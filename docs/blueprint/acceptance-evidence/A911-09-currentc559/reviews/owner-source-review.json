@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The proposed two-line correction assigns the authored SDK explanation and product-contract review to SDK maintainers (plugin-foundation), while retaining documentation automation ownership of the generated export inventory. Product behavior, evidence revisions, verification statements, and their limits remain unchanged. Review was limited to the supplied sdk.md correction.",
+  "overall_confidence": 0.99
+}

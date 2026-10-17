@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-17T12:09:36.724853+00:00",
+  "sourceUTC": "2026-10-17T12:09:36.724853+00:00",
+  "package": "AP09.11",
+  "phase": "Bearbeitung",
+  "currentGateIds": [
+    "A911-10"
+  ],
+  "task": "A911-10 Bearbeitung: historischen Routeverlust-Schutz umgesetzt, begrenzt unabhängig sauber geprüft und alsb1b2fe3d auf PR13+Backup verifiziert; unveränderte166Seitenmap, Rename/Removal-/Owner- und Link-/Ankerfälle belegt. Sourcefamilien-Transitionen und formale Gate-Entscheidungen bleiben offen; AP09.11 unverändert1/12.",
+  "basis": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/continuation-result.json",
+    "sha256": "4e4c91e06c919a986c5aefcab71f627116b5429b4d68514a1875054728fadfdf"
+  },
+  "criterion": "A911-10",
+  "formalAcceptance": false
+}

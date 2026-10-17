@@ -1,0 +1,38 @@
+import subprocess,json,hashlib,difflib
+from pathlib import Path
+P=Path(__file__).resolve().parent;R=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo');F=P/'current-fixture';REV='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9';S='scripts/generate-buster-provider-reference.mjs';PAGE='docs/site/reference/buster-provider-configuration.md'
+def g(*a):return subprocess.check_output(['git',*a],cwd=R)
+def sha(b):return hashlib.sha256(b).hexdigest()
+assert not F.exists();assert json.loads((P/'review.json').read_text())['findings']==[];assert json.loads((P/'actual-result.json').read_text())['state']=='PINNED_SOURCE_REMOVE_RENAME_POSITIVE_NEGATIVE_CASES_PASS'
+F.mkdir();files=g('ls-tree','-r','--name-only',REV,'skills/buster/plugins','docs/site').decode().splitlines();files=[p for p in files if p.endswith('.json') or p.endswith('.md')]
+files+=['scripts/docs-governance.mjs','scripts/lib/docs-route-continuity.mjs','scripts/docs-published-route-baseline.json','docs/blueprint/generated/ap09-catalogue.json','docs/operator-tasks.json']
+for p in files:
+ out=F/p;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(g('show',REV+':'+p))
+(F/S).write_bytes((P/S).read_bytes());subprocess.run(['git','init','-q'],cwd=F,check=True)
+objects=R/'.git/objects';assert objects.is_dir();(F/'.git/objects/info/alternates').write_text(str(objects)+'\n')
+commands=[]
+for name,args in [('current-provider-write',['node',S,'--write']),('current-provider-noarg-check',['node',S]),('current-governance-write',['node','scripts/docs-governance.mjs']),('current-governance-check',['node','scripts/docs-governance.mjs','--check'])]:
+ r=subprocess.run(args,cwd=F,text=True,capture_output=True,timeout=60)
+ for suffix,text in [('stdout',r.stdout),('stderr',r.stderr)]:(P/(name+'.'+suffix)).write_text(text)
+ commands.append({'id':name,'exitCode':r.returncode,'stdoutSHA256':sha(r.stdout.encode()),'stderrSHA256':sha(r.stderr.encode())});assert r.returncode==0,(name,r.stderr[:2000])
+# Adopt exactly one newly derived fact digest, never refresh unrelated records.
+authority='scripts/docs-api-producer-adapter-authorities.json';raw=g('show',REV+':'+authority);a=json.loads(raw);before=json.loads(raw)
+record=[x for x in a['nonApiOutputContracts'] if x.get('source')==S];assert len(record)==1 and len(record[0]['operations'])==1
+facts=json.loads((P/'authority-impact/result.json').read_text());assert record[0]['operations'][0]['factsDigest']==facts['before']['digest']
+record[0]['operations'][0]['factsDigest']=facts['after']['digest']
+# Preserve original formatting by replacing unique exact digest, not rewriting authority corpus.
+assert raw.count(facts['before']['digest'].encode())==1
+out=F/authority;out.write_bytes(raw.replace(facts['before']['digest'].encode(),facts['after']['digest'].encode()));assert json.loads(out.read_text())==a
+package={}
+for p in [S,authority,PAGE,'docs/site/reference/generated-documentation-map.json']:
+ out=P/'candidate'/p;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes((F/p).read_bytes());package[p]=sha(out.read_bytes())
+ # Exact deltas retained, no synthetic mutation output is publication input.
+ (P/(Path(p).name+'.diff')).write_text(''.join(difflib.unified_diff(g('show',REV+':'+p).decode().splitlines(True),out.read_text().splitlines(True),fromfile='before/'+p,tofile='after/'+p)))
+oldpage=g('show',REV+':'+PAGE).decode();newpage=(F/PAGE).read_text()
+oldtables=[l for l in oldpage.splitlines() if l.startswith('|')];newtables=[l for l in newpage.splitlines() if l.startswith('|')];assert oldtables==newtables
+oldmap=json.loads(g('show',REV+':docs/site/reference/generated-documentation-map.json'));newmap=json.loads((F/'docs/site/reference/generated-documentation-map.json').read_text());changes=[]
+for old,new in zip(oldmap['pages'],newmap['pages']):
+ if old!=new:changes.append({'page':new['page'],'before':old,'after':new})
+assert len(changes)==1 and changes[0]['page']==PAGE
+result={'publishedBaseline':REV,'scope':'Real unchanged committed production JSON; not synthetic modified schemas. Exact new source generator validates all JSON against actual historical3cf commit, whose bytes still equal currentb1. Noarg owning path and affected original governance pass.','commands':commands,'files':package,'tablesByteEqual':True,'mapChanges':changes,'authorityDelta':{'source':S,'before':facts['before']['digest'],'after':facts['after']['digest'],'baselineReproduced':True,'onlyOneOperationUpdated':True},'formalAcceptance':False,'canonicalWrites':False,'ciDirtyMutation':False}
+(P/'current-package-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'files':package,'commands':commands,'mapChangedPages':[x['page'] for x in changes]},indent=2))

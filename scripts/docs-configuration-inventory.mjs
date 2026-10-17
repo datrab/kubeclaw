@@ -1,0 +1,9271 @@
+#!/usr/bin/env node
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import process from 'node:process';
+import os from 'node:os';
+import { pathToFileURL } from 'node:url';
+import { spawnSync } from 'node:child_process';
+import vm from 'node:vm';
+import ts from 'typescript';
+import YAML from 'yaml';
+import { shellHeredocCustody, shellCommandAcquisitions } from './docs-shell-source-custody.mjs';
+import { helmEnvironmentHelperProjectionPlans } from './docs-helm-environment-projections.mjs';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
+import { assertYamlAuthorityRegistry, yamlAuthorityFile, yamlAuthorityPaths, yamlFieldAuthority } from './docs-yaml-field-authorities.mjs';
+import {
+  assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
+} from './docs-local-helm-authorities.mjs';
+import { apiFieldSchemaAuthority, apiFieldCollectionAuthority } from './docs-api-schema-authorities.mjs';
+import { apiProductSelection, discoverProductApiContexts, productMetadataReferences, productScopeLimits, productApiReceiverRecords } from './docs-api-product-scope.mjs';
+import { discoverRejectedApiOutputProfiles } from './docs-api-output-discovery.mjs';
+import { apiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
+import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
+import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
+import { receiverContracts as admissionStatusReceiverContracts } from './docs-kubernetes-admission-status-contracts.mjs';
+import { receiverContracts as deploymentReceiverContracts } from './docs-kubernetes-apps-receiver-contracts.mjs';
+import { receiverContracts as coreReceiverContracts } from './docs-kubernetes-core-receiver-contracts.mjs';
+import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
+import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
+import { receiverContracts as envelopeReceiverContracts } from './docs-kubernetes-envelope-receiver-contracts.mjs';
+import { receiverContracts as metadataReceiverContracts, implicitKubernetesObjectMetaReferences } from './docs-kubernetes-metadata-receiver-contracts.mjs';
+import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
+import {
+  yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
+} from './yaml-field-path.mjs';
+
+const argv = process.argv.slice(2);
+const option = (name, fallback) => {
+  const index = argv.indexOf(name);
+  return index === -1 ? fallback : argv[index + 1];
+};
+const root = path.resolve(option('--root', process.cwd()));
+const checkOnly = argv.includes('--check');
+const allowSensitivityFixture = argv.includes('--allow-sensitivity-fixture');
+const allowSemanticGaps = argv.includes('--allow-semantic-gaps');
+// A write run must be able to publish a newly discovered field as an explicit
+// semantic gap. Check mode remains strict and rejects stale field authorities.
+// Without this distinction, the mutation suite cannot create its temporary
+// negative-control inventory before it verifies the published blocker.
+const allowLocalHelmAuthorityMaintenance = argv.includes('--allow-local-helm-authority-maintenance') || !checkOnly;
+const outputDirectory = path.resolve(
+  option('--out-dir', path.join(root, 'docs/generated/inventory')),
+);
+
+const SOURCE_ROOTS = ['charts', 'examples', 'gitops', 'my-values', 'releases/values'];
+const RUNTIME_SCAN_ROOTS = ['scripts', 'my-values', 'charts', 'gitops', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'contracts/agent-observability/v1/src'];
+const TEXT_EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts', '.sh', '.py', '.go', '.c', '.h', '.yaml', '.yml']);
+const EXCLUDED_SEGMENTS = new Set(['node_modules', 'dist', 'build', 'coverage', '.git', 'tests', 'test', 'fixtures']);
+const SENSITIVE_VALUE_NAME = /(?:pass(?:word)?|token|credential|private.?key|api.?key|oauth|webhook|client.?secret|allow.?from|approver|member|guild|channel.?id|role.?id|owner.?id|user(?:name|id|s)?|email|account)/i;
+const SENSITIVE_ENV_NAME = /(?:pass(?:word)?|token|private.?key|api.?key|master.?key|salt.?key|auth.?key|client.?secret|signing.?secret|webhook)/i;
+const SCHEMA_CONSTRAINTS = [
+  'const', 'enum', 'format', 'pattern', 'minimum', 'maximum', 'exclusiveMinimum',
+  'exclusiveMaximum', 'multipleOf', 'minLength', 'maxLength', 'minItems', 'maxItems',
+  'uniqueItems', 'minProperties', 'maxProperties', 'additionalProperties',
+  'propertyNames', 'dependentRequired', 'dependentSchemas', 'contains', 'minContains', 'maxContains',
+  'required', 'allOf', 'anyOf', 'oneOf', 'if', 'then', 'else', 'not',
+];
+
+function exists(relativePath) {
+  return fs.existsSync(path.join(root, relativePath));
+}
+
+function read(relativePath) {
+  return fs.readFileSync(path.join(root, relativePath), 'utf8');
+}
+
+function relative(absolutePath) {
+  return path.relative(root, absolutePath).split(path.sep).join('/');
+}
+
+function walk(relativeRoot, accept = () => true) {
+  const start = path.join(root, relativeRoot);
+  if (!fs.existsSync(start)) return [];
+  const found = [];
+  const visit = (directory) => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      if (EXCLUDED_SEGMENTS.has(entry.name)) continue;
+      const absolutePath = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) {
+        assert.fail(`CONFIG_RUNTIME_SOURCE_CUSTODY_UNSUPPORTED: ${relative(absolutePath)}: symbolic-link source requires explicit canonical acquisition; outside-root and unresolved aliases cannot be omitted`);
+      }
+      if (entry.isDirectory()) visit(absolutePath);
+      else if (entry.isFile() && accept(absolutePath)) found.push(relative(absolutePath));
+    }
+  };
+  visit(start);
+  return found;
+}
+
+function lineAt(text, index) {
+  return text.slice(0, index).split('\n').length;
+}
+
+const meaningTextCache = new Map();
+function meaningExcerpt(sourcePath, token, { requireSemanticLanguage = false } = {}) {
+  if (!exists(sourcePath)) return null;
+  const text = meaningTextCache.get(sourcePath) ?? read(sourcePath);
+  meaningTextCache.set(sourcePath, text);
+  const escaped = token.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  const patterns = [new RegExp(`\`${escaped}\``, 'u'), new RegExp(`(?<![A-Za-z0-9_])${escaped}(?![A-Za-z0-9_])`, 'u')];
+  const index = patterns.map((pattern) => text.search(pattern)).find((value) => value >= 0);
+  if (index === undefined) return null;
+  const lines = text.split('\n');
+  const line = lineAt(text, index);
+  const excerpt = lines.slice(line - 1, Math.min(lines.length, line + 2)).join(' ').replace(/\s+/gu, ' ').trim().slice(0, 280);
+  if (requireSemanticLanguage && (excerpt.length < 35 || !/(?:controls?|selects?|sets?|limits?|requires?|enables?|disables?|uses?|reads?|writes?|path|file|URL|endpoint|timeout|bytes|request|response|failure|default|allowed|must|when)/iu.test(excerpt))) return null;
+  return { path: sourcePath, line, excerpt };
+}
+
+const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBehavior, invalidBehavior, precedence, precedenceSteps, impact, failure, required = 'conditional', evidence = [] }) => ({
+  purpose,
+  acceptedForm,
+  defaultBehavior,
+  emptyBehavior,
+  invalidBehavior,
+  precedence,
+  ...(precedenceSteps ? { precedenceSteps } : {}),
+  impact,
+  failure,
+  required,
+  evidence,
+});
+
+const ENVIRONMENT_CONTRACTS = new Map(Object.entries({
+  BUNDLE_TMP_ROOT: environmentContract({ purpose: 'Carries the chart init script\'s fixed `/tmp/code-bundle` work directory across one shell-to-Node process boundary while the downloaded code bundle is validated.', acceptedForm: 'The internal fixed path `/tmp/code-bundle`; this is not an operator or external runtime input.', defaultBehavior: 'The init script assigns `/tmp/code-bundle` before bundle download and passes that value only to the validation Node process.', emptyBehavior: 'No supported empty state exists: the shell assignment at `deployment.yaml:944` fixes the value before the child-process export at line 1023.', invalidBehavior: 'Changing or removing the internal assignment can make archive extraction and Node validation use different directories, which stops code-bundle initialization.', precedence: 'The local shell assignment at `deployment.yaml:944` is the only producer. The command-local export at line 1023 passes it to the Node reader at line 1027; no values field, Pod environment entry, or external setting participates.', impact: 'The value joins the shell extraction directory to the Node validator\'s `extracted` path for this init-container execution only.', failure: 'The code-bundle init step fails before the workload starts when the archive and validator do not use the same temporary directory.', required: 'internal and fixed when code-bundle initialization runs' }),
+  AGENT_HELM_TIMEOUT: environmentContract({ purpose: 'Limits how long Helm can wait for a Nova or Buster release operation.', acceptedForm: 'A Helm duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'Helm rejects an invalid duration or ends the release when the duration expires.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `45m`.', impact: 'A shorter value stops a slow agent release sooner. A longer value delays rollback and failure reporting.', failure: 'The atomic Helm operation fails and rolls back when the wait limit expires.' }),
+  AGENT_ROLLOUT_TIMEOUT: environmentContract({ purpose: 'Limits each Kubernetes rollout-status wait for Nova and Buster workloads.', acceptedForm: 'A kubectl duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a rollout timeout.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `45m`.', impact: 'This value changes only the observation deadline; it does not change the workload progress deadline.', failure: 'The deploy command stops when a required rollout does not become ready in time.' }),
+  ALLOW_PARTIAL_INFRA: environmentContract({ purpose: 'Changes selected infrastructure rollout failures from fatal errors to warnings.', acceptedForm: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled`; `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: 'Uses `false` and fails closed.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled` enables partial progress; other values keep fail-closed behavior.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `false`.', impact: 'When true, deployment can continue after an infrastructure component fails readiness.', failure: 'The command can finish with incomplete infrastructure; operators must inspect warnings and component status before using the platform.' }),
+  BACKUP_APPLICATION_IMAGE: environmentContract({ purpose: 'Pins the application image identity written into and checked against PostgreSQL backup metadata.', acceptedForm: 'A reference matching `[a-zA-Z0-9._/-]+@sha256:[a-f0-9]{64}`; tags and colon-containing registry ports are not accepted by this host recovery reader.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'A value without the required digest shape returns `POSTGRES_RECOVERY_APPLICATION_IMAGE_INVALID`.', precedence: 'The non-empty process value is the only source.', impact: 'Changing it makes existing backups fail the application-image compatibility check.', failure: 'Backup and restore stop before changing database state.', required: 'required' }),
+  BACKUP_CREDENTIAL_AUTHORITY_REF: environmentContract({ purpose: 'Records the external credential-authority identity that must provide database roles and credentials during recovery.', acceptedForm: 'A 1-256 character authority reference containing letters, digits, dot, underscore, colon, slash, or hyphen.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'A value outside the allowed shape returns `POSTGRES_RECOVERY_CREDENTIAL_AUTHORITY_INVALID`.', precedence: 'The non-empty process value is the only source.', impact: 'The reference is stored in backup metadata; it does not copy credential bytes into the backup.', failure: 'The syntax guard rejects an invalid reference. Recovery retains this descriptive metadata but does not compare it for equality; credential binding and other enforced metadata checks remain separate.', required: 'required' }),
+  BACKUP_EXPECTED_SERVER_VERSION: environmentContract({ purpose: 'Selects the PostgreSQL numeric server version accepted for backup and target recovery.', acceptedForm: 'A positive PostgreSQL `server_version_num`, for example `160004`.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before database access.', invalidBehavior: 'A non-positive value returns `POSTGRES_RECOVERY_INVALID_BACKUP_EXPECTED_SERVER_VERSION`; a different live version returns `POSTGRES_RECOVERY_SERVER_VERSION_NOT_SELECTED`.', precedence: 'The non-empty process value is the only source.', impact: 'The value prevents an unplanned source version or restore-client version from entering recovery.', failure: 'Backup, verify, restore, or migration stops before publication or restore.', required: 'required' }),
+  BACKUP_INTERVAL_SECONDS: environmentContract({ purpose: 'Sets the minimum age at which the scheduled command creates another PostgreSQL backup.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 seconds.', defaultBehavior: 'No default; only the `scheduled` command reads it.', emptyBehavior: 'An empty value is rejected for `scheduled`.', invalidBehavior: 'Zero, negative, non-numeric, or overlong input returns `POSTGRES_RECOVERY_INVALID_BACKUP_INTERVAL_SECONDS`.', precedence: 'The non-empty process value is the only source.', impact: 'A larger value reuses a still-valid latest backup for longer; it does not relax the maximum backup age.', failure: 'The scheduled command stops without creating or deleting a backup.', required: 'required for `scheduled`' }),
+  BACKUP_MAXIMUM_AGE_SECONDS: environmentContract({ purpose: 'Sets the oldest backup age accepted by verification and restore.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 seconds.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before reading a backup.', invalidBehavior: 'Invalid input returns `POSTGRES_RECOVERY_INVALID_BACKUP_MAXIMUM_AGE_SECONDS`; an older backup returns `POSTGRES_RECOVERY_BACKUP_RPO_EXCEEDED`.', precedence: 'The non-empty process value is the only source.', impact: 'This is the enforced recovery-point objective limit.', failure: 'Verification and restore stop; the backup is retained.', required: 'required' }),
+  BACKUP_MAXIMUM_BYTES: environmentContract({ purpose: 'Caps one host PostgreSQL archive or one Prism database-and-artifact backup group.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 bytes.', defaultBehavior: 'No default in either consumer.', emptyBehavior: 'An empty value is rejected before backup or verification.', invalidBehavior: 'Both consumers reject invalid input with their own `INVALID_BACKUP_MAXIMUM_BYTES` error; each also rejects an archive or group over the cap.', precedence: 'The non-empty process value is the only source at each consumer boundary.', impact: 'The cap limits disk use and can stop a dump or artifact copy that grows past the selected budget.', failure: 'The incomplete staging directory remains visible and the previous completed backup remains unchanged.', required: 'required' }),
+  BACKUP_MAXIMUM_DURATION_SECONDS: environmentContract({ purpose: 'Caps host PostgreSQL dump/restore time and Prism backup command time.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 seconds.', defaultBehavior: 'No default in either consumer.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'Both consumers reject invalid input with their own `INVALID_BACKUP_MAXIMUM_DURATION_SECONDS` error.', precedence: 'The non-empty process value is the only source at each consumer boundary.', impact: 'The host recovery timeout sends TERM and then KILL after 15 seconds; the Prism CronJob passes the same limit to its backup command.', failure: 'A host backup retains an incomplete stage; a host restore transaction rolls back; a Prism backup job fails without replacing a completed group.', required: 'required' }),
+  BACKUP_MAXIMUM_RETAINED_BYTES: environmentContract({ purpose: 'Caps retained backup storage before a host PostgreSQL or Prism backup starts.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 bytes.', defaultBehavior: 'No default in either consumer.', emptyBehavior: 'An empty value is rejected before backup.', invalidBehavior: 'Both consumers reject invalid input; insufficient remaining allowance returns their `RETAINED_CAPACITY_EXCEEDED` error.', precedence: 'The non-empty process value is the only source at each consumer boundary.', impact: 'Host recovery reserves 64 MiB; Prism reserves 1 MiB. Neither path deletes an older backup to make room.', failure: 'The new backup does not start or remains incomplete; completed backups remain intact.', required: 'required' }),
+  BACKUP_ROOT: environmentContract({ purpose: 'Selects the private backup-set directory and lock boundary for host PostgreSQL recovery or Prism database-and-artifact backup.', acceptedForm: 'An absolute, non-root, non-symlink directory. Host recovery also requires current-user ownership and no group/other permissions; Prism also requires a canonical real path.', defaultBehavior: 'No default in either consumer.', emptyBehavior: 'An empty value is rejected before filesystem access.', invalidBehavior: 'Each consumer returns its own `ROOT_INVALID`, owner, or mode error before publishing or restoring data.', precedence: 'The non-empty process value is the only source at each consumer boundary.', impact: 'Changing the directory changes which backup history, capacity budget, and lock the selected command sees.', failure: 'The selected command stops without replacing a completed backup or starting a restore.', required: 'required' }),
+  LITELLM_MASTER_KEY: environmentContract({ purpose: 'Supplies the confidential LiteLLM master key used to bind a backup to the selected credential set.', acceptedForm: 'A non-empty secret value supplied through the recovery process environment.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before database access.', invalidBehavior: 'The recovery script does not validate key strength; a different value makes backup verification return `POSTGRES_RECOVERY_BACKUP_CREDENTIAL_SET_MISMATCH`.', precedence: 'The non-empty process value is the only source. Never place it in backup metadata.', impact: 'The script derives a domain-separated hash binding; it does not store the key.', failure: 'Backup configuration or later verification stops.', required: 'required' }),
+  LITELLM_SALT_KEY: environmentContract({ purpose: 'Optionally supplies the confidential LiteLLM salt key used with the master key for the recovery credential binding.', acceptedForm: 'A secret string.', defaultBehavior: 'Uses `LITELLM_MASTER_KEY` when the variable is unset.', emptyBehavior: 'An explicitly empty value is accepted and differs from an unset value because the shell uses the non-colon `-` operator.', invalidBehavior: 'The script does not validate strength or format; a different effective value causes credential-set mismatch during verification.', precedence: 'An explicitly set value, including empty, wins; otherwise `LITELLM_MASTER_KEY` supplies the value.', impact: 'Changing it changes the credential binding and makes existing backups incompatible with the selected credentials.', failure: 'Verification and restore stop with `POSTGRES_RECOVERY_BACKUP_CREDENTIAL_SET_MISMATCH`.' }),
+  PGHOST: environmentContract({ purpose: 'Selects the PostgreSQL server endpoint used by psql, pg_dump, and pg_restore.', acceptedForm: 'A libpq host name, IP address, or Unix-socket directory.', defaultBehavior: 'No default in the recovery script.', emptyBehavior: 'An empty value is rejected before database access.', invalidBehavior: 'libpq connection parsing or connection establishment fails.', precedence: 'The non-empty process value is passed through libpq; standard libpq rules apply to any other connection settings.', impact: 'Changing it changes the source or target server. Server identity checks still prevent same-server restore.', failure: 'The database client exits and the recovery command stops.', required: 'required' }),
+  PGDATABASE: environmentContract({ purpose: 'Selects the PostgreSQL database used by host recovery and by the Prism backup container.', acceptedForm: 'Host recovery requires a lowercase identifier that starts with a letter; Prism backup accepts a letter or underscore followed by letters, digits, or underscores. Both limit the name to 63 characters.', defaultBehavior: 'No default in either checked-in consumer.', emptyBehavior: 'An empty value is rejected before database access.', invalidBehavior: 'Host recovery returns `POSTGRES_RECOVERY_DATABASE_NAME_INVALID`; Prism returns `PRISM_BACKUP_DATABASE_INVALID`.', precedence: 'The non-empty process value is passed to libpq; each backup writes the selected database into its metadata.', impact: 'Changing it selects a different database and makes host metadata from another database fail verification.', failure: 'The selected backup or recovery command stops before dump or restore.', required: 'required' }),
+  PGUSER: environmentContract({ purpose: 'Selects the PostgreSQL login role used by the recovery tools.', acceptedForm: 'A non-empty libpq user name.', defaultBehavior: 'No default in the recovery script.', emptyBehavior: 'An empty value is rejected before database access.', invalidBehavior: 'The server rejects an unknown role or invalid credentials.', precedence: 'The non-empty process value is passed through libpq.', impact: 'The role must have enough rights for full dump, server identity inspection, and restore of owners and ACLs.', failure: 'The database client exits and the recovery command stops.', required: 'required' }),
+  REDIS_SERVER: environmentContract({ purpose: 'Selects the native `redis-server` executable used for an isolated RDB-to-AOF conversion.', acceptedForm: 'A path to an executable `redis-server` binary.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before touching the snapshot.', invalidBehavior: 'A missing binary or a version that differs from `versions.json` fails the migration.', precedence: 'The non-empty process value is the only source.', impact: 'The selected binary starts only on loopback with an ephemeral password and the migration policy.', failure: 'The destination remains absent or visibly partial; no cutover occurs.', required: 'required' }),
+  REDIS_CLI: environmentContract({ purpose: 'Selects the native `redis-cli` executable used to control and verify the isolated migration server.', acceptedForm: 'A path to an executable `redis-cli` binary compatible with the selected server.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before snapshot conversion.', invalidBehavior: 'A missing or incompatible client makes readiness, configuration, or shutdown checks fail.', precedence: 'The non-empty process value is the only source.', impact: 'The client performs loopback-only checks against the temporary server.', failure: 'Migration stops and retains a visible partial destination; no cutover occurs.', required: 'required' }),
+  REDIS_CHECK_RDB: environmentContract({ purpose: 'Selects the native `redis-check-rdb` executable that validates the source snapshot before conversion.', acceptedForm: 'A path to an executable `redis-check-rdb` binary.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before reading the snapshot.', invalidBehavior: 'A missing binary or failed RDB check stops the migration.', precedence: 'The non-empty process value is the only source.', impact: 'The check prevents a corrupt snapshot from starting the isolated Redis process.', failure: 'No destination publication or cutover occurs.', required: 'required' }),
+  REDIS_MIGRATION_MAXIMUM_SECONDS: environmentContract({ purpose: 'Sets the common deadline for starting, converting, and verifying the isolated Redis migration server.', acceptedForm: 'An integer from 1 through 99,999 seconds.', defaultBehavior: 'Uses `600` seconds.', emptyBehavior: 'An empty value is absent and selects `600`.', invalidBehavior: 'Zero, negative, non-numeric, or more than five digits returns `REDIS_MIGRATION_LIMIT_INVALID`.', precedence: 'A non-empty process value wins; otherwise the script uses `600`.', impact: 'A smaller value limits interruption time but can stop a valid large conversion.', failure: 'The temporary server is killed, the staging directory is removed, and a partial destination remains visible.' }),
+  REDIS_MIGRATION_MAXIMUM_BYTES: environmentContract({ purpose: 'Caps the source snapshot, destination files, and temporary Redis file growth during conversion.', acceptedForm: 'An integer from 1 through 999,999,999,999,999 bytes.', defaultBehavior: 'Uses `21474836480` bytes (20 GiB).', emptyBehavior: 'An empty value is absent and selects 20 GiB.', invalidBehavior: 'Invalid input returns `REDIS_MIGRATION_LIMIT_INVALID`; oversized input or output returns a size-limit error.', precedence: 'A non-empty process value wins; otherwise the script uses 20 GiB.', impact: 'The value limits disk consumption and applies as a file-size limit to the isolated server.', failure: 'Conversion stops without cutover; a partial destination remains for inspection.' }),
+  PIPELINE_LIGHT_WATCHDOG_POLL_SECONDS: environmentContract({ purpose: 'Sets how often the pipeline-light watchdog checks the run process and status file.', acceptedForm: 'A positive whole number of seconds.', defaultBehavior: 'Uses `15` seconds.', emptyBehavior: 'An empty value is absent and selects `15`.', invalidBehavior: 'The script has no explicit numeric validation; invalid shell arithmetic terminates it under strict mode.', precedence: 'A non-empty process value initializes the value; `--poll-seconds` overrides it when supplied.', impact: 'Lower values detect completion sooner and perform more checks.', failure: 'The watchdog exits and no later heartbeat or terminal notification is produced.' }),
+  PIPELINE_LIGHT_WATCHDOG_HEARTBEAT_SECONDS: environmentContract({ purpose: 'Sets the maximum interval between unchanged-status heartbeat lines from the pipeline-light watchdog.', acceptedForm: 'A positive whole number of seconds.', defaultBehavior: 'Uses `300` seconds.', emptyBehavior: 'An empty value is absent and selects `300`.', invalidBehavior: 'The script has no explicit numeric validation; invalid shell arithmetic terminates it under strict mode.', precedence: 'A non-empty process value initializes the value; `--heartbeat-seconds` overrides it when supplied.', impact: 'Lower values write more unchanged-status lines; terminal state changes are still written immediately.', failure: 'The watchdog exits and no later heartbeat or terminal notification is produced.' }),
+  POLICY_FILE: environmentContract({ purpose: 'Selects the project network-policy file applied during the Cilium migration.', acceptedForm: 'A readable YAML file path for the project policy set.', defaultBehavior: 'Uses `my-values/infra/network-policies.yaml` below the repository.', emptyBehavior: 'An empty value is absent and selects the repository file.', invalidBehavior: 'kubectl fails if the file is missing or invalid.', precedence: 'A non-empty process value wins; otherwise the repository policy file is used.', impact: 'The apply command installs this policy set after it verifies the cluster-wide Cilium baseline.', failure: 'The migration command stops before legacy NetworkPolicies are removed.' }),
+  SOPS_FILE: environmentContract({ purpose: 'Selects the SOPS-encrypted file used as one optional source for secret setup.', acceptedForm: 'A readable SOPS YAML file path.', defaultBehavior: 'Uses `$HOME/openclaw-swarm/ansible/group_vars/production/secrets.yml`.', emptyBehavior: 'An empty value is absent and selects the default path.', invalidBehavior: 'A missing or unreadable file is skipped as a source; a present file that cannot be decrypted produces a setup error.', precedence: 'Existing target Secret data wins unless overwrite is enabled; then the configured SOPS file is considered before source-namespace copy and interactive input.', impact: 'Changing it changes the encrypted authority from which missing credential values can be loaded.', failure: 'Secret setup continues to the next permitted source or stops if a required value has no valid source.' }),
+  SRC_NS: environmentContract({ purpose: 'Selects the Kubernetes namespace from which secret setup can copy existing application Secrets.', acceptedForm: 'A Kubernetes namespace name.', defaultBehavior: 'Uses `default`.', emptyBehavior: 'An empty value is absent and selects `default`.', invalidBehavior: 'kubectl rejects an invalid namespace or reports read/authorization errors.', precedence: 'Existing target Secrets win unless overwrite is enabled; SOPS is checked before source-namespace copy.', impact: 'Changing it changes only the copy source; target Secrets are still written to `NAMESPACE`.', failure: 'The helper moves to another permitted source for missing data or stops on a non-not-found Kubernetes error.' }),
+}));
+
+// A name-level contract is insufficient when independent processes interpret
+// the same variable differently. These contracts are keyed by the exact
+// receiving source so the generated reference cannot merge incompatible
+// defaults, validation rules, or conditional requirements into one claim.
+const ENVIRONMENT_CONSUMER_CONTRACTS = new Map();
+const addEnvironmentConsumerContract = (name, sourcePath, contract) => {
+  ENVIRONMENT_CONSUMER_CONTRACTS.set(`${name}:${sourcePath}`, contract);
+};
+
+addEnvironmentConsumerContract('PATH', 'scripts/docs-api-output-discovery.mjs', environmentContract({
+  purpose: 'Selects executable lookup directories for the documentation resource-discovery helpers. Python helpers receive only this environment entry; Go helpers inherit the process environment.',
+  acceptedForm: 'The host executable-search path, with directories separated by the host path delimiter.',
+  defaultBehavior: 'Uses the parent process PATH. The helper does not supply its own search path.',
+  emptyBehavior: 'An empty value is forwarded unchanged. An absent value supplies no authored search path; the host process launcher determines executable lookup.',
+  invalidBehavior: 'A path that cannot resolve the required Python or Go executable causes helper launch or parsing to fail.',
+  precedence: 'The process PATH controls Python lookup and default Go lookup. A present KUBECLAW_DOCS_GO_BINARY selects the Go command instead.',
+  impact: 'Changing the path can select different local tools and change discovery results. Use trusted, compatible tools when generating documentation.',
+  failure: 'The corresponding API_PRODUCT helper parse or operation error stops generation. No live Kubernetes command is authorized by this setting.',
+  required: 'conditional',
+}));
+addEnvironmentConsumerContract('KUBECLAW_DOCS_GO_BINARY', 'scripts/docs-api-output-discovery.mjs', environmentContract({
+  purpose: 'Selects the Go executable used to parse product resource constructors and serialized-output roles for documentation.',
+  acceptedForm: 'An executable Go command name or filesystem path accepted by the host process launcher. The helper does not validate the Go version or path before launch.',
+  defaultBehavior: 'An absent value selects go through the process executable-search path.',
+  emptyBehavior: 'An explicitly empty string is retained by the nullish fallback and fails executable launch; it does not select go.',
+  invalidBehavior: 'A missing, non-executable, incompatible or unsuccessful Go command fails the helper parse check.',
+  precedence: 'A present process value wins over the literal go command; PATH resolves a command name. No configuration file overrides this selection.',
+  impact: 'Changing this setting changes the local tool that runs the offline Go parsing helpers. Select a trusted tool compatible with the repository.',
+  failure: 'An empty command throws a Node launch-argument error before parsing. A missing or unsuccessful executable stops discovery with API_PRODUCT_GO_PRODUCER_PARSE_FAILED. Both failures stop generation. This setting does not select the product runtime Go executable.',
+  required: 'conditional',
+}));
+
+const busterControllerSource = 'cmd/buster-namespace-controller/main.go';
+const busterControllerContracts = {
+  KUBECLAW_NAMESPACE: environmentContract({
+    purpose: 'Selects the namespace in which the Buster namespace controller reads leases and creates its namespace-scoped bindings.',
+    acceptedForm: 'A non-empty namespace name. This reader trims whitespace but does not validate Kubernetes name syntax at startup.',
+    defaultBehavior: 'Uses the trimmed ServiceAccount namespace file; if that file is unreadable or blank, uses `kubeclaw`.',
+    emptyBehavior: 'An absent, empty, or whitespace-only environment value selects the ServiceAccount namespace file and then `kubeclaw`.',
+    invalidBehavior: 'A non-empty invalid value survives startup and later makes API paths, subjects, or admitted objects fail.',
+    precedence: 'Trimmed non-empty process value, then trimmed non-empty ServiceAccount namespace file, then `kubeclaw`.',
+    precedenceSteps: [
+      { order: 1, source: 'process environment', condition: 'trimmed value is non-empty', evidence: `${busterControllerSource}:133` },
+      { order: 2, source: 'ServiceAccount namespace file', condition: 'environment value is blank and file content is readable and non-empty', value: '/var/run/secrets/kubernetes.io/serviceaccount/namespace', evidence: `${busterControllerSource}:133` },
+      { order: 3, source: 'controller fallback', condition: 'environment and namespace file do not supply a value', value: 'kubeclaw', evidence: `${busterControllerSource}:133` },
+    ],
+    impact: 'Changing it moves lease discovery and generated namespace bindings to another namespace authority.',
+    failure: 'The controller starts with a malformed non-empty value, but reconciliation or Kubernetes admission fails.',
+  }),
+  BUSTER_ALLOWED_ACCESS_JSON: environmentContract({
+    purpose: 'Defines which ServiceAccounts can request Buster tester or deployer access.',
+    acceptedForm: 'A JSON array of objects. Each `subject` is one canonical DNS label or `namespace/name`; each mode is exactly `tester` or `deployer`. At least one subject is required. An empty modes list is valid and grants nothing.',
+    defaultBehavior: 'Uses one `kubeclaw/agent-buster` subject with `tester` mode.',
+    emptyBehavior: 'An absent, empty, or whitespace-only value selects the default JSON array.',
+    invalidBehavior: 'Invalid JSON, an invalid subject, an unsupported mode, or no subjects returns a configuration error.',
+    precedence: 'A trimmed non-empty process value wins; otherwise the checked-in JSON fallback applies.',
+    impact: 'Changing it changes the identities and access modes that the controller places into leased namespaces.',
+    failure: 'The controller returns an error before it starts its reconciliation loop.',
+  }),
+  BUSTER_ALLOWED_NAMESPACE_PREFIXES: environmentContract({
+    purpose: 'Selects the namespace prefixes that Buster lease requests can use.',
+    acceptedForm: 'A comma-separated list. The reader trims entries and drops empty entries but does not validate prefix syntax or length at startup.',
+    defaultBehavior: 'Uses `test`.',
+    emptyBehavior: 'A blank value, or a list that contains only blank entries, selects `test`.',
+    invalidBehavior: 'A malformed non-empty prefix can survive startup and later produce an unusable namespace name or failed Kubernetes request.',
+    precedence: 'A trimmed non-empty process value is split first; an empty result then falls back to `test`.',
+    impact: 'Changing the list changes which requested names are admitted and which prefix is used for generated names.',
+    failure: 'Lease validation, namespace creation, or Kubernetes admission fails when the effective prefix cannot produce a usable name.',
+  }),
+  BUSTER_DEFAULT_TTL_SECONDS: environmentContract({
+    purpose: 'Sets the lease lifetime used when a request does not supply a positive `ttlSeconds` value.',
+    acceptedForm: 'A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.',
+    defaultBehavior: 'Uses `7200` when the value is blank, non-numeric, or outside the Go `int` range.',
+    emptyBehavior: 'An absent, empty, or whitespace-only value selects `7200`.',
+    invalidBehavior: 'Non-numeric and integer-overflow input silently selects `7200`. A parsed value below 60, above the effective maximum, or affected by duration overflow makes later lease validation or expiry behavior fail.',
+    precedence: 'A trimmed parseable process integer wins; otherwise `7200` applies.',
+    impact: 'Changing it changes the default expiry time for leases without a positive request-specific TTL.',
+    failure: 'The controller can start, but a defaulted lease is rejected or receives an unsafe expiry when the parsed value is unsuitable.',
+  }),
+  BUSTER_MAX_TTL_SECONDS: environmentContract({
+    purpose: 'Sets the maximum lease lifetime accepted by the Buster namespace controller.',
+    acceptedForm: 'A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.',
+    defaultBehavior: 'Uses `86400` when the value is blank, non-numeric, or outside the Go `int` range.',
+    emptyBehavior: 'An absent, empty, or whitespace-only value selects `86400`.',
+    invalidBehavior: 'Non-numeric and integer-overflow input silently selects `86400`. A zero, negative, too-small, or duration-overflowing parsed value causes later lease validation or expiry behavior to reject otherwise valid leases.',
+    precedence: 'A trimmed parseable process integer wins; otherwise `86400` applies.',
+    impact: 'Changing it changes the upper lifetime bound and the clamp applied during expiry calculation.',
+    failure: 'The controller can start, but leases are rejected or receive an unsafe expiry when the effective maximum is unsuitable.',
+  }),
+  BUSTER_CONTROLLER_SERVICE_ACCOUNT: environmentContract({ purpose: 'Selects the ServiceAccount subject placed into generated Buster RoleBindings.', acceptedForm: 'A non-empty Kubernetes ServiceAccount name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `agent-buster-namespace-controller`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails Kubernetes admission or binds the wrong valid identity.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it changes which controller identity receives permissions in leased namespaces.', failure: 'RoleBinding reconciliation fails, or a wrong valid ServiceAccount receives the binding.' }),
+  BUSTER_SECRET_ROLE_NAME: environmentContract({ purpose: 'Selects the Role referenced by generated Secret-access RoleBindings.', acceptedForm: 'A non-empty Kubernetes Role name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `buster-controller-secrets`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails admission; a wrong valid name leaves Secret access ineffective.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it redirects the Secret permission reference in leased namespaces.', failure: 'RoleBinding reconciliation or later Secret access fails.' }),
+  BUSTER_DEPLOYER_ROLE_NAME: environmentContract({ purpose: 'Selects the ClusterRole or Role reference granted for requested deployer access.', acceptedForm: 'A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `buster-namespace-deployer`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended deployer authority.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it changes the permission set bound to approved deployer subjects.', failure: 'Access-binding reconciliation fails or approved deployers remain unauthorized.' }),
+  BUSTER_TESTER_ROLE_NAME: environmentContract({ purpose: 'Selects the ClusterRole or Role reference granted for requested tester access.', acceptedForm: 'A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `buster-namespace-tester`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended tester authority.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it changes the permission set bound to approved tester subjects.', failure: 'Access-binding reconciliation fails or approved testers remain unauthorized.' }),
+  BUSTER_CONTROLLER_POLL_MS: environmentContract({ purpose: 'Sets the delay between complete Buster lease reconciliation passes.', acceptedForm: 'A base-10 integer from 1 through the largest millisecond count that fits `time.Duration`.', defaultBehavior: 'Uses `3000` milliseconds.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `3000`.', invalidBehavior: 'Non-numeric, zero, negative, or multiplication-overflow input returns `BUSTER_CONTROLLER_POLL_MS must be positive`.', precedence: 'A trimmed non-empty process value wins; otherwise `3000` applies.', impact: 'Changing it changes reconciliation latency and Kubernetes API request frequency.', failure: 'The controller returns an error before it starts its reconciliation loop.' }),
+};
+for (const [name, contract] of Object.entries(busterControllerContracts)) {
+  ENVIRONMENT_CONTRACTS.set(name, contract);
+  addEnvironmentConsumerContract(name, busterControllerSource, contract);
+}
+
+const busterReadinessSource = 'cmd/buster-namespace-controller/demo-readiness-lifecycle.go';
+const busterReadinessContracts = {
+  BUSTER_READY_LISTEN: environmentContract({
+    purpose: 'Enables the demo-readiness HTTPS server and selects the TCP address on which it listens.',
+    acceptedForm: 'A non-empty host-and-port or colon-and-port string accepted by `net.SplitHostPort`; the chart supplies `:8443`. The address must also be available to `tls.Listen` at startup.',
+    defaultBehavior: 'No address default. An absent value disables the complete readiness server.',
+    emptyBehavior: 'An empty value disables readiness, skips the four companion-input checks, and makes readiness server startup a no-op.',
+    invalidBehavior: 'An invalid address returns `invalid Ready listen address`. A valid but unavailable address returns the listener error when the server starts.',
+    precedence: 'The exact process value is the only runtime source. No trimming or fallback occurs.',
+    impact: 'Changing it enables, disables, or moves the readiness API. Product decisions cannot be enabled unless readiness is enabled.',
+    failure: 'Controller startup stops before reconciliation when configuration or listener creation fails.',
+  }),
+  BUSTER_READY_AUDIENCE: environmentContract({
+    purpose: 'Sets the Kubernetes TokenReview audience required from callers of the readiness API.',
+    acceptedForm: 'From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'Invalid text stops startup. A valid value that is absent from a caller TokenReview result makes the request return HTTP 401 with `DEMO_READY_UNAUTHORIZED`.',
+    precedence: 'The exact process value is the only source and is checked only after the listen gate enables readiness.',
+    impact: 'Changing it changes which audience a caller token must prove.',
+    failure: 'Enabled startup fails for invalid configuration, or callers with a different audience are denied.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+  BUSTER_READY_PRODUCER: environmentContract({
+    purpose: 'Selects the one Kubernetes ServiceAccount identity allowed to call the readiness API.',
+    acceptedForm: 'Exactly `system:serviceaccount:<namespace>:<name>`. Namespace and name must match `^[a-z0-9][a-z0-9.-]{0,252}$`; this is the implemented check, not full Kubernetes DNS validation.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'A malformed identity stops startup. A well-formed identity that differs from TokenReview `status.user.username` makes the request return HTTP 401.',
+    precedence: 'The exact process value is the only source and is checked only after the listen gate enables readiness.',
+    impact: 'Changing it transfers readiness-call authority to another ServiceAccount and also changes the identity that the product producer must differ from.',
+    failure: 'Enabled startup fails for malformed configuration, or a different caller identity is denied.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+  BUSTER_READY_TLS_CERT: environmentContract({
+    purpose: 'Selects the PEM certificate chain presented by the readiness HTTPS listener.',
+    acceptedForm: 'A non-empty file path whose PEM certificate can be loaded with the selected private key. The chart supplies `/var/run/kubeclaw/ready-server/tls.crt`.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'An unreadable or malformed certificate, or one that does not match the key, stops startup with `Ready TLS certificate unavailable`.',
+    precedence: 'The exact process path is the only source. The file is opened when the readiness server starts.',
+    impact: 'Changing it changes the certificate chain that readiness clients authenticate.',
+    failure: 'The readiness listener does not start and controller startup stops.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+  BUSTER_READY_TLS_KEY: environmentContract({
+    purpose: 'Selects the private-key PEM file used by the readiness HTTPS listener.',
+    acceptedForm: 'A non-empty file path containing a private key that matches the selected certificate. The chart supplies `/var/run/kubeclaw/ready-server/tls.key`.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'An unreadable, malformed, or nonmatching key stops startup with `Ready TLS certificate unavailable`.',
+    precedence: 'The exact process path is the only source. The file is opened when the readiness server starts.',
+    impact: 'Changing it changes the private key used for the readiness TLS identity.',
+    failure: 'The readiness listener does not start and controller startup stops.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+};
+const busterReadinessEvidence = {
+  BUSTER_READY_LISTEN: [{ path: busterReadinessSource, line: 18, endLine: 27 }, { path: busterReadinessSource, line: 32, endLine: 43 }],
+  BUSTER_READY_AUDIENCE: [{ path: busterReadinessSource, line: 18, endLine: 27 }, { path: 'cmd/buster-namespace-controller/demo-readiness.go', line: 116, endLine: 141 }],
+  BUSTER_READY_PRODUCER: [{ path: busterReadinessSource, line: 18, endLine: 27 }, { path: 'cmd/buster-namespace-controller/demo-readiness.go', line: 116, endLine: 141 }],
+  BUSTER_READY_TLS_CERT: [{ path: busterReadinessSource, line: 18, endLine: 39 }],
+  BUSTER_READY_TLS_KEY: [{ path: busterReadinessSource, line: 18, endLine: 39 }],
+};
+for (const [name, contract] of Object.entries(busterReadinessContracts)) {
+  addEnvironmentConsumerContract(name, busterReadinessSource, { ...contract, evidence: busterReadinessEvidence[name] });
+}
+
+const busterProductSource = 'cmd/buster-namespace-controller/demo-product.go';
+const busterProductContracts = {
+  BUSTER_PRODUCT_ENABLED: environmentContract({
+    purpose: 'Enables validation and use of signed product decisions after the readiness authority is configured.',
+    acceptedForm: 'Only exact `true`, exact `false`, or an empty value. Exact `true` enables the feature; exact `false` and empty disable it.',
+    defaultBehavior: 'Disabled when the variable is absent.',
+    emptyBehavior: 'Disables product decisions and ignores all five companion inputs.',
+    invalidBehavior: 'Any other value, including case changes, whitespace, `0`, or `1`, returns `DEMO_PRODUCT_CONFIG_INVALID`.',
+    precedence: 'The exact process value is the only source. No trimming or Boolean coercion occurs.',
+    impact: 'Enabling it makes the five companion inputs mandatory and activates the signed product-decision routes; readiness must already be enabled.',
+    failure: 'Controller startup stops for an invalid value, missing readiness, or an invalid companion input. Disabled product routes return HTTP 404 with `DEMO_PRODUCT_DISABLED_OR_ROUTE_INVALID`.',
+  }),
+  BUSTER_PRODUCT_AUDIENCE: environmentContract({
+    purpose: 'Sets the Kubernetes TokenReview audience required from callers of the product-decision API.',
+    acceptedForm: 'From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`. A valid audience not proved by TokenReview makes requests return HTTP 401 with `DEMO_PRODUCT_UNAUTHORIZED`.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it changes which audience a product-decision caller token must prove.',
+    failure: 'Enabled controller startup stops, or callers with a different audience are denied.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_PRODUCER: environmentContract({
+    purpose: 'Selects the Kubernetes ServiceAccount identity allowed to submit signed product decisions.',
+    acceptedForm: 'Exactly `system:serviceaccount:<namespace>:<name>`, with both final parts matching `^[a-z0-9][a-z0-9.-]{0,252}$`, and different from `BUSTER_READY_PRODUCER`.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Malformed input or reuse of the readiness producer returns `DEMO_PRODUCT_CONFIG_INVALID`; another valid caller identity receives HTTP 401.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it transfers product-decision submission authority while keeping that authority separate from readiness publication.',
+    failure: 'Enabled controller startup stops, or an unauthorized caller is denied.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_ISSUER: environmentContract({
+    purpose: 'Sets the issuer text that every verified signed product decision must contain.',
+    acceptedForm: 'From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`; a signed decision with another issuer returns HTTP 409 with `DEMO_PRODUCT_REQUEST_INVALID`.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it invalidates otherwise valid decisions that name the previous issuer.',
+    failure: 'Enabled controller startup stops, or a decision from a different issuer is rejected.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_VERIFY_KEY: environmentContract({
+    purpose: 'Supplies the Ed25519 public key used to verify signed product-decision payloads.',
+    acceptedForm: 'Strict standard Base64 that decodes to exactly 32 bytes, the Ed25519 public-key size.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Malformed Base64 or the wrong decoded length returns `DEMO_PRODUCT_CONFIG_INVALID`. A different valid key starts successfully but rejects signatures from the old signer with `DEMO_PRODUCT_SIGNATURE_INVALID`.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it rotates the public signature authority for product decisions; it is verification material, not a signing secret.',
+    failure: 'Enabled controller startup stops, or decisions signed by a nonmatching key return HTTP 409.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_ACTORS_JSON: environmentContract({
+    purpose: 'Defines the actor identifiers that signed product decisions may name.',
+    acceptedForm: 'A JSON array with at least one unique string. Every string must contain 1 through 1024 bytes and no NUL, carriage-return, or line-feed byte.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'An absent or empty value is invalid JSON and is rejected when enabled; it is ignored when disabled.',
+    invalidBehavior: 'Malformed JSON, `null`, an empty array, a non-string member, invalid actor text, or a duplicate actor returns `DEMO_PRODUCT_CONFIG_INVALID`. An unlisted signed actor later returns `DEMO_PRODUCT_REQUEST_INVALID`.',
+    precedence: 'The exact process value is the only source and is decoded only after exact `true` enables the feature.',
+    impact: 'Changing it changes the actor allowlist applied after signature verification.',
+    failure: 'Enabled controller startup stops, or a validly signed decision from an unlisted actor returns HTTP 409.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+};
+const busterProductEvidence = Object.fromEntries(Object.keys(busterProductContracts).map((name) => [name, [
+  { path: busterProductSource, line: 58, endLine: 80 },
+  ...(name === 'BUSTER_PRODUCT_ENABLED' ? [{ path: busterProductSource, line: 331, endLine: 343 }] : []),
+  ...(name === 'BUSTER_PRODUCT_ACTORS_JSON' || name === 'BUSTER_PRODUCT_ISSUER'
+    ? [{ path: busterProductSource, line: 169, endLine: 178 }] : []),
+  ...(name === 'BUSTER_PRODUCT_VERIFY_KEY' ? [{ path: busterProductSource, line: 162, endLine: 172 }] : []),
+]]));
+for (const [name, contract] of Object.entries(busterProductContracts)) {
+  addEnvironmentConsumerContract(name, busterProductSource, { ...contract, evidence: busterProductEvidence[name] });
+}
+
+const busterRuntimeSource = 'docker/buster-runtime-entrypoint.sh';
+const busterRuntimeContracts = {
+  BUSTER_V2_TOKEN: environmentContract({
+    purpose: 'Supplies the bearer credential used to authenticate remote-plan requests when SPIFFE/XFCC authentication is not selected.',
+    acceptedForm: 'A non-empty string at entrypoint startup. Bearer-token mode additionally requires at least 32 characters.',
+    defaultBehavior: 'No default. The current entrypoint requires the value even when `BUSTER_TRUSTED_PEER_SPIFFE_ID` later selects SPIFFE authentication.',
+    emptyBehavior: 'An absent or empty value stops the entrypoint before BuildKit or Buster starts.',
+    invalidBehavior: 'In bearer-token mode, a value shorter than 32 characters stops server creation with `BUSTER_REMOTE_TOKEN_INVALID`; requests with a missing or different bearer value receive HTTP 401. In SPIFFE mode, the entrypoint requires the value but does not pass it to the Buster child process.',
+    precedence: 'The entrypoint captures and removes the process value. A non-empty `BUSTER_TRUSTED_PEER_SPIFFE_ID` selects SPIFFE and suppresses token forwarding; otherwise the captured value is passed to Buster as `BUSTER_V2_TOKEN` and is the sole bearer credential.',
+    impact: 'Changing it rotates Nova-to-Buster bearer authentication in token mode. It has no request-authentication effect in SPIFFE mode, although the current startup guard still requires it.',
+    failure: 'The container stops for a missing or empty value, the Buster server stops for a short bearer token, or requests with nonmatching credentials receive HTTP 401.',
+    required: 'required at entrypoint startup; used for request authentication only when SPIFFE is not selected',
+  }),
+  BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT: environmentContract({
+    purpose: 'Selects the delegated cgroup-v2 subtree that enforces process, memory, and CPU limits for Playwright browser work.',
+    acceptedForm: 'The non-empty path must exist, resolve exactly to `/var/run/kubeclaw-browser-cgroup`, expose `pids`, `memory`, and `cpu` controllers, contain no host processes, and permit those controllers to be delegated.',
+    defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint before the Buster runtime starts.',
+    invalidBehavior: 'Missing files stop the strict shell. An unsafe path, missing controller, existing host process, or failed delegation produces the matching explicit cgroup error.',
+    precedence: 'The environment path is the only source; the checked canonical path is copied into the generated runtime configuration.',
+    impact: 'Changing it changes the kernel resource-control boundary for browser processes.',
+    failure: 'The container stops before serving work, or runtime policy construction rejects an unusable cgroup root.', required: 'required',
+  }),
+  BUSTER_PLAN_PORT: environmentContract({
+    purpose: 'Selects the TCP port for the Buster remote-plan HTTP server on fixed host `0.0.0.0`.',
+    acceptedForm: 'A string converted by JavaScript `Number` to a safe integer from 0 through 65535. Zero requests an operating-system-selected port; whitespace converts to zero.',
+    defaultBehavior: 'Uses `18891` when absent.', emptyBehavior: 'An exact empty string selects `18891`.',
+    invalidBehavior: 'Negative, fractional, nonnumeric, infinite, or unsafe values fail configuration; values above 65535 fail port validation; a busy valid port returns the listener error.',
+    precedence: 'A non-empty process value wins; otherwise `18891` applies.',
+    impact: 'Changing it moves the plan, health, bootstrap, and readiness endpoints and must agree with container and Service routing.',
+    failure: 'The remote-plan server does not start.',
+  }),
+  BUSTER_PLAN_STATE_DIR: environmentContract({
+    purpose: 'Selects durable plan-job state, stored results, recovery records, and the admission lock.',
+    acceptedForm: 'A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.',
+    defaultBehavior: 'Uses `/var/lib/buster-v2/plan-jobs`.', emptyBehavior: 'An empty value selects `/var/lib/buster-v2/plan-jobs`.',
+    invalidBehavior: 'Directory creation or ownership failure stops the entrypoint; later permission, filesystem, or recovery errors stop runtime startup or state operations.',
+    precedence: 'A non-empty process value wins; otherwise the fixed state directory applies.',
+    impact: 'Changing it moves durable job state; an ephemeral or wrong location can lose recovery data or prevent admission.',
+    failure: 'The container or state operation fails at the first inaccessible or inconsistent path.',
+  }),
+  BUSTER_PLAN_RUN_DIR: environmentContract({
+    purpose: 'Selects the working root for repository extraction, suite workspaces, artifacts, and observability files of remote-plan jobs.',
+    acceptedForm: 'A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.',
+    defaultBehavior: 'Uses `/var/lib/buster-v2/runs`.', emptyBehavior: 'An empty value selects `/var/lib/buster-v2/runs`.',
+    invalidBehavior: 'Directory creation or ownership failure stops the entrypoint; later permission or filesystem errors fail affected jobs.',
+    precedence: 'A non-empty process value wins; otherwise the fixed run directory applies.',
+    impact: 'Changing it moves the area in which untrusted snapshots are extracted and suites create working data.',
+    failure: 'The container fails at setup or a job fails when it cannot create or use its working directory.',
+  }),
+  BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY: environmentContract({
+    purpose: 'Supplies the Ed25519 public trust anchor used to verify Nova-signed repository snapshots.',
+    acceptedForm: 'A non-empty Node-readable Ed25519 public key; this environment path normally carries PEM text.',
+    defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.',
+    invalidBehavior: 'Missing material reports the required or missing-key error. Unparseable or non-Ed25519 material reports `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID`; a nonmatching valid key causes `BUSTER_SOURCE_ATTESTATION_INVALID`.',
+    precedence: 'The generated configuration fixes this environment-variable name; its process value is the only key source.',
+    impact: 'Changing it rotates the source-signature authority and requires the matching Nova signing key.',
+    failure: 'Runtime startup stops for bad key material, or new jobs are rejected when signature verification fails.', required: 'required',
+  }),
+  BUSTER_TRUSTED_PEER_SPIFFE_ID: environmentContract({
+    purpose: 'Selects SPIFFE/XFCC authentication and names the one Nova SPIFFE identity allowed to submit remote-plan requests.',
+    acceptedForm: 'A non-empty SPIFFE ID matching `spiffe://[a-z0-9.-]+/<path>` for successful authorization.',
+    defaultBehavior: 'An absent value selects bearer-token authentication.', emptyBehavior: 'An empty value selects bearer-token authentication.',
+    invalidBehavior: 'Malformed non-empty text reaches the allow policy; request authorization catches the policy error and returns HTTP 401.',
+    precedence: 'A non-empty value selects SPIFFE instead of token use. The current entrypoint still requires `BUSTER_V2_TOKEN` at startup even when SPIFFE is selected.',
+    impact: 'Changing it switches the remote-plan authentication boundary and the only accepted workload identity.',
+    failure: 'Requests that do not arrive through the trusted loopback proxy with the exact valid identity return HTTP 401.',
+  }),
+  BUSTER_V2_MAX_ARCHIVE_BYTES: environmentContract({
+    purpose: 'Caps the compressed repository archive accepted in one remote-plan request.',
+    acceptedForm: 'A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.',
+    defaultBehavior: 'Uses `67108864` bytes (64 MiB).', emptyBehavior: 'An empty value selects 64 MiB.',
+    invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized request reports `BUSTER_REMOTE_ARCHIVE_SIZE_EXCEEDED`.',
+    precedence: 'A non-empty process value wins; otherwise 64 MiB applies.',
+    impact: 'Changing it changes the largest compressed source snapshot admitted into storage.',
+    failure: 'Invalid configuration stops startup; an oversized job is rejected before extraction.',
+  }),
+  BUSTER_V2_MAX_EXTRACTED_BYTES: environmentContract({
+    purpose: 'Caps the accumulated declared uncompressed size of regular files and directories in a submitted source archive.',
+    acceptedForm: 'A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.',
+    defaultBehavior: 'Uses `536870912` bytes (512 MiB).', emptyBehavior: 'An empty value selects 512 MiB.',
+    invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized archive reports `BUSTER_REMOTE_ARCHIVE_EXPANDED_SIZE_EXCEEDED`.',
+    precedence: 'A non-empty process value wins; otherwise 512 MiB applies.',
+    impact: 'Changing it changes the expansion limit applied during archive inspection before extraction.',
+    failure: 'Invalid configuration stops startup; an oversized job is rejected before extraction.',
+  }),
+  BUSTER_ALLOWED_SOURCE_SECRETS: environmentContract({
+    purpose: 'Defines the source Secret names that a `kubernetes.fixture` request may ask the namespace controller to copy.',
+    acceptedForm: 'A comma-separated list with at most 32 non-empty items. This reader does not trim items; each retained name must contain only letters, digits, dot, underscore, or hyphen. Duplicate names collapse in the downstream set.',
+    defaultBehavior: 'Uses an empty list, which denies every source-Secret request.', emptyBehavior: 'An absent or empty value becomes an empty list.',
+    invalidBehavior: 'More than 32 items fails runtime configuration. Invalid names fail invoker construction. A valid but unapproved request reports `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED`.',
+    precedence: 'The process value wholly replaces the empty runtime default. Copy succeeds only when this runtime list and the controller list both allow the name.',
+    impact: 'Changing it changes which named Secrets a fixture request may ask the controller to copy.',
+    failure: 'Startup or first invoker construction fails for invalid policy, or the individual request is denied.',
+  }),
+  BUSTER_LEASE_API_GROUP: environmentContract({
+    purpose: 'Selects the lease CRD API group used by fixture, Tailscale exposure, and Kubernetes runtime-security capabilities.',
+    acceptedForm: 'With the shipped capabilities enabled, lowercase alphanumeric at both ends, with lowercase alphanumeric, dot, or hyphen internally.',
+    defaultBehavior: 'Uses `kubeclaw.forgestack.ai`.', emptyBehavior: 'An empty value selects `kubeclaw.forgestack.ai`.',
+    invalidBehavior: 'The generator does not validate syntax; the first applicable job fails with `KUBERNETES_FIXTURE_API_GROUP_INVALID` or `TAILSCALE_EXPOSURE_API_INVALID`.',
+    precedence: 'A truthy process string wins; otherwise the built-in group applies.',
+    impact: 'Changing it changes CRD API versions, kubectl resource names, and runtime-security lookups.',
+    failure: 'Capability construction or later Kubernetes requests fail against an invalid or unavailable group.',
+  }),
+  BUSTER_LEASE_API_VERSION: environmentContract({
+    purpose: 'Selects the lease CRD version used by fixture and Tailscale exposure operations.',
+    acceptedForm: 'With the shipped capabilities enabled, a value matching `^v[0-9]+(?:alpha|beta)?[0-9]*$`.',
+    defaultBehavior: 'Uses `v1alpha1`.', emptyBehavior: 'An empty value selects `v1alpha1`.',
+    invalidBehavior: 'The generator does not validate syntax; the first applicable job fails with `KUBERNETES_FIXTURE_API_VERSION_INVALID` or `TAILSCALE_EXPOSURE_API_INVALID`.',
+    precedence: 'A truthy process string wins; otherwise `v1alpha1` applies.',
+    impact: 'Changing it changes generated lease `apiVersion` values and the selected Kubernetes API endpoint.',
+    failure: 'Capability construction or later Kubernetes requests fail against an invalid or unavailable version.',
+  }),
+  BUILDKIT_HOST: environmentContract({ purpose: 'Selects the Unix socket on which the bundled rootless BuildKit daemon listens and the generated container-build capability connects.', acceptedForm: 'A non-empty BuildKit address; the shipped path uses `unix:///run/user/1000/buildkit/buildkitd.sock`.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'An invalid address prevents directory setup, daemon readiness, or later `buildctl` connections.', precedence: 'The exact process value is the only source and is copied into the generated runtime configuration.', impact: 'Changing it moves both the daemon listener and build client to another socket.', failure: 'The container stops after the bounded readiness loop or builds cannot connect.', required: 'required' }),
+  BUILDKIT_STATE_DIR: environmentContract({ purpose: 'Selects the persistent root directory used by the bundled BuildKit daemon.', acceptedForm: 'A non-empty writable directory path.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Directory creation, ownership, or daemon startup fails for an unusable path.', precedence: 'The exact process value is the only source.', impact: 'Changing it moves BuildKit cache and worker state.', failure: 'The BuildKit daemon fails before the Buster worker starts.', required: 'required' }),
+  BUILDKIT_OTEL_SOCKET_PATH: environmentContract({ purpose: 'Selects the Unix socket on which BuildKit emits OTLP telemetry.', acceptedForm: 'A writable Unix-socket path.', defaultBehavior: 'Uses `$XDG_RUNTIME_DIR/buildkit/otel-grpc.sock`.', emptyBehavior: 'An empty value selects the XDG-based default.', invalidBehavior: 'A bad path prevents parent-directory creation or BuildKit startup.', precedence: 'A non-empty process value wins; otherwise the XDG runtime directory supplies the socket path.', impact: 'Changing it moves the BuildKit telemetry endpoint.', failure: 'The entrypoint or BuildKit daemon stops before the worker starts.' }),
+  BUSTER_PLAN_CONFIG_ROOT: environmentContract({ purpose: 'Selects the private directory in which the entrypoint writes generated Buster platform, runtime, and Kubernetes client configuration.', acceptedForm: 'A writable directory path.', defaultBehavior: 'Uses `/tmp/buster-plan-config`.', emptyBehavior: 'An empty value selects `/tmp/buster-plan-config`.', invalidBehavior: 'Creation, permission, file-write, or ownership failure stops the entrypoint.', precedence: 'A non-empty process value wins; otherwise the fixed temporary directory applies.', impact: 'Changing it moves generated configuration and changes the base directory for relative runtime paths.', failure: 'The Buster worker does not start.' }),
+  BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT: environmentContract({ purpose: 'Selects the projected Kubernetes credential directory used to build the worker kubeconfig.', acceptedForm: 'A directory containing readable `token`, `ca.crt`, and `namespace` files; the namespace must contain only lowercase letters, digits, and hyphen.', defaultBehavior: 'Uses `/var/run/buster-worker/kubernetes`.', emptyBehavior: 'An empty value selects the default mount path.', invalidBehavior: 'Missing files stop the strict shell; an invalid namespace reports `projected Kubernetes namespace is invalid`.', precedence: 'A non-empty process value wins; otherwise the fixed projected-volume path applies.', impact: 'Changing it selects a different Kubernetes credential projection and namespace authority.', failure: 'The entrypoint stops before it writes kubeconfig or starts the worker.' }),
+  BUSTER_NETWORK_HTTP_EXACT_ORIGINS: environmentContract({ purpose: 'Defines exact HTTP origins that the Buster `network.http` capability may contact in addition to its fixed suffix policy.', acceptedForm: 'A comma-separated list of origins; items are trimmed and empty items are removed. Runtime origin parsing and policy checks validate retained values.', defaultBehavior: 'Uses an empty list.', emptyBehavior: 'An absent or empty value permits no additional exact origins.', invalidBehavior: 'An invalid retained origin fails capability construction with the network policy validation error.', precedence: 'The process list wholly replaces the empty default.', impact: 'Changing it expands or narrows the exact outbound HTTP allowlist.', failure: 'The runtime fails capability construction or denies the request.' }),
+  BUSTER_BROWSER_AXE_EXACT_ORIGINS: environmentContract({ purpose: 'Defines exact web origins permitted for the Buster Axe, Lighthouse, visual, and Playwright browser capabilities.', acceptedForm: 'A comma-separated list of origins; items are trimmed and empty items are removed. Each browser capability validates the retained origins.', defaultBehavior: 'Uses an empty list.', emptyBehavior: 'An absent or empty value permits no additional exact browser origins.', invalidBehavior: 'An invalid retained origin fails the affected browser capability policy construction.', precedence: 'The process list wholly replaces the empty default.', impact: 'Changing it expands or narrows browser test destinations.', failure: 'The runtime fails capability construction or denies a target outside the policy.' }),
+  BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET: environmentContract({ purpose: 'Controls whether the `network.http` capability accepts WebSocket requests.', acceptedForm: 'Only exact `true` enables WebSocket support.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An absent or empty value selects `false`.', invalidBehavior: 'Any value other than exact `true` is treated as false; no startup error is produced.', precedence: 'The exact process comparison is the only source.', impact: 'Changing it to exact `true` permits WebSocket traffic within the remaining network policy.', failure: 'WebSocket requests are denied when the effective value is false.' }),
+  BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY: environmentContract({ purpose: 'Names the source authority that must appear in every verified Nova snapshot attestation.', acceptedForm: 'A non-empty authority string; the loader rejects an empty effective value when it constructs the Ed25519 verifier.', defaultBehavior: 'Uses `nova:production`.', emptyBehavior: 'An empty value selects `nova:production`.', invalidBehavior: 'An empty generated authority fails with `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID`; a different valid authority rejects attestations from the previous authority.', precedence: 'A truthy process value wins; otherwise `nova:production` applies.', impact: 'Changing it rotates the logical source issuer independently from the public key.', failure: 'Runtime startup or source-snapshot admission fails.' }),
+  BUSTER_V2_MAX_ACTIVE_JOBS: environmentContract({ purpose: 'Caps how many remote-plan jobs may execute at the same time.', acceptedForm: 'A non-empty value converted by JavaScript `Number` to a positive safe integer.', defaultBehavior: 'Uses `2`.', emptyBehavior: 'An empty value selects `2`.', invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe input fails with `BUSTER_REMOTE_CONFIG_INVALID:maximumActiveJobs`.', precedence: 'A non-empty process value wins; otherwise `2` applies.', impact: 'Changing it changes parallel job execution and resource pressure; accepted jobs wait in the queue when the cap is reached.', failure: 'Invalid configuration stops startup; valid excess work remains queued.' }),
+  BUSTER_V2_MAX_QUEUED_JOBS: environmentContract({ purpose: 'Caps accepted jobs waiting for an execution slot.', acceptedForm: 'A non-empty value converted by JavaScript `Number` to a positive safe integer.', defaultBehavior: 'Uses `16`.', emptyBehavior: 'An empty value selects `16`.', invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe input fails with `BUSTER_REMOTE_CONFIG_INVALID:maximumQueuedJobs`.', precedence: 'A non-empty process value wins; otherwise `16` applies.', impact: 'Changing it changes admission capacity while active slots are occupied.', failure: 'Invalid configuration stops startup; a full valid queue rejects new work with `BUSTER_REMOTE_ADMISSION_FULL`.' }),
+  BUSTER_V2_MAX_CONCURRENT_ATTEMPTS: environmentContract({ purpose: 'Caps both one job’s requested attempt concurrency and the sum of attempt weights across active jobs.', acceptedForm: 'A non-empty value converted by JavaScript `Number` to a positive safe integer.', defaultBehavior: 'Uses `64`.', emptyBehavior: 'An empty value selects `64`.', invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe input fails with `BUSTER_REMOTE_CONFIG_INVALID:maximumConcurrentAttempts`.', precedence: 'A non-empty process value wins; otherwise `64` applies.', impact: 'Changing it changes admission and scheduling of attempt-heavy jobs.', failure: 'Invalid configuration stops startup; an oversized job returns `BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT` and aggregate pressure delays queued jobs.' }),
+  KUBECLAW_REGISTRY_CONFIG: environmentContract({ purpose: 'Supplies the complete registry endpoint, transport, and authentication contract from which the entrypoint generates BuildKit and runtime client files.', acceptedForm: 'Non-empty JSON accepted by `scripts/registry-client-config.mjs` for both `buildkit` and `runtime` outputs.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Malformed, incomplete, or unsafe registry configuration makes the generator stop before BuildKit starts.', precedence: 'The exact process value is written to the private temporary input and is the only registry authority.', impact: 'Changing it redirects image push/pull traffic and changes transport or credentials for both clients.', failure: 'The container stops before BuildKit or Buster starts.', required: 'required' }),
+  KUBERNETES_SERVICE_HOST: environmentContract({ purpose: 'Selects the Kubernetes API host written into the generated worker kubeconfig.', acceptedForm: 'A non-empty host or IP address supplied by Kubernetes service discovery.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Malformed text creates an unusable API URL and later Kubernetes requests fail.', precedence: 'The exact process value is the only host source.', impact: 'Changing it redirects every worker Kubernetes capability to another API endpoint.', failure: 'Kubeconfig generation or later Kubernetes operations fail.', required: 'required' }),
+  KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API port written into the generated worker kubeconfig.', acceptedForm: 'A non-empty port string supplied by Kubernetes service discovery.', defaultBehavior: 'No default in this entrypoint consumer.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Malformed text creates an unusable API URL and later Kubernetes requests fail.', precedence: 'The exact process value is the only port source for this consumer.', impact: 'Changing it redirects every worker Kubernetes capability to another API port.', failure: 'Kubeconfig generation or later Kubernetes operations fail.', required: 'required' }),
+  RUNTIME_CONFIG_ROOT: environmentContract({ purpose: 'Carries the entrypoint-selected generated-configuration directory into its embedded Node generator.', acceptedForm: 'The internal value already selected through `BUSTER_PLAN_CONFIG_ROOT`.', defaultBehavior: 'Assigned internally before the child process starts.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A mismatched path makes generated configuration writes fail or land outside the directory prepared by the shell.', precedence: 'The local shell assignment is the only producer.', impact: 'Joins shell directory preparation to Node file generation.', failure: 'The entrypoint stops before starting Buster.', required: 'internal' }),
+  REGISTRY_CLIENT_RUNTIME: environmentContract({ purpose: 'Carries the internally generated registry runtime-client file path into the embedded Node configuration generator.', acceptedForm: 'The private `runtime.json` path generated earlier in the same entrypoint.', defaultBehavior: 'Assigned internally before the child process starts.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A missing or invalid file stops JSON parsing and configuration generation.', precedence: 'The local shell assignment is the only producer.', impact: 'Binds Buster container-build and scanner clients to the same registry contract.', failure: 'The entrypoint stops before starting Buster.', required: 'internal' }),
+  REGISTRY_REFERENCE: environmentContract({ purpose: 'Carries the normalized registry reference from the generated client contract into the embedded Node configuration generator.', acceptedForm: 'The non-empty registry reference read from the generated runtime client JSON.', defaultBehavior: 'Assigned internally before the child process starts.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'Missing or invalid registry JSON prevents this assignment or later produces invalid allowed prefixes.', precedence: 'The generated registry client file is the only producer.', impact: 'Sets repository and allowlist prefixes used by build, fixture, and security-scan capabilities.', failure: 'The entrypoint stops or registry operations are denied.', required: 'internal' }),
+  CONTROLLER_NAMESPACE: environmentContract({ purpose: 'Carries the validated projected ServiceAccount namespace into the embedded Node configuration generator.', acceptedForm: 'The internal lowercase letter, digit, and hyphen namespace value validated by the shell.', defaultBehavior: 'Read internally from the projected namespace file.', emptyBehavior: 'An empty projected namespace is rejected before assignment.', invalidBehavior: 'Invalid namespace text stops the entrypoint.', precedence: 'The projected ServiceAccount namespace file is the only producer.', impact: 'Sets the controller namespace used by Kubernetes capabilities.', failure: 'The entrypoint stops or capabilities target the wrong valid namespace.', required: 'internal' }),
+  BUSTER_V2_STATE_DIR: environmentContract({ purpose: 'Carries the resolved plan state directory into the embedded Node configuration generator.', acceptedForm: 'The internal path selected through `BUSTER_PLAN_STATE_DIR`.', defaultBehavior: 'Assigned internally from the selected state directory.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A mismatched path separates shell ownership setup from runtime state resolution.', precedence: 'The local shell assignment is the only producer.', impact: 'Binds generated runtime state to the prepared directory.', failure: 'Runtime startup or durable state operations fail.', required: 'internal' }),
+  BUSTER_V2_RUN_DIR: environmentContract({ purpose: 'Carries the resolved job working directory into the embedded Node configuration generator.', acceptedForm: 'The internal path selected through `BUSTER_PLAN_RUN_DIR`.', defaultBehavior: 'Assigned internally from the selected run directory.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A mismatched path separates shell ownership setup from job workspace resolution.', precedence: 'The local shell assignment is the only producer.', impact: 'Binds generated runtime workspaces to the prepared directory.', failure: 'Runtime startup or job execution fails.', required: 'internal' }),
+};
+const entrypointEvidence = (line, endLine) => ({ path: busterRuntimeSource, line, endLine });
+const productionEvidence = (line, endLine) => ({ path: 'skills/buster/engine/test-gates/production.ts', line, endLine });
+const serviceEvidence = (line, endLine) => ({ path: 'skills/buster/engine/test-gates/remote-plan-service.ts', line, endLine });
+const busterRuntimeEvidence = {
+  BUSTER_V2_TOKEN: [entrypointEvidence(4, 6), entrypointEvidence(171, 176), entrypointEvidence(325, 336), productionEvidence(133, 144), { path: 'skills/buster/engine/test-gates/remote-plan-http.ts', line: 8, endLine: 29 }, { path: 'skills/buster/engine/test-gates/remote-plan-http.ts', line: 105, endLine: 120 }],
+  BUILDKIT_HOST: [entrypointEvidence(7, 35), entrypointEvidence(53, 61), productionEvidence(252, 264)],
+  BUILDKIT_STATE_DIR: [entrypointEvidence(7, 35)],
+  BUILDKIT_OTEL_SOCKET_PATH: [entrypointEvidence(7, 35)],
+  BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT: [entrypointEvidence(63, 87), productionEvidence(200, 204), productionEvidence(355, 375)],
+  BUSTER_PLAN_PORT: [entrypointEvidence(171, 187), productionEvidence(410, 419), { path: 'skills/buster/engine/test-gates/remote-plan-runtime.ts', line: 24, endLine: 50 }],
+  BUSTER_PLAN_STATE_DIR: [entrypointEvidence(37, 41), entrypointEvidence(108, 117), productionEvidence(212, 225)],
+  BUSTER_PLAN_RUN_DIR: [entrypointEvidence(37, 41), entrypointEvidence(108, 117), productionEvidence(231, 237)],
+  BUSTER_PLAN_CONFIG_ROOT: [entrypointEvidence(37, 41), entrypointEvidence(108, 117), entrypointEvidence(147, 180)],
+  BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT: [entrypointEvidence(108, 145)],
+  BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY: [entrypointEvidence(103, 108), productionEvidence(135, 152), serviceEvidence(71, 105)],
+  BUSTER_TRUSTED_PEER_SPIFFE_ID: [entrypointEvidence(1, 6), entrypointEvidence(171, 187), entrypointEvidence(325, 336), { path: 'skills/buster/engine/test-gates/remote-plan-http.ts', line: 105, endLine: 120 }],
+  BUSTER_V2_MAX_ARCHIVE_BYTES: [entrypointEvidence(171, 187), productionEvidence(212, 225), serviceEvidence(71, 105)],
+  BUSTER_V2_MAX_EXTRACTED_BYTES: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489)],
+  BUSTER_V2_MAX_ACTIVE_JOBS: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489), serviceEvidence(647, 658)],
+  BUSTER_V2_MAX_QUEUED_JOBS: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489), serviceEvidence(530, 540)],
+  BUSTER_V2_MAX_CONCURRENT_ATTEMPTS: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489), serviceEvidence(530, 540), serviceEvidence(647, 658)],
+  BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY: [entrypointEvidence(171, 187), productionEvidence(212, 225), serviceEvidence(84, 105)],
+  BUSTER_ALLOWED_SOURCE_SECRETS: [entrypointEvidence(147, 153), entrypointEvidence(221, 227), productionEvidence(265, 277), { path: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', line: 447, endLine: 464 }],
+  BUSTER_LEASE_API_GROUP: [entrypointEvidence(221, 237), productionEvidence(265, 280), { path: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', line: 447, endLine: 453 }],
+  BUSTER_LEASE_API_VERSION: [entrypointEvidence(221, 237), productionEvidence(265, 280), { path: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', line: 447, endLine: 453 }],
+  BUSTER_NETWORK_HTTP_EXACT_ORIGINS: [entrypointEvidence(147, 163), entrypointEvidence(239, 245), productionEvidence(305, 324), { path: 'skills/buster/engine/test-gates/network-http-runtime.ts', line: 162, endLine: 180 }, { path: 'skills/buster/engine/test-gates/network-http-runtime.ts', line: 185, endLine: 198 }],
+  BUSTER_BROWSER_AXE_EXACT_ORIGINS: [entrypointEvidence(147, 163), entrypointEvidence(247, 292), productionEvidence(325, 357), { path: 'skills/buster/engine/test-gates/browser-axe-runtime.ts', line: 124, endLine: 128 }, { path: 'skills/buster/engine/test-gates/browser-lighthouse-runtime.ts', line: 163, endLine: 168 }, { path: 'skills/buster/engine/test-gates/browser-visual-runtime.ts', line: 110, endLine: 114 }, { path: 'skills/buster/engine/test-gates/browser-playwright-runtime.ts', line: 101, endLine: 101 }],
+  BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET: [entrypointEvidence(147, 153), entrypointEvidence(239, 245), productionEvidence(305, 324), { path: 'skills/buster/engine/test-gates/network-http-runtime.ts', line: 208, endLine: 221 }],
+  KUBECLAW_REGISTRY_CONFIG: [entrypointEvidence(11, 22), entrypointEvidence(215, 220), entrypointEvidence(296, 303)],
+  KUBERNETES_SERVICE_HOST: [entrypointEvidence(118, 145)],
+  KUBERNETES_SERVICE_PORT: [entrypointEvidence(118, 145)],
+  RUNTIME_CONFIG_ROOT: [entrypointEvidence(108, 117), entrypointEvidence(147, 180)],
+  REGISTRY_CLIENT_RUNTIME: [entrypointEvidence(11, 22), entrypointEvidence(147, 180), entrypointEvidence(296, 303)],
+  REGISTRY_REFERENCE: [entrypointEvidence(11, 22), entrypointEvidence(215, 227)],
+  CONTROLLER_NAMESPACE: [entrypointEvidence(118, 153), entrypointEvidence(221, 237)],
+  BUSTER_V2_STATE_DIR: [entrypointEvidence(108, 117), entrypointEvidence(171, 180), productionEvidence(212, 225)],
+  BUSTER_V2_RUN_DIR: [entrypointEvidence(108, 117), entrypointEvidence(171, 180), productionEvidence(231, 237)],
+};
+for (const [name, contract] of Object.entries(busterRuntimeContracts)) {
+  const evidence = busterRuntimeEvidence[name] ?? [];
+  addEnvironmentConsumerContract(name, busterRuntimeSource, {
+    ...contract,
+    evidence,
+    precedenceSteps: contract.precedenceSteps ?? [{
+      order: 1,
+      source: 'Buster runtime input resolution',
+      condition: contract.precedence,
+      evidence: `${evidence[0]?.path ?? busterRuntimeSource}:${evidence[0]?.line ?? 1}`,
+    }],
+  });
+}
+
+for (const [name, contract] of Object.entries({
+  KUBERNETES_SERVICE_HOST: environmentContract({ purpose: 'Selects the Kubernetes API host used by the Buster namespace controller.', acceptedForm: 'A non-empty host name or IP address; this reader does not trim or validate syntax at startup.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value is rejected.', invalidBehavior: 'Malformed non-empty text reaches the API URL and later fails URL parsing, TLS, DNS, or connection setup.', precedence: 'The exact process value is the only host source.', impact: 'Changing it redirects every namespace-controller Kubernetes request.', failure: 'The controller stops before reconciliation for an empty value or cannot complete API requests for an unusable value.', required: 'required', evidence: [{ path: busterControllerSource, line: 132, endLine: 165 }] }),
+  KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API TCP port used by the Buster namespace controller.', acceptedForm: 'A non-empty port string; this reader trims whitespace but does not validate numeric syntax or range.', defaultBehavior: 'Uses `443`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `443`.', invalidBehavior: 'A malformed non-empty value is concatenated into the API URL and later fails URL parsing, connection setup, or reconciliation.', precedence: 'A trimmed non-empty process value wins; otherwise `443` applies.', impact: 'Changing it redirects every controller request to another port on `KUBERNETES_SERVICE_HOST`.', failure: 'The controller cannot complete Kubernetes API requests.', evidence: [{ path: busterControllerSource, line: 132, endLine: 165 }] }),
+  BUSTER_LEASE_API_GROUP: environmentContract({ purpose: 'Selects the API group used in Buster lease request paths and the controller finalizer.', acceptedForm: 'A non-empty API-group string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `kubeclaw.forgestack.ai`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default group.', invalidBehavior: 'A malformed non-empty value survives startup and later causes malformed or not-found API requests or an invalid finalizer.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in group applies.', impact: 'Changing it redirects lease discovery and changes the finalizer identity.', failure: 'Lease reconciliation or Kubernetes admission fails.' }),
+  BUSTER_LEASE_API_VERSION: environmentContract({ purpose: 'Selects the API version used in Buster lease request paths.', acceptedForm: 'A non-empty API-version string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `v1alpha1`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default version.', invalidBehavior: 'A malformed or unavailable non-empty value survives startup and later causes malformed or not-found API requests.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in version applies.', impact: 'Changing it redirects lease discovery to another served API version.', failure: 'Lease reconciliation fails because the selected resource endpoint is invalid or unavailable.' }),
+  BUSTER_ALLOWED_SOURCE_SECRETS: environmentContract({ purpose: 'Lists the Secret object names that a Buster lease may copy from its approved source namespace.', acceptedForm: 'A comma-separated list whose trimmed non-empty entries contain only letters, digits, dot, underscore, or hyphen.', defaultBehavior: 'Uses an empty allowlist.', emptyBehavior: 'An absent, empty, or whitespace-only value permits no source Secret names.', invalidBehavior: 'Any entry outside `^[A-Za-z0-9._-]+$` returns `invalid BUSTER_ALLOWED_SOURCE_SECRETS entry`.', precedence: 'The process value is split, trimmed, and validated; no other controller source adds names.', impact: 'Changing it changes which named Secret references can be admitted into leased namespaces.', failure: 'The controller returns an error before it starts when any entry is invalid.' }),
+})) addEnvironmentConsumerContract(name, busterControllerSource, contract);
+
+const kubernetesSubprocessEnvironmentSources = [
+  ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', 500, 520],
+  ['skills/buster/engine/test-gates/kubernetes-runtime-security.ts', 70, 85],
+  ['skills/buster/engine/test-gates/tailscale-exposure-runtime.ts', 90, 102],
+];
+for (const [sourcePath, line, endLine] of kubernetesSubprocessEnvironmentSources) {
+  addEnvironmentConsumerContract('KUBERNETES_SERVICE_HOST', sourcePath, environmentContract({ purpose: 'Passes the pod-discovered Kubernetes API host to the isolated kubectl child process used by this capability.', acceptedForm: 'The Kubernetes-provided host or IP string accepted by kubectl client discovery.', defaultBehavior: 'No repository default; Kubernetes normally injects the service value.', emptyBehavior: 'An absent value is passed as absent and kubectl must resolve configuration through the generated kubeconfig.', invalidBehavior: 'kubectl reports URL, DNS, TLS, or connection failure.', precedence: 'The child process receives the current parent-process value together with the explicit generated kubeconfig.', impact: 'Changing it changes Kubernetes client discovery for this capability.', failure: 'The capability command cannot reach the Kubernetes API.', evidence: [{ path: sourcePath, line, endLine }] }));
+  addEnvironmentConsumerContract('KUBERNETES_SERVICE_PORT', sourcePath, environmentContract({ purpose: 'Passes the pod-discovered Kubernetes API port to the isolated kubectl child process used by this capability.', acceptedForm: 'A port string accepted by kubectl client discovery.', defaultBehavior: 'No repository default in this consumer; Kubernetes normally injects the service value.', emptyBehavior: 'An absent value is passed as absent and kubectl must resolve configuration through the generated kubeconfig.', invalidBehavior: 'kubectl reports URL or connection failure for an unusable value.', precedence: 'The child process receives the current parent-process value together with the explicit generated kubeconfig.', impact: 'Changing it changes Kubernetes client discovery for this capability.', failure: 'The capability command cannot reach the Kubernetes API.', evidence: [{ path: sourcePath, line, endLine }] }));
+}
+
+for (const [sourcePath, purpose, failure] of [
+  ['skills/prism/server/control-config.ts', 'Authenticates Control dispatch to the Prism worker when SPIFFE workload identity is disabled.', 'Control startup stops with `PRISM_WORKER_SECRET is required`.'],
+  ['skills/prism/server/worker-config.ts', 'Authenticates requests received by the Prism worker when SPIFFE workload identity is disabled.', 'Worker startup stops with `PRISM_WORKER_SECRET is required`.'],
+  ['skills/prism/config/native-worker.ts', 'Authenticates native-worker artifact and dispatch traffic when SPIFFE workload identity is disabled.', 'Native-worker configuration stops with `PRISM_NATIVE_ARTIFACT_AUTH_REQUIRED`.'],
+]) addEnvironmentConsumerContract('PRISM_WORKER_SECRET', sourcePath, environmentContract({
+  purpose,
+  acceptedForm: 'A non-empty shared secret when `WORKER_TRUST_SPIFFE_ENABLED` is not exactly `true`.',
+  defaultBehavior: 'Uses an empty internal value only when SPIFFE workload identity is exactly enabled.',
+  emptyBehavior: 'Accepted only with `WORKER_TRUST_SPIFFE_ENABLED=true`; otherwise startup rejects it.',
+  invalidBehavior: 'The reader does not impose a character format. A value that differs from the peer causes authentication failure.',
+  precedence: 'The receiving process reads its captured environment once at startup. Exact SPIFFE enablement removes the shared-secret requirement.',
+  impact: 'Changing the value requires every shared-secret producer and consumer at this trust boundary to change together.',
+  failure,
+  required: 'required when SPIFFE workload identity is not exactly `true`',
+}));
+
+addEnvironmentConsumerContract('ARTIFACT_ROOT', 'skills/prism/server/control-config.ts', environmentContract({
+  purpose: 'Selects the directory in which Prism Control stores and retrieves artifact data.',
+  acceptedForm: 'A filesystem path available to the Control process.',
+  defaultBehavior: 'Uses `/var/lib/prism/artifacts` only when the variable is absent.',
+  emptyBehavior: 'An explicitly empty string is retained because the reader uses nullish fallback, not empty-string fallback.',
+  invalidBehavior: 'This loader does not validate the path; the first artifact filesystem operation reports the unusable location.',
+  precedence: 'An explicitly present process value, including empty, wins; otherwise `/var/lib/prism/artifacts` applies.',
+  impact: 'Changing the path changes which artifact set Control sees and can separate database records from their files.',
+  failure: 'Artifact reads or writes fail when the effective path is absent, inaccessible, or inconsistent with persisted records.',
+}));
+addEnvironmentConsumerContract('ARTIFACT_ROOT', 'charts/prism/files/prism-backup.sh', environmentContract({
+  purpose: 'Selects the complete Prism artifact tree copied into a database-and-artifact backup group.',
+  acceptedForm: 'An existing canonical absolute directory that is not a symbolic link and does not overlap `BACKUP_ROOT`.',
+  defaultBehavior: 'No default.',
+  emptyBehavior: 'An absent or empty value stops before backup staging.',
+  invalidBehavior: 'A relative, missing, symlinked, non-canonical, or overlapping directory returns `ARTIFACT_ROOT_INVALID` or `ROOTS_OVERLAP`.',
+  precedence: 'The non-empty process value is the only artifact-source path for this command.',
+  impact: 'Changing the path changes the artifact snapshot paired with the database dump.',
+  failure: 'The backup command stops without publishing a completed backup group.',
+  required: 'required',
+}));
+
+for (const [sourcePath, contract] of [
+  ['skills/prism/server/studio-config.ts', environmentContract({ purpose: 'Selects the TCP listen port for Prism Studio.', acceptedForm: 'An integer from 1 through 65535.', defaultBehavior: 'Uses `8080` only when absent.', emptyBehavior: 'An empty string converts to zero and is rejected.', invalidBehavior: 'A non-integer, zero, negative, or value above 65535 returns `PRISM_STUDIO_PORT_INVALID`.', precedence: 'A present process value wins; otherwise `8080` applies.', impact: 'Changing it moves the Studio HTTP listener and requires the Service or caller route to match.', failure: 'Studio stops during configuration before it starts listening.' })],
+  ['skills/prism/server/control-config.ts', environmentContract({ purpose: 'Selects the TCP listen port for Prism Control.', acceptedForm: 'A value accepted by JavaScript `Number` and later by the Node HTTP listener.', defaultBehavior: 'Uses `8080` only when absent.', emptyBehavior: 'An empty string converts to `0`, which asks the operating system for an ephemeral port.', invalidBehavior: 'This loader performs no explicit validation; the Node listener rejects an unusable value.', precedence: 'A present process value wins; otherwise `8080` applies.', impact: 'Changing it moves the Control HTTP listener; port zero makes the chosen port unsuitable for a fixed Kubernetes Service target.', failure: 'The listener fails at startup for an invalid value, or peers cannot reach a port that does not match their route.' })],
+  ['skills/prism/server/worker-config.ts', environmentContract({ purpose: 'Selects the TCP listen port for the Prism worker service.', acceptedForm: 'A value accepted by JavaScript `Number` and later by the Node HTTP listener.', defaultBehavior: 'Uses `8080` only when absent.', emptyBehavior: 'An empty string converts to `0`, which requests an ephemeral port.', invalidBehavior: 'This loader performs no explicit validation; the Node listener rejects an unusable value.', precedence: 'A present process value wins; otherwise `8080` applies.', impact: 'Changing it moves the worker listener and requires Control and the Service route to match.', failure: 'Worker startup fails or Control cannot reach the worker listener.' })],
+  ['skills/prism/server/ingestion.ts', environmentContract({ purpose: 'Selects the TCP listen port for Prism ingestion.', acceptedForm: 'A value accepted by JavaScript `Number` and the Node HTTP listener.', defaultBehavior: 'Uses `8080` only when absent.', emptyBehavior: 'An empty string converts to `0`, which requests an ephemeral port.', invalidBehavior: 'The source has no separate range check; the Node listener rejects an unusable value.', precedence: 'A present process value wins; otherwise `8080` applies.', impact: 'Changing it moves the ingestion listener and requires the Service and Control URL to match.', failure: 'Ingestion fails to listen or callers cannot reach the selected port.' })],
+  ['skills/prism/server/agent-bridge.mjs', environmentContract({ purpose: 'Selects the loopback TCP listen port for the Prism agent bridge.', acceptedForm: 'A non-empty value accepted by JavaScript `Number` and the Node HTTP listener.', defaultBehavior: 'Uses `18080` when absent or empty.', emptyBehavior: 'An empty string is false and therefore selects `18080`.', invalidBehavior: 'The source has no separate range check; the Node listener rejects an unusable value.', precedence: 'A truthy process value wins; otherwise `18080` applies.', impact: 'Changing it moves the loopback bridge endpoint used by local agent integration.', failure: 'The bridge fails to listen or its local caller cannot connect.' })],
+  ['tools/ops-mcp/src/config.mjs', environmentContract({ purpose: 'Selects the TCP listen port for the Ops MCP HTTP server.', acceptedForm: 'An integer from 0 through 65535; zero requests an ephemeral port.', defaultBehavior: 'Uses `8080` only when absent.', emptyBehavior: 'An empty string converts to zero and is accepted as an ephemeral-port request.', invalidBehavior: 'A non-integer, negative, or value above 65535 throws `Invalid Ops MCP listen port`.', precedence: 'A present process value wins; otherwise `8080` applies.', impact: 'Changing it moves the Ops MCP endpoint; port zero is suitable for tests but not a fixed Service target.', failure: 'Ops MCP stops during configuration before it starts listening.' })],
+]) addEnvironmentConsumerContract('PORT', sourcePath, contract);
+
+for (const [name, contract] of Object.entries({
+  HOST: environmentContract({ purpose: 'Selects the network address on which the Ops MCP HTTP server listens.', acceptedForm: 'A host name or IP address accepted by the Node HTTP listener.', defaultBehavior: 'Uses `0.0.0.0` when absent.', emptyBehavior: 'An explicitly empty string is retained and passed to the listener.', invalidBehavior: 'The Node listener rejects an address it cannot bind; local-only mode separately requires exact `127.0.0.1`.', precedence: 'A present process value wins; otherwise `0.0.0.0` applies.', impact: 'Changing it changes the network exposure of the privileged analysis endpoint.', failure: 'Configuration rejects a non-loopback local-only combination, or the HTTP server fails to bind.' }),
+  OPS_LOCAL_ONLY: environmentContract({ purpose: 'Requires the Ops MCP server to bind only to IPv4 loopback.', acceptedForm: 'Only exact `1` enables this protection.', defaultBehavior: 'Disabled when absent.', emptyBehavior: 'An empty value leaves local-only mode disabled.', invalidBehavior: 'Every value other than exact `1` is treated as disabled; when enabled, any `HOST` other than `127.0.0.1` stops startup.', precedence: 'The process value is compared exactly once during configuration.', impact: 'Disabling it can expose the privileged MCP endpoint beyond the pod-local Codex client.', failure: 'An unsafe enabled combination throws `Local-only MCP requires HOST=127.0.0.1` before listen.' }),
+  ARGOCD_NAMESPACE: environmentContract({ purpose: 'Selects the Argo CD namespace that Ops MCP includes in its permitted observation scope.', acceptedForm: 'A valid lowercase Kubernetes namespace name.', defaultBehavior: 'Uses `argocd` when absent.', emptyBehavior: 'An empty string is retained and then rejected as an invalid namespace.', invalidBehavior: 'Invalid syntax makes namespace allow-list construction throw before server startup.', precedence: 'A present process value wins; otherwise `argocd` applies.', impact: 'Changing it changes the namespace used for Argo CD observation and validation.', failure: 'Ops MCP stops with the explicit `OPS_ALLOWED_NAMESPACES` validation error.' }),
+  OPS_ALLOWED_NAMESPACES: environmentContract({ purpose: 'Defines the complete Kubernetes namespace allow-list for Ops MCP tools.', acceptedForm: 'A comma-separated list of valid lowercase Kubernetes namespace names that includes `OPS_DEFAULT_NAMESPACE`; whitespace is not trimmed.', defaultBehavior: 'Uses only the effective `OPS_DEFAULT_NAMESPACE` when absent.', emptyBehavior: 'An empty string becomes one invalid empty namespace and is rejected.', invalidBehavior: 'Invalid syntax or omission of the default namespace throws `OPS_ALLOWED_NAMESPACES must contain valid, explicit namespaces including OPS_DEFAULT_NAMESPACE`.', precedence: 'A present process list wins; otherwise the effective default namespace supplies the one-item list.', impact: 'Adding a namespace expands where this privileged analysis service can read resources; removing one blocks those tools.', failure: 'Ops MCP stops before it creates the HTTP server.' }),
+  OPS_MCP_BEARER_TOKEN: environmentContract({ purpose: 'Supplies the in-memory bearer credential required by every Ops MCP HTTP request.', acceptedForm: 'From 32 through 512 URL-safe characters in the set `A-Z`, `a-z`, `0-9`, dot, underscore, tilde, and hyphen.', defaultBehavior: 'No default; exactly one bearer source is required.', emptyBehavior: 'An empty value is rejected as a missing or invalid token.', invalidBehavior: 'Wrong length or characters stop startup; a request with a different token is denied.', precedence: 'Use either this value or `OPS_MCP_BEARER_TOKEN_FILE`, never both. A configured file is reopened for every request.', impact: 'Changing the credential invalidates every existing client authorization header.', failure: 'Startup stops without valid authentication, or requests receive an authorization failure.', required: 'required when no bearer-token file is configured' }),
+  OPS_MCP_BEARER_TOKEN_FILE: environmentContract({ purpose: 'Selects the mounted file from which Ops MCP reads its bearer credential for each request.', acceptedForm: 'A readable file containing one 32-512 character URL-safe token, with surrounding whitespace removed.', defaultBehavior: 'No default; exactly one bearer source is required.', emptyBehavior: 'An empty path is absent; startup then requires `OPS_MCP_BEARER_TOKEN`.', invalidBehavior: 'An unreadable file, 514-byte read, or invalid trimmed token stops startup and later makes readiness and authorization fail closed.', precedence: 'Use either this file or the direct token, never both. The file wins only by being the sole configured source and is reopened on every request for Secret-volume rotation.', impact: 'Changing the path changes the live rotating credential authority without caching the old inode.', failure: 'Startup stops, readiness becomes false, and requests are denied while the file is missing or invalid.', required: 'required when no direct bearer token is configured' }),
+  MCP_ALLOWED_ORIGINS: environmentContract({ purpose: 'Limits browser-origin requests accepted by the Ops MCP HTTP endpoint.', acceptedForm: 'A comma-separated list of exact Origin header strings; surrounding whitespace is removed and empty items are discarded.', defaultBehavior: 'Uses an empty set, which disables Origin filtering.', emptyBehavior: 'An empty string produces an empty set and accepts any Origin value.', invalidBehavior: 'The loader does not parse URL structure; a malformed entry simply fails to equal legitimate Origin headers.', precedence: 'The process string is split once at startup; no later source augments the set.', impact: 'Adding entries permits those exact browser origins. An empty set is safe only when loopback binding and bearer authentication remain enforced.', failure: 'A request with an Origin not in a non-empty set is rejected.' }),
+})) addEnvironmentConsumerContract(name, 'tools/ops-mcp/src/config.mjs', contract);
+
+addEnvironmentConsumerContract('KUBECLAW_NATIVE_SUPERVISOR_PID', 'skills/worker/core/worker/native-worker-launcher.c', environmentContract({
+  purpose: 'Binds the privileged native-worker launcher to the exact unprivileged supervisor process that invoked it.',
+  acceptedForm: 'A base-10 positive process ID below 4,294,967,295 and no sign or trailing characters.',
+  defaultBehavior: 'No default.',
+  emptyBehavior: 'An absent value returns `WORKER_NATIVE_LAUNCH_PARENT_REQUIRED`; an empty value returns `WORKER_NATIVE_LAUNCH_IDENTITY_INVALID`.',
+  invalidBehavior: 'Malformed, zero, negative, overflowed, or stale process identity is rejected; a changed parent returns `WORKER_NATIVE_LAUNCH_PARENT_LOST`.',
+  precedence: 'The launcher reads only its process environment and then verifies it against the live parent PID after installing a parent-death signal.',
+  impact: 'The binding prevents a detached caller from reusing the root launcher after the trusted supervisor exits.',
+  failure: 'The launcher writes the exact `WORKER_NATIVE_LAUNCH_*` code to stderr and exits 125 before entering the worker cgroup or dropping identity.',
+  required: 'required',
+}));
+
+const prismNativeNumericDefaults = {
+  PRISM_NATIVE_CPU_TIME_MS: [60000, Number.MAX_SAFE_INTEGER], PRISM_NATIVE_MEMORY_BYTES: [8589934592, Number.MAX_SAFE_INTEGER], PRISM_NATIVE_TASKS: [2048, Number.MAX_SAFE_INTEGER],
+  PRISM_NATIVE_UID: [1000, 2147483647], PRISM_NATIVE_GID: [1000, 2147483647], PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS: [65536, 2147483647],
+  PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES: [67108864, 2147483647], PRISM_NATIVE_MAXIMUM_INPUT_BYTES: [16777216, 2147483647],
+  PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES: [33554432, 2147483647], PRISM_NATIVE_MAXIMUM_RESULT_BYTES: [67108864, 2147483647],
+  PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES: [68719476736, Number.MAX_SAFE_INTEGER], PRISM_NATIVE_POLL_INTERVAL_MS: [20, 2147483647],
+  PRISM_NATIVE_DRAIN_TIMEOUT_MS: [10000, 2147483647], PRISM_NATIVE_CLOSE_TIMEOUT_MS: [105000, 2147483647],
+  PRISM_NATIVE_DISPATCH_TIMEOUT_MS: [900000, 2147483647],
+};
+for (const [name, [fallback, maximum]] of Object.entries(prismNativeNumericDefaults)) addEnvironmentConsumerContract(name, 'skills/prism/config/native-worker.ts', environmentContract({
+  purpose: `Sets the Prism native-worker ${name.toLowerCase().replace(/^prism_native_/u, '').replaceAll('_', ' ')} boundary.`,
+  acceptedForm: `A positive safe integer from 1 through ${maximum}.`,
+  defaultBehavior: `Uses \`${fallback}\` when absent.`,
+  emptyBehavior: 'An empty string converts to zero and is rejected.',
+  invalidBehavior: `A non-integer or out-of-range value returns the source-defined \`PRISM_NATIVE_${name.includes('RESULT') ? 'RESULT_LIMIT' : name.includes('DISPATCH') ? 'DISPATCH_DEADLINE' : name.includes('CPU_TIME') || name.includes('MEMORY') || name.endsWith('TASKS') ? 'POLICY' : 'CONFIG'}_INVALID\` family error.`,
+  precedence: 'A present process value wins; otherwise the listed immutable loader fallback applies.',
+  impact: 'Changing the value changes a resource, size, or time safety boundary for native execution and must stay consistent with the host pool policy.',
+  failure: 'Native-worker configuration stops before it accepts or launches work.',
+}));
+
+for (const name of ['PRISM_NATIVE_POOL_POLICY_FILE', 'PRISM_NATIVE_LAUNCHER']) addEnvironmentConsumerContract(name, 'skills/prism/config/native-worker.ts', environmentContract({
+  purpose: name.endsWith('POLICY_FILE') ? 'Selects the signed/owned native-worker pool policy read by the Prism supervisor.' : 'Selects the privileged native-worker launcher executable used by the Prism supervisor.',
+  acceptedForm: 'A non-empty canonical absolute path other than filesystem root.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value is rejected.',
+  invalidBehavior: `A relative, non-canonical, empty, or root path returns \`PRISM_NATIVE_PATH_REQUIRED:${name}\`; the selected file then has its own identity and ownership checks.`,
+  precedence: 'The process value is the only path source.', impact: 'Changing the path changes the native isolation authority or executable and requires a new host acceptance proof.',
+  failure: 'The native supervisor stops before opening the pool or launcher.', required: 'required',
+}));
+
+addEnvironmentConsumerContract('PRISM_ENGINE_CONTENT_DIGEST', 'skills/prism/config/native-worker.ts', environmentContract({ purpose: 'Binds native execution to one immutable Prism engine content identity.', acceptedForm: 'Lowercase `sha256:` followed by 64 hexadecimal digits.', defaultBehavior: 'No production or supervisor default.', emptyBehavior: 'Allowed only outside production when the caller asks only for the optional digest; supervisor configuration always rejects it.', invalidBehavior: 'Production and supervisor readers return `PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED`.', precedence: 'The trimmed process value is the only digest source.', impact: 'Changing it creates a new executable-content identity and invalidates work bound to the previous engine.', failure: 'Native supervisor or production configuration stops before accepting work.', required: 'required for production and native supervisor configuration' }));
+addEnvironmentConsumerContract('KUBECLAW_NATIVE_SCOPE', 'skills/prism/config/native-worker.ts', environmentContract({ purpose: 'Selects the already-created native worker cgroup scope whose membership the host process must enter.', acceptedForm: 'A non-empty scope path supplied by the native supervisor.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value is rejected.', invalidBehavior: 'An empty value returns `PRISM_NATIVE_PREEXEC_MEMBERSHIP_REQUIRED`; the launcher performs the canonical path and cgroup-v2 ownership checks.', precedence: 'The injected process value is the only scope source.', impact: 'Changing it changes the kernel resource-control boundary for this worker process.', failure: 'Native host startup stops before work is admitted.', required: 'required' }));
+addEnvironmentConsumerContract('PLAYWRIGHT_BROWSERS_PATH', 'skills/prism/config/native-worker.ts', environmentContract({ purpose: 'Selects the browser binary directory exposed to native Prism work.', acceptedForm: 'A filesystem path available to the worker process.', defaultBehavior: 'Uses `/ms-playwright` when absent.', emptyBehavior: 'An explicitly empty string is retained because the loader uses nullish fallback.', invalidBehavior: 'The loader does not validate the path; browser startup reports a missing or unusable installation.', precedence: 'A present process value wins; otherwise `/ms-playwright` applies.', impact: 'Changing it changes which installed browser runtime native tests execute.', failure: 'Browser-backed work fails when the selected installation is absent or incompatible.' }));
+
+for (const name of ['PRISM_PRODUCT_ORIGIN', 'PRISM_PRODUCT_CONTROLLER_URL', 'PRISM_PRODUCT_OPERATORS', 'PRISM_PRODUCT_PRIVATE_KEY_FILE', 'PRISM_PRODUCT_ISSUER', 'PRISM_PRODUCT_CONTROLLER_CA_FILE', 'PRISM_PRODUCT_CONTROLLER_TOKEN_FILE']) {
+  const url = name === 'PRISM_PRODUCT_ORIGIN' || name === 'PRISM_PRODUCT_CONTROLLER_URL';
+  const operators = name === 'PRISM_PRODUCT_OPERATORS';
+  const privateKey = name === 'PRISM_PRODUCT_PRIVATE_KEY_FILE';
+  addEnvironmentConsumerContract(name, 'skills/prism/control/product-decisions.ts', environmentContract({
+    purpose: `${name} supplies ${url ? 'one HTTPS product-decision authority endpoint' : operators ? 'the explicit product-operator allow-list' : privateKey ? 'the dedicated product-decision signing key file' : 'one required product-decision authority value'}.`,
+    acceptedForm: url ? 'An HTTPS origin with no credentials, query, fragment, or path other than `/`.' : operators ? 'A JSON array of unique, non-empty, already-trimmed strings.' : privateKey ? 'A readable file containing a dedicated Ed25519 private key.' : 'A non-empty string after trimming.',
+    defaultBehavior: 'No value is read while product decisions are disabled; no default exists when enabled.',
+    emptyBehavior: `When product decisions are enabled, an absent, empty, or whitespace-only value returns \`${name} is required\`.`,
+    invalidBehavior: url ? 'A non-HTTPS or non-origin URL returns `product authority requires HTTPS origins`.' : operators ? 'Malformed JSON or an empty, duplicated, or untrimmed list returns `explicit product operator allowlist is required`.' : privateKey ? 'Read failure or a non-Ed25519 key stops composition.' : 'The reader requires non-empty trimmed text; the downstream controller connection validates the selected file or identity.',
+    precedence: 'Exact `PRISM_PRODUCT_DECISIONS_ENABLED=true` activates the captured startup environment; no other source overrides it.',
+    impact: 'Changing this authority input changes who can issue, receive, or approve signed product decisions.',
+    failure: 'Control composition stops before the product-decision endpoint becomes available.', required: 'required only when product decisions are exactly enabled',
+  }));
+}
+addEnvironmentConsumerContract('PRISM_PRODUCT_DECISIONS_ENABLED', 'skills/prism/control/product-decisions.ts', environmentContract({ purpose: 'Enables the external signed product-decision authority.', acceptedForm: 'Only exact `true` enables the feature.', defaultBehavior: 'Disabled when absent.', emptyBehavior: 'An empty value keeps the feature disabled.', invalidBehavior: 'Every value other than exact `true` keeps the feature disabled.', precedence: 'The captured process value is the sole enablement switch.', impact: 'Enabling it makes every product authority input mandatory and exposes the signed decision composition path.', failure: 'Enabled startup fails closed when any authority input is missing or invalid.' }));
+
+for (const [name, fallback] of Object.entries({
+  PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS: 16,
+  PRISM_WORKER_MAXIMUM_PROBE_REQUESTS: 4,
+  PRISM_WORKER_MAXIMUM_CONNECTIONS: 128,
+  PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS: 120000,
+})) addEnvironmentConsumerContract(name, 'skills/prism/server/worker-config.ts', environmentContract({
+  purpose: `Sets the worker ingress ${name.toLowerCase().replace(/^prism_worker_/u, '').replaceAll('_', ' ')} limit.`,
+  acceptedForm: 'A positive safe integer from 1 through 2,147,483,647.', defaultBehavior: `Uses \`${fallback}\` when absent.`,
+  emptyBehavior: 'An empty string converts to zero and is rejected.', invalidBehavior: `Invalid input returns \`PRISM_WORKER_INGRESS_INVALID:${name}\`.`,
+  precedence: 'A present process value wins; otherwise the listed loader fallback applies.',
+  impact: 'Changing this limit changes worker concurrency, connection pressure, request size handling, or the time allowed to receive a request body.',
+  failure: 'Worker configuration stops before the HTTP service starts.',
+}));
+addEnvironmentConsumerContract('PRISM_WORKER_SHUTDOWN_TIMEOUT_MS', 'skills/prism/server/worker-config.ts', environmentContract({
+  purpose: 'Limits how long the Prism worker can spend on its controlled shutdown sequence.', acceptedForm: 'A positive safe integer from 1 through 2,147,483,647 milliseconds.',
+  defaultBehavior: 'Uses `120000` milliseconds when absent.', emptyBehavior: 'An empty string converts to zero and is rejected.',
+  invalidBehavior: 'Invalid input returns `PRISM_WORKER_SHUTDOWN_TIMEOUT_MS must be a positive timer-safe integer`.', precedence: 'A present process value wins; otherwise 120 seconds applies.',
+  impact: 'A shorter value can interrupt drain or native close; a longer value must still fit below the pod termination grace period.', failure: 'Worker startup stops for invalid input; an undersized valid limit can force termination before clean drain completes.',
+}));
+
+for (const sourcePath of ['skills/prism/server/control-config.ts', 'skills/prism/server/worker-config.ts', 'skills/prism/config/native-worker.ts']) addEnvironmentConsumerContract('WORKER_TRUST_SPIFFE_ENABLED', sourcePath, environmentContract({
+  purpose: 'Selects SPIFFE workload identity instead of the shared worker-secret trust path.', acceptedForm: 'Only exact `true` enables SPIFFE trust.', defaultBehavior: 'Disabled when absent.', emptyBehavior: 'An empty value keeps shared-secret trust enabled.',
+  invalidBehavior: 'Every value other than exact `true` selects the shared-secret path and therefore requires its shared credential and, for the worker, its database URL.',
+  precedence: 'Each process captures its own environment at startup; its selected trust mode must match every peer.',
+  impact: 'Changing the mode changes the authentication boundary and the set of required SPIFFE identities or shared secrets.',
+  failure: 'Startup stops for incomplete selected trust data, or peers reject one another when their modes differ.',
+}));
+
+for (const name of ['PRISM_TRUSTED_NOVA_SPIFFE_ID', 'PRISM_TRUSTED_WORKER_SPIFFE_ID', 'PRISM_CONTROL_SPIFFE_ID', 'PRISM_TRUSTED_AGENT_SPIFFE_ID']) addEnvironmentConsumerContract(name, 'skills/prism/server/control-config.ts', environmentContract({
+  purpose: `Selects the exact SPIFFE identity accepted for ${name.toLowerCase().replace(/^prism_/u, '').replaceAll('_', ' ')} at Prism Control.`, acceptedForm: 'A non-empty SPIFFE ID string supplied by the rendered worker-trust configuration.',
+  defaultBehavior: 'Uses an empty string while SPIFFE trust is disabled.', emptyBehavior: 'Accepted only while `WORKER_TRUST_SPIFFE_ENABLED` is not exact `true`.',
+  invalidBehavior: 'When SPIFFE trust is enabled, any missing required identity returns `Prism SPIFFE trust policy is incomplete`; peer certificate matching enforces the actual identity.',
+  precedence: 'The captured process value is the only identity source for this Control instance.', impact: 'Changing it changes which workload certificate Control trusts at that role boundary.',
+  failure: 'Control startup stops for an incomplete policy or rejects a peer with a different SPIFFE identity.', required: 'required when SPIFFE worker trust is exactly enabled',
+}));
+addEnvironmentConsumerContract('PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID', 'skills/prism/server/control-config.ts', environmentContract({
+  purpose: 'Selects the optional SPIFFE identity trusted for the isolated Prism test runner.', acceptedForm: 'A SPIFFE ID string or empty text when no test-runner identity is admitted.', defaultBehavior: 'Uses an empty string when absent.', emptyBehavior: 'An empty value admits no test-runner SPIFFE identity.', invalidBehavior: 'The loader retains the string; the authorization boundary rejects a peer that does not match the configured identity.', precedence: 'The captured process value is the only test-runner identity source.', impact: 'Changing it changes whether and which test runner can use the trusted test path.', failure: 'The test runner is denied when its presented identity does not match.' }));
+addEnvironmentConsumerContract('PRISM_TRUSTED_CONTROL_SPIFFE_ID', 'skills/prism/server/worker-config.ts', environmentContract({
+  purpose: 'Selects the exact Prism Control SPIFFE identity trusted by the worker.', acceptedForm: 'A non-empty SPIFFE ID string when worker SPIFFE trust is enabled.', defaultBehavior: 'Uses an empty string while SPIFFE trust is disabled.', emptyBehavior: 'Accepted only while `WORKER_TRUST_SPIFFE_ENABLED` is not exact `true`.', invalidBehavior: 'An empty value with SPIFFE enabled returns `Prism worker SPIFFE trust policy is incomplete`; peer matching rejects a different identity.', precedence: 'The captured process value is the only trusted Control identity source.', impact: 'Changing it changes which Control workload can dispatch authenticated work to this worker.', failure: 'Worker startup stops or authenticated dispatch is denied.', required: 'required when SPIFFE worker trust is exactly enabled' }));
+
+for (const [name, fallback, purpose] of [
+  ['PRISM_WORKER_URL', 'http://prism-worker:8080', 'Selects the internal Prism worker endpoint used by Control.'],
+  ['PRISM_INGESTION_URL', 'http://prism-ingestion:8080', 'Selects the internal Prism ingestion endpoint used by Control.'],
+  ['PRISM_CONTROL_INTERNAL_URL', 'http://prism-control:8080', 'Selects the internal Prism Control endpoint used by Control and the worker.'],
+  ['PRISM_STUDIO_PUBLIC_URL', 'https://prism-studio', 'Selects the public Prism Studio URL placed into Control responses and links.'],
+]) addEnvironmentConsumerContract(name, 'skills/prism/server/control-config.ts', environmentContract({ purpose, acceptedForm: 'An absolute URL accepted by the WHATWG URL parser.', defaultBehavior: `Uses \`${fallback}\` when absent.`, emptyBehavior: 'An explicitly empty string is passed to the URL parser and rejected, except the Studio public URL which is retained as text.', invalidBehavior: name === 'PRISM_STUDIO_PUBLIC_URL' ? 'This loader does not parse the Studio value; downstream link consumers expose an invalid selection.' : 'The URL constructor throws before Control starts.', precedence: 'A present process value wins; otherwise the listed service default applies.', impact: 'Changing it redirects internal service traffic or the public link authority.', failure: 'Control startup fails for parsed endpoint errors, or requests and links target the wrong valid endpoint.' }));
+addEnvironmentConsumerContract('PRISM_CONTROL_INTERNAL_URL', 'skills/prism/server/worker-config.ts', environmentContract({ purpose: 'Selects the internal Control endpoint used by the Prism worker.', acceptedForm: 'An absolute URL accepted by the WHATWG URL parser.', defaultBehavior: 'Uses `http://prism-control:8080` when absent.', emptyBehavior: 'An empty string is rejected by the URL parser.', invalidBehavior: 'The URL constructor throws before worker startup.', precedence: 'A present process value wins; otherwise the cluster-service URL applies.', impact: 'Changing it redirects worker control callbacks and native result delivery.', failure: 'Worker startup stops or later Control requests cannot connect.' }));
+addEnvironmentConsumerContract('PRISM_CONTROL_INTERNAL_URL', 'skills/prism/config/native-worker.ts', environmentContract({ purpose: 'Selects the exact Control endpoint used by the native Prism host path.', acceptedForm: 'A required absolute URL accepted by the WHATWG URL parser.', defaultBehavior: 'No default in the native host reader.', emptyBehavior: 'An absent or empty value is rejected by the URL parser.', invalidBehavior: 'The URL constructor throws before native host configuration completes.', precedence: 'The injected process value is the only endpoint source for the native host.', impact: 'Changing it redirects native artifact and dispatch communication.', failure: 'Native host startup stops or cannot reach Control.', required: 'required' }));
+addEnvironmentConsumerContract('DATABASE_URL', 'skills/prism/server/worker-config.ts', environmentContract({ purpose: 'Selects the Prism PostgreSQL connection URL used by the worker on the shared-secret trust path.', acceptedForm: 'A non-empty PostgreSQL connection URL accepted by the database client.', defaultBehavior: 'Uses an empty internal value only when SPIFFE trust is enabled.', emptyBehavior: 'Rejected with `DATABASE_URL is required` when SPIFFE trust is disabled.', invalidBehavior: 'The loader checks only presence; the database client reports parse, TLS, authentication, or connection failure.', precedence: 'The captured process value is the only database endpoint; exact SPIFFE enablement removes this reader’s presence requirement.', impact: 'Changing it redirects worker persistence to a different database authority.', failure: 'Worker startup stops for a missing required value or database operations fail against an invalid endpoint.', required: 'required when SPIFFE worker trust is not exactly enabled' }));
+addEnvironmentConsumerContract('DATABASE_URL', 'skills/prism/server/control-config.ts', environmentContract({ purpose: 'Selects the PostgreSQL connection used by the unconditional `pg.Pool` that backs the Prism Control listener.', acceptedForm: 'A PostgreSQL connection URL accepted by node-postgres. An absent or empty value selects node-postgres connection-parameter resolution instead of disabling the database.', defaultBehavior: 'The loader passes `undefined` to `pg.Pool`. Node-postgres then reads `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT`, and `PGDATABASE` and uses its library defaults for fields that remain absent.', emptyBehavior: 'An empty connection string is falsey to node-postgres, so it follows the same `PG*` and library-default path as an absent value; it does not create a non-database listener.', invalidBehavior: 'The loader does not parse the URL. Pool connection reports URL parsing, DNS, TLS, authentication, or connection failure when Control first uses PostgreSQL.', precedence: 'Values present in a non-empty connection URL configure the pool. For connection fields not supplied by that URL, node-postgres uses the matching `PG*` variable and then its library default.', impact: 'Changing the URL or its fallback `PG*` inputs redirects the durable Control state to another PostgreSQL authority.', failure: 'Control can bind its HTTP listener before the lazy pool connects, but a database-backed request fails when the resolved PostgreSQL connection is unusable.', required: 'required as a usable PostgreSQL resolution; `DATABASE_URL` itself can be absent only when the `PG*` variables or node-postgres defaults identify the intended database' }));
+addEnvironmentConsumerContract('DATABASE_URL', 'skills/prism/server/migrate.ts', environmentContract({ purpose: 'Selects the PostgreSQL database on which the Prism migration process applies schema changes.', acceptedForm: 'A PostgreSQL connection URL accepted by node-postgres. An absent or empty value invokes node-postgres `PG*` and library-default resolution.', defaultBehavior: 'The migration pool receives `undefined`; node-postgres reads `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT`, and `PGDATABASE`, then applies library defaults to fields that remain absent.', emptyBehavior: 'An empty connection string follows the same node-postgres fallback path as an absent value.', invalidBehavior: 'The migration fails on URL parsing, DNS, TLS, authentication, connection, or SQL errors before it can complete.', precedence: 'Values present in a non-empty connection URL configure the pool. Missing URL fields fall back to matching `PG*` variables and then node-postgres defaults.', impact: 'Changing the URL or fallback `PG*` inputs redirects schema migration to a different database authority.', failure: 'The migration process exits without completing the schema transaction, and dependent Prism workloads must not be treated as ready.', required: 'required as a usable PostgreSQL resolution; the chart supplies `DATABASE_URL` for the migration job' }));
+addEnvironmentConsumerContract('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 'skills/prism/server/worker-config.ts', environmentContract({ purpose: 'Caps the request body accepted by the Prism worker ingress before native dispatch.', acceptedForm: 'A positive safe integer from 1 through 2,147,483,647 bytes.', defaultBehavior: 'Uses `16777216` bytes when absent.', emptyBehavior: 'An empty string converts to zero and is rejected.', invalidBehavior: 'Invalid input returns `PRISM_WORKER_INGRESS_INVALID:PRISM_NATIVE_MAXIMUM_INPUT_BYTES`.', precedence: 'A present worker process value wins; otherwise the 16 MiB ingress default applies.', impact: 'Changing it changes the earliest body-size boundary; the native host has its own independently checked contract for the same name.', failure: 'Worker configuration stops or oversized requests are rejected before native execution.' }));
+
+for (const [name, contract] of Object.entries({
+  BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE: environmentContract({ purpose: 'Selects the rootless BuildKit image used by the deployment capability probe.', acceptedForm: 'An OCI image reference pinned with a `sha256` digest.', defaultBehavior: 'Uses the checked-in `moby/buildkit:v0.26.2-rootless` digest.', emptyBehavior: 'An empty value is absent and selects the checked-in digest.', invalidBehavior: 'The container runtime rejects an invalid or unavailable image; the probe also rejects a runtime that lacks the required rootless capability.', precedence: 'A non-empty process value wins; otherwise the checked-in digest applies.', impact: 'Changing it changes the executable probe used to decide whether build capability is ready.', failure: 'The probe pod fails and deployment does not claim rootless BuildKit readiness.' }),
+  BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT: environmentContract({ purpose: 'Limits the wait for the rootless BuildKit capability probe pod.', acceptedForm: 'A kubectl duration such as `180s`.', defaultBehavior: 'Uses `180s`.', emptyBehavior: 'An empty value is absent and selects `180s`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a timeout.', precedence: 'A non-empty process value wins; otherwise the checked-in timeout applies.', impact: 'A shorter value stops a slow probe sooner; a longer value delays deployment failure.', failure: 'The probe is diagnosed and removed, and deployment stops without claiming BuildKit readiness.' }),
+  CODE_BUNDLE_GITHUB_REPOSITORY: environmentContract({ purpose: 'Supplies the GitHub `owner/repository` used to derive source-bundle release URLs.', acceptedForm: 'A GitHub repository identifier in `owner/repository` form.', defaultBehavior: 'Empty; derive from a recognized `ghcr.io` image repository, then Git remote metadata.', emptyBehavior: 'An empty value requests repository derivation.', invalidBehavior: 'A missing or malformed effective repository prevents release-asset URL derivation.', precedence: 'An explicit environment repository wins, then a recognized `ghcr.io` image repository, then Git remote metadata.', impact: 'Changing it redirects all derived Nova, Buster, and Prism bundle URLs.', failure: 'Code-bundle preflight or deployment stops before downloading an unbound archive.' }),
+  CODE_BUNDLE_PREFLIGHT_SKIP: environmentContract({ purpose: 'Skips the remote code-bundle URL-existence preflight during live code deployment; render-only mode bypasses that remote check separately.', acceptedForm: 'Case-insensitive `true` skips the remote preflight; use `false` otherwise.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any value other than case-insensitive `true` does not skip the remote check. This switch never bypasses local selected-receipt render validation.', precedence: 'A non-empty process value wins; otherwise verification remains enabled.', impact: 'When true, the command skips remote archive URL existence checks. A successful URL check never validates a receipt, and local selected-receipt render validation remains mandatory.', failure: 'A later init container can fail if the unverified asset is missing or invalid.' }),
+  CODE_BUNDLE_RELEASE_TAG: environmentContract({ purpose: 'Selects the GitHub release tag under which derived code-bundle assets are located.', acceptedForm: 'A GitHub release tag valid in a release download URL.', defaultBehavior: 'Uses `agent-code-bundles`.', emptyBehavior: 'An empty value is absent and selects the default tag.', invalidBehavior: 'A nonexistent or malformed tag makes the derived asset unavailable.', precedence: 'A non-empty process value wins; otherwise the checked-in tag applies.', impact: 'Changing it redirects derived Nova, Buster, and Prism archive URLs while expected commits still bind their contents.', failure: 'Bundle preflight or init download fails.' }),
+  DISABLE_IMAGE_PULL_SECRETS: environmentContract({ purpose: 'Omits configured imagePullSecrets from an agent Helm release.', acceptedForm: 'Only `1` disables imagePullSecrets; use `0` to retain them.', defaultBehavior: 'Uses `0` and keeps imagePullSecrets.', emptyBehavior: 'An empty value is absent and selects `0`.', invalidBehavior: 'Any value other than exact `1` retains imagePullSecrets.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `0`.', impact: 'Use it only when every selected image is anonymously pullable or another cluster mechanism supplies credentials.', failure: 'Private image pulls fail with `ImagePullBackOff` when the override removes the required Secret.' }),
+  KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR: environmentContract({ purpose: 'Enables the anonymous HTTP Docker Hub pull-through mirror used by the lab deployment.', acceptedForm: 'Exactly `true` or `false`.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any other value stops deployment with a boolean validation error.', precedence: 'A non-empty process value wins; otherwise the mirror remains disabled.', impact: 'When enabled, deployment applies the lab mirror resources. It does not make the service production-ready or HTTPS-authenticated.', failure: 'Invalid input or a failed mirror rollout stops the infrastructure path.' }),
+  KUBECLAW_DEPLOY_LAB_REGISTRY: environmentContract({ purpose: 'Enables the anonymous HTTP local OCI registry used by the lab deployment.', acceptedForm: 'Exactly `true` or `false`.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any other value stops deployment with a boolean validation error.', precedence: 'A non-empty process value wins; otherwise the local registry remains disabled.', impact: 'When enabled, deployment renders the lab registry from an explicit storage configuration. This is not a production HTTPS registry.', failure: 'Invalid input, missing storage configuration, or rollout failure stops the infrastructure path.' }),
+  KUBECLAW_DEPLOY_RENDER_ONLY: environmentContract({ purpose: 'Selects manifest rendering without cluster mutation for internal deployment verification paths.', acceptedForm: 'Only exact `1` enables render-only behavior.', defaultBehavior: 'Uses `0` in ordinary deployment paths.', emptyBehavior: 'An absent or empty value selects normal apply behavior.', invalidBehavior: 'Every value other than exact `1` is treated as normal apply behavior.', precedence: 'A value exported by the script for its verification subshells wins there; otherwise an inherited process value controls each read.', impact: 'When set to `1`, selected render paths emit or validate manifests and skip their corresponding kubectl or Helm mutation and readiness steps.', failure: 'Using `1` for an intended deployment produces no live rollout; leaving it disabled in a verification path can mutate the selected cluster.', required: 'internal verification control; direct operator use is unsafe' }),
+  KUBECLAW_KUBERNETES_PREFLIGHT_SECRET: environmentContract({ purpose: 'Names the approved test Secret mounted by the Kubernetes and combined production preflights.', acceptedForm: 'A valid Kubernetes Secret name.', defaultBehavior: 'Uses `kubeclaw-fixture-preflight`.', emptyBehavior: 'An empty value is absent and selects the default Secret name.', invalidBehavior: 'The command rejects an invalid name and fails when the Secret does not exist or cannot be mounted.', precedence: 'Command argument 3 wins; this environment value is the fallback; then the checked-in default applies.', impact: 'This public object name selects test data exposure for the preflight workload; it does not contain the Secret payload.', failure: 'The preflight stops and produces no successful production receipt.' }),
+  KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG: environmentContract({ purpose: 'Selects the explicit JSON storage configuration used to render the lab local registry.', acceptedForm: 'A readable JSON file accepted by `render-registry-local.mjs`.', defaultBehavior: 'No default when the lab registry is enabled.', emptyBehavior: 'An empty value is rejected only when `KUBECLAW_DEPLOY_LAB_REGISTRY=true`.', invalidBehavior: 'A missing, invalid, or unsafe storage configuration stops registry rendering.', precedence: 'The non-empty process value is the only storage-config source for the enabled lab registry.', impact: 'The file selects registry storage behavior and persistence.', failure: 'Deployment stops before applying the local registry resources.', required: 'required when the lab registry is enabled' }),
+  KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE: environmentContract({ purpose: 'Selects the private signing-key file used to issue a production preflight receipt.', acceptedForm: 'A readable private-key file whose canonical real path is outside the repository and whose key matches the installed trusted public key.', defaultBehavior: 'Empty; production receipt commands require an explicit file.', emptyBehavior: 'An empty value is rejected by receipt-producing commands.', invalidBehavior: 'A missing, unreadable, mismatched, or repository-contained canonical key path prevents receipt signing or verification.', precedence: 'The process value is the only private-key path; the fixed installed trusted public-key path remains a separate immutable authority and its canonical file must also be outside the repository.', impact: 'The path is publishable, but the file contents are secret. Changing the key pair changes who can issue accepted receipts.', failure: 'The production preflight stops without an accepted receipt.', required: 'required for production receipt commands' }),
+  KUBECLAW_RUN_SECRET_SETUP: environmentContract({ purpose: 'Selects whether the deploy `setup` and `all` paths invoke secret setup.', acceptedForm: 'Case-insensitive `auto`; truthy `1`, `true`, `yes`, `on`, or `enabled`; or falsey `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: '`auto`: run with a terminal and skip with a warning without one.', emptyBehavior: 'An empty value is absent and selects `auto`.', invalidBehavior: 'Every value outside the exact accepted set stops deployment with an explicit mode error.', precedence: 'A non-empty process value wins; otherwise `auto` applies.', impact: 'A truthy value requires secret setup even without a terminal; a falsey value always skips it.', failure: 'Forced setup fails when required sources are unavailable; skipped setup can leave later workloads unready.' }),
+  KUBECLAW_SECRET_SETUP_MODE: environmentContract({ purpose: 'Selects whether the secret helper can ask for missing values interactively.', acceptedForm: 'Case-insensitive `auto`, `interactive`, or `noninteractive`; truthy `1`, `true`, `yes`, `on`, or `enabled` selects interactive mode; falsey `0`, `false`, `no`, `off`, or `disabled` selects noninteractive mode.', defaultBehavior: '`auto`: use prompts only when `/dev/tty` is readable and writable.', emptyBehavior: 'An empty value is absent and selects `auto`.', invalidBehavior: 'Every value outside the exact accepted set stops secret setup.', precedence: 'A non-empty process value wins; otherwise `auto` applies.', impact: 'Noninteractive mode requires existing target Secrets, SOPS, source-namespace copies, or bootstrap inputs.', failure: 'A required value without an allowed source remains missing and setup reports the gap.' }),
+  KUBECLAW_SECRETS_OVERWRITE: environmentContract({ purpose: 'Allows secret setup to replace existing target Secret data.', acceptedForm: 'Case-insensitive truthy `1`, `true`, `yes`, `on`, or `enabled` enables overwrite. Falsey `0`, `false`, `no`, `off`, or `disabled` keeps existing data.', defaultBehavior: 'Uses `false` and reuses existing Secrets.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'A value outside the exact accepted boolean set does not enable overwrite and therefore preserves existing data.', precedence: 'A non-empty process value wins; otherwise existing target Secrets remain authoritative.', impact: 'When enabled, later configured sources can replace live credential material and trigger dependent restarts or auth failures.', failure: 'Partial or wrong replacement can break consumers; inspect each Secret and rotate deliberately.' }),
+  KUBECLAW_WORKSPACE_NAMESPACE_FILE: environmentContract({ purpose: 'Selects the local file from which deployment reads and to which it records the chosen workspace namespace.', acceptedForm: 'A writable local file path whose content is a valid Kubernetes namespace.', defaultBehavior: 'Uses `my-values/.workspace-namespace`.', emptyBehavior: 'An empty value is absent and selects the default path.', invalidBehavior: 'Invalid file content is ignored with a warning; write failures stop the persistence step.', precedence: 'Only deploy setup, secrets, and all through setup invoke workspace resolution. When NAMESPACE was unset, a valid saved file replaces the initial namespace before mode handling. Setting NAMESPACE, including an empty value, suppresses this file read. A permitted interactive prompt can replace the chosen value and then rewrites this file.', impact: 'The file affects later local deploy invocations; it does not change cluster state by itself.', failure: 'Deployment uses another valid namespace source or stops when it cannot safely persist the selected value.' }),
+  KUBECLAW_WORKSPACE_PROMPT: environmentContract({ purpose: 'Controls whether deployment asks the operator to confirm or select a workspace namespace.', acceptedForm: '`auto`, `true`, or `false`, with normalized boolean aliases.', defaultBehavior: '`auto`: prompt only on an interactive terminal when a namespace was not explicitly set.', emptyBehavior: 'An empty value is absent and selects `auto`.', invalidBehavior: 'An unrecognized value stops deployment; `true` without an interactive terminal also stops.', precedence: 'On deploy setup, secrets, and all through setup, false retains the pre-prompt namespace. Auto returns without prompting when NAMESPACE was set, including empty; otherwise it prompts only with a readable/writable terminal. True requires that terminal and can replace an explicitly set NAMESPACE. The accepted prompt response wins and is saved.', impact: 'The selection changes the namespace targeted by the deployment command.', failure: 'The command stops before cluster changes when it cannot obtain a safe namespace choice.' }),
+  LITELLM_NODE_PORT: environmentContract({ purpose: 'Selects the Kubernetes NodePort exposed by the LiteLLM Service.', acceptedForm: 'An integer from 30000 through 32767.', defaultBehavior: 'Uses `30050`.', emptyBehavior: 'An empty value is absent and selects `30050`.', invalidBehavior: 'A non-integer or out-of-range value stops deployment before patching the Service.', precedence: 'A non-empty process value wins; otherwise the checked-in default applies.', impact: 'Changing it changes the node-level LiteLLM endpoint and can conflict with another Service.', failure: 'Infrastructure deployment stops before accepting an invalid Service port.' }),
+  NAMESPACE: environmentContract({ purpose: 'Selects the primary Kubernetes namespace targeted by deployment, secret setup, and policy migration.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Startup uses kubeclaw for an unset or empty process value. Deploy setup, secrets, and all through setup can subsequently select a valid saved namespace when the variable was unset, or an accepted interactive response.', emptyBehavior: 'Explicit empty uses kubeclaw at startup but remains marked as set: saved-file loading and auto prompting are suppressed. Forced true prompting can still replace it.', invalidBehavior: 'The workspace resolver rejects invalid saved or entered names; kubectl rejects invalid direct names at the API boundary.', precedence: 'For commands without workspace resolution, the nonempty process value wins over the kubeclaw startup fallback. Deploy setup, secrets, and all through setup additionally load a valid saved file only when NAMESPACE was unset; false or auto with a set variable retains the chosen value, while true with a terminal accepts a replacement even for an explicit process value. Any accepted prompt response wins and is persisted/exported.', impact: 'Changing it redirects namespaced reads, writes, release ownership, Secret setup, and policy operations.', failure: 'A wrong valid namespace can target the wrong workload set, so operators must verify the bound cluster and namespace before mutation.' }),
+  NATIVE_WORKER_NODE_POLICY_FILE: environmentContract({ purpose: 'Selects the native-worker node policy checked before Prism workloads are deployed.', acceptedForm: 'A readable YAML policy file path.', defaultBehavior: 'Uses `my-values/infra/native-worker-pools.yaml`.', emptyBehavior: 'An empty value is absent and selects the checked-in policy.', invalidBehavior: 'A missing, invalid, or unsatisfied policy stops the worker-node preflight.', precedence: 'A non-empty process path wins; otherwise the checked-in policy applies.', impact: 'Changing it changes which nodes and isolation conditions Prism workers may use.', failure: 'Prism deployment stops before applying workloads to an unapproved worker pool.' }),
+  PRISM_DATABASE_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret that supplies Prism PostgreSQL credentials.', acceptedForm: 'A valid Secret name in `PRISM_NAMESPACE` with every required database key.', defaultBehavior: 'Uses `prism-postgresql-auth`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An absent selected Secret is created by secret setup; an existing Secret is reused and is not automatically repaired. An invalid name or missing required key stops deployment.', precedence: 'A non-empty process value wins and is passed to both the Prism and PostgreSQL chart bindings.', impact: 'This public object name changes the database credential authority for Prism components.', failure: 'Secret preflight or workload startup fails; no valid database connection is claimed.' }),
+  PRISM_RUNTIME_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret that supplies Prism runtime signing and ingress credentials.', acceptedForm: 'A valid Secret name in `PRISM_NAMESPACE` with every required runtime key.', defaultBehavior: 'Uses `prism-runtime`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An absent selected Secret is created by secret setup; an existing Secret is reused and is not automatically repaired. An invalid name or missing required key stops deployment.', precedence: 'A non-empty process value wins and is passed to the Prism chart.', impact: 'This public object name changes the runtime credential authority used by Prism services and preflights.', failure: 'Secret preflight, pod startup, or authenticated request verification fails.' }),
+  PRISM_IMAGE_PULL_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret used to pull Prism and Prism test images.', acceptedForm: 'A valid image-pull Secret name in `PRISM_NAMESPACE`.', defaultBehavior: 'Uses `ghcr-secret`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An invalid or missing Secret stops Prism preflight or causes image pulls to fail.', precedence: 'A non-empty process value wins and is written into the rendered imagePullSecrets list.', impact: 'This public object name changes the registry credential authority; it does not contain credential bytes.', failure: 'Deployment stops at preflight or pods report `ImagePullBackOff`.' }),
+  PRISM_E2E_RUN_FAILURES: environmentContract({ purpose: 'Adds the destructive/negative Prism production-failure exercise after the main end-to-end run.', acceptedForm: 'Only exact `true` enables the failure exercise.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any value other than exact `true` leaves the additional exercise disabled.', precedence: 'A non-empty process value wins; otherwise failure injection remains off.', impact: 'When enabled, the command deliberately exercises failure paths after the success journey.', failure: 'A failed negative exercise makes the end-to-end command fail and retain its evidence.' }),
+  PRISM_E2E_USE_LEASE: environmentContract({ purpose: 'Selects whether the Prism end-to-end command requests an isolated Buster namespace lease.', acceptedForm: 'Only exact `true` enables lease creation.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'Any value other than exact `true` runs in the configured Prism namespace without a lease.', precedence: 'A non-empty process value wins; otherwise isolation is enabled.', impact: 'Disabling it removes namespace isolation and makes the test operate on the configured Prism namespace.', failure: 'Lease creation or namespace preparation failure stops the test before Prism deployment.' }),
+  PRISM_E2E_USER: environmentContract({ purpose: 'Supplies the Tailscale login identity used by the Prism end-to-end authorization journey.', acceptedForm: 'A non-empty Tailscale login identity accepted by the test policy.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value stops the end-to-end command.', invalidBehavior: 'An identity that is not authorized by the selected policy makes the access checks fail.', precedence: 'The non-empty process value is written to the runner ConfigMap.', impact: 'This is an identity, not a secret. It selects the subject whose access is tested.', failure: 'The end-to-end job or authorization assertion fails.', required: 'required for Prism end-to-end' }),
+  PRISM_HELM_TIMEOUT: environmentContract({ purpose: 'Limits each atomic Prism and Prism-agent Helm release operation.', acceptedForm: 'A Helm duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'Helm rejects an invalid duration or rolls back when the deadline expires.', precedence: 'A non-empty process value wins; otherwise the checked-in timeout applies.', impact: 'A longer value permits slower migrations and rollouts but delays rollback and reporting.', failure: 'The atomic release fails and rolls back; deployment diagnostics remain available.' }),
+  PRISM_VALUES_FILE: environmentContract({ purpose: 'Adds an operator-owned Prism Helm values overlay while keeping the selected release values as the immutable base.', acceptedForm: 'A readable YAML values file compatible with the Prism chart.', defaultBehavior: 'Empty; deployment uses `releases/values/prism.yaml` without an extra operator overlay.', emptyBehavior: 'An empty value adds no overlay.', invalidBehavior: 'A missing, unreadable, or invalid overlay makes value inspection, rendering, or Helm fail.', precedence: 'The deploy script captures this process value as `PRISM_VALUES_OVERLAY`, then resets `PRISM_VALUES_FILE` to the selected release file. The non-empty overlay is appended after the selected file and before explicit command-line image overrides.', impact: 'Changing it can override Prism release settings without replacing the selected release baseline.', failure: 'Preflight, render, or the atomic Helm release fails before a successful rollout is claimed.' }),
+  PRISM_AGENT_VALUES_FILE: environmentContract({ purpose: 'Adds an operator-owned Prism-agent Helm values overlay while keeping the selected release values as the immutable base.', acceptedForm: 'A readable YAML values file compatible with the KubeClaw agent chart.', defaultBehavior: 'Empty; deployment uses `releases/values/prism-agent.yaml` without an extra operator overlay.', emptyBehavior: 'An empty value adds no overlay.', invalidBehavior: 'A missing, unreadable, or invalid overlay makes bundle inspection, rendering, or Helm fail.', precedence: 'The deploy script captures this process value as `PRISM_AGENT_VALUES_OVERLAY`, then resets `PRISM_AGENT_VALUES_FILE` to the selected release file. The non-empty overlay is appended after the selected file and before explicit command-line overrides.', impact: 'Changing it can override the Prism agent release without replacing the selected release baseline.', failure: 'Bundle preflight, render, or the atomic Helm release fails before a successful rollout is claimed.' }),
+  PRISM_NAMESPACE: environmentContract({ purpose: 'Selects the Kubernetes namespace for Prism, Prism agent, their Secrets, and their acceptance checks.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Uses the effective primary `NAMESPACE`.', emptyBehavior: 'An empty value is absent and inherits `NAMESPACE`.', invalidBehavior: 'kubectl or Helm rejects an invalid namespace; a wrong valid namespace fails Secret and ownership checks.', precedence: 'A nonempty process value wins; otherwise startup captures NAMESPACE before any workspace prompt. A later setup/secrets prompt does not recompute PRISM_NAMESPACE. The E2E lease path temporarily overrides it with the allocated namespace.', impact: 'Changing it redirects every Prism namespaced resource and trust binding.', failure: 'Preflight or deployment stops when required resources are absent from the selected namespace.' }),
+  PRISM_ROLLOUT_TIMEOUT: environmentContract({ purpose: 'Limits Prism Kubernetes rollout and ready-pod waits after Helm succeeds.', acceptedForm: 'A kubectl duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a rollout timeout.', precedence: 'A non-empty process value wins; otherwise the checked-in timeout applies.', impact: 'This changes the observation deadline, not the workload configuration.', failure: 'Deployment stops and reports the workload that did not become ready.' }),
+  SPIFFE_HELM_REPO: environmentContract({ purpose: 'Selects the SPIFFE Helm repository URL registered for the SPIRE charts.', acceptedForm: 'An HTTPS Helm repository URL.', defaultBehavior: 'Uses `https://spiffe.github.io/helm-charts-hardened/`.', emptyBehavior: 'An empty value is absent and selects the checked-in URL.', invalidBehavior: 'Helm repository registration or chart lookup fails.', precedence: 'A non-empty process URL is proposed when registering `spiffe`; an already-present local Helm alias is preserved and remains the chart-fetch authority.', impact: 'Changing it changes the proposed SPIFFE repository URL only when registering a new alias. An existing local alias keeps its prior chart-fetch source; inspect Helm repository state.', failure: 'SPIRE installation stops before its releases are upgraded.' }),
+  SPIRE_CHART_VERSION: environmentContract({ purpose: 'Pins the SPIRE server and agent Helm chart version.', acceptedForm: 'A chart version present in the selected SPIFFE repository.', defaultBehavior: 'Uses `0.30.0`.', emptyBehavior: 'An empty value is absent and selects the checked-in version.', invalidBehavior: 'Helm fails when the version does not exist or the chart is incompatible.', precedence: 'A non-empty process value wins; otherwise the checked-in pin applies.', impact: 'Changing it changes SPIRE control-plane and agent behavior and requires trust/readiness verification.', failure: 'The infrastructure Helm operation uses `--wait`, not `--atomic`; failure or readiness timeout can leave partial release state.' }),
+  SPIRE_CRDS_CHART_VERSION: environmentContract({ purpose: 'Pins the SPIRE CRD Helm chart version.', acceptedForm: 'A CRD chart version present in the selected SPIFFE repository.', defaultBehavior: 'Uses `0.6.0`.', emptyBehavior: 'An empty value is absent and selects the checked-in version.', invalidBehavior: 'Helm fails when the version does not exist or is incompatible.', precedence: 'A non-empty process value wins; otherwise the checked-in pin applies.', impact: 'Changing it changes cluster-scoped SPIRE API definitions and must remain compatible with the SPIRE chart.', failure: 'SPIRE installation stops before the main release is accepted.' }),
+  TAILSCALE_HELM_REPO: environmentContract({ purpose: 'Represents a retired direct Tailscale Helm repository override.', acceptedForm: 'Leave unset or empty.', defaultBehavior: 'Empty; deployment uses the pinned chart lock in `versions.json`.', emptyBehavior: 'An empty value selects the pinned lock.', invalidBehavior: 'Any non-empty value stops deployment as superseded.', precedence: 'The pinned infrastructure-chart lock is authoritative; this variable cannot override it.', impact: 'The fail-closed rule prevents an arbitrary repository from replacing the locked Tailscale chart.', failure: 'Tailscale operator deployment stops with a superseded-setting error.' }),
+  TAILSCALE_OAUTH_CLIENT_ID: environmentContract({ purpose: 'Optionally supplies the public client identity used to bootstrap the Tailscale operator OAuth Secret.', acceptedForm: 'A non-empty Tailscale OAuth client ID.', defaultBehavior: 'Empty; reuse an existing Secret or another secret-setup source.', emptyBehavior: 'An empty value supplies no bootstrap identity.', invalidBehavior: 'The helper does not validate the identity locally; the Tailscale operator reports rejected credentials.', precedence: 'An existing target Secret wins unless overwrite is enabled; the paired bootstrap environment values are used only when both are present.', impact: 'This identity is not secret, but it must be paired with the matching client secret.', failure: 'Secret creation is skipped or operator authentication fails.' }),
+  TAILSCALE_OAUTH_CLIENT_SECRET: environmentContract({ purpose: 'Optionally supplies the confidential client secret used to bootstrap the Tailscale operator OAuth Secret.', acceptedForm: 'A non-empty secret value paired with `TAILSCALE_OAUTH_CLIENT_ID`.', defaultBehavior: 'Empty; reuse an existing Secret or another secret-setup source.', emptyBehavior: 'An empty value supplies no bootstrap credential.', invalidBehavior: 'The helper does not validate the credential locally; the Tailscale operator reports rejected credentials.', precedence: 'An existing target Secret wins unless overwrite is enabled; the paired bootstrap values are used only when both are present.', impact: 'The value is written to Kubernetes Secret data and must not be logged or published.', failure: 'Secret creation is skipped or operator authentication fails.' }),
+  TAILSCALE_OAUTH_SECRET_NAME: environmentContract({ purpose: 'Selects the Kubernetes Secret object that holds the Tailscale operator OAuth client identity and secret.', acceptedForm: 'A valid Kubernetes Secret name in the effective Tailscale operator namespace.', defaultBehavior: 'Uses `operator-oauth`.', emptyBehavior: 'An empty value is absent and selects `operator-oauth`.', invalidBehavior: 'kubectl, Helm, or the Kubernetes API rejects an invalid object name; a valid but wrong name leaves the operator without its expected credentials.', precedence: 'A non-empty process value wins; otherwise setup and deployment both use `operator-oauth`.', impact: 'Changing the name changes which Secret setup creates or verifies and which Secret the operator release expects. This value names an object and does not contain credential payload.', failure: 'Secret verification or operator rollout fails, and Tailscale-backed ingress remains unavailable.' }),
+  TAILSCALE_OPERATOR_ENABLED: environmentContract({ purpose: 'Enables Tailscale operator secret setup and installation.', acceptedForm: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled`; `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'Only normalized `false` skips setup and installation. An unrecognized value continues the enabled path; missing paired credentials can still cause a warning and skip.', precedence: 'A non-empty process value wins; otherwise Tailscale integration remains enabled.', impact: 'Disabling it removes the operator installation path and final-preview tailnet URL support.', failure: 'The script reports the skip; Tailscale-backed ingress and preview URLs remain unavailable.' }),
+  TAILSCALE_OPERATOR_NAMESPACE: environmentContract({ purpose: 'Selects the Kubernetes namespace that owns the Tailscale operator release and its OAuth Secret.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Uses `tailscale`.', emptyBehavior: 'An empty value is absent and selects `tailscale`.', invalidBehavior: 'kubectl or Helm rejects an invalid namespace; a valid but wrong namespace separates setup, Secret, or release state from the intended operator.', precedence: 'A non-empty process value wins; otherwise setup and deployment both use `tailscale`.', impact: 'Changing the namespace changes the ownership boundary for the operator release, ServiceAccount, and OAuth Secret.', failure: 'Secret lookup, Helm release, or rollout verification fails; no Tailscale-backed ingress is accepted.' }),
+  ARGOCD_HELM_REPO: environmentContract({ purpose: 'Selects the Helm repository URL registered under the local `argo` alias.', acceptedForm: 'An HTTPS Helm repository URL.', defaultBehavior: 'Uses `https://argoproj.github.io/argo-helm`.', emptyBehavior: 'An empty value is absent and selects the checked-in upstream URL.', invalidBehavior: 'Helm repository registration or chart lookup fails.', precedence: 'A non-empty process value wins; `--force-update` makes it replace an existing local alias.', impact: 'Changing it changes the source of the pinned Argo CD chart package.', failure: 'Argo CD installation stops before Helm upgrades the release.' }),
+  ARGOCD_VALUES_FILE: environmentContract({ purpose: 'Selects the Helm values file for the Argo CD release.', acceptedForm: 'A readable YAML values file.', defaultBehavior: 'Uses `my-values/infra/argocd-values.yaml`.', emptyBehavior: 'An empty value is absent and selects the checked-in file.', invalidBehavior: 'Helm stops on a missing, unreadable, or invalid file.', precedence: 'A non-empty process path replaces the default values-file path; explicit `--set` and `--set-file` arguments in the script still win.', impact: 'Changing it changes the rendered Argo CD configuration.', failure: 'The Helm release fails and the ingress is not applied.' }),
+  ARGOCD_TAILSCALE_INGRESS: environmentContract({ purpose: 'Selects the Kubernetes manifest applied for private Tailscale access to Argo CD.', acceptedForm: 'A readable Kubernetes YAML manifest.', defaultBehavior: 'Uses `my-values/infra/argocd-tailscale-ingress.yaml`.', emptyBehavior: 'An empty value is absent and selects the checked-in manifest.', invalidBehavior: 'kubectl rejects a missing or invalid manifest.', precedence: 'A non-empty process path replaces the checked-in ingress path.', impact: 'Changing it changes how Argo CD is exposed in the tailnet after the Helm release succeeds.', failure: 'Argo CD can be running while the private ingress apply fails.' }),
+  CILIUM_K3S_READY: environmentContract({ purpose: 'Confirms that the operator completed the disruptive K3s host preflight for the initial Cilium cutover.', acceptedForm: 'Exactly `true`.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and refuses the cutover.', invalidBehavior: 'Every value other than exact `true` stops the install path.', precedence: 'The process value is the only confirmation source; it is checked on every install attempt.', impact: 'This is an operator assertion, not an automated proof. It permits the script to inspect CRI state and start the same-CIDR cutover.', failure: 'The script exits before installing Cilium and leaves the existing network unchanged.' }),
+  CILIUM_DATAPLANE_VERIFIED: environmentContract({ purpose: 'Confirms that pod recreation and dataplane connectivity checks completed before project policy migration.', acceptedForm: 'Exactly `true`.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and refuses policy migration.', invalidBehavior: 'Every value other than exact `true` stops the migration.', precedence: 'The process value is the only confirmation source.', impact: 'This assertion permits the script to apply project Cilium policies over the cluster baseline.', failure: 'No project policy or legacy cleanup action runs.' }),
+  CILIUM_TRAFFIC_VERIFIED: environmentContract({ purpose: 'Confirms that pipeline and negative traffic tests passed before legacy NetworkPolicy cleanup.', acceptedForm: 'Exactly `true`.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and refuses cleanup.', invalidBehavior: 'Every value other than exact `true` stops the cleanup mode.', precedence: 'The process value is the only confirmation source.', impact: 'This assertion permits deletion of superseded static NetworkPolicy objects after the Cilium verifier passes.', failure: 'Legacy policies remain in place as a safety boundary.' }),
+  KUBE_CONTEXT: environmentContract({ purpose: 'Selects the explicit Kubernetes context used by operator scripts that bind kubectl and Helm to a cluster.', acceptedForm: 'A non-empty context name present in the bound kubeconfig.', defaultBehavior: 'No default in scripts that require it.', emptyBehavior: 'An empty value is rejected before cluster mutation.', invalidBehavior: 'kubectl or Helm rejects a missing context; an existing but wrong context can target the wrong cluster.', precedence: 'The process value is passed explicitly as `--context` or `--kube-context`; it does not rely on the ambient current context.', impact: 'Changing it redirects every cluster read and write performed by the owning command.', failure: 'Unknown contexts stop the command; operators must separately verify the expected API server and cluster identity before mutation.', required: 'required for the listed operator scripts' }),
+  KUBECLAW_ALLOW_LEGACY_REPO_SETUP: environmentContract({ purpose: 'Acknowledges the destructive breadth of the legacy one-time repository setup script.', acceptedForm: 'Exactly `1`.', defaultBehavior: 'Unset; the legacy script refuses to run.', emptyBehavior: 'An empty value refuses execution.', invalidBehavior: 'Every value other than exact `1` stops before Git changes.', precedence: 'The process value is the only acknowledgement source.', impact: 'When enabled, the script can run broad Git add, commit, remote replacement, branch rename, and push operations.', failure: 'Without the acknowledgement, no Git mutation occurs. With it, later Git command failures can leave a partial repository setup.' }),
+  OPS_NAMESPACE: environmentContract({ purpose: 'Selects the Kubernetes namespace for the optional Ops analysis pod.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Uses `kubeclaw-ops`.', emptyBehavior: 'An empty value is absent and selects `kubeclaw-ops`.', invalidBehavior: 'kubectl or Helm rejects an invalid namespace.', precedence: 'A non-empty process value wins and is exported to the bootstrap helper.', impact: 'Changing it redirects Ops discovery, Secret creation, release resources, and follow-up commands.', failure: 'Deployment or later login/verify commands cannot find the intended Ops pod.' }),
+  OPS_RELEASE: environmentContract({ purpose: 'Selects the Helm release name and resulting stateful Ops pod name.', acceptedForm: 'A valid Helm release name.', defaultBehavior: 'Uses `codex-ops`.', emptyBehavior: 'An empty value is absent and selects `codex-ops`.', invalidBehavior: 'Helm rejects an invalid name; a wrong valid name can create or target another release.', precedence: 'A non-empty process value wins and is exported to the bootstrap helper.', impact: 'The script derives the pod name as `<release>-0` for login, pairing, status, and verification.', failure: 'Follow-up commands fail or target the wrong valid release.' }),
+  OPS_DISCOVERY_VALUES: environmentContract({ purpose: 'Supplies the explicit discovery JSON used by the non-mutating Ops render command.', acceptedForm: 'A readable JSON values file produced by an equivalent discovery step.', defaultBehavior: 'No default for `render`; live `deploy` runs discovery instead.', emptyBehavior: 'An empty value stops `render` before Helm rendering.', invalidBehavior: 'Copy, release rendering, or JSON consumption fails for a missing or malformed file.', precedence: 'The process file is authoritative only for `render`; `deploy` regenerates discovery from the bound cluster.', impact: 'Changing it changes the simulated discovered cluster scope rendered into the Ops chart.', failure: 'No rendered manifest is emitted.', required: 'required for `render`' }),
+  OPS_POD_VALUES: environmentContract({ purpose: 'Adds an operator-owned Helm values overlay to the Ops release.', acceptedForm: 'A readable YAML values file.', defaultBehavior: 'Empty; only discovered and checked-in release values are used.', emptyBehavior: 'No operator overlay is appended.', invalidBehavior: 'Rendering or Helm fails for a missing or invalid file.', precedence: 'Discovered values load first, checked-in release values load second, and this non-empty overlay loads last before explicit image and feature overrides.', impact: 'Changing it can alter Ops permissions, mounts, resources, and runtime behavior.', failure: 'Pre-render validation or release upgrade fails.' }),
+  OPS_CODEX_IMAGE: environmentContract({ purpose: 'Overrides the Codex container image in the Ops chart.', acceptedForm: 'An OCI image reference ending in `@sha256:` and 64 lowercase hexadecimal digits, identical to the selected receipt image.', defaultBehavior: 'Empty; the selected release values supply the image.', emptyBehavior: 'No image override is added.', invalidBehavior: 'The chart rejects a reference without the required digest before render. Local selected-release validation rejects a valid-but-different image; an unavailable accepted image can later fail pull.', precedence: 'A non-empty process value becomes a final Helm `--set-string` override.', impact: 'The override can only restate the selected receipt image; changing executable Codex content requires selecting a different release receipt.', failure: 'The pod reports an image pull or startup failure.' }),
+  OPS_MCP_IMAGE: environmentContract({ purpose: 'Overrides the MCP sidecar image in the Ops chart.', acceptedForm: 'An OCI image reference ending in `@sha256:` and 64 lowercase hexadecimal digits, identical to the selected receipt image.', defaultBehavior: 'Empty; the selected release values supply the image.', emptyBehavior: 'No image override is added.', invalidBehavior: 'The chart rejects a reference without the required digest before render. Local selected-release validation rejects a valid-but-different image; an unavailable accepted image can later fail pull.', precedence: 'A non-empty process value becomes a final Helm `--set-string` override.', impact: 'The override can only restate the selected receipt image; changing MCP executable content requires selecting a different release receipt.', failure: 'The MCP sidecar reports an image pull or startup failure.' }),
+  OPS_GITHUB_TOKEN_FILE: environmentContract({ purpose: 'Selects the local file whose confidential token is copied into the Ops GitHub Secret.', acceptedForm: 'A readable path to a file that contains the intended GitHub token.', defaultBehavior: 'Empty; no GitHub Secret override is requested.', emptyBehavior: 'The deployment does not enable the chart GitHub Secret binding.', invalidBehavior: 'The bootstrap helper stops for a missing or unreadable file, empty stripped content, or Secret apply failure. It does not authenticate a nonempty token; unusable credentials can be stored and fail later GitHub authentication.', precedence: 'A non-empty path enables the fixed `codex-ops-github` Secret binding after discovery values and release values.', impact: 'The path is publishable; the file content is secret and grants the Ops pod GitHub access.', failure: 'Secret creation or GitHub authentication fails.' }),
+  OPS_TAILSCALE_AUTHKEY_FILE: environmentContract({ purpose: 'Selects the local file whose confidential auth key enables Tailscale in the Ops pod.', acceptedForm: 'A readable path to a file that contains a valid Tailscale auth key.', defaultBehavior: 'Empty; no Tailscale enabling override or credential apply is added. Effective enablement remains with the merged values; the chart default is false. Bootstrap absence does not delete an existing Secret.', emptyBehavior: 'No Tailscale enable override is added.', invalidBehavior: 'The bootstrap helper or Tailscale sidecar rejects a missing, unreadable, expired, or invalid key.', precedence: 'A non-empty path adds the final `tailscale.enabled=true` Helm override and supplies Secret setup.', impact: 'The path is publishable; the file content is secret and joins the Ops pod to the tailnet.', failure: 'Secret creation or Tailscale authentication fails.' }),
+})) ENVIRONMENT_CONTRACTS.set(name, contract);
+
+function operatorEnvironmentFamilyContract(name) {
+  const role = name.match(/^(NOVA|BUSTER|PRISM)_CODE_BUNDLE_(ARCHIVE_URL|EXPECTED_COMMIT|CONTRACT_VERSION|AUTH_SECRET|AUTH_SECRET_KEY)$/u);
+  if (role) {
+    const component = role[1].toLowerCase();
+    const field = role[2];
+    const definitions = {
+      ARCHIVE_URL: environmentContract({ purpose: `Selects the published ${component} source-bundle archive instead of deriving its GitHub release URL.`, acceptedForm: 'An `https` archive URL accepted by the bundle init contract.', defaultBehavior: 'Empty; the deploy script derives a release URL when repository and expected commit are available.', emptyBehavior: 'An empty value requests URL derivation.', invalidBehavior: 'Local render and the bundle contract reject an unsafe scheme or selected-receipt mismatch. The separate remote URL-existence check can reject an unavailable archive, but is skipped for configured Secret auth, missing curl, render-only mode, or the explicit skip switch.', precedence: 'A non-empty environment URL wins; then selected values are checked; finally the script derives the GitHub release URL.', impact: `An override must retain the exact ${component} archive identity in the selected release receipt; a valid different URL fails local render validation.`, failure: 'Render or deploy stops before the workload accepts an unverified bundle.' }),
+      EXPECTED_COMMIT: environmentContract({ purpose: `Pins the ${component} source commit that the code-bundle receipt must report.`, acceptedForm: 'The full source commit identifier expected by the bundle contract.', defaultBehavior: 'Uses `SELECTED_RUNTIME_COMMIT` when the environment value is empty.', emptyBehavior: 'An empty value selects `SELECTED_RUNTIME_COMMIT` and does not disable receipt verification.', invalidBehavior: 'A value that differs from the release receipt fails the bundle preflight.', precedence: 'A non-empty environment value wins; otherwise `SELECTED_RUNTIME_COMMIT` applies. Local render validation requires agreement with the selected receipt.', impact: `The value binds the ${component} runtime to one verified source revision.`, failure: 'The workload is not upgraded with the unverified bundle.' }),
+      CONTRACT_VERSION: environmentContract({ purpose: `Selects the code-bundle manifest contract expected by the ${component} init path.`, acceptedForm: 'Exactly `v2` for the selected runtime release.', defaultBehavior: 'Uses `v2`.', emptyBehavior: 'An empty value is absent and selects `v2`.', invalidBehavior: 'Selected-runtime validation rejects a contract other than `v2`; local render and the bundle init path also enforce receipt agreement.', precedence: 'A non-empty environment value wins; otherwise `v2` applies, without consulting selected Helm values. The selected runtime requires `v2`.', impact: 'Changing it changes which manifest and receipt rules the downloaded archive must satisfy.', failure: 'Render or deployment stops before activating the bundle.' }),
+      AUTH_SECRET: environmentContract({ purpose: `Names the Kubernetes Secret that supplies an optional bearer token for the private ${component} bundle archive.`, acceptedForm: 'A Kubernetes Secret name in the target namespace.', defaultBehavior: 'Uses a selected/overlay `auth.existingSecret` when supplied; otherwise public archive access uses no auth Secret.', emptyBehavior: 'An empty environment value requests the selected/overlay Secret, or no Secret-backed authentication when that source is empty.', invalidBehavior: 'An invalid or missing named Secret causes render, init, or archive download failure.', precedence: 'A non-empty environment value wins; otherwise selected values can name the Secret.', impact: 'This is a public object name, not credential payload. It changes which Secret the init container references.', failure: 'The workload cannot fetch a private bundle and does not become ready.' }),
+      AUTH_SECRET_KEY: environmentContract({ purpose: `Names the key within the ${component} bundle authentication Secret.`, acceptedForm: 'A key present in the named Kubernetes Secret.', defaultBehavior: 'Starts with `token`, then replaces it with a non-empty selected/overlay `existingSecretKey`.', emptyBehavior: 'An empty environment value follows the selected/overlay key, or `token` when that key is empty.', invalidBehavior: 'A missing key causes the bundle init container to fail.', precedence: 'A non-empty environment value other than `token` wins. Any effective `token`, including an explicit environment value, is replaced by a non-empty selected/overlay `existingSecretKey`; otherwise `token` applies.', impact: 'This is a public key name, not credential payload.', failure: 'The private bundle cannot be downloaded and the workload remains unready.' }),
+    };
+    return definitions[field];
+  }
+  const componentSwitch = name.match(/^KUBECLAW_DEPLOY_(POSTGRESQL|LITELLM|SPIRE|PRISM)$/u);
+  if (componentSwitch) return environmentContract({ purpose: `Enables or skips ${componentSwitch[1]} in the deployment path.`, acceptedForm: 'A boolean-like value accepted by `component_enabled`: `1`, `true`, `yes`, `on`, or `enabled` enables it; `0`, `false`, `no`, `off`, or `disabled` disables it.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'Any unrecognized value behaves as disabled because `component_enabled` matches only normalized `true`.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `true`.', impact: `Disabling the switch skips ${componentSwitch[1]} installation; dependent features can remain unavailable.`, failure: 'The script reports the skip. It does not prove that dependent workloads can operate without the component.' });
+  const values = name.match(/^(NOVA|BUSTER|POSTGRESQL|REDIS|SPIRE|TAILSCALE)_VALUES_FILE$/u);
+  if (values) return environmentContract({ purpose: `Selects the ${values[1].toLowerCase()} Helm values file or private overlay used by deployment.`, acceptedForm: 'A readable YAML file path.', defaultBehavior: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'Empty; no private overlay is added.' : 'Uses the checked-in infrastructure values file.', emptyBehavior: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'An empty value adds no private overlay.' : 'An empty value is absent and selects the checked-in file.', invalidBehavior: 'Deployment stops when a required file is missing, unreadable, or invalid YAML.', precedence: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'The selected release values form the base; this non-empty private file is appended as the later Helm values source.' : 'A non-empty process path replaces the default checked-in values-file path; later Helm command-line overrides still win.', impact: 'Changing the file changes the rendered release configuration and therefore requires a fresh render and readiness check.', failure: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'Preflight, Helm rendering, or the atomic agent release fails before the new configuration is accepted.' : 'Preflight, Helm rendering, or infrastructure readiness can fail. These infrastructure Helm commands use `--wait` without `--atomic`; partial release state can remain.' });
+  const release = name.match(/^(POSTGRESQL|REDIS|PRISM|TAILSCALE_OPERATOR)_RELEASE$/u);
+  if (release) return environmentContract({ purpose: `Selects the Helm release name for ${release[1].toLowerCase()}.`, acceptedForm: 'A valid Helm release name that matches the intended existing or new release.', defaultBehavior: `Uses \`${release[1] === 'TAILSCALE_OPERATOR' ? 'tailscale-operator' : release[1].toLowerCase()}\`.`, emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'Helm rejects an invalid name; selecting the wrong valid name can create a second release instead of upgrading the intended one.', precedence: 'A non-empty process value wins; otherwise the deploy script uses its checked-in release name.', impact: 'The name is part of stateful-release ownership and uninstall targeting.', failure: 'Preflight or Helm stops; an incorrectly selected valid name requires operator reconciliation.' });
+  const compatibilityImage = name.match(/^(GENERAL|NAMESPACE_CONTROLLER)_IMAGE_(REPOSITORY|TAG)$/u);
+  if (compatibilityImage) {
+    const currentName = compatibilityImage[1] === 'GENERAL' ? `NOVA_IMAGE_${compatibilityImage[2]}` : `BUSTER_CONTROLLER_IMAGE_${compatibilityImage[2]}`;
+    const kind = compatibilityImage[2];
+    if (kind === 'TAG') return environmentContract({ purpose: `Retains the rejected compatibility tag selector for ${currentName}.`, acceptedForm: 'Leave unset or empty.', defaultBehavior: 'Empty; selected digest-release values remain authoritative.', emptyBehavior: 'Adds no tag override.', invalidBehavior: 'Any non-empty effective tag is rejected before rendering with the selected-digest release error.', precedence: `A non-empty ${currentName} wins; otherwise this compatibility value becomes the rejected effective tag.`, impact: 'A tag cannot redirect the selected immutable executable image.', failure: 'Deployment stops before Helm render or rollout.' });
+    return environmentContract({ purpose: `Supplies the compatibility fallback for \`${currentName}\` when the current image override is empty.`, acceptedForm: kind === 'TAG' ? 'An image tag accepted by the container runtime.' : 'An OCI repository without an embedded credential.', defaultBehavior: 'Empty; the selected Helm values remain authoritative.', emptyBehavior: 'An empty value adds no compatibility override.', invalidBehavior: 'Helm or the container runtime rejects an invalid or unavailable effective image reference.', precedence: `A non-empty \`${currentName}\` wins, then this compatibility value, then the selected Helm values.`, impact: `Changing it changes the effective image only while \`${currentName}\` is empty.`, failure: 'Render, image pull, or rollout fails; the atomic Helm operation rolls back when applicable.' });
+  }
+  const image = name.match(/^(NOVA|BUSTER_GATEWAY|BUSTER_CONTROLLER|PRISM_(?:CONTROL|STUDIO|WORKER|INGESTION))_IMAGE_(REPOSITORY|TAG|DIGEST)$/u);
+  if (image) {
+    const kind = image[2];
+    if (kind === 'TAG') return environmentContract({ purpose: `Retains the rejected ${image[1].toLowerCase()} image-tag override.`, acceptedForm: 'Leave unset or empty.', defaultBehavior: 'Empty; selected digest-release values remain authoritative.', emptyBehavior: 'Adds no tag override; Nova and Buster controller can inherit the compatibility tag, which is also rejected when non-empty.', invalidBehavior: 'Any non-empty effective image tag stops deployment before render with the selected-digest release error.', precedence: 'The explicit current tag wins over its compatibility fallback; neither can replace a selected digest release.', impact: 'Executable content remains bound to the selected release receipt.', failure: 'Deployment stops before Helm rendering or rollout.' });
+    const compatibilityFallback = /^(?:NOVA|BUSTER_CONTROLLER)$/u.test(image[1]) && kind !== 'DIGEST';
+    const fallbackName = image[1] === 'NOVA' ? `GENERAL_IMAGE_${kind}` : `NAMESPACE_CONTROLLER_IMAGE_${kind}`;
+    return environmentContract({ purpose: `Overrides the selected ${image[1].toLowerCase().replaceAll('_', ' ')} container image ${kind.toLowerCase()}.`, acceptedForm: kind === 'DIGEST' ? 'A lowercase `sha256:` digest with 64 hexadecimal digits.' : kind === 'TAG' ? 'An image tag accepted by the container runtime.' : 'An OCI repository without an embedded credential.', defaultBehavior: compatibilityFallback ? `Uses \`${fallbackName}\` when that compatibility value is non-empty; otherwise selected values remain authoritative.` : 'Empty; checked-in selected values remain authoritative.', emptyBehavior: compatibilityFallback ? `An empty value selects \`${fallbackName}\` when it is non-empty, then falls back to selected values.` : 'An empty value does not add an override.', invalidBehavior: kind === 'DIGEST' ? 'Prism deployment rejects a missing or invalid effective digest.' : 'Helm or the container runtime rejects an invalid or unavailable image reference.', precedence: compatibilityFallback ? `This non-empty value wins, then \`${fallbackName}\`, then the selected Helm values.` : 'A non-empty environment override wins over the selected values for this image field.', impact: 'Local selected-release render validation requires the exact selected receipt image. A valid-but-different repository or digest fails before rollout; changing executable content requires selecting a different receipt.', failure: 'Render, image pull, or rollout fails; atomic Helm operations roll back when applicable.' });
+  }
+  const preflightImage = name.match(/^KUBECLAW_(KUBERNETES|HTTP|API|A11Y|LIGHTHOUSE|VISUAL|E2E|SECURITY|TAILSCALE|PRODUCTION)_PREFLIGHT_IMAGE$/u);
+  if (preflightImage) return environmentContract({ purpose: `Selects the digest-pinned workload image for the ${preflightImage[1].toLowerCase()} production preflight.`, acceptedForm: 'A reference matching `[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}`: explicit registry, lowercase repository, no tag.', defaultBehavior: 'Empty; the command requires an explicit argument or this environment value.', emptyBehavior: 'An empty value provides no fallback.', invalidBehavior: 'The preflight rejects a missing, mutable, malformed, or unavailable image.', precedence: 'Command argument 2 wins; this environment value is the fallback.', impact: 'The image is the exact test workload whose behavior and receipt are evaluated.', failure: 'The preflight stops and does not issue a successful production receipt.' });
+  const expectedText = name.match(/^KUBECLAW_(HTTP|TAILSCALE)_PREFLIGHT_EXPECTED_TEXT$/u);
+  if (expectedText) return environmentContract({ purpose: `Optionally requires the ${expectedText[1].toLowerCase()} preflight response body to contain an exact text fragment.`, acceptedForm: 'A non-empty UTF-8 text fragment.', defaultBehavior: 'Empty; no extra body-fragment assertion is sent.', emptyBehavior: 'An empty value disables this additional assertion.', invalidBehavior: 'The preflight fails when the response does not contain the supplied fragment.', precedence: 'The process value is forwarded to the test command when non-empty.', impact: 'This narrows success from reachability to reachability plus expected content.', failure: 'The preflight receipt reports failure and deployment acceptance stops.' });
+  const notifyContracts = {
+    OPENCLAW_NOTIFY_CHANNEL: environmentContract({ purpose: 'Selects the OpenClaw channel adapter used for the required terminal-state message.', acceptedForm: 'An OpenClaw channel name accepted by `openclaw message send`.', defaultBehavior: 'Uses `discord`.', emptyBehavior: 'An empty value is absent and selects `discord`.', invalidBehavior: 'OpenClaw rejects an unknown channel and the required notification fails.', precedence: 'A non-empty process value wins; otherwise `discord` applies. Agent reply channel inherits the effective value unless explicitly overridden.', impact: 'Changing it redirects the required channel delivery and default agent reply delivery.', failure: 'The notifier exits 1 when a required delivery attempt fails.' }),
+    OPENCLAW_NOTIFY_TARGET: environmentContract({ purpose: 'Selects the destination identifier for the required OpenClaw channel message.', acceptedForm: 'A destination string accepted by the selected OpenClaw channel.', defaultBehavior: 'Empty; another delivery route can satisfy the notifier precondition.', emptyBehavior: 'No channel message is attempted when empty.', invalidBehavior: 'OpenClaw rejects an unknown or unauthorized destination.', precedence: 'The process value is used directly and becomes the default agent reply target.', impact: 'A non-empty value makes channel delivery required for notifier success.', failure: 'The notifier exits 1 when the required message lacks a successful message ID.' }),
+    OPENCLAW_NOTIFY_SESSION_KEY: environmentContract({ purpose: 'Selects an OpenClaw system-event session that receives a supplemental pipeline event.', acceptedForm: 'An OpenClaw session key.', defaultBehavior: 'Empty; no supplemental system event is sent.', emptyBehavior: 'The system-event route is disabled.', invalidBehavior: 'OpenClaw rejects an unknown session; the attempt is reported as failed.', precedence: 'The process value is used directly.', impact: 'This route is supplemental when another required route exists; by itself, its success determines the notifier result.', failure: 'The notifier exits 1 when it is the only attempted route and delivery fails.' }),
+    OPENCLAW_NOTIFY_SESSION_MODE: environmentContract({ purpose: 'Selects the scheduling mode for the supplemental OpenClaw system event.', acceptedForm: 'A mode accepted by `openclaw system event --mode`.', defaultBehavior: 'Uses `now`.', emptyBehavior: 'An empty value is absent and selects `now`.', invalidBehavior: 'OpenClaw rejects the mode and the session-event attempt fails.', precedence: 'A non-empty process value wins; otherwise `now` applies.', impact: 'The mode changes when the selected session processes the event.', failure: 'The notifier reports the failed supplemental route and can exit 1 if no required route succeeds.' }),
+    OPENCLAW_NOTIFY_ACCOUNT: environmentContract({ purpose: 'Selects the OpenClaw account used for the required channel message.', acceptedForm: 'An account name configured in OpenClaw.', defaultBehavior: 'Uses `default`.', emptyBehavior: 'An empty value is absent and selects `default`.', invalidBehavior: 'OpenClaw rejects an unknown or unauthorized account.', precedence: 'A non-empty process value wins; otherwise `default` applies. Agent reply account inherits it unless explicitly overridden.', impact: 'Changing it changes the sending identity and credential authority.', failure: 'The required delivery fails and the notifier exits 1.' }),
+    OPENCLAW_NOTIFY_SILENT: environmentContract({ purpose: 'Requests silent delivery for the required channel message.', acceptedForm: 'Only exact `1` enables the OpenClaw `--silent` flag.', defaultBehavior: 'Uses `0`.', emptyBehavior: 'An empty value is absent and selects `0`.', invalidBehavior: 'Any value other than exact `1` sends without the silent flag.', precedence: 'A non-empty process value wins; otherwise normal notification applies.', impact: 'This changes recipient notification behavior, not message content or delivery requirements.', failure: 'Unsupported silence behavior is reported by the selected channel adapter.' }),
+    OPENCLAW_NOTIFY_AGENT_ID: environmentContract({ purpose: 'Selects the OpenClaw agent awakened for configured terminal pipeline states.', acceptedForm: 'An installed OpenClaw agent identifier.', defaultBehavior: 'Uses `main`.', emptyBehavior: 'An empty value is absent and selects `main`.', invalidBehavior: 'OpenClaw rejects an unknown agent.', precedence: 'A non-empty process value wins; otherwise `main` applies.', impact: 'Changing it changes which agent receives the pipeline context and continuation request.', failure: 'The required agent wake fails and the notifier exits 1.' }),
+    OPENCLAW_NOTIFY_AGENT_SESSION_KEY: environmentContract({ purpose: 'Selects the OpenClaw agent session awakened for matching terminal statuses.', acceptedForm: 'A non-empty OpenClaw agent session key.', defaultBehavior: 'Empty; no agent wake is attempted.', emptyBehavior: 'The agent route is disabled.', invalidBehavior: 'OpenClaw rejects an unknown session key.', precedence: 'The process value is used directly.', impact: 'When non-empty and the status policy matches, agent wake becomes a required delivery.', failure: 'The notifier exits 1 when the required agent call does not return a JSON object.' }),
+    OPENCLAW_NOTIFY_AGENT_ON_STATUSES: environmentContract({ purpose: 'Selects the pipeline status values that can trigger an OpenClaw agent wake.', acceptedForm: 'A comma-separated list compared case-insensitively after trimming; for example `failed,complete`.', defaultBehavior: 'Uses `failed`.', emptyBehavior: 'An empty value selects `failed`; a non-empty list with no matching token triggers no agent wake.', invalidBehavior: 'Unknown tokens never match and therefore do not trigger the agent route.', precedence: 'The process value is used directly; the pipeline level is compared with each normalized token.', impact: 'Adding a status can wake the agent for non-failure terminal messages.', failure: 'A nonmatching policy silently skips the agent route; other configured routes still determine success.' }),
+    OPENCLAW_NOTIFY_AGENT_TIMEOUT_SECONDS: environmentContract({ purpose: 'Limits the OpenClaw agent command execution time.', acceptedForm: 'A seconds value accepted by `openclaw agent --timeout`.', defaultBehavior: 'Uses `180` seconds.', emptyBehavior: 'An empty value is absent and selects `180`.', invalidBehavior: 'OpenClaw rejects an invalid timeout or the call fails when the limit expires.', precedence: 'A non-empty process value wins; otherwise 180 seconds applies.', impact: 'A shorter value bounds wake latency but can stop a slow agent response.', failure: 'The required agent route fails and the notifier exits 1.' }),
+    OPENCLAW_NOTIFY_AGENT_DELIVER: environmentContract({ purpose: 'Controls whether the awakened agent also sends its reply through a channel.', acceptedForm: 'Only exact `1` enables `--deliver`.', defaultBehavior: 'Uses `1`.', emptyBehavior: 'An empty value is absent and selects `1`.', invalidBehavior: 'Any value other than exact `1` disables reply delivery while retaining the agent call.', precedence: 'A non-empty process value wins; otherwise reply delivery is enabled.', impact: 'Disabling it keeps the agent result in the session and sends no channel reply.', failure: 'When enabled, invalid reply routing can make the agent command fail.' }),
+    OPENCLAW_NOTIFY_AGENT_REPLY_CHANNEL: environmentContract({ purpose: 'Selects the channel used for an awakened agent reply.', acceptedForm: 'An OpenClaw channel name.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_CHANNEL`.', emptyBehavior: 'An empty value inherits the effective `OPENCLAW_NOTIFY_CHANNEL`.', invalidBehavior: 'OpenClaw rejects an unknown channel.', precedence: 'An explicit non-empty process value wins; otherwise the effective notification channel applies.', impact: 'Changing it separates agent replies from the primary notification channel.', failure: 'The agent delivery route fails when the selected adapter is invalid or unavailable.' }),
+    OPENCLAW_NOTIFY_AGENT_REPLY_TARGET: environmentContract({ purpose: 'Selects the destination for an awakened agent reply.', acceptedForm: 'A target accepted by the reply channel.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_TARGET`.', emptyBehavior: 'No `--deliver` arguments are added when the effective target is empty.', invalidBehavior: 'OpenClaw rejects an unknown or unauthorized target.', precedence: 'An explicit non-empty process value wins; otherwise the primary notification target applies.', impact: 'Changing it redirects only the agent reply.', failure: 'The agent delivery route fails when enabled with an invalid target.' }),
+    OPENCLAW_NOTIFY_AGENT_REPLY_ACCOUNT: environmentContract({ purpose: 'Selects the OpenClaw account used to deliver an awakened agent reply.', acceptedForm: 'An account name configured in OpenClaw.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_ACCOUNT`.', emptyBehavior: 'An empty value is absent and inherits the primary account.', invalidBehavior: 'OpenClaw rejects an unknown or unauthorized account.', precedence: 'An explicit non-empty process value wins; otherwise the effective notification account applies.', impact: 'Changing it changes the reply sending identity.', failure: 'The agent delivery route fails when the account cannot send to the selected target.' }),
+    PIPELINE_LIGHT_MESSAGE: environmentContract({ purpose: 'Supplies the human-readable pipeline status body sent through each selected route.', acceptedForm: 'A non-empty UTF-8 string.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value stops the notifier with exit 2.', invalidBehavior: 'The script accepts arbitrary text and prefixes it with the selected level; downstream adapters can impose length limits.', precedence: 'The process value is the only message source.', impact: 'The same prefixed payload is used for session and channel delivery and embedded in the agent wake message.', failure: 'No delivery is attempted when the value is empty.', required: 'required' }),
+    PIPELINE_LIGHT_LEVEL: environmentContract({ purpose: 'Labels the pipeline message and selects whether the agent status policy matches.', acceptedForm: 'A status token; the notifier lowercases and trims it only for policy comparison.', defaultBehavior: 'Uses `info`.', emptyBehavior: 'An empty value is absent and selects `info`.', invalidBehavior: 'Unknown text is still sent as a label but matches an agent route only when the policy contains the same normalized token.', precedence: 'A non-empty process value wins; otherwise `info` applies.', impact: 'The value appears in the message prefix and controls conditional agent wake.', failure: 'A typo can prevent the intended agent wake while channel/session delivery still occurs.' }),
+    PIPELINE_LIGHT_STATUS_FILE: environmentContract({ purpose: 'Adds the pipeline status-file path to the awakened agent context.', acceptedForm: 'A filesystem path meaningful to the receiving agent.', defaultBehavior: 'Empty; the context omits the field.', emptyBehavior: 'No status-file line is added.', invalidBehavior: 'The notifier does not read or validate this path; an incorrect path gives the agent unusable context.', precedence: 'The process value is used directly when non-empty.', impact: 'It affects agent context only, not the primary notification payload.', failure: 'The agent can fail to inspect pipeline state, but message delivery itself can still succeed.' }),
+    PIPELINE_LIGHT_WATCHDOG_LOG_FILE: environmentContract({ purpose: 'Adds the pipeline watchdog log path to the awakened agent context.', acceptedForm: 'A filesystem path meaningful to the receiving agent.', defaultBehavior: 'Empty; the context omits the field.', emptyBehavior: 'No watchdog-log line is added.', invalidBehavior: 'The notifier does not read or validate this path.', precedence: 'The process value is used directly when non-empty.', impact: 'It gives the agent a diagnostic location without attaching log contents.', failure: 'An incorrect path limits diagnosis but does not by itself fail delivery.' }),
+    PIPELINE_LIGHT_RUN_PID: environmentContract({ purpose: 'Adds the watched pipeline process ID to the awakened agent context.', acceptedForm: 'A process identifier represented as text.', defaultBehavior: 'Empty; the context omits the field.', emptyBehavior: 'No process-ID line is added.', invalidBehavior: 'The notifier does not validate the PID; an invalid value gives the agent incorrect context.', precedence: 'The process value is used directly when non-empty.', impact: 'It helps the agent correlate the notification with a local run.', failure: 'An incorrect value limits diagnosis but does not by itself fail delivery.' }),
+  };
+  if (notifyContracts[name]) return notifyContracts[name];
+  return null;
+}
+
+function environmentMeaning(name, consumers) {
+  const consumer = consumers[0];
+  return { status: 'environment-consumer-contract-blocker',
+    text: `The receiving-source contract for ${name} must be established for each listed reader or external producer boundary.`,
+    evidence: `${consumer.path}:${consumer.line}`, blockerOwner: sourceOwner(consumer.path).component,
+    closureCondition: 'Qualify each exact receiving source with its default, empty and invalid behavior, required condition, precedence, owner, owning setting, change effect and failure.', contract: null };
+}
+
+const OPERATOR_ENV_SOURCE_RULES = [
+  /^scripts\/deploy\.sh$/u,
+  /^scripts\/deploy-(?:argocd|cilium|ops-pod)\.sh$/u,
+  /^scripts\/setup\.sh$/u,
+  /^my-values\/setup-secrets\.sh$/u,
+  /^scripts\/(?:postgresql-recovery|redis-prepare-migration|pipeline-light-[a-z0-9-]+|activate-native-worker-[a-z0-9-]+|repair-[a-z0-9-]+|migrate-[a-z0-9-]+|install-[a-z0-9-]+|rotate-[a-z0-9-]+|backup-[a-z0-9-]+|restore-[a-z0-9-]+)\.sh$/u,
+];
+
+function operatorEnvironmentSource(sourcePath) {
+  return OPERATOR_ENV_SOURCE_RULES.some((rule) => rule.test(sourcePath));
+}
+
+function typeOf(value) {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  if (Number.isInteger(value)) return 'integer';
+  return typeof value;
+}
+
+function redactValue(fieldPath, value) {
+  let lastSegment;
+  try {
+    lastSegment = String(yamlFieldPathTokens(fieldPath)
+      .filter((token) => typeof token === 'string')
+      .at(-1) ?? fieldPath);
+  }
+  catch { lastSegment = fieldPath.split('.').at(-1)?.replace(/\[[0-9]+\]$/u, '') ?? fieldPath; }
+  if (SENSITIVE_VALUE_NAME.test(lastSegment)) return '<redacted:sensitive-field>';
+  if (typeof value === 'string') {
+    if (value.length > 160) return `<redacted:long-string:${value.length}>`;
+    if (/^(?:ghp_|github_pat_|sk-|tskey-|-----BEGIN )/.test(value)) return '<redacted:credential-shape>';
+    if (/^[0-9]{15,20}$/.test(value)) return '<redacted:identity-number>';
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return '<redacted:identity-email>';
+    if (/^[a-z][a-z0-9+.-]*:\/\/[^/\s:@]+:[^/\s@]+@/i.test(value)) return '<redacted:credential-url>';
+  }
+  return value;
+}
+
+function environmentDefaultIsSecretPayload(name) {
+  if (/(?:_VERIFY_KEY|_PUBLIC_KEY|_TLS_CERT|_CA_FILE)$/u.test(name)) return false;
+  if (/(?:_CLIENT_ID|_USER|_USERNAME|_ACCOUNT|_PRODUCER|_AUDIENCE|_ISSUER)$/u.test(name)) return false;
+  if (['PGUSER', 'REDIS_USERNAME'].includes(name)) return false;
+  if (/^(?:DISABLE_IMAGE_PULL_SECRETS|KUBECLAW_RUN_SECRET_SETUP|KUBECLAW_SECRET_SETUP_MODE|KUBECLAW_SECRETS_OVERWRITE|OPS_COPY_PULL_SECRET|BUSTER_SECRET_ROLE_NAME)$/u.test(name)) return false;
+  if (/_AUTH_SECRET_KEY$/u.test(name)) return false;
+  if (/(?:_AUTH_SECRET|_PREFLIGHT_SECRET|_SECRET_NAME)$/u.test(name)) return false;
+  if (/(?:ALLOWED|SOURCE).*SECRETS?$/u.test(name)) return false;
+  if (/SECRET.*(?:NAMESPACE|REF)$/u.test(name) || /CREDENTIAL_AUTHORITY_REF$/u.test(name)) return false;
+  if (/_FILE$/u.test(name)) return false;
+  return SENSITIVE_ENV_NAME.test(name);
+}
+
+function shellParameterValue(operator, name, rawValue) {
+  if (!operator) return { role: 'none', display: '<none>' };
+  if (operator.includes('?')) return { role: 'required-guard', display: '<no default; expansion stops when the requirement is not met>' };
+  if (operator.includes('+')) {
+    return {
+      role: 'alternate',
+      display: environmentDefaultIsSecretPayload(name) ? '<redacted:sensitive-field>' : redactValue('environment-value', rawValue),
+    };
+  }
+  if (rawValue?.includes('${')) return { role: 'default', display: '<nested parameter expansion; see source>' };
+  return {
+    role: 'default',
+    display: environmentDefaultIsSecretPayload(name) ? '<redacted:sensitive-field>' : redactValue('environment-value', rawValue),
+  };
+}
+
+function stableObject(value) {
+  if (Array.isArray(value)) return value.map(stableObject);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).map(([key, item]) => [key, stableObject(item)]));
+  }
+  return value;
+}
+
+function stableJson(value) {
+  return `${JSON.stringify(stableObject(value), null, 2)}\n`;
+}
+
+function sha256(text) {
+  return crypto.createHash('sha256').update(text).digest('hex');
+}
+
+const priorInventoryCache = new Map();
+function priorInventory(name) {
+  if (priorInventoryCache.has(name)) return priorInventoryCache.get(name);
+  const target = path.join(outputDirectory, name);
+  let inventory = null;
+  if (fs.existsSync(target)) {
+    try { inventory = JSON.parse(fs.readFileSync(target, 'utf8')); } catch { /* Invalid prior output supplies no semantic authority. */ }
+  }
+  priorInventoryCache.set(name, inventory);
+  return inventory;
+}
+
+function yamlClass(relativePath) {
+  if (/^charts\/[^/]+\/(?:ci-)?values\.ya?ml$/.test(relativePath)) return 'helm-values';
+  if (relativePath.startsWith('gitops/platform/values/')) return 'gitops-values';
+  if (relativePath.startsWith('gitops/')) return 'gitops-manifest';
+  if (relativePath.startsWith('releases/values/')) return 'release-values';
+  if (/^my-values\/[^/]+-values\.ya?ml$/.test(relativePath)) return 'helm-overlay';
+  if (/^examples\/[^/]+-values\.ya?ml$/.test(relativePath)) return 'helm-example';
+  if (relativePath.startsWith('my-values/')) return 'operator-values-or-manifest';
+  return 'yaml-configuration';
+}
+
+function yamlSources() {
+  const files = new Set();
+  for (const sourceRoot of SOURCE_ROOTS) {
+    for (const file of walk(sourceRoot, (absolutePath) => /\.ya?ml$/.test(absolutePath))) {
+      if (file.startsWith('charts/') && !/(?:^|\/)(?:ci-)?values\.ya?ml$/.test(file)) continue;
+      files.add(file);
+    }
+  }
+  return [...files].sort();
+}
+
+function canonicalHelmPath(value) {
+  return yamlFieldPathWithoutRoot(value, { arrayWildcard: true });
+}
+
+function helmValueLeafCatalog() {
+  const result = new Map();
+  const sourceChart = (sourcePath) => {
+    if (sourcePath.startsWith('charts/')) return sourcePath.split('/').slice(0, 2).join('/');
+    if (sourcePath === 'my-values/prism-values.yaml') return 'charts/prism';
+    return 'charts/kubeclaw';
+  };
+  const visit = (value, tokens, leaves) => {
+    if (tokens.length) leaves.add(yamlFieldPath(tokens, { root: false }));
+    if (Array.isArray(value)) {
+      value.forEach((item) => visit(item, [...tokens, '[]'], leaves));
+      return;
+    }
+    if (value && typeof value === 'object') {
+      Object.entries(value).forEach(([key, item]) => {
+        visit(item, [...tokens, key], leaves);
+      });
+      return;
+    }
+    if (tokens.length) leaves.add(yamlFieldPath(tokens, { root: false }));
+  };
+  for (const sourcePath of yamlSources().filter((item) => ['helm-values', 'helm-overlay', 'helm-example'].includes(yamlClass(item)))) {
+    const chart = sourceChart(sourcePath);
+    const leaves = result.get(chart) ?? new Set();
+    for (const document of YAML.parseAllDocuments(read(sourcePath), { prettyErrors: false })) {
+      if (!document.errors.length) visit(document.toJS(), [], leaves);
+    }
+    result.set(chart, leaves);
+  }
+  return result;
+}
+
+function helmActions(text) {
+  return [...text.matchAll(/\{\{-?([\s\S]*?)-?\}\}/gu)].map((match) => {
+    const expression = match[1].trim();
+    const command = /^(else\s+if|define|if|with|range|else|end)\b/u.exec(expression)?.[1]?.replace(/\s+/gu, ' ') ?? 'expression';
+    return { expression, command, index: match.index, end: match.index + match[0].length, line: lineAt(text, match.index) };
+  });
+}
+
+function balancedHelmBody(actions, startIndex) {
+  let depth = 1;
+  for (let index = startIndex + 1; index < actions.length; index += 1) {
+    if (['define', 'if', 'with', 'range'].includes(actions[index].command)) depth += 1;
+    else if (actions[index].command === 'end') depth -= 1;
+    if (depth === 0) return actions.slice(startIndex + 1, index);
+  }
+  throw new Error(`CONFIG_HELM_CONTROL_UNBALANCED: ${actions[startIndex].command} at line ${actions[startIndex].line}`);
+}
+
+function helmHelperDefinitions() {
+  const definitions = new Map();
+  for (const sourcePath of walk('charts', (absolutePath) => /\/templates\//u.test(absolutePath))) {
+    const text = read(sourcePath);
+    const actions = helmActions(text);
+    for (let index = 0; index < actions.length; index += 1) {
+      const action = actions[index];
+      const name = action.command === 'define' ? /^define\s+"([^"]+)"/u.exec(action.expression)?.[1] : null;
+      if (!name) continue;
+      const body = balancedHelmBody(actions, index);
+      const aliases = new Map();
+      const accesses = [];
+      for (const item of body) {
+        const assignment = /^(\$[A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*(?:deepCopy\s+)?\.([A-Za-z_][A-Za-z0-9_.-]*)/u.exec(item.expression);
+        if (assignment) aliases.set(assignment[1], assignment[2]);
+        for (const relative of item.expression.matchAll(/(?:^|[\s(|,])\.([A-Za-z_][A-Za-z0-9_.-]*)/gu)) {
+          if (/^(?:Values|Release|Chart|Capabilities|Template)(?:\.|$)/u.test(relative[1])) continue;
+          accesses.push({ suffix: relative[1], path: sourcePath, line: item.line, expression: item.expression });
+        }
+        for (const [variable, base] of aliases) {
+          const escaped = variable.replace(/\$/gu, '\\$');
+          for (const relative of item.expression.matchAll(new RegExp(`${escaped}\\.([A-Za-z_][A-Za-z0-9_.-]*)`, 'gu'))) {
+            accesses.push({ suffix: `${base}.${relative[1]}`, path: sourcePath, line: item.line, expression: item.expression });
+          }
+          if (new RegExp(`\\b(?:toYaml|toJson)\\s+${variable.replace(/\$/gu, '\\$')}\\b`, 'u').test(item.expression)) {
+            accesses.push({ suffix: base, path: sourcePath, line: item.line, expression: item.expression, serialized: true });
+          }
+        }
+      }
+      definitions.set(name, { name, sourcePath, line: action.line, accesses });
+    }
+  }
+  return definitions;
+}
+
+function chartConsumers() {
+  const consumers = new Map();
+  const leafCatalog = helmValueLeafCatalog();
+  const helperDefinitions = helmHelperDefinitions();
+  for (const file of walk('charts', (absolutePath) => /\/templates\//u.test(absolutePath) && !/\/NOTES\.txt$/u.test(absolutePath))) {
+    const text = read(file);
+    const lines = text.split('\n');
+    const chart = file.split('/').slice(0, 2).join('/');
+    const chartLeaves = leafCatalog.get(chart) ?? new Set();
+    const actions = helmActions(text);
+    const add = (valuePath, match, details = {}) => {
+      const canonicalPath = canonicalHelmPath(valuePath);
+      const key = `${chart}:${canonicalPath}`;
+      const entries = consumers.get(key) ?? [];
+      const consumerPath = details.consumerPath ?? file;
+      const consumerText = consumerPath === file ? text : read(consumerPath);
+      const consumerLines = consumerPath === file ? lines : consumerText.split('\n');
+      const line = details.consumerLine ?? match.line ?? lineAt(text, match.index);
+      const lineText = consumerLines[line - 1] ?? '';
+      const nearby = consumerLines.slice(Math.max(0, line - 3), line + 2).join(' ');
+      const entry = {
+        path: consumerPath,
+        line,
+        kind: details.kind ?? 'helm-template',
+        authority: `${chart} template`,
+        templateExpression: lineText.trim().slice(0, 240),
+        exactValuePath: canonicalPath,
+        bindingKind: details.bindingKind ?? 'exact-leaf-access',
+        bindingProof: details.bindingProof ?? `the expression reads .Values.${canonicalPath}`,
+        helperCallProof: details.helperCallProof ?? null,
+        requiredSignal: /\brequired\b|\bfail\b/u.test(lineText),
+        conditionalSignal: /\{\{-?\s*(?:if|with)\b|\bdefault\b/u.test(nearby),
+        constraints: [
+          /\bregexMatch\b/u.test(lineText) ? 'template regexMatch validation' : null,
+          /\brequired\b/u.test(lineText) ? 'Helm required expression' : null,
+          /\bfail\b/u.test(lineText) ? 'Helm fail expression' : null,
+        ].filter(Boolean),
+      };
+      if (!entries.some((current) => current.path === entry.path && current.line === entry.line
+        && current.exactValuePath === entry.exactValuePath && current.bindingKind === entry.bindingKind)) entries.push(entry);
+      consumers.set(key, entries);
+    };
+    const addExactOrSerialized = (basePath, match, expression) => {
+      const base = canonicalHelmPath(basePath);
+      if (chartLeaves.has(base)) add(base, match);
+      if (/\b(?:toYaml|toJson|join)\b/u.test(expression)) {
+        for (const leafPath of chartLeaves) if (leafPath.startsWith(`${base}.`) || leafPath.startsWith(`${base}[]`)) {
+          add(leafPath, match, {
+            bindingKind: 'serialized-subtree-leaf',
+            bindingProof: `${expression.trim()} serializes ancestor ${base}; ${leafPath} is an exact checked-in descendant leaf`,
+          });
+        }
+      }
+    };
+    const variableRoots = new Map();
+    for (const action of actions) {
+      for (const match of action.expression.matchAll(/(?:\$[A-Za-z_][A-Za-z0-9_]*\.)?Values((?:\.[A-Za-z_][A-Za-z0-9_-]*|\[[0-9]+\])+)/gu)) {
+        addExactOrSerialized(match[1].replace(/^\./u, ''), action, action.expression);
+      }
+      const assignment = /^(\$[A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*(?:\$[A-Za-z_][A-Za-z0-9_]*\.)?Values((?:\.[A-Za-z_][A-Za-z0-9_-]*|\[[0-9]+\])+)/u.exec(action.expression);
+      if (assignment) variableRoots.set(assignment[1], canonicalHelmPath(assignment[2].replace(/^\./u, '')));
+      const derivedAssignment = /^(\$[A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*[\s\S]*?(\$[A-Za-z_][A-Za-z0-9_]*)(?:\.([A-Za-z_][A-Za-z0-9_.-]*))?/u.exec(action.expression);
+      if (!assignment && derivedAssignment && variableRoots.has(derivedAssignment[2])) {
+        variableRoots.set(derivedAssignment[1], `${variableRoots.get(derivedAssignment[2])}${derivedAssignment[3] ? `.${derivedAssignment[3]}` : ''}`);
+      }
+      for (const [variable, base] of variableRoots) {
+        const escaped = variable.replace(/\$/gu, '\\$');
+        for (const match of action.expression.matchAll(new RegExp(`${escaped}((?:\\.[A-Za-z_][A-Za-z0-9_-]*)+)`, 'gu'))) {
+          const suffix = match[1].replace(/^\./u, '');
+          const exact = `${base}.${suffix}`;
+          if (chartLeaves.has(exact)) add(exact, action, {
+            bindingKind: 'assigned-variable-leaf-access',
+            bindingProof: `${variable} is bound to .Values.${base} and this expression reads ${variable}.${suffix}`,
+          });
+        }
+      }
+      for (const call of action.expression.matchAll(/(?:include|template)\s+"([^"]+)"\s+((?:\$[A-Za-z_][A-Za-z0-9_]*\.)?\.?Values(?:\.[A-Za-z_][A-Za-z0-9_-]*|\[[0-9]+\])+)/gu)) {
+        const helper = helperDefinitions.get(call[1]);
+        if (!helper) throw new Error(`CONFIG_HELM_HELPER_UNRESOLVED: ${file}:${action.line} ${call[1]}`);
+        const base = canonicalHelmPath(call[2].replace(/^(?:\$[A-Za-z_][A-Za-z0-9_]*\.)?\.?Values\.?/u, ''));
+        for (const access of helper.accesses) {
+          const exact = `${base}.${access.suffix}`;
+          if (!chartLeaves.has(exact)) continue;
+          add(exact, action, {
+            consumerPath: access.path,
+            consumerLine: access.line,
+            bindingKind: 'helper-body-leaf-access',
+            bindingProof: `${file}:${action.line} passes .Values.${base} to helper ${helper.name}; ${access.path}:${access.line} reads exact relative leaf .${access.suffix}`,
+            helperCallProof: { path: file, line: action.line, helper: helper.name, argumentPath: base, sourceLineSha256: sha256(lines[action.line - 1] ?? '') },
+          });
+        }
+      }
+    }
+    for (let actionIndex = 0; actionIndex < actions.length; actionIndex += 1) {
+      const action = actions[actionIndex];
+      if (!['range', 'with'].includes(action.command)) continue;
+      const baseMatch = /(?:\$[A-Za-z_][A-Za-z0-9_]*\.)?Values((?:\.[A-Za-z_][A-Za-z0-9_-]*|\[[0-9]+\])+)/u.exec(action.expression);
+      if (!baseMatch) continue;
+      const base = canonicalHelmPath(baseMatch[1].replace(/^\./u, ''));
+      const body = balancedHelmBody(actions, actionIndex);
+      const itemBase = action.command === 'range' ? `${base}[]` : base;
+      let provedLeaf = false;
+      for (const bodyAction of body) {
+        for (const call of bodyAction.expression.matchAll(/(?:include|template)\s+"([^"]+)"\s+\(dict[\s\S]*?"([A-Za-z_][A-Za-z0-9_]*)"\s+\./gu)) {
+          const helper = helperDefinitions.get(call[1]);
+          if (!helper) continue;
+          const argumentName = call[2];
+          for (const access of helper.accesses) {
+            if (access.suffix !== argumentName && !access.suffix.startsWith(`${argumentName}.`)) continue;
+            const relative = access.suffix === argumentName ? '' : access.suffix.slice(argumentName.length + 1);
+            const candidates = access.serialized && !relative
+              ? [...chartLeaves].filter((leafPath) => leafPath === itemBase || leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`))
+              : [`${itemBase}${relative ? `.${relative}` : ''}`];
+            for (const exact of candidates) {
+              if (!chartLeaves.has(exact)) continue;
+              provedLeaf = true;
+              add(exact, bodyAction, {
+                consumerPath: access.path,
+                consumerLine: access.line,
+                bindingKind: `${action.command}-dict-helper-${access.serialized ? 'serialized-item-leaf' : 'item-leaf-access'}`,
+                bindingProof: `${action.command} at ${file}:${action.line} binds . to ${itemBase}; ${file}:${bodyAction.line} passes it as dict key ${argumentName} to ${helper.name}; ${access.path}:${access.line} ${access.serialized ? 'serializes that exact item subtree' : `reads .${access.suffix}`}`,
+                helperCallProof: { path: file, line: bodyAction.line, helper: helper.name, argumentPath: itemBase, sourceLineSha256: sha256(lines[bodyAction.line - 1] ?? '') },
+              });
+            }
+          }
+        }
+        if (action.command === 'range' && /(?:^|[\s(,|])\.(?=$|[\s),|}])/u.test(bodyAction.expression)
+          && ![...chartLeaves].some((fieldPath) => fieldPath.startsWith(`${itemBase}.`) || fieldPath.startsWith(`${itemBase}[]`))) {
+          provedLeaf = true;
+          add(itemBase, bodyAction, {
+            bindingKind: 'range-scalar-item',
+            bindingProof: `range at ${file}:${action.line} binds dot to scalar item ${itemBase}; the body passes that exact scalar item to its rendered receiver`,
+          });
+        }
+        for (const relative of bodyAction.expression.matchAll(/(?:^|[\s(|,])\.([A-Za-z_][A-Za-z0-9_.-]*)/gu)) {
+          const exact = `${itemBase}.${relative[1]}`;
+          if (!chartLeaves.has(exact)) continue;
+          provedLeaf = true;
+          add(exact, bodyAction, {
+            bindingKind: `${action.command}-item-leaf-access`,
+            bindingProof: `${action.command} at ${file}:${action.line} binds . to ${itemBase}; the body reads exact leaf .${relative[1]}`,
+          });
+        }
+        if (/\b(?:toYaml|toJson)\s+\./u.test(bodyAction.expression)) for (const leafPath of chartLeaves) {
+          if (leafPath === itemBase || leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`)) {
+            provedLeaf = true;
+            add(leafPath, bodyAction, {
+              bindingKind: `${action.command}-serialized-item-leaf`,
+              bindingProof: `${action.command} at ${file}:${action.line} binds . to ${itemBase}; the body serializes that exact item subtree`,
+            });
+          }
+        }
+      }
+      if (!provedLeaf && action.command === 'range') {
+        const itemLeaves = [...chartLeaves].filter((leafPath) => leafPath === itemBase);
+        for (const leafPath of itemLeaves) add(leafPath, action, {
+          bindingKind: 'range-scalar-item',
+          bindingProof: `range iterates scalar leaf ${itemBase}`,
+        });
+      }
+    }
+    const matchingLeaves = (pattern, suffix = '', descendants = false) => {
+      const expected = yamlFieldPathTokens(`${pattern}${suffix ? `.${suffix}` : ''}`);
+      const matches = (leafPath) => {
+        const actual = yamlFieldPathTokens(leafPath);
+        if (actual.length < expected.length || (!descendants && actual.length !== expected.length)) return false;
+        return expected.every((token, index) => token === '*' ? typeof actual[index] === 'string' : token === actual[index]);
+      };
+      return [...chartLeaves].filter(matches);
+    };
+    const rangeEnd = (startIndex) => {
+      let depth = 1;
+      for (let index = startIndex + 1; index < actions.length; index += 1) {
+        if (['define', 'if', 'with', 'range'].includes(actions[index].command)) depth += 1;
+        else if (actions[index].command === 'end') depth -= 1;
+        if (depth === 0) return index;
+      }
+      throw new Error(`CONFIG_HELM_CONTROL_UNBALANCED: range at ${file}:${actions[startIndex].line}`);
+    };
+    const resolveExpressionPattern = (expression, environment, dotPattern) => {
+      const direct = /(?:\$[A-Za-z_][A-Za-z0-9_]*\.)?Values((?:\.[A-Za-z_][A-Za-z0-9_-]*|\[[0-9]+\])+)/u.exec(expression);
+      if (direct) return canonicalHelmPath(direct[1].replace(/^\./u, ''));
+      const variable = [...expression.matchAll(/(\$[A-Za-z_][A-Za-z0-9_]*)(?:\.([A-Za-z_][A-Za-z0-9_.-]*))?/gu)]
+        .find((candidate) => environment.has(candidate[1]) && environment.get(candidate[1]) !== '<map-key>');
+      if (variable) return `${environment.get(variable[1])}${variable[2] ? `.${variable[2]}` : ''}`;
+      const relative = /^\.([A-Za-z_][A-Za-z0-9_.-]*)/u.exec(expression.trim());
+      if (relative && dotPattern) return `${dotPattern}.${relative[1]}`;
+      return null;
+    };
+    const analyzeRange = (startIndex, parentEnvironment = new Map(), parentDot = null) => {
+      const start = actions[startIndex];
+      const header = /^range\s+(?:(\$[A-Za-z_][A-Za-z0-9_]*)\s*,\s*)?(\$[A-Za-z_][A-Za-z0-9_]*)\s*:=\s*([\s\S]+)$/u.exec(start.expression);
+      const simpleSource = !header ? /^range\s+([\s\S]+)$/u.exec(start.expression)?.[1] : null;
+      const sourceExpression = header?.[3] ?? simpleSource;
+      if (!sourceExpression) return;
+      const sourcePattern = resolveExpressionPattern(sourceExpression, parentEnvironment, parentDot);
+      if (!sourcePattern) return;
+      const arrayItems = [...chartLeaves].some((leafPath) => leafPath === `${sourcePattern}[]` || leafPath.startsWith(`${sourcePattern}[].`));
+      const itemPattern = arrayItems ? `${sourcePattern}[]` : `${sourcePattern}.*`;
+      const environment = new Map(parentEnvironment);
+      if (header?.[1]) environment.set(header[1], '<map-key>');
+      if (header?.[2]) environment.set(header[2], itemPattern);
+      const dotPattern = header ? itemPattern : itemPattern;
+      const endIndex = rangeEnd(startIndex);
+      for (let index = startIndex + 1; index < endIndex; index += 1) {
+        const item = actions[index];
+        if (item.command === 'range') {
+          analyzeRange(index, environment, dotPattern);
+          index = rangeEnd(index);
+          continue;
+        }
+        const alias = /^(\$[A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*([\s\S]+)$/u.exec(item.expression);
+        if (alias) {
+          const resolved = resolveExpressionPattern(alias[2], environment, dotPattern);
+          if (resolved) environment.set(alias[1], resolved);
+        }
+        for (const [variable, pattern] of environment) {
+          if (pattern === '<map-key>') continue;
+          const escaped = variable.replace(/\$/gu, '\\$');
+          const uses = [...item.expression.matchAll(new RegExp(`${escaped}(?![A-Za-z0-9_])(?:\\.([A-Za-z_][A-Za-z0-9_.-]*))?`, 'gu'))];
+          for (const use of uses) {
+            const suffix = use[1] ?? '';
+            const descendants = /\b(?:dict|append|toYaml|toJson)\b/u.test(item.expression) && Boolean(suffix);
+            for (const leafPath of matchingLeaves(pattern, suffix, descendants)) add(leafPath, item, {
+              bindingKind: descendants ? 'range-derived-subtree-leaf' : 'range-variable-leaf-access',
+              bindingProof: `balanced range at ${file}:${start.line} binds ${variable} to ${pattern}; ${file}:${item.line} reads ${variable}${suffix ? `.${suffix}` : ''}${descendants ? ' into a serialized or validated derived value' : ''}`,
+            });
+          }
+        }
+        for (const relative of item.expression.matchAll(/(?:^|[\s(|,])\.([A-Za-z_][A-Za-z0-9_.-]*)/gu)) {
+          const descendants = /\b(?:dict|append|toYaml|toJson)\b/u.test(item.expression);
+          for (const leafPath of matchingLeaves(dotPattern, relative[1], descendants)) add(leafPath, item, {
+            bindingKind: descendants ? 'range-relative-subtree-leaf' : 'range-relative-leaf-access',
+            bindingProof: `balanced range at ${file}:${start.line} binds dot to ${dotPattern}; ${file}:${item.line} reads .${relative[1]}`,
+          });
+        }
+      }
+    };
+    actions.forEach((action, index) => {
+      if (action.command === 'range') analyzeRange(index);
+    });
+    for (const range of text.matchAll(/range\s+\$([A-Za-z_][A-Za-z0-9_]*)\s*:=\s*list\s+((?:"[^"]+"\s*)+)/gu)) {
+      const variable = range[1];
+      const names = [...range[2].matchAll(/"([^"]+)"/gu)].map((item) => item[1]);
+      const dynamic = new RegExp(`\\(index\\s+\\$\\.Values\\s+\\$${variable}\\)\\.([A-Za-z_][A-Za-z0-9_.-]*)`, 'gu');
+      for (const match of text.matchAll(dynamic)) {
+        for (const name of names) {
+          const valuePath = canonicalHelmPath(`${name}.${match[1]}`);
+          const dynamicLine = lines[lineAt(text, match.index) - 1] ?? '';
+          const targets = [...new Set([
+            ...(chartLeaves.has(valuePath) ? [valuePath] : []),
+            ...(/\b(?:toYaml|toJson)\b/u.test(dynamicLine)
+              ? [...chartLeaves].filter((leafPath) => leafPath.startsWith(`${valuePath}.`) || leafPath.startsWith(`${valuePath}[]`)) : []),
+          ])];
+          for (const target of targets) add(target, { index: match.index, line: lineAt(text, match.index) }, {
+            kind: 'helm-template-dynamic-index',
+            bindingKind: target === valuePath ? 'enumerated-index-leaf-access' : 'enumerated-index-serialized-subtree-leaf',
+            bindingProof: `range enumerates ${names.join(', ')} and index $.Values $${variable} reads ${valuePath}${target === valuePath ? '' : ` before serializing exact descendant ${target}`}`,
+          });
+        }
+      }
+    }
+    for (const assignment of text.matchAll(/\$([A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*index\s+\$?\.Values\.([A-Za-z_][A-Za-z0-9_.-]*)\s+\$([A-Za-z_][A-Za-z0-9_]*)/gu)) {
+      const [variable, base, selector] = assignment.slice(1);
+      const prefix = text.slice(0, assignment.index);
+      const ranges = [...prefix.matchAll(new RegExp(`range\\s+\\$${selector}\\s*:=\\s*list\\s+((?:"[^"]+"\\s*)+)`, 'gu'))];
+      const names = [...(ranges.at(-1)?.[1] ?? '').matchAll(/"([^"]+)"/gu)].map((item) => item[1]);
+      const tail = text.slice(assignment.index + assignment[0].length);
+      for (const use of tail.matchAll(new RegExp(`\\$${variable}\\.([A-Za-z_][A-Za-z0-9_.-]*)`, 'gu'))) {
+        const useIndex = assignment.index + assignment[0].length + use.index;
+        for (const name of names) {
+          const exact = canonicalHelmPath(`${base}.${name}.${use[1]}`);
+          if (chartLeaves.has(exact)) add(exact, { index: useIndex, line: lineAt(text, useIndex) }, {
+            kind: 'helm-template-dynamic-index',
+            bindingKind: 'indexed-variable-leaf-access',
+            bindingProof: `${file}:${lineAt(text, assignment.index)} binds $${variable} to index $.Values.${base} $${selector}; this expression reads exact suffix ${use[1]}`,
+          });
+        }
+      }
+      for (const call of tail.matchAll(new RegExp(`(?:include|template)\\s+"([^"]+)"\\s+\\$${variable}\\b`, 'gu'))) {
+        const helper = helperDefinitions.get(call[1]);
+        if (!helper) continue;
+        const callIndex = assignment.index + assignment[0].length + call.index;
+        const callLine = lineAt(text, callIndex);
+        for (const name of names) for (const access of helper.accesses) {
+          const exact = canonicalHelmPath(`${base}.${name}.${access.suffix}`);
+          if (!chartLeaves.has(exact)) continue;
+          add(exact, { index: callIndex, line: callLine }, {
+            consumerPath: access.path,
+            consumerLine: access.line,
+            bindingKind: 'indexed-helper-body-leaf-access',
+            bindingProof: `${file}:${lineAt(text, assignment.index)} binds $${variable} to index $.Values.${base} $${selector}; ${file}:${callLine} passes it to ${helper.name}; helper body reads .${access.suffix}`,
+            helperCallProof: { path: file, line: callLine, helper: helper.name, argumentPath: `${base}.${name}`, sourceLineSha256: sha256(lines[callLine - 1] ?? '') },
+          });
+        }
+        break;
+      }
+    }
+    for (const range of text.matchAll(/range\s+(?:\$[A-Za-z_][A-Za-z0-9_]*\s*,\s*)?(\$[A-Za-z_][A-Za-z0-9_]*)\s*:=\s*dict\s+([^}]*)/gu)) {
+      const variable = range[1];
+      const argumentsText = range[2];
+      const bases = [];
+      for (const value of argumentsText.matchAll(/"[^"]+"\s+((?:\$[A-Za-z_][A-Za-z0-9_]*\.)?\.?Values(?:\.[A-Za-z_][A-Za-z0-9_-]*)+|\$[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_.-]*)?)/gu)) {
+        if (/(?:^|\.)Values\./u.test(value[1])) bases.push(canonicalHelmPath(value[1].replace(/^(?:\$[A-Za-z_][A-Za-z0-9_]*\.)?\.?Values\.?/u, '')));
+        else {
+          const variableMatch = /^(\$[A-Za-z_][A-Za-z0-9_]*)(?:\.([A-Za-z_][A-Za-z0-9_.-]*))?$/u.exec(value[1]);
+          if (variableMatch && variableRoots.has(variableMatch[1])) bases.push(`${variableRoots.get(variableMatch[1])}${variableMatch[2] ? `.${variableMatch[2]}` : ''}`);
+        }
+      }
+      const startAction = actions.findIndex((item) => item.index === range.index || (item.index <= range.index && item.end >= range.index));
+      if (startAction < 0) continue;
+      const body = balancedHelmBody(actions, startAction);
+      for (const item of body) for (const access of item.expression.matchAll(new RegExp(`\\${variable}\\.([A-Za-z_][A-Za-z0-9_.-]*)`, 'gu'))) {
+        for (const base of bases) {
+          const exact = `${base}.${access[1]}`;
+          if (!chartLeaves.has(exact)) continue;
+          add(exact, item, {
+            bindingKind: 'dict-range-leaf-access',
+            bindingProof: `${file}:${lineAt(text, range.index)} binds ${variable} to one of ${bases.join(', ')}; ${file}:${item.line} reads exact suffix ${access[1]}`,
+          });
+        }
+      }
+    }
+  }
+  return consumers;
+}
+
+function externalChartProfileBindings() {
+  const bindings = new Map();
+  for (const sourcePath of walk('gitops/platform/bootstrap', (absolutePath) => /\.ya?ml$/u.test(absolutePath))) {
+    const text = read(sourcePath);
+    for (const document of YAML.parseAllDocuments(text, { prettyErrors: false })) {
+      if (document.errors.length) continue;
+      const value = document.toJS();
+      if (value?.kind !== 'Application') continue;
+      const sources = value.spec?.sources ?? (value.spec?.source ? [value.spec.source] : []);
+      const chartSource = sources.find((source) => source?.chart);
+      if (!chartSource) continue;
+      const application = value.metadata?.name ?? '<unnamed>';
+      const profilePath = `my-values/infra/${application}-values.yaml`;
+      if (!exists(profilePath)) continue;
+      bindings.set(profilePath, [{
+        path: sourcePath,
+        line: Math.max(1, lineAt(text, text.indexOf(`chart: ${chartSource.chart}`))),
+        kind: 'external-chart-schema-unbound-profile',
+        direction: 'schema-authority-only; not selected for runtime read',
+        authority: `external chart schema ${chartSource.chart}@${chartSource.targetRevision ?? '<unversioned>'}; this profile is not the active Argo valueFiles binding`,
+        application,
+        chart: chartSource.chart,
+        targetRevision: chartSource.targetRevision ?? '<unversioned>',
+        inactiveProfile: true,
+      }]);
+    }
+  }
+  return bindings;
+}
+
+function runtimeFileBindings(sourcePath) {
+  const exactReaders = new Map([
+    ['my-values/infra/native-worker-pools.yaml', [
+      { path: 'scripts/gitops.mjs', line: 171, kind: 'runtime-file-reader', direction: 'read', authority: 'preflightGitOps passes the selected policy file to loadNativeNodePolicy; the parser reads and validates it before native Prism selection' },
+      { path: 'scripts/native-worker-node-policy.mjs', line: 36, kind: 'runtime-file-parser', direction: 'read', authority: 'loadNativeNodePolicy reads YAML bytes and calls validateNativeNodePolicy' },
+    ]],
+    ['my-values/infra/native-worker-pools-ax41.yaml', [
+      { path: 'scripts/activate-native-worker-ax41.sh', line: 26, kind: 'runtime-file-reader-invocation', direction: 'read', authority: 'activation passes this exact profile to render-native-worker-node.mjs' },
+      { path: 'scripts/render-native-worker-node.mjs', line: 69, kind: 'runtime-file-parser', direction: 'read', authority: 'the renderer calls loadNativeNodePolicy for its policy-file argument before it writes a new output bundle' },
+      { path: 'scripts/native-worker-node-policy.mjs', line: 36, kind: 'runtime-file-parser', direction: 'read', authority: 'loadNativeNodePolicy reads YAML bytes and calls validateNativeNodePolicy' },
+    ]],
+    ['releases/values/ops.yaml', [
+      { path: 'scripts/deploy-ops-pod.sh', line: 21, kind: 'helm-values-reader', direction: 'read', authority: 'the deploy command passes this exact file to Helm with -f after discovered values and before explicit --set-string overrides' },
+      { path: 'scripts/updates/materialize-release.mjs', line: 38, kind: 'generated-file-producer', direction: 'write', authority: 'materialize-release writes codexImage and mcpImage from the verified ops release receipt; operators do not author this generated file' },
+    ]],
+    ['gitops/platform/values/codex-ops.yaml', [
+      { path: 'scripts/argocd-self-management.mjs', line: 15, kind: 'runtime-file-reader', direction: 'read', authority: 'the Argo bootstrap generator parses this exact YAML file' },
+      { path: 'scripts/argocd-self-management.mjs', line: 82, kind: 'argocd-values-object-producer', direction: 'write-derived', authority: 'the generator combines these values with immutable release images in the codex-ops Application valuesObject' },
+    ]],
+    ['my-values/infra/litellm-config.yaml', [
+      { path: 'scripts/deploy.sh', line: 1175, kind: 'runtime-file-reader-invocation', direction: 'read', authority: 'deploy.sh passes this exact configuration to render-litellm-deployment.mjs' },
+      { path: 'scripts/render-litellm-deployment.mjs', line: 10, kind: 'opaque-config-reader', direction: 'read', authority: 'the renderer reads the exact bytes, hashes them for rollout, and stores them as ConfigMap/litellm-config data' },
+      { path: 'scripts/render-postgresql-recovery.mjs', line: 45, kind: 'credential-contract-reader', direction: 'read', authority: 'the recovery renderer validates the LiteLLM master-key authority from the same configuration file' },
+    ]],
+    ['my-values/infra/postgresql-recovery.yaml', [
+      { path: 'scripts/deploy.sh', line: 1108, kind: 'runtime-file-reader-invocation', direction: 'read', authority: 'deploy.sh passes this exact recovery policy to render-postgresql-recovery.mjs before apply' },
+      { path: 'scripts/render-postgresql-recovery.mjs', line: 101, kind: 'runtime-file-parser', direction: 'read', authority: 'the renderer parses and validates every policy field before it emits PVC, ConfigMap, CronJob, and verification resources' },
+    ]],
+  ]);
+  if (exactReaders.has(sourcePath)) return exactReaders.get(sourcePath);
+  const bindings = [];
+  for (const candidate of runtimeTextSources()) {
+    if (candidate === sourcePath) continue;
+    if (/^(?:scripts\/(?:docs-|check-|test-|verify-|.*inventory|.*blueprint|.*publication|.*platform-surface)|skills\/.*\/tests?\/)/u.test(candidate)) continue;
+    const text = read(candidate);
+    let index = text.indexOf(sourcePath);
+    let variable = null;
+    if (index < 0 && candidate.endsWith('.sh')) {
+      const basename = path.basename(sourcePath);
+      const assignment = [...text.matchAll(/^\s*([A-Z][A-Z0-9_]*_(?:VALUES|CONFIG)_FILE)=(.*)$/gmu)]
+        .find((item) => item[2].includes(basename));
+      if (assignment) {
+        variable = assignment[1];
+        const downstream = text.slice((assignment.index ?? 0) + assignment[0].length);
+        const use = new RegExp(`(?:--values|-f|infrastructure-release|stateful-release-preflight|deploy-|helm)[^\n]{0,240}\\$\\{?${variable}(?:\\}|\\b)`, 'u').exec(downstream);
+        if (use) index = (assignment.index ?? 0) + assignment[0].length + (use.index ?? 0);
+      }
+    }
+    if (index < 0) continue;
+    bindings.push({ path: candidate, line: lineAt(text, index), kind: 'runtime-file-input', direction: 'read', authority: variable
+      ? `${candidate} resolves ${sourcePath} as the default for ${variable} and passes that variable to its deploy path`
+      : `${candidate} loads or passes the exact path ${sourcePath}` });
+  }
+  return bindings;
+}
+
+function gitOpsValueBindings() {
+  const bindings = new Map();
+  for (const sourcePath of walk('gitops', (absolutePath) => /\.ya?ml$/u.test(absolutePath))) {
+    const text = read(sourcePath);
+    for (const document of YAML.parseAllDocuments(text, { prettyErrors: false })) {
+      if (document.errors.length) continue;
+      const value = document.toJS();
+      if (value?.kind !== 'Application') continue;
+      const sources = value.spec?.sources ?? (value.spec?.source ? [value.spec.source] : []);
+      for (const source of sources) {
+        for (const authoredPath of source?.helm?.valueFiles ?? []) {
+          const cleanPath = String(authoredPath).replace(/^\$values\//u, '');
+          const needle = String(authoredPath);
+          const index = text.indexOf(needle);
+          const entries = bindings.get(cleanPath) ?? [];
+          entries.push({
+            path: sourcePath,
+            line: index < 0 ? 1 : lineAt(text, index),
+            kind: 'argocd-helm-values',
+            direction: 'read',
+            authority: `Argo CD Application ${value.metadata?.name ?? '<unnamed>'}; Helm chart ${source.chart ?? source.path ?? '<external>'}@${source.targetRevision ?? '<unversioned>'}`,
+            application: value.metadata?.name ?? '<unnamed>',
+            chart: source.chart ?? source.path ?? '<external>',
+            targetRevision: source.targetRevision ?? '<unversioned>',
+            repository: source.repoURL ?? '<unversioned-repository>',
+          });
+          bindings.set(cleanPath, entries);
+        }
+      }
+    }
+  }
+  return bindings;
+}
+
+function directExternalChartBindings(sourcePath) {
+  const versions = exists('versions.json') ? JSON.parse(read('versions.json')) : {};
+  const definitions = {
+    'my-values/infra/postgresql-values.yaml': {
+      chart: 'postgresql', targetRevision: versions.infrastructureCharts?.postgresql?.version,
+      repository: 'registry-1.docker.io/bitnamicharts', path: 'scripts/deploy.sh', line: 1153,
+      authority: 'deploy.sh passes this exact values file to the digest-staged PostgreSQL chart selected by versions.json',
+    },
+    'my-values/infra/redis-values.yaml': {
+      chart: 'redis', targetRevision: versions.infrastructureCharts?.redis?.version,
+      repository: 'registry-1.docker.io/bitnamicharts', path: 'scripts/deploy.sh', line: 1144,
+      authority: 'deploy.sh passes this exact values file to the digest-staged Redis chart selected by versions.json',
+    },
+    'my-values/infra/spire-values.yaml': {
+      chart: 'spire', targetRevision: versions.platformCharts?.spire?.version,
+      repository: 'https://spiffe.github.io/helm-charts-hardened/', path: 'scripts/deploy.sh', line: 1130,
+      authority: 'deploy.sh passes this exact values file to the explicitly versioned SPIRE chart',
+    },
+    'my-values/infra/tailscale-operator-values.yaml': {
+      chart: 'tailscale-operator', targetRevision: versions.infrastructureCharts?.tailscale?.version,
+      repository: 'https://pkgs.tailscale.com/helmcharts', path: 'scripts/deploy.sh', line: 1045,
+      authority: 'deploy.sh passes this exact values file to the digest-staged Tailscale operator chart selected by versions.json',
+    },
+  };
+  const binding = definitions[sourcePath];
+  if (!binding) return [];
+  assert(binding.targetRevision, `direct external chart binding has no pinned version: ${sourcePath}`);
+  return [{ ...binding, kind: 'operator-helm-values', direction: 'read', application: path.basename(sourcePath, path.extname(sourcePath)) }];
+}
+
+let renderProfileCache = null;
+function discoveredRenderProfiles() {
+  if (renderProfileCache) return renderProfileCache;
+  const profiles = new Map();
+  for (const authorityPath of ['scripts/docs-platform-surface-inventory.mjs', 'scripts/platform-surface-source-discovery.mjs', 'scripts/check-cni-portability.mjs']) {
+    if (!exists(authorityPath)) continue;
+    const text = read(authorityPath);
+    for (const match of text.matchAll(/(?:render|helm)\([^\n]{0,120}?['"](charts\/[a-z0-9-]+)['"][\s\S]{0,240}?\[\s*['"](my-values\/[a-z0-9_./-]+-values\.yaml)['"]/gu)) {
+      profiles.set(match[2], { chartRoot: match[1], evidence: `${authorityPath}:${lineAt(text, match.index)}` });
+    }
+  }
+  renderProfileCache = profiles;
+  return profiles;
+}
+
+function localHelmBinding(sourcePath) {
+  if (sourcePath.startsWith('charts/')) return { chartRoot: sourcePath.split('/').slice(0, 2).join('/'), evidence: sourcePath };
+  if (sourcePath === 'gitops/platform/values/codex-ops.yaml') {
+    return {
+      chartRoot: 'charts/ops-pod',
+      evidence: 'scripts/argocd-self-management.mjs:79-82 valuesObject forwarding to the local Ops chart',
+    };
+  }
+  if (['examples/nova-values.yaml', 'examples/buster-values.yaml'].includes(sourcePath)) {
+    return { chartRoot: 'charts/kubeclaw', evidence: `${sourcePath}: deploy command in the file header` };
+  }
+  const discoveredProfile = discoveredRenderProfiles().get(sourcePath);
+  if (discoveredProfile) return discoveredProfile;
+  const quotedVariants = [sourcePath];
+  for (const candidate of runtimeTextSources()) {
+    if (candidate === sourcePath) continue;
+    if (/^(?:scripts\/(?:docs-|check-|test-|verify-|.*inventory|.*blueprint|.*publication|.*platform-surface)|skills\/.*\/tests?\/)/u.test(candidate)) continue;
+    const text = read(candidate);
+    if (!quotedVariants.some((needle) => text.includes(needle))) continue;
+    for (const needle of quotedVariants) {
+      const index = text.indexOf(needle);
+      if (index < 0) continue;
+      const nearby = text.slice(Math.max(0, index - 700), index + needle.length + 700);
+      const sourceLine = text.split('\n')[lineAt(text, index) - 1] ?? '';
+      const sameLineChart = sourceLine.match(/charts\/[a-z0-9-]+/u)?.[0];
+      const nearbyNeedleIndex = nearby.indexOf(needle);
+      const chartMatches = [...nearby.matchAll(/charts\/[a-z0-9-]+/gu)];
+      const nearestChart = chartMatches.sort((left, right) => Math.abs((left.index ?? 0) - nearbyNeedleIndex) - Math.abs((right.index ?? 0) - nearbyNeedleIndex))[0]?.[0];
+      const chart = sameLineChart ?? nearestChart;
+      if (chart) return { chartRoot: chart, evidence: candidate };
+      const invocation = nearby.match(/helm\s+upgrade(?:\s+--install)?\s+[^\s\\]+\s+([^\s\\]+)[\s\S]*?(?:--values|-f)\s+[^\n]*$/mu);
+      if (invocation && !invocation[1].startsWith('$')) {
+        const version = nearby.match(/--version\s+([^\s\\]+)/u)?.[1] ?? '<version supplied by Helm source>';
+        const repositoryAlias = invocation[1].split('/')[0];
+        const repositoryPattern = new RegExp(`helm\\s+repo\\s+add\\s+${repositoryAlias.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}\\s+([^\\s\\\\]+)`, 'u');
+        const repository = repositoryPattern.exec(text)?.[1] ?? '<unversioned-repository>';
+        return {
+          chartRoot: null,
+          evidence: candidate,
+          externalBinding: {
+            path: candidate,
+            line: lineAt(text, index),
+            kind: 'operator-helm-values',
+            direction: 'read',
+            authority: `operator Helm invocation for ${invocation[1]}@${version}`,
+            application: path.basename(candidate),
+            chart: invocation[1],
+            targetRevision: version,
+            repository,
+          },
+        };
+      }
+    }
+  }
+  return null;
+}
+
+function sourceOwner(sourcePath) {
+  const cleanPath = sourcePath.split('#')[0];
+  const chart = cleanPath.match(/^(charts\/[^/]+)/)?.[1];
+  if (chart) return { component: `Helm chart ${chart}`, evidence: `${chart}/Chart.yaml` };
+  if (cleanPath.startsWith('gitops/')) return { component: 'GitOps platform configuration', evidence: cleanPath };
+  if (cleanPath.startsWith('my-values/')) return { component: 'maintained deployment profile', evidence: cleanPath };
+  if (cleanPath.startsWith('releases/')) return { component: 'release configuration', evidence: cleanPath };
+  if (cleanPath.startsWith('scripts/')) return { component: `operator script ${cleanPath}`, evidence: cleanPath };
+  const packageOwner = nearestPackage(cleanPath);
+  if (packageOwner) return { component: packageOwner.name, evidence: packageOwner.path };
+  return { component: cleanPath.split('/')[0] || 'unknown', evidence: cleanPath };
+}
+
+function deploymentFieldBoundary(resource, exactPath) {
+  if (['ConfigMap', 'Secret'].includes(resource.kind) && /^(?:data|stringData)\./u.test(exactPath)) {
+    return { kind: 'opaque-object-payload', owner: `the workload that reads ${resource.kind}/${resource.name}` };
+  }
+  if (resource.kind === 'Application' && /^spec\.sources?(?:\[\])?\.helm\.(?:valuesObject|values)(?:\.|$)/u.test(exactPath)) {
+    return { kind: 'embedded-helm-payload', owner: 'Argo CD Helm rendering and the selected chart' };
+  }
+  if (/^metadata\.annotations\./u.test(exactPath)) {
+    return { kind: 'controller-annotation-payload', owner: 'the controller named by the annotation prefix' };
+  }
+  if (/(?:^|\.)containers\[\]\.(?:args|command)\[\]$/u.test(exactPath)
+    || /(?:^|\.)containers\[\]\.env\[\]\.(?:name|value)$/u.test(exactPath)) {
+    return { kind: 'workload-process-payload', owner: 'the selected container image and process entry point' };
+  }
+  return { kind: 'api-envelope', owner: null };
+}
+
+function manifestReceivingPaths(sourcePath, resource = null, exactPath = '') {
+  const bindings = [];
+  const exactApply = sourcePath === 'my-values/infra/cilium-cluster-policies.yaml'
+    ? { path: 'scripts/deploy-cilium.sh', pattern: /kubectl apply -f .*my-values\/infra\/cilium-cluster-policies\.yaml/u, condition: 'after the Cilium policy CRDs are Established' }
+    : sourcePath === 'my-values/infra/registry-mirror.yaml'
+      ? { path: 'scripts/deploy.sh', pattern: /kubectl apply -n .*registry-mirror\.yaml/u, condition: 'KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR=true' } : null;
+  if (exactApply) {
+    const lines = read(exactApply.path).split('\n');
+    const index = lines.findIndex((line) => exactApply.pattern.test(line));
+    assert(index >= 0, `CONFIG_API_RECEIVER_DRIFT: ${sourcePath} lost its exact kubectl apply receiver`);
+    const command = lines[index].trim();
+    assert(!/--server-side/u.test(command), `CONFIG_API_RECEIVER_DRIFT: ${sourcePath} apply mode changed`);
+    bindings.push({ path: exactApply.path, line: index + 1, kind: 'kubernetes-manifest-client-side-apply',
+      direction: 'read', authority: `This exact command uses kubectl client-side apply: ${command}`,
+      condition: exactApply.condition, sourceLineSha256: sha256(lines[index]) });
+  }
+  if (sourcePath === 'my-values/infra/registry-local.yaml') {
+    const storageField = resource?.kind === 'PersistentVolumeClaim' && resource.name === 'registry-local-data'
+      ? { 'spec.storageClassName': '  pvc.spec.storageClassName = config.storageClassName;',
+        'spec.resources.requests.storage': '  pvc.spec.resources.requests.storage = config.capacity;' }[exactPath] : null;
+    const receivers = [
+      ['scripts/render-registry-local.mjs', "  const docs = parseAllDocuments(fs.readFileSync(template, 'utf8')).map(doc => {", 'manifest-template-reader', 'The renderer parses this authored template; operators must not apply its REQUIRED_STORAGE_CLASS or REQUIRED_CAPACITY placeholders directly.'],
+      ...(storageField ? [['scripts/render-registry-local.mjs', 'function validateConfig(config) {', 'renderer-storage-config-validator', 'The selected JSON must contain capacity and storageClassName with the exact renderer forms; invalid input stops before API apply.'], ['scripts/render-registry-local.mjs', 'function validatePvc(pvc, config) {', 'renderer-existing-storage-validator', 'An existing PVC must agree with the selected JSON class/capacity and ReadWriteOncePod access mode; mismatch stops before apply.'], ['scripts/render-registry-local.mjs', storageField, 'manifest-renderer-field-overwrite', 'The validated explicit storage JSON field replaces this template leaf before any API request.']] : []),
+      ['scripts/deploy.sh', '      : "${KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG:?Set to an explicit registry storage JSON config file}"', 'renderer-config-selection', 'The enabled lab-registry branch requires an explicit storage JSON file selected by KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG.'],
+      ['scripts/deploy.sh', '      registry_manifests="$(node "$SCRIPT_DIR/render-registry-local.mjs" "$KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG" serve "$registry_existing" "$registry_pvc")" || {', 'manifest-renderer-invocation', 'This selected deploy path renders serve mode after inspecting the existing Deployment and PVC; render failure stops before apply.'],
+      ['scripts/deploy.sh', String.raw`      printf '%s\n' "$registry_manifests" | kubectl apply -n "$NAMESPACE" -f -`, 'kubernetes-rendered-manifest-client-side-apply', 'kubectl client-side apply receives the rendered output, rather than this template, in the explicit NAMESPACE request scope.'],
+    ];
+    for (const [receiverPath, anchor, kind, authority] of receivers) {
+      const lines = read(receiverPath).split('\n');
+      const index = lines.findIndex((line) => line === anchor);
+      assert(index >= 0, `CONFIG_API_RECEIVER_DRIFT: ${sourcePath} lost ${kind} in ${receiverPath}`);
+      bindings.push({ path: receiverPath, line: index + 1, kind, direction: 'read', authority,
+        condition: 'KUBECLAW_DEPLOY_LAB_REGISTRY=true', sourceLineSha256: sha256(lines[index]) });
+    }
+  }
+  if (sourcePath === 'my-values/infra/litellm-deployment.yaml') {
+    const portPatch = resource?.kind === 'Service' && resource.name === 'litellm'
+      && (exactPath === 'spec' || /^spec\.ports(?:\[|\.|$)/u.test(exactPath));
+    const receivers = [
+      ['scripts/render-litellm-deployment.mjs', "const documents = loadAll(fs.readFileSync(deploymentFile, 'utf8')).filter(Boolean);", 'manifest-template-reader', 'The renderer preserves the Service from this template while generating the ConfigMap and Deployment checksum from the selected configuration bytes.'],
+      ['scripts/deploy.sh', String.raw`    printf '%s\n' "$litellm_manifests" | kubectl apply -n "$NAMESPACE" -f -`, 'kubernetes-rendered-manifest-client-side-apply', 'The selected LiteLLM branch applies rendered manifests in the explicit NAMESPACE request scope.'],
+      ...(portPatch ? [
+        ['scripts/deploy.sh', '    if [[ ! $LITELLM_NODE_PORT =~ ^[0-9]+$ ]] \\', 'post-apply-port-input-validator', 'Before rendering or apply, the deploy script requires a numeric LITELLM_NODE_PORT within its 30000–32767 bounds.'],
+        ['scripts/deploy.sh', '    kubectl patch service litellm -n "$NAMESPACE" --type=merge \\', 'kubernetes-service-post-apply-merge-patch', 'After apply, a JSON merge patch replaces spec.ports as one list with name=http, port=4000, targetPort=4000, protocol=TCP and nodePort from LITELLM_NODE_PORT. This later writer wins for that list if the patch succeeds.'],
+      ] : []),
+    ];
+    for (const [receiverPath, anchor, kind, authority] of receivers) {
+      const lines = read(receiverPath).split('\n');
+      const index = lines.findIndex((line) => line === anchor);
+      assert(index >= 0, `CONFIG_API_RECEIVER_DRIFT: ${sourcePath} lost ${kind} in ${receiverPath}`);
+      bindings.push({ path: receiverPath, line: index + 1, kind, direction: 'read', authority,
+        condition: 'KUBECLAW_DEPLOY_LITELLM enables the component', sourceLineSha256: sha256(lines[index]) });
+    }
+  }
+  if (sourcePath === 'my-values/infra/registry-mirror.yaml') {
+    const lines = read('scripts/argocd-self-management.mjs').split('\n');
+    const index = lines.findIndex((line) => /directory:.*include: 'registry-mirror\.yaml', recurse: false/u.test(line));
+    assert(index >= 0, 'CONFIG_API_RECEIVER_DRIFT: registry mirror lost its exact Argo CD directory receiver');
+    bindings.push({ path: 'scripts/argocd-self-management.mjs', line: index + 1,
+      kind: 'argocd-directory-manifest', direction: 'read', sourceLineSha256: sha256(lines[index]),
+      authority: 'Argo CD generates this file as a directory manifest. FailOnSharedResource=true is set; this source does not request Helm values coalescing. Resource annotations and configured sync options can still select the apply operation.' });
+  }
+  return bindings;
+}
+
+function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
+  const exactLine = context.fieldLine ?? 1;
+  const semanticPath = yamlFieldMatcherPath(exactPath);
+  if (boundary.kind === 'embedded-helm-payload') {
+    const suffix = canonicalHelmPath(exactPath.replace(/^spec\.sources?(?:\[[0-9]+\])?\.helm\.(?:valuesObject|values)\.?/u, ''));
+    const sources = context.documentValue?.spec?.sources ?? (context.documentValue?.spec?.source ? [context.documentValue.spec.source] : []);
+    const sourceMatch = /^spec\.sources\[([0-9]+)\]/u.exec(exactPath);
+    const selected = sourceMatch ? sources[Number(sourceMatch[1])] : sources[0];
+    const localChart = typeof selected?.path === 'string' && selected.path.startsWith('charts/') ? selected.path : null;
+    if (localChart && suffix) {
+      const matches = context.consumerMap.get(`${localChart}:${suffix}`) ?? [];
+      if (matches.length) return matches.map((item) => ({ ...item, kind: 'embedded-helm-runtime-consumer', authority: `${localChart} exact template receiver` }));
+    }
+    if (valueType === 'object' || valueType === 'array') return [{
+      path: context.sourcePath,
+      line: exactLine,
+      kind: 'structural-container',
+      direction: 'none',
+      authority: 'This mapping or list has no independent scalar contract. Its exact child leaf rows identify the selected chart receivers.',
+    }];
+    return [{
+      path: selected?.chart === 'argo-cd' ? 'gitops/platform/bootstrap/argocd.yaml' : context.sourcePath,
+      line: selected?.chart === 'argo-cd' ? 15 : exactLine,
+      kind: selected?.chart === 'argo-cd' ? 'version-bound-external-controller-contract' : 'embedded-payload-consumer-unproved',
+      direction: 'read',
+      authority: selected?.chart === 'argo-cd'
+        ? `Argo CD chart ${selected.targetRevision} installs this exact configs.cm key into the selected controller configuration`
+        : `no exact checked-in template or content-addressed external chart receiver was found for ${suffix}`,
+    }];
+  }
+  if (boundary.kind === 'controller-annotation-payload') {
+    if (semanticPath === 'metadata.annotations.kubeclaw.io/health-mode') return [{
+      path: 'gitops/platform/bootstrap/argocd.yaml', line: 40, kind: 'checked-in-controller-reader', direction: 'read',
+      authority: 'the Application health Lua code from the pinned Argo CD chart 10.8.0 reads this exact annotation key',
+    }];
+    if (/^metadata\.annotations\.argocd\.argoproj\.io\/(?:ignore-healthcheck|sync-wave|compare-options)$/u.test(semanticPath)) return [{
+      path: 'gitops/platform/bootstrap/argocd.yaml', line: 15, kind: 'version-bound-external-controller-contract', direction: 'read',
+      authority: 'the pinned Argo CD chart 10.8.0 selects the controller version that owns this exact argocd.argoproj.io annotation contract',
+    }];
+    return [{ path: context.sourcePath, line: exactLine, kind: 'embedded-payload-consumer-unproved', direction: 'unknown', authority: 'no exact version-bound annotation controller was found' }];
+  }
+  if (boundary.kind === 'workload-process-payload') {
+    const index = Number(/containers\[([0-9]+)\]/u.exec(exactPath)?.[1] ?? 0);
+    const image = context.documentValue?.spec?.template?.spec?.containers?.[index]?.image
+      ?? context.documentValue?.spec?.containers?.[index]?.image
+      ?? '<selected container image>';
+    return [{
+      path: context.sourcePath, line: exactLine, kind: 'selected-image-process-contract', direction: 'read',
+      authority: `container ${index} image ${image} receives this exact command, argument, or environment field`,
+    }];
+  }
+  if (boundary.kind === 'opaque-object-payload') {
+    const objectName = context.resource.name;
+    const payloadKey = yamlFieldPathTokens(exactPath).slice(1).join('.');
+    if (context.resource.kind === 'ConfigMap' && objectName === 'registry-local-config' && payloadKey === 'config.yml'
+      && context.sourcePath === 'my-values/infra/registry-local.yaml') {
+      const lines = read(context.sourcePath).split('\n');
+      const exact = (pattern, kind, chainStep, authority, occurrence = 'first') => {
+        const index = occurrence === 'last' ? lines.findLastIndex((line) => pattern.test(line)) : lines.findIndex((line) => pattern.test(line));
+        assert(index >= 0, `CONFIG_PAYLOAD_CHAIN_DRIFT: ${context.sourcePath} lost ${chainStep}`);
+        return { path: context.sourcePath, line: index + 1, kind, chainStep, direction: 'read', authority };
+      };
+      return [
+        exact(/^\s*name:\s*registry-local-config\s*$/u, 'configmap-volume-object-reference', 'object-to-volume', 'Deployment/registry-local volume `config` selects ConfigMap/registry-local-config', 'last'),
+        exact(/^\s*-\s*name:\s*config\s*$/u, 'pod-volume-name-link', 'volume-to-mount', 'Pod volume and volumeMount use the exact shared name `config`'),
+        exact(/^\s*mountPath:\s*\/etc\/kubeclaw-registry\s*$/u, 'configmap-mount-path', 'mount-to-filesystem', 'ConfigMap keys are projected below /etc/kubeclaw-registry'),
+        exact(/^\s*args:\s*\[serve,\s*\/etc\/kubeclaw-registry\/config\.yml\]\s*$/u, 'process-config-argument', 'filesystem-to-process-argument', 'registry process receives the exact projected key path as its `serve` configuration argument'),
+        exact(/^\s*image:\s*registry:3\.0\.0\s*$/u, 'selected-image-config-reader', 'process-argument-to-reader', 'the selected registry:3.0.0 process owns and parses the Distribution config.yml contract'),
+      ];
+    }
+    return [{
+      path: context.sourcePath, line: exactLine, kind: 'embedded-payload-consumer-unproved', direction: 'unknown',
+      authority: `no exact object/key to volume or environment to process-reader chain for ${context.resource.kind}/${objectName} key ${payloadKey} was found`,
+    }];
+  }
+  return [{ path: context.sourcePath, line: exactLine, kind: 'embedded-payload-consumer-unproved', direction: 'unknown', authority: 'no exact receiver was found' }];
+}
+
+function yamlSemantics(context, exactPath, valueType) {
+  if (context.resource) {
+    const { kind, name, apiVersion } = context.resource;
+    const semanticExactPath = yamlFieldMatcherPath(exactPath);
+    const apiOwner = kind === 'Application' || kind === 'AppProject' ? `Argo CD ${kind} controller`
+      : kind === 'CiliumNetworkPolicy' || kind === 'CiliumClusterwideNetworkPolicy' ? 'Cilium policy parser and agent'
+        : kind === 'NetworkPolicy' ? 'the selected network policy implementation' : `Kubernetes ${kind} controller`;
+    const boundary = deploymentFieldBoundary(context.resource, semanticExactPath);
+    if (boundary.kind !== 'api-envelope') return {
+      required: 'embedded-payload-contract',
+      requiredReason: `${apiVersion}/${kind} validates the outer field type; ${boundary.owner} owns the embedded value semantics.`,
+      defaultKind: 'authored-embedded-payload',
+      constraints: [`outer ${apiVersion}/${kind} API field type`, `inner contract owned by ${boundary.owner}`],
+      runtimeOwner: boundary.owner,
+      consumers: embeddedPayloadConsumers(context, exactPath, boundary, valueType),
+      precedence: ['authored manifest payload', `${apiVersion}/${kind} admission preserves the accepted payload`, `${boundary.owner} reads and interprets the payload`],
+      effectiveValueProof: `${context.sourcePath} -> ${apiVersion}/${kind} field -> ${boundary.owner}`,
+      changeImpact: `Changes the value delivered to ${boundary.owner}; it does not change Kubernetes API behavior by itself.`,
+      failureMeaning: `An invalid outer type fails API admission. A type-valid but invalid payload fails only when ${boundary.owner} parses or uses it.`,
+      blockerOwner: sourceOwner(context.sourcePath).component,
+      closureCondition: `Link the exact ${boundary.owner} contract before presenting this embedded payload as a direct operator option.`,
+      deploymentBoundary: boundary.kind,
+    };
+    const registryTemplate = context.sourcePath === 'my-values/infra/registry-local.yaml';
+    const storageConfigField = registryTemplate && kind === 'PersistentVolumeClaim' && name === 'registry-local-data'
+      ? { 'spec.storageClassName': 'storageClassName', 'spec.resources.requests.storage': 'capacity' }[exactPath] : null;
+    const litellmTemplate = context.sourcePath === 'my-values/infra/litellm-deployment.yaml';
+    const litellmPortPatch = litellmTemplate && kind === 'Service' && name === 'litellm'
+      && (exactPath === 'spec' || /^spec\.ports(?:\[|\.|$)/u.test(exactPath));
+    return {
+      required: 'external-schema',
+      requiredReason: storageConfigField
+        ? `The selected renderer requires valid explicit ${storageConfigField} before ${apiVersion}/${kind} admission; this authored leaf is a replaced template placeholder.`
+        : `${apiVersion}/${kind} admission and CRD/OpenAPI validation own required-field semantics.`,
+      defaultKind: storageConfigField ? 'renderer-overwritten-template'
+        : registryTemplate && kind === 'Deployment' && name === 'registry-local' && exactPath === 'spec.replicas' ? 'renderer-selected-replicas'
+          : litellmPortPatch ? 'post-apply-overwritten-template' : 'authored-manifest',
+      constraints: [`${apiVersion}/${kind} API schema and admission`],
+      runtimeOwner: `${apiOwner} for ${kind}/${name}`,
+      consumers: [...manifestReceivingPaths(context.sourcePath, context.resource, exactPath), {
+        path: context.sourcePath,
+        line: context.fieldLine ?? 1,
+        sourceLineSha256: sha256(read(context.sourcePath).split('\n')[(context.fieldLine ?? 1) - 1] ?? ''),
+        kind: 'kubernetes-api',
+        authority: apiFieldSchemaAuthority(apiVersion, kind, exactPath).authority,
+      }],
+      precedence: registryTemplate
+        ? ['authored registry-local template (not a directly applicable manifest)',
+          'KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG selects explicit JSON; render-registry-local.mjs validates it and existing storage',
+          storageConfigField ? `config.${storageConfigField} overwrites this template leaf in rendered serve output`
+            : 'serve renderer overwrites PVC class/capacity and sets Deployment replicas to one; other fields pass through',
+          'deploy.sh applies the rendered output with kubectl client-side apply -n NAMESPACE',
+          'existing field ownership, Kubernetes API defaulting and admission', `${apiOwner} reconciliation`]
+        : litellmTemplate
+          ? ['authored LiteLLM Deployment/Service template', 'render-litellm-deployment.mjs generates configuration delivery and preserves the authored Service', 'deploy.sh applies rendered output in NAMESPACE',
+            ...(litellmPortPatch ? ['deploy.sh then merge-patches the complete Service ports list: http/4000/4000/TCP plus validated LITELLM_NODE_PORT (nonempty process input, otherwise 30050)'] : []),
+            'accepted API operation, existing ownership and controller reconciliation']
+          : ['authored manifest', 'named client apply or synchronization operation and existing field ownership', 'Kubernetes API defaulting and admission', `${apiOwner} reconciliation`],
+      effectiveValueProof: registryTemplate
+        ? `${context.sourcePath} template -> ${storageConfigField ? `explicit JSON ${storageConfigField} replaces authored placeholder -> ` : ''}scripts/render-registry-local.mjs:52-55 -> scripts/deploy.sh:1210-1215 rendered request -> ${apiVersion}/${kind} admission -> ${kind}/${name}`
+        : litellmTemplate
+          ? `${context.sourcePath} -> scripts/render-litellm-deployment.mjs:10-22 -> scripts/deploy.sh:1175-1177 apply${litellmPortPatch ? ' -> scripts/deploy.sh:91 effective LITELLM_NODE_PORT -> scripts/deploy.sh:1168-1171 validation -> scripts/deploy.sh:1178-1179 complete port-list merge patch' : ''} -> accepted API state -> ${kind}/${name}`
+          : `${context.sourcePath} -> ${apiVersion}/${kind} admission -> ${kind}/${name}`,
+      changeImpact: `Changes the desired ${kind}/${name} resource state after admission.`,
+      failureMeaning: `Invalid fields fail API admission or Argo sync; accepted fields can still fail ${apiOwner} reconciliation.`,
+      blockerOwner: null,
+      closureCondition: null,
+    };
+  }
+  if (context.externalBindings.length) {
+    const binding = context.externalBindings[0];
+    const directRuntimeBinding = context.runtimeBindings[0] ?? null;
+    const inactive = binding.inactiveProfile === true && !directRuntimeBinding;
+    return {
+      required: 'external-schema',
+      requiredReason: `The external chart ${binding.chart}@${binding.targetRevision} owns required and optional value semantics.`,
+      defaultKind: 'authored-override',
+      constraints: [`external Helm chart ${binding.chart}@${binding.targetRevision}`],
+      runtimeOwner: inactive ? `No active runtime owner; external Helm chart ${binding.chart} owns the field schema`
+        : directRuntimeBinding ? `${sourceOwner(directRuntimeBinding.path).component} and external Helm chart ${binding.chart}`
+          : `Argo CD Application ${binding.application} and Helm chart ${binding.chart}`,
+      consumers: [...context.externalBindings, ...context.runtimeBindings],
+      precedence: inactive
+        ? [`${binding.chart}@${binding.targetRevision} external defaults`, `${context.sourcePath} inactive authored profile`, 'no effective runtime value until a deploy binding selects this file']
+        : directRuntimeBinding
+          ? [`${binding.chart}@${binding.targetRevision} chart defaults`, `${context.sourcePath} authored override`, `${directRuntimeBinding.path} direct loader/deploy binding`]
+          : [`${binding.chart}@${binding.targetRevision} chart defaults`, `${context.sourcePath} authored override`, `Argo CD Application ${binding.application} Helm rendering`],
+      effectiveValueProof: inactive ? `${binding.path}:${binding.line} proves schema authority; no active valueFiles/deploy binding selects ${context.sourcePath}`
+        : directRuntimeBinding ? `${context.sourcePath} -> ${directRuntimeBinding.path}:${directRuntimeBinding.line} -> ${binding.chart}@${binding.targetRevision}`
+          : `${context.sourcePath} -> ${binding.path}:${binding.line} -> ${binding.chart}@${binding.targetRevision}`,
+      changeImpact: inactive ? 'No current runtime impact; this profile affects the external chart only after an operator binds it.'
+        : directRuntimeBinding ? `Changes the ${binding.chart} values consumed by the linked loader or deploy command.`
+          : `Changes the rendered ${binding.application} release when Argo CD reconciles it.`,
+      failureMeaning: inactive ? 'No current deployment failure; using the profile with an incompatible chart fails Helm validation or rendering.'
+        : directRuntimeBinding ? 'An invalid value fails the linked loader, Helm rendering, or workload readiness.'
+          : 'An invalid value fails Helm rendering or Argo CD synchronization; an accepted value can still fail workload readiness.',
+      blockerOwner: inactive ? context.owner.component : null,
+      closureCondition: inactive ? 'Bind this profile to a versioned Helm invocation/Application, or remove the inactive profile.' : null,
+    };
+  }
+  let linkedHelmConsumers = context.chartRoot && exactPath
+    ? [...(context.consumerMap.get(`${context.chartRoot}:${canonicalHelmPath(exactPath)}`) ?? [])]
+    : [];
+  const extraContainerIndex = /^extraContainers\[([0-9]+)\](?:\.|$)/u.exec(exactPath)?.[1];
+  if (extraContainerIndex !== undefined) {
+    const selectedName = context.documentValue?.extraContainers?.[Number(extraContainerIndex)]?.name;
+    if (selectedName === 'buster-v2-runtime') {
+      linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => !(consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
+        && consumer.line === 1527));
+    } else if (selectedName) {
+      linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => consumer.path !== 'charts/kubeclaw/templates/_registry-clients.tpl');
+    }
+  }
+  if (context.runtimeBindings.length) {
+    const readers = context.runtimeBindings.filter((item) => item.direction === 'read');
+    const sourceWriters = context.runtimeBindings.filter((item) => item.direction === 'write');
+    const derivedWriters = context.runtimeBindings.filter((item) => item.direction === 'write-derived');
+    const binding = readers[0] ?? context.runtimeBindings[0];
+    return {
+      required: 'source-loader-contract',
+      requiredReason: linkedHelmConsumers.length
+        ? `${binding.path} preserves this runtime input in the generated values object; the linked chart template owns its final interpretation.`
+        : `${binding.path} owns parsing and validation for this runtime input.`,
+      defaultKind: sourceWriters.length ? 'generated-runtime-input' : 'authored-runtime-input',
+      constraints: [
+        `loader contract in ${binding.path}`,
+        ...linkedHelmConsumers.flatMap((item) => item.constraints ?? []),
+      ],
+      runtimeOwner: linkedHelmConsumers.length
+        ? `Helm release rendered from ${context.chartRoot}`
+        : sourceOwner(binding.path).component,
+      consumers: [...context.runtimeBindings, ...linkedHelmConsumers],
+      precedence: [
+        ...sourceWriters.map((item) => `${item.path} generated-file write`),
+        `${context.sourcePath} selected file value`,
+        ...readers.map((item) => `${item.path} read/validation`),
+        ...derivedWriters.map((item) => `${item.path} derived runtime output`),
+        ...(linkedHelmConsumers.length ? [`${context.chartRoot}/values.yaml chart defaults merged by Helm`, 'linked chart template rendering'] : []),
+        'generated or live runtime state',
+      ],
+      effectiveValueProof: linkedHelmConsumers.length
+        ? `${context.sourcePath} -> ${binding.path}:${binding.line} -> ${linkedHelmConsumers[0].path}:${linkedHelmConsumers[0].line}`
+        : `${context.sourcePath} -> ${binding.path}:${binding.line}`,
+      changeImpact: linkedHelmConsumers.length
+        ? 'Changes the generated values object and the linked chart output when this source wins Helm precedence.'
+        : 'Changes the generated runtime policy or operational action produced by the linked loader.',
+      failureMeaning: linkedHelmConsumers.length
+        ? 'Invalid input can fail Helm rendering or API admission; an accepted change can alter workload behavior or readiness.'
+        : 'Invalid input fails the linked loader/preflight before runtime activation; accepted changes can alter generated runtime state.',
+      blockerOwner: null,
+      closureCondition: null,
+    };
+  }
+  const matches = linkedHelmConsumers;
+  if (matches.length) {
+    const requiredSignal = matches.some((item) => item.requiredSignal);
+    const conditionalSignal = matches.some((item) => item.conditionalSignal);
+    const required = requiredSignal ? 'required' : conditionalSignal ? 'conditional' : 'optional';
+    const overlay = context.sourceClass !== 'helm-values';
+    return {
+      required,
+      requiredReason: requiredSignal ? 'A linked template uses Helm required/fail validation.' : conditionalSignal ? 'A linked template condition or default controls consumption.' : 'A linked template consumes the value without a required/fail assertion.',
+      defaultKind: overlay ? 'authored-override' : 'chart-default',
+      constraints: [...new Set(matches.flatMap((item) => item.constraints))],
+      runtimeOwner: `Helm release rendered from ${context.chartRoot}`,
+      consumers: [...new Map(matches.map((item) => [`${item.path}:${item.line}`, item])).values()],
+      precedence: overlay
+        ? [`${context.chartRoot}/values.yaml chart default`, `${context.sourcePath} override`, 'later Helm -f/--set input when supplied', 'linked template rendering']
+        : [`${context.sourcePath} chart default`, 'later Helm -f/--set input when supplied', 'linked template rendering'],
+      effectiveValueProof: `${context.sourcePath} -> ${matches[0].path}:${matches[0].line}`,
+      changeImpact: 'Changes each linked rendered template field when this source wins Helm precedence.',
+      failureMeaning: requiredSignal ? 'A missing or invalid value stops Helm rendering.' : 'A rejected render stops deployment; an accepted change can alter workload behavior or readiness.',
+      blockerOwner: null,
+      closureCondition: null,
+    };
+  }
+  if (valueType === 'object' || valueType === 'array') {
+    return {
+      required: 'not-applicable-container', requiredReason: 'This row is a structural container; leaf rows own effective-value semantics.',
+      defaultKind: context.sourceClass === 'helm-values' ? 'chart-default-container' : 'authored-container', constraints: [],
+      runtimeOwner: 'Not applicable; structural container', consumers: [{ path: context.sourcePath, line: 1, kind: 'structural-container', authority: 'child leaf facts' }],
+      precedence: ['See child leaf fields'], effectiveValueProof: 'See child leaf fields', changeImpact: 'No independent value; child changes define impact.',
+      failureMeaning: 'No independent failure; child validation and consumers define failure.', blockerOwner: null, closureCondition: null,
+    };
+  }
+  return {
+    required: 'not-applicable-unused',
+    requiredReason: 'No checked-in template, Application binding, or API resource consumes this leaf.',
+    defaultKind: context.sourceClass === 'helm-values' ? 'unused-chart-default' : 'unbound-authored-value',
+    constraints: [],
+    runtimeOwner: 'Not applicable; no checked-in runtime binding',
+    consumers: [{ path: context.owner.evidence, line: 1, kind: 'not-applicable', authority: 'no discovered runtime binding' }],
+    precedence: ['Authored value has no effective runtime precedence until a binding exists.'],
+    effectiveValueProof: 'No effective runtime value; discovery found no binding.',
+    changeImpact: 'No proved runtime impact in the checked-in deployment path.',
+    failureMeaning: 'No runtime failure is proved; keeping an unused value can mislead operators.',
+    blockerOwner: context.owner.component,
+    closureCondition: 'Add a source-backed template/Application/deploy binding or remove the unused value.',
+  };
+}
+
+function normalizedChartName(value) {
+  return String(value ?? '').split('/').filter(Boolean).at(-1) ?? '';
+}
+
+function normalizedChartRepository(value) {
+  return String(value ?? '').replace(/^oci:\/\//u, '').replace(/\/+$/u, '');
+}
+
+function exactYamlAuthority(context, fieldPath) {
+  const exactDeclaration = yamlAuthorityFile(context.sourcePath);
+  const localDeclaration = localHelmAuthorityFile(context.sourcePath);
+  const declaration = exactDeclaration ?? localDeclaration;
+  if (declaration && declaration.sourceSha256 !== context.sourceDigest
+    && !(localDeclaration && allowLocalHelmAuthorityMaintenance)) {
+    throw new Error(`CONFIG_YAML_AUTHORITY_DRIFT: ${context.sourcePath} changed without an exact field-authority update; expected ${declaration.sourceSha256}, got ${context.sourceDigest}`);
+  }
+  const authority = yamlFieldAuthority(context.sourcePath, fieldPath) ?? localHelmFieldAuthority(context.sourcePath, fieldPath);
+  if (!authority) return null;
+  if (authority.externalChart) {
+    const binding = context.externalBindings.find((item) => item.inactiveProfile !== true)
+      ?? context.externalBindings[0];
+    assert(binding, `CONFIG_YAML_AUTHORITY_DRIFT: ${context.sourcePath}${fieldPath} pins an external chart but has no chart binding`);
+    assert.equal(normalizedChartName(binding.chart), authority.externalChart.chart,
+      `CONFIG_YAML_AUTHORITY_DRIFT: ${context.sourcePath}${fieldPath} chart changed`);
+    assert.equal(String(binding.targetRevision), authority.externalChart.version,
+      `CONFIG_YAML_AUTHORITY_DRIFT: ${context.sourcePath}${fieldPath} chart version changed`);
+    assert.equal(normalizedChartRepository(binding.repository), normalizedChartRepository(authority.externalChart.repository),
+      `CONFIG_YAML_AUTHORITY_DRIFT: ${context.sourcePath}${fieldPath} chart repository changed`);
+  }
+  return authority;
+}
+
+function deploymentApiCollectionContract(resource, exactPath, valueType, documentValue = null, sourcePath = null) {
+  const field = yamlFieldMatcherPath(exactPath);
+  const api = `${resource.apiVersion}/${resource.kind}`;
+  const schema = apiFieldCollectionAuthority(resource.apiVersion, resource.kind, exactPath);
+  const ciliumRule = ['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind) ? documentValue?.spec : null;
+  const parserBoundary = ciliumRule && ['ingress', 'ingressDeny', 'egress', 'egressDeny'].every((direction) => !ciliumRule[direction]?.length)
+    && ['spec', 'spec.ingress', 'spec.egress', 'spec.enableDefaultDeny'].includes(field)
+    ? ` The selected checked-in rule has zero entries in all four Cilium allow/deny direction lists. In Cilium 1.20.1, the CNP/CCNP Parse method calls Rule.Sanitize, which rejects this with rule must have at least one of Ingress, IngressDeny, Egress, EgressDeny. A valid CRD shape therefore does not prove policy installation or traffic enforcement. Stop before relying on this object for isolation. Cilium and configuration maintainers must choose a supported policy design or verified controller version, then prove parser acceptance and both required and denied traffic before removing this limit. No live parser rejection or enforcement check ran. [Parser boundary](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/k8s/apis/cilium.io/v2/${resource.kind === 'CiliumNetworkPolicy' ? 'cnp_types.go#L191-L201' : 'ccnp_types.go#L97-L107'}); [Rule.Sanitize](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L42-L46).`
+    : '';
+  const result = (group, purpose, emptyBehavior, impact, failure, { structural = false, source = null } = {}) => ({
+    status: structural ? 'deployment-collection-envelope' : 'deployment-operational-authority',
+    collectionGroup: group, purpose, emptyBehavior: `${emptyBehavior}${source ? ` ${source}` : ''}${parserBoundary}`, impact, failure: `${failure}${parserBoundary}`,
+    acceptedValues: 'The exact field, item and child schema contracts listed here apply together. Parent descriptions and required fields constrain the complete object; a schema-valid fragment does not prove that the receiving controller can use it.',
+    apiAuthority: `${schema.authority}${source ? `; ${source}` : ''}`,
+    collectionSchemaAuthority: schema,
+    qualification: { method: 'path-specific contract and exact pinned schema', group, scope: 'Source contract; admission and reconciliation have not run.', ...(parserBoundary ? { controllerLimit: parserBoundary } : {}) },
+  });
+  const k8sSource = (file, lines) => `[Kubernetes v1.35.0 ${file.split('/').at(-1)}](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/${file}#${lines})`;
+  const argoSource = (file, lines) => `[Argo CD 3.5.2 ${file}](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/${file}#${lines})`;
+  const unqualified = (missing) => ({
+    status: 'api-collection-meaning-blocker', collectionGroup: 'unqualified-api-collection',
+    purpose: `The exact ${api} field ${field} reaches the API server. Its schema and named children are shown here, but the complete receiving behavior is not established.`,
+    acceptedValues: 'Use the exact pinned field, item, child and parent schema contracts. They do not establish a missing controller contract.',
+    emptyBehavior: `Not established: ${missing}. Stop before using an empty, omitted or null collection as a reset or fallback. Keep the checked-in selection until the receiving behavior is established.`,
+    impact: `Changing ${field} changes desired ${resource.kind}/${resource.name} state. The complete operational consequence is not established.`,
+    failure: `An unqualified change can remove required inputs or expand scope. The configuration owner must establish ${missing} before this field is presented as a supported change.`,
+    apiAuthority: schema.authority, collectionSchemaAuthority: schema,
+    qualification: { method: 'exact pinned schema only', missing, scope: 'Unqualified controller behavior; no acceptance claim.' },
+    blockerOwner: `configuration owners and the ${resource.kind} controller owner`,
+    closureCondition: `Establish ${missing} for ${api} ${field}, with pinned implementation and a bounded negative check.`,
+  });
+  const envelopeKinds = ['Namespace', 'CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy', 'NetworkPolicy', 'Application', 'AppProject', 'Deployment', 'Service', 'Ingress', 'ValidatingAdmissionPolicy', 'ValidatingAdmissionPolicyBinding', 'PersistentVolumeClaim', 'ConfigMap'];
+  if (envelopeKinds.includes(resource.kind) && (field === 'metadata' || field === 'spec' || resource.kind === 'Deployment' && ['spec.template', 'spec.template.metadata', 'spec.template.spec'].includes(field))) return result(
+    'api-object-envelope', `Groups the named ${field} child contracts for ${resource.kind}/${resource.name}.`,
+    'An empty or removed envelope still has to satisfy the required child fields, API validation and the receiving object contract. It does not disable the object or its controller. Null is not a supported whole-object reset. Child defaults apply only when the enclosing object and API operation permit them.',
+    `Changes the named desired-state children. For Deployment Pod-template changes, the Deployment creates replacement Pods; the descriptions that forbid updating a Pod apply to a running Pod, not to changing its Deployment template.`,
+    'Missing required children fail admission; inconsistent selectors, references or policy inputs can prevent reconciliation. The named child contracts describe the exact consequences.', { structural: true });
+  if (/(?:^|\.)metadata\.(?:labels|annotations)$/u.test(field)) return result(
+    'object-metadata-map', `Stores ${field.endsWith('labels') ? 'labels used by exact matching selectors' : 'annotations interpreted by the component named by each key'}.`,
+    'An empty map supplies no entries from this field. Omission has no authored entries in a new object; apply may remove previously managed entries or retain entries owned by another writer. Null is not a general reset of other writers. A Pod-template label change must keep the Deployment selector valid.',
+    'Changes stored metadata and the exact selector or annotation consumers shown in child rows. Pod-template changes can start a rollout; object metadata by itself does not prove process restart.',
+    'Invalid keys or values fail admission. Lost selector labels can detach routing or policy; a stored annotation has no proved process effect without its exact reader.');
+  if (/(?:^|\.)(?:matchLabels|matchExpressions|values)(?:\[\])?$/u.test(field) && /(?:Selector|Endpoints|selector)/u.test(field)) return result(
+    'label-selector-terms', 'Defines label requirements for the enclosing selector.',
+    'matchLabels entries and matchExpressions are ANDed. An empty requirements set adds no restriction to that selector. For In and NotIn, values must be nonempty; for Exists and DoesNotExist, values must be empty. An empty item still has to supply the required key and operator. Omission or null of a term collection adds no terms after accepted API decoding; it does not define omission of the enclosing selector. Its parent contract remains in force.',
+    'Changes which objects or endpoints the enclosing selector matches; removing terms can broaden scope.',
+    'Invalid operator/value combinations fail validation; valid broad terms can select unintended workloads or traffic.');
+  if (resource.kind === 'NetworkPolicy') {
+    if (/^spec\.(?:ingress|egress)$/u.test(field)) return result('network-policy-rule-list', 'Defines the traffic allow rules for the named policy direction.',
+      'An empty, omitted or accepted null list contributes no allow rules. Whether the selected Pods are isolated in that direction depends on policyTypes and all selecting policies. Allow rules across the selecting policy set are ORed; source and port restrictions within one rule must both match.',
+      'Changes traffic allowed to or from selected Pods after policy enforcement.', 'Removing all allows can block dependencies; removing a restriction inside a retained rule can expand traffic.');
+    if (/^spec\.(?:ingress\[\]\.from|egress\[\]\.to|(?:ingress|egress)\[\]\.ports)$/u.test(field)) {
+      const ports = field.endsWith('.ports');
+      return result('network-policy-peer-port-list', `Restricts the ${ports ? 'destination ports' : 'peers'} matched by this NetworkPolicy rule.`,
+        `An empty or missing list matches all ${ports ? 'ports' : 'peers'} in this rule. Nonempty entries are ORed. The peer and port restrictions are intersected; a request must match both. Accepted null is decoded as a missing list, not as a deny rule.`,
+        `Removing the complete list broadens the retained rule to all ${ports ? 'ports' : 'peers'}; it does not remove the rule.`,
+        'A broad retained rule can grant unintended traffic; a mismatched nonempty entry can block required traffic.');
+    }
+    if (/^spec\.(?:ingress|egress)\[\]$/u.test(field)) return result('network-policy-rule', 'Combines the peer and port restrictions of one allow rule.',
+      'A rule with missing or empty from/to matches all peers; missing or empty ports matches all ports. Each nonempty member list ORs its entries, and the peer and port restrictions intersect. An empty rule therefore permits all traffic in that direction through this rule. Removing the rule removes that allow. A null rule item is not a supported substitute for deleting it.',
+      'Changes the intersection of peers and ports allowed by this rule; separate rules are ORed.', 'An empty retained rule broadens traffic even if other rules remain narrow.');
+    if (/^spec\.(?:ingress\[\]\.from|egress\[\]\.to)\[\]$/u.test(field)) return result('network-policy-peer', 'Selects the peer alternative used by this allow-rule item.',
+      'An empty peer object is invalid: a retained item must specify podSelector, namespaceSelector or ipBlock. An explicit empty selector object is valid and matches all objects in its own scope. podSelector and namespaceSelector in the same item intersect; separate peer items are ORed. ipBlock cannot accompany either selector. Removing an item removes that alternative; removing the complete peer list broadens the retained rule to all peers.',
+      'Changes the peer scope permitted by the retained allow rule.', 'An empty peer or invalid alternative combination fails validation; removing the complete peer list can grant unintended traffic.', { source: k8sSource('pkg/apis/networking/validation/validation.go', 'L107-L132') });
+    if (/^spec\.(?:ingress|egress)\[\]\.ports\[\]$/u.test(field)) return result('network-policy-port', 'Selects one port and transport protocol allowed by the rule.',
+      'An omitted port matches all ports for the selected protocol. Protocol defaults to TCP; endPort requires a numeric port and must not be below it. Removing an item removes that alternative; removing the list permits all ports. Null is not a supported port item.',
+      'Changes the allowed destination port range.', 'Invalid port ranges fail admission; deleting the list can broaden traffic.', { source: k8sSource('pkg/apis/networking/v1/defaults.go', 'L30-L45') });
+    if (field === 'spec.policyTypes') return result('network-policy-directions', 'Selects the policy directions that isolate selected Pods.',
+      'Kubernetes defaults a zero-length list, including [], omission or decoded null, to Ingress and also Egress when the egress rule list is nonempty. Use an explicit Egress item for an egress-only policy or an empty egress allow set. Empty items are invalid.',
+      'Changes which traffic directions need an explicit allow from the selecting policy set.', 'A missing Egress direction can leave egress unrestricted; a direction without allows can block traffic.', { source: k8sSource('pkg/apis/networking/v1/defaults.go', 'L38-L45') });
+    if (/(?:podSelector|namespaceSelector)$/u.test(field)) return result('network-policy-selector', 'Selects Pods or namespaces for the enclosing policy or peer.',
+      'An empty selector matches all objects within its scope. The top-level podSelector scopes Pods to the policy namespace. A peer podSelector without namespaceSelector also uses the policy namespace; a peer namespaceSelector with podSelector intersects both selectors. Omission of a peer selector does not mean an empty selector. Null is not a supported reset of the required top-level selector.',
+      'Changes the Pods isolated or peers permitted by the policy.', 'Broad selectors can grant traffic or isolate unrelated Pods; inconsistent selectors can block intended traffic.');
+  }
+  if (['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind)) {
+    if (/^spec\.(?:ingress|egress)$/u.test(field)) return result('cilium-direction-rules', 'Defines Cilium allow rules for the named direction.',
+      'An omitted or empty list contributes no allow rule in this direction. It does not by itself prove disabled enforcement: enableDefaultDeny and all policies selecting the endpoints still apply. Null decoding and policy normalization are not a supported way to recover an empty allow set.',
+      'Changes allowed traffic after Cilium policy reconciliation.', 'Missing allows can block dependencies; broad retained rules can expand traffic.');
+    if (/^spec\.(?:ingress|egress)\[\]$/u.test(field)) return result('cilium-allow-rule', 'Combines the alternatives and restrictions of one Cilium traffic rule.',
+      'The exact pinned rule description lists mutually exclusive peer members and the intersections between present members. Removing a member removes its restriction subject to its own exact contract; removing the complete rule removes that allow. An empty retained rule is not a supported reset. Null items must not be used in place of deletion.',
+      'Changes which peer and port combinations the policy engine allows.', 'Invalid alternative combinations fail Cilium validation; removed restrictions can expand scope.');
+    if (/\.(?:fromEndpoints|toEndpoints)$/u.test(field)) return result('cilium-peer-selectors', 'Selects endpoint identities permitted by this Cilium rule.',
+      'The pinned Cilium contract distinguishes [] from omission: an empty non-nil list selects no endpoints, while a nil list is a wildcard when ToPorts is specified. One empty EndpointSelector selects everything. Null cannot be assumed to preserve []; admission and policy normalization must preserve the intended selector state.',
+      'Changes allowed endpoint identities, with the enclosing port restrictions still intersected.', 'Replacing a restrictive list with omission can broaden traffic; [] can block required peers.');
+    if (/\.(?:fromEndpoints|toEndpoints)\[\]$|\.endpointSelector$/u.test(field)) return result('cilium-endpoint-selector', 'Selects the endpoints for the enclosing policy or peer alternative.',
+      'An empty selector object has no label requirements. The enclosing peer list decides whether that empty item selects everything; a missing list is a different state. At the policy root, Rule.Sanitize requires exactly one declared endpointSelector or nodeSelector: a declared {} is different from a missing or null selector. Do not use null to select a fallback.',
+      'Changes protected endpoints or allowed peer identities.', 'A broad selector expands the policy scope; an invalid root selector combination fails Cilium rule validation.', { source: '[Cilium 1.20.1 Rule.Sanitize](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L67-L85)' });
+    if (/\.(?:fromEntities|toEntities)$/u.test(field)) return result('cilium-entity-list', 'Selects reserved Cilium identities permitted by the enclosing traffic rule.',
+      'The pinned policy translator distinguishes [] from omission: an explicit empty entity list produces no selected identities; a missing list can leave peer selection to the other supported selector member or act as a wildcard with port rules. It does not select the none entity or disable the whole policy. Null must not be assumed to preserve explicit [].',
+      'Changes which infrastructure or external identities can communicate.', 'A broad entity or removed restriction can grant traffic across a wider trust boundary.', { source: '[Cilium 1.20.1 peer translation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/utils/parserules.go#L149-L166)' });
+    if (field === 'spec.enableDefaultDeny') return result('cilium-default-deny-map', 'Controls whether this policy enables default deny for each selected traffic direction.',
+      'When EnableNonDefaultDenyPolicies is enabled, a missing direction override defaults true for directions with allow or deny rules and false otherwise. If that Cilium feature is disabled, Rule.Sanitize sets both directions true regardless of authored overrides. Any selecting policy can enable default deny. An empty map supplies no overrides; removing this map does not disable default deny. Null must not be used as an explicit false override.',
+      'Changes whether unmatched traffic is dropped for selected endpoints.', 'A false override can leave traffic allowed unless another selecting policy enables default deny; true without allows can block dependencies.', { source: '[Cilium 1.20.1 default-deny selection](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L47-L66)' });
+    if (/\.toPorts(?:\[\])?\.ports\[\]$/u.test(field)) return result('cilium-port-protocol-item', 'Selects a Cilium port and optional transport protocol.',
+      'The item schema and PortProtocol contract apply together. Omitted or empty protocol matches transport protocols TCP, UDP and SCTP; named ports may narrow this. An empty port item is not a supported way to remove a port restriction. Remove the intended rule item and inspect the remaining rule scope.',
+      'Changes traffic matched by the enclosing Cilium port rule.', 'Invalid port/protocol combinations fail validation; a broad protocol can permit unintended traffic.', { source: '[Cilium 1.20.1 PortProtocol](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/l4.go#L43-L83)' });
+    if (/\.toPorts(?:\[\])?(?:\.ports)?$/u.test(field)) return result('cilium-port-rule-list', 'Defines the port-rule entries and their port/protocol lists used by the Cilium policy engine.',
+      'Empty or omitted toPorts produces no port-rule entries. With a nonempty allowed peer selector and no other L4 entries, the engine creates an L3-only allowance for all transport ports; an explicit empty peer list still selects nothing. A retained PortRule with an empty or omitted ports list contributes no port/protocol iteration and no L4 filter from that entry. These states are different. Removing the last PortRule can therefore broaden the peer rule, while removing its ports can remove its allowance. An accepted null list must be inspected as the decoded zero-length state; null items are not a supported recovery input. Optional Layer 7 alternatives still have their own validation and do not add a missing port/protocol entry.',
+      'Changes the traffic filters emitted by this rule after Cilium reconciliation, with peer selection and the complete policy set still in force.',
+      'Invalid combinations fail Cilium rule validation. Changing the wrong list level can block traffic or broaden the retained peer rule. Stop before treating an empty list as a deny-all or disable switch; inspect the complete peer and port rule together.',
+      { source: '[Cilium 1.20.1 rule translation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/utils/parserules.go#L19-L46); [port iteration and L3-only allowance](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/rule.go#L356-L413)' });
+  }
+  if (resource.kind === 'AppProject') {
+    if (/^spec\.(?:cluster|namespace)ResourceWhitelist(?:\[\])?$/u.test(field)) return result('argo-resource-permissions', 'Defines resource group and kind permissions in this Argo CD project.',
+      'For namespaced resources, [] is an explicit deny-all whitelist, while omission or null permits namespaced kinds subject to blacklist and destination checks. For cluster-scoped resources, empty, omitted or null grants no kinds. A nonempty list permits matching entries unless a blacklist denies them. Each item requires the actual group/kind or supported wildcard; an empty item is not permission.',
+      'Changes which desired resource kinds the project can synchronize.', 'Missing permissions stop synchronization; broad wildcards expand authority.', { source: argoSource('app_project_types.go', 'L399-L413') });
+    if (/^spec\.(?:sourceRepos|destinations)(?:\[\])?$/u.test(field)) return result('argo-source-destination-permissions', 'Defines source repository or cluster/namespace permissions for this project.',
+      'The evaluator loops over the selected entries. An empty, omitted or null list supplies no matching allow entry. PermitOnlyProjectScopedClusters can further restrict an otherwise matched destination; it does not replace a missing destination permission. Positive matches do not override a matching negative pattern. Empty destination items are not a supported allow entry.',
+      'Changes the repositories or destination namespaces available to project Applications.', 'No matching permission prevents synchronization; a wildcard or wrong destination can expand the deployment boundary.', { source: argoSource('app_project_types.go', 'L458-L530') });
+  }
+  if (resource.kind === 'Application') {
+    if (/^spec\.sources(?:\[\])?$|^spec\.source$/u.test(field)) return result('argo-source-selection', 'Selects the desired manifest or chart sources for this Application.',
+      'A nonempty sources list takes precedence over source. Empty, omitted or null sources falls back to source; when both are absent the selected source is empty and cannot generate desired state. Each source needs repoURL. A manifest-producing source selects a valid chart or path. In multiple sources, a Git source with ref may omit path and chart and supply only values files. Adding path to that ref source also requests manifest generation; ref and chart cannot be combined. Manifest-producing sources remain ordered; later repeated resources can override earlier source output.',
+      'Changes desired-state source identity, values-file inputs, content and precedence.', 'A missing required source identity or incompatible chart/ref selection prevents source resolution or generation; changing manifest-producing source order can replace desired resources.', { source: `${argoSource('types.go', 'L281-L296')}; [multiple-source resource precedence](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/docs/user-guide/multiple_sources.md#L45-L47); [values-only ref sources and chart restriction](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/docs/user-guide/multiple_sources.md#L76-L88)` });
+    if (field === 'spec.destination') return result('argo-destination', 'Selects the cluster and default namespace for generated resources.',
+      'The destination child contract requires a registered server or cluster name and project permission. An empty, omitted or null map is not a supported destination reset. Namespace omission is usable only for cluster-scoped output or resources with their own accepted namespace.',
+      'Changes the target cluster and namespaced reference boundary.', 'An incomplete or denied destination stops synchronization.');
+    if (/^spec\.sources?(?:\[\])?\.(?:helm|directory)$/u.test(field)) return result('argo-manifest-generator-options', 'Groups options for the Helm or directory generator selected by this source.',
+      'An empty map still requests that generator type. Omission lets Argo CD infer the type from the source; competing generator option maps are not a supported combination. Child defaults and required settings apply only to the selected generator. Null is not a supported way to clear generated desired state.',
+      'Changes which files and options enter generated desired state.', 'An incompatible generator or missing input fails manifest generation; unintended files can enter synchronization.', { source: `${argoSource('types.go', 'L3798-L3825')}; [generator selection](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1921-L1943)` });
+    if (/^spec\.sources?(?:\[\])?\.helm\.valueFiles$/u.test(field)) return result('argo-helm-value-file-list', 'Selects ordered values files for the source Helm render.',
+      'An empty, omitted or null list adds no values files through this field; chart defaults and other values/valuesObject/parameters inputs remain. Resolved paths retain first-occurrence order; duplicate resolved paths are skipped. Later distinct files have higher Helm precedence. A $ref path resolves through a source ref; missing files fail generation unless ignoreMissingValueFiles is enabled.',
+      'Changes effective Helm values and the resulting desired manifests.', 'A missing file or ref fails generation; removing overrides can re-enable chart defaults.', { source: '[Argo CD ordered ref/local resolution](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1475-L1499); [unique resolved paths](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1466-L1474); [missing files and ordered append](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1531-L1547)' });
+    if (field === 'spec.syncPolicy' || field === 'spec.syncPolicy.automated') return result('argo-sync-policy', 'Controls Application synchronization and the optional automated-sync path.',
+      'A missing or null automated object disables automated sync. An empty automated map enables it unless enabled is explicitly false; omitted prune, selfHeal and allowEmpty do not enable those flags. An empty syncPolicy map does not by itself enable automation. Removing syncPolicy also removes its app-wide syncOptions.',
+      'Changes whether the controller synchronizes automatically and can prune or repair live drift.', 'An unintended automated object can start changes; unsafe prune/allowEmpty choices can remove desired resources.', { source: argoSource('types.go', 'L1530-L1547') });
+    if (field === 'spec.syncPolicy.syncOptions') return result('argo-sync-options-list', 'Selects named synchronization options for this Application.',
+      'An empty, omitted or null list sets no app-wide options through this field. Resource annotations can still set options. The exact option names and values decide validation, apply, namespace creation, replacement and pruning; an empty item is not a supported option.',
+      'Changes how Argo CD performs synchronization for generated resources.', 'A wrong option can change ownership, replace resources or make synchronization fail.');
+    if (/^spec\.ignoreDifferences(?:\[\])?(?:\.jqPathExpressions)?$/u.test(field)) return result('argo-comparison-exclusions', 'Selects resource fields excluded from Argo CD comparison.',
+      'An empty, omitted or null list excludes no fields through this field. Each item filters objects by group/kind and optional name/namespace; its JQ or JSON-pointer selectors choose fields. An empty selector list contributes no excluded paths. Other configured comparison rules can still apply. RespectIgnoreDifferences is a separate sync option.',
+      'Changes which differences can make an Application appear out of sync.', 'Invalid expressions fail comparison; broad selectors can hide material drift.');
+  }
+  if (resource.kind === 'Deployment') {
+    if (/^spec\.selector(?:\.matchLabels)?$/u.test(field)) return result('deployment-selector', 'Selects the Pods owned by this Deployment.',
+      'The apps/v1 Deployment requires a nonempty immutable selector that matches the Pod-template labels. An empty, omitted or null selector is not a supported reset. Empty matchLabels must still leave a valid nonempty complete selector through matchExpressions.',
+      'Changes controller ownership; changing the immutable selector requires a deliberate replacement workflow.', 'An invalid, empty, changed or mismatched selector fails API validation.', { source: k8sSource('pkg/apis/apps/validation/validation.go', 'L637-L659') });
+    if (field === 'spec.strategy') return result('deployment-replacement-strategy', 'Selects the method that replaces old Pods with new Pods.',
+      'Omission or an empty strategy selects the Kubernetes RollingUpdate defaults. Recreate and RollingUpdate are distinct variants; rollingUpdate settings cannot accompany Recreate. Null is not a separate disablement mode. Availability during replacement depends on the selected rollout constraints.',
+      'Changes Pod replacement order and available capacity during rollout.', 'An invalid variant fails admission; a valid aggressive rollout can interrupt service.', { source: k8sSource('pkg/apis/apps/v1/defaults.go', 'L38-L63') });
+    const containerField = /^spec\.template\.spec\.containers(?:\[\])?(?:\.(.*))?$/u.exec(field);
+    if (containerField) {
+      const member = containerField[1];
+      if (!member) return result('pod-container-set', 'Defines the application containers in each new Deployment Pod.',
+        'The Pod requires at least one container and unique names. An empty, omitted or null list cannot create a valid Pod. Removing one item removes that process from replacement Pods; running Pod container lists cannot be updated in place.',
+        'Changes the processes and startup dependencies of replacement Pods.', 'Missing or duplicate containers fail admission; a valid changed image/process can fail startup.');
+      if (member === 'args' || member === 'command') return result('container-launch-list', `Defines the ordered container ${member}.`,
+        `An empty, omitted or decoded null ${member} list leaves the image ${member === 'args' ? 'CMD arguments' : 'ENTRYPOINT command'} in effect. Entries are ordered and environment references are expanded under the exact field contract. This field does not invoke a shell unless the selected executable does so.`,
+        'Changes the program or its arguments after Pod replacement.', 'An invalid executable or argument can make the container exit; removing arguments can select unintended image defaults.');
+      if (/^env(?:\[\])?$|^envFrom(?:\[\])?(?:\.secretRef)?$/u.test(member)) return result('container-environment-collection', 'Defines literal environment entries or references to environment sources.',
+        'An empty, omitted or null list adds no entries through that field; image environment and other env/envFrom entries remain. env entries override duplicate envFrom keys; the last envFrom source wins among sources. Items select literal value or valueFrom, or a ConfigMap/Secret source. A missing nonoptional referenced object or key prevents container setup; optional references can be absent.',
+        'Changes process input after Pod replacement; Secret/ConfigMap edits do not update an existing process environment.', 'Invalid alternatives fail admission; unavailable required credentials prevent startup.');
+      if (/^ports(?:\[\])?$/u.test(member)) return result('container-port-declarations', 'Declares named container ports for API references and tooling.',
+        'An empty, omitted or null list declares no ports. It does not stop the image process from listening or block network traffic. A named Service targetPort or probe still needs a matching declaration; numeric endpoints remain separate.',
+        'Changes named-port resolution and desired Pod metadata, not the process listener itself.', 'Invalid or duplicate declarations fail validation; a missing named target can break routing.');
+      if (/^resources(?:\.(?:requests|limits))?$/u.test(member)) return result('container-resource-boundaries', 'Defines container scheduling requests and runtime resource limits.',
+        'An empty or missing map supplies no authored keys through this Deployment template field. At created-Pod defaulting, each absent container request inherits a present limit for the same resource; the Deployment-template defaulter does not insert those inherited requests. LimitRange and other namespace admission can add constraints. Requests cannot exceed limits. Null is not a bypass of namespace resource policy.',
+        'Changes scheduling reservations and resource enforcement for replacement Pods.', 'Invalid quantities fail admission; high requests can leave Pods Pending and low limits can throttle or terminate processes.', { source: `${k8sSource('pkg/apis/core/v1/defaults.go', 'L164-L196')}; ${k8sSource('pkg/apis/apps/v1/zz_generated.defaults.go', 'L373-L380')}; ${k8sSource('pkg/apis/core/v1/zz_generated.defaults.go', 'L207-L211')}` });
+      if (/^volumeMounts(?:\[\])?$/u.test(member)) return result('container-volume-mounts', 'Selects Pod volumes and the container paths where they appear.',
+        'An empty, omitted or null list adds no mounts. Each retained item needs a matching Pod volume and a valid unique mountPath. Removing a mount removes that filesystem exposure from replacement Pods; it does not delete the source volume data.',
+        'Changes container data and credential access after Pod replacement.', 'Invalid or missing volume relationships fail admission or setup; a removed mount can break process startup.');
+      if (/^(?:livenessProbe|readinessProbe|startupProbe)(?:\.httpGet)?$/u.test(member)) return result('container-health-probe', 'Defines a container health check and its selected action.',
+        'A missing or null probe supplies no check of that type. An empty probe is invalid because exactly one action must be selected. A supplied httpGet action requires a port; other action alternatives cannot be present together. Probe timing defaults and success/failure thresholds remain in the named child contracts.',
+        'Liveness and startup failures can restart a container; readiness failures remove it from ready Service endpoints. Startup gating postpones the other probes.', 'Invalid actions fail validation; a wrong endpoint or aggressive timing can cause restart loops or traffic loss.');
+    }
+    if (/^spec\.template\.spec\.volumes(?:\[\])?(?:\.(?:configMap|secret|persistentVolumeClaim))?$/u.test(field)) return result('pod-volume-sources', 'Defines named Pod volumes and their selected source alternatives.',
+      'An empty, omitted or null list adds no volumes. Each retained named volume must have one supported source variant; a volume item with no source defaults to emptyDir in Kubernetes. ConfigMap/Secret sources project keys as files unless items selects keys and paths. A missing nonoptional source prevents setup; a PVC reference must name a claim in the Pod namespace. Removing a Pod volume does not delete its PVC.',
+      'Changes files and persistent storage accessible to replacement Pods.', 'Unmatched mounts or invalid source alternatives fail admission; unavailable required sources leave Pods unable to start.', { source: k8sSource('pkg/apis/core/v1/defaults.go', 'L65-L98') });
+  }
+  if (resource.kind === 'Service') {
+    if (field === 'spec.selector') return result('service-endpoint-selector', 'Selects Pods whose endpoints receive Service traffic.',
+      'An empty, omitted or null selector delegates endpoint management to an external process; the Service controller does not select every Pod. Selector applies to ClusterIP, NodePort and LoadBalancer, and is ignored for ExternalName. Apply ownership decides which previously stored keys are removed.',
+      'Changes the selected endpoint set after EndpointSlice reconciliation.', 'A mismatched selector yields no endpoints; a broad nonempty selector can route traffic to unintended Pods.');
+    if (/^spec\.ports(?:\[\])?$/u.test(field)) return result('service-listeners', 'Defines exposed Service ports and their target listeners.',
+      'A non-headless Service other than ExternalName requires at least one port: empty, omitted or null cannot supply it. Headless and ExternalName have separate validation rules. Items select numeric or named targetPort, with protocol and port defaults from the exact child contracts.',
+      'Changes network exposure and routing, while the target process must still listen.', 'Invalid or duplicate ports fail admission; unresolved named targets or absent listeners prevent requests.', { source: k8sSource('pkg/apis/core/validation/validation.go', 'L6587-L6627') });
+  }
+  if (resource.kind === 'Ingress') {
+    if (/^spec\.defaultBackend(?:\.service(?:\.port)?)?$/u.test(field)) return result('ingress-backend-alternatives', 'Selects the backend used when no Ingress rule matches.',
+      'A declared backend selects exactly one service or resource alternative. A service backend requires its name and either a port name or number. An empty or null backend is not a supported target; removing defaultBackend still requires valid rules or another valid complete Ingress configuration.',
+      'Changes the destination of unmatched requests.', 'Invalid alternatives fail admission; an unresolved Service or port makes the backend unavailable.');
+    if (/^spec\.tls(?:\[\])?(?:\.hosts)?$/u.test(field)) return result('ingress-tls-selection', 'Selects Ingress TLS entries, certificate Secrets and host names.',
+      'An empty, omitted or null TLS list supplies no explicit TLS entries through this field. Empty or missing hosts uses the selected Ingress controller wildcard-host behavior described by the pinned API; actual certificate and default-listener behavior depends on that controller. The host names must match the selected certificate. Null is not a proved TLS-disable switch.',
+      'Changes TLS certificate and host routing requested from the selected Ingress controller.', 'A missing certificate or host mismatch can cause client TLS failure; source checks do not prove live controller behavior.');
+  }
+  if (resource.kind === 'PersistentVolumeClaim') {
+    if (field === 'spec.accessModes') return result('pvc-access-mode-set', 'Requests access modes supported by the selected storage driver.',
+      'API validation requires at least one access mode, so empty, omitted or null cannot create a valid claim. The selected driver must support the requested modes. ReadWriteOncePod is distinct from ReadWriteOnce and restricts access at the Pod boundary.',
+      'Changes volume matching and concurrent access constraints.', 'Invalid modes fail admission; unsupported modes leave the claim Pending.', { source: k8sSource('pkg/apis/core/validation/validation.go', 'L2464-L2498') });
+    if (/^spec\.resources(?:\.requests)?$/u.test(field)) return result('pvc-storage-request', 'Requests persistent storage capacity for the claim.',
+      'The claim requires a positive storage request. Empty, omitted or null resources/requests cannot provide it; a generic container request-to-limit fallback is not a storage recovery contract. Updates must satisfy PVC resizing and storage-driver constraints.',
+      'Changes requested capacity and volume binding or expansion; it does not prove filesystem expansion has completed.', 'Missing or invalid storage fails admission; unavailable capacity or unsupported expansion leaves storage unusable.', { source: k8sSource('pkg/apis/core/validation/validation.go', 'L2464-L2512') });
+  }
+  if (resource.kind === 'ValidatingAdmissionPolicy' || resource.kind === 'ValidatingAdmissionPolicyBinding') {
+    if (/^spec\.matchConditions(?:\[\])?$/u.test(field)) return result('admission-match-conditions', 'Filters admission requests before policy validation.',
+      'An empty, omitted or null list adds no condition filter and matches all requests already selected by the resource rules and selectors. Any false condition skips the policy. When none is false, condition errors produce a policy error decision: Ignore skips it; Fail applies the binding validationActions, so only a Deny action rejects. Each item needs its name and valid CEL expression; at most 64 conditions are accepted.',
+      'Changes which requests reach validation and how condition errors affect them.', 'Removing a filter can broaden admission enforcement; under Fail, a faulty condition follows the binding Deny, Warn or Audit actions.', { source: `${k8sSource('staging/src/k8s.io/apiserver/pkg/admission/plugin/policy/validating/validator.go', 'L77-L104')}; ${k8sSource('staging/src/k8s.io/api/admissionregistration/v1/types.go', 'L493-L530')}` });
+    if (/^spec\.matchConstraints(?:\.resourceRules(?:\[\])?(?:\.(?:apiGroups|apiVersions|operations|resources))?)?$/u.test(field)) return result('admission-resource-rule-selection', 'Selects the API operations and resources to which the policy applies.',
+      'ResourceRules entries are ORed; fields within one rule constrain the same request. Exclude rules take precedence. A rule must supply nonempty valid apiGroups, apiVersions, operations and resources; wildcard entries follow the exact item constraints. Empty matchConstraints or resourceRules is not a supported all-resources default. Null cannot be used to recover an incomplete required match contract.',
+      'Changes the admission requests subject to this policy.', 'Invalid rules fail policy validation; broad wildcards can affect unrelated API operations.', { source: k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L791-L799') });
+    if (/^spec\.validations(?:\[\])?$/u.test(field)) return result('admission-validation-list', 'Defines the CEL checks used to accept or reject matched requests.',
+      'Empty, omitted or null validations supplies no validation expressions. validations and auditAnnotations cannot both be empty; at least one is required. Each retained item needs a valid expression. Removing a validation removes that check and does not remove the remaining policy or binding.',
+      'Changes policy checks and the failures acted on by its bindings.', 'Invalid CEL or missing required checks fails validation; permissive valid expressions can admit unsafe requests.');
+    if (/^spec\.variables(?:\[\])?$/u.test(field)) return result('admission-variable-order', 'Defines named CEL variables available to later policy expressions.',
+      'An empty, omitted or null list defines no variables. Expressions that still reference a removed variable can fail compilation. Variables may refer only to earlier variables, must be acyclic, and are unavailable in matchConditions.',
+      'Changes shared expression inputs and evaluation order.', 'Invalid names, forward references or cycles fail expression checks; affected request failures follow policy and binding settings.');
+    if (field === 'spec.validationActions') return result('admission-enforcement-actions', 'Selects Deny, Warn or Audit behavior for policy failures.',
+      'The binding requires at least one action. Empty, omitted or null fails validation. Duplicate actions and the Deny+Warn combination are invalid. Order does not matter. failurePolicy controls whether policy errors are acted on; the exact binding contract lists the effect of each action.',
+      'Changes whether clients receive denial, warnings or audit evidence.', 'Invalid action sets fail admission; removing Deny while keeping only audit or warning can allow failing requests.', { source: k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L926-L960') });
+  }
+  if (resource.kind === 'ConfigMap' && resource.name === 'registry-local-config'
+    && sourcePath === 'my-values/infra/registry-local.yaml' && field === 'data') return result('configmap-payload-map', 'Stores the config.yml bytes delivered through the proved registry-local ConfigMap volume and explicit Distribution serve argument.',
+    'An empty, omitted or null data map supplies no config.yml key, so the selected serve configuration-file open fails. A retained config.yml key with an empty string projects an empty file: Distribution rejects its missing version before environment overrides. The explicit configuration argument wins over REGISTRY_CONFIGURATION_PATH. A version 0.1 payload must also supply storage after environment overrides; no process default restores the checked-in storage contract.',
+    'Changes the mounted registry configuration. ConfigMap projection and process reload remain separate; a stored payload does not prove that a running registry has reloaded it.',
+    'Invalid outer keys fail API validation. Missing selected files, unsupported configuration versions and absent required storage prevent the selected registry process from starting. No live image-parser run is claimed.',
+    { source: '[Distribution 3.0.0 selected file](https://github.com/distribution/distribution/blob/9ed95e7365224025ee89365e12cf128e1f1bf965/registry/registry.go#L473-L500); [version check before overrides](https://github.com/distribution/distribution/blob/9ed95e7365224025ee89365e12cf128e1f1bf965/configuration/parser.go#L114-L152); [storage validation](https://github.com/distribution/distribution/blob/9ed95e7365224025ee89365e12cf128e1f1bf965/configuration/configuration.go#L796-L838)' });
+  if (resource.kind === 'ConfigMap' && field === 'data') return result('configmap-payload-map', 'Stores named string payloads for the exact workload readers in child rows.',
+    'An empty, omitted or null map supplies no payload entries. Required key references can then prevent Pod setup; optional projections can be absent. ConfigMap stores strings and validates key syntax, not each process configuration language. A process default cannot be inferred from an empty map.',
+    'Changes files or environment entries delivered to readers; mounted updates and process reload have separate contracts.', 'Invalid outer keys fail admission; missing or invalid required process payloads can prevent startup.');
+  return unqualified('whole-collection empty/omitted/null behavior, controller defaults and item alternatives');
+}
+
+function deploymentApiFieldContract(resource, exactPath, valueType = null, documentValue = null, sourcePath = null) {
+  const normalized = yamlFieldMatcherPath(exactPath);
+  const api = `${resource.apiVersion}/${resource.kind}`;
+  const k8sSource = (file, lines) => `[Kubernetes v1.35.0 ${file.split('/').at(-1)}](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/${file}#${lines})`;
+  const operational = (purpose, acceptedValues, emptyBehavior, impact, failure, controller = `${resource.kind} controller`, source = null) => ({
+    status: 'deployment-operational-authority', purpose, acceptedValues, emptyBehavior: `${emptyBehavior}${source ? ` ${source}` : ''}`, impact, failure,
+    apiAuthority: `${api} schema, admission, defaulting, and ${controller} reconciliation${source ? `; ${source}` : ''}`,
+  });
+  const structural = (purpose) => ({
+    status: 'deployment-structural-authority',
+    purpose,
+    acceptedValues: `The exact type and format in the pinned ${api} schema authority.`,
+    emptyBehavior: `If the exact versioned schema permits omission, the API stores no value for this leaf; if the parent requires it, admission rejects the object. The schema does not turn an authored empty value into omission.`,
+    impact: `Changes the API identity or structural relationship of ${resource.kind}/${resource.name}; it is not a separate KubeClaw runtime option.`,
+    failure: `A schema-invalid value fails admission or Argo CD synchronization. A valid but inconsistent relationship can prevent ${resource.kind}/${resource.name} reconciliation.`,
+    apiAuthority: `${api} pinned schema authority and the named reconciler for this object`,
+  });
+  if (['object', 'array'].includes(valueType)) {
+    return deploymentApiCollectionContract(resource, exactPath, valueType, documentValue, sourcePath);
+  }
+  if (normalized === 'apiVersion') return structural(`Selects the versioned API schema used to decode ${resource.kind}/${resource.name}.`);
+  if (normalized === 'kind') return structural(`Selects the API resource kind decoded for ${resource.name}.`);
+  if (normalized === 'metadata.name') return operational(`Names this ${resource.kind} object within its API scope.`, 'A value that satisfies the pinned Kubernetes ObjectMeta name schema.', 'The pinned schema and the sibling generateName field define omission behavior; an empty authored name must satisfy the same schema.', 'Changes object identity. Controllers and references continue to target the old name until they are changed together.', 'A malformed name fails admission. A renamed object can leave references unresolved.', 'Kubernetes API server');
+  if (normalized === 'metadata.namespace') return operational(`Selects the namespace that contains ${resource.kind}/${resource.name}.`, 'An existing or deliberately created DNS-label namespace allowed by admission policy.', 'For a namespaced create, omission or an empty string is filled with the request namespace before validation. A nonempty namespace that disagrees with that request is rejected. Cluster-scoped requests clear an object namespace. The client or Argo CD destination still determines the request scope.', 'Changes API scope, DNS names, RBAC, Secret and ConfigMap lookup, and controller ownership.', 'A missing or unauthorized namespace makes apply fail; moving only one resource breaks same-namespace references.', 'Kubernetes API server', `${k8sSource('staging/src/k8s.io/apiserver/pkg/registry/rest/meta.go', 'L44-L68')}; ${k8sSource('staging/src/k8s.io/apiserver/pkg/registry/rest/create.go', 'L111-L123')}`);
+  if (resource.kind === 'Namespace' && /^metadata\.labels\.pod-security\.kubernetes\.io\/(?:audit|enforce|warn)$/u.test(normalized)) return operational('Selects the Pod Security Admission level for the namespace and mode named by this label.', 'Exactly `privileged`, `baseline`, or `restricted`; generic Kubernetes label syntax does not validate the Pod Security level.', 'Removing the label uses the configured cluster default for that mode. When warn is absent and an explicit valid enforce level is stricter than the default warn level, warn follows enforce. An empty or unsupported level is a policy parsing error. When Pod Security Admission handles Namespace creation it rejects invalid labels; on update it rejects new or changed invalid policy errors, while unchanged previous invalid labels can remain. Its policy parser uses restricted for invalid enforce and privileged for invalid audit or warn while reporting the error.', 'Changes whether Pod Security violations are denied, warned about, or recorded in audit events.', 'A weak level can admit unsafe Pods; a strict enforce level can reject workloads. Stop on an invalid policy label instead of relying on generic label acceptance or parser fallback.', 'Kubernetes Pod Security Admission controller', `${k8sSource('staging/src/k8s.io/pod-security-admission/api/helpers.go', 'L96-L105')}; ${k8sSource('staging/src/k8s.io/pod-security-admission/api/helpers.go', 'L177-L236')}; ${k8sSource('staging/src/k8s.io/pod-security-admission/admission/admission.go', 'L245-L280')}`);
+  if (/^metadata\.labels\./u.test(normalized)) return operational('Sets one exact object label used by selectors, policy, inventory, or ownership tooling.', 'A Kubernetes label value: at most 63 characters, empty or beginning and ending with an alphanumeric character, with `-`, `_`, and `.` permitted inside.', 'Removing the label removes that identity signal. An empty value retains the key and is not equivalent to omission.', 'Changes selector matching, policy scope, grouping, or controller ownership wherever the same exact key is selected.', 'An invalid value fails admission. Removing or changing a selected label can detach a workload from its Service, Deployment, policy, or operational inventory.', 'Kubernetes API server and each exact matching selector');
+  if (/^metadata\.annotations\./u.test(normalized)) return operational('Sets one exact annotation on this object.', 'A string that satisfies the pinned ObjectMeta schema. The annotation key identifies the separate component that can interpret the value.', 'Omission removes the annotation. An empty string remains an authored string and has no inferred component meaning.', 'Changes the stored annotation. It changes runtime behavior only when the component named by the exact annotation key reads it.', 'Invalid key syntax fails API admission. A schema-valid value can still be rejected or ignored by its named component.', 'Kubernetes API server and the component named by the exact annotation key');
+
+  if (resource.kind === 'Application') {
+    if (/^spec\.sources?\[\]\.repoURL$|^spec\.source\.repoURL$/u.test(normalized)) return operational('Selects the Git or Helm repository from which Argo CD reads desired state.', 'An absolute repository URL supported by Argo CD and authorized by its repository credentials.', 'An empty or omitted URL leaves the source incomplete and reconciliation cannot load desired state.', 'Changes the trust and content origin for every object generated from this source.', 'Malformed, unreachable, or unauthorized repositories produce comparison and synchronization errors.', 'Argo CD Application controller');
+    if (/^spec\.sources?\[\]\.targetRevision$|^spec\.source\.targetRevision$/u.test(normalized)) return operational('Selects the Git revision, chart version, or immutable source revision reconciled by Argo CD.', 'A revision accepted by the selected source type. This repository uses complete commits or exact chart versions where the surrounding source contract requires them.', 'An empty revision is not a complete source selection.', 'Changes the exact desired-state version rendered and applied by the Application.', 'A missing or unresolved revision produces a comparison error and prevents synchronization.', 'Argo CD repo-server and Application controller');
+    if (/^spec\.sources?\[\]\.(?:chart|path)$|^spec\.source\.(?:chart|path)$/u.test(normalized)) return operational('Selects the chart name or repository directory rendered for this Application source.', 'A chart name or clean repository-relative directory that exists at the selected revision.', 'An empty selection cannot identify render input unless another valid source mode is used.', 'Changes the complete manifest set produced by this source.', 'A missing chart or path makes manifest generation fail.', 'Argo CD repo-server');
+    if (/^spec\.sources?(?:\[\])?\.helm\.valueFiles\[\]$/u.test(normalized)) return operational('Adds one values-file path to this Argo CD source. The repo-server preserves first-occurrence order after resolving paths and skips repeated resolved paths; A,B,A remains A,B.', 'A repository-relative values path, or a `$ref/` path backed by a declared multi-source reference.', 'Use a nonempty file path. An empty list adds no files; chart defaults and other values, valuesObject and parameters inputs remain.', 'Changes Helm precedence and every rendered field overridden by each distinct selected file.', 'An invalid reference makes manifest generation fail. Missing files fail unless ignoreMissingValueFiles permits omission.', 'Argo CD repo-server Helm renderer');
+    if (/^spec\.sources?\[\]\.helm\.releaseName$|^spec\.source\.helm\.releaseName$/u.test(normalized)) return operational('Sets the Helm release name used while Argo CD renders this source.', 'A Helm release name accepted by the pinned renderer and chart helpers.', 'Omission lets Argo CD derive a release name from the Application; an empty scalar is not an explicit stable name.', 'Changes generated names, labels, and selectors for charts that use the Helm release identity.', 'An invalid name stops rendering; changing it can replace or orphan resources.', 'Argo CD repo-server Helm renderer');
+    if (/^spec\.sources?\[\]\.ref$/u.test(normalized)) return operational('Defines the multi-source reference name used by `$ref/` values-file paths.', 'A non-empty Argo CD source-reference identifier unique within this Application.', 'Omission means the source cannot be addressed by another source; an empty reference is invalid.', 'Changes how values and chart sources are joined during manifest generation.', 'A missing or mismatched reference makes the linked values file unresolved.', 'Argo CD repo-server');
+    if (normalized === 'spec.destination.server') return operational('Selects the Kubernetes API server to which Argo CD applies this Application.', 'A cluster URL or registered cluster name accepted by Argo CD; in-cluster deployment uses `https://kubernetes.default.svc`.', 'An empty destination server leaves the Application destination incomplete.', 'Changes the target cluster for all generated resources.', 'An unknown, unreachable, or unauthorized cluster prevents synchronization.', 'Argo CD Application controller');
+    if (normalized === 'spec.destination.namespace') return operational('Selects the default target namespace for namespaced resources generated by this Application.', 'A DNS-label namespace allowed by the AppProject destination policy.', 'An empty namespace is valid only when every generated resource supplies its own namespace or is cluster-scoped.', 'Changes the namespace, DNS, RBAC, storage, Secret, and policy scope of generated resources.', 'A forbidden or absent namespace causes sync failure; a partial move breaks namespaced dependencies.', 'Argo CD Application controller');
+    if (normalized === 'spec.project') return operational('Binds this Application to the named Argo CD AppProject policy.', 'An existing AppProject name in the Argo CD namespace.', 'An omitted project uses Argo CD `default`; an empty name is not the selected policy.', 'Changes permitted source repositories, destinations, and resource kinds.', 'A missing project or denied source/destination makes reconciliation fail.', 'Argo CD Application controller');
+    if (/^spec\.syncPolicy\.syncOptions\[\]$/u.test(normalized)) return operational('Adds one Argo CD synchronization option to the Application.', 'A `Name=true|false` option supported by the pinned Argo CD controller authority.', 'Omission leaves that named option absent. An empty list item must satisfy the pinned CRD item schema and is not treated as a named option.', 'Changes apply, namespace creation, validation, ownership, or pruning behavior according to the named option.', 'An unsupported or unsafe option can make synchronization fail or apply resources with unintended ownership semantics.', 'The pinned Argo CD Application controller');
+    if (/^spec\.syncPolicy\.automated\.(?:prune|selfHeal|allowEmpty)$/u.test(normalized)) return operational(`Controls Argo CD automated synchronization behavior for ${normalized.split('.').at(-1)}.`, '`true` or `false` as defined by the CRDs from the pinned Argo CD chart 10.8.0.', 'When the exact CRD permits omission, Argo CD receives no authored Boolean and applies the pinned controller semantics for that named flag. An authored empty scalar fails the Boolean schema.', 'Changes whether Argo CD removes absent resources, repairs live drift, or permits an empty generated set.', 'An unsafe selection can retain stale resources, overwrite emergency changes, or prune the complete Application output.', 'The pinned Argo CD Application controller');
+    if (/^spec\.sources?\[\]\.directory\.recurse$|^spec\.source\.directory\.recurse$/u.test(normalized)) return operational('Controls whether Argo CD recursively scans subdirectories below the selected Git directory.', '`true` includes matching manifests below nested directories. `false` limits discovery to the selected directory.', 'When the exact CRD permits omission, the directory generator does not enable recursive traversal. An authored empty scalar fails the Boolean schema.', 'Changes the set of manifests that enters desired state from the selected source path.', 'A false value can silently omit nested resources. A true value can include unintended manifests that match the directory rules.', 'The pinned Argo CD repo-server directory generator');
+    if (/^spec\.sources?\[\]\.directory\.include$|^spec\.source\.directory\.include$/u.test(normalized)) return operational('Selects which files the Argo CD directory generator includes.', 'An Argo CD directory include glob, including brace expansion supported by the pinned controller version.', 'Omission includes all supported manifest files not excluded by another rule. An empty pattern matches no useful input.', 'Changes the exact manifest files loaded from the selected Git directory.', 'A malformed or over-narrow pattern omits desired resources; an over-broad pattern can include files that must not be applied.', 'Argo CD repo-server directory generator');
+    if (/^spec\.sources?\[\]\.helm\.skipTests$|^spec\.source\.helm\.skipTests$/u.test(normalized)) return operational('Controls whether Argo CD omits Helm test-hook resources while rendering this source.', '`true` skips resources annotated as Helm tests. `false` keeps them in rendered output.', 'Omission uses the pinned Argo CD Helm-renderer default. An empty scalar is invalid.', 'Changes whether chart test Jobs and their supporting resources enter the Application manifest set.', 'Keeping incompatible test hooks can make synchronization unhealthy; skipping them removes those chart-provided validation resources.', 'Argo CD repo-server Helm renderer');
+    if (/^spec\.ignoreDifferences\[\]\.(?:group|kind|name|namespace)$/u.test(normalized)) return operational('Selects the API objects to which this Argo CD difference-suppression rule applies.', 'An exact API group, kind, object name, or namespace accepted by the pinned Argo CD Application CRD. Empty group denotes the Kubernetes core API group.', 'Omitted name or namespace broadens the rule to all matching objects in that dimension; kind is required for a useful rule.', 'Changes which live objects can hide differences from Argo CD comparison and synchronization.', 'A narrow selector leaves expected controller-owned drift visible; a broad selector can hide real configuration drift.', 'Argo CD Application comparison engine');
+    if (/^spec\.ignoreDifferences\[\]\.jqPathExpressions\[\]$/u.test(normalized)) return operational('Adds one JQ expression whose selected fields Argo CD ignores during comparison.', 'A valid JQ path expression accepted by the pinned Argo CD comparison engine.', 'An empty item is invalid as a useful selector; an empty list suppresses no fields.', 'Changes which live-field differences are hidden for the objects selected by the enclosing rule.', 'An invalid expression causes comparison errors. An over-broad expression can hide consequential drift.', 'Argo CD Application comparison engine');
+  }
+
+  if (resource.kind === 'AppProject') {
+    if (normalized === 'spec.description') return structural(`Stores the human-readable description of AppProject/${resource.name}; the AppProject policy evaluator does not use it to authorize a source, destination, or resource kind.`);
+    if (/^spec\.sourceRepos\[\]$/u.test(normalized)) return operational('Allows Applications in this AppProject to read one repository scope.', 'An exact repository URL or an Argo CD-supported repository pattern.', 'An empty item grants nothing and is invalid as a useful repository authority.', 'Changes the source trust boundary for every Application assigned to the project.', 'An omitted required repository makes Application sources forbidden; an overbroad pattern expands supply-chain authority.', 'Argo CD AppProject policy evaluator');
+    if (/^spec\.destinations\[\]\.(?:server|namespace)$/u.test(normalized)) return operational('Defines one cluster or namespace boundary to which project Applications may deploy.', 'A registered cluster server and an exact namespace or supported namespace pattern.', 'An empty destination element does not authorize a useful target.', 'Changes the deployment scope available to all Applications in this project.', 'A narrow value blocks synchronization; an overbroad pattern expands deployment authority.', 'Argo CD AppProject policy evaluator');
+    if (/^spec\.(?:clusterResourceWhitelist|namespaceResourceWhitelist)\[\]\.(?:group|kind)$/u.test(normalized)) return operational('Defines one API group/kind pattern that project Applications may manage.', 'A Kubernetes API group or kind, including `*` only when broad authority is intentional.', 'An empty group can mean the core API group; an empty kind does not define a useful allow rule.', 'Changes the resource kinds that Applications in the project can create, update, or delete.', 'A missing rule blocks synchronization; a wildcard can grant cluster-wide management authority.', 'Argo CD AppProject policy evaluator');
+  }
+
+  if (resource.kind === 'ValidatingAdmissionPolicy') {
+    if (normalized === 'spec.failurePolicy') return operational('Selects how the API server handles an error while evaluating this admission policy.', 'Exactly `Fail` or `Ignore` for admissionregistration.k8s.io/v1.', 'Omission uses the versioned API default `Fail`; an empty scalar is invalid.', 'Changes whether evaluation errors are ignored or acted on through the binding validationActions.', '`Ignore` ignores evaluation failures. Under `Fail`, Deny rejects, Warn reports a warning and Audit records the failure; Fail alone does not select Deny. A false validation result always follows binding actions regardless of failurePolicy.', 'Kubernetes API server CEL admission evaluator', k8sSource('staging/src/k8s.io/api/admissionregistration/v1/types.go', 'L233-L249'));
+    if (/^spec\.matchConstraints\.resourceRules\[\]\.apiGroups\[\]$/u.test(normalized)) return operational('Selects one API group matched by this admission-policy rule.', 'An API group string; `*` cannot accompany other groups in the same list. The empty string denotes the core API group.', 'An empty string item selects the core API group and is valid. A zero-length apiGroups list is invalid because the rule requires at least one group.', 'Changes which API group requests reach this policy and its bindings.', 'A missing list fails policy validation; a broad group selector can affect unrelated resources.', 'Kubernetes API server admission matcher', k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L140-L159'));
+    if (/^spec\.matchConstraints\.resourceRules\[\]\.(?:apiVersions|operations|resources)\[\]$/u.test(normalized)) return operational('Adds one exact API group, version, operation, or resource selector to the admission-policy match rule.', 'A value accepted by the admissionregistration.k8s.io/v1 ResourceRule field, including only the wildcards permitted by that exact field.', 'An empty item is invalid. Removing an item narrows or changes the request set evaluated by the policy.', 'Changes which API requests are evaluated and can be denied by this policy.', 'A narrow selector leaves intended requests unprotected; a broad selector can apply policy actions to unrelated cluster operations.', 'Kubernetes API server admission matcher', k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L149-L167'));
+    if (/^spec\.matchConditions\[\]\.name$/u.test(normalized)) return operational('Names one match condition within this admission policy.', 'A unique DNS-label-compatible condition name accepted by admissionregistration.k8s.io/v1.', 'The name is required for a declared condition; an empty value fails admission.', 'Changes the stable identity used to report a failed or errored match condition.', 'A duplicate or invalid name makes the policy invalid.', 'Kubernetes API server admission matcher');
+    if (/^spec\.matchConditions\[\]\.expression$/u.test(normalized)) return operational('Defines the CEL expression that decides whether this policy evaluates the matched request.', 'A Boolean CEL expression valid in the admissionregistration.k8s.io/v1 match-condition environment.', 'The expression is required; an empty expression fails policy validation.', 'Changes which matched requests proceed to the validation expressions.', 'A compile error prevents a valid policy. A false expression skips validation; an evaluation error follows failurePolicy and, under Fail, the binding validationActions.', 'Kubernetes API server CEL admission evaluator', k8sSource('staging/src/k8s.io/apiserver/pkg/admission/plugin/policy/validating/validator.go', 'L77-L104'));
+    if (/^spec\.variables\[\]\.name$/u.test(normalized)) return operational('Names one lazily evaluated CEL variable available to later admission expressions.', 'A unique identifier accepted by admissionregistration.k8s.io/v1 and not conflicting with reserved CEL names.', 'The name is required for a declared variable; an empty value fails validation.', 'Changes the identifier referenced by later expressions.', 'A duplicate, invalid, or renamed identifier makes dependent expressions fail compilation.', 'Kubernetes API server CEL admission evaluator');
+    if (/^spec\.variables\[\]\.expression$/u.test(normalized)) return operational('Defines the CEL expression used to compute one admission-policy variable.', 'A CEL expression valid in the admissionregistration.k8s.io/v1 variable environment.', 'The expression is required; an empty value fails policy validation.', 'Changes inputs to later variables, validation, message and audit expressions that reference this variable. Variables are unavailable in matchConditions because matching runs first.', 'A compile or evaluation error prevents the dependent policy decision according to failurePolicy.', 'Kubernetes API server CEL admission evaluator', k8sSource('staging/src/k8s.io/api/admissionregistration/v1/types.go', 'L280-L292'));
+    if (/^spec\.validations\[\]\.expression$/u.test(normalized)) return operational('Defines the Boolean CEL rule that an admitted request must satisfy.', 'A Boolean CEL expression valid in the admissionregistration.k8s.io/v1 validation environment.', 'The expression is required; an empty value fails policy validation.', 'Changes the invariant enforced for every request selected by the policy and binding.', 'A false result triggers the binding validationActions: Deny rejects, Warn sends a warning, and Audit records a validation failure. Warn or Audit alone does not deny. Evaluation errors follow failurePolicy and the binding actions.', 'Kubernetes API server CEL admission evaluator', k8sSource('staging/src/k8s.io/api/admissionregistration/v1/types.go', 'L493-L530'));
+    if (/^spec\.validations\[\]\.message$/u.test(normalized)) return operational('Sets the diagnostic used when the paired validation expression fails.', 'An optional string. The API field contract requires a message for multiline expressions and prohibits line breaks; use a clear single-line message. The pinned validator accepts the zero-length string, rejects a nonempty whitespace-only string, and rejects line breaks remaining after trimming.', 'Omission or an empty string supplies no custom message. A usable messageExpression result wins, then a nonempty custom message, then the runtime failed-expression message. The pinned validator does not implement the documented multiline-expression requirement: its final conditional checks the trimmed message again. Do not rely on that implementation gap to omit a required multiline-expression message.', 'Changes the failure diagnostic used by the binding actions without changing whether the validation is false.', 'Whitespace-only messages and interior line breaks fail policy validation. An unclear message makes diagnosis difficult; Deny, Warn and Audit remain binding choices.', 'Kubernetes API server CEL admission evaluator', `${k8sSource('staging/src/k8s.io/api/admissionregistration/v1/types.go', 'L352-L360')}; ${k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L1034-L1057')}; ${k8sSource('staging/src/k8s.io/apiserver/pkg/admission/plugin/policy/validating/validator.go', 'L156-L188')}`);
+  }
+  if (resource.kind === 'ValidatingAdmissionPolicyBinding') {
+    if (normalized === 'spec.policyName') return operational('Selects the ValidatingAdmissionPolicy activated by this binding.', 'The exact name of an existing ValidatingAdmissionPolicy.', 'This field is required; an empty or omitted name makes the binding invalid.', 'Changes which CEL policy evaluates requests selected by this binding.', 'A missing policy leaves the binding unresolved and no intended admission decision can be enforced.', 'Kubernetes API server admission evaluator');
+    if (/^spec\.validationActions\[\]$/u.test(normalized)) return operational('Selects one action taken when the bound validation fails.', 'One of `Deny`, `Warn`, or `Audit`, subject to the combinations permitted by admissionregistration.k8s.io/v1.', 'At least one action is required; an empty item is invalid.', 'Changes whether failure blocks the request, warns the caller, or records an audit annotation.', 'A non-denying action can allow prohibited state; an invalid combination makes the binding invalid.', 'Kubernetes API server admission evaluator');
+  }
+
+  if (normalized === 'spec.replicas') return operational('Sets the desired number of workload replicas.', 'A non-negative integer within cluster capacity.', 'For workload APIs in this inventory, omission leaves the field absent and API defaulting stores one replica. An authored empty scalar is invalid.', 'Changes availability, rollout concurrency, scheduling demand, and resource use.', 'Zero stops the workload. Excess demand leaves Pods Pending; an invalid value fails admission.');
+  if (resource.kind === 'Deployment' && /^spec\.(?:selector\.matchLabels|template\.metadata\.labels)\./u.test(normalized)) return operational('Sets one Pod label used by the Deployment selector or its Pod template.', 'A Kubernetes label value that is identical on both selector and template for this immutable Deployment relationship.', 'An empty string is a valid label value when the selector and template agree. Removing or changing a selected label must leave the complete selector nonempty and matched by the template; changing only one side can invalidate that relationship.', 'Changes which Pods the Deployment owns. The selector is immutable after creation.', 'A selector/template mismatch fails admission. Changing an existing selector requires Deployment replacement and can orphan Pods.', 'Kubernetes Deployment controller', `${k8sSource('staging/src/k8s.io/apimachinery/pkg/apis/meta/v1/validation/validation.go', 'L113-L122')}; ${k8sSource('pkg/apis/apps/validation/validation.go', 'L637-L656')}`);
+  if (resource.kind === 'Deployment' && normalized === 'spec.strategy.type') return operational('Selects the Deployment rollout strategy.', 'Exactly `RollingUpdate` or `Recreate` for apps/v1.', 'Omission or an empty string defaults to `RollingUpdate`. Its omitted rollingUpdate object and limits receive the rollout defaults. rollingUpdate settings cannot accompany `Recreate`.', 'Changes whether old and new Pods overlap during an update.', '`Recreate` introduces downtime. An incompatible rolling-update configuration fails validation or stalls rollout.', 'Kubernetes Deployment controller', k8sSource('pkg/apis/apps/v1/defaults.go', 'L38-L63'));
+  if (/\.containers\[\]\.name$/u.test(normalized)) return operational('Names this container within the Pod specification.', 'A unique DNS-label-compatible container name within the Pod.', 'The name is required; an empty value fails admission.', 'Changes the identity used by logs, exec, status, patches, and references such as startup ordering tools.', 'A duplicate or invalid name fails admission; external automation that retains the old name no longer finds the container.');
+  if (/\.containers\[\]\.ports\[\]\.name$/u.test(normalized)) return operational('Names a container port for references by Services, probes, and policy.', 'A valid IANA port name, unique among the named ports of this container. The shown validator creates a separate name set for each container.', 'Omission or an empty string leaves the port unnamed and is valid. A named reference still requires a matching nonempty declaration.', 'Changes symbolic port resolution without changing the process listener.', 'A duplicate or invalid nonempty name fails validation; stale named references can break routing or health checks.', 'Kubernetes API server and named-port consumers', k8sSource('pkg/apis/core/validation/validation.go', 'L2722-L2738'));
+  if (resource.kind === 'Service' && /^spec\.ports\[\]\.name$/u.test(normalized)) return operational('Names one Service port for clients and backend references.', 'A DNS1123 label, unique among this Service ports; Service port names have a different validator from container port names.', 'Omission or an empty string is valid for a single-port Service. A Service with multiple ports requires a nonempty name for each port.', 'Changes which Service port a symbolic backend reference selects.', 'Missing multi-port names or duplicate/invalid nonempty names fail admission; stale references break backend selection.', 'Kubernetes API server and Service clients', `${k8sSource('pkg/apis/core/validation/validation.go', 'L6624-L6627')}; ${k8sSource('pkg/apis/core/validation/validation.go', 'L6780-L6792')}`);
+  if (/\.containers\[\]\.image$/u.test(normalized)) return operational('Selects the image executed by this container.', 'The shown container validator requires a nonempty image string; it does not validate OCI reference syntax or trim whitespace. Use a usable image reference and a digest for immutable selection.', 'An empty string fails the required-image check. Whitespace-only text passes that length check but does not establish a usable image.', 'Changes the executable filesystem and process code run by the workload.', 'Reference parsing, resolution or pulling can fail later at the node, including image-pull errors and backoff. Other admission policies can impose additional restrictions.', 'Kubernetes container validator and kubelet image consumers', k8sSource('pkg/apis/core/validation/validation.go', 'L3886-L3891'));
+  if (/\.containers\[\]\.imagePullPolicy$/u.test(normalized)) return operational('Selects when kubelet pulls the container image.', '`Always`, `IfNotPresent`, or `Never`.', 'Omission or an empty string derives the policy from the parsed image tag: latest selects `Always`; other tags select `IfNotPresent`. This defaulting occurs when the API object is defaulted, not on every later image change.', 'Changes registry traffic and whether cached bytes can be reused.', 'An unsupported value fails admission; `Never` without cached bytes or a required pull failure prevents startup.', 'Kubernetes API server and kubelet', `${k8sSource('pkg/apis/core/v1/defaults.go', 'L82-L100')}; ${k8sSource('pkg/apis/apps/v1/zz_generated.defaults.go', 'L538-L540')}`);
+  if (/\.containers\[\]\.resources\.(?:requests|limits)\.(?:cpu|memory|ephemeral-storage)$/u.test(normalized)) return operational('Sets one Kubernetes scheduling request or runtime resource limit for the container.', 'A non-negative Kubernetes resource quantity appropriate to the named resource.', 'Omission removes the authored template request or limit for this resource. When a replacement Pod is defaulted, an absent request inherits a present limit for the same resource; this inheritance is not inserted into the stored Deployment template. An empty string is not a resource quantity. Namespace admission can apply additional defaults and constraints.', 'Changes scheduling, reserved capacity, throttling, eviction, or termination behavior.', 'Invalid quantities fail admission. Excessive requests leave Pods Pending; undersized limits cause throttling, eviction, or OOM termination.', 'Kubernetes API server, scheduler and kubelet', `${k8sSource('pkg/apis/core/v1/defaults.go', 'L164-L196')}; ${k8sSource('pkg/apis/apps/v1/zz_generated.defaults.go', 'L373-L380')}`);
+  if (resource.kind === 'Service' && /^spec\.ports\[\]\.targetPort$/u.test(normalized)) return operational('Selects the Pod listener to which this Service port sends traffic.', 'A numeric port from 1 through 65535 or a valid named container port. The API defaulter also accepts the zero or empty-string state before validation.', 'Omission, numeric zero or an empty string defaults to the enclosing Service port value. A nonempty named target needs a matching container port declaration.', 'Changes the resolved workload listener while retaining the Service-facing port.', 'An invalid effective target fails admission; an unresolved name or absent listener prevents requests.', 'Kubernetes API server and EndpointSlice controller', k8sSource('pkg/apis/core/v1/defaults.go', 'L126-L134'));
+  if (resource.kind === 'Service' && /^spec\.ports\[\]\.protocol$/u.test(normalized)) return operational('Selects the transport protocol used by this Service port.', '`TCP`, `UDP`, or `SCTP`.', 'Omission or an empty string defaults to `TCP` before validation.', 'Changes Service transport routing.', 'An unsupported effective protocol fails admission; a listener mismatch prevents traffic.', 'Kubernetes API server and Service network implementation', `${k8sSource('pkg/apis/core/v1/defaults.go', 'L126-L134')}; ${k8sSource('pkg/apis/core/validation/validation.go', 'L6798-L6802')}`);
+  if (resource.kind === 'Deployment' && /\.containers\[\]\.ports\[\]\.protocol$/u.test(normalized)) return operational('Selects the transport protocol declared for this container port.', '`TCP`, `UDP`, or `SCTP`.', 'Omission or an empty string defaults to `TCP` through the generated Deployment container defaulter.', 'Changes port declarations and named-port protocol matching.', 'An unsupported effective protocol fails admission; the declaration does not change which protocol the process listens on.', 'Kubernetes API server and named-port consumers', `${k8sSource('pkg/apis/apps/v1/zz_generated.defaults.go', 'L538-L546')}; ${k8sSource('pkg/apis/core/validation/validation.go', 'L2751-L2755')}`);
+  if (resource.kind === 'NetworkPolicy' && /^spec\.(?:ingress|egress)\[\]\.ports\[\]\.protocol$/u.test(normalized)) return operational('Selects the transport protocol matched by this NetworkPolicy port alternative.', '`TCP`, `UDP`, or `SCTP`.', 'An omitted or decoded null pointer defaults to `TCP`. An explicit empty string remains a non-nil protocol and fails validation; it does not use the core Service or container empty-string default.', 'Changes which transport traffic this allow-rule item permits.', 'An unsupported protocol fails admission; a valid mismatched protocol can block required traffic.', 'Kubernetes API server and NetworkPolicy implementation', `${k8sSource('pkg/apis/networking/v1/defaults.go', 'L30-L35')}; ${k8sSource('pkg/apis/networking/validation/validation.go', 'L70-L75')}`);
+  if (resource.kind === 'Deployment' && /\.containers\[\]\.ports\[\]\.containerPort$/u.test(normalized)) return operational('Declares the numeric container port used by metadata and named-port references.', 'An integer from 1 through 65535; the receiver validates this range even though the selected schema supplies no minimum/maximum keyword.', 'The containerPort is required for a declared port item; omission or numeric zero fails validation. An empty string is not an integer port. This declaration does not start a process listener.', 'Changes port metadata and named-port resolution.', 'An invalid numeric port fails admission; a valid declared port can still lack a listening process.', 'Kubernetes API server and named-port consumers', `${k8sSource('pkg/apis/core/validation/validation.go', 'L2722-L2755')}; ${k8sSource('staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go', 'L270-L276')}`);
+  if (resource.kind === 'Service' && /^spec\.ports\[\]\.port$/u.test(normalized)) return operational('Selects the numeric port exposed by this Service.', 'An integer from 1 through 65535, independently of absent schema range keywords.', 'A declared Service port requires a valid nonzero port; omission or numeric zero fails validation. An empty string is not an integer port.', 'Changes the Service-facing listener used by clients.', 'An invalid numeric port fails admission; a valid port still requires resolved endpoints and listening targets.', 'Kubernetes API server and Service network implementation', `${k8sSource('pkg/apis/core/validation/validation.go', 'L6794-L6804')}; ${k8sSource('staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go', 'L270-L276')}`);
+  if (resource.kind === 'Service' && /^spec\.ports\[\]\.nodePort$/u.test(normalized)) return operational('Selects or requests allocation of this Service node port.', 'An integer: zero requests automatic allocation when this Service type allocates node ports; a nonzero value must lie in the target API server configured node-port allocator range and be available.', 'Omission or numeric zero requests allocation for NodePort Services. LoadBalancer allocation depends on allocateLoadBalancerNodePorts. A ClusterIP Service cannot declare a nonzero nodePort. An empty string is not an integer and is not an allocation request.', 'Changes node-level exposure and allocation ownership; changing the port requires clients and firewall rules to follow.', 'An out-of-range, conflicting or incompatible node port fails the API operation. Check the target cluster range and allocation availability before changing the port.', 'Kubernetes API server Service port allocator', `${k8sSource('pkg/registry/core/service/storage/alloc.go', 'L498-L566')}; ${k8sSource('pkg/registry/core/service/storage/alloc.go', 'L973-L980')}; ${k8sSource('pkg/apis/core/validation/validation.go', 'L6674-L6682')}`);
+  if (resource.kind === 'Deployment' && /\.(?:livenessProbe|readinessProbe|startupProbe)\.httpGet\.port$/u.test(normalized)) return operational('Selects the numeric or named container port checked by this HTTP probe.', 'An integer from 1 through 65535 or a valid IANA named container port; the receiver supplies these constraints even though numeric schema range keywords are absent.', 'A supplied HTTP action requires a valid port. Omission or numeric zero fails validation; an empty string fails named-port validation. There is no HTTPGet port default.', 'Changes the process listener used by the health check.', 'An invalid port fails admission; an unresolved name or wrong listening port causes probe failures.', 'Kubernetes API server and kubelet probe runner', `${k8sSource('pkg/apis/core/validation/validation.go', 'L3464-L3495')}; ${k8sSource('staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go', 'L270-L276')}`);
+  if (resource.kind === 'NetworkPolicy' && /^spec\.(?:ingress|egress)\[\]\.ports\[\]\.port$/u.test(normalized)) return operational('Restricts this NetworkPolicy port alternative to a numeric or named port.', 'An integer from 1 through 65535 or a valid IANA port name. endPort requires a numeric port and a valid ending port at or above it.', 'An omitted or decoded null port pointer matches all ports for the selected protocol. Explicit numeric zero or an empty string is invalid; neither means an unrestricted port.', 'Changes destination ports allowed by this rule item.', 'Invalid port/range combinations fail admission; removing the port restriction can broaden allowed traffic.', 'Kubernetes API server and NetworkPolicy implementation', `${k8sSource('pkg/apis/networking/validation/validation.go', 'L70-L104')}; ${k8sSource('staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go', 'L270-L276')}`);
+  if (!['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind) && /\.protocol$/u.test(normalized)) return operational('Selects the network protocol for this port or policy rule.', 'One of the enum values in the exact pinned field schema.', 'If the exact schema permits omission, the API stores the schema default when one exists; otherwise it stores no authored protocol. An empty string must satisfy the same enum.', 'Changes how traffic is matched or routed.', 'An unsupported value fails admission; a schema-valid mismatch prevents the expected traffic.');
+  if (resource.kind === 'Service' && normalized === 'spec.type') return operational('Selects how Kubernetes exposes this Service.', '`ClusterIP`, `NodePort`, `LoadBalancer`, or `ExternalName` where supported by the remaining Service fields.', 'Omission or an empty string defaults to `ClusterIP` before validation.', 'Changes the network exposure boundary and allocated Service fields.', 'An incompatible type/field combination fails admission or makes the endpoint unreachable or unintentionally exposed.', 'Kubernetes Service controller', k8sSource('pkg/apis/core/v1/defaults.go', 'L123-L134'));
+  if (/\.(?:secretRef|secret|secretKeyRef)\.name$|\.secretName$/u.test(normalized)) return operational('Selects the existing Kubernetes Secret read by this workload field.', 'A DNS-compatible Secret name in the workload namespace unless the exact controller documents another scope.', 'An empty or omitted required reference cannot supply the selected data.', 'Changes which credential or trust object is delivered to the workload.', 'A malformed or missing required Secret prevents Pod materialization or makes authentication fail.');
+  if (/\.configMap\.name$|\.configMapRef\.name$/u.test(normalized)) return operational('Selects the existing Kubernetes ConfigMap delivered to this workload.', 'A DNS-compatible ConfigMap name in the workload namespace.', 'An empty or omitted required reference cannot supply configuration.', 'Changes which configuration object is mounted or injected.', 'A missing required ConfigMap prevents Pod materialization; incompatible content makes the process fail.');
+  if (/\.persistentVolumeClaim\.claimName$/u.test(normalized)) return operational('Selects the PersistentVolumeClaim mounted by this Pod.', 'A DNS-compatible PVC name in the Pod namespace.', 'An empty claim name is invalid.', 'Changes the persistent storage object visible to the workload.', 'A missing or unbound claim leaves the Pod Pending.');
+  if (resource.kind === 'PersistentVolumeClaim' && normalized === 'spec.resources.requests.storage') return operational('Requests persistent storage capacity for this claim.', 'A positive Kubernetes storage quantity such as `20Gi`.', 'An empty or omitted storage request is not a usable capacity contract.', 'Changes the requested volume size; existing volumes cannot be assumed to shrink.', 'An invalid or unsupported size fails admission or provisioning; insufficient capacity causes write failures.', 'Kubernetes storage controller and selected CSI driver');
+  if (resource.kind === 'PersistentVolumeClaim' && normalized === 'spec.storageClassName') return operational('Selects the StorageClass that provisions this claim.', 'An installed StorageClass name; explicit empty-string and omission have API-specific default-class behavior.', 'Omission can select the cluster default. An explicit empty string disables dynamic class selection.', 'Changes provisioner, topology, binding, expansion, and retention behavior.', 'A missing or unsuitable class leaves the claim Pending or creates storage with the wrong lifecycle.', 'Kubernetes storage controller and selected CSI driver');
+  if (resource.kind === 'PersistentVolumeClaim' && /^spec\.accessModes\[\]$/u.test(normalized)) return operational('Requests one access mode for the PersistentVolumeClaim.', 'One of the access modes supported by the selected CSI driver, such as `ReadWriteOncePod`, `ReadWriteOnce`, `ReadOnlyMany`, or `ReadWriteMany`.', 'At least one usable access mode is required; an empty item is invalid.', 'Changes eligible volumes, node attachment, and concurrent writer guarantees.', 'An unsupported mode leaves the claim Pending. Weakening `ReadWriteOncePod` can permit unsafe concurrent writers.', 'Kubernetes storage controller and selected CSI driver');
+  if (resource.kind === 'Deployment' && /\.(?:livenessProbe|readinessProbe|startupProbe)\.httpGet\.(?:path|scheme)$/u.test(normalized)) return operational('Selects the HTTP request path or URI scheme used by this health probe.', normalized.endsWith('.path') ? 'An HTTP request path accepted by the target endpoint.' : '`HTTP` or `HTTPS`.', normalized.endsWith('.path') ? 'Omission or an empty string defaults the path to `/` when the httpGet action exists; it does not remove the probe.' : 'Omission or an empty string defaults the scheme to `HTTP` when the httpGet action exists.', 'Changes which HTTP endpoint is checked and whether the probe uses TLS.', 'A wrong endpoint can cause false readiness failures or restart loops; an unsupported scheme fails validation.', 'Kubernetes API server and kubelet probe runner', `${k8sSource('pkg/apis/core/v1/defaults.go', 'L316-L323')}; ${k8sSource('pkg/apis/apps/v1/zz_generated.defaults.go', 'L563-L591')}`);
+  if (/\.(?:livenessProbe|readinessProbe|startupProbe)\./u.test(normalized)) return operational('Configures one exact container health-probe field.', 'A value accepted by the Kubernetes Probe schema and by the receiving HTTP, TCP, gRPC, or command endpoint.', 'Omission and empty values depend on the exact field and whether the parent Probe exists. For a present Probe, zero timeoutSeconds, periodSeconds, successThreshold and failureThreshold select their defaults before validation. An empty handler field has its own required-field and runtime checks; numeric zero is not a universally invalid empty scalar.', 'Changes startup gating, Service readiness, or automatic container restart timing.', 'A wrong endpoint or aggressive timing causes false unready or restart loops; weak settings delay failure detection.');
+  if (/\.volumeMounts\[\]\.(?:name|mountPath|subPath|readOnly)$/u.test(normalized) || /\.volumes\[\]\.name$/u.test(normalized)) return operational('Defines or selects one volume mount relationship in the Pod.', 'A unique matching volume name, valid container path, clean subpath, or Boolean read-only flag according to the exact field.', 'Required names and mount paths cannot be empty; omitted read-only state defaults to writable.', 'Changes which files the container can read or modify and where they appear.', 'Invalid or unmatched fields fail admission or Pod setup; a wrong path hides required configuration or exposes writable data.');
+  if (resource.kind === 'CiliumNetworkPolicy' || resource.kind === 'CiliumClusterwideNetworkPolicy') {
+    if (normalized === 'spec.description') return structural(`Stores the human-readable description of ${resource.kind}/${resource.name}; Cilium does not use this field to select endpoints or allow traffic.`);
+    if (/^spec\.enableDefaultDeny\.(?:ingress|egress)$/u.test(normalized)) return operational('Controls whether selecting endpoints with this policy enables default-deny enforcement for the named traffic direction.', 'A Boolean override. When EnableNonDefaultDenyPolicies is enabled, true enables default deny and false keeps this policy from enabling it by itself. When that feature is disabled, Rule.Sanitize forces both directions true.', 'When the feature is enabled, omission defaults true for a direction with allow or deny rules and false otherwise. The complete Rule must first pass parsing; the linked parent collection explains the zero-rule rejection. An authored empty scalar fails the Boolean schema.', 'Changes whether traffic not explicitly allowed by the complete policy set is denied for selected endpoints.', 'False can leave unintended traffic allowed. True without complete allow rules blocks required connectivity.', '[Cilium 1.20.1 Rule.Sanitize](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L42-L66)');
+    if (/\.port$/u.test(normalized)) return operational('Selects a destination port allowed by this Cilium policy rule.', 'A port string accepted by the exact pinned CRD and Cilium PortProtocol parser: numeric ports include 0 through 65535, or a supported service name. Port 0 is rejected when the enclosing rule has nonempty L7 rules.', 'Omission or an empty string must satisfy the exact CRD and protocol-dependent receiver checks; removing the port entry changes the rule scope.', 'Changes which application endpoint the selected identities may reach.', 'A mismatch blocks required traffic; a broad or wrong port weakens isolation.', '[Cilium 1.20.1 PortProtocol parser](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L607-L641) and [L7 zero-port restriction](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L570-L578)');
+    if (/\.protocol$/u.test(normalized)) return operational('Selects the transport protocol matched by this Cilium policy port.', 'One of the protocol values accepted by the pinned Cilium 1.20.1 CRD field.', 'Omitted or empty protocol is interpreted as ANY: TCP, UDP and SCTP. Named-port validation can further restrict accepted protocols. The exact schema and PortProtocol parser apply together.', 'Changes which transport traffic the policy permits.', 'A mismatch blocks required traffic or permits an unintended protocol.', 'Cilium 1.20.1 policy engine');
+    if (/\.(?:fromEntities|toEntities)\[\]$/u.test(normalized)) return operational('Selects a Cilium reserved identity matched by this policy direction.', 'A reserved entity value accepted by the pinned Cilium 1.20.1 CRD field.', 'Removing the item removes that identity from the rule; removing the complete list leaves no entity match from this field. An empty string must satisfy the same field schema.', 'Changes the non-Pod identity boundary that can send or receive traffic.', 'A wrong entity blocks required infrastructure traffic or grants a broader trust boundary.', 'Cilium 1.20.1 policy engine');
+    if (/\.endpointSelector\.|\.(?:fromEndpoints|toEndpoints)\[\]\./u.test(normalized)) return operational('Defines one exact label selector key, operator, or value used by the Cilium policy.', 'A label selector value accepted by the pinned Cilium CRD field.', 'Removing the exact leaf removes that selector term; an authored empty value remains part of the enclosing selector and must satisfy the CRD.', 'Changes which endpoints the policy selects as subjects, sources, or destinations.', 'A selector mismatch denies required traffic; an overbroad selector grants unintended connectivity.', 'Cilium policy engine');
+  }
+  if (resource.kind === 'Ingress') {
+    if (normalized === 'spec.ingressClassName') return operational('Selects the IngressClass whose controller can reconcile this Ingress.', 'A string that satisfies the pinned networking.k8s.io/v1 field schema and names an IngressClass present in the target cluster.', 'The pinned schema permits omission and defines no field default. Class selection after omission depends on explicitly configured IngressClass and cluster admission settings. An empty string remains an authored string.', 'Changes which named IngressClass can own the routes.', 'A missing class leaves the Ingress unhandled; selecting the wrong class can expose it through an unintended ingress implementation.', 'Kubernetes API server and the controller named by the selected IngressClass');
+    if (normalized === 'spec.defaultBackend.service.name') return operational('Selects the Service used when no Ingress rule matches.', 'A Service name that satisfies the pinned networking.k8s.io/v1 schema and resolves in the Ingress namespace.', 'The pinned schema marks the service name as required inside a declared service backend.', 'Changes the workload that receives unmatched ingress traffic.', 'A missing Service or endpoint leaves the backend unresolved and unmatched requests fail.', 'Controller named by spec.ingressClassName');
+    if (normalized === 'spec.defaultBackend.service.port.number') return operational('Selects the numeric Service port used by the default Ingress backend.', 'An integer from 1 through 65535 that exists on the selected Service.', 'A backend must select either a port name or number; an empty number is invalid.', 'Changes the Service listener that receives unmatched ingress traffic.', 'A missing port makes the backend unresolved and requests fail.', 'Selected Ingress controller');
+    if (/^spec\.tls\[\]\.hosts\[\]$/u.test(normalized)) return operational('Adds one DNS host covered by this Ingress TLS entry.', 'A DNS host name accepted by the pinned networking.k8s.io/v1 schema and covered by the certificate in the enclosing secretName.', 'Removing the item removes that host from this TLS entry; removing the complete host list leaves certificate selection to the Ingress controller. An authored empty string must still satisfy the field schema.', 'Changes which requested host names use the enclosing TLS certificate.', 'A host/certificate mismatch causes client TLS verification failure.', 'Controller named by spec.ingressClassName');
+  }
+  if (resource.kind === 'NetworkPolicy') {
+    if (/^spec\.podSelector\.matchLabels\./u.test(normalized)) return operational('Sets one exact label equality requirement for Pods selected by this NetworkPolicy.', 'A valid Kubernetes label value for the exact label key in the path.', 'Removing the entry broadens or changes the selector; an empty value selects only Pods with that exact empty label value.', 'Changes which Pods receive the ingress and egress isolation rules.', 'An over-broad selector can isolate unrelated Pods; a mismatch leaves intended Pods outside this policy.', 'Kubernetes NetworkPolicy evaluator');
+    if (/^spec\.podSelector\.matchExpressions\[\]\.key$/u.test(normalized)) return operational('Selects the Pod label key evaluated by this NetworkPolicy match expression.', 'A valid Kubernetes label key.', 'The key is required for a match expression; an empty value fails admission.', 'Changes which label dimension selects protected Pods.', 'A wrong key selects no intended Pods or a different Pod set.', 'Kubernetes NetworkPolicy evaluator');
+    if (/^spec\.podSelector\.matchExpressions\[\]\.operator$/u.test(normalized)) return operational('Selects the set operation used by this NetworkPolicy label expression.', 'Exactly `In`, `NotIn`, `Exists`, or `DoesNotExist`.', 'The operator is required; an empty value fails admission.', 'Changes how the key and values select protected Pods.', 'An invalid operator fails admission; a valid but wrong operator can invert policy scope.', 'Kubernetes NetworkPolicy evaluator');
+    if (/^spec\.podSelector\.matchExpressions\[\]\.values\[\]$/u.test(normalized)) return operational('Adds one label value used by the enclosing NetworkPolicy selector expression.', 'A valid Kubernetes label value; values are required for `In` and `NotIn` and forbidden for existence operators.', 'An empty item is a literal empty label value, not omission. Removing all values invalidates value-based operators.', 'Changes the Pod set selected by the enclosing expression.', 'An invalid operator/value combination fails admission; a wrong value leaves intended Pods unprotected.', 'Kubernetes NetworkPolicy evaluator');
+    if (/^spec\.policyTypes\[\]$/u.test(normalized)) return operational('Selects one traffic direction isolated by this NetworkPolicy.', 'Exactly `Ingress` or `Egress`.', 'Omission triggers networking.k8s.io/v1 defaulting from present rule sections; an empty item is invalid.', 'Changes whether ingress, egress, or both directions default to denied except for explicit allows.', 'Omitting a required direction leaves traffic unisolated; adding one without allow rules blocks that direction.', 'Kubernetes NetworkPolicy evaluator');
+  }
+  if (resource.kind === 'Service' && /^spec\.selector\./u.test(normalized)) return operational('Sets one exact Pod-label equality requirement used by this Service.', 'A valid Kubernetes label value for the exact selector key.', 'Removing the selector entry broadens or changes endpoint selection; a Service without a selector requires externally managed EndpointSlices.', 'Changes which Pods receive traffic sent to the Service.', 'A mismatch yields no ready endpoints; an over-broad selector routes traffic to unintended Pods.', 'Kubernetes Service and EndpointSlice controllers');
+  throw new Error(`CONFIG_YAML_API_CONTRACT_GAP: ${api} ${normalized} has no exact operational or proved-structural contract`);
+}
+
+function versionedApiSchemaContract(schema) {
+  const constraints = [`type \`${schema.type ?? 'schema-defined'}\``];
+  if (schema.enum?.length) constraints.push(`one of ${schema.enum.map((value) => `\`${String(value)}\``).join(', ')}`);
+  if (schema.format) constraints.push(`format \`${schema.format}\``);
+  if (schema.minimum !== null && schema.minimum !== undefined) constraints.push(`minimum ${schema.minimum}`);
+  if (schema.maximum !== null && schema.maximum !== undefined) constraints.push(`maximum ${schema.maximum}`);
+  const acceptedValues = `The pinned authority (${schema.authority}) defines ${constraints.join('; ')} for the exact field \`${schema.resolvedPath}\`.`;
+  const defaultBehavior = schema.default === '<no schema default>'
+    ? 'The exact field schema defines no default.'
+    : `The exact field schema default is \`${JSON.stringify(schema.default)}\`.`;
+  const omissionBehavior = schema.requiredBySchema
+    ? 'When its enclosing object is declared, the parent schema requires this field; omission then fails schema validation.'
+    : `The parent schema permits omission. ${defaultBehavior}`;
+  const emptyBehavior = schema.nullable
+    ? 'The exact schema permits null. Any other empty value must satisfy the same type, enum, format, and range constraints.'
+    : 'The schema supplies no nullable marker. This does not establish how the selected API decoder or apply operation handles null. An empty string, list, or object is an authored value and must satisfy the type, enum, format, range, and parent constraints.';
+  return { acceptedValues, defaultBehavior, omissionBehavior, emptyBehavior };
+}
+
+function yamlMeaning(context, exactPath, valueType, semantics, authority) {
+  if (['object', 'array'].includes(valueType) && !authority && (!context.resource || semantics.deploymentBoundary)
+    && !semantics.consumers.some((consumer) => consumer.kind?.startsWith('helm-template'))) return { status: 'structural-container', text: 'Groups the nested values listed below. This grouping has no separately proved template receiver; its child contracts determine runtime behavior.', evidence: `${context.sourcePath}:${context.fieldLine}`, blockerOwner: null, closureCondition: null };
+  if (authority && context.resource && semantics.deploymentBoundary) {
+    const receiverProved = semantics.consumers.length > 0
+      && semantics.consumers.every((consumer) => consumer.kind !== 'embedded-payload-consumer-unproved');
+    return {
+    status: receiverProved ? 'embedded-payload-authority' : 'embedded-payload-meaning-blocker',
+    text: `${context.resource.apiVersion}/${context.resource.kind} stores this value as ${semantics.deploymentBoundary.replaceAll('-', ' ')}; Kubernetes validates only its outer type. ${authority.purpose} Accepted values: ${authority.acceptedValues} Selected default: the checked-in value in this row is the repository baseline. Empty or omitted value: ${authority.emptyBehavior}`,
+    evidence: `${context.sourcePath}:${context.fieldLine}; scripts/docs-yaml-field-authorities.mjs${authority.inheritedSemanticContractEvidence ? `; ${authority.semanticContractEvidence.path}:${authority.semanticContractEvidence.line}-${authority.semanticContractEvidence.endLine}` : ''}`,
+    acceptedValues: authority.acceptedValues,
+    emptyBehavior: authority.emptyBehavior,
+    sourceFileSha256: authority.sourceFileSha256,
+    semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
+    semanticContractEvidence: authority.semanticContractEvidence,
+    semanticContractBinding: authority.semanticContractBinding ?? null,
+    ...(authority.inheritedSemanticContractEvidence ? { inheritedSemanticContractEvidence: authority.inheritedSemanticContractEvidence } : {}),
+    externalChart: null,
+    blockerOwner: receiverProved ? null : sourceOwner(context.sourcePath).component,
+    closureCondition: receiverProved ? null : 'Add an exact checked-in reader or a pinned external image/controller contract for this payload.',
+  };
+  }
+  if (context.resource && semantics.deploymentBoundary) {
+    return {
+      status: 'embedded-payload-meaning-blocker',
+      text: `${context.resource.apiVersion}/${context.resource.kind} stores this as ${semantics.deploymentBoundary.replaceAll('-', ' ')}. Kubernetes validates only the outer field type, and no exact receiving-controller or process contract explains this value.`,
+      evidence: context.sourcePath,
+      blockerOwner: sourceOwner(context.sourcePath).component,
+      closureCondition: 'Add an exact source-path and field-path authority with the receiving controller or process, purpose, accepted values, default and empty behavior, impact, and failure symptom.',
+    };
+  }
+  if (context.resource) {
+    const contract = deploymentApiFieldContract(context.resource, exactPath, valueType, context.documentValue, context.sourcePath);
+    const schemaAuthority = {
+      ...apiFieldSchemaAuthority(context.resource.apiVersion, context.resource.kind, exactPath),
+      fieldPath: exactPath,
+    };
+    const schemaContract = versionedApiSchemaContract(schemaAuthority);
+    const collectionSchema = contract.collectionSchemaAuthority;
+    const rendererText = semantics.defaultKind === 'renderer-overwritten-template'
+      ? ` Selected deployment input: this authored value is a template placeholder, not the effective capacity or StorageClass. The validated JSON selected by KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG overwrites this exact leaf in render-registry-local.mjs before deploy.sh applies the rendered output. The JSON must be an object with only capacity and storageClassName: capacity is a positive integer followed by Mi, Gi or Ti; storageClassName is nonempty, at most 253 characters, contains only lowercase letters, digits, dots and hyphens, and starts and ends with a letter or digit. Empty or invalid selected JSON fails with REGISTRY_STORAGE_CONFIG_INVALID before apply; a conflicting existing PVC fails with REGISTRY_EXISTING_STORAGE_MISMATCH. The API contract below applies to the rendered value.`
+      : semantics.defaultKind === 'renderer-selected-replicas'
+        ? ` Selected deployment input: render-registry-local.mjs overwrites this template replica count with one for serve mode, which deploy.sh explicitly selects. Its gc-dry-run and gc modes instead set replicas to zero and add a maintenance Job after validating the existing Deployment/PVC. Those modes also replace the Job arguments and remove its ports and health probes. The mode is validated before rendering; an authored template count is not the winner.`
+        : semantics.defaultKind === 'post-apply-overwritten-template'
+        ? ` Selected deployment input: after applying the rendered Service, deploy.sh replaces the complete ports list with a merge patch containing name=http, port=4000, targetPort=4000, protocol=TCP and nodePort from LITELLM_NODE_PORT. A nonempty process input supplies that value; omission or an empty string selects 30050. Before render/apply the script checks numeric input and its 30000–32767 bounds. The patch must also satisfy the target API server allocation range and conflicts. A patch failure can leave the earlier applied Service; stop and inspect it rather than claiming the configured NodePort took effect.`
+        : '';
+    const collectionText = collectionSchema
+      ? ` The linked API collection contract includes the exact field, child, item and parent descriptions, constraints and alternatives. Those descriptions can define API defaults absent from the schema default keyword. Null acceptance and deletion also depend on the receiving operation; absence of nullable does not prove that API decoding rejects every null.`
+      : '';
+    return {
+      status: contract.status,
+      text: `${contract.purpose}${rendererText} Accepted values: ${schemaContract.acceptedValues} Operational constraint: ${contract.acceptedValues} Default: ${schemaContract.defaultBehavior} Omission: ${schemaContract.omissionBehavior} ${collectionSchema ? 'Collection result' : `Empty value: ${schemaContract.emptyBehavior} Operational result after omission or an empty value`}: ${contract.emptyBehavior}${collectionText}`,
+      evidence: `${context.sourcePath}:${context.fieldLine ?? 1}; ${schemaAuthority.authority}; sha256:${schemaAuthority.authoritySha256}`,
+      acceptedValues: `${schemaContract.acceptedValues} ${contract.acceptedValues}`,
+      defaultBehavior: schemaContract.defaultBehavior,
+      omissionBehavior: schemaContract.omissionBehavior,
+      emptyBehavior: `${collectionSchema ? '' : `${schemaContract.emptyBehavior} `}${contract.emptyBehavior}`,
+      apiAuthority: `${schemaAuthority.authority}; ${contract.apiAuthority}`,
+      apiSchemaAuthority: schemaAuthority,
+      ...(collectionSchema ? { apiCollectionAuthority: collectionSchema, collectionGroup: contract.collectionGroup, qualification: contract.qualification } : {}),
+      sourceLine: context.fieldLine ?? 1,
+      sourceLineSha256: sha256(read(context.sourcePath).split('\n')[(context.fieldLine ?? 1) - 1] ?? ''),
+      blockerOwner: contract.blockerOwner ?? null,
+      closureCondition: contract.closureCondition ?? null,
+    };
+  }
+  if (authority) return {
+    status: authority.externalChart ? (authority.collectionOnly ? 'external-chart-collection-authority' : 'external-chart-authority') : authority.chartRoot ? 'local-helm-field-authority' : 'implementation-authority',
+    text: `${authority.purpose} Accepted values: ${authority.acceptedValues} ${context.sourceClass === 'helm-values'
+      ? 'Selected chart default: the checked-in value in this row is the chart default.'
+      : context.sourceClass === 'helm-example'
+        ? 'Selected example value: the checked-in value in this row is an example selection, not a chart default.'
+        : 'Selected overlay value: the checked-in value in this row is an overlay selection, not a chart default.'} Empty or omitted value: ${authority.emptyBehavior}`,
+    evidence: authority.externalChart
+      ? `${context.sourcePath}:${context.fieldLine}; scripts/docs-yaml-field-authorities.mjs; ${authority.externalChart.chart}@${authority.externalChart.version}; archive sha256:${authority.externalChart.archiveSha256}`
+      : authority.chartRoot
+        ? `${context.sourcePath}:${context.fieldLine}; ${semantics.consumers.map((consumer) => `${consumer.path}:${consumer.line}`).join('; ')}; scripts/docs-local-helm-field-authorities.json`
+        : `${context.sourcePath}:${context.fieldLine}; scripts/docs-yaml-field-authorities.mjs`,
+    acceptedValues: authority.acceptedValues,
+    emptyBehavior: authority.emptyBehavior,
+    sourceFileSha256: authority.sourceFileSha256,
+    externalChart: authority.externalChart ?? null,
+    localHelmChart: authority.chartRoot ?? null,
+    upstreamTemplateProof: authority.upstreamTemplateProof ?? null,
+    semanticGroup: authority.group ?? null,
+    semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
+    semanticContractEvidence: authority.semanticContractEvidence,
+    semanticContractBinding: authority.semanticContractBinding ?? null,
+    blockerOwner: null,
+    closureCondition: null,
+  };
+  const dottedPath = exactPath.replace(/\[[0-9]+\]/gu, '[]');
+  const consumer = semantics.consumers.find((item) => item?.kind?.startsWith('helm-template'))
+    ?? semantics.consumers.find((item) => item !== 'unknown');
+  const inactive = semantics.required === 'not-applicable-unused'
+    || (semantics.consumers.length > 0 && semantics.consumers.every((item) => item?.inactiveProfile === true || item?.kind === 'not-applicable'));
+  if (inactive) return {
+    status: 'inactive-profile',
+    text: context.sourcePath === 'my-values/infra/litellm-values.yaml'
+      ? 'This leaf belongs to an unselected Helm-style LiteLLM profile. The current deployment reads my-values/infra/litellm-config.yaml and renders my-values/infra/litellm-deployment.yaml. Editing this profile changes no checked-in deployment path.'
+      : `This leaf belongs to the inactive profile ${context.sourcePath}. No checked-in render or deploy path selects that profile, so operators must not treat the leaf as effective configuration.`,
+    evidence: context.sourcePath === 'my-values/infra/litellm-values.yaml'
+      ? 'scripts/deploy.sh:1175'
+      : consumer?.path ? `${consumer.path}:${consumer.line ?? 1}` : context.sourcePath,
+    blockerOwner: context.owner.component,
+    closureCondition: semantics.closureCondition,
+  };
+  const external = semantics.required === 'external-schema';
+  if (consumer?.kind?.startsWith('helm-template')) {
+    return {
+      status: 'template-render-meaning-blocker',
+      text: `${dottedPath} reaches the exact Helm expression \`${consumer.templateExpression}\`, but that render link alone does not explain purpose, accepted values, default and empty behavior, impact, or the receiving failure symptom.`,
+      evidence: `${consumer.path}:${consumer.line}`,
+      blockerOwner: context.owner.component,
+      closureCondition: `Add an exact ${context.sourcePath}#$.${exactPath} local Helm authority and pin every linked template source.`,
+    };
+  }
+  return {
+    status: external ? 'external-schema-meaning-blocker' : 'implementation-only-meaning-blocker',
+    text: external
+      ? `${dottedPath} belongs to ${consumer?.authority ?? 'an external schema'}, but this repository has no maintained field-level behavior and failure explanation.`
+      : `${dottedPath} reaches ${consumer?.path ?? 'the linked consumer'}, but the link alone does not explain its purpose, accepted values, empty/default behavior, or failure symptom.`,
+    evidence: consumer?.path ? `${consumer.path}:${consumer.line ?? 1}` : context.sourcePath,
+    blockerOwner: context.owner.component,
+    closureCondition: `Add a source-backed ${dottedPath} explanation with purpose, accepted values, default/empty behavior, change impact, and failure symptom.`,
+  };
+}
+
+function yamlFields(value, context, fieldPath = '$', result = [], pathSegments = []) {
+  const valueType = typeOf(value);
+  const exactPath = fieldPath === '$' ? '' : fieldPath.replace(/^\$\.?/, '');
+  const node = pathSegments.length ? context.document?.getIn(pathSegments, true) : context.document?.contents;
+  const fieldLine = Array.isArray(node?.range) ? context.lineCounter?.linePos(node.range[0]).line : 1;
+  const fieldContext = { ...context, fieldLine };
+  const discoveredSemantics = fieldPath === '$' ? { required: 'not-applicable-container', requiredReason: 'Document envelope; nested rows define its contract.', defaultKind: 'authored-container', constraints: [], runtimeOwner: 'Document envelope', consumers: [], precedence: ['See nested rows'], effectiveValueProof: `${context.sourcePath}:1`, changeImpact: 'See nested rows.', failureMeaning: 'YAML syntax errors stop parsing.', blockerOwner: null, closureCondition: null } : yamlSemantics(fieldContext, exactPath, valueType);
+  let authority = fieldPath === '$' ? null : exactYamlAuthority(context, fieldPath);
+  if (authority && context.sourcePath === 'my-values/infra/registry-local.yaml'
+    && context.resource?.kind === 'ConfigMap' && context.resource.name === 'registry-local-config'
+    && fieldPath === '$.data["config.yml"]') {
+    authority = {
+    ...authority,
+    emptyBehavior: 'An empty string creates an empty config.yml file through the proved ConfigMap mount. The serve command explicitly selects that file. Distribution 3.0.0 rejects its missing configuration version as unsupported before environment overrides; there is no image-configuration fallback for those empty bytes. A version 0.1 document also requires nonempty storage after its environment overrides. Removing the key removes the selected file and causes the explicit configuration-file open to fail. [Selected file parser](https://github.com/distribution/distribution/blob/9ed95e7365224025ee89365e12cf128e1f1bf965/registry/registry.go#L473-L500); [version validation](https://github.com/distribution/distribution/blob/9ed95e7365224025ee89365e12cf128e1f1bf965/configuration/parser.go#L114-L126); [storage requirement](https://github.com/distribution/distribution/blob/9ed95e7365224025ee89365e12cf128e1f1bf965/configuration/configuration.go#L796-L838).',
+    failure: 'An absent selected file, invalid YAML, unsupported configuration version or absent required storage prevents registry startup; verify the running registry before treating valid configuration as startup success.',
+    };
+    // The baseline field registration still supplies the payload purpose and
+    // form. The exact receiving-parser refinement is authored in this file.
+    const contractPath = 'scripts/docs-configuration-inventory.mjs';
+    const contractLines = read(contractPath).split('\n');
+    const contractIndex = contractLines.findIndex((line) => line.includes(authority.emptyBehavior));
+    assert(contractIndex >= 0, 'CONFIG_PAYLOAD_PARSER_AUTHORITY_DRIFT: registry-local empty behavior lost its source statement');
+    authority = { ...authority,
+      inheritedSemanticContractEvidence: authority.semanticContractEvidence,
+      semanticAuthorityEvidence: { path: contractPath, line: contractIndex + 1, sourceLineSha256: sha256(contractLines[contractIndex]) },
+      semanticContractEvidence: { path: contractPath, line: contractIndex + 1, endLine: contractIndex + 2,
+        sourceRangeSha256: sha256(contractLines.slice(contractIndex, contractIndex + 2).join('\n')) },
+      semanticContractBinding: 'receiver-refined-field-contract',
+    };
+  }
+  if (authority?.chartRoot && !allowLocalHelmAuthorityMaintenance) {
+    const actualConsumers = discoveredSemantics.consumers.filter((consumer) => consumer.kind?.startsWith('helm-template')).map((consumer) => ({
+      path: consumer.path,
+      kind: consumer.kind,
+      templateExpression: consumer.templateExpression,
+    })).sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
+    const expectedConsumers = authority.consumerProof.map((consumer) => ({
+      path: consumer.path,
+      kind: consumer.kind,
+      templateExpression: consumer.templateExpression,
+    })).sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
+    assert.deepEqual(actualConsumers, expectedConsumers,
+      `CONFIG_YAML_AUTHORITY_DRIFT: exact Helm consumer changed for ${context.sourcePath}#${fieldPath}`);
+  }
+  const runtimeProofConsumers = authority?.runtimeConsumerProof?.map((proof) => ({
+    path: proof.path,
+    line: proof.line,
+    kind: proof.kind,
+    direction: 'read',
+    authority: proof.authority ?? `The checked-in runtime reads ${proof.environment} through ${proof.access}.`,
+  })) ?? [];
+  let semantics = authority ? {
+    ...discoveredSemantics,
+    consumers: [
+      ...(authority.chartRoot ? discoveredSemantics.consumers.map((consumer) => {
+        const proof = authority.consumerProof.find((item) => item.path === consumer.path && item.line === consumer.line
+          && item.kind === consumer.kind && item.bindingKind === consumer.bindingKind);
+        return {
+          ...consumer,
+          exactValuePath: fieldPath.replace(/^\$\.?/u, ''),
+          ...(proof ? { receiver: proof.receiver, receiverProof: proof.receiverProof, condition: proof.condition,
+            conditionProof: proof.conditionProof, defaultProof: proof.defaultProof, defaultClauseProofs: proof.defaultClauseProofs } : {}),
+        };
+      }) : discoveredSemantics.consumers),
+      ...runtimeProofConsumers,
+    ],
+    constraints: [...new Set([...discoveredSemantics.constraints, authority.acceptedValues, `empty/omitted: ${authority.emptyBehavior}`])],
+    runtimeOwner: runtimeProofConsumers.length
+      ? `${discoveredSemantics.runtimeOwner}; checked-in runtime consumers linked below`
+      : discoveredSemantics.runtimeOwner,
+    precedence: runtimeProofConsumers.length
+      ? [...discoveredSemantics.precedence, 'checked-in runtime parsing or effect']
+      : discoveredSemantics.precedence,
+    effectiveValueProof: runtimeProofConsumers.length
+      ? `${discoveredSemantics.effectiveValueProof} -> ${runtimeProofConsumers[0].path}:${runtimeProofConsumers[0].line}`
+      : discoveredSemantics.effectiveValueProof,
+    changeImpact: authority.impact,
+    failureMeaning: authority.failure,
+  } : discoveredSemantics;
+  if (!authority && context.resource && discoveredSemantics.deploymentBoundary === undefined
+    && fieldPath !== '$') {
+    const apiContract = deploymentApiFieldContract(context.resource, exactPath, valueType, context.documentValue, context.sourcePath);
+    semantics = {
+      ...semantics,
+      constraints: [...new Set([...semantics.constraints, apiContract.acceptedValues])],
+      changeImpact: apiContract.impact,
+      failureMeaning: apiContract.failure,
+      effectiveValueProof: ['my-values/infra/registry-local.yaml', 'my-values/infra/litellm-deployment.yaml'].includes(context.sourcePath)
+        ? `${discoveredSemantics.effectiveValueProof} -> ${apiContract.apiAuthority}`
+        : `${context.sourcePath}#$.${exactPath} -> ${apiContract.apiAuthority}`,
+    };
+  }
+  if (authority?.sourceOnly) semantics = {
+    ...semantics,
+    required: 'not-applicable-unused', requiredReason: 'No checked-in deploy path installs this repository source on a node.',
+    runtimeOwner: 'No proved deployed consumer; operator-owned node configuration remains separate',
+    consumers: [
+      { path: 'scripts/registry-client-config.mjs', line: 57, kind: 'source-configuration-producer-contract', authority: 'nodeConfiguration defines accepted registry-clients.v1 output; it does not install this repository YAML' },
+      { path: 'scripts/inspect-node-registry.mjs', line: 15, kind: 'source-configuration-inspector-contract', authority: 'inspectNodeRegistry reads only explicitly supplied source configuration; its CLI reads /etc/rancher/k3s/registries.yaml, not this repository file' },
+    ],
+    precedence: ['checked-in empty source baseline', 'operator selects, generates and installs a separate node configuration', 'effective containerd state and uncached CRI pull remain unverified'],
+    effectiveValueProof: 'No checked-in binding installs this repository file; the named producer and inspector define only source configuration contracts.',
+  };
+  // The node range belongs to the exact scalar/sequence item, not to its parent
+  // mapping.  Pass that context through so every API-field citation and digest is
+  // bound to the leaf that the row describes.
+  const meaning = fieldPath === '$' ? { status: 'structural-container', text: 'YAML document envelope.', evidence: `${context.sourcePath}:1`, blockerOwner: null, closureCondition: null } : yamlMeaning(fieldContext, exactPath, valueType, semantics, authority);
+  result.push({
+    path: fieldPath,
+    type: valueType,
+    required: semantics.required,
+    requiredReason: semantics.requiredReason,
+    defaultKind: semantics.defaultKind,
+    value: valueType === 'object' || valueType === 'array' ? (Object.keys(value).length === 0 ? (valueType === 'array' ? '[]' : '{}') : `<${valueType}: ${Object.keys(value).length} entries; see child rows>`)
+      : context.resource?.kind === 'Secret' && /^(?:data|stringData)\./u.test(exactPath) ? '<redacted:secret-payload>'
+        : redactValue(fieldPath, value),
+    constraints: semantics.constraints,
+    ownerComponent: context.owner.component,
+    ownerEvidence: context.owner.evidence,
+    runtimeOwner: semantics.runtimeOwner,
+    consumers: semantics.consumers,
+    precedence: semantics.precedence,
+    effectiveValueProof: semantics.effectiveValueProof,
+    changeImpact: semantics.changeImpact,
+    failureMeaning: semantics.failureMeaning,
+    // Publish blocker metadata from the final meaning. An exact authority can
+    // replace a discovered blocker, so the pre-authority metadata is stale at
+    // this point.
+    blockerOwner: meaning.blockerOwner,
+    closureCondition: meaning.closureCondition,
+    sourceLine: fieldLine,
+    sourceLineSha256: sha256(read(context.sourcePath).split('\n')[fieldLine - 1] ?? ''),
+    meaning,
+  });
+  const collectionRow = result.at(-1);
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => yamlFields(item, context, `${fieldPath}[${index}]`, result, [...pathSegments, index]));
+  } else if (value && typeof value === 'object') {
+    for (const key of Object.keys(value).sort()) {
+      // Capability identifiers are map keys, not object path segments.  Quote
+      // dotted identifiers at the map boundary so runtime.dispatch and
+      // test.plan.execute remain one key in every public field path.
+      const next = yamlFieldChildPath(fieldPath, key);
+      yamlFields(value[key], context, next, result, [...pathSegments, key]);
+    }
+  }
+  if (['object', 'array'].includes(valueType) && fieldPath !== '$') {
+    completeYamlCollection(collectionRow, context, value, result);
+  }
+  return result;
+}
+
+// Collection rows preserve Helm merge behavior and the receiving contract.
+// Grouping rows link actual descendants; they cannot conceal an empty option.
+function completeYamlCollection(row, context, value, fields) {
+  const descendants = fields.filter((field) => field.path.startsWith(`${row.path}.`) || field.path.startsWith(`${row.path}[`));
+  const isHelm = !context.resource && Boolean(context.chartRoot || context.externalBindings.length);
+  const receiverClass = context.resource ? 'kubernetes-api-manifest' : isHelm ? 'helm-values' : 'source-loader';
+  const merge = isHelm
+    ? row.type === 'array'
+      ? 'Helm replaces a list as one value: a later [] removes all earlier items; omission keeps the earlier list. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
+      : 'Helm merges map keys recursively: a later {} keeps earlier keys; omission keeps the earlier map. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
+    : context.resource
+      ? 'This document is an API manifest. Its named client apply or synchronization operation, existing object state and field ownership control which stored keys or items are retained or removed. kubectl client-side apply compares the submitted manifest, live object and last-applied configuration; fields managed elsewhere can remain. API patch/list annotations describe patch behavior, not Helm values merge. Empty, omitted and null input then pass through the exact API admission/defaulting and controller contracts; null is not a general reset command.'
+      : 'This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence.';
+  row.collection = { entries: Object.keys(value).length, empty: Object.keys(value).length === 0, childPaths: descendants.map((field) => field.path), mergeBehavior: merge,
+    receiverClass, rejectedHelmBinding: context.rejectedHelmBinding ?? null };
+  row.constraints = [...new Set([...row.constraints, merge])];
+  if (row.meaning.status === 'deployment-collection-envelope') {
+    const children = descendants.filter((field) => yamlFieldPathTokens(field.path).length === yamlFieldPathTokens(row.path).length + 1);
+    row.collection.childContracts = children.map((child) => ({ path: child.path, status: child.meaning.status,
+      receivingSources: child.consumers.map((consumer) => ({ path: consumer.path, line: consumer.line, kind: consumer.kind })),
+      emptyBehavior: child.meaning.emptyBehavior ?? null, blockerOwner: child.blockerOwner, closureCondition: child.closureCondition }));
+    row.meaning.text += ` Actual child contracts: ${children.map((child) => `\`${child.path}\` (${child.meaning.status.includes('blocker') ? 'receiving behavior not established' : child.meaning.collectionGroup ?? child.type})`).join(', ')}. A child limitation remains a limitation of this envelope. Collection precedence: ${merge}`;
+    return;
+  }
+  if (row.meaning.status !== 'structural-container') {
+    row.meaning.text = `${row.meaning.text} Collection precedence: ${merge}`;
+    return;
+  }
+  const leaves = descendants.filter((field) => !['object', 'array'].includes(field.type));
+  const children = descendants.filter((field) => yamlFieldPathTokens(field.path).length === yamlFieldPathTokens(row.path).length + 1);
+  const contracts = leaves.length ? leaves : children;
+  if (!contracts.length) {
+    row.meaning = { status: 'collection-meaning-blocker', text: `This empty ${row.type} has no exact collection contract. ${merge}`, evidence: `${context.sourcePath}:${row.sourceLine}`, blockerOwner: context.owner.component, closureCondition: `Add an exact collection authority for ${context.sourcePath}#${row.path}, including new keys or items, accepted forms, empty/omitted/null behavior, receiver and failure effect.` };
+    row.blockerOwner = row.meaning.blockerOwner;
+    row.closureCondition = row.meaning.closureCondition;
+    return;
+  }
+  row.requiredReason = 'This row groups the named nested contracts. Their required states and conditions still apply after collection merge or replacement.';
+  row.runtimeOwner = [...new Set(contracts.map((field) => field.runtimeOwner))].join('; ');
+  row.consumers = [...new Map(contracts.flatMap((field) => field.consumers).map((consumer) => [`${consumer.path}:${consumer.line}:${consumer.kind}`, consumer])).values()];
+  row.precedence = [...new Set(contracts.flatMap((field) => field.precedence))];
+  row.effectiveValueProof = `Nested contract paths: ${contracts.map((field) => field.path).join(', ')}. Each child row pins its complete receiving chain.`;
+  row.changeImpact = 'Changing this group changes its accepted nested values. Each child row identifies its receiving effect and whether a workload or controller must be reconciled.';
+  row.failureMeaning = 'Removing or replacing the group can remove required children. The linked nested schema, template and runtime contracts determine the rejected render, admission or startup failure.';
+  row.meaning.text = `Groups the nested fields ${children.map((field) => `\`${field.path}\``).join(', ')}. It has no separately proved whole-collection receiver. Accepted keys and item variants are those defined by the nested schema and consumer contracts; this row does not authorize arbitrary new keys. ${merge}`;
+}
+
+// Bind an authored receiver registry to its declared API version. A new version
+// must not inherit another version's runtime claims merely because kind names
+// and field paths match.
+
+function buildApiResourceInventory(files) {
+  const resources = new Map();
+  for (const context of discoverProductApiContexts(root)) {
+    const { apiVersion, kind, ...sourceContext } = context;
+    const key = `${apiVersion}/${kind}`;
+    if (!resources.has(key)) resources.set(key, { apiVersion, kind, sourceContexts: [] });
+    resources.get(key).sourceContexts.push({ ...sourceContext, owner: sourceOwner(context.path).component });
+  }
+  return [...resources.entries()].sort(([left], [right]) => left.localeCompare(right))
+    .map(([, resource]) => {
+      const receivers = productApiReceiverRecords(resource.apiVersion,resource.kind);
+      const selection = apiProductSelection(resource.apiVersion, resource.kind, resource.sourceContexts, receivers, root);
+      return { ...resource, ...apiReceiverCoverage(resource.apiVersion, resource.kind, productApiReceiverRecords(resource.apiVersion, resource.kind, selection.fieldPaths), selection) };
+    });
+}
+
+function buildYamlInventory() {
+  assertYamlAuthorityRegistry(root);
+  if (!allowLocalHelmAuthorityMaintenance) assertLocalHelmAuthorityRegistry(root);
+  const consumerMap = chartConsumers();
+  const valueBindings = gitOpsValueBindings();
+  const externalProfiles = externalChartProfileBindings();
+  const files = yamlSources().map((sourcePath) => {
+    const text = read(sourcePath);
+    const sourceDigest = sha256(text);
+    const exactDeclaration = yamlAuthorityFile(sourcePath);
+    const localDeclaration = localHelmAuthorityFile(sourcePath);
+    const declaration = exactDeclaration ?? localDeclaration;
+    if (declaration && declaration.sourceSha256 !== sourceDigest
+      && !(localDeclaration && allowLocalHelmAuthorityMaintenance)) {
+      throw new Error(`CONFIG_YAML_AUTHORITY_DRIFT: ${sourcePath} changed without an exact field-authority update; expected ${declaration.sourceSha256}, got ${sourceDigest}`);
+    }
+    const lineCounter = new YAML.LineCounter();
+    const documents = YAML.parseAllDocuments(text, { prettyErrors: false, lineCounter });
+    const errors = documents.flatMap((document, index) => document.errors.map((error) => ({ document: index, message: error.message })));
+    assert.equal(errors.length, 0, `CONFIG_YAML_INVALID: ${sourcePath}: ${errors.map(error => error.message).join('; ')}`);
+    const chartRootMatch = sourcePath.match(/^(charts\/[^/]+)\//);
+    const sourceClass = yamlClass(sourcePath);
+    const localBinding = localHelmBinding(sourcePath);
+    const runtimeBindings = runtimeFileBindings(sourcePath);
+    const directExternalBindings = directExternalChartBindings(sourcePath);
+    return {
+      path: sourcePath,
+      sourceClass,
+      sourceDigest,
+      parseErrors: errors,
+      documents: documents.map((document, index) => {
+        const value = document.errors.length ? null : document.toJS();
+        const resource = value?.apiVersion && value?.kind ? { apiVersion: value.apiVersion, kind: value.kind, name: value.metadata?.name ?? '<unnamed>' } : null;
+        const selectedExternalBindings = [...(valueBindings.get(sourcePath) ?? []), ...directExternalBindings, ...(externalProfiles.get(sourcePath) ?? []), ...(localBinding?.externalBinding ? [localBinding.externalBinding] : [])];
+        if (resource) assert(![...(valueBindings.get(sourcePath) ?? []), ...directExternalBindings].some((binding) => ['argocd-helm-values', 'operator-helm-values'].includes(binding.kind)),
+          `CONFIG_API_RECEIVER_CLASS_CONFLICT: ${sourcePath} document ${index} is ${resource.apiVersion}/${resource.kind}, but an actual Helm values receiver also selects it`);
+        const rejectedHelmBinding = resource && localBinding ? {
+          chartRoot: localBinding.chartRoot ?? null, externalBinding: localBinding.externalBinding ?? null, evidence: localBinding.evidence,
+          reason: 'The inferred nearby chart is incompatible with this API document. It does not select this document as Helm values.',
+        } : null;
+        return {
+        index,
+        resource,
+        receiverClass: resource ? 'kubernetes-api-manifest' : (chartRootMatch?.[1] ?? localBinding?.chartRoot) || selectedExternalBindings.length ? 'helm-values' : 'source-loader',
+        rejectedHelmBinding,
+        fields: document.errors.length ? [] : yamlFields(value, {
+          sourcePath,
+          sourceDigest,
+          chartRoot: resource ? null : chartRootMatch?.[1] ?? localBinding?.chartRoot ?? null,
+          rejectedHelmBinding,
+          consumerMap,
+          sourceClass,
+          owner: sourceOwner(sourcePath),
+          resource,
+          document,
+          documentValue: value,
+          lineCounter,
+          externalBindings: resource ? [] : selectedExternalBindings,
+          runtimeBindings: sourcePath === 'gitops/platform/values/codex-ops.yaml'
+            ? runtimeBindings
+            : (chartRootMatch?.[1] ?? localBinding?.chartRoot) ? [] : runtimeBindings,
+        }),
+      };}),
+    };
+  });
+  const apiResources = buildApiResourceInventory(files);
+  const allFields = files.flatMap((file) => file.documents.flatMap((document) => document.fields));
+  for (const file of files) {
+    const actualPaths = new Set(file.documents.flatMap((document) => document.fields)
+      .map((field) => field.path));
+    const registeredPaths = [
+      ...yamlAuthorityPaths(file.path),
+      ...(allowLocalHelmAuthorityMaintenance ? [] : localHelmAuthorityPaths(file.path)),
+    ];
+    for (const registeredPath of registeredPaths) {
+      assert(actualPaths.has(registeredPath), `CONFIG_YAML_AUTHORITY_DRIFT: obsolete exact authority ${file.path}#${registeredPath}`);
+    }
+  }
+  const leafFields = allFields.filter((field) => field.type !== 'object' && field.type !== 'array');
+  // A public path is an identity, not display prose. A literal key that contains
+  // a dot must therefore remain one bracket-quoted segment. This also proves
+  // that a literal `a.b` key cannot collide with nested `a: { b: ... }`.
+  assert.notEqual(yamlFieldPath(['collision', 'a.b']), yamlFieldPath(['collision', 'a', 'b']),
+    'CONFIG_YAML_PATH_COLLISION: literal dotted key and nested keys have the same identity');
+  const dottedKeyLeaves = leafFields.filter((field) => yamlFieldPathTokens(field.path)
+    .some((token) => typeof token === 'string' && token.includes('.')));
+  for (const field of dottedKeyLeaves) {
+    for (const token of yamlFieldPathTokens(field.path).filter((item) => typeof item === 'string' && item.includes('.'))) {
+      assert(field.path.includes(`[${JSON.stringify(token)}]`),
+        `CONFIG_YAML_DOTTED_KEY_FLATTENED: ${field.path} does not preserve literal key ${token}`);
+    }
+  }
+  assert.equal(dottedKeyLeaves.length, 112,
+    'CONFIG_YAML_DOTTED_KEY_COVERAGE: the checked-in dotted-key leaf set changed; inspect and classify every new or removed leaf');
+  for (const [sourcePath, exactPath] of [
+    ['my-values/infra/argocd-values.yaml', '$.configs.cm["application.resourceTrackingMethod"]'],
+    ['my-values/infra/argocd-values.yaml', '$.configs.params["server.insecure"]'],
+    ['examples/cilium/project-network-policy.yaml', '$.metadata.labels["pod-security.kubernetes.io/enforce"]'],
+    ['my-values/infra/registry-local.yaml', '$.data["config.yml"]'],
+    ['my-values/nova-values.yaml', '$.capabilityProviders.buster.capabilities["runtime.dispatch"].port'],
+    ['my-values/nova-values.yaml', '$.capabilityProviders.buster.capabilities["test.plan.execute"].port'],
+  ]) {
+    assert(files.find((file) => file.path === sourcePath)?.documents.some((document) => document.fields.some((field) => field.path === exactPath)),
+      `CONFIG_YAML_DOTTED_KEY_NAMED_REGRESSION: ${sourcePath}#${exactPath} is missing`);
+  }
+  const opsCilium = files.find((file) => file.path === 'gitops/platform/values/codex-ops.yaml')
+    ?.documents.flatMap((document) => document.fields)
+    .find((field) => field.path === '$.networkPolicy.cilium');
+  assert(opsCilium, 'CONFIG_GITOPS_OPS_CILIUM_MISSING: exact GitOps Cilium field is missing');
+  assert.equal(opsCilium.runtimeOwner, 'Helm release rendered from charts/ops-pod',
+    'CONFIG_GITOPS_OPS_CILIUM_OWNER: the forwarding script was mistaken for the final runtime owner');
+  assert(opsCilium.consumers.some((consumer) => consumer.path === 'charts/ops-pod/templates/network.yaml'
+    && consumer.line === 37),
+  'CONFIG_GITOPS_OPS_CILIUM_CONSUMER: the final chart template consumer is missing');
+  assert(opsCilium.precedence.includes('charts/ops-pod/values.yaml chart defaults merged by Helm'),
+    'CONFIG_GITOPS_OPS_CILIUM_PRECEDENCE: chart-default merge is missing');
+  assert.match(`${opsCilium.meaning.text} ${opsCilium.meaning.emptyBehavior ?? ''}`,
+    /networkPolicy\.enabled=true[\s\S]*parent false[\s\S]*neither policy/iu,
+  'CONFIG_GITOPS_OPS_CILIUM_PARENT_GATE: the parent-child truth table is missing');
+  const busterFields = files.find((file) => file.path === 'my-values/buster-values.yaml')
+    ?.documents.flatMap((document) => document.fields) ?? [];
+  for (const fieldPath of [
+    '$.extraContainers[0].securityContext.allowPrivilegeEscalation',
+    '$.extraContainers[0].securityContext.privileged',
+    '$.extraContainers[0].securityContext.runAsNonRoot',
+    '$.extraContainers[0].volumeMounts[2].readOnly',
+  ]) {
+    const field = busterFields.find((item) => item.path === fieldPath);
+    assert(field?.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/_registry-clients.tpl'
+      && consumer.line === 51 && consumer.helperCallProof?.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && consumer.helperCallProof?.line === 1525),
+    `CONFIG_BUSTER_REGISTRY_HELPER_CONSUMER: ${fieldPath} lacks its exact helper serialization path`);
+    assert(!field.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && consumer.line === 1527),
+    `CONFIG_BUSTER_REGISTRY_HELPER_BRANCH: ${fieldPath} incorrectly cites the non-Buster else branch`);
+  }
+  const apiLeafFields = leafFields.filter((field) => field.meaning.status.startsWith('deployment-'));
+  const forbiddenApiPhrases = /where defined|states whether|uses pinned default|controller behavior|commonly/iu;
+  for (const file of files) {
+    const sourceLines = read(file.path).split('\n');
+    for (const document of file.documents) {
+      for (const field of document.fields.filter((item) => !['object', 'array'].includes(item.type))) {
+        const sourceLine = sourceLines[field.sourceLine - 1] ?? '';
+        assert.equal(field.sourceLineSha256, sha256(sourceLine),
+          `CONFIG_YAML_LEAF_LINE_DRIFT: ${file.path}#${field.path} does not bind its exact AST leaf line`);
+        if (!field.meaning.status.startsWith('deployment-')) continue;
+        assert.equal(field.meaning.sourceLine, field.sourceLine,
+          `CONFIG_YAML_API_LEAF_LINE_DRIFT: ${file.path}#${field.path} cites a different line from its exact AST leaf`);
+        assert.equal(field.meaning.sourceLineSha256, field.sourceLineSha256,
+          `CONFIG_YAML_API_LEAF_DIGEST_DRIFT: ${file.path}#${field.path} cites a different digest from its exact AST leaf`);
+        assert(!forbiddenApiPhrases.test(`${field.meaning.text} ${field.meaning.emptyBehavior ?? ''}`),
+          `CONFIG_YAML_API_VAGUE_CONTRACT: ${file.path}#${field.path} uses forbidden non-versioned omission wording`);
+      }
+    }
+  }
+  const authoredAuthorityStatuses = new Set([
+    'embedded-payload-authority', 'external-chart-authority', 'external-chart-collection-authority', 'implementation-authority', 'local-helm-field-authority',
+  ]);
+  let authoredAuthorityEvidenceCount = 0;
+  for (const file of files) for (const document of file.documents) {
+    for (const field of document.fields.filter((item) => authoredAuthorityStatuses.has(item.meaning.status))) {
+      assert(field.sourceLine >= 1 && field.meaning.evidence.includes(`${file.path}:${field.sourceLine}`),
+        `CONFIG_YAML_AUTHORITY_LINE_MISSING: ${file.path}#${field.path} has no exact supporting source line`);
+      if (field.meaning.status === 'local-helm-field-authority') {
+        assert(field.consumers.every((consumer) => consumer.line >= 1
+          && field.meaning.evidence.includes(`${consumer.path}:${consumer.line}`)),
+        `CONFIG_YAML_LOCAL_HELM_AUTHORITY_LINE_MISSING: ${file.path}#${field.path} has no exact template authority line`);
+      }
+      const registration = field.meaning.semanticAuthorityEvidence;
+      const contractEvidence = field.meaning.semanticContractEvidence;
+      assert(registration?.line > 1 && exists(registration.path),
+        `CONFIG_YAML_SEMANTIC_AUTHORITY_LINE_MISSING: ${file.path}#${field.path}`);
+      const authorityLines = read(registration.path).split('\n');
+      assert.equal(sha256(authorityLines[registration.line - 1] ?? ''), registration.sourceLineSha256,
+        `CONFIG_YAML_SEMANTIC_AUTHORITY_LINE_DRIFT: ${file.path}#${field.path}`);
+      assert(contractEvidence?.path === registration.path && contractEvidence.line > 1
+        && contractEvidence.endLine >= contractEvidence.line,
+      `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_MISSING: ${file.path}#${field.path}`);
+      assert.equal(sha256(authorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n')), contractEvidence.sourceRangeSha256,
+        `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_DRIFT: ${file.path}#${field.path}`);
+      if (!['object', 'array'].includes(field.type)) authoredAuthorityEvidenceCount += 1;
+    }
+  }
+  assert.equal(authoredAuthorityEvidenceCount, 1223,
+    'CONFIG_YAML_SEMANTIC_AUTHORITY_COVERAGE: all 418 authored YAML and 805 local Helm authorities need exact semantic source ranges');
+  assert.equal(apiLeafFields.length, leafFields.filter((field) => field.meaning.sourceLine !== undefined).length,
+    'CONFIG_YAML_API_LEAF_LINE_DRIFT: every and only API leaves must carry an exact semantic source line');
+  const unknownLeafConsumers = leafFields.filter((field) => field.consumers.some((consumer) => consumer === 'unknown')).length;
+  const unknownLeafRuntimeOwners = leafFields.filter((field) => field.runtimeOwner === 'unknown').length;
+  const unknownLeafRequired = leafFields.filter((field) => field.required === 'conditional-or-unknown').length;
+  const semanticGapIds = files.flatMap((file) => file.documents.flatMap((document) => document.fields
+    .filter((field) => field.path !== '$'
+      && (/blocker/u.test(field.meaning?.status ?? '') || (file.sourceClass === 'helm-values' && field.meaning?.status === 'inactive-profile')))
+    .map((field) => `${file.path}#${field.path}`)));
+  if (!allowSemanticGaps && semanticGapIds.length) {
+    const details = files.flatMap((file) => file.documents.flatMap((document) => document.fields
+      .filter((field) => field.path !== '$' && /blocker/u.test(field.meaning?.status ?? ''))
+      .map((field) => `${file.path} document ${document.index}#${field.path}: ${field.meaning.qualification?.missing ?? field.closureCondition}`)));
+    throw new Error(`CONFIG_SEMANTIC_GAP: public YAML options lack qualified semantic authority:\n${details.join('\n')}\nExpected authority: exact source path + full field path with purpose, accepted values, default/empty behavior, impact, and failure symptom. Use the existing --allow-semantic-gaps maintenance mode only to inspect and publish explicit blockers; it does not pass this gate.`);
+  }
+  const apiReceiverGaps = apiResources.flatMap((resource) => resource.missing
+    .map((fieldPath) => `${resource.apiVersion}/${resource.kind} ${fieldPath}`));
+  const apiReceiverExtraPaths = apiResources.flatMap((resource) => resource.extra
+    .map((fieldPath) => `${resource.apiVersion}/${resource.kind} ${fieldPath}`));
+  assert.equal(apiReceiverExtraPaths.length, 0,
+    `API_RECEIVER_PATH_OUTSIDE_AUTHORITY: ${apiReceiverExtraPaths.join(', ')}`);
+  if (!allowSemanticGaps && apiReceiverGaps.length) {
+    throw new Error(`API_RECEIVER_CONTRACT_MISSING: public API fields lack authored receiving contracts:\n${apiReceiverGaps.join('\n')}\nThis scope includes discovered resource choices and recorded relevant omissions, including selected metadata, list items and map values. Unused upstream alternatives do not require a receiver audit. The --allow-semantic-gaps maintenance mode records these gaps; it does not pass the gate. Contract presence still requires independent Source, Reader and Quality acceptance.`);
+  }
+  assert.equal(unknownLeafRuntimeOwners, 0, 'quality gate: leaf runtime ownership must be resolved, not mass-unknown');
+  assert.equal(unknownLeafConsumers, 0, 'quality gate: leaf consumers must resolve to an authority or an explicit not-applicable binding');
+  assert.equal(unknownLeafRequired, 0, 'quality gate: leaf required state must be source-backed, external-schema, or explicitly not applicable');
+  assert.equal(leafFields.filter((field) => !field.meaning?.status || !field.meaning?.text || !field.meaning?.evidence).length, 0,
+    'quality gate: every YAML leaf needs a semantic authority or an explicit owned documentation blocker');
+  assert.equal(leafFields.filter((field) => /blocker/u.test(field.meaning.status) && (!field.meaning.blockerOwner || !field.meaning.closureCondition)).length, 0,
+    'quality gate: every unresolved YAML meaning needs an owner and concrete closure condition');
+  assert.equal(allFields.filter((field) => field.blockerOwner !== field.meaning.blockerOwner
+    || field.closureCondition !== field.meaning.closureCondition).length, 0,
+  'quality gate: top-level YAML blocker metadata must match the final field meaning');
+  assert.equal(allFields.filter((field) => !/blocker/u.test(field.meaning.status)
+    && field.meaning.status !== 'inactive-profile'
+    && (field.blockerOwner !== null || field.closureCondition !== null)).length, 0,
+  'quality gate: resolved YAML meanings must not retain stale blocker metadata');
+  return {
+    generatedBy: 'scripts/docs-configuration-inventory.mjs',
+    discovery: {
+      roots: SOURCE_ROOTS,
+      apiProductScope: productScopeLimits,
+      rule: 'all YAML below examples, gitops, my-values, and releases/values; chart root values.yaml and ci-values.yaml',
+      apiOutputProducers: [...new Set(apiResources.flatMap(resource=>resource.sourceContexts.map(context=>context.producer??'authored-yaml')))].sort(),
+      apiOutputSourcePaths: [...new Set(apiResources.flatMap(resource=>resource.sourceContexts.map(context=>context.path)))].sort(),
+    },
+    files,
+    apiResources,
+    rejectedApiOutputProfiles: discoverRejectedApiOutputProfiles(root),
+    apiMetadataReferences: productMetadataReferences(apiResources),
+    totals: {
+      files: files.length,
+      apiResourceKinds: apiResources.length,
+      apiResourceSourceContexts: apiResources.reduce((sum, resource) => sum + resource.sourceContexts.length, 0),
+      apiSchemaBoundaries: apiResources.reduce((sum, resource) => sum + resource.rows.length, 0),
+      apiReceiverContractsPresent: apiResources.reduce((sum, resource) => sum + resource.rows.length - resource.missing.length, 0),
+      apiReceiverContractsMissing: apiReceiverGaps.length,
+      documents: files.reduce((sum, file) => sum + file.documents.length, 0),
+      fields: files.reduce((sum, file) => sum + file.documents.reduce((count, document) => count + document.fields.length, 0), 0),
+      unresolvedSourceOwner: allFields.filter((field) => field.ownerComponent === 'unknown').length,
+      unknownRuntimeOwner: allFields.filter((field) => field.runtimeOwner === 'unknown').length,
+      unknownConsumer: allFields.filter((field) => field.consumers.includes('unknown')).length,
+      conditionalOrUnknownRequired: allFields.filter((field) => field.required === 'conditional-or-unknown').length,
+      leafFields: leafFields.length,
+      kubernetesApiObjectLeaves: leafFields.filter((field) => field.meaning.status.startsWith('deployment-')).length,
+      kubernetesOperationalLeaves: leafFields.filter((field) => field.meaning.status === 'deployment-operational-authority').length,
+      kubernetesStructuralLeaves: leafFields.filter((field) => field.meaning.status === 'deployment-structural-authority').length,
+      activeOperatorConfigurationLeaves: leafFields.filter((field) => !field.meaning.status.startsWith('deployment-') && field.meaning.status !== 'inactive-profile').length,
+      unknownLeafRuntimeOwner: unknownLeafRuntimeOwners,
+      unknownLeafConsumer: unknownLeafConsumers,
+      unknownLeafRequired,
+      explicitlyUnboundLeaves: leafFields.filter((field) => field.required === 'not-applicable-unused').length,
+      authoredLeafMeanings: leafFields.filter((field) => field.meaning.status === 'authored-authority').length,
+      implementationLeafMeanings: leafFields.filter((field) => field.meaning.status === 'implementation-authority').length,
+      localHelmFieldMeanings: leafFields.filter((field) => field.meaning.status === 'local-helm-field-authority').length,
+      mechanicalTemplateMeanings: leafFields.filter((field) => field.meaning.status === 'template-render-authority').length,
+      embeddedPayloadAuthorities: leafFields.filter((field) => field.meaning.status === 'embedded-payload-authority').length,
+      externalChartLeafMeanings: leafFields.filter((field) => field.meaning.status === 'external-chart-authority').length,
+      externalSchemaLeafMeanings: leafFields.filter((field) => field.meaning.status === 'external-schema-authority').length,
+      inactiveProfileLeaves: leafFields.filter((field) => field.meaning.status === 'inactive-profile').length,
+      embeddedPayloadContractsNeedingConsumerProof: leafFields.filter((field) => field.meaning.status === 'embedded-payload-meaning-blocker').length,
+      collectionFields: allFields.filter((field) => field.path !== '$' && ['object', 'array'].includes(field.type)).length,
+      emptyCollectionFields: allFields.filter((field) => field.collection?.empty).length,
+      collectionMeaningBlockers: allFields.filter((field) => field.collection && /blocker/u.test(field.meaning.status)).length,
+      localHelmCollectionMeanings: allFields.filter((field) => field.collection && field.meaning.status === 'local-helm-field-authority').length,
+      activeMeaningBlockers: allFields.filter((field) => field.path !== '$' && /blocker/u.test(field.meaning.status)).length,
+      semanticGapBaselineEntries: 0,
+      externalSchemaMeaningBlockers: leafFields.filter((field) => field.meaning.status === 'external-schema-meaning-blocker').length,
+      implementationMeaningBlockers: leafFields.filter((field) => field.meaning.status === 'implementation-only-meaning-blocker').length,
+    },
+  };
+}
+
+let registeredSchemaAuthorityCache = null;
+function registeredSchemaAuthorities() {
+  if (registeredSchemaAuthorityCache) return registeredSchemaAuthorityCache;
+  const authorities = new Map();
+  const add = (key, authority) => {
+    const current = authorities.get(key);
+    if (current) current.registrations.push(...authority.registrations);
+    else authorities.set(key, authority);
+  };
+  const platformSchema = 'skills/common/plugin-runtime/foundation/config/platform.schema.json';
+  if (exists(platformSchema)) add(platformSchema, { path: platformSchema, schema: null, registrations: [{ manifest: platformSchema, pointer: '$' }] });
+  for (const skillRoot of ['skills/common/plugins', 'skills/nova/plugins', 'skills/buster/plugins']) {
+    for (const manifest of walk(skillRoot, (absolutePath) => /\/(?:plugin|openclaw\.plugin)\.json$/.test(absolutePath))) {
+      const visit = (item, pointer = '$') => {
+        if (Array.isArray(item)) return item.forEach((child, index) => visit(child, `${pointer}[${index}]`));
+        if (!item || typeof item !== 'object') return;
+        for (const [key, child] of Object.entries(item)) {
+          const childPointer = `${pointer}.${key}`;
+          if (key === 'configSchema' && typeof child === 'string') {
+            const schemaPath = relative(path.resolve(root, path.dirname(manifest), child));
+            assert(fs.existsSync(path.join(root, schemaPath)), `${manifest}${childPointer} registers missing config schema ${schemaPath}`);
+            add(schemaPath, { path: schemaPath, schema: null, registrations: [{ manifest, pointer: childPointer }] });
+          } else if (key === 'configSchema' && child && typeof child === 'object') {
+            const authorityKey = `${manifest}#${childPointer}`;
+            add(authorityKey, { path: manifest, schema: child, registrations: [{ manifest, pointer: childPointer }] });
+          } else visit(child, childPointer);
+        }
+      };
+      visit(JSON.parse(read(manifest)));
+    }
+  }
+  registeredSchemaAuthorityCache = [...authorities.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([key, authority]) => ({ key, ...authority }));
+  return registeredSchemaAuthorityCache;
+}
+
+function schemaSources() {
+  return registeredSchemaAuthorities().map((authority) => authority.path).filter((item, index, all) => all.indexOf(item) === index);
+}
+
+function nearestPackage(sourcePath) {
+  let directory = path.dirname(path.join(root, sourcePath.split('#')[0]));
+  while (directory.startsWith(root)) {
+    const packagePath = path.join(directory, 'package.json');
+    if (fs.existsSync(packagePath)) {
+      const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+      return { name: packageJson.name ?? '<unnamed-package>', path: relative(packagePath) };
+    }
+    if (directory === root) break;
+    directory = path.dirname(directory);
+  }
+  return null;
+}
+
+function schemaRegistrationEvidence(sourcePath) {
+  const pluginRoot = sourcePath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json'
+    ? 'skills/common/plugin-runtime/foundation'
+    : sourcePath.includes('/schemas/') ? sourcePath.split('/schemas/')[0] : path.dirname(sourcePath);
+  const candidates = ['plugin.json', 'manifest.json', 'package.json']
+    .map((name) => `${pluginRoot}/${name}`)
+    .filter(exists);
+  const directConsumers = [];
+  for (const candidate of walk(pluginRoot, (absolutePath) => /\.(?:ts|mts|js|mjs|json)$/.test(absolutePath))) {
+    if (candidate === sourcePath || candidate.includes('/tests/')) continue;
+    const text = read(candidate);
+    if (/config\.schema\.json|schemas\/config|configSchema/.test(text)) directConsumers.push(candidate);
+  }
+  return { candidates, directConsumers: [...new Set(directConsumers)].sort() };
+}
+
+const SCHEMA_RUNTIME_CONTEXTS = new Map(Object.entries({
+  'skills/buster/plugins/api-flow/schemas/config.schema.json': 'one bounded HTTP and WebSocket API flow',
+  'skills/buster/plugins/axe/schemas/config.schema.json': 'one browser accessibility scan',
+  'skills/buster/plugins/container-build/schemas/config.schema.json': 'one immutable container-image build',
+  'skills/buster/plugins/coverage-budget/schemas/config.schema.json': 'one coverage-budget decision',
+  'skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json': 'one demo login and protected-route check',
+  'skills/buster/plugins/direct-command/schemas/config.schema.json': 'one allowlisted test command',
+  'skills/buster/plugins/http/schemas/config.schema.json': 'one bounded HTTP assertion',
+  'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json': 'one isolated Kubernetes deployment lease',
+  'skills/buster/plugins/lighthouse/schemas/config.schema.json': 'one Lighthouse measurement set',
+  'skills/buster/plugins/openapi/schemas/config.schema.json': 'one selected OpenAPI operation set',
+  'skills/buster/plugins/playwright/schemas/config.schema.json': 'one Playwright test invocation',
+  'skills/buster/plugins/security-providers/schemas/dependency.schema.json': 'one dependency vulnerability scan',
+  'skills/buster/plugins/security-providers/schemas/headers.schema.json': 'one HTTP security-header check',
+  'skills/buster/plugins/security-providers/schemas/image.schema.json': 'one container-image vulnerability scan',
+  'skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json': 'one static Kubernetes-policy scan',
+  'skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json': 'one live Kubernetes runtime-security scan',
+  'skills/buster/plugins/size-budget/schemas/config.schema.json': 'one repository size-budget decision',
+  'skills/buster/plugins/tailscale-exposure/schemas/config.schema.json': 'one Tailscale HTTPS exposure lease',
+  'skills/buster/plugins/visual/schemas/config.schema.json': 'one browser screenshot comparison',
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json': 'one Pipeline Core plugin-platform activation',
+  'skills/common/plugins/artifact-store/schemas/config.schema.json': 'the immutable artifact store',
+  'skills/common/plugins/command-runner/schemas/config.schema.json': 'the bounded command adapter',
+  'skills/common/plugins/git-workspace/schemas/config.schema.json': 'the bounded Git workspace adapter',
+  'skills/common/plugins/network-http/schemas/config.schema.json': 'the bounded HTTP capability adapter',
+  'skills/common/plugins/notification-observer/schemas/config.schema.json': 'the lifecycle notification observer',
+  'skills/common/plugins/openclaw-agent-events/schemas/config.schema.json': 'the OpenClaw event-ingress queue',
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json': 'the OpenClaw-to-Redis host observer',
+  'skills/common/plugins/operator-messaging/schemas/config.schema.json': 'the durable operator-message sender',
+  'skills/common/plugins/redis-transport/schemas/config.schema.json': 'the Redis Streams transport',
+  'skills/common/plugins/runtime-dispatch/schemas/config.schema.json': 'the generic remote-runtime dispatcher',
+  'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json': 'the OpenClaw runtime dispatcher',
+  'skills/common/plugins/secret-resolver/schemas/config.schema.json': 'the confidential environment-backed secret resolver',
+  'skills/common/plugins/state-store/schemas/config.schema.json': 'the append-only pipeline state store',
+  'skills/common/plugins/telemetry-store/schemas/config.schema.json': 'the bounded telemetry store',
+  'skills/common/plugins/transport-publisher/schemas/config.schema.json': 'the durable signed transport publisher',
+  'skills/common/plugins/wait-store/schemas/config.schema.json': 'the durable wait store',
+  'skills/nova/plugins/architecture-validator/schemas/config.schema.json': 'the architecture-validation agent stage',
+  'skills/nova/plugins/buster-quality-gate/schemas/config.schema.json': 'the Buster quality-gate stage',
+  'skills/nova/plugins/case-study/schemas/config.schema.json': 'the case-study agent stage',
+  'skills/nova/plugins/demo-handoff/schemas/adapter.schema.json': 'the authenticated demo-readiness handoff',
+  'skills/nova/plugins/human-approval/schemas/config.schema.json': 'the human-approval wait stage',
+  'skills/nova/plugins/implementation-agent/schemas/config.schema.json': 'the implementation-agent stage',
+  'skills/nova/plugins/lint/schemas/adapter-config.schema.json': 'the lint execution adapter',
+  'skills/nova/plugins/lint/schemas/config.schema.json': 'the lint policy stage',
+  'skills/nova/plugins/pipeline-review/schemas/config.schema.json': 'the compact pipeline-review agent stage',
+  'skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json': 'the pipeline-review evidence store',
+  'skills/nova/plugins/prism-design/schemas/config.schema.json': 'the Prism design and approval stage',
+  'skills/nova/plugins/project-summary/schemas/config.schema.json': 'the final project-summary stage',
+  'skills/nova/plugins/remote-test-gate/schemas/config.schema.json': 'the authenticated Nova-to-Buster test gate',
+  'skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json': 'the imported Buster evidence store',
+  'skills/nova/plugins/repository-adapter/schemas/config.schema.json': 'the read-only repository snapshot adapter',
+  'skills/nova/plugins/review/schemas/config.schema.json': 'the in-pipeline repository review stage',
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json': 'the independent repository-audit stage',
+}));
+
+function schemaAuthorityPath(authorityPath) {
+  return authorityPath.split('#')[0];
+}
+
+function schemaRuntimeContext(authorityPath) {
+  const sourcePath = schemaAuthorityPath(authorityPath);
+  return SCHEMA_RUNTIME_CONTEXTS.get(sourcePath) ?? null;
+}
+
+function schemaNamedSegments(fieldPath) {
+  return fieldPath.replace(/^\$\.?/u, '').split('.')
+    .map((segment) => segment.replace(/\[\]|\[[0-9]+\]|\{[^}]+\}/gu, ''))
+    .filter(Boolean);
+}
+
+function schemaAcceptedValues(field) {
+  if (field.type === 'never') return 'no value is accepted at this location';
+  if (field.presence === 'forbidden') return `field must be absent when ${field.branches.join(' > ')} matches`;
+  const rules = field.constraints.map((constraint) => {
+    if (constraint.name === 'propertyNames') return `every property name must match ${JSON.stringify(constraint.value)}`;
+    if (constraint.name === 'dependentRequired') return `when a listed property is present, its paired properties are required: ${JSON.stringify(constraint.value)}`;
+    if (constraint.name === 'contains') return `the array must contain matching items: ${JSON.stringify(constraint.value)} (minContains defaults to 1 unless declared)`;
+    return `${constraint.name}=${JSON.stringify(constraint.value)}`;
+  });
+  const branch = field.branches.length ? `; branch ${field.branches.join(' > ')}` : '';
+  const accepted = `${field.type}${rules.length ? ` with ${rules.join(', ')}` : ' with no narrower scalar constraint'}${branch}`;
+  return field.negated ? `any value except (${accepted})` : accepted;
+}
+
+const SCHEMA_RUNTIME_FALLBACK_AUTHORITIES = new Map(Object.entries({
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.requestTimeoutMs': [10000, 'skills/buster/plugins/openapi/src/provider.js', 'config.requestTimeoutMs ?? 10_000'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.maximumResponseBytes': [1048576, 'skills/buster/plugins/openapi/src/provider.js', 'config.maximumResponseBytes ?? 1_048_576'],
+  'skills/buster/plugins/security-providers/schemas/dependency.schema.json::$.timeoutMs': [300000, 'skills/buster/plugins/security-providers/src/dependency.js', 'integer(value.timeoutMs, 300_000'],
+  'skills/buster/plugins/security-providers/schemas/image.schema.json::$.timeoutMs': [300000, 'skills/buster/plugins/security-providers/src/image.js', 'integer(value.timeoutMs, 300_000'],
+  'skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json::$.timeoutMs': [120000, 'skills/buster/plugins/security-providers/src/kubernetes-policy.js', 'integer(value.timeoutMs, 120_000'],
+  'skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json::$.timeoutMs': [120000, 'skills/buster/plugins/security-providers/src/kubernetes-runtime.js', 'integer(value.timeoutMs, 120_000'],
+  'skills/buster/plugins/security-providers/schemas/headers.schema.json::$.requestTimeoutMs': [10000, 'skills/buster/plugins/security-providers/src/headers.js', 'integer(value.requestTimeoutMs, 10_000'],
+  'skills/buster/plugins/size-budget/schemas/config.schema.json::$.format': ['auto', 'skills/buster/plugins/size-budget/src/provider.js', "value.format ?? 'auto'"],
+}));
+
+// Each effective fallback is bound to an exact consumer expression. Schema
+// annotations alone are never used to establish runtime default insertion.
+for (const [plugin, source, fields] of [
+  ['artifact-store', 'adapter', { maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
+  ['state-store', 'adapter', { maxEntryBytes: [1048576, 'context.config.maxEntryBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
+  ['wait-store', 'adapter', { maxEntryBytes: [1048576, 'context.config.maxEntryBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? 256 * 1024 * 1024'], maximumRecords: [100000, 'context.config.maximumRecords ?? 100_000'] }],
+  ['telemetry-store', 'adapter', { maxRecordBytes: [1048576, 'context.config.maxRecordBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? 256 * 1024 * 1024'], maximumRecords: [100000, 'context.config.maximumRecords ?? 100_000'] }],
+  ['operator-messaging', 'config', { maximumDeliveryBytes: [268435456, 'config.maximumDeliveryBytes ?? 256 * 1024 * 1024'], maximumDeliveryRecords: [100000, 'config.maximumDeliveryRecords ?? 100_000'] }],
+  ['transport-publisher', 'adapter', { maximumDeliveryBytes: [268435456, "storeLimit(config.maximumDeliveryBytes, 256 * 1024 * 1024"], maximumDeliveryRecords: [100000, "storeLimit(config.maximumDeliveryRecords, 100_000"] }],
+  ['network-http', 'adapter', { allowedHeaders: [['accept', 'content-type', 'idempotency-key'], "config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key']"], allowedMethods: [['GET'], "config.allowedMethods as string[] | undefined ?? ['GET']"], maxRequestBytes: [1048576, "positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576)"], maxResponseBytes: [1048576, "positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576)"], timeoutMs: [30000, "positiveInteger(config.timeoutMs, 'timeoutMs', 30_000)"] }],
+  ['openclaw-agent-events', 'ingress-queue', { maxQueueEvents: [256, 'maxQueueEvents: 256'], maxQueueBytes: [1048576, 'maxQueueBytes: 1024 * 1024'], drainTimeoutMs: [5000, 'drainTimeoutMs: 5000'] }],
+]) for (const [field, [value, anchor]] of Object.entries(fields)) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(
+  `skills/common/plugins/${plugin}/schemas/config.schema.json::$.${field}`,
+  [value, `skills/common/plugins/${plugin}/src/${source}.ts`, anchor],
+);
+for (const [field, value, anchor] of [
+  ['workingDirectory', '.', "value.workingDirectory ?? '.'"],
+  ['args', [], 'value.args ?? []'],
+  ['environment', {}, 'value.environment === undefined ? {}'],
+]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/buster/plugins/direct-command/schemas/config.schema.json::$.${field}`, [value, 'skills/buster/plugins/direct-command/src/provider.js', anchor]);
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/nova/plugins/human-approval/schemas/config.schema.json::$.timeoutMinutes', [60, 'skills/nova/plugins/human-approval/src/approval.ts', 'config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES']);
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/nova/plugins/buster-quality-gate/schemas/config.schema.json::$.testAgentEnabled', [true, 'skills/nova/plugins/buster-quality-gate/src/stage.ts', 'context.contract.config.testAgentEnabled !== false']);
+for (const field of ['includeDebt', 'includeExperimental']) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/nova/plugins/lint/schemas/config.schema.json::$.${field}`, [false, 'skills/nova/plugins/lint/src/stage.ts', `context.contract.config.${field} === true`]);
+for (const [field, value] of Object.entries({ pollMs: 1000, maxPollMs: 15000, maxPolls: 1800, sessionTimeoutMs: 1800000, spawnIntervalMs: 1500, maxPromptBytes: 900000, maxInputTokens: 120000, maxOutputTokens: 6000, maxContextTokens: 128000 })) {
+  const schemaPath = 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json';
+  const sourcePath = 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts';
+  const numeral = String(value).replace(/\B(?=(\d{3})+(?!\d))/gu, '_');
+  SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`${schemaPath}::$.targets.{*}.${field}`, [value, sourcePath, `numberValue(raw.${field}, ${numeral})`]);
+}
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::$.targets.{*}.collectorMode', [false, 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts', 'raw.collectorMode === true']);
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::$.targets.{*}.tokenizerEncoding', ['o200k_base', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts', "value === undefined ? 'o200k_base'"]);
+
+function schemaRuntimeValueMatchesType(value, declaredType) {
+  return declaredType.split('|').some((type) => {
+    if (type === 'any' || type === 'unspecified') return true;
+    if (type === 'integer') return Number.isInteger(value);
+    if (type === 'number') return typeof value === 'number' && Number.isFinite(value);
+    if (type === 'string' || type === 'boolean') return typeof value === type;
+    if (type === 'array') return Array.isArray(value);
+    if (type === 'object') return value !== null && typeof value === 'object' && !Array.isArray(value);
+    return false;
+  });
+}
+
+for (const [schemaPath, fieldPath, value, sourcePath, anchor] of [
+  ['skills/common/plugins/operator-messaging/schemas/config.schema.json', '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.format', 'json', 'skills/common/plugins/operator-messaging/src/config.ts', "raw.format ?? 'json'"],
+  ['skills/common/plugins/operator-messaging/schemas/config.schema.json', '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.maxPayloadBytes', 65536, 'skills/common/plugins/operator-messaging/src/config.ts', 'value ?? 65_536'],
+  ['skills/common/plugins/runtime-dispatch/schemas/config.schema.json', '$.targets.{*}.authentication', 'hmac', 'skills/common/plugins/runtime-dispatch/src/adapter.ts', "value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'hmac'"],
+  ['skills/common/plugins/runtime-dispatch/schemas/config.schema.json', '$.targets.{*}.maxRequestBytes', 1048576, 'skills/common/plugins/runtime-dispatch/src/adapter.ts', 'boundedInteger(value.maxRequestBytes, 1_048_576'],
+  ['skills/common/plugins/runtime-dispatch/schemas/config.schema.json', '$.targets.{*}.maxResponseBytes', 1048576, 'skills/common/plugins/runtime-dispatch/src/adapter.ts', 'boundedInteger(value.maxResponseBytes, 1_048_576'],
+  ['skills/common/plugins/transport-publisher/schemas/config.schema.json', '$.targets.{*}.maxPayloadBytes', 262144, 'skills/common/plugins/transport-publisher/src/adapter.ts', 'positiveInteger(rawTarget.maxPayloadBytes, DEFAULT_MAX_PAYLOAD_BYTES)'],
+  ['skills/nova/plugins/review/schemas/config.schema.json', '$.profile', 'gate', 'skills/nova/plugins/review/src/stage.ts', "value.profile === undefined ? 'gate' : value.profile"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.profile', 'audit', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "configText(value.profile, 'audit')"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.reviewerAgentId', 'codex', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "configText(value.reviewerAgentId, 'codex')"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.reviewerThinking', 'high', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "configText(value.reviewerThinking, 'high')"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.reviewerRuntime', 'subagent', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "value.reviewerRuntime === undefined ? 'subagent' : value.reviewerRuntime"],
+]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, [value, sourcePath, anchor]);
+
+const schemaStaticSourceCache = new Map();
+function schemaStaticFallback(sourcePath, anchor) {
+  let parsed = schemaStaticSourceCache.get(sourcePath);
+  if (!parsed) {
+    const source = ts.createSourceFile(sourcePath, read(sourcePath), ts.ScriptTarget.Latest, true);
+    const bindings = new Map(); const functions = new Map(); const unstableBindings = new Set();
+    const visit = (node) => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+        if (bindings.has(node.name.text) || !(node.parent.flags & ts.NodeFlags.Const)) unstableBindings.add(node.name.text);
+        bindings.set(node.name.text, node.initializer);
+      }
+      const rootBinding = expression => {
+        while (ts.isPropertyAccessExpression(expression) || ts.isElementAccessExpression(expression)) expression = expression.expression;
+        return ts.isIdentifier(expression) ? expression.text : null;
+      };
+      if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+        const name = rootBinding(node.left); if (name) unstableBindings.add(name);
+      }
+      if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)
+        && ['push','pop','shift','unshift','splice','sort','reverse','fill','copyWithin','set','add','delete','clear'].includes(node.expression.name.text)) {
+        const name = rootBinding(node.expression.expression); if (name) unstableBindings.add(name);
+      }
+      if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ts.isIdentifier(node.operand)
+        && [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)) unstableBindings.add(node.operand.text);
+      if (ts.isFunctionDeclaration(node) && node.name) functions.set(node.name.text, node);
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+    // A literal object/array alias cannot restore mutable initializer authority.
+    for (let changed = true; changed;) {
+      changed = false;
+      for (const [name, initializer] of bindings) if (unstableBindings.has(name) && ts.isIdentifier(initializer) && !unstableBindings.has(initializer.text)) {
+        unstableBindings.add(initializer.text); changed = true;
+      }
+    }
+    parsed = { source, bindings, functions, unstableBindings }; schemaStaticSourceCache.set(sourcePath, parsed);
+  }
+  const { source, bindings, functions, unstableBindings } = parsed;
+  const unknown = Symbol('not statically proven');
+  const evaluate = (node, stack = new Set()) => {
+    if (!node) return unknown;
+    if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) return evaluate(node.expression, stack);
+    if (ts.isNumericLiteral(node)) return Number(node.text.replaceAll('_', ''));
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+    if (node.kind === ts.SyntaxKind.TrueKeyword) return true;
+    if (node.kind === ts.SyntaxKind.FalseKeyword) return false;
+    if (node.kind === ts.SyntaxKind.NullKeyword) return null;
+    if (ts.isIdentifier(node) && bindings.has(node.text) && !stack.has(node.text)) {
+      assert(!unstableBindings.has(node.text), `CONFIG_SCHEMA_DEFAULT_AUTHORITY: ${sourcePath}:${lineAt(source.text, node.getStart(source))} mutable or ambiguous fallback binding ${node.text}`);
+      return evaluate(bindings.get(node.text), new Set([...stack, node.text]));
+    }
+    if (ts.isArrayLiteralExpression(node)) {
+      const values = node.elements.map((item) => evaluate(item, stack)); return values.includes(unknown) ? unknown : values;
+    }
+    if (ts.isObjectLiteralExpression(node)) {
+      const entries = [];
+      for (const property of node.properties) {
+        if (!ts.isPropertyAssignment(property)) return unknown;
+        const value = evaluate(property.initializer, stack); if (value === unknown) return unknown;
+        entries.push([property.name.getText(source).replace(/^['"]|['"]$/gu, ''), value]);
+      }
+      return Object.fromEntries(entries);
+    }
+    if (ts.isBinaryExpression(node)) {
+      const left = evaluate(node.left, stack); const right = evaluate(node.right, stack);
+      if (typeof left !== 'number' || typeof right !== 'number') return unknown;
+      switch (node.operatorToken.kind) {
+        case ts.SyntaxKind.PlusToken: return left + right;
+        case ts.SyntaxKind.MinusToken: return left - right;
+        case ts.SyntaxKind.AsteriskToken: return left * right;
+        case ts.SyntaxKind.SlashToken: return left / right;
+      }
+    }
+    return unknown;
+  };
+  const matches = [];
+  const visit = (node) => {
+    if (node.getText(source).includes(anchor)) {
+      let value = unknown;
+      if (ts.isBinaryExpression(node)) {
+        if (node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken) value = evaluate(node.right);
+        // These exact boolean expressions deliberately select the result for
+        // undefined. Validation decides whether other authored values are legal.
+        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken && node.right.kind === ts.SyntaxKind.TrueKeyword) value = false;
+        if (node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken && node.right.kind === ts.SyntaxKind.FalseKeyword) value = true;
+      }
+      if (ts.isConditionalExpression(node) && /===\s*undefined/u.test(node.condition.getText(source))) value = evaluate(node.whenTrue);
+      else if (ts.isConditionalExpression(node) && ts.isBinaryExpression(node.condition)
+        && node.condition.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken
+        && ts.isStringLiteral(node.condition.right)) value = evaluate(node.whenFalse);
+      if (ts.isPropertyAssignment(node)) value = evaluate(node.initializer);
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+        const definition = functions.get(node.expression.text);
+        const fallbackIndex = definition?.parameters.findIndex((parameter) => parameter.name.getText(source) === 'fallback') ?? -1;
+        if (fallbackIndex < 0 && node.expression.text === 'integer' && sourcePath.includes('/security-providers/')) {
+          assert(read('skills/buster/plugins/security-providers/src/common.js').includes('const result = value ?? fallback;'), 'CONFIG_SCHEMA_DEFAULT_AUTHORITY: security integer helper changed');
+          value = evaluate(node.arguments[1]);
+        }
+        if (fallbackIndex >= 0 && definition.body && /(?:\?\?\s*fallback|===\s*undefined\s*\?\s*fallback)/u.test(definition.body.getText(source))) value = evaluate(node.arguments[fallbackIndex]);
+      }
+      if (value !== unknown) matches.push({ value, length: node.end - node.pos });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source); matches.sort((a, b) => a.length - b.length);
+  assert(matches.length > 0, `CONFIG_SCHEMA_DEFAULT_AUTHORITY: ${sourcePath} ${anchor} has no supported source-derived fallback expression`);
+  return matches[0].value;
+}
+
+function schemaRuntimeFallback(authorityPath, field) {
+  const authorityKey = `${authorityPath}::${field.path}`;
+  const authority = SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.get(authorityKey);
+  if (!authority) return null;
+  const [, sourcePath, anchor] = authority;
+  const value = schemaStaticFallback(sourcePath, anchor);
+  assert(schemaRuntimeValueMatchesType(value, field.type),
+    `${authorityKey}: runtime fallback ${JSON.stringify(value)} does not match schema type ${field.type}`);
+  const text = read(sourcePath);
+  const index = text.indexOf(anchor);
+  assert(index >= 0, `${authorityKey}: runtime fallback anchor not found in ${sourcePath}`);
+  return { value, evidence: `${sourcePath}:${lineAt(text, index)}` };
+}
+
+function schemaUsesProviderDefaults(authorityPath) {
+  const registration = registeredSchemaAuthorities().find((authority) => authority.key === authorityPath);
+  return registration?.registrations.length > 0 && registration.registrations.every((item) => item.pointer.startsWith('$.testProviders['));
+}
+
+function schemaDefaultBehavior(authorityPath, field, runtimeFallback) {
+  if (field.presence === 'forbidden') return `The field must be omitted when ${field.branches.join(' > ')} matches.`;
+  const annotation = field.default !== '<none>' ? `The schema advertises ${JSON.stringify(field.default)} as a default. ` : 'The schema declares no default. ';
+  if (field.default !== '<none>' && schemaUsesProviderDefaults(authorityPath)) {
+    return `${annotation}The test-provider resolver clones the authored values and applies schema defaults before provider invocation (skills/common/plugin-runtime/foundation/registry/configuration.ts:102; schema.ts:108). Explicit values, including permitted empty collections, remain unchanged.`;
+  }
+  if (field.required) return `${annotation}The immediate parent requires this field. Validation without default insertion rejects omission.`;
+  if (runtimeFallback) return `${annotation}When the field is absent, the linked runtime uses ${JSON.stringify(runtimeFallback.value)} (${runtimeFallback.evidence}). Stage, observer, and adapter validation does not insert defaults.`;
+  return `${annotation}Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value.`;
+}
+
+function schemaEmptyBehavior(field) {
+  if (field.negated) return 'This row describes a negated schema fragment. Its local rejection condition is inverted by the enclosing not rule; enclosing types and sibling constraints still apply to an empty string.';
+  const constraints = new Map(field.constraints.map((constraint) => [constraint.name, constraint.value]));
+  if (field.type === 'array') {
+    if (Number(constraints.get('minItems') ?? 0) > 0) return 'An empty array is invalid because minItems requires at least one item.';
+    if (constraints.has('contains') && Number(constraints.get('minContains') ?? 1) > 0) return 'An empty array is invalid because contains requires a matching item.';
+    return 'The local array constraints permit zero items. Apply every listed conditional constraint and the linked consumer rules before using an empty array.';
+  }
+  if (field.type === 'object') {
+    if (Number(constraints.get('minProperties') ?? 0) > 0 || (constraints.get('required') ?? []).length > 0) return 'An empty object is invalid because this object requires properties.';
+    return 'The local object constraints permit zero properties. Apply every listed conditional constraint and the linked consumer rules before using an empty object.';
+  }
+  if (field.type.includes('string')) {
+    if (Number(constraints.get('minLength') ?? 0) > 0) return 'An empty string is invalid.';
+    if (constraints.has('const') && constraints.get('const') !== '') return 'An empty string does not match the required constant.';
+    if (constraints.has('enum') && !constraints.get('enum').includes('')) return 'An empty string is not one of the allowed values.';
+    if (constraints.has('format')) return `An empty string does not match the required ${constraints.get('format')} format.`;
+    if (constraints.has('pattern')) {
+      try {
+        if (!new RegExp(constraints.get('pattern'), 'u').test('')) return 'An empty string does not match the required pattern.';
+      } catch {
+        return 'The schema pattern is the validation authority; its regular-expression dialect is not evaluated by this documentation generator.';
+      }
+    }
+    return 'The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.';
+  }
+  if (['any', 'unspecified'].includes(field.type)) return field.branches.length
+    ? 'This schema fragment does not declare a type. It does not reject an empty string by type; enclosing and sibling branches, resolved references, and the linked runtime validator determine whether that value is accepted.'
+    : 'This schema does not declare a type. An empty string is permitted unless a listed value or branch constraint rejects it; the linked runtime can validate it against a separate operation contract.';
+  if (field.type === 'never') return 'This false schema rejects every value, including an empty string.';
+  return 'A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well.';
+}
+
+function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.activeAdapters[]') return {
+    accepted: 'An existing adapter registration identifier. This list is the explicit initial set; required capabilities of enabled adapters, observers and stages recursively enable their selected provider adapters',
+    empty: 'An empty identifier does not name a registered adapter. Removing every item removes only this initial adapter set; required provider adapters can still become enabled.',
+    failure: 'An unknown enabled identifier or an unavailable required capability prevents registry admission. An enabled adapter can then fail its registered configuration schema or startup. Configuration for a disabled adapter is not schema-validated, but its configured identifier must still exist.',
+    evidence: ['skills/nova/core/execution/engine-runtime.ts:47', 'skills/common/plugin-runtime/foundation/registry/capabilities.ts:149', 'skills/common/plugin-runtime/foundation/registry/configuration.ts:59', 'skills/common/plugin-runtime/foundation/registry/configuration.ts:75'],
+  };
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.shutdownTimeoutMs') return {
+    accepted: 'The schema requires an integer of at least 1 and sets no maximum. Use 1 through 2,147,483,647 milliseconds for the current Node timers: a larger delay becomes 1 millisecond rather than a longer deadline. [Node 24.21.0 timer contract](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args)',
+    omission: 'The platform schema requires the field and supplies no default. The loader does not insert one.',
+    empty: 'Null, an empty string and zero fail the integer/minimum constraint. A schema-valid delay above the Node timer range is still an unsafe deadline input.',
+    failure: 'Adapter activation and readiness race their operation against a timer and can reject with ADAPTER_START_TIMEOUT. Overall shutdown races against ADAPTER_SHUTDOWN_TIMEOUT. These rejections and abort signals do not prove that the underlying adapter work stopped. Readiness teardown, rollback and late activation cleanup pass an abort signal but still await the shutdown promise; an adapter that ignores cancellation can keep that cleanup pending. Stop before declaring cleanup complete or replaying an uncertain effect.',
+    evidence: ['skills/nova/core/execution/adapters.ts:79', 'skills/nova/core/execution/adapter-support.ts:17', 'skills/nova/core/execution/adapter-support.ts:21', 'skills/nova/core/execution/adapter-startup.ts:153', 'skills/nova/core/execution/adapter-startup.ts:162'],
+  };
+  if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
+    const contract = observerInlineFieldContract(field.path.replace(/^\$\./u, ''));
+    if (contract) return { accepted: `The inline schema declares ${field.type} for plugin values. The runtime separately applies this normalization to the selected plugin or environment value: ${contract.acceptedForm}`,
+      empty: `The declared inline type still applies to plugin values. If a null or empty value reaches the resolver, it overrides earlier configuration and the environment before normalization. ${contract.emptyBehavior}`,
+      omission: `${contract.defaultBehavior} ${contract.precedence}`,
+      failure: contract.failure,
+      evidence: [...contract.evidence.map((item) => `${item.path}:${item.line}`), 'skills/common/plugins/openclaw-agent-observer/src/index.ts:197'] };
+  }
+  if (authorityPath === 'skills/buster/plugins/openapi/schemas/config.schema.json' && field.path === '$.operations[].body') return {
+    accepted: 'The configuration schema imposes no body type. At execution the selected OpenAPI operation must declare a JSON request body; its request schema validates the actual value',
+    empty: 'The configuration schema accepts an empty string. The selected OpenAPI request schema can accept or reject that string; omission is separately checked against requestBody.required.',
+    failure: 'An undeclared JSON request body, an operation request-schema violation, or a missing required body records an operation failure before the HTTP request is sent.',
+    evidence: ['skills/buster/plugins/openapi/src/provider.js:226'],
+  };
+  if (authorityPath !== 'skills/common/plugins/runtime-dispatch/schemas/config.schema.json') return null;
+  const rules = {
+    '$.targets.{*}.endpoint': ['An HTTP or HTTPS URL without username, password or fragment. HMAC targets outside loopback require HTTPS; spiffe-proxy targets must use loopback', 'Empty is rejected by the URL constructor; a configured target requires an endpoint.', 'Malformed URLs or forbidden protocol, credentials or fragments reject adapter activation. Non-loopback plaintext HMAC returns RUNTIME_CONFIG_INVALID:plaintextHmac; non-loopback SPIFFE proxy returns RUNTIME_CONFIG_INVALID:spiffeProxy.'],
+    '$.targets.{*}.tokenSecret': ['With HMAC, a secret identifier matching `^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$` is required. In spiffe-proxy mode no token secret is used', 'Empty is rejected in HMAC mode; spiffe-proxy omits the tokenSecret from its effective target.', 'A missing or invalid HMAC secret identifier rejects activation with RUNTIME_CONFIG_INVALID:tokenSecret. A later unavailable secret returns RUNTIME_SECRET_UNAVAILABLE.'],
+    '$.targets.{*}.authentication': ['spiffe-proxy selects loopback-only SPIFFE transport. The runtime otherwise selects HMAC, including when authentication is absent; the schema restricts explicitly configured values', 'An explicit empty value violates the schema enum. If that validator is bypassed, the runtime selects HMAC.', 'A target that does not satisfy its selected authentication mode rejects activation.'],
+  };
+  const rule = rules[field.path];
+  return rule ? { accepted: rule[0], empty: rule[1], failure: rule[2], evidence: ['skills/common/plugins/runtime-dispatch/src/adapter.ts:20', 'skills/common/plugins/runtime-dispatch/src/adapter.ts:65'] } : null;
+}
+
+function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  const pathWithoutRoot = fieldPath.replace(/^\$\.?/u, '');
+  const segments = schemaNamedSegments(fieldPath);
+  const leaf = segments.at(-1);
+  const parent = segments.at(-2);
+  if (!leaf) return null;
+  if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
+    && ['$.secretReferences', '$.secretReferences[]'].includes(fieldPath)) {
+    const selection = fieldPath.endsWith('[]') ? 'Names one Kubernetes Secret object to copy' : 'Lists Kubernetes Secret objects to copy';
+    return `${selection} from the approved source namespace into the deployment lease namespace created by ${context}. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections.`;
+  }
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && fieldPath === '$.shutdownTimeoutMs') return 'Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle.';
+
+  if (/^(?:artifacts|coverage|reports)\[\]\./u.test(pathWithoutRoot)) {
+    const declarationKind = pathWithoutRoot.split('[', 1)[0].replace(/s$/u, '');
+    return {
+      id: `Sets the unique evidence identifier for one declared ${declarationKind} produced by ${context}.`,
+      path: `Selects the repository-relative output path copied for one declared ${declarationKind} in ${context}.`,
+      mediaType: `Declares the exact media type accepted for one ${declarationKind} output in ${context}.`,
+      format: `Declares the parser format used for one ${declarationKind} output in ${context}.`,
+    }[leaf] ?? null;
+  }
+  if (/policy\.acceptances\[\]\./u.test(pathWithoutRoot)) {
+    return {
+      findingId: `Names the exact scanner finding suppressed by one time-bounded security-policy acceptance in ${context}.`,
+      reason: `Records the operator reason for one time-bounded security-policy acceptance in ${context}.`,
+      expiresAt: `Sets the instant after which one security-policy acceptance no longer suppresses its finding in ${context}.`,
+    }[leaf] ?? null;
+  }
+  if (/policy\.profile$/u.test(pathWithoutRoot)) return `Pins the built-in strict security policy applied to findings from ${context}.`;
+  if (/rules\.(?:add|replace)\[\]\./u.test(pathWithoutRoot)) {
+    return {
+      id: `Sets the unique security-header rule identifier used when ${context} merges rule overrides.`,
+      header: `Names the HTTP response header checked by one configured rule in ${context}.`,
+      severity: `Sets the finding severity emitted when one configured security-header rule fails in ${context}.`,
+      kind: `Selects the exact presence, equality, containment, or HSTS-age comparison for one rule in ${context}.`,
+      value: `Supplies the comparison value for a non-presence security-header rule in ${context}.`,
+    }[leaf] ?? null;
+  }
+  if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json' && fieldPath === '$.definition.target') {
+    return `Selects the named Dockerfile build stage passed to the immutable container-image build.`;
+  }
+  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.masks[].target') {
+    return `Names the selected visual target whose screenshots receive this mask selector set.`;
+  }
+  if (authorityPath === 'skills/buster/plugins/size-budget/schemas/config.schema.json' && fieldPath === '$.format') {
+    return `Selects how ${context} decodes the input build artifact: infer from media type, one file, tar, or gzip-compressed tar.`;
+  }
+  if (/policy\.simplification\.enabled$/u.test(pathWithoutRoot)) {
+    return `Controls whether the review policy emits bounded simplification recommendations in ${context}.`;
+  }
+
+  if (/operations\[\]\.headers\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one request-header value for each configured header name in ${context}.`;
+  if (/operations\[\]\.query\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one scalar query-parameter value for each configured parameter name in ${context}.`;
+  if (/operations\[\]\.pathParameters\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one scalar path-parameter value for each OpenAPI path placeholder in ${context}.`;
+  if (/definition\.buildArgs\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one Docker build-argument value for each configured argument name in ${context}.`;
+  if (authorityPath === 'skills/common/plugins/secret-resolver/schemas/config.schema.json' && /environment\.\{\*\}$/u.test(pathWithoutRoot)) return 'Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request; the mapping stores the variable name, not the secret value.';
+  if (/environment\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one declared environment name to the value given to ${context}; it does not grant ambient host-environment access.`;
+  if (/executableCatalog\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one logical executable identifier to the exact executable path that ${context} can start.`;
+  if (/stageLabels\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one stage identifier to the bounded label shown by ${context}.`;
+  if (/externalTrust\.allowedSourceDigests\.\{\*\}\[\]$/u.test(pathWithoutRoot)) return `Adds one allowed package digest under a canonical external source reference for ${context}.`;
+  if (/externalTrust\.verifiedAttestations\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one verified package digest to the attestation digest trusted by ${context}.`;
+  if (/providers\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one capability identifier to the provider registration that ${context} activates.`;
+  if (/targets\.\{(?:\*|pattern:[^}]+)\}$/u.test(pathWithoutRoot)) return `Selects the closed target variant used for each named target in ${context}.`;
+  if (/targets\.\{(?:\*|pattern:[^}]+)\}\./u.test(pathWithoutRoot)) {
+    const targetPurpose = {
+      authentication: `Selects the authentication protocol that ${context} uses for one named target.`,
+      endpoint: `Sets the exact network endpoint used for one named target in ${context}.`,
+      endpointOrigin: `Restricts a named target to the expected origin before ${context} sends or checks a delivery.`,
+      endpointSecret: `Names the confidential secret used to authenticate one named endpoint in ${context}.`,
+      format: `Selects the serialized message format accepted by one named target in ${context}.`,
+      maxPayloadBytes: `Limits the serialized message bytes sent to one named target by ${context}.`,
+      maxRequestBytes: `Limits the serialized request bytes sent to one named target by ${context}.`,
+      maxResponseBytes: `Limits response bytes retained from one named target by ${context}.`,
+      receiptEndpoint: `Sets the same-origin endpoint that ${context} queries to reconcile an uncertain delivery.`,
+      tokenSecret: `Names the confidential token or signing secret resolved for one named target in ${context}.`,
+      agentId: `Selects the OpenClaw agent identity used for one named dispatch target.`,
+      agentRole: `Sets the stable role label used in OpenClaw task identity and diagnostics for one named target.`,
+      collectorMode: `Selects the OpenClaw collect-and-wait protocol instead of the announcing spawn path for one named target.`,
+      controllerSessionKey: `Selects the OpenClaw controller session that owns spawn and task-control calls for one named target.`,
+      cwd: `Sets the fixed working directory for dispatches that do not carry an attempt-owned workspace reference.`,
+      maxContextTokens: `Limits the combined model context token estimate admitted for one named target.`,
+      maxInputTokens: `Limits prompt and input tokens admitted for one named target.`,
+      maxOutputTokens: `Limits requested model output tokens for one named target.`,
+      maxPollMs: `Caps the delay between OpenClaw status polls for one named target.`,
+      maxPolls: `Caps the number of OpenClaw status polls before the dispatch stops waiting.`,
+      maxPromptBytes: `Limits UTF-8 prompt bytes sent to one named target.`,
+      model: `Selects the model configured for one named OpenClaw dispatch target.`,
+      pollMs: `Sets the initial delay between OpenClaw status polls for one named target.`,
+      repositoryRoot: `Binds one named target to the canonical repository root allowed for workspace dispatch.`,
+      resultEndpoint: `Sets the endpoint from which ${context} imports the durable result for one named target.`,
+      resultPathPrefix: `Restricts imported local result files to this path prefix for one named target.`,
+      resultTokenSecret: `Names the confidential token used only when importing a result from one named target.`,
+      runtime: `Selects the runtime protocol implemented by one named dispatch target.`,
+      sessionTimeoutMs: `Limits the complete OpenClaw session wait for one named target.`,
+      spawnIntervalMs: `Sets the minimum delay between serialized OpenClaw spawn calls for one controller.`,
+      thinking: `Selects the configured reasoning level for one named OpenClaw target.`,
+      tokenizerEncoding: `Selects the tokenizer used to enforce token budgets for one named target.`,
+      workspaceRoot: `Binds one named target to the canonical root that may contain attempt-owned workspaces.`,
+    }[leaf];
+    if (targetPurpose) return targetPurpose;
+  }
+  if (/policy\.ranking\.categoryWeights\./u.test(pathWithoutRoot)) return `Sets the ranking weight for the ${leaf} finding category; a larger value moves otherwise comparable findings earlier.`;
+  if (/policy\.ranking\.priorityWeights\./u.test(pathWithoutRoot)) return `Sets the ranking weight for ${leaf} findings; a larger value moves otherwise comparable findings earlier.`;
+  if (/assertions\[\]\.equals$/u.test(pathWithoutRoot)) return `Defines the exact Boolean, number, or string value expected at the assertion's JSON Pointer in ${context}.`;
+  if (/assertions\[\]\.pointer$/u.test(pathWithoutRoot)) return `Selects the JSON Pointer read from the protected response for one assertion in ${context}.`;
+  if (/acceptances\[\]\./u.test(pathWithoutRoot)) {
+    return {
+      audit: `Names the exact Lighthouse audit accepted for one route in ${context}.`,
+      expiresAt: `Sets the calendar date after which one documented acceptance becomes invalid in ${context}.`,
+      reason: `Records the human reason for one time-bounded acceptance in ${context}.`,
+      route: `Limits one acceptance to the exact route where the finding is known in ${context}.`,
+      rule: `Names the exact Axe rule accepted for one selector and route in ${context}.`,
+      selector: `Limits one accessibility acceptance to the exact DOM selector where the finding is known.`,
+    }[leaf] ?? null;
+  }
+  if (/matchingFiles\[\]\./u.test(pathWithoutRoot)) {
+    return {
+      id: `Gives one matching-file budget a stable evidence identifier in ${context}.`,
+      maximumBytes: `Sets the largest allowed aggregate byte size of all files matched by one budget rule.`,
+      pattern: `Selects repository-relative files for one size-budget rule.`,
+      requireMatch: `Controls whether a size-budget rule fails when its pattern matches no file.`,
+    }[leaf] ?? null;
+  }
+  if (/administrativeDecisionIssuers\[\]\./u.test(pathWithoutRoot)) return leaf === 'type'
+    ? `Selects whether one trusted administrative-decision issuer acts as an operator or administrator in ${context}.`
+    : `Sets the exact issuer identifier accepted for one administrative decision in ${context}.`;
+  if (/image\./u.test(pathWithoutRoot)) return leaf === 'digest'
+    ? `Pins the deployment image bytes to the SHA-256 digest that must also appear in the image reference.`
+    : `Selects the immutable registry image reference deployed by ${context}.`;
+  if (/retention\./u.test(pathWithoutRoot)) return leaf === 'mode'
+    ? `Selects whether ${context} deletes or retains the leased namespace after the attempt.`
+    : `Requests the bounded lifetime, in seconds, of the namespace lease created by ${context}.`;
+  if (/testCredentials\./u.test(pathWithoutRoot)) return leaf === 'mode'
+    ? `Requests lease-bound generated demo credentials from ${context}.`
+    : `Names the Kubernetes Secret that receives generated lease-bound demo credentials.`;
+  if (/rules\./u.test(pathWithoutRoot)) return {
+    add: `Adds exact security-header rules to the selected built-in profile for ${context}.`,
+    remove: `Removes named rules from the selected built-in security-header profile for ${context}.`,
+    replace: `Replaces built-in security-header rules with explicitly supplied rules for ${context}.`,
+  }[leaf] ?? null;
+  if (/overrides\./u.test(pathWithoutRoot)) return {
+    maximumDifferencePercent: `Overrides the largest changed-pixel percentage allowed by ${context}.`,
+    pixelThreshold: `Overrides the per-pixel color-distance threshold used by ${context}.`,
+    uncertaintyMarginPercent: `Overrides the uncertainty band applied around the visual difference limit in ${context}.`,
+  }[leaf] ?? null;
+
+  const purpose = {
+    absoluteFileAllowance: `Sets the fixed number of additional changed files that the review governor permits before proportional growth rules apply.`,
+    absoluteNonTestLocAllowance: `Sets the fixed number of additional non-test lines that the review governor permits before proportional growth rules apply.`,
+    accept: `Sets the HTTP Accept header sent by ${context}.`,
+    activeAdapters: `Lists the adapter registration IDs initially enabled in ${context}. Required capabilities can recursively enable provider adapters beyond this list. A configured adapter receives no calls only if it remains outside the complete enabled set.`,
+    add: `Adds entries to the selected rule set used by ${context}.`,
+    agent: `Selects the configured runtime-agent target that ${context} dispatches.`,
+    agentRole: `Sets the stable stage-role label emitted with ${context} decisions and lifecycle events.`,
+    allowedExecutables: `Lists the canonical executable paths that ${context} is authorized to start.`,
+    allowedHeaders: `Lists caller-controlled HTTP header names that ${context} permits.`,
+    allowedMethods: `Lists the HTTP methods that ${context} permits.`,
+    allowedOrigins: `Lists the exact URL origins that ${context} can contact.`,
+    allowedPolicyRoots: `Lists canonical roots from which ${context} may load a lint policy.`,
+    allowedRepositoryRoots: `Lists canonical repository roots that ${context} may read or modify within its declared capability.`,
+    allowedWorkingRoots: `Lists canonical directory roots in which ${context} may start a command.`,
+    args: `Supplies the ordered argument vector passed directly to ${context}, without a shell.`,
+    artifactRoot: `Selects the private filesystem root where ${context} stores content-addressed blobs and metadata.`,
+    artifacts: `Lists the bounded files that ${context} publishes as typed artifacts after the command completes.`,
+    authentication: `Selects the closed authentication protocol used by ${context}.`,
+    authorEmail: `Sets the explicit Git commit-author email used by ${context}; ambient Git identity is ignored.`,
+    authorName: `Sets the explicit Git commit-author name used by ${context}; ambient Git identity is ignored.`,
+    body: `Supplies the JSON request body for one selected operation in ${context}.`,
+    budget: `Selects the named performance budget evaluated by ${context}.`,
+    buildContext: `Selects the repository-relative build context sent to ${context}.`,
+    candidateStageId: `Names the stage whose candidate artifact ${context} binds into the handoff.`,
+    caPath: `Selects the CA certificate file used to verify the TLS peer contacted by ${context}.`,
+    categories: `Lists the finding categories that can make the review decision blocking.`,
+    cgroupRoot: `Selects the delegated Linux cgroup root used to isolate external plugin processes.`,
+    cleanup: `Marks one OpenAPI operation as cleanup work that reverses state created by earlier selected operations.`,
+    combine: `Controls whether ${context} combines coverage inputs before it compares line coverage with the budget.`,
+    comparisonProfile: `Selects the named visual comparison policy used by ${context}.`,
+    configFile: `Selects the repository-relative Playwright configuration file loaded by ${context}.`,
+    controllerSessionKey: `Selects the OpenClaw controller session used by ${context}.`,
+    controlWriteMaxAttempts: `Limits attempts to write one control record from ${context} to Redis.`,
+    controlWriteRetryBaseMs: `Sets the initial retry delay after a failed Redis control-record write.`,
+    controlWriteRetryMaxMs: `Caps the retry delay after repeated Redis control-record write failures.`,
+    cookieName: `Names the session cookie that ${context} must receive after login and send to the protected route.`,
+    coverage: `Lists coverage files that ${context} imports and converts to typed coverage evidence.`,
+    deadLetterMaxLen: `Caps retained dead-letter records for the Redis stream written by ${context}.`,
+    dedupTtlMs: `Sets how long ${context} retains a Redis idempotency key before it can be accepted again.`,
+    definition: `Selects the closed Dockerfile or built-in template definition used by ${context}.`,
+    deliveryManifestEncoding: `Pins the portable JSON encoding required for delivery-manifest input to ${context}.`,
+    deliveryRoot: `Selects the private durable-record root used to reconcile sends after restart in ${context}.`,
+    deliveryStageId: `Names the stage whose delivery artifact ${context} binds into the handoff.`,
+    digest: `Pins content to the exact SHA-256 digest consumed by ${context}.`,
+    directEvidenceBonus: `Adds this score when a finding has direct source or execution evidence.`,
+    dockerfile: `Selects the Dockerfile path inside the build context used by ${context}.`,
+    drainTimeoutMs: `Limits how long ${context} waits for admitted event deliveries during status or shutdown.`,
+    effectLockTtlMs: `Sets the recovery lease duration for one external-effect lock before another owner can reconcile it.`,
+    enabled: `Enables or disables the indicated optional behavior in ${context}.`,
+    enabledRules: `Lists the simplification rules that the review policy permits.`,
+    endpoint: `Sets the exact network endpoint contacted by ${context}.`,
+    endpointName: `Selects an operator-approved typed endpoint by name instead of supplying an arbitrary URL to ${context}.`,
+    endpointOrigin: `Restricts ${context} to the expected endpoint origin.`,
+    endpointSecret: `Names the confidential endpoint credential resolved by ${context}.`,
+    equals: `Defines the exact value that one assertion in ${context} must observe.`,
+    exclude: `Lists selectors deliberately omitted from the accessibility scan performed by ${context}.`,
+    executable: `Selects the logical executable that ${context} requests from the command capability.`,
+    expectedContentType: `Requires the HTTP response from ${context} to have the specified content type.`,
+    expectedHead: `Pins repository reads to the expected Git commit; ${context} rejects a changed head.`,
+    expectedStatuses: `Lists the HTTP status codes that count as successful assertions in ${context}.`,
+    expectedText: `Requires the HTTP response body from ${context} to contain the specified text.`,
+    expiresAt: `Sets the date after which the configured acceptance in ${context} is rejected.`,
+    fileGrowthMultiplier: `Sets the proportional changed-file growth limit enforced by the review governor.`,
+    flowFile: `Selects the repository-relative API-flow document executed by ${context}.`,
+    format: `Selects the closed output or message representation used by ${context}.`,
+    gateStageId: `Names the remote test-gate stage whose verified decision ${context} imports.`,
+    gitExecutable: `Selects the canonical Git executable path started directly by ${context}.`,
+    hookPriority: `Sets the ordering priority used when OpenClaw registers ${context} hook handlers.`,
+    hooks: `Lists the exact OpenClaw hook names that ${context} subscribes to.`,
+    hookTimeoutMs: `Limits one OpenClaw hook callback before ${context} reports failure.`,
+    hostname: `Selects the declared Tailscale hostname used for ${context}.`,
+    id: `Sets the stable identifier used for the configured item in ${context}.`,
+    includeDebt: `Controls whether ${context} includes policy rules classified as technical-debt checks.`,
+    includeExperimental: `Controls whether ${context} includes experimental lint rules.`,
+    installationRoots: `Lists package-discovery roots scanned by ${context}.`,
+    insufficientFindingEvidence: `Selects the review outcome when a proposed finding lacks enough direct evidence.`,
+    introducedByDiffBonus: `Adds this ranking score when evidence proves that the current diff introduced a finding.`,
+    issuerId: `Sets the exact trusted decision issuer used by ${context}.`,
+    largestFiles: `Sets how many largest repository files ${context} includes in diagnostic evidence.`,
+    loginPath: `Sets the route where ${context} submits the demo login request.`,
+    manifestFile: `Selects the repository-relative visual-target manifest loaded by ${context}.`,
+    manifestStageId: `Names the stage whose manifest artifact ${context} verifies and imports.`,
+    maxAdvisories: `Caps advisory findings retained in the final review report.`,
+    maxArtifactBytes: `Caps the bytes accepted for one immutable artifact by ${context}.`,
+    maxBundleBytes: `Caps the complete review-bundle bytes admitted by ${context}.`,
+    maxChangedPaths: `Caps changed repository paths returned by ${context}.`,
+    maxContextBytes: `Caps total source-context bytes selected across all review expansion rounds.`,
+    maxContextFileBytes: `Caps bytes read from one source file for review context.`,
+    maxContextFiles: `Caps source files selected across all review expansion rounds.`,
+    maxDependencyDepth: `Caps dependency traversal depth used to expand review context.`,
+    maxEntryBytes: `Caps bytes accepted for one durable state or wait record by ${context}.`,
+    maxEventBytes: `Caps serialized bytes accepted for one OpenClaw hook event by ${context}.`,
+    maxExecutionMs: `Limits one external process started by ${context}.`,
+    maxExpansionFiles: `Caps files added by one review context-expansion proposal.`,
+    maxFileBytes: `Caps bytes read from one repository file by ${context}.`,
+    maximumArtifactBytes: `Caps artifact bytes imported into the pipeline-review evidence bundle.`,
+    maximumBundleBytes: `Caps the complete pipeline-review evidence bundle before it is stored.`,
+    maximumBytes: `Caps total bytes retained by the configured store in ${context}.`,
+    maximumDeliveryBytes: `Caps total durable delivery-record bytes retained by ${context}.`,
+    maximumDeliveryRecords: `Caps durable delivery records retained by ${context}.`,
+    maximumFileCount: `Sets the largest repository file count accepted by ${context}.`,
+    maximumGrowthBytes: `Sets the largest allowed byte increase relative to the size baseline in ${context}.`,
+    maximumGrowthPercent: `Sets the largest allowed percentage increase relative to the size baseline in ${context}.`,
+    maximumJournalBytes: `Caps journal bytes imported into the pipeline-review evidence bundle.`,
+    maximumRecords: `Caps durable metadata records retained by ${context}.`,
+    maximumResponseBytes: `Caps response bytes retained from one network operation in ${context}.`,
+    maximumSteps: `Caps the combined setup, main, and cleanup steps executed by ${context}.`,
+    maximumStoreBytes: `Caps aggregate durable-store bytes retained by ${context}.`,
+    maximumTotalBytes: `Sets the largest total repository byte size accepted by ${context}.`,
+    maxInitialContextBytes: `Caps source bytes selected for the initial review context.`,
+    maxInitialContextFiles: `Caps source files selected for the initial review context.`,
+    maxInstancesPerCluster: `Caps the number of related finding instances retained in one review root-cause cluster.`,
+    maxItems: `Caps items retained in the configured bounded collection in ${context}.`,
+    maxLen: `Sets the approximate Redis Stream MAXLEN trim target used by ${context}.`,
+    maxMessageChars: `Caps the characters shown in one operator notification from ${context}.`,
+    maxOutputBytes: `Caps combined stdout and stderr retained from one external process in ${context}.`,
+    maxPayloadBytes: `Caps the serialized payload bytes sent by ${context}.`,
+    maxProposals: `Caps context-expansion proposals accepted during one review.`,
+    maxQueueBytes: `Caps serialized bytes held in the volatile event queue of ${context}.`,
+    maxQueueEvents: `Caps admitted events held in the volatile queue of ${context}.`,
+    maxQueuePerStream: `Caps pending Redis writes held for one source stream by ${context}.`,
+    maxRecommendations: `Caps simplification recommendations retained in the review result.`,
+    maxRecordBytes: `Caps bytes accepted for one telemetry or durable record by ${context}.`,
+    maxRepairCycles: `Caps review-governor repair cycles before the review must stop.`,
+    maxRequestBytes: `Caps request-body bytes accepted or sent by ${context}.`,
+    maxResponseBytes: `Caps response-body bytes retained by ${context}.`,
+    maxRootCauses: `Caps independent root causes retained after review clustering.`,
+    method: `Selects the HTTP method used by ${context}.`,
+    minimumConfidence: `Sets the lowest confidence accepted for a simplification recommendation.`,
+    minimumExecutedTests: `Requires ${context} to observe at least this many executed Playwright tests.`,
+    minimumLinePercent: `Sets the lowest accepted line-coverage percentage in ${context}.`,
+    mode: `Selects the closed operating mode for the configured behavior in ${context}.`,
+    modelLabel: `Sets the bounded display label used for the model in notifications from ${context}.`,
+    namespacePrefix: `Requests the allowlisted namespace prefix used by ${context} when it creates a lease.`,
+    nonTestLocGrowthMultiplier: `Sets the proportional non-test line-growth limit enforced by the review governor.`,
+    operationId: `Selects the exact OpenAPI operation executed by ${context}.`,
+    operations: `Lists exact OpenAPI operations executed by ${context}.`,
+    operatorTarget: `Selects the configured operator-message target that receives the demo handoff.`,
+    orchestratorIssuerId: `Sets the issuer identity required on orchestrator decisions accepted by ${context}.`,
+    outputName: `Sets the stable logical name of the image output produced by ${context}.`,
+    outsideScope: `Selects how the review treats a proposed finding outside the declared review scope.`,
+    passwordKey: `Names the key in the confidential credential object that supplies the demo password.`,
+    passwordSecret: `Names the confidential Redis password that ${context} resolves through the secret capability.`,
+    path: `Sets the URL path used by ${context}.`,
+    paths: `Lists the URL paths checked by ${context}.`,
+    pattern: `Selects repository paths matched by the configured rule in ${context}.`,
+    pipelineLabel: `Sets the bounded display label used for the pipeline in notifications from ${context}.`,
+    platform: `Selects the target operating-system and architecture pair for ${context}.`,
+    pointer: `Selects the JSON Pointer evaluated by one response assertion in ${context}.`,
+    policy: `Supplies the closed policy object that ${context} enforces.`,
+    policyPath: `Selects the policy file loaded by ${context}.`,
+    policyProject: `Selects the project entry from the loaded lint policy.`,
+    priorities: `Lists finding priorities that can make the review decision blocking.`,
+    profile: `Selects the named built-in behavior profile used by ${context}.`,
+    profileFile: `Selects the repository-relative browser profile file loaded by ${context}.`,
+    profiles: `Lists browser profiles executed by ${context}.`,
+    projectDirectory: `Selects the repository-relative project directory inspected by ${context}.`,
+    protectedPath: `Sets the route that must reject an anonymous request and accept the authenticated demo session.`,
+    protocol: `Pins the closed wire or document protocol interpreted by ${context}.`,
+    purpose: `Selects the Lighthouse measurement purpose executed by ${context}.`,
+    readinessTimeoutSeconds: `Limits how long ${context} waits for deployment or endpoint readiness.`,
+    readyStageId: `Names the readiness stage whose artifact ${context} binds into the handoff.`,
+    receiptEndpoint: `Sets the same-origin endpoint that ${context} queries to reconcile an uncertain delivery without sending it again.`,
+    reason: `Records the human reason for the configured exception in ${context}.`,
+    reference: `Selects the immutable image reference consumed by ${context}.`,
+    registryVersion: `Pins the simplification-rule registry version used by the review policy.`,
+    remove: `Removes entries from the selected rule set used by ${context}.`,
+    replace: `Replaces entries in the selected rule set used by ${context}.`,
+    reportArtifactEncoding: `Pins the portable JSON encoding required for the stored review report.`,
+    reports: `Lists command-produced report files that ${context} parses as test evidence.`,
+    resultMode: `Selects whether ${context} requires JUnit evidence or uses the command exit code as its result.`,
+    redisCommandTimeoutMs: `Limits one Redis command issued by ${context}.`,
+    redisHost: `Sets the Redis host contacted by ${context}.`,
+    redisNetworkIsolation: `Selects the network-isolation binding passed to the Redis connection used by ${context}.`,
+    redisPassword: `Supplies the Redis password used by ${context}; environment precedence is resolved before connection.`,
+    redisPort: `Sets the Redis TCP port contacted by ${context}.`,
+    redisTls: `Controls whether ${context} protects the Redis connection with TLS.`,
+    redisUsername: `Supplies the Redis ACL username used by ${context}.`,
+    repositoryRoot: `Binds ${context} to the canonical repository root it may inspect.`,
+    requestTimeoutMs: `Limits one outbound network request made by ${context}.`,
+    requireDirectEvidence: `Controls whether every blocking review finding must cite direct evidence.`,
+    requiredTests: `Lists exact Playwright test titles that ${context} must observe as executed.`,
+    requireIntroducedByDiff: `Controls whether a blocking finding must be proved as introduced by the current diff.`,
+    requireMatch: `Controls whether an unmatched repository-file rule fails ${context}.`,
+    retainedPriorities: `Lists priorities retained as follow-up items when they do not block the review.`,
+    retainPreExisting: `Controls whether the review report retains findings proved to predate the current diff.`,
+    retentionMode: `Selects whether ${context} releases exposure immediately or transfers ownership to readiness handoff.`,
+    reviewerAgentId: `Selects the reviewer agent identity used by ${context}.`,
+    reviewerModel: `Selects the reviewer model used by ${context}.`,
+    reviewerRuntime: `Selects the supported reviewer execution runtime used by ${context}.`,
+    reviewerThinking: `Selects the configured reviewer reasoning level used by ${context}.`,
+    reviewSemanticEncoding: `Pins the portable encoding of review semantic evidence consumed by ${context}.`,
+    root: `Selects the private filesystem root used by ${context} for durable records.`,
+    route: `Limits the configured check or exception to one exact URL route in ${context}.`,
+    routes: `Lists URL routes checked by ${context}.`,
+    rule: `Names the exact rule affected by the configured exception in ${context}.`,
+    runs: `Sets the number of independent measurement runs performed by ${context}.`,
+    schemaVersion: `Pins the exact configuration contract version accepted by ${context}.`,
+    seconds: `Sets the requested lifetime in seconds for the configured resource in ${context}.`,
+    secretName: `Names the Kubernetes Secret used by ${context}.`,
+    selector: `Limits the configured accessibility exception to one exact DOM selector.`,
+    selectors: `Lists DOM selectors masked for one visual-comparison target in ${context}.`,
+    semanticVerifier: `Selects the verifier result required before a proposed review finding can be accepted.`,
+    serviceName: `Sets the DNS service name created inside the namespace lease by ${context}.`,
+    servicePort: `Sets the service port published in the typed endpoint returned by ${context}.`,
+    serviceTargetPort: `Sets the workload target port when it differs from the published service port.`,
+    settingsFile: `Selects the repository-relative Lighthouse settings file loaded by ${context}.`,
+    shutdownTimeoutMs: `Sets the shutdown timeout passed to ${context}; its receiving cancellation contract determines whether work actually stops.`,
+    signingSecret: `Names the confidential HMAC key used by ${context} to sign one target's request.`,
+    sourceAuthority: `Sets the exact source-attestation authority accepted by ${context}.`,
+    sourcePrivateKeySecret: `Names the confidential private key used to sign source attestations sent by ${context}.`,
+    specFile: `Selects the repository-relative OpenAPI document loaded by ${context}.`,
+    stateRoot: `Selects the private durable state root used by ${context}.`,
+    storageRoot: `Selects the private Pipeline Core storage root used by ${context}.`,
+    streamMaxLen: `Sets the approximate Redis Stream retention target used by ${context}.`,
+    streamPrefix: `Sets the namespace prefix for Redis Stream and idempotency keys written by ${context}.`,
+    suppressEventTypes: `Lists lifecycle event types that ${context} deliberately does not publish.`,
+    tags: `Lists tags used to select checks or operations in ${context}.`,
+    target: `Selects the named configured destination used by ${context}.`,
+    targets: `Lists the exact named targets selected for ${context}.`,
+    template: `Selects the built-in build template used by ${context}.`,
+    terminationGraceMs: `Sets the time between SIGTERM and SIGKILL when ${context} stops an external process.`,
+    testAgentEnabled: `Controls whether ${context} dispatches the optional agent evaluator after native Buster evidence passes.`,
+    timeoutMinutes: `Limits how long ${context} waits for an external approval decision.`,
+    timeoutMs: `Limits how long ${context} can run before it is stopped or reported as timed out.`,
+    tokenPath: `Selects the private bearer-token file read by ${context}.`,
+    tokenSecret: `Names the confidential bearer token resolved by ${context}.`,
+    trustedBuiltinRoots: `Lists package roots treated as built-in trust anchors by ${context}.`,
+    type: `Selects the closed configured variant interpreted by ${context}.`,
+    unknownScope: `Selects how the review treats a proposed finding whose diff scope cannot be proved.`,
+    unverifiedRequirement: `Selects the review outcome when a stated requirement cannot be verified.`,
+    url: `Sets the absolute target URL contacted by ${context} when no typed endpoint input supplies it.`,
+    usernameKey: `Names the key in the confidential credential object that supplies the demo username.`,
+    usernamePointer: `Selects the JSON Pointer that must equal the authenticated username in ${context}.`,
+    workers: `Sets the number of Playwright workers used by ${context}.`,
+    workingDirectory: `Selects the allowlisted repository-relative directory in which ${context} starts the command.`,
+    workspaceRoot: `Selects the canonical root below which ${context} may create isolated Git worktrees.`,
+  }[leaf];
+  return purpose ?? null;
+}
+
+function schemaImplementationCandidates(authorityPath) {
+  const sourcePath = schemaAuthorityPath(authorityPath);
+  const pluginRoot = sourcePath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json'
+    ? 'skills/common/plugin-runtime/foundation'
+    : sourcePath.includes('/schemas/') ? sourcePath.split('/schemas/')[0] : path.dirname(sourcePath);
+  let candidates = walk(pluginRoot, (absolutePath) => /\.(?:ts|mts|js|mjs)$/u.test(absolutePath));
+  if (sourcePath.includes('/security-providers/schemas/')) {
+    const provider = path.basename(sourcePath, '.schema.json');
+    const exact = `${pluginRoot}/src/${provider}.js`;
+    candidates = [exact, `${pluginRoot}/src/common.js`, ...candidates].filter((item, index, all) => exists(item) && all.indexOf(item) === index);
+  }
+  if (sourcePath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json') {
+    candidates.push(...walk('skills/common/plugin-runtime/foundation/registry', (absolutePath) => /\.ts$/u.test(absolutePath)));
+    candidates.push(...walk('skills/common/plugin-runtime/foundation/packages', (absolutePath) => /\.ts$/u.test(absolutePath)));
+    candidates.push(...walk('skills/common/plugin-runtime/foundation/isolation', (absolutePath) => /\.ts$/u.test(absolutePath)));
+  }
+  candidates.push('skills/nova/core/execution/run-decisions.ts');
+  return [...new Set(candidates)].filter(exists).sort();
+}
+
+const SCHEMA_IMPLEMENTATION_AUTHORITIES = new Map(Object.entries({
+  'skills/buster/plugins/axe/schemas/config.schema.json::$.acceptances[].expiresAt': ['skills/buster/plugins/axe/src/provider.js', 'String(acceptance.expiresAt)'],
+  'skills/buster/plugins/axe/schemas/config.schema.json::$.acceptances[].reason': ['skills/buster/plugins/axe/src/provider.js', 'acceptedFinding.reason'],
+  'skills/buster/plugins/container-build/schemas/config.schema.json::$.definition.buildArgs.{*}': ['skills/buster/plugins/container-build/src/provider.js', 'const entries = Object.entries(buildArgs)'],
+  'skills/buster/plugins/container-build/schemas/config.schema.json::$.definition.dockerfile': ['skills/buster/plugins/container-build/src/provider.js', "relative(definition.dockerfile, 'definition.dockerfile')"],
+  'skills/buster/plugins/container-build/schemas/config.schema.json::$.definition.target': ['skills/buster/plugins/container-build/src/provider.js', 'target = definition.target'],
+  'skills/buster/plugins/container-build/schemas/config.schema.json::$.definition.type': ['skills/buster/plugins/container-build/src/provider.js', "definition.type === 'dockerfile'"],
+  'skills/buster/plugins/direct-command/schemas/config.schema.json::$.resultMode': ['skills/buster/plugins/direct-command/src/provider.js', 'const resultMode = value.resultMode'],
+  'skills/buster/plugins/lighthouse/schemas/config.schema.json::$.acceptances[].reason': ['skills/buster/plugins/lighthouse/src/provider.js', 'acceptance.reason'],
+  'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json::$.testCredentials.mode': ['skills/buster/plugins/kubernetes-fixture/src/provider.js', "testCredentials.mode !== 'generate'"],
+  'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json::$.testCredentials.secretName': ['skills/buster/plugins/kubernetes-fixture/src/provider.js', 'testCredentials.secretName'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.operations[].cleanup': ['skills/buster/plugins/openapi/src/provider.js', '!selected.cleanup'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.operations[].expectedStatuses[]': ['skills/buster/plugins/openapi/src/provider.js', 'selected.expectedStatuses.includes(response.status)'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.operations[].headers.{*}': ['skills/buster/plugins/openapi/src/provider.js', '...(selected.headers ?? {})'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.operations[].pathParameters.{*}': ['skills/buster/plugins/openapi/src/provider.js', 'Object.entries(selected.pathParameters ?? {})'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.operations[].query.{*}': ['skills/buster/plugins/openapi/src/provider.js', 'Object.entries(selected.query ?? {})'],
+  'skills/buster/plugins/security-providers/schemas/image.schema.json::$.timeoutMs': ['skills/buster/plugins/security-providers/src/image.js', 'timeoutMs: config.timeoutMs'],
+  'skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json::$.timeoutMs': ['skills/buster/plugins/security-providers/src/kubernetes-policy.js', 'timeoutMs: config.timeoutMs'],
+  'skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json::$.timeoutMs': ['skills/buster/plugins/security-providers/src/kubernetes-runtime.js', 'timeoutMs: config.timeoutMs'],
+  'skills/buster/plugins/security-providers/schemas/headers.schema.json::$.profile': ['skills/buster/plugins/security-providers/src/headers.js', "value.profile === 'web-https-v1'"],
+  'skills/buster/plugins/playwright/schemas/config.schema.json::$.timeoutMs': ['skills/buster/plugins/playwright/src/provider.js', 'Math.min(config.timeoutMs ?? invocation.timeoutMs'],
+  'skills/buster/plugins/security-providers/schemas/headers.schema.json::$.rules.remove[]': ['skills/buster/plugins/security-providers/src/headers.js', 'base.filter((item) => !remove.includes(item.id))'],
+  'skills/buster/plugins/size-budget/schemas/config.schema.json::$.matchingFiles[].id': ['skills/buster/plugins/size-budget/src/provider.js', "typeof rule.id !== 'string'"],
+  'skills/buster/plugins/size-budget/schemas/config.schema.json::$.matchingFiles[].maximumBytes': ['skills/buster/plugins/size-budget/src/provider.js', 'safeInteger(rule.maximumBytes'],
+  'skills/buster/plugins/size-budget/schemas/config.schema.json::$.matchingFiles[].pattern': ['skills/buster/plugins/size-budget/src/provider.js', "typeof rule.pattern !== 'string'"],
+  'skills/buster/plugins/size-budget/schemas/config.schema.json::$.matchingFiles[].requireMatch': ['skills/buster/plugins/size-budget/src/provider.js', 'requireMatch: rule.requireMatch !== false'],
+  'skills/buster/plugins/visual/schemas/config.schema.json::$.masks[].selectors[]': ['skills/buster/plugins/visual/src/provider.js', 'masks.set(value.target, value.selectors)'],
+  'skills/buster/plugins/visual/schemas/config.schema.json::$.targets[]': ['skills/buster/plugins/visual/src/provider.js', 'const selected = config.targets.map'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.activeAdapters[]': ['skills/nova/core/execution/engine-runtime.ts', 'platform.activeAdapters.forEach'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.administrativeDecisionIssuers[].id': ['skills/nova/core/execution/engine-admin.ts', 'issuer.id === principal.id'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.administrativeDecisionIssuers[].type': ['skills/nova/core/execution/engine-admin.ts', 'issuer.type === principal.type'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.effectLockTtlMs': ['skills/nova/core/execution/engine-runtime.ts', 'platform.effectLockTtlMs ?? 300_000'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.externalTrust.allowedSourceDigests.{*}[]': ['skills/common/plugin-runtime/foundation/registry/discovery.ts', 'trustPolicy.allowedSourceDigests.get(reference)'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.externalTrust.verifiedAttestations.{*}': ['skills/common/plugin-runtime/foundation/registry/discovery.ts', 'trustPolicy.verifiedAttestations.get(digest)'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.orchestratorIssuerId': ['skills/nova/core/execution/engine-run.ts', 'context.platform.orchestratorIssuerId'],
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json::$.shutdownTimeoutMs': ['skills/nova/core/execution/engine-runtime.ts', 'shutdownTimeoutMs: platform.shutdownTimeoutMs'],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisCommandTimeoutMs': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisCommandTimeoutMs'"],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisHost': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisHost'"],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisNetworkIsolation': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisNetworkIsolation'"],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisPassword': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisPassword'"],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisPort': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisPort'"],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisTls': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisTls'"],
+  'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema::$.redisUsername': ['skills/common/plugins/openclaw-agent-observer/src/config.ts', "configuredValue(config, env, 'redisUsername'"],
+  'skills/common/plugins/operator-messaging/schemas/config.schema.json::$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint': ['skills/common/plugins/operator-messaging/src/config.ts', 'parseUrl(raw.receiptEndpoint'],
+  'skills/common/plugins/network-http/schemas/config.schema.json::$.maxRequestBytes': ['skills/common/plugins/network-http/src/adapter.ts', "positiveInteger(config.maxRequestBytes, 'maxRequestBytes'"],
+  'skills/common/plugins/network-http/schemas/config.schema.json::$.maxResponseBytes': ['skills/common/plugins/network-http/src/adapter.ts', "positiveInteger(config.maxResponseBytes, 'maxResponseBytes'"],
+  'skills/common/plugins/network-http/schemas/config.schema.json::$.timeoutMs': ['skills/common/plugins/network-http/src/adapter.ts', "positiveInteger(config.timeoutMs, 'timeoutMs'"],
+  'skills/common/plugins/notification-observer/schemas/config.schema.json::$.modelLabel': ['skills/common/plugins/notification-observer/src/observer.ts', "configuredText(context.contract.config, 'modelLabel'"],
+  'skills/common/plugins/notification-observer/schemas/config.schema.json::$.pipelineLabel': ['skills/common/plugins/notification-observer/src/observer.ts', "configuredText(context.contract.config, 'pipelineLabel'"],
+  'skills/common/plugins/notification-observer/schemas/config.schema.json::$.stageLabels.{*}': ['skills/common/plugins/notification-observer/src/observer.ts', 'const stageLabels = context.contract.config.stageLabels'],
+  'skills/common/plugins/redis-transport/schemas/config.schema.json::$.passwordSecret': ['skills/common/plugins/redis-transport/src/adapter.ts', 'canonicalId: options.passwordSecret'],
+  'skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryBytes': ['skills/common/plugins/transport-publisher/src/adapter.ts', 'storeLimit(config.maximumDeliveryBytes'],
+  'skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryRecords': ['skills/common/plugins/transport-publisher/src/adapter.ts', 'storeLimit(config.maximumDeliveryRecords'],
+  'skills/nova/plugins/lint/schemas/adapter-config.schema.json::$.allowedPolicyRoots[]': ['skills/nova/plugins/lint/src/adapter.ts', "configuredRoots(context.config, 'allowedPolicyRoots')"],
+  'skills/nova/plugins/lint/schemas/adapter-config.schema.json::$.allowedRepositoryRoots[]': ['skills/nova/plugins/lint/src/adapter.ts', "configuredRoots(context.config, 'allowedRepositoryRoots')"],
+  'skills/nova/plugins/remote-test-gate/schemas/config.schema.json::$.sourcePrivateKeySecret': ['skills/nova/plugins/remote-test-gate/src/adapter.ts', "string(context.config.sourcePrivateKeySecret, 'REMOTE_TEST_GATE_CONFIG_INVALID')"],
+  'skills/nova/plugins/review/schemas/config.schema.json::$.policy.limits.maxInstancesPerCluster': ['skills/nova/plugins/review/src/review-policy-parser.ts', "integer(limits.maxInstancesPerCluster, 'limits.maxInstancesPerCluster'"],
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json::$.policy.limits.maxInstancesPerCluster': ['skills/nova/plugins/review/src/review-policy-parser.ts', "integer(limits.maxInstancesPerCluster, 'limits.maxInstancesPerCluster'"],
+  'skills/nova/plugins/review/schemas/config.schema.json::$.policy': ['skills/nova/plugins/review/src/stage.ts', 'settingsFile: stageConfig.policy'],
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json::$.policy': ['skills/nova/plugins/review/src/repository-audit-stage.ts', 'settingsFile: config.policy'],
+  'skills/nova/plugins/review/schemas/config.schema.json::$.profile': ['skills/nova/plugins/review/src/stage.ts', 'getReviewPolicyProfile(stageConfig.profile)'],
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json::$.profile': ['skills/nova/plugins/review/src/repository-audit-stage.ts', 'getReviewPolicyProfile(config.profile)'],
+  'skills/nova/plugins/review/schemas/config.schema.json::$.policy.schemaVersion': ['skills/nova/plugins/review/src/review-policy-parser.ts', 'schemaVersion: REVIEW_POLICY_SCHEMA_VERSION'],
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json::$.policy.schemaVersion': ['skills/nova/plugins/review/src/review-policy-parser.ts', 'schemaVersion: REVIEW_POLICY_SCHEMA_VERSION'],
+  'skills/nova/plugins/review/schemas/config.schema.json::$.policy.governor.maxRepairCycles': ['skills/nova/plugins/review/src/review-policy-parser.ts', "integer(value.maxRepairCycles, 'governor.maxRepairCycles'"],
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json::$.policy.governor.maxRepairCycles': ['skills/nova/plugins/review/src/review-policy-parser.ts', "integer(value.maxRepairCycles, 'governor.maxRepairCycles'"],
+}));
+
+for (const collection of ['artifacts', 'coverage', 'reports']) {
+  for (const [field, anchor] of Object.entries({
+    id: 'const id = item.id',
+    path: 'relativePath(item.path',
+    mediaType: 'item.mediaType',
+    format: 'item.format',
+  })) {
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(
+      `skills/buster/plugins/direct-command/schemas/config.schema.json::$.${collection}[].${field}`,
+      ['skills/buster/plugins/direct-command/src/provider.js', anchor],
+    );
+  }
+}
+
+for (const provider of ['dependency', 'headers', 'image', 'kubernetes-policy', 'kubernetes-runtime']) {
+  const schemaPath = `skills/buster/plugins/security-providers/schemas/${provider}.schema.json`;
+  for (const [field, anchor] of Object.entries({
+    findingId: 'item.findingId',
+    reason: 'item.reason.trim()',
+    expiresAt: 'new Date(item.expiresAt).toISOString()',
+    profile: 'item.profile !== POLICY.profile',
+  })) {
+    const fieldPath = field === 'profile' ? '$.policy.profile' : `$.policy.acceptances[].${field}`;
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::${fieldPath}`,
+      ['skills/buster/plugins/security-providers/src/common.js', anchor]);
+  }
+}
+
+for (const operation of ['add', 'replace']) {
+  for (const [field, anchor] of Object.entries({
+    id: 'item.id',
+    header: 'item.header',
+    severity: 'item.severity',
+    kind: 'item.kind',
+    value: 'item.value',
+  })) {
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(
+      `skills/buster/plugins/security-providers/schemas/headers.schema.json::$.rules.${operation}[].${field}`,
+      ['skills/buster/plugins/security-providers/src/headers.js', anchor],
+    );
+  }
+}
+
+for (const schemaPath of [
+  'skills/nova/plugins/review/schemas/config.schema.json',
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json',
+]) {
+  SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::$.policy.simplification.enabled`,
+    ['skills/nova/plugins/review/src/review-policy-parser.ts', "boolean(value.enabled, 'simplification.enabled'"]);
+}
+
+for (const schemaPath of [
+  'skills/nova/plugins/review/schemas/config.schema.json',
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json',
+]) {
+  for (const category of ['architecture', 'contract', 'correctness', 'security', 'simplification']) {
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::$.policy.ranking.categoryWeights.${category}`,
+      ['skills/nova/plugins/review/src/review-cluster-ranking.ts', 'ranking.categoryWeights[finding.category]']);
+  }
+  for (const priority of ['P0', 'P1', 'P2', 'P3']) {
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::$.policy.ranking.priorityWeights.${priority}`,
+      ['skills/nova/plugins/review/src/review-cluster-ranking.ts', 'ranking.priorityWeights[finding.priority]']);
+  }
+}
+
+for (const [field, anchor] of Object.entries({
+  endpoint: 'endpointValue(raw.endpoint)', tokenSecret: 'text(raw.tokenSecret)', runtime: "runtime: raw.runtime",
+  agentId: 'idValue(raw.agentId', agentRole: 'idValue(raw.agentRole', model: 'text(raw.model)', thinking: 'text(raw.thinking',
+  controllerSessionKey: 'controllerSessionKey(raw.controllerSessionKey', cwd: 'absolute(raw.cwd)', repositoryRoot: 'absolute(raw.repositoryRoot)',
+  workspaceRoot: 'raw.workspaceRoot === undefined', resultPathPrefix: 'prefixValue(raw.resultPathPrefix)', resultEndpoint: 'optionalUrl(raw.resultEndpoint)', resultTokenSecret: 'optionalText(raw.resultTokenSecret)',
+  collectorMode: 'raw.collectorMode === true', tokenizerEncoding: 'encodingValue(raw.tokenizerEncoding)',
+})) SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::$.targets.{*}.${field}`, ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts', anchor]);
+for (const [key, [value, sourcePath, anchor]] of SCHEMA_RUNTIME_FALLBACK_AUTHORITIES) {
+  if (key.startsWith('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::')) SCHEMA_IMPLEMENTATION_AUTHORITIES.set(key, [sourcePath, anchor]);
+}
+
+function explicitSchemaImplementationEvidence(authorityPath, fieldPath) {
+  const authority = SCHEMA_IMPLEMENTATION_AUTHORITIES.get(`${authorityPath}::${fieldPath}`);
+  if (!authority) return null;
+  const [sourcePath, anchor] = authority;
+  assert(anchor.length > 0, `${authorityPath}::${fieldPath}: implementation authority anchor must not be empty`);
+  assert(exists(sourcePath), `${authorityPath}::${fieldPath}: missing implementation authority ${sourcePath}`);
+  const text = read(sourcePath);
+  const index = text.indexOf(anchor);
+  assert(index >= 0, `${authorityPath}::${fieldPath}: implementation authority anchor not found in ${sourcePath}`);
+  return { path: sourcePath, line: lineAt(text, index), score: Number.MAX_SAFE_INTEGER };
+}
+
+function schemaImplementationEvidence(authorityPath, fieldPath) {
+  const explicit = explicitSchemaImplementationEvidence(authorityPath, fieldPath);
+  if (explicit) return explicit;
+  const segments = schemaNamedSegments(fieldPath);
+  const anchor = segments.at(-1);
+  if (!anchor) return null;
+  const escapedAnchor = anchor.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  const anchorPattern = new RegExp(`(?<![A-Za-z0-9_])${escapedAnchor}(?![A-Za-z0-9_])`, 'u');
+  const scored = [];
+  for (const candidate of schemaImplementationCandidates(authorityPath)) {
+    const text = read(candidate);
+    const lines = text.split('\n');
+    for (let index = 0; index < lines.length; index += 1) {
+      if (!anchorPattern.test(lines[index])) continue;
+      const sourceLine = lines[index];
+      if (/^\s*(?:readonly\s+)?[A-Za-z_$][A-Za-z0-9_$]*\??\s*:\s*(?:readonly\s+)?(?:string|number|boolean|unknown|Record|Readonly|Map|Set|[A-Z][A-Za-z0-9_$]*)(?:\b|<|\[)/u.test(sourceLine)) continue;
+      if (/^\s*(?:import|export\s+type|interface|type)\b/u.test(sourceLine)) continue;
+      const matchedSegments = segments.filter((segment) => {
+        const alternatives = [segment, segment.endsWith('s') && segment.length > 3 ? segment.slice(0, -1) : null].filter(Boolean);
+        return alternatives.some((item) => new RegExp(`(?<![A-Za-z0-9_])${item.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}(?![A-Za-z0-9_])`, 'u').test(sourceLine));
+      });
+      const accessSignal = /(?:context\.(?:contract\.)?config|(?:config|configuration|settings|raw|values|options|policy|target|operation|item|value|input|limits|ranking|governor|blocking)\s*(?:\.|\[)|Object\.(?:entries|keys|values)|(?:parse|validate|integer|text|bounded|resolve|path\.resolve|selection|selections|boolean|weights|configuredRoots|configuredValue)\s*\(|\?\?|throw new Error|payload\s*[:=])/u.test(sourceLine);
+      const minimumSegments = Math.min(segments.length, 2);
+      if (matchedSegments.length < minimumSegments || !accessSignal) continue;
+      scored.push({ path: candidate, line: index + 1, score: matchedSegments.length * 10 + 3 });
+    }
+  }
+  scored.sort((a, b) => b.score - a.score || a.path.localeCompare(b.path) || a.line - b.line);
+  return scored[0] ?? null;
+}
+
+// Collections are public configuration too. Each entry binds the whole map or
+// selection list to the implementation that consumes it, including empty input.
+const SCHEMA_COLLECTION_AUTHORITIES = new Map();
+function collectionAuthority(schemaPath, paths, sourcePath, anchor, purpose, omission = null, empty = null) {
+  for (const fieldPath of paths) {
+    SCHEMA_COLLECTION_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, { sourcePath, anchor, purpose, omission, empty });
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, [sourcePath, anchor]);
+  }
+}
+const busterSchema = (plugin) => `skills/buster/plugins/${plugin}/schemas/config.schema.json`;
+const busterSource = (plugin) => `skills/buster/plugins/${plugin}/src/provider.js`;
+collectionAuthority(busterSchema('direct-command'), ['$.args'], busterSource('direct-command'), 'const args = value.args ?? []',
+  'Supplies the ordered arguments passed to the selected executable.', 'The provider uses an empty argument list when omitted.', 'An empty array passes no arguments.');
+collectionAuthority(busterSchema('direct-command'), ['$.environment'], busterSource('direct-command'), 'environment: { ...environment, CI:',
+  'Supplies permitted command environment entries. The provider sets CI to the string true after these entries.', 'Omission uses an empty authored map, then inserts CI=true.', 'An empty object still produces CI=true. Protected environment names, invalid names, NUL values, or more than 64 entries are rejected. The shipped common command-runner rejects every payload.environment, including this injected CI entry, with COMMAND_ENVIRONMENT_DENIED. This provider therefore needs an executor that explicitly supports its environment payload; the common command-runner does not execute this request.');
+SCHEMA_COLLECTION_AUTHORITIES.get(`${busterSchema('direct-command')}::$.environment`).secondaryAuthorities = [
+  ['skills/common/plugins/command-runner/src/adapter.ts', "request.payload.environment !== undefined"],
+];
+for (const kind of ['reports', 'coverage', 'artifacts']) {
+  collectionAuthority(busterSchema('direct-command'), [`$.${kind}`, `$.${kind}[]`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
+    `Declares the ${kind} copied from repository-relative output files. Identifiers and paths must be unique across all three evidence collections.`,
+    'The declarations parser uses an empty list when omitted.', kind === 'reports'
+      ? 'An empty list is required for resultMode=exit-code and forbidden for resultMode=junit-required.'
+      : 'An empty list declares no output of this kind.');
+}
+collectionAuthority(busterSchema('container-build'), ['$.definition.buildArgs'], busterSource('container-build'), "buildArgs = object(definition.buildArgs",
+  'Maps Docker build-argument names to values sent to the immutable image build.', 'Omission leaves the initial buildArgs map empty.', 'An empty map supplies no build arguments.');
+collectionAuthority(busterSchema('demo-auth-smoke'), ['$.assertions', '$.assertions[]'], 'skills/buster/plugins/demo-auth-smoke/src/protocol.js', 'Array.isArray(value.assertions)',
+  'Selects protected-response business assertions in addition to the authenticated username check.', 'The protocol requires assertions; omission is invalid.', 'An empty list is rejected with DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED.');
+for (const plugin of ['axe', 'lighthouse']) collectionAuthority(busterSchema(plugin), ['$.acceptances', '$.acceptances[]'], busterSource(plugin), 'config.acceptances ?? []',
+  `Declares expiring exceptions for exact ${plugin} findings.`, 'Omission uses an empty acceptance list.', 'An empty list suppresses no finding.');
+for (const [field, anchor, purpose, omission, empty] of [
+  ['image', 'value.image === undefined ? object', 'Selects the immutable image reference and digest for a Kubernetes deployment lease.', 'Omission selects exactly one image input; no config image and no input is rejected. Supplying both is ambiguous.', 'An empty image object lacks the required matching reference and digest and is rejected.'],
+  ['retention', 'value.retention === undefined ? {}', 'Controls whether the isolated deployment is deleted or retained and sets its lease lifetime.', 'Omission uses an empty policy, then mode=delete and seconds=1800.', 'An empty object uses mode=delete and seconds=1800.'],
+  ['testCredentials', 'value.testCredentials === undefined ? null', 'Requests generation of isolated demo credentials under one declared Secret name.', 'Omission disables credential generation.', 'An empty object lacks mode=generate and a valid secretName and is rejected.'],
+]) collectionAuthority(busterSchema('kubernetes-fixture'), [`$.${field}`], busterSource('kubernetes-fixture'), anchor, purpose, omission, empty);
+for (const [field, anchor, purpose] of [
+  ['headers', 'header: selected.headers ?? {}', 'Maps HTTP request-header names to values for one selected OpenAPI operation.'],
+  ['query', 'query: selected.query ?? {}', 'Maps declared query-parameter names to scalar request values for one selected OpenAPI operation.'],
+  ['pathParameters', 'path: selected.pathParameters ?? {}', 'Maps OpenAPI route placeholders to scalar values encoded into the request path.'],
+  ['expectedStatuses', 'selected.expectedStatuses.includes(response.status)', 'Selects the response status codes accepted for one operation in addition to the response-schema checks.'],
+]) collectionAuthority(busterSchema('openapi'), [`$.operations[].${field}`], busterSource('openapi'), anchor, purpose,
+  field === 'expectedStatuses' ? 'Omission performs no additional expectedStatuses membership check.' : 'Omission uses an empty supplied parameter map. Required OpenAPI parameters must still be satisfied.',
+  field === 'expectedStatuses' ? 'An empty array is invalid under minItems.' : 'An empty map supplies no parameter of this kind. The loaded OpenAPI document can require parameters that make it invalid.');
+for (const provider of ['dependency', 'headers', 'image', 'kubernetes-policy', 'kubernetes-runtime']) {
+  const schemaPath = `skills/buster/plugins/security-providers/schemas/${provider}.schema.json`;
+  collectionAuthority(schemaPath, ['$.policy'], 'skills/buster/plugins/security-providers/src/common.js', 'item.profile !== POLICY.profile',
+    'Selects the strict-v1 security decision policy and its time-bounded finding exceptions.', 'Omission is invalid: the policy object and strict-v1 profile are required.', 'An empty object lacks profile=strict-v1 and is rejected.');
+  collectionAuthority(schemaPath, ['$.policy.acceptances', '$.policy.acceptances[]'], 'skills/buster/plugins/security-providers/src/common.js', 'acceptances: acceptances(item.acceptances)',
+    'Declares exact finding identifiers whose suppression ends at expiresAt; each entry requires a reason and a unique findingId.', 'The acceptance parser uses an empty list when omitted.', 'An empty list suppresses no finding.');
+}
+for (const [field, anchor, purpose] of [
+  ['rules', 'const value = overrides === undefined ? {}', 'Supplies removals, additions, and replacements for the selected built-in security-header rule profile.'],
+  ['rules.remove', 'base.filter((item) => !remove.includes(item.id))', 'Selects built-in security-header rule identifiers to remove from the active rule list.'],
+]) collectionAuthority('skills/buster/plugins/security-providers/schemas/headers.schema.json', [`$.${field}`], 'skills/buster/plugins/security-providers/src/headers.js', anchor, purpose);
+collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles', '$.matchingFiles[]'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
+  'Declares named glob rules with a maximum aggregate byte count for each matched file set.', 'Omission uses an empty matching-rule list.', 'An empty list adds no matching-file check. At least one total, count, growth, or matching-file limit is still required.');
+for (const [field, anchor, purpose, omission, empty] of [
+  ['masks', 'config.masks ?? []', 'Declares CSS selector masks for selected screenshot targets.', 'Omission uses an empty mask list.', 'An empty list masks no element.'],
+  ['masks[]', 'config.masks ?? []', 'Binds one selector list to a target already present in targets.', null, 'An empty object lacks a target and selector list and is rejected.'],
+  ['overrides', 'config.overrides ?? {}', 'Overrides named thresholds in the selected visual comparison profile.', 'Omission uses an empty override map.', 'An empty map keeps every selected comparison-profile threshold.'],
+]) collectionAuthority(busterSchema('visual'), [`$.${field}`], busterSource('visual'), anchor, purpose, omission, empty);
+const platformSchema = 'skills/common/plugin-runtime/foundation/config/platform.schema.json';
+const engineRuntime = 'skills/nova/core/execution/engine-runtime.ts';
+for (const [paths, anchor, purpose, empty] of [
+  [['$.activeAdapters'], 'platform.activeAdapters.forEach', 'Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set; required capabilities then recursively enable their selected provider adapters. Configuration alone does not activate an adapter.', 'An empty list enables no adapter directly through this field. Dependencies of enabled observers and stages can still enable and start provider adapters.'],
+  [['$.adapters', '$.adapters.{*}'], 'adapters: objectMap(platform.adapters)', 'Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started.', 'An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.'],
+  [['$.observers', '$.observers.{*}'], 'observers: objectMap(platform.observers)', 'Maps enabled observer registration identifiers to their exact configuration.', 'An empty map enables no observer.'],
+  [['$.externalTrust', '$.externalTrust.allowedSourceDigests', '$.externalTrust.allowedSourceDigests.{*}'], 'platform.externalTrust.allowedSourceDigests', 'Selects allowed external package digests for each canonical source reference.', 'An empty digest map permits no source by digest allowlisting; an empty per-source list permits no digest for that source.'],
+  [['$.externalTrust.verifiedAttestations'], 'platform.externalTrust.verifiedAttestations', 'Maps external package digests to verified attestation digests used by package admission.', 'An empty map provides no verified attestation admission.'],
+  [['$.providers'], 'new Map(Object.entries(platform.providers))', 'Selects one adapter registration for each configured capability identifier.', 'An empty map selects no capability providers. Registrations that require capabilities can fail admission.'],
+  [['$.grants', '$.grants.{*}', '$.grants.{*}.{*}'], 'grants: nestedMap(platform.grants)', 'Maps registration identifiers and capability identifiers to their resource-scoped grants.', 'An empty grant map grants no capability at that level. Configuration cannot create permission outside this policy.'],
+]) collectionAuthority(platformSchema, paths, engineRuntime, anchor, purpose, 'The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.', empty);
+SCHEMA_COLLECTION_AUTHORITIES.get(`${platformSchema}::$.activeAdapters`).secondaryAuthorities = [
+  ['skills/common/plugin-runtime/foundation/registry/capabilities.ts', 'function enableProviders('],
+];
+for (const field of ['$.adapters', '$.adapters.{*}']) SCHEMA_COLLECTION_AUTHORITIES.get(`${platformSchema}::${field}`).secondaryAuthorities = [
+  ['skills/common/plugin-runtime/foundation/registry/configuration.ts', 'for (const registrationId of configured.adapters.keys())'],
+  ['skills/common/plugin-runtime/foundation/registry/configuration.ts', 'for (const [registrationId, entry] of snapshot.adapters)'],
+];
+collectionAuthority(platformSchema, ['$.administrativeDecisionIssuers', '$.administrativeDecisionIssuers[]'], 'skills/nova/core/execution/engine-admin.ts', 'administrativeDecisionIssuers.some',
+  'Selects the operator or administrator identities allowed to reopen a run.', 'The platform schema requires this list.', 'An empty list denies every administrative reopen principal. An empty entry lacks type and id and is invalid.');
+collectionAuthority(platformSchema, ['$.isolation'], 'skills/common/plugin-runtime/foundation/config/platform.ts', 'config.isolation ? { isolation:',
+  'Selects the cgroup root passed to plugin activation after resolution relative to the platform file.', 'Omission supplies no isolation override.', 'An empty object lacks cgroupRoot and is invalid.');
+collectionAuthority('skills/common/plugins/command-runner/schemas/config.schema.json', ['$.executableCatalog'], 'skills/common/plugins/command-runner/src/adapter.ts', 'catalogFrom(context.config.executableCatalog)',
+  'Maps stable logical executable identifiers to canonical executable paths added to the command allowlist. propertyNames constrains every identifier.', 'Omission uses an empty catalog; allowedExecutables remains a separate allowlist.', 'An empty map adds no executable path.');
+collectionAuthority('skills/common/plugins/secret-resolver/schemas/config.schema.json', ['$.environment'], 'skills/common/plugins/secret-resolver/src/adapter.ts', 'const mapping = context.config.environment',
+  'Maps allowed secret identifiers to process environment-variable names. It controls which confidential requests can resolve a value.', 'Omission is rejected as a missing environment mapping.', 'An empty object resolves no secret identifier; lookup returns SECRET_DENIED.');
+collectionAuthority('skills/common/plugins/notification-observer/schemas/config.schema.json', ['$.stageLabels'], 'skills/common/plugins/notification-observer/src/observer.ts', 'const stageLabels = context.contract.config.stageLabels',
+  'Maps stage identifiers to bounded labels in lifecycle notifications.', 'Omission supplies no configured stage labels; notification presentation uses its built-in stage identity or agent-role label.', 'An empty map overrides no stage label.');
+const operatorTargetPath = '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}';
+collectionAuthority('skills/common/plugins/operator-messaging/schemas/config.schema.json', [operatorTargetPath], 'skills/common/plugins/operator-messaging/src/config.ts', "exactKeys(raw, TARGET_KEYS",
+  'Selects one closed operator-message target: a direct endpoint with a token, or a secret endpoint paired with its public origin.');
+for (const [schemaName, sourceName, anchor] of [
+  ['config', 'adapter', 'Object.entries(raw.targets)'],
+  ['openclaw-config', 'openclaw-config', 'Object.entries(raw.targets)'],
+]) collectionAuthority(`skills/common/plugins/runtime-dispatch/schemas/${schemaName}.schema.json`, ['$.targets', '$.targets.{*}'], `skills/common/plugins/runtime-dispatch/src/${sourceName}.ts`, anchor,
+  schemaName === 'config' ? 'Maps target identifiers to generic dispatcher endpoints and authentication policy.' : 'Maps target identifiers to OpenClaw session configuration, token budgets, result import, and polling limits.');
+for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {
+  collectionAuthority(schemaPath, ['$.policy'], 'skills/nova/plugins/review/src/review-policy-resolver.ts', "candidates.push(['settings_file', validated(input.settingsFile",
+    'Supplies a complete replacement review policy. The resolver validates the built-in policy first, then selects this settings policy as a whole; it does not merge individual fields.',
+    'Omission selects the built-in policy named by profile. The stage applies its own default profile when profile is also absent.',
+    'An empty object is invalid because the complete review-policy fields are required.');
+  for (const [section, purpose] of Object.entries({
+    blocking: 'Selects blocking finding priorities and categories and their diff/evidence conditions. P0 and correctness, security, and contract cannot be omitted.',
+    limits: 'Sets bounded finding, bundle, context, expansion, and advisory capacities.',
+    scope: 'Selects what happens to outside-scope, unknown-scope, and pre-existing findings.',
+    verification: 'Selects semantic verification and the action for insufficient evidence or an unverified requirement.',
+    simplification: 'Selects simplification rules, confidence, and recommendation capacity. Enabled policies need rules and positive capacity; disabled policies require neither.',
+    ranking: 'Sets priority, category, diff, and evidence weights used to order finding clusters.',
+    followUp: 'Selects retained follow-up priorities and their capacity. follow_up actions require both non-empty priorities and positive capacity.',
+    governor: 'Sets repair-cycle and growth budgets used to stop further repairs.',
+  })) collectionAuthority(schemaPath, [`$.policy.${section}`], 'skills/nova/plugins/review/src/review-policy-parser.ts', `section(input, '${section}')`, purpose);
+  for (const category of ['priority', 'category']) collectionAuthority(schemaPath, [`$.policy.ranking.${category}Weights`], 'skills/nova/plugins/review/src/review-policy-parser.ts', `weights(value.${category}Weights`,
+    `Maps each known ${category} to the non-negative weight used to rank finding clusters.`);
+}
+
+function schemaCollectionAuthority(authorityPath, field) {
+  const authority = SCHEMA_COLLECTION_AUTHORITIES.get(`${authorityPath}::${field.path}`);
+  if (!authority) return null;
+  const text = read(authority.sourcePath);
+  const index = text.indexOf(authority.anchor);
+  assert(index >= 0, `${authorityPath}::${field.path}: missing collection authority ${authority.sourcePath} ${authority.anchor}`);
+  const additionalImplementationEvidence = (authority.secondaryAuthorities ?? []).map(([sourcePath, anchor]) => {
+    const source = read(sourcePath); const sourceIndex = source.indexOf(anchor);
+    assert(sourceIndex >= 0, `${authorityPath}::${field.path}: secondary implementation authority changed`);
+    return `${sourcePath}:${lineAt(source, sourceIndex)}`;
+  });
+  return { ...authority, evidence: `${authority.sourcePath}:${lineAt(text, index)}`, additionalImplementationEvidence };
+}
+
+let priorSchemaAuthorityKeys = null;
+function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
+  const authorityKey = `${authorityPath}::${field.path}`;
+  if (field.type === 'recursive-reference') {
+    return {
+      authorityKey,
+      status: 'schema-meaning-blocker',
+      text: `The local schema reference at ${field.path} is cyclic and cannot establish an effective public field contract.`,
+      evidence: schemaAuthorityPath(authorityPath),
+      schemaEvidence: schemaAuthorityPath(authorityPath),
+      implementationEvidence: null,
+      acceptedValues: schemaAcceptedValues(field),
+      defaultBehavior: 'No effective default can be established through a cyclic reference.',
+      emptyBehavior: 'No effective empty-value contract can be established through a cyclic reference.',
+      changeImpact: 'Do not publish this field until the reference cycle is removed.',
+      failureMeaning: 'The documentation inventory rejects the cycle instead of recursing or inventing a leaf contract.',
+      blockerOwner: sourceOwner(schemaAuthorityPath(authorityPath)).component,
+      closureCondition: `Replace the cyclic local reference for ${authorityKey} with a finite schema graph.`,
+      consumerEvidence,
+    };
+  }
+  if (field.path === '$' || field.branches.includes('definition')) {
+    return {
+      authorityKey,
+      status: 'structural-container',
+      text: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
+        ? 'The observer merges registration configuration, then service configuration, then hook configuration. Later defined keys replace earlier keys; undefined is ignored, while null and empty replace earlier values. Each resulting defined key wins over its environment value before the field normalizer runs. Child rows state the actual bounds, defaults and failure rules.'
+        : 'Structural schema container. Child fields define configurable behavior.',
+      evidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21' : schemaAuthorityPath(authorityPath),
+      schemaEvidence: schemaAuthorityPath(authorityPath),
+      implementationEvidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21' : null,
+      additionalImplementationEvidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? ['skills/common/plugins/openclaw-agent-observer/src/config.ts:87', 'skills/common/plugins/openclaw-agent-observer/src/index.ts:197'] : [],
+      acceptedValues: schemaAcceptedValues(field),
+      defaultBehavior: schemaDefaultBehavior(authorityPath, field, null),
+      emptyBehavior: schemaEmptyBehavior(field),
+      changeImpact: 'Child fields, not the container row, define runtime changes.',
+      failureMeaning: 'Container shape and child constraints determine validation failure.',
+      blockerOwner: null,
+      closureCondition: null,
+    };
+  }
+  const context = schemaRuntimeContext(authorityPath);
+  const priorSchema = priorInventory('configuration-schemas.json');
+  priorSchemaAuthorityKeys ??= new Set((priorSchema?.files ?? []).flatMap((file) =>
+    (file.fields ?? []).map((candidate) => `${file.path}::${candidate.path}`)));
+  const priorAuthorityKeys = priorSchemaAuthorityKeys;
+  const previouslyInventoried = priorSchema === null || priorAuthorityKeys.has(authorityKey);
+  const inheritedThroughLocalReference = (field.resolvedReferences ?? []).length > 0;
+  const authoredDescription = field.description?.trim() || null;
+  // A newly added public field must not acquire a meaning merely because its
+  // short name (for example `enabled`, `target`, or `timeoutMs`) occurs in an
+  // unrelated provider. Existing rows are drift-controlled, while referenced
+  // leaves inherit their identity from the resolved local schema definition.
+  const permitsInferredAuthority = previouslyInventoried || inheritedThroughLocalReference || Boolean(authoredDescription);
+  const collection = schemaCollectionAuthority(authorityPath, field);
+  const purpose = collection?.purpose ?? (context && permitsInferredAuthority ? schemaSpecificPurpose(authorityPath, field.path, context) : null);
+  const implementation = permitsInferredAuthority ? schemaImplementationEvidence(authorityPath, field.path) : null;
+  const runtimeFallback = schemaRuntimeFallback(authorityPath, field);
+  const describedPurpose = authoredDescription || purpose;
+  const runtimeRules = schemaRuntimeValidationRules(authorityPath, field);
+  const acceptedValues = [schemaAcceptedValues(field), runtimeRules?.accepted].filter(Boolean).map((value) => value.replace(/\.$/u, '')).join('; ');
+  const defaultBehavior = runtimeRules?.omission ?? collection?.omission ?? schemaDefaultBehavior(authorityPath, field, runtimeFallback);
+  const emptyBehavior = runtimeRules?.empty ?? collection?.empty ?? schemaEmptyBehavior(field);
+  if (describedPurpose && implementation) {
+    const changeImpact = `Changing ${field.path} changes this exact configured behavior when ${context} next loads it: ${describedPurpose}`;
+    const failureMeaning = runtimeRules?.failure ?? `Schema validation rejects ${field.path} when it violates ${acceptedValues}. The linked consumer at ${implementation.path}:${implementation.line} owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.`;
+    return {
+      authorityKey,
+      status: field.description?.trim() ? 'schema-and-runtime-authority' : 'qualified-runtime-authority',
+      text: `${describedPurpose} Accepted values: ${acceptedValues}. Omission: ${defaultBehavior} Empty value: ${emptyBehavior} Change effect: ${changeImpact} Failure: ${failureMeaning}`,
+      evidence: `${implementation.path}:${implementation.line}`,
+      schemaEvidence: schemaAuthorityPath(authorityPath),
+      implementationEvidence: `${implementation.path}:${implementation.line}`,
+      additionalImplementationEvidence: [...new Set([
+        ...(authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
+          && ['$.secretReferences', '$.secretReferences[]'].includes(field.path)
+          ? ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:664',
+            'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:700',
+            'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:715',
+            'cmd/buster-namespace-controller/main.go:185',
+            'cmd/buster-namespace-controller/main.go:623',
+            'cmd/buster-namespace-controller/main.go:1401'] : []),
+        ...(runtimeRules?.evidence ?? []),
+        ...(collection?.additionalImplementationEvidence ?? []),
+        ...(runtimeFallback ? [runtimeFallback.evidence] : []),
+        ...(field.default !== '<none>' && schemaUsesProviderDefaults(authorityPath)
+          ? ['skills/common/plugin-runtime/foundation/registry/configuration.ts:102', 'skills/common/plugin-runtime/foundation/registry/schema.ts:106'] : []),
+      ])].filter((evidence) => evidence !== `${implementation.path}:${implementation.line}`),
+      runtimeDefault: runtimeFallback?.value ?? null,
+      runtimeDefaultEvidence: runtimeFallback?.evidence ?? null,
+      acceptedValues,
+      defaultBehavior,
+      emptyBehavior,
+      changeImpact,
+      failureMeaning,
+      blockerOwner: null,
+      closureCondition: null,
+    };
+  }
+  const missing = [!context ? 'registered runtime context' : null, !describedPurpose ? 'concrete field purpose' : null, !implementation ? 'path-specific runtime data flow' : null].filter(Boolean);
+  const readablePath = field.path.replace(/^\$\.?/u, '') || field.path;
+  return {
+    authorityKey,
+    status: 'schema-meaning-blocker',
+    text: `The schema accepts ${readablePath}, but the repository does not yet prove its complete operator meaning. Missing authority: ${missing.join(', ')}. Accepted values: ${acceptedValues}. Omission: ${defaultBehavior} Empty value: ${emptyBehavior}`,
+    evidence: schemaAuthorityPath(authorityPath),
+    schemaEvidence: schemaAuthorityPath(authorityPath),
+    implementationEvidence: null,
+    runtimeDefault: runtimeFallback?.value ?? null,
+    runtimeDefaultEvidence: runtimeFallback?.evidence ?? null,
+    acceptedValues,
+    defaultBehavior,
+    emptyBehavior,
+    changeImpact: 'Do not change this field until its path-specific runtime effect is linked.',
+    failureMeaning: 'Schema validation behavior is known; downstream runtime behavior is not proved.',
+    blockerOwner: sourceOwner(schemaAuthorityPath(authorityPath)).component,
+    closureCondition: `Add a path-specific runtime read or an exact authored Page + Section + table-row authority for ${authorityKey}; otherwise remove the unused public field.`,
+    consumerEvidence,
+  };
+}
+
+function schemaType(schema) {
+  if (typeof schema === 'boolean') return schema ? 'any' : 'never';
+  if (Array.isArray(schema.type)) return schema.type.join('|');
+  if (schema.type) return schema.type;
+  if (schema.const !== undefined) return typeOf(schema.const);
+  if (Array.isArray(schema.enum) && schema.enum.length) return [...new Set(schema.enum.map(typeOf))].join('|');
+  for (const keyword of ['oneOf', 'anyOf']) {
+    if (Array.isArray(schema[keyword]) && schema[keyword].length) {
+      const branchTypes = schema[keyword].map(schemaType);
+      if (branchTypes.some((item) => ['any', 'unspecified'].includes(item))) return 'unspecified';
+      const types = [...new Set(branchTypes)];
+      if (types.length) return types.join('|');
+    }
+  }
+  // properties/items constrain their applicable JSON types; neither keyword
+  // excludes strings or other JSON values without an explicit type rule.
+  return 'unspecified';
+}
+
+const SUPPORTED_SCHEMA_KEYWORDS = new Set([
+  ...SCHEMA_CONSTRAINTS, '$schema', '$id', '$ref', '$defs', 'definitions', '$comment',
+  'title', 'description', 'default', 'examples', 'deprecated', 'readOnly', 'writeOnly',
+  'type', 'properties', 'patternProperties', 'items', 'prefixItems',
+]);
+
+function assertSupportedSchemaRules(schema, fieldPath = '$') {
+  if (typeof schema === 'boolean') return;
+  assert(schema && typeof schema === 'object' && !Array.isArray(schema), `CONFIG_SCHEMA_UNSUPPORTED_KEYWORD: invalid schema at ${fieldPath}`);
+  for (const keyword of Object.keys(schema)) assert(SUPPORTED_SCHEMA_KEYWORDS.has(keyword),
+    `CONFIG_SCHEMA_UNSUPPORTED_KEYWORD: ${fieldPath} ${keyword}; add extraction and semantic tests before publishing this validation rule`);
+  for (const keyword of ['properties', 'patternProperties', '$defs', 'definitions', 'dependentSchemas']) {
+    for (const [name, child] of Object.entries(schema[keyword] ?? {})) assertSupportedSchemaRules(child, `${fieldPath}.${keyword}.${name}`);
+  }
+  for (const keyword of ['additionalProperties', 'items', 'contains', 'propertyNames', 'if', 'then', 'else', 'not']) {
+    if (schema[keyword] !== undefined) assertSupportedSchemaRules(schema[keyword], `${fieldPath}.${keyword}`);
+  }
+  for (const keyword of ['allOf', 'anyOf', 'oneOf', 'prefixItems']) {
+    (schema[keyword] ?? []).forEach((child, index) => assertSupportedSchemaRules(child, `${fieldPath}.${keyword}[${index}]`));
+  }
+}
+
+function schemaPublishedValue(fieldPath, value) {
+  // Token counts and tokenizer identities are public validation metadata, not
+  // credentials. Preserve their finite schema defaults and allowed constants.
+  return /(?:Tokens|tokenizerEncoding)$/u.test(fieldPath) ? value : redactValue(fieldPath, value);
+}
+
+function schemaConstraints(schema, fieldPath) {
+  if (!schema || typeof schema !== 'object') return [];
+  const constraints = [];
+  for (const key of SCHEMA_CONSTRAINTS) {
+    if (!(key in schema)) continue;
+    let value = schema[key];
+    if (key === 'additionalProperties' && typeof value === 'object') value = '<schema>';
+    constraints.push({
+      name: key,
+      value: key === 'const' || key === 'enum' ? schemaPublishedValue(fieldPath, value) : value,
+    });
+  }
+  if (typeof schema.items === 'boolean') constraints.push({ name: 'items', value: schema.items });
+  if (schema.$ref) constraints.push({ name: '$ref', value: schema.$ref });
+  if (schema.deprecated === true) constraints.push({ name: 'deprecated', value: true });
+  return constraints;
+}
+
+function resolveLocalSchemaReference(rootSchema, reference) {
+  if (typeof reference !== 'string' || !reference.startsWith('#/')) return null;
+  let current = rootSchema;
+  for (const encodedSegment of reference.slice(2).split('/')) {
+    const segment = encodedSegment.replaceAll('~1', '/').replaceAll('~0', '~');
+    if (!current || typeof current !== 'object' || !Object.hasOwn(current, segment)) return null;
+    current = current[segment];
+  }
+  return current && typeof current === 'object' ? current : null;
+}
+
+function flattenSchema(schema, fieldPath = '$', required = true, branches = [], output = [], rootSchema = schema, referenceStack = [], resolvedReferences = [], negated = false, forbiddenPresence = false) {
+  if (output.length === 0) assertSupportedSchemaRules(rootSchema);
+  if (typeof schema === 'boolean') {
+    output.push({ path: fieldPath, type: schemaType(schema), required: negated ? false : required, presence: forbiddenPresence ? 'forbidden' : 'allowed', negated, default: '<none>', constraints: [], branches, resolvedReferences, ownerRole: 'unknown', consumers: ['schema validator; runtime consumer not proven by schema'] });
+    return output;
+  }
+  for (const keyword of Object.keys(schema)) {
+    assert(SUPPORTED_SCHEMA_KEYWORDS.has(keyword), `CONFIG_SCHEMA_UNSUPPORTED_KEYWORD: ${fieldPath} ${keyword}; add recursive extraction and semantic tests before publishing this validation rule`);
+  }
+  if (schema.$ref) {
+    const resolved = resolveLocalSchemaReference(rootSchema, schema.$ref);
+    assert(resolved, `CONFIG_SCHEMA_UNSUPPORTED_REFERENCE: ${fieldPath} ${schema.$ref}; bind a finite local definition before publishing recursive configuration`);
+    if (resolved) {
+      if (referenceStack.includes(schema.$ref)) {
+        output.push({
+          path: fieldPath,
+          type: 'recursive-reference',
+          required: negated ? false : required,
+          presence: forbiddenPresence ? 'forbidden' : 'allowed',
+          negated,
+          default: '<none>',
+          description: schema.description ?? '',
+          constraints: [{ name: '$ref', value: schema.$ref }],
+          branches: [...branches, 'cyclic-reference'],
+          resolvedReferences: [...resolvedReferences, schema.$ref],
+          ownerRole: 'unknown',
+          consumers: ['schema validator; recursive runtime consumer'],
+        });
+        return output;
+      }
+      const siblings = { ...schema };
+      delete siblings.$ref;
+      const validationSiblings = Object.keys(siblings).some((keyword) => !['title', 'description', 'default', 'examples', '$comment', 'deprecated', 'readOnly', 'writeOnly'].includes(keyword));
+      // A reference and its validation siblings are conjunctive. Merging their
+      // maps can overwrite a pattern, a bound, or a condition from the referent.
+      const merged = validationSiblings ? { allOf: [resolved, siblings] } : { ...resolved, ...siblings };
+      return flattenSchema(merged, fieldPath, required, branches, output, rootSchema,
+        [...referenceStack, schema.$ref], [...resolvedReferences, schema.$ref], negated, forbiddenPresence);
+    }
+  }
+  output.push({
+    path: fieldPath,
+    type: schemaType(schema),
+    required: negated ? false : required,
+    presence: forbiddenPresence ? 'forbidden' : 'allowed',
+    negated,
+    default: 'default' in schema ? schemaPublishedValue(fieldPath, schema.default) : '<none>',
+    description: schema.description ?? '',
+    constraints: [
+      ...schemaConstraints(schema, fieldPath),
+      ...resolvedReferences.map((reference) => ({ name: '$ref', value: reference })),
+    ],
+    branches,
+    resolvedReferences,
+    ownerRole: 'unknown',
+    consumers: ['schema validator; runtime consumer not proven by schema'],
+  });
+  const requiredChildren = new Set(schema.required ?? []);
+  for (const [key, child] of Object.entries(schema.properties ?? {}).sort(([a], [b]) => a.localeCompare(b))) {
+    const childForbidden = negated && requiredChildren.has(key);
+    flattenSchema(child, fieldPath === '$' ? `$.${key}` : `${fieldPath}.${key}`, negated ? false : requiredChildren.has(key), branches, output, rootSchema, referenceStack, resolvedReferences, negated, childForbidden);
+  }
+  for (const [key, child] of Object.entries(schema.patternProperties ?? {}).sort(([a], [b]) => a.localeCompare(b))) {
+    flattenSchema(child, `${fieldPath}.{pattern:${key}}`, false, branches, output, rootSchema, referenceStack, resolvedReferences, negated, false);
+  }
+  if (schema.additionalProperties && typeof schema.additionalProperties === 'object') {
+    flattenSchema(schema.additionalProperties, `${fieldPath}.{*}`, false, branches, output, rootSchema, referenceStack, resolvedReferences, negated, false);
+  }
+  if (schema.items && typeof schema.items === 'object') flattenSchema(schema.items, `${fieldPath}[]`, negated ? false : true, branches, output, rootSchema, referenceStack, resolvedReferences, negated, false);
+  (schema.prefixItems ?? []).forEach((child, index) => flattenSchema(child, `${fieldPath}[${index}]`, negated ? false : true, branches, output, rootSchema, referenceStack, resolvedReferences, negated, false));
+  for (const keyword of ['allOf', 'anyOf', 'oneOf']) {
+    (schema[keyword] ?? []).forEach((child, index) => flattenSchema(child, fieldPath, required, [...branches, `${keyword}[${index}]`], output, rootSchema, referenceStack, resolvedReferences, negated, forbiddenPresence));
+  }
+  for (const keyword of ['if', 'then', 'else']) {
+    if (schema[keyword] && typeof schema[keyword] === 'object') flattenSchema(schema[keyword], fieldPath, required, [...branches, keyword], output, rootSchema, referenceStack, resolvedReferences, negated, forbiddenPresence);
+  }
+  if (schema.not && typeof schema.not === 'object') flattenSchema(schema.not, fieldPath, false, [...branches, 'not'], output, rootSchema, referenceStack, resolvedReferences, !negated, false);
+  for (const [key, child] of Object.entries(schema.$defs ?? {}).sort(([a], [b]) => a.localeCompare(b))) {
+    flattenSchema(child, `$defs.${key}`, false, [...branches, 'definition'], output, rootSchema, referenceStack, resolvedReferences, false, false);
+  }
+  return output;
+}
+
+function flattenDeployedPayload(value, fieldPath = '$', result = []) {
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => flattenDeployedPayload(item, `${fieldPath}[${index}]`, result));
+    return result;
+  }
+  if (value && typeof value === 'object') {
+    for (const [key, item] of Object.entries(value)) flattenDeployedPayload(item, fieldPath === '$' ? `$.${key}` : `${fieldPath}.${key}`, result);
+    return result;
+  }
+  result.push({ path: fieldPath, type: value === null ? 'null' : typeof value, value: redactValue(fieldPath, value) });
+  return result;
+}
+
+function parseConfigPayload(sourcePath) {
+  const name = path.basename(sourcePath);
+  const text = read(sourcePath);
+  let parseMode = 'opaque-program-or-tool-config';
+  let fields = [];
+  try {
+    if (/\.json$/u.test(name)) {
+      fields = flattenDeployedPayload(JSON.parse(text));
+      parseMode = 'recursive-json';
+    } else if (/\.ya?ml$/u.test(name)) {
+      fields = YAML.parseAllDocuments(text, { prettyErrors: false }).flatMap((document, documentIndex) => {
+        assert.equal(document.errors.length, 0, `${sourcePath}: configuration payload does not parse`);
+        return flattenDeployedPayload(document.toJS()).map((field) => ({ ...field, document: documentIndex }));
+      });
+      parseMode = 'recursive-yaml';
+    }
+  } catch (error) {
+    throw new Error(`${sourcePath}: structured configuration payload parsing failed: ${error.message}`);
+  }
+  return { name, text, parseMode, fields };
+}
+
+function deployedConfigPayloads() {
+  const templatePath = 'charts/kubeclaw/templates/configmap-swarm-config.yaml';
+  const deploymentPath = 'charts/kubeclaw/templates/deployment.yaml';
+  const templateText = read(templatePath);
+  const deploymentText = read(deploymentPath);
+  const deploymentLines = deploymentText.split('\n');
+  const templateLines = templateText.split('\n');
+  const exactLine = (sourcePath, sourceText, needle, kind, authority, occurrence = null) => {
+    const matches = sourceText.split('\n').flatMap((line, index) => line.includes(needle) ? [{ line, index }] : []);
+    if (occurrence === null) assert.equal(matches.length, 1, `${sourcePath}: expected one exact ${kind} line containing ${needle}, found ${matches.length}`);
+    else assert(matches[occurrence], `${sourcePath}: expected ${kind} occurrence ${occurrence + 1} containing ${needle}`);
+    const selected = matches[occurrence ?? 0];
+    return {
+      path: sourcePath,
+      line: selected.index + 1,
+      sourceLineSha256: sha256(selected.line),
+      requiredToken: needle,
+      kind,
+      authority,
+    };
+  };
+  const exactReaders = {
+    '.semgrep.yml': ['skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts', 'semgrepArgs(ctx, config),', 'Semgrep tool adapter passes the policy-selected config path to the semgrep process'],
+    '.yamllint.yml': ['skills/nova/plugins/lint/src/engine/container-yaml-tools.ts', "const args = ['-c', config, '-f', 'parsable', '--strict', ...yamlFiles]", 'yamllint tool adapter places the policy-selected config path after -c in the yamllint process arguments'],
+    '.tflint.hcl': ['skills/nova/plugins/lint/src/engine/terraform-tools.ts', '`--config=${ctx.tool.config_path}`', 'TFLint tool adapter places the policy-selected config path in the --config process argument'],
+    'knip.json': ['skills/nova/plugins/lint/src/engine/architecture-tools.ts', "'--config', ctx.tool.config_path", 'Knip tool adapter places the policy-selected config path after --config'],
+    'jscpd.json': ['skills/nova/plugins/lint/src/engine/architecture-tools.ts', 'executeJscpd(ctx, ctx.tool.config_path', 'JSCPD adapter passes the policy-selected production config path to its process-argument builder'],
+    'jscpd-tests.json': ['skills/nova/plugins/lint/src/engine/architecture-tools.ts', "path.join(path.dirname(ctx.tool.config_path), 'jscpd-tests.json')", 'JSCPD adapter derives the dedicated test calibration path from the policy-selected production path'],
+    // lint-policy.json has a checked-in parser, but no checked-in binding proves
+    // that request.policyPath selects /runtime-config/lint-policy.json.
+    'lint-baseline.json': ['skills/nova/plugins/lint/src/engine/lint-governance.ts', "source = fs.readFileSync(baselinePath, 'utf8'); parsed = JSON.parse(source)", 'lint governance reads and parses the baseline path selected by the policy'],
+    'eslint.config.mjs': ['skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts', "args.push('--config', config)", 'ESLint adapter places the policy-selected config path after --config'],
+    'eslint-type-evidence-config.mjs': ['skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts', "args.push('--config', config)", 'ESLint adapter places this policy-selected production type-evidence path after --config'],
+    'eslint-type-evidence-generated-config.mjs': ['skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts', "args.push('--config', config)", 'ESLint adapter places this policy-selected generated-code type-evidence path after --config'],
+    'eslint-type-evidence-tests-config.mjs': ['skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts', "args.push('--config', config)", 'ESLint adapter places this policy-selected test type-evidence path after --config'],
+    'type-evidence-eslint-plugin.mjs': ['charts/kubeclaw/files/config/eslint-type-evidence-config.mjs', "import typeEvidence from './type-evidence-eslint-plugin.mjs'", 'the deployed ESLint configuration imports this exact sibling module'],
+    // The chart injects SWARM_CONFIG, but the image-owned runtime reader is not
+    // present in this repository.  Do not turn path injection into field meaning.
+  };
+  const runtimeSourceFiles = walk('skills', (absolutePath) => /\.(?:[cm]?[jt]s|tsx)$/u.test(absolutePath))
+    .filter((sourcePath) => !/(?:^|\/)(?:tests?|fixtures?|node_modules)(?:\/|$)/u.test(sourcePath));
+  const lintCanonicalRequestBindings = runtimeSourceFiles.filter((sourcePath) => {
+    const source = read(sourcePath);
+    return source.includes('/runtime-config/lint-policy.json') && /request\.policyPath|policyPath/u.test(source);
+  });
+  assert.deepEqual(lintCanonicalRequestBindings, [],
+    'CONFIG_PAYLOAD_REQUEST_PATH_BOUNDARY_CHANGED: a runtime lint-policy binding now exists; replace the documented gap with an exact chain');
+  const checkedInSwarmRuntimeReaders = runtimeSourceFiles.filter((sourcePath) => /SWARM_CONFIG|\.openclaw\/swarm\.config\.json/u.test(read(sourcePath)));
+  assert.deepEqual(checkedInSwarmRuntimeReaders, [],
+    'CONFIG_PAYLOAD_SWARM_READER_BOUNDARY_CHANGED: a checked-in swarm runtime reader now exists; replace the documented gap with exact reader proof');
+  const payloads = [];
+  for (const match of templateText.matchAll(/\.Files\.Get\s+"files\/config\/([^"]+)"/gu)) {
+    const name = match[1];
+    const sourcePath = `charts/kubeclaw/files/config/${name}`;
+    assert(exists(sourcePath), `${templatePath}: deployed config payload ${sourcePath} is missing`);
+    const { text, parseMode, fields } = parseConfigPayload(sourcePath);
+    const embeddingLine = lineAt(templateText, match.index);
+    const reader = exactReaders[name] ?? null;
+    const genericNames = 'eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json';
+    const generic = genericNames.split(' ').includes(name);
+    const firstCopyNeedle = generic ? `for lint_config in ${genericNames}` : name === 'swarm.config.json'
+      ? 'cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"'
+      : `cp -Lf ${['.semgrep.yml', 'eslint.config.mjs'].includes(name) ? `"/init-swarm-config/${name}" "/config/${name}"` : name === 'lint-policy.json' ? '"/init-swarm-config/lint-policy.json" "/config/lint-policy.json"' : `"/init-swarm-config/${name}" "/config/${name}"`}`;
+    const runtimeCopyNeedle = generic ? `for lint_config in ${genericNames}` : name === 'swarm.config.json'
+      ? 'const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"'
+      : name === 'lint-policy.json' ? 'cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json'
+        : `cp -Lf /config/${name} /runtime-config/${name}`;
+    const deliveryChain = [
+      exactLine(templatePath, templateText, `  ${name}: |`, 'configmap-key', `ConfigMap data key ${name} names the embedded payload`),
+      exactLine(templatePath, templateText, `.Files.Get "files/config/${name}"`, 'helm-file-embedding', `the exact ${sourcePath} bytes populate ConfigMap key ${name}`),
+      exactLine(deploymentPath, deploymentText, 'name: {{ include "kubeclaw.fullname" . }}-swarm-config', 'configmap-volume-object-reference', 'Pod volume init-swarm-config selects the rendered swarm ConfigMap object'),
+      exactLine(deploymentPath, deploymentText, 'mountPath: /init-swarm-config', 'configmap-volume-mount', 'init container mounts the ConfigMap at /init-swarm-config'),
+      exactLine(deploymentPath, deploymentText, firstCopyNeedle, generic ? 'first-copy-loop-membership' : 'first-config-copy', generic
+        ? `${name} is an explicit member of the first-copy loop from /init-swarm-config to /config`
+        : `${name} is copied from the ConfigMap mount into persistent /config`, generic ? 0 : null),
+      ...(generic ? [exactLine(deploymentPath, deploymentText, 'cp -Lf "/init-swarm-config/$lint_config" "/config/$lint_config"', 'first-config-copy', 'the first-copy loop copies its exact named member from /init-swarm-config to /config')] : []),
+      exactLine(deploymentPath, deploymentText, runtimeCopyNeedle, generic ? 'runtime-copy-loop-membership' : 'runtime-config-copy', generic
+        ? `${name} is an explicit member of the runtime-copy loop from /config to /runtime-config`
+        : `${name} is copied or rendered from /config into /runtime-config`, generic ? 1 : null),
+      ...(generic ? [exactLine(deploymentPath, deploymentText, 'cp -Lf "/config/$lint_config" "/runtime-config/$lint_config"', 'runtime-config-copy', 'the runtime-copy loop copies its exact named member into /runtime-config')] : []),
+    ];
+    const selectionProof = [];
+    let selectionPrecedence;
+    if (name === '.semgrep.yml' || name === 'eslint.config.mjs') {
+      selectionProof.push(
+        exactLine(deploymentPath, deploymentText, `if [ -f "/init-swarm-config/${name}" ]; then`, 'chart-source-present-condition', `the chart source participates only when the mounted ${name} exists`),
+        exactLine(deploymentPath, deploymentText, `if [ "${'${OVERRIDE_SWARM_CONFIG}'}" = "true" ] || [ ! -f "/config/${name}" ]; then`, 'override-or-absent-condition', `chart bytes replace persistent ${name} only when override is true or no persistent file exists`),
+        exactLine(deploymentPath, deploymentText, `${name} exists, keeping (override=false)`, 'persistent-retention-branch', `an existing persistent ${name} is retained when override is false`),
+      );
+      selectionPrecedence = 'Mounted chart bytes replace the persistent file only when OVERRIDE_SWARM_CONFIG is true or the persistent file is absent. Otherwise the existing persistent file wins. The runtime copy uses the resulting persistent file.';
+    } else if (generic) {
+      selectionProof.push(exactLine(deploymentPath, deploymentText, 'if [ -f "/init-swarm-config/$lint_config" ]; then', 'chart-source-present-condition', `${name} is copied only when its explicit loop member exists in the mounted chart source`));
+      selectionPrecedence = 'When the named chart file exists, the init loop replaces the persistent file. The runtime loop then copies that persistent result. No retained-file override branch exists for this payload.';
+    } else {
+      const mountedNeedle = `if [ -f ${name === 'swarm.config.json' || ['.semgrep.yml', 'eslint.config.mjs', '.yamllint.yml', '.tflint.hcl', 'lint-policy.json'].includes(name) ? `"/init-swarm-config/${name}"` : `/init-swarm-config/${name}`} ]; then`;
+      // Quote spelling differs in three simple shell blocks; bind the exact
+      // condition actually present rather than normalizing shell source.
+      const conditionNeedle = name === 'swarm.config.json' ? 'if [ -f "/init-swarm-config/swarm.config.json" ]; then'
+        : name === '.yamllint.yml' ? 'if [ -f "/init-swarm-config/.yamllint.yml" ]; then'
+          : name === '.tflint.hcl' ? 'if [ -f "/init-swarm-config/.tflint.hcl" ]; then'
+            : name === 'lint-policy.json' ? 'if [ -f "/init-swarm-config/lint-policy.json" ]; then' : mountedNeedle;
+      selectionProof.push(exactLine(deploymentPath, deploymentText, conditionNeedle, 'chart-source-present-condition', `the chart source replaces persistent ${name} only when the mounted source file exists`));
+      selectionPrecedence = 'When the mounted chart file exists, it replaces the persistent file. When it is absent, the existing persistent file remains. The runtime copy uses the resulting persistent file.';
+    }
+    const policyText = read('charts/kubeclaw/files/config/lint-policy.json');
+    const policyConfigPaths = new Set(['.semgrep.yml', '.tflint.hcl', '.yamllint.yml', 'eslint-type-evidence-config.mjs',
+      'eslint-type-evidence-generated-config.mjs', 'eslint-type-evidence-tests-config.mjs', 'eslint.config.mjs', 'jscpd.json', 'knip.json']);
+    if (policyConfigPaths.has(name)) deliveryChain.push(exactLine(
+      'charts/kubeclaw/files/config/lint-policy.json', policyText, `"config_path": "${name}"`, 'lint-policy-config-path', `the canonical lint policy selects ${name} as an exact tool config_path`,
+    ));
+    else if (name === 'lint-baseline.json') deliveryChain.push(exactLine(
+      'charts/kubeclaw/files/config/lint-policy.json', policyText, '"baseline_path": "lint-baseline.json"', 'lint-policy-baseline-path', 'the canonical lint policy selects lint-baseline.json as its exact baseline path',
+    ));
+    else if (name === 'type-evidence-eslint-plugin.mjs') deliveryChain.push(exactLine(
+      'charts/kubeclaw/files/config/eslint-type-evidence-config.mjs', read('charts/kubeclaw/files/config/eslint-type-evidence-config.mjs'), "import typeEvidence from './type-evidence-eslint-plugin.mjs'", 'module-import-path', 'the deployed ESLint configuration imports this exact sibling module',
+    ));
+    else if (name === 'jscpd-tests.json') deliveryChain.push(exactLine(
+      'skills/nova/plugins/lint/src/engine/architecture-tools.ts', read('skills/nova/plugins/lint/src/engine/architecture-tools.ts'), "path.join(path.dirname(ctx.tool.config_path), 'jscpd-tests.json')", 'derived-tool-config-path', 'the JSCPD adapter derives this exact sibling test configuration from the policy-selected production path',
+    ));
+    else if (name === 'lint-policy.json') {
+      // Keep these as a disconnected reader boundary.  No checked-in source
+      // binds request.policyPath to the runtime copy produced above.
+    } else if (name === 'swarm.config.json') {
+      deliveryChain.push(exactLine(deploymentPath, deploymentText, 'value: "/home/node/.openclaw/swarm.config.json"', 'process-config-path', 'the main workload process receives the mounted runtime swarm configuration path', 1));
+    }
+    if (reader) deliveryChain.push(exactLine(reader[0], read(reader[0]), reader[1], 'process-argument-or-reader', reader[2],
+      name === 'swarm.config.json' ? 1 : null));
+    for (const edge of [...deliveryChain, ...selectionProof]) {
+      const line = read(edge.path).split('\n')[edge.line - 1] ?? '';
+      assert.equal(sha256(line), edge.sourceLineSha256, `${sourcePath}: ${edge.kind} digest does not match ${edge.path}:${edge.line}`);
+      assert(line.includes(edge.requiredToken), `${sourcePath}: ${edge.kind} token is absent from ${edge.path}:${edge.line}`);
+    }
+    const unboundReaderEvidence = name === 'lint-policy.json' ? [
+      exactLine('skills/nova/plugins/lint/src/engine/index.ts', read('skills/nova/plugins/lint/src/engine/index.ts'), 'const policyPath = fs.realpathSync(request.policyPath)', 'request-selected-policy-path', 'the lint request chooses a path, but checked-in source does not bind it to the chart runtime copy'),
+      exactLine('skills/nova/plugins/lint/src/engine/policy.ts', read('skills/nova/plugins/lint/src/engine/policy.ts'), "source = fs.readFileSync(policyPath, 'utf8'); parsed = JSON.parse(source)", 'checked-in-config-parser', 'the lint engine parses whichever request-selected path it receives'),
+    ] : name === 'swarm.config.json' ? [
+      exactLine(deploymentPath, deploymentText, "JSON.parse(fs.readFileSync(source,\"utf8\"))", 'init-transform-parser', 'the init script parses the persistent file only to produce the runtime copy; this is not the workload field reader'),
+    ] : [];
+    for (const edge of unboundReaderEvidence) {
+      const line = read(edge.path).split('\n')[edge.line - 1] ?? '';
+      assert.equal(sha256(line), edge.sourceLineSha256, `${sourcePath}: ${edge.kind} digest does not match ${edge.path}:${edge.line}`);
+      assert(line.includes(edge.requiredToken), `${sourcePath}: ${edge.kind} token is absent from ${edge.path}:${edge.line}`);
+    }
+    const runtimeSelectionProved = Boolean(reader) && !['lint-policy.json', 'swarm.config.json'].includes(name);
+    const readerBoundary = name === 'lint-policy.json'
+      ? 'The repository proves a parser for request.policyPath, but it does not bind that request field to /runtime-config/lint-policy.json. Materialization and parsing are separate proved boundaries, not a continuous runtime chain.'
+      : name === 'swarm.config.json'
+        ? 'The chart materializes the file and injects its mounted path through SWARM_CONFIG. The image-owned process reader and field behavior are not checked in, so path injection does not prove field-level runtime meaning.'
+        : reader ? reader[2]
+          : 'The chart deploys these bytes, but this repository does not prove field-level executable behavior. Treat the payload as image/tool-owned until a checked-in reader is linked.';
+    payloads.push({
+      path: sourcePath,
+      sourceDigest: sha256(text),
+      parseMode,
+      fields,
+      leafFields: fields.length,
+      behaviorClassification: runtimeSelectionProved ? 'deployed-and-reader-bound'
+        : name === 'lint-policy.json' ? 'materialized-request-path-binding-unproved'
+          : name === 'swarm.config.json' ? 'materialized-and-path-injected-field-reader-unproved'
+            : 'deployed-payload-without-checked-in-field-reader',
+      executableBehaviorProved: runtimeSelectionProved,
+      consumers: deliveryChain,
+      deliveryChain,
+      selectionPrecedence,
+      selectionProof,
+      unboundReaderEvidence,
+      readerBoundary,
+    });
+  }
+  const intentionallyUndeployed = new Set(['charts/kubeclaw/files/config/kubernetes-policy-pack-default.json']);
+  const expectedPayloadPaths = walk('charts/kubeclaw/files/config').filter((sourcePath) => !intentionallyUndeployed.has(sourcePath)).sort();
+  assert.deepEqual(payloads.map((payload) => payload.path).sort(), expectedPayloadPaths,
+    'deployed config payload discovery differs from checked-in files; each file must have an exact .Files.Get edge or an explicit undeployed classification');
+  return payloads.sort((left, right) => left.path.localeCompare(right.path));
+}
+
+function undeployedConfigPayloads(deployedPayloads) {
+  const deployedPaths = new Set(deployedPayloads.map((payload) => payload.path));
+  const policyText = read('charts/kubeclaw/files/config/lint-policy.json');
+  const loaderPath = 'skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts';
+  const loaderText = read(loaderPath);
+  return walk('charts/kubeclaw/files/config')
+    .filter((sourcePath) => !deployedPaths.has(sourcePath))
+    .map((sourcePath) => {
+      const { name, text, parseMode, fields } = parseConfigPayload(sourcePath);
+      const referenceIndex = policyText.indexOf(`"path": "${name}"`);
+      const loaderIndex = name === 'kubernetes-policy-pack-default.json'
+        ? loaderText.indexOf('fs.existsSync(sourcePath)')
+        : -1;
+      assert(referenceIndex >= 0, `${sourcePath}: checked-in but undeployed configuration lacks an exact checked-in reference`);
+      assert(loaderIndex >= 0, `${sourcePath}: checked-in but undeployed configuration lacks an exact loader boundary`);
+      return {
+        path: sourcePath,
+        sourceDigest: sha256(text),
+        parseMode,
+        fields,
+        leafFields: fields.length,
+        behaviorClassification: 'checked-in-reference-without-chart-delivery',
+        executableBehaviorProved: false,
+        references: [
+          {
+            path: 'charts/kubeclaw/files/config/lint-policy.json',
+            line: lineAt(policyText, referenceIndex),
+            sourceLineSha256: sha256(policyText.split('\n')[lineAt(policyText, referenceIndex) - 1] ?? ''),
+            kind: 'checked-in-policy-reference',
+            authority: `the lint policy selects ${name} by relative path`,
+          },
+          {
+            path: loaderPath,
+            line: lineAt(loaderText, loaderIndex),
+            sourceLineSha256: sha256(loaderText.split('\n')[lineAt(loaderText, loaderIndex) - 1] ?? ''),
+            kind: 'checked-in-loader-boundary',
+            authority: 'the loader rejects the referenced policy-pack path when the file is absent',
+          },
+        ],
+        deliveryGap: `The checked-in chart does not embed or copy ${name}. The deployed lint policy references this file, so the runtime loader rejects that reference unless another unsupported process supplies the missing file.`,
+      };
+    })
+    .sort((left, right) => left.path.localeCompare(right.path));
+}
+
+function buildSchemaInventory() {
+  const files = registeredSchemaAuthorities().map((authority) => {
+    const sourcePath = authority.key;
+    const text = read(authority.path);
+    const schema = authority.schema ?? JSON.parse(text);
+    const packageOwner = nearestPackage(authority.path);
+    const registration = schemaRegistrationEvidence(authority.path);
+    const owner = packageOwner
+      ? { component: packageOwner.name, evidence: packageOwner.path }
+      : { component: 'unknown', evidence: 'no enclosing package.json' };
+    const consumerEvidence = registration.directConsumers.length
+      ? registration.directConsumers
+      : registration.candidates.length ? registration.candidates : ['unknown'];
+    const fields = flattenSchema(schema).map((field) => ({
+      ...field,
+      ownerRole: owner.component,
+      ownerEvidence: owner.evidence,
+      consumers: consumerEvidence,
+      meaning: schemaFieldMeaning(authority.key, field, consumerEvidence),
+    }));
+    return {
+      path: sourcePath,
+      sourceClass: sourcePath.endsWith('/platform.schema.json') ? 'pipeline-platform-schema' : 'plugin-configuration-schema',
+      sourceDigest: sha256(text),
+      schemaId: schema.$id ?? null,
+      registrationEvidence: authority.registrations,
+      fields,
+    };
+  });
+  const swarmPath = 'charts/kubeclaw/files/config/swarm.config.json';
+  let swarm = null;
+  if (exists(swarmPath)) {
+    const text = read(swarmPath);
+    swarm = {
+      path: swarmPath,
+      sourceDigest: sha256(text),
+      fields: yamlFields(JSON.parse(text), { sourcePath: swarmPath, chartRoot: null, consumerMap: new Map(), sourceClass: 'swarm-authored-config', owner: sourceOwner(swarmPath), resource: null, externalBindings: [], runtimeBindings: [] }).map((field) => ({
+        ...field,
+        required: field.type === 'object' || field.type === 'array' ? 'not-applicable-container' : 'external-schema',
+        requiredReason: field.type === 'object' || field.type === 'array'
+          ? 'This row is a structural container; child leaf rows own loader semantics.'
+          : 'The checked-in repository has no field schema; the OpenClaw/swarm loader owns acceptance.',
+        defaultKind: field.type === 'object' || field.type === 'array' ? 'authored-container' : 'authored-runtime-base',
+        constraints: field.type === 'object' || field.type === 'array' ? [] : ['valid JSON plus external OpenClaw/swarm loader contract'],
+        runtimeOwner: 'OpenClaw gateway runtime configuration loader',
+        consumers: [{ path: 'charts/kubeclaw/templates/configmap-swarm-config.yaml', line: 14, kind: 'helm-file-embedding', authority: '.Files.Get files/config/swarm.config.json' }, { path: 'charts/kubeclaw/templates/deployment.yaml', line: 674, kind: 'runtime-config-materialization', authority: 'JSON parse and runtime file write' }],
+        precedence: ['checked-in swarm.config.json base', 'init normalization', 'runtime Secret/environment injection where implemented', 'more specific project progress configuration where implemented'],
+        effectiveValueProof: `${swarmPath} -> charts/kubeclaw/templates/configmap-swarm-config.yaml:14 -> charts/kubeclaw/templates/deployment.yaml:674`,
+        changeImpact: 'Changes the base runtime swarm configuration after the chart rematerializes the file.',
+        failureMeaning: 'Invalid JSON stops materialization; a loader-rejected field prevents or degrades gateway startup.',
+        blockerOwner: field.type === 'object' || field.type === 'array' ? null : 'OpenClaw/swarm loader contract owner',
+        closureCondition: field.type === 'object' || field.type === 'array' ? null : 'Bind a versioned field schema when the loader publishes one.',
+      })),
+      schemaAuthority: 'external OpenClaw/swarm loader contract; repository proves JSON materialization but has no bound field schema',
+    };
+  }
+  const allSchemaFields = files.flatMap((file) => file.fields);
+  const publicSchemaFields = allSchemaFields.filter((field) => field.path !== '$' && !field.branches.includes('definition'));
+  assert.equal(publicSchemaFields.filter((field) => !field.meaning?.text || !field.meaning?.evidence || !field.meaning?.status).length, 0,
+    'quality gate: every public schema field needs authored meaning or an explicit owned documentation blocker');
+  const schemaMeaningBlockers = files.flatMap((file) => file.fields
+    .filter((field) => field.path !== '$' && !field.branches.includes('definition') && /blocker/u.test(field.meaning.status))
+    .map((field) => `${file.path}::${field.path}`));
+  if (!allowSemanticGaps && schemaMeaningBlockers.length) {
+    throw new Error(`CONFIG_SEMANTIC_GAP: public schema fields lack qualified field-path and consumer authority: ${schemaMeaningBlockers.slice(0, 12).join(', ')}. A same-named field in another provider is not evidence.`);
+  }
+  const schemaByPath = new Map(files.map((file) => [file.path, file]));
+  const securityTimeoutCases = [
+    ['skills/buster/plugins/security-providers/schemas/image.schema.json', 'container-image vulnerability scan', '/src/image.js:'],
+    ['skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json', 'static Kubernetes-policy scan', '/src/kubernetes-policy.js:'],
+    ['skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json', 'live Kubernetes runtime-security scan', '/src/kubernetes-runtime.js:'],
+  ];
+  for (const [sourcePath, purposeFragment, evidenceFragment] of securityTimeoutCases) {
+    const timeout = schemaByPath.get(sourcePath)?.fields.find((field) => field.path === '$.timeoutMs');
+    assert(timeout, `schema semantic regression: missing ${sourcePath} $.timeoutMs`);
+    assert.match(timeout.meaning.text, new RegExp(purposeFragment.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&'), 'u'),
+      `schema semantic regression: ${sourcePath} timeout purpose collided with another provider`);
+    assert(timeout.meaning.implementationEvidence?.includes(evidenceFragment),
+      `schema semantic regression: ${sourcePath} timeout evidence is not bound to its provider implementation`);
+  }
+  const openApi = schemaByPath.get('skills/buster/plugins/openapi/schemas/config.schema.json');
+  for (const [fieldPath, purposeFragment] of [
+    ['$.operations[].headers.{*}', 'request-header value'],
+    ['$.operations[].pathParameters.{*}', 'path-parameter value'],
+    ['$.operations[].query.{*}', 'query-parameter value'],
+  ]) {
+    const fields = openApi?.fields.filter((field) => field.path === fieldPath) ?? [];
+    assert(fields.length > 0, `schema semantic regression: missing OpenAPI wildcard ${fieldPath}`);
+    for (const field of fields) {
+      assert.match(field.meaning.text, new RegExp(purposeFragment, 'u'),
+        `schema semantic regression: OpenAPI wildcard ${fieldPath} lost its exact map-value purpose`);
+      assert(field.meaning.implementationEvidence?.includes('/openapi/src/provider.js:'),
+        `schema semantic regression: OpenAPI wildcard ${fieldPath} lacks provider data-flow evidence`);
+      assert(!field.meaning.implementationEvidence?.endsWith(':1'),
+        `schema semantic regression: OpenAPI wildcard ${fieldPath} matched an empty token`);
+    }
+  }
+  const conditionalPresenceCases = [
+    {
+      sourcePath: 'skills/nova/plugins/remote-test-gate/schemas/config.schema.json',
+      fieldPath: '$.tokenSecret',
+      requiredBranch: 'allOf[0] > then',
+      forbiddenBranch: 'allOf[0] > else > not',
+    },
+    {
+      sourcePath: 'skills/common/plugins/runtime-dispatch/schemas/config.schema.json',
+      fieldPath: '$.targets.{*}.tokenSecret',
+      requiredBranch: 'allOf[0] > else',
+      forbiddenBranch: 'allOf[0] > then > not',
+    },
+  ];
+  for (const { sourcePath, fieldPath, requiredBranch, forbiddenBranch } of conditionalPresenceCases) {
+    const fields = schemaByPath.get(sourcePath)?.fields.filter((field) => field.path === fieldPath) ?? [];
+    const requiredField = fields.find((field) => field.branches.join(' > ') === requiredBranch);
+    const forbiddenField = fields.find((field) => field.branches.join(' > ') === forbiddenBranch);
+    assert.equal(requiredField?.required, true,
+      `schema logical regression: ${sourcePath} ${requiredBranch} must require ${fieldPath}`);
+    assert.equal(requiredField?.presence, 'allowed',
+      `schema logical regression: ${sourcePath} ${requiredBranch} inverted ${fieldPath}`);
+    assert.equal(forbiddenField?.required, false,
+      `schema logical regression: ${sourcePath} ${forbiddenBranch} emitted forbidden ${fieldPath} as required`);
+    assert.equal(forbiddenField?.presence, 'forbidden',
+      `schema logical regression: ${sourcePath} ${forbiddenBranch} lost the not/absence constraint for ${fieldPath}`);
+    assert.match(forbiddenField?.meaning?.acceptedValues ?? '', /must be absent/u,
+      `schema logical regression: ${sourcePath} ${forbiddenBranch} documents ${fieldPath} with the wrong polarity`);
+  }
+  const syntheticUnknown = schemaFieldMeaning('skills/buster/plugins/openapi/schemas/config.schema.json', {
+    path: '$.operations[].newPublicControl', type: 'string', required: false, default: '<none>', description: '', constraints: [], branches: [],
+  }, ['skills/buster/plugins/openapi/plugin.json']);
+  assert.equal(syntheticUnknown.status, 'schema-meaning-blocker',
+    'schema semantic regression: a newly declared public nested field must fail closed without qualified meaning authority');
+  const syntheticBareWildcard = schemaFieldMeaning('skills/buster/plugins/openapi/schemas/config.schema.json', {
+    path: '$.{*}', type: 'string', required: false, default: '<none>', description: '', constraints: [], branches: [],
+  }, ['skills/buster/plugins/openapi/plugin.json']);
+  assert.equal(syntheticBareWildcard.status, 'schema-meaning-blocker',
+    'schema semantic regression: a wildcard with no named path segment must never match an empty token');
+  for (const field of allSchemaFields) {
+    for (const constraint of field.constraints) {
+      if (!['const', 'enum'].includes(constraint.name)) {
+        assert.notEqual(constraint.value, '<redacted:sensitive-field>', `${field.path}: structural schema constraint ${constraint.name} was incorrectly redacted`);
+      }
+    }
+  }
+  const deployedPayloads = deployedConfigPayloads();
+  const undeployedPayloads = undeployedConfigPayloads(deployedPayloads);
+  return {
+    generatedBy: 'scripts/docs-configuration-inventory.mjs',
+    discovery: {
+      platformSchema: 'skills/common/plugin-runtime/foundation/config/platform.schema.json',
+      pluginRule: 'every string or inline object registered as configSchema in plugin.json or openclaw.plugin.json below skills/{common,nova,buster}/plugins',
+      swarmConfig: swarmPath,
+    },
+    files,
+    swarm,
+    deployedPayloads,
+    undeployedPayloads,
+    totals: {
+      schemaFiles: files.length,
+      schemaFields: files.reduce((sum, file) => sum + file.fields.length, 0),
+      swarmFields: swarm?.fields.length ?? 0,
+      deployedConfigPayloads: deployedPayloads.length,
+      deployedStructuredPayloadLeaves: deployedPayloads.reduce((sum, payload) => sum + payload.leafFields, 0),
+      deployedPayloadsWithoutCheckedInReader: deployedPayloads.filter((payload) => !payload.executableBehaviorProved).length,
+      undeployedConfigPayloads: undeployedPayloads.length,
+      unresolvedSourceOwner: allSchemaFields.filter((field) => field.ownerRole === 'unknown').length + (swarm?.fields.filter((field) => field.ownerComponent === 'unknown').length ?? 0),
+      unknownRuntimeOwner: swarm?.fields.filter((field) => field.runtimeOwner === 'unknown').length ?? 0,
+      unknownConsumer: allSchemaFields.filter((field) => field.consumers.includes('unknown')).length + (swarm?.fields.filter((field) => field.consumers.includes('unknown')).length ?? 0),
+      conditionalOrUnknownRequired: swarm?.fields.filter((field) => field.required === 'conditional-or-unknown').length ?? 0,
+      publicSchemaLeaves: publicSchemaFields.filter((field) => !['object', 'array'].includes(field.type)).length,
+      publicSchemaFields: publicSchemaFields.length,
+      publicSchemaCollectionFields: publicSchemaFields.filter((field) => ['object', 'array'].includes(field.type)).length,
+      schemaAndRuntimeAuthorities: publicSchemaFields.filter((field) => field.meaning.status === 'schema-and-runtime-authority').length,
+      qualifiedRuntimeAuthorities: publicSchemaFields.filter((field) => field.meaning.status === 'qualified-runtime-authority').length,
+      schemaMeaningBlockers: schemaMeaningBlockers.length,
+    },
+  };
+}
+
+const observerGeneratedPrefix = 'skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/';
+const observerCanonicalPrefix = 'contracts/agent-observability/v1/src/';
+const observerSyncSource = 'skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs';
+function canonicalRuntimeSource(sourcePath) {
+  if (!sourcePath.startsWith(observerGeneratedPrefix)) return sourcePath;
+  const canonical = `${observerCanonicalPrefix}${sourcePath.slice(observerGeneratedPrefix.length)}`;
+  assert(exists(canonical), `CONFIG_RUNTIME_CANONICAL_SOURCE_MISSING: ${sourcePath} has no tracked observer contract authority`);
+  assert.equal(sha256(read(sourcePath)), sha256(read(canonical)),
+    `CONFIG_MATERIALIZED_SOURCE_DRIFT: ${sourcePath} differs from ${canonical}; regenerate it with ${observerSyncSource}`);
+  return canonical;
+}
+
+function runtimeTextSources() {
+  const files = new Set();
+  for (const sourceRoot of RUNTIME_SCAN_ROOTS) {
+    for (const file of walk(sourceRoot, (absolutePath) => TEXT_EXTENSIONS.has(path.extname(absolutePath))
+      && !(path.extname(absolutePath) === '.go' && absolutePath.endsWith('_test.go')))) files.add(file);
+  }
+  // Track the canonical contract even before the observer build materializes
+  // its ignored import directory; copies resolve to that same source identity.
+  return [...new Set([...files].map(canonicalRuntimeSource))].sort();
+}
+
+function maskQuotedShellHeredocs(text, file = '<shell environment source>') {
+  const custody = shellHeredocCustody(file, text);
+  let masked = text;
+  for (const body of custody.heredocs) {
+    const quoted = /^<<-?\s*['"]/u.test(text.slice(body.start, body.bodyStart));
+    if (quoted) masked = masked.slice(0, body.bodyStart)
+      + masked.slice(body.bodyStart, body.end).replace(/[^\n]/gu, ' ') + masked.slice(body.end);
+  }
+  return masked;
+}
+
+function configuredSecretResolverFacts(file, text, parsedSource = null) {
+  const source = parsedSource ?? ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const normalize = node => node.getText(source).replace(/\s+/gu, '');
+  const fail = detail => { throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}: configured receiver custody: ${detail}`); };
+  const nodes = []; const visit = node => { nodes.push(node); ts.forEachChild(node, visit); }; visit(source);
+  const requireNode = (predicate, normalized) => {
+    const matches = nodes.filter(node => predicate(node) && normalize(node) === normalized);
+    if (matches.length !== 1) fail(`missing or changed selector/guard ${normalized}`); return matches[0];
+  };
+  const mapping = requireNode(ts.isVariableDeclaration, 'mapping=context.config.environment');
+  const mappingGuard = requireNode(ts.isIfStatement, "if(!mapping||typeofmapping!=='object'||Array.isArray(mapping))thrownewError('environmentmappingisrequired');");
+  const frozen = requireNode(ts.isVariableDeclaration, 'names=Object.freeze({...(mappingasRecord<string,string>)})');
+  const selector = requireNode(ts.isVariableDeclaration, 'environmentName=names[request.resource.canonicalId]');
+  const denied = requireNode(ts.isIfStatement, 'if(!environmentName)thrownewError(`SECRET_DENIED:${request.resource.canonicalId}`);');
+  const capability = requireNode(ts.isIfStatement, "if(request.capability!=='secrets.read'||request.operation!=='resolve'){thrownewError('SECRET_OPERATION_UNSUPPORTED');}");
+  const cancelled = requireNode(ts.isIfStatement, "if(signal.aborted)thrownewError('ADAPTER_CANCELLED');");
+  const fence = requireNode(ts.isIfStatement, 'if(!confidential)fence.assertCurrent();');
+  const value = requireNode(ts.isVariableDeclaration, 'value=process.env[environmentName]');
+  const missing = requireNode(ts.isIfStatement, 'if(value===undefined||value.length===0)thrownewError(`SECRET_UNAVAILABLE:${request.resource.canonicalId}`);');
+  for (const node of [mapping,frozen,selector,value]) if (!(node.parent.flags & ts.NodeFlags.Const)) fail('mutable selector/configuration initialization');
+  for (const node of nodes) if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+    && /^(?:mapping|names|environmentName|value)(?:$|[.\[])/u.test(node.left.getText(source))) fail('configured selector or value written');
+  if (!(mapping.end < mappingGuard.getStart(source) && mappingGuard.end < frozen.getStart(source) && frozen.end < selector.getStart(source)
+    && selector.end < denied.getStart(source) && denied.end < value.getStart(source) && value.end < missing.getStart(source)
+    && fence.end < capability.getStart(source) && capability.end < cancelled.getStart(source) && cancelled.end < selector.getStart(source))) fail('selector authorization/read order changed');
+  const schemaPath = 'skills/common/plugins/secret-resolver/schemas/config.schema.json';
+  const pluginPath = 'skills/common/plugins/secret-resolver/plugin.json';
+  const schema = JSON.parse(fs.readFileSync(path.join(root,schemaPath),'utf8'));
+  const plugin = JSON.parse(fs.readFileSync(path.join(root,pluginPath),'utf8'));
+  if (schema.type !== 'object' || schema.additionalProperties !== false || !schema.required?.includes('environment')
+    || schema.properties?.environment?.type !== 'object' || schema.properties.environment.additionalProperties?.type !== 'string'
+    || schema.properties.environment.additionalProperties.pattern !== '^[A-Z][A-Z0-9_]*$'
+    || !plugin.adapters?.some(adapter => adapter.module === 'src/adapter.ts' && adapter.export === 'activate'
+      && adapter.configSchema === 'schemas/config.schema.json' && adapter.providesCapabilities?.includes('secrets.read'))) fail('registered mapping-schema authority changed');
+  const receiver = value.initializer;
+  return [{index:receiver.getStart(source),path:file,line:lineAt(text,receiver.getStart(source)),access:'configured-environment-key',
+    function:'activate / invoke',schemaVersion:'registered secret-resolver config.schema.json',configurationField:'environment{logical secret identifier}',canonicalPage:'reference/plugin-configuration.md',
+    purpose:'Maps one allowed logical secret identifier to the process environment-variable name read for a confidential secrets.read / resolve request.',
+    acceptedForm:'The registered mapping schema requires variable names matching `[A-Z][A-Z0-9_]*`. The adapter itself checks mapping shape, not each mapped name; the selected variable must contain non-empty text.',
+    defaultBehavior:'No mapping default. Activation copies and freezes the configured mapping; arbitrary supported names are selectors, not a closed list of example names.',
+    emptyBehavior:'An absent mapping stops activation. An empty object or unmapped identifier returns SECRET_DENIED; an absent or empty selected variable returns SECRET_UNAVAILABLE.',
+    invalidBehavior:'Registered configuration-schema validation rejects malformed variable names. Unsupported capability/operation returns SECRET_OPERATION_UNSUPPORTED; cancellation returns ADAPTER_CANCELLED; the current fence is required outside the confidential lane.',
+    precedence:'The copied activation configuration maps request.resource.canonicalId to a variable name. The current process environment supplies its contents at each permitted invocation; later mutation of the original mapping does not change the frozen copy.',
+    impact:'Changing the mapping changes which process-held secret bytes one granted logical identifier can resolve on the next activation.',
+    failure:'Activation or the resolve request stops with its mapping, authorization, cancellation, missing-value, or fence error; no value is returned on those paths.',
+    required:'mapping required at activation; selected contents required for each permitted mapped resolve request',condition:'Only an allowed secrets.read / resolve request that passes cancellation and the applicable current-fence check.',
+    evidence:[mapping,mappingGuard,frozen,fence,capability,cancelled,selector,denied,receiver,missing].map(node=>({path:file,line:lineAt(text,node.getStart(source)),endLine:lineAt(text,node.end)})).concat([{path:schemaPath,line:1,endLine:1},{path:pluginPath,line:7,endLine:17}]),
+  }];
+}
+
+function configuredEnvironmentReceiverFacts(file, text, parsedSource = null) {
+  if (file === 'skills/common/plugins/secret-resolver/src/adapter.ts') return configuredSecretResolverFacts(file, text, parsedSource);
+  const nova = file === 'skills/nova/core/test-gates/runtime-config.ts';
+  if (!nova && file !== 'skills/buster/engine/test-gates/production.ts') return [];
+  const loaderName = nova ? 'loadProductionNovaTestGate' : 'loadProductionBusterRemotePlanRuntime';
+  const schemaVersion = nova ? 'nova-remote-test-gate-runtime.v1' : 'buster-remote-plan-runtime.v1';
+  const prefix = nova ? 'NOVA' : 'BUSTER';
+  const keyField = nova ? 'sourceAttestationPrivateKeyEnvironmentVariable' : 'sourceAttestationPublicKeyEnvironmentVariable';
+  const keyValue = nova ? 'sourceAttestationPrivateKey' : 'sourceAttestationPublicKey';
+  const source = parsedSource ?? ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const normalize = node => node.getText(source).replace(/\s+/gu, '');
+  const fail = detail => { throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}: configured receiver custody: ${detail}`); };
+  const loaders = source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === loaderName);
+  if (loaders.length !== 1 || !loaders[0].body) fail('loader missing or ambiguous');
+  const loader = loaders[0]; const parameter = loader.parameters.find(node => node.name.getText(source) === 'environment');
+  if (!parameter?.initializer || normalize(parameter.initializer) !== 'process.env') fail('process environment default changed');
+  const nodes = []; const visit = node => { nodes.push(node); ts.forEachChild(node, visit); }; visit(loader.body);
+  const statements = nodes.filter(ts.isIfStatement);
+  const requireGuard = (condition, body) => {
+    const matches = statements.filter(node => normalize(node.expression) === condition && normalize(node.thenStatement) === body);
+    if (matches.length !== 1) fail(`missing or changed guard ${condition}`);
+    return matches[0];
+  };
+  const version = requireGuard(`value.schemaVersion!=='${schemaVersion}'`, `thrownewError('${prefix}_REMOTE_CONFIG_VERSION_INVALID');`);
+  const declaration = name => {
+    const matches = nodes.filter(node => ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name);
+    if (matches.length !== 1) fail(`ambiguous selector ${name}`); return matches[0];
+  };
+  if (normalize(declaration('canonical').initializer) !== 'fs.realpathSync(file)'
+    || normalize(declaration('value').initializer) !== "object(JSON.parse(fs.readFileSync(canonical,'utf8')),'root')") fail('canonical configuration-file acquisition changed');
+  if (nova) {
+    if (normalize(declaration('authentication').initializer) !== "value.authentication==='spiffe-proxy'?'spiffe-proxy':'bearer'") fail('authentication selection changed');
+  } else if (normalize(declaration('trustedPeerSpiffeIds').initializer) !== "value.trustedPeerSpiffeIds===undefined?undefined:stringArray(value.trustedPeerSpiffeIds,'trustedPeerSpiffeIds')") fail('SPIFFE selection changed');
+  const conditional = statements.filter(node => normalize(node.expression) === (nova ? "authentication==='bearer'" : '!trustedPeerSpiffeIds'));
+  if (conditional.length !== 1 || !ts.isBlock(conditional[0].thenStatement)) fail('token enable condition changed');
+  const tokenGuard = requireGuard("typeofvalue.tokenEnvironmentVariable!=='string'||!/^[A-Z][A-Z0-9_]*$/u.test(value.tokenEnvironmentVariable)", `{thrownewError('${prefix}_REMOTE_CONFIG_TOKEN_ENV_INVALID');}`);
+  const tokenMissing = requireGuard('!token', `thrownewError('${prefix}_REMOTE_CONFIG_TOKEN_MISSING');`);
+  const keyGuard = requireGuard('!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName)||sourceKeyName===tokenName', `{thrownewError('${prefix}_SOURCE_ATTESTATION_ENV_INVALID');}`);
+  const keyMissing = requireGuard(`!${keyValue}`, `thrownewError('${prefix}_SOURCE_ATTESTATION_${nova ? 'PRIVATE' : 'PUBLIC'}_KEY_MISSING');`);
+  const tokenAssignments = nodes.filter(node => ts.isBinaryExpression(node) && ts.isIdentifier(node.left) && node.left.text === 'tokenName'
+    && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment);
+  if (tokenAssignments.length !== 1 || normalize(tokenAssignments[0]) !== 'tokenName=value.tokenEnvironmentVariable'
+    || declaration('tokenName').initializer) fail('token selector write authority changed');
+  const keyDeclaration = declaration('sourceKeyName');
+  if (!(keyDeclaration.parent.flags & ts.NodeFlags.Const) || normalize(keyDeclaration.initializer) !== `value.${keyField}asstring`) fail('public-key selector initializer changed');
+  for (const node of nodes) {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+      && /^(?:environment|value|sourceKeyName)(?:$|[.\[])/u.test(node.left.getText(source))) fail('configuration or receiver binding is written');
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ['environment','value','sourceKeyName','tokenName'].includes(node.operand.getText(source))
+      && [ts.SyntaxKind.PlusPlusToken,ts.SyntaxKind.MinusMinusToken].includes(node.operator)) fail('selector increment/decrement');
+  }
+  if (nova) {
+    requireGuard("parsedSourceKey.asymmetricKeyType!=='ed25519'", "thrownewError('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID');");
+    const parses = nodes.filter(node => ts.isBinaryExpression(node) && normalize(node) === 'parsedSourceKey=crypto.createPrivateKey(sourceAttestationPrivateKey)');
+    if (parses.length !== 1) fail('Ed25519 private-key parse changed');
+  }
+  const facts = [];
+  for (const [key, configurationField, guard, missing, condition] of [
+    ['tokenName', 'tokenEnvironmentVariable', tokenGuard, tokenMissing, nova ? 'Only when effective authentication is bearer; absent or unrecognized authentication selects bearer.' : 'Only when trustedPeerSpiffeIds is absent.'],
+    ['sourceKeyName', keyField, keyGuard, keyMissing, 'Always required by the selected remote-test runtime.'],
+  ]) {
+    const receivers = nodes.filter(node => ts.isElementAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'environment'
+      && ts.isIdentifier(node.argumentExpression) && node.argumentExpression.text === key);
+    if (receivers.length !== 1) fail(`receiver removed or duplicated for ${configurationField}`);
+    const receiver = receivers[0];
+    if (key === 'tokenName') {
+      let ancestor = receiver.parent; while (ancestor && ancestor !== conditional[0].thenStatement) ancestor = ancestor.parent;
+      if (!ancestor || tokenGuard.parent !== conditional[0].thenStatement || tokenMissing.parent !== conditional[0].thenStatement
+        || receiver.getStart(source) < tokenGuard.end || receiver.getStart(source) > tokenMissing.getStart(source)) fail('token conditional/guard/read order changed');
+    } else if (receiver.getStart(source) < keyGuard.end || receiver.getStart(source) > keyMissing.getStart(source)) fail('public-key guard/read order changed');
+    const publicKey = key === 'sourceKeyName';
+    const selectedValue = publicKey ? declaration(keyValue) : declaration('token');
+    if (publicKey && (!(selectedValue.parent.flags & ts.NodeFlags.Const) || normalize(selectedValue.initializer) !== 'environment[sourceKeyName]')) fail('key contents fallback or write changed');
+    const tokenWrites = nodes.filter(node => ts.isBinaryExpression(node) && ts.isIdentifier(node.left) && node.left.text === 'token' && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment);
+    if (!publicKey && (selectedValue.initializer || tokenWrites.length !== 1 || normalize(tokenWrites[0]) !== 'token=environment[tokenName]')) fail('token contents fallback or write changed');
+    facts.push({ index: receiver.getStart(source), path: file, line: lineAt(text, receiver.getStart(source)), access:'configured-environment-key',
+      function:loaderName, schemaVersion, configurationField,
+      canonicalPage:nova ? 'reference/environment-variables.md' : 'reference/buster-runtime-configuration.md', condition,
+      purpose: publicKey ? `Selects the environment variable that contains the Nova source-attestation ${nova ? 'private signing' : 'trusted public'} key.` : 'Selects the environment variable that contains the remote-test bearer token when the selected authentication mode requires it.',
+      acceptedForm: publicKey ? 'A variable name matching `[A-Z][A-Z0-9_]*`, different from the selected token variable; its non-empty contents supply the required source-attestation key.' : 'A variable name matching `[A-Z][A-Z0-9_]*`; its non-empty contents supply the bearer token.',
+      defaultBehavior:'No selector default. The configuration file selects an arbitrary supported variable name; documented examples are not a closed allow-list.',
+      emptyBehavior: publicKey ? `A missing, empty, or malformed selector is rejected; an absent or empty selected variable returns ${prefix}_SOURCE_ATTESTATION_${nova ? 'PRIVATE' : 'PUBLIC'}_KEY_MISSING.` : `In the selected SPIFFE mode the token selector is not read. In bearer mode, a missing, empty, or malformed selector is rejected; an absent or empty selected variable returns ${prefix}_REMOTE_CONFIG_TOKEN_MISSING.`,
+      invalidBehavior: publicKey ? `An invalid or reused selector returns ${prefix}_SOURCE_ATTESTATION_ENV_INVALID; ${nova ? 'this loader rejects a malformed or non-Ed25519 private key' : 'downstream Ed25519 verification rejects unusable public-key bytes'}.` : `An invalid selector returns ${prefix}_REMOTE_CONFIG_TOKEN_ENV_INVALID; downstream bearer verification rejects unusable credentials.`,
+      precedence:'The canonical JSON file selects the key; the function environment argument supplies its contents and defaults to the current process environment. The selected SPIFFE mode bypasses only bearer-token selection.',
+      impact:publicKey ? nova ? 'Changing the selector changes the private Ed25519 key used to sign Nova source attestations.' : 'Changing the selector changes which Nova attestation authority the remote-plan runtime trusts.' : 'Changing the selector changes the bearer credential used for the non-SPIFFE remote-plan transport.',
+      failure:'Configuration loading stops before remote-plan work is admitted when its selected required variable is missing or unusable.',
+      required:publicKey ? 'required' : nova ? 'required only in effective bearer mode' : 'required only without trustedPeerSpiffeIds',
+      evidence:[version,guard,missing,receiver].map(node=>({path:file,line:lineAt(text,node.getStart(source)),endLine:lineAt(text,node.end)})),
+    });
+  }
+  return facts;
+}
+
+function nodeEnvironmentReads(file, text, sourcePositions = null, sourceText = text) {
+  const sourceFile = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true,
+    file.endsWith('.ts') || file.endsWith('.mts') || file.endsWith('.cts') ? ts.ScriptKind.TS : ts.ScriptKind.JS);
+  if (sourceFile.parseDiagnostics.length) {
+    const diagnostic = sourceFile.parseDiagnostics[0], index = diagnostic.start ?? 0;
+    throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}:${lineAt(sourceText,sourcePositions ? sourcePositions[index] : index)}: malformed selected JavaScript/TypeScript source: ${ts.flattenDiagnosticMessageText(diagnostic.messageText,' ')}`);
+  }
+  const reads = [];
+  const configuredReceivers = configuredEnvironmentReceiverFacts(file, text, sourceFile);
+  const computedReaders = new Map();
+  const writes = new Set();
+  const collectWrites = (node) => {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+      let target = node.left;
+      while (ts.isPropertyAccessExpression(target) || ts.isElementAccessExpression(target)) target = target.expression;
+      if (ts.isIdentifier(target)) writes.add(target.text);
+    }
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ts.isIdentifier(node.operand)
+      && [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)) writes.add(node.operand.text);
+    ts.forEachChild(node, collectWrites);
+  };
+  collectWrites(sourceFile);
+  const unsupported = (node, reason) => { throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}:${lineAt(sourceText, sourcePositions ? sourcePositions[node.getStart(sourceFile)] : node.getStart(sourceFile))}: ${reason}`); };
+  const importedProcessObjects = new Set(); const importedEnvironmentObjects = new Set(); const importedNames = new Set();
+  for (const statement of sourceFile.statements) if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.importClause) {
+    const builtin = ['process','node:process'].includes(statement.moduleSpecifier.text);
+    const clause = statement.importClause;
+    if (clause.name) { importedNames.add(clause.name.text); if (builtin) importedProcessObjects.add(clause.name.text); }
+    if (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings)) { importedNames.add(clause.namedBindings.name.text); if (builtin) importedProcessObjects.add(clause.namedBindings.name.text); }
+    if (clause.namedBindings && ts.isNamedImports(clause.namedBindings)) for (const specifier of clause.namedBindings.elements) {
+      importedNames.add(specifier.name.text);
+      if (builtin && (specifier.propertyName ?? specifier.name).text === 'env') importedEnvironmentObjects.add(specifier.name.text);
+      if (builtin && (specifier.propertyName ?? specifier.name).text === 'default') importedProcessObjects.add(specifier.name.text);
+    }
+  }
+  const processEnvironment = (node) => {
+    if (!(ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node))) return false;
+    const environmentMember = ts.isPropertyAccessExpression(node) ? node.name.text === 'env' : ts.isStringLiteral(node.argumentExpression) && node.argumentExpression.text === 'env';
+    if (!environmentMember) return false;
+    const processRequire = expression => ts.isCallExpression(expression) && ts.isIdentifier(expression.expression) && expression.expression.text === 'require'
+      && expression.arguments.length === 1 && ts.isStringLiteral(expression.arguments[0]) && ['process','node:process'].includes(expression.arguments[0].text);
+    if (processRequire(node.expression)) unsupported(node,'unqualified CommonJS process-module environment capability');
+    if (!ts.isIdentifier(node.expression)) return false;
+    const name = node.expression.text;
+    let locallyBound = false;
+    for (let scope=node.expression.parent;scope;scope=scope.parent) if ((declarations.get(name) ?? []).some(entry=>entry.scope===scope)) { locallyBound=true;break; }
+    if (locallyBound && processRequire(bindingFor(node.expression)?.initializer ?? node.expression)) unsupported(node,'unqualified CommonJS process-module environment alias');
+    if (locallyBound || !(importedProcessObjects.has(name) || name === 'process' && !importedNames.has(name))) return false;
+    return ts.isPropertyAccessExpression(node) ? node.name.text === 'env'
+      : ts.isStringLiteral(node.argumentExpression) && node.argumentExpression.text === 'env';
+  };
+  const declarations = new Map(); const aliasNodes = new Set();
+  const scopeOf = node => {
+    let scope = node.parent;
+    if (ts.isParameter(node)) return scope;
+    while (scope && !ts.isBlock(scope) && !ts.isSourceFile(scope) && !ts.isFunctionLike(scope) && !ts.isForOfStatement(scope) && !ts.isForInStatement(scope) && !ts.isForStatement(scope) && !ts.isCatchClause(scope)) scope = scope.parent;
+    return scope;
+  };
+  const collectDeclarations = node => {
+    if ((ts.isVariableDeclaration(node) || ts.isParameter(node)) && ts.isIdentifier(node.name)) {
+      const entries = declarations.get(node.name.text) ?? []; entries.push({ node, scope: scopeOf(node) }); declarations.set(node.name.text, entries);
+    }
+    ts.forEachChild(node, collectDeclarations);
+  };
+  collectDeclarations(sourceFile);
+  const bindingFor = node => {
+    if (!ts.isIdentifier(node)) return null;
+    const entries = declarations.get(node.text) ?? [];
+    for (let scope = node.parent; scope; scope = scope.parent) {
+      const matches = entries.filter(entry => entry.scope === scope);
+      if (matches.length > 1) {
+        if (matches.some(entry => aliasNodes.has(entry.node))) unsupported(node, `ambiguous environment binding ${node.text}`);
+        return null; // Unrelated pure bindings are not environment authority.
+      }
+      if (matches.length) return matches[0].node;
+    }
+    return null;
+  };
+  const aliasExpression = (node) => {
+    const binding = bindingFor(node);
+    const alias = binding && aliasNodes.has(binding) || !binding && importedEnvironmentObjects.has(node.text);
+    if (alias && writes.has(node.text)) unsupported(node, `written environment alias ${node.text}`);
+    return processEnvironment(node) || alias;
+  };
+  const functionName = (node) => node.name && ts.isIdentifier(node.name) ? node.name.text
+    : ts.isVariableDeclaration(node.parent) && ts.isIdentifier(node.parent.name) ? node.parent.name.text : null;
+  const collectAliases = (node) => {
+    if (ts.isParameter(node) && ts.isIdentifier(node.name)
+      && (node.initializer && aliasExpression(node.initializer) || /(?:^|\.)ProcessEnv\b/u.test(node.type?.getText(sourceFile) ?? ''))) aliasNodes.add(node);
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name)) {
+      if (node.initializer && aliasExpression(node.initializer)) aliasNodes.add(node);
+    }
+    ts.forEachChild(node, collectAliases);
+  };
+  collectAliases(sourceFile);
+  const constantKey = node => {
+    const binding = bindingFor(node);
+    return binding?.initializer && (ts.isStringLiteral(binding.initializer) || ts.isNoSubstitutionTemplateLiteral(binding.initializer))
+      ? binding.initializer.text : null;
+  };
+  const snapshotObservation = node => {
+    const comparison = node.parent;
+    if (!ts.isBinaryExpression(comparison) || comparison.left !== node || comparison.operatorToken.kind !== ts.SyntaxKind.ExclamationEqualsEqualsToken) return false;
+    const callback = comparison.parent;
+    if (!ts.isArrowFunction(callback) || callback.body !== comparison || callback.parameters.length !== 1
+      || !ts.isArrayBindingPattern(callback.parameters[0].name)) return false;
+    const [key, value] = callback.parameters[0].name.elements;
+    if (!key || !value || !ts.isIdentifier(key.name) || !ts.isIdentifier(value.name)
+      || !ts.isIdentifier(node.argumentExpression) || node.argumentExpression.text !== key.name.text
+      || !ts.isIdentifier(comparison.right) || comparison.right.text !== value.name.text) return false;
+    const call = callback.parent;
+    if (!ts.isCallExpression(call) || !ts.isPropertyAccessExpression(call.expression) || call.expression.name.text !== 'some') return false;
+    const entries = call.expression.expression;
+    if (!ts.isCallExpression(entries) || entries.expression.getText(sourceFile) !== 'Object.entries'
+      || entries.arguments.length !== 1 || !ts.isIdentifier(entries.arguments[0])) return false;
+    const binding = bindingFor(entries.arguments[0]);
+    return binding && (binding.parent.flags & ts.NodeFlags.Const) && !writes.has(entries.arguments[0].text)
+      && ts.isObjectLiteralExpression(binding.initializer) && binding.initializer.properties.length === 1
+      && ts.isSpreadAssignment(binding.initializer.properties[0]) && processEnvironment(binding.initializer.properties[0].expression);
+  };
+  const collectComputedReaders = (node) => {
+    if ((ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node) || ts.isMethodDeclaration(node))) {
+      const name = functionName(node);
+      if (name) {
+        const parameters = node.parameters.map((parameter) => ts.isIdentifier(parameter.name) ? parameter.name.text : null);
+        const inspect = (child) => {
+          if (ts.isElementAccessExpression(child) && ts.isIdentifier(child.argumentExpression)) {
+            const keyIndex = parameters.indexOf(child.argumentExpression.text);
+            if (keyIndex >= 0) {
+              const environmentIndex = aliasExpression(child.expression) ? null
+                : ts.isIdentifier(child.expression) ? parameters.indexOf(child.expression.text) : -1;
+              if (environmentIndex === null || environmentIndex >= 0) {
+                const readers = computedReaders.get(name) ?? [];
+                readers.push({ environmentIndex, keyIndex });
+                computedReaders.set(name, readers);
+              }
+            }
+          }
+          ts.forEachChild(child, inspect);
+        };
+        if (node.body) inspect(node.body);
+      }
+    }
+    ts.forEachChild(node, collectComputedReaders);
+  };
+  collectComputedReaders(sourceFile);
+  const add = (name, node, kind) => {
+    if (typeof name !== 'string' || !/^[A-Za-z_][A-Za-z0-9_]*$/u.test(name)) unsupported(node,'unsupported environment key spelling outside finite identifier-shaped literal grammar');
+    reads.push({ name, index: node.getStart(sourceFile), kind });
+  };
+  const visit = (node) => {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+      && (processEnvironment(node.left) || ((ts.isPropertyAccessExpression(node.left) || ts.isElementAccessExpression(node.left)) && aliasExpression(node.left.expression)))) unsupported(node.left,'written environment receiver');
+    if (ts.isDeleteExpression(node) && (ts.isPropertyAccessExpression(node.expression) || ts.isElementAccessExpression(node.expression))
+      && aliasExpression(node.expression.expression)) unsupported(node.expression,'deleted environment receiver');
+    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name)
+      && node.initializer && aliasExpression(node.initializer)) {
+      for (const element of node.name.elements) {
+        if (element.dotDotDotToken) unsupported(element,'environment destructuring rest capability');
+        const key = element.propertyName ?? element.name;
+        if (ts.isIdentifier(key) || ts.isStringLiteral(key)) add(key.text, element, 'node-process-env-destructure');
+        else if (ts.isComputedPropertyName(key)) {
+          const expression=key.expression;
+          if(ts.isStringLiteral(expression)||ts.isNoSubstitutionTemplateLiteral(expression)) add(expression.text,element,'node-process-env-computed-destructure');
+          else if(ts.isIdentifier(expression)&&constantKey(expression)!==null) {
+            if(writes.has(expression.text)) unsupported(element,`written environment destructuring key ${expression.text}`);
+            add(constantKey(expression),element,'node-process-env-computed-destructure');
+          } else unsupported(element,'runtime-computed environment destructuring key');
+        } else unsupported(element,'unsupported environment destructuring selector');
+      }
+    } else if (ts.isPropertyAccessExpression(node) && aliasExpression(node.expression)) {
+      add(node.name.text, node, processEnvironment(node.expression) ? 'node-process-env' : 'node-process-env-alias');
+    } else if (ts.isElementAccessExpression(node) && aliasExpression(node.expression)) {
+      if (ts.isStringLiteral(node.argumentExpression) || ts.isNoSubstitutionTemplateLiteral(node.argumentExpression)) {
+        add(node.argumentExpression.text, node, 'node-process-env-computed');
+      } else if (ts.isIdentifier(node.argumentExpression) && constantKey(node.argumentExpression) !== null) {
+        if (writes.has(node.argumentExpression.text)) unsupported(node, `written environment key ${node.argumentExpression.text}`);
+        add(constantKey(node.argumentExpression), node, 'node-process-env-computed');
+      } else {
+        let loop = node.parent; let literalLoop = null;
+        while (loop && !ts.isFunctionLike(loop)) {
+          if (ts.isForOfStatement(loop) && ts.isVariableDeclarationList(loop.initializer)
+            && loop.initializer.declarations.length === 1 && ts.isIdentifier(loop.initializer.declarations[0].name)
+            && ts.isIdentifier(node.argumentExpression) && loop.initializer.declarations[0].name.text === node.argumentExpression.text
+            && !writes.has(node.argumentExpression.text)) {
+            let collection = loop.expression;
+            if (ts.isIdentifier(collection)) { const binding = bindingFor(collection); if (binding && binding.parent.flags & ts.NodeFlags.Const && !writes.has(collection.text)) collection = binding.initializer; }
+            if (collection && ts.isCallExpression(collection) && collection.expression.getText(sourceFile) === 'Object.freeze') collection = collection.arguments[0];
+            while (collection && (ts.isAsExpression(collection) || ts.isParenthesizedExpression(collection))) collection = collection.expression;
+            if (collection && ts.isArrayLiteralExpression(collection) && collection.elements.every(ts.isStringLiteral)) { literalLoop = collection.elements; break; }
+          }
+          loop = loop.parent;
+        }
+        if (literalLoop) { for (const key of literalLoop) add(key.text, node, 'node-process-env-literal-loop'); }
+        let owner = node.parent;
+        while (owner && !ts.isFunctionLike(owner)) owner = owner.parent;
+        const boundedHelper = owner && functionName(owner) && computedReaders.has(functionName(owner))
+          && ts.isIdentifier(node.argumentExpression) && owner.parameters.some(parameter => ts.isIdentifier(parameter.name) && parameter.name.text === node.argumentExpression.text);
+        if (!boundedHelper && !literalLoop && !snapshotObservation(node) && !configuredReceivers.some(fact => fact.index === node.getStart(sourceFile))) unsupported(node, 'runtime-computed environment key');
+      }
+    } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && computedReaders.has(node.expression.text)) {
+      for (const reader of computedReaders.get(node.expression.text)) {
+        const environmentArgument = reader.environmentIndex === null ? null : node.arguments[reader.environmentIndex];
+        if (reader.environmentIndex !== null && (!environmentArgument || !aliasExpression(environmentArgument))) continue;
+        const argument = node.arguments[reader.keyIndex];
+        if (argument && (ts.isStringLiteral(argument) || ts.isNoSubstitutionTemplateLiteral(argument))) add(argument.text, node, 'node-process-env-computed-helper');
+        else if (argument && ts.isIdentifier(argument) && constantKey(argument) !== null) {
+          if (writes.has(argument.text)) unsupported(node, `written environment helper key ${argument.text}`);
+          add(constantKey(argument), node, 'node-process-env-computed-helper');
+        } else unsupported(node,'runtime-computed or missing environment helper key');
+      }
+    } else if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)
+      && node.expression.name.text === 'get' && ts.isPropertyAccessExpression(node.expression.expression)
+      && ts.isIdentifier(node.expression.expression.expression) && node.expression.expression.expression.text === 'Deno'
+      && node.expression.expression.name.text === 'env') {
+      if(node.arguments.length!==1) unsupported(node,'unsupported Deno environment getter argument custody');
+      const argument=node.arguments[0];
+      if(ts.isStringLiteral(argument)||ts.isNoSubstitutionTemplateLiteral(argument)) add(argument.text,node,'deno-env');
+      else if(ts.isIdentifier(argument)&&constantKey(argument)!==null) {
+        if(writes.has(argument.text)) unsupported(node,`written Deno environment key ${argument.text}`);
+        add(constantKey(argument),node,'deno-env');
+      } else unsupported(node,'runtime-computed Deno environment key');
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  return reads;
+}
+
+function quotedProgramToken(token) {
+  if (token.startsWith("'") && token.endsWith("'")) return { code: token.slice(1, -1), offset: 1 };
+  if (token.startsWith('"') && token.endsWith('"')) {
+    return { code: token.slice(1, -1).replace(/\\([\\"$`])/gu, '$1'), offset: 1 };
+  }
+  return { code: token, offset: 0 };
+}
+
+function pythonArgvMode(tokens, python, diagnostic) {
+  let modeIndex = python + 1;
+  while (['-I', '-E', '-s', '-S', '-u', '-B', '-q', '-O', '-OO'].includes(tokens[modeIndex])) modeIndex += 1;
+  const mode = tokens[modeIndex];
+  assert(!mode?.startsWith('-') || ['-', '-c', '-m', '--version', '-V', '--help', '-h'].includes(mode),
+    `${diagnostic}: unresolved Python argv mode`);
+  return { stdin: mode === undefined || mode === '-', codeFlag: mode === '-c' ? modeIndex : -1 };
+}
+
+function pythonInterpreterIndex(tokens, diagnostic) {
+  let first = 0;
+  const wrapperIdentity = (value) => typeof value === 'string' && (value.startsWith('/') || !value.includes('/')) ? path.posix.basename(value) : null;
+  while (['env', 'sudo'].includes(wrapperIdentity(tokens[first]))) {
+    const wrapper = wrapperIdentity(tokens[first++]);
+    while (tokens[first]) {
+      if (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[first]) || tokens[first] === '--') { first += 1; continue; }
+      if (wrapper === 'env' && ['-i', '--ignore-environment'].includes(tokens[first])) { first += 1; continue; }
+      if (wrapper === 'env' && ['-u', '--unset'].includes(tokens[first])) { first += 2; continue; }
+      assert(!tokens[first].startsWith('-'), `${diagnostic}: unresolved interpreter wrapper options`);
+      break;
+    }
+  }
+  return first;
+}
+
+function pythonShellPrograms(text, depth = 0) {
+  assert(depth < 16, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: literal shell nesting limit');
+  // Finite lexical command acquisition, not shell execution. Quoted words and
+  // every heredoc body belong to their command; recipe text is never rescanned.
+  const programs = [];
+  let unresolvedStdin = false;
+  let words = [];
+  let redirects = [];
+  // Separators end argv, but heredoc bodies start only after the newline.
+  // Retain each redirect with its original command until that body is consumed.
+  const pendingHeredocs = [];
+  let inputRedirect = null;
+  const executable = () => {
+    const tokens = words.map((word) => word.value);
+    let first = 0;
+    while (tokens[first] && (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[first])
+      || ['if', 'then', 'elif', 'do', 'while', 'until', '!', 'exec', 'command'].includes(tokens[first]))) first += 1;
+    first += pythonInterpreterIndex(tokens.slice(first), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED');
+    let python = first;
+    if (['docker', 'kubectl'].includes(tokens[first]) && tokens.includes('exec')) {
+      python = tokens.findIndex((word, index) => index > first && /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(word));
+    }
+    if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(tokens[first] ?? '')) {
+      const bodyIndex = nodeShellArgvSelection(tokens, first, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED');
+      return bodyIndex === null ? null : { shell: true, codeFlag: bodyIndex - 1 };
+    }
+    if (!/^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(tokens[python] ?? '')) {
+      // An expanded executable with recognizable Python -c source has lost
+      // interpreter custody. Do not infer shell variable values or omit it.
+      const code = tokens.indexOf('-c', first + 1);
+      assert(!words[first]?.dynamic || code < 0
+        || !/\b(?:import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(tokens[code + 1] ?? ''),
+      'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved dynamic interpreter custody');
+      return words[first]?.dynamic ? { dynamicInterpreter: true, index: words[first].positions[0] ?? 0 } : null;
+    }
+    // Only no argument or an explicit '-' selects Python stdin. Options
+    // with operands and script/module modes must not promote stdin as source.
+    return { tokens, python, ...pythonArgvMode(tokens, python, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED') };
+  };
+  const flush = () => {
+    const command = executable();
+    if (command) {
+      const flag = command.codeFlag;
+      if (flag >= 0) {
+        assert(words[flag + 1], 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: missing literal -c body');
+        const body = words[flag + 1];
+        assert(!body.dynamic, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: dynamically expanded Python body');
+        if (command.shell) {
+          const nested = pythonShellPrograms(body.value, depth + 1);
+          assert(!nested.unresolvedStdin, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved nested shell stdin custody');
+          for (const program of nested) programs.push({ ...program,
+            ...(program.positions ? { positions: program.positions.map((position) => body.positions[position]) } : {}) });
+        } else programs.push({ code: body.value, positions: body.positions, kind: 'inline' });
+      }
+    }
+    assert(!inputRedirect, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: missing stdin redirect path');
+    const winner = redirects.filter((redirect) => redirect.fd === 0).at(-1);
+    if (command?.stdin && !winner) unresolvedStdin = true;
+    if (command?.stdin && winner?.body && !winner.output) programs.push({ fileInput: winner.body, kind: 'file-stdin' });
+    const result = { command, redirects };
+    if (redirects.some((redirect) => !redirect.body)) pendingHeredocs.push(result);
+    words = []; redirects = [];
+    return result;
+  };
+  let index = 0;
+  while (index < text.length) {
+    if (text[index] === '#') { while (index < text.length && text[index] !== '\n') index += 1; continue; }
+    if (/\s/u.test(text[index])) {
+      if (text[index] === '\n') {
+        flush();
+        index += 1;
+        for (const command of pendingHeredocs.splice(0)) {
+          for (const redirect of command.redirects) {
+            if (redirect.body) continue;
+            const start = index;
+            let end = index;
+            while (end < text.length) {
+              const next = text.indexOf('\n', end);
+              const stop = next < 0 ? text.length : next;
+              if ((redirect.stripTabs ? text.slice(end, stop).replace(/^\t+/u, '') : text.slice(end, stop)) === redirect.delimiter) break;
+              end = stop + 1;
+            }
+            assert(end < text.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated heredoc');
+            const rawBody = text.slice(start, end);
+            if (command.command?.dynamicInterpreter && redirect.fd === 0 && redirect === command.redirects.filter(item => item.fd === 0).at(-1)
+              && /\b(?:import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(rawBody))
+              assert.fail(`PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved dynamic interpreter stdin custody at line ${lineAt(text,command.command.index)}`);
+            assert(redirect.quoted || !/\$\(|`/u.test(rawBody),
+              command.command?.stdin ? 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: expanded Python heredoc custody'
+                : 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: expanded executable heredoc custody');
+            if (command.command?.stdin && redirect.fd === 0 && redirect === command.redirects.filter((item) => item.fd === 0).at(-1)) {
+              const raw = text.slice(start, end);
+              assert(redirect.quoted || !/[$`]|\\(?:[\\$`]|\n)/u.test(raw), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: expanded Python heredoc custody');
+              const positions = []; let code = '';
+              for (let offset = 0; offset < raw.length; offset += 1) {
+                if (redirect.stripTabs && (offset === 0 || raw[offset - 1] === '\n')) {
+                  while (raw[offset] === '\t') offset += 1;
+                }
+                if (offset < raw.length) { code += raw[offset]; positions.push(start + offset); }
+              }
+              programs.push({ code, positions, kind: 'heredoc' });
+            }
+            const next = text.indexOf('\n', end);
+            index = next < 0 ? text.length : next + 1;
+          }
+        }
+      } else index += 1;
+      continue;
+    }
+    if (text.startsWith('&>', index)) assert(!executable(), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: combined Python output redirection custody');
+    if (';|&()'.includes(text[index])) { flush(); index += 1; continue; }
+    if (text.startsWith('<<<', index)) {
+      assert(!executable(), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: Python here-string custody');
+      index += 3; continue;
+    }
+    if (text.startsWith('<<', index)) {
+      const descriptor = words.at(-1);
+      const fd = descriptor && /^\d+$/u.test(descriptor.value) && descriptor.positions.at(-1) === index - 1 ? Number(words.pop().value) : 0;
+      const stripTabs = text[index + 2] === '-'; index += stripTabs ? 3 : 2;
+      while (/[ \t]/u.test(text[index] ?? '') && index < text.length) index += 1;
+      let delimiter = ''; let quote = null; let quoted = false;
+      while (index < text.length && (quote || !/[\s;|&)]/u.test(text[index]))) {
+        const char = text[index++];
+        if ((char === "'" || char === '"') && (!quote || quote === char)) { quoted = true; quote = quote ? null : char; continue; }
+        if (char === '\\') { quoted = true; assert(index < text.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: incomplete heredoc delimiter escape'); delimiter += text[index++]; continue; }
+        delimiter += char;
+      }
+      redirects.push({ delimiter, stripTabs, fd, quoted }); continue;
+    }
+    if ('<>'.includes(text[index])) {
+      const output = text[index] === '>';
+      const descriptor = words.at(-1);
+      const fd = descriptor && /^\d+$/u.test(descriptor.value) && descriptor.positions.at(-1) === index - 1 ? Number(words.pop().value) : output ? 1 : 0;
+      index += 1;
+      if (output && text[index] === '>') index += 1;
+      if (text[index] === '&') {
+        index += 1;
+        const target = /^(?:[0-9]+|-)/u.exec(text.slice(index));
+        assert(target, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved redirect descriptor');
+        assert(output || !executable()?.stdin, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved Python stdin descriptor duplication');
+        redirects.push({ fd, output, body: { value: target[0], dynamic: false } });
+        index += target[0].length;
+        continue;
+      }
+      assert(!['|', '<', '>'].includes(text[index]), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved redirection operator');
+      inputRedirect = { fd, output };
+      redirects.push(inputRedirect);
+      continue;
+    }
+    const wordStart = index;
+    let value = ''; const positions = []; let quote = null; let dynamic = false;
+    while (index < text.length && (quote || !/[\s;|&()<>]/u.test(text[index]))) {
+      const char = text[index];
+      if ((char === "'" || char === '"') && (!quote || quote === char)) { quote = quote ? null : char; index += 1; continue; }
+      if (char === '`' && quote !== "'") {
+        const start = index + 1;
+        let end = start;
+        while (end < text.length && text[end] !== '`') {
+          assert(text[end] !== '\\', 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: escaped backtick custody');
+          end += 1;
+        }
+        assert(end < text.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated backtick substitution');
+        const nested = pythonShellPrograms(text.slice(start, end), depth + 1);
+        unresolvedStdin ||= nested.unresolvedStdin;
+        for (const program of nested) programs.push({ ...program,
+          ...(program.positions ? { positions: program.positions.map((position) => start + position) } : {}) });
+        dynamic = true; value += '`'; positions.push(index); index = end + 1; continue;
+      }
+      if (text.startsWith('$(', index) && quote !== "'") {
+        const start = index + 2; let end = start; let delimiterDepth = 1; let innerQuote = null;
+        for (; end < text.length && delimiterDepth; end += 1) {
+          const inner = text[end];
+          if (inner === '\\' && innerQuote !== "'") { end += 1; continue; }
+          if ((inner === "'" || inner === '"') && (!innerQuote || innerQuote === inner)) { innerQuote = innerQuote ? null : inner; continue; }
+          if (!innerQuote && inner === '(') delimiterDepth += 1;
+          if (!innerQuote && inner === ')') delimiterDepth -= 1;
+        }
+        assert(!delimiterDepth, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated command substitution');
+        const nested = pythonShellPrograms(text.slice(start, end - 1), depth + 1);
+        unresolvedStdin ||= nested.unresolvedStdin;
+        for (const program of nested) programs.push({ ...program,
+          ...(program.positions ? { positions: program.positions.map((position) => start + position) } : {}) });
+        dynamic = true; value += '$()'; positions.push(index, index, index);
+        index = end; continue;
+      }
+      if (char === '\\' && quote !== "'") {
+        if (text[index + 1] === '\n') { index += 2; continue; }
+        if (!quote || /[\\"$`]/u.test(text[index + 1] ?? '')) index += 1;
+      } else if ((char === '$' || char === '`') && quote !== "'") dynamic = true;
+      value += text[index]; positions.push(index); index += 1;
+    }
+    assert(!quote, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated shell quote');
+    const word = { value, positions, dynamic, raw: text.slice(wordStart, index) };
+    if (inputRedirect) { inputRedirect.body = word; inputRedirect = null; }
+    else words.push(word);
+  }
+  flush();
+  assert(!pendingHeredocs.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated heredoc');
+  Object.defineProperty(programs, 'unresolvedStdin', { value: unresolvedStdin });
+  return programs;
+}
+
+function pythonYamlPrograms(file, text) {
+  if (!/\b(?:python(?:\d+(?:\.\d+)?)?\b|import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(text)) return [];
+  // Recognizable Python source also reaches dynamic-interpreter rejection;
+  // a literal interpreter name is not required for fail-closed custody.
+  // Helm delimiters are not YAML nodes. Mask only their spans, retaining every
+  // original source offset; actual command/args scalar tokens come from YAML.
+  const masked = text.replace(/\{\{[\s\S]*?\}\}/gu, (value) => value.replace(/[^\n]/gu, ' '));
+  const documents = YAML.parseAllDocuments(masked, { keepSourceTokens: true, uniqueKeys: false });
+  const programs = [];
+  const scalar = (node) => {
+    assert(YAML.isScalar(node) && typeof node.value === 'string',
+      `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} nonliteral command argument`);
+    const raw = masked.slice(node.range[0], node.range[1]);
+    const positions = [];
+    let decoded = '';
+    if (raw.startsWith('"') || raw.startsWith("'")) {
+      const double = raw[0] === '"';
+      for (let index = 1; index < raw.length - 1; index += 1) {
+        const start = index; let value = raw[index];
+        if (!double && value === "'" && raw[index + 1] === "'") index += 1;
+        else if (double && value === '\\') {
+          const escape = raw[++index];
+          const widths = { x: 2, u: 4, U: 8 };
+          if (widths[escape]) { value = String.fromCodePoint(parseInt(raw.slice(index + 1, index + 1 + widths[escape]), 16)); index += widths[escape]; }
+          else value = ({ '0': '\0', a: '\x07', b: '\b', t: '\t', n: '\n', v: '\v', f: '\f', r: '\r', e: '\x1b', ' ': ' ', '"': '"', '/': '/', '\\': '\\', N: '\u0085', _: '\u00a0', L: '\u2028', P: '\u2029' })[escape];
+          assert(value !== undefined, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} scalar escape`);
+        }
+        decoded += value; for (let count = 0; count < value.length; count += 1) positions.push(node.range[0] + start);
+      }
+    } else if (/^[|>]/u.test(raw)) {
+      let cursor = raw.indexOf('\n') + 1;
+      for (const char of node.value) {
+        while (cursor < raw.length && raw[cursor] !== char) cursor += 1;
+        assert(cursor < raw.length, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} folded scalar mapping`);
+        decoded += char; positions.push(node.range[0] + cursor++);
+      }
+    } else { decoded = raw; for (let index = 0; index < raw.length; index += 1) positions.push(node.range[0] + index); }
+    assert.equal(decoded, node.value, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} multiline scalar mapping`);
+    return { value: node.value, positions };
+  };
+  for (const document of documents) {
+    assert.equal(document.errors.length, 0, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} ${document.errors.map((error) => error.message).join('; ')}`);
+    YAML.visit(document, { Map(_key, node, ancestors) {
+      const pairs = ancestors.filter((ancestor) => YAML.isPair(ancestor));
+      const owner = pairs.at(-1)?.key?.value;
+      const directContainer = YAML.isSeq(ancestors.at(-1))
+        && ['containers', 'initContainers'].includes(owner);
+      if (node !== document.contents && owner !== 'exec' && !directContainer) return;
+      const command = node.items.find((pair) => pair.key?.value === 'command');
+      const args = node.items.find((pair) => pair.key?.value === 'args');
+      if (!command) return;
+      const items = YAML.isSeq(command.value) ? [...command.value.items,
+        ...(YAML.isSeq(args?.value) ? args.value.items : [])] : [command.value];
+      const values = items.map((item) => YAML.isScalar(item) ? item.value : null);
+      const diagnostic = `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file}`;
+      const python = pythonInterpreterIndex(values, diagnostic);
+      if (/^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(values[python] ?? '')) {
+        assert(!args || YAML.isSeq(args.value), `${diagnostic}: nonliteral Python args sequence`);
+        assert(values.every((value) => typeof value === 'string'), `${diagnostic}: nonliteral Python argv`);
+        const mode = pythonArgvMode(values, python, diagnostic);
+        assert(!mode.stdin, `${diagnostic}: unresolved Python stdin source custody`);
+        const flag = mode.codeFlag;
+        if (flag < 0) return;
+        const body = scalar(items[flag + 1]);
+        programs.push({ code: body.value, positions: body.positions, kind: 'yaml-argv' });
+      } else if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(values[python] ?? '') || !YAML.isSeq(command.value)) {
+        let bodyIndex = 0;
+        if (YAML.isSeq(command.value)) {
+          assert(values.every((value) => typeof value === 'string'), `${diagnostic}: nonliteral shell argv`);
+          assert(!args || YAML.isSeq(args.value), `${diagnostic}: nonliteral shell args sequence`);
+          bodyIndex = nodeShellArgvSelection(values, python, diagnostic, 'unresolved shell argv mode');
+          if (bodyIndex === null) return;
+        }
+        const body = scalar(items[bodyIndex]);
+        const nested = pythonShellPrograms(body.value);
+        assert(!nested.unresolvedStdin, `${diagnostic}: unresolved Python stdin source custody`);
+        for (const program of nested) programs.push({ ...program,
+          ...(program.positions ? { positions: program.positions.map((index) => body.positions[index]) } : {}) });
+      } else if (['env', 'sudo'].includes(typeof values[0] === 'string' ? path.posix.basename(values[0]) : null) && values.some((value) => /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(value ?? ''))) {
+        assert.fail(`${diagnostic}: unresolved interpreter wrapper custody`);
+      }
+    } });
+  }
+  return programs;
+}
+
+function acquiredPythonEnvironmentReads(file, text, kind = null) {
+  if (!/\b(?:python(?:\d+(?:\.\d+)?)?\b|import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(text)) return [];
+  const yaml = ['.yaml', '.yml'].includes(path.extname(file));
+  // A standalone shell fixture in YAML is normalized with an offset map.
+  const lines = text.split('\n');
+  const indentation = yaml ? Math.min(...lines.filter((line) => line.trim()).map((line) => line.match(/^\s*/u)[0].length)) : 0;
+  let normalized = ''; const positions = [];
+  let offset = 0;
+  for (const line of lines) {
+    const removed = Math.min(indentation, line.length);
+    for (let index = removed; index < line.length; index += 1) { normalized += line[index]; positions.push(offset + index); }
+    normalized += '\n'; positions.push(offset + line.length); offset += line.length + 1;
+  }
+  let programs;
+  try {
+    programs = yaml ? pythonYamlPrograms(file, text) : pythonShellPrograms(normalized);
+    assert(!programs.unresolvedStdin, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved Python stdin source custody');
+  }
+  catch (error) { throw new Error(`${file}: ${error.message}`, { cause: error }); }
+  const reads = [];
+  for (const program of programs) {
+    if (program.kind === 'file-stdin') {
+      // Finite repository-bound external stdin custody. Its own source has a
+      // different offset space: reject any newly found readers with that source
+      // identity, rather than pretending the shell redirect is their read site.
+      const word = program.fileInput;
+      let selected;
+      if (!word.dynamic) {
+        assert(path.isAbsolute(word.value), `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} unresolved working directory for Python stdin file`);
+        selected = path.resolve(word.value);
+      }
+      else {
+        const relative = /^"\$\(dirname -- "\$\{BASH_SOURCE\[0\]\}"\)([^"$`]+)"$/u.exec(word.raw);
+        assert(relative, `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} unresolved Python stdin file path`);
+        selected = path.resolve(root, path.dirname(file), `.${relative[1]}`);
+      }
+      assert(selected.startsWith(`${root}${path.sep}`) && fs.existsSync(selected) && fs.lstatSync(selected).isFile() && fs.realpathSync(selected) === selected,
+        `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} Python stdin source is not a regular repository file`);
+      const input = fs.readFileSync(selected, 'utf8');
+      const external = pythonEnvironmentReads(input, selected);
+      assert(!external.length, `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} external stdin readers require exact receiving-source qualification: ${selected}: ${external.map((item) => `${item.name}@line-${lineAt(input, item.index)}`).join(', ')}`);
+      continue;
+    }
+    if (kind === 'non-heredoc' ? program.kind === 'heredoc' : kind && program.kind !== kind) continue;
+    for (const fact of pythonEnvironmentReads(program.code, `${file}:${lineAt(text, program.positions[0] ?? 0)}`)) reads.push({ ...fact,
+      index: yaml ? program.positions[fact.index] : positions[program.positions[fact.index]],
+      kind: `embedded-${fact.kind}` });
+  }
+  return reads;
+}
+
+function inlineProgramEnvironmentReads(file, text) {
+  return [...acquiredPythonEnvironmentReads(file, text, 'non-heredoc'), ...acquiredNodeEnvironmentReads(file, text, 'inline')];
+}
+
+function pythonEnvironmentReads(text, source = '<inline>') {
+  // Parse syntax, never import or execute the inspected program. Constants
+  // (including raw recipes/docstrings) and comments cannot be environment
+  // readers; JoinedStr expressions remain executable AST children. This finite
+  // static model supports imports, simple aliases/constant keys and literal
+  // tuple loops, lexical class/function/lambda/comprehension boundaries and
+  // conservative finite if/else joins. Runtime-computed keys, reflection,
+  // potential lazy/eager annotations (future strings need explicit evaluation).
+  // Recognizable os reflection, star imports and helper-returned environment
+  // capabilities reject explicitly. Unresolved static keys/bindings also fail;
+  // exception/global/nonlocal
+  // effects and arbitrary helper/control/data flow
+  // require separate source review; this is not an arbitrary-Python proof.
+  const parser = String.raw`
+import ast, json, re, sys
+try:
+    tree = ast.parse(sys.stdin.read())
+except (SyntaxError, ValueError) as error:
+    print("PYTHON_ENVIRONMENT_PARSE_FAILED: " + str(error), file=sys.stderr)
+    sys.exit(1)
+
+class Readers(ast.NodeVisitor):
+    def __init__(self):
+        self.aliases = {}
+        self.keys = {}
+        self.reads = []
+        self.exception_states = []
+        self.class_parent = None
+        self.comprehension_scopes = set()
+        self.comprehension_writes = {}
+        self.pending = []
+        self.annotations = {}
+        self.methods = {}
+        self.callable_functions = {}
+        self.class_annotations = {}
+        self.class_nodes = {}
+        self.class_base_protocols = {}
+        self.capability_active = set()
+        self.annotation_namespaces = {}
+        self.class_bindings = None
+        self.active_functions = set()
+        self.annotation_pending = []
+        self.lazy_annotations = sys.version_info >= (3, 14)
+        self.imported_os_names = {item.asname or 'os' for node in ast.walk(tree)
+            if isinstance(node, ast.Import) for item in node.names
+            if item.name == 'os' or item.name.startswith('os.') and not item.asname}
+        self.function_depth = 0
+        self.ast_parents = {id(child): node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+        self.module_globals = ({}, {})
+        self.function_stack = []
+        self.definition_states = {}
+        self.environment_authority_names = set(self.imported_os_names)
+        self.environment_authority_names.update(item.asname or item.name for node in ast.walk(tree)
+            if isinstance(node, ast.ImportFrom) and node.level == 0 and node.module == 'os'
+            for item in node.names if item.name in ('getenv', 'environ'))
+        self.subprocess_names = {item.asname or item.name for node in ast.walk(tree)
+            if isinstance(node, ast.Import) for item in node.names if item.name == 'subprocess'}
+        changed = True
+        while changed:
+            changed = False
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign) and isinstance(node.value, ast.Name) and node.value.id in self.subprocess_names:
+                    for target in node.targets:
+                        if isinstance(target, ast.Name) and target.id not in self.subprocess_names:
+                            self.subprocess_names.add(target.id)
+                            changed = True
+        self.subprocess_escaped = False
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id in self.subprocess_names:
+                if isinstance(node.ctx, (ast.Store, ast.Del)) or node.attr in ('__dict__', '__setattr__', '__delattr__'):
+                    self.subprocess_escaped = True
+        def acquisition(node):
+            if isinstance(node, ast.Name): return node.id in self.environment_authority_names
+            if isinstance(node, ast.NamedExpr): return acquisition(node.value)
+            if isinstance(node, ast.Attribute): return node.attr in ('getenv', 'environ', 'get', '__call__', '__getitem__', 'setdefault') and acquisition(node.value)
+            if isinstance(node, ast.Call): return isinstance(node.func, ast.Attribute) and node.func.attr == 'copy' and acquisition(node.func.value)
+            if isinstance(node, (ast.List, ast.Tuple, ast.Set)): return any(acquisition(value) for value in node.elts)
+            if isinstance(node, ast.Dict): return any(acquisition(value) for value in node.values)
+            if isinstance(node, ast.IfExp): return acquisition(node.body) or acquisition(node.orelse)
+            if isinstance(node, ast.BoolOp): return any(acquisition(value) for value in node.values)
+            return False
+        changed = True
+        while changed:
+            changed = False
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)) and node.value is not None and acquisition(node.value):
+                    for target in node.targets if isinstance(node, ast.Assign) else [node.target]:
+                        if isinstance(target, ast.Name) and target.id not in self.environment_authority_names:
+                            self.environment_authority_names.add(target.id)
+                            changed = True
+        self.environment_key_names = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in ('getenv', 'get') and acquisition(node.func):
+                if node.args and isinstance(node.args[0], ast.Name): self.environment_key_names.add(node.args[0].id)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in self.environment_authority_names:
+                if node.args and isinstance(node.args[0], ast.Name): self.environment_key_names.add(node.args[0].id)
+            if isinstance(node, ast.Subscript) and acquisition(node.value) and isinstance(node.slice, ast.Name):
+                self.environment_key_names.add(node.slice.id)
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in self.subprocess_names:
+                parent = self.ast_parents.get(id(node))
+                if not ((isinstance(parent, ast.Attribute) and parent.value is node)
+                    or (isinstance(parent, ast.Assign) and parent.value is node and all(isinstance(target, ast.Name) for target in parent.targets))):
+                    self.subprocess_escaped = True
+        # The same finite Name/IfExp keys accepted by names() can reach a
+        # supported reader through simple assignment aliases. External writes
+        # must reject before helper restoration can resurrect an old key.
+        def key_dependencies(node):
+            if isinstance(node, ast.Name): return {node.id}
+            if isinstance(node, ast.IfExp): return key_dependencies(node.body) | key_dependencies(node.orelse)
+            return set()
+        def recognized_reader(node):
+            if isinstance(node, ast.NamedExpr): return recognized_reader(node.value)
+            if isinstance(node, ast.Attribute) and node.attr == '__call__': return recognized_reader(node.value)
+            if isinstance(node, ast.Attribute) and node.attr in ('getenv', 'get', '__getitem__', 'setdefault'):
+                return acquisition(node.value)
+            return isinstance(node, ast.Name) and node.id in self.environment_authority_names
+        self.external_key_names = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and recognized_reader(node.func):
+                key = node.args[0] if node.args else next((item.value for item in node.keywords if item.arg == 'key'), None)
+                self.external_key_names.update(key_dependencies(key))
+            if isinstance(node, ast.Subscript) and acquisition(node.value):
+                self.external_key_names.update(key_dependencies(node.slice))
+        changed = True
+        while changed:
+            changed = False
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign): targets, value = node.targets, node.value
+                elif isinstance(node, (ast.AnnAssign, ast.NamedExpr)): targets, value = [node.target], node.value
+                else: continue
+                if any(isinstance(target, ast.Name) and target.id in self.external_key_names for target in targets):
+                    dependencies = key_dependencies(value) - self.external_key_names
+                    if dependencies:
+                        self.external_key_names.update(dependencies)
+                        changed = True
+        self.postponed_annotations = any(isinstance(n, ast.ImportFrom) and n.module == "__future__"
+            and any(a.name == "annotations" for a in n.names) for n in tree.body)
+
+    def role(self, node):
+        if isinstance(node, ast.Constant): return {'passive-authority'}
+        if isinstance(node, ast.Name):
+            if node.id == 'getattr' and node.id not in self.keys: return {'reflection-reader'}
+            if node.id in ('setattr', 'delattr') and node.id not in self.keys: return {'authority-mutator'}
+            return self.aliases.get(node.id, set())
+        if isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Attribute) and node.func.attr == 'copy' and 'environ' in self.role(node.func.value):
+                return {'environment-snapshot', 'snapshot:' + str(node.lineno) + ':' + str(node.col_offset)} if self.role(node.func.value) == {'environ'} else {'capability-container'}
+            if any(self.callable_environment_capability(self.class_nodes[identity]) for identity in self.role(node.func) if identity in self.class_nodes):
+                return {'capability-container'}
+            return set()
+        if isinstance(node, ast.IfExp):
+            branches = (node.body, node.orelse)
+            roles = self.role(node.body) | self.role(node.orelse)
+            if any(not self.role(branch) and not isinstance(branch, ast.Constant) for branch in branches):
+                roles = roles | {'unknown-authority'}
+            return roles
+        if isinstance(node, ast.BoolOp):
+            roles = set().union(*(self.role(value) for value in node.values))
+            if any(not self.role(value) and not isinstance(value, ast.Constant) for value in node.values):
+                roles = roles | {'unknown-authority'}
+            return roles
+        if isinstance(node, ast.BinOp):
+            return {'capability-container'} if self.transferred_capability(node.left) or self.transferred_capability(node.right) else set()
+        if isinstance(node, ast.Lambda):
+            return {'unsupported-callable'} if self.callable_environment_capability([node, False]) else set()
+        if isinstance(node, (ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
+            values = (node.key, node.value) if isinstance(node, ast.DictComp) else (node.elt,)
+            return {'capability-container'} if any(self.transferred_capability(value) for value in values) else set()
+        if isinstance(node, ast.NamedExpr): return self.role(node.value)
+        # Literal containers retain an unsupported capability marker through
+        # assignment/aliases. Ordinary data containers have no such role.
+        if isinstance(node, (ast.Tuple, ast.List, ast.Set)):
+            return {'capability-container'} if any(self.transferred_capability(item) for item in node.elts) else set()
+        if isinstance(node, ast.Dict):
+            capabilities = [(key, value) for key, value in zip(node.keys, node.values)
+                if self.transferred_capability(key) or self.transferred_capability(value)]
+            if capabilities and all(key is None and (self.role(value) == {'environ'} or self.snapshot_role(self.role(value))) for key, value in capabilities):
+                identity = 'snapshot:' + str(node.lineno) + ':' + str(node.col_offset)
+                return {'environment-snapshot', identity} | {'written:' + identity + ':' + key.value for key in node.keys if isinstance(key, ast.Constant) and isinstance(key.value, str)}
+            return {'capability-container'} if capabilities else set()
+        if isinstance(node, ast.Starred): return self.role(node.value)
+        if isinstance(node, ast.Attribute):
+            methods = set()
+            base = self.role(node.value)
+            matched = set()
+            for owner in base:
+                candidate = self.methods.get(owner, {}).get(node.attr)
+                if candidate:
+                    matched.add(owner)
+                    methods.update(identity for identity, function in self.callable_functions.items() if function is candidate)
+            alternatives = base - matched
+            if methods: return methods | ({'passive-authority'} if alternatives == {'passive-authority'} else {'unknown-authority'} if alternatives else set())
+            if 'os' in base and node.attr in ('environ', 'getenv'):
+                role = 'environ' if node.attr == 'environ' else 'reader'
+                return {role} | ({'passive-authority'} if base - {'os'} == {'passive-authority'} else {'unknown-authority'} if base != {'os'} else set())
+            if node.attr == '__call__' and (base & {'reader', 'annotation-reader'} or any(identity in self.callable_functions for identity in base)):
+                return base
+            if 'environ' in base and node.attr in ('get', '__getitem__', 'setdefault'):
+                return {'reader'} | ({'passive-authority'} if base - {'environ'} == {'passive-authority'} else {'unknown-authority'} if base != {'environ'} else set())
+            if 'annotationlib' in base and node.attr == 'get_annotations':
+                return {'annotation-reader'} if base == {'annotationlib'} else {'annotation-reader', 'unknown-authority'}
+            if 'builtins' in base and node.attr == 'getattr':
+                return {'reflection-reader'} if base == {'builtins'} else {'reflection-reader', 'unknown-authority'}
+            if 'builtins' in base and node.attr in ('setattr', 'delattr'): return {'authority-mutator'}
+        return set()
+
+    def literal(self, node):
+        try:
+            return ast.literal_eval(node)
+        except (ValueError, TypeError, SyntaxError, RecursionError):
+            return None
+
+    def snapshot_role(self, roles):
+        return 'environment-snapshot' in roles and all(role == 'environment-snapshot' or role.startswith(('snapshot:', 'written:snapshot:')) for role in roles)
+
+    def snapshot_write(self, target, deleting=False):
+        if not isinstance(target, ast.Subscript) or not self.snapshot_role(self.role(target.value)): return
+        keys = self.names(target.slice)
+        if None in keys or len(keys) != 1:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment snapshot producer key at line ' + str(target.lineno))
+        identities = {role for role in self.role(target.value) if role.startswith('snapshot:')}
+        if len(identities) != 1:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment snapshot producer receiver at line ' + str(target.lineno))
+        markers = {'written:' + identity + ':' + key for identity in identities for key in keys}
+        for name, roles in list(self.aliases.items()):
+            if roles & identities:
+                self.aliases[name] = roles - markers if deleting else roles | markers
+
+    def snapshot_forwarding_parameter(self, candidate, parameter):
+        parents = {id(child): node for node in ast.walk(candidate[0]) for child in ast.iter_child_nodes(node)}
+        uses = [node for node in ast.walk(candidate[0]) if isinstance(node, ast.Name) and node.id == parameter]
+        if not uses: return False
+        for use in uses:
+            keyword = parents.get(id(use))
+            call = parents.get(id(keyword))
+            if not (isinstance(use.ctx, ast.Load) and isinstance(keyword, ast.keyword) and keyword.arg == 'env'
+                and isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute)
+                and self.exact_subprocess_receiver(call.func.value, call)
+                and call.func.attr in ('Popen', 'run', 'call', 'check_call', 'check_output')): return False
+        return True
+
+    def lexical_scope(self, node):
+        parent = self.ast_parents.get(id(node))
+        while parent is not None:
+            if isinstance(parent, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)): return parent
+            parent = self.ast_parents.get(id(parent))
+        return tree
+
+    def exact_subprocess_receiver(self, value, site, scope=None, active=None):
+        # Prove the receiver in its owning lexical scope, never in a caller's
+        # local namespace. Only unconditional finite imports/simple aliases
+        # with no foreign writes or module escape qualify this producer slot.
+        if self.subprocess_escaped or not isinstance(value, ast.Name): return False
+        scope = self.lexical_scope(site) if scope is None else scope
+        active = set() if active is None else active
+        identity = (id(scope), value.id)
+        if identity in active: return False
+        active = active | {identity}
+        if not isinstance(scope, ast.Module):
+            parameters = scope.args.posonlyargs + scope.args.args + scope.args.kwonlyargs + [item for item in (scope.args.vararg, scope.args.kwarg) if item]
+            if any(item.arg == value.id for item in parameters): return False
+        declarations = [node for node in ast.walk(scope) if self.lexical_scope(node) is scope and isinstance(node, (ast.Global, ast.Nonlocal)) and value.id in node.names]
+        bindings = []
+        for node in ast.walk(scope):
+            if self.lexical_scope(node) is not scope: continue
+            if isinstance(node, ast.Import):
+                for item in node.names:
+                    if (item.asname or item.name.split('.')[0]) == value.id: bindings.append((node, item.name == 'subprocess', None))
+            elif isinstance(node, ast.ImportFrom):
+                if any((item.asname or item.name) == value.id for item in node.names): bindings.append((node, False, None))
+            elif isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)) and node.id == value.id:
+                parent = self.ast_parents.get(id(node))
+                bindings.append((parent, False, parent.value if isinstance(parent, ast.Assign) else None))
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node is not scope and node.name == value.id:
+                bindings.append((node, False, None))
+        if declarations:
+            if bindings or any(isinstance(node, ast.Nonlocal) for node in declarations): return False
+            scope = tree
+            return self.exact_subprocess_receiver(value, site, scope, active)
+        # A global/nonlocal write elsewhere can change the shared module
+        # identity before this call, even when the writer is invoked opaquely.
+        if isinstance(scope, ast.Module):
+            if self.module_globals[0].get(value.id) != {'subprocess'}: return False
+            for declaration in ast.walk(tree):
+                if isinstance(declaration, (ast.Global, ast.Nonlocal)) and value.id in declaration.names:
+                    owner = self.lexical_scope(declaration)
+                    if any(isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)) and node.id == value.id and self.lexical_scope(node) is owner for node in ast.walk(owner)): return False
+        if not bindings:
+            if isinstance(scope, ast.Module): return False
+            return self.exact_subprocess_receiver(value, site, self.lexical_scope(scope), active)
+        for binding, imported, alias in bindings:
+            if self.ast_parents.get(id(binding)) is not scope: return False
+            if not isinstance(scope, ast.Module) and binding.lineno >= site.lineno: return False
+            if imported: continue
+            if not isinstance(alias, ast.Name) or not self.exact_subprocess_receiver(alias, binding, scope, active): return False
+        return True
+
+    def visit_Module(self, node):
+        for child in node.body:
+            self.visit(child)
+            self.module_globals = self.state()
+
+    def visit_Global(self, node):
+        owner = self.lexical_scope(node)
+        sensitive = self.environment_authority_names | self.subprocess_names | self.environment_key_names | self.external_key_names
+        for name in set(node.names) & sensitive:
+            for child in ast.walk(owner):
+                if self.lexical_scope(child) is not owner: continue
+                written = isinstance(child, ast.Name) and isinstance(child.ctx, (ast.Store, ast.Del)) and child.id == name
+                imported = isinstance(child, (ast.Import, ast.ImportFrom)) and any((item.asname or item.name.split('.')[0]) == name for item in child.names)
+                if written or imported:
+                    raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: global or nonlocal environment authority write at line ' + str(node.lineno))
+
+    visit_Nonlocal = visit_Global
+
+    def names(self, node):
+        if isinstance(node, ast.Name): return self.keys.get(node.id, {None})
+        if isinstance(node, ast.IfExp): return self.names(node.body) | self.names(node.orelse)
+        value = self.literal(node)
+        # None is an explicit unresolved/non-string alternative, never an
+        # empty union that a known branch can erase.
+        return {value} if isinstance(value, str) else {None}
+
+    def callable_environment_capability(self, candidate, active=None):
+        active = set() if active is None else active
+        if id(candidate[0]) in active or id(candidate[0]) in self.capability_active: return False
+        active = active | {id(candidate[0])}
+        # A passed pure callback is ordinary data. Potential environment
+        # authority in its executable AST (including late imported globals)
+        # cannot cross an unmodeled parameter boundary. Passive constants are
+        # never scanned as code; no callback is executed by this inspection.
+        self.capability_active.add(id(candidate[0]))
+        try:
+            for child in ast.walk(candidate[0]):
+                if isinstance(child, ast.ImportFrom) and child.level == 0 and child.module == 'os': return True
+                if isinstance(child, ast.Name) and child.id in self.environment_authority_names: return True
+                roles = self.role(child)
+                if roles & {'os', 'environ', 'reader', 'annotation-reader', 'annotationlib', 'subprocess', 'capability-container', 'environment-snapshot'}: return True
+                for identity in roles:
+                    called = self.callable_functions.get(identity) or self.class_nodes.get(identity)
+                    if called and self.callable_environment_capability(called, active): return True
+            return False
+        finally:
+            self.capability_active.remove(id(candidate[0]))
+
+    def transferred_capability(self, node):
+        roles = self.role(node)
+        if roles & {'os', 'environ', 'reader', 'annotation-reader', 'annotationlib', 'subprocess', 'reflection-reader', 'capability-container', 'environment-snapshot', 'unsupported-callable'}: return True
+        if any(self.callable_environment_capability(self.class_nodes[role]) for role in roles if role in self.class_nodes): return True
+        if any(self.callable_environment_capability(self.callable_functions[role]) for role in roles if role in self.callable_functions): return True
+        if isinstance(node, (ast.Tuple, ast.List, ast.Set)):
+            return any(self.transferred_capability(item) for item in node.elts)
+        if isinstance(node, ast.Dict):
+            return any(self.transferred_capability(item) for item in node.values)
+        return False
+
+    def bind(self, target, values, role=None):
+        if isinstance(target, ast.Name):
+            if self.class_bindings is not None: self.class_bindings.add(target.id)
+            self.aliases.pop(target.id, None)
+            self.keys[target.id] = {value if isinstance(value, str) else None for value in values}
+            if role: self.aliases[target.id] = {role} if isinstance(role, str) else role
+        elif isinstance(target, (ast.Tuple, ast.List)):
+            if role and role & {'capability-container', 'environment-snapshot', 'unsupported-callable', 'os', 'environ', 'reader'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability unpacking at line ' + str(target.lineno))
+            for index, child in enumerate(target.elts):
+                self.bind(child, [value[index] for value in values
+                    if isinstance(value, (tuple, list)) and len(value) == len(target.elts)])
+
+    def visit_Import(self, node):
+        for item in node.names:
+            self.bind(ast.Name(id=item.asname or item.name.split('.')[0]), [],
+                'os' if item.name.startswith('os.') and not item.asname else
+                item.name if item.name in ('os', 'annotationlib', 'builtins', 'subprocess') else None)
+
+    def visit_ImportFrom(self, node):
+        if node.level == 0 and node.module == 'os' and any(item.name == '*' for item in node.names):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: os star-import capability at line ' + str(node.lineno))
+        for item in node.names:
+            self.bind(ast.Name(id=item.asname or item.name), [],
+                ({'environ': 'environ', 'getenv': 'reader'}.get(item.name) if node.module == 'os' else
+                 'annotation-reader' if node.module == 'annotationlib' and item.name == 'get_annotations' else
+                 'reflection-reader' if node.module == 'builtins' and item.name == 'getattr' else None) if node.level == 0 else None)
+            if node.level == 0 and node.module == 'builtins' and item.name in ('setattr', 'delattr'):
+                self.bind(ast.Name(id=item.asname or item.name), [], 'authority-mutator')
+
+    def reject_exemption_mutation(self, target):
+        for child in ast.walk(target):
+            if isinstance(child, ast.Attribute) and child.attr in ('__dict__', '__setattr__', '__delattr__') and self.role(child.value) & {'annotationlib', 'subprocess'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver reflection at line ' + str(child.lineno))
+        if isinstance(target, ast.Attribute):
+            base = self.role(target.value)
+            for identity in base:
+                if identity in self.callable_functions and target.attr in ('__annotations__', '__annotate__'):
+                    raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: callable annotation authority mutation at line ' + str(target.lineno))
+                if identity in self.class_nodes:
+                    annotations = self.class_annotations.get(identity, ([], set(), None))[0]
+                    referenced = {node.id for annotation in annotations for node in ast.walk(annotation) if isinstance(node, ast.Name)}
+                    for candidate in self.methods.get(identity, {}).values():
+                        for argument in candidate[0].args.posonlyargs + candidate[0].args.args + candidate[0].args.kwonlyargs + [item for item in (candidate[0].args.vararg, candidate[0].args.kwarg) if item]:
+                            if argument.annotation: referenced.update(node.id for node in ast.walk(argument.annotation) if isinstance(node, ast.Name))
+                        if candidate[0].returns: referenced.update(node.id for node in ast.walk(candidate[0].returns) if isinstance(node, ast.Name))
+                    if target.attr in referenced or target.attr in self.methods.get(identity, {}) or target.attr in ('__annotations__', '__annotate__'):
+                        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: class annotation authority mutation at line ' + str(target.lineno))
+            if ('annotationlib' in base and target.attr == 'get_annotations') or ('subprocess' in base and target.attr in ('Popen', 'run', 'call', 'check_call', 'check_output')):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver mutation at line ' + str(target.lineno))
+
+    def reject_external_capability_write(self, target, value):
+        if not isinstance(target, ast.Name) or not (self.transferred_capability(value) or target.id in self.external_key_names): return
+        owner = self.lexical_scope(target)
+        if any(isinstance(node, (ast.Global, ast.Nonlocal)) and target.id in node.names and self.lexical_scope(node) is owner for node in ast.walk(owner)):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: global or nonlocal environment authority write at line ' + str(target.lineno))
+
+    def visit_Assign(self, node):
+        self.visit(node.value)
+        role = self.role(node.value)
+        values = list(self.names(node.value)) or [self.literal(node.value)]
+        for target in node.targets:
+            self.visit_target_expressions(target)
+            self.reject_external_capability_write(target, node.value)
+            self.reject_exemption_mutation(target)
+            if not isinstance(target, (ast.Name, ast.Tuple, ast.List)) and self.transferred_capability(node.value):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment capability assignment receiver at line ' + str(target.lineno))
+            self.bind(target, values, role)
+            self.snapshot_write(target)
+
+    def visit_target_expressions(self, target):
+        # Store/Delete contexts do not read the selected environment value,
+        # but their receiver and subscript expressions are evaluated.
+        if isinstance(target, ast.Subscript):
+            self.visit(target.value)
+            self.visit(target.slice)
+        elif isinstance(target, ast.Attribute):
+            self.visit(target.value)
+        elif isinstance(target, (ast.Tuple, ast.List)):
+            for child in target.elts: self.visit_target_expressions(child)
+        elif isinstance(target, ast.Starred): self.visit_target_expressions(target.value)
+
+    def visit_AugAssign(self, node):
+        self.reject_exemption_mutation(node.target)
+        if self.transferred_capability(node.value) or self.role(node.target) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability augmented assignment at line ' + str(node.lineno))
+        # AugAssign has a Store AST target but reads its previous value first.
+        if isinstance(node.target, ast.Subscript) and 'environ' in self.role(node.target.value):
+            self.add(node.target.slice, node.target)
+        self.visit(node.target)
+        self.visit(node.value)
+        if isinstance(node.target, ast.Name): self.bind(node.target, [])
+
+    def class_annotation_protocol(self, name, access, active=None):
+        active = set() if active is None else active
+        if name in active: return
+        active = active | {name}
+        for roles, builtin in self.class_base_protocols.get(name, []):
+            if builtin: continue
+            if not roles or any(role not in self.class_nodes for role in roles):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved class annotation protocol at line ' + str(access.lineno))
+            for role in roles: self.class_annotation_protocol(role, access, active)
+
+    def evaluate_class_annotations(self, name, eval_str=False, access=None):
+        if access is not None: self.class_annotation_protocol(name, access)
+        if self.postponed_annotations and eval_str and self.callable_environment_capability(self.class_nodes[name]):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: evaluated future class annotation at line ' + str((access or self.class_nodes[name][0]).lineno))
+        if name not in self.class_annotations: return
+        annotations, locals, namespace = self.class_annotations[name]
+        saved = self.state()
+        self.aliases, self.keys = (part.copy() for part in self.annotation_globals(self.class_nodes[name][0]))
+        for local in locals:
+            self.aliases[local] = namespace[0].get(local, set())
+            self.keys[local] = namespace[1].get(local, set())
+        for annotation in annotations:
+            if self.transferred_capability(annotation):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(annotation.lineno))
+            if eval_str and isinstance(annotation, ast.Constant) and isinstance(annotation.value, str):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: evaluated string annotation at line ' + str(annotation.lineno))
+            self.visit(annotation)
+        self.aliases, self.keys = saved
+
+    def annotation_globals(self, node):
+        owner = self.lexical_scope(node)
+        if isinstance(owner, ast.Module):
+            return self.module_globals if self.function_depth else self.state()
+        if self.function_stack and self.function_stack[-1] is owner: return self.state()
+        definition = self.definition_states.get(id(node), self.state())
+        if any(isinstance(child, ast.Name) and (child.id in self.environment_authority_names or definition[0].get(child.id, set()) & {'os', 'environ', 'reader', 'capability-container', 'environment-snapshot'}) for child in ast.walk(node)):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation closure namespace at line ' + str(node.lineno))
+        return self.module_globals
+
+    def visit_Attribute(self, node):
+        if node.attr in ('__dict__', '__setattr__', '__delattr__') and self.role(node.value) & {'annotationlib', 'subprocess'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver reflection at line ' + str(node.lineno))
+        if self.role(node.value) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container access at line ' + str(node.lineno))
+        # Reflective acquisition must not erase a recognizable module, reader
+        # or callable's authority before metadata evaluation or helper transfer.
+        # Ordinary objects and pure callbacks remain passive; no reflection is
+        # executed or interpreted by this syntax-only scanner.
+        base = self.role(node.value)
+        admitted_protocol = node.attr == '__call__' and (base & {'reader', 'annotation-reader'} or any(identity in self.callable_functions for identity in base))
+        passive_metadata = node.attr in ('__name__', '__qualname__', '__module__', '__doc__')
+        if node.attr.startswith('__') and node.attr != '__annotations__' and not admitted_protocol and not passive_metadata and self.transferred_capability(node.value):
+            if not (node.attr == '__getitem__' and base == {'environ'}):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: reflected environment capability at line ' + str(node.lineno))
+        if 'environ' in base and node.attr not in ('get', 'copy', '__getitem__', 'setdefault') and not passive_metadata:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment mapping protocol at line ' + str(node.lineno))
+        if node.attr == '__annotations__':
+            self.evaluate_annotations(node.value, False, node)
+        self.generic_visit(node)
+
+    def evaluate_annotations(self, target, eval_str, access):
+        identities = self.role(target)
+        if identities - (self.class_nodes.keys() | self.annotations.keys() | {'passive-authority'}):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation evaluation target at line ' + str(access.lineno))
+        known = False
+        for identity in identities:
+            if identity in self.class_nodes:
+                known = True
+                self.evaluate_class_annotations(identity, eval_str, access)
+            elif identity in self.annotations:
+                known = True
+                saved = self.state()
+                self.aliases, self.keys = (part.copy() for part in self.annotation_globals(self.callable_functions[identity][0]))
+                namespace = self.annotation_namespaces.get(identity)
+                if namespace:
+                    bindings, state = namespace
+                    for local in bindings:
+                        self.aliases[local] = state[0].get(local, set())
+                        self.keys[local] = state[1].get(local, set())
+                for annotation in self.annotations[identity] if eval_str or not self.postponed_annotations else []:
+                    if self.transferred_capability(annotation):
+                        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(annotation.lineno))
+                    if eval_str and not self.postponed_annotations and isinstance(annotation, ast.Constant) and isinstance(annotation.value, str):
+                        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: evaluated string annotation at line ' + str(annotation.lineno))
+                    self.visit(annotation)
+                self.aliases, self.keys = saved
+        if not known and (eval_str or not self.postponed_annotations):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation evaluation target at line ' + str(access.lineno))
+
+    def visit_NamedExpr(self, node):
+        self.visit(node.value)
+        self.reject_external_capability_write(node.target, node.value)
+        # A walrus in a comprehension writes the containing scope. Never
+        # discard recognized capability or environment-key custody on restore.
+        sensitive = self.environment_authority_names | self.subprocess_names | self.environment_key_names
+        parent = self.ast_parents.get(id(node))
+        while parent is not None and not isinstance(parent, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            if id(parent) in self.comprehension_scopes and (self.transferred_capability(node.value) or node.target.id in sensitive):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: comprehension containing-scope environment authority write at line ' + str(node.lineno))
+            if id(parent) in self.comprehension_scopes:
+                self.comprehension_writes[id(parent)].add(node.target.id)
+            parent = self.ast_parents.get(id(parent))
+        self.bind(node.target, list(self.names(node.value)), self.role(node.value))
+
+    def visit_AnnAssign(self, node):
+        if node.value:
+            self.visit(node.value)
+        self.visit_target_expressions(node.target)
+        if node.value:
+            self.reject_external_capability_write(node.target, node.value)
+            self.reject_exemption_mutation(node.target)
+            if not isinstance(node.target, (ast.Name, ast.Tuple, ast.List)) and self.transferred_capability(node.value):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment capability assignment receiver at line ' + str(node.target.lineno))
+            self.bind(node.target, list(self.names(node.value)) or [self.literal(node.value)], self.role(node.value))
+            self.snapshot_write(node.target)
+        if not self.function_depth: self.annotation(node.annotation)
+
+    def visit_Delete(self, node):
+        for target in node.targets:
+            self.visit_target_expressions(target)
+            self.reject_exemption_mutation(target)
+            if isinstance(target, ast.Name): self.bind(target, [])
+            self.snapshot_write(target, True)
+
+    def annotation(self, node):
+        if self.postponed_annotations: return
+        if self.lazy_annotations: self.annotation_pending.append(node)
+        else:
+            if self.transferred_capability(node):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(node.lineno))
+            self.visit(node)
+
+    def finish_annotations(self):
+        pending, self.annotation_pending = self.annotation_pending, []
+        for node in pending:
+            if self.transferred_capability(node):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(node.lineno))
+            self.visit(node)
+
+    def visit_For(self, node):
+        self.visit(node.iter)
+        if self.role(node.iter) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container iteration at line ' + str(node.lineno))
+        values = self.literal(node.iter)
+        before = self.state()
+        if isinstance(values, (tuple, list, set)) and not values:
+            for child in node.orelse: self.visit(child)
+            return
+        # Store receivers and indices execute for a selected iteration, not
+        # for an empty iterable. They are readers without reading stored values.
+        self.visit_target_expressions(node.target)
+        self.bind(node.target, values if isinstance(values, (tuple, list, set)) else [])
+        self.visit_loop_body(node, self.state() if isinstance(values, (tuple, list, set)) else before, iteration_target=node.target)
+        for child in node.orelse: self.visit(child)
+
+    visit_AsyncFor = visit_For
+
+    def visit_While(self, node):
+        self.visit(node.test)
+        if isinstance(node.test, ast.Constant) and not node.test.value:
+            for child in node.orelse: self.visit(child)
+            return
+        before = self.state()
+        self.visit_loop_body(node, before, node.test)
+        for child in node.orelse: self.visit(child)
+
+    def visit_loop_body(self, node, entry, test=None, iteration_target=None):
+        # Finite abstract join, not iteration execution. Revisit with carried
+        # key/capability alternatives until stable; never accept truncation.
+        sensitive = self.environment_authority_names | self.environment_key_names
+        carried = any((isinstance(child, ast.Name) and isinstance(child.ctx, (ast.Store, ast.Del)) and child.id in sensitive)
+            or (isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and child.name in sensitive)
+            or (isinstance(child, (ast.Import, ast.ImportFrom)) and any((item.asname or item.name.split('.')[0]) in sensitive for item in child.names))
+            for statement in node.body + ([iteration_target] if iteration_target is not None else []) for child in ast.walk(statement))
+        if not carried:
+            for child in node.body: self.visit(child)
+            self.join(entry, self.state())
+            return
+        for attempt in range(16):
+            previous = self.loop_environment_state()
+            if test is not None: self.visit(test)
+            if attempt and iteration_target is not None:
+                self.visit_target_expressions(iteration_target)
+            for child in node.body: self.visit(child)
+            self.join(entry, self.state())
+            if self.loop_environment_state() == previous: return
+        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: loop-carried environment custody did not converge at line ' + str(node.lineno))
+
+    def loop_environment_state(self):
+        # Fresh identities of pure callbacks/containers are not environment
+        # custody. Only selected reader keys and potential capabilities govern
+        # this purpose-bound fixed point; unrelated program state is not run.
+        sensitive = self.environment_authority_names | self.environment_key_names
+        aliases = {name: roles for name, roles in self.aliases.items() if name in sensitive}
+        return aliases, {name: self.keys.get(name, {None}) for name in self.environment_key_names}
+
+    def visit_With(self, node):
+        for item in node.items:
+            self.visit(item.context_expr)
+            if item.optional_vars is not None:
+                self.visit_target_expressions(item.optional_vars)
+                self.bind(item.optional_vars, [None])
+        for child in node.body: self.visit(child)
+
+    visit_AsyncWith = visit_With
+
+    def visit_Raise(self, node):
+        if node.exc: self.visit(node.exc)
+        if node.cause: self.visit(node.cause)
+        # A nested explicit raise exposes this intermediate static key state.
+        # Do not execute handlers or model Python exception selection.
+        for states in self.exception_states: states.append(self.state())
+
+    def state(self):
+        return self.aliases.copy(), self.keys.copy()
+
+    def join(self, left, right):
+        self.aliases = {name: left[0].get(name, set()) | right[0].get(name, set())
+            for name in left[0].keys() | right[0].keys()}
+        for name in self.aliases:
+            written = {role for role in self.aliases[name] if role.startswith('written:snapshot:')}
+            self.aliases[name] -= written - (left[0].get(name, set()) & right[0].get(name, set()))
+            if not left[0].get(name) or not right[0].get(name):
+                self.aliases[name] = self.aliases[name] | {'unknown-authority'}
+        self.keys = {name: left[1].get(name, {None}) | right[1].get(name, {None})
+            for name in left[1].keys() | right[1].keys()}
+
+    def visit_If(self, node):
+        self.visit(node.test)
+        before = self.state()
+        for child in node.body: self.visit(child)
+        body = self.state()
+        self.aliases, self.keys = before
+        for child in node.orelse: self.visit(child)
+        self.join(body, self.state())
+
+    def visit_Try(self, node):
+        before = self.state()
+        exceptional_states = [before]
+        self.exception_states.append(exceptional_states)
+        for child in node.body:
+            self.visit(child)
+            exceptional_states.append(self.state())
+        self.exception_states.pop()
+        body = self.state()
+        for child in node.orelse: self.visit(child)
+        outcomes = [self.state()]
+        self.aliases, self.keys = exceptional_states[0]
+        for state in exceptional_states[1:]: self.join(self.state(), state)
+        exceptional = self.state()
+        for handler in node.handlers:
+            self.aliases, self.keys = (part.copy() for part in exceptional)
+            if handler.type: self.visit(handler.type)
+            if handler.name: self.bind(ast.Name(id=handler.name), [])
+            for child in handler.body: self.visit(child)
+            outcomes.append(self.state())
+        self.aliases, self.keys = outcomes[0]
+        for outcome in outcomes[1:]: self.join(self.state(), outcome)
+        for child in node.finalbody: self.visit(child)
+
+    visit_TryStar = visit_Try
+
+    def visit_Match(self, node):
+        self.visit(node.subject)
+        if self.transferred_capability(node.subject):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability structural pattern at line ' + str(node.lineno))
+        before = self.state()
+        outcomes = [before]
+        for case in node.cases:
+            self.aliases, self.keys = (part.copy() for part in before)
+            for pattern in ast.walk(case.pattern):
+                name = getattr(pattern, 'name', None) or getattr(pattern, 'rest', None)
+                if name: self.bind(ast.Name(id=name), [])
+            if case.guard: self.visit(case.guard)
+            for child in case.body: self.visit(child)
+            outcomes.append(self.state())
+        self.aliases, self.keys = outcomes[0]
+        for outcome in outcomes[1:]: self.join(self.state(), outcome)
+
+    def arguments(self, args):
+        for item in args.posonlyargs + args.args + args.kwonlyargs:
+            self.bind(ast.Name(id=item.arg), [])
+        for item in (args.vararg, args.kwarg):
+            if item: self.bind(ast.Name(id=item.arg), [])
+
+    def enter_closure(self):
+        before, parent = self.state(), self.class_parent
+        bindings, self.class_bindings = self.class_bindings, None
+        # Class namespaces are executable scopes, but are not enclosing
+        # lexical bindings for methods, lambdas or comprehension bodies.
+        self.aliases, self.keys = parent if parent is not None else before
+        self.aliases, self.keys = self.state()
+        self.class_parent = None
+        return before, parent, bindings
+
+    def leave_closure(self, saved):
+        (self.aliases, self.keys), self.class_parent, self.class_bindings = saved
+
+    def local_names(self, node):
+        names, external = set(), set()
+        class Locals(ast.NodeVisitor):
+            def visit_Name(self, child):
+                if isinstance(child.ctx, (ast.Store, ast.Del)): names.add(child.id)
+            def visit_Import(self, child):
+                names.update(item.asname or item.name.split('.')[0] for item in child.names)
+            def visit_ImportFrom(self, child):
+                names.update(item.asname or item.name for item in child.names)
+            def visit_FunctionDef(self, child): names.add(child.name)
+            visit_AsyncFunctionDef = visit_FunctionDef
+            def visit_ClassDef(self, child): names.add(child.name)
+            def visit_Lambda(self, child): pass
+            def visit_ListComp(self, child): pass
+            visit_SetComp = visit_ListComp
+            visit_DictComp = visit_ListComp
+            visit_GeneratorExp = visit_ListComp
+            def visit_Global(self, child): external.update(child.names)
+            visit_Nonlocal = visit_Global
+        for child in node.body: Locals().visit(child)
+        return names - external
+
+    def analyze_function(self, node, parent=None):
+        if id(node) in self.active_functions: return
+        self.active_functions.add(id(node))
+        owner = self.lexical_scope(node)
+        caller = self.function_stack[-1] if self.function_stack else tree
+        if not self.function_depth and self.class_parent is None: self.module_globals = self.state()
+        if isinstance(owner, ast.Module):
+            parent = self.module_globals
+        elif caller is owner:
+            parent = self.state()
+        else:
+            definition = self.definition_states.get(id(node), self.state())
+            if any(isinstance(child, ast.Name) and (child.id in self.imported_os_names or definition[0].get(child.id, set()) & {'os', 'environ', 'reader', 'subprocess', 'capability-container', 'environment-snapshot'}) for child in ast.walk(node)):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment closure invocation custody at line ' + str(node.lineno))
+            parent = definition
+        saved = self.enter_closure()
+        if parent is not None: self.aliases, self.keys = (part.copy() for part in parent)
+        for name in self.local_names(node): self.bind(ast.Name(id=name), [])
+        self.arguments(node.args)
+        pending, self.pending = self.pending, []
+        annotations, self.annotation_pending = self.annotation_pending, []
+        self.function_depth += 1
+        self.function_stack.append(node)
+        for child in node.body: self.visit(child)
+        self.finish_annotations()
+        self.finish_functions()
+        self.function_depth -= 1
+        self.function_stack.pop()
+        self.pending = pending
+        self.annotation_pending = annotations
+        self.leave_closure(saved)
+        self.active_functions.remove(id(node))
+
+    def finish_functions(self):
+        pending, self.pending = self.pending, []
+        parent = self.class_parent if self.class_parent is not None else self.state()
+        for node, called in pending:
+            if not called: self.analyze_function(node, parent)
+
+    def visit_FunctionDef(self, node):
+        for item in node.decorator_list + node.args.defaults + [x for x in node.args.kw_defaults if x]: self.visit(item)
+        if any(self.transferred_capability(item) for item in node.args.defaults + [x for x in node.args.kw_defaults if x]):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper environment capability default argument at line ' + str(node.lineno))
+        # Without future.annotations, these are potential evaluated readers:
+        # eager on older Python, lazy annotation scopes on Python 3.14+. Class
+        # annotation scopes use the actual class namespace, unlike methods.
+        if not self.postponed_annotations:
+            for item in node.args.posonlyargs + node.args.args + node.args.kwonlyargs + [x for x in (node.args.vararg, node.args.kwarg) if x]:
+                if item.annotation: self.annotation(item.annotation)
+            if node.returns: self.annotation(node.returns)
+        candidate = [node, False]
+        self.definition_states[id(node)] = self.state()
+        identity = 'function:' + str(len(self.callable_functions))
+        self.callable_functions[identity] = candidate
+        self.bind(ast.Name(id=node.name), [], identity)
+        self.annotations[identity] = [item.annotation for item in node.args.posonlyargs + node.args.args + node.args.kwonlyargs + [x for x in (node.args.vararg, node.args.kwarg) if x] if item.annotation]
+        if node.returns: self.annotations[identity].append(node.returns)
+        self.pending.append(candidate)
+
+    visit_AsyncFunctionDef = visit_FunctionDef
+
+    def visit_Lambda(self, node):
+        for item in node.args.defaults + [x for x in node.args.kw_defaults if x]: self.visit(item)
+        if any(self.transferred_capability(item) for item in node.args.defaults + [x for x in node.args.kw_defaults if x]):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper environment capability default argument at line ' + str(node.lineno))
+        saved = self.enter_closure()
+        self.arguments(node.args)
+        self.visit(node.body)
+        if self.transferred_capability(node.body):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper-returned environment capability at line ' + str(node.lineno))
+        self.leave_closure(saved)
+
+    def visit_ClassDef(self, node):
+        self.definition_states[id(node)] = self.state()
+        base_protocols = [(self.role(base), isinstance(base, ast.Name) and base.id in ('object', 'type') and base.id not in self.keys) for base in node.bases]
+        for item in node.decorator_list + node.bases + [item.value for item in node.keywords]: self.visit(item)
+        if any(item.arg == 'metaclass' for item in node.keywords) or any(self.transferred_capability(item) for item in node.bases):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unmodeled environment class construction authority at line ' + str(node.lineno))
+        before, parent = self.state(), self.class_parent
+        self.class_parent = parent if parent is not None else before
+        self.aliases, self.keys = (part.copy() for part in self.class_parent)
+        pending, self.pending = self.pending, []
+        annotations, self.annotation_pending = self.annotation_pending, []
+        enclosing_bindings, self.class_bindings = self.class_bindings, set()
+        for child in node.body: self.visit(child)
+        class_annotations = self.annotation_pending
+        namespace = self.state()
+        class_bindings, self.class_bindings = self.class_bindings, enclosing_bindings
+        if not self.lazy_annotations: self.finish_annotations()
+        self.annotation_pending = annotations
+        methods, self.pending = self.pending, pending
+        self.pending.extend(methods)
+        self.aliases, self.keys = before
+        self.class_parent = parent
+        identity = 'class:' + str(len(self.methods))
+        self.class_nodes[identity] = [node, False]
+        self.class_base_protocols[identity] = base_protocols
+        self.bind(ast.Name(id=node.name), [], identity)
+        self.methods[identity] = {candidate[0].name: candidate for candidate in methods
+            if any(self.callable_functions.get(role) is candidate for role in namespace[0].get(candidate[0].name, set()))}
+        for method_identity, candidate in self.callable_functions.items():
+            if any(candidate is method for method in self.methods[identity].values()):
+                self.annotation_namespaces[method_identity] = (class_bindings, namespace)
+        if self.lazy_annotations and not self.postponed_annotations:
+            self.class_annotations[identity] = (class_annotations, class_bindings, namespace)
+
+    def comprehension(self, node):
+        # The first iterable runs in the enclosing scope; targets, filters,
+        # later iterables and the result run in a separate lexical scope.
+        self.visit(node.generators[0].iter)
+        saved = self.enter_closure()
+        self.comprehension_scopes.add(id(node))
+        self.comprehension_writes[id(node)] = set()
+        reachable = True
+        for index, generator in enumerate(node.generators):
+            if index: self.visit(generator.iter)
+            if self.role(generator.iter) & {'capability-container', 'environment-snapshot'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container iteration at line ' + str(node.lineno))
+            values = self.literal(generator.iter)
+            if isinstance(values, (tuple, list, set)) and not values:
+                reachable = False
+                break
+            self.visit_target_expressions(generator.target)
+            self.bind(generator.target, values if isinstance(values, (tuple, list, set)) else [])
+            for condition in generator.ifs: self.visit(condition)
+        if reachable:
+            if isinstance(node, ast.DictComp):
+                self.visit(node.key)
+                self.visit(node.value)
+            else: self.visit(node.elt)
+        self.comprehension_scopes.remove(id(node))
+        writes = self.comprehension_writes.pop(id(node))
+        self.leave_closure(saved)
+        # A pure scalar may become an environment key through a later finite
+        # alias/conditional/reader slot. Invalidate its containing binding;
+        # never restore a stale qualified key or discard possible old authority.
+        for name in writes:
+            self.keys[name] = {None}
+            self.aliases[name] = self.aliases.get(name, set()) | {'unknown-authority'}
+
+    visit_ListComp = comprehension
+    visit_SetComp = comprehension
+    visit_DictComp = comprehension
+    visit_GeneratorExp = comprehension
+
+    def add(self, key, node):
+        names = self.names(key)
+        if not names or None in names:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment key at line ' + str(node.lineno))
+        for name in sorted(names):
+            if not re.fullmatch(r'[A-Z][A-Z0-9_]*', name):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unsupported statically known environment name ' + repr(name) + ' at line ' + str(node.lineno))
+            self.reads.append({'name': name, 'line': node.lineno, 'byteColumn': node.col_offset})
+
+    def visit_Call(self, node):
+        authority = self.role(node.func)
+        if 'authority-mutator' in authority and node.args and self.role(node.args[0]) & {'annotationlib', 'subprocess'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver mutation at line ' + str(node.lineno))
+        if 'unsupported-callable' in authority:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment callable authority at line ' + str(node.lineno))
+        if 'reflection-reader' in self.role(node.func) and node.args:
+            if self.role(node.args[0]) & {'os', 'environ', 'reader'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: reflected environment capability at line ' + str(node.lineno))
+        annotation_reader = self.role(node.func) == {'annotation-reader'}
+        candidate = self.callable_functions.get(next(iter(authority))) if len(authority) == 1 else None
+        if candidate and (candidate[0].decorator_list or next(iter(authority)) in self.annotation_namespaces):
+            candidate = None
+        parameters = candidate[0].args.posonlyargs + candidate[0].args.args if candidate else []
+        def forwarded(item, parameter):
+            return candidate and self.snapshot_role(self.role(item)) and self.snapshot_forwarding_parameter(candidate, parameter)
+        # Only the known annotation reader's object target owns supported
+        # callable/class custody. Other helper parameters have no role model.
+        transferred_arguments = [item for index, item in enumerate(node.args)
+            if not (annotation_reader and index == 0)
+            and not (index < len(parameters) and not any(isinstance(argument, ast.Starred) for argument in node.args[:index + 1]) and forwarded(item, parameters[index].arg))]
+        transferred_arguments += [keyword.value for keyword in node.keywords
+            if not (annotation_reader and keyword.arg == 'obj')
+            and not (keyword.arg and forwarded(keyword.value, keyword.arg))
+            # The subprocess env slot is a data producer boundary, not an
+            # opaque helper receiver. Preserve a copied environment snapshot;
+            # callable/reader containers in that slot still reject.
+            and not (keyword.arg == 'env' and isinstance(node.func, ast.Attribute)
+                and self.exact_subprocess_receiver(node.func.value, node)
+                and node.func.attr in ('Popen', 'run', 'call', 'check_call', 'check_output')
+                and self.snapshot_role(self.role(keyword.value))) ]
+        if any(self.transferred_capability(item) for item in transferred_arguments):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper environment capability argument at line ' + str(node.lineno))
+        if 'unknown-authority' in authority and self.transferred_capability(node.func):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment callable authority at line ' + str(node.lineno))
+        if 'annotation-reader' in self.role(node.func):
+            eval_keyword = next((item.value for item in node.keywords if item.arg == 'eval_str'), None)
+            if eval_keyword is not None and not (isinstance(eval_keyword, ast.Constant) and isinstance(eval_keyword.value, bool)):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation eval_str at line ' + str(node.lineno))
+            eval_str = eval_keyword is not None and eval_keyword.value is True
+            if any(item.arg in ('format', 'globals', 'locals') or item.arg is None for item in node.keywords):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation evaluation namespace/format at line ' + str(node.lineno))
+            target = node.args[0] if node.args else next((item.value for item in node.keywords if item.arg == 'obj'), None)
+            self.evaluate_annotations(target, eval_str, node)
+        for identity in self.role(node.func):
+            candidate = self.callable_functions.get(identity)
+            if candidate:
+                candidate[1] = True
+                self.analyze_function(candidate[0])
+        if isinstance(node.func, ast.Attribute) and node.func.attr in ('getenv', 'get'):
+            receiver = node.func.value
+            if isinstance(receiver, ast.Attribute) and receiver.attr == 'environ': receiver = receiver.value
+            if isinstance(receiver, ast.Name) and receiver.id in self.imported_os_names and receiver.id not in self.keys and not self.role(receiver):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved lexical os binding at line ' + str(node.lineno))
+        if 'reader' in self.role(node.func):
+            key = node.args[0] if node.args else next((item.value for item in node.keywords if item.arg == 'key'), None)
+            if key is None:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment reader arguments at line ' + str(node.lineno))
+            self.add(key, node)
+        self.generic_visit(node)
+
+    def visit_Return(self, node):
+        if self.transferred_capability(node.value):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper-returned environment capability at line ' + str(node.lineno))
+        self.generic_visit(node)
+
+    def visit_Subscript(self, node):
+        roles = self.role(node.value)
+        if self.snapshot_role(roles) and isinstance(node.ctx, ast.Load):
+            keys = self.names(node.slice)
+            identities = {role for role in roles if role.startswith('snapshot:')}
+            if keys and None not in keys and all('written:' + identity + ':' + key in roles for identity in identities for key in keys):
+                self.generic_visit(node)
+                return
+        if self.role(node.value) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container access at line ' + str(node.lineno))
+        if isinstance(node.ctx, ast.Load) and 'environ' in self.role(node.value): self.add(node.slice, node)
+        self.generic_visit(node)
+
+reader = Readers()
+reader.visit(tree)
+reader.finish_annotations()
+for name in list(reader.class_annotations): reader.evaluate_class_annotations(name)
+reader.finish_functions()
+print(json.dumps(reader.reads))
+`;
+  const result = spawnSync('python3', ['-I', '-c', parser], {
+    input: text, encoding: 'utf8', timeout: 10_000, maxBuffer: 8 * 1024 * 1024,
+  });
+  assert.equal(result.status, 0,
+    `PYTHON_ENVIRONMENT_PARSE_FAILED: ${source}: read-only Python environment discovery failed\n${result.error?.message ?? ''}\n${result.stderr}`);
+  const lines = text.split('\n');
+  const offsets = [];
+  let offset = 0;
+  for (const line of lines) { offsets.push(offset); offset += line.length + 1; }
+  return JSON.parse(result.stdout).map(({ name, line, byteColumn }) => ({
+    name,
+    // CPython columns count UTF-8 bytes; JavaScript indices count UTF-16 units.
+    index: offsets[line - 1] + Buffer.from(lines[line - 1], 'utf8').subarray(0, byteColumn).toString('utf8').length,
+    kind: 'python-process-env',
+  }));
+}
+
+function nodeArgvSelection(file, words, commandArrays = new Set()) {
+  let first = 0;
+  while (words[first] && (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(words[first].value)
+    || ['if', 'then', 'elif', 'do', 'while', 'until', '!', 'exec', 'command'].includes(words[first].value))) first++;
+  // Shared wrapper refusal happens before interpreter selection. Preserve the
+  // recognizable Python owner's diagnostic instead of masking it as Node.
+  const pythonOwner = words.slice(first).some(word => /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(word.value))
+    && !words.slice(first).some(word => /^(?:.*\/)?node(?:js)?$/u.test(word.value));
+  const wrapperDiagnostic = `${pythonOwner ? 'PYTHON' : 'NODE'}_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}`;
+  first += pythonInterpreterIndex(words.slice(first).map(word => word.value), wrapperDiagnostic);
+  if ((['kubectl', 'docker'].includes(words[first]?.value) || commandArrays.has(words[first]?.value)) && words.some(word => word.value === 'exec')) {
+    const separator = words.findIndex(word => word.value === '--');
+    if (separator >= 0) first = separator + 1;
+  }
+  const executable = words[first]?.value ?? '';
+  if (!/^(?:.*\/)?node(?:js)?$/u.test(executable)) return { first, dynamic: /[$`]/u.test(words[first]?.raw ?? ''), words };
+  let next = first + 1;
+  while (words[next]?.value.startsWith('-')) {
+    const value = words[next].value;
+    if (['-e', '--eval', '-p', '--print'].includes(value)) return { first, inline: words[next + 1], node: true };
+    if (['-v', '--version', '-h', '--help', '--v8-options', '-c', '--check'].includes(value)) return { first, node: true, passive: true };
+    if (value === '-') return { first, node: true, stdin: true };
+    if (/^--(?:input-type|conditions|experimental-default-type)=/u.test(value)
+      || ['--no-warnings', '--experimental-strip-types'].includes(value)) { next++; continue; }
+    throw new Error(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}: unsupported Node argv ${value}`);
+  }
+  return { first, node: true, stdin: !words[next], script: words[next]?.value };
+}
+
+function nodeShellArgvSelection(values, first, diagnostic, modeDescription = 'unresolved nested shell argv mode') {
+  let index = first + 1;
+  let unsupportedSelectedPrefix = false;
+  let selected = false;
+  const selector = value => /^-[A-Za-z]*c[A-Za-z]*$/u.test(value ?? '');
+  const selectedBody = bodyIndex => {
+    assert(!unsupportedSelectedPrefix, `${diagnostic}: ${modeDescription}`);
+    assert(values[bodyIndex] !== undefined, `${diagnostic}: missing selected shell program`);
+    return bodyIndex;
+  };
+  while (index < values.length) {
+    const value = values[index];
+    // A terminator before c establishes passive script custody. After c it
+    // ends option parsing but retains the selected command-string operand.
+    if (value === '--' || value === '-') return selected ? selectedBody(index + 1) : null;
+    if (!value.startsWith('-') && !value.startsWith('+')) return selected ? selectedBody(index) : null;
+    if (selector(value)) {
+      assert(!unsupportedSelectedPrefix && /^-[efuvxnClic]+$/u.test(value),
+        `${diagnostic}: ${modeDescription}`);
+      selected = true; index++; continue;
+    }
+    if (/^-[efuvxnCli]+$/u.test(value)) { index++; continue; }
+    // These options establish operand custody only, before or after c. A
+    // selected body using them is explicitly unsupported, never omitted.
+    if (['-o', '+o', '-O', '+O', '--rcfile', '--init-file'].includes(value)) {
+      if (values[index + 1] === undefined) {
+        assert(!selected, `${diagnostic}: ${modeDescription}`);
+        return null;
+      }
+      index += 2; unsupportedSelectedPrefix = true; continue;
+    }
+    if (['--noprofile', '--norc', '--posix', '--restricted', '--verbose', '--login', '--debugger'].includes(value)) {
+      index++; unsupportedSelectedPrefix = true; continue;
+    }
+    assert(!selected, `${diagnostic}: ${modeDescription}`);
+    // An unknown pre-selector option might consume the next word. Preserve
+    // the distinction between ambiguous custody and definite script data.
+    assert(!values.slice(index + 1).some(selector), `${diagnostic}: ambiguous shell option custody`);
+    return null;
+  }
+  assert(!selected, `${diagnostic}: missing selected shell program`);
+  return null;
+}
+
+function nodeShellPrograms(file, text, selectedScripts = new Set(), sourcePositions = null, sourceText = text, nested = false, depth = 0) {
+  const sourceLine = index => lineAt(sourceText,sourcePositions ? sourcePositions[index] : index);
+  assert(depth <= 8, `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(0)}: nested shell custody depth`);
+  let acquired;
+  try { acquired = shellCommandAcquisitions(file, text); }
+  catch(error) {
+    if (!sourcePositions) throw error;
+    const marker = `${file}:`, start = error.message.indexOf(marker);
+    const line = start >= 0 ? /^([0-9]+):/u.exec(error.message.slice(start+marker.length)) : null;
+    let index = 0; if (line) for(let count=1;count<Number(line[1]);count++) index=text.indexOf('\n',index)+1;
+    throw new Error(line ? error.message.replace(`${file}:${line[1]}:`,`${file}:${sourceLine(index)}:`) : `${file}:${sourceLine(0)}: ${error.message}`,{cause:error});
+  }
+  const programs = [];
+  const commandArrays = new Set([...text.matchAll(/(?:^|\n)\s*([A-Za-z_][A-Za-z0-9_]*)=\(\s*kubectl(?:\s|\))/gu)].map(match => '${' + match[1] + '[@]}'));
+  const selections = new Map(acquired.commands.map(command => [command, nodeArgvSelection(`${file}:${sourceLine(command.words[0]?.start ?? command.start)}`, command.words, commandArrays)]));
+  for (const selection of selections.values()) if (selection.node && selection.script) selectedScripts.add(selection.script);
+  for (const [command, selection] of selections) {
+    const diagnostic = `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}`;
+    // Inspect only literal shell -c operands to detect an unsupported nested
+    // Node execution path. Quoted arguments to ordinary commands stay passive.
+    assert(!(nested && selection.node), `${diagnostic}: nested shell Node acquisition`);
+    if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(command.words[selection.first]?.value ?? '')) {
+      const bodyIndex = nodeShellArgvSelection(command.words.map(word => word.value), selection.first, diagnostic);
+      const body = bodyIndex === null ? null : command.words[bodyIndex];
+      if (body) {
+        assert(!body.expanded, `${diagnostic}: expanded nested shell program`);
+        const positions = sourcePositions ? body.positions.map(index => sourcePositions[index]) : body.positions;
+        nodeShellPrograms(file, body.value, selectedScripts, positions, sourceText, true, depth + 1);
+      }
+    }
+    if (selection.inline) {
+      const parsed = { code: selection.inline.value };
+      assert(!selection.inline.expanded, `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}: expanded inline program`);
+      programs.push({ code: parsed.code, positions: selection.inline.positions, kind: 'inline' });
+    } else if (selection.node && !selection.passive && selection.stdin
+      && !acquired.heredocs.some(body => body.command === command && body.selectedStdin)) {
+      assert.fail(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}: unresolved Node stdin`);
+    }
+    if (selection.dynamic && command.words.slice(selection.first + 1).some(word => /process(?:\.env|\[['"]env['"]\])/u.test(word.value)))
+      assert.fail(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}: dynamic interpreter custody`);
+  }
+  for (const body of acquired.heredocs) {
+    const selection = selections.get(body.command);
+    if (selection.dynamic && /process(?:\.env|\[['"]env['"]\])/u.test(body.body))
+      assert.fail(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(body.start)}: dynamic interpreter stdin custody`);
+    const output = body.command.redirections.filter(redirect => redirect.fd === 1 && ['>', '>>'].includes(redirect.operator)).at(-1)?.target;
+    const generatedScript = body.selectedStdin && body.command.words[selection.first]?.value === 'cat' && output && selectedScripts.has(output);
+    if (!(body.selectedStdin && selection.node && selection.stdin) && !generatedScript) continue;
+    assert(/^<<-?\s*['"]/u.test(text.slice(body.start, body.bodyStart)) || !/[$`]/u.test(body.body),
+      `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(body.start)}: expanded program heredoc`);
+    assert(body.bodyPositions?.length >= body.body.length, `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(body.start)}: missing decoded heredoc source custody`);
+    programs.push({ code: body.body, positions:body.bodyPositions, kind: 'heredoc' });
+  }
+  return programs;
+}
+
+function acquiredNodeEnvironmentReads(file, text, kind = null) {
+  const programs = [];
+  if (['.yaml', '.yml'].includes(path.extname(file))) {
+    const masked = text.replace(/\{\{[\s\S]*?\}\}/gu, value => value.replace(/[^\n]/gu, ' '));
+    const documents = YAML.parseAllDocuments(masked, { keepSourceTokens: true, uniqueKeys: false });
+    const shellBodies = []; const selectedScripts = new Set();
+  const scalar = (node) => {
+    assert(YAML.isScalar(node) && typeof node.value === 'string',
+      `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} nonliteral command argument`);
+    const raw = masked.slice(node.range[0], node.range[1]);
+    const positions = [];
+    let decoded = '';
+    if (raw.startsWith('"') || raw.startsWith("'")) {
+      const double = raw[0] === '"';
+      for (let index = 1; index < raw.length - 1; index += 1) {
+        const start = index; let value = raw[index];
+        if (!double && value === "'" && raw[index + 1] === "'") index += 1;
+        else if (double && value === '\\') {
+          const escape = raw[++index];
+          const widths = { x: 2, u: 4, U: 8 };
+          if (widths[escape]) { value = String.fromCodePoint(parseInt(raw.slice(index + 1, index + 1 + widths[escape]), 16)); index += widths[escape]; }
+          else value = ({ '0': '\0', a: '\x07', b: '\b', t: '\t', n: '\n', v: '\v', f: '\f', r: '\r', e: '\x1b', ' ': ' ', '"': '"', '/': '/', '\\': '\\', N: '\u0085', _: '\u00a0', L: '\u2028', P: '\u2029' })[escape];
+          assert(value !== undefined, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} scalar escape`);
+        }
+        decoded += value; for (let count = 0; count < value.length; count += 1) positions.push(node.range[0] + start);
+      }
+    } else if (/^[|>]/u.test(raw)) {
+      let cursor = raw.indexOf('\n') + 1;
+      for (const char of node.value) {
+        while (cursor < raw.length && raw[cursor] !== char) cursor += 1;
+        assert(cursor < raw.length, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} folded scalar mapping`);
+        decoded += char; positions.push(node.range[0] + cursor++);
+      }
+    } else { decoded = raw; for (let index = 0; index < raw.length; index += 1) positions.push(node.range[0] + index); }
+    assert.equal(decoded, node.value, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} multiline scalar mapping`);
+    return { code: node.value, positions };
+  };
+    for (const document of documents) YAML.visit(document, { Map(_key, node, ancestors) {
+      const owner = ancestors.filter(YAML.isPair).at(-1)?.key?.value;
+      const container = YAML.isSeq(ancestors.at(-1)) && ['containers', 'initContainers'].includes(owner);
+      if (node !== document.contents && owner !== 'exec' && !container) return;
+      const command = node.items.find(pair => pair.key?.value === 'command');
+      if (!command) return;
+      const args = node.items.find(pair => pair.key?.value === 'args');
+      const items = YAML.isSeq(command.value) ? [...command.value.items, ...(YAML.isSeq(args?.value) ? args.value.items : [])] : [command.value];
+      const values = items.map(item => item?.value);
+      // Array values are native argv, while a selected shell body/scalar is
+      // lexically acquired below. Raw Node spelling inside that body cannot
+      // decide whether a decoded literal executable exists.
+      if (YAML.isSeq(command.value) && !values.some(value => typeof value === 'string'
+        && /^(?:.*\/)?(?:node(?:js)?|(?:ba|da|a|z|k)?sh)$/u.test(value))
+        && !values.some(value => typeof value === 'string' && /process\.env/u.test(value))) return;
+      assert(!document.errors.some(error => error.pos?.[0] >= command.value.range[0] && error.pos?.[0] <= (args?.value.range?.[1] ?? command.value.range[1])), `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}: malformed selected argv`);
+      assert(values.every(value => typeof value === 'string'), `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}: nonliteral selected argv`);
+      const first = pythonInterpreterIndex(values, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}`);
+      if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(values[first]) || !YAML.isSeq(command.value)) {
+        const bodyIndex = YAML.isSeq(command.value) ? nodeShellArgvSelection(values, first,
+          `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}:${lineAt(text,items[first].range[0])}`) : 0;
+        if (bodyIndex === null) return;
+        shellBodies.push(scalar(items[bodyIndex]));
+      } else {
+        const words = values.map((value,index) => ({ value, raw:value, start:items[index].range[0] }));
+        const selection = nodeArgvSelection(file, words);
+        assert(!(selection.node && selection.stdin && !selection.passive), `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}:${lineAt(text, items[selection.first].range[0])}: unresolved Node stdin`);
+        if (selection.inline) { const index = words.indexOf(selection.inline); programs.push({...scalar(items[index]), kind:'inline'}); }
+        if (selection.script) selectedScripts.add(selection.script);
+        if (selection.dynamic && values.some(value => /process\.env/u.test(value))) assert.fail(`NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}: dynamic interpreter custody`);
+      }
+    } });
+    // Selected direct Node script argv (including probes) proves which generated
+    // file is executed; a filename extension alone never grants authority.
+    for (const body of shellBodies) for (const command of shellCommandAcquisitions(file, body.code).commands) {
+      const selection = nodeArgvSelection(file, command.words); if (selection.script) selectedScripts.add(selection.script);
+    }
+    for (const body of shellBodies) for (const program of nodeShellPrograms(file, body.code, selectedScripts, body.positions, text)) programs.push({ ...program,
+      positions: program.positions ? program.positions.map(index => body.positions[index]) : body.positions.slice(program.index, program.index + program.code.length) });
+  } else programs.push(...nodeShellPrograms(file, text));
+  const reads = [];
+  for (const program of programs) {
+    if (kind && program.kind !== kind) continue;
+    for (const fact of nodeEnvironmentReads(file, program.code, program.positions ?? Array.from(program.code,(_char,index)=>program.index+index), text)) reads.push({ ...fact,
+      index: program.positions ? program.positions[fact.index] : program.index + fact.index, kind:`embedded-${fact.kind}` });
+  }
+  return reads;
+}
+
+function embeddedNodeEnvironmentReads(file, text) {
+  return acquiredNodeEnvironmentReads(file, text, 'heredoc');
+}
+
+function embeddedPythonEnvironmentReads(file, text) {
+  return acquiredPythonEnvironmentReads(file, text, 'heredoc');
+}
+
+function environmentProducerOccurrences(file, text, skipHelperProjection = false) {
+  const helperPlans = skipHelperProjection ? [] : helmEnvironmentHelperProjectionPlans({file,text,sourceRoot:root});
+  const masked = text.replace(/\{\{[\s\S]*?\}\}/gu,value=>value.replace(/[^\n]/gu,' '));
+  const facts = [];
+  const documents = YAML.parseAllDocuments(masked,{keepSourceTokens:true,uniqueKeys:false});
+  const propertySource = (owner,key) => {
+    if (!YAML.isMap(owner)) return null;
+    const pair = owner.items.find(item=>item.key?.value===key);
+    if (!pair?.key?.range) return null;
+    const start = pair.key.range[0], end = text.indexOf('\n',start);
+    return text.slice(start,end < 0 ? text.length : end).replace(/^[^:]+:\s*/u,'').trim();
+  };
+  const propertyBytes = (owner,key) => {
+    if (!YAML.isMap(owner)) return '';
+    const pair = owner.items.find(item=>item.key?.value===key);
+    if (!pair?.key?.range) return '';
+    const start=pair.key.range[0],newline=text.indexOf('\n',start),end=Math.max(pair.value?.range?.[1]??start,newline<0?text.length:newline);
+    return text.slice(start,end);
+  };
+  const guardsAt = index => {
+    const stack = []; const bindings = [];
+    for (const match of text.slice(0,index).matchAll(/\{\{-?\s*([\s\S]*?)\s*-?\}\}/gu)) {
+      const action = match[1].trim();
+      if (/^\$[A-Za-z_][A-Za-z0-9_]*\s*(?::=|=)/u.test(action)) bindings.push({directive:'binding',expression:action});
+      if (/^(?:if|range|with)\s/u.test(action)) {
+        const space = action.indexOf(' '); stack.push({directive:action.slice(0,space),expression:action.slice(space+1).trim()});
+      } else if (/^else(?:\s|$)/u.test(action)) {
+        assert(stack.length, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,match.index)}: unmatched template else`);
+        stack[stack.length-1] = {...stack.at(-1),branch:action};
+      } else if (action === 'end') {
+        assert(stack.length, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,match.index)}: unmatched template end`);stack.pop();
+      }
+    }
+    return [...bindings,...stack];
+  };
+  for (const [documentIndex,document] of documents.entries()) YAML.visit(document,{ Map(_key,node,ancestors) {
+    const sequence = ancestors.at(-1), envPair = ancestors.at(-2);
+    if (!YAML.isSeq(sequence) || !YAML.isPair(envPair) || !['env','extraEnv'].includes(envPair.key?.value)) return;
+    const names = node.items.filter(pair=>pair.key?.value==='name');
+    assert(names.length === 1, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,node.range[0])}: missing or ambiguous environment declaration name`);
+    const name = names[0].value;
+    assert(YAML.isScalar(name) && typeof name.value === 'string' && name.value.length > 0, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,names[0].key.range[0])}: unsupported nonliteral or environment-name spelling`);
+    assert(!document.errors.some(error=>error.pos?.[0]>=node.range[0]&&error.pos?.[0]<=node.range[1]), `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,name.range[0])}: malformed selected declaration`);
+    const owner = ancestors.slice(0,-2).filter(YAML.isMap).at(-1);
+    assert(owner, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,name.range[0])}: environment owner missing`);
+    const keys = ancestors.filter(YAML.isPair).map(pair=>String(pair.key?.value));
+    const placement = keys.findLast(key=>['containers','initContainers','extraContainers'].includes(key)) ?? 'profile-environment';
+    const command = owner.get('command',true),args = owner.get('args',true);
+    const argv = value => YAML.isSeq(value) ? value.items.map((item,index)=>YAML.isScalar(item)&&typeof item.value==='string'&&!item.value.includes('\n')&&!['-c','-ec','-e','-p','--eval','--print'].includes(value.items[index-1]?.value)?item.value:'<selected program or template argument>') : [];
+    const commandSource = ['command','args'].map(key=>propertyBytes(owner,key)).filter(Boolean).join('\n');
+    const image = owner.get('image',true);
+    const imageSource = propertyBytes(owner,'image');
+    const metadata = YAML.isMap(document.contents) ? document.contents.get('metadata',true) : null;
+    const kind = YAML.isMap(document.contents) ? document.contents.get('kind',true) : null;
+    const raw = text.slice(node.range[0],node.range[1]);
+    const custody = {
+      schemaVersion:'environment-producer-source-custody.v1',
+      container:{name:propertySource(owner,'name'),image:YAML.isMap(image)?`<selected image mapping: ${image.items.map(pair=>pair.key?.value).join(', ')}>`:propertySource(owner,'image'),imageSourceDigest:crypto.createHash('sha256').update(imageSource).digest('hex'),placement},
+      command:{argv:argv(command),args:argv(args),sourceSelectors:{command:command&&!YAML.isSeq(command)?propertySource(owner,'command'):null,args:args&&!YAML.isSeq(args)?propertySource(owner,'args'):null},sourceDigest:crypto.createHash('sha256').update(commandSource).digest('hex'),mode:command?'conditional or explicit selected argv; inspect command guards':'image/default entrypoint or profile injection',guards:command?guardsAt(owner.items.find(pair=>pair.key?.value==='command').key.range[0]):[]},
+      guards:guardsAt(name.range[0]),statement:{sourceDigest:crypto.createHash('sha256').update(raw).digest('hex')},
+      document:{index:documentIndex,kind:propertySource(document.contents,'kind'),name:propertySource(metadata,'name')},
+      profilePlacement:'$.'+keys.join('.'),
+    };
+    const value = node.get('value',true); const literal = YAML.isScalar(value) && typeof value.value==='string' ? value.value : '';
+    facts.push({name:name.value,kind:'kubernetes-env',path:file,line:lineAt(text,name.range[0]),defaultOperator:null,sourceValueRole:'none',default:'<none>',
+      secretProvenance:/\b(?:secretKeyRef|secretRef)\s*:/u.test(raw),
+      filePathProvenance:literal.startsWith('/')&&(SENSITIVE_ENV_NAME.test(name.value)||name.value==='GOOGLE_APPLICATION_CREDENTIALS'||/\.(?:key|pem|crt)$/u.test(literal)),
+      custody, custodyDigest:crypto.createHash('sha256').update(JSON.stringify(custody)).digest('hex'),
+      custodyEvidence:{path:file,line:lineAt(text,node.range[0]),endLine:lineAt(text,node.range[1]),containerLine:lineAt(text,owner.range[0]),range:[node.range[0],node.range[1]]},
+    });
+  } });
+  for(const plan of helperPlans) {
+    const indent=plan.prefix.length;
+    const marker='__HELM_ENVIRONMENT_PROJECTION_CUSTODY__';
+    const replacement=plan.registry
+      ? `name: buster-v2-runtime\n${' '.repeat(indent)}image: '<selected incoming .Values.extraContainers image>'\n${' '.repeat(indent)}env:\n${' '.repeat(indent+2)}- name: ${marker}\n${' '.repeat(indent+4)}value: selected`
+      : `- name: ${marker}\n${' '.repeat(indent+2)}value: selected`;
+    const selected=environmentProducerOccurrences(file,text.slice(0,plan.start)+replacement+text.slice(plan.end),true).filter(fact=>fact.name===marker);
+    assert(selected.length===1,`ENVIRONMENT_PRODUCER_HELPER_CUSTODY_UNQUALIFIED: ${file}:${plan.line}: helper is not acquired in one actual environment/container placement`);
+    const caller=selected[0];
+    if(plan.registry) {
+      assert(caller.custody.container.placement==='containers' && caller.custody.guards.some(guard=>guard.directive==='range'&&guard.expression==='.Values.extraContainers') && caller.custody.guards.some(guard=>guard.directive==='if'&&guard.expression==='eq .name "buster-v2-runtime"'),`ENVIRONMENT_PRODUCER_HELPER_CUSTODY_UNQUALIFIED: ${file}:${plan.line}: registry helper requires actual extraContainers range/name branch`);
+    }
+    for(const projection of plan.projections) {
+      const helperProjection={...plan.helperProjection,caller:{...plan.helperProjection.caller,guards:caller.custody.guards},branch:{guards:projection.guards,finiteKey:projection.finiteKey??null,valueAuthority:projection.valueAuthority}};
+      const custody={...caller.custody,guards:[...caller.custody.guards,...projection.guards],statement:{sourceDigest:projection.sourceDigest},helperProjection};
+      if(plan.registry) {
+        custody.container={...custody.container,image:'.Values.extraContainers[name=buster-v2-runtime].image',imageSourceDigest:plan.helperProjection.incomingContainer.sourceDigest};
+        custody.command={argv:[],args:[],sourceSelectors:{command:'.container.command',args:'.container.args'},sourceDigest:plan.helperProjection.incomingContainer.sourceDigest,mode:'incoming values container command/image; transport only without source delivery proof',guards:caller.custody.guards};
+      }
+      const literal=typeof projection.literalValue==='string'?projection.literalValue:'';
+      facts.push({name:projection.name,kind:'kubernetes-env',path:file,line:plan.line,defaultOperator:null,sourceValueRole:'none',default:'<none>',secretProvenance:projection.secretProvenance,
+        filePathProvenance:literal.startsWith('/')&&(SENSITIVE_ENV_NAME.test(projection.name)||/\.(?:key|pem|crt)$/u.test(literal)),custody,custodyDigest:crypto.createHash('sha256').update(JSON.stringify(custody)).digest('hex'),
+        custodyEvidence:{path:file,line:plan.line,endLine:plan.line,containerLine:caller.custodyEvidence.containerLine,selectedSourcePath:projection.sourcePath,selectedSourceLine:projection.sourceLine,range:projection.range}});
+    }
+  }
+  return facts;
+}
+
+function environmentOccurrences(file, text) {
+  const found = [];
+  const assignments = new Map();
+  const extension = path.extname(file);
+  const shellSource = extension === '.sh' || /^(?:#![^\n]*(?:ba|z|da|k)?sh\b)/u.test(text);
+  const yamlSource = extension === '.yaml' || extension === '.yml';
+  const nodeSource = ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'].includes(extension);
+  const pythonSource = extension === '.py';
+  const goSource = extension === '.go';
+  const cSource = extension === '.c' || extension === '.h';
+  const scanText = shellSource ? maskQuotedShellHeredocs(text, file) : text;
+  if (yamlSource) found.push(...environmentProducerOccurrences(file, text));
+  if (goSource) {
+    const splitGoArguments = (value) => {
+      const result = [];
+      let start = 0;
+      let quote = null;
+      let escaped = false;
+      for (let index = 0; index < value.length; index += 1) {
+        const character = value[index];
+        if (escaped) { escaped = false; continue; }
+        if (quote && character === '\\' && quote !== '`') { escaped = true; continue; }
+        if (quote) { if (character === quote) quote = null; continue; }
+        if (character === '"' || character === "'" || character === '`') { quote = character; continue; }
+        if (character === ',') { result.push(value.slice(start, index).trim()); start = index + 1; }
+      }
+      result.push(value.slice(start).trim());
+      return result;
+    };
+    const goLiteral = (value) => {
+      if (/^-?[0-9]+$/u.test(value)) return value;
+      if (value.startsWith('`') && value.endsWith('`')) return value.slice(1, -1);
+      if (value.startsWith('"') && value.endsWith('"')) {
+        try { return JSON.parse(value); } catch { return null; }
+      }
+      return null;
+    };
+    const wrappers = [];
+    for (const declaration of text.matchAll(/\bfunc\s+([a-z][A-Za-z0-9_]*)\s*\(([^)]*)\)[^{]*\{/gu)) {
+      const parameters = declaration[2].split(',').map((item) => item.trim().split(/\s+/u)[0]).filter(Boolean);
+      const bodyStart = (declaration.index ?? 0) + declaration[0].length;
+      let depth = 1;
+      let bodyEnd = bodyStart;
+      for (; bodyEnd < text.length && depth > 0; bodyEnd += 1) {
+        if (text[bodyEnd] === '{') depth += 1;
+        else if (text[bodyEnd] === '}') depth -= 1;
+      }
+      const body = text.slice(bodyStart, bodyEnd - 1);
+      const reader = /os\.(?:Getenv|LookupEnv)\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)/u.exec(body)?.[1];
+      const environmentIndex = reader ? parameters.indexOf(reader) : -1;
+      if (environmentIndex < 0) continue;
+      wrappers.push({
+        name: declaration[1],
+        environmentIndex,
+        fallbackIndex: parameters.indexOf('fallback'),
+      });
+    }
+    for (const direct of text.matchAll(/os\.(?:Getenv|LookupEnv)\(\s*["']([A-Z][A-Z0-9_]*)["']\s*\)/gu)) {
+      found.push({ name: direct[1], kind: 'go-process-env', path: file, line: lineAt(text, direct.index), defaultOperator: null, sourceValueRole: 'none', default: '<none>', secretProvenance: false, filePathProvenance: false });
+    }
+    for (const wrapper of wrappers) {
+      const callPattern = new RegExp(`\\b${wrapper.name}\\(([^)\\n]*)\\)`, 'gu');
+      for (const call of text.matchAll(callPattern)) {
+        const argumentsList = splitGoArguments(call[1]);
+        const name = goLiteral(argumentsList[wrapper.environmentIndex] ?? '');
+        if (!/^[A-Z][A-Z0-9_]*$/u.test(name ?? '')) continue;
+        const fallback = wrapper.fallbackIndex >= 0 ? goLiteral(argumentsList[wrapper.fallbackIndex] ?? '') : null;
+        found.push({
+          name,
+          kind: 'go-process-env-helper',
+          path: file,
+          line: lineAt(text, call.index),
+          defaultOperator: fallback === null ? null : 'trimmed-empty-fallback',
+          sourceValueRole: fallback === null ? 'none' : 'default',
+          default: fallback ?? '<none>',
+          secretProvenance: false,
+          filePathProvenance: false,
+        });
+      }
+    }
+  }
+  if (nodeSource || pythonSource) {
+    for (const readFact of pythonSource ? pythonEnvironmentReads(text, file) : nodeEnvironmentReads(file, text)) {
+      found.push({
+        name: readFact.name,
+        kind: readFact.kind,
+        path: file,
+        line: lineAt(text, readFact.index),
+        defaultOperator: null,
+        sourceValueRole: 'none',
+        default: '<none>',
+        secretProvenance: false,
+        filePathProvenance: false,
+      });
+    }
+  }
+  if (shellSource || yamlSource) {
+    for (const readFact of embeddedNodeEnvironmentReads(file, text)) {
+      found.push({
+        name: readFact.name,
+        kind: readFact.kind,
+        path: file,
+        line: lineAt(text, readFact.index),
+        defaultOperator: null,
+        sourceValueRole: 'none',
+        default: '<none>',
+        secretProvenance: false,
+        filePathProvenance: false,
+      });
+    }
+    for (const readFact of embeddedPythonEnvironmentReads(file, text)) {
+      found.push({
+        name: readFact.name,
+        kind: readFact.kind,
+        path: file,
+        line: lineAt(text, readFact.index),
+        defaultOperator: null,
+        sourceValueRole: 'none',
+        default: '<none>',
+        secretProvenance: false,
+        filePathProvenance: false,
+      });
+    }
+    for (const readFact of inlineProgramEnvironmentReads(file, text)) {
+      found.push({
+        name: readFact.name,
+        kind: readFact.kind,
+        path: file,
+        line: lineAt(text, readFact.index),
+        defaultOperator: null,
+        sourceValueRole: 'none',
+        default: '<none>',
+        secretProvenance: false,
+        filePathProvenance: false,
+      });
+    }
+  }
+  if (shellSource || yamlSource) {
+    for (const assignment of scanText.matchAll(/^\s*(?:export\s+|readonly\s+|local\s+)?([A-Z][A-Z0-9_]*)=(.*)$/gmu)) {
+      const name = assignment[1];
+      const values = assignments.get(name) ?? [];
+      values.push({ selfExternal: new RegExp(`\\$\\{?${name}(?::[-=?+]|[-=?+]|\\})`, 'u').test(assignment[2]), line: lineAt(text, assignment.index) });
+      assignments.set(name, values);
+    }
+  }
+  const declaredYamlEnvironment = yamlSource ? new Set([...text.matchAll(/(?:^\s*-?\s*name:|\{\s*name\s*:)\s*['"]?([A-Z][A-Z0-9_]*)/gmu)].map((match) => match[1])) : new Set();
+  const patterns = [];
+  if (yamlSource) patterns.push({ kind: 'embedded-shell-env', regex: /\$([A-Z][A-Z0-9_]*)\b/g });
+  // YAML templates can contain shell or Node programs in block scalars. Other
+  // source languages must use their own environment API. This prevents a
+  // JavaScript test string that contains `${NAME}` from becoming a shell input.
+  if (shellSource || yamlSource) {
+    patterns.push({ kind: 'shell-parameter', regex: /\$\{([A-Z][A-Z0-9_]*)(?:(:-|:=|:\?|:\+|-|=|\?|\+)([^}]*))?\}/g });
+    // The first expression records an outer expansion. This zero-width pass
+    // also records the innermost expansion when one fallback contains another.
+    patterns.push({ kind: 'shell-parameter', regex: /(?=\$\{([A-Z][A-Z0-9_]*)(?:(:-|:=|:\?|:\+|-|=|\?|\+)([^{}]*))?\})/g });
+  }
+  // Embedded YAML programs are parsed by the runtime-specific scanners above.
+  // Do not also scan arbitrary YAML text with language regexes: that duplicates
+  // real readers and can turn documentation strings into runtime inputs.
+  if (cSource) patterns.push({ kind: 'c-getenv', regex: /(?:secure_)?getenv\(\s*"([A-Z][A-Z0-9_]*)"\s*\)/g });
+  for (const { kind, regex } of patterns) {
+    for (const match of scanText.matchAll(regex)) {
+      const name = match[1] ?? match[2];
+      if (!name) continue;
+      const line = lineAt(text, match.index);
+      if (kind === 'embedded-shell-env' && (!declaredYamlEnvironment.has(name) || text.split('\n')[line - 1].trim().startsWith('#'))) continue;
+      const precedingAssignments = (assignments.get(name) ?? []).filter((item) => item.line <= line);
+      // A later child-process assignment must not hide an earlier process input.
+      // Only the latest assignment that can reach this read decides whether the
+      // uppercase name is a local shell value or an environment-derived value.
+      if (precedingAssignments.length > 0 && !precedingAssignments.at(-1).selfExternal && kind !== 'kubernetes-env') continue;
+      const operator = kind === 'shell-parameter' ? match[2] ?? null : null;
+      const rawDefault = kind === 'shell-parameter' && match[2] ? match[3] : null;
+      const sourceValue = shellParameterValue(operator, name, rawDefault);
+      const sourceLines = text.split('\n');
+      const startIndex = Math.max(0, line - 1);
+      const startLine = sourceLines[startIndex] ?? '';
+      const startIndent = startLine.match(/^\s*/u)?.[0].length ?? 0;
+      let endIndex = Math.min(sourceLines.length, startIndex + 12);
+      if (kind === 'kubernetes-env') {
+        for (let index = startIndex + 1; index < Math.min(sourceLines.length, startIndex + 12); index += 1) {
+          const next = sourceLines[index];
+          const nextIndent = next.match(/^\s*/u)?.[0].length ?? 0;
+          const nextEnvItem = /^\s*-\s*(?:\{\s*)?name\s*:/u.test(next) && nextIndent <= startIndent;
+          const leftEnvItem = next.trim().length > 0 && nextIndent < startIndent;
+          if (nextEnvItem || leftEnvItem) {
+            endIndex = index;
+            break;
+          }
+        }
+      }
+      const nearby = sourceLines.slice(startIndex, endIndex).join('\n');
+      const secretProvenance = kind === 'kubernetes-env' && /(?:secretKeyRef|secretRef)\s*:/u.test(nearby);
+      found.push({
+        name,
+        kind,
+        path: file,
+        line,
+        defaultOperator: operator,
+        sourceValueRole: sourceValue.role,
+        default: sourceValue.display,
+        secretProvenance,
+        filePathProvenance: kind === 'kubernetes-env'
+          && /value:\s*["']?\/(?:[^\s"']*\/)*[^\s"']+(?:["']|\s|$)/iu.test(nearby)
+          && (SENSITIVE_ENV_NAME.test(name) || name === 'GOOGLE_APPLICATION_CREDENTIALS' || /value:\s*[^\n]*(?:\.key|\.pem|\.crt)(?:["']|\s|$)/iu.test(nearby)),
+      });
+    }
+  }
+  return found;
+}
+
+function ownedCliFlags(file, text) {
+  // This executable contains literal mutation inputs and assertions about
+  // options owned by other programs. None of those strings are parser facts
+  // for the mutation runner itself.
+  if (file === 'scripts/check-configuration-drift-mutations.mjs') return [];
+  const flags = new Map();
+  const add = (name, index, evidence, semantics = {}) => {
+    if (!/^(?:--[a-z][a-z0-9-]*|-[A-Za-z])$/u.test(name)) return;
+    const key = `${name}:${lineAt(text, index)}`;
+    const line = lineAt(text, index);
+    const sourceLine = text.split('\n')[line - 1] ?? '';
+    flags.set(key, { name, path: file, line, evidence, sourceLine: sourceLine.trim(), ...semantics });
+  };
+  for (const match of text.matchAll(/^.*Usage:.*$/gm)) {
+    const line = match[0];
+    for (const nested of line.matchAll(/--[a-z][a-z0-9-]*|(?<![A-Za-z0-9])-([A-Za-z])(?![A-Za-z0-9-])/g)) add(nested[0], match.index + nested.index, 'usage declaration');
+  }
+  for (const match of text.matchAll(/^#\s+\.\/[^\n]*--[a-z][a-z0-9-]*.*$/gm)) {
+    for (const nested of match[0].matchAll(/--[a-z][a-z0-9-]*/g)) add(nested[0], match.index + nested.index, 'shell usage declaration');
+  }
+  for (const match of text.matchAll(/([A-Za-z_$][A-Za-z0-9_$]*(?:\s*(?:\[[^\]\n]+\]|\.[A-Za-z_$][A-Za-z0-9_$]*))*)\s*(?:===?|!==?)\s*['"]((?:--[a-z][a-z0-9-]*|-[A-Za-z]))['"]/g)) {
+    const expression = match[1].replace(/\s+/gu, '');
+    const line = text.split('\n')[lineAt(text, match.index) - 1] ?? '';
+    const directArgumentRead = /(?:process\.)?argv|sys\.argv|os\.Args/u.test(line);
+    const identifier = /^([A-Za-z_$][A-Za-z0-9_$]*)/u.exec(expression)?.[1];
+    const escapedIdentifier = identifier?.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    const prefix = text.slice(0, match.index);
+    const assignedFromArguments = escapedIdentifier
+      ? new RegExp(`(?:const|let|var)\\s+${escapedIdentifier}\\s*=\\s*(?:process\\.)?argv(?:\\.|\\[)|${escapedIdentifier}\\s*=\\s*sys\\.argv(?:\\.|\\[)|for\\s*\\([^\\n]*\\b${escapedIdentifier}\\b[^\\n]*\\b(?:process\\.)?argv\\b`, 'u').test(prefix)
+      : false;
+    const declarations = [...prefix.matchAll(/function\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*\(([^)]*)\)\s*(?::[^\{]+)?\{/gu)];
+    const enclosing = declarations.at(-1);
+    const parameters = enclosing?.[2].split(',').map((item) => item.trim().replace(/\??:\s*.*$/u, '')).filter(Boolean) ?? [];
+    const assignedSource = escapedIdentifier
+      ? new RegExp(`(?:const|let|var)\\s+${escapedIdentifier}\\s*=\\s*([A-Za-z_$][A-Za-z0-9_$]*)\\s*\\[`, 'u').exec(prefix)?.[1]
+      : null;
+    const parserParameter = parameters.includes(identifier) ? identifier : parameters.includes(assignedSource) ? assignedSource : null;
+    const invokedWithArguments = enclosing && parserParameter
+      ? new RegExp(`\\b${enclosing[1]}\\(\\s*process\\.argv(?:\\.slice\\([^)]*\\))?\\s*\\)`, 'u').test(text)
+      : false;
+    if (directArgumentRead || assignedFromArguments || invokedWithArguments) add(match[2], match.index, 'argument comparison');
+  }
+  for (const match of text.matchAll(/(?:"?\$\{?[0-9]+(?::-[^}]*)?\}?"?)\s*(?:==|=)\s*(?:['"])?(--[a-z][a-z0-9-]*|-[A-Za-z])(?:['"])?/gu)) {
+    add(match[1], match.index, 'argument comparison');
+  }
+  for (const match of text.matchAll(/(?:process\.argv|argv)\.includes\(['"]((?:--[a-z][a-z0-9-]*|-[A-Za-z]))['"]\)/g)) {
+    const followingBranch = text.slice(match.index ?? 0, (match.index ?? 0) + 320);
+    const delegatesCompleteArgv = /(?:await\s+)?[A-Za-z_$][A-Za-z0-9_$]*CLI\(process\.argv\.slice\(2\)\)/u.test(followingBranch);
+    add(match[1], match.index, delegatesCompleteArgv ? 'argument delegation selector' : 'argument membership check', {
+      ...(delegatesCompleteArgv ? { declaredValueTaking: true } : {}),
+    });
+  }
+  for (const match of text.matchAll(/\bcase\s+['"]?((?:--[a-z][a-z0-9-]*|-[A-Za-z]))['"]?\s*:/g)) add(match[1], match.index, 'argument branch');
+  for (const match of text.matchAll(/^[ \t]*((?:(?:--[a-z][a-z0-9-]*|-[A-Za-z])[ \t]*(?:\|[ \t]*(?:--[a-z][a-z0-9-]*|-[A-Za-z])[ \t]*)*))\)[ \t]*$/gm)) {
+    const branchFlags = [...match[1].matchAll(/--[a-z][a-z0-9-]*|(?<![A-Za-z0-9])-([A-Za-z])(?![A-Za-z0-9-])/g)];
+    for (const nested of branchFlags) add(nested[0], (match.index ?? 0) + nested.index, 'argument branch');
+  }
+  for (const match of text.matchAll(/(?:add_argument|\.option)\(\s*['"]((?:--[a-z][a-z0-9-]*|-[A-Za-z]))(?:\s+[^'"]+)?['"]/g)) add(match[1], match.index, 'parser declaration');
+  for (const match of text.matchAll(/^\s*['"](--[a-z][a-z0-9-]*)['"]\s*:\s*['"][A-Za-z_][A-Za-z0-9_]*['"]\s*,?\s*$/gm)) add(match[1], match.index, 'parser declaration');
+
+  // A literal choice list is a parser definition only when its membership
+  // check reads the program's argv. Arrays used to build child-command argv
+  // do not satisfy this shape.
+  for (const match of text.matchAll(/\[([^\]]*['"](?:--[a-z][a-z0-9-]*|-[A-Za-z])['"][^\]]*)\]\.includes\(\s*(?:process\.)?argv\s*\[[^\]]+\]\s*\)/gs)) {
+    for (const nested of match[1].matchAll(/['"]((?:--[a-z][a-z0-9-]*|-[A-Za-z]))['"]/g)) {
+      add(nested[1], (match.index ?? 0) + nested.index, 'parser argv choice-list', { declaredValueTaking: false });
+    }
+  }
+
+  for (const match of text.matchAll(/(?:process\.)?argv\.indexOf\(\s*['"]((?:--[a-z][a-z0-9-]*|-[A-Za-z]))['"]\s*\)/g)) {
+    add(match[1], match.index, 'parser argv lookup', { declaredValueTaking: true });
+  }
+
+  // Bind a literal allow-list to the variable that the parser checks. A bare
+  // string array is not sufficient: the adjacent-value reads and assignment
+  // prove that this code owns the listed options and consumes their values.
+  for (const match of text.matchAll(/\[([^\]]*['"]--[a-z][a-z0-9-]*['"][^\]]*)\]\.includes\(\s*([A-Za-z_$][A-Za-z0-9_$]*)\s*\)/gs)) {
+    const list = match[1];
+    const listedFlags = [...list.matchAll(/['"](--[a-z][a-z0-9-]*)['"]/g)];
+    const checkedVariable = match[2];
+    const enclosingStart = Math.max(0, text.lastIndexOf('for (', match.index), text.lastIndexOf('while (', match.index));
+    const structuralWindow = text.slice(enclosingStart, Math.min(text.length, (match.index ?? 0) + match[0].length + 500));
+    const escapedVariable = checkedVariable.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    const adjacentValueRead = /\[\s*(?:index|i)\s*\+\s*1\s*\]/u.test(structuralWindow);
+    const storesByFlag = new RegExp(`\\[\\s*${escapedVariable}\\s*\\]\\s*=`, 'u').test(structuralWindow);
+    const pairedIteration = /(?:index|i)\s*\+=\s*2/u.test(structuralWindow);
+    const takesValue = adjacentValueRead && storesByFlag && pairedIteration;
+    const allListedRequired = new RegExp(`Object\\.keys\\(\\s*args\\s*\\)\\.length\\s*!==?\\s*${listedFlags.length}`, 'u').test(text)
+      && /ARGUMENTS?_REQUIRED/u.test(text);
+    for (const nested of listedFlags) {
+      add(nested[1], (match.index ?? 0) + nested.index, 'parser allow-list', {
+        declaredValueTaking: takesValue ? true : null,
+        ...(allListedRequired ? { declaredRequired: 'required', declaredDefault: '<none>' } : {}),
+      });
+    }
+  }
+
+  // Some small Node CLIs use a required-value helper such as argument('report')
+  // and construct the flag as `--${name}` inside that helper. Record only calls
+  // to a helper whose body proves both argv lookup and adjacent-value access.
+  for (const helper of text.matchAll(/function\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*\(\s*([A-Za-z_$][A-Za-z0-9_$]*)\s*\)\s*\{([\s\S]*?)^\}/gm)) {
+    const helperName = helper[1];
+    const parameter = helper[2];
+    const body = helper[3];
+    const escapedParameter = parameter.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    const constructsFlag = new RegExp('`--\\$\\{' + escapedParameter + '\\}`', 'u').test(body);
+    const consumesAdjacentValue = /(?:process\.)?argv\s*\[\s*index\s*\+\s*1\s*\]/u.test(body);
+    if (!constructsFlag || !consumesAdjacentValue) continue;
+    const required = /(?:throw|usage\s*\()[\s\S]{0,160}(?:required|index\s*<\s*0)/u.test(body)
+      || /index\s*<\s*0[\s\S]{0,160}(?:throw|usage\s*\()/u.test(body);
+    const callPattern = new RegExp(`\\b${helperName}\\(\\s*['"]([a-z][a-z0-9-]*)['"]\\s*\\)`, 'gu');
+    for (const call of text.matchAll(callPattern)) {
+      // Ignore the helper declaration itself; the call must be outside its body.
+      if ((call.index ?? 0) >= (helper.index ?? 0) && (call.index ?? 0) < (helper.index ?? 0) + helper[0].length) continue;
+      add(`--${call[1]}`, call.index, 'required-value helper call', {
+        declaredValueTaking: true,
+        declaredRequired: required ? 'required' : 'conditional',
+        declaredDefault: '<none>',
+      });
+    }
+  }
+  return [...flags.values()];
+}
+
+function cliSurface(sourcePath) {
+  if (/^(?:scripts\/deploy|my-values\/setup-secrets\.sh)|skills\/(?:nova\/core|nova\/project|buster\/.*(?:cli|runtime))/u.test(sourcePath)) return 'operator-runtime';
+  if (/^scripts\/(?:ap\d+-|docs-|check-(?:ap\d+|configuration-|operator-task-registry|platform-specialist-guides|prism-guides|site-reader-boundary)|generate-suite-migration-status|pipeline-unit-parity-report|suite-parity-report|plugin-system-inventory)/u.test(sourcePath)) return 'documentation-internal';
+  if (/^scripts\/(?:lint-baseline-prune|run-lint-report|runtime-tool-locks|scan-runtime-images|versions)\b/u.test(sourcePath)
+    || /^skills\/[^/]+\/plugins\/[^/]+\/scripts\/generate-/u.test(sourcePath)) return 'maintainer-verification';
+  if (/^(?:scripts\/(?:check-|docs-|generate-|verify-|.*test)|tools\/|packaging\/)/u.test(sourcePath)) return 'maintainer-verification';
+  return 'internal-or-invocation';
+}
+
+const CLI_AUTHORED_PAGE_BINDINGS = [
+  [/^skills\/nova\/core\/cli\.ts$/u, [{ page: 'docs/site/use/operate.md' }]],
+  [/^skills\/nova\/project\/(?:cli|legacy-import-cli)\.ts$/u, [{ page: 'docs/site/reference/nova-project.md' }]],
+  [/^skills\/nova\/project_setup\/tools\/progress-scaffold\.ts$/u, [{ page: 'docs/site/reference/project-pipeline-publication.md' }]],
+  [/^skills\/buster\/engine\/remote-plan-cli\.ts$/u, [{ page: 'docs/site/reference/buster-runtime-configuration.md', section: '## Minimal Root Configuration', endBefore: '### Start one Nova remote-gate request' }]],
+  [/^skills\/nova\/core\/test-gates\/remote-gate-cli\.ts$/u, [{ page: 'docs/site/reference/buster-runtime-configuration.md', section: '### Start one Nova remote-gate request' }]],
+  [/^scripts\/deploy\.sh$/u, [{ page: 'docs/site/use/operate.md' }]],
+];
+
+function markdownSectionLines(lines, heading, endBefore = null) {
+  if (!heading) return { start: 0, end: lines.length };
+  const start = lines.findIndex((line) => line.trim() === heading);
+  if (start < 0) return null;
+  const level = heading.match(/^#+/u)?.[0].length ?? 1;
+  let end = lines.length;
+  for (let index = start + 1; index < lines.length; index += 1) {
+    if (endBefore && lines[index].trim() === endBefore) { end = index; break; }
+    const nextLevel = lines[index].match(/^(#+)\s/u)?.[1].length;
+    if (nextLevel && nextLevel <= level) { end = index; break; }
+  }
+  return { start, end };
+}
+
+function cliDocumentation(sourcePath, name, classification, surface) {
+  if (classification !== 'definition') return {
+    documentationStatus: 'not-applicable-invocation',
+    documentationAuthority: null,
+    documentationReason: 'This occurrence invokes another command and is not an owned option definition.',
+  };
+  if (surface !== 'operator-runtime') return {
+    documentationStatus: 'not-required-in-operator-handbook',
+    documentationAuthority: null,
+    documentationReason: 'This definition is not part of the operator-runtime surface.',
+  };
+  const binding = CLI_AUTHORED_PAGE_BINDINGS.find(([pattern]) => pattern.test(sourcePath));
+  if (!binding) return {
+    documentationStatus: 'missing-authored-documentation',
+    documentationAuthority: null,
+    documentationReason: `No authored operator-page binding is registered for ${sourcePath}.`,
+  };
+  const semanticLanguage = /(?:accepts?|adds?|cannot|checks?|continues?|controls?|creates?|emits?|enables?|fails?|file|input|must|mutually|optional|output|path|prints?|reads?|required|resumes?|runs?|selects?|starts?|validates?|writes?)/iu;
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  const exactOption = new RegExp(`(?:^|[^A-Za-z0-9-])${escapedName}(?![A-Za-z0-9-])`, 'u');
+  for (const pageBinding of binding[1]) {
+    const page = pageBinding.page;
+    if (!exists(page)) continue;
+    const pageText = read(page);
+    const lines = pageText.split('\n');
+    const section = markdownSectionLines(lines, pageBinding.section, pageBinding.endBefore);
+    if (!section) continue;
+    for (let lineIndex = section.start; lineIndex < section.end; lineIndex += 1) {
+      if (!exactOption.test(lines[lineIndex])) continue;
+      const context = lines.slice(Math.max(0, lineIndex - 2), Math.min(lines.length, lineIndex + 6)).join(' ');
+      if (semanticLanguage.test(context)) return {
+        documentationStatus: 'authored-documentation',
+        documentationAuthority: `${page}:${lineIndex + 1}`,
+        documentationReason: `The bound authored page explains ${name} in operator context.`,
+      };
+    }
+  }
+  return {
+    documentationStatus: 'missing-authored-documentation',
+    documentationAuthority: null,
+    documentationReason: `${name} needs an explanation in the source-bound command section on ${binding[1].map((item) => item.page).join(' or ')}; a same-named option for another command is not authority.`,
+  };
+}
+
+const CLI_SEMANTIC_OVERRIDES = new Map(Object.entries({
+  'scripts/pipeline-light-watchdog.sh::--status-file': { required: 'required', default: '<none>', requiredReason: 'The parser rejects an empty status_file after option parsing.' },
+  'scripts/pipeline-light-watchdog.sh::--run-pid': { required: 'required', default: '<none>', requiredReason: 'The parser rejects an empty run_pid after option parsing.' },
+  'scripts/pipeline-light-watchdog.sh::--log-file': { required: 'required', default: '<none>', requiredReason: 'The parser rejects an empty log_file after option parsing.' },
+  'scripts/pipeline-light-watchdog.sh::--notify-command': { required: 'conditional', default: '', requiredReason: 'Notification is optional; the initialized empty string suppresses a notification command.' },
+  'scripts/pipeline-light-watchdog.sh::--poll-seconds': { required: 'conditional', default: 'PIPELINE_LIGHT_WATCHDOG_POLL_SECONDS when non-empty, otherwise 15', requiredReason: 'The option overrides the environment-derived polling interval.' },
+  'scripts/pipeline-light-watchdog.sh::--heartbeat-seconds': { required: 'conditional', default: 'PIPELINE_LIGHT_WATCHDOG_HEARTBEAT_SECONDS when non-empty, otherwise 300', requiredReason: 'The option overrides the environment-derived heartbeat interval.' },
+  'skills/nova/project_setup/tools/progress-scaffold.ts::--project': { required: 'alternative-required', default: '<none>', requiredReason: 'Exactly one location selector is needed: --project or --swarm, unless --help is selected.' },
+  'skills/nova/project_setup/tools/progress-scaffold.ts::--swarm': { required: 'alternative-required', default: '<none>', requiredReason: 'Exactly one location selector is needed: --project or --swarm, unless --help is selected.' },
+  'skills/nova/project_setup/tools/progress-scaffold.ts::--repo': { required: 'conditional', default: 'nearest parent containing .git', requiredReason: 'The parser discovers the repository root when this option is omitted.' },
+  'skills/nova/project_setup/tools/progress-scaffold.ts::--scaffold': { required: 'conditional', default: '<selected .swarm directory>/progress.scaffold.json', requiredReason: 'The selected swarm directory and DEFAULT_SCAFFOLD_FILE determine the path when omitted.' },
+}));
+
+for (const name of ['--import-legacy', '--authoring', '--platform', '--output']) {
+  CLI_SEMANTIC_OVERRIDES.set(`skills/nova/project/legacy-import-cli.ts::${name}`, {
+    required: 'required',
+    default: '<none>',
+    requiredReason: 'The allow-list parser rejects duplicates and Object.keys(args).length !== 4 rejects any set missing one of the four required options.',
+  });
+}
+
+const CLI_PARSER_CONTRACTS = new Map(Object.entries({
+  'skills/nova/core/cli.ts': {
+    unknownOptionBehavior: 'An arbitrary paired `--name value` option is accepted and ignored when no returned field reads its name.',
+    duplicateOptionBehavior: 'The last value for a repeated option name wins.',
+    failureMeaning: 'A missing paired value, a required-mode omission, or an invalid option combination calls usage; an unknown paired option alone is accepted and ignored.',
+  },
+  'skills/nova/core/test-gates/remote-gate-cli.ts': {
+    unknownOptionBehavior: 'An arbitrary paired `--name value` option is accepted and ignored when no returned field reads its name.',
+    duplicateOptionBehavior: 'The last value for a repeated option name wins.',
+    failureMeaning: 'A missing or empty paired value, a missing required option, or a non-positive/non-integer timeout fails; an unknown paired option alone is accepted and ignored.',
+  },
+  'skills/nova/project/legacy-import-cli.ts': {
+    unknownOptionBehavior: 'Any option outside the four-name allow-list fails.',
+    duplicateOptionBehavior: 'A repeated option fails before import.',
+    failureMeaning: 'Unknown, repeated, missing-value, or incomplete four-option input fails before output is written.',
+  },
+  'skills/nova/project/cli.ts': {
+    unknownOptionBehavior: 'The project parser rejects any option outside its five-name allow-list. Without --project, this entry point delegates the complete argv to the Core CLI.',
+    duplicateOptionBehavior: 'The project parser rejects a repeated option before it reads project configuration.',
+    failureMeaning: 'An unknown or repeated option, a missing or option-shaped value, a missing required project/platform pair, or conflicting compile/recover/signal modes fails before execution.',
+  },
+  'skills/nova/project_setup/tools/progress-scaffold.ts': {
+    unknownOptionBehavior: 'Any argument outside the four value options, three action switches, --help, and -h fails.',
+    duplicateOptionBehavior: 'A repeated value option uses its last value. Repeated boolean switches are idempotent.',
+    failureMeaning: 'An unknown argument, a missing value, conflicting apply/check switches, or absence of both project and swarm selectors fails before scaffold work; --help and -h bypass the selector requirement.',
+  },
+  'scripts/deploy.sh': {
+    unknownOptionBehavior: 'The agent command rejects an unrecognized first optional argument. Other deploy commands have their own positional command contracts.',
+    duplicateOptionBehavior: 'The top-level dispatcher passes only the first optional agent argument; later trailing arguments are ignored by the current shell dispatch.',
+    failureMeaning: 'For the agent command, an unknown first option fails; --with-code is rejected for Prism and enables code-bundle deployment only for Nova or Buster.',
+  },
+  'skills/buster/engine/remote-plan-cli.ts': {
+    unknownOptionBehavior: 'Any option other than the single `--config` pair fails.',
+    duplicateOptionBehavior: 'Repeating `--config` makes the argument count invalid and fails.',
+    failureMeaning: 'Any input other than exactly one non-empty `--config` value fails before runtime startup.',
+  },
+}));
+
+function classifyCliFacts(facts) {
+  const grouped = new Map();
+  for (const fact of facts) {
+    const key = `${fact.path}:${fact.name}`;
+    const values = grouped.get(key) ?? [];
+    values.push(fact);
+    grouped.set(key, values);
+  }
+  return [...grouped.values()].map((occurrences) => {
+    const first = occurrences[0];
+    const text = read(first.path);
+    const parserEvidence = occurrences.filter((item) => [
+      'argument comparison', 'argument membership check', 'argument branch', 'parser declaration',
+      'argument delegation selector', 'parser allow-list', 'required-value helper call',
+      'parser argv choice-list', 'parser argv lookup',
+    ].includes(item.evidence));
+    const definitionEvidence = parserEvidence;
+    const classification = definitionEvidence.length ? 'definition' : 'invocation';
+    const evidence = definitionEvidence[0] ?? first;
+    const escapedFlag = first.name.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    const evidenceLine = evidence.line;
+    const parserWindow = text.split('\n').slice(Math.max(0, evidenceLine - 1), evidenceLine + 8).join('\n').split(/;;/u)[0];
+    const usageValueEvidence = occurrences.find((item) => new RegExp(`${escapedFlag}(?:=|\\s)(?:<[^>]+>|[A-Z][A-Z0-9_-]*|["']?\\$)`, 'u').test(String(item.sourceLine)));
+    const parserConsumesNext = /(?:\$\{?2\}?|shift\s+2|argv\s*\[\s*(?:index|i)\s*\+\s*1\s*\]|argv\[(?:index|i)\s*\+\s*1\])/u.test(parserWindow);
+    const declarationTakesValue = evidence.evidence === 'parser declaration'
+      && (new RegExp(`${escapedFlag}\\s+(?:<[^>]+>|[A-Z][A-Z0-9_-]*)`, 'u').test(evidence.sourceLine) || !/(?:store_true|store_false|boolean)/iu.test(evidence.sourceLine));
+    const explicitBoolean = evidence.evidence === 'argument membership check'
+      || (evidence.evidence === 'parser declaration' && /(?:store_true|store_false|boolean)/iu.test(evidence.sourceLine));
+    const branchWithoutValue = classification === 'definition' && !parserConsumesNext && !declarationTakesValue;
+    const declaredArity = definitionEvidence.map((item) => item.declaredValueTaking).find((value) => value !== undefined && value !== null);
+    const dynamicAdjacentValueParser = classification === 'invocation'
+      && /(?:parsed\s*\[\s*flag\.slice\(2\)\s*\]\s*=\s*value|!flag\?\.startsWith\(['"]--['"]\)[\s\S]{0,180}value\s*===\s*undefined)/u.test(text)
+      && occurrences.some((item) => item.evidence === 'usage declaration');
+    const valueTaking = declaredArity ?? (parserConsumesNext || declarationTakesValue || usageValueEvidence || dynamicAdjacentValueParser
+      ? true : explicitBoolean || branchWithoutValue ? false : null);
+    const effectiveClassification = classification === 'invocation' && dynamicAdjacentValueParser ? 'definition' : classification;
+    const longName = first.name.startsWith('--');
+    const requiredGuardPatterns = longName ? [
+      new RegExp(`!parsed(?:\\.${first.name.slice(2).replace(/-([a-z])/gu, (_whole, letter) => letter.toUpperCase())}|\\[['"]${escapedFlag.slice(2)}['"]\\])`, 'u'),
+      new RegExp(`!args\\[['"]${escapedFlag}['"]\\]`, 'u'),
+    ] : [];
+    const matchingRequiredGuard = requiredGuardPatterns.find((pattern) => pattern.test(text));
+    const accessSource = matchingRequiredGuard?.source;
+    const conditionalAbsence = accessSource
+      ? new RegExp(`(?:${accessSource})[\\s)]*&&|&&[\\s(]*(?:${accessSource})`, 'u').test(text)
+      : false;
+    const propertyName = longName ? first.name.slice(2) : null;
+    const numericBinding = propertyName ? text.match(new RegExp(`const\\s+([A-Za-z_$][A-Za-z0-9_$]*)\\s*=\\s*Number\\(parsed\\[['"]${propertyName.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}['"]\\]\\)`, 'u')) : null;
+    const requiredNumericBinding = numericBinding
+      ? new RegExp(`!Number\\.isSafeInteger\\(\\s*${numericBinding[1]}\\s*\\)`, 'u').test(text)
+      : false;
+    const singlePairParser = occurrences.some((item) => item.evidence === 'argument comparison')
+      && /values\.length\s*!==?\s*2/u.test(text)
+      && new RegExp(`values\\[0\\]\\s*!==?\\s*['"]${escapedFlag}['"]`, 'u').test(text);
+    const sourceProvesRequired = (Boolean(matchingRequiredGuard) && !conditionalAbsence) || requiredNumericBinding || singlePairParser;
+    const declaredRequired = definitionEvidence.map((item) => item.declaredRequired).find(Boolean);
+    const declaredDefault = definitionEvidence.map((item) => item.declaredDefault).find((value) => value !== undefined);
+    const surface = cliSurface(first.path);
+    const owner = sourceOwner(first.path);
+    const documentation = cliDocumentation(first.path, first.name, effectiveClassification, surface);
+    const semanticOverride = CLI_SEMANTIC_OVERRIDES.get(`${first.path}::${first.name}`);
+    const parserContract = CLI_PARSER_CONTRACTS.get(first.path);
+    const aliasFor = first.name === '-h' && /['"]--help['"]/u.test(text) ? '--help' : null;
+    return {
+      name: first.name,
+      path: evidence.path,
+      line: evidence.line,
+      evidence: evidence.evidence,
+      occurrenceCount: occurrences.length,
+      classification: effectiveClassification,
+      surface,
+      valueTaking,
+      type: valueTaking === true ? 'value-taking argument; source does not prove a narrower type'
+        : valueTaking === false ? 'boolean switch or command selector'
+          : 'value-taking behavior is not proved by the discovered syntax; inspect the linked parser',
+      required: semanticOverride?.required ?? declaredRequired ?? (sourceProvesRequired ? 'required' : 'conditional'),
+      requiredReason: semanticOverride?.requiredReason ?? (sourceProvesRequired
+        ? 'The linked parser rejects absence after parsing.'
+        : 'No unconditional absence rejection is proved by the linked parser.'),
+      default: semanticOverride?.default ?? declaredDefault ?? (valueTaking === true ? '<none>' : valueTaking === false ? 'false/not selected' : '<source does not prove a default>'),
+      aliasFor,
+      unknownOptionBehavior: parserContract?.unknownOptionBehavior ?? (effectiveClassification === 'definition'
+        ? 'The linked parser decides whether an unrecognized option fails.' : 'Not applicable to an invocation occurrence.'),
+      duplicateOptionBehavior: parserContract?.duplicateOptionBehavior ?? (effectiveClassification === 'definition'
+        ? 'The linked parser decides whether a repeated option fails or wins.' : 'Not applicable to an invocation occurrence.'),
+      ownerComponent: owner.component,
+      ownerEvidence: owner.evidence,
+      runtimeOwner: owner.component,
+      consumers: [{ path: evidence.path, line: evidence.line, kind: effectiveClassification === 'definition' ? 'argument-parser' : 'command-invocation' }],
+      precedence: effectiveClassification === 'definition' ? ['explicit command-line flag', parserContract?.duplicateOptionBehavior ?? 'parser-specific duplicate handling', 'environment or source default when the consumer declares one', 'built-in behavior'] : ['not applicable; this source invokes another command'],
+      changeImpact: effectiveClassification === 'definition' ? 'Selects the parser branch or value used by this command.' : 'Changes the arguments passed to the invoked command; it is not an operator-facing definition here.',
+      failureMeaning: effectiveClassification === 'definition' ? parserContract?.failureMeaning ?? 'Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.' : 'The invoked command can reject the argument or fail its selected operation.',
+      ...documentation,
+    };
+  }).filter((fact) => fact.classification === 'definition')
+    .sort((a, b) => a.name.localeCompare(b.name) || a.path.localeCompare(b.path));
+}
+
+function shellFunctionScopes(text) {
+  const lines = text.split('\n');
+  const scopes = Array(lines.length).fill('<top-level>');
+  let active = null;
+  for (let index = 0; index < lines.length; index += 1) {
+    // Repository shell functions are top-level declarations with an
+    // unindented closing brace. Using those grammar landmarks avoids counting
+    // braces inside multiline awk/sed programs or parameter expansions.
+    const declaration = lines[index].match(/^(?:function\s+)?([a-zA-Z_][a-zA-Z0-9_]*)\s*(?:\(\s*\))?\s*\{/u);
+    if (!active && declaration) active = declaration[1];
+    if (active) scopes[index] = active;
+    if (active && /^\}\s*(?:#.*)?$/u.test(lines[index])) active = null;
+  }
+  return scopes;
+}
+
+function shellAssignmentStatements(text) {
+  const lines = text.split('\n');
+  const offsets = [];
+  let offset = 0;
+  for (const line of lines) { offsets.push(offset); offset += line.length + 1; }
+  const statements = [];
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
+    const prefix = lines[lineIndex].match(/^\s*((?:(?:export|readonly|local)\s+)*)([A-Z][A-Z0-9_]*)=(.*)$/u);
+    if (!prefix) continue;
+    const startLine = lineIndex;
+    const rhsStart = offsets[startLine] + lines[startLine].length - prefix[3].length;
+    let single = false;
+    let double = false;
+    let commandDepth = 0;
+    let parameterDepth = 0;
+    let parsedEndLine = lineIndex;
+    let cursor = rhsStart;
+    for (; cursor < text.length; cursor += 1) {
+      const character = text[cursor];
+      const next = text[cursor + 1];
+      if (character === '\\' && !single) {
+        if (next === '\n') parsedEndLine += 1;
+        cursor += 1;
+        continue;
+      }
+      if (single) { if (character === "'") single = false; continue; }
+      if (character === "'") { single = true; continue; }
+      if (character === '"') { double = !double; continue; }
+      if (character === '$' && next === '(' && text[cursor + 2] !== '(') { commandDepth += 1; cursor += 1; continue; }
+      if (character === '$' && next === '{') { parameterDepth += 1; cursor += 1; continue; }
+      if (character === '(' && commandDepth > 0) { commandDepth += 1; continue; }
+      if (character === ')' && commandDepth > 0) { commandDepth -= 1; continue; }
+      if (character === '}' && parameterDepth > 0) { parameterDepth -= 1; continue; }
+      if (character === '\n') {
+        if (double || commandDepth > 0 || parameterDepth > 0) { parsedEndLine += 1; continue; }
+        break;
+      }
+      if (!double && commandDepth === 0 && parameterDepth === 0 && (/[\t ]/u.test(character) || character === ';')) break;
+    }
+    const rhs = text.slice(rhsStart, cursor);
+    const source = text.slice(offsets[startLine], cursor);
+    statements.push({
+      name: prefix[2],
+      rhs,
+      source,
+      start: offsets[startLine] + (lines[startLine].indexOf(prefix[2])),
+      end: cursor,
+      line: startLine + 1,
+      endLine: parsedEndLine + 1,
+      sameLineRemainder: cursor <= offsets[startLine] + lines[startLine].length
+        ? text.slice(cursor, offsets[startLine] + lines[startLine].length)
+        : '',
+      exported: /(?:^|\s)export\s/u.test(prefix[1]),
+      local: /(?:^|\s)local\s/u.test(prefix[1]),
+    });
+  }
+  return statements;
+}
+
+function shellFormulaFacts(formula) {
+  const references = [];
+  const unsupportedReasons = [];
+  let single = false;
+  let double = false;
+  let commandSubstitution = false;
+  const addReference = (name) => references.push(/^\d+$|^[@*#?]$/u.test(name) ? `shell positional $${name}` : name);
+  for (let index = 0; index < formula.length; index += 1) {
+    const character = formula[index];
+    const next = formula[index + 1];
+    if (character === '\\' && !single) { index += 1; continue; }
+    if (single) { if (character === "'") single = false; continue; }
+    if (character === "'" && !double) { single = true; continue; }
+    if (character === '"') { double = !double; continue; }
+    if (!double && character === '#' && (index === 0 || /\s/u.test(formula[index - 1]))) break;
+    if (character === '`') unsupportedReasons.push('legacy backtick command substitution');
+    if (!double && (character === '<' || character === '>') && next === '(') unsupportedReasons.push('process substitution');
+    if (!double && character === '<' && next === '<') unsupportedReasons.push('here-document');
+    if (character !== '$') continue;
+    if (next === '(' && formula[index + 2] === '(') { unsupportedReasons.push('arithmetic expansion'); continue; }
+    if (next === '(') { commandSubstitution = true; continue; }
+    let tail = formula.slice(index + (next === '{' ? 2 : 1));
+    // `${#NAME}` is the length of NAME. `#` is an operator here, not the
+    // special positional parameter `$#`.
+    if (next === '{' && tail.startsWith('#')) tail = tail.slice(1);
+    const reference = tail.match(/^([A-Za-z_][A-Za-z0-9_]*|[0-9]+|[@*#?])/u);
+    if (reference) addReference(reference[1]);
+  }
+  if (commandSubstitution) references.push('command substitution');
+  return { references: [...new Set(references)].sort(), unsupportedReasons: [...new Set(unsupportedReasons)] };
+}
+
+function shellChildProcessPrefixConsumer(lines, assignment) {
+  const startIndex = assignment.line - 1;
+  const firstLine = lines[startIndex] ?? '';
+  const remainder = assignment.sameLineRemainder;
+  const stripEnvironmentPrefixes = (value) => {
+    let rest = value.trim();
+    while (/^[A-Z][A-Z0-9_]*=(?:"[^"]*"|'[^']*'|[^\s]+)\s+/u.test(rest)) {
+      rest = rest.replace(/^[A-Z][A-Z0-9_]*=(?:"[^"]*"|'[^']*'|[^\s]+)\s+/u, '');
+    }
+    return rest;
+  };
+  const sameLineCommand = stripEnvironmentPrefixes(remainder);
+  if (sameLineCommand && sameLineCommand !== '\\' && !sameLineCommand.startsWith('#')) {
+    return { line: assignment.line, kind: 'child-process-environment-edge' };
+  }
+  if (!/\\\s*$/u.test(firstLine)) return null;
+  let finalIndex = startIndex;
+  while (finalIndex < lines.length - 1 && /\\\s*$/u.test(lines[finalIndex])) finalIndex += 1;
+  const command = stripEnvironmentPrefixes(lines[finalIndex] ?? '');
+  if (!command || command === '\\' || command.startsWith('#')) return null;
+  return { line: finalIndex + 1, kind: 'child-process-environment-edge' };
+}
+
+function shellFunctionInvocations(lines, scopes, functionName) {
+  const escaped = functionName.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  const invocation = new RegExp(`(?:^|[;&|]\\s*)${escaped}(?:\\s|$)`, 'u');
+  const declaration = new RegExp(`^(?:function\\s+)?${escaped}\\s*(?:\\(\\s*\\))?\\s*\\{`, 'u');
+  const found = [];
+  for (let index = 0; index < lines.length; index += 1) {
+    if (scopes[index] === functionName || declaration.test(lines[index])) continue;
+    if (invocation.test(lines[index].replace(/^\s+/u, ''))) found.push(index);
+  }
+  return found;
+}
+
+function derivedAssignments(file, text) {
+  const derived = [];
+  const lines = text.split('\n');
+  const scopes = shellFunctionScopes(text);
+  const assignments = shellAssignmentStatements(text);
+  for (let assignmentIndex = 0; assignmentIndex < assignments.length; assignmentIndex += 1) {
+    const assignment = assignments[assignmentIndex];
+    if (!assignment.rhs.includes('$') && !assignment.rhs.includes('`')) continue;
+    const scope = scopes[assignment.line - 1];
+    const scopeLocal = assignment.local || assignments.slice(0, assignmentIndex).some((candidate) => candidate.name === assignment.name
+      && candidate.local && scopes[candidate.line - 1] === scope);
+    const facts = shellFormulaFacts(assignment.rhs);
+    if (facts.references.includes(assignment.name)) continue;
+    const nextReassignment = assignments.slice(assignmentIndex + 1).find((candidate) => candidate.name === assignment.name
+      && scopes[candidate.line - 1] === scope);
+    const stopLine = nextReassignment?.line ?? lines.length + 1;
+    const downstream = [];
+    for (let lineIndex = assignment.endLine; lineIndex < stopLine - 1; lineIndex += 1) {
+      if (scope !== '<top-level>' && scopes[lineIndex] !== scope) continue;
+      const sourceLine = lines[lineIndex];
+      if (shellFormulaFacts(sourceLine).references.includes(assignment.name)) {
+        downstream.push({ path: file, line: lineIndex + 1, kind: 'shell-derived-value-use' });
+      }
+    }
+    if (!scopeLocal && scope !== '<top-level>') {
+      const functionEnd = scopes.lastIndexOf(scope);
+      const nextSameScope = assignments.slice(assignmentIndex + 1).find((candidate) => candidate.name === assignment.name
+        && scopes[candidate.line - 1] === scope);
+      const boundaryEnd = (nextSameScope?.line ?? functionEnd + 2) - 1;
+      const boundaryText = lines.slice(assignment.endLine, boundaryEnd).join('\n');
+      const canReturnWithValue = !nextSameScope || /^\s*return(?:\s|$)|^\s*(?:else|elif\b)|^\s*;;\s*$/mu.test(boundaryText);
+      if (canReturnWithValue) {
+        const invocations = shellFunctionInvocations(lines, scopes, scope);
+        for (let invocationIndex = 0; invocationIndex < invocations.length; invocationIndex += 1) {
+          const callIndex = invocations[invocationIndex];
+          downstream.push({
+            path: file,
+            line: callIndex + 1,
+            kind: 'shell-global-conditional-return-edge',
+            condition: `${scope} reaches this assignment and returns before another ${assignment.name} assignment`,
+          });
+          const callerScope = scopes[callIndex];
+          const nextCall = invocations[invocationIndex + 1] ?? lines.length;
+          const nextGlobalAssignment = assignments.find((candidate) => candidate.name === assignment.name
+            && candidate.line - 1 > callIndex && scopes[candidate.line - 1] !== scope)?.line ?? lines.length + 1;
+          const scanEnd = Math.min(nextCall, nextGlobalAssignment - 1, callIndex + 80);
+          let postCallUses = 0;
+          for (let lineIndex = callIndex + 1; lineIndex < scanEnd && postCallUses < 3; lineIndex += 1) {
+            if (scopes[lineIndex] !== callerScope) continue;
+            if (!shellFormulaFacts(lines[lineIndex]).references.includes(assignment.name)) continue;
+            downstream.push({
+              path: file,
+              line: lineIndex + 1,
+              kind: 'shell-global-conditional-post-call-use',
+              condition: `${scope} returned through this assignment at the call on line ${callIndex + 1}`,
+            });
+            postCallUses += 1;
+          }
+        }
+      }
+    }
+    const escapedName = assignment.name.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    for (let lineIndex = assignment.endLine; lineIndex < stopLine - 1; lineIndex += 1) {
+      if (scope !== '<top-level>' && scopes[lineIndex] !== scope) continue;
+      if (new RegExp(`^\\s*export\\s+${escapedName}(?:\\s|$)`, 'u').test(lines[lineIndex])) {
+        downstream.push({ path: file, line: lineIndex + 1, kind: 'exported-child-process-environment-edge' });
+      }
+    }
+    const childPrefix = shellChildProcessPrefixConsumer(lines, assignment);
+    if (childPrefix) downstream.push({ path: file, ...childPrefix });
+    if (assignment.exported) {
+      // Export establishes a real environment edge, but static source order
+      // does not prove which later command forks a child (a shell function can
+      // defer that command). Point at the export itself and do not invent a
+      // specific child-command consumer.
+      downstream.push({ path: file, line: assignment.line, kind: 'exported-child-process-environment-edge' });
+    }
+    const uniqueDownstream = [...new Map(downstream.map((consumer) => [`${consumer.path}:${consumer.line}:${consumer.kind}`, consumer])).values()];
+    const presentation = /^(?:BLUE|GREEN|YELLOW|RED|NC|TODO_PREFIX)$/u.test(assignment.name);
+    const unsupported = facts.unsupportedReasons.length > 0;
+    const exportedFlow = assignment.exported || uniqueDownstream.some((consumer) => consumer.kind === 'exported-child-process-environment-edge');
+    const classification = presentation ? 'presentation-internal'
+      : unsupported ? 'unsupported-derived'
+        : uniqueDownstream.length ? exportedFlow ? 'exported-runtime-derived' : 'runtime-derived' : 'unused-derived';
+    const inputText = facts.references.length ? facts.references.join(', ') : 'no external input proved';
+    derived.push({
+      name: assignment.name,
+      path: file,
+      line: assignment.line,
+      formula: unsupported ? '<unsupported shell syntax; inspect source>' : redactValue(assignment.name, assignment.rhs.trim()),
+      inputs: facts.references,
+      analysisStatus: unsupported ? 'unsupported' : 'analyzed',
+      unsupportedReason: unsupported ? facts.unsupportedReasons.join('; ') : null,
+      ownerComponent: sourceOwner(file).component,
+      ownerEvidence: sourceOwner(file).evidence,
+      runtimeOwner: sourceOwner(file).component,
+      consumers: uniqueDownstream.length ? uniqueDownstream : [{ path: file, line: assignment.line, kind: 'definition-without-proved-downstream-use' }],
+      classification,
+      precedence: ['referenced environment or shell inputs', 'this derived assignment', 'next reassignment in the same shell function or top-level scope'],
+      changeImpact: unsupported
+        ? `${assignment.name} uses ${facts.unsupportedReasons.join(', ')}. The generator does not claim a formula or complete data flow for this syntax.`
+        : uniqueDownstream.length
+          ? `Combines ${inputText} into ${assignment.name}; the listed same-scope use sites receive this assignment before reassignment.`
+          : `${assignment.name} has no proved downstream use before reassignment in the same shell scope.`,
+      failureMeaning: unsupported
+        ? 'The source must be inspected before this derived value is changed.'
+        : uniqueDownstream.length
+          ? `An absent or malformed ${inputText} can produce an empty or invalid ${assignment.name} at the listed use sites.`
+          : 'No runtime failure is proved because no same-scope downstream use was found.',
+      closureCondition: classification === 'unused-derived' ? 'Remove the assignment or add a source-backed downstream use in the same shell scope.'
+        : classification === 'unsupported-derived' ? 'Add parser support for this shell syntax before publishing a calculated formula.' : null,
+    });
+  }
+  return derived;
+}
+
+function secretFactsFromYaml(sourcePath, value, documentIndex, document, lineCounter) {
+  const facts = [];
+  const resourceNamespace = value?.metadata?.namespace ?? '<runtime namespace>';
+  const exactLine = (segments) => {
+    const node = document.getIn(segments, true);
+    return Array.isArray(node?.range) ? lineCounter.linePos(node.range[0]).line : null;
+  };
+  const recurse = (item, fieldPath = '$', segments = []) => {
+    if (Array.isArray(item)) {
+      item.forEach((child, index) => recurse(child, `${fieldPath}[${index}]`, [...segments, index]));
+      return;
+    }
+    if (!item || typeof item !== 'object') return;
+    if (item.kind === 'Secret' && item.metadata?.name) {
+      facts.push({ kind: 'declaration', name: item.metadata.name, keys: [...new Set([...Object.keys(item.data ?? {}), ...Object.keys(item.stringData ?? {})])].sort(), namespace: item.metadata?.namespace ?? '<runtime namespace>', path: sourcePath, document: documentIndex, fieldPath, line: exactLine([...segments, 'metadata', 'name']) ?? exactLine([...segments, 'kind']) });
+    }
+    for (const [key, child] of Object.entries(item)) {
+      const nextPath = yamlFieldChildPath(fieldPath, key);
+      if (key === 'secretKeyRef' && child && typeof child === 'object') {
+        facts.push({ kind: 'key-reference', name: child.name ?? '<dynamic>', key: child.key ?? '<unknown>', namespace: resourceNamespace, optionalState: child.optional === true ? 'optional' : 'required unless enclosing field is conditional', path: sourcePath, document: documentIndex, fieldPath: nextPath, line: exactLine([...segments, key, 'name']) ?? exactLine([...segments, key]) });
+      } else if (key === 'secretRef' && child && typeof child === 'object') {
+        facts.push({ kind: 'reference', name: child.name ?? '<dynamic>', namespace: resourceNamespace, optionalState: child.optional === true ? 'optional' : 'required unless enclosing field is conditional', path: sourcePath, document: documentIndex, fieldPath: nextPath, line: exactLine([...segments, key, 'name']) ?? exactLine([...segments, key]) });
+      } else if ((key === 'existingSecret' || key === 'secretName') && typeof child === 'string' && child) {
+        facts.push({ kind: 'reference', name: child, namespace: resourceNamespace, optionalState: 'chart/application condition at linked field', path: sourcePath, document: documentIndex, fieldPath: nextPath, line: exactLine([...segments, key]) });
+      } else if (key === 'name' && /\.imagePullSecrets\[[0-9]+\]$/u.test(fieldPath) && typeof child === 'string' && child) {
+        facts.push({ kind: 'reference', name: child, namespace: resourceNamespace, optionalState: 'required for private image pulls by the enclosing workload', path: sourcePath, document: documentIndex, fieldPath: nextPath, line: exactLine([...segments, key]) });
+      }
+      recurse(child, nextPath, [...segments, key]);
+    }
+  };
+  recurse(value);
+  return facts;
+}
+
+function helmValuesAt(values, dottedPath) {
+  return dottedPath.split('.').filter(Boolean).reduce((current, segment) => current?.[segment], values);
+}
+
+function helmExpressionPath(expression) {
+  return /\$?\.Values\.([A-Za-z0-9_.]+)/u.exec(expression)?.[1] ?? null;
+}
+
+function cleanHelmExpression(expression) {
+  return expression.trim().replace(/^['"]|['"]$/gu, '').replace(/^\{\{-?\s*/u, '').replace(/\s*-?\}\}$/u, '').trim();
+}
+
+function describeHelmConditions(conditions) {
+  if (conditions.length === 0) return 'rendered whenever this template is selected';
+  if (conditions.length === 1) return `rendered only when Helm expression \`${conditions[0]}\` is true`;
+  return `rendered only when all of these Helm expressions are true: ${conditions.map((condition) => `\`${condition}\``).join('; ')}`;
+}
+
+const HELM_HELPER_BINDINGS = new Map(Object.entries({
+  'kubeclaw.gatewaySecretName': { authorityId: 'kubeclaw-gateway-secret', name: '<configured auth Secret or release gateway Secret>' },
+  'kubeclaw.litellmSecretName': { authorityId: 'kubeclaw-litellm-secret', name: '<configured LiteLLM Secret or release gateway Secret>' },
+  'kubeclaw.discordSecretName': { authorityId: 'kubeclaw-discord-secret', name: '<configured Discord Secret or release gateway Secret>' },
+  'kubeclaw.stitchSecretName': { authorityId: 'kubeclaw-stitch-secret', name: '<configured Stitch Secret>' },
+  'kubeclaw.gatewaySecretKey': { value: 'gatewayToken' },
+  'kubeclaw.litellmSecretKey': { value: 'litellmApiKey' },
+  'kubeclaw.discordSecretKey': { value: 'discordToken' },
+  'kubeclaw.stitchSecretKey': { value: 'stitchApiKey' },
+}));
+
+function helmTemplateValue(expression, values, chartName, valueKind) {
+  const cleaned = cleanHelmExpression(expression);
+  const primary = cleaned.split('|', 1)[0].trim();
+  const helper = /include\s+"([^"]+)"/u.exec(cleaned)?.[1];
+  if (helper && HELM_HELPER_BINDINGS.has(helper)) return HELM_HELPER_BINDINGS.get(helper);
+  if (primary === '$postgresSecret') {
+    const selected = helmValuesAt(values, 'postgresql.existingSecret');
+    return { name: selected || '<required Prism PostgreSQL Secret>', authorityId: 'prism-postgresql-auth' };
+  }
+  if (primary === '$client.caSecretName') return { name: '<configured registry client CA Secret>', authorityId: 'kubeclaw-registry-ca-secret' };
+  if (primary === '$config.signingSecretName') return { name: '<configured Prism product signing Secret>', authorityId: 'prism-product-signing-secret' };
+  if (primary === '$config.controllerCaSecretName') return { name: '<configured Prism product controller CA Secret>', authorityId: 'prism-product-controller-ca-secret' };
+  const valuePath = helmExpressionPath(cleaned);
+  if (valuePath) {
+    const selected = helmValuesAt(values, valuePath);
+    if (typeof selected === 'string' && selected) return valueKind === 'name' ? { name: selected } : { value: selected };
+    const configuredAuthorities = {
+      'githubSecret': 'ops-github-secret',
+      'codeBundle.auth.existingSecret': 'github-bundle-reader',
+      'discordWebhook.secretName': 'kubeclaw-discord-webhook-secret',
+      'agent.git.secretName': 'kubeclaw-git-deploy-secret',
+      'archviewer.existingSecret': 'nova-archviewer-auth',
+      'busterNamespaceBroker.controller.readiness.tlsSecretName': 'kubeclaw-ready-tls-secret',
+      'busterNamespaceBroker.readyClient.caSecretName': 'kubeclaw-ready-client-ca-secret',
+      'control.productDecisions.signingSecretName': 'prism-product-signing-secret',
+      'control.productDecisions.controllerCaSecretName': 'prism-product-controller-ca-secret',
+      'postgresql.existingSecret': 'prism-postgresql-auth',
+    };
+    if (valueKind === 'name') return { name: `<configured ${chartName} $.${valuePath}>`, authorityId: configuredAuthorities[valuePath] ?? `${chartName}-configured-${valuePath.replaceAll('.', '-')}` };
+    const fallback = /\|\s*default\s+"([^"]+)"/u.exec(cleaned)?.[1];
+    if (fallback) return { value: fallback };
+    return { value: `<configured $.${valuePath}>` };
+  }
+  const literal = /^['"]?([A-Za-z0-9_.-]+)['"]?$/u.exec(cleaned)?.[1];
+  if (literal) return valueKind === 'name' ? { name: literal } : { value: literal };
+  return valueKind === 'name'
+    ? { name: `<Helm expression: ${cleaned}>`, authorityId: `${chartName}-template-${cleaned.replace(/[^A-Za-z0-9]+/gu, '-').replace(/^-|-$/gu, '').toLowerCase()}` }
+    : { value: `<Helm expression: ${cleaned}>` };
+}
+
+function helmSecretAuthority(authorityId) {
+  const authorities = {
+    'ops-github-secret': { purpose: 'Supplies the optional GitHub token mounted only in the Ops Codex container.', requiredWhen: 'Required only when the Ops Codex workflow needs authenticated GitHub access.', producer: 'The operator names an existing Secret through `githubSecret`; the Ops chart never generates the token.', rotationOwner: 'source-control security', rotation: 'Create a replacement least-privilege token in the selected Secret key `token`, restart the Ops pod, verify GitHub access, and revoke the old token.', failure: 'Authenticated GitHub commands in the Ops Codex container fail; Ops MCP does not consume this token.', consumerAuthority: 'The Ops StatefulSet injects key `token` as `GH_TOKEN` only into the Codex container.' },
+    'ops-tailscale-secret': { purpose: 'Supplies the optional Tailscale auth key used by the Ops userspace sidecar.', requiredWhen: 'Required when `tailscale.enabled` is true.', producer: 'The operator or Ops deployment bootstrap creates the named Secret with key `authkey`.', rotationOwner: 'tailnet security owner', rotation: 'Issue a replacement tagged auth key, replace `authkey`, restart the Ops pod, verify tailnet registration, and revoke the old key.', failure: 'The Tailscale sidecar cannot register and the private Ops endpoint is unavailable.', consumerAuthority: 'The Ops Tailscale sidecar injects `authkey` as `TS_AUTHKEY`.' },
+    'ops-bearer-secret': { purpose: 'Authenticates local HTTP requests from the Ops Codex environment to the Ops MCP sidecar.', requiredWhen: 'Required for every Ops pod.', producer: 'The Ops deployment bootstrap creates the Secret or the operator supplies an equivalent existing Secret.', rotationOwner: 'platform-security', rotation: 'Replace key `token`, restart both containers in the single Ops pod, and verify an authenticated and a denied MCP request.', failure: 'The Ops MCP server refuses startup or Codex requests receive an authentication failure.', consumerAuthority: 'The Ops pod mounts key `token` into the bearer volume read by Ops MCP; the Codex client uses the same local trust boundary.' },
+    'kubeclaw-gateway-secret': { purpose: 'Supplies the OpenClaw gateway authentication token.', requiredWhen: 'Required for a rendered agent workload.', producer: 'A configured existing Secret is authoritative; otherwise the chart-managed release gateway Secret contains the configured direct token.', rotationOwner: 'platform-security', rotation: 'Replace `gatewayToken` in the selected Secret, restart every gateway client and server in the release, and verify authorized and denied requests.', failure: 'Gateway clients cannot authenticate or the workload does not start with its required Secret reference.', consumerAuthority: 'The rendered KubeClaw workload injects the resolved gateway key into the exact container environment shown by each template fact.' },
+    'kubeclaw-chart-managed-gateway-secret': { purpose: 'Creates the chart-managed fallback Secret that can hold the OpenClaw gateway token, LiteLLM API key, and Discord bot token.', requiredWhen: 'Rendered only when at least one direct credential value is non-empty and that credential does not select an existing Secret.', producer: 'The KubeClaw Helm chart renders this Secret from the direct values whose exact per-key conditions are listed in the declaration fact.', rotationOwner: 'platform-security with the applicable integration owner', rotation: 'Replace only the affected direct chart value, upgrade the release, restart every consumer of that key, verify its authentication boundary, and revoke the old external credential.', failure: 'A missing or stale rendered key prevents the corresponding gateway, LiteLLM, or Discord authentication path from working.', consumerAuthority: '`gatewayToken` feeds the OpenClaw gateway binding, `litellmApiKey` feeds memory-search authentication, and `discordToken` feeds enabled Discord integration.' },
+    'kubeclaw-litellm-secret': { purpose: 'Supplies the LiteLLM API key used by OpenClaw memory search.', requiredWhen: 'Required when the configured remote embedding path uses LiteLLM authentication.', producer: 'A configured existing Secret is authoritative; otherwise the chart-managed gateway Secret contains the direct chart value.', rotationOwner: 'platform-security', rotation: 'Replace the selected key, restart all consuming agents, verify embedding requests, and retire the old key.', failure: 'Memory embedding requests are rejected by LiteLLM.', consumerAuthority: 'The rendered KubeClaw workload injects the resolved LiteLLM key into its runtime environment.' },
+    'kubeclaw-discord-secret': { purpose: 'Supplies the Discord bot token for enabled agent Discord integration.', requiredWhen: 'Required when Discord integration is enabled.', producer: 'A configured existing Secret is authoritative; otherwise the chart-managed gateway Secret contains the configured direct token.', rotationOwner: 'integration security owner', rotation: 'Replace the selected key, restart the enabled Discord consumer, verify bot authentication, and revoke the old token.', failure: 'The Discord integration cannot authenticate.', consumerAuthority: 'The rendered KubeClaw workload injects the resolved Discord token only into enabled agent paths.' },
+    'kubeclaw-stitch-secret': { purpose: 'Supplies the Google Stitch API key used by the configured design integration.', requiredWhen: 'Required only when the Stitch integration is enabled.', producer: 'The operator names an existing Secret; the chart does not generate this credential.', rotationOwner: 'integration security owner', rotation: 'Replace the selected key, restart the consumer, verify Stitch access, and revoke the old key.', failure: 'Stitch API requests fail authentication.', consumerAuthority: 'The rendered KubeClaw workload injects the selected Stitch key into the enabled integration.' },
+    'kubeclaw-discord-webhook-secret': { purpose: 'Supplies the optional Discord webhook credential.', requiredWhen: 'Required only when `discordWebhook.secretName` is non-empty.', producer: 'The operator creates the selected Secret and key outside the chart.', rotationOwner: 'integration security owner', rotation: 'Replace the webhook value, restart the consumer, verify delivery, and revoke the old webhook.', failure: 'Webhook notification delivery fails.', consumerAuthority: 'The exact KubeClaw template fact identifies each container that receives the configured webhook key.' },
+    'kubeclaw-git-deploy-secret': { purpose: 'Supplies the SSH private deploy key used by chart-managed repository synchronization.', requiredWhen: 'Required when `agent.git.enabled` is true.', producer: 'The secret setup helper or source-control authority creates the role-specific deploy-key Secret.', rotationOwner: 'source-control security', rotation: 'Authorize the replacement public key, replace `id_rsa`, verify a new clone, and revoke the old key.', failure: 'Repository initialization cannot clone the configured Git repository.', consumerAuthority: 'The agent init path mounts the Secret as the read-only SSH credential volume.' },
+    'kubeclaw-registry-ca-secret': { purpose: 'Supplies a private CA certificate for one configured OCI registry client.', requiredWhen: 'Required when that registry endpoint uses a custom CA.', producer: 'The registry trust owner creates the configured Secret and CA key.', rotationOwner: 'registry trust owner', rotation: 'Publish the replacement CA with an overlap period, update the Secret, restart clients, verify TLS, and retire the old CA.', failure: 'The affected registry client rejects the endpoint TLS chain.', consumerAuthority: 'The KubeClaw workload mounts the selected CA key at the registry-client trust path.' },
+    'kubeclaw-ready-tls-secret': { purpose: 'Supplies the TLS server certificate and private key for the Buster namespace-controller readiness endpoint.', requiredWhen: 'Required when the namespace controller is enabled.', producer: 'The platform trust owner pre-creates the selected TLS Secret.', rotationOwner: 'platform trust owner', rotation: 'Replace the certificate and key together, restart the controller, and verify the pinned readiness client.', failure: 'The controller readiness endpoint cannot establish its required TLS identity.', consumerAuthority: 'The namespace-controller pod mounts the selected Secret as its readiness TLS volume.' },
+    'kubeclaw-ready-client-ca-secret': { purpose: 'Supplies the CA certificate that verifies the Buster readiness endpoint.', requiredWhen: 'Required when the readiness client is enabled.', producer: 'The platform trust owner pre-creates the configured CA Secret.', rotationOwner: 'platform trust owner', rotation: 'Publish the new CA with an overlap period, update the Secret, verify readiness, and retire the old CA.', failure: 'The readiness client rejects the controller certificate.', consumerAuthority: 'The rendered readiness client mounts the selected CA key.' },
+    'prism-product-signing-secret': { purpose: 'Supplies the dedicated Ed25519 private key used to sign Prism product decisions.', requiredWhen: 'Required when product decisions are enabled.', producer: 'The product authority creates the separately named signing Secret.', rotationOwner: 'product decision authority', rotation: 'Publish the replacement verification authority, replace the private key, restart Control, verify signed decisions, and retire the old key.', failure: 'Control cannot load the signing key and product-decision composition stops.', consumerAuthority: 'Prism Control mounts the configured signing key at the product-authority private-key path.' },
+    'prism-product-controller-ca-secret': { purpose: 'Supplies the CA certificate used to verify the external product controller.', requiredWhen: 'Required when product decisions are enabled.', producer: 'The product controller trust owner creates the selected CA Secret.', rotationOwner: 'product controller trust owner', rotation: 'Publish the new CA with overlap, update the Secret, restart Control, verify controller TLS, and retire the old CA.', failure: 'Control cannot verify or connect to the product controller.', consumerAuthority: 'Prism Control mounts the configured CA key through the projected controller-authority volume.' },
+  };
+  return authorities[authorityId] ?? null;
+}
+
+function helmTemplateSecretFacts() {
+  const facts = [];
+  const templates = walk('charts', (absolutePath) => /\/templates\/.*\.(?:yaml|yml|tpl)$/u.test(absolutePath));
+  for (const sourcePath of templates) {
+    const text = read(sourcePath);
+    const lines = text.split('\n');
+    const chartRoot = sourcePath.split('/templates/')[0];
+    const chartName = path.basename(chartRoot);
+    const valuesPath = `${chartRoot}/values.yaml`;
+    const values = exists(valuesPath) ? YAML.parse(read(valuesPath)) : {};
+    const add = (kind, nameExpression, keyExpression, line, fieldPath, optionalState, keys = null, keyConditions = null) => {
+      const resolvedName = helmTemplateValue(nameExpression, values, chartName, 'name');
+      const resolvedKey = keyExpression ? helmTemplateValue(keyExpression, values, chartName, 'key') : null;
+      let authorityId = resolvedName.authorityId ?? resolvedName.name;
+      let authorityIds = null;
+      let publishedName = resolvedName.name;
+      if (sourcePath === 'charts/kubeclaw/templates/secret.yaml' && /include\s+"kubeclaw\.fullname"[^\n]*-gateway/u.test(nameExpression)) {
+        authorityId = 'kubeclaw-chart-managed-gateway-secret';
+        authorityIds = ['kubeclaw-gateway-secret', 'kubeclaw-litellm-secret', 'kubeclaw-discord-secret'];
+        publishedName = '<release full name>-gateway';
+      }
+      if (sourcePath === 'charts/ops-pod/templates/workload.yaml' && resolvedName.name === 'codex-ops-tailscale') authorityId = 'ops-tailscale-secret';
+      if (sourcePath === 'charts/ops-pod/templates/workload.yaml' && resolvedName.name === 'codex-ops-bearer') authorityId = 'ops-bearer-secret';
+      facts.push({ kind, name: publishedName, authorityId, authorityIds: authorityIds ?? undefined,
+        key: resolvedKey?.value, keys: keys ? [...new Set(keys)].sort() : undefined,
+        keyConditions: keyConditions ?? undefined,
+        namespace: '<runtime namespace>', optionalState,
+        path: sourcePath, line, fieldPath, templateExpression: cleanHelmExpression(nameExpression),
+        literalNameResolved: !publishedName.startsWith('<'), authorityResolved: Boolean(helmSecretAuthority(authorityId) || SECRET_AUTHORITIES?.has?.(authorityId)),
+        nameSource: publishedName.startsWith('<')
+          ? `Runtime-rendered name from ${authorityId === 'kubeclaw-chart-managed-gateway-secret' ? 'helper `kubeclaw.fullname` plus literal suffix `-gateway`' : `template expression \`${cleanHelmExpression(nameExpression)}\``}; semantic authority \`${authorityId}\` remains stable.`
+          : `Literal or values-resolved template name; semantic authority \`${authorityId}\`.`,
+        resolved: !publishedName.startsWith('<') });
+    };
+    const conditionStack = [];
+    const renderCondition = () => describeHelmConditions(conditionStack);
+    for (let index = 0; index < lines.length; index += 1) {
+      const line = lines[index];
+      const conditionStart = /\{\{-?\s*(?:if|with)\s+(.+?)\s*-?\}\}/u.exec(line);
+      if (conditionStart) conditionStack.push(cleanHelmExpression(conditionStart[1]));
+      if (/^\s*kind:\s*Secret\s*$/u.test(line)) {
+        const nameIndex = lines.slice(index + 1, index + 12).findIndex((candidate) => /^\s*name:\s*/u.test(candidate));
+        if (nameIndex >= 0) {
+          const absoluteNameIndex = index + 1 + nameIndex;
+          const nameExpression = lines[absoluteNameIndex].replace(/^\s*name:\s*/u, '');
+          const keys = [];
+          const keyConditions = {};
+          const declarationConditions = [...conditionStack];
+          const payloadConditions = [...declarationConditions];
+          let dataIndent = null;
+          for (let cursor = absoluteNameIndex + 1; cursor < lines.length; cursor += 1) {
+            if (/^---\s*$/u.test(lines[cursor]) || (cursor > absoluteNameIndex + 1 && /^\s*kind:\s*/u.test(lines[cursor]))) break;
+            const nestedCondition = /\{\{-?\s*(?:if|with)\s+(.+?)\s*-?\}\}/u.exec(lines[cursor]);
+            if (nestedCondition) payloadConditions.push(cleanHelmExpression(nestedCondition[1]));
+            const dataMatch = /^(\s*)(?:data|stringData):\s*$/u.exec(lines[cursor]);
+            if (dataMatch) {
+              dataIndent = dataMatch[1].length;
+              continue;
+            }
+            if (dataIndent !== null) {
+              const keyMatch = /^(\s*)([A-Za-z0-9_.-]+):\s*/u.exec(lines[cursor]);
+              if (keyMatch && keyMatch[1].length > dataIndent) {
+                keys.push(keyMatch[2]);
+                keyConditions[keyMatch[2]] = describeHelmConditions(payloadConditions);
+              }
+              else if (lines[cursor].trim() && !/^\s*\{\{/u.test(lines[cursor]) && (lines[cursor].match(/^\s*/u)?.[0].length ?? 0) <= dataIndent) dataIndent = null;
+            }
+            if (/\{\{-?\s*end\s*-?\}\}/u.test(lines[cursor]) && payloadConditions.length > declarationConditions.length) payloadConditions.pop();
+          }
+          add('helm-template-declaration', nameExpression, null, absoluteNameIndex + 1,
+            `template line ${absoluteNameIndex + 1} Secret declaration`, renderCondition(), keys, keyConditions);
+        }
+      }
+      if (/secretKeyRef\s*:/u.test(line)) {
+        const inline = /secretKeyRef\s*:\s*\{\s*name:\s*(.+?)\s*,\s*key:\s*(.+?)\s*\}\s*\}?\s*$/u.exec(line);
+        if (inline) add('helm-template-key-reference', inline[1], inline[2], index + 1, `template line ${index + 1} secretKeyRef`, 'required when the enclosing Helm condition renders this environment binding');
+        else {
+          const window = lines.slice(index + 1, index + 7);
+          const nameOffset = window.findIndex((item) => /^\s*name:\s*/u.test(item));
+          const keyOffset = window.findIndex((item) => /^\s*key:\s*/u.test(item));
+          if (nameOffset >= 0 && keyOffset >= 0) add('helm-template-key-reference', window[nameOffset].replace(/^\s*name:\s*/u, ''), window[keyOffset].replace(/^\s*key:\s*/u, ''), index + 1, `template line ${index + 1} secretKeyRef`, 'required when the enclosing Helm condition renders this environment binding');
+        }
+      }
+      if (/\bsecretRef\s*:/u.test(line) && !/secretKeyRef\s*:/u.test(line)) {
+        const inline = /secretRef\s*:\s*\{\s*name:\s*(.+?)\s*(?:,\s*optional:\s*([^}\s]+))?\s*\}/u.exec(line);
+        if (inline) add('helm-template-reference', inline[1], null, index + 1, `template line ${index + 1} envFrom Secret`, inline[2] === 'true' ? 'optional' : renderCondition());
+        else {
+          const window = lines.slice(index + 1, index + 6);
+          const nameOffset = window.findIndex((item) => /^\s*name:\s*/u.test(item));
+          const optional = window.some((item) => /^\s*optional:\s*true\s*$/u.test(item));
+          if (nameOffset >= 0) add('helm-template-reference', window[nameOffset].replace(/^\s*name:\s*/u, ''), null, index + 1,
+            `template line ${index + 1} envFrom Secret`, optional ? 'optional' : renderCondition());
+        }
+      }
+      if (/^\s*secretName:\s*/u.test(line) && lines.slice(Math.max(0, index - 3), index).some((item) => /^\s*(?:-\s*)?secret:\s*$/u.test(item))) {
+        add('helm-template-volume-reference', line.replace(/^\s*secretName:\s*/u, ''), null, index + 1, `template line ${index + 1} Secret volume`, 'required when the enclosing Helm condition renders this volume');
+      }
+      if (/^\s*name:\s*/u.test(line) && lines.slice(Math.max(0, index - 2), index).some((item) => /^\s*-\s*secret:\s*$/u.test(item))) {
+        add('helm-template-volume-reference', line.replace(/^\s*name:\s*/u, ''), null, index + 1, `template line ${index + 1} projected Secret volume`, 'required when the enclosing Helm condition renders this projected volume');
+      }
+      if (/imagePullSecrets\s*:\s*\{\{[^\n]*toYaml/u.test(line) || (/^\s*imagePullSecrets:\s*$/u.test(line) && lines.slice(index, index + 3).some((item) => /toYaml/u.test(item)))) {
+        for (const selected of values.imagePullSecrets ?? []) {
+          if (selected?.name) facts.push({ kind: 'helm-template-image-pull-reference', name: selected.name, authorityId: selected.name,
+            namespace: '<runtime namespace>', optionalState: 'required for private image pulls when the chart values keep this list entry', path: sourcePath,
+            line: index + 1, fieldPath: `template line ${index + 1} imagePullSecrets`, literalNameResolved: true,
+            authorityResolved: Boolean(helmSecretAuthority(selected.name) || SECRET_AUTHORITIES?.has?.(selected.name)),
+            nameSource: `Literal name from ${chartName} chart values; semantic authority \`${selected.name}\`.`, resolved: true });
+        }
+      }
+      if (/^\s*-\s*name:\s*/u.test(line) && lines.slice(Math.max(0, index - 3), index).some((item) => /^\s*imagePullSecrets:\s*$/u.test(item))) {
+        add('helm-template-image-pull-reference', line.replace(/^\s*-\s*name:\s*/u, ''), null, index + 1,
+          `template line ${index + 1} imagePullSecrets`, `${renderCondition()}; required when the selected image is private`);
+      }
+      if (/\{\{-?\s*end\s*-?\}\}/u.test(line) && conditionStack.length) conditionStack.pop();
+    }
+  }
+  return facts;
+}
+
+function shellFunctionScope(text, index) {
+  const prefix = text.slice(0, index);
+  const declarations = [...prefix.matchAll(/^([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{/gmu)];
+  const declaration = declarations.at(-1);
+  if (!declaration) return { name: '<top-level>', start: 0, end: text.length };
+  const start = declaration.index ?? 0;
+  const next = /^([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{/gmu;
+  next.lastIndex = index + 1;
+  const following = next.exec(text);
+  return { name: declaration[1], start, end: following?.index ?? text.length };
+}
+
+function resolveShellSecretName(expression, functionName) {
+  const normalized = expression.replace(/^['"]|['"]$/gu, '');
+  if (!normalized.startsWith('$')) return [{ name: normalized, nameSource: 'literal command argument' }];
+  const fixedVariables = {
+    '$SECRET_NAME': ['openclaw-shared-secrets', 'script constant `SECRET_NAME`'],
+    '$TAILSCALE_OAUTH_SECRET_NAME': ['operator-oauth', 'default of `TAILSCALE_OAUTH_SECRET_NAME`; an operator override changes the effective name'],
+    '$PRISM_DATABASE_SECRET_NAME': ['prism-postgresql-auth', 'default of `PRISM_DATABASE_SECRET_NAME`; an operator override changes the effective name'],
+    '$PRISM_RUNTIME_SECRET_NAME': ['prism-runtime', 'default of `PRISM_RUNTIME_SECRET_NAME`; an operator override changes the effective name'],
+  };
+  if (fixedVariables[normalized]) return [{ name: fixedVariables[normalized][0], nameSource: fixedVariables[normalized][1] }];
+  if (normalized === '$name' || normalized === '${name}') {
+    if (functionName === 'setup_git_deploy_key') return [
+      { name: 'git-deploy-key-nova', nameSource: 'literal call argument to `setup_git_deploy_secret`' },
+      { name: 'git-deploy-key-buster', nameSource: 'literal call argument to `setup_git_deploy_secret`' },
+    ];
+    if (functionName === 'setup_pipeline_source_attestation_secret') return [{ name: 'pipeline-test-gate-source-attestation', nameSource: 'literal call argument to `setup_pipeline_source_attestation_secret`' }];
+    if (functionName === 'setup_fixture_preflight_secret') return [{ name: 'kubeclaw-fixture-preflight', nameSource: 'literal call argument to `setup_fixture_preflight_secret`' }];
+  }
+  return [{ name: normalized, nameSource: 'unresolved shell expression', unresolved: true }];
+}
+
+function shellSecretFacts(sourcePath, text) {
+  const facts = [];
+  const lines = text.split('\n');
+  let offset = 0;
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const direct = /^\s*(?:(?:printf|openssl)\b[^|]*\|\s*)?kubectl\s+create\s+secret\s+(?:generic|docker-registry|tls)\s+/u.test(line);
+    if (direct) {
+      const startOffset = offset;
+      const commandLines = [line];
+      while (/\\\s*$/u.test(commandLines.at(-1)) && index + 1 < lines.length) {
+        index += 1;
+        commandLines.push(lines[index]);
+      }
+      const command = commandLines.join('\n');
+      const secretType = /kubectl\s+create\s+secret\s+(generic|docker-registry|tls)\s+/u.exec(command)?.[1] ?? 'generic';
+      const nameExpression = /kubectl\s+create\s+secret\s+(?:generic|docker-registry|tls)\s+((?:"[^"]+"|'[^']+'|[^\s\\]+))/u.exec(command)?.[1] ?? '<shell command authority unresolved>';
+      const scope = shellFunctionScope(text, startOffset);
+      const names = resolveShellSecretName(nameExpression, scope.name);
+      const keys = secretType === 'docker-registry' ? ['.dockerconfigjson']
+        : secretType === 'tls' ? ['tls.crt', 'tls.key']
+          : [...command.matchAll(/--from-(?:literal|file)=?["']?([A-Za-z0-9_.-]+)=/gu)].map((match) => match[1]);
+      const namespaceExpression = /(?:--namespace|-n)\s+((?:"[^"]+"|'[^']+'|[^\s\\]+))/u.exec(command)?.[1]?.replace(/^['"]|['"]$/gu, '') ?? '<runtime namespace>';
+      for (const resolved of names) facts.push({
+        kind: resolved.unresolved ? 'unresolved-shell-secret-command' : 'declared-keys-in-script',
+        name: resolved.name,
+        nameSource: resolved.nameSource,
+        keys: [...new Set(keys)].sort(),
+        namespace: namespaceExpression,
+        optionalState: `conditional command in \`${scope.name}\`; use its documented setup condition`,
+        path: sourcePath,
+        line: lineAt(text, startOffset),
+        commandEvidence: `kubectl create secret ${secretType}`,
+        nameEvidence: nameExpression,
+        fieldPath: `<shell function ${scope.name}>`,
+        resolved: !resolved.unresolved,
+        blockerOwner: resolved.unresolved ? `operator script ${sourcePath}` : null,
+        closureCondition: resolved.unresolved ? 'Bind the shell name expression to a declared Secret authority or a finite literal call set.' : null,
+      });
+      offset += commandLines.reduce((sum, item) => sum + item.length + 1, 0);
+      continue;
+    }
+    offset += line.length + 1;
+  }
+
+  for (const array of text.matchAll(/^\s*([A-Za-z_][A-Za-z0-9_]*)=\(\s*\n([\s\S]*?)^\s*\)/gmu)) {
+    if (!/\bcreate\s+secret\s+generic\b/u.test(array[2])) continue;
+    const scope = shellFunctionScope(text, array.index ?? 0);
+    const scopeText = text.slice(array.index ?? 0, scope.end);
+    const commandMatch = /create\s+secret\s+generic\s+((?:"[^"]+"|'[^']+'|[^\s\\]+))/u.exec(array[2]);
+    const nameExpression = commandMatch?.[1] ?? '<shell command authority unresolved>';
+    const commandOffset = (array.index ?? 0) + array[0].indexOf(commandMatch?.[0] ?? 'create secret generic');
+    const names = resolveShellSecretName(nameExpression, scope.name);
+    const keys = [...scopeText.matchAll(/--from-(?:literal|file)=?["']?([A-Za-z0-9_.-]+)=/gu)].map((match) => match[1]);
+    const namespaceExpression = /(?:--namespace|-n)\s+((?:"[^"]+"|'[^']+'|[^\s\\)]+))/u.exec(array[2])?.[1]?.replace(/^['"]|['"]$/gu, '') ?? '<runtime namespace>';
+    for (const resolved of names) facts.push({
+      kind: resolved.unresolved ? 'unresolved-shell-secret-command' : 'declared-keys-in-script',
+      name: resolved.name,
+      nameSource: resolved.nameSource,
+      keys: [...new Set(keys)].sort(),
+      namespace: namespaceExpression,
+      optionalState: `conditional array command in \`${scope.name}\`; use its documented setup condition`,
+      path: sourcePath,
+      line: lineAt(text, commandOffset),
+      commandEvidence: 'create secret generic',
+      nameEvidence: nameExpression,
+      fieldPath: `<shell function ${scope.name}>`,
+      resolved: !resolved.unresolved,
+      blockerOwner: resolved.unresolved ? `operator script ${sourcePath}` : null,
+      closureCondition: resolved.unresolved ? 'Bind the shell name expression to a declared Secret authority or a finite literal call set.' : null,
+    });
+  }
+  return facts;
+}
+
+const SECRET_AUTHORITIES = new Map(Object.entries({
+  'kubeclaw-shared-secrets': { purpose: 'Names the gateway, LiteLLM, Discord, and webhook credential references illustrated by the two example values files.', requiredWhen: 'Required when a complete, successfully rendered configuration retains these illustrative Secret references. `examples/buster-values.yaml` alone fails the chart requirement for exactly one `buster-v2-runtime` container; preparing that required container and its registry configuration precedes deployment.', producer: 'No checked-in setup path creates this legacy example name. The operator must pre-create the Secret with every key selected by the chosen example or replace the references with a maintained Secret name.', rotationOwner: 'the operator who owns the prepared deployment', rotation: 'Create replacement key values in the same Secret, restart every prepared workload that reads them, verify gateway and integration authentication, and then revoke the old credentials at their external authorities.', failure: 'Pods retaining these references cannot materialize required environment values, or gateway, LiteLLM, Discord, and webhook authentication fails.' },
+  'openclaw-shared-secrets': { purpose: 'Authenticates OpenClaw gateways and selected providers, Discord integrations, LiteLLM access, and the Buster v2 handoff.', requiredWhen: 'Required for each enabled consumer represented by its named key.', producer: 'The secret setup helper reuses the target Secret or resolves values from SOPS, source-namespace copies, or interactive input.', rotationOwner: 'platform-security', rotation: 'Replace only the affected keys through the external credential authority, apply the Secret deliberately, restart affected consumers, and verify gateway/provider authentication.', failure: 'Missing or stale keys cause gateway authentication, provider, Discord, LiteLLM, or Buster handoff failures.' },
+  'redis-secrets': { purpose: 'Authenticates clients to the platform Redis service.', requiredWhen: 'Required when Redis authentication is enabled for the selected release.', producer: 'The secret setup helper reuses, copies, or generates the password; an external secret authority can pre-create it.', rotationOwner: 'platform-security with platform-operations', rotation: 'Coordinate the Redis server password and every client, then restart and verify clients before retiring the old value.', failure: 'Redis clients report authentication or connection failures; telemetry transport can stop while pipeline job authority remains separate.' },
+  'postgresql-secrets': { purpose: 'Holds the PostgreSQL administrator password and the LiteLLM database-role password.', requiredWhen: 'Required when the managed PostgreSQL path is enabled.', producer: 'The secret setup helper reuses, copies, or generates the two passwords.', rotationOwner: 'database-operations with platform-security', rotation: 'Rotate database roles and Secret keys as one maintenance operation, refresh derived connection data, then verify both PostgreSQL and LiteLLM.', failure: 'PostgreSQL chart initialization or LiteLLM database authentication fails.' },
+  'litellm-secrets': { purpose: 'Supplies the LiteLLM master key and credential-bearing PostgreSQL connection URL.', requiredWhen: 'Required when LiteLLM is enabled.', producer: 'The secret setup helper derives or collects the values after PostgreSQL credential resolution.', rotationOwner: 'platform-security with database-operations', rotation: 'Rotate the master key and database credential under a planned compatibility boundary; update the Secret and verify LiteLLM before accepting the change.', failure: 'LiteLLM cannot decrypt protected state, authenticate clients, or connect to PostgreSQL.' },
+  'google-sa-key': { purpose: 'Supplies the Google service-account JSON file mounted by LiteLLM integrations.', requiredWhen: 'Required only when an enabled provider uses Google service-account authentication.', producer: 'The secret setup helper imports an operator-selected JSON file or reuses an existing Secret.', rotationOwner: 'platform-security', rotation: 'Issue a replacement service-account key, update `credentials.json`, restart the consumer, verify provider access, and revoke the old key.', failure: 'The Google-backed provider rejects requests or the credential file is absent.' },
+  'ghcr-secret': { purpose: 'Supplies Docker registry authentication for pulling private GHCR workload images.', requiredWhen: 'Required when any selected image is private and no other node-level pull authority can access it.', producer: 'The secret setup helper creates the Docker registry Secret from operator-provided GHCR credentials or reuses an existing Secret.', rotationOwner: 'source registry security', rotation: 'Issue a replacement least-privilege registry token, replace `.dockerconfigjson`, verify image pulls in each target namespace, and revoke the old token.', failure: 'Pods report `ImagePullBackOff` or `ErrImagePull`.' },
+  'git-deploy-key-nova': { purpose: 'Supplies Nova with its SSH private deploy key for the configured Git checkout.', requiredWhen: 'Required when Nova uses the Git clone path.', producer: 'The secret setup helper imports the operator-selected private-key file or reuses an existing Secret.', rotationOwner: 'source-control security', rotation: 'Install the replacement public key at the Git authority, update `id_rsa`, verify a fresh clone, and then revoke the old key.', failure: 'The Nova init container cannot clone its repository.' },
+  'git-deploy-key-buster': { purpose: 'Supplies Buster with its SSH private deploy key for the configured Git checkout.', requiredWhen: 'Required when Buster uses the Git clone path.', producer: 'The secret setup helper imports the operator-selected private-key file or reuses an existing Secret.', rotationOwner: 'source-control security', rotation: 'Install the replacement public key at the Git authority, update `id_rsa`, verify a fresh clone, and then revoke the old key.', failure: 'The Buster init container cannot clone its repository.' },
+  'github-bundle-reader': { purpose: 'Supplies an optional bearer token for private GitHub release bundle downloads.', requiredWhen: 'Required only when the selected bundle archive is private and anonymous download is unavailable.', producer: 'An external GitHub credential authority must pre-create this Secret; the checked-in helper does not generate its token.', rotationOwner: 'source-control security', rotation: 'Create a least-privilege replacement token, update the Secret key selected by the bundle settings, verify a bundle preflight, and revoke the old token.', failure: 'The code-bundle init container receives an authorization error and the workload remains unready.' },
+  'pipeline-test-gate-source-attestation': { purpose: 'Holds the Ed25519 private signing key used by Nova and the public verification key used by Buster for source attestations.', requiredWhen: 'Required when the remote test-gate source-attestation path is enabled.', producer: 'The secret setup helper generates the key pair with OpenSSL or reuses an existing Secret.', rotationOwner: 'pipeline trust owner', rotation: 'Publish the new private and public keys together, restart both signer and verifier, run a signed handoff test, and retain no mixed-key state.', failure: 'Nova cannot sign a source attestation or Buster rejects the attestation signature.' },
+  'kubeclaw-fixture-preflight': { purpose: 'Provides isolated proof bytes mounted only by the Kubernetes production preflight fixture.', requiredWhen: 'Required for the Kubernetes and combined production preflight commands.', producer: 'The secret setup helper generates 32 random bytes unless the Secret already exists.', rotationOwner: 'platform-operations', rotation: 'Delete or replace the fixture Secret, rerun setup, and repeat the preflight. No production credential depends on this value.', failure: 'The fixture pod cannot mount the proof key and the production preflight fails.' },
+  'operator-oauth': { purpose: 'Authenticates the Tailscale Kubernetes Operator to the tailnet with an OAuth client identity and secret.', requiredWhen: 'Required when the Tailscale operator is enabled.', producer: 'Secret setup or deployment can create it from paired bootstrap values; an external authority can pre-create it.', rotationOwner: 'tailnet security owner', rotation: 'Issue a replacement OAuth client, update both keys together, verify operator authentication and ingress, then revoke the old client.', failure: 'The operator cannot authenticate, and Tailscale-backed ingress or preview URLs are unavailable.' },
+  'prism-postgresql-auth': { purpose: 'Supplies Prism PostgreSQL administrator, migrator, runtime, and read-only credentials and connection URLs.', requiredWhen: 'Required for a Prism deployment that uses the bundled PostgreSQL release.', producer: 'The deploy script creates random role passwords and derived URLs when the Secret is absent; an external authority can pre-create the complete key set.', rotationOwner: 'database-operations with platform-security', rotation: 'Rotate each database role with its matching URL, update the complete Secret, restart dependants in a controlled order, and run database acceptance.', failure: 'Prism migration or service startup fails at the missing-key or database-authentication check.' },
+  'prism-runtime': { purpose: 'Supplies Prism session, ingress, dispatch, worker, and ingestion authentication secrets.', requiredWhen: 'Required for every Prism deployment.', producer: 'The deploy script generates each value with OpenSSL when the Secret is absent; an external authority can pre-create it.', rotationOwner: 'platform-security', rotation: 'Rotate one trust boundary at a time, restart all producers and consumers for that key, and repeat authenticated request and worker-dispatch checks.', failure: 'Sessions, ingress verification, dispatch, worker communication, or ingestion authentication fails.' },
+  'prism-test-postgresql-auth': { purpose: 'Provides an isolated copy of Prism database credentials for the end-to-end lease namespace.', requiredWhen: 'Required only for the leased Prism end-to-end journey.', producer: 'The deploy script generates temporary role passwords and derived URLs before it requests the test lease.', rotationOwner: 'test operator', rotation: 'Recreate the isolated test Secret for each clean journey and remove it with the lease cleanup.', failure: 'The isolated Prism migration or test services cannot connect to PostgreSQL.' },
+  'prism-test-runtime': { purpose: 'Provides isolated Prism runtime authentication values for the end-to-end lease namespace.', requiredWhen: 'Required only for the leased Prism end-to-end journey.', producer: 'The deploy script generates fresh temporary values before it requests the test lease.', rotationOwner: 'test operator', rotation: 'Recreate the test Secret for each clean journey and remove it with the lease cleanup.', failure: 'The isolated session, ingress, dispatch, worker, or ingestion checks fail.' },
+  'prism-test-ghcr': { purpose: 'Copies image-pull authentication into the isolated Prism end-to-end lease namespace.', requiredWhen: 'Required when the selected Prism test images need GHCR authentication.', producer: 'The deploy script copies `.dockerconfigjson` from the bound source namespace `ghcr-secret` without printing it.', rotationOwner: 'source registry security', rotation: 'Rotate the source GHCR Secret, recreate the test copy, and verify an authenticated image pull.', failure: 'The test runner or Prism workloads report `ImagePullBackOff`.' },
+  'nova-archviewer-auth': { purpose: 'Authenticates access to the Nova architecture viewer.', requiredWhen: 'Required when the architecture viewer is enabled with Secret-backed authentication.', producer: 'An external access authority must pre-create the Secret; the checked-in helper does not generate it.', rotationOwner: 'platform-security', rotation: 'Update the external credential, replace the Secret data, restart the viewer, and verify authorized and denied access.', failure: 'The architecture viewer rejects valid users or becomes exposed without the intended authentication gate.' },
+  'prometheus-grafana': { purpose: 'Supplies the Grafana administrator credential used by the Prometheus stack.', requiredWhen: 'Required when the selected monitoring values enable Grafana with this existing Secret.', producer: 'An external monitoring credential authority must pre-create it.', rotationOwner: 'monitoring operations', rotation: 'Replace the Grafana credential in the authority and Secret, restart or reconcile Grafana, and verify administrator login.', failure: 'Grafana cannot initialize or administrator login fails.' },
+}));
+
+const SECRET_CONSUMER_AUTHORITIES = new Map(Object.entries({
+  'kubeclaw-shared-secrets': 'The stand-alone Nova and Buster example profiles pass the selected keys to their rendered gateway, LiteLLM, Discord, and webhook consumers.',
+  'openclaw-shared-secrets': 'Nova, Buster, Prism, and OpenClaw containers read only the keys enabled by their rendered environment bindings.',
+  'redis-secrets': 'The Redis release reads `redis-password`; Nova, Buster, and platform services use the same effective password through their rendered client bindings.',
+  'postgresql-secrets': 'The PostgreSQL release reads both role passwords; secret setup derives the LiteLLM connection authority from the LiteLLM role password.',
+  'litellm-secrets': 'The LiteLLM deployment reads `LITELLM_MASTER_KEY` and `DATABASE_URL` from this Secret.',
+  'google-sa-key': 'The LiteLLM deployment mounts `credentials.json` for enabled Google-backed providers.',
+  'ghcr-secret': 'Kubernetes kubelets use `.dockerconfigjson` through each workload imagePullSecrets reference.',
+  'git-deploy-key-nova': 'The Nova repository initialization path mounts `id_rsa` for its authenticated Git checkout.',
+  'git-deploy-key-buster': 'The Buster repository initialization path mounts `id_rsa` for its authenticated Git checkout.',
+  'github-bundle-reader': 'Nova and Buster code-bundle initialization paths read the selected token key for private GitHub release downloads.',
+  'pipeline-test-gate-source-attestation': 'Nova reads `privateKey` to sign source attestations; Buster reads `publicKey` to verify them.',
+  'kubeclaw-fixture-preflight': 'The Kubernetes and combined production preflight fixture pod mounts the `proof` key.',
+  'operator-oauth': 'The Tailscale Kubernetes Operator reads `client_id` and `client_secret` to authenticate to the tailnet.',
+  'prism-postgresql-auth': 'Prism migration, control, studio, ingestion, and read-only paths read the role-specific passwords or URLs selected by their workload bindings.',
+  'prism-runtime': 'Prism control, studio, worker, and ingestion workloads read their corresponding session, ingress, dispatch, worker, or ingestion key.',
+  'prism-test-postgresql-auth': 'The leased Prism end-to-end migration and service pods read the isolated role-specific passwords and URLs.',
+  'prism-test-runtime': 'The leased Prism end-to-end control, studio, worker, and ingestion pods read the isolated runtime keys.',
+  'prism-test-ghcr': 'Kubernetes kubelets in the leased Prism test namespace use the copied `.dockerconfigjson` to pull private test images.',
+  'nova-archviewer-auth': 'The Nova architecture-viewer authentication boundary reads this Secret before it permits protected viewer access.',
+  'prometheus-grafana': 'The Grafana deployment reads its administrator credential through the selected existing-Secret binding.',
+}));
+
+function enrichSecretFacts(secrets) {
+  const declarations = secrets.filter((fact) => ['declaration', 'declared-keys-in-script', 'helm-template-declaration'].includes(fact.kind));
+  const references = secrets.filter((fact) => ['reference', 'key-reference', 'helm-template-key-reference', 'helm-template-reference', 'helm-template-volume-reference', 'helm-template-image-pull-reference'].includes(fact.kind));
+  const authoritySet = (fact) => new Set([fact.authorityId ?? fact.name, ...(fact.authorityIds ?? [])]);
+  const sharesAuthority = (left, right) => [...authoritySet(left)].some((authority) => authoritySet(right).has(authority));
+  for (const fact of secrets) {
+    const authority = SECRET_AUTHORITIES.get(fact.authorityId ?? fact.name) ?? (fact.authorityId ? helmSecretAuthority(fact.authorityId) : null);
+    if (!authority) {
+      fact.semanticStatus = 'secret-authority-blocker';
+      fact.blockerOwner ??= sourceOwner(fact.path).component;
+      fact.closureCondition ??= `Define the purpose, condition, producer, consumer, rotation owner and method, and failure symptom for Secret ${fact.name}.`;
+      continue;
+    }
+    fact.semanticStatus = 'authored-secret-authority';
+    fact.purpose = authority.purpose;
+    fact.requiredWhen = authority.requiredWhen;
+    fact.producer = authority.producer;
+    fact.rotationOwner = authority.rotationOwner;
+    fact.rotation = authority.rotation;
+    fact.failure = authority.failure;
+    fact.consumerAuthority = SECRET_CONSUMER_AUTHORITIES.get(fact.authorityId ?? fact.name) ?? authority.consumerAuthority;
+    assert(fact.consumerAuthority, `Secret ${fact.name} lacks an explicit consumer authority`);
+    fact.namespaceMeaning = fact.namespace === '$NAMESPACE' ? 'the effective primary application namespace'
+      : fact.namespace === '$PRISM_NAMESPACE' ? 'the effective Prism namespace'
+        : fact.namespace === '$TAILSCALE_OPERATOR_NAMESPACE' ? 'the effective Tailscale operator namespace'
+          : fact.namespace === '<runtime namespace>' ? 'the namespace of the rendered Helm release or Kubernetes resource'
+            : `the literal or rendered namespace \`${fact.namespace}\``;
+    fact.producers = declarations.filter((candidate) => sharesAuthority(candidate, fact)).map((candidate) => ({ path: candidate.path, line: candidate.line ?? null, keys: candidate.keys ?? [] }));
+    fact.consumers = references.filter((candidate) => sharesAuthority(candidate, fact)).map((candidate) => ({ path: candidate.path, line: candidate.line ?? null, fieldPath: candidate.fieldPath, key: candidate.key ?? null }));
+    fact.consumerStatus = fact.consumerAuthority;
+    fact.blockerOwner = null;
+    fact.closureCondition = null;
+  }
+  return secrets;
+}
+
+function environmentReaderContract(name, consumer) {
+  const identity = `${name}:${consumer.path}`;
+  const maintained = maintainedEnvironmentBindings.has(identity)
+    ? ENVIRONMENT_CONTRACTS.get(name) ?? operatorEnvironmentFamilyContract(name) : null;
+  const contract = runtimeConsumerContract(name, consumer.path)
+    ?? ENVIRONMENT_CONSUMER_CONTRACTS.get(identity) ?? maintained;
+  if (!contract) return null;
+  const qualified = { owner: sourceOwner(consumer.path).component,
+    owningSurface: `The receiving setting or command in ${consumer.path}; see the exact source and its producer bindings.`,
+    boundary: 'checked-in receiving source', ...contract };
+  assertRuntimeConsumerContract(qualified, identity);
+  return qualified;
+}
+
+// Source ownership can name a file and then its field, role, or binding. Keep
+// those parts separate in reader prose: a colon-qualified setting is not a
+// repository filename. The raw owner and owningSurface fields remain intact.
+function environmentSourceProse(value) {
+  return value.replace(/(?<![`A-Za-z0-9_/])((?:\.github|charts|my-values|skills|scripts|docker|ops|tools|cmd|packaging|gitops|releases)\/(?:[A-Za-z0-9_./-]+\.(?:json|ya?ml|m?[jt]s|cjs|cts|tsx?|sh|py|go)|(?:[A-Za-z0-9_.-]+\/)*Dockerfile(?:\.[A-Za-z0-9_-]+)?))(?::(?:(\d+):)?|#)?/gu,
+    (match, sourcePath, line) => {
+      const qualifier = match.slice(sourcePath.length);
+      return `\`${sourcePath}\`${line ? ` at line ${line}` : ''}${qualifier ? ' — ' : ''}`;
+    });
+}
+
+function environmentConsumerPurpose(contract, producer = null) {
+  return `${environmentSourceProse(contract.purpose)} Owner: ${environmentSourceProse(contract.owner)}. Owning setting: ${environmentSourceProse(contract.owningSurface).replace(/\.$/u, '')}.${producer ? ` Producer binding: ${environmentProducerSetting(producer)}.` : ''} Boundary: ${contract.boundary}.`;
+}
+
+function verifyEnvironmentConsumerCoverage() {
+  const entries = new Map();
+  const configuredEnvironmentReceivers = runtimeTextSources().flatMap(source => configuredEnvironmentReceiverFacts(source, read(source)));
+  for (const source of runtimeTextSources()) for (const occurrence of environmentOccurrences(source, read(source))) {
+    const entry = entries.get(occurrence.name) ?? { readers: [], producers: [] };
+    entry[occurrence.kind === 'kubernetes-env' ? 'producers' : 'readers'].push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind, ...(occurrence.custody ? {custody:occurrence.custody,custodyDigest:occurrence.custodyDigest,custodyEvidence:occurrence.custodyEvidence} : {}) });
+    entries.set(occurrence.name, entry);
+  }
+  const missing = [];
+  for (const [name, entry] of entries) {
+    for (const reader of entry.readers) if (!environmentReaderContract(name, reader)) missing.push(`${name}:${reader.path}`);
+    for (const producer of entry.producers) {
+      if (!qualifiedProducerBindings.has(`${name}:${producer.path}`)) missing.push(`${name}:${producer.path}`);
+      if (!externalProducerContract(name, producer.path, {...producer,sourceRoot:root})) missing.push(`${name}:${producer.path}:external boundary`);
+    }
+  }
+  assert.equal(missing.length, 0, `CONFIG_SEMANTIC_GAP: unqualified environment receiving sources: ${[...new Set(missing)].join(', ')}`);
+  console.log(`PASS exact environment receiving-source coverage (${entries.size} discovered names; every reader and producer pair qualified; ${configuredEnvironmentReceivers.length} explicit configured-key receivers).`);
+}
+
+function environmentProducerSetting(producer) {
+  const selectedPath=producer.custodyEvidence?.selectedSourcePath??producer.path;
+  const selectedLine=producer.custodyEvidence?.selectedSourceLine??producer.line;
+  const lines = read(selectedPath).split('\n');
+  const selected = [];
+  const declarationIndent = /^\s*/u.exec(lines[selectedLine - 1])[0].length;
+  for (let index = selectedLine - 1; index < Math.min(lines.length, selectedLine + 12); index++) {
+    // A sibling value, Helm action, or container field does not belong to this
+    // environment declaration. Its Values expressions cannot prove this input.
+    if (index > selectedLine - 1 && /^\s*\S/u.test(lines[index])
+      && !/^\s*#/u.test(lines[index]) && /^\s*/u.exec(lines[index])[0].length <= declarationIndent) break;
+    selected.push(lines[index]);
+  }
+  const bytes = read(selectedPath);
+  const text = producer.custodyEvidence?.range ? bytes.slice(...producer.custodyEvidence.range) : selected.join('\n');
+  const settings = [...new Set([...text.matchAll(/\.Values\.([A-Za-z0-9_.]+)/gu)].map((match) => match[1]))];
+  const location = `\`${producer.path}\` at line ${producer.line}${selectedPath!==producer.path?`; selected helper \`${selectedPath}\` at line ${selectedLine}`:''}`;
+  if(producer.custody?.helperProjection) {
+    const projection=producer.custody.helperProjection,authority=projection.branch.valueAuthority;
+    const selectedValue=authority.kind==='literal'?`fixed literal ${JSON.stringify(authority.value)}`:authority.expression?`Helm value expression \`${authority.expression}\``:`selected ${authority.kind} statements ${authority.statements.map(statement=>`\`${statement}\``).join('; ')}`;
+    const guards=projection.branch.guards.filter(guard=>guard.directive!=='binding').map(guard=>`${guard.directive} \`${guard.expression}\``).join('; ');
+    return `${location}; ${selectedValue}; producing branches ${guards||'<unconditional helper declaration>'}; exact helper validation dependencies and actual caller/container custody apply; no evaluated Helm default or unproved receiving-process guarantee`;
+  }
+  if (settings.length) return `${location}; Helm fields ${settings.map((setting) => `\`${setting}\``).join(', ')}; the linked declaration supplies any render condition and default`;
+  const literalSource = /\bvalue:\s*("(?:[^"\\]|\\.)*"|'(?:[^']|'')*'|[^,}\n]+)/u.exec(text)?.[1]?.trim();
+  const literal = literalSource && !literalSource.startsWith('{{') ? YAML.parse(literalSource) : undefined;
+  const reference = /(?:secretKeyRef|configMapKeyRef|fieldRef|resourceFieldRef)\s*:/u.exec(text)?.[0];
+  const name = /name:\s*['"]?([A-Z][A-Z0-9_]*)/u.exec(text)?.[1];
+  const publishedLiteral = name && environmentDefaultIsSecretPayload(name) && literal !== undefined ? '<redacted:sensitive-field>' : redactValue('environment-value', literal);
+  return literal !== undefined ? `${location}; fixed literal ${JSON.stringify(publishedLiteral)}`
+    : reference ? `${location}; declared \`${reference.replace(/\s*:\s*$/u, '')}\` transport authority`
+      : `${location}; exact maintained workload environment declaration`;
+}
+
+function buildRuntimeInputInventory(yamlInventory) {
+  const environment = [];
+  const cliFlags = [];
+  const derivedValues = [];
+  for (const sourcePath of runtimeTextSources()) {
+    const text = read(sourcePath);
+    environment.push(...environmentOccurrences(sourcePath, text));
+    cliFlags.push(...ownedCliFlags(sourcePath, text));
+    const shellSource = path.extname(sourcePath) === '.sh' || /^#![^\n]*\b(?:ba|da|k|z)?sh\b/u.test(text);
+    if (shellSource) {
+      derivedValues.push(...derivedAssignments(sourcePath, text));
+    }
+  }
+  const groupedEnvironment = new Map();
+  for (const occurrence of environment) {
+    const entry = groupedEnvironment.get(occurrence.name) ?? {
+      name: occurrence.name,
+      sensitive: false,
+      sensitivityClass: 'ordinary-value',
+      sensitivityReasons: [],
+      sourceOwners: [],
+      runtimeOwner: 'unknown',
+      consumers: [],
+      precedence: [],
+    };
+    const publicSecretClass = /^(?:DISABLE_IMAGE_PULL_SECRETS|KUBECLAW_RUN_SECRET_SETUP|KUBECLAW_SECRET_SETUP_MODE|KUBECLAW_SECRETS_OVERWRITE|OPS_COPY_PULL_SECRET)$/u.test(occurrence.name) ? 'secret-setup-control'
+      : occurrence.name === 'BUSTER_SECRET_ROLE_NAME' ? 'rbac-role-reference'
+        : /_AUTH_SECRET_KEY$/u.test(occurrence.name) ? 'secret-key-name-reference'
+          : /(?:_AUTH_SECRET|_PREFLIGHT_SECRET|_SECRET_NAME)$/u.test(occurrence.name) ? 'secret-object-name-reference'
+            : /(?:ALLOWED|SOURCE).*SECRETS?$/u.test(occurrence.name) ? 'secret-object-name-list'
+              : /SECRET.*(?:NAMESPACE|REF)$/u.test(occurrence.name) ? 'secret-authority-reference'
+                : null;
+    const authorityReference = /(?:CREDENTIAL_AUTHORITY_REF)$/u.test(occurrence.name);
+    const publicVerificationMaterial = /(?:_VERIFY_KEY|_PUBLIC_KEY)$/u.test(occurrence.name);
+    const publicCertificatePath = /(?:_TLS_CERT|_CA_FILE)$/u.test(occurrence.name);
+    const identityReference = /(?:_CLIENT_ID|_USER|_USERNAME|_ACCOUNT|_PRODUCER|_AUDIENCE|_ISSUER)$/u.test(occurrence.name)
+      || ['PGUSER', 'REDIS_USERNAME'].includes(occurrence.name);
+    if (occurrence.secretProvenance || entry.sensitivityClass === 'secret-value') {
+      entry.sensitivityClass = 'secret-value';
+      if (occurrence.secretProvenance) entry.sensitivityReasons.push('Kubernetes valueFrom/secretKeyRef provenance');
+    } else if (publicVerificationMaterial) {
+      entry.sensitivityClass = 'public-verification-material';
+      entry.sensitivityReasons.push('public verification material; it cannot create signatures or credentials');
+    } else if (publicCertificatePath) {
+      entry.sensitivityClass = 'public-verification-file-path';
+      entry.sensitivityReasons.push('path to public certificate or trust material; it does not contain a private key');
+    } else if (identityReference) {
+      entry.sensitivityClass = 'identity-reference';
+      entry.sensitivityReasons.push('identity or routing selector; it is not authentication proof');
+    } else if (publicSecretClass) {
+      entry.sensitivityClass = publicSecretClass;
+      entry.sensitivityReasons.push('public control or authority identifier; it does not carry Secret payload data');
+    } else if (authorityReference) {
+      entry.sensitivityClass = 'public-authority-reference';
+      entry.sensitivityReasons.push('public authority reference; it does not carry credential bytes');
+    } else if (occurrence.filePathProvenance) {
+      if (entry.sensitivityClass !== 'secret-value') entry.sensitivityClass = 'secret-file-path';
+      entry.sensitivityReasons.push('literal path to key/certificate material; file contents are sensitive');
+    } else if (/_FILE$/u.test(occurrence.name) && SENSITIVE_ENV_NAME.test(occurrence.name.replace(/_FILE$/u, ''))) {
+      if (entry.sensitivityClass !== 'secret-value') entry.sensitivityClass = 'secret-file-path';
+      entry.sensitivityReasons.push('path to sensitive material; the path is publishable but file contents are not');
+    } else if (SENSITIVE_ENV_NAME.test(occurrence.name)) {
+      entry.sensitivityClass = 'secret-value';
+      entry.sensitivityReasons.push('sensitive environment-variable name');
+    }
+    entry.sensitive = entry.sensitivityClass === 'secret-value';
+    entry.consumers.push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind, ...(occurrence.custody ? {custody:occurrence.custody,custodyDigest:occurrence.custodyDigest,custodyEvidence:occurrence.custodyEvidence} : {}) });
+    const owner = sourceOwner(occurrence.path);
+    if (!entry.sourceOwners.some((item) => item.component === owner.component && item.evidence === owner.evidence)) entry.sourceOwners.push(owner);
+    if (occurrence.kind === 'shell-parameter') {
+      entry.precedence.push({
+        order: 1,
+        source: 'process environment',
+        condition: occurrence.defaultOperator?.includes(':') ? 'set and non-empty' : 'set',
+        evidence: `${occurrence.path}:${occurrence.line}`,
+      });
+      if (occurrence.sourceValueRole === 'default') {
+        entry.precedence.push({ order: 2, source: 'source default', condition: `parameter operator ${occurrence.defaultOperator}`, value: occurrence.default, evidence: `${occurrence.path}:${occurrence.line}` });
+      } else if (occurrence.sourceValueRole === 'required-guard') {
+        entry.precedence.push({ order: 2, source: 'required-value guard', condition: `parameter operator ${occurrence.defaultOperator}`, value: occurrence.default, evidence: `${occurrence.path}:${occurrence.line}` });
+      } else if (occurrence.sourceValueRole === 'alternate') {
+        entry.precedence.push({ order: 2, source: 'alternate expansion value', condition: `parameter operator ${occurrence.defaultOperator}`, value: occurrence.default, evidence: `${occurrence.path}:${occurrence.line}` });
+      }
+    } else if (occurrence.kind === 'go-process-env' || occurrence.kind === 'go-process-env-helper') {
+      entry.precedence.push({
+        order: 1,
+        source: 'process environment',
+        condition: occurrence.kind === 'go-process-env-helper' ? 'trimmed value is non-empty' : 'reader is called',
+        evidence: `${occurrence.path}:${occurrence.line}`,
+      });
+      if (occurrence.sourceValueRole === 'default') {
+        entry.precedence.push({
+          order: 2,
+          source: 'Go helper fallback',
+          condition: 'environment value is absent, empty, or whitespace',
+          value: occurrence.default,
+          evidence: `${occurrence.path}:${occurrence.line}`,
+        });
+      }
+    }
+    groupedEnvironment.set(occurrence.name, entry);
+  }
+  for (const entry of groupedEnvironment.values()) {
+    entry.sensitivityReasons = [...new Set(entry.sensitivityReasons)].sort();
+    entry.consumers = [...new Map(entry.consumers.map((consumer) => [`${consumer.path}:${consumer.line}:${consumer.access}`, consumer])).values()]
+      .sort((a, b) => a.path.localeCompare(b.path) || a.line - b.line);
+    entry.precedence = [...new Map(entry.precedence.map((step) => [JSON.stringify(step), step])).values()];
+    if (!entry.precedence.length) entry.precedence = [{ order: 1, source: 'process environment or injected Kubernetes env', condition: 'no source default was found', evidence: 'see consumers' }];
+    entry.runtimeOwner = [...new Set(entry.sourceOwners.map((owner) => owner.component))].join('; ');
+    entry.required = entry.precedence.some((step) => /\?|required/iu.test(step.condition)) ? 'required' : 'conditional-or-external';
+    const accessKinds = new Set(entry.consumers.map((consumer) => consumer.access));
+    const consumerPaths = entry.consumers.map((consumer) => consumer.path);
+    const onlyInjection = [...accessKinds].every((access) => access === 'kubernetes-env');
+    entry.producers = entry.consumers.filter((consumer) => consumer.access === 'kubernetes-env');
+    entry.readers = entry.consumers.filter((consumer) => consumer.access !== 'kubernetes-env');
+    entry.direction = onlyInjection ? 'injection-only; receiving runtime reader is external or unproved'
+      : entry.producers.length ? 'injected by checked-in manifest and read by checked-in runtime source'
+        : 'read as process input; producer is the operator, CI host, or external runtime';
+    const ciContext = /^(?:CI(?:$|_)|GITHUB_|GITLAB_|BUILDKITE_|JENKINS_|RUNNER_)/u.test(entry.name);
+    const externalStandard = /^(?:HOME|PATH|PWD|TMPDIR|XDG_CACHE_HOME|XDG_RUNTIME_DIR|NODE_PATH|NODE_OPTIONS|KUBECONFIG|GOOGLE_APPLICATION_CREDENTIALS)$/u.test(entry.name);
+    const maintainerOnly = consumerPaths.every((sourcePath) => /^(?:scripts\/(?:docs-|check-|test-|verify-|generate-)|packaging\/)/u.test(sourcePath));
+    const operatorAuthored = entry.producers.length === 0 && consumerPaths.some(operatorEnvironmentSource);
+    const directOperatorReader = consumerPaths.some(operatorEnvironmentSource);
+    entry.surface = directOperatorReader ? 'operator-authored-input'
+      : entry.producers.length ? (onlyInjection ? 'kubernetes-injected-transport' : 'checked-in-injected-transport')
+        : ciContext ? 'ci-build-host-input'
+        : externalStandard ? 'external-runtime-standard'
+          : maintainerOnly ? 'maintainer-verification-input'
+            : operatorAuthored ? 'operator-authored-input' : 'runtime-process-boundary';
+    entry.setDirectly = entry.surface === 'operator-authored-input';
+    if (entry.setDirectly && entry.producers.length) entry.direction = 'read directly by an operator command and also injected at separate checked-in runtime boundaries';
+    if (onlyInjection) entry.runtimeOwner = 'external receiving image/runtime; no checked-in reader proved';
+    entry.acceptedForm = /(?:^|_)(?:ENABLED|DISABLED|ALLOW|REQUIRE|STRICT|DRY_RUN|OVERWRITE|CREATE|COPY)(?:_|$)/u.test(entry.name)
+      ? '`true` or `false` unless the linked consumer states a narrower form'
+      : /(?:^|_)(?:PORT|NODE_PORT)$/u.test(entry.name) ? 'integer TCP/UDP port accepted by the linked consumer'
+        : /(?:TIMEOUT|INTERVAL|DURATION|TTL|POLL_MS|_MS$|_SECONDS$|_MINUTES$)/u.test(entry.name) ? 'non-negative duration or count in the unit named by the variable'
+          : /(?:_URL|_URI|_ENDPOINT|_ORIGIN)$/u.test(entry.name) ? 'absolute URL, URI, endpoint, or origin accepted by the linked consumer'
+            : /(?:_JSON)$/u.test(entry.name) ? 'valid JSON with the shape enforced by the linked consumer'
+              : /(?:_FILE|_DIR|_ROOT|_PATH)$/u.test(entry.name) ? 'filesystem path available to the linked process'
+                : 'string accepted by the linked consumer; use its source validation and listed default';
+    if (entry.name === 'KUBECLAW_RUN_SECRET_SETUP') entry.acceptedForm = '`auto`, `true`, or `false`';
+    if (entry.name === 'KUBECLAW_SECRET_SETUP_MODE') entry.acceptedForm = '`auto`, `interactive`, or `noninteractive`';
+    if (['KUBECLAW_SECRETS_OVERWRITE', 'DISABLE_IMAGE_PULL_SECRETS', 'OPS_COPY_PULL_SECRET'].includes(entry.name)) entry.acceptedForm = '`true` or `false`';
+    entry.changeImpact = 'Changes the behavior of each listed runtime consumer when that process receives the variable.';
+    entry.failureMeaning = entry.required === 'required' ? 'The consumer stops with its source-defined missing-value error.' : 'An absent value selects the listed default or leaves behavior to the external runtime binding.';
+    const meaning = environmentMeaning(entry.name, entry.consumers, entry.surface);
+    entry.meaningStatus = meaning.status;
+    entry.meaning = meaning.text;
+    entry.meaningEvidence = meaning.evidence;
+    entry.blockerOwner = meaning.blockerOwner;
+    entry.closureCondition = meaning.closureCondition;
+    if (meaning.contract) {
+      entry.acceptedForm = meaning.contract.acceptedForm;
+      entry.required = meaning.contract.required;
+      entry.defaultBehavior = meaning.contract.defaultBehavior;
+      entry.emptyBehavior = meaning.contract.emptyBehavior;
+      entry.invalidBehavior = meaning.contract.invalidBehavior;
+      entry.precedenceExplanation = meaning.contract.precedence;
+      entry.changeImpact = meaning.contract.impact;
+      entry.failureMeaning = meaning.contract.failure;
+      if (meaning.contract.precedenceSteps) entry.precedence = meaning.contract.precedenceSteps;
+    } else {
+      entry.defaultBehavior = 'Use the producer or external authority named by the surface classification.';
+      entry.emptyBehavior = 'The owning producer or runtime defines empty-value behavior.';
+      entry.invalidBehavior = 'The owning producer or runtime reports invalid input; this inventory does not invent that external contract.';
+      entry.precedenceExplanation = 'Use the listed producer or owning interface. Direct operator setting is not supported from this reference.';
+    }
+    const contractsByReader = new Map();
+    entry.unqualifiedReaders = [];
+    for (const consumer of entry.readers) {
+      if (contractsByReader.has(consumer.path)) continue;
+      const qualified = environmentReaderContract(entry.name, consumer);
+      if (!qualified) { entry.unqualifiedReaders.push({ name: entry.name, ...consumer }); continue; }
+      contractsByReader.set(consumer.path, { path: consumer.path, line: consumer.line, access: consumer.access,
+        ...qualified, purpose: environmentConsumerPurpose(qualified) });
+    }
+    entry.consumerContracts = [...contractsByReader.values()];
+    entry.unqualifiedProducers = entry.producers.filter((producer) => !qualifiedProducerBindings.has(`${entry.name}:${producer.path}`));
+    entry.producerContracts = entry.producers.map((producer) => ({ ...producer,
+      owner: sourceOwner(producer.path).component,
+      owningSurface: environmentProducerSetting(producer),
+      qualified: qualifiedProducerBindings.has(`${entry.name}:${producer.path}`),
+    }));
+    {
+      for (const producer of entry.producers) {
+        const contract = externalProducerContract(entry.name, producer.path, {...producer,sourceRoot:root});
+        if (!contract) { entry.unqualifiedProducers.push(producer); continue; }
+        assertRuntimeConsumerContract(contract, `${entry.name}:${producer.path}`);
+        entry.consumerContracts.push({ ...producer, ...contract,
+          purpose: environmentConsumerPurpose(contract, producer) });
+      }
+    }
+    const distinctConsumerContracts = new Set(entry.consumerContracts.map((contract) => JSON.stringify({
+      acceptedForm: contract.acceptedForm,
+      defaultBehavior: contract.defaultBehavior,
+      emptyBehavior: contract.emptyBehavior,
+      invalidBehavior: contract.invalidBehavior,
+      required: contract.required,
+      purpose: contract.purpose,
+      failure: contract.failure,
+    })));
+    if (distinctConsumerContracts.size > 1) {
+      entry.meaningStatus = 'authored-consumer-specific-contracts';
+      entry.meaning = `The meaning of ${entry.name} differs by receiving process. Use the contract attached to the exact consumer source.`;
+      entry.meaningEvidence = `${entry.consumerContracts[0].path}:${entry.consumerContracts[0].line}`;
+      entry.acceptedForm = 'Varies by receiving process; see the consumer-specific contracts.';
+      entry.required = 'varies by receiving process';
+      entry.defaultBehavior = 'Varies by receiving process; no merged default is valid.';
+      entry.emptyBehavior = 'Varies by receiving process; an empty string can be rejected, retained, or converted to a value.';
+      entry.invalidBehavior = 'Varies by receiving process; use the exact reader validation below.';
+      entry.precedenceExplanation = 'Each receiving process captures and interprets its own environment. No consumer contract overrides another consumer.';
+      entry.changeImpact = 'Changes only the processes that receive the variable, according to each listed consumer contract.';
+      entry.failureMeaning = 'Use the exact consumer failure below; a single merged symptom would be incorrect.';
+      entry.blockerOwner = null;
+      entry.closureCondition = null;
+    } else if (entry.consumerContracts.length >= 1 && !meaning.contract
+      && entry.unqualifiedReaders.length === 0 && entry.unqualifiedProducers.length === 0) {
+      const [contract] = entry.consumerContracts;
+      entry.meaningStatus = 'authored-consumer-specific-contract';
+      entry.meaning = contract.purpose;
+      entry.meaningEvidence = `${contract.path}:${contract.line}`;
+      entry.acceptedForm = contract.acceptedForm;
+      entry.required = contract.required;
+      entry.defaultBehavior = contract.defaultBehavior;
+      entry.emptyBehavior = contract.emptyBehavior;
+      entry.invalidBehavior = contract.invalidBehavior;
+      entry.precedenceExplanation = contract.precedence;
+      entry.changeImpact = contract.impact;
+      entry.failureMeaning = contract.failure;
+      if (contract.precedenceSteps) entry.precedence = contract.precedenceSteps;
+      entry.blockerOwner = null;
+      entry.closureCondition = null;
+    }
+    if (entry.unqualifiedReaders.length || entry.unqualifiedProducers.length) {
+      entry.meaningStatus = 'environment-consumer-contract-blocker';
+      entry.meaning = `The receiving-source contract is missing for ${[...entry.unqualifiedReaders, ...entry.unqualifiedProducers].map((item) => `${entry.name} at ${item.path}:${item.line}`).join('; ')}.`;
+      entry.blockerOwner = entry.runtimeOwner;
+      entry.closureCondition = 'Add an exact source-backed reader or external boundary contract, including its owning configuration, default, empty and invalid behavior, required condition, precedence, change effect and failure.';
+    }
+    if (entry.name === 'BUNDLE_TMP_ROOT') {
+      entry.producers = [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 944, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }];
+      entry.direction = 'internal shell assignment passed to one child Node process; not operator-authored or externally configurable';
+      entry.meaningEvidence = 'charts/kubeclaw/templates/deployment.yaml:944';
+      entry.precedence = [
+        { order: 1, source: 'fixed internal shell assignment', condition: 'code-bundle initialization is enabled', value: '/tmp/code-bundle', evidence: 'charts/kubeclaw/templates/deployment.yaml:944' },
+        { order: 2, source: 'command-local child-process export', condition: 'the validator Node process starts', evidence: 'charts/kubeclaw/templates/deployment.yaml:1023' },
+      ];
+    }
+  }
+  assert.equal([...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus) && (!entry.blockerOwner || !entry.closureCondition)).length, 0,
+    'quality gate: every unresolved environment meaning needs an owner and concrete closure condition');
+  const environmentContractGaps = [...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus));
+  const controllerWrapperInputs = [
+    'KUBECLAW_NAMESPACE', 'KUBERNETES_SERVICE_PORT', 'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION',
+    'BUSTER_ALLOWED_NAMESPACE_PREFIXES', 'BUSTER_DEFAULT_TTL_SECONDS', 'BUSTER_MAX_TTL_SECONDS',
+    'BUSTER_CONTROLLER_SERVICE_ACCOUNT', 'BUSTER_SECRET_ROLE_NAME', 'BUSTER_DEPLOYER_ROLE_NAME',
+    'BUSTER_TESTER_ROLE_NAME', 'BUSTER_ALLOWED_ACCESS_JSON',
+  ];
+  for (const name of controllerWrapperInputs) {
+    const entry = groupedEnvironment.get(name);
+    assert(entry?.readers.some((reader) => reader.path === busterControllerSource && reader.access === 'go-process-env-helper'),
+      `quality gate: ${name} lost its Buster controller helper-call reader`);
+  }
+  for (const name of [
+    'KUBECLAW_NAMESPACE', 'BUSTER_ALLOWED_NAMESPACE_PREFIXES', 'BUSTER_DEFAULT_TTL_SECONDS',
+    'BUSTER_MAX_TTL_SECONDS', 'BUSTER_CONTROLLER_SERVICE_ACCOUNT', 'BUSTER_SECRET_ROLE_NAME',
+    'BUSTER_DEPLOYER_ROLE_NAME', 'BUSTER_TESTER_ROLE_NAME', 'BUSTER_ALLOWED_ACCESS_JSON',
+  ]) {
+    const entry = groupedEnvironment.get(name);
+    assert.equal(entry.surface, 'checked-in-injected-transport', `quality gate: ${name} is not a proved injected runtime input`);
+    assert.match(entry.meaningStatus, /^authored-consumer-specific-contracts?$/u, `quality gate: ${name} lacks its exact controller contract`);
+    assert(entry.consumerContracts.some((contract) => contract.path === busterControllerSource), `quality gate: ${name} lost its controller-specific semantic authority`);
+    assert.doesNotMatch(`${entry.direction} ${entry.meaning}`, /external or unproved|external authority/iu,
+      `quality gate: ${name} regressed to an unproved external boundary`);
+  }
+  for (const [sourcePath, names] of [
+    [busterReadinessSource, Object.keys(busterReadinessContracts)],
+    [busterProductSource, Object.keys(busterProductContracts)],
+  ]) {
+    for (const name of names) {
+      const entry = groupedEnvironment.get(name);
+      assert(entry, `quality gate: ${name} is missing from the runtime inventory`);
+      assert.equal(entry.surface, 'checked-in-injected-transport',
+        `quality gate: ${name} is not bound to its checked-in chart producer`);
+      assert(entry.readers.some((reader) => reader.path === sourcePath),
+        `quality gate: ${name} lost its exact runtime reader`);
+      const contract = entry.consumerContracts.find((candidate) => candidate.path === sourcePath);
+      assert(contract, `quality gate: ${name} lacks its exact consumer contract`);
+      for (const field of ['purpose', 'acceptedForm', 'defaultBehavior', 'emptyBehavior', 'invalidBehavior', 'precedence', 'impact', 'failure']) {
+        assert.equal(typeof contract[field], 'string', `quality gate: ${name} contract lacks ${field}`);
+        assert(contract[field].trim(), `quality gate: ${name} contract has an empty ${field}`);
+      }
+      assert(contract.evidence?.length, `quality gate: ${name} contract lacks downstream implementation evidence`);
+      assert.equal(entry.meaningStatus, 'authored-consumer-specific-contract',
+        `quality gate: ${name} still publishes a generic transport description`);
+      assert.doesNotMatch(`${entry.meaning} ${entry.defaultBehavior} ${entry.failureMeaning}`,
+        /owning producer or runtime|external authority/iu,
+        `quality gate: ${name} regressed to generic external-authority wording`);
+    }
+  }
+  for (const name of Object.keys(busterRuntimeContracts)) {
+    const entry = groupedEnvironment.get(name);
+    assert(entry?.readers.some((reader) => reader.path === busterRuntimeSource),
+      `quality gate: ${name} lost its Buster runtime entrypoint reader`);
+    const contract = entry.consumerContracts.find((candidate) => candidate.path === busterRuntimeSource);
+    assert(contract, `quality gate: ${name} lacks its Buster runtime entrypoint contract`);
+    for (const field of ['purpose', 'acceptedForm', 'defaultBehavior', 'emptyBehavior', 'invalidBehavior', 'precedence', 'impact', 'failure']) {
+      assert.equal(typeof contract[field], 'string', `quality gate: ${name} runtime contract lacks ${field}`);
+      assert(contract[field].trim(), `quality gate: ${name} runtime contract has an empty ${field}`);
+    }
+    assert(contract.evidence?.length, `quality gate: ${name} runtime contract lacks downstream implementation evidence`);
+    for (const authority of contract.evidence) {
+      assert(exists(authority.path), `quality gate: ${name} evidence source is missing: ${authority.path}`);
+      const sourceLines = read(authority.path).split('\n').length;
+      assert(Number.isInteger(authority.line) && Number.isInteger(authority.endLine)
+        && authority.line > 0 && authority.endLine >= authority.line && authority.endLine <= sourceLines
+        && authority.endLine - authority.line + 1 <= 60,
+      `quality gate: ${name} has an invalid evidence range at ${authority.path}`);
+    }
+    assert.match(entry.meaningStatus, /^authored-consumer-specific-contracts?$/u,
+      `quality gate: ${name} still publishes a generic Buster runtime description`);
+  }
+  for (const entry of groupedEnvironment.values()) {
+    if (!entry.readers.some((reader) => reader.path === busterRuntimeSource) || ['HOME', 'XDG_RUNTIME_DIR'].includes(entry.name)) continue;
+    assert(entry.consumerContracts.some((contract) => contract.path === busterRuntimeSource),
+      `quality gate: ${entry.name} is read by the Buster runtime entrypoint but lacks an exact consumer contract`);
+  }
+  const requireSensitivity = (name, expectedClass) => {
+    const entry = groupedEnvironment.get(name);
+    assert(entry, `quality gate: representative environment variable is missing: ${name}`);
+    assert.equal(entry.sensitivityClass, expectedClass, `quality gate: ${name} sensitivity must be ${expectedClass}`);
+  };
+  if (!allowSensitivityFixture) {
+    requireSensitivity('TS_AUTHKEY', 'secret-value');
+    requireSensitivity('LITELLM_MASTER_KEY', 'secret-value');
+    requireSensitivity('LITELLM_SALT_KEY', 'secret-value');
+    requireSensitivity('OPS_TAILSCALE_AUTHKEY_FILE', 'secret-file-path');
+    requireSensitivity('BUSTER_READY_TLS_KEY', 'secret-file-path');
+    requireSensitivity('GOOGLE_APPLICATION_CREDENTIALS', 'secret-file-path');
+    requireSensitivity('BUSTER_PRODUCT_VERIFY_KEY', 'public-verification-material');
+    requireSensitivity('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY', 'public-verification-material');
+    requireSensitivity('BUSTER_READY_TLS_CERT', 'public-verification-file-path');
+    requireSensitivity('TAILSCALE_OAUTH_CLIENT_ID', 'identity-reference');
+    requireSensitivity('PRISM_E2E_USER', 'identity-reference');
+    requireSensitivity('PGUSER', 'identity-reference');
+    requireSensitivity('REDIS_USERNAME', 'identity-reference');
+    for (const controlName of ['DISABLE_IMAGE_PULL_SECRETS', 'KUBECLAW_RUN_SECRET_SETUP', 'KUBECLAW_SECRET_SETUP_MODE', 'KUBECLAW_SECRETS_OVERWRITE', 'OPS_COPY_PULL_SECRET']) if (groupedEnvironment.has(controlName)) requireSensitivity(controlName, 'secret-setup-control');
+    if (groupedEnvironment.has('BUSTER_SECRET_ROLE_NAME')) requireSensitivity('BUSTER_SECRET_ROLE_NAME', 'rbac-role-reference');
+    for (const keyName of ['BUSTER_CODE_BUNDLE_AUTH_SECRET_KEY', 'NOVA_CODE_BUNDLE_AUTH_SECRET_KEY', 'PRISM_CODE_BUNDLE_AUTH_SECRET_KEY']) if (groupedEnvironment.has(keyName)) requireSensitivity(keyName, 'secret-key-name-reference');
+    for (const objectName of ['BUSTER_CODE_BUNDLE_AUTH_SECRET', 'NOVA_CODE_BUNDLE_AUTH_SECRET', 'PRISM_CODE_BUNDLE_AUTH_SECRET', 'KUBECLAW_KUBERNETES_PREFLIGHT_SECRET']) if (groupedEnvironment.has(objectName)) requireSensitivity(objectName, 'secret-object-name-reference');
+    if (groupedEnvironment.has('BUSTER_ALLOWED_SOURCE_SECRETS')) requireSensitivity('BUSTER_ALLOWED_SOURCE_SECRETS', 'secret-object-name-list');
+    if (groupedEnvironment.has('BACKUP_CREDENTIAL_AUTHORITY_REF')) requireSensitivity('BACKUP_CREDENTIAL_AUTHORITY_REF', 'public-authority-reference');
+    for (const ordinaryName of ['CLUSTER_ID', 'KUBECLAW_CAPABILITY_PROVIDERS', 'LITELLM_URL', 'NODE_PATH', 'OPENCLAW_GATEWAY_URL', 'REDIS_PORT', 'STORE_MODEL_IN_DB', 'SWARM_CONFIG']) {
+      if (groupedEnvironment.has(ordinaryName)) requireSensitivity(ordinaryName, 'ordinary-value');
+    }
+  }
+  for (const representative of ['BACKUP_EXPECTED_SERVER_VERSION', 'REDIS_SERVER', 'REDIS_CLI', 'REDIS_CHECK_RDB', 'PIPELINE_LIGHT_WATCHDOG_POLL_SECONDS']) {
+    const entry = groupedEnvironment.get(representative);
+    if (!entry) continue;
+    assert.equal(entry.surface, 'operator-authored-input', `quality gate: ${representative} must remain an operator-owned command input`);
+    assert.equal(entry.setDirectly, true, `quality gate: ${representative} must remain directly settable at its owning command`);
+  }
+  for (const [name, requiredPaths] of Object.entries({
+    DATABASE_URL: ['skills/prism/server/control-config.ts', 'skills/prism/server/migrate.ts', 'skills/prism/server/worker-config.ts'],
+    PRISM_WORKER_SECRET: ['skills/prism/server/control-config.ts', 'skills/prism/server/worker-config.ts', 'skills/prism/config/native-worker.ts'],
+    ARTIFACT_ROOT: ['skills/prism/server/control-config.ts', 'charts/prism/files/prism-backup.sh'],
+    PORT: ['skills/prism/server/studio-config.ts', 'skills/prism/server/control-config.ts', 'skills/prism/server/worker-config.ts', 'skills/prism/server/ingestion.ts', 'skills/prism/server/agent-bridge.mjs', 'tools/ops-mcp/src/config.mjs'],
+  })) {
+    const entry = groupedEnvironment.get(name);
+    assert(entry, `quality gate: consumer-specific variable is missing: ${name}`);
+    for (const sourcePath of requiredPaths) assert(entry.consumerContracts.some((contract) => contract.path === sourcePath),
+      `quality gate: ${name} lacks its exact consumer contract for ${sourcePath}`);
+    assert.equal(entry.meaningStatus, 'authored-consumer-specific-contracts', `quality gate: ${name} must not publish one merged behavior`);
+  }
+  for (const internalName of ['BLUE', 'AGENT_CAPITALIZED']) {
+    assert.equal(groupedEnvironment.has(internalName), false, `quality gate: internal shell local leaked into operator environment inventory: ${internalName}`);
+  }
+  if (groupedEnvironment.has('BUNDLE_TMP_ROOT')) {
+    const bundleTemporaryRoot = groupedEnvironment.get('BUNDLE_TMP_ROOT');
+    assert.equal(bundleTemporaryRoot.surface, 'runtime-process-boundary',
+      'quality gate: an internal shell-to-Node environment edge was misclassified as an operator-authored input');
+    assert.equal(bundleTemporaryRoot.setDirectly, false,
+      'quality gate: an internal shell-to-Node environment edge became directly settable');
+    assert.deepEqual(bundleTemporaryRoot.producers, [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 944, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }],
+      'quality gate: BUNDLE_TMP_ROOT lost its fixed internal producer');
+    assert(bundleTemporaryRoot.precedence.some((step) => step.evidence === 'charts/kubeclaw/templates/deployment.yaml:1023'),
+      'quality gate: BUNDLE_TMP_ROOT lost its command-local shell-to-Node export');
+    assert(bundleTemporaryRoot.readers.some((reader) => reader.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && reader.line === 1027 && reader.access === 'embedded-node-process-env'),
+    'quality gate: BUNDLE_TMP_ROOT lost its exact embedded Node reader');
+    assert.equal(bundleTemporaryRoot.acceptedForm, 'The internal fixed path `/tmp/code-bundle`; this is not an operator or external runtime input.',
+      'quality gate: BUNDLE_TMP_ROOT was presented as externally configurable');
+  }
+  for (const computedName of ['KUBECLAW_HEALTH_CHECK_GATEWAY', 'KUBECLAW_CODE_BUNDLE_ENABLED']) {
+    const entry = groupedEnvironment.get(computedName);
+    assert(entry?.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && consumer.access === 'embedded-node-process-env-computed-helper'),
+    `quality gate: embedded YAML JavaScript computed reader is missing for ${computedName}`);
+  }
+  const secrets = [];
+  for (const file of yamlInventory.files) {
+    const text = read(file.path);
+    const lineCounter = new YAML.LineCounter();
+    const documents = YAML.parseAllDocuments(text, { prettyErrors: false, lineCounter });
+    documents.forEach((document, index) => {
+      if (!document.errors.length) secrets.push(...secretFactsFromYaml(file.path, document.toJS(), index, document, lineCounter));
+    });
+  }
+  secrets.push(...helmTemplateSecretFacts());
+  for (const sourcePath of runtimeTextSources().filter((sourcePath) => sourcePath.endsWith('.sh'))) {
+    if (!exists(sourcePath)) continue;
+    const text = read(sourcePath);
+    secrets.push(...shellSecretFacts(sourcePath, maskQuotedShellHeredocs(text)));
+  }
+  enrichSecretFacts(secrets);
+  const shellSecretFactsForEvidence = secrets.filter((fact) => fact.kind === 'declared-keys-in-script');
+  for (const fact of shellSecretFactsForEvidence) {
+    const evidenceLine = read(fact.path).split('\n')[fact.line - 1] ?? '';
+    assert(evidenceLine.trim(), `${fact.path}:${fact.line} ${fact.fieldPath}: shell Secret evidence line is blank`);
+    assert(fact.commandEvidence && evidenceLine.includes(fact.commandEvidence),
+      `${fact.path}:${fact.line} ${fact.fieldPath}: shell Secret evidence line does not contain command evidence ${fact.commandEvidence}`);
+    assert(fact.nameEvidence && evidenceLine.includes(fact.nameEvidence),
+      `${fact.path}:${fact.line} ${fact.fieldPath}: shell Secret evidence line does not contain name evidence ${fact.nameEvidence}`);
+  }
+  const yamlSecretFacts = secrets.filter((fact) => ['declaration', 'reference', 'key-reference'].includes(fact.kind));
+  for (const fact of yamlSecretFacts) {
+    assert(Number.isInteger(fact.line) && fact.line > 0, `${fact.path} ${fact.fieldPath}: YAML Secret fact lacks an exact source line`);
+    const evidenceLine = read(fact.path).split('\n')[fact.line - 1] ?? '';
+    const expectedToken = typeof fact.name === 'string' && !fact.name.startsWith('<') ? fact.name
+      : typeof fact.key === 'string' && !fact.key.startsWith('<') ? fact.key : null;
+    if (expectedToken) assert(evidenceLine.includes(expectedToken),
+      `${fact.path}:${fact.line} ${fact.fieldPath}: YAML Secret evidence line does not contain ${expectedToken}`);
+  }
+  const helmSecretFacts = secrets.filter((fact) => fact.kind.startsWith('helm-template-'));
+  assert(helmSecretFacts.length > 0, 'quality gate: Helm Secret references were not scanned');
+  assert.equal(helmSecretFacts.filter((fact) => !Number.isInteger(fact.line) || fact.line < 1).length, 0,
+    'quality gate: every Helm Secret fact needs an exact template line');
+  assert.equal(helmSecretFacts.filter((fact) => fact.semanticStatus === 'authored-secret-authority' && fact.authorityResolved !== true).length, 0,
+    'quality gate: a documented Helm Secret fact lacks a stable semantic authority distinct from its rendered name');
+  const requireHelmSecretFact = (sourcePath, authorityId, key = null, kind = null) => assert(helmSecretFacts.some((fact) => fact.path === sourcePath
+    && (fact.authorityId ?? fact.name) === authorityId && (key === null || fact.key === key) && (kind === null || fact.kind === kind)),
+  `quality gate: missing exact Helm Secret fact ${sourcePath} ${authorityId}${key ? ` key ${key}` : ''}`);
+  requireHelmSecretFact('charts/ops-pod/templates/workload.yaml', 'ops-github-secret', 'token', 'helm-template-key-reference');
+  requireHelmSecretFact('charts/ops-pod/templates/workload.yaml', 'ops-tailscale-secret', 'authkey', 'helm-template-key-reference');
+  requireHelmSecretFact('charts/ops-pod/templates/workload.yaml', 'ops-bearer-secret', null, 'helm-template-volume-reference');
+  requireHelmSecretFact('charts/prism/templates/workloads.yaml', 'prism-runtime', 'worker-secret', 'helm-template-key-reference');
+  requireHelmSecretFact('charts/prism/templates/workloads.yaml', 'prism-postgresql-auth', 'runtime-url', 'helm-template-key-reference');
+  requireHelmSecretFact('charts/kubeclaw/templates/deployment.yaml', 'kubeclaw-gateway-secret', 'gatewayToken', 'helm-template-key-reference');
+  requireHelmSecretFact('charts/kubeclaw/templates/deployment.yaml', 'redis-secrets', 'redis-password', 'helm-template-key-reference');
+  const chartManagedGateway = helmSecretFacts.find((fact) => fact.path === 'charts/kubeclaw/templates/secret.yaml'
+    && fact.kind === 'helm-template-declaration' && fact.authorityId === 'kubeclaw-chart-managed-gateway-secret');
+  assert(chartManagedGateway, 'quality gate: chart-managed gateway Secret declaration is missing');
+  assert.deepEqual(chartManagedGateway.keys, ['discordToken', 'gatewayToken', 'litellmApiKey'],
+    'quality gate: chart-managed gateway Secret keys changed without an inventory update');
+  for (const [key, conditionPattern] of Object.entries({
+    gatewayToken: /auth\.token.*auth\.existingSecret/u,
+    litellmApiKey: /litellm\.apiKey.*litellm\.existingSecret/u,
+    discordToken: /discord\.enabled.*discord\.token.*discord\.existingSecret/u,
+  })) assert.match(chartManagedGateway.keyConditions?.[key] ?? '', conditionPattern,
+    `quality gate: chart-managed gateway Secret key ${key} lacks its exact render condition`);
+  const secretIdentity = (fact) => `${fact.kind}:${fact.name}:${fact.key ?? ''}:${(fact.keys ?? []).join(',')}:${fact.path}:${fact.fieldPath ?? ''}`;
+  const secretSemanticGaps = secrets.filter((fact) => fact.semanticStatus !== 'authored-secret-authority');
+  // Discover both transport and Secret ownership gaps before rejecting: the
+  // same newly introduced Secret reference can also create an ENV producer.
+  // Reporting the first category alone would hide the other required contract.
+  if (!allowSemanticGaps && (environmentContractGaps.length || secretSemanticGaps.length)) {
+    const diagnostics = [];
+    if (environmentContractGaps.length) diagnostics.push(`environment receiving sources lack qualified semantic authority: ${environmentContractGaps.flatMap((entry) => [...entry.unqualifiedReaders, ...entry.unqualifiedProducers].map((item) => `${entry.name}:${item.path}:${item.line}`)).join(', ')}. Expected authority: owning reader plus purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom.`);
+    if (secretSemanticGaps.length) diagnostics.push(`Secret declarations or references lack maintained operator authority: ${secretSemanticGaps.map(secretIdentity).join(', ')}. Expected authority: purpose, namespace, keys, optionality, producer, consumer, rotation owner and method, and failure symptom.`);
+    throw new Error(`CONFIG_SEMANTIC_GAP: ${diagnostics.join(' ')} `);
+  }
+  const configurationConsumerSources = schemaSources().flatMap((schemaPath) => {
+    const pluginRoot = schemaPath.includes('/schemas/') ? schemaPath.split('/schemas/')[0] : path.dirname(schemaPath);
+    const sources = walk(`${pluginRoot}/src`, (absolutePath) => /\.(?:ts|mts|js|mjs)$/.test(absolutePath)).map(canonicalRuntimeSource);
+    if (pluginRoot === 'skills/common/plugins/openclaw-agent-observer') {
+      sources.push(...walk(observerCanonicalPrefix.replace(/\/$/u, ''), (absolutePath) => /\.(?:ts|mts|js|mjs)$/.test(absolutePath)), observerSyncSource);
+    }
+    return sources;
+  }).filter((sourcePath, index, all) => all.indexOf(sourcePath) === index).sort().map((sourcePath) => ({
+    path: sourcePath,
+    sourceDigest: sha256(read(sourcePath)),
+    purpose: sourcePath.startsWith(observerCanonicalPrefix)
+      ? 'tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires tracing the exact field reader'
+      : sourcePath === observerSyncSource ? 'tracked producer of observer runtime contract copies from contracts/agent-observability/v1/src'
+        : 'candidate runtime consumer of a discovered configuration schema; field-level ownership requires tracing the exact field reader',
+    ...(sourcePath.startsWith(observerCanonicalPrefix) ? { materialization: { producer: observerSyncSource, runtimePath: `${observerGeneratedPrefix}${sourcePath.slice(observerCanonicalPrefix.length)}`, mode: 'byte-for-byte copy; ignored build output is not source authority' } } : {}),
+  }));
+  const classifiedCliFlags = classifyCliFacts(cliFlags);
+  return {
+    generatedBy: 'scripts/docs-configuration-inventory.mjs',
+    discovery: { roots: RUNTIME_SCAN_ROOTS, textExtensions: [...TEXT_EXTENSIONS].sort(), excludedSegments: [...EXCLUDED_SEGMENTS].sort(), helmEnvironmentHelperRule: 'finite source-shaped literal include/caller recipes acquire all optional demo-ready, product-decisions and registry-container environment branches with exact helper/validation/caller/container custody; unknown or changed env-emitting helper syntax fails source-specifically', shellSecretRule: 'every .sh source below the declared runtime roots, excluding quoted heredoc bodies; discover direct kubectl create secret commands and shell command arrays, and reject any discovered Secret without semantic authority' },
+    environment: [...groupedEnvironment.values()].sort((a, b) => a.name.localeCompare(b.name)),
+    configuredEnvironmentReceivers: runtimeTextSources().flatMap(source => configuredEnvironmentReceiverFacts(source, read(source))).map(({index, ...fact}) => fact),
+    cliFlags: classifiedCliFlags,
+    secrets: secrets.sort((a, b) => a.path.localeCompare(b.path) || String(a.name).localeCompare(String(b.name)) || String(a.key ?? '').localeCompare(String(b.key ?? ''))),
+    derivedValues: derivedValues.sort((a, b) => a.name.localeCompare(b.name) || a.path.localeCompare(b.path)),
+    configurationConsumerSources,
+    precedenceRules: {
+      helm: [
+        'chart values.yaml supplies the base value',
+        'each --values or -f file overrides the preceding source from left to right',
+        '--set and --set-string override files in the same Helm invocation',
+        'a template default expression applies only when its Helm emptiness condition is true',
+      ],
+      environment: [
+        'an explicitly exported value wins before the shell parameter default',
+        'the colon form treats an empty value as absent; the form without a colon treats an empty value as set',
+        'a Kubernetes env value or valueFrom source becomes the process environment inside the container',
+      ],
+      limitation: 'These rules describe source semantics. An authored operator page must connect each effective runtime value to its exact invocation and consumer; unknown consumers remain unknown here.',
+    },
+    totals: {
+      environmentVariables: groupedEnvironment.size,
+      configuredEnvironmentReceivers: runtimeTextSources().flatMap(source => configuredEnvironmentReceiverFacts(source, read(source))).length,
+      environmentReaderPairs: new Set([...groupedEnvironment.values()].flatMap((item) => item.readers.map((reader) => `${item.name}:${reader.path}`))).size,
+      environmentProducerPairs: new Set([...groupedEnvironment.values()].flatMap((item) => item.producers.map((producer) => `${item.name}:${producer.path}`))).size,
+      unqualifiedEnvironmentReaderPairs: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.unqualifiedReaders.length, 0),
+      unqualifiedEnvironmentProducerPairs: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.unqualifiedProducers.length, 0),
+      environmentConsumers: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.consumers.length, 0),
+      environmentMeaningBlockers: [...groupedEnvironment.values()].filter((item) => /blocker/u.test(item.meaningStatus)).length,
+      injectionOnlyEnvironmentVariables: [...groupedEnvironment.values()].filter((item) => item.surface === 'kubernetes-injected-transport').length,
+      operatorAuthoredEnvironmentInputs: [...groupedEnvironment.values()].filter((item) => item.surface === 'operator-authored-input').length,
+      operatorAuthoredMeaningBlockers: [...groupedEnvironment.values()].filter((item) => item.surface === 'operator-authored-input' && /blocker/u.test(item.meaningStatus)).length,
+      cliOccurrences: cliFlags.length,
+      cliFlags: classifiedCliFlags.length,
+      cliDefinitions: classifiedCliFlags.filter((flag) => flag.classification === 'definition').length,
+      cliInvocations: classifiedCliFlags.filter((flag) => flag.classification === 'invocation').length,
+      secretFacts: secrets.length,
+      secretAuthorityBlockers: secrets.filter((fact) => fact.semanticStatus !== 'authored-secret-authority').length,
+      derivedValues: derivedValues.length,
+      configurationConsumerSources: configurationConsumerSources.length,
+      unresolvedSourceOwner: [...groupedEnvironment.values()].filter((item) => item.sourceOwners.length === 0).length + derivedValues.filter((item) => item.ownerComponent === 'unknown').length,
+      unknownRuntimeOwner: [...groupedEnvironment.values()].filter((item) => item.runtimeOwner === 'unknown').length + derivedValues.filter((item) => item.runtimeOwner === 'unknown').length,
+      unknownConsumer: derivedValues.filter((item) => item.consumers.includes('unknown')).length,
+    },
+  };
+}
+
+function sourceProgramPart(sourcePath, symbol, kind) {
+  const source = ts.createSourceFile(sourcePath, read(sourcePath), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  let selected;
+  const visit = (node) => {
+    if (kind === 'function' && ts.isFunctionDeclaration(node) && node.name?.text === symbol) selected = node.getText(source);
+    if (kind === 'initializer' && ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === symbol) selected = node.initializer?.getText(source);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  assert(selected, `${sourcePath}: source symbol ${symbol} is missing`);
+  return selected;
+}
+
+async function verifyRuntimeConsumerSemantics() {
+  const importSource = (file) => import(pathToFileURL(path.join(root, file)).href);
+  const studio = await importSource('skills/prism/server/studio-config.ts');
+  assert.equal(studio.loadStudioConfig({}).control.href, 'http://prism-control:8080/');
+  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_URL: '' }), /Invalid URL/u);
+  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_URL: 'https://control.invalid' }).control.href, 'https://control.invalid/');
+  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '' }), /PRISM_STUDIO_CONTROL_TIMEOUT_INVALID/u);
+  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '12' }).controlTimeoutMs, 12);
+  for (const value of [undefined, '', 'https://bridge.invalid']) {
+    const environment = value === undefined ? {} : { PRISM_CONTROL_URL: value };
+    const actual = vm.runInNewContext(sourceProgramPart('skills/prism/server/agent-bridge.mjs', 'controlUrl', 'initializer'), { process: { env: environment } });
+    assert.equal(actual, value || 'http://127.0.0.1:28080');
+  }
+  let requested, requestOptions;
+  const post = vm.runInNewContext(`${sourceProgramPart('skills/prism/openclaw-plugin/index.mjs', 'post', 'function')}; post`, {
+    process: { env: { PRISM_CONTROL_URL: 'https://environment.invalid' } }, URL,
+    fetch: async (url, options) => { requested = String(url); requestOptions = options; return { ok: true, json: async () => ({}) }; },
+  });
+  await post('/test', {}, { controlUrl: 'https://plugin.invalid' }); assert.equal(requested, 'https://plugin.invalid/test');
+  assert.equal(Object.hasOwn(requestOptions, 'signal'), false, 'OpenClaw post unexpectedly has a configured timeout');
+  await post('/test', {}, { controlUrl: '' }); assert.equal(requested, 'https://environment.invalid/test');
+  await assert.rejects(() => post('/test', {}, { controlUrl: 'malformed' }), /Invalid URL/u);
+  const bootstrap = await importSource('skills/prism/config/database-bootstrap.ts');
+  const completeBootstrap = { ADMIN_DATABASE_URL: 'postgresql://admin.invalid/db', PRISM_MIGRATOR_PASSWORD: 'm', PRISM_RUNTIME_PASSWORD: 'r', PRISM_READONLY_PASSWORD: 'q' };
+  assert.equal(bootstrap.prismDatabaseBootstrapConfig(completeBootstrap).adminUrl, completeBootstrap.ADMIN_DATABASE_URL);
+  for (const name of Object.keys(completeBootstrap)) assert.throws(() => bootstrap.prismDatabaseBootstrapConfig({ ...completeBootstrap, [name]: '' }), new RegExp(`${name} is required`, 'u'));
+  const observer = await importSource('skills/common/plugins/openclaw-agent-observer/src/config.ts');
+  const observerSource = read('skills/common/plugins/openclaw-agent-observer/src/config.ts');
+  const pairs = [...observerSource.matchAll(/configuredValue\(config, env, '([^']+)', '([^']+)'\)/gu)].map((match) => [match[1], match[2]]);
+  const observerEnv = Object.fromEntries(pairs.map(([key, name]) => [name, key === 'enabled' ? 'true' : key === 'redisHost' ? ' redis.invalid ' : key === 'redisPassword' ? ' secret ' : key === 'redisUsername' ? ' user ' : key === 'redisNetworkIsolation' ? 'isolated' : key === 'redisTls' ? 'false' : key === 'hookPriority' ? '0' : key === 'redisPort' ? '6379' : '2']));
+  const resolved = observer.resolveAgentObserverConfig({}, observerEnv);
+  assert.equal(resolved.enabled, true); assert.equal(resolved.redisHost, 'redis.invalid'); assert.equal(resolved.redisPassword, 'secret'); assert.equal(resolved.hookPriority, 0);
+  assert.equal(observer.resolveAgentObserverConfig({ enabled: false, redisHost: '' }, observerEnv).enabled, false);
+  assert.equal(observer.resolveAgentObserverConfig({ redisHost: '' }, observerEnv).redisHost, undefined);
+  assert.equal(observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_ENABLED: 'unexpected' }).enabled, false);
+  assert.throws(() => observer.resolveAgentObserverConfig({ enabled: null }, observerEnv), /enabled must be configured/u);
+  for (const [key, name] of pairs.filter(([key]) => !key.startsWith('redis') && key !== 'enabled')) {
+    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '' }), /required|configured/u, name);
+    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: 'not-a-number' }), /integer/u, name);
+    if (key !== 'hookPriority') assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '0' }), /positive integer/u, name);
+  }
+  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, REDIS_PORT: '65536' }), /between 1 and 65535/u);
+  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES: '5242881' }), /cannot exceed/u);
+  assert.equal(observer.resolveAgentObserverConfig({ redisTls: null }, observerEnv).redisTls, false);
+  assert.equal(observer.resolveAgentObserverConfig({ redisPort: null }, observerEnv).redisPort, undefined);
+  assert.equal(observer.resolveAgentObserverConfig({ hookPriority: ' ' }, observerEnv).hookPriority, 0);
+  assert.throws(() => observer.resolveAgentObserverConfig({ maxQueuePerStream: ' ' }, observerEnv), /positive integer/u);
+  const support = await importSource('skills/common/plugins/openclaw-agent-observer/src/observer-support.ts');
+  assert.deepEqual(support.mergeConfigInputs({ enabled: true, redisHost: 'registration' }, { redisHost: 'service' }, { enabled: undefined, redisHost: '' }), { enabled: true, redisHost: '' });
+  assert.deepEqual(support.mergeConfigInputs({ enabled: true }, { enabled: null }), { enabled: null });
+  for (const [key] of pairs) {
+    const field = flattenSchema(JSON.parse(read('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json')).configSchema).find((item) => item.path === `$.${key}`);
+    const rule = schemaRuntimeValidationRules('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema', field);
+    assert(rule?.accepted && rule.omission && rule.empty && rule.failure, `${key}: inline observer runtime contract is incomplete`);
+    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);
+  }
+  const transport = await importSource('skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts');
+  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'localhost', port: 6379 }), /Secure Redis transport policy violation/u);
+  assert.equal(transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, networkIsolation: 'documented' }).policy.networkIsolation, true);
+  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, enforceSecureMode: false }), /restricted to localhost/u);
+  const controlConfig = await importSource('skills/prism/server/control-config.ts');
+  const controlEnvironment = { PRISM_SESSION_SECRET: 'session', PRISM_INGRESS_SECRET: 'ingress', PRISM_INGESTION_SECRET: 'ingestion', PRISM_DISPATCH_SECRET: 'dispatch', PRISM_WORKER_SECRET: 'worker' };
+  assert.equal(controlConfig.loadControlServerConfig(controlEnvironment).dispatchSecret, 'dispatch');
+  for (const name of Object.keys(controlEnvironment)) assert.throws(() => controlConfig.loadControlServerConfig({ ...controlEnvironment, [name]: '' }), new RegExp(`${name} is required`, 'u'));
+  assert.throws(() => controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: '' }), /invalid platform pipeline preference subject/u);
+  assert.equal(controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: `user-${'a'.repeat(24)}` }).pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);
+  const spiffe = { ...controlEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_NOVA_SPIFFE_ID: 'nova', PRISM_TRUSTED_WORKER_SPIFFE_ID: 'worker', PRISM_CONTROL_SPIFFE_ID: 'control', PRISM_TRUSTED_AGENT_SPIFFE_ID: 'agent', PRISM_DISPATCH_SECRET: '', PRISM_WORKER_SECRET: '' };
+  assert.equal(controlConfig.loadControlServerConfig(spiffe).dispatchSecret, '');
+  assert.throws(() => controlConfig.loadControlServerConfig({ ...spiffe, PRISM_TRUSTED_NOVA_SPIFFE_ID: '' }), /trust policy is incomplete/u);
+  const ingestionTtl = sourceProgramPart('skills/prism/server/ingestion.ts', 'configuredQuarantineTtl', 'initializer');
+  const ingestionClamp = sourceProgramPart('skills/prism/server/ingestion.ts', 'quarantineTtl', 'initializer');
+  for (const [raw, expected] of [[undefined, 3600000], ['', 60000], ['-1', 60000], ['86400001', 86400000]]) {
+    const configured = vm.runInNewContext(ingestionTtl, { process: { env: raw === undefined ? {} : { PRISM_QUARANTINE_TTL_MS: raw } }, Number });
+    assert.equal(vm.runInNewContext(ingestionClamp, { configuredQuarantineTtl: configured, Math }), expected);
+  }
+  const chartText = read('charts/kubeclaw/templates/deployment.yaml');
+  const healthSource = chartText.slice(chartText.indexOf("<<'HEALTH_SCRIPT'") + "<<'HEALTH_SCRIPT'".length, chartText.indexOf('\n              HEALTH_SCRIPT'));
+  const healthAst = ts.createSourceFile('generated-health.mjs', healthSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  const enabledNode = healthAst.statements.find((statement) => ts.isFunctionDeclaration(statement) && statement.name?.text === 'enabled');
+  assert(enabledNode, 'embedded health boolean helper is missing');
+  for (const [raw, fallback, expected] of [[undefined, true, true], ['', true, true], ['TRUE', false, true], ['yes', false, true], [' true ', true, false], ['unexpected', true, false]]) {
+    const enabled = vm.runInNewContext(`${enabledNode.getText(healthAst)}; enabled`, { process: { env: raw === undefined ? {} : { TEST: raw } } });
+    assert.equal(enabled('TEST', fallback), expected);
+  }
+  const bare = environmentOccurrences('charts/example/templates/workload.yaml', 'env:\n  - {name: REDIS_HOST, value: redis}\nscript: |\n  printf "%s" "$REDIS_HOST"\n');
+  assert(bare.some((occurrence) => occurrence.name === 'REDIS_HOST' && occurrence.kind === 'embedded-shell-env'));
+  const ops = await importSource('tools/ops-mcp/src/config.mjs');
+  assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');
+  assert.throws(() => ops.loadOpsMcpConfig({ OPS_DEFAULT_NAMESPACE: '' }), /OPS_ALLOWED_NAMESPACES/u);
+  const kube = await importSource('tools/ops-mcp/src/kubernetes.mjs');
+  assert.equal(typeof kube.createKubeRequest({ api: 'https://api.invalid' }), 'function');
+  for (const api of ['', 'http://api.invalid', 'https://user:pass@api.invalid', 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);
+  const dispatch = await importSource('skills/common/plugins/runtime-dispatch/src/adapter.ts');
+  const activate = (target) => dispatch.activate({ config: { targets: { sample: target } } });
+  for (const target of [{ endpoint: 'http://127.0.0.1:8080', tokenSecret: 'valid-secret' }, { endpoint: 'https://runtime.invalid', tokenSecret: 'valid-secret' }, { endpoint: 'http://localhost:8080', authentication: 'spiffe-proxy' }]) await activate(target).shutdown();
+  for (const endpoint of ['ftp://runtime.invalid', 'https://user:pass@runtime.invalid', 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);
+  for (const tokenSecret of ['', '../secret', 'UPPER', 'a'.repeat(129)]) assert.throws(() => activate({ endpoint: 'https://runtime.invalid', tokenSecret }), /RUNTIME_CONFIG_INVALID:tokenSecret/u);
+  assert.throws(() => activate({ endpoint: 'https://runtime.invalid', authentication: 'spiffe-proxy' }), /RUNTIME_CONFIG_INVALID:spiffeProxy/u);
+  const ajv = new Ajv2020({ strict: false }); addFormats(ajv);
+  const openapiSchema = JSON.parse(read('skills/buster/plugins/openapi/schemas/config.schema.json'));
+  const bodySchema = openapiSchema.properties.operations.items.properties.body;
+  assert.equal(ajv.compile(bodySchema)(''), true);
+  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(bodySchema)[0]), /wrong type/u);
+  assert.equal(schemaType({ properties: { value: { type: 'string' } } }), 'unspecified');
+  assert.equal(ajv.compile({ properties: { value: { type: 'string' } } })(''), true);
+  for (const schema of [{}, { default: 12, description: 'Annotation only' }, { anyOf: [{ type: 'integer' }, {}] }, { items: { type: 'integer' } }]) {
+    assert.equal(ajv.compile(schema)(''), true, 'unconstrained or type-specific keyword wrongly rejected a string');
+    assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(schema)[0]), /wrong (?:declared )?type/u);
+  }
+  const branches = { type: 'string', allOf: [{ minLength: 1 }] };
+  assert.equal(ajv.compile(branches)(''), false);
+  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(branches)[1]), /wrong type/u);
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-openapi-body-contract-'));
+  try {
+    fs.mkdirSync(path.join(workspace, 'repository')); fs.mkdirSync(path.join(workspace, 'evidence'));
+    const provider = await importSource('skills/buster/plugins/openapi/src/provider.js');
+    const invocation = { testIdentity: 'body-empty', configuration: { values: { specFile: 'spec.json', url: 'https://endpoint.invalid', operations: [{ operationId: 'sample', body: '' }] } }, inputs: [], workspace: { repository: 'repository', evidence: 'evidence' }, timeoutMs: 1000 };
+    for (const [requestSchema, expected, expectedCalls] of [[{ type: 'string' }, 'passed', 1], [{ type: 'string', minLength: 1 }, 'failed', 0], [{ type: 'object' }, 'failed', 0]]) {
+      fs.writeFileSync(path.join(workspace, 'repository/spec.json'), JSON.stringify({ openapi: '3.1.0', paths: { '/sample': { post: { operationId: 'sample', requestBody: { required: true, content: { 'application/json': { schema: requestSchema } } }, responses: { '204': { description: 'empty success' } } } } } }));
+      let calls = 0;
+      const result = await provider.provider().execute(invocation, { workspaceRoot: workspace, signal: new AbortController().signal, async invoke(capability, request) { calls++; assert.equal(capability, 'network.http'); assert.equal(request.payload.body, JSON.stringify('')); return { status: 204, body: '', headers: {} }; } });
+      assert.equal(result.outcome, expected); assert.equal(calls, expectedCalls);
+    }
+  } finally { fs.rmSync(workspace, { recursive: true, force: true }); }
+  console.log('PASS actual runtime consumer contracts: Prism source precedence, observer overrides/normalization/guards, Redis security, Ops API origins, dispatch URL/auth/secret identifiers, unconstrained and operation-validated OpenAPI bodies. No network calls or live commands.');
+}
+
+async function verifyConfigurationSchemaSemantics() {
+  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);
+  const ruleCase = (schema, examples, expectedKeywords) => {
+    const fields = flattenSchema(schema);
+    const projected = structuredClone(schema);
+    for (const keyword of expectedKeywords) {
+      const constraint = fields[0].constraints.find((item) => item.name === keyword);
+      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);
+      projected[keyword] = constraint.value;
+    }
+    const validator = ajv.compile(projected);
+    for (const [value, expected] of examples) assert.equal(validator(value), expected,
+      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);
+  };
+  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));
+  ruleCase(commandSchema.properties.executableCatalog,
+    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);
+  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));
+  const paired = dispatchSchema.properties.targets.additionalProperties;
+  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },
+    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],
+      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);
+  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {
+    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;
+    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);
+    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);
+    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));
+    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });
+  }
+  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },
+    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);
+  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);
+  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);
+  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });
+  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));
+  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));
+  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);
+  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);
+  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');
+
+
+  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);
+  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);
+  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));
+  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);
+  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };
+  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };
+  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };
+  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });
+  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');
+  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);
+  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);
+  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);
+  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });
+  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });
+  for (const family of ['observers', 'adapters']) {
+    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };
+    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };
+    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);
+    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);
+  }
+  const providerSchemaPath = 'fixture-provider-schema';
+  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);
+  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };
+  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);
+  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});
+  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });
+  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };
+  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);
+  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);
+  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);
+
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));
+  try {
+    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));
+    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);
+    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };
+    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };
+    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');
+    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));
+    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);
+    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });
+    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);
+    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });
+    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);
+    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);
+    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);
+    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });
+    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);
+    await instance.shutdown();
+  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }
+  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\n'));
+  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');
+  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');
+}
+
+if (argv.includes('--environment-producer-custody-index-only')) {
+  const facts=runtimeTextSources().filter(file=>['.yaml','.yml'].includes(path.extname(file))).flatMap(file=>environmentProducerOccurrences(file,read(file)));
+  await new Promise((resolve,reject)=>process.stdout.write(JSON.stringify(facts,null,2)+'\n',error=>error?reject(error):resolve()));
+  process.exit(0);
+}
+
+if (argv.includes('--environment-producer-custody-probe')) {
+  const sourcePath = option('--environment-producer-custody-probe');
+  assert(typeof sourcePath === 'string' && RUNTIME_SCAN_ROOTS.some(prefix=>sourcePath.startsWith(`${prefix}/`))
+    && sourcePath === path.posix.normalize(sourcePath) && !sourcePath.startsWith('../') && ['.yaml','.yml'].includes(path.extname(sourcePath)) && exists(sourcePath),
+    'ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: probe requires an existing repository runtime YAML source identity');
+  const input = option('--probe-input');
+  assert(!input || fs.lstatSync(input).isFile(), 'ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: probe input must be a regular local text file');
+  const text = input ? fs.readFileSync(input,'utf8') : read(sourcePath);
+  await new Promise((resolve,reject)=>process.stdout.write(JSON.stringify(environmentProducerOccurrences(sourcePath,text),null,2)+'\n',error=>error?reject(error):resolve()));
+  process.exit(0);
+}
+
+if (argv.includes('--check-runtime-consumer-semantics-only')) {
+  await verifyRuntimeConsumerSemantics();
+  process.exit(0);
+}
+
+if (argv.includes('--check-environment-coverage-only')) {
+  verifyEnvironmentConsumerCoverage();
+  process.exit(0);
+}
+
+if (argv.includes('--check-schema-semantics-only')) {
+  await verifyConfigurationSchemaSemantics();
+  process.exit(0);
+}
+
+export function buildConfigurationInventories() {
+  if (argv.includes('--runtime-only')) return new Map([['configuration-runtime-inputs.json', buildRuntimeInputInventory({ files: [] })]]);
+  if (argv.includes('--schemas-only')) return new Map([['configuration-schemas.json', buildSchemaInventory()]]);
+  const yaml = buildYamlInventory();
+  return new Map([
+    ['configuration-values.json', yaml],
+    ['configuration-schemas.json', buildSchemaInventory()],
+    ['configuration-runtime-inputs.json', buildRuntimeInputInventory(yaml)],
+  ]);
+}
+
+if (argv.includes('--check-payload-delivery-only')) {
+  const payloads = deployedConfigPayloads();
+  console.log(`Exact deployed payload delivery chains are current (${payloads.length} payloads).`);
+  process.exit(0);
+}
+
+const stale = [];
+for (const [fileName, inventory] of buildConfigurationInventories()) {
+  const target = path.join(outputDirectory, fileName);
+  const expected = stableJson(inventory);
+  if (checkOnly) {
+    const actual = fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : null;
+    if (actual !== expected) stale.push(path.relative(root, target));
+  } else {
+    fs.mkdirSync(outputDirectory, { recursive: true });
+    fs.writeFileSync(target, expected);
+    console.log(`wrote ${path.relative(root, target)}`);
+  }
+}
+
+if (stale.length) {
+  console.error('DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:');
+  stale.forEach((file) => console.error(`- ${file}`));
+  console.error('Run: npm run docs:inventory:config');
+  process.exitCode = 1;
+} else if (checkOnly) {
+  const externalAuthorityCheck = spawnSync(process.execPath, [path.join(root, 'scripts/vendor-external-helm-authorities.mjs')], {
+    cwd: root,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  assert.equal(externalAuthorityCheck.status, 0,
+    `offline external Helm authority verification failed\n${externalAuthorityCheck.stdout}\n${externalAuthorityCheck.stderr}`);
+  console.log('Configuration documentation inventory is current.');
+}

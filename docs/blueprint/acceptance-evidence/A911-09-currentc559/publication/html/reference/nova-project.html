@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/nova-project.html"></head><body><main>
+<h1 id="nova-project">Nova Project</h1>
+<p>Status: current configuration reference
+Audience: project operator, pipeline author
+Owner: Nova project compiler
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/compiler.ts">skills/nova/project/compiler.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/source.ts">skills/nova/project/source.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/coverage.ts">skills/nova/project/coverage.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/demo.ts">skills/nova/project/demo.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/cli.ts">skills/nova/project/cli.ts</a>
+Applies to: <code>nova-project.v2</code>
+Last verified: 2026-10-09 at source revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code></p>
+<h2 id="purpose-and-compiler-boundary">Purpose and compiler boundary</h2>
+<p><code>nova-project.v2</code> is the project-level input to Nova. It binds one clean Git
+baseline, an immutable architecture source, one to 128 owned modules, mandatory
+quality coverage, cumulative gates, and an optional demo handoff. The compiler
+turns it into a closed <a href="pipeline-definition.html"><code>pipeline-definition.v2</code></a>
+graph. Nova Core remains independent of module names and project policy.</p>
+<p>Compilation validates the resulting graph against the installed registry,
+configuration schemas, providers, and grants. It starts no adapter, creates no
+run state, calls no external provider, and writes the requested output with
+create-only semantics.</p>
+<h2 id="commands">Commands</h2>
+<pre><code class="language-bash"># Validate and write a new explicit graph; the output must not exist.
+npm run pipeline -- \
+  --platform &quot;/absolute/path/platform.json&quot; \
+  --project &quot;/absolute/path/project.json&quot; \
+  --compile &quot;/absolute/path/compiled-pipeline.json&quot;
+
+# Start a new project run.
+npm run pipeline -- \
+  --platform &quot;/absolute/path/platform.json&quot; \
+  --project &quot;/absolute/path/project.json&quot;
+
+# Continue the same pinned run.
+npm run pipeline -- \
+  --platform &quot;/absolute/path/platform.json&quot; \
+  --project &quot;/absolute/path/project.json&quot; \
+  --recover &quot;run:example&quot;
+</code></pre>
+<p><code>--compile</code>, <code>--recover</code>, and <code>--signal</code> are mutually exclusive. A project and
+platform are always required. Normal start requires repository <code>HEAD</code> to equal
+<code>baseRevision</code> and the worktree to be clean.</p>
+<h3 id="import-a-legacy-project-file">Import a legacy project file</h3>
+<p>The same entry point can convert one legacy progress file into a
+<code>nova-project.v2</code> document:</p>
+<pre><code class="language-bash">npm run pipeline -- \
+  --import-legacy &quot;/absolute/path/progress.json&quot; \
+  --authoring &quot;/absolute/path/import-authoring.json&quot; \
+  --platform &quot;/absolute/path/platform.json&quot; \
+  --output &quot;/absolute/path/project.json&quot;
+</code></pre>
+<p>All four options are required in import mode and each option takes one value.
+<code>--import-legacy</code> selects the existing progress file. <code>--authoring</code> supplies
+the explicit project policy that old progress data does not contain.
+<code>--platform</code> selects the installed package registry and grants used to validate
+the compiled result. <code>--output</code> selects a new destination file; the command
+refuses to replace an existing file.</p>
+<p>The importer resolves the legacy input to its real path and requires the
+authoring document to name a canonical repository root. It imports the
+project, validates the resulting pipeline against the selected platform,
+writes the new project with create-only file semantics, and prints an import
+report. An unknown option, a repeated option, a missing value, or any set other
+than these four option/value pairs fails before the command writes output.</p>
+<blockquote>
+<p><strong>Source evidence — legacy import command</strong></p>
+<p><strong>Claim:</strong> Import mode requires four value pairs, validates the converted
+runtime graph, and creates the output without replacing an existing file.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/cli.ts#L14-L17">entry-point dispatch</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/legacy-import-cli.ts#L8-L27">argument and output handling</a></p>
+<p><strong>Revision:</strong> <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code></p>
+</blockquote>
+<h2 id="root-fields">Root fields</h2>
+<p>The root is closed. Every listed field is required except <code>demo</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type and constraints</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exact <code>nova-project.v2</code></td>
+<td>Selects the current project compiler contract.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>Lowercase ID matching <code>^[a-z][a-z0-9-]{0,47}$</code></td>
+<td>Project identity; compiled pipeline ID becomes <code>project:&lt;id&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>runId</code></td>
+<td>Non-empty string</td>
+<td>Exact run identity. Every resolved provider plan must use it.</td>
+</tr>
+<tr>
+<td><code>repositoryRoot</code></td>
+<td>Normalized absolute path</td>
+<td>The one repository publication lane. Relative paths are invalid.</td>
+</tr>
+<tr>
+<td><code>workspaceRoot</code></td>
+<td>Normalized absolute path outside <code>repositoryRoot</code></td>
+<td>Parent for temporary module worktrees. It cannot equal or be below the repository.</td>
+</tr>
+<tr>
+<td><code>baseRevision</code></td>
+<td>Exactly 40 lowercase hexadecimal characters</td>
+<td>Committed source baseline used by source admission, coverage, start checks, and worktrees.</td>
+</tr>
+<tr>
+<td><code>architecture</code></td>
+<td>Closed source-admission object</td>
+<td>Pins the architecture ref and control files; see below.</td>
+</tr>
+<tr>
+<td><code>modules</code></td>
+<td>Array of 1–128 closed module objects</td>
+<td>Units of implementation, ownership, and module coverage.</td>
+</tr>
+<tr>
+<td><code>final</code></td>
+<td>Closed cumulative gate object</td>
+<td>Full-repository lint, optional review, mandatory test, and integration requirements.</td>
+</tr>
+<tr>
+<td><code>demo</code></td>
+<td>Optional closed demo object</td>
+<td>Adds candidate, delivery, and readiness stages only when the final resolved plan proves the required deployment chain.</td>
+</tr>
+</tbody>
+</table>
+<p>All string fields described as non-empty reject <code>&quot;&quot;</code> and whitespace-only
+values. Closed objects reject unknown keys.</p>
+<h2 id="architecture-source-admission">Architecture source admission</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Required state, type, and constraints</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>architecture.ref</code></td>
+<td>Required non-empty string with no whitespace or control character</td>
+<td>Git ref read by source preflight and Blueprint synchronization. Use a ref whose movement is controlled; <code>baseRevision</code> remains the run baseline.</td>
+</tr>
+<tr>
+<td><code>architecture.requiredFiles</code></td>
+<td>Required unique array of repository-relative paths; may be empty</td>
+<td>Files included in the immutable source subject. Paths cannot be absolute, contain backslashes/control characters, or contain empty, <code>.</code> or <code>..</code> segments.</td>
+</tr>
+<tr>
+<td><code>architecture.review</code></td>
+<td>Optional closed <code>{agent,approval}</code></td>
+<td>Adds an architecture assessment and a conditional approval wait before Blueprint sync. Omission means deterministic source checks still run but these two stages do not exist.</td>
+</tr>
+<tr>
+<td><code>architecture.review.agent</code></td>
+<td>Required non-empty string when review exists</td>
+<td>Runtime dispatch target for architecture assessment.</td>
+</tr>
+<tr>
+<td><code>architecture.review.approval</code></td>
+<td>Required closed object</td>
+<td>Configuration of the approval stage.</td>
+</tr>
+<tr>
+<td><code>...approval.target</code></td>
+<td>Required non-empty string</td>
+<td>Intended operator target.</td>
+</tr>
+<tr>
+<td><code>...approval.issuerId</code></td>
+<td>Required non-empty string</td>
+<td>Expected decision issuer; platform grants and issuer policy must also authorize it.</td>
+</tr>
+<tr>
+<td><code>...approval.timeoutMinutes</code></td>
+<td>Accepted field; the approval registration performs its detailed schema validation</td>
+<td>Approval deadline setting. The project parser does not insert a default.</td>
+</tr>
+</tbody>
+</table>
+<p>The compiler builds the control-path set from <code>requiredFiles</code> plus each
+module's <code>FORGE.md</code> location. One source preflight and one Blueprint sync cover
+the whole project. This prevents each module from admitting a different source
+subject.</p>
+<h2 id="module-fields">Module fields</h2>
+<p>Each module is closed and has no implicit ID, task, ownership, requirement,
+Blueprint, implementation, lint, or test declaration.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type and constraints</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>modules[].id</code></td>
+<td>Required project ID form; unique</td>
+<td>Used in generated stage IDs, worktree paths, coverage, and plan scope.</td>
+</tr>
+<tr>
+<td><code>modules[].dependsOn</code></td>
+<td>Required unique array of project IDs; may be empty</td>
+<td>Module dependency graph. Unknown IDs and cycles are invalid. The compiler also serializes the repository lane.</td>
+</tr>
+<tr>
+<td><code>modules[].task</code></td>
+<td>Required non-empty string</td>
+<td>Work statement given to the implementation stage and later gates.</td>
+</tr>
+<tr>
+<td><code>modules[].ownedPaths</code></td>
+<td>Required non-empty unique array of safe repository-relative prefixes</td>
+<td>Defines source ownership. Paths cannot overlap exactly, as parent/child, or across modules.</td>
+</tr>
+<tr>
+<td><code>modules[].requirements</code></td>
+<td>Required non-empty array of closed <code>{id,statement}</code></td>
+<td>Product requirements for independent coverage. IDs must be non-empty and unique within the module; statements are non-empty.</td>
+</tr>
+<tr>
+<td><code>modules[].blueprint</code></td>
+<td>Required closed object</td>
+<td>Identifies module control files and explicit deliverable selectors.</td>
+</tr>
+<tr>
+<td><code>modules[].implementation</code></td>
+<td>Required closed agent object</td>
+<td>Selects the implementation agent.</td>
+</tr>
+<tr>
+<td><code>modules[].lint</code></td>
+<td>Required closed lint object</td>
+<td>Selects full-lint policy.</td>
+</tr>
+<tr>
+<td><code>modules[].review</code></td>
+<td>Optional closed <code>{agent}</code></td>
+<td>Adds a blocking module review stage. Omission means lint flows directly to test.</td>
+</tr>
+<tr>
+<td><code>modules[].test</code></td>
+<td>Required closed test object</td>
+<td>Supplies independent required checks and a fully resolved provider plan.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="blueprint-fields">Blueprint fields</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>blueprint.modulePath</code></td>
+<td>Required safe relative path to the module directory.</td>
+</tr>
+<tr>
+<td><code>blueprint.substeps</code></td>
+<td>Optional non-empty, unique array of safe relative path segments/paths. If present, each control path is <code>&lt;modulePath&gt;/&lt;substep&gt;/FORGE.md</code>; an empty array is invalid.</td>
+</tr>
+<tr>
+<td><code>blueprint.serveDockerfile</code></td>
+<td>Required safe relative path or <code>null</code>. <code>null</code> states that this module does not declare that deliverable selector.</td>
+</tr>
+<tr>
+<td><code>blueprint.apiSpecFile</code></td>
+<td>Required safe relative path or <code>null</code>. <code>null</code> states that this module does not declare that deliverable selector.</td>
+</tr>
+</tbody>
+</table>
+<p>The compiler checks path form and binding. Source preflight checks the committed
+files and their declared content. <code>null</code> is different from omission: omission
+is invalid because the project must make the boundary explicit.</p>
+<h3 id="agent-and-lint-fields">Agent and lint fields</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Requirement and default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>implementation.agent</code></td>
+<td>Required non-empty runtime target.</td>
+</tr>
+<tr>
+<td><code>implementation.agentRole</code></td>
+<td>Optional non-empty role string passed to dispatch configuration. No compiler default.</td>
+</tr>
+<tr>
+<td><code>review.agent</code></td>
+<td>Required non-empty runtime target when review exists.</td>
+</tr>
+<tr>
+<td><code>lint.policyPath</code></td>
+<td>Required normalized absolute path.</td>
+</tr>
+<tr>
+<td><code>lint.policyProject</code></td>
+<td>Required non-empty policy project.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="test-and-provider-plan-fields">Test and provider-plan fields</h2>
+<p>Module <code>test</code> and <code>final.test</code> use the same closed shape:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Required state and rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agent</code></td>
+<td>Optional non-empty runtime target; default <code>buster</code>.</td>
+</tr>
+<tr>
+<td><code>agentRole</code></td>
+<td>Optional role string passed through when present.</td>
+</tr>
+<tr>
+<td><code>testAgentEnabled</code></td>
+<td>Optional boolean; default <code>true</code>. <code>false</code> suppresses test-agent dispatch, not provider execution or coverage checks.</td>
+</tr>
+<tr>
+<td><code>requiredChecks</code></td>
+<td>Required by project policy and used to build coverage. Each entry uses the coverage check shape described in <a href="pipeline-json.html#coverage-object">Project test pipeline</a>.</td>
+</tr>
+<tr>
+<td><code>providerPlan</code></td>
+<td>Required closed resolved-plan envelope; see below.</td>
+</tr>
+</tbody>
+</table>
+<p>The authored provider-plan envelope contains exactly these fields:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type and constraints</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repositoryId</code></td>
+<td>Required non-empty string, maximum 256 at the quality-stage contract</td>
+<td>Stable repository identity for remote execution.</td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>Required complete <code>resolved-test-plan.v1</code> object with valid <code>planDigest</code></td>
+<td>Immutable resolved nodes, providers, links, coverage, limits, and registry digest. It must be produced by the resolver, not edited by hand.</td>
+</tr>
+<tr>
+<td><code>grants</code></td>
+<td>Required object from resolved node ID to a unique array of non-empty capability strings</td>
+<td>Remote per-node capability boundary. Empty grants do not imply permission.</td>
+</tr>
+<tr>
+<td><code>maximumConcurrency</code></td>
+<td>Required integer 1–64</td>
+<td>Remote plan execution ceiling. It coexists with per-group limits inside <code>plan</code>.</td>
+</tr>
+<tr>
+<td><code>submittedAt</code></td>
+<td>Required RFC 3339 date-time</td>
+<td>Submission timestamp bound into the request.</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Required integer 1–7,200,000</td>
+<td>Whole remote plan request deadline.</td>
+</tr>
+</tbody>
+</table>
+<p>Do not author <code>repositoryRoot</code>, <code>sourceStageId</code>, or <code>revision</code> in a
+<code>nova-project.v2</code> provider plan. The compiler adds <code>repositoryRoot</code> and
+<code>sourceStageId</code> from the owned repository and implementation stage. This
+prevents the project document from pointing a quality stage at unrelated
+source. Caller-supplied success evidence is not accepted.</p>
+<p>The resolved plan must satisfy all of these bindings:</p>
+<ul>
+<li><code>planDigest</code> matches the plan without the digest field.</li>
+<li><code>plan.runId</code> equals root <code>runId</code> and <code>plan.project</code> equals root <code>id</code>.</li>
+<li>A module plan has <code>{moduleId: &lt;module.id&gt;, gateId: null}</code>.</li>
+<li>The final plan has <code>{moduleId: null, gateId: &quot;final-test&quot;}</code>.</li>
+<li>A module plan contains at least one non-skipped blocking test.</li>
+<li>Its coverage policy maps the module's exact ownership and requirements to
+resolved declaration IDs. The final plan covers every module plus all
+integration requirements.</li>
+</ul>
+<p>Use the authored and resolved field references in
+<a href="pipeline-json.html">Project test pipeline</a> to construct these plans.</p>
+<h2 id="final-gate">Final gate</h2>
+<p><code>final</code> is closed:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>final.lint</code></td>
+<td>Required <code>{policyPath,policyProject}</code> with the same rules as module lint.</td>
+</tr>
+<tr>
+<td><code>final.test</code></td>
+<td>Required test/provider-plan object. Its plan scope is the <code>final-test</code> gate.</td>
+</tr>
+<tr>
+<td><code>final.review</code></td>
+<td>Optional closed <code>{agent}</code>. Omission removes the final review stage.</td>
+</tr>
+<tr>
+<td><code>final.integrationRequirements</code></td>
+<td>Required array, which may be empty. Each useful entry is a closed <code>{id,statement}</code> coverage requirement and must be mapped by <code>final.test.requiredChecks</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>The final lint depends on all module tests. Optional final review follows lint;
+final test follows lint or review; the project summary follows final test.</p>
+<h2 id="optional-demo-fields">Optional demo fields</h2>
+<p><code>demo</code> is closed:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Requirement and default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>authNodeId</code></td>
+<td>Required non-empty string, maximum 2,048; names the blocking demo-auth node in the final plan.</td>
+</tr>
+<tr>
+<td><code>protocol</code></td>
+<td>Exact <code>json-session.v1</code>.</td>
+</tr>
+<tr>
+<td><code>operatorTarget</code></td>
+<td>Required ID matching <code>^[a-z0-9][a-z0-9._:-]{0,127}$</code>.</td>
+</tr>
+<tr>
+<td><code>retentionSeconds</code></td>
+<td>Optional safe integer 1–9,223,372,036; default 604,800 (seven days).</td>
+</tr>
+</tbody>
+</table>
+<p>Demo compilation is deliberately strict. The final plan must connect an
+immutable container build and checked manifest to a Kubernetes fixture, then
+to a Tailscale exposure in <code>await-readiness</code> mode, then pass deployment,
+credentials, and exposure into the required blocking demo-auth node. The auth
+node must be mandatory in coverage. If any binding is absent, compilation
+fails; the compiler does not invent a public endpoint or credentials.</p>
+<h2 id="generated-graph-and-scheduling">Generated graph and scheduling</h2>
+<p>The compiler sorts modules topologically with an ID tie-break, independent of
+their JSON array order. It then builds:</p>
+<ol>
+<li><code>source-preflight</code>.</li>
+<li>Optional <code>architecture-review</code> and <code>architecture-approval</code>.</li>
+<li><code>blueprint-sync</code>.</li>
+<li>For each module: <code>implement-&lt;id&gt;</code>, <code>lint-&lt;id&gt;</code>, optional <code>review-&lt;id&gt;</code>, and
+<code>test-&lt;id&gt;</code>.</li>
+<li><code>final-lint</code>, optional <code>final-review</code>, <code>final-test</code>, and <code>project-summary</code>.</li>
+<li>Optional <code>demo-candidate</code>, <code>demo-delivery</code>, and <code>demo-ready</code>.</li>
+</ol>
+<p>The resulting definition has <code>maxConcurrency: 1</code>, and module dependencies form
+one sequential repository lane. Provider plans can still execute their own nodes
+up to their declared and group limits.</p>
+<p><strong>Current technical inference:</strong> Serialization keeps a later implementation from
+advancing shared <code>HEAD</code> before the earlier module's checks finish. Its cost is
+lower module throughput: independent modules wait for each other, and a slow or
+blocked stage delays the lane. The compiler proves the sequence, not the original
+reason for selecting it. The historical reason is unknown; the Nova project
+compiler owner owns that gap. Reconsider serialization only when parallel source
+publication, ownership isolation, gate-to-revision binding, and recovery have
+explicit contracts and overlapping-run tests.</p>
+<p>Module implementation owns repair budgets. Each lint, review, and test checker
+can request the implementation stage again. Current compilation gives two
+orders to each present category, one orchestrator order, and one technical
+retry, then calculates <code>maxAttempts</code> to cover that bounded policy.</p>
+<h2 id="change-and-recovery-rules">Change and recovery rules</h2>
+<p>Normal start checks the declared commit and a clean worktree. Compilation alone
+does not. After run creation, recovery reconstructs compiler encoding choices
+from the stored graph and verifies the whole graph digest. It also verifies
+platform configuration and pinned packages. A changed task, requirement,
+ownership prefix, plan, agent, policy path, demo setting, or source ref can
+change the graph digest. Use the unchanged project and platform to continue;
+start a new run for intended changes.</p>
+<p>Compilation output reports <code>status: &quot;compiled&quot;</code>, <code>runId</code>, <code>stageCount</code>,
+<code>definitionDigest</code>, and <code>completionScope</code>. A successful compile proves static
+contracts and grants only. A successful run is not by itself human acceptance.</p>
+<h2 id="diagnostic-guide">Diagnostic guide</h2>
+<table>
+<thead>
+<tr>
+<th>Code family</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROJECT_OBJECT_INVALID</code>, <code>PROJECT_SOURCE_INVALID</code></td>
+<td>Unknown field, missing object, array where object expected, or wrong closed shape.</td>
+</tr>
+<tr>
+<td><code>PROJECT_TEXT_REQUIRED</code>, <code>PROJECT_ID_INVALID</code>, <code>PROJECT_ABSOLUTE_PATH_REQUIRED</code></td>
+<td>Invalid scalar identity or path.</td>
+</tr>
+<tr>
+<td><code>PROJECT_MODULES_INVALID</code>, <code>PROJECT_MODULE_DUPLICATE</code>, <code>PROJECT_DEPENDENCY_*</code></td>
+<td>Module count, identity, unknown dependency, or cycle failed.</td>
+</tr>
+<tr>
+<td><code>PROJECT_OWNERSHIP_INVALID</code>, <code>PROJECT_OWNERSHIP_OVERLAP</code></td>
+<td>Unsafe or overlapping repository ownership.</td>
+</tr>
+<tr>
+<td><code>PROJECT_SOURCE_PATH_*</code>, <code>PROJECT_ARCHITECTURE_*</code></td>
+<td>Architecture/Blueprint source selection is incomplete or unsafe.</td>
+</tr>
+<tr>
+<td><code>PROJECT_REQUIREMENTS_REQUIRED</code>, <code>PROJECT_REQUIREMENT_DUPLICATE</code></td>
+<td>Requirements are empty or repeat an ID.</td>
+</tr>
+<tr>
+<td><code>PROJECT_PLAN_DIGEST_MISMATCH</code>, <code>PROJECT_PLAN_SCOPE_MISMATCH</code>, <code>PROJECT_FINAL_PLAN_SCOPE_MISMATCH</code></td>
+<td>Resolved plan is changed or bound to another run/project/scope. Regenerate it.</td>
+</tr>
+<tr>
+<td><code>PROJECT_BLOCKING_TEST_REQUIRED</code></td>
+<td>Module plan has no active blocking test.</td>
+</tr>
+<tr>
+<td><code>PROJECT_DEMO_*</code></td>
+<td>Demo fields or the required provider-link chain are invalid.</td>
+</tr>
+<tr>
+<td><code>PROJECT_BASELINE_CHANGED</code>, <code>PROJECT_REPOSITORY_DIRTY</code></td>
+<td>New-run source no longer matches the declared clean baseline.</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_*</code>, <code>RECOVERY_GRAPH_DIGEST_MISMATCH</code></td>
+<td>Supplied project cannot reconstruct the pinned graph. Use the original input.</td>
+</tr>
+<tr>
+<td><code>LEGACY_A11Y_THRESHOLDS_RETIRED</code></td>
+<td>A project uses numeric accessibility thresholds instead of explicit rule, route, selector, reason, and expiry acceptances. Replace the threshold with the required acceptance records.</td>
+</tr>
+<tr>
+<td><code>LEGACY_A11Y_TIMEOUT_INVALID</code></td>
+<td>The earlier accessibility timeout is not an integer from 1,000 through 120,000 ms. Move the supported timeout to the provider node and keep it within that range.</td>
+</tr>
+<tr>
+<td><code>LEGACY_PERF_CONFIGURATION_RETIRED</code></td>
+<td>A project uses the earlier performance block or has no explicit <code>kubeclaw.lighthouse@1</code> node. Define named Lighthouse profiles and budgets in <code>.swarm/pipeline.json</code>.</td>
+</tr>
+<tr>
+<td><code>LEGACY_VISUAL_CONFIGURATION_RETIRED</code></td>
+<td>A project uses the earlier visual block or has no explicit <code>kubeclaw.visual@1</code> node. Define reviewed baseline, profile, and provider nodes in <code>.swarm/pipeline.json</code>.</td>
+</tr>
+<tr>
+<td><code>LEGACY_E2E_CONFIGURATION_RETIRED</code></td>
+<td>A project uses the earlier end-to-end block or has no explicit <code>kubeclaw.playwright@1</code> node. Add a project-owned Playwright configuration and an explicit provider node.</td>
+</tr>
+<tr>
+<td><code>LEGACY_SECURITY_CONFIGURATION_RETIRED</code></td>
+<td>A project uses one combined security block. Define the five explicit security provider nodes so each decision has its own evidence and policy.</td>
+</tr>
+</tbody>
+</table>
+<p>These diagnostics stop project scaffolding before provider execution. Repeating
+the command with unchanged input produces the same stop. Correct the project
+definition; do not disable the check.</p>
+<blockquote>
+<p><strong>Source evidence — unsupported project shapes fail at discovery</strong></p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L269-L290">accessibility guards</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L396-L401">performance guards</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L402-L413">visual, end-to-end, and security guards</a>.</p>
+<p><strong>Revision:</strong> <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code></p>
+</blockquote>
+<blockquote>
+<p><strong>Source evidence — compiler contract</strong></p>
+<p><strong>Claim:</strong> The compiler validates a closed v2 project, ownership, and resolved-plan bindings before emitting one deterministic sequential graph.</p>
+<p>The CLI validates the installed runtime before it creates compile output.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/compiler.ts#L89-L134">requirements, plan binding, and module validation</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/compiler.ts#L137-L192">stable ordering and graph compilation</a></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/source.ts#L19-L66">Source admission</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/cli.ts#L13-L59">CLI behavior</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/coverage.ts#L11-L67">coverage binding</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/demo.ts#L3-L54">demo binding</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/contracts/check-project-compiler.mts#L80-L119">deterministic graph shape and optional-stage behavior</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/contracts/check-project-compiler.mts#L121-L130">dependency, ownership, and plan rejection checks</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node tests/verification/contracts/check-project-compiler.mts</code>: exit zero with both <code>legacy-authoring-import</code> and <code>source-launcher</code> reports <code>ok: true</code>, and zero executed stages.</p>
+<p><strong>Revision:</strong> <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code></p>
+<p><strong>Limit:</strong> Static compilation does not execute providers, confirm endpoint reachability, or establish product acceptance.</p>
+</blockquote>
+</main></body></html>

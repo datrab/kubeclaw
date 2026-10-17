@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-17T09:55:19.434256+00:00",
+  "cases": [
+    {
+      "name": "stale-production-revision",
+      "command": [
+        "python3",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py",
+        "--repo",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo",
+        "--revision",
+        "3354d2d1e641e8332326d0a1641f459b2d494c62",
+        "--publication-root",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/sdk-provenance-v3/root/.tmp/docs-publication",
+        "--output",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/actual-negative-provenance-v1/stale-production-revision-must-not-exist",
+        "--publication-receipt",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/actual-negative-provenance-v1/stale-receipt.json"
+      ],
+      "exitCode": 1,
+      "outputAbsent": true,
+      "stderrSha256": "bc6ae490240bc0379519f93df4d0055863a3f64dd47ed5308160807443eba623"
+    },
+    {
+      "name": "optimized-python-refused",
+      "command": [
+        "python3",
+        "-O",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py",
+        "--repo",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo",
+        "--revision",
+        "3354d2d1e641e8332326d0a1641f459b2d494c62",
+        "--publication-root",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/sdk-provenance-v3/root/.tmp/docs-publication",
+        "--output",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/actual-negative-provenance-v1/optimized-python-refused-must-not-exist",
+        "--publication-receipt",
+        "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-build-v2/actual-result.json"
+      ],
+      "exitCode": 1,
+      "outputAbsent": true,
+      "stderrSha256": "faec908d0e81192b9a1425b2ea0d9146a96d021197ed9beec40a457b0bade2d5"
+    }
+  ],
+  "actualInvocations": 2,
+  "positiveReplay": false,
+  "canonicalWrites": false,
+  "formalAcceptance": false
+}

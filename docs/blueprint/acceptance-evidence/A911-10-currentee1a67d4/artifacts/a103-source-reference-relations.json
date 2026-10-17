@@ -1,0 +1,690 @@
+{
+  "revision": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "method": "Complete committed166page literal source-path census and Markdown local-link BFS of at most3edges. Links in inline/code text may be included; reachability is an inspection candidate, not parser/link acceptance. No execution or claim that transitive citation proves exact mutation coverage.",
+  "rows": [
+    {
+      "family": "config",
+      "variant": "helm-field",
+      "source": "charts/kubeclaw/values.yaml",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/use/prism-studio.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/use/install.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/use/install.md",
+            "docs/site/reference/environment-variables.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "config",
+      "variant": "environment-setting",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/lint.md",
+        "docs/site/extend/testing.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/status/roadmap.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/worker-trust.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/deployment-and-trust.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/deployment-and-trust.md",
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "config",
+      "variant": "secret-setting",
+      "source": "my-values/setup-secrets.sh",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/cli.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/use/install.md",
+        "docs/site/use/worker-trust.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/security-and-trust.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "config",
+      "variant": "script-flag",
+      "source": "scripts/deploy.sh",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/api-object-updates.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/reference/service-routing.md",
+        "docs/site/reference/verification-commands.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/use/README.md",
+        "docs/site/use/capacity.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/worker-trust.md",
+        "docs/site/use/workflows/buster-suite.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/use/install.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/use/install.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "config",
+      "variant": "swarm-config-field",
+      "source": "charts/kubeclaw/files/config/swarm.config.json",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/plugin-configuration.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/use/operate.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/use/operate.md",
+            "docs/site/use/install.md",
+            "docs/site/reference/helm-values.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "config",
+      "variant": "nested-plugin-config",
+      "source": "skills/nova/plugins/lint/schemas/config.schema.json",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/plugin-configuration.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/extend/plugin-catalogue/kubeclaw.lint.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "config",
+      "variant": "default-precedence",
+      "source": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/lint.md",
+        "docs/site/reference/lint-policy.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+            "docs/site/extend/contracts.md",
+            "docs/site/extend/nova.md",
+            "docs/site/extend/lint.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "schema",
+      "variant": "recursive-pipeline-field",
+      "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/telemetry.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/workflows.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "schema",
+      "variant": "pipeline-stage-type",
+      "source": "skills/nova/project/compiler.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/request-state-recovery.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/workflows.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "cli",
+      "variant": "nova-cli-flag",
+      "source": "skills/nova/core/cli.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/use/README.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/prism-studio.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/use/operate.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/use/operate.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "contract",
+      "variant": "sdk-export",
+      "source": "skills/common/plugin-runtime/sdk/src/index.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/README.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/reference/sdk.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/extend/developer-handbook.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/extend/developer-handbook.md",
+            "docs/site/extend/README.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "contract",
+      "variant": "public-contract-member",
+      "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/telemetry.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/extend/developer-handbook.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/extend/developer-handbook.md",
+            "docs/site/reference/sdk-exports.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "contract",
+      "variant": "progress-contract",
+      "source": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/project-pipeline-publication.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/workflows.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "event",
+      "variant": "runtime-event",
+      "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/telemetry.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/telemetry.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "endpoint",
+      "variant": "runtime-http-route",
+      "source": "skills/prism/server/control-server.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/platform/prism.md",
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/prism-data.md",
+        "docs/site/understand/prism-runtime.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/use/capacity.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/worker-trust.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/communication.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/communication.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "store",
+      "variant": "runtime-store",
+      "source": "skills/nova/core/test-gates/production.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/understand/data-and-state.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/data-and-state.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/data-and-state.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "secret",
+      "variant": "runtime-secret-reference",
+      "source": "charts/kubeclaw/templates/deployment.yaml",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/lint.md",
+        "docs/site/extend/testing.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/status/roadmap.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/worker-trust.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/security-and-trust.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/security-and-trust.md",
+            "docs/site/reference/secrets.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "runtime-service",
+      "variant": "kubernetes-service",
+      "source": "charts/prism/templates/services.yaml",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/service-routing.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/deployment-and-trust.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/use/prism-studio.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/platform-and-operations.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/platform-and-operations.md",
+            "docs/site/understand/communication.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "ops-tool",
+      "variant": "ops-mcp-tool",
+      "source": "tools/ops-mcp/src/server.mjs",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/understand/ops-mcp.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/understand/ops-mcp.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/understand/ops-mcp.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "capability",
+      "variant": "plugin-capability",
+      "source": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/understand/plugin-runtime.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/capabilities.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/reference/capabilities.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "capability",
+      "variant": "role-grant",
+      "source": "charts/kubeclaw/files/config/swarm.config.json",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/plugin-configuration.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/capabilities.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "plugin-manifest",
+      "source": "skills/nova/plugins/lint/plugin.json",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/lint.md",
+        "docs/site/extend/nova.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/use/plugins.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/extend/plugin-catalogue/kubeclaw.lint.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "extension-class",
+      "source": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/reference/plugin-configuration.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/extend/README.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/extend/README.md",
+            "docs/site/decisions/core-and-plugins.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "provider-registration",
+      "source": "tests/verification/e2e/provider-catalog.mjs",
+      "pagesLiterallyCitingSource": [],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/buster-provider-configuration.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "fixture-registration",
+      "source": "tests/verification/e2e/fixture-coverage.mjs",
+      "pagesLiterallyCitingSource": [],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/buster-suites.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "plugin-registration",
+      "variant": "report-format-registration",
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/stores-and-retention.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/buster-suites.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/reference/buster-suites.md",
+            "docs/site/reference/buster-error-codes.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "error-code",
+      "variant": "runtime-error-family",
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/stores-and-retention.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/buster-error-codes.md",
+          "literalSourcePresent": true,
+          "shortestLiteralSourceLinkChainUpTo3Edges": [
+            "docs/site/reference/buster-error-codes.md"
+          ],
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    },
+    {
+      "family": "workflow",
+      "variant": "pipeline-workflow",
+      "source": "skills/nova/project/compiler.ts",
+      "pagesLiterallyCitingSource": [
+        "docs/site/extend/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/request-state-recovery.md"
+      ],
+      "expectedPageRelations": [
+        {
+          "expectedPage": "docs/site/reference/workflows.md",
+          "literalSourcePresent": false,
+          "shortestLiteralSourceLinkChainUpTo3Edges": null,
+          "limit": "Literal path or link reachability is attribution only, not complete semantic removal qualification."
+        }
+      ]
+    }
+  ],
+  "unresolvedVariants": [
+    "recursive-pipeline-field",
+    "pipeline-stage-type",
+    "progress-contract",
+    "role-grant",
+    "provider-registration",
+    "fixture-registration",
+    "pipeline-workflow"
+  ],
+  "formalAcceptance": false
+}

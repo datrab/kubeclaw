@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/prism.html"></head><body><main>
+<h1 id="prism-from-design-request-to-approved-baseline">Prism: From Design Request to Approved Baseline</h1>
+<p>Status: implemented architecture with stated environment limits
+Audience: platform engineer, Prism developer, operator, technical reviewer
+Owner: Prism maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism">skills/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/prism/v1">contracts/prism/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/prism-design">skills/nova/plugins/prism-design</a>
+Evidence revision: <code>4e52c72788ac002788bc036a497d76c13e6a35fd</code>
+Applies to: current Prism contracts, services, storage, Studio, and pipeline handoff
+Last verified: source and test inspection on 2026-09-19</p>
+<h2 id="purpose">Purpose</h2>
+<p>Prism turns design intent into an approved, immutable baseline that other
+parts of KubeClaw can use. It is not one service and it is not only a visual
+editor. It is a bounded product system with separate authorities for user
+sessions, design changes, background work, source ingestion, durable state,
+human approval, and pipeline handoff.</p>
+<p>This page gives the complete map. Follow its links when you need field-level,
+route-level, storage-level, or change-level detail.</p>
+<h2 id="read-the-prism-documentation">Read the Prism Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Page</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trace services, requests, jobs, sessions, authentication, cancellation, and restart</td>
+<td><a href="prism-runtime.html">Prism runtime architecture</a></td>
+<td>You can identify the owner and trust boundary for each call.</td>
+</tr>
+<tr>
+<td>Trace projects, rounds, documents, revisions, corpus records, preferences, approvals, artifacts, and migrations</td>
+<td><a href="prism-data.html">Prism data architecture</a></td>
+<td>You can identify the durable authority and consistency rule for each record.</td>
+</tr>
+<tr>
+<td>Configure, start, use, diagnose, back up, restore, and stop Prism</td>
+<td><a href="../use/prism-studio.html">Operate Prism</a></td>
+<td>You can complete and recover the supported operator and Studio journey.</td>
+</tr>
+<tr>
+<td>Change a contract, operation, provider, route, renderer, Studio, retrieval, storage, or handoff</td>
+<td><a href="../extend/platform/prism.html">Extend Prism safely</a></td>
+<td>You can plan the change and select the required checks.</td>
+</tr>
+<tr>
+<td>Understand accepted tradeoffs and rejected alternatives</td>
+<td><a href="../decisions/prism.html">Prism decisions</a></td>
+<td>You can see why the major boundaries exist.</td>
+</tr>
+</tbody>
+</table>
+<p>These pages are the canonical Prism documentation. Historical plans and
+implementation records are not reader prerequisites.</p>
+<h2 id="the-product-boundary">The Product Boundary</h2>
+<p>Prism owns the path from a design request to an approved baseline bundle.
+It owns the meaning of a Design Document and the rules for changing it.
+It also owns the evidence that connects an approval to one exact revision.</p>
+<p>Prism does not own generic pipeline scheduling. Nova owns that work.
+Prism does not own generic attempt isolation. Worker Core owns that work.
+Prism does not own the test decision. Buster consumes an approved baseline and
+produces test evidence. Forge receives a read-only implementation assignment.</p>
+<p><strong>Decision:</strong> Keep design authority in Prism and reuse neutral execution and
+pipeline mechanisms at the outer boundaries.</p>
+<p><strong>Reason:</strong> A design revision, an approval, and a baseline have product meaning.
+Generic workers and schedulers must not invent or weaken that meaning.</p>
+<p><strong>Rejected alternative:</strong> Put design state directly in Nova or in Worker Core.</p>
+<p><strong>Cost:</strong> A complete request crosses more than one process and contract.
+Operators must be able to trace those identities across the boundary.</p>
+<blockquote>
+<p><strong>Source evidence — product and runtime boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/runtime.ts#L1-L3">The Prism runtime exports the specialist Engine, Worker binding, and Domain as separate owners</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/packaging/runtime/roles/prism.json#L1-L28">The runtime role assembles Prism with neutral Worker Core and explicit package and capability inputs</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/pipeline-adapter/index.ts#L1-L57">The pipeline adapter creates digest-bound Buster targets and read-only Forge assignments</a>.</p>
+</blockquote>
+<h2 id="one-request-through-the-system">One Request Through the System</h2>
+<pre><code class="language-mermaid">flowchart LR
+    User[User or agent] --&gt; Control[Prism Control]
+    Studio[Prism Studio] --&gt; Control
+    Control --&gt; DB[(PostgreSQL and pgvector)]
+    Control --&gt; Agent[Agent Bridge]
+    Agent --&gt; OpenClaw[OpenClaw Agent]
+    Control --&gt; Worker[Prism Worker]
+    Worker --&gt; Core[Worker Core]
+    Core --&gt; Engine[Prism Engine]
+    Engine --&gt; Render[Renderer and evaluation]
+    Control --&gt; Ingest[Ingestion service]
+    Ingest --&gt; Source[External source]
+    Worker --&gt;|artifact HTTP| Control
+    Control --&gt; Artifacts[Content-addressed artifacts]
+    Control --&gt; Baseline[Approved baseline bundle]
+    Baseline --&gt; Adapter[Pipeline adapter]
+    Adapter --&gt; Buster[Buster]
+    Adapter --&gt; Forge[Forge]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User or agent</td>
+<td>Directed connection</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism Studio</td>
+<td>Directed connection</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>PostgreSQL and pgvector</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Agent Bridge</td>
+</tr>
+<tr>
+<td>Agent Bridge</td>
+<td>Directed connection</td>
+<td>OpenClaw Agent</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Prism Worker</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Directed connection</td>
+<td>Worker Core</td>
+</tr>
+<tr>
+<td>Worker Core</td>
+<td>Directed connection</td>
+<td>Prism Engine</td>
+</tr>
+<tr>
+<td>Prism Engine</td>
+<td>Directed connection</td>
+<td>Renderer and evaluation</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Ingestion service</td>
+</tr>
+<tr>
+<td>Ingestion service</td>
+<td>Directed connection</td>
+<td>External source</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Directed connection — artifact HTTP</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Content-addressed artifacts</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Approved baseline bundle</td>
+</tr>
+<tr>
+<td>Approved baseline bundle</td>
+<td>Directed connection</td>
+<td>Pipeline adapter</td>
+</tr>
+<tr>
+<td>Pipeline adapter</td>
+<td>Directed connection</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>Pipeline adapter</td>
+<td>Directed connection</td>
+<td>Forge</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: A user works through Studio or calls Control through an allowed
+agent path. Control validates identity and intent, and stores the durable
+request. Model-driven generation uses a durable Agent job, the Agent Bridge,
+and OpenClaw. Deterministic render, evaluation, embedding, and low-level
+publication work goes through the Prism Worker and neutral Worker Core before
+the Prism Engine interprets it. The production native Worker rejects
+<code>generate</code>. Source ingestion enters through a separate service and rights
+gate. PostgreSQL holds relational authority. The Worker reads and writes
+immutable artifact bytes through Control. Human approval binds one revision
+and its evidence into a baseline. The pipeline adapter then creates a
+digest-bound Buster plan or read-only Forge assignments. Nova calls Control
+directly; the adapter does not create a Nova input.</p>
+<h2 id="authority-map">Authority Map</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Owns</th>
+<th>Must not own</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>Public product API, sessions, durable product transitions, dispatch intent, approval and publication coordination</td>
+<td>Browser rendering, generic process isolation, or unrecorded remote effects</td>
+</tr>
+<tr>
+<td>Agent Bridge</td>
+<td>Bounded agent request and job interface</td>
+<td>Operator session authority or direct database mutation</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Prism attempt endpoint and specialist binding</td>
+<td>Human approval or pipeline scheduling</td>
+</tr>
+<tr>
+<td>Worker Core</td>
+<td>Admission, deadlines, cancellation, native execution, accounting, journal, and sealed attempt result</td>
+<td>Design semantics</td>
+</tr>
+<tr>
+<td>Prism Engine</td>
+<td><code>generate</code>, <code>render</code>, <code>evaluate</code>, <code>ingest</code>, and <code>publish</code> semantics</td>
+<td>Public session policy or human approval</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>Bounded external acquisition, quarantine, normalization, rights evidence, and Control handoff</td>
+<td>Direct eligibility without rights admission</td>
+</tr>
+<tr>
+<td>Studio</td>
+<td>User interaction, typed edit intent, preview, comparison, and approval request</td>
+<td>Canonical state, authority, or silent conflict resolution</td>
+</tr>
+<tr>
+<td>PostgreSQL and pgvector</td>
+<td>Relational records, current pointers, transactions, locks, and vector retrieval data</td>
+<td>Large immutable artifact bytes</td>
+</tr>
+<tr>
+<td>Artifact store</td>
+<td>Digest-verified immutable bytes</td>
+<td>Mutable project state or approval policy</td>
+</tr>
+<tr>
+<td>Pipeline adapter</td>
+<td>Translation from one approved baseline to bounded downstream inputs</td>
+<td>Creation of approval or mutation of the baseline</td>
+</tr>
+</tbody>
+</table>
+<p>The separation is deliberate. It makes a partial failure visible. For example,
+Control can retain a durable job while a worker is unavailable. A restart can
+then reconcile the recorded intent instead of guessing whether the user asked
+for the operation.</p>
+<h2 id="the-durable-spine">The Durable Spine</h2>
+<p>The project is the long-lived product container. A round groups one design
+cycle. A Design Document is the typed design value. Each accepted operation
+creates a revision. The current-revision pointer can move only with a
+compare-and-swap rule. This rule rejects a stale edit instead of overwriting a
+newer revision.</p>
+<p>Directions and preference events provide design input and learning evidence.
+Corpus sources and revisions provide rights-qualified retrieval material.
+Evaluation findings describe quality and risk. They do not grant approval.
+Approval binds a person and a decision to one exact revision. Publication
+creates an immutable baseline bundle and artifact digest for downstream use.</p>
+<p><strong>Decision:</strong> Use immutable revisions and evidence with small mutable pointers.</p>
+<p><strong>Reason:</strong> A reviewer must be able to reconstruct what was seen and approved.
+A mutable document cannot supply this proof after a later edit.</p>
+<p><strong>Rejected alternative:</strong> Update one document row in place and store only its
+latest content.</p>
+<p><strong>Cost:</strong> Storage grows with revisions. Retention, backup grouping, and
+artifact cleanup need explicit rules.</p>
+<blockquote>
+<p><strong>Source evidence — durable spine</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L5-L113">The domain applies typed operations to a clone, checks the base revision, and validates the complete result</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L79-L179">The storage repository uses transactions and row locks for project and direction transitions</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L292">Revision writes advance the current pointer with a compare-and-swap condition</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67">The artifact store verifies content identity and publishes with no-replace behavior</a>.</p>
+</blockquote>
+<h2 id="five-engine-operations">Five Engine Operations</h2>
+<p>The Prism Engine accepts five operations in contract major 1:</p>
+<ul>
+<li><code>generate</code> proposes typed document changes when a caller supplies a design
+provider; the production native Worker does not admit this operation;</li>
+<li><code>render</code> creates bounded preview or export output;</li>
+<li><code>evaluate</code> creates quality findings;</li>
+<li><code>ingest</code> validates text and requests an embedding from the provider; it does
+not acquire a source or grant rights; and</li>
+<li><code>publish</code> requires an <code>approved: true</code> input and emits a small manifest. It
+does not perform the governed approval checks or assemble the complete
+baseline archive.</li>
+</ul>
+<p>The Engine validates the request and result identity for each operation.
+The provider does not receive authority to replace the document directly.
+The Engine applies provider operations and validates the resulting document.</p>
+<p>This design contains an unreliable or external provider. It can propose work,
+but it cannot bypass document semantics, approval, or result validation.
+The Ingestion, corpus, Control, approval, and baseline paths provide the
+product-level admission and publication boundaries around these lower-level
+Engine operations.</p>
+<blockquote>
+<p><strong>Source evidence — engine boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/worker-binding.ts#L1-L49">The Worker binding admits exactly five operations and validates operation-specific request and result schemas</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L69-L176">The Engine owns fingerprinting, idempotent execution, document validation, and application of provider operations</a>.</p>
+</blockquote>
+<h2 id="retrieval-rights-and-preference-evidence">Retrieval, Rights, and Preference Evidence</h2>
+<p>Retrieval does not search every stored item and rank it later. Eligibility
+comes first. Current state, rights, validity, model identity, required traits,
+and avoid rules remove records that must not participate. Text and vector
+candidates are then combined with deterministic ranking and source-family
+limits.</p>
+<p>Preference data is append-only evidence. A projection can group and decay that
+evidence, but it retains its origins and respects retractions. This prevents one
+mutable score from hiding why Prism learned a preference.</p>
+<p><strong>Decision:</strong> Separate admission, eligibility, ranking, and preference
+projection.</p>
+<p><strong>Reason:</strong> A high similarity score must never override a rights restriction.
+An explanation must also remain possible after preferences change over time.</p>
+<p><strong>Cost:</strong> Retrieval needs more filters and stored evidence than a simple vector
+nearest-neighbor query.</p>
+<blockquote>
+<p><strong>Source evidence — retrieval and learning</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L30-L148">Corpus ingestion commits rights, revision, current pointer, and embedding in one transaction</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L150-L238">Corpus search filters eligible current records before deterministic text and vector ranking</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L1-L89">Preference projection deduplicates events, applies retractions, retains origins, and calculates time-dependent scores</a>.</p>
+</blockquote>
+<h2 id="failure-is-part-of-the-design">Failure Is Part of the Design</h2>
+<p>Prism has distinct answers for different failures:</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Safe response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stale Studio edit</td>
+<td>Keep the local intent, load the current revision, and reconcile explicitly.</td>
+</tr>
+<tr>
+<td>Duplicate request</td>
+<td>Return or reconcile the result only when the stable identity and input fingerprint agree.</td>
+</tr>
+<tr>
+<td>Lost worker response</td>
+<td>Inspect durable job and attempt state before dispatching again.</td>
+</tr>
+<tr>
+<td>Cancellation</td>
+<td>Treat cancellation as boundary-specific. Worker Core propagates its accepted attempt signal into Engine and cleanup. Studio aborts its Control HTTP request, but Control does not currently bind that disconnect to a request-wide operation signal.</td>
+</tr>
+<tr>
+<td>Process restart</td>
+<td>Reconcile durable intent, ownership, journal, and result state. Do not infer success from process exit.</td>
+</tr>
+<tr>
+<td>Database uncertainty</td>
+<td>Stop the transition and inspect the transaction outcome through stable record identity.</td>
+</tr>
+<tr>
+<td>Missing artifact</td>
+<td>Treat the baseline as incomplete. Do not replace content under the expected digest.</td>
+</tr>
+<tr>
+<td>Ineligible source</td>
+<td>Keep it outside retrieval even when its content or embedding exists.</td>
+</tr>
+<tr>
+<td>Evaluation finding</td>
+<td>Report and remediate it. Do not confuse a passing evaluation with human approval.</td>
+</tr>
+</tbody>
+</table>
+<p>The runtime, data, and operator pages give the exact records and procedures for
+these cases.</p>
+<h2 id="configuration-and-environment-proof">Configuration and Environment Proof</h2>
+<p>Prism needs more than source code. The complete path depends on PostgreSQL with
+pgvector, artifact storage, service identities and secrets, Worker Core,
+browser support for render and Studio checks, and the selected provider or
+external source path.</p>
+<p>A local contract test proves the contract at the pinned source revision.
+It does not prove database migration, browser isolation, cgroup behavior,
+cluster identity, backup recovery, or an external provider. Each guide names
+the environment that its stronger checks require.</p>
+<p>The operator page is the authority for every runtime setting and its
+precedence. The data page is the authority for backup groups and retention.
+The extension page maps each change to focused, native, browser, and live
+checks.</p>
+<h2 id="current-limits">Current Limits</h2>
+<ul>
+<li>The repository can prove source contracts without proving a live cluster.</li>
+<li>Native PostgreSQL checks need a compatible database with pgvector.</li>
+<li>Native worker checks need the documented launcher, cgroup, browser, and host
+controls.</li>
+<li>Browser acceptance needs the built Studio and Playwright environment.</li>
+<li>Real provider and source checks need separately authorized credentials and
+network access.</li>
+<li>A runtime-role manifest proves packaging intent. It does not prove that the
+role is active or reachable in a selected cluster.</li>
+</ul>
+<p>Keep these limits visible in acceptance records. Do not turn an unavailable
+environment check into a pass.</p>
+<h2 id="start-here-for-a-change">Start Here for a Change</h2>
+<ol>
+<li>Use the authority map to select the smallest owner.</li>
+<li>Trace the request in <a href="prism-runtime.html">Prism runtime architecture</a>.</li>
+<li>Trace every durable value in <a href="prism-data.html">Prism data architecture</a>.</li>
+<li>Confirm the operator effect in <a href="../use/prism-studio.html">Operate Prism</a>.</li>
+<li>Follow the procedure and verification matrix in
+<a href="../extend/platform/prism.html">Extend Prism safely</a>.</li>
+<li>Record which local, native, browser, and live checks actually ran.</li>
+</ol>
+<p>This sequence keeps a feature understandable from intent to recovery. It also
+keeps the documentation useful when the implementation grows.</p>
+</main></body></html>

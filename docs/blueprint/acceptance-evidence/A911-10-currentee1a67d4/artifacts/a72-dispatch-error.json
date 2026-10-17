@@ -1,0 +1,5 @@
+{
+  "failure": "Path evidence preparation was accidentally run in nested review fixture, not evidence root. It failed before writing; shell then launched unchanged reviewer.",
+  "recovery": "Absolute path used for actual resolution; evidence persisted. Preserve already running reviewer, do not cancel or duplicate. Prior first review preserved before output replacement.",
+  "pathEvidence": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/controller-path-resolution.json"
+}

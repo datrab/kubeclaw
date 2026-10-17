@@ -1,0 +1,20 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Prove source-field rename from a revision that still contains the old field",
+      "body": "The supplied V3 controller creates the rename commit on top of the removal commit: it first deletes maximumSteps, commits that removal, then adds maximumStepsAfterRename. Consequently the purported rename transition is an addition relative to its immediate predecessor. Its stale-output rejection can result solely from changed evidence revision. Supply a direct baseline-to-rename case with original field present in committed schema and generated reference; reject stale old reference; regenerate and verify old row absent, successor/current source pin/ownership correct.",
+      "priority": "P2",
+      "category": "test_gap",
+      "code_location": {
+        "file_path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json",
+        "line": 1
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "SOURCE A911-10 FAIL at reviewed revision ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120. Claimed source rename execution transitions from already removed field to newly added successor. Finite next proof: direct baseline-to-rename case. Other evidence supports bounded page-route removal/rename, declarative redirect disposition, owned successors, local link/anchor migration, provider-field removal and committed-input provenance. Neither deployed HTTP serving nor all84/native/fullGo/P17 established as dependency;54pre-existing metadata mismatches do not independently establish affected-transition defect.",
+  "provenance": "Transcribed engine console finding/decision from autoreview session nimble-sage, GPT6.1Sol thread01a149d3-103e-7cb3-b2e9-11eee03a0b34. Finding consumed as actual review result. Helper did NOT emit validated JSON because external code_location path was outside review fixture. This transcription is not a successful helper validation or formal PASS.",
+  "helperValidationError": "finding0 uses invalid file path external provenance-correction-v3/actual-result.json",
+  "decision": "FAIL",
+  "reviewedRevision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120"
+}

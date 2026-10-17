@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/README.html"></head><body><main>
+<h1 id="operate-kubeclaw">Operate KubeClaw</h1>
+<p>Status: source-backed operator procedures; live results exist only where an evidence record is named
+Audience: platform operator, product operator, incident responder, release maintainer
+Owner: platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/deploy.sh">scripts/deploy.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/cli.ts">skills/nova/core/cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>
+Applies to: the source revision, release receipts, cluster context, and private configuration recorded for the operation
+Last verified: 2026-09-21; no live environment result is available</p>
+<h2 id="purpose">Purpose</h2>
+<p>This directory owns the supported operator lifecycle. The generated publication
+metadata assigns one canonical page and anchor to every task. A page that mentions another task
+links to that authority instead of defining a second procedure.</p>
+<p>Source checks prove repository behavior. They are not evidence that a command
+succeeded in a cluster. A live claim needs retained command output, the target
+identity, the source revision, and its execution time.</p>
+<h2 id="canonical-task-map">Canonical Task Map</h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Canonical authority</th>
+<th>Supported result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install and preflight</td>
+<td><a href="install.html#canonical-install-and-preflight-procedure">Plan and Install</a></td>
+<td>A non-mutating stop or a source-bound installation record</td>
+</tr>
+<tr>
+<td>Start, readiness, and observation</td>
+<td><a href="operate.html#canonical-start-readiness-and-observation-procedure">Configure and Operate</a></td>
+<td>Process, service, dependency, and functional observations</td>
+</tr>
+<tr>
+<td>Wait, signal, resume, interruption, and cancellation boundary</td>
+<td><a href="operate.html#canonical-run-control-procedure">Configure and Operate</a></td>
+<td>A durable transition or an exact unsupported control</td>
+</tr>
+<tr>
+<td>Symptom diagnosis</td>
+<td><a href="diagnose.html#canonical-symptom-diagnosis-procedure">Observe and Diagnose</a></td>
+<td>A distinguished cause class and safe next action</td>
+</tr>
+<tr>
+<td>Backup and restore</td>
+<td><a href="recovery.html#canonical-backup-and-restore-procedure">Back Up and Recover</a></td>
+<td>A verified component restore or an explicit unsupported scope</td>
+</tr>
+<tr>
+<td>Upgrade and rollback</td>
+<td><a href="maintenance.html#canonical-upgrade-and-rollback-procedure">Maintain and Retire</a></td>
+<td>A compatible change or a stop before mutation</td>
+</tr>
+<tr>
+<td>Credential and trust rotation</td>
+<td><a href="maintenance.html#canonical-rotation-procedure">Maintain and Retire</a></td>
+<td>A completed rotation or a retained old trust set</td>
+</tr>
+<tr>
+<td>Capacity and retention</td>
+<td><a href="capacity.html#canonical-capacity-and-retention-procedure">Capacity and Retention</a></td>
+<td>Measured pressure and a supported retention decision</td>
+</tr>
+<tr>
+<td>Plugin lifecycle</td>
+<td><a href="plugins.html#canonical-plugin-lifecycle-procedure">Operate Plugins</a></td>
+<td>Validated activation, drain, replacement, or removal</td>
+</tr>
+<tr>
+<td>Decommission</td>
+<td><a href="maintenance.html#canonical-decommission-procedure">Maintain and Retire</a></td>
+<td>Removed access and workloads with retained evidence</td>
+</tr>
+<tr>
+<td>Prism and Studio</td>
+<td><a href="prism-studio.html#canonical-prism-and-studio-procedure">Operate Prism</a></td>
+<td>A traced design decision or exact blocked step</td>
+</tr>
+<tr>
+<td>Demo delivery</td>
+<td><a href="demo-delivery.html#canonical-demo-delivery-procedure">Deliver a Demo</a></td>
+<td>A local contract result or an exact blocked live-delivery prerequisite; human acceptance remains separate</td>
+</tr>
+<tr>
+<td>Worker trust</td>
+<td><a href="worker-trust.html#canonical-worker-trust-procedure">Operate Worker Trust</a></td>
+<td>Positive and negative workload-identity observations</td>
+</tr>
+</tbody>
+</table>
+<p>Use <a href="workflows/README.html">Pipeline Workflow Guides</a> to select concrete approval,
+test, and fixture inputs. <a href="workflows/wait-resume.html">Rehearse Human Approval and Resume</a>
+supplies the input set and observations for the run-control procedure above.</p>
+<p>The <a href="workflows/buster-suite.html">Buster suite workflow</a> is the canonical Buster
+suite procedure. It is not the authority for a human demo decision or the full
+Prism journey. Use <a href="workflows/kubernetes-fixture.html">Prepare and release a Kubernetes fixture</a>
+for the fixture entry point, storage policy, observations and cleanup boundaries.</p>
+<h2 id="shared-operating-contract">Shared Operating Contract</h2>
+<p>Every execution record must contain:</p>
+<ul>
+<li>canonical task ID and page anchor;</li>
+<li>supported start state and version, execution location, and implementation,
+configuration, and data authority;</li>
+<li>source commit, selected image receipts, configuration digests, target context,
+namespace, and component versions;</li>
+<li>execution location and operator identity;</li>
+<li>preconditions and the observation that satisfied each one;</li>
+<li>commands and non-secret arguments in order, plus expected and actual
+observations, exit status, and timestamps;</li>
+<li>stop conditions, failure distinction, recovery or rollback, cleanup, and
+final proof;</li>
+<li>secret names and owners, never secret values.</li>
+</ul>
+<p>Do not repeat a command when its external effect is uncertain. Inspect the
+durable request and receipt, then reconcile the external system. Do not use an
+application Pod as the only recovery route.</p>
+<h2 id="shared-placeholders">Shared Placeholders</h2>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Meaning</th>
+<th>Required property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;repository-root&gt;</code></td>
+<td>KubeClaw checkout used for the operation</td>
+<td>Its full commit is recorded</td>
+</tr>
+<tr>
+<td><code>&lt;kubeconfig-path&gt;</code></td>
+<td>Dedicated kubeconfig used for one operation</td>
+<td>Absolute regular-file path, supplied by the cluster authority and not shared with a default user config</td>
+</tr>
+<tr>
+<td><code>&lt;context&gt;</code></td>
+<td>Kubernetes context inside the dedicated kubeconfig</td>
+<td>Exact value supplied independently by the cluster authority</td>
+</tr>
+<tr>
+<td><code>&lt;cluster-server&gt;</code></td>
+<td>Kubernetes API server URL</td>
+<td>Exact independently recorded URL, including scheme and port where present</td>
+</tr>
+<tr>
+<td><code>&lt;kube-system-uid&gt;</code></td>
+<td>UID of the intended cluster's existing <code>kube-system</code> namespace</td>
+<td>Exact independently recorded UID used with server and context as cluster identity</td>
+</tr>
+<tr>
+<td><code>&lt;namespace&gt;</code></td>
+<td>Application namespace</td>
+<td>It is dedicated to the resources selected for broad teardown</td>
+</tr>
+<tr>
+<td><code>&lt;prism-namespace&gt;</code></td>
+<td>Prism namespace</td>
+<td>Exact namespace selected for the recorded Prism operation</td>
+</tr>
+<tr>
+<td><code>&lt;release-commit&gt;</code></td>
+<td>Source identity</td>
+<td>It is an immutable full Git commit</td>
+</tr>
+<tr>
+<td><code>&lt;full-git-commit&gt;</code></td>
+<td>Any task-specific Git identity</td>
+<td>Full immutable commit, never a branch or moving tag</td>
+</tr>
+<tr>
+<td><code>&lt;run-id&gt;</code></td>
+<td>Durable Nova run identity</td>
+<td>It comes from command output or durable evidence</td>
+</tr>
+<tr>
+<td><code>&lt;existing-nova-run-id&gt;</code></td>
+<td>Existing run selected for inspection or recovery</td>
+<td>Copied from durable Nova output, never guessed</td>
+</tr>
+<tr>
+<td><code>&lt;new-run-id&gt;</code></td>
+<td>Newly emitted run identity</td>
+<td>Captured from the immediately preceding command</td>
+</tr>
+<tr>
+<td><code>&lt;new-registered-fault-run-id&gt;</code></td>
+<td>New run reserved for one controlled fault</td>
+<td>Unique and recorded before fault injection</td>
+</tr>
+<tr>
+<td><code>&lt;different-new-registered-success-run-id&gt;</code></td>
+<td>Separate healthy comparison run</td>
+<td>Different from every fault or prior run identity</td>
+</tr>
+<tr>
+<td><code>&lt;backup-group&gt;</code></td>
+<td>Completed backup unit</td>
+<td>It includes metadata, members, and checksums</td>
+</tr>
+<tr>
+<td><code>&lt;evidence-dir&gt;</code></td>
+<td>New operator-controlled evidence directory</td>
+<td>It is outside disposable workload and project storage</td>
+</tr>
+<tr>
+<td><code>&lt;new-evidence-dir&gt;</code></td>
+<td>Replacement evidence directory after a stopped attempt</td>
+<td>New and empty; never overwrites the first attempt</td>
+</tr>
+<tr>
+<td><code>&lt;unique-id&gt;</code></td>
+<td>Suffix for a temporary Job or probe</td>
+<td>DNS-safe, collision-free for the target, and recorded before creation</td>
+</tr>
+<tr>
+<td><code>&lt;platform.json&gt;</code>, <code>&lt;active-platform.json&gt;</code>, <code>&lt;candidate-platform.json&gt;</code></td>
+<td>Exact platform configuration file for the named task phase</td>
+<td>Absolute or repository-recorded path with retained digest</td>
+</tr>
+<tr>
+<td><code>&lt;project.json&gt;</code>, <code>&lt;controlled-project.json&gt;</code></td>
+<td>Exact Nova project descriptor</td>
+<td>Validated file with repository root and immutable base revision</td>
+</tr>
+<tr>
+<td><code>&lt;pipeline.json&gt;</code>, <code>&lt;new-pipeline.json&gt;</code>, <code>&lt;compiled-pipeline.json&gt;</code></td>
+<td>Exact pipeline input or compiler output</td>
+<td>New file where required, retained digest, and run binding</td>
+</tr>
+<tr>
+<td><code>&lt;resume-signal.json&gt;</code></td>
+<td>Signal for one active wait</td>
+<td>Validated against that wait; issuer identity is still self-asserted by the current product</td>
+</tr>
+<tr>
+<td><code>&lt;storage-root&gt;</code></td>
+<td>Durable runtime storage root</td>
+<td>Absolute owned path with capacity and backup authority</td>
+</tr>
+<tr>
+<td><code>&lt;absolute-path&gt;</code>, <code>&lt;absolute-secure-path&gt;</code></td>
+<td>Task-specific local file or directory</td>
+<td>Absolute path; secure variants are access-restricted and outside evidence output</td>
+</tr>
+<tr>
+<td><code>&lt;absolute-path-outside-project&gt;</code></td>
+<td>Task output outside project storage</td>
+<td>Absolute new path whose owner and cleanup are recorded</td>
+</tr>
+<tr>
+<td><code>&lt;absolute-path-to-disposable-project&gt;</code></td>
+<td>Project fixture that may be changed or removed</td>
+<td>Absolute path proven disposable before mutation</td>
+</tr>
+<tr>
+<td><code>&lt;delegated-cgroup-v2-root&gt;</code></td>
+<td>Delegated cgroup subtree for a native worker</td>
+<td>Absolute owned cgroup-v2 path supplied by the host authority</td>
+</tr>
+<tr>
+<td><code>&lt;repository&gt;</code></td>
+<td>Git or OCI repository named by the task</td>
+<td>Exact owner/name or registry path, not an inferred default</td>
+</tr>
+<tr>
+<td><code>&lt;registry&gt;</code></td>
+<td>Registry endpoint</td>
+<td>Exact scheme/host/port and trust authority</td>
+</tr>
+<tr>
+<td><code>&lt;advertised-immutable-ref&gt;</code></td>
+<td>Advertised source or image identity</td>
+<td>Digest or immutable revision verified against the producer receipt</td>
+</tr>
+<tr>
+<td><code>&lt;application&gt;</code>, <code>&lt;pod&gt;</code>, <code>&lt;container&gt;</code></td>
+<td>Exact live resource selected for inspection</td>
+<td>Copied from current discovery output in the recorded namespace</td>
+</tr>
+</tbody>
+</table>
+<p>Never run a command with an unreplaced placeholder. Never write credentials to
+an evidence directory. <code>&lt;redacted:authority-identity&gt;</code> is a publication
+redaction marker, not a value to pass to a command. HTML <code>&lt;br&gt;</code> in generated
+tables is formatting, not a placeholder.</p>
+<h2 id="version-and-tool-boundary">Version and Tool Boundary</h2>
+<p>Use Node.js 24 and the npm version paired with it. Complete the canonical
+<a href="quickstart.html#locked-dependency-installation">Locked Dependency Installation</a>;
+do not change the lockfile during an operator task. <code>versions.json</code> currently records kubectl
+<code>1.35.6</code> and Helm <code>3.18.4</code>, while the selected Ops image records its own tools.
+Those are build inputs, not a claimed compatibility range.</p>
+<p>The repository does not establish a supported Kubernetes, K3s, CNI, storage,
+kubectl/server, or Helm/server matrix. Record the actual versions and stop until
+the platform owner accepts the combination. Runtime deployment also requires
+<code>releases/runtime-images.json</code>; if it is absent, installation and upgrade stop
+before mutation. Never replace the missing selection with a mutable tag or a
+hand-written digest.</p>
+<h2 id="current-product-boundaries">Current Product Boundaries</h2>
+<ul>
+<li>Installation starts with an existing Kubernetes cluster. There is no complete
+host, K3s, CNI, or StorageClass installation procedure.</li>
+<li>The optional Ops Pod is cluster-dependent and is not an independent recovery
+path.</li>
+<li>Resume-signal issuer fields are unsigned and self-asserted by the caller. The
+runtime compares them with the active wait but does not authenticate the
+human or external identity provider.</li>
+<li>The pipeline CLI has no supported operator cancellation command.</li>
+<li>The repository does not provide a complete full-platform restore.</li>
+<li>No runtime upgrade pair is supported unless a component authority explicitly
+names and proves that exact pair.</li>
+</ul>
+<p>Read <a href="../status/current.html">Current Status</a> and
+<a href="../status/open-issues.html">Open Implementation Work</a> before a production
+change.</p>
+</main></body></html>

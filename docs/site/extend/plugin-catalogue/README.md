@@ -4,14 +4,24 @@ Status: implemented
 Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: scripts/docs-publication.mjs
-Applies to: pipeline-plugin-v2
-Last verified: generated during publication
+Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins
+Last verified: generated source listing only; package checks and their limits are recorded on each package page
 
 ## Purpose
 
-Use this catalogue to find every installed plugin package and its declared extension surfaces.
+Use this catalogue to find every installable extension package and its declared surfaces.
 
-The catalogue contains 50 packages.
+The catalogue contains 51 packages.
+
+Each package page combines two separate authorities. Maintainers write the practical
+guidance separately from generated facts. The publication generator
+reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated
+refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.
+
+The plugin-foundation owner maintains purpose, use, exclusion, and limit text in
+`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains
+the manifest and schema facts. Do not edit generated catalogue pages as a second
+authority. Change the owning input, then regenerate and run the declared checks.
 
 ## Stage Packages
 
@@ -83,3 +93,7 @@ The catalogue contains 50 packages.
 
 - [kubeclaw-agent-observer](kubeclaw-agent-observer.md)
 - [kubeclaw-prism](kubeclaw-prism.md)
+
+## Codex plugin Packages
+
+- [kubeclaw-ops](kubeclaw-ops.md)

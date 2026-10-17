@@ -1,0 +1,19 @@
+{
+  "id": "example.greeting",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "say",
+      "type": "example.greeting.say",
+      "module": "src/stage.js",
+      "export": "execute",
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

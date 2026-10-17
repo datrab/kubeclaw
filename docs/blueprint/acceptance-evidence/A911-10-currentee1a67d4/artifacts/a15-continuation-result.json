@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-17T12:09:36.724853+00:00",
+  "state": "A91110_ROUTE_LOSS_GAP_FIXED_REVIEWED_PUSHED_SOURCE_MIGRATION_STILL_OPEN",
+  "acceptanceId": "A911-10",
+  "result": "43 historische Mapstände/166 bekannte Routen ohne reale Verluste geprüft. Stiller Routeverlust nach Regenerierung jetzt an unveränderlichem bekannten Bestand gesperrt; deklarierter direkter Redirect braucht aktiven Owner-Nachfolger. GPT-6.1-Sol beide begrenzten Reviews sauber;10pure+9Original-Governancefälle und7Original-Link-/Ankertransitionen bestanden. Baseline bleibt außerhalb Reader-/Dokumentationsbaum.",
+  "checkpoint": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/checkpoint-receipt.json",
+    "sha256": "56309fa517c8016233ad6899ce51a9e7d64c683ff9cd803e4ee8b31e573ac63b"
+  },
+  "history": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/receipt.json",
+    "sha256": "e8fa9c32eed9486b59def14aa6ef4adb0f9058a194e2be342a6b7e0541052994"
+  },
+  "applicability": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/applicability-and-baseline-verification.json",
+    "sha256": "1608e400b26430f46cf1a85111ab04ebfbbc25c403070687de2a0dcd0363339e"
+  },
+  "sourceImpact": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/current-source-impact.json",
+    "sha256": "30d78f4bdbc32aec6b2e74ccd8a85507213f598ff2f20bab7ac3ec9eb2938aba"
+  },
+  "freshCensus": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/fresh-canonical-census.json",
+    "sha256": "6d0f05183eb13a3f2f773d464d995d1b6294afb7c7b7752f7143eb3b7c82f3a7"
+  },
+  "links": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/actual-link-transition-result.json",
+    "sha256": "beb32714cd7b4a60987c35f2d63fbbaa98ce70f844c45bb3b83131b774476e4a"
+  },
+  "accepted": {
+    "package": "AP09.11",
+    "completed": 1,
+    "total": 12,
+    "ids": [
+      "A911-09"
+    ]
+  },
+  "remaining": "A911-10: vorhandene echte Source-Remove-/Rename-Belege je betroffener Referenzfamilie exakt auf Referenz, Links, Redirect und Owner abgleichen; nur konkrete Lücken ergänzen. Danach stabiles Gate-Dossier mit getrennten Source/Reader/Quality-Entscheidungen schließen und erst bei PASS registrieren/pushen.",
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "ciGreen": false,
+  "dirtyPathsPreserved": 24,
+  "remoteHeads": {
+    "refs/heads/checkpoint/pr13-documentation-overhaul": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+    "refs/heads/docs/documentation-overhaul": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9"
+  }
+}

@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/operate.html"></head><body><main>
+<h1 id="configure-and-operate">Configure and Operate</h1>
+<p>Status: source-backed command paths with explicit unauthenticated issuer and missing cancellation boundaries
+Audience: product operator, pipeline operator, Prism operator
+Owner: Nova Core and platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/cli.ts">skills/nova/project/cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/cli.ts">skills/nova/core/cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-snapshots.ts">skills/nova/core/execution/engine-snapshots.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-run.ts">skills/nova/core/execution/engine-run.ts</a>
+Applies to: pipeline-platform.v2 and current Prism deployment
+Last verified: 2026-09-21 schema validation; canonical journal preservation, resume, recovery, and retention boundaries rechecked on 2026-10-12 at <code>2025f36306636b2e0c2c426447bf137d0574e11f</code>; no live cluster result</p>
+<h2 id="objective">Objective</h2>
+<p>Configure one governed runtime, start work, inspect durable results, and continue supported waits.
+This page also identifies controls that the current CLI does not provide.</p>
+<h2 id="canonical-start-readiness-and-observation-procedure">Canonical Start, Readiness, and Observation Procedure</h2>
+<!-- operator-task: start-readiness-observe -->
+<p>This section is the sole authority for <code>start-readiness-observe</code>. Start with an
+installed source-bound release, explicit <code>&lt;context&gt;</code> and <code>&lt;namespace&gt;</code>, selected
+component list, independent administration, and no active change. Run cluster
+commands from the administration machine. Kubernetes owns process and Service
+state; <code>scripts/deploy.sh</code> and the health program embedded by the chart own
+component checks; a completed application transaction owns functional proof.</p>
+<p>Before any cluster command on this page, complete
+<a href="install.html#bind-cluster-authority">Bind Cluster Authority</a>. Keep the same bound
+shell for the whole task. Every raw <code>kubectl</code>, Helm, or <code>scripts/deploy.sh</code>
+command below must inherit its exported read-only <code>KUBECONFIG</code>; every shown
+<code>&lt;context&gt;</code> must equal <code>EXPECTED_CONTEXT</code>. Run <code>assert_cluster_binding</code>
+immediately before each command block. Stop on any mismatch and follow the
+binding section's recovery; never fall back to the default kubeconfig.</p>
+<p>Record source and release identities, context, namespace, time, and evidence
+directory. Stop if the current context, selected images, or ownership differs
+from the install record.</p>
+<p>Observe the four levels in order:</p>
+<ol>
+<li>
+<p><strong>Process:</strong></p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; rollout status deployment/agent-nova --timeout=300s
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; rollout status deployment/agent-buster --timeout=300s
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get pods -o wide
+</code></pre>
+<p>Expected observation: each selected Deployment completes rollout and every
+selected Pod is running without restart growth. Omit a role only when the
+install record says it is disabled.</p>
+</li>
+<li>
+<p><strong>Service:</strong></p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get service agent-nova agent-buster
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get endpointslice \
+  -l kubernetes.io/service-name=agent-nova
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get endpointslice \
+  -l kubernetes.io/service-name=agent-buster
+</code></pre>
+<p>Expected observation: each selected Service exists and has at least one
+ready endpoint. A Service without an endpoint is not ready.</p>
+</li>
+<li>
+<p><strong>Dependency:</strong></p>
+<pre><code class="language-bash">assert_cluster_binding
+bound_deploy smoke-agent nova
+bound_deploy smoke-agent buster
+</code></pre>
+<p>Expected observation: each command exits zero after rollout, Pod readiness,
+gateway, startup record, Redis-aware readiness, code bundle, skills, and
+runtime configuration checks. These checks do not prove a user transaction.</p>
+</li>
+<li>
+<p><strong>Functional:</strong> execute the registered non-production
+<a href="workflows/buster-suite.html#deployment-success-exercise">deployment success exercise</a>
+with its exact project, provider, receipt, and cleanup checks. Expected
+observation: the project returns terminal <code>succeeded</code>, the audit agrees, and
+all external effects have terminal receipts. This is technical proof; use
+<a href="demo-delivery.html#canonical-demo-delivery-procedure">Deliver a Demo</a> for a
+separate human decision.</p>
+</li>
+</ol>
+<p>At any failure, stop at the first failed level. Use
+<a href="diagnose.html#canonical-symptom-diagnosis-procedure">symptom diagnosis</a>; do not
+restart all roles to hide a dependency or functional failure. Recovery is the
+narrow owning-layer repair followed by all four levels again. Cleanup belongs
+to the functional exercise. Retain every command, output, exit status, selected
+image ID, events, audit, receipts, cleanup result, and blocked step.</p>
+<h2 id="canonical-run-control-procedure">Canonical Run Control Procedure</h2>
+<!-- operator-task: run-control -->
+<p>This page is the sole authority for <code>run-control</code>. The supported start state is
+a <code>pipeline-platform.v2</code> and project or explicit graph at the original source
+and package snapshot, with writable durable storage and a reconciled prior
+effect state. Run from <code>&lt;repository-root&gt;</code> on the administration machine. Nova's
+CLI and durable journal are authoritative; process state and plugin logs are
+diagnostic only.</p>
+<p>Complete <a href="#validate-before-starting">Validate Before Starting</a>,
+<a href="#start-a-project-run">Start a Project Run</a>, <a href="#inspect-a-run">Inspect a Run</a>,
+<a href="#approve-or-resume-a-wait">Approve or Resume a Wait</a>, and, after interruption,
+<a href="#recover-after-interruption">Recover After Interruption</a>. The
+<a href="#cancellation-boundary">Cancellation Boundary</a> is mandatory. Stop on an
+unknown run, changed graph/package digest, unresolved effect, stale or expired
+wait, issuer mismatch, or terminal run. Retain input digests, output, audit,
+wait and signal bytes, effects and receipts, failure, retry decision, and final
+state. Follow <a href="#evidence-to-retain">Evidence to Retain</a> for protected raw copies
+and signal bytes; a digest alone does not authorize deletion.</p>
+<h2 id="before-each-operation">Before Each Operation</h2>
+<p>Run from <code>&lt;repository-root&gt;</code> unless a command states another location.
+Set no implicit Kubernetes context.</p>
+<p>The machine that runs Nova's CLI needs Linux file locking and <code>/usr/bin/flock</code>
+with <code>--exclusive</code>, <code>--timeout</code>, and <code>--conflict-exit-code</code> support. Nova uses
+that fixed executable to protect durable state updates. A BusyBox <code>flock</code> that
+lacks these options is insufficient. Stop before a run or resume if this
+interface is unavailable; a lock error does not prove that a signal was
+accepted. Preserve the journal and diagnose the executable before retrying.
+<a href="https://github.com/datrab/kubeclaw/blob/425be378fa25d26835a5418d65bfd457e151cc16/skills/nova/core/state/file-mutex.ts#L4-L22">Lock acquisition and release</a>.</p>
+<p>Record these inputs:</p>
+<ul>
+<li>Full source commit.</li>
+<li>Platform configuration path and digest.</li>
+<li>Project or pipeline path and digest.</li>
+<li>Selected role and plugin package revisions.</li>
+<li>Operator identity for an approval or administrative decision.</li>
+<li>Durable storage root and its free capacity.</li>
+</ul>
+<p>Do not start work while the project repository contains uncommitted changes.
+The project command rejects a changed baseline or dirty worktree.</p>
+<h2 id="supported-versions">Supported Versions</h2>
+<p>Use the <a href="README.html#version-and-tool-boundary">shared version rules</a>.
+This procedure applies to <code>pipeline-platform.v2</code> and the pipeline command at the recorded source revision.
+Start a new governed run when a platform, project, graph, package, or state format is not compatible with that revision.</p>
+<h2 id="understand-the-two-command-forms">Understand the Two Command Forms</h2>
+<p>KubeClaw accepts a project document or an explicit pipeline graph.</p>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Use</th>
+<th>Identity source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--project</code></td>
+<td>Normal project operation</td>
+<td>Compiler derives the run and graph identity</td>
+</tr>
+<tr>
+<td><code>--pipeline</code></td>
+<td>Direct operation of an explicit graph</td>
+<td>Operator supplies or accepts the run identity</td>
+</tr>
+</tbody>
+</table>
+<p>Both forms require <code>--platform</code>.
+Do not mix their recovery syntax.</p>
+<p>The command does not implement <code>--help</code>.
+The runnable forms in this page are the interface reference.</p>
+<blockquote>
+<p><strong>Source evidence — command surface</strong></p>
+<p><strong>Claim:</strong> The dispatcher selects the project form only when <code>--project</code> is present. Otherwise, it uses the explicit-graph Core CLI. The two forms support the commands shown on this page.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/cli.ts#L19-L56">The project dispatcher validates arguments and selects compile, start, recover, or signal</a>. <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/cli.ts#L16-L74">The Core CLI supports start, recover, signal, and audit for explicit graphs</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/package.json#L42-L42">The npm <code>pipeline</code> script selects the dispatcher</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-project-compiler.mts#L171-L185">The project compiler test starts the real dispatcher and checks its compiled output</a>. The test passed on 2026-09-16.</p>
+<p><strong>Revision:</strong> Command sources were checked at <code>430633accc4a374a740b5f12f384eeeb9dce228d</code>; the older CLI and test links contain identical complete files. The test execution above remains a historical result at <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code>.</p>
+<p><strong>Limit:</strong> Neither CLI defines a <code>--help</code> option or a separate cancel command.</p>
+</blockquote>
+<h2 id="configure-the-platform">Configure the Platform</h2>
+<p>The operator owns the platform configuration.
+Project content cannot add trusted packages, providers, adapters, or grants.</p>
+<p>The configuration must declare these groups:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Operator decision</th>
+<th>Verification question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>installationRoots</code></td>
+<td>Package locations that the registry may discover</td>
+<td>Do all paths exist at the selected revision?</td>
+</tr>
+<tr>
+<td><code>trustedBuiltinRoots</code></td>
+<td>Package roots allowed as built-ins</td>
+<td>Does each path belong to the reviewed release?</td>
+</tr>
+<tr>
+<td><code>externalTrust</code></td>
+<td>Allowed external source digests and attestations</td>
+<td>Does each external package match its approved digest?</td>
+</tr>
+<tr>
+<td><code>providers</code></td>
+<td>One selected provider for each capability</td>
+<td>Does the provider registration exist and activate?</td>
+</tr>
+<tr>
+<td><code>grants</code></td>
+<td>Resource limits for each registration and capability</td>
+<td>Does each grant allow only the intended resource?</td>
+</tr>
+<tr>
+<td><code>adapters</code></td>
+<td>Adapter configuration</td>
+<td>Do referenced endpoints and stores exist?</td>
+</tr>
+<tr>
+<td><code>activeAdapters</code></td>
+<td>Adapters that start in this runtime</td>
+<td>Does every required capability have one active provider?</td>
+</tr>
+<tr>
+<td><code>observers</code></td>
+<td>Observer configuration</td>
+<td>Is required delivery reachable and bounded?</td>
+</tr>
+<tr>
+<td><code>storageRoot</code></td>
+<td>Durable run storage</td>
+<td>Is it persistent, writable, private, and monitored?</td>
+</tr>
+<tr>
+<td>issuer fields</td>
+<td>Nova and administrative identities</td>
+<td>Do resume signals use an authorized exact identity?</td>
+</tr>
+</tbody>
+</table>
+<p>Relative package and storage paths resolve from the platform file directory.
+This prevents the shell working directory from changing their meaning.</p>
+<blockquote>
+<p><strong>Source evidence — platform authority</strong></p>
+<p><strong>Claim:</strong> The operator-owned platform document selects trusted package roots, providers, grants, adapters, observers, durable storage, and decision issuers. Relative paths use the platform file directory.</p>
+<p><strong>Implementation:</strong> The platform schema declares <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L33">its required fields, schema version, and installation roots</a>.
+It also declares <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.schema.json#L34-L68">trust, providers, and grants</a>.
+It defines <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.schema.json#L69-L95">adapter, observer, and storage authority</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69">The loader validates the document and resolves paths from its directory</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.schema.json#L20-L21"><code>pipeline-platform.v2</code> is the required schema version</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L55">The platform test checks path resolution, immutability, validation, and rejection of project-controlled installation roots</a>. The test passed on 2026-09-16.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code>.</p>
+<p><strong>Limit:</strong> Schema validation does not prove that a configured provider, adapter, observer, or storage service is reachable.</p>
+</blockquote>
+<p>Keep credentials outside the JSON file.
+Use adapter-supported secret references or the intended secret resolver.</p>
+<h2 id="validate-before-starting">Validate Before Starting</h2>
+<p>Compile the project without running stages:</p>
+<pre><code class="language-bash">npm run pipeline -- \
+  --platform &quot;&lt;platform.json&gt;&quot; \
+  --project &quot;&lt;project.json&gt;&quot; \
+  --compile &quot;&lt;new-pipeline.json&gt;&quot;
+</code></pre>
+<p>The output path must not exist.
+The compiler refuses to overwrite it.</p>
+<p>Expected output contains:</p>
+<ul>
+<li><code>status</code> equal to <code>compiled</code>.</li>
+<li>One derived <code>runId</code>.</li>
+<li><code>stageCount</code>.</li>
+<li><code>definitionDigest</code>.</li>
+<li><code>completionScope</code>.</li>
+</ul>
+<p>Compilation validates runtime registrations and grants.
+It does not call an external provider or prove deployment reachability.</p>
+<p>Review the compiled graph for stage types, dependencies, limits, and selected repair paths.
+Retain its digest with the run record.</p>
+<h2 id="start-a-project-run">Start a Project Run</h2>
+<p>Starting condition:</p>
+<ul>
+<li>Project repository HEAD equals <code>baseRevision</code>.</li>
+<li>Project repository has no uncommitted file.</li>
+<li>Platform storage has enough monitored capacity.</li>
+<li>Required providers and adapters are reachable.</li>
+<li>No existing process owns the same intended run.</li>
+</ul>
+<p>Start the run:</p>
+<pre><code class="language-bash">npm run pipeline -- \
+  --platform &quot;&lt;platform.json&gt;&quot; \
+  --project &quot;&lt;project.json&gt;&quot;
+</code></pre>
+<p>Expected output is one JSON object.
+It includes <code>runId</code>, <code>status</code>, <code>completionScope</code>, <code>acceptanceReadiness</code>, and stage states.</p>
+<p>Exit code zero means the returned run status is <code>succeeded</code>.
+It does not mean human acceptance or complete live acceptance.</p>
+<p>For an explicit graph, use:</p>
+<pre><code class="language-bash">npm run pipeline -- \
+  --platform &quot;&lt;platform.json&gt;&quot; \
+  --pipeline &quot;&lt;pipeline.json&gt;&quot; \
+  --run-id &quot;&lt;new-run-id&gt;&quot;
+</code></pre>
+<p>Use a new run identity.
+Do not reuse a prior terminal run identity.</p>
+<h2 id="inspect-a-run">Inspect a Run</h2>
+<p>Before every audit, recovery, or resume command, confirm that the run owner
+has exited and no new operation can write this run or its adapter stores.
+Make a new verified capture for each command, including a retry or a deliberately
+wrong signal. Stop if ownership is
+unknown. Use the original platform path and run ID from the retained start
+command. Do not discover the run by auditing it first.</p>
+<p>Audit is not a read-only storage operation.
+<a href="https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/telemetry/audit.ts#L14-L18">The audit reader opens <code>FileJournal</code></a>. It constructs <code>FileJournal</code>, creates
+an append-lock file, and acquires its lock. If <code>events.jsonl</code> ends without a
+newline, the constructor removes all bytes after the last newline and
+synchronizes the shorter file <strong>before</strong> it parses the retained records. It can
+therefore change evidence even when audit later fails. A complete hash chain
+needs no tail repair. Recovery and resume also open journals through this
+constructor; they can create locks and repair tails before rejecting a run or
+signal.
+<a href="https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/journal.ts#L30-L77">Constructor and tail recovery</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/file-mutex.ts#L8-L21">append-lock creation</a>
+define these storage effects.</p>
+<p>Preserve the raw run directory before every audit, recovery, or resume, whether
+or not the prior command ended cleanly. Also preserve the owning adapters'
+stores through their declared
+backup procedure while their writers are stopped. The copy must retain partial
+bytes, original signals, effects, snapshots, and lock files. Do not parse,
+truncate, or repair the source to make the copy pass.</p>
+<p>In Bash at the repository root, set the platform and run ID from the original
+command record. Set <code>RUN_CONTROL_EVIDENCE_ROOT</code> to an existing private durable
+directory selected by the incident audit owner, outside the run and adapter
+stores. The owner must confirm its capacity, access restrictions, retention
+period, and protection from automatic temporary-file removal before capture.
+Stop if that location or its retention authority is absent. Define
+<code>preserve_run_state</code> in the same terminal. It uses the platform
+loader and the actual run-root resolver without opening <code>FileJournal</code>. <a href="https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/execution/run-root.ts#L62-L75">The resolver</a>
+selects the hashed or verified legacy directory. Each call makes a new restricted copy outside the run root and verifies all file
+bytes. Symlinks and special files require the owning store's backup procedure;
+this command stops on them.</p>
+<pre><code class="language-bash">export RUN_CONTROL_PLATFORM=&quot;&lt;original-platform.json&gt;&quot;
+export RUN_CONTROL_RUN_ID=&quot;&lt;original-run-id&gt;&quot;
+export RUN_CONTROL_EVIDENCE_ROOT=&quot;&lt;absolute-private-durable-evidence-root&gt;&quot;
+preserve_run_state() {
+  umask 077
+  local observation_root
+  test -n &quot;${RUN_CONTROL_EVIDENCE_ROOT:-}&quot; &amp;&amp; test -d &quot;$RUN_CONTROL_EVIDENCE_ROOT&quot; || return 1
+  observation_root=$(mktemp -d &quot;$RUN_CONTROL_EVIDENCE_ROOT/nova-raw-state.XXXXXXXX&quot;) || return 1
+  export RUN_CONTROL_OBSERVATION_ROOT=&quot;$observation_root&quot;
+  node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
+import { runRoot } from './skills/nova/core/execution/run-root.ts';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+const platform = loadPlatformConfig(process.env.RUN_CONTROL_PLATFORM);
+const runId = process.env.RUN_CONTROL_RUN_ID;
+const source = runRoot(platform.storageRoot, runId);
+const target = process.env.RUN_CONTROL_OBSERVATION_ROOT;
+if (!fs.lstatSync(source).isDirectory()) throw new Error('Run directory is required');
+if (target === source || target.startsWith(source + path.sep)) throw new Error('Evidence must be outside the run root');
+function inventory(root, relative = '') {
+  return fs.readdirSync(path.join(root, relative)).sort().flatMap(name =&gt; {
+    const file = path.join(relative, name);
+    const stat = fs.lstatSync(path.join(root, file));
+    if (stat.isDirectory()) return inventory(root, file);
+    if (!stat.isFile()) throw new Error('Unsupported evidence entry: ' + file);
+    const bytes = fs.readFileSync(path.join(root, file));
+    return [{ path: file, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') }];
+  });
+}
+const original = inventory(source);
+if (!original.some(file =&gt; file.path === 'events.jsonl')) throw new Error('Event journal is required');
+fs.cpSync(source, path.join(target, 'run'), { recursive: true, force: false, errorOnExist: true });
+assert.deepEqual(inventory(source), original);
+assert.deepEqual(inventory(path.join(target, 'run')), original);
+fs.writeFileSync(path.join(target, 'raw-manifest.json'), JSON.stringify({ runId, source, capturedAt: new Date().toISOString(), files: original }, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+console.log(JSON.stringify({ rawState: target, runId, source, filesVerified: original.length }));
+for (const entry of original.filter(entry =&gt; entry.path.endsWith('.jsonl'))) {
+  const file = path.join(target, 'run', entry.path);
+  parseHashJournal(fs.readFileSync(file), file);
+}
+NODE
+}
+preserve_run_state || exit 1
+</code></pre>
+<p>The helper verifies the raw copy before it parses the copied journals. Even
+when a partial record causes parsing to fail, keep that directory and manifest.
+Require exit zero before ordinary audit, recovery, or resume. Comparison failure means the copy is
+not a verified consistency point. Stop and establish the stopped writer state before making a new copy. Hash equality
+checks the copied bytes; it does not prove that every external effect completed.</p>
+<p>For non-mutating journal inspection, use the existing strict parser on the
+preserved bytes. It rejects an incomplete final record, empty records, wrong
+sequence, wrong previous hash, or wrong record hash. It does not repair files or
+create locks.
+<a href="https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/common/plugin-runtime/foundation/observability/hash-journal.ts#L15-L29">The pure parser</a>
+defines these rejection rules. This command checks every journal below the
+preserved run root:</p>
+<pre><code class="language-bash">node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+const root = path.join(process.env.RUN_CONTROL_OBSERVATION_ROOT, 'run');
+function inspect(directory) {
+  for (const name of fs.readdirSync(directory).sort()) {
+    const file = path.join(directory, name);
+    const stat = fs.lstatSync(file);
+    if (stat.isDirectory()) inspect(file);
+    else if (!stat.isFile()) throw new Error('Unsupported evidence entry: ' + file);
+    else if (name.endsWith('.jsonl')) {
+      const records = parseHashJournal(fs.readFileSync(file), file);
+      console.log(JSON.stringify({ file, records: records.length, journalHead: records.at(-1)?.hash ?? null }));
+    }
+  }
+}
+inspect(root);
+NODE
+</code></pre>
+<p>Stop on a parse error. Keep the complete raw copy, including the rejected tail.
+Determine which writes and external effects were interrupted. Do not use audit's
+automatic truncation as proof of successful recovery. If the owning incident
+procedure permits canonical tail recovery, keep the verified raw copy first,
+reconcile external effects, then record the audit or recovery command and its
+actual changes. A checksum proves byte preservation, not permission to retry an
+accepted external request.</p>
+<p>For a complete verified journal, use the Core audit command for either command
+form. Capture its outputs and exit status in the retained observation directory:</p>
+<pre><code class="language-bash">audit_status=0
+npm run pipeline -- \
+  --platform &quot;$RUN_CONTROL_PLATFORM&quot; \
+  --audit &quot;$RUN_CONTROL_RUN_ID&quot; \
+  &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/audit.stdout&quot; \
+  2&gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr&quot; || audit_status=$?
+printf '%s\n' &quot;$audit_status&quot; &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/audit.exit&quot; || exit 1
+test &quot;$audit_status&quot; -eq 0 || exit 1
+</code></pre>
+<p>The command rebuilds its audit view from durable run state. Retain the whole
+output; npm can print a script banner before the CLI JSON. Compare it with the
+preserved journal and any previously trusted journal head. A new internally
+valid chain alone cannot prove that no old records were lost.</p>
+<p>Use <a href="../understand/request-state-recovery.html">Request, State, and Recovery</a> to interpret states.
+Do not infer a terminal state from one plugin log.</p>
+<h2 id="approve-or-resume-a-wait">Approve or Resume a Wait</h2>
+<p>The CLI uses a typed resume-signal file.
+It does not provide a separate <code>approve</code> verb.</p>
+<p>Before creating a signal, complete <a href="#inspect-a-run">Inspect a Run</a>. Use the
+original platform, run ID, project or graph, package snapshot, storage root,
+and runtime configuration from the retained start record. Confirm stopped run
+and owning-adapter writers, preserve new verified raw run and adapter copies,
+and require strict parsing of the copied journals. Read the active wait from
+that preserved evidence. Stop on unknown ownership, changed identity, failed
+copy verification, incomplete records, or a journal chain error. Copy no
+identity from an earlier wait. There is no non-mutating live audit command
+that can replace these prerequisites.</p>
+<p>Read <code>waitId</code>, <code>signalType</code>,
+<code>authorizedIssuer</code>, <code>expiresAt</code>, and the payload requirements from the active
+<code>wait-request.v2</code> record. The signal must contain all eight fields in this
+example:</p>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: &quot;resume-signal.v2&quot;,
+  &quot;signalId&quot;: &quot;signal:approval-2026-09-17T120000Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;approval:wait-7:decision-1&quot;,
+  &quot;waitId&quot;: &quot;wait:7&quot;,
+  &quot;signalType&quot;: &quot;approval.resolved&quot;,
+  &quot;issuer&quot;: {
+    &quot;type&quot;: &quot;operator&quot;,
+    &quot;id&quot;: &quot;operator:release&quot;
+  },
+  &quot;issuedAt&quot;: &quot;2026-09-17T12:00:00.000Z&quot;,
+  &quot;payload&quot;: {
+    &quot;decision&quot;: &quot;approved&quot;,
+    &quot;issuer&quot;: {
+      &quot;type&quot;: &quot;operator&quot;,
+      &quot;id&quot;: &quot;operator:release&quot;
+    },
+    &quot;reason&quot;: &quot;Approved the exact source and report in wait:7.&quot;
+  }
+}
+</code></pre>
+<p>This example is valid for the shared envelope schema. Its payload is the
+approval payload used by the approval path. Another wait type can require a
+different payload. Never copy this payload without checking the active wait.</p>
+<p>The <code>issuer</code> object is <strong>unsigned and self-asserted by the caller</strong>. Nova checks
+that its type and ID equal the active wait's <code>authorizedIssuer</code>, but the signal
+schema contains no signature and the CLI does not authenticate the human or an
+external identity provider. Protect access to signal creation and the CLI as
+the effective authority. Do not describe issuer matching as identity proof.</p>
+<p>Apply these matching rules:</p>
+<ul>
+<li>Create a new <code>signalId</code> for one decision event. Nova uses it as the cause of
+the <code>wait.resolved</code> event.</li>
+<li>Create one <code>idempotencyKey</code> for the exact signal content. Reuse that key only
+to retry the same bytes. Signal storage treats an identical stored record as
+a no-op and rejects the same key with different content. A retry after wait
+resolution is stale and stops before this storage check.</li>
+<li>Copy <code>waitId</code> and <code>signalType</code> from the active wait.</li>
+<li>Copy the authorized issuer type and ID. This satisfies runtime matching only;
+it does not authenticate who created the file.</li>
+<li>Set <code>issuedAt</code> to a valid date-time at or after creation of the active wait.</li>
+<li>Build <code>payload</code> from that wait's request and plugin contract. Include the
+current source, decision, or repair digest when that contract requires it.</li>
+</ul>
+<p>Nova validates the closed envelope before recording the accepted signal and
+its durable <code>wait.resolved</code> transition. It rejects unknown fields, a stale or
+unknown wait, an expired wait, a mismatched type or issuer, and a signal issued
+before wait creation. After Nova records one signal for a wait, a different
+signal cannot resolve that wait again.</p>
+<p>Storage can change before those checks. <a href="https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/engine-run.ts#L81-L95">Resume opens the administrative and
+event journals before wait and signal validation</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/run-mutation.ts#L7-L16">run ownership acquires durable lock state first</a>.
+Opening a journal can create an append lock or truncate an incomplete tail.
+A rejected envelope, wrong issuer, stale wait, or terminal run therefore does
+not prove that canonical files are unchanged. Preserve original raw bytes
+through <a href="#inspect-a-run">Inspect a Run</a> before every submission.</p>
+<p>Use an operator-controlled signal file with restricted permissions. Before
+<strong>each</strong> submission below, including a retry, replay check, or wrong-signal
+check:</p>
+<ol>
+<li>Reconfirm the original platform and run ID, project or graph bytes, package
+snapshot, storage root, and runtime configuration against the retained
+start record. <code>&lt;original-project.json&gt;</code> and <code>&lt;original-pipeline.json&gt;</code> mean
+those exact original inputs, not a new candidate.</li>
+<li>Confirm the prior run owner has exited. Stop new writes to the run and its
+owning adapter stores. Unknown ownership stops the command; containment
+alone does not prove that an external effect completed.</li>
+<li>Reconcile accepted external effects through their owning contracts. Stop
+while any outcome is unknown or no supported continuation exists.</li>
+<li>Follow <a href="#inspect-a-run">Inspect a Run</a> to make and verify a <strong>new</strong> complete
+raw run copy and new owning-adapter copies through their declared backup
+procedures, with writers stopped. Define its <code>preserve_run_state</code> helper
+and evidence-root inputs in this Bash shell.</li>
+<li>Require successful strict parsing of every copied run journal. Retain raw
+bytes and stop on a copy, identity, incomplete-record, sequence, or hash
+failure. Do not use automatic tail truncation to make submission possible.</li>
+<li>Verify that the signal still names that active unexpired wait. Retain the
+exact signal bytes, ID, issue time, and idempotency key. Submit one of the
+following forms, using the same original identities.</li>
+</ol>
+<p>Project form:</p>
+<pre><code class="language-bash">preserve_run_state || exit 1
+resume_status=0
+npm run pipeline -- \
+  --platform &quot;$RUN_CONTROL_PLATFORM&quot; \
+  --project &quot;&lt;original-project.json&gt;&quot; \
+  --signal &quot;&lt;resume-signal.json&gt;&quot; \
+  &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/resume.stdout&quot; \
+  2&gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/resume.stderr&quot; || resume_status=$?
+printf '%s\n' &quot;$resume_status&quot; &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/resume.exit&quot; || exit 1
+</code></pre>
+<p>For an explicit graph, supply the original run identity:</p>
+<pre><code class="language-bash">preserve_run_state || exit 1
+resume_status=0
+npm run pipeline -- \
+  --platform &quot;$RUN_CONTROL_PLATFORM&quot; \
+  --pipeline &quot;&lt;original-pipeline.json&gt;&quot; \
+  --run-id &quot;$RUN_CONTROL_RUN_ID&quot; \
+  --signal &quot;&lt;resume-signal.json&gt;&quot; \
+  &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/resume.stdout&quot; \
+  2&gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/resume.stderr&quot; || resume_status=$?
+printf '%s\n' &quot;$resume_status&quot; &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/resume.exit&quot; || exit 1
+</code></pre>
+<p>Expected observation: an accepted signal records one matching resolution, and
+continued execution gives the resumed stage a new attempt identity. Exit zero
+requires <code>succeeded</code>; a nonzero exit can contain a waiting, failed, blocked, or
+rejected result. Retain stdout, stderr, and the actual exit status before any
+follow-up. The command response alone does not prove adapter or external
+process quiescence. If the response or exit status was lost, retain partial
+output and record that result as <code>not observed</code>; do not invent an exit status.</p>
+<p>After <strong>every</strong> submission, including rejection or a lost response, confirm
+that the owner has exited and re-establish stopped run and adapter writers.
+If ownership is unknown, retain the previous capture and command output and
+stop; do not audit or submit again. Otherwise make new verified run and adapter
+copies through <a href="#inspect-a-run">Inspect a Run</a>, require strict copied-journal
+inspection, then capture its audit outputs and exit status. Keep the previous
+captures and compare the new journal head, original identities, actual wait
+transition, attempt budget, and external receipts with the submitted signal.
+Do not reuse the pre-submission copy for this later audit.</p>
+<p>Stop after an issuer mismatch, expired wait, digest mismatch, or stale signal.
+Do not edit the journal or change the signal identity to force acceptance.
+An exact retry needs the same bytes and key, a still-active wait, known effect
+outcomes, and the complete fresh preservation sequence above. A replay after
+resolution is stale or terminal and does not prove unchanged lock files.
+Any later incident-owner-authorized canonical tail repair must retain the
+verified original raw bytes and record the command and its actual changes.</p>
+<blockquote>
+<p><strong>Source evidence — signal contract and replay rules</strong></p>
+<p><strong>Claim:</strong> A resume signal uses a closed eight-field envelope. Nova compares its caller-supplied issuer with the active wait. An identical retry has no second effect, and a conflicting retry fails.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L137-L144">Nova validates wait identity, signal type, issuer, expiry, and issue time</a>. <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-run.ts#L109-L122">Nova makes identical retries idempotent and permits only one recorded signal for each wait</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L777-L802">The contract requires all eight envelope fields and rejects extra fields</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/reliability/attempt-projection-recovery.test.mjs#L43-L76">The recovery test exercises accepted, repeated, stale, and expired signals</a>. The publication check also validates the example on this page against the canonical schema.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code>.</p>
+<p><strong>Limit:</strong> The envelope has no signature. Its issuer is self-asserted by the
+caller, and repository checks do not authenticate the human or external
+identity provider.</p>
+</blockquote>
+<h2 id="recover-after-interruption">Recover After Interruption</h2>
+<!-- operator-variant: run-control/recover-project -->
+<!-- operator-variant: run-control/recover-explicit-graph -->
+<!-- operator-variant: run-control/recovery-signal-required -->
+<!-- operator-variant: run-control/recovery-terminal-run -->
+<!-- operator-variant: run-control/recovery-cooldown-not-due -->
+<!-- operator-variant: run-control/recovery-identity-mismatch -->
+<!-- operator-variant: run-control/recovery-unresolved-effect -->
+<!-- operator-variant: run-control/recovery-external-continuation -->
+<p>Recovery reopens durable state after a process interruption.
+It does not approve a wait or resolve an uncertain external result.</p>
+<p>Before every audit or recovery attempt after interruption, including a retry,
+stop new admission, confirm that the prior owner has exited, and verify stopped
+owning-adapter writers. Follow <a href="#inspect-a-run">Inspect a Run</a> to preserve and
+verify new raw run and adapter copies through their declared backup procedures.
+Define its <code>preserve_run_state</code> helper and evidence-root inputs in this Bash
+shell; require strict copied-journal parsing before the command. Stop
+on an incomplete or corrupt journal. Audit can truncate an incomplete tail;
+retain the original bytes before any permitted canonical repair. Confirm the
+original platform, graph or project, package snapshot, run ID, storage root,
+and configuration. Retain the audit output only after this preservation step. Reconcile every accepted
+external effect that lacks a terminal receipt. Stop while any outcome remains
+unknown.</p>
+<p>Project form, with the original project bytes:</p>
+<pre><code class="language-bash">preserve_run_state || exit 1
+recovery_status=0
+npm run pipeline -- \
+  --platform &quot;$RUN_CONTROL_PLATFORM&quot; \
+  --project &quot;&lt;original-project.json&gt;&quot; \
+  --recover &quot;$RUN_CONTROL_RUN_ID&quot; \
+  &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/recovery.stdout&quot; \
+  2&gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/recovery.stderr&quot; || recovery_status=$?
+printf '%s\n' &quot;$recovery_status&quot; &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/recovery.exit&quot; || exit 1
+</code></pre>
+<p>Explicit graph form:</p>
+<pre><code class="language-bash">preserve_run_state || exit 1
+recovery_status=0
+npm run pipeline -- \
+  --platform &quot;$RUN_CONTROL_PLATFORM&quot; \
+  --pipeline &quot;&lt;original-pipeline.json&gt;&quot; \
+  --recover &quot;$RUN_CONTROL_RUN_ID&quot; \
+  &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/recovery.stdout&quot; \
+  2&gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/recovery.stderr&quot; || recovery_status=$?
+printf '%s\n' &quot;$recovery_status&quot; &gt; &quot;$RUN_CONTROL_OBSERVATION_ROOT/recovery.exit&quot; || exit 1
+</code></pre>
+<p>Recovery must use the original graph and package snapshot.
+Start a new run when governed configuration must change.</p>
+<p>Expected observation: a permitted recovery writes one JSON result for the same
+run ID. Exit code zero requires terminal status <code>succeeded</code>; retain a nonzero
+result as a failed or blocked recovery, not as proof that restart completed.
+<a href="https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/engine-run.ts#L56-L68">Recovery opens journals and can reconcile observer state before returning</a>.
+It can change journals, effects, observer state, and adapter stores, including
+before a failed or blocked return. The pre-recovery capture
+cannot prove the bytes that the next audit will open.</p>
+<p>After <strong>every</strong> recovery attempt, including failure, rejection, or a lost
+response:</p>
+<ol>
+<li>Retain the pre-command raw copies, available command stdout/stderr, and
+actual exit status. Record a lost response or exit status as <code>not observed</code>.
+Confirm that the run owner has exited and re-establish stopped run
+and owning-adapter writers. Stop if ownership is unknown.</li>
+<li>Reconfirm the original run, platform, project or graph, package, storage,
+and configuration identities. Make and verify new adapter-store copies
+through their declared backup procedures, then call <code>preserve_run_state</code>
+again through <a href="#inspect-a-run">Inspect a Run</a>. Require successful strict
+parsing of every copied run journal. Keep rejected bytes and stop on failure.</li>
+<li>Only then run the audit block in <a href="#inspect-a-run">Inspect a Run</a>. It captures
+stdout, stderr, and the actual exit status in this new observation directory.
+Never reuse the pre-recovery copy or overwrite the earlier audit.</li>
+<li>Compare the before/after audits, original graph and package identities,
+committed journal heads, external effects and receipts, and returned state.
+A successful recovery needs a final audit that agrees with terminal
+<code>succeeded</code> and contains no unexplained duplicate effect. A failed, waiting,
+blocked, or uncertain result remains that result.</li>
+</ol>
+<p>Before any further recovery retry, repeat the original-identity, stopped-writer,
+new raw run/adapter copy, and strict-inspection prerequisites. Later authorized
+canonical tail repair retains the original bytes first and records its actual
+changes; it does not turn an uncertain external outcome into success.</p>
+<p>Use the exact failure before choosing the next action:</p>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Meaning</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RECOVERY_SIGNAL_REQUIRED:&lt;wait-id&gt;</code></td>
+<td>The run has an active wait; restart cannot invent its decision</td>
+<td>Read the active wait and use <a href="#approve-or-resume-a-wait">Approve or Resume a Wait</a> with one matching signal</td>
+</tr>
+<tr>
+<td><code>RECOVERY_RUN_TERMINAL</code></td>
+<td>The durable run already ended as succeeded, failed, blocked, or cancelled</td>
+<td>Do not recover it; retain the audit and start a new governed run only for new work</td>
+</tr>
+<tr>
+<td><code>RECOVERY_COOLDOWN_NOT_DUE:&lt;stage-id&gt;:&lt;time&gt;</code></td>
+<td>A persisted retry time has not arrived</td>
+<td>Do not bypass the clock; wait until the recorded time, then repeat the same recovery command with new stopped-writer raw run/adapter copies and strict inspection</td>
+</tr>
+<tr>
+<td><code>RECOVERY_GRAPH_*</code>, <code>RECOVERY_PIPELINE_ID_MISMATCH</code>, or <code>PROJECT_RECOVERY_RUN_MISMATCH</code></td>
+<td>The supplied graph, project, or run does not match durable state</td>
+<td>Restore the original input bytes; never edit the snapshot or reuse the run ID for a changed graph</td>
+</tr>
+<tr>
+<td><code>RECOVERY_PINNED_PACKAGE_*</code>, <code>RECOVERY_PACKAGE_UPGRADE_*</code>, or <code>RECOVERY_REGISTRY_SNAPSHOT_INVALID</code></td>
+<td>Installed package identity differs from the recorded snapshot</td>
+<td>Restore the recorded package set; use only the separate authorized package-upgrade procedure when its exact contract applies</td>
+</tr>
+<tr>
+<td><code>RECOVERY_RUNTIME_CONFIGURATION_MISMATCH</code> or <code>RECOVERY_DEPENDENCY_IDENTITY_MISMATCH</code></td>
+<td>Runtime configuration or dependency identity changed</td>
+<td>Restore the recorded runtime configuration and dependency set, or start a new governed run</td>
+</tr>
+<tr>
+<td><code>RECOVERY_EFFECT_OUTCOME_UNRESOLVED:&lt;effect-id&gt;</code></td>
+<td>An accepted external request has no known receipt outcome</td>
+<td>Query the external authority with the original identity and reconcile it before any recovery retry</td>
+</tr>
+<tr>
+<td><code>RECOVERY_EXTERNAL_CONTINUATION_REQUIRED:&lt;effect-id&gt;</code></td>
+<td>An external effect has a receipt, but its interrupted attempt needs explicit continuation</td>
+<td>Follow the owning plugin or provider continuation contract; do not replay the effect through generic recovery</td>
+</tr>
+</tbody>
+</table>
+<p>Project recovery also validates the stored generated nodes and their encoding
+selectors before it verifies the whole pinned graph. The implementation
+authorities are
+<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/recovery.ts#L5-L50"><code>recovery.ts</code></a>
+and
+<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/delivery-manifest.ts#L6-L33"><code>delivery-manifest.ts</code></a>.
+These are operator-visible identity mismatches, not permissions to repair the
+stored graph:</p>
+<table>
+<thead>
+<tr>
+<th>Exact outcome</th>
+<th>Failed stored authority</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROJECT_RECOVERY_SOURCE_INVALID</code></td>
+<td>Exactly one generated <code>source-preflight</code> node is absent or has the wrong type</td>
+<td>Stop; restore the original durable run bytes from the owning store or retain the run as unrecoverable</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_REVIEW_NODES_MISMATCH</code></td>
+<td>Generated Review node identities differ from the project compiler</td>
+<td>Stop; use the original project/compiler/package snapshot</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_REVIEW_SEMANTICS_INVALID</code></td>
+<td>A stored Review semantic or report encoding is unsupported</td>
+<td>Stop; restore the exact compatible package snapshot; never rewrite the node</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_REVIEW_SEMANTICS_MIXED</code></td>
+<td>Review nodes contain mixed semantic generations</td>
+<td>Stop; treat the durable graph as inconsistent and preserve it for diagnosis</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_REPORT_ENCODING_INVALID</code></td>
+<td>A Review report encoding is unsupported</td>
+<td>Stop; restore the compatible package snapshot</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_REPORT_ENCODING_MIXED</code></td>
+<td>Review nodes contain mixed report encodings</td>
+<td>Stop; preserve the inconsistent graph; do not select a mode by majority</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_SUMMARY_NODE_INVALID</code></td>
+<td>The one required <code>project-summary</code> identity/type pairing is missing, duplicated, or inconsistent</td>
+<td>Stop; restore the original durable graph bytes or retain the run as unrecoverable</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_DELIVERY_SELECTOR_FOREIGN</code></td>
+<td>A non-summary node owns <code>deliveryManifestEncoding</code></td>
+<td>Stop; do not move or delete the foreign selector in durable state</td>
+</tr>
+<tr>
+<td><code>PROJECT_RECOVERY_DELIVERY_MANIFEST_ENCODING_INVALID</code></td>
+<td>The stored summary selector shape or value is unsupported</td>
+<td>Stop; restore the compatible project/package snapshot</td>
+</tr>
+<tr>
+<td><code>PROJECT_DELIVERY_MANIFEST_ENCODING_INVALID</code></td>
+<td>A caller supplied a delivery-manifest mode outside the supported legacy/current pair</td>
+<td>Correct the caller configuration before compilation; do not mutate an existing run</td>
+</tr>
+</tbody>
+</table>
+<p>Recovery has no separate temporary runtime object to clean up. Preserve all
+before/after raw run and adapter captures, manifests, partial or rejected tails,
+audits, exact commands, output, exit status, effect queries and receipts, repair
+changes, and the final decision under <a href="#evidence-to-retain">Evidence to Retain</a>.
+Do not delete a <code>nova-raw-state.*</code> observation directory because its digest was
+recorded or a later command passed. Only a successful recovery result plus the
+matching final audit and reconciled external receipts proves the intended
+recovery; containment or a completed audit alone does not prove success.</p>
+<h2 id="cancellation-boundary">Cancellation Boundary</h2>
+<p>The current pipeline CLI has no supported operator cancellation command.
+Do not present process termination as durable run cancellation.</p>
+<p>An internal abort signal can cancel active work during runtime shutdown.
+That mechanism is not an external operator control surface.</p>
+<p>When urgent containment is necessary:</p>
+<ol>
+<li>Preserve available command, process, and component observations through
+supported paths. Do not audit while run or adapter writers remain active.</li>
+<li>Stop new admission through the owning service boundary.</li>
+<li>Use the approved incident process for workload containment.</li>
+<li>Reconcile every accepted external effect.</li>
+<li>After the owner has exited and run/adapter writers are stopped, complete
+<a href="#inspect-a-run">Inspect a Run</a> before audit or another run-control command.
+Preserve new verified raw run/adapter copies and strictly inspect the copied
+journals. Unknown ownership or rejected bytes stops this inspection path.</li>
+<li>Do not claim <code>cancelled</code> unless durable lifecycle evidence records it.</li>
+</ol>
+<p>This is an implementation limit, not a documentation shortcut.</p>
+<h2 id="inspect-results-and-demo-readiness">Inspect Results and Demo Readiness</h2>
+<p>A successful run can report <code>technical-only</code> or <code>demo-handoff</code> completion.
+Only the latter can report <code>ready-for-acceptance</code>.</p>
+<p>Human acceptance remains a separate action.
+It binds to the exact source, run, result, and exposed demo.</p>
+<p>Check result artifacts through their owning store.
+Verify content digests before sharing or importing them.</p>
+<p>For exposure and handoff, follow <a href="demo-delivery.html#canonical-demo-delivery-procedure">Deliver a Demo</a>.
+That procedure supplies a local contract rehearsal and identifies the additional
+authorities required for live delivery. KubeClaw does not supply a complete
+live demo-delivery journey. Stop before Tailnet exposure until product
+operations has registered the deployment procedure, stage configuration,
+exposure receipts, and cleanup required by that canonical procedure.</p>
+<h2 id="operate-prism">Operate Prism</h2>
+<p>Use the <a href="prism-studio.html#canonical-prism-and-studio-procedure">canonical Prism and Studio procedure</a>.
+This page does not define a second deployment, health, access, or recovery path.</p>
+<h2 id="operate-role-deployments">Operate Role Deployments</h2>
+<p>Use targeted commands when one role changes:</p>
+<pre><code class="language-bash">assert_cluster_binding
+./scripts/deploy.sh agent nova
+./scripts/deploy.sh agent buster
+./scripts/deploy.sh agent prism
+</code></pre>
+<p>Use <code>--with-code</code> only for Nova or Buster.
+Prism uses its dedicated multi-workload release.</p>
+<p>After a role change, run its smoke command and inspect its selected image ID.
+Do not restart every role to hide one role-specific failure.</p>
+<h2 id="safe-retry-decision">Safe Retry Decision</h2>
+<p>Every permitted audit, recovery, or signal retry must first repeat the
+original-identity, stopped run/adapter writer, new verified raw run/adapter copy,
+and strict copied-journal inspection steps in <a href="#inspect-a-run">Inspect a Run</a>.
+An earlier successful capture does not cover a later command's storage state.
+Stop if a required check or owning-store backup procedure is unavailable.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Command failed before durable request acceptance, with a verified complete journal and unchanged active authority</td>
+<td>Correct the rejected input and review one submission</td>
+</tr>
+<tr>
+<td>Durable request exists with a terminal failure</td>
+<td>Follow its declared retry or repair decision</td>
+</tr>
+<tr>
+<td>Request exists and provider outcome is absent</td>
+<td>Inspect through a documented provider status operation; if the outcome remains uncertain, preserve evidence, stop, and escalate</td>
+</tr>
+<tr>
+<td>Provider completed but local response was lost</td>
+<td>Use an exact provider-specific idempotent import operation only when its contract documents one; otherwise preserve evidence, stop, and escalate</td>
+</tr>
+<tr>
+<td>Wait remains active, unexpired, with complete history and no prior resolution</td>
+<td>Follow <a href="#approve-or-resume-a-wait">Approve or Resume a Wait</a>, including new stopped-writer raw run/adapter copies and strict inspection before each submission; retain exact signal bytes and identities</td>
+</tr>
+<tr>
+<td>Wait expired or resolved, or signal identity conflicts</td>
+<td>Stop; preserve raw state before audit. Do not issue a new signal identity to force acceptance</td>
+</tr>
+<tr>
+<td>Graph, package, or policy digest changed</td>
+<td>Start a new governed run</td>
+</tr>
+<tr>
+<td>Terminal run</td>
+<td>Do not recover or resume it</td>
+</tr>
+</tbody>
+</table>
+<p>There is no generic Core operation that reconciles an uncertain external
+effect and imports its result. See the
+<a href="../status/open-issues.html#uncertain-external-effects-have-no-supported-reconciliation-and-result-import-operation">current reconciliation boundary</a>.
+A provider-specific normal result import is safe only when that provider
+documents the request identity, result identity, idempotency rule, authority,
+and durable transition. External inspection alone does not authorize a retry,
+resume, journal edit, or result import.</p>
+<h2 id="evidence-to-retain">Evidence to Retain</h2>
+<ul>
+<li>Platform, project, graph, and signal digests.</li>
+<li>Complete command and nonsecret arguments.</li>
+<li>Start output and run identity.</li>
+<li>New verified raw run and owning-adapter copies and manifests before every
+audit, recovery, resume, retry, and wrong-signal check, and after each command
+before the next audit. Keep rejected or partial bytes as evidence.</li>
+<li>Audit output before and after recovery or signal handling, with any tail repair recorded.</li>
+<li>Provider request, receipt, and reconciliation record.</li>
+<li>Artifact identities and verified digests.</li>
+<li>Prism decision and demo identity when applicable.</li>
+<li>Unsupported-control finding when an operation stops at a missing surface.</li>
+</ul>
+<p>The incident audit owner must record each capture's durable location, access
+identity, retention period, and final-disposition authority. Retain complete
+raw run and adapter bytes, manifests, rejected tails, exact signal bytes,
+command records, and actual repair-change evidence for that period. A digest
+records integrity; it cannot replace the bytes. Keep these captures separate
+from disposable working copies. If evidence must move, use the audit owner's
+verified complete-copy procedure and retain its receipt; stop if byte
+preservation or retention cannot be proved.</p>
+<p>Only named disposable candidate files or redundant working signal copies may
+be removed after their prescribed retention and the owner's recorded
+final-disposition decision. First prove that the original signal bytes and
+all required evidence remain in the protected retained capture. Original raw
+observation directories and their contents require the audit owner's explicit
+final disposition after the retention period; ordinary run cleanup does not
+authorize their removal.</p>
+<h2 id="read-next">Read Next</h2>
+<p>Use <a href="diagnose.html">Observe and Diagnose</a> for failed or slow work.
+Use <a href="recovery.html">Back Up and Recover</a> for data or access loss.</p>
+</main></body></html>

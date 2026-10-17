@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS \u2014 A911-09 source-role review at c559e97960a89a0f80487483addb91d2e6e4527d. GOV-005: authored SDK explanation and generated exports occupy separate files with distinct owners. MNT-001: the changed map owner derives from sdk.md metadata, preserving one authored authority rather than adding a manual inventory. MNT-016: governance generation writes only its map; reference generation selects sdk-exports.md and preserves sdk.md. Catalogue generation reads separately maintained guidance. MNT-015: the corrected SDK maintainer owner agrees across source metadata, derived map and supplied published output. MNT-017: maintenance instructions identify owning inputs, regeneration, checks and review responsibilities. Supplied impact verification supports bounded reuse of preservation/tamper evidence; execution receipts are coordinator evidence, not reviewer executions. No actionable defect is demonstrated. This decision covers the five exact A911-09 facets only. Formal acceptance still requires persisted fresh role reports and required reconciliation; global 261/89, native/P17/fullGo, deployment, browser, whole-site links and SDK completeness are not established here.",
+  "overall_confidence": 0.93
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "kubeclaw-documentation-routes.v1",
+  "authority": "This registry owns declared public redirects, deprecated terms, and superseded reader routes.",
+  "redirects": [],
+  "deprecatedTerms": [
+    {
+      "term": "needs_nova",
+      "successor": "Needs Nova",
+      "reason": "The product state uses the readable name. The snake-case name is not an active contract term."
+    },
+    {
+      "term": "action_required",
+      "successor": "blocked or the applicable typed wait state",
+      "reason": "Current contracts use explicit lifecycle and wait states instead of this ambiguous label."
+    }
+  ],
+  "historicalRouteBoundary": "No authoritative list of public routes predates this registry. Do not invent redirects for unknown URLs."
+}

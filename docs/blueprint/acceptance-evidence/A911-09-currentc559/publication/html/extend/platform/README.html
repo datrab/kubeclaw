@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/platform/README.html"></head><body><main>
+<h1 id="change-a-platform-component">Change a Platform Component</h1>
+<p>Status: source-backed change router; environment and unsupported paths stated below
+Audience: platform developers, component maintainers, contract and UI authors
+Owner: developer experience maintainers; each component owner retains implementation authority
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/package.json">package.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/package.json">skills/prism/package.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/lifecycle/reducer.ts">skills/nova/core/lifecycle/reducer.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/effects/durable-invocation.ts">skills/nova/core/effects/durable-invocation.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-resource-pool.ts">skills/worker/core/worker/native-resource-pool.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/discovery.ts">skills/common/plugin-runtime/foundation/registry/discovery.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/storage/index.ts">skills/prism/storage/index.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/.github/workflows/pipeline-reliability.yaml">.github/workflows/pipeline-reliability.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/.github/workflows/docs-checks.yaml">.github/workflows/docs-checks.yaml</a>
+Applies to: Nova, Worker, Foundation, SDK, capability/event, integration, UI, deployment and durable-data changes; Buster and Prism details remain in their own guides
+Last verified: 2026-10-15; named current source bytes and script definitions inspected, not executed</p>
+<h2 id="choose-the-smallest-owner">Choose the smallest owner</h2>
+<p>Use this router before changing an internal component. First ask whether an
+existing <a href="../README.html">extension contract</a> can contain the behavior. If it can,
+use that extension's guide instead of changing the platform. A package's presence
+does not grant permission to activate it or establish a ready native host.
+Start with the <a href="../../understand/request-to-result.html">request-to-result path</a>
+and <a href="../../reference/roles-and-package-ownership.html">role and package boundaries</a>.</p>
+<p>A <strong>contract</strong> is a versioned boundary between a caller and its receiver.
+An <strong>invariant</strong> is a rule that must survive every supported action.
+A <strong>reducer</strong> computes the next state from the current state and a result.
+<strong>Replay</strong> reconstructs state from retained records. A <strong>receipt</strong> records an
+external operation's outcome; an HTTP response alone is not necessarily that
+receipt. <strong>Idempotency</strong> keeps one logical request from causing duplicate work.
+<strong>Fencing</strong> rejects work when the current owner cannot prove authority.
+A <strong>digest</strong> identifies bytes or one declared encoding, not permission or health.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Start with the owning route</th>
+<th>Adjacent owner that must agree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova invocation, graph or run authority</td>
+<td><a href="#nova-and-lifecycle">Nova and lifecycle</a></td>
+<td>Project compiler, package registry and retained-run reader</td>
+</tr>
+<tr>
+<td>Retry, repair, scheduling or wait</td>
+<td><a href="#lifecycle-decisions-and-waits">Lifecycle decisions</a></td>
+<td>Live recorder, replay, signal issuer and budget owner</td>
+</tr>
+<tr>
+<td>External effect or recovery</td>
+<td><a href="#effects-and-unknown-outcomes">Effects</a></td>
+<td>Adapter, durable receipt, lock and resource owners</td>
+</tr>
+<tr>
+<td>Worker protocol, supervisor or capacity</td>
+<td><a href="#worker-and-native-host-boundaries">Worker</a></td>
+<td>Host operator and caller's protocol/profile owner</td>
+</tr>
+<tr>
+<td>Package discovery, trust or isolation</td>
+<td><a href="#foundation-discovery-and-trust">Foundation</a></td>
+<td>Manifest, grant/provider and sandbox owners</td>
+</tr>
+<tr>
+<td>Public type, schema, encoding or export</td>
+<td><a href="#sdk-and-public-contracts">SDK</a></td>
+<td>All supported producers, consumers and reference owner</td>
+</tr>
+<tr>
+<td>Capability or event</td>
+<td><a href="#capabilities-and-events-are-different-changes">Capabilities and events</a></td>
+<td>Security/provider or observer/transport/retention owner</td>
+</tr>
+<tr>
+<td>Forge, Echo, service or API integration</td>
+<td><a href="#integrations-and-receiving-services">Integrations</a></td>
+<td>Actual target host/model/service and credential owner</td>
+</tr>
+<tr>
+<td>Studio or Archviewer behavior</td>
+<td><a href="#studio-and-archviewer">UI</a></td>
+<td>Typed domain/source-data owner and publisher</td>
+</tr>
+<tr>
+<td>Chart, values or GitOps</td>
+<td><a href="#charts-values-and-gitops">Deployment</a></td>
+<td>Rendered receiver, release selector and operator</td>
+</tr>
+<tr>
+<td>Durable data or migration</td>
+<td><a href="#data-models-and-migrations">Stores</a></td>
+<td>Every writer/reader, migrator and backup owner</td>
+</tr>
+</tbody>
+</table>
+<p>For a Buster resolver, provider, admitted plan or fixture change, use the
+<a href="buster.html">Buster development guide</a>. For Control, Engine, Worker, Ingestion,
+Renderer, Corpus or Studio ownership, use <a href="prism.html#start-with-the-smallest-owner">Prism's owner selector</a>.
+Do not move a change into Control only because Control has a reachable endpoint.</p>
+<h2 id="prepare-and-finish-one-bounded-change">Prepare and finish one bounded change</h2>
+<ol>
+<li>Follow <a href="../developer-handbook.html#prepare-a-clean-checkout">Prepare a clean checkout</a>.
+Select the actual full source commit for your change. Use its lockfile and
+selected tools; do not substitute a global compiler or a live run directory.
+The handbook's historical example commit is not a universal current baseline.</li>
+<li>Name the caller, receiver, data/authority handoff and invariant. Record which
+old inputs, active runs or stored records must still work. Choose one route below.</li>
+<li>Trace changed configuration through validation, defaults, effective caller,
+capture time and receiver. Use <a href="../../reference/configuration-change-impact.html">configuration change impact</a>
+and <a href="../../reference/configuration-precedence.html">precedence</a>. A values edit
+does not move stored data; a restart does not grant capabilities.</li>
+<li>Change the owning source, not a generated copy. Add positive and denied-neighbor
+cases for the changed rule, plus interruption/replay/compatibility cases when
+state or effects cross the boundary. Select the smallest <strong>complete</strong> chain
+from the component route and command tables, not an arbitrary single green test.</li>
+<li>Update the canonical explanation, affected operator task and recorded source
+dependency. Use <a href="../documentation-maintenance.html">documentation maintenance</a>
+for its tools, generation ownership and drift checks. Keep original failures,
+partial outputs and uncertain cleanup distinct from a later success.</li>
+<li>Before activation or rollout, require the actual caller/host/operator procedure
+and observation. A local check, generated document or compilation is not that
+result. For removal, first account for active users, retained versions and data;
+remove registration/grants/providers only through their owners' supported path.</li>
+</ol>
+<p>Use Linux, Node.js 24, npm with the committed root lockfile, and the installed
+root compiler selected by that lockfile. Journal fixtures need genuine GNU
+util-linux <code>/usr/bin/flock</code>, a qualified local filesystem with complete append
+writes and synchronization, and isolated durable fixture roots. C fixtures
+need the C11 compiler <code>cc</code>. Native, Go, Helm and browser chains have additional
+prerequisites below. Do not run them against a deployed run or data root.
+The cited setup procedure includes dependency acquisition, not an offline check.</p>
+<p><strong>Source — setup, ownership and effective configuration</strong></p>
+<p>Implementation: <a href="../../../../docs/site/extend/developer-handbook.html#prepare-a-clean-checkout"><code>setup_toolchain_lock_contract</code></a>, <code>docs/site/extend/developer-handbook.md:39-64</code>. Revision: current-checkout SHA-256 <code>c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067</code>. Implementation: <a href="../../../../docs/site/extend/developer-handbook.html#repository-ownership-and-build-boundaries"><code>ownership_build_boundary_reuse</code></a>, <code>docs/site/extend/developer-handbook.md:284-309</code>. Revision: current-checkout SHA-256 <code>c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067</code>. Implementation: <a href="../../../../docs/site/reference/configuration-change-impact.html#impact-classes"><code>startup_new_run_rollout_boundaries</code></a>, <code>docs/site/reference/configuration-change-impact.md:20-44</code>. Revision: current-checkout SHA-256 <code>c8e9a84b585bd96eb0d8e095e8a6188980f8a0584adbd7cca396f8a16e91854e</code>. Implementation: <a href="../../../../docs/site/reference/roles-and-package-ownership.html#choose-the-boundary-first"><code>package_grant_host_boundary</code></a>, <code>docs/site/reference/roles-and-package-ownership.md:14-24</code>. Revision: current-checkout SHA-256 <code>be3e8aa7faa7f5f7f30fdcb6c6ca982d67834c5faeab2e78e504510d1ba17741</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69"><code>configuration_validation_paths</code></a>, <code>skills/common/plugin-runtime/foundation/config/platform.ts:53-69</code>. Revision: current-checkout SHA-256 <code>4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/schema.ts#L84-L113"><code>immutable_schema_default_resolution</code></a>, <code>skills/common/plugin-runtime/foundation/registry/schema.ts:84-113</code>. Revision: current-checkout SHA-256 <code>eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="nova-and-lifecycle">Nova and lifecycle</h2>
+<p>Nova Core is a library with a command-line interface (CLI), not an independent
+daemon. The selected CLI or project facade loads platform configuration and a
+pipeline/project, discovers the permitted packages and executes the resulting
+graph. The project compiler owns graph construction; scheduling owns when an
+eligible stage runs. Do not change one to conceal an invalid input to the other.</p>
+<p>For a graph or invocation change, identify the actual caller variant, original
+platform file, run identity, package snapshot, graph digest and recorded profile.
+Current snapshot readers distinguish run versions v1–v4 and graph versions v2/v3;
+that finite support is not permission to reinterpret an unknown version.
+Retained recovery compares the original graph; incompatible changed input belongs
+to a new run, not a relabeled recovery. Platform paths resolve from the canonical
+configuration file's directory, not an assumed shell working directory.</p>
+<p>Follow <a href="../developer-handbook.html#change-nova-lifecycle-scheduling-or-run-authority">Change Nova lifecycle, scheduling or run authority</a>.
+Select lifecycle contract checks and lifecycle/replay fixtures; add SDK/package
+ownership checks when schemas, packages or public contracts also change.
+Update Nova Core's explanation and the affected run/recovery task. On graph or
+snapshot mismatch stop with the original retained inputs and error; do not
+regenerate the old identity, delete the snapshot or start a replacement run as recovery.</p>
+<p><strong>Source — actual invocation and versioned snapshot readers</strong></p>
+<p>Implementation: <a href="../../../../skills/nova/core/execution/engine-snapshots.ts#L68-L109"><code>historical_profile_graph_pins</code></a>, <code>skills/nova/core/execution/engine-snapshots.ts:68-109</code>. Revision: current-checkout SHA-256 <code>50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd</code>. Implementation: <a href="../../../../skills/nova/core/cli.ts#L28-L54"><code>CLI_input_audit_branch</code></a>, <code>skills/nova/core/cli.ts:28-54</code>. Revision: current-checkout SHA-256 <code>09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69"><code>configuration_validation_paths</code></a>, <code>skills/common/plugin-runtime/foundation/config/platform.ts:53-69</code>. Revision: current-checkout SHA-256 <code>4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="lifecycle-decisions-and-waits">Lifecycle decisions and waits</h2>
+<p>The live flow is stage result → reducer → budgeted decision → durable records
+and next action. <code>applyStageResult</code> accepts results only from <code>running</code>.
+It requires a reason for non-<code>passed</code> outcomes and consumes an attempt after
+validation. Configured technical retries have their own accounting; remediation
+has another budget. A new reason is not interchangeable
+with a new outcome or scheduling action. Completed-attempt replay calls the same
+reducer and repair decision; changing only live state breaks that agreement.</p>
+<p><code>decisionWait</code> binds an orchestrator wait to run, stage and attempt. Its authorized
+issuer and signal type are part of the continuation boundary; the orchestrator
+wait shown here has <code>expiresAt: null</code>. That does not remove validation from other
+wait kinds or permit a stale/foreign signal. Preserve wait identity and the
+original approved payload across interruption. Test allowed transitions, denied
+neighbor states, exhausted budgets and live/replayed equality. Include the
+process-death fixture, which writes a journal and kills a real Node child.
+See the <a href="../developer-handbook.html#change-nova-lifecycle-scheduling-or-run-authority">lifecycle route</a>
+and <a href="../../use/recovery.html#pipeline-state-recovery">original-state recovery</a>.</p>
+<p><strong>Source — one reducer and stable waits across live work and replay</strong></p>
+<p>Implementation: <a href="../../../../skills/nova/core/lifecycle/reducer.ts#L60-L64"><code>requiredReason</code></a>, <code>skills/nova/core/lifecycle/reducer.ts:60-64</code>. Revision: current-checkout SHA-256 <code>13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d</code>. Implementation: <a href="../../../../skills/nova/core/lifecycle/reducer.ts#L96-L136"><code>outcome_accounting_guard</code></a>, <code>skills/nova/core/lifecycle/reducer.ts:96-136</code>. Revision: current-checkout SHA-256 <code>13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d</code>. Implementation: <a href="../../../../skills/nova/core/lifecycle/recovery-state.ts#L39-L69"><code>completed_attempt_replay</code></a>, <code>skills/nova/core/lifecycle/recovery-state.ts:39-69</code>. Revision: current-checkout SHA-256 <code>bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f</code>. Implementation: <a href="../../../../skills/nova/core/execution/run-decisions.ts#L29-L60"><code>decision_recording</code></a>, <code>skills/nova/core/execution/run-decisions.ts:29-60</code>. Revision: current-checkout SHA-256 <code>a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171</code>. Implementation: <a href="../../../../skills/nova/core/lifecycle/wait-request.ts#L1-L19"><code>wait_issuer_identity_boundary</code></a>, <code>skills/nova/core/lifecycle/wait-request.ts:1-19</code>. Revision: current-checkout SHA-256 <code>0e9f41bd8e4a5ceb6e43d53e713e3fbbdacca2540ff31134d0409745252419de</code>. Implementation: <a href="../../../../tests/verification/reliability/lifecycle.test.mts#L61-L81"><code>process_death_fixture</code></a>, <code>tests/verification/reliability/lifecycle.test.mts:61-81</code>. Revision: current-checkout SHA-256 <code>3ff75f78dc7ce12b4d362a7fc40292178d49eafd28eab5cada3c4508ccda9ace</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: <code>node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs</code> and <code>node --test tests/verification/reliability/lifecycle.test.mts</code>; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="effects-and-unknown-outcomes">Effects and unknown outcomes</h2>
+<p>The effect coordinator checks the original idempotency request and existing
+receipt, acquires the resource lock, then rechecks identity under that lock.
+A terminal receipt returns the existing outcome without another invocation.
+The durable requested/accepted state separates first invocation from recovery.
+An accepted request without a terminal receipt uses the adapter's <code>receipt</code>
+method. If it is absent or returns no receipt, recovery stops; it does not grant
+a fresh effect or a new idempotency key. Generic invoke/shutdown adapters need
+not implement this recovery route.</p>
+<p>Keep effect encoding/version, attempt/resource identity, lock renewal, current
+fence and durable result together. A renewal/release failure can leave additional
+failure evidence; do not hide it with a retry. Cover interruption before/after
+acceptance and receipt, lost response, conflicting identity, corruption and
+failed renewal/release. The external-effect fixture starts the real CLI and a
+local service, writes durable temporary state and can kill the child; it is not
+an inert assertion-only test. See the handbook's
+<a href="../developer-handbook.html#change-nova-lifecycle-scheduling-or-run-authority">effect change route</a>.</p>
+<p>Before audit or recovery, follow <a href="../../use/recovery.html#pipeline-state-recovery">Pipeline state recovery</a>:
+establish the writer fence and preserve the original related stores. FileJournal
+construction can create a lock and truncate a nonempty incomplete tail through
+its last newline, possibly to zero, then synchronize it before parsing.
+A projected audit adds no canonical event, but is not a guarantee of unchanged
+storage. Preserve the first diagnostic and original bytes before an authorized
+inspection; never remove a live lock inode or manufacture a no-record substitute.</p>
+<p><strong>Source — stable effects, receipt recovery and journal effects</strong></p>
+<p>Implementation: <a href="../../../../skills/nova/core/effects/durable-invocation.ts#L39-L66"><code>idempotent_request_lock_recheck</code></a>, <code>skills/nova/core/effects/durable-invocation.ts:39-66</code>. Revision: current-checkout SHA-256 <code>6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2</code>. Implementation: <a href="../../../../skills/nova/core/effects/durable-invocation.ts#L88-L145"><code>accepted_receipt_recovery_fence</code></a>, <code>skills/nova/core/effects/durable-invocation.ts:88-145</code>. Revision: current-checkout SHA-256 <code>6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2</code>. Implementation: <a href="../../../../skills/nova/core/effects/identity.ts#L1-L45"><code>effect_identity_owner</code></a>, <code>skills/nova/core/effects/identity.ts:1-45</code>. Revision: current-checkout SHA-256 <code>8d3e2f32b4fdb98f6159c989b41fe926fd5b518791b4b02246d633dff847bcb9</code>. Implementation: <a href="../../../../skills/nova/core/state/journal.ts#L30-L81"><code>journal_lock_conditional_repair_effects</code></a>, <code>skills/nova/core/state/journal.ts:30-81</code>. Revision: current-checkout SHA-256 <code>25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf</code>. Implementation: <a href="../../../../tests/verification/reliability/external-effect-recovery.test.mts#L72-L99"><code>real_CLI_fixture_child_effect</code></a>, <code>tests/verification/reliability/external-effect-recovery.test.mts:72-99</code>. Revision: current-checkout SHA-256 <code>75501024d5ef9aaac53ff4dbe7666cc528624217a3749666a2d1ea837d4d4e22</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: <code>node --test tests/verification/reliability/external-effect-recovery.test.mts</code> plus changed identity fixtures; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="worker-and-native-host-boundaries">Worker and native host boundaries</h2>
+<p>The caller's versioned attempt/profile contract enters Worker Core. The native
+supervisor owns the process lifetime, sealed control channel, output spool and
+resource reservations. The host operator owns the root-managed launcher, policy,
+Linux control groups (cgroups), runtime identity and aggregate capacity.
+A cgroup is a kernel resource-control boundary, not a JavaScript memory limit.
+The pool binds the real filesystem/device/inode; a copied pathname or policy
+file is not proof of the original host boundary.</p>
+<p>Follow <a href="../developer-handbook.html#change-worker-core-or-native-execution">Change Worker Core or native execution</a>.
+Keep protocol/version, host/boot identity, supervisor lifetime lock, cancellation,
+spool sealing and recovery consistent. The spool owns bounded private output
+files and synchronizes accepted bytes; channel framing alone does not define
+durable acknowledgement. Tests must account for every owned process before
+cleanup or renewed admission. Preserve unresolved ownership and unfinished
+cleanup; do not declare ready because contract fixtures pass.</p>
+<p>Start with Worker contract and attempt-executor checks. Select the native chain
+only with the genuine host, C compiler, prepared cgroups, root-owned policy,
+Helm/native inputs and selected Go prerequisites. The Node Resource Interface
+(NRI) connects the runtime to the native pool. Its builder separately checks
+the selected Go version and modules, requires an absent output, then writes a
+binary. Neither building it nor passing a render proves a supported running host.</p>
+<p><strong>Source — host ownership, output and aggregate native boundaries</strong></p>
+<p>Implementation: <a href="../../../../skills/worker/core/worker/ownership-store.ts#L60-L95"><code>host_identity_lifetime_fence</code></a>, <code>skills/worker/core/worker/ownership-store.ts:60-95</code>. Revision: current-checkout SHA-256 <code>d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79</code>. Implementation: <a href="../../../../skills/worker/core/worker/native-output-spool.ts#L27-L67"><code>spool_private_bounded_synced_bytes</code></a>, <code>skills/worker/core/worker/native-output-spool.ts:27-67</code>. Revision: current-checkout SHA-256 <code>da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7</code>. Implementation: <a href="../../../../skills/worker/core/worker/native-control-channel.ts#L1-L36"><code>native_channel_owner</code></a>, <code>skills/worker/core/worker/native-control-channel.ts:1-36</code>. Revision: current-checkout SHA-256 <code>253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8</code>. Implementation: <a href="../../../../skills/worker/core/worker/native-resource-pool.ts#L1-L38"><code>resource_pool_owner</code></a>, <code>skills/worker/core/worker/native-resource-pool.ts:1-38</code>. Revision: current-checkout SHA-256 <code>2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee</code>. Implementation: <a href="../../../../scripts/build-native-worker-nri.mjs#L1-L17"><code>selected_Go_build_effect</code></a>, <code>scripts/build-native-worker-nri.mjs:1-17</code>. Revision: current-checkout SHA-256 <code>2030ab287fd08b0acbe476b2248c92a44518117d68e278db94737516b7ec2dd8</code>. Implementation: <a href="../../../../tests/verification/reliability/worker-native-launcher.test.mts#L11-L43"><code>C_build_native_fixture</code></a>, <code>tests/verification/reliability/worker-native-launcher.test.mts:11-43</code>. Revision: current-checkout SHA-256 <code>4ddfccf7e7ea894c8735f66777af0f193943d83e302d09a47440e83c66a6089c</code>. Implementation: <a href="../../../../tests/verification/deployment/prism-native-runtime.test.mjs#L15-L24"><code>Helm_fixture_subprocess</code></a>, <code>tests/verification/deployment/prism-native-runtime.test.mjs:15-24</code>. Revision: current-checkout SHA-256 <code>8a103340311017870f682947f0003e59849048e344035bb55842851ee7d5531d</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="foundation-discovery-and-trust">Foundation discovery and trust</h2>
+<p>Foundation's plugin registry discovers inert manifests before executable
+activation. It checks package identity/digest/trust, schema, references and
+registrations; the import audit uses a permissioned Node child before activation.
+This registry is not an Open Container Initiative (OCI) image storage server.
+Role bundle membership, an installed package, a requested capability and the
+caller's actual provider/grant are separate decisions.</p>
+<p>Use <a href="../developer-handbook.html#change-registry-storage-or-package-discovery">Change registry, storage or package discovery</a>.
+Change the owning manifest/trust/activation layer, include denied imports and
+capabilities, and exercise replacement/removal with retained old package state.
+Build the maintained sandbox only in an isolated source checkout: it calls <code>cc</code>,
+writes a temporary native binary, sets its mode and renames it into the source
+sandbox path. The import-safety check actually discovers and activates selected
+first-party packages. Do not widen trust or grants merely to pass a failed import;
+keep the first typed registry code/details and original package bytes.</p>
+<p><strong>Source — manifest-to-activation trust and real child effects</strong></p>
+<p>Implementation: <a href="../../../../scripts/build-plugin-sandbox.mjs#L1-L25"><code>C11_compile_atomic_output</code></a>, <code>scripts/build-plugin-sandbox.mjs:1-25</code>. Revision: current-checkout SHA-256 <code>ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/discovery.ts#L105-L137"><code>inert_manifest_trust_digest</code></a>, <code>skills/common/plugin-runtime/foundation/registry/discovery.ts:105-137</code>. Revision: current-checkout SHA-256 <code>1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/import-audit.ts#L27-L58"><code>permission_child_import_audit_effect</code></a>, <code>skills/common/plugin-runtime/foundation/registry/import-audit.ts:27-58</code>. Revision: current-checkout SHA-256 <code>764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3</code>. Implementation: <a href="../../../../tests/verification/contracts/check-plugin-system-v2-import-safety.mjs#L1-L38"><code>actual_registry_activation_test</code></a>, <code>tests/verification/contracts/check-plugin-system-v2-import-safety.mjs:1-38</code>. Revision: current-checkout SHA-256 <code>a65c62186340e0c95f7a6371bc58ce48cb00ee69e60589a076a5638987b3ccd3</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L38"><code>code_details_error_identity</code></a>, <code>skills/common/plugin-runtime/foundation/registry/errors.ts:1-38</code>. Revision: current-checkout SHA-256 <code>148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="sdk-and-public-contracts">SDK and public contracts</h2>
+<p>The software development kit (SDK) exposes shared contracts to actual producers
+and consumers. Start with the canonical schema and encoding meaning, then the
+source generator, generated types/exports and every supported caller. A TypeScript
+optional field is not compatibility proof for a closed JSON schema. Package
+version, wire version, source digest and portable JSON encoding are different
+identities; choose the transition for the intended identity change explicitly.</p>
+<p>Follow <a href="../developer-handbook.html#change-sdk-or-shared-contracts">Change SDK or shared contracts</a>
+and the <a href="../../reference/sdk.html">SDK reference</a>. The SDK check compiles the genuine
+schema with the installed locked dependency and compares generated bytes;
+without <code>--check</code> that generator writes the maintained generated TypeScript file.
+Do not hand-edit it. SDK build emits compiler outputs. The local SDK fixture
+chain exercises selected encoding/identity/delivery compatibility, not every
+export or every deployed reader. Require declared old→new and new→old directions,
+denied input/removal cases and retained old identity tests before release.
+Route generated reference changes through documentation maintenance; a reference
+collector or successful typecheck alone is not activation or consumer acceptance.</p>
+<p><strong>Source — canonical schema, generator and identity compatibility</strong></p>
+<p>Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/schema.ts#L84-L113"><code>immutable_schema_default_resolution</code></a>, <code>skills/common/plugin-runtime/foundation/registry/schema.ts:84-113</code>. Revision: current-checkout SHA-256 <code>eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557</code>. Implementation: <a href="../../../../skills/nova/core/effects/identity.ts#L1-L45"><code>effect_identity_owner</code></a>, <code>skills/nova/core/effects/identity.ts:1-45</code>. Revision: current-checkout SHA-256 <code>8d3e2f32b4fdb98f6159c989b41fe926fd5b518791b4b02246d633dff847bcb9</code>. Implementation: <a href="../../../../scripts/generate-plugin-sdk-types.mjs#L1-L33"><code>canonical_schema_codegen_check_write</code></a>, <code>scripts/generate-plugin-sdk-types.mjs:1-33</code>. Revision: current-checkout SHA-256 <code>3fe20ad1f2e5d604f4197d3fb7dd6e897f2ad3f6e6fd6b013412fc0eba8aed0b</code>. Implementation: <a href="../../../../docs/site/extend/developer-handbook.html#change-sdk-or-shared-contracts"><code>SDK_contract_route_reuse</code></a>, <code>docs/site/extend/developer-handbook.md:1319-1359</code>. Revision: current-checkout SHA-256 <code>c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="capabilities-and-events-are-different-changes">Capabilities and events are different changes</h2>
+<p>For a <strong>capability</strong> (permission to perform a named operation), trace the closed
+vocabulary, allowed operation/resource kinds, provider, resource constraints,
+requesting registration and caller grant. Adding a vocabulary name alone does
+not supply a provider or grant. Reject unknown names, denied operations, wrong
+resource kinds and out-of-scope resources. Keep role packaging separate.</p>
+<p>For an <strong>event</strong>, trace its producer, envelope, namespace, identity, receiving
+observer, redaction, order, duplicate handling, replay and retention. The
+<code>plugin-domain-event.v2</code> schema constrains names to the plugin namespace and
+requires producer provenance and sequence. Retained flat-v1 telemetry is a
+separate contract, not evidence that every current producer uses that format.
+Emitting an event does not grant a capability. Use the
+<a href="../developer-handbook.html#change-telemetry-or-derived-views">telemetry/derived-view route</a>
+and <a href="../../understand/telemetry.html">telemetry mechanism</a>.</p>
+<p>Select changed security/provider and observer/store fixtures. The selected
+telemetry generator's <code>--check</code> still runs PATH-selected <code>gofmt</code>; non-check mode
+writes generated outputs. Require the actual producer-to-consumer denial,
+ordering, version and retirement cases. A complete new-capability or new-event
+registration/consumer/role task is not supplied by this router; assign that
+missing task before claiming the extension can be activated or safely removed.</p>
+<p><strong>Source — capability denials versus event envelope and generated telemetry</strong></p>
+<p>Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L37-L70"><code>closed_capability_definitions</code></a>, <code>skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts:37-70</code>. Revision: current-checkout SHA-256 <code>147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L170-L197"><code>resource_constraint_denial</code></a>, <code>skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts:170-197</code>. Revision: current-checkout SHA-256 <code>147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0</code>. Implementation: <a href="../../../../skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1060-L1077"><code>namespaced_plugin_domain_event</code></a>, <code>skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json:1060-1077</code>. Revision: current-checkout SHA-256 <code>837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db</code>. Implementation: <a href="../../../../scripts/generate-telemetry-contracts.mjs#L14-L39"><code>gofmt_child_and_generated_write</code></a>, <code>scripts/generate-telemetry-contracts.mjs:14-39</code>. Revision: current-checkout SHA-256 <code>71f894da41b2bda7462f785f2c0adbab863e4037a91dd649cd968f02547c5a0c</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="integrations-and-receiving-services">Integrations and receiving services</h2>
+<p>Choose the actual <a href="../plugin-catalogue/README.html">package guide</a> and the
+<a href="../developer-handbook.html#select-the-smallest-complete-check-chain">smallest complete check chain</a>.
+Trace caller → admitted target → host/model/service → bounded request → persisted
+result and downstream consumer. Forge, Echo and service/API integrations do not
+share an invented start command or one generic receipt implementation.
+An application programming interface (API) defines the receiving operation;
+endpoint reachability alone does not authorize it.</p>
+<p>For runtime dispatch, verify the selected endpoint, authentication, resource
+identity and limits at their real loader and receiver. HTTP means Hypertext
+Transfer Protocol. HMAC is a keyed message authentication code; the shown adapter
+signs the idempotency key and exact JSON body with a confidentially obtained
+secret. SPIFFE (Secure Production Identity Framework for Everyone) workload
+identity is a different selected trust path; do not substitute an HMAC secret.
+The adapter rejects oversized requests, invalid target or cancellation; a safe
+bounded no-follow retained-result read is not proof of successful remote work.</p>
+<p><code>createDispatchAdapter</code> exposes ready/invoke/shutdown here, not <code>receipt</code>.
+If a response is lost, preserve the request identity and receiving-service
+outcome; stop while it is unknown. Do not claim durable-effect recovery can
+reconcile an adapter that lacks its required receipt method. Run selected package
+and original receiving-host fixtures; use <code>verify:prism:native-dispatch</code> when that
+Control boundary changes. Complete Forge/Echo host/model/policy/version and
+lost-response procedures still need their own supported component path.</p>
+<p><strong>Source — target admission, authenticated request and missing generic receipt route</strong></p>
+<p>Implementation: <a href="../../../../skills/common/plugins/runtime-dispatch/src/adapter.ts#L14-L25"><code>bounded_endpoint_defaults</code></a>, <code>skills/common/plugins/runtime-dispatch/src/adapter.ts:14-25</code>. Revision: current-checkout SHA-256 <code>5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e</code>. Implementation: <a href="../../../../skills/common/plugins/runtime-dispatch/src/adapter.ts#L113-L137"><code>HTTP_identity_auth_output</code></a>, <code>skills/common/plugins/runtime-dispatch/src/adapter.ts:113-137</code>. Revision: current-checkout SHA-256 <code>5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e</code>. Implementation: <a href="../../../../skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts#L14-L38"><code>dispatch_admission_no_receipt_option</code></a>, <code>skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts:14-38</code>. Revision: current-checkout SHA-256 <code>16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a</code>. Implementation: <a href="../../../../skills/common/plugins/runtime-dispatch/src/result-persistence.ts#L43-L64"><code>no_follow_result_reader</code></a>, <code>skills/common/plugins/runtime-dispatch/src/result-persistence.ts:43-64</code>. Revision: current-checkout SHA-256 <code>4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41</code>. Implementation: <a href="../../../../skills/nova/core/effects/durable-invocation.ts#L88-L145"><code>accepted_receipt_recovery_fence</code></a>, <code>skills/nova/core/effects/durable-invocation.ts:88-145</code>. Revision: current-checkout SHA-256 <code>6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="studio-and-archviewer">Studio and Archviewer</h2>
+<p>Prism Studio is a typed document editor. Archviewer is a separate static reader;
+neither may take over the source component's write/approval authority. Use
+<a href="../developer-handbook.html#change-ui-behavior">Change UI behavior</a>,
+<a href="prism.html#start-with-the-smallest-owner">Prism ownership</a> and
+<a href="../../understand/archviewer.html">Archviewer</a>.
+User interface (UI) changes must preserve domain operations, revision conflicts,
+preview isolation, authentication, keyboard access and responsive behavior.
+Preserve user intent on a stale-revision conflict rather than overwriting it.</p>
+<p>The Studio build empties <code>skills/prism/dist-studio</code>; npm's <code>prebuild:studio</code>
+also generates contract validators before Vite runs. The development server
+binds loopback <code>127.0.0.1:4190</code>. Playwright can start or reuse a server there;
+identify its owner/bytes before trusting a result from an already occupied port.
+Its declared projects cover desktop, phone and tablet sizes, not every browser.
+Build/test output is not publication or a deployed browser observation.
+For Archviewer, native nginx/OpenSSL prerequisites and the actual input document
+and publisher must be established separately. If that supported publisher/read
+path is missing, stop there; do not replace it with a Studio build or screenshot.</p>
+<p><strong>Source — Studio npm lifecycle, output directory and browser-server boundary</strong></p>
+<p>Implementation: <a href="../../../../skills/prism/package.json#L1-L40"><code>Studio_nested_script_owner</code></a>, <code>skills/prism/package.json:1-40</code>. Revision: current-checkout SHA-256 <code>19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c</code>. Implementation: <a href="../../../../skills/prism/studio/vite.config.ts#L1-L10"><code>UI_build_write_local_server</code></a>, <code>skills/prism/studio/vite.config.ts:1-10</code>. Revision: current-checkout SHA-256 <code>523f55894f9562a6c0f3bb2816ad9ab6e5a0538e7fbd7cf8d535f876a42d2ee5</code>. Implementation: <a href="../../../../skills/prism/studio/playwright.config.mjs#L1-L7"><code>browser_projects_managed_server</code></a>, <code>skills/prism/studio/playwright.config.mjs:1-7</code>. Revision: current-checkout SHA-256 <code>b7a8e95cac93fae2ccc04cf5d4c79bab218b9e308164a1605667811ddb690655</code>. Implementation: <a href="../../../../docs/site/extend/developer-handbook.html#change-ui-behavior"><code>UI_route_reuse</code></a>, <code>docs/site/extend/developer-handbook.md:1680-1726</code>. Revision: current-checkout SHA-256 <code>c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="charts-values-and-gitops">Charts, values and GitOps</h2>
+<p>Helm renders templates from selected values. GitOps uses a repository selection
+for deployment reconciliation; a render is not that reconciliation. Follow
+<a href="../developer-handbook.html#change-charts-or-gitops">Change charts or GitOps</a>
+and the <a href="../../reference/configuration-change-impact.html">configuration change-impact matrix</a>.
+Trace each changed value/schema/default or omitted field through conditions,
+overrides and templates to the receiving process, volume, network policy or
+role-based access control (RBAC) rule. Determine whether the effect is restart,
+rollout, new run, host preparation or a separate data procedure.</p>
+<p>The selected GitOps fixture copies and changes a temporary repository, creates
+Git commits, materializes selections and invokes native Helm. Its synthetic
+release data are fixture inputs, not accepted releases. Require the original
+release/credentials/tool prerequisites and selected receivers. Configuration
+and local-Helm checks detect their named input drift; they do not prove cluster
+admission, image availability, storage attachment or a completed sync.
+Before deployment or rollback, use the real operator maintenance/recovery path
+with original images, data, credentials and writer boundaries. An old image does
+not restore a schema or credential. Do not propose unconditional reruns of an
+operation whose partial apply or cleanup is unknown.</p>
+<p><strong>Source — render inputs, real temporary Git/Helm effects and rollout classification</strong></p>
+<p>Implementation: <a href="../../../../docs/site/extend/developer-handbook.html#change-charts-or-gitops"><code>charts_GitOps_route_reuse</code></a>, <code>docs/site/extend/developer-handbook.md:1475-1516</code>. Revision: current-checkout SHA-256 <code>c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067</code>. Implementation: <a href="../../../../tests/verification/deployment/prism-native-runtime.test.mjs#L15-L24"><code>Helm_fixture_subprocess</code></a>, <code>tests/verification/deployment/prism-native-runtime.test.mjs:15-24</code>. Revision: current-checkout SHA-256 <code>8a103340311017870f682947f0003e59849048e344035bb55842851ee7d5531d</code>. Implementation: <a href="../../../../tests/verification/deployment/gitops-release.test.mjs#L15-L48"><code>Git_temp_render_mutation_fixture</code></a>, <code>tests/verification/deployment/gitops-release.test.mjs:15-48</code>. Revision: current-checkout SHA-256 <code>a48622956e62dc1461e8d696c36baa2a2087be9d3d0128e98e91a7e995bac80a</code>. Implementation: <a href="../../../../docs/site/reference/configuration-change-impact.html#impact-classes"><code>startup_new_run_rollout_boundaries</code></a>, <code>docs/site/reference/configuration-change-impact.md:20-44</code>. Revision: current-checkout SHA-256 <code>c8e9a84b585bd96eb0d8e095e8a6188980f8a0584adbd7cca396f8a16e91854e</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="data-models-and-migrations">Data models and migrations</h2>
+<p>Name the durable invariant, every writer/reader, transaction boundary and backup
+owner before changing a stored field. Plan expansion, compatibility and backfill
+of existing records separately from later removal. Keep old readers until their
+supported-version and retained-data obligations are closed. A migration for one
+store is not a general platform migration or restoration procedure.</p>
+<p>Use <a href="prism.html#change-storage-or-add-a-migration">Prism storage changes</a>.
+Its migrator sorts numbered SQL files, takes a transactional advisory lock and
+records applied <strong>filenames</strong>, not SQL content hashes. Never edit an applied
+migration. Use the migrator role for data definition and the runtime role for
+application access. New immutable artifact bytes are synchronized and published
+without replacing existing content before their database reference is committed.
+Retain database, artifact references, keys and original media as one consistent
+application recovery group; metadata restoration alone is not restored content.</p>
+<p>Test both a new database and the oldest supported schema, application-code
+rollback while the new schema remains, conflicts and interruption. <code>test:storage</code>
+is a selected local test route, not a claim of native PostgreSQL or full restore.
+Require the actual isolated database and application read/restore observation
+before the corresponding operational claim. Use <a href="../../use/recovery.html">Recovery</a>
+for supported component procedures; if backfill, cutover or restore is not
+provided, record that missing procedure and stop before the irreversible change.</p>
+<p><strong>Source — Prism SQL migration history and durable artifact boundaries</strong></p>
+<p>Implementation: <a href="../../../../docs/site/extend/platform/prism.html#change-storage-or-add-a-migration"><code>migration_route_reuse</code></a>, <code>docs/site/extend/platform/prism.md:374-401</code>. Revision: current-checkout SHA-256 <code>9c7b43487328edd95695c7581468b768f21d538dd2d7e429aa62e6a9ec6badeb</code>. Implementation: <a href="../../../../skills/prism/storage/index.ts#L21-L72"><code>migration_lock_ledger_transaction</code></a>, <code>skills/prism/storage/index.ts:21-72</code>. Revision: current-checkout SHA-256 <code>e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199</code>. Implementation: <a href="../../../../skills/prism/storage/artifacts.ts#L36-L68"><code>immutable_artifact_publication</code></a>, <code>skills/prism/storage/artifacts.ts:36-68</code>. Revision: current-checkout SHA-256 <code>8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f</code>. Implementation: <a href="../../../../docs/site/use/recovery.html#pipeline-state-recovery"><code>preservation_reconciliation_not_pure_read</code></a>, <code>docs/site/use/recovery.md:936-985</code>. Revision: current-checkout SHA-256 <code>944988014bbfecd79138d2180f47631218ecea38efef9ae4bc3239e4e76a1a52</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="select-commands-with-their-real-effects">Select commands with their real effects</h2>
+<p>These are source-defined commands, not checks executed for this page. Start at
+the repository root after the setup and component prerequisites above. Root
+<code>npm run</code> resolves the installed local binaries through npm's PATH; it does not
+qualify a substituted compiler/tool. Stop at the first nonzero exit in a serial
+chain. Preserve output, selected revision, working directory, non-secret inputs
+and temporary-artifact/cleanup status. Exit zero establishes only the named
+check's scope, not product, native, browser or deployed success.</p>
+<h3 id="root-command-routes">Root command routes</h3>
+<table>
+<thead>
+<tr>
+<th>Exact root invocation</th>
+<th>Additional prerequisites and effects</th>
+<th>Result meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run verify:worker-core:contracts</code></td>
+<td>Locked TypeScript and source contract inputs; Node checker then two-stage contract chain with noEmit typecheck</td>
+<td>Worker contract consistency, not native host readiness</td>
+</tr>
+<tr>
+<td><code>npm run verify:worker-core:attempt-executor</code></td>
+<td>Node contract checker then two noEmit TypeScript projects; original package inputs</td>
+<td>Attempt-executor/type contracts, not supervised process recovery</td>
+</tr>
+<tr>
+<td><code>npm run verify:runtime-packaging:ownership</code></td>
+<td>Role manifests and package-ownership authorities; Node ownership checker</td>
+<td>Named packaging boundaries, not activation or host admission</td>
+</tr>
+<tr>
+<td><code>npm run plugin-system:sdk:check</code></td>
+<td>Installed json-schema-to-typescript; real compilation and generated-byte comparison; selected check does not write generated target</td>
+<td>Current canonical generated types only</td>
+</tr>
+<tr>
+<td><code>npm run plugin-system:sdk:build</code></td>
+<td>Locked root tsc; emits SDK build outputs</td>
+<td>Build, not full consumer compatibility</td>
+</tr>
+<tr>
+<td><code>npm run plugin-system:sandbox:build</code></td>
+<td>PATH cc/C11 hardening; writes temporary maintained sandbox binary, chmod then rename</td>
+<td>Built isolation launcher, not trusted running host</td>
+</tr>
+<tr>
+<td><code>npm run docs:inventory:config:check</code></td>
+<td>Follow documentation-maintenance native/input prerequisites; traverse real config/schema sources and compare inventory</td>
+<td>Named inventory drift, not global configuration acceptance</td>
+</tr>
+<tr>
+<td><code>npm run docs:inventory:local-helm:check</code></td>
+<td>Qualified Helm and selected chart/value inputs; generator check then boolean semantics checker</td>
+<td>Local authorities/selected branch semantics, not live cluster state</td>
+</tr>
+<tr>
+<td><code>npm run docs:generate:check</code></td>
+<td>Follow documentation-maintenance source/input/native acquisition prerequisites; genuine source discovery and generated-output comparison</td>
+<td>Selected generated outputs, not write-free execution merely because --check is present</td>
+</tr>
+<tr>
+<td><code>npm run docs:governance:check</code></td>
+<td>Classification, registered dependencies and baseline inputs; compare governance outputs</td>
+<td>Governance constraints, not independent content correctness</td>
+</tr>
+<tr>
+<td><code>npm run docs:check:refs</code></td>
+<td>Actual referenced checkout/source objects and documented reference prerequisites</td>
+<td>Selected repository references, not published browser routes</td>
+</tr>
+<tr>
+<td><code>npm run docs:publication:check</code></td>
+<td>Runs docs:publication:test before publication check; test fixture/effect prerequisites apply</td>
+<td>Current publication checks, not future HTML/browser/search implementation</td>
+</tr>
+<tr>
+<td><code>npm run docs:publication:build</code></td>
+<td>Current publication input/output ownership and maintenance prerequisites; stages raw Markdown/assets and writes build output</td>
+<td>Not a rendered HTML/search or live-site proof</td>
+</tr>
+<tr>
+<td><code>npm run docs:site-boundary:check</code></td>
+<td>Current reader-site input boundary checker</td>
+<td>Source boundary, not complete reader-task acceptance</td>
+</tr>
+<tr>
+<td><code>npm run docs:core-guides:check</code></td>
+<td>Genuine Git objects and protected source revision; Git show and whole-file comparisons</td>
+<td>Named Core guide byte/revision constraints; never fix by an unexplained repin</td>
+</tr>
+<tr>
+<td><code>npm run versions:check</code></td>
+<td>Central versions and their selected consumer files</td>
+<td>Named version drift, not an observed build</td>
+</tr>
+<tr>
+<td><code>npm run verify:sdk:local</code></td>
+<td>Serial selected reliability fixtures; real identity/compiler/durability/cancellation paths and temporary outputs require original harness prerequisites</td>
+<td>Named portable JSON/identity/delivery cases, not every SDK consumer</td>
+</tr>
+<tr>
+<td><code>npm run verify:worker-core:native-runtime</code></td>
+<td>Four real Node native/render fixture files, C compiler/prepared host/cgroups/Helm as selected; then GOTOOLCHAIN=local Go race test in tools/native-worker-nri, -mod=readonly -count=1</td>
+<td>Selected native cases; missing supported host remains not ready</td>
+</tr>
+<tr>
+<td><code>npm run verify:prism:native-dispatch</code></td>
+<td>Original native operation-journal then HTTP fixture prerequisites, real processes/stores/service identities</td>
+<td>Selected Prism dispatch, not every service integration</td>
+</tr>
+</tbody>
+</table>
+<h3 id="prism-command-routes">Prism command routes</h3>
+<p>Invoke from the repository root using <code>--prefix skills/prism</code>; npm runs the
+script with <code>skills/prism</code> as its working directory. Do not change to another
+working directory and retain root-relative assumptions. Npm lifecycle hooks
+still apply: <code>build:studio</code> invokes <code>prebuild:studio</code>, including when nested
+inside remediation. The explicit development environment below is not a
+production server configuration.</p>
+<table>
+<thead>
+<tr>
+<th>Exact invocation from repository root</th>
+<th>Prerequisites, environment and effects</th>
+<th>Result meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run test:domain --prefix skills/prism</code></td>
+<td>Locked source/contract dependencies; runs domain and domain-storage Node fixtures</td>
+<td>Typed/domain cases, not deployed database behavior</td>
+</tr>
+<tr>
+<td><code>npm run test:storage --prefix skills/prism</code></td>
+<td>Locked source/contract dependencies; runs storage and Control Node fixtures</td>
+<td>Selected local storage tests, not native PostgreSQL/restore</td>
+</tr>
+<tr>
+<td><code>npm run build:studio --prefix skills/prism</code></td>
+<td>Prebuild regenerates contract validators; Vite replaces dist-studio</td>
+<td>Compiled UI artifact, not observed browser or publisher</td>
+</tr>
+<tr>
+<td><code>npm run dev:studio --prefix skills/prism</code></td>
+<td>Explicit NODE_ENV=development; starts loopback Vite at 127.0.0.1:4190; port and process owner required</td>
+<td>Development server; stop owned process after use</td>
+</tr>
+<tr>
+<td><code>npm run test:studio --prefix skills/prism</code></td>
+<td>Adapter Node fixtures then Playwright; genuine installed browser/dependencies and identified loopback server; may start/reuse server</td>
+<td>Declared desktop/phone/tablet cases, not deployment</td>
+</tr>
+<tr>
+<td><code>npm run typecheck --prefix skills/prism</code></td>
+<td>Installed root-selected compiler; tsc --noEmit in Prism package</td>
+<td>Static types, not activation</td>
+</tr>
+<tr>
+<td><code>npm run test:studio-remediation --prefix skills/prism</code></td>
+<td>Roundtrip and preview-assets Node fixtures; nested build with validator writes/dist replacement; then remediation Playwright/server effects</td>
+<td>Selected remediation path, not all UI security or visual acceptance</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — actual npm owners and selected generator/native/browser effects</strong></p>
+<p>Implementation: <a href="../../../../package.json#L1-L31"><code>workspace_map</code></a>, <code>package.json:1–31</code>. Revision: current-checkout SHA-256 <code>c1c7109e5aced3207861e9e676f69056583878c46bed4facbcd0503a9b8e10b6</code>. Implementation: <a href="../../../../skills/prism/package.json#L1-L40"><code>Studio_nested_script_owner</code></a>, <code>skills/prism/package.json:1-40</code>. Revision: current-checkout SHA-256 <code>19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c</code>. Implementation: <a href="../../../../scripts/generate-plugin-sdk-types.mjs#L1-L33"><code>canonical_schema_codegen_check_write</code></a>, <code>scripts/generate-plugin-sdk-types.mjs:1-33</code>. Revision: current-checkout SHA-256 <code>3fe20ad1f2e5d604f4197d3fb7dd6e897f2ad3f6e6fd6b013412fc0eba8aed0b</code>. Implementation: <a href="../../../../scripts/build-plugin-sandbox.mjs#L1-L25"><code>C11_compile_atomic_output</code></a>, <code>scripts/build-plugin-sandbox.mjs:1-25</code>. Revision: current-checkout SHA-256 <code>ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec</code>. Implementation: <a href="../../../../scripts/build-native-worker-nri.mjs#L1-L17"><code>selected_Go_build_effect</code></a>, <code>scripts/build-native-worker-nri.mjs:1-17</code>. Revision: current-checkout SHA-256 <code>2030ab287fd08b0acbe476b2248c92a44518117d68e278db94737516b7ec2dd8</code>. Implementation: <a href="../../../../skills/prism/studio/vite.config.ts#L1-L10"><code>UI_build_write_local_server</code></a>, <code>skills/prism/studio/vite.config.ts:1-10</code>. Revision: current-checkout SHA-256 <code>523f55894f9562a6c0f3bb2816ad9ab6e5a0538e7fbd7cf8d535f876a42d2ee5</code>. Implementation: <a href="../../../../skills/prism/studio/playwright.config.mjs#L1-L7"><code>browser_projects_managed_server</code></a>, <code>skills/prism/studio/playwright.config.mjs:1-7</code>. Revision: current-checkout SHA-256 <code>b7a8e95cac93fae2ccc04cf5d4c79bab218b9e308164a1605667811ddb690655</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="ci-documentation-and-protected-evidence">CI, documentation and protected evidence</h2>
+<p>Continuous integration (CI) runs the workflow's selected checks with its actual
+permissions and tools. Pipeline reliability uses Node 24 and locked dependency
+installation, then builds the sandbox before its selected contract fixtures.
+Independent failed steps remain failures; collecting their reports together is
+not a successful run. Docs CI selects Node 24, Go 1.26.3 and Helm 3.22.0.
+Its remote <code>contents: read</code> permission does not make local commands read-only:
+it regenerates inventories/docs, then uses Git status to reject drift.
+This page does not establish actual remote branch protection, credentials,
+workflow execution or merge/release authority.</p>
+<p>The current Core guide checker selects protected revision
+<code>4f089958db97a551f406c157d774bda143a38946</code>, checks the required evidence metadata,
+and compares cited source files against Git objects. The handbook's historical
+example revision is not that current guard. When relevant source changes, use
+the owning Core-guide change procedure and have the affected explanation/source
+reviewed together. Do not copy an old literal, silently renew the guard or infer
+a general permission to bypass it. Git object availability/equality still needs
+the actual qualified check; it was not observed here.</p>
+<p>Use <a href="../developer-handbook.html#route-each-source-change-to-its-documentation-owner">the documentation owner routes</a>
+and <a href="../documentation-maintenance.html">documentation maintenance</a> for generated
+source, reference, configuration and reader-task changes. After a rename/removal,
+account for imports, registered dependency paths, generated references, nav and
+retained compatibility before deleting old authority. Recheck both repository
+and published routes through their actual procedures; local links alone do not
+prove publication.</p>
+<p><strong>Source — current protected checker, workflow authority and documentation ownership</strong></p>
+<p>Implementation: <a href="../../../../scripts/check-core-architecture-guides.mjs#L9-L23"><code>actual_current_protected_revision</code></a>, <code>scripts/check-core-architecture-guides.mjs:9-23</code>. Revision: current-checkout SHA-256 <code>05e0c0421afda55921950e88adbb005e3455111830ee0953204c1f0f0ebce01e</code>. Implementation: <a href="../../../../scripts/check-core-architecture-guides.mjs#L103-L133"><code>Git_source_equality_guard</code></a>, <code>scripts/check-core-architecture-guides.mjs:103-133</code>. Revision: current-checkout SHA-256 <code>05e0c0421afda55921950e88adbb005e3455111830ee0953204c1f0f0ebce01e</code>. Implementation: <a href="../../../../.github/workflows/pipeline-reliability.yaml#L1-L41"><code>CI_core_dependencies_and_build_effect</code></a>, <code>.github/workflows/pipeline-reliability.yaml:1-41</code>. Revision: current-checkout SHA-256 <code>e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a</code>. Implementation: <a href="../../../../.github/workflows/docs-checks.yaml#L1-L60"><code>CI_read_authority_local_write_guard</code></a>, <code>.github/workflows/docs-checks.yaml:1-60</code>. Revision: current-checkout SHA-256 <code>5349499f1936d361a0d269bc45664550580fb8b1af5773391fbdd30dd08a35d7</code>. Implementation: <a href="../../../../.github/workflows/docs-checks.yaml#L61-L61"><code>CI_read_authority_local_write_guard</code></a>, <code>.github/workflows/docs-checks.yaml:61-61</code>. Revision: current-checkout SHA-256 <code>5349499f1936d361a0d269bc45664550580fb8b1af5773391fbdd30dd08a35d7</code>. Implementation: <a href="../../../../docs/site/extend/developer-handbook.html#route-each-source-change-to-its-documentation-owner"><code>source_to_documentation_route_reuse</code></a>, <code>docs/site/extend/developer-handbook.md:2002-2024</code>. Revision: current-checkout SHA-256 <code>c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067</code>. Implementation: <a href="../../../../scripts/docs-generate.mjs#L141-L153"><code>page_write_map_missing_hub</code></a>, <code>scripts/docs-generate.mjs:141-153</code>. Revision: current-checkout SHA-256 <code>c83c5653177b9b0a56326b0e315c409dc3c814c95d37dd53933402a2288aa718</code>. Contract or setting: the selected boundary and configuration described in this section. Test evidence: the selected checks below; not executed for this page. Limit: implementation contracts only; no native, deployed, browser or retained-run result.</p>
+<h2 id="failure-and-recovery-decisions">Failure and recovery decisions</h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Stop condition</th>
+<th>Owner and safe next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Illegal stage state or changed replay</td>
+<td>Live and retained decisions no longer agree</td>
+<td>Lifecycle owner preserves original journal/graph and adds the exact denied transition and replay case; no live-only patch</td>
+</tr>
+<tr>
+<td>Graph/package/identity mismatch</td>
+<td>Original run inputs cannot be proved</td>
+<td>Nova/package owner retains old inputs and first error; changed work uses its separately authorized new-run path</td>
+</tr>
+<tr>
+<td>Accepted effect, missing receipt or lost response</td>
+<td>Remote outcome is unknown</td>
+<td>Adapter/resource owner reconciles the original request through its supported receipt contract; no duplicate request/new identity</td>
+</tr>
+<tr>
+<td>Native ownership, capacity, channel or cleanup unresolved</td>
+<td>Supported host admission is unproved</td>
+<td>Worker and host owners retain boot/process/spool evidence and fence new work until original recovery completes</td>
+</tr>
+<tr>
+<td>Untrusted package or denied capability</td>
+<td>Trust/provider/grant contract failed</td>
+<td>Foundation/security owner corrects the owning input; no blanket grant, trust-root widening or protected identity edit</td>
+</tr>
+<tr>
+<td>Schema/generated output or Core source guard drift</td>
+<td>Caller contract or evidence no longer matches</td>
+<td>Contract/documentation owner reviews source and explanation; do not edit generated output or merely repin to green</td>
+</tr>
+<tr>
+<td>UI revision conflict, wrong local server or missing publisher</td>
+<td>Result does not describe intended user/source state</td>
+<td>Preserve user intent, identify the real server and use the component route; no screenshot/build substituted for the missing path</td>
+</tr>
+<tr>
+<td>Render/test succeeds but rollout or restore is unknown</td>
+<td>No actual receiver/data observation</td>
+<td>Operator/data owner follows its original procedure, preserves partial effects and checks compatibility before retry/rollback</td>
+</tr>
+</tbody>
+</table>
+<p>Cleanup is part of the selected procedure, not a universal delete command.
+Retain original failed evidence and account for owned processes, locks, temporary
+fixtures, stored receipts and application references before removal. Do not
+unlink a lock or erase a spool merely to allow another attempt.</p>
+<h2 id="what-this-router-does-not-supply">What this router does not supply</h2>
+<p>The routes describe a bounded set of current source and command definitions.
+They do not discover every extension, SDK consumer, event, error, integration,
+workflow or data store. Complete new-capability/event activation and retirement,
+Forge/Echo host/model/lost-response paths, each store's backfill/expand-contract
+and application restore, actual native-host/deployment exercises, and the
+Archviewer publisher/browser path require their supported component procedures.
+When one is missing, name the blocked step and owning component before changing
+its boundary. Do not replace it with a universal run-all command or claim
+clean-checkout, remote, deployed or global coverage from this router.</p>
+</main></body></html>

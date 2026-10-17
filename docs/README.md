@@ -26,14 +26,18 @@ The build resolves evidence to the exact Git revision. It also emits a digest an
 
 The approved [documentation blueprint](blueprint/README.md) classifies existing documentation and defines the publication workflow.
 
-## Operations Infrastructure Sources
+## Current Platform Guidance
 
-- [Codex Ops Pod architecture](architecture/ops-pod.md): authority, runtime, networking, persistence and failure domains.
-- [Codex Ops Pod operations](ops/ops-pod.md): deployment, acceptance, diagnosis, upgrades, credential rotation and recovery.
+- [Platform and operations architecture](site/understand/platform-and-operations.md): Ops, GitOps, networking, persistence, telemetry, and optional infrastructure.
+- [Operate KubeClaw](site/use/operate.md): configuration, startup, run inspection, signals, cancellation, and recovery boundaries.
+- [Maintain KubeClaw](site/use/maintenance.md): version authority, image selection, upgrades, rollback, rotation, and retirement.
 
-These are repository source documents; adding them here does not add them to the
-published site's explicit allowlist.
+The old reader sources are isolated below `docs/_legacy-source/`. They are extraction inputs, not an alternative documentation route.
 
-## Runtime Image Operations
+## Current work and decisions
 
-- [Runtime versions and role images](operations/runtime-versions-and-images.md): central version authority, Nova/Prism separation, image acceptance and upgrades.
+- [Open issues](site/status/open-issues.md): generated from the single machine-readable register at `docs/status/open-issues.json`.
+- [Live acceptance](site/status/acceptance.md): outstanding environment checks, separate from local finding closure.
+- [Decisions](site/decisions/README.md): enduring constraints, approval evidence and supersession.
+
+The review directory is historical migration input. Do not maintain current finding status there.

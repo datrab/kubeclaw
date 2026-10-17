@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/testing.html"></head><body><main>
+<h1 id="test-and-manage-an-extension">Test And Manage An Extension</h1>
+<p>Status: implemented with stated local limits
+Audience: extension author, operator, maintainer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/verify-plugin-packages.mjs">scripts/verify-plugin-packages.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry">skills/common/plugin-runtime/foundation/registry</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>
+Evidence revision: <code>f68a7294abf0928c1aabf290c6a7e486c651a808</code>
+Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins, Worker engines, runtime roles
+Last verified: source and focused local checks on 2026-10-10; no live host result</p>
+<h2 id="objective">Objective</h2>
+<p>Prove that an extension works at its real boundary.
+Then change, disable, or remove it without losing necessary state or recovery data.</p>
+<p>A unit test proves only one layer. A complete result connects package bytes, trust,
+selection, activation, behavior, failure, and cleanup.</p>
+<h2 id="terms-used-in-this-guide">Terms Used In This Guide</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discovery</td>
+<td>Read inert metadata and build an index without loading package code</td>
+</tr>
+<tr>
+<td>Activation</td>
+<td>Load one selected executable export after trust and policy checks</td>
+</tr>
+<tr>
+<td>Package check</td>
+<td>Validate one package's manifest, modules, schemas, and tests</td>
+</tr>
+<tr>
+<td>Platform check</td>
+<td>Validate the shared contract and security boundary</td>
+</tr>
+<tr>
+<td>Live check</td>
+<td>Use the actual host, service, network, storage, or cluster</td>
+</tr>
+<tr>
+<td>Remaining state</td>
+<td>Data that an extension does not own or cannot remove safely</td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-a-proof-ladder">Use A Proof Ladder</h2>
+<p>Run the smallest useful check first. Continue until the test reaches the changed
+boundary.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Question</th>
+<th>Typical proof</th>
+<th>What it does not prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Static</td>
+<td>Are files and declarations valid?</td>
+<td>JSON Schema, type check, import-safety check</td>
+<td>The host can activate the package</td>
+</tr>
+<tr>
+<td>2. Package</td>
+<td>Does owned behavior work?</td>
+<td>Package test command</td>
+<td>Shared policy or role inclusion</td>
+</tr>
+<tr>
+<td>3. Platform</td>
+<td>Does the public boundary accept it?</td>
+<td>Registry, activation, sandbox, or role check</td>
+<td>External dependency health</td>
+</tr>
+<tr>
+<td>4. Integration</td>
+<td>Do connected components agree?</td>
+<td>Real adapter, provider, or engine exercise</td>
+<td>Production topology and credentials</td>
+</tr>
+<tr>
+<td>5. Live</td>
+<td>Does the deployed path work and recover?</td>
+<td>Host or cluster acceptance</td>
+<td>Behavior outside the tested configuration</td>
+</tr>
+</tbody>
+</table>
+<p>KubeClaw keeps these levels separate because a green inner test cannot prove an
+outer boundary.</p>
+<p><strong>Benefit:</strong> A failure report identifies the first boundary that did not work.</p>
+<p><strong>Cost:</strong> Important changes need more than one command and one evidence record.</p>
+<p><strong>Rejected alternative:</strong> One repository-wide command hides skipped tools, missing
+hosts, and unavailable live dependencies behind an aggregate result.</p>
+<p><strong>Reconsider when:</strong> A test runner can preserve each level, environment, skip reason,
+and result in one machine-readable record.</p>
+<blockquote>
+<p><strong>Discovery boundary:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317">The registry builder validates package declarations and creates separate indexes</a>.</p>
+<p><strong>Activation boundary:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137">Foundation checks selected package integrity before it imports executable code</a>.</p>
+</blockquote>
+<h2 id="record-a-reproducible-result">Record A Reproducible Result</h2>
+<p>For each command, record these facts:</p>
+<ul>
+<li>the complete command and working directory;</li>
+<li>the reviewed Git revision;</li>
+<li>the package version and digest when the runtime reports them;</li>
+<li>required environment variables without their secret values;</li>
+<li>the host, operating system, and external services;</li>
+<li>passed, failed, skipped, unavailable, and not-run results as different states;</li>
+<li>the first relevant error and the retained evidence location;</li>
+<li>the boundary that the command did not reach.</li>
+</ul>
+<p>Do not change <code>unavailable</code> to <code>passed</code> without running the check.
+The recorded local result came from a host without timeout-capable <code>flock</code> or a C compiler.
+Check the current host before reusing that result.
+The catalogue pages state the current local result and its environment limit.</p>
+<h2 id="test-a-pipeline-stage">Test A Pipeline Stage</h2>
+<p>Use the minimal plugin journey for the complete first stage. For later stages, apply
+this focused procedure:</p>
+<ol>
+<li>Validate the manifest and every referenced schema.</li>
+<li>Import the declared module and named export.</li>
+<li>Invoke success with the smallest valid input.</li>
+<li>Invoke one invalid input and verify rejection before work starts.</li>
+<li>Deny each requested capability and verify the public denial result.</li>
+<li>Exercise timeout, cancellation, and duplicate input when they apply.</li>
+<li>Verify every declared artifact and output against its schema.</li>
+<li>Activate the stage through Foundation with the intended grant.</li>
+<li>Run it through Nova and inspect the committed lifecycle result.</li>
+<li>Remove the stage from the graph and verify that no new invocation occurs.</li>
+</ol>
+<p>Core owns lifecycle changes. A stage test must not accept direct journal mutation as
+proof of a supported plugin result.</p>
+<blockquote>
+<p><strong>Invocation boundary:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugin-runtime/sdk/src/runtime.ts#L21-L43">The SDK context exposes bounded capability, event, and artifact services</a>.</p>
+<p><strong>Result interpretation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/nova/core/execution/stage-executor.ts#L31-L52">Nova validates the result, records it, applies lifecycle rules, and always cleans the attempt</a>.</p>
+</blockquote>
+<h2 id="test-an-observer">Test An Observer</h2>
+<p>An observer consumes committed events. It must not control the pipeline.</p>
+<ol>
+<li>Validate subscriptions and checkpoint schema.</li>
+<li>Deliver one matching committed event.</li>
+<li>Verify one non-matching event causes no delivery.</li>
+<li>Repeat the same event and verify the declared duplicate behavior.</li>
+<li>Stop delivery during an external write.</li>
+<li>Restart from the durable checkpoint.</li>
+<li>Exhaust the retry policy and inspect the terminal delivery record.</li>
+<li>Disable the observer and verify later events remain available to Core.</li>
+</ol>
+<p>An observer can fail its delivery. That failure does not reverse the committed
+pipeline event.</p>
+<blockquote>
+<p><strong>Bounded delivery:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/nova/core/telemetry/observer-delivery.ts#L15-L43">Nova binds the observer identity, delivery attempt, lease, grants, timeout, and cleanup</a>.</p>
+</blockquote>
+<h2 id="test-a-capability-adapter">Test A Capability Adapter</h2>
+<p>An adapter test must prove policy and the external effect.</p>
+<ol>
+<li>Validate the provided capability ID against the closed vocabulary.</li>
+<li>Verify provider selection from platform configuration.</li>
+<li>Invoke with no grant and expect denial before the external call.</li>
+<li>Invoke at each important constraint boundary.</li>
+<li>Verify the external receipt and the redacted audit record.</li>
+<li>Interrupt after dispatch and before receipt persistence.</li>
+<li>Reconcile the uncertain effect by stable operation identity.</li>
+<li>Verify cancellation stops owned local work.</li>
+<li>Disable the adapter and verify selection fails closed.</li>
+</ol>
+<p>Do not prove an effect only with a mock. Use a mock for deterministic inner tests,
+then use the real protocol in an integration or live check.</p>
+<blockquote>
+<p><strong>Provider resolution:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L119">Foundation maps each capability to one installed adapter and rejects invalid mappings</a>.</p>
+<p><strong>Effect recovery:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/nova/core/effects/durable-invocation.ts#L88-L157">The durable invocation records request and acceptance, recovers receipts, fences calls, and records completion</a>.</p>
+</blockquote>
+<h2 id="test-a-provider-or-report-adapter">Test A Provider Or Report Adapter</h2>
+<p>Buster binds both surfaces through a resolved test plan.</p>
+<p>For a test provider:</p>
+<ol>
+<li>Validate its provider contract and declared matrix fields.</li>
+<li>Run the smallest valid plan in the provider sandbox.</li>
+<li>Deny one required grant and verify failure before provider work.</li>
+<li>Exercise fixture prepare, health, test, collect, and cleanup paths.</li>
+<li>Verify evidence size, count, type, and retention bounds.</li>
+<li>Exercise timeout, cancellation, retry safety, and remote interruption.</li>
+<li>Import the signed result through Nova.</li>
+</ol>
+<p>For a report adapter:</p>
+<ol>
+<li>Validate the format identity and accepted media type.</li>
+<li>Parse a small valid report.</li>
+<li>Reject malformed and oversized input.</li>
+<li>Preserve executed, failed, skipped, and error counts.</li>
+<li>Verify bounded diagnostic output.</li>
+</ol>
+<p>The provider produces facts. The report adapter normalizes facts. Gate policy decides
+whether those facts pass.</p>
+<blockquote>
+<p><strong>Provider binding:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/buster/engine/test-gates/runner.ts#L234-L267">Buster verifies the plan digest, registry snapshot, provider identity, and report-adapter identity</a>.</p>
+<p><strong>Package snapshot:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/buster/engine/test-gates/provider-loader.ts#L52-L79">The provider loader verifies the digest and copies exact package bytes into the attempt workspace</a>.</p>
+</blockquote>
+<h2 id="test-an-openclaw-or-codex-extension">Test An OpenClaw Or Codex Extension</h2>
+<p>Test the host contract, not only the exported function. These are acceptance
+requirements, not an installation procedure. First apply the <a href="#operate-the-packaged-openclaw-hosts">packaged OpenClaw
+route</a> or the <a href="#codex-host-lifecycle-boundary">Codex host
+boundary</a>. Stop at their unavailable controls.</p>
+<p>For OpenClaw:</p>
+<ol>
+<li>Validate <code>openclaw.plugin.json</code> with the target host version.</li>
+<li>Verify the built image contains the package.</li>
+<li>Verify allowlist and entry configuration.</li>
+<li>Start with the extension disabled.</li>
+<li>Start with valid and invalid configuration.</li>
+<li>Invoke every hook or tool through OpenClaw.</li>
+<li>Stop during queued work and verify bounded shutdown.</li>
+<li>Restart and inspect external records for duplicates.</li>
+</ol>
+<p>For Codex:</p>
+<ol>
+<li>Validate <code>.codex-plugin/plugin.json</code> and every skill path.</li>
+<li>Install the exact package version.</li>
+<li>Exercise trigger and non-trigger prompts.</li>
+<li>Exercise connected and missing external tools.</li>
+<li>Verify that read-only guidance does not perform mutations.</li>
+<li>Update the package and repeat its critical workflow.</li>
+<li>Remove it and verify that the skill is no longer discoverable.</li>
+</ol>
+<p>The current Ops package has no package-local automated test. Its connected-tool and
+missing-tool exercises remain required acceptance work.</p>
+<h2 id="test-a-worker-engine-or-runtime-role">Test A Worker Engine Or Runtime Role</h2>
+<p>A Worker engine test starts with its versioned attempt envelope.</p>
+<ol>
+<li>Reject the wrong contract, engine digest, or schema identity.</li>
+<li>Apply resource limits before specialist execution.</li>
+<li>Execute success, domain failure, timeout, and cancellation.</li>
+<li>Terminate all owned child work.</li>
+<li>Collect bounded evidence and cumulative resource facts.</li>
+<li>Run cleanup after every terminal path.</li>
+<li>Retry or recover with the same immutable attempt identity.</li>
+</ol>
+<p>A role test proves packaging around that engine:</p>
+<ol>
+<li>Run ownership and role-closure checks.</li>
+<li>Build a clean role bundle.</li>
+<li>Inspect selected packages, extensions, entrypoint, and digests.</li>
+<li>Build the role image.</li>
+<li>Start the process and verify readiness.</li>
+<li>Run one real task and one failure.</li>
+<li>Stop and restart while recoverable work exists.</li>
+</ol>
+<blockquote>
+<p><strong>Attempt lifecycle:</strong> The <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L68-L80">operation interface defines required and optional functions</a>.
+Worker Core applies the following conditions when it calls them:</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L381-L389">Preparation must finish synchronously</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L405-L418">Execution starts after the remaining-time and cancellation checks</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L431-L449">Measurement follows execution and its error handling</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L452-L462">Cleanup runs when the operation supplies it</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L497-L514">Evidence collection runs when the operation supplies it</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L552-L560">Final measurement follows the completion functions</a>.</li>
+</ul>
+<p><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L615-L627">Termination has its own timeout</a>.
+Worker Core calls it after an execution error and on cleanup failure or expiration,
+as shown in the execution and cleanup links above.
+It is not an unconditional step after every successful execution.</p>
+<p><strong>Role closure:</strong> <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/scripts/check-runtime-role-manifests.mjs#L77-L145">The role checker verifies ownership, dependencies, capability providers, and plugin selection</a>.</p>
+</blockquote>
+<h2 id="install-and-activate-by-surface">Install And Activate By Surface</h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Install action</th>
+<th>Activation action</th>
+<th>Positive observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage or observer</td>
+<td>Stage approved package bytes in an installation root</td>
+<td>Select it in graph or platform configuration</td>
+<td>Registry identity and successful invocation or delivery</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>Stage package and configure its provider mapping</td>
+<td>Add it to active adapters with a bounded grant</td>
+<td>Receipt plus redacted effect record</td>
+</tr>
+<tr>
+<td>Test provider or report adapter</td>
+<td>Include package in the Buster role</td>
+<td>Bind it into a resolved test plan</td>
+<td>Provider result or normalized report</td>
+</tr>
+<tr>
+<td>OpenClaw extension</td>
+<td>Use the packaged host route below</td>
+<td>The role chart selects its own host entry</td>
+<td>Image and entry checks are partial proof; host invocation has the stop rule below</td>
+</tr>
+<tr>
+<td>Codex plugin</td>
+<td>No versioned operator installation route is supplied</td>
+<td>Stop before host installation</td>
+<td>Manifest discovery is local proof only; see the Codex boundary below</td>
+</tr>
+<tr>
+<td>Worker engine</td>
+<td>Integrate engine and exact profile</td>
+<td>Route a matching attempt to its role</td>
+<td>Accepted attempt and durable result</td>
+</tr>
+<tr>
+<td>Runtime role</td>
+<td>Build and deploy immutable bundle or image</td>
+<td>Start its entrypoint with role configuration</td>
+<td>Readiness and one real task</td>
+</tr>
+</tbody>
+</table>
+<p>Installation authority belongs to the operator. Project input can select approved
+behavior, but it cannot install executable code or grant itself authority.</p>
+<h2 id="operate-the-packaged-openclaw-hosts">Operate The Packaged OpenClaw Hosts</h2>
+<p>This route covers <code>kubeclaw-agent-observer</code> version <code>0.0.0</code> in the Buster
+gateway and <code>kubeclaw-prism</code> version <code>0.1.0</code> in the Prism agent. The image
+builds select OpenClaw <code>2026.9.4</code> with a fixed image digest. Both manifests
+require plugin API and gateway version <code>2026.9.1</code> or later. That minimum is
+not proof that every later host version works. Use the pinned build version.
+A host is the process that loads the extension. Its SDK is a library interface;
+SDK availability alone does not show that the host selected this extension.</p>
+<h3 id="install-start-and-inspect">Install, start, and inspect</h3>
+<ol>
+<li>Use the <a href="../use/install.html">platform installation procedure</a>, including its
+release-image selection, bound administration shell, namespace selection,
+Secrets, trust, and dependency checks. The platform operator needs image and
+chart deployment authority. Stop if release-image selection is absent. Do
+not install arbitrary source files into a running container.</li>
+<li>Select the Buster gateway or Prism agent deployment from that installation.
+The Docker builds install the observer at
+<code>/app/dist/extensions/kubeclaw-agent-observer</code>. The Prism agent build also
+installs its tools at <code>/app/dist/extensions/kubeclaw-prism</code>. The role bundle
+extension list is packaging metadata; it does not prove host activation.</li>
+<li>Keep <code>agentRole</code> equal to <code>buster</code> for the observer host or <code>prism</code> for the
+Prism tool host. The chart writes <code>plugins.allow</code> and <code>plugins.entries</code>.
+For Buster, it allows <code>kubeclaw-agent-observer</code>, sets its entry <code>enabled</code> to
+<code>true</code>, sets <code>config.enabled</code> to <code>true</code>, and allows conversation access.
+For Prism, it allows <code>kubeclaw-prism</code>, sets its entry <code>enabled</code> to <code>true</code>,
+and sets <code>config.controlUrl</code> to <code>http://127.0.0.1:28080</code>. These entries are
+fixed chart content, not independent Helm value switches.</li>
+<li>Complete rollout and dependency checks in the installation and
+<a href="../use/prism-studio.html">Prism operation procedure</a>. Retain the deployed
+image digest, chart values, role, and rollout result. A ready Pod proves
+process readiness only.</li>
+<li>In the bound administration shell, select <code>HOST_POD</code> as the exact running
+Pod name from that rollout and <code>HOST_PLUGIN</code> as one of the two IDs above.
+Use <code>NAMESPACE</code> from the installation. This read requires <code>get</code> on Pods
+and <code>create</code> on <code>pods/exec</code>; obtain that authority before use. It runs only
+a file check and a restricted configuration read in container <code>kubeclaw</code>.</li>
+</ol>
+<pre><code class="language-bash">: &quot;${NAMESPACE:?Use the namespace selected during installation}&quot;
+: &quot;${HOST_POD:?Set the exact deployed host Pod name}&quot;
+: &quot;${HOST_PLUGIN:?Set kubeclaw-agent-observer or kubeclaw-prism}&quot;
+case &quot;$HOST_PLUGIN&quot; in
+  kubeclaw-agent-observer|kubeclaw-prism) ;;
+  *) printf '%s\n' 'Unsupported host plugin ID' &gt;&amp;2; exit 1 ;;
+esac
+bound_kubectl -n &quot;$NAMESPACE&quot; exec &quot;$HOST_POD&quot; -c kubeclaw --   test -f &quot;/app/dist/extensions/$HOST_PLUGIN/openclaw.plugin.json&quot;
+bound_kubectl -n &quot;$NAMESPACE&quot; exec &quot;$HOST_POD&quot; -c kubeclaw --   node -e 'const fs=require(&quot;node:fs&quot;); const id=process.argv[1]; const c=JSON.parse(fs.readFileSync(&quot;/home/node/.openclaw/openclaw.json&quot;,&quot;utf8&quot;)); const e=c.plugins?.entries?.[id]; const allowed=c.plugins?.allow?.includes(id)===true; console.log(JSON.stringify({id,allowed,entryEnabled:e?.enabled===true,observerEnabled:id===&quot;kubeclaw-agent-observer&quot;?e?.config?.enabled===true:undefined,controlUrl:id===&quot;kubeclaw-prism&quot;?e?.config?.controlUrl:undefined})); if(!allowed||e?.enabled!==true) process.exit(1);' &quot;$HOST_PLUGIN&quot;
+</code></pre>
+<p>A missing file means the image does not contain the selected package. A false
+<code>allowed</code> or <code>entryEnabled</code> means selection failed. For the observer, require
+<code>observerEnabled: true</code>. For Prism, require the control URL above and independently
+verify the bridge and control dependency through the Prism procedure. Stop on
+any mismatch. Preserve these restricted results; do not print the complete host
+configuration because it can contain sensitive values. Restore the approved
+complete image and chart configuration through the maintenance procedure after
+an owner has assessed compatibility. Do not repair a running image by copying
+individual package files.</p>
+<h3 id="prove-host-registration-and-a-real-result">Prove host registration and a real result</h3>
+<p>The observer registers hooks, a service, and gateway methods
+<code>kubeclaw.agentObserver.status</code> (<code>operator.read</code>) and
+<code>kubeclaw.agentObserver.selfTest</code> (<code>operator.admin</code>). Status includes
+<code>registered_hooks</code>; this is the extension's declared list, not independent proof
+that the host delivered every hook. Self-test writes a synthetic lifecycle event
+and flushes it; it does not prove receipt of a real host event. The Prism extension
+registers <code>prism_create_design_set</code> and <code>prism_apply_revision</code>; their calls write
+through the local control endpoint with job, fence, and generation identity.
+Do not submit a dummy design or revision merely to check installation.</p>
+<p><strong>Stop before claiming complete host activation.</strong> The repository supplies these
+registration interfaces and local tests, but no pinned operator client procedure
+for enumerating their registration and invoking the observer methods. The
+OpenClaw integration owner must supply the exact authenticated gateway client,
+its supported version, endpoint and identity selection, read/admin scope checks,
+expected status fields, a controlled real-hook event and its matching Redis
+record, and a negative disabled-host observation. For Prism, use the controlled
+Studio journey for a real operation; its current live prerequisites and stop
+rules apply. Tool registration still needs an exact host enumeration procedure
+from the same owner. Until those procedures and results exist, image presence,
+configuration, SDK checks, local registration tests, and Pod readiness remain
+separate partial observations. Do not substitute Nova compile/start/audit for
+them.</p>
+<h3 id="disable-update-or-remove">Disable, update, or remove</h3>
+<p>The chart has no independent observer or Prism extension disable value. Startup
+copies managed <code>plugins.allow</code> and <code>plugins.entries</code> from the chart into the
+persistent configuration. It also removes entries from other roles. An edit to
+<code>/home/node/.openclaw/openclaw.json</code> or <code>/config/openclaw.json</code> is not a durable
+operator disable route. Package bytes are part of the immutable host image.
+Changing <code>agentRole</code> would change the process role and is not plugin disablement.</p>
+<p><strong>Stop before independent disablement, replacement, or package removal.</strong> The
+OpenClaw integration and runtime-packaging owners must provide a reviewed chart
+control or a complete replacement image, exact rollout and drain steps, host
+registration absence and no-later-event/tool proof, and a tested rollback to the
+old image and configuration. The platform operator must approve the affected
+workload scope. If urgent containment requires stopping the whole host, use the
+<a href="../use/operate.html">run control boundary</a> and the workload owner's approved
+containment procedure; host stoppage affects other work and does not prove
+removal. Keep Redis records, Prism database documents, job identities, receipts,
+and old images according to their owners' retention and recovery rules. The
+extension does not delete them. No accepted old/new host-package compatibility
+pair or state migration is supplied; follow the maintenance safe stop before
+upgrade.</p>
+<h2 id="codex-host-lifecycle-boundary">Codex Host Lifecycle Boundary</h2>
+<p><code>kubeclaw-ops</code> version <code>0.2.0</code> declares <code>./skills/</code> and the
+<code>troubleshoot-kubeclaw</code> skill. It has no pipeline registration, OpenClaw entry,
+or MCP server declaration. Its interface <code>Read</code> capability describes intended
+use; it does not grant or restrict operating-system, tool, or Kubernetes rights.
+The Ops Pod deployment and its MCP service are separate installations. Deploying
+them does not install this Codex plugin.</p>
+<p><strong>Stop before install, activation, update, disable, or removal.</strong> No supported
+Codex host version, plugin installation directory, versioned install/connect
+control, or disable/removal control is supplied for this package. The Codex
+environment owner must provide those exact controls and paths, an approved Ops
+MCP connection with endpoint and credential ownership, and effective tool/RBAC
+authority. Before continuation, that owner must show skill discovery for the
+installed version, a trigger prompt that uses the expected tools, a non-trigger
+prompt, a missing-tool result that reports the unavailable connection without
+mutation, and skill absence after disable/removal. Retain the package version,
+host version, connection identity without credentials, results, and remaining
+conversation/service data. If a tool is missing, stop the investigation at that
+boundary; do not replace a missing read tool with shell or cluster mutation.
+The package has no automated host lifecycle test or general external-data deletion
+operation. Plugin removal does not remove conversation or external service data.</p>
+<h2 id="nova-adapter-with-an-openclaw-sdk-dependency">Nova Adapter With An OpenClaw SDK Dependency</h2>
+<p><code>kubeclaw.openclaw-agent-events:source</code> version <code>1.0.0</code> is a Nova capability
+adapter, not either OpenClaw host extension above. Its manifest provides
+<code>agent.events.subscribe</code>. Select its adapter and provider through the
+<a href="../use/plugins.html#canonical-plugin-lifecycle-procedure">Nova lifecycle</a>.
+Its <code>activate</code> function loads <code>openclaw/plugin-sdk</code> and requires <code>on</code> during
+<code>ready()</code>. No compatible SDK version is declared by this package. The Nova role
+selects it, but that selection does not prove that the pinned OpenClaw SDK exports
+this interface or that a real host shares its event source with the Nova process.</p>
+<p>Stop at readiness if <code>OPENCLAW_HOOK_API_UNAVAILABLE</code> occurs or the SDK import
+fails. The Nova/OpenClaw integration owner must supply an exact compatible SDK
+version and execution topology, prove <code>on</code> on the actual loaded module, and
+show one configured real host hook reaching a matching committed Nova event.
+Do not use the observer's focused diagnostic SDK export as proof of this distinct
+root export. Configured hooks must be supported and unique; invalid, unsupported,
+or duplicate hooks fail before readiness. The adapter's <code>status</code> operation
+reports <code>activeSubscriptions</code>, queue facts, and <code>shuttingDown</code>; it is an adapter
+invocation, not a host gateway command. A local injected SDK test does not prove
+the real source. Failed partial registration releases subscriptions. Shutdown
+releases subscriptions and drains the queue under its signal. Keep committed
+Nova events and recoverable runs when selection stops; source removal does not
+delete their journals. Apply the Nova drain and retained-byte rules before
+removing adapter selection or its package.</p>
+<h2 id="host-lifecycle-source-evidence">Host Lifecycle Source Evidence</h2>
+<p>The following links support the available controls and their limits. They do not
+establish a live deployment result. Revision: <code>f68a7294abf0928c1aabf290c6a7e486c651a808</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Implementation or contract</th>
+<th>Check and limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observer version and host compatibility</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugins/openclaw-agent-observer/package.json#L4-L22">Package</a></td>
+<td>Manifest inspection; later host compatibility is unproved</td>
+</tr>
+<tr>
+<td>Prism version and host compatibility</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/prism/openclaw-plugin/package.json#L2-L11">Package</a></td>
+<td>Manifest inspection only</td>
+</tr>
+<tr>
+<td>Fixed host build and observer image path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/docker/Dockerfile.buster-gateway#L5-L30">Buster Docker build</a>, <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/docker/Dockerfile.buster-gateway#L95-L102">final image copy</a></td>
+<td>Image build and live image inspection were not run</td>
+</tr>
+<tr>
+<td>Prism tool image path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/docker/Dockerfile.prism-agent#L110-L124">Prism image</a></td>
+<td>Image presence does not prove registration</td>
+</tr>
+<tr>
+<td>Role-controlled entries and configuration</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/charts/kubeclaw/templates/configmap-gateway.yaml#L262-L322">Chart</a></td>
+<td>Entries are fixed chart content.</td>
+</tr>
+<tr>
+<td>Persistent entry overwrite and role filtering</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/charts/kubeclaw/templates/deployment.yaml#L440-L473">Persistent source synchronization</a>, <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/charts/kubeclaw/templates/deployment.yaml#L224-L245">runtime role filtering</a></td>
+<td>Direct edits are not durable disable controls.</td>
+</tr>
+<tr>
+<td>Observer methods, authority, and service stop</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugins/openclaw-agent-observer/src/index.ts#L241-L300">Registration</a></td>
+<td>Local registration code; no authenticated gateway-client execution</td>
+</tr>
+<tr>
+<td>Prism tool names and external writes</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/prism/openclaw-plugin/index.mjs#L10-L59">Tool registration</a>, <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/prism/openclaw-plugin/index.mjs#L59-L81">revision call</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/prism/openclaw-plugin/index.test.mjs#L5-L16">Original registration test</a>; local API fixture only</td>
+</tr>
+<tr>
+<td>Codex identity, skills, and interface authority</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26">Manifest</a>, <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L29">skill</a></td>
+<td>Host installation and connected-tool access require separate validation.</td>
+</tr>
+<tr>
+<td>Nova adapter is a distinct registration</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugins/openclaw-agent-events/plugin.json#L1-L18">Manifest</a>, <a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L73-L119">SDK dependency and lifecycle</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts#L45-L106">Original injected-SDK test</a>; local fixture, not a real host</td>
+</tr>
+</tbody>
+</table>
+<h2 id="update-or-replace">Update Or Replace</h2>
+<p>Use an update when identity and compatible contracts remain stable. Use a replacement
+when identity, host contract, authority, state format, or recovery bytes change.</p>
+<ol>
+<li>Record the old package version, digest, configuration, and state owners.</li>
+<li>Read the new compatibility and migration notes.</li>
+<li>Run static, package, and platform checks against the new bytes.</li>
+<li>Build a new complete role when role contents change.</li>
+<li>Stop new selection of the old implementation.</li>
+<li>Drain work that must finish with the old bytes.</li>
+<li>Migrate owned state only through a documented migration.</li>
+<li>Activate the new identity for new work.</li>
+<li>Run one success, one denial, and one recovery exercise.</li>
+<li>Retain old bytes while an attempt can still request them.</li>
+</ol>
+<p>Do not replace files inside a running bundle. That action breaks the connection
+between evidence, digest, and behavior.</p>
+<h2 id="disable-safely">Disable Safely</h2>
+<p>Disablement stops new use. It does not mean removal.</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Disable control</th>
+<th>Required check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage</td>
+<td>Remove it from new graphs</td>
+<td>Existing recoverable runs keep resolvable bytes</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>Remove the configured observer ID</td>
+<td>Core continues to commit source events</td>
+</tr>
+<tr>
+<td>Adapter</td>
+<td>Remove active selection or provider mapping</td>
+<td>Requests fail closed with no external call</td>
+</tr>
+<tr>
+<td>Provider or report adapter</td>
+<td>Stop binding it into new plans</td>
+<td>Existing plans keep exact implementation identity</td>
+</tr>
+<tr>
+<td>OpenClaw</td>
+<td>No independent deployment toggle is supplied</td>
+<td>Stop before an entry edit or byte removal; see the host stop rules below</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td>No versioned disable or removal control is supplied</td>
+<td>Stop until the Codex environment owner supplies the host procedure and absence proof</td>
+</tr>
+<tr>
+<td>Engine or role</td>
+<td>Stop routing new attempts</td>
+<td>In-flight and recoverable work has a drain plan</td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove-and-inspect-remaining-state">Remove And Inspect Remaining State</h2>
+<p>Remove package bytes only after selection stops and recovery no longer needs them.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Typical owner</th>
+<th>Removal consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova journal and pipeline records</td>
+<td>Core</td>
+<td>Package removal does not delete them</td>
+</tr>
+<tr>
+<td>Observer checkpoints and delivery attempts</td>
+<td>Observer runtime or store</td>
+<td>Keep them for replay policy and audit</td>
+</tr>
+<tr>
+<td>External effects and receipts</td>
+<td>External system plus effect journal</td>
+<td>Reconcile or retain them separately</td>
+</tr>
+<tr>
+<td>Buster evidence and resolved plans</td>
+<td>Test evidence store</td>
+<td>Keep them for result verification and recovery</td>
+</tr>
+<tr>
+<td>OpenClaw Redis records</td>
+<td>Observer and Redis retention policy</td>
+<td>Host-extension removal does not delete them</td>
+</tr>
+<tr>
+<td>Codex conversation or external tool data</td>
+<td>Codex or connected service</td>
+<td>Plugin removal does not delete them</td>
+</tr>
+<tr>
+<td>Worker evidence and attempt records</td>
+<td>Worker and pipeline stores</td>
+<td>Keep them while audit or recovery requires them</td>
+</tr>
+<tr>
+<td>Role bundles and images</td>
+<td>Artifact or image store</td>
+<td>Retain referenced versions, then apply store policy</td>
+</tr>
+</tbody>
+</table>
+<p>After removal, verify package discovery, configuration references, running processes,
+queued work, external credentials, durable records, and retention rules. Delete data
+only through its owner's procedure.</p>
+<h2 id="diagnose-a-failure">Diagnose A Failure</h2>
+<p>Follow the first failed boundary:</p>
+<ol>
+<li>If discovery fails, inspect the manifest, schema paths, exports, and package digest.</li>
+<li>If selection fails, inspect graph, platform mapping, plan binding, or host entry.</li>
+<li>If activation fails, inspect trust, grants, allowlists, and role contents.</li>
+<li>If invocation fails, inspect bounded input, dependency health, timeout, and logs.</li>
+<li>If recovery fails, inspect stable identity, checkpoint, retained bytes, and cleanup.</li>
+<li>If removal fails, find the remaining selector or state owner before deletion.</li>
+</ol>
+<p>Do not start by increasing authority or retry limits. First identify whether the
+failure occurred before dispatch, during work, or after an uncertain external effect.</p>
+<h2 id="commands">Commands</h2>
+<p>Run the commands that match the changed surface:</p>
+<pre><code class="language-bash">npm run verify:plugin-packages
+npm run verify:plugin-live-capabilities
+npm run verify:plugin-system:phase12
+npm run verify:worker-core:attempt-executor
+npm run verify:runtime-packaging:roles
+npm test --prefix skills/common/plugins/openclaw-agent-observer
+node --test skills/prism/openclaw-plugin/index.test.mjs
+</code></pre>
+<p>Package-specific commands appear on each catalogue page. Live checks require their
+named host, credentials, external services, or cluster. Record those prerequisites
+instead of silently skipping them.</p>
+<h2 id="completion-checklist">Completion Checklist</h2>
+<ul>
+<li>The test reached the real changed boundary.</li>
+<li>The record identifies environment, revision, package identity, and result state.</li>
+<li>Success, invalid input, denial, timeout, cancellation, and cleanup have coverage.</li>
+<li>Duplicate and uncertain-effect behavior has coverage when an external effect exists.</li>
+<li>Role or host installation has direct proof.</li>
+<li>Update or replacement preserves recoverable work.</li>
+<li>Disablement stops new use and fails closed.</li>
+<li>Removal checks every remaining state owner.</li>
+<li>Unavailable and live checks remain explicit.</li>
+<li>Every behavior claim links to current contract, implementation, configuration, or test evidence.</li>
+</ul>
+</main></body></html>

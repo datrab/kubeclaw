@@ -1,0 +1,3436 @@
+{
+  "schemaVersion": "kubeclaw-ap09-evidence.v2",
+  "bundle_scope": "Individual A911-09 complete terminal PASS decision with five exact applicable requirement facets; NOT the final all261/all89 ledger.",
+  "reviewed_revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "fixture_sha256": "bb5114fd19697495854dcb58f36cd9ee579fe3c146293f2895152bbb94797552",
+  "publication": {
+    "output_root": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html",
+    "build_report_artifact_id": "a28",
+    "anchor_inventory_artifact_id": "a27",
+    "route_inventory_artifact_id": "a378",
+    "allowlist_probe_artifact_id": "a26"
+  },
+  "artifacts": [
+    {
+      "id": "a1",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-governance.json",
+      "bytes": 967,
+      "sha256": "9a8de3fe5423e43634cc47f4f194b2486aa9754ef5a22a793a20da650c742f65",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a2",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html.json",
+      "bytes": 1775,
+      "sha256": "9c7f8807d88241d0d72b800cb8c8c595f138a0dde61de64cf09d5eee1d64e665",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a3",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-impact.json",
+      "bytes": 2007,
+      "sha256": "f385461c5bb992763abbb04d431f8c507b316282652cbb9689c36f94eca86b27",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a4",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-production.json",
+      "bytes": 29539,
+      "sha256": "4599b1d157bb518ed53d992df806167dc064c23679ee3135d22301b276d2b202",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a5",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-original.json",
+      "bytes": 2422,
+      "sha256": "b6607b69a38890e97c2c2163b2b34ef160e1ccd72a6a9c50fe662952539427a1",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a7",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/authored-preservation-check.stdout",
+      "bytes": 51,
+      "sha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a9",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/authored-preservation-regenerate.stdout",
+      "bytes": 75,
+      "sha256": "e3ad3ed194ee7ef06f66373b48e9f0b611a0c2d3055a20dade2ca83656302623",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a11",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/current-primary.stdout",
+      "bytes": 51,
+      "sha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a12",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/manual-owner-rejected.stderr",
+      "bytes": 101,
+      "sha256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a15",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/restored-current-primary.stdout",
+      "bytes": 51,
+      "sha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a16",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/governance6-raw/wrong-generated-class-rejected.stderr",
+      "bytes": 101,
+      "sha256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a18",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-original.json",
+      "bytes": 2975,
+      "sha256": "29ffeb9c5fcd39791ec853f7f5d662687666006e9332b4bc829ec736ceacb97a",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a19",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/actual-result.json",
+      "bytes": 2975,
+      "sha256": "29ffeb9c5fcd39791ec853f7f5d662687666006e9332b4bc829ec736ceacb97a",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a20",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/optimized-python-refused.stderr",
+      "bytes": 467,
+      "sha256": "faec908d0e81192b9a1425b2ea0d9146a96d021197ed9beec40a457b0bade2d5",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a21",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/stale-production-revision.stderr",
+      "bytes": 1091,
+      "sha256": "bc6ae490240bc0379519f93df4d0055863a3f64dd47ed5308160807443eba623",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a22",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/negative-provenance-raw/stale-receipt.json",
+      "bytes": 25909,
+      "sha256": "af76cb352f7b435fd06e14c9b4191ce5218e2e06dd463416321fbf9e5d40ec65",
+      "evidence_class": "mutation",
+      "status": "captured"
+    },
+    {
+      "id": "a23",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/owner-map-checkpoint.json",
+      "bytes": 2423,
+      "sha256": "c73f5c18939e9c0f4be2b5a381174d9dc89d804f71ad1943971cfce1990c2000",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a24",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/owner-source-checkpoint.json",
+      "bytes": 2397,
+      "sha256": "e821da946ce62787c2a1ab69f8000c2f24df5489a705a6d565fbe257ca33c717",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a25",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/owning14-original.json",
+      "bytes": 1438,
+      "sha256": "3b59556c357e1eb9d01fae6b2f3c53d060101e2ed1839ef797f18e75ea0c922d",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "a26",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/allowlist-probe.json",
+      "bytes": 1846,
+      "sha256": "014e9080c26b5e640ba963c13a628eff45d30cede9e80173b2526564f9209e59",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a27",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/anchor-inventory.json",
+      "bytes": 166094,
+      "sha256": "e304ffb0f4ae9b3885a7856d73e1df818aafe29edfc61a9f376e077417b6d334",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a28",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/build-report.json",
+      "bytes": 72650,
+      "sha256": "42adf7fb6cdcc68bfb67c50d818490e261d12027b061304b2a71d012d9e4b2ae",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-1",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/README.html",
+      "bytes": 5983,
+      "sha256": "d4142146dfcfd63c32669b2eae3acf1914601b14980562f348e8d636a48da978",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-2",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/README.html",
+      "bytes": 4299,
+      "sha256": "a0eccd4209acfbbb713c6a990d04ff4bc623a147369b91ff5e6f16b83bbaae61",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-3",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/acceptance.html",
+      "bytes": 4073,
+      "sha256": "1b782b80b63f05b831a5c55a7a72cbf1d21be83bbc74cca6c8c6aebbb1a1bc67",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-4",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/core-and-plugins.html",
+      "bytes": 49485,
+      "sha256": "cc76f8ddc3bf4c5b47cc7c816d578a22ca2a22c61b958bb521d0294fcc5d11b4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-5",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/echo.html",
+      "bytes": 30956,
+      "sha256": "0298172d1d82e8df42e9519ac5b6c9bd95415b36ca973031f812ebcf7ff69af2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-6",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/implementation.html",
+      "bytes": 14125,
+      "sha256": "83af0632737eb14937d1e8559d69fe0eb7694109e9749d8e6f8b0df166e3faad",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-7",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/prism.html",
+      "bytes": 14323,
+      "sha256": "b7758145e1a5ee4dd6a220f25fb41cebb132bbfcdab1c09656a694a9083e09c5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-8",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/runtime-and-operations.html",
+      "bytes": 38699,
+      "sha256": "86d02ef54ec8efe7742228c60fdfb0a53c80f72ef206a63e7e455c77f04a9b03",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-9",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/decisions/test-gate.html",
+      "bytes": 73666,
+      "sha256": "6ec2a2623e7656c445fc15cadc91ad51e14a43e1bf4cc84e1ee2768c995a14c7",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-10",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/README.html",
+      "bytes": 41913,
+      "sha256": "f7c003002352d633abab998b134af7bfacbe6faf65faafd9060f589cc0bd0f6c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-11",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/buster.html",
+      "bytes": 45546,
+      "sha256": "64c4be040723fa93f4fad1f29654e81ccb322f4bc4beace457c9c9a1764e0863",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-12",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/contracts.html",
+      "bytes": 25556,
+      "sha256": "e2ecc05dbb358dd69d25433b28822d93be161816037c3d9ba59700d2df4b900b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-13",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/developer-handbook.html",
+      "bytes": 204809,
+      "sha256": "740a73c1a5a8d21e5cd49678ad461acda15fcffe2c5bf0a6ad36722ba4788202",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-14",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/documentation-maintenance.html",
+      "bytes": 24956,
+      "sha256": "d1a4db61738d4a6b3a47a7570058eb14996e1191c3bfa64559741884256fbb52",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-15",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/effectful-plugin.html",
+      "bytes": 21741,
+      "sha256": "4776f1530a9513f277a57571f777bd78a028b2421a1c3e6db7c8e82da494b578",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a44",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/package.json",
+      "bytes": 155,
+      "sha256": "858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a45",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/plugin.json",
+      "bytes": 469,
+      "sha256": "ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a46",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/schemas/config.schema.json",
+      "bytes": 256,
+      "sha256": "ecb4659a0d13372817eb167c4af7a0eaba08e1b8f3ccf496dbb6fa287cc992ad",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a47",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/schemas/input.schema.json",
+      "bytes": 297,
+      "sha256": "39dcacb7784aaf29e76304fb161c03c4d050a4abff4f080b4bd39f604ee486c4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a48",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/schemas/result.schema.json",
+      "bytes": 1332,
+      "sha256": "1b312c6f2a9601239a47a3ad6ebc7d3ff67c5e377b1b2a905e743298e9d35859",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a49",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/src/stage.js",
+      "bytes": 524,
+      "sha256": "58f99854a1ab3c1afcd9e08721c4a05afa8fda06c4030e34de0f54b8498ebf08",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a50",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/minimal-stage/tests/stage.test.mjs",
+      "bytes": 852,
+      "sha256": "5eb15bb9853c4f8a7bb341b92fd4732b3415ec98e2f3b62c10b2f8838c764c0a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a51",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/examples/platform-change-nova-lifecycle.json",
+      "bytes": 5763,
+      "sha256": "2a1d752198305331536e73a771fb0e2096eb501266f43612f6286ca786e406fc",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-16",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/first-plugin.html",
+      "bytes": 23666,
+      "sha256": "be675f371d7e54c8ed4c5c8efbb5989719ca7a7fc5e1f4c4909c23167421217e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-17",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/host-and-engine.html",
+      "bytes": 33168,
+      "sha256": "389dfbb4c520d8ade5ae24502d42faf2061966593299dee8dd305b42a6b489a9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-18",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/lint.html",
+      "bytes": 81275,
+      "sha256": "31f1b05d5653ae2dc3e6248097eee43a4d71fe84e1a6e1e98610564efe4ebdff",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-19",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/nova.html",
+      "bytes": 30139,
+      "sha256": "ba03754088f371cf412286650d6360f6085a73762cd1aa229d1d40f231253266",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-20",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/platform/README.html",
+      "bytes": 67097,
+      "sha256": "b7264764375c8e3c1c4b0a6954ac9a267f666417912ab4c49def046b774f2162",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-21",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/platform/buster.html",
+      "bytes": 17992,
+      "sha256": "d42f327dcf03c7a2beb90182f01605bcda94a52d7473e371e50b0b195df9acbf",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-22",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/platform/prism.html",
+      "bytes": 31151,
+      "sha256": "e386e4061d8f3ca62d3764acb58eb83ffc3fd161c0a73e9fab5ce45672c69546",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-23",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/README.html",
+      "bytes": 6022,
+      "sha256": "683ee325ee0ea8f88c2b0a0e96f32d7e72f914e42d87f7cf7c97078d819b4113",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-24",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw-agent-observer.html",
+      "bytes": 9339,
+      "sha256": "e2c13beb9e0a1ffd3a19adaa15a83b947a1cc05f263819ab47fb39d26681f25f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-25",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw-ops.html",
+      "bytes": 6213,
+      "sha256": "05cc486adf0290965750f0294b6c26151739ba1234b9159671d6a6b5e4fe52dd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-26",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw-prism.html",
+      "bytes": 6802,
+      "sha256": "6f1f8c6c705b55e516da89b93fe4c7c829bbb5edac2db02ce5077fbe27336f40",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-27",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.agent-observability.html",
+      "bytes": 13575,
+      "sha256": "186fa63ab0d55cda0793c4d233131dd9fde25feb45447b9a1dd58c70ad7618d3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-28",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.api-flow.html",
+      "bytes": 9932,
+      "sha256": "0dd91add52d6f1592915fa0e4652eab47e1556a9b8c14a61c1bdbfb431af4fdd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-29",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+      "bytes": 9349,
+      "sha256": "fdb05b98187bc752fef8c42b2bcf426959e1c289efe9e1749ebb687ad0b2655e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-30",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.artifact-store.html",
+      "bytes": 8804,
+      "sha256": "b9b17cc1eb75744b3617b2fb7aad46718d98d6b7ae7246ecd3c73fb55b40345c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-31",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.axe.html",
+      "bytes": 10018,
+      "sha256": "2722f4c4bd19dc86fa979547e9940ccc11d68d9f1cf5f43afeadd5d1f1fe22d4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-32",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+      "bytes": 8779,
+      "sha256": "c89e8eec7ee9f138278828e3b4ad19f21dd299b8ea4c34ad1cb1f49e8d491aeb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-33",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+      "bytes": 9557,
+      "sha256": "b7327690bac2efc3eae27248bb400c744127b32e7e3c3ba629328342ce959bb9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-34",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.case-study.html",
+      "bytes": 8794,
+      "sha256": "a5a9d57e009a223f53290d8740286728bbc660d28bc38fd200f309eaf54dc618",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-35",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.command-runner.html",
+      "bytes": 9235,
+      "sha256": "1d3dedc89946ebc986ef26cb59581d7354fa170f4a96fe0005c01ed55eb3e68b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-36",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.container-build.html",
+      "bytes": 9490,
+      "sha256": "2f99049a895815b17e07e65376bdd562bfcf88e023ed486e5a9f05c7a8792599",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-37",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+      "bytes": 10305,
+      "sha256": "f59bd2330d9993639bcc9a36d5a7cd5a7cdf39b1a64ccb893fa3f59f0683e479",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-38",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+      "bytes": 8735,
+      "sha256": "2ebe1e2e2a754b6777dae141e1d58c0736bcedea2f44e9a6446353704be68edf",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-39",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+      "bytes": 10154,
+      "sha256": "d8196ce12803329b132a111aa7ae059225d8990f6f0794da22026499e60f7f4a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-40",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+      "bytes": 17156,
+      "sha256": "ba02d372a50c542b7504ae4d23638f86d0df80dc482dddc9ceac4f3f2d6a6f99",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-41",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.direct-command.html",
+      "bytes": 15057,
+      "sha256": "e3f09f5621a8a7bb500a4063975a87719a942373c299a9455b26deeb6202bbad",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-42",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.git-workspace.html",
+      "bytes": 9593,
+      "sha256": "d83e9ba111d03f998f5fe79aa8fb1269d8e921d6ed6f372fd14105dc5aa746bf",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-43",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.http.html",
+      "bytes": 9896,
+      "sha256": "4248775eb122291bb01be9a61b87dd5648771d690ff6d51f4483a2b049e7a994",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-44",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.human-approval.html",
+      "bytes": 12728,
+      "sha256": "79874dc9285732ac6e014cc1022ec2a9766c7b9cfecee4dc39ead227557dac63",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-45",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+      "bytes": 9445,
+      "sha256": "fb54c26112e80b37b46a3e65e6e0e966820ae7e162e2dd3c7224f5882adf3ce9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-46",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.junit-report.html",
+      "bytes": 7951,
+      "sha256": "3f7c91d4da87f034e0cee274403d9fe9fa0421021921b18058b83b186a526d12",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-47",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+      "bytes": 10987,
+      "sha256": "035e8747bb962ed1d8fa0b9e0fbf8c032c56c950d2f28082c2bcc7a0b1718f95",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-48",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.lighthouse.html",
+      "bytes": 10422,
+      "sha256": "4be576ab3fca4424679bc0213848b543241e4449ca332ba2cc4948fb991998a0",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-49",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.lint.html",
+      "bytes": 15481,
+      "sha256": "b80dd0d18240eb2fa926d514a8c7ea0b2adc4bd8ad0c9b59e0f950367f345f90",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-50",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.network-http.html",
+      "bytes": 9065,
+      "sha256": "65206f4295bbaf00a8f119c2a61c7d38d467a64afcbc26f05c90d74077bd3965",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-51",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.notification-observer.html",
+      "bytes": 13970,
+      "sha256": "31f889db80dcc7b649818c9b852e75af873b32dcce525f55c191822e28ffddfc",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-52",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.openapi.html",
+      "bytes": 10030,
+      "sha256": "99190806d44666f3cafa92ba2157d740b0177e78ecf88fe60a8f56099ea84b2e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-53",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+      "bytes": 8948,
+      "sha256": "0e24abcf050bdbf2210c3915c76195fee9202922fc246b5d2c9290e8c3d924cd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-54",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+      "bytes": 8860,
+      "sha256": "3ac8a460437b9aa672dab38b2ba87fe951fcad7e8e5a20c9d067652c5cd7b77a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-55",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+      "bytes": 11751,
+      "sha256": "6a5ecc98758e889e0323be7e5242183ef44929be82f1bbc955ebba4345965eba",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-56",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.playwright.html",
+      "bytes": 10514,
+      "sha256": "1882c4988db812dfcb42b1c7d95bd55cf0f2a569b834dac60bf08ac15c2183c2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-57",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+      "bytes": 11605,
+      "sha256": "d5f5e92a581c6ef9daec6f03f9993726725b11891d0ff9a7f35d0a2987a6b060",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-58",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.prism-design.html",
+      "bytes": 8799,
+      "sha256": "4262cae24e5e70ba8400cc805733e017bf7c45f9d56c250c0fa63c67f2314b4e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-59",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.project-summary.html",
+      "bytes": 8961,
+      "sha256": "bfafaae744a4b678772efdabedc0813f019b8e2c87fe5320667b326a346a1a31",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-60",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.redis-transport.html",
+      "bytes": 11839,
+      "sha256": "56dd99093b3817fa80bcda157a4355ec16cc77fb5d2d599cfe779b9d4dba165e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-61",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+      "bytes": 11378,
+      "sha256": "6e190c8beb26e777fb511a168abdc20291ca32b330e0b1b240445aaee0d3a7ba",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-62",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+      "bytes": 8871,
+      "sha256": "865979cae8abafa4bfca30a41089479771425ee136291e9e4facedbee4eb609e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-63",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.review.html",
+      "bytes": 32754,
+      "sha256": "7988fd967236b4264dea5cbdc62b8d9d97ff33fef99b2e594caa7e4789ee5c19",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-64",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+      "bytes": 10990,
+      "sha256": "894cf41a38b6f1cd54870709196d54c670564a2e8c06d412cf5de91350165c0e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-65",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+      "bytes": 8283,
+      "sha256": "4c56ecbacd964a6d19199c6920ce413b41294da5975a680c873e16adf460429d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-66",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.security-providers.html",
+      "bytes": 23332,
+      "sha256": "a3bf0921f907e6ff311a4b6d9d77d9c6d8ea5c3bd0cc802ba57f21591dcea1c8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-67",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.size-budget.html",
+      "bytes": 10283,
+      "sha256": "89a770ef04b208a19a3cb6014036f08bbfb74cd9c578e9bf79c52a6f9b0fba0c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-68",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.state-store.html",
+      "bytes": 8596,
+      "sha256": "55bdc1a1dbd74ddca7fbda58deceb6eb34982f7c1fd18014afa75c6416bed6da",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-69",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+      "bytes": 9721,
+      "sha256": "bce1a2001dbd4129d1c433829f4573a21d212aab19e6b30bc08136a7c9c4fd52",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-70",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+      "bytes": 9921,
+      "sha256": "7c916cd5a7191285542712e397b8b91f85173ae6206f259529f1c0395696876d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-71",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+      "bytes": 8818,
+      "sha256": "731fad782395500ff3cfd2191944b2d611d64a80e65dad8f041682b87def6d74",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-72",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+      "bytes": 9244,
+      "sha256": "721f25aa23a008b14289be1eb7edc197a4acb43be5b10ce895a71db71501188e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-73",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.visual.html",
+      "bytes": 10536,
+      "sha256": "3a1f593d86c0fee21edfa0c6e0b7743c5de7ecdf98eda1cdee744c635260d586",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-74",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/plugin-catalogue/kubeclaw.wait-store.html",
+      "bytes": 8564,
+      "sha256": "e4a91e30965cca8ddf19e0d3409170e2de610c4e0055841e6de5edc42d778661",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-75",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/extend/testing.html",
+      "bytes": 40388,
+      "sha256": "2f6d30267f13d8864b4e9ab1fb0b8e2c79fa2c71310cef3322a505fc05cbdcd1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-76",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/product-surfaces.html",
+      "bytes": 34977,
+      "sha256": "e0cd4732f1a958522469f435b6690c687e0fb88b39d3642a9ab4a66936a958d1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-77",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/README.html",
+      "bytes": 9188,
+      "sha256": "b8c40f876d4a8ef12a9433804ead5baf1734859e8cc01aab48190be420c0c688",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-78",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/api-object-updates.html",
+      "bytes": 25887,
+      "sha256": "f29d3c93a83db1ce2debeac977cdec568bfaf05cd5dc3850b5d02b44a8f4f8ef",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-79",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-error-codes.html",
+      "bytes": 707810,
+      "sha256": "220c459fb90db64a4f35bf637a8719075ce2849ad5ec6507f5a9f1c30717229a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-80",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-provider-configuration.html",
+      "bytes": 63292,
+      "sha256": "f91959b2aad9b9c2bd1ad916eb5592d254b93189408610b4377773c87c524d07",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-81",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-runtime-configuration.html",
+      "bytes": 44443,
+      "sha256": "6dcce694d38432ce99d8baf4664144ab828c86b8714ee94dbab2bfe5c70ca7b5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-82",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/buster-suites.html",
+      "bytes": 71959,
+      "sha256": "6023191e3128d7a6a6578769c5b1258cc92724eb317a1d7a76c81b4f8fde4457",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-83",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/capabilities.html",
+      "bytes": 35738,
+      "sha256": "e6d2dcb13a65aa3d17e68deeb9c2eaaae1944d3bade483101d9e44eb29438f1f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-84",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/cli.html",
+      "bytes": 138336,
+      "sha256": "de93dbde12c688592d89aecf7caf93b7bfbbdc0d11a81ae6c6a3b29c964b01fb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-85",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-change-impact.html",
+      "bytes": 85041,
+      "sha256": "162d4674c259336e7c87d2d7cf015c60db2a0aae1b94aad998da919e629bced1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-86",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-compatibility.html",
+      "bytes": 11135,
+      "sha256": "aad2a295ae2ed2baed66ee94a09fe50b60c3bf51faf5b8d71e59b6ab4e71f1fa",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-87",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-errors.html",
+      "bytes": 16955,
+      "sha256": "8c471e8c01f3b50b406d94b62f4459eec651f7dc96b5b1265c384b7273ac2798",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-88",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration-precedence.html",
+      "bytes": 47024,
+      "sha256": "1194892dc52b68676f55ffb32c2995fdd9224fe457b3f32487c63fccbaea6d11",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-89",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/configuration.html",
+      "bytes": 21243,
+      "sha256": "9accfb63389ecfced526ea0ac7835232ac81334a45efa5a3dc792bfca3a7c865",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-90",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/contracts.html",
+      "bytes": 22669,
+      "sha256": "dd39381f1a454ecf4d6d7de781a75a96e6b595dc93e294a3fe9c944f3e8450be",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-91",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/documentation-governance.html",
+      "bytes": 12577,
+      "sha256": "5d45dba62723b281b01a7a57e51ed66a1d172cf908c18ed677f139e9150be6af",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a128",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/documentation-route-registry.json",
+      "bytes": 758,
+      "sha256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-92",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/documentation-site.html",
+      "bytes": 18453,
+      "sha256": "97ce2c3db3fd29555b29dafe8e52c0d9b0bc3f0c142e84fc43154e7778b18dd1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-93",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/endpoints.html",
+      "bytes": 78803,
+      "sha256": "81e3b31448790daeece044f220b325627ce217d08a4b6695cccb079dd26b713e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-94",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/environment-variables.html",
+      "bytes": 1681764,
+      "sha256": "9abd19530a03efa884106cf22a0e527e48cce92387049b84809dc77424dd9da4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-95",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/errors.html",
+      "bytes": 23172,
+      "sha256": "d88bb98722ac48f4be0ee63395f15a0128d1ebaa5b7a066187a8aaec506b3314",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-96",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/events.html",
+      "bytes": 28590,
+      "sha256": "ea5966d58d47e69e2de9eb0809e2b0b1b4441a2f4384ef48cd0d610cc7d34a91",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a134",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/generated-documentation-map.json",
+      "bytes": 167226,
+      "sha256": "b1cb93f01751080c9f34672a20117698b974f3430a24e41b6102f47fd18377ac",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-97",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/glossary.html",
+      "bytes": 28102,
+      "sha256": "dfe84b56eb03f07be293a0b1646732ec68568890a7f8edd54734c4d00c12c1ac",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-98",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/helm-values.html",
+      "bytes": 17727234,
+      "sha256": "c0adba87eb3334ddb646b4379edb967ff0c93253e84941d186ae0a886e3cc466",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-99",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/host-and-prism-configuration.html",
+      "bytes": 19163,
+      "sha256": "aded3cc7de05bc6897026185ced819b25326be9a77102edb9e24986e3dc0f35c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-100",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/images-and-digests.html",
+      "bytes": 40349,
+      "sha256": "0e63cdad4e25d000f5dbf484a90111441071b77d3eb4dd8b861352f9e18f21de",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-101",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/lint-policy-generated.html",
+      "bytes": 58282,
+      "sha256": "9898ff49d433cc7af6874bf389e6fdc38dec6dbda948fbb98d6e7495bec8454a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-102",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/lint-policy.html",
+      "bytes": 73886,
+      "sha256": "e2e06f9ca70a8c7deedbd44c46bcf94194e0ac9c60399a227a2208838131fb12",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-103",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/lint-rules.html",
+      "bytes": 54139,
+      "sha256": "fa6e54093ee3652614ddadd13872ff1cbdea616bb8b883f74baf879cd2fce4f8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-104",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/nova-project.html",
+      "bytes": 28942,
+      "sha256": "49602df7c413543b59f9547f1ba4c511e171738f8783dcc662787d9978c1d20b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-105",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/pipeline-definition.html",
+      "bytes": 16621,
+      "sha256": "b48dd39362be68bb71b86dae01d6c132829fd6666f92fccf4b00852541a37805",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-106",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/pipeline-json.html",
+      "bytes": 21687,
+      "sha256": "00f02558ad9de9ffaf2a23cf5dd39139a152bc556d8fd80c20fd6477022a3cc5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-107",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/pipeline-platform.html",
+      "bytes": 41270,
+      "sha256": "29756223b9349593581e61456125c99657820fd6ba559fb5dc5f355c55b194f4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-108",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/platform-surfaces-generated.html",
+      "bytes": 532547,
+      "sha256": "cc3024aaef70fdc8bcfa0f747eacb422dfb2455512d5a3b6ef6d46e921b4e7b7",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-109",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/plugin-configuration.html",
+      "bytes": 1825447,
+      "sha256": "e99ae6f516b9436cdf88d5614f1128c440517074d41f33e3fe2ec6797fd020c2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-110",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/project-pipeline-publication.html",
+      "bytes": 50924,
+      "sha256": "2507797924370fe05b9f4147d785bc3b83d010f82944bd3557d76890fe628777",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-111",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/roles-and-package-ownership.html",
+      "bytes": 69856,
+      "sha256": "3f0e732df37d9487b6b6c321c3e477f9b8d415e9d5c85e020dcc8202d010052b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-112",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/schemas.html",
+      "bytes": 46743,
+      "sha256": "136d4157b9b28ea1f73db0af41e407a32b2ad94cdab46d88b9cfff7d3940eaf6",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-113",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/sdk-exports.html",
+      "bytes": 1026564,
+      "sha256": "e167c1d22ed7c6eb0e6f9ee8f469d4e6257006db2f8af2f2d4cefd3497a9b416",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-114",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/sdk.html",
+      "bytes": 63059,
+      "sha256": "43895478cc8535483dd832c7fae610c5843ecf00eea12cd73188a21fab5c42e8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-115",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/secrets.html",
+      "bytes": 390077,
+      "sha256": "801ab8bcd5a34295bb54c5c714576e2fd0fa0889f40ed80cdbf6141cf9fec0d0",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-116",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/service-routing.html",
+      "bytes": 23918,
+      "sha256": "48679d96679055780a497c7d77a91200fff04eedd14664989b0252a89982bd38",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-117",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/stores-and-retention.html",
+      "bytes": 32881,
+      "sha256": "bb51c26172c47dfd8d1586930601f75a73243f588ade84628d9c06d1b196aac6",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-118",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/verification-commands.html",
+      "bytes": 4100,
+      "sha256": "d7d0dc2ed4d0b79da21cdf47af0af865e4f4c9c0f186428abec4dde9e72eb02d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-119",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/worker-profiles-and-roles.html",
+      "bytes": 17174,
+      "sha256": "1d2c2aaabc9c22de67c19a3117d283f91c193fe3ffea382d8a1751419c33310d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-120",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/reference/workflows.html",
+      "bytes": 15793,
+      "sha256": "c407883b02e73b50fb57e66f500017dcaf344515154b9c943024500110189a46",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-121",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/acceptance.html",
+      "bytes": 38354,
+      "sha256": "75cd5f1f868f1ec6210e76c9d940ef4b1bcae0eca4b57ba34b8d781d219515ba",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-122",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/current.html",
+      "bytes": 4293,
+      "sha256": "bb7a59afe6e95ed095d20740a18ca078cf37f45ef8c9634c43b72aed797d0c9f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-123",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/open-issues.html",
+      "bytes": 113836,
+      "sha256": "281c0b368aee0ee0f7bee73720f5149cea5539aa3cb94a74491265586f390502",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-124",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/status/roadmap.html",
+      "bytes": 15134,
+      "sha256": "ee4eee74d26d370983bef27df5f354395ab91ac40f145c621a711a42ec67dada",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-125",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/README.html",
+      "bytes": 17740,
+      "sha256": "c8280c8c5a766e674a26fb5b103020776823d02f266b6bcb776170f40c36dfb2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-126",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/archviewer.html",
+      "bytes": 11991,
+      "sha256": "7e8ae46888848fe9fdefee0a737cbb2081bef2499fb06e0f49f5788b3d679165",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-127",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/buster-namespace-controller.html",
+      "bytes": 40461,
+      "sha256": "931f39778fc7a3f153f0da3e9abf211da8379ed36955907ac2bd1af1704ff528",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-128",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/buster.html",
+      "bytes": 28152,
+      "sha256": "35080fbc898d6fd3cf92f6fa94ce3f63e9095fab83bc9e5cfb39a279d0769af5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-129",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/codex-integration.html",
+      "bytes": 15565,
+      "sha256": "cad07b418aac314e10cf6a64ef9f4f21c8aa206e3c96a502f586c9dad99403fb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-130",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/communication.html",
+      "bytes": 90380,
+      "sha256": "b577a4ec390bd4e58bc8c2ac06520d026bce8bee5dd86637e7a4cee655c65b57",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-131",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/components-and-authority.html",
+      "bytes": 44722,
+      "sha256": "639b34c001d3d0502b29ecf739209ee608fc58eeb768ab4ee8ca2abff0367168",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-132",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/data-and-state.html",
+      "bytes": 143852,
+      "sha256": "e093df39e7b691d6081fedae3044ee5a91eab0e2f6af3ad111e67d7a375268da",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-133",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/deployment-and-trust.html",
+      "bytes": 37858,
+      "sha256": "720c8969b2cc1b0caaacda71bd67fc0728e0128c92623e5510f02dec915d0a08",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-134",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/echo.html",
+      "bytes": 17840,
+      "sha256": "3ead0154e3e239e0a982961c68927573ca34e50bf58c621f4b0a0a2c178bac7a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-135",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/forge.html",
+      "bytes": 16447,
+      "sha256": "ba392c2c00812575b36c67ad99f9c463d50924f637b415272280306b8b040b4a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-136",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/nova-core.html",
+      "bytes": 116328,
+      "sha256": "6105ee92a8ce7016fac200aa4710e3696039b16296574b39ad85f32c3f31ea09",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-137",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/openclaw.html",
+      "bytes": 20216,
+      "sha256": "9ac149bef98d981775df6c35080450d72001c0cdc12c344ce72eee232877af11",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-138",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/ops-mcp.html",
+      "bytes": 27364,
+      "sha256": "c3d9a6e6bc84c94a0047f5e2cf7bbc485afa1fb79ec79aff5f4440de404cbeec",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-139",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/pipeline-dependencies.html",
+      "bytes": 25793,
+      "sha256": "2fc38145a6c64a15164f8bb37a92d7c175eb33b6b2410d4e12aca35b3e64e284",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-140",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/platform-and-operations.html",
+      "bytes": 88152,
+      "sha256": "0e1ae17fd3c5f9480f8818c3e3c861cd5960345cbfd757a3a814d88ec0cac81e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-141",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/plugin-runtime.html",
+      "bytes": 73374,
+      "sha256": "8047767469a706b3d86b91a8a8fd915129c348cd928cefa43b50eabfffb3f2fb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-142",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/prism-data.html",
+      "bytes": 83653,
+      "sha256": "bdb0a4f39765e4462db41709d709e025cd4a5e4777c70c692b650c2c9a4d5067",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-143",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/prism-runtime.html",
+      "bytes": 68504,
+      "sha256": "b8bb701c0058b3099754f78ffad078abc9435c8ce64152885c3f62af9029af37",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-144",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/prism.html",
+      "bytes": 20933,
+      "sha256": "7a00b9255befa56e521e8daeb84141d3dc7a085cbc416a38509d42ca0f26d9bd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-145",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/request-state-recovery.html",
+      "bytes": 28062,
+      "sha256": "8a91c695ba09268ccc36d69968856c4240485a8bc4c0e8db39ff42ef72d71ad8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-146",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/request-to-result.html",
+      "bytes": 1268,
+      "sha256": "4e53b42191d86c445bb705092cf7350d6855c294b6b737f34d4257c85a193f1b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-147",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/security-and-trust.html",
+      "bytes": 67561,
+      "sha256": "004e43a0ad8625553f91262fe2781ed2768e338553c42fa659ace5ba736c098d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-148",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/telemetry.html",
+      "bytes": 84135,
+      "sha256": "53cbd98d878ec9d7217f95b83de37d0e66b1477da489aa5b1918230b87a7e9ff",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-149",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/worker-core.html",
+      "bytes": 77898,
+      "sha256": "f862e31f247d9c64404b3b74179c85e4de44690de7f884c74c805956db2eb35d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-150",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/understand/worker-trust.html",
+      "bytes": 14835,
+      "sha256": "9b8d3250f9e215d6c258ab6cfb408bc909b7c051a30b007ce2e619e1a1240f54",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-151",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/README.html",
+      "bytes": 14140,
+      "sha256": "153958dcb2f490ec7e18836a6b36142895db5187cce69202d244340a3455b7bc",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-152",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/capacity.html",
+      "bytes": 60936,
+      "sha256": "ead9efb1fbbfcec8d54e1e444090e0e24a788cae73b6584c98e6da9cd2d955a9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-153",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/demo-delivery.html",
+      "bytes": 16653,
+      "sha256": "3ffc4c4448030e3ed0e8ec989bdc58c4c9eac8a5e7e5a129e71f68b4cf09cb2b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-154",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/diagnose.html",
+      "bytes": 190230,
+      "sha256": "62147bc28e0ae9306a79b6b69f04f8a398c834359095d3bd897c9134432f07b3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-155",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/install.html",
+      "bytes": 102124,
+      "sha256": "5a3c8e6933ffad27166500c5f3275ecd63919cd05ce89ff514c6d855e814d057",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-156",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/maintenance.html",
+      "bytes": 97106,
+      "sha256": "811283b6ac1a30addb39c4cf3c9ab9529d1f93afa0a734500a53cdbc462c9d9b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-157",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/operate.html",
+      "bytes": 57753,
+      "sha256": "361393577d09011f07d88cc065b8e1d8e3a4418fd8f4e184fff0337825734e5b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-158",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/plugins.html",
+      "bytes": 687531,
+      "sha256": "e52d7c793f613637ff9c80ca6dca5b1bf2e5780f2afd978d9ac78bd32c7033c1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-159",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/prism-studio.html",
+      "bytes": 266558,
+      "sha256": "8223f1ac52757e6d31bb697101bfd2fa4e08846ce4da271da35583a2ff5b3891",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-160",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/quickstart.html",
+      "bytes": 9703,
+      "sha256": "75ce89294b4a53b73b2e893143a980da5e6e7a74d844905a3c7ae3f307145617",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-161",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/recovery.html",
+      "bytes": 73960,
+      "sha256": "8fe156f2a0f863907f51f154fbeb0ae935e10f2fc51a4ed71abb7de49194986a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-162",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/worker-trust.html",
+      "bytes": 37072,
+      "sha256": "71ecce95bccdd5bb9bb464719b350f0b0848d54ab25fa2c5272f67823e98754f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-163",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/README.html",
+      "bytes": 4524,
+      "sha256": "732f7172b0f091b68bb045910766804d47cca89a0c0c1a9034dc048f44c619a1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-164",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/buster-suite.html",
+      "bytes": 45730,
+      "sha256": "0a6136e68d4a75efa29218911827f2f0f828066cb4aacc2aff52b892c9c0224a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a203",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "bytes": 3082,
+      "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a204",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/examples/request-trace-redis-unavailable.json",
+      "bytes": 3777,
+      "sha256": "a7e50d68b2a4c0ed85ec1ce1d7b7c25e441c1c378df666d908d1ce0221b2c3b4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a205",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/examples/request-trace-success.json",
+      "bytes": 17731,
+      "sha256": "ad5e77b0b88753809f6117ea0d55c92147f814d0bfafd0b117b652b69e560eb7",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-165",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/kubernetes-fixture.html",
+      "bytes": 10528,
+      "sha256": "76baa75b8c92a285beabdaa1429cff4e0a69974f4c31dc9988286050e5b96382",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a207",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume/approval.pipeline.json",
+      "bytes": 537,
+      "sha256": "e28df575a6b6b90c8d4f0f8c94ed1eb0ba1f6760d41a9e03398b9941fb1405d9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a208",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume/platform.template.json",
+      "bytes": 2198,
+      "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a209",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume/signal.template.json",
+      "bytes": 514,
+      "sha256": "5ca867de4e70a28a24f3cf7f6e74499ce6b9af5a98c45b7358e6b226dfee0ffd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "html-166",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html/use/workflows/wait-resume.html",
+      "bytes": 50910,
+      "sha256": "2a38a33bae5a73d35d64779ac9fddecd3d64c7ddeb0c209d483eabf9f6c70285",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a211",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/README.md",
+      "bytes": 4578,
+      "sha256": "450c37600e509157ce29d857c8cf2fa354709de3c1d728eec4167e9b1873a80a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a212",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/README.md",
+      "bytes": 3648,
+      "sha256": "1ad0c0fde42be68ccb2af0ef01ec1892c2769aa386d5dfb0a12a85470f57704b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a213",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/acceptance.md",
+      "bytes": 3283,
+      "sha256": "c6106b2daea635c06f9e912d4e47a3ca52df97f54eb31b69a9f960f080fbdb26",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a214",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/core-and-plugins.md",
+      "bytes": 44910,
+      "sha256": "63d22e2f61d5c87b4b8dd4b4564662806f49066a6e01463abfd7feb17886e447",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a215",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/echo.md",
+      "bytes": 27209,
+      "sha256": "0e60670b8a9ffe8646c522f37645978fabf155a644eeb2d482e47dee9ab9634c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a216",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/implementation.md",
+      "bytes": 12806,
+      "sha256": "e3d3ee5f7ae33e10bbba75f5cec8f62464a67a0d155ce3b244332f5122661ef4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a217",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/prism.md",
+      "bytes": 13239,
+      "sha256": "a5aeab53743bb8e6eb6942391ff2b8ea5a7d651b10e66fbfa5a85620a34c7dc5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a218",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/runtime-and-operations.md",
+      "bytes": 35359,
+      "sha256": "b3ae2f84c42823b223e4cec988699e136a9fc3d2f6d0274163cb433552bed9d3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a219",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/decisions/test-gate.md",
+      "bytes": 59816,
+      "sha256": "2effac78e8b04b033f1337c4cb33effaf4d9392d53f3a5c04fc6d25c5d6f6f5c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a220",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/README.md",
+      "bytes": 35799,
+      "sha256": "32c1e3c137d5d03e7561b09d57764c06ff9d5fe068f2d544886af1e98ca04a14",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a221",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/buster.md",
+      "bytes": 39259,
+      "sha256": "f9346213987b8e004f2e9cde14bd1c0db766d3a3e02539db8078c47ef10718db",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a222",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/contracts.md",
+      "bytes": 22069,
+      "sha256": "b12b87e0cf8b72cb90f8a578a950ef10f8bce98fcd65be03db1a0c5ccb022eef",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a223",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/developer-handbook.md",
+      "bytes": 185936,
+      "sha256": "97c693c151da26a6d972c56f8e1f62d966585408677c566df3ed6268da1f83d4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a224",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/documentation-maintenance.md",
+      "bytes": 22346,
+      "sha256": "d7e3de7a2f3c1f669f9855ad6d93ff49e783c093767db4e639873d4001bd78fa",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a225",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/effectful-plugin.md",
+      "bytes": 18906,
+      "sha256": "1d421e99972d1406ed555a176a87c4d3c8f2afef5096380ca1ba56414e4f6fc4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a226",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/first-plugin.md",
+      "bytes": 19410,
+      "sha256": "b38b7c3f03d8607d340c198c9589331559f4fc5b866e30179911d58d562ecb89",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a227",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/host-and-engine.md",
+      "bytes": 28868,
+      "sha256": "6bed5b5aa5e95f46ee3817d784521d3708439aa40a5b0e3d1f675efc973e1651",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a228",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/lint.md",
+      "bytes": 71962,
+      "sha256": "67e149dd2d10bc8b961cf911d0fc353fef948946dd16ce88b31289f8bd4de119",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a229",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/nova.md",
+      "bytes": 25427,
+      "sha256": "84446574b45588f7ae47199ea3cd74269d11add90889043754547b5f2133e449",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a230",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/platform/README.md",
+      "bytes": 59431,
+      "sha256": "20b8f1dbf9cf36e3da6e58a81d73b3b3026b554bf828cc8b373ed25bff5917f8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a231",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/platform/buster.md",
+      "bytes": 15623,
+      "sha256": "5f21aac68ffd40f4317892cb57a6a39a8afe73c3112c086ac596dc12b4907b1e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a232",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/platform/prism.md",
+      "bytes": 26959,
+      "sha256": "527479258d880efb9efbd406065093a71adf181cb442488155b11de0e784b9c2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a233",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/README.md",
+      "bytes": 4377,
+      "sha256": "25ca5f2c5e97602ceb81c64ef46b7c72038a2db944d79920238b7d4194fbacdf",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a234",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "bytes": 7387,
+      "sha256": "ea3da6f6a837b0492f7eddc44143d0af0baca96ba807377fa1e0a24cf0f65cce",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a235",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "bytes": 4829,
+      "sha256": "f7b74fd8523d03a41571347b826c37324388e06b87c349c2ce5e36541568ef0c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a236",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "bytes": 5359,
+      "sha256": "d3278277bbfae03b36da70ce665b3679976952242a65c5abf770295ca0a14e67",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a237",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "bytes": 10485,
+      "sha256": "bc826025f1e560e3e46e100a9ebdf818166d7f0b7b6b614792817ac055ab1c8e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a238",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "bytes": 7358,
+      "sha256": "290d778c1382817c4dbc60b17bffef3a86e68effc3e0c793d11eaeff2bc1c2f6",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a239",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "bytes": 7361,
+      "sha256": "8f7fda3fed3f8d19d3d0715dceebd95d0b2b499349efeb814e06de7a66d11dc7",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a240",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "bytes": 6880,
+      "sha256": "26760980e0a6e3957e2de90d810813cc8c863de3c707267452d17b6d89b978d4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a241",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "bytes": 7290,
+      "sha256": "faa7b8d0d7fab9963d1622875df3be1aa303b978fd385836cf8144a469bee43a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a242",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "bytes": 6882,
+      "sha256": "c2ea099a9050c1db435b8e3f234686f184b676445ca071461d8edd2aecca5d3e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a243",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "bytes": 7525,
+      "sha256": "64d53ffb2b7b40825ed6b8cad4dd7e1179e4c58293883e644878f4cb9bc62683",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a244",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "bytes": 6882,
+      "sha256": "eab72b687cb2a59376b9eb62e6840891462688dec042c078aaad6f224bcda3af",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a245",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "bytes": 7284,
+      "sha256": "dd7338cd793492ecd28a939bcb8b89dda1ec63d7a4eb90529773a6008fa90abc",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a246",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "bytes": 7152,
+      "sha256": "cbedb81fec45b8744378d074921c0095854c179b009062080e8928fbd4f7bc48",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a247",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "bytes": 7492,
+      "sha256": "a63da7efc52838fc6da460c8ada412077c4350616d6c07adfd4a75a0fe8c46f7",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a248",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "bytes": 6883,
+      "sha256": "2e8e0c53926952688c2f632515edcc92741b2d572068b8d4cac6ea997534d04f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a249",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "bytes": 7398,
+      "sha256": "5ee0b8e1a1419fc91ef6a6f43d64b237ad581b056a1307bb128231202af97022",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a250",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "bytes": 12788,
+      "sha256": "a9b56794255ff9d0bee7fa25d757c0f4236352471ab05aa6cc329a429f19b655",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a251",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "bytes": 10764,
+      "sha256": "8431bbbc8f7dcd47dcd73cbc333bbb2c7737f275efaa1b518514f8769859e8b1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a252",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "bytes": 7444,
+      "sha256": "55a4a82e0a9938fc8c0da55f88428f6f46391d0bb436d9f8b6143f80717ceda8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a253",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "bytes": 7161,
+      "sha256": "dbc2887776a527adf1e2f1ed179e64219a09a3a6621523ba7f809897ab8d7684",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a254",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "bytes": 9754,
+      "sha256": "d37a3bfefb87eec3acdc3fec6344e2d24b54576f7bbe85fed1e46b82f42d5691",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a255",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "bytes": 7396,
+      "sha256": "bf9fcef66c89b26586d2d18333b286c2f90421bf01b50347930158ca61dc4071",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a256",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "bytes": 6228,
+      "sha256": "c626eaaede8d0d9757f3ca9f58d7d843c3ad1b069188bc016addd46d10082a95",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a257",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "bytes": 8151,
+      "sha256": "c5a5cc4ff7cd3698fe94af4fbf833b56c227c1f9ca632aa8c071bbfd0654f2b3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a258",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "bytes": 7677,
+      "sha256": "5ab037afcac0d52da635a7b59fe7a621e6b1c6d667e13f8a6905e85d59f21e4f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a259",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "bytes": 11859,
+      "sha256": "38994625b94fb7f2e6f3fac989b48b6598a155b95ba6ce5b8512b3f23bb3dee0",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a260",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "bytes": 7030,
+      "sha256": "11c542c80c8153608e641b6ea8ddbdc9aa0915398e13f9d4f9b772090b45a18b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a261",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "bytes": 10505,
+      "sha256": "559ade37c19e21a7c73124b2f75b9865ae17cf754498c8c2384dba944b29dc5b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a262",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "bytes": 7423,
+      "sha256": "35a38d22bf9994e9f0e4aedec8102fedb62522ca30b3715ee5a8b7bbb3b10a50",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a263",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "bytes": 7017,
+      "sha256": "040dfe3f4e176a39312a73f1ca505d6dcb592c57d03e169fb7fe59508589b0c4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a264",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "bytes": 6914,
+      "sha256": "076d042ea3b8655e71a74aeb7e5498bf19088b87fd53a07dc3810dc1e81a995e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a265",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "bytes": 9016,
+      "sha256": "3954eace23c4845fd20e7b8d9b4b43e87c5bcb0afcbb0b6324565d8901baa7d3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a266",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "bytes": 7760,
+      "sha256": "571ed4bffd7f0b1e3216cf0f8993eec604d41e3b835a9a1027d188239f1d1859",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a267",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "bytes": 9023,
+      "sha256": "f921290c19e5440d46de9042b32b54cf9d889db1f14258b81555ca26ba90dfda",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a268",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "bytes": 6783,
+      "sha256": "3e8c0d4e456ed213f1fb9afcde4f755107a2ba3f0975d9439128c63c5fa2d19c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a269",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "bytes": 7052,
+      "sha256": "22071bee0a54c7fb6d602685a63e960d79beed840fc6e3e96b08e34a4b795c7d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a270",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "bytes": 8987,
+      "sha256": "b3234358c3af0af3f816e870433c8fd7b09d912425e02313e6599ce9e6f29301",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a271",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "bytes": 8656,
+      "sha256": "bd535ba344e4047a2f144e2b8b31f68870ac50323a5cbc3b76d3dc1dc65873e1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a272",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "bytes": 6982,
+      "sha256": "62796c77209246ded1a8b3acc119ad0a3ee45677eace09e0f66975d28fc75489",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a273",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "bytes": 27138,
+      "sha256": "ea18eee3176860e8944e90e3f9bd72117140d2d476c3885c507d6d7200d82139",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a274",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "bytes": 8446,
+      "sha256": "b34181d2968d54d4ab81c1f1b2dbcd0b46f456f2070588c2829abb0586283638",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a275",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "bytes": 6505,
+      "sha256": "65bb467d12b9a17ddf9f9f23c2d5d016a2917425b02070da2642b81835f4b3b9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a276",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "bytes": 16326,
+      "sha256": "a75c1c947a9f1649e0e20b644497f7d99cae27d9534f2618b976a51ee4e89e10",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a277",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "bytes": 7567,
+      "sha256": "130287c09596c890c3fac09b2a81c13d40784ece2adc24912e5438047f209329",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a278",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "bytes": 6698,
+      "sha256": "5a233488b32252f4f3ce66a195cfba437efff96ce59cd0e05558c2ab41b99913",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a279",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "bytes": 7238,
+      "sha256": "6d5014a59ac98e30c627534e7520c5a05679c8d8d076d9bd2c4f7d4bc525ac1a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a280",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "bytes": 7635,
+      "sha256": "a0f8782546e0d36797a0180554045e7dbf4d545b46c388565e458ad62a6b554a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a281",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "bytes": 6899,
+      "sha256": "074bfe0bc9669eb625c5395f7fa18e64ae220e2d69f41950a9d6b5670a57cc98",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a282",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "bytes": 7290,
+      "sha256": "08aa3df2179d927a02e635a5fa7a4e65698b249164895f8bb46ed2a70bb482e6",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a283",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "bytes": 7765,
+      "sha256": "e117ff189f8966fff4d125e7d2051d419009e1fb7349309e3b5638cd49246bbe",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a284",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "bytes": 6689,
+      "sha256": "fc78c5a1d8235446356091225c84645d904ffa73aa9dd30cff6db59134141ef2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a285",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/extend/testing.md",
+      "bytes": 34658,
+      "sha256": "0d78932fccf9c0a6db1c405bc6f688e3c2c01c8f342e717ec196b5e28e26db84",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a286",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/product-surfaces.md",
+      "bytes": 27473,
+      "sha256": "47ebbfb9183a04e992926202017c08d343549d1b07655b3dc81ec40fa7d96f6d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a287",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/README.md",
+      "bytes": 7767,
+      "sha256": "3ec71a28fb866bd79d6bc774c720a56515b43b2970dc51acd3b036c5bbc421e4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a288",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/api-object-updates.md",
+      "bytes": 23855,
+      "sha256": "5b9efac5934075c28d05d0b8680ae2a80d3c123311327ce341d346841175a733",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a289",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-error-codes.md",
+      "bytes": 624926,
+      "sha256": "3fd56bbe89cde2cfaa4ab98fdda940091b7bee68b83fc1bc6ac4d68eaeced52c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a290",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-provider-configuration.md",
+      "bytes": 41696,
+      "sha256": "ec195dddad852b38061d5b267225a15253ad6c3ad18d2aa646cc6a2bfcf47515",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a291",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-runtime-configuration.md",
+      "bytes": 33889,
+      "sha256": "9ee43c2a00ba4404fc7c073bf7150a52f8b652e4f36ce084bfec699422d38b9e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a292",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/buster-suites.md",
+      "bytes": 57594,
+      "sha256": "3832f80b3dd58c73bf60c7b300dbd576b33f749141411b346d4aeafbc40331b3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a293",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/capabilities.md",
+      "bytes": 28968,
+      "sha256": "628672e7d6d904d3cb826abfd70b9729ee2516807da64bc49df6cfeedd22dd92",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a294",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/cli.md",
+      "bytes": 121091,
+      "sha256": "2658db5c922ae0a51538937640afcf60d4bc88b0fe00272f1d635b5db82a8166",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a295",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-change-impact.md",
+      "bytes": 76754,
+      "sha256": "1fb8ca18c880a93d94cf5dbc074f889fb7254d4afc6850984bd1490107836def",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a296",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-compatibility.md",
+      "bytes": 9088,
+      "sha256": "c1d6b3c00af38203d6bd666fb33ab61807ea9fdda8968b9d21c0543dabde8043",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a297",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-errors.md",
+      "bytes": 13214,
+      "sha256": "6609bd27fd1e60c17d46c2762eaf3c768963a53be63748e53a5db204b3dd68e5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a298",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration-precedence.md",
+      "bytes": 40915,
+      "sha256": "2c76c33a645847556e3cbdb5d2aab734b2e22ffb14d75e40a0954a447a805702",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a299",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/configuration.md",
+      "bytes": 17770,
+      "sha256": "be4d962242681e6a090db1624b04bbdc7354d97cbbb34498335d2db7fba9729f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a300",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/contracts.md",
+      "bytes": 19704,
+      "sha256": "831d4fbdbff8ff290287e426ed5ae5eb1d8267d98002556c7a222e36ef95b297",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a301",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/documentation-governance.md",
+      "bytes": 10646,
+      "sha256": "757a431db4c08f407076bf94506aabc1662d0f2c5967bb06f5f8a3036b04c2e5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a302",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/documentation-site.md",
+      "bytes": 16440,
+      "sha256": "fb0cae14489f31f1665f81c30ad2e065e19f4dda7645a9444e189d3b93c7b8f9",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a303",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/endpoints.md",
+      "bytes": 61326,
+      "sha256": "517dc649c2741cd693981614185477ee04f80fc940c3a1af91d7cbacd232d19c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a304",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/environment-variables.md",
+      "bytes": 1553155,
+      "sha256": "ed48989a77a32c0460c15926b13c5b677657dfbf550ef018b3a55f2c374c93ab",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a305",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/errors.md",
+      "bytes": 19810,
+      "sha256": "074d7edb54dcc0321345bfeb1cdf2c9be7cacde430324762f08d415f55ed9414",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a306",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/events.md",
+      "bytes": 24802,
+      "sha256": "bbed0c11ca1bc5c68a897aaeacbe16b00e1165e3b926967213a434e017da29dd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a307",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/glossary.md",
+      "bytes": 24064,
+      "sha256": "f4a88586a401e59dbb59bb714b77c16b277f22cfed51071d2b358158ad75a3d3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a308",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/helm-values.md",
+      "bytes": 16907307,
+      "sha256": "f194bfc869d3e96dde10ed3dc37c4513c6e891a223ac478c232c0c2ec9bed3f2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a309",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/host-and-prism-configuration.md",
+      "bytes": 15985,
+      "sha256": "5e564a82c90540ab03e7326fa9869c0beb30fd74756235f24ba0397e2a753790",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a310",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/images-and-digests.md",
+      "bytes": 34358,
+      "sha256": "c1ade6654b324903f3385ac1c49f6a7c604eaacac61ab886534ff7763a4d36ca",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a311",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/lint-policy-generated.md",
+      "bytes": 34318,
+      "sha256": "43365a8696b66d1b4110d08e118ae5e47e4e509a339b2b55ebfe4d166e5d98e5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a312",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/lint-policy.md",
+      "bytes": 60040,
+      "sha256": "a44f1fa866575d77b61b774539ad33a737e6a317a0eff87f220893c73b0176fc",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a313",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/lint-rules.md",
+      "bytes": 42800,
+      "sha256": "f44ee4b4d55f8be240dd2beccd2448e01ac1b3d0012f491d093e454a5b0eefcb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a314",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/nova-project.md",
+      "bytes": 22665,
+      "sha256": "06afc02132313d44bd95d3f6409b74bcee5f0e17e617de2f063b7a438f0b83ce",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a315",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/pipeline-definition.md",
+      "bytes": 13250,
+      "sha256": "8422c24693d773439db312c0e8b5ba1d45273ef6b5194fde25bd830adc5cc95b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a316",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/pipeline-json.md",
+      "bytes": 16484,
+      "sha256": "fdf5a859794cfb14a9cc60dde3263696c3551ddae849a36696452de46ee28cc2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a317",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/pipeline-platform.md",
+      "bytes": 36189,
+      "sha256": "ff5f6994d06c7143fb72de795fb3c3907cd14bf9392c6f1d73e8a7eb436e9d1b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a318",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/platform-surfaces-generated.md",
+      "bytes": 414705,
+      "sha256": "ad4fcc7b4adb94357829183729abfb3b3252f19abe5e220d0da65904af5ad6f3",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a319",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/plugin-configuration.md",
+      "bytes": 1641295,
+      "sha256": "10de0e872f133898b54d9a58e7858e4527c13bb4c9962a18f3302043239656a4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a320",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/project-pipeline-publication.md",
+      "bytes": 44839,
+      "sha256": "d12f95abd1b2d0f780dec2787b18cd9330304850f1e34f39082d94a532cc0259",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a321",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/roles-and-package-ownership.md",
+      "bytes": 59868,
+      "sha256": "1ddf3808d81b998f7368bbbbdd368a2c3ba94e24bc37f402c51fc2f234c64f87",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a322",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/schemas.md",
+      "bytes": 37877,
+      "sha256": "d9dee74725d27826e14e7a58d926c69ca320138b49430e039239f265c5ec6721",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a323",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/sdk-exports.md",
+      "bytes": 807787,
+      "sha256": "98dad486a6183b5a408bbab67cca92fb816b40bcb53f2a6cbca62d93905f54f1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a324",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/sdk.md",
+      "bytes": 54718,
+      "sha256": "85f860f4287d61a8919a754fa93b3a7852341cba0fe0399fbf47c0d717ba3bfe",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a325",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/secrets.md",
+      "bytes": 339088,
+      "sha256": "c94a8d9e3dda40d02ff5253da7cfe8f7fc76728d52fc1d7dc1d4c2084ae34ebb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a326",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/service-routing.md",
+      "bytes": 21398,
+      "sha256": "cb0d38bb0b0f475464c7e9f484b2765c0ca6d8747179cb006717cc6e2d74a81b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a327",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/stores-and-retention.md",
+      "bytes": 28765,
+      "sha256": "779e898918403ceaf7f720c8144cabddda221bbf0acfdec66f76cdee2a1642f4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a328",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/verification-commands.md",
+      "bytes": 2927,
+      "sha256": "24e1125232b0589ce4fb9d43408c6605012b5340d2ca978816f76f92ba736b75",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a329",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/worker-profiles-and-roles.md",
+      "bytes": 13159,
+      "sha256": "48a9cd1944e5e23f40d3128367ffdffe522c46637444f9789ec81bfe541a24af",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a330",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/reference/workflows.md",
+      "bytes": 12030,
+      "sha256": "3eec2339b64df2306613c4275eff6933c9f37e23191fbceea0abe506e6e53a8b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a331",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/acceptance.md",
+      "bytes": 34278,
+      "sha256": "c72bb5c14c1f157377dc35bb29e162774e525c9baa1553378cfb7ee4ff44452d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a332",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/current.md",
+      "bytes": 3512,
+      "sha256": "07033686cb02e46f003a6a52f3b86583d23811663beade50152e0cc18dd6014f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a333",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/open-issues.md",
+      "bytes": 96003,
+      "sha256": "2e617a38b2915470a5d9b0de7bc96b7406c83def19b39e1cec6f6f122edcddf0",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a334",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/status/roadmap.md",
+      "bytes": 13869,
+      "sha256": "8ff7cf2f70c33b0d3c7844a46e7bd5570cc98acc34502694d87e227602066a67",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "injected-unapproved-source",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/unapproved-evidence-probe.md",
+      "bytes": 47,
+      "sha256": "8e2e09452cd39c11e082a54ab89647fa5ff6dff007ab56f95ade65f4dfb60506",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a336",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/README.md",
+      "bytes": 14561,
+      "sha256": "52ffc4de1f473b6121f45aeecac2e6806c924990504b0b0fd031b778e96327a8",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a337",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/archviewer.md",
+      "bytes": 10429,
+      "sha256": "88ff3f9324791952de52be7d41539baafcd8e32e91452c6a5a136424d34d1f7a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a338",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/buster-namespace-controller.md",
+      "bytes": 36633,
+      "sha256": "b7b9167eb639fbd3c37ac8da29963bca12186d86d192e484a7d039936cec47a5",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a339",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/buster.md",
+      "bytes": 24153,
+      "sha256": "931743a9420b4da8a5ce9503e05ed627aaec7e96cd78e099b339da4017ae6599",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a340",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/codex-integration.md",
+      "bytes": 13590,
+      "sha256": "335081f8158261ce56ddd19ef23f6e2c57475be4421024f0feb1f7d072f777fc",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a341",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/communication.md",
+      "bytes": 81949,
+      "sha256": "993f75c9977a6030e52f90bb135ca5cc4286145db3c4ce6271067fbc456b2f4a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a342",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/components-and-authority.md",
+      "bytes": 37858,
+      "sha256": "3c8740a1e58f1f1187853595555df93922ba801b7c6e53045d9e464b86d4a409",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a343",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/data-and-state.md",
+      "bytes": 126852,
+      "sha256": "34cc97bfc51c2305762aafc76e0afc4ce0d7066239d9727c7b22b8eb6db75066",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a344",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/deployment-and-trust.md",
+      "bytes": 32101,
+      "sha256": "f7954a8d888ca4ff7a866454477f769512a1ffba11039992857458dca58bf11e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a345",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/echo.md",
+      "bytes": 15345,
+      "sha256": "438f4faa344a0fe33e4ec5b5205a2689d8c4cee334e7eeabac13f12d10cf4937",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a346",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/forge.md",
+      "bytes": 14339,
+      "sha256": "8064b8d5aafafe14d348e6f92f6999a913c62183dc7c6cc943401893d82f4307",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a347",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/nova-core.md",
+      "bytes": 101490,
+      "sha256": "1c76e10298c392f4834d8598a6d487a5c88840eee642e100e9790c9e64383717",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a348",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/openclaw.md",
+      "bytes": 17703,
+      "sha256": "e30e118e3afe689d2eb01b223ea28bfab57961cac4027d03c86df5c52de56574",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a349",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/ops-mcp.md",
+      "bytes": 23678,
+      "sha256": "efa1d5995d0e515a2446d83a9b2c8cbb879ff0134270281dfdc917ef03520c36",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a350",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/pipeline-dependencies.md",
+      "bytes": 22001,
+      "sha256": "8c3993f1e3bb27d4ce2bf89ed7a5d5774f9740d278dee5eb276146c32aa6fd1f",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a351",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/platform-and-operations.md",
+      "bytes": 77766,
+      "sha256": "615c7f6c6e30d32091739e5a1ce9b0aece22088605486f46fdccb1a047723797",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a352",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/plugin-runtime.md",
+      "bytes": 63378,
+      "sha256": "da3f12d89604fdd0ffceb048906d1e7ff1aea01751c38453f7513c094c7ae9c1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a353",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/prism-data.md",
+      "bytes": 73108,
+      "sha256": "91f8588789b51b68fa36149f91aa6dec0316156a9628584a2609ebfbe507ba30",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a354",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/prism-runtime.md",
+      "bytes": 56272,
+      "sha256": "58eea7e3821630e9689ef3b2b4ebb32349a723410616a10d12e59c6313540512",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a355",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/prism.md",
+      "bytes": 17691,
+      "sha256": "87520eafbab71b08dd4a1cdc5803f767b1e0a7122bb8d7f607f779f11833d2bb",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a356",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/request-state-recovery.md",
+      "bytes": 23362,
+      "sha256": "11c8fb5d95e417ae2694aa9a347e36e5bae9bfa49a3f8844b61053e3b1698ba4",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a357",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/request-to-result.md",
+      "bytes": 954,
+      "sha256": "25717403b4831f95afb823088c995fe9ecf33ca0cb3cac44a48d84d1eebd66aa",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a358",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/security-and-trust.md",
+      "bytes": 59547,
+      "sha256": "c20ca666c25eb781a9922e95d6e72f292a84596690ff7b273c5309b5f201c5fd",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a359",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/telemetry.md",
+      "bytes": 70274,
+      "sha256": "5479891ed19d552ddd7befd089f482d92506f703aac4a6d5a478fabb7552e43d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a360",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/worker-core.md",
+      "bytes": 64997,
+      "sha256": "7fcff1bdf9ced60f39535ad08fbb9a3f3b2292d5d7ba2fac7fa21410e0da9496",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a361",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/understand/worker-trust.md",
+      "bytes": 12540,
+      "sha256": "213663f89c24b1e1aaa4eaf988ed3894aba3170b04fbafb9d9f0e05d8bfde53c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a362",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/README.md",
+      "bytes": 11126,
+      "sha256": "19f87707627f2e9c49fd17c6b4623e8eb2f045d19334de5e23cab4a7be71942d",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a363",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/capacity.md",
+      "bytes": 54681,
+      "sha256": "0659504cf19865541d76a3499191677d7dc66b13be631e4901da3e5292337e5b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a364",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/demo-delivery.md",
+      "bytes": 14268,
+      "sha256": "89984d6fda6fb0a15a92b6cd9b5af8973b3e3780f1961de716fe82ca18c1985b",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a365",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/diagnose.md",
+      "bytes": 170098,
+      "sha256": "e69101f6225ffceb5c5bb4507834e5e514c08b357e0be169a0a789e44f2ea9f0",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a366",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/install.md",
+      "bytes": 89382,
+      "sha256": "9c6eda0af9bf266c21a5a505e43063e0b6d38be2fb101668b7135ff3da7709ae",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a367",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/maintenance.md",
+      "bytes": 85877,
+      "sha256": "612be8ffbfe4f76f1439f66f3808f069ff076c4dd131a32bced8212e02a6e38e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a368",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/operate.md",
+      "bytes": 50490,
+      "sha256": "3caedff05fb2135dc25b071fb8290ebe0628c776d820196056a20eec5fcf5152",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a369",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/plugins.md",
+      "bytes": 645142,
+      "sha256": "667fda85615b72331b94387a80cdcc46125ed74137f78ae931a0c8b3ad7fd0d7",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a370",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/prism-studio.md",
+      "bytes": 235090,
+      "sha256": "043b732204046cf66e7001c161bee017109a23051bfd80c39799edf3b44ae416",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a371",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/quickstart.md",
+      "bytes": 7884,
+      "sha256": "7d23fbcf3d52936cc73d1ace52dfa610a0b60a53dbafb461193c7670709a4d77",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a372",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/recovery.md",
+      "bytes": 65141,
+      "sha256": "ecb3122c3138795305fa3984a4ca9a86a57360edc97d2068f14f2285893faf0a",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a373",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/worker-trust.md",
+      "bytes": 33683,
+      "sha256": "23ab842eef5dae361b4d5b9496fff247a4d51fa21b2a6bb84d7c167308d8e9bf",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a374",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/README.md",
+      "bytes": 3854,
+      "sha256": "93208d9db45f7001c88a5f669b415564b59bafbb227c0b5e6bb064c1e1199814",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a375",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/buster-suite.md",
+      "bytes": 40622,
+      "sha256": "84419c80140291efcccfee3137ec4e670f34a530aaca575029feb49b83f2aef1",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a376",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/kubernetes-fixture.md",
+      "bytes": 9655,
+      "sha256": "cb95139780117384df58d599604f839e3d4efce0bf7b0df07aa5718094315750",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a377",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/input/docs/site/use/workflows/wait-resume.md",
+      "bytes": 45768,
+      "sha256": "df4c4cf40f439aa544541c5c66ee27ce8ba9ab60bc13d019f3bf22817ded944c",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a378",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/route-inventory.json",
+      "bytes": 42394,
+      "sha256": "9f81fc173630a84717017f02caa624db40cd008d0b547c115a51eb2993d2dd3e",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a379",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/source-manifest.json",
+      "bytes": 32560,
+      "sha256": "d6d7501265067a9ba6acee4992bced4f715453d19398ed182a060a3bf4ccd5d2",
+      "evidence_class": "render",
+      "status": "captured"
+    },
+    {
+      "id": "a380",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/historical3354/quality.json",
+      "bytes": 2394,
+      "sha256": "8fa827f6e008ccc2c9b0eda5706a7f192954fb5e0c5c84c882d0f9313b8f3fb6",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "a381",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/historical3354/reader.json",
+      "bytes": 1236,
+      "sha256": "0ba946bd696b1fbead8e840abbcf467449e818ca38de74a355e84cbaa39694db",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "a382",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/historical3354/source.json",
+      "bytes": 1448,
+      "sha256": "08f7b7e04bd04c1958c46315d9b1ce3586d5c7ae8bb2bc0e01bf4f35e657dd7d",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "a383",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/owner-map-review.json",
+      "bytes": 469,
+      "sha256": "a5f173e96509d4926ac1229059f88139c2785fe2bbc99ab80297476e249643af",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "a384",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/owner-source-review.json",
+      "bytes": 500,
+      "sha256": "4889b32155120360ed87a4e4f391757b21729c0f2177a1184cd4d18651a72e22",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-379",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation-producer.mjs",
+      "bytes": 3179,
+      "sha256": "286c9936e6e08baa9979d3593718db056b3ad3ed54dc352d34299579eea4287a",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "final-380",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation.json",
+      "bytes": 30772,
+      "sha256": "e11bd56c77968338f40325a6bb7bde18c6f716f4abc784a07226980de61c0c52",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "final-381",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/raw-evidence-whitespace-findings.json",
+      "bytes": 2392,
+      "sha256": "4efaeccd9d3882578ab20aeecaa624575db855ef96c6d8bb93087e504c19d0cd",
+      "evidence_class": "contract",
+      "status": "captured"
+    },
+    {
+      "id": "final-382",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-process.json",
+      "bytes": 1297,
+      "sha256": "96eea50840449315c2fb57d08c08a7aa220bede2ea3bc3ad56694d8ed4305da5",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-383",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-prompt.md",
+      "bytes": 877673,
+      "sha256": "7615951b454dc0a0817d7c0ed48c824bf27d71198947f9a613ffb9357bdb83c0",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "current-quality-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-review.json",
+      "bytes": 1815,
+      "sha256": "c3bbe074c5e48ddf26157c48bcb145f07dde3d67dfe9db79d6d5d5c545a95dd7",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-385",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/quality-review.log",
+      "bytes": 3918,
+      "sha256": "d6326156c17657ad097cb6eda6d58a1b9238df82b77115298ca5a85cc0fdd5bc",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-386",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-process.json",
+      "bytes": 1294,
+      "sha256": "a5433364d2cf28a2cada6c2520f77436206a78c95e84386501e4ea7bcaa2aaa2",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-387",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-prompt.md",
+      "bytes": 877639,
+      "sha256": "be3b65d4af1f90fbf8407e4eb921347b829e2d7e0c78292900ceace5f3208c91",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "current-reader-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-review.json",
+      "bytes": 1426,
+      "sha256": "c0b5e13b7739b0c0198fdb232603856d1c1e3d333f5394de6457b703b9b4cf0b",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-389",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/reader-review.log",
+      "bytes": 3140,
+      "sha256": "165ae74fa2b714d8e8f2623a1a867b42262b4c582aad8bb7984110acc219eba1",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-390",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-process.json",
+      "bytes": 1294,
+      "sha256": "39af323349ef79c3525ce6e79a618ab5075d44d8b1f667cbb08e068c3aeddd52",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-391",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-prompt.md",
+      "bytes": 877584,
+      "sha256": "3eba169ef396f9344c6273f2c17f8ea63e1f8147c1e399298a7b37488fcc05ae",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "current-source-review",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-review.json",
+      "bytes": 1305,
+      "sha256": "1d2a6fb3e2502e6963b0b9c5059bc900bab909a82154b7069e9d0bbc47e5037b",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    },
+    {
+      "id": "final-393",
+      "path": "docs/blueprint/acceptance-evidence/A911-09-currentc559/reviews/source-review.log",
+      "bytes": 2898,
+      "sha256": "a7445954b6c414fa6f5b899465701661e680506e0718ff76350aec1d9c132bea",
+      "evidence_class": "reviewer",
+      "status": "captured"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "GOV-005",
+      "work_package": "AP09.11",
+      "owner": "documentation architecture",
+      "canonical_target": "docs/site/reference/documentation-governance.md",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "verdict": "PASS",
+      "reader_question": "Trennung generierter Fakten und redaktioneller Erklärungen — identify the owning input and the safe update/review route.",
+      "finding": "Generated facts and authored explanations use separate source inputs, files and owners; the SDK authored owner is now distinct and propagated through genuine governance and actual publication.",
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-governance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/documentation-maintenance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/plugin-catalogue/README.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk-exports.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L259-L293",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L848-L859"
+      ],
+      "artifact_ids": [
+        "a1",
+        "a3"
+      ],
+      "acceptance_ids": [
+        "A911-09"
+      ],
+      "scope": "Exact A911-09 facet; global requirement-wide final reconciliation remains required."
+    },
+    {
+      "id": "MNT-001",
+      "work_package": "AP09.11",
+      "owner": "documentation automation",
+      "canonical_target": "docs/site/extend/documentation-maintenance.md",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "verdict": "PASS",
+      "reader_question": "Eine Quelle der Wahrheit je mechanischem Fakt — identify the owning input and the safe update/review route.",
+      "finding": "Ownership facts derive from page metadata; the generated map is not a second manually maintained inventory. Sources and current generated output agree at the exact reviewed revision.",
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-governance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/documentation-maintenance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/plugin-catalogue/README.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk-exports.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L259-L293",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L848-L859"
+      ],
+      "artifact_ids": [
+        "a1",
+        "a3"
+      ],
+      "acceptance_ids": [
+        "A911-09"
+      ],
+      "scope": "Exact A911-09 facet; global requirement-wide final reconciliation remains required."
+    },
+    {
+      "id": "MNT-016",
+      "work_package": "AP09.11",
+      "owner": "documentation automation",
+      "canonical_target": "docs/site/extend/plugin-catalogue/README.md",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "verdict": "PASS",
+      "reader_question": "Generatoren überschreiben keine Erklärungen — identify the owning input and the safe update/review route.",
+      "finding": "Governance writes only its map, reference generation selects the generated SDK file, and publication consumes separately maintained guidance. Retained original preservation cases and current source-impact verification support this exact facet.",
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-governance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/documentation-maintenance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/plugin-catalogue/README.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk-exports.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L259-L293",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L848-L859"
+      ],
+      "artifact_ids": [
+        "a1",
+        "a3"
+      ],
+      "acceptance_ids": [
+        "A911-09"
+      ],
+      "scope": "Exact A911-09 facet; global requirement-wide final reconciliation remains required."
+    },
+    {
+      "id": "MNT-015",
+      "work_package": "AP09.11",
+      "owner": "documentation automation",
+      "canonical_target": "docs/site/extend/documentation-maintenance.md",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "verdict": "PASS",
+      "reader_question": "Owner und Reviewpflicht bei Codeänderungen — identify the owning input and the safe update/review route.",
+      "finding": "SDK maintainers (plugin-foundation) own the authored explanation and product-claim review, while documentation automation owns generated exports; source metadata, derived map and actual published asset agree.",
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-governance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/documentation-maintenance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/plugin-catalogue/README.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk-exports.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L259-L293",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L848-L859"
+      ],
+      "artifact_ids": [
+        "a1",
+        "a3"
+      ],
+      "acceptance_ids": [
+        "A911-09"
+      ],
+      "scope": "Exact A911-09 facet; global requirement-wide final reconciliation remains required."
+    },
+    {
+      "id": "MNT-017",
+      "work_package": "AP09.11",
+      "owner": "documentation automation",
+      "canonical_target": "docs/site/extend/documentation-maintenance.md",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "verdict": "PASS",
+      "reader_question": "Pflegeanleitung für Dokumentationsagenten — identify the owning input and the safe update/review route.",
+      "finding": "The English maintenance procedure identifies source ownership, prerequisites, generator/check selection, stop conditions, partial-write recovery and independent review obligations.",
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-governance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/documentation-maintenance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/plugin-catalogue/README.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk-exports.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L259-L293",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L848-L859"
+      ],
+      "artifact_ids": [
+        "a1",
+        "a3"
+      ],
+      "acceptance_ids": [
+        "A911-09"
+      ],
+      "scope": "Exact A911-09 facet; global requirement-wide final reconciliation remains required."
+    }
+  ],
+  "points": [
+    {
+      "acceptance_id": "A911-09",
+      "catalogue_ids": [
+        "GOV-005",
+        "MNT-001",
+        "MNT-016",
+        "MNT-015",
+        "MNT-017"
+      ],
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "reader_task": "Identify the owner and input to change an explanation without manually copying or overwriting generated facts.",
+      "reader_fixture_ids": [],
+      "execution_scenario_ids": [],
+      "canonical_pages": [
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/reference/sdk.md",
+        "docs/site/reference/sdk-exports.md"
+      ],
+      "source_evidence": [
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-governance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/documentation-maintenance.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/extend/plugin-catalogue/README.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/sdk-exports.md#L1-L45",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs#L259-L293",
+        "https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs#L848-L859"
+      ],
+      "execution": {
+        "environment": "Existing isolated clean evidence Git stage; Node v24.21.0; actual source revision c559e97960a89a0f80487483addb91d2e6e4527d; markdown-it-py4.2.0 qualified HTML adapter. No canonical/CI worktree writes.",
+        "commands": [
+          {
+            "run_id": "A911-09-PRIMARY",
+            "status": "passed",
+            "command": "node scripts/docs-governance.mjs && node scripts/docs-governance.mjs --check",
+            "exit_code": 0,
+            "observation": "Original generator and check actually passed on committed owner source; all166 rows reconciled with only authored SDK owner changed; exact full criterion is assessed with published ownership procedure, source authority and preserved original negative/preservation evidence. Not a count proxy.",
+            "evidence_class": "contract",
+            "expected_outcome": "Generated facts und authored explanation haben getrennte Bereiche und Owners; Autoren kopieren keine generierten Inventare manuell.",
+            "artifact_ids": [
+              "a1",
+              "a3"
+            ]
+          }
+        ]
+      },
+      "negative_proof": [
+        {
+          "scenario": "Manual generated owner/class tampering and preservation through regeneration in the unchanged governing scripts.",
+          "expected_failure": "Stale owner or classification is rejected; authored explanation remains byte-identical through regeneration.",
+          "observed": "Original six cases have their genuine exits and original execution revision preserved; relevant unchanged generator/input bytes bound by current impact. Current SDK derived owner and actual output separately regenerated.",
+          "artifact_ids": [
+            "a5"
+          ]
+        }
+      ],
+      "limits": [
+        {
+          "status": "none",
+          "reason": "No product limitation substitutes for generated/authored separation; full native/P17/fullGo and final261/89 remain open at their own exact scopes.",
+          "effect": "This individual evidence package does not claim deployment, SDK completeness, whole-site links, browser usability or overall AP acceptance.",
+          "owner": "Existing sole PR13 coordinator",
+          "acceptance_condition": "Complete fresh distinct gate decisions, persist their reports and reconcile this individual finding into the unweakened overall261/89 ledger.",
+          "artifact_ids": [
+            "a3"
+          ]
+        }
+      ],
+      "reviewer_ids": [
+        "codex:01a14956-5694-7bd3-aefd-7fdf75f41828",
+        "codex:01a14956-5667-7452-b5d0-9359ca09692e",
+        "codex:01a14956-5663-7752-8d5e-a44f39715ef2"
+      ],
+      "verdict": "PASS",
+      "reason": "Three distinct fresh read-only reviewers independently returned PASS on the current exact A911-09 facets after the SDK authored-owner correction. Complete current production/HTML and explicit unchanged-input evidence support the individual mapping, PRIMARY, negative proof and limits. Their actual reports and identities are stored here before any acceptance registration. This does not accept whole requirement families, other gates, browser/deployment/whole-site links/whole-SDK completeness or final261/89 closure."
+    }
+  ],
+  "reviewers": [
+    {
+      "id": "codex:01a14956-5694-7bd3-aefd-7fdf75f41828",
+      "role": "source",
+      "assignment": "ASSIGNED DISTINCT ROLE SOURCE: Verify source authority, generated/authored boundaries and distinct owners, no manual duplicate inventory, genuine preservation and individually applicable source facts.",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-source-review",
+      "executionEvidence": "Distinct new Codex CLI threads, configured read-only review engine; no role target executions.",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "id": "codex:01a14956-5667-7452-b5d0-9359ca09692e",
+      "role": "reader",
+      "assignment": "ASSIGNED DISTINCT ROLE READER: Task without solution hint: identify the owner/input/check path for changing an explanation without copying generated facts. Assess actual published pages and downloadable owner assets, safe stop and verification boundaries.",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-reader-review",
+      "executionEvidence": "Distinct new Codex CLI threads, configured read-only review engine; no role target executions.",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "id": "codex:01a14956-5663-7752-8d5e-a44f39715ef2",
+      "role": "quality",
+      "assignment": "ASSIGNED DISTINCT ROLE QUALITY: Verify full criterion, English/source evidence/individual mapping, actual current publication custody, negative proof, mandatory record fields/evidence-only persistence, and genuine role separation. No proxy-count acceptance or blanket unrelated dependency.",
+      "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+      "fresh_context": true,
+      "initial_read_only": true,
+      "verdict": "PASS",
+      "report_artifact_id": "current-quality-review",
+      "executionEvidence": "Distinct new Codex CLI threads, configured read-only review engine; no role target executions.",
+      "model": "gpt-6.1-sol"
+    }
+  ],
+  "participants": [],
+  "fixture_results": [],
+  "execution_scenario_results": [],
+  "formalAcceptance": false,
+  "registryDisposition": "Pending canonical acceptance-registry reconciliation under existing no-canonical-write freeze; do not increment formal accepted count from this isolated dossier alone."
+}

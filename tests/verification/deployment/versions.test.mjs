@@ -57,7 +57,7 @@ test('central versions update actual build/deployment files and reject drift wit
     assert.ok(fs.readFileSync(path.join(copy, 'charts/kubeclaw/values.yaml'), 'utf8').includes('npm:@openclaw/acpx@2099.1.1'));
     assert.equal(JSON.parse(fs.readFileSync(path.join(copy, 'ops/pod/package.json'), 'utf8')).dependencies['@openai/codex'], '99.1.2');
     assert.match(fs.readFileSync(path.join(copy, 'charts/ops-pod/Chart.yaml'), 'utf8'), /appVersion: "99\.1\.2"/);
-    assert.match(fs.readFileSync(path.join(copy, 'docs/ops/ops-pod.md'), 'utf8'), /\| Codex CLI 99\.1\.2 /);
+    assert.equal(JSON.parse(fs.readFileSync(path.join(copy, 'docs/generated/inventory/ops-tool-versions.json'), 'utf8')).codex.version, '99.1.2');
     const policy = fs.readFileSync(path.join(copy, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8');
     assert.ok(policy.includes('"kubernetes_version": "1.99.9"'));
     assert.ok(policy.includes('/v1.99.9-standalone-strict/'));
@@ -108,4 +108,13 @@ test('the generated Codex package and integrity lock agree with the central vers
     fs.writeFileSync(lockFile, JSON.stringify(lock));
     assert.throws(() => syncCodexLock(copy), /Codex lock drift/);
   } finally { fs.rmSync(copy, { recursive: true, force: true }); }
+});
+
+test('version projection stays internal and Renovate retains the actual generated companion', () => {
+  const outputs = versionOutputs(root);
+  assert.ok(outputs.has('docs/generated/inventory/ops-tool-versions.json'));
+  assert.ok([...outputs.keys()].every(file => !file.startsWith('docs/site/') && !file.startsWith('docs/_legacy-source/') && !file.startsWith('docs/ops/')));
+  const config = JSON.parse(fs.readFileSync(path.join(root, 'renovate.json'), 'utf8'));
+  const rule = config.packageRules.find(rule => rule.matchFileNames?.includes('versions.json') && rule.postUpgradeTasks);
+  assert.ok(rule.postUpgradeTasks.fileFilters.includes('docs/generated/inventory/ops-tool-versions.json'));
 });

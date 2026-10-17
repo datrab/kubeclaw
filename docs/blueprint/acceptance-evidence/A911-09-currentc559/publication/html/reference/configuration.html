@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/configuration.html"></head><body><main>
+<h1 id="configuration">Configuration</h1>
+<p>Status: bounded reference; discovery limitations stated below
+Audience: operator, project author, plugin author, maintainer
+Owner: documentation; consumer semantics belong to the named component
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.ts">skills/common/plugin-runtime/foundation/config/platform.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/configuration.ts">skills/common/plugin-runtime/foundation/registry/configuration.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/schema.ts">skills/common/plugin-runtime/foundation/registry/schema.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/cli.ts">skills/nova/project/cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/control-config.ts">skills/prism/server/control-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-configuration-inventory.mjs">scripts/docs-configuration-inventory.mjs</a>
+Applies to: the consumer families and source boundaries listed on this page
+Last verified: 2026-10-15; source behavior checked from current files; no validation or deployment run</p>
+<h2 id="find-the-setting-before-changing-it">Find the setting before changing it</h2>
+<p>Start with the process or artifact that consumes the value, not its filename.
+A Helm value, a platform grant, and a stage setting can share a name without
+sharing authority. Changing one does not override the other two.</p>
+<ol>
+<li>Find the consumer in the family table below.</li>
+<li>Open its detailed reference and identify the exact field, version, and default rule.</li>
+<li>Use the change class and diagnostic route for that consumer before activation.</li>
+</ol>
+<p>For a schema keyword or a contract that describes an input or result, use
+<a href="schemas.html">Schema authorities</a>. For a package name versus a caller grant or
+native-host permission, use <a href="roles-and-package-ownership.html">Roles and package ownership</a>.</p>
+<h2 id="select-the-configuration-family">Select the configuration family</h2>
+<p>The component in the Consumer column owns the behavior. These routes describe
+named, supported source families; they are not a claim that every possible
+configuration source in the repository has been catalogued.</p>
+<table>
+<thead>
+<tr>
+<th>Artifact or setting</th>
+<th>Version / selection</th>
+<th>Consumer and authority</th>
+<th>Defaults and override boundary</th>
+<th>Detailed route</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform JSON</td>
+<td><code>pipeline-platform.v2</code></td>
+<td>Foundation <code>loadPlatformConfig</code>; Nova receives this explicit file</td>
+<td>One canonical file; schema validation precedes canonical-file-relative path resolution. No Helm or compact-profile merge</td>
+<td><a href="pipeline-platform.html">Pipeline platform</a></td>
+</tr>
+<tr>
+<td>Nova project JSON</td>
+<td><code>nova-project.v2</code>, <code>--project</code> and <code>--platform</code> route</td>
+<td>Nova project CLI and <code>compileProject</code>; graph preparation then checks installed registrations and grants</td>
+<td>Closed project input compiles a separate graph; it is not an overlay on platform trust</td>
+<td><a href="nova-project.html">Nova project</a></td>
+</tr>
+<tr>
+<td>Explicit execution graph</td>
+<td><code>pipeline-definition.v2</code>; no <code>--project</code> route delegates to the Core CLI</td>
+<td>Nova graph builder and registry-backed stage validation</td>
+<td>Stage <code>config</code> and <code>input</code> use their own installed registration authorities</td>
+<td><a href="pipeline-definition.html">Pipeline definition</a></td>
+</tr>
+<tr>
+<td>Project authoring pair</td>
+<td><code>.swarm/pipeline.json</code> and <code>.swarm/progress.json</code></td>
+<td>Publication store, test-plan resolver, explicit project import routes</td>
+<td>Coupled generation, not two independent editable effective files; pipeline JSON has no universal root version marker</td>
+<td><a href="pipeline-json.html">Project pipeline JSON</a>, <a href="project-pipeline-publication.html">publication</a></td>
+</tr>
+<tr>
+<td>Plugin stage, observer, adapter configuration</td>
+<td>Exact installed package registration and <code>configSchema</code></td>
+<td>Foundation registry; enabled owner and exact schema select meaning</td>
+<td>Ordinary validation does not insert schema defaults; enabled observer/adapter missing config is passed as <code>{}</code></td>
+<td><a href="plugin-configuration.html">Plugin configuration</a>, <a href="../extend/plugin-catalogue/README.html">plugin catalogue</a></td>
+</tr>
+<tr>
+<td>Buster test-provider configuration</td>
+<td>Contract ID, selected provider, <code>provider-configuration.v1</code> resolved output</td>
+<td>Registry test-provider resolution and actual provider implementation</td>
+<td>Resolve clones values and validates with default insertion; grants and provider availability remain separate</td>
+<td><a href="buster-provider-configuration.html">Provider fields</a>, <a href="buster-runtime-configuration.html">runtime settings</a>, <a href="buster-suites.html">suites</a></td>
+</tr>
+<tr>
+<td>Worker resources and profile</td>
+<td>Selected v1/v2/v3 contract path, not highest filename</td>
+<td>Worker admission/version dispatch; Prism native worker uses v3 admission</td>
+<td>v2 process budgets and v3 native task budgets are not interchangeable; absent measurement is not zero</td>
+<td><a href="worker-profiles-and-roles.html">Worker profiles and roles</a>, <a href="configuration-compatibility.html">compatibility</a></td>
+</tr>
+<tr>
+<td>KubeClaw / Prism / GitOps deployment values</td>
+<td>Exact chart, release values, supported overlays</td>
+<td>Helm templates, GitOps receiver, then each workload</td>
+<td>Ordered values merging is specific to the deployment route; absent upstream values can select receiver defaults</td>
+<td><a href="helm-values.html">Helm values</a>, <a href="configuration-precedence.html">precedence</a>, <a href="api-object-updates.html">API updates</a></td>
+</tr>
+<tr>
+<td>Compact swarm profile</td>
+<td>Shipped <code>standard</code> profile; callers of its expander</td>
+<td>Shipped classic configuration and verification-support expansion</td>
+<td>Exact profile/features/tuning assertions; existing override leaf paths only. Not accepted by platform loader</td>
+<td><a href="host-and-prism-configuration.html">Host and Prism configuration</a></td>
+</tr>
+<tr>
+<td>OpenClaw / Codex routing and host settings</td>
+<td>Rendered gateway/agent input and selected runtime-dispatch target</td>
+<td>Gateway or host plugin, not a Nova stage field alone</td>
+<td>A target/model label neither edits gateway settings nor proves credentials or capacity</td>
+<td><a href="host-and-prism-configuration.html">Host and Prism configuration</a>, <a href="../understand/openclaw.html">OpenClaw</a></td>
+</tr>
+<tr>
+<td>Prism process environment and credentials</td>
+<td>Exact service loader and trust mode</td>
+<td><code>loadControlCompositionConfig</code> snapshots environment at startup; other services have their own loaders</td>
+<td>Required credentials differ by trust branch; environment is not a universal live override layer</td>
+<td><a href="environment-variables.html">Environment variables</a>, <a href="secrets.html">Secrets</a>, <a href="host-and-prism-configuration.html">host settings</a></td>
+</tr>
+<tr>
+<td>Prism native pool host policy</td>
+<td>Root-owned policy schema <code>1</code>, actual node and cgroup state</td>
+<td>Native supervisor and host readiness checks</td>
+<td>Aggregate host limits and identity are not granted by an environment pointer or worker profile</td>
+<td><a href="host-and-prism-configuration.html">Host and Prism configuration</a>, <a href="worker-profiles-and-roles.html">worker roles</a></td>
+</tr>
+<tr>
+<td>Lint policy and generated tool settings</td>
+<td>Selected policy and tool contract</td>
+<td>Lint loader, resolver, admission and tool runners</td>
+<td>Use the lint-specific precedence, baseline and waiver rules, not plugin-config default rules</td>
+<td><a href="lint-policy.html">Lint policy</a>, <a href="lint-policy-generated.html">generated facts</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — explicit platform and project acquisition:</strong>
+<a href="../../../skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69">loadPlatformConfig / resolvePaths</a> (<code>skills/common/plugin-runtime/foundation/config/platform.ts:53–69</code>, current-checkout SHA-256 <code>4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8</code>). <a href="../../../skills/nova/project/cli.ts#L16-L39">project CLI acquisition and runtime preparation</a> (<code>skills/nova/project/cli.ts:16–39</code>, current-checkout SHA-256 <code>6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366</code>).</p>
+<h2 id="determine-the-effective-value">Determine the effective value</h2>
+<p>There is no global last-writer-wins rule. Record the family first, then apply
+its <a href="configuration-precedence.html">precedence rules</a>. Keep these cases distinct:</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>What to establish</th>
+<th>What not to infer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Omitted field</td>
+<td>Whether the exact schema requires it; whether the actual resolver or consumer supplies it</td>
+<td>A displayed schema <code>default</code> means every caller inserts it</td>
+</tr>
+<tr>
+<td>Empty string</td>
+<td>Whether that field permits it, uses <code>??</code>, or requires non-empty text</td>
+<td>Empty equals omitted; <code>??</code> only replaces null or undefined</td>
+</tr>
+<tr>
+<td><code>null</code></td>
+<td>Whether schema type/branch allows null before consumer fallback</td>
+<td>A null value always clears a setting</td>
+</tr>
+<tr>
+<td><code>false</code> or <code>0</code></td>
+<td>Exact type and allowed range, then the real consumer condition</td>
+<td>False/zero means missing or disable everywhere</td>
+</tr>
+<tr>
+<td>Object / array</td>
+<td>Exact family merge or replacement behavior</td>
+<td>Helm, compact profiles, provider config and platform JSON share one merge algorithm</td>
+</tr>
+<tr>
+<td>Relative path</td>
+<td>The loader's path origin and canonical-file handling</td>
+<td>Every path is relative to the shell working directory</td>
+</tr>
+<tr>
+<td>Secret reference</td>
+<td>Named Secret/key or file plus the actual receiving process</td>
+<td>A reference proves the credential exists, is valid, or is authorized</td>
+</tr>
+</tbody>
+</table>
+<p>The platform loader uses strict validation without a default-insertion option.
+It resolves installation roots, trusted built-in roots, storage root and
+optional cgroup root relative to the real platform file's directory, then
+freezes the result. It does not merge an environment object into that file.</p>
+<p>Registered configuration has two deliberately different operations:</p>
+<ul>
+<li><strong>Validate:</strong> check the provided value without inserting defaults. Stage,
+enabled observer/adapter, and <code>validateTestProviderConfiguration</code> use this route.</li>
+<li><strong>Resolve provider configuration:</strong> clone the supplied value, validate the
+clone with default insertion, and return a <code>provider-configuration.v1</code> record
+with contract ID, schema digest and resolved values. The original input is
+not rewritten. Resolution still does not install or grant a provider.</li>
+</ul>
+<p><strong>Source — validation versus resolution:</strong>
+<a href="../../../skills/common/plugin-runtime/foundation/registry/schema.ts#L84-L113">validateReferencedSchema</a> (<code>skills/common/plugin-runtime/foundation/registry/schema.ts:84–113</code>, current-checkout SHA-256 <code>eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557</code>). <a href="../../../skills/common/plugin-runtime/foundation/registry/configuration.ts#L82-L121">validateTestProviderConfiguration / resolveTestProviderConfiguration</a> (<code>skills/common/plugin-runtime/foundation/registry/configuration.ts:82–121</code>, current-checkout SHA-256 <code>94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f</code>).</p>
+<h3 id="concrete-route-a-missing-provider-option">Concrete route: a missing provider option</h3>
+<p>Suppose a provider field has a default in its registered schema. First open
+<a href="buster-provider-configuration.html">Provider configuration</a> and identify the
+contract ID and field. Check whether your caller resolves configuration or
+only validates it. A successful validation alone does not prove that the
+provider received a filled-in value. Retain the non-secret resolved contract
+ID/schema digest and the exact provider field, rather than printing the whole
+resolved object. If the provider is unavailable, diagnose installation,
+selection, grants and service availability separately from field validity.</p>
+<h3 id="concrete-route-a-prism-url">Concrete route: a Prism URL</h3>
+<p><code>loadControlServerConfig</code> uses <code>PRISM_WORKER_URL ?? 'http://prism-worker:8080'</code>
+and constructs a URL. An omitted variable selects that loader fallback; an
+empty string is not replaced by <code>??</code> and must still be a valid URL. The
+composition function copies the environment before asynchronous authority
+loading. Changing a deployment Secret or shell variable does not update the
+already captured process configuration.</p>
+<p><strong>Source — startup capture and URL fallback:</strong>
+<a href="../../../skills/prism/server/control-config.ts#L36-L72">loadControlServerConfig / loadControlCompositionConfig</a> (<code>skills/prism/server/control-config.ts:36–72</code>, current-checkout SHA-256 <code>9da649103dd1bf2c1a95f533725942bd760e80f1353d4e0db924c4053c8dcd7a</code>).</p>
+<h2 id="change-and-reload-boundaries">Change and reload boundaries</h2>
+<p>Use <a href="configuration-change-impact.html">Configuration change impact</a> for the
+complete procedure. The following distinctions prevent unsafe shortcuts:</p>
+<table>
+<thead>
+<tr>
+<th>Changed authority</th>
+<th>Required boundary to check</th>
+<th>Preserve before changing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform packages, providers, grants, adapters, observers or graph</td>
+<td>Existing run snapshots pin effective authority and graph/package identities; changed authority normally belongs to a new run</td>
+<td>Prior platform, original graph, package identities and run ID</td>
+</tr>
+<tr>
+<td>Platform shutdown/effect-lock timeouts</td>
+<td>Recreate the consuming objects; new CLI invocation or restart if startup-loaded. Timeout-only change is not itself a new-run requirement in the recorded runtime subset</td>
+<td>Original values, drain state and first shutdown diagnostic</td>
+</tr>
+<tr>
+<td>Provider plan or coupled <code>.swarm</code> files</td>
+<td>Republish a consistent generation, then use its new resolved plan/run</td>
+<td>Original pair/generation and plan digest; do not fix only one loose copy</td>
+</tr>
+<tr>
+<td>Pod template, environment or startup-mounted configuration</td>
+<td>Identify the rendered receiving workload and its restart/rollout behavior; no general hot reload promise</td>
+<td>Redacted rendered values, workload identity and previous generation</td>
+</tr>
+<tr>
+<td>Signing material or trust identity</td>
+<td>Component-specific coordinated credential rotation and restart/reload rule</td>
+<td>Old/new acceptance window and identity; never publish private bytes</td>
+</tr>
+<tr>
+<td>Native pool policy or capacity</td>
+<td>Host preparation, actual cgroup/identity checks, then worker readiness</td>
+<td>Policy identity, host state, active attempts and drain status</td>
+</tr>
+<tr>
+<td>Persistent location or data format</td>
+<td>Component backup/restore/migration procedure, not just a values edit</td>
+<td>Proven backup and restore route, ownership and store identity</td>
+</tr>
+</tbody>
+</table>
+<p>These are selection rules, not permission to run a deployment or migration.
+A value is <strong>hot</strong> only where the named consumer explicitly watches or rereads it.
+See the source-linked change matrix for recovery pins and field-specific exceptions.</p>
+<h2 id="diagnose-without-exposing-secrets">Diagnose without exposing secrets</h2>
+<ol>
+<li>Retain the first diagnostic, artifact version, canonical input path and
+source/package identity. Redact tokens, private keys, Secret contents and
+credential-bearing URLs. Do not paste a full environment or config dump.</li>
+<li>Match the prefix to <a href="configuration-errors.html">Configuration errors</a>.</li>
+<li>Correct the owning input, not a different layer with a similar name.</li>
+<li>Follow that family's validation route before restart, republish or new run.
+Preserve the prior working bytes and unresolved cleanup state if activation fails.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Signal / question</th>
+<th>First route</th>
+<th>Stop condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PLATFORM_CONFIG_INVALID</code></td>
+<td>Platform JSON pointer and <a href="pipeline-platform.html">platform fields</a></td>
+<td>Unknown version/key/type; do not coerce it to another family</td>
+</tr>
+<tr>
+<td><code>REGISTRY_REGISTRATION_MISSING</code> / missing stage owner</td>
+<td>Exact package registration, enabled owner and grants</td>
+<td>Do not widen unrelated grants or pretend schema success activates a package</td>
+</tr>
+<tr>
+<td><code>REGISTRY_RESULT_INVALID</code></td>
+<td>Named schema path and validator errors</td>
+<td>Determine config/input/result/checkpoint route before modifying a value</td>
+</tr>
+<tr>
+<td><code>PROJECT_*</code> / graph error</td>
+<td><a href="nova-project.html">Project</a>, then <a href="pipeline-definition.html">graph</a></td>
+<td>Compilation is not proof of plugin execution or a valid deployment</td>
+</tr>
+<tr>
+<td>Prism required value or URL failure</td>
+<td>Exact service loader, rendered environment and <a href="secrets.html">Secrets</a></td>
+<td>Credential presence is not downstream authentication success</td>
+</tr>
+<tr>
+<td>Worker admission failure</td>
+<td>Selected resource version and <a href="host-and-prism-configuration.html">host policy</a></td>
+<td>Do not convert missing accounting to zero or bypass native readiness</td>
+</tr>
+</tbody>
+</table>
+<h2 id="facts-generated-tables-and-coverage-limits">Facts, generated tables, and coverage limits</h2>
+<p><a href="plugin-configuration.html">Plugin configuration</a>, <a href="helm-values.html">Helm values</a>
+and <a href="environment-variables.html">Environment variables</a> retain their existing
+field inventories. This page is an authored selector; it is not another
+manually copied field table and is not a newly generated inventory output.
+The documentation generator's current write map does not generate this hub.</p>
+<p>The current configuration discovery has separate YAML/Helm, runtime environment
+and owned CLI routes. Its registered-schema selector covers platform plus
+<code>configSchema</code> registrations under <code>skills/common/plugins</code>, <code>skills/nova/plugins</code>
+and <code>skills/buster/plugins</code>. That selector does not discover every contract,
+embedded validator, host input or dynamically constructed source.</p>
+<p><strong>Source — declared discovery boundaries:</strong>
+<a href="../../../scripts/docs-configuration-inventory.mjs#L3073-L3103">registeredSchemaAuthorities</a> (<code>scripts/docs-configuration-inventory.mjs:3073–3103</code>, current-checkout SHA-256 <code>f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c</code>). <a href="../../../scripts/docs-configuration-inventory.mjs#L8422-L8455">buildRuntimeInputInventory</a> (<code>scripts/docs-configuration-inventory.mjs:8422–8455</code>, current-checkout SHA-256 <code>f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c</code>).</p>
+<p>To maintain these references, use the prerequisite and failure guidance in
+<a href="../extend/documentation-maintenance.html">Documentation maintenance</a>. Inventory
+checks and mutation tests can launch external tools; they are not passive
+reads. A missing source/tool guard is a stop, not a reason to skip semantics.
+We ran no check, reload, live consumer or deployment to produce this page.</p>
+<p>Global family discovery and inverse consumer coverage are still incomplete.
+In particular, unsupported/unresolved sources must be classified before this
+selector can be treated as an all-family inventory. Use <a href="schemas.html#coverage-and-unresolved-authorities">Schema coverage
+limits</a> for the finite companion,
+contract-root and embedded-validator boundaries; do not infer support from a
+filename or infer exclusion from a pruned directory.</p>
+</main></body></html>

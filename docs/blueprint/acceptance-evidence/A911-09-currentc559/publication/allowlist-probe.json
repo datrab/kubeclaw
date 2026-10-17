@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "kubeclaw-publication-allowlist-probe.v1",
+  "id": "unapproved-html-probe",
+  "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "status": "excluded",
+  "injectedPath": "docs/site/unapproved-evidence-probe.md",
+  "injectedSourceSha256": "8e2e09452cd39c11e082a54ab89647fa5ff6dff007ab56f95ade65f4dfb60506",
+  "expectedOutputPath": "unapproved-evidence-probe.html",
+  "expectedRoute": "/unapproved-evidence-probe.html",
+  "exitCode": 0,
+  "observation": "Actual injected unapproved Markdown was present in input during rendering and absent from complete HTML tree and emitted routes.",
+  "outputRoot": "docs/blueprint/acceptance-evidence/A911-09-currentc559/publication/html",
+  "command": "python3 /home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py --repo /home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo --revision c559e97960a89a0f80487483addb91d2e6e4527d --output /home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/publication --publication-root /home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/sdk-provenance-v3/root/.tmp/docs-publication --publication-receipt /home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/actual-build-result.json",
+  "injectedSourceArtifactId": "injected-unapproved-source"
+}

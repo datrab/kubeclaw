@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/deployment-and-trust.html"></head><body><main>
+<h1 id="deployment-and-trust">Deployment and Trust</h1>
+<p>Status: implemented design; live acceptance remains separate
+Audience: operator, architecture reader, security reviewer, maintainer
+Owner: platform architecture and operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw">charts/kubeclaw</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism">charts/prism</a>
+Evidence revision: <code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code>
+Applies to: current Helm charts and runtime-role declarations
+Last verified: 2026-09-21</p>
+<h2 id="purpose">Purpose</h2>
+<p>This page maps the software boundaries to running workloads.
+It explains identity, network, storage, permissions, observability, and failure domains.</p>
+<p>It does not treat supporting services as an unnamed infrastructure box.
+<a href="pipeline-dependencies.html">Pipeline Dependencies</a> explains the Git, Redis, PostgreSQL, BuildKit, registry, mirror, and Tailscale paths.
+<a href="platform-and-operations.html">Platform and Operations Architecture</a> explains K3s, Cilium, Argo CD, and the optional Ops Pod.</p>
+<p>A rendered chart proves intended Kubernetes resources.
+It does not prove that a live cluster applies or enforces them.
+Use the linked operations checks for that proof.</p>
+<h2 id="deployment-map">Deployment Map</h2>
+<pre><code class="language-mermaid">flowchart LR
+    User[Human user] --&gt;|private application route| Studio[Prism Studio]
+    Studio --&gt;|HTTP 8080| Control[Prism Control]
+    Nova[Nova role] --&gt;|Envoy and SPIFFE mTLS| Buster[Buster role]
+    Nova --&gt;|loopback Envoy 28080 and SPIFFE mTLS| AgentProxy[Prism agent Envoy 18082]
+    AgentProxy --&gt;|loopback 18080| Bridge[Prism agent bridge]
+    Bridge --&gt;|loopback Envoy 28080 and SPIFFE mTLS| Control
+    Bridge --&gt;|durable job launch| OpenClaw[Prism OpenClaw gateway]
+    OpenClaw --&gt;|fenced tool result| Control
+    OpenClaw --&gt;|memory embedding| LiteLLM[LiteLLM]
+    LiteLLM --&gt;|provider request| Vertex[Vertex AI]
+    OpenClaw --&gt;|managed reasoning| OpenAI[OpenAI provider]
+    Control --&gt;|Envoy and SPIFFE mTLS| PWorker[Prism Worker]
+    Control --&gt;|bearer HTTP| Ingestion[Optional Prism Ingestion]
+    Control --&gt; DB[(Prism PostgreSQL)]
+    PWorker --&gt; DB
+    Control --&gt; Artifacts[(Prism artifact PVC)]
+    Nova --&gt; RunStore[(Nova run storage)]
+    Buster --&gt; BStore[(Buster job and evidence storage)]
+    Discord[Discord users and service] --&gt;|enabled bot channels| Nova
+    Discord --&gt;|enabled bot channels| Buster
+    Nova -. event delivery .-&gt; Telemetry[Telemetry and observers]
+</code></pre>
+<p>Text version: Nova calls Buster through its protected route. For Prism, Nova
+first reaches the <code>agent-prism</code> Envoy and loopback bridge. The bridge reaches
+Control through a second protected route. Control persists an agent job before
+the bridge launches OpenClaw. OpenClaw commits a fenced result back to Control.
+Studio calls Control through the application route. Control can call the native
+Worker, optional Ingestion workload, and Prism PostgreSQL. The Prism OpenClaw
+gateway can call LiteLLM for memory embeddings. Nova, Buster, Prism, OpenClaw,
+and LiteLLM keep different owner state. Observers receive committed events only
+after Nova writes them. Managed OpenAI reasoning, Vertex embeddings through
+LiteLLM, and the enabled Nova and Buster Discord channels are external paths;
+none of them owns pipeline or Prism state.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human user</td>
+<td>Directed connection — private application route</td>
+<td>Prism Studio</td>
+</tr>
+<tr>
+<td>Prism Studio</td>
+<td>Directed connection — HTTP 8080</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Directed connection — Envoy and SPIFFE mTLS</td>
+<td>Buster role</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Directed connection — loopback Envoy 28080 and SPIFFE mTLS</td>
+<td>Prism agent Envoy 18082</td>
+</tr>
+<tr>
+<td>Prism agent Envoy 18082</td>
+<td>Directed connection — loopback 18080</td>
+<td>Prism agent bridge</td>
+</tr>
+<tr>
+<td>Prism agent bridge</td>
+<td>Directed connection — loopback Envoy 28080 and SPIFFE mTLS</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism agent bridge</td>
+<td>Directed connection — durable job launch</td>
+<td>Prism OpenClaw gateway</td>
+</tr>
+<tr>
+<td>Prism OpenClaw gateway</td>
+<td>Directed connection — fenced tool result</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism OpenClaw gateway</td>
+<td>Directed connection — memory embedding</td>
+<td>LiteLLM</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td>Directed connection — provider request</td>
+<td>Vertex AI</td>
+</tr>
+<tr>
+<td>Prism OpenClaw gateway</td>
+<td>Directed connection — managed reasoning</td>
+<td>OpenAI provider</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — Envoy and SPIFFE mTLS</td>
+<td>Prism Worker</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — bearer HTTP</td>
+<td>Optional Prism Ingestion</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Prism PostgreSQL</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Directed connection</td>
+<td>Prism PostgreSQL</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Prism artifact PVC</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Directed connection</td>
+<td>Nova run storage</td>
+</tr>
+<tr>
+<td>Buster role</td>
+<td>Directed connection</td>
+<td>Buster job and evidence storage</td>
+</tr>
+<tr>
+<td>Discord users and service</td>
+<td>Directed connection — enabled bot channels</td>
+<td>Nova role</td>
+</tr>
+<tr>
+<td>Discord users and service</td>
+<td>Directed connection — enabled bot channels</td>
+<td>Buster role</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Dotted relationship — event delivery</td>
+<td>Telemetry and observers</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — deployed Prism path</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/prism-agent-values.yaml#L45-L85">The selected Prism agent values colocate OpenClaw, the loopback bridge, and the Control egress listener</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117">The role proxy accepts Nova, Control, and test-runner identities at 18082 and forwards only to the loopback bridge</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L90-L138">Control receives its database, Ingestion, Worker, agent, and exact SPIFFE settings from the rendered chart</a>.</p>
+</blockquote>
+<h2 id="runtime-roles-and-workloads">Runtime Roles and Workloads</h2>
+<p>A runtime role is a packaging boundary.
+It declares the packages and plugins available to one purpose.</p>
+<table>
+<thead>
+<tr>
+<th>Role or workload</th>
+<th>Main responsibility</th>
+<th>Included authority</th>
+<th>Excluded authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova role</td>
+<td>Compile and control pipeline runs.</td>
+<td>Lifecycle state, stage leases, configured adapters.</td>
+<td>Worker execution semantics and specialist judgment.</td>
+</tr>
+<tr>
+<td>Buster role</td>
+<td>Run fixed test plans.</td>
+<td>Test providers, evidence, Worker Core controls.</td>
+<td>Canonical pipeline decisions.</td>
+</tr>
+<tr>
+<td>Prism role</td>
+<td>Host the OpenClaw Prism integration.</td>
+<td>Prism engine and selected shared adapters.</td>
+<td>Nova lifecycle authority.</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Own Prism operations and durable application state.</td>
+<td>Revision, operation, approval, and artifact coordination.</td>
+<td>Native host process authority.</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Run bounded native Prism operations.</td>
+<td>Worker Core attempt and process controls.</td>
+<td>Product approval and public entry.</td>
+</tr>
+<tr>
+<td>Prism Studio</td>
+<td>Give humans the application interface.</td>
+<td>User-facing requests through Control.</td>
+<td>Direct database or worker authority.</td>
+</tr>
+<tr>
+<td>Prism Ingestion</td>
+<td>Fetch and quarantine optional external input.</td>
+<td>Narrow outbound fetch path.</td>
+<td>Control state ownership.</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>Store Prism relational state.</td>
+<td>Database persistence only.</td>
+<td>Pipeline and product decisions.</td>
+</tr>
+<tr>
+<td>Prism agent bridge</td>
+<td>Translate authenticated dispatch into a durable Control request and run one claimed OpenClaw job.</td>
+<td>The claimed job ID, fence, and local process lifecycle.</td>
+<td>Prism documents, approval, and Nova lifecycle authority.</td>
+</tr>
+<tr>
+<td>Prism OpenClaw gateway</td>
+<td>Perform the external design-agent session and expose fenced Prism tools.</td>
+<td>Its gateway session, configured model route, and tool invocation.</td>
+<td>Durable Control job/result authority.</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td>Supply the configured OpenClaw memory embedding route.</td>
+<td>Gateway routing and its separate database state.</td>
+<td>Agent reasoning route, Prism state, and pipeline lifecycle.</td>
+</tr>
+<tr>
+<td>Managed OpenAI provider</td>
+<td>Supply the model selected by an OpenClaw agent session.</td>
+<td>Provider response and external account controls.</td>
+<td>OpenClaw session, Control job, and pipeline lifecycle authority.</td>
+</tr>
+<tr>
+<td>Discord</td>
+<td>Carry enabled Nova and Buster bot traffic and configured webhook notifications.</td>
+<td>External message transport and Discord account controls.</td>
+<td>User authorization beyond configured allowlists, pipeline state, and domain results.</td>
+</tr>
+</tbody>
+</table>
+<p>Forge and Echo do not appear as current role manifests.
+Nova reaches them through configured runtime dispatch.
+Their actual process location depends on that runtime configuration.</p>
+<blockquote>
+<p><strong>Source evidence — package boundaries</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/nova.json#L1-L60">Nova role declaration</a>, <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/buster.json#L1-L60">Buster role declaration</a>, and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/prism.json#L1-L28">Prism role declaration</a>.</p>
+<p><strong>Decision record:</strong> <a href="../decisions/core-and-plugins.html#adr-012-assemble-exact-role-specific-runtime-bundles">ADR-012 explains role-specific immutable bundles</a>.</p>
+</blockquote>
+<h2 id="why-role-bundles-exist">Why Role Bundles Exist</h2>
+<p>A single large image could contain every engine and plugin.
+That image would make accidental authority easier and review harder.</p>
+<p>Role bundles make the intended content explicit.
+Nova does not need the Buster engine to control a Buster job.
+Buster does not need Nova Core to execute a test provider.</p>
+<p>The bundle is only the first limit.
+Activation selects a smaller set of registrations.
+Capability grants reduce each invocation again.
+Network policy and workload identity limit process-to-process access.</p>
+<p>These limits overlap on purpose.
+One incorrect setting must not silently grant every other permission.</p>
+<h2 id="four-independent-trust-questions">Four Independent Trust Questions</h2>
+<p>Before one component trusts another, it asks four questions.</p>
+<ol>
+<li><strong>Who connected?</strong> SPIFFE gives the workload an identity.</li>
+<li><strong>Was the route protected?</strong> Envoy authenticates and encrypts the connection with mutual TLS.</li>
+<li><strong>May this identity call this service?</strong> Worker code checks the exact expected SPIFFE ID.</li>
+<li><strong>Can packets reach the port?</strong> Kubernetes NetworkPolicy limits pods, namespaces, and ports.</li>
+</ol>
+<p>Nova-to-Buster source transfer adds another question:
+does this archive match the source identity that Nova signed?</p>
+<p><strong>Historical reason:</strong> Unknown. <strong>Current rationale (inference):</strong> Network
+location is not an identity. A Pod IP can change, and another Pod can exist in
+the same namespace. Exact workload identity plus application authorization
+keeps those cases distinct.</p>
+<p><strong>Cost:</strong> SPIRE, its CSI driver, Envoy configuration, and network-policy enforcement become service dependencies.
+Protected routes fail closed when those dependencies fail.</p>
+<p><strong>Status and reconsideration:</strong> The secured chart profile contains the SPIFFE
+and Envoy path. Live issuance and denial remain separate acceptance.
+Reconsider the layers only if a replacement proves exact workload identity,
+encrypted peer authentication, application allowlists, rotation, and both
+positive and negative route behavior without trusting a caller-supplied header.</p>
+<blockquote>
+<p><strong>Source evidence — application identity check</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/trust.ts#L1-L52">Worker Core parses and authorizes proxied SPIFFE identities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L127-L138">Prism workloads receive separate trusted caller identities</a>.</p>
+<p><a href="worker-trust.html">Worker Trust gives the complete certificate and proxy path</a>.</p>
+</blockquote>
+<h2 id="identity-boundaries">Identity Boundaries</h2>
+<p>Each Prism workload has its own Kubernetes ServiceAccount.
+The chart disables automatic service-account token mounting.
+SPIRE derives the workload identity from namespace and ServiceAccount.</p>
+<p>The expected identity has this form:</p>
+<pre><code class="language-text">spiffe://kubeclaw.internal/ns/&lt;namespace&gt;/sa/&lt;service-account&gt;
+</code></pre>
+<p>The application cannot select another identity through a normal environment variable.
+Envoy receives the short-lived certificate from the SPIRE Workload API.</p>
+<p>Human identity remains separate. Keycloak is an unimplemented architectural
+option: this repository does not deploy it, configure a client, connect Prism
+session exchange to it, or provide a live acceptance procedure. If a future
+deployment selects Keycloak, it could authenticate a human and supply
+application roles; it still would not provide workload identity or artifact
+signatures. Current operators must use only the implemented human-authentication
+path described by the selected application procedure.</p>
+<blockquote>
+<p><strong>Source evidence — separate service accounts</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/serviceaccounts.yaml#L1-L7">The Prism chart creates Control, Studio, Worker, Ingestion, Backup, and test-runner accounts</a>.</p>
+</blockquote>
+<h2 id="network-boundaries">Network Boundaries</h2>
+<p>The Prism chart first denies ingress and egress for its named workloads.
+It then adds only the required paths.</p>
+<p>Important paths include:</p>
+<table>
+<thead>
+<tr>
+<th>Caller</th>
+<th>Destination</th>
+<th>Port or route</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prism Studio</td>
+<td>Prism Control</td>
+<td>HTTP 8080</td>
+<td>Human application actions.</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Prism agent Envoy</td>
+<td>Nova loopback 28080 to agent Service 8080 and Envoy 18082</td>
+<td>Authenticate and deliver design dispatch to the loopback bridge.</td>
+</tr>
+<tr>
+<td>Prism agent bridge and OpenClaw tool</td>
+<td>Prism Control</td>
+<td>Agent loopback 28080 to Control mTLS Service 8443</td>
+<td>Persist dispatch, claim jobs, and commit fenced designs or revisions.</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Prism Worker</td>
+<td>mTLS service 8443 when enabled</td>
+<td>Bounded native operation.</td>
+</tr>
+<tr>
+<td>Prism Control and Worker</td>
+<td>PostgreSQL</td>
+<td>TCP 5432</td>
+<td>Prism state.</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Prism Ingestion</td>
+<td>HTTP 8080</td>
+<td>Optional controlled ingestion.</td>
+</tr>
+<tr>
+<td>Prism Ingestion</td>
+<td>Approved external source</td>
+<td>HTTPS 443 only</td>
+<td>Bounded acquisition into temporary quarantine.</td>
+</tr>
+<tr>
+<td>Prism OpenClaw agent</td>
+<td>LiteLLM</td>
+<td>HTTP 4000</td>
+<td>Remote memory-search embeddings only.</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td>Vertex AI</td>
+<td>HTTPS 443</td>
+<td>The configured <code>gemini-embedding-001</code> route and no reasoning traffic.</td>
+</tr>
+<tr>
+<td>Nova, Buster, and Prism OpenClaw</td>
+<td>Managed OpenAI provider</td>
+<td>External HTTPS owned by the pinned OpenClaw runtime</td>
+<td>Agent reasoning under the configured model allowlist.</td>
+</tr>
+<tr>
+<td>Discord service</td>
+<td>Nova and Buster OpenClaw gateways</td>
+<td>External bot gateway and HTTPS APIs</td>
+<td>Enabled allowlisted human messages and bot replies.</td>
+</tr>
+<tr>
+<td>Nova or Buster notification path</td>
+<td>Discord webhook</td>
+<td>Secret-selected HTTPS destination</td>
+<td>Optional notification delivery; never lifecycle authority.</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Buster</td>
+<td>mTLS worker route</td>
+<td>Plan submission, status, result, evidence, cancellation.</td>
+</tr>
+</tbody>
+</table>
+<p>The Service sends protected traffic to the Envoy sidecar.
+The sidecar sends accepted local traffic to the application port.
+The runtime port is not the public worker endpoint.</p>
+<p>Prism Studio is different.
+It is an application entry point and can use a private Tailscale ingress.
+It does not use the internal worker route for browser traffic.</p>
+<p>The checked-in policy set and Hubble observation path require Cilium in the
+current supported secured deployment. The architecture does not bind Nova Core
+to Cilium, but the repository has no implemented and proved Flannel equivalent
+for these policies. Do not label Flannel as a supported secured fallback until
+positive and negative route tests pass with equivalent policy and evidence.</p>
+<p>This statement has two evidence levels. The repository proves that selected
+manifests contain Cilium resources, that installation checks target Cilium, and
+that Ops can query Hubble. It does not prove that a particular live cluster
+enforces a deny rule. That proof needs an allowed request, a denied request, and
+the matching live flow evidence. The repository has no equivalent Flannel
+manifest set or recorded fallback proof, so “CNI-neutral Core” must not be read
+as “secured Flannel profile available.”</p>
+<blockquote>
+<p><strong>Source evidence — default deny and allowed paths</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L1-L22">The Prism default-deny and DNS policies</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L24-L59">The Prism application paths name allowed callers, destinations, and ports</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/services.yaml#L8-L29">Internal Prism services target the mTLS sidecar port</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L95-L121">The Prism agent policy permits dispatch, Control, LiteLLM, and managed-provider paths</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L150-L165">Optional Ingestion permits only Control ingress and public HTTPS egress</a>.</p>
+</blockquote>
+<p><strong>Decision status:</strong> A CNI-neutral application boundary is an architecture
+direction; Cilium is the implemented and currently supported secured deployment.
+<strong>Historical reason:</strong> Unknown. <strong>Current rationale (inference):</strong> Cilium supplies
+the checked-in identity-aware policies and Hubble evidence. The cost is a larger
+platform dependency and a guarded CNI lifecycle. Reconsider Cilium only after a
+replacement enforces the complete route matrix and supplies equivalent incident
+evidence in live positive-and-negative tests.</p>
+<h2 id="capability-grants">Capability Grants</h2>
+<p>Network access does not authorize a plugin operation.
+A stage lease contains explicit capability grants.</p>
+<p>A grant names the capability, its selected provider, and resource constraints.
+Examples include allowed repository roots, artifact namespaces, secret names, agents, and network origins.</p>
+<p>The plugin context denies a capability that has no grant.
+The authorization code then checks the requested resource against the grant.</p>
+<p><strong>Why this design exists:</strong> A review plugin needs repository read access.
+It does not need repository write access or every secret.</p>
+<p><strong>Cost:</strong> Each new operation needs a defined capability, constraints, an adapter, and platform configuration.
+This work is intentional security review, not incidental wiring.</p>
+<blockquote>
+<p><strong>Source evidence — least authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/context.ts#L34-L58"><code>createPluginInvocationContext()</code> creates the grant map and denies missing grants</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/authorization.ts#L39-L93">Capability authorization checks paths, namespaces, names, targets, and sources</a> and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/authorization.ts#L94-L130">checks origins, commands, and signals</a>.</p>
+</blockquote>
+<h2 id="process-isolation">Process Isolation</h2>
+<p>Trusted first-party registrations can load in the host process after import audit and digest checks.
+An external stage or observer runs through the isolation runner.</p>
+<p>The isolated process receives a bounded context protocol.
+It requests capabilities through the parent instead of obtaining host authority.
+The runner limits readable paths and disables native add-ons.</p>
+<p>External capability adapters need a persistent isolated adapter runtime.
+The current activation path rejects them without that boundary.</p>
+<p>Native Worker Core adds another process boundary.
+It writes admission before launch, applies host resource limits, captures bounded output, and seals the result.</p>
+<p><strong>Why this design exists:</strong> A manifest declaration is not a process sandbox.
+The runtime must also constrain how untrusted code reaches the host.</p>
+<blockquote>
+<p><strong>Source evidence — trust-dependent activation</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100"><code>load()</code> selects direct import or isolated invocation from the package trust scope</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/isolation/runner.ts#L33-L52">The isolation runner grants only selected file reads and disables add-ons</a>.</p>
+</blockquote>
+<h2 id="storage-boundaries">Storage Boundaries</h2>
+<p>The main durable stores have different owners and recovery needs.</p>
+<pre><code class="language-mermaid">flowchart LR
+    Nova[Nova] --&gt; NovaStore[(Run snapshots, journals, signals, and imports)]
+    Buster[Buster] --&gt; BusterStore[(Jobs, source archives, results, and evidence)]
+    Control[Prism Control] --&gt; Database[(PostgreSQL state)]
+    Control --&gt; Artifacts[(Content-addressed artifact PVC)]
+    Worker[Prism Worker] --&gt; Native[(Native ownership and process journal)]
+    Roles[Applicable role deployments] --&gt; OpenClaw[(OpenClaw state PVCs)]
+    Database --&gt; Backup[Matched Prism backup group]
+    Artifacts --&gt; Backup
+    Backup --&gt; Restore[Restore and digest verification]
+    Restore --&gt; Database
+    Restore --&gt; Artifacts
+</code></pre>
+<p>Text version: Nova owns its run records, and Buster owns its remote-job and evidence records.
+Prism Control owns relational state and content-addressed artifacts.
+Prism Worker keeps separate native ownership and process records.
+Applicable role deployments also keep separate OpenClaw state.
+Prism backup and restore must treat its database and artifacts as one matched group.
+Restore verification must complete before Prism enables new writes.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova</td>
+<td>Directed connection</td>
+<td>Run snapshots, journals, signals, and imports</td>
+</tr>
+<tr>
+<td>Buster</td>
+<td>Directed connection</td>
+<td>Jobs, source archives, results, and evidence</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>PostgreSQL state</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Content-addressed artifact PVC</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Directed connection</td>
+<td>Native ownership and process journal</td>
+</tr>
+<tr>
+<td>Applicable role deployments</td>
+<td>Directed connection</td>
+<td>OpenClaw state PVCs</td>
+</tr>
+<tr>
+<td>PostgreSQL state</td>
+<td>Directed connection</td>
+<td>Matched Prism backup group</td>
+</tr>
+<tr>
+<td>Content-addressed artifact PVC</td>
+<td>Directed connection</td>
+<td>Matched Prism backup group</td>
+</tr>
+<tr>
+<td>Matched Prism backup group</td>
+<td>Directed connection</td>
+<td>Restore and digest verification</td>
+</tr>
+<tr>
+<td>Restore and digest verification</td>
+<td>Directed connection</td>
+<td>PostgreSQL state</td>
+</tr>
+<tr>
+<td>Restore and digest verification</td>
+<td>Directed connection</td>
+<td>Content-addressed artifact PVC</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Store</th>
+<th>Owner</th>
+<th>Data</th>
+<th>Failure effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova run storage</td>
+<td>Nova</td>
+<td>Snapshots, events, effects, signals, decisions, imports.</td>
+<td>Nova cannot safely recover or prove prior authority.</td>
+</tr>
+<tr>
+<td>Buster runtime storage</td>
+<td>Buster</td>
+<td>Job admission, source archive, result, and evidence.</td>
+<td>Nova can lose remote reconciliation and evidence import.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL</td>
+<td>Prism Control and bounded clients</td>
+<td>Projects, revisions, operations, preferences, and approvals.</td>
+<td>Prism cannot reconstruct current application state.</td>
+</tr>
+<tr>
+<td>Prism artifact PVC</td>
+<td>Prism Control</td>
+<td>Content-addressed design and operation artifacts.</td>
+<td>Database references can point to unavailable content.</td>
+</tr>
+<tr>
+<td>Prism native host state</td>
+<td>Prism Worker supervisor</td>
+<td>Ownership, journal, policy, and resource-pool identity.</td>
+<td>Native admission must fence rather than guess ownership.</td>
+</tr>
+<tr>
+<td>OpenClaw state PVC</td>
+<td>Each applicable role deployment</td>
+<td>Gateway and host-integration state.</td>
+<td>Agent sessions and host configuration can fail independently.</td>
+</tr>
+</tbody>
+</table>
+<p>The Prism artifact PVC uses <code>ReadWriteOnce</code>.
+The current chart therefore requires one Control replica.
+This protects one-writer behavior but creates a Control availability limit.</p>
+<p>Backups must keep the Prism database and content-addressed artifacts as one recovery group.
+Database-only restore can create references to missing artifacts.</p>
+<blockquote>
+<p><strong>Source evidence — Prism persistence</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L1-L6">The chart enforces one Control replica and mounts the artifact PVC only there</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L217-L230">The retained artifact PVC uses <code>ReadWriteOnce</code></a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/files/prism-backup.sh#L54-L105">The backup script defines one database-and-artifact group</a>.</p>
+</blockquote>
+<h2 id="observability-boundary">Observability Boundary</h2>
+<p>Nova writes canonical lifecycle events before observers deliver derived views.
+Observers can send telemetry, notifications, or agent event records.
+They cannot rewrite the lifecycle journal.</p>
+<p>Delivery can fail after the lifecycle event is durable.
+The observability layer therefore tracks delivery attempts separately.
+An observer failure must not create a second pipeline authority.</p>
+<p>Logs help diagnosis, but a raw log does not prove a lifecycle transition.
+Use the ordered event, effect receipt, artifact digest, or remote result record as authoritative evidence.</p>
+<blockquote>
+<p><strong>Source evidence — committed events before delivery</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-run.ts#L21-L34"><code>executePrepared()</code> creates a serialized observer drainer around the pipeline runner</a>.</p>
+<p><a href="../decisions/core-and-plugins.html#adr-011-observers-consume-immutable-events-without-lifecycle-mutation">ADR-011 explains immutable observer input and independent delivery</a>.</p>
+</blockquote>
+<h2 id="failure-domains">Failure Domains</h2>
+<p>One failure does not always stop every surface.
+The table shows the expected boundary.</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Direct effect</th>
+<th>What remains available</th>
+<th>Required response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova process stops</td>
+<td>No new canonical pipeline decisions.</td>
+<td>Durable run records and independent services.</td>
+<td>Recover the same run from pinned state.</td>
+</tr>
+<tr>
+<td>Buster stops during a job</td>
+<td>Test outcome can remain unknown.</td>
+<td>Nova journal and other independent stages.</td>
+<td>Reconnect by job identity; do not submit a changed duplicate.</td>
+</tr>
+<tr>
+<td>Prism Control stops</td>
+<td>Studio operations and worker coordination stop.</td>
+<td>Stored database and artifacts, if storage is healthy.</td>
+<td>Restore Control and reconcile operation records.</td>
+</tr>
+<tr>
+<td>Prism agent bridge or OpenClaw stops before claim</td>
+<td>Accepted job remains in PostgreSQL.</td>
+<td>Control, Studio, native Worker, and the unclaimed job.</td>
+<td>Restore the agent Pod and let one runner claim the same job.</td>
+</tr>
+<tr>
+<td>Prism agent bridge or OpenClaw stops after claim</td>
+<td>External outcome can be unknown; job becomes <code>needs_nova</code> at expiry or errored completion.</td>
+<td>Control's job, fence, request digest, and any already committed result.</td>
+<td>Reconcile the job and fenced result. Do not launch a replacement agent automatically.</td>
+</tr>
+<tr>
+<td>Prism Worker stops</td>
+<td>Native Prism attempt can be interrupted.</td>
+<td>Control state, Studio, and stored artifacts.</td>
+<td>Use Worker Core ownership and journal recovery.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL stops</td>
+<td>Prism state operations and new agent admission stop.</td>
+<td>Nova, Buster, and any durable off-database evidence.</td>
+<td>Restore the matched Prism database and artifact recovery group before Prism work.</td>
+</tr>
+<tr>
+<td>LiteLLM PostgreSQL or LiteLLM stops</td>
+<td>OpenClaw memory embedding fails.</td>
+<td>Agent session, Control state, and reasoning route can remain separate.</td>
+<td>Restore gateway state and credentials, then prove one authenticated embedding.</td>
+</tr>
+<tr>
+<td>Managed OpenAI route stops</td>
+<td>The affected OpenClaw reasoning step can remain incomplete or have an uncertain external result.</td>
+<td>Control's durable job, Nova's journal, and already committed domain state.</td>
+<td>Reconcile the same agent session or job; repair provider access; prove one bounded model request before new work.</td>
+</tr>
+<tr>
+<td>Discord stops</td>
+<td>Enabled bot entry, replies, approvals, or webhook notices can stop.</td>
+<td>Core execution and every durable owner store.</td>
+<td>Restore the exact bot or webhook identity and target. Prove the affected path without inferring pipeline state from message delivery.</td>
+</tr>
+<tr>
+<td>Prism Ingestion stops</td>
+<td>New corpus acquisition and cleanup stop.</td>
+<td>Existing active corpus and other Prism operations.</td>
+<td>Reconcile quarantine and inactive revision state before resubmission.</td>
+</tr>
+<tr>
+<td>Artifact PVC fails</td>
+<td>Prism content becomes unavailable.</td>
+<td>Relational records can remain.</td>
+<td>Restore the matched database-and-artifact backup group.</td>
+</tr>
+<tr>
+<td>SPIRE or Envoy fails</td>
+<td>Protected worker routes fail closed.</td>
+<td>Local durable state and unrelated public paths.</td>
+<td>Restore identity service and verify exact peer routes.</td>
+</tr>
+<tr>
+<td>Observer destination fails</td>
+<td>Derived telemetry becomes delayed.</td>
+<td>Canonical lifecycle journal.</td>
+<td>Replay durable observer delivery.</td>
+</tr>
+<tr>
+<td>Redis fails</td>
+<td>Configured transport and status projections can stop.</td>
+<td>File-backed canonical Nova state.</td>
+<td>Restore Redis and reconcile projections; do not infer lifecycle loss.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="infrastructure-dependency-order">Infrastructure Dependency Order</h2>
+<p>The safe order follows data and identity dependencies.</p>
+<ol>
+<li>Provide Kubernetes, storage classes, DNS, and Cilium policy enforcement for
+the current supported secured deployment.</li>
+<li>Provide required secrets without placing secret values in documentation or logs.</li>
+<li>Provide SPIRE, its CSI driver, and workload registration when worker trust is enabled.</li>
+<li>Provide shared data services, such as Redis and PostgreSQL.</li>
+<li>Run database migration and storage preparation jobs.</li>
+<li>Deploy Prism Control, Worker, optional Ingestion, and its database migration.</li>
+<li>Deploy the Prism OpenClaw agent and its bridge, then Nova and Buster roles.</li>
+<li>Wait for application and Envoy readiness.</li>
+<li>Verify permitted and denied identity paths, including both Prism mTLS hops.</li>
+<li>Verify durable writes, one fenced Prism result, and restore inputs.</li>
+<li>Enable independent user entry only after internal checks succeed.</li>
+</ol>
+<p><strong>Why this order exists:</strong> An application can look ready before its identity sidecar or durable store is ready.
+The ordered checks prevent that partial state from becoming an acceptance claim.</p>
+<h2 id="independent-access">Independent Access</h2>
+<p>Operator and human access must not depend on an active agent conversation.
+Prism Studio uses a private Tailscale route in the complete showcase topology.
+Operational access uses its own controlled path and credentials.</p>
+<p>This separation helps during an incident.
+An operator can inspect or repair the platform when a specialist runtime is unavailable.</p>
+<p>Independent access is not anonymous access.
+The entry route still needs human authentication, authorization, and network controls.</p>
+<h2 id="current-limits">Current Limits</h2>
+<ul>
+<li>Live SPIRE, mTLS, and denial proof remains a separate acceptance scope.</li>
+<li>Prism results do not currently use durable Ed25519 artifact provenance.</li>
+<li>A runtime role does not prove activation or reachability in a target cluster.</li>
+<li>Prism Control currently has a single-replica limit for its <code>ReadWriteOnce</code> artifact volume.</li>
+<li>Some Buster native-runner and fixture-lifetime integration remains in the open implementation issues.</li>
+<li>The operations track supplies backup, restore, upgrade, incident, and daily-operation procedures.</li>
+</ul>
+<h2 id="continue-with-operations">Continue With Operations</h2>
+<ul>
+<li><a href="pipeline-dependencies.html">Pipeline Dependencies</a> explains every direct and conditional pipeline service.</li>
+<li><a href="platform-and-operations.html">Platform and Operations Architecture</a> explains the surrounding platform and optional operations tool.</li>
+<li><a href="../use/worker-trust.html">Operate Worker Trust</a> gives the deployment and live proof procedure.</li>
+<li><a href="../use/README.html">Operate KubeClaw</a> is the operations entry point.</li>
+<li><a href="../status/current.html">Current status</a> separates source implementation from live acceptance.</li>
+<li><a href="../status/open-issues.html">Open issues</a> lists remaining implementation work.</li>
+<li><a href="request-state-recovery.html">Request, State, and Recovery</a> explains how these failures affect a run.</li>
+</ul>
+</main></body></html>

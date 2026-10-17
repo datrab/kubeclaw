@@ -1,0 +1,1350 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/buster-suites.html"></head><body><main>
+<h1 id="buster-suite-and-provider-reference">Buster Suite and Provider Reference</h1>
+<p>Status: implemented with stated external prerequisites
+Audience: pipeline author, operator, test maintainer
+Owner: buster
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-test-gate/v1/suites">contracts/pipeline-test-gate/v1/suites</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins">skills/buster/plugins</a>
+Evidence revision: <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>
+Applies to: pipeline test-gate contract version 1
+Last verified: all suite templates, providers, and schemas on 2026-09-19</p>
+<h2 id="how-to-read-this-reference">How To Read This Reference</h2>
+<p>KubeClaw ships <strong>12 suite templates</strong>. A template is a named composition of
+fixtures and tests. It is not executable code. Each node selects a provider by
+versioned contract ID. The provider manifest defines inputs, outputs,
+capabilities, evidence, report formats, matrix fields, and retry safety. Its
+strict JSON Schema defines configuration.</p>
+<p>Several templates are intentionally empty. Selecting one of them does not run a
+test. It supplies a stable suite identity and concurrency defaults for
+project-defined nodes. This design lets a project choose its command, build
+definition, deployment, endpoint, or budget without KubeClaw guessing it.</p>
+<p>There is no thirteenth shipped template. The additional supported task is to
+<a href="../extend/buster.html#suite-templates">create a project or platform suite</a>. That
+path is documented with the same care, but it must not be counted as shipped
+behavior.</p>
+<h2 id="why-the-suite-model-uses-these-rules">Why The Suite Model Uses These Rules</h2>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Reason</th>
+<th>Rejected alternative</th>
+<th>Cost and consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keep project-specific suites empty.</td>
+<td>Only the project knows its command, image, endpoint, or budget.</td>
+<td>Guess project behavior in a shared template.</td>
+<td>A selected empty suite does not run until the project adds a node.</td>
+</tr>
+<tr>
+<td>Use strict provider schemas.</td>
+<td>A misspelled or unknown field must fail before execution.</td>
+<td>Ignore unknown configuration and rely on provider defaults.</td>
+<td>Schema evolution needs explicit compatibility work.</td>
+</tr>
+<tr>
+<td>Connect nodes with typed ports.</td>
+<td>Dependencies must show which exact value or artifact crosses the boundary.</td>
+<td>Share untracked paths or infer data from node order.</td>
+<td>Authors must declare both the dependency and the port link.</td>
+</tr>
+<tr>
+<td>Let the provider own retry safety.</td>
+<td>Only the provider contract knows whether repetition can duplicate an external effect.</td>
+<td>Let each project mark any node as safe.</td>
+<td>Some transient failures cannot use an automatic Buster retry.</td>
+</tr>
+<tr>
+<td>Expand matrices during resolution.</td>
+<td>Every variation needs a stable identity, limits, coverage, and evidence policy before execution.</td>
+<td>Let a provider create hidden variations while it runs.</td>
+<td>Large products are rejected by the operator matrix limit.</td>
+</tr>
+<tr>
+<td>Separate fixtures from tests.</td>
+<td>Resource lifecycle and quality decisions have different outcomes and cleanup duties.</td>
+<td>Treat successful resource creation as a passed quality check.</td>
+<td>Plans must retain fixture ownership until all consumers finish.</td>
+</tr>
+<tr>
+<td>Generate the exact error-code index from source.</td>
+<td>Operators need a complete lookup that cannot silently drift from emitted codes.</td>
+<td>Maintain selected examples or wildcard families only.</td>
+<td>A new emitted code makes the documentation gate fail until the index is reviewed.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Authoritative inventory</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/tree/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites">The suite directory contains the twelve versioned JSON templates</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/tree/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins">Provider manifests bind every executable contract to a schema and declared authority</a>.</p>
+</blockquote>
+<h2 id="common-node-rules">Common Node Rules</h2>
+<p>Each test or fixture name is local to the resolved plan. <code>uses</code> selects the
+exact provider contract. <code>config</code> must satisfy that provider's strict schema;
+unknown fields fail. <code>needs</code> orders nodes. <code>inputs</code> connects a named input
+port to one exact upstream output. A dependency alone does not transfer data.</p>
+<p><code>mode: blocking</code> contributes failure to the gate. <code>mode: advisory</code> records the
+result without blocking the gate. A fixture supplies a resource and has no
+quality mode. <code>retries</code> is permitted only when the provider declares
+<code>retrySafe: true</code>. A retry creates a new attempt identity; it does not erase
+prior evidence. <code>concurrencyGroup</code> uses the resolved group limit.</p>
+<p>A condition can produce <code>skipped</code>. An unavailable dependency can also skip a
+consumer. A skipped node is not a pass. Required coverage still applies after
+suite exclusions and condition evaluation. Buster distinguishes:</p>
+<ul>
+<li><code>passed</code>: execution completed and all provider assertions passed;</li>
+<li><code>failed</code>: execution completed and an assertion or budget failed;</li>
+<li><code>errored</code>: execution could not produce a trustworthy assertion result;</li>
+<li><code>skipped</code>: the declared condition or dependency prevented execution;</li>
+<li><code>cancelled</code>: the job or attempt authority requested cancellation.</li>
+</ul>
+<h2 id="complete-test-scope-syntax">Complete Test-Scope Syntax</h2>
+<p>The selected module or gate can contain only <code>suites</code>, <code>tests</code>, <code>fixtures</code>,
+<code>concurrencyLimits</code>, and <code>coverage</code> as test-plan fields. Nova rejects unknown
+fields inside this scope.</p>
+<h3 id="suite-selection">Suite selection</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Resolution effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uses</code></td>
+<td>Required</td>
+<td>Select one versioned suite contract.</td>
+</tr>
+<tr>
+<td><code>exclude[]</code></td>
+<td>Empty</td>
+<td>Remove named template nodes. Every name must exist. Coverage records the removal; it does not count it as pass.</td>
+</tr>
+<tr>
+<td><code>overrides.&lt;node&gt;</code></td>
+<td>Empty</td>
+<td>Change any node field except <code>uses</code>. Configuration objects merge recursively; arrays and scalar values replace. Evidence outcomes merge independently.</td>
+</tr>
+<tr>
+<td><code>add.&lt;node&gt;</code></td>
+<td>Empty</td>
+<td>Add a project test to this suite instance. It cannot replace a template node or add a fixture.</td>
+</tr>
+</tbody>
+</table>
+<p>Selected template nodes receive IDs <code>&lt;suite-instance&gt;/&lt;local-node&gt;</code>. A local
+dependency or input reference inside the template or <code>add</code> receives the same
+prefix automatically. A reference that already contains <code>/</code> remains explicit.
+Top-level <code>tests</code> and <code>fixtures</code> keep their declared IDs.</p>
+<h3 id="test-and-fixture-node">Test and fixture node</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uses</code></td>
+<td>Required</td>
+<td>Versioned provider contract. Its registered kind must match test or fixture.</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Empty object before provider defaults</td>
+<td>Strict provider values. Matrix values merge last.</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td>Tests default to <code>blocking</code>; forbidden for fixtures</td>
+<td><code>blocking</code> or <code>advisory</code>.</td>
+</tr>
+<tr>
+<td><code>review.agent</code></td>
+<td>No review agent</td>
+<td>Stable identifier for optional test review. Forbidden for fixtures.</td>
+</tr>
+<tr>
+<td><code>needs[]</code></td>
+<td>Empty</td>
+<td>A node ID, or an object with <code>nodeId</code> and non-empty unique <code>acceptedResults</code>. A plain ID accepts only <code>passed</code>.</td>
+</tr>
+<tr>
+<td><code>inputs.&lt;port&gt;</code></td>
+<td>Empty</td>
+<td><code>from</code>, <code>output</code>, and optional <code>mediaType</code>. Provider declarations must prove compatible kinds, schemas, and media types. The link also creates dependency order.</td>
+</tr>
+<tr>
+<td><code>when</code></td>
+<td>Always eligible</td>
+<td>One or more of <code>changedPaths</code>, <code>moduleType</code>, or <code>pipelineStage</code>. All declared condition families must match.</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Resolver-policy default</td>
+<td>Positive integer no larger than the policy maximum.</td>
+</tr>
+<tr>
+<td><code>limits</code></td>
+<td>Each resolver-policy default</td>
+<td>Optional <code>cpuMillis</code>, <code>memoryBytes</code>, <code>logBytes</code>, <code>artifactBytes</code>, <code>artifactFiles</code>, and <code>processes</code>. Each value cannot exceed policy.</td>
+</tr>
+<tr>
+<td><code>retries</code></td>
+<td>1 for retry-safe providers; 0 for unsafe providers</td>
+<td>Integer from zero through the policy maximum.</td>
+</tr>
+<tr>
+<td><code>acceptUnsafeRetry</code></td>
+<td><code>false</code></td>
+<td>Must be explicitly <code>true</code> for a positive retry on an unsafe provider. This acknowledges risk; policy can still reject it.</td>
+</tr>
+<tr>
+<td><code>concurrencyGroup</code></td>
+<td>None</td>
+<td>Stable group ID. Effective limit comes from suite, project, and operator policy.</td>
+</tr>
+<tr>
+<td><code>matrix.&lt;field&gt;[]</code></td>
+<td>No matrix</td>
+<td>Non-empty JSON values. The provider must declare the field. Cartesian expansion must remain within policy.</td>
+</tr>
+<tr>
+<td><code>evidence.onPass[]</code></td>
+<td>Provider default</td>
+<td>Evidence retained after pass. Every type must appear in the provider manifest.</td>
+</tr>
+<tr>
+<td><code>evidence.onFail[]</code></td>
+<td>Provider default</td>
+<td>Evidence retained after assertion failure.</td>
+</tr>
+<tr>
+<td><code>evidence.onError[]</code></td>
+<td>Provider default</td>
+<td>Evidence retained after execution error.</td>
+</tr>
+</tbody>
+</table>
+<p><code>acceptedResults</code> can contain <code>passed</code>, <code>failed</code>, <code>skipped</code>, <code>errored</code>,
+<code>cancelled</code>, and <code>timed_out</code>. Use a non-pass value only when the consumer has a
+clear reason to inspect that state. It does not change the upstream result.</p>
+<p><code>changedPaths</code> uses project-relative glob patterns. Absolute paths and <code>..</code> are
+invalid. <code>moduleType</code> and <code>pipelineStage</code> accept one string or a non-empty list.
+A false condition gives the resolved node an explicit skip reason. The node
+still exists for coverage and audit.</p>
+<h3 id="concurrency-and-matrix-rules">Concurrency and matrix rules</h3>
+<p>A suite defines composition defaults. Project <code>concurrencyLimits</code> can lower an
+existing suite group, but cannot raise it. A project can define a new group
+within the operator maximum. When selected suites name the same group, the
+resolver takes the lowest requested limit. A node without a group still counts
+against the job-wide concurrency limit.</p>
+<p>Matrix expansion sorts field names, computes the Cartesian product, and creates
+IDs such as <code>http/matrix-001</code>. Each variation has a separate execution ID and
+stable test identity. Every expanded variation named by a required coverage
+check must pass; one passing variation does not cover its siblings.</p>
+<h3 id="coverage-policy">Coverage policy</h3>
+<p><code>coverage</code> is a digest-bound <code>gate-coverage.v1</code> object. It contains <code>projectId</code>,
+<code>kind</code> (<code>module</code> or <code>cumulative</code>), <code>baseRevision</code>, <code>modules[]</code>,
+<code>integrationRequirements[]</code>, <code>requiredChecks[]</code>, and <code>policyDigest</code>. Each module
+contains <code>moduleId</code>, <code>ownedPaths[]</code>, and requirements with <code>id</code> and <code>statement</code>.
+Each required check contains <code>checkId</code>, <code>requirementRefs[]</code>, and pre-expansion
+<code>nodeIds[]</code>.</p>
+<p>Every requirement must map to a check. IDs and references must be unique. Module
+coverage has exactly one module and no integration requirement. Cumulative
+coverage applies at a gate. An excluded, missing, skipped, advisory, failed, or
+errored required node leaves coverage unsatisfied. Coverage policy is
+independent of how many suites were selected.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L30-L220">The resolver accepts the complete closed syntax and defines defaults</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L223-L393">Suite merge, ID localization, exclusions, additions, and concurrency resolution</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/coverage.ts#L1-L112">Coverage validates requirement mapping and every resolved matrix variation</a>.</p>
+</blockquote>
+<h2 id="suite-inventory">Suite Inventory</h2>
+<table>
+<thead>
+<tr>
+<th>Suite contract</th>
+<th>Shipped nodes</th>
+<th>Default concurrency</th>
+<th>Main prerequisite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubeclaw.unit-suite@1</code></td>
+<td>None</td>
+<td><code>unit: 4</code></td>
+<td>Project test executable</td>
+</tr>
+<tr>
+<td><code>kubeclaw.container-build-suite@1</code></td>
+<td>None</td>
+<td><code>container-build: 1</code></td>
+<td>BuildKit and local OCI registry</td>
+</tr>
+<tr>
+<td><code>kubeclaw.kubernetes-fixture-suite@1</code></td>
+<td>None</td>
+<td><code>kubernetes-fixture: 2</code></td>
+<td>Namespace broker and checked manifest</td>
+</tr>
+<tr>
+<td><code>kubeclaw.http-suite@1</code></td>
+<td>None</td>
+<td><code>http: 8</code></td>
+<td>Approved origin or endpoint input</td>
+</tr>
+<tr>
+<td><code>kubeclaw.tailscale-exposure-suite@1</code></td>
+<td>None</td>
+<td><code>tailscale: 1</code>, <code>http: 2</code></td>
+<td>Retained deployment and Tailscale operator</td>
+</tr>
+<tr>
+<td><code>kubeclaw.api-suite@1</code></td>
+<td>HTTP, flow, OpenAPI</td>
+<td><code>http: 8</code>, <code>api-flow: 4</code></td>
+<td>Service endpoint and project files</td>
+</tr>
+<tr>
+<td><code>kubeclaw.a11y-suite@1</code></td>
+<td>Axe</td>
+<td><code>browser-axe: 2</code></td>
+<td>Browser policy and endpoint</td>
+</tr>
+<tr>
+<td><code>kubeclaw.lighthouse-suite@1</code></td>
+<td>Performance, SEO, best practices</td>
+<td><code>lighthouse: 1</code></td>
+<td>Chrome/Lighthouse profiles and endpoint</td>
+</tr>
+<tr>
+<td><code>kubeclaw.visual-suite@1</code></td>
+<td>Visual comparison</td>
+<td><code>browser-visual: 2</code></td>
+<td>Reviewed baselines and exact browser</td>
+</tr>
+<tr>
+<td><code>kubeclaw.e2e-suite@1</code></td>
+<td>Playwright</td>
+<td><code>browser-playwright: 1</code></td>
+<td>Project Playwright configuration</td>
+</tr>
+<tr>
+<td><code>kubeclaw.security-suite@1</code></td>
+<td>Five security checks</td>
+<td>One per scanner; headers 2</td>
+<td>Trivy, policies, manifest, image, cluster</td>
+</tr>
+<tr>
+<td><code>kubeclaw.size-budget-suite@1</code></td>
+<td>None</td>
+<td><code>size-budget: 4</code></td>
+<td>Upstream build artifact and limits</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-unit-suite">1. Unit Suite</h2>
+<p><strong>Purpose:</strong> Run project-owned unit or component tests through the generic
+<code>kubeclaw.direct-command@1</code> provider. <strong>Boundary:</strong> It does not discover a test
+command and does not grant arbitrary shell access. <code>executable</code> is an
+operator-catalog name, and arguments are passed without a shell.</p>
+<p>The shipped suite has no node. Add a direct-command test with:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>executable</code></td>
+<td>Required</td>
+<td>Approved executable name; 1–128 safe name characters.</td>
+</tr>
+<tr>
+<td><code>args[]</code></td>
+<td>Empty if omitted; max 256</td>
+<td>Literal arguments, each at most 4096 characters.</td>
+</tr>
+<tr>
+<td><code>workingDirectory</code></td>
+<td><code>.</code></td>
+<td>Project-relative directory.</td>
+</tr>
+<tr>
+<td><code>environment</code></td>
+<td>Empty if omitted; max 64</td>
+<td>Declared string variables. Worker-owned variables remain protected.</td>
+</tr>
+<tr>
+<td><code>resultMode</code></td>
+<td>Required</td>
+<td><code>junit-required</code> or <code>exit-code</code>.</td>
+</tr>
+<tr>
+<td><code>reports[]</code></td>
+<td>Empty; max 16</td>
+<td><code>id</code>, <code>format: junit</code>, relative <code>path</code>, and one supported XML media type.</td>
+</tr>
+<tr>
+<td><code>coverage[]</code></td>
+<td>Empty; max 8</td>
+<td><code>id</code>, <code>format: lcov</code>, relative <code>path</code>, <code>mediaType: text/lcov</code>.</td>
+</tr>
+<tr>
+<td><code>artifacts[]</code></td>
+<td>Empty; max 8</td>
+<td><code>id</code>, relative <code>path</code>, and an allowed artifact media type.</td>
+</tr>
+</tbody>
+</table>
+<p>The provider is retry-safe and requires <code>command.execute</code>. JUnit mode errors if
+the report is absent, malformed, too large, or has no cases. Exit-code mode
+passes only on exit zero. Evidence can include log, test report, coverage, and
+declared artifacts. Use <code>kubeclaw.coverage-budget@1</code> as a dependent node when
+coverage has a threshold; this keeps test correctness separate from coverage.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/unit.v1.json">Unit suite template</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/direct-command/schemas/config.schema.json">complete direct-command schema</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/direct-command/plugin.json">provider contract</a></p>
+</blockquote>
+<h2 id="2-container-build-suite">2. Container Build Suite</h2>
+<p><strong>Purpose:</strong> Produce one immutable image reference. <strong>Boundary:</strong> It does not
+deploy or test the image. The empty template requires a project node using
+<code>kubeclaw.container-build@1</code>.</p>
+<p><code>buildContext</code> and <code>definition</code> are required. <code>definition.type</code> selects
+<code>dockerfile</code> or <code>template</code>. Dockerfile mode also requires <code>dockerfile</code> and
+accepts optional <code>target</code> plus 32 non-secret <code>buildArgs</code>. Template mode requires
+<code>definition.template: node-static@1</code>. <code>outputName</code> defaults to a safe form of
+the module or node ID. <code>platform</code> defaults to <code>linux/amd64</code>. It must be a Linux
+platform string and is the only permitted matrix field.</p>
+<p>The provider is retry-safe, needs <code>container.build</code>, and returns required
+<code>image</code> data. It passes only after Buster reads the pushed registry manifest
+and matches its digest to BuildKit output. Tool absence, denied registry,
+digest mismatch, unsafe path, or build failure is an error; a successful
+process without digest proof is not a pass. Evidence is the bounded log.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/container-build.v1.json">Container suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/schemas/config.schema.json">complete build schema</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/plugin.json">manifest and image output</a></p>
+</blockquote>
+<h2 id="3-kubernetes-fixture-suite">3. Kubernetes Fixture Suite</h2>
+<p><strong>Purpose:</strong> Create an isolated deployment lease. <strong>Boundary:</strong> The fixture
+does not build, expose, or test the workload. Its empty suite requires a
+<code>kubeclaw.kubernetes-fixture@1</code> fixture node.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>serviceName</code></td>
+<td>Required</td>
+<td>DNS label for the service.</td>
+</tr>
+<tr>
+<td><code>servicePort</code></td>
+<td>Required, 1–65535</td>
+<td>Service port used in the typed endpoint.</td>
+</tr>
+<tr>
+<td><code>serviceTargetPort</code></td>
+<td>Optional, 1–65535</td>
+<td>Target port when different.</td>
+</tr>
+<tr>
+<td><code>image.reference</code>, <code>image.digest</code></td>
+<td>Optional direct image pair</td>
+<td>Both required together; reference must already contain the same immutable digest.</td>
+</tr>
+<tr>
+<td><code>namespacePrefix</code></td>
+<td><code>test</code></td>
+<td>Requested allowed prefix, maximum 42 characters.</td>
+</tr>
+<tr>
+<td><code>retention.mode</code></td>
+<td><code>delete</code></td>
+<td><code>delete</code> or <code>retain</code>.</td>
+</tr>
+<tr>
+<td><code>retention.seconds</code></td>
+<td>1800; range 60–604800</td>
+<td>Requested bounded lifetime. Broker policy can reject or reduce it.</td>
+</tr>
+<tr>
+<td><code>readinessTimeoutSeconds</code></td>
+<td>120; range 1–3600</td>
+<td>Maximum readiness observation time.</td>
+</tr>
+<tr>
+<td><code>secretReferences[]</code></td>
+<td>Empty; max 32 unique names</td>
+<td>Operator-allowlisted source secrets.</td>
+</tr>
+<tr>
+<td><code>testCredentials.mode</code></td>
+<td>Optional; only <code>generate</code></td>
+<td>Ask the controller for lease-bound demo credentials.</td>
+</tr>
+<tr>
+<td><code>testCredentials.secretName</code></td>
+<td>Required with credentials</td>
+<td>DNS label of the generated secret.</td>
+</tr>
+</tbody>
+</table>
+<p>The fixture requires a <code>checked-manifest</code> artifact. An upstream <code>image</code> value
+is optional only because an immutable image can be present in configuration;
+normal composition links build output. It needs <code>kubernetes.fixture</code>, is not
+retry-safe, and returns <code>deployment</code>, <code>image</code>, and optional <code>demo-credentials</code>.
+Cleanup releases the lease. An unresolved cleanup remains visible in the
+result. See <a href="../understand/buster-namespace-controller.html">namespace leases</a>.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json">Fixture suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json">complete fixture schema</a></p>
+</blockquote>
+<h2 id="4-http-suite">4. HTTP Suite</h2>
+<p><strong>Purpose:</strong> Make one bounded HTTP request and assert response facts.
+<strong>Boundary:</strong> It does not deploy, expose, crawl, or run arbitrary methods. The
+empty template expects <code>kubeclaw.http@1</code> project nodes.</p>
+<p><code>url</code> or <code>endpointName</code> selects an operator-approved target, unless a typed
+deployment or endpoint input supplies it. <code>path</code> is optional: when omitted it
+preserves a linked public endpoint path, otherwise a bare origin uses <code>/</code>.
+<code>method</code> defaults to <code>GET</code> and also permits <code>HEAD</code>. <code>accept</code> defaults to <code>*/*</code>.
+<code>expectedStatuses</code> lists accepted codes; <code>expectedText</code> and
+<code>expectedContentType</code> add assertions. <code>maximumResponseBytes</code> defaults to
+1 MiB and is bounded at 16 MiB. <code>requestTimeoutMs</code> defaults to 10 seconds and
+is bounded at 300 seconds.</p>
+<p>Only <code>path</code> can form a matrix. The retry-safe provider needs <code>network.http</code> and
+emits log evidence. A reachable response that violates an assertion fails.
+Origin denial, timeout, size limit, cancellation, or transport failure errors.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/http.v1.json">HTTP suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/http/schemas/config.schema.json">complete HTTP schema</a></p>
+</blockquote>
+<h2 id="5-tailscale-exposure-suite">5. Tailscale Exposure Suite</h2>
+<p><strong>Purpose:</strong> Turn a deployment fixture into one typed HTTPS endpoint.
+<strong>Boundary:</strong> It does not assert page content and does not receive Kubernetes
+credentials. Link its output to HTTP, API, browser, or E2E nodes.</p>
+<p>The empty template expects a <code>kubeclaw.tailscale-exposure@1</code> fixture.
+<code>retentionMode</code> is <code>release</code> or <code>await-readiness</code>; the latter requires a
+retained deployment and transfers ownership to the durable readiness handoff.
+<code>endpointName</code> and <code>hostname</code> select the declared endpoint. <code>path</code> defaults to
+<code>/</code>. <code>readinessTimeoutSeconds</code> defaults to 120 and ranges from 1–3600.
+<code>retentionMode</code> defaults to <code>release</code>.</p>
+<p>The fixture requires the deployment input, needs <code>kubernetes.exposure</code>, is not
+retry-safe, and returns <code>exposure</code>. It uses attempt and target identity plus a
+lease generation fence. Cleanup cannot remove a successor's ingress. The
+deployment lease retains final expiry authority; exposure does not extend it.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/tailscale-exposure.v1.json">Tailscale suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json">complete exposure schema</a></p>
+</blockquote>
+<h2 id="6-api-suite">6. API Suite</h2>
+<p><strong>Purpose:</strong> Check simple HTTP health, a stateful API flow, and selected OpenAPI
+operations. <strong>Boundary:</strong> The three nodes are independent checks. A green health
+request cannot replace contract or flow evidence.</p>
+<p>The shipped template contains:</p>
+<ul>
+<li>blocking <code>http</code>, with <code>/health</code>, one retry, and group <code>http</code>;</li>
+<li>blocking <code>flow</code>, with <code>.swarm/api-flow.json</code>, no retry, and group <code>api-flow</code>;</li>
+<li>blocking <code>openapi</code>, with <code>.swarm/openapi.json</code> and operation <code>health</code>, no
+retry, and group <code>api-flow</code>.</li>
+</ul>
+<p>HTTP fields are in section 4. API flow has these provider fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>flowFile</code></td>
+<td>Required</td>
+<td>Project-relative JSON flow file.</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>No direct URL</td>
+<td>Absolute target URL. Do not set it with <code>endpointName</code> or a typed endpoint input.</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>No named endpoint</td>
+<td>Operator-approved endpoint name.</td>
+</tr>
+<tr>
+<td><code>requestTimeoutMs</code></td>
+<td>10000; range 1–300000</td>
+<td>Default timeout for one request or WebSocket step.</td>
+</tr>
+<tr>
+<td><code>maximumResponseBytes</code></td>
+<td>1048576; range 1–16777216</td>
+<td>Maximum accepted response bytes.</td>
+</tr>
+<tr>
+<td><code>maximumSteps</code></td>
+<td>64; range 1–256</td>
+<td>Maximum combined setup, main, and cleanup steps.</td>
+</tr>
+</tbody>
+</table>
+<p>The flow document requires <code>schemaVersion</code> with value
+<code>kubeclaw.api-flow.v1</code>. It accepts up to
+64 scalar <code>variables</code>. <code>setup</code>, <code>steps</code>, and <code>cleanup</code> each contain bounded step
+arrays. <code>steps</code> is required and must contain at least one executed main step.</p>
+<p>Each step requires <code>id</code> and <code>path</code>. Optional <code>method</code> accepts <code>DELETE</code>, <code>GET</code>,
+<code>HEAD</code>, <code>OPTIONS</code>, <code>PATCH</code>, <code>POST</code>, or <code>PUT</code>. Set <code>protocol: websocket</code> for a
+WebSocket step. A step can also set <code>headers</code>, <code>body</code>, <code>messages</code>, <code>timeoutMs</code>,
+<code>expect</code>, and <code>extract</code>.</p>
+<p><code>expect.status</code>, <code>expect.contentType</code>, <code>expect.bodyContains</code>, and <code>expect.json</code>
+check HTTP responses. <code>expect.minimumMessages</code> and <code>expect.messageContains</code>
+check WebSocket messages. <code>extract</code> maps up to 32 variable names to selectors.
+A capability error stops more main requests, attempts cleanup, and remains an
+error. The provider is not retry-safe.</p>
+<p>For exact nested limits, use the <a href="buster-provider-configuration.html#kubeclawapi-flow-document1">generated provider configuration
+reference</a>. It
+includes the 32-header limit, the 1–4096 character header values, the 64-message
+limit, the 1–300000 millisecond step timeout, the 32-entry JSON expectation and
+extraction limits, and the exact extraction-name pattern.</p>
+<p>OpenAPI has these provider fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>specFile</code></td>
+<td>Required</td>
+<td>Project-relative OpenAPI JSON file.</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>No direct URL</td>
+<td>Absolute target URL. It is exclusive with the other target selectors.</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>No named endpoint</td>
+<td>Operator-approved endpoint name.</td>
+</tr>
+<tr>
+<td><code>operations[]</code></td>
+<td>Required unless <code>tags</code> exists; max 128</td>
+<td>Exact operation selections and request values.</td>
+</tr>
+<tr>
+<td><code>tags[]</code></td>
+<td>Required unless <code>operations</code> exists; max 32</td>
+<td>Select all supported operations with one of these tags.</td>
+</tr>
+<tr>
+<td><code>requestTimeoutMs</code></td>
+<td>10000; range 1–300000</td>
+<td>Timeout for one selected operation.</td>
+</tr>
+<tr>
+<td><code>maximumResponseBytes</code></td>
+<td>1048576; range 1–16777216</td>
+<td>Maximum accepted response bytes.</td>
+</tr>
+</tbody>
+</table>
+<p>Each <code>operations[]</code> item requires <code>operationId</code>. Optional <code>pathParameters</code>,
+<code>query</code>, and <code>headers</code> accept at most 32 entries. Optional <code>body</code> supplies the
+request body. <code>expectedStatuses[]</code> accepts 1–16 unique HTTP status codes.
+<code>cleanup</code> defaults to <code>false</code>; set it only for an operation that reverses prior
+test state.</p>
+<p>The provider supports a bounded OpenAPI 3.0/3.1 subset and local references.
+Unsupported assertions fail closed. The provider is not retry-safe because
+selected operations can mutate state.</p>
+<p>Both complex providers need <code>network.http</code> and emit log plus test-report
+evidence. Assertion mismatches fail; invalid project documents, unsupported
+schema semantics, transport denial, timeout, or malformed response errors.</p>
+<p>The <a href="buster-provider-configuration.html#kubeclawopenapi1">OpenAPI provider configuration
+table</a> records every nested
+operation field. It also records the allowed string, number, and Boolean path or
+query values and the 4096-character header-value limit. Use that table when you author configuration. Use this suite
+section to understand why the provider has those boundaries.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/api.v1.json">Exact API suite composition</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/config.schema.json">flow config</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/flow.schema.json">flow-file contract</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/schemas/config.schema.json">OpenAPI config</a></p>
+</blockquote>
+<h2 id="7-accessibility-suite">7. Accessibility Suite</h2>
+<p><strong>Purpose:</strong> Find WCAG-related page violations with Axe in a real browser.
+<strong>Boundary:</strong> It is not a general functional browser test and does not accept a
+numeric violation allowance.</p>
+<p>The shipped blocking node checks route <code>/</code> with desktop and mobile profiles,
+tags <code>wcag2a</code> and <code>wcag2aa</code>, zero retries, and browser concurrency 2.
+<code>routes</code> is required. Optional target fields are <code>url</code> and <code>endpointName</code>.
+<code>profiles</code> defaults to desktop and mobile; <code>profileFile</code> selects project profile
+data; <code>tags</code> defaults to the two shipped WCAG levels. <code>exclude[]</code> identifies
+deliberately omitted selectors. <code>acceptances[]</code> must bind an exact rule, route,
+selector, reason, and expiry. <code>timeoutMs</code> defaults to 30000 and ranges from
+1000 to 120000.</p>
+<p>Each acceptance requires <code>rule</code>, <code>route</code>, <code>selector</code>, <code>reason</code>, and <code>expiresAt</code>.
+The reason has 8–1024 characters. The expiry must identify an exact calendar
+date to take effect. An expired or invalid-calendar-date acceptance does not
+suppress a matching violation: that violation remains unaccepted and fails the
+scan. An acceptance with no matching violation does not by itself fail a scan.</p>
+<p>The retry-safe provider needs <code>browser.axe</code>. It records logs and test reports,
+and adds screenshots on failure. Unaccepted violations fail. Schema-invalid
+configuration, unavailable browser, forbidden origin, timeout, or malformed
+result errors. Browser availability and all three supported engines need live proof.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/a11y.v1.json">Accessibility suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/schemas/config.schema.json">complete Axe schema</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/plugin.json">Axe authority and evidence</a></p>
+</blockquote>
+<h2 id="8-performance-suite">8. Performance Suite</h2>
+<p><strong>Purpose:</strong> Measure performance, SEO, and best-practice facts with Lighthouse.
+<strong>Boundary:</strong> Accessibility belongs to the Axe suite. Performance sampling is
+not a load test.</p>
+<p>The suite has three nodes. <code>performance</code> is blocking, uses mobile-standard,
+budget <code>release</code>, and three runs. <code>seo</code> and <code>best-practices</code> are advisory, use
+desktop-standard, and run once. All use <code>/</code>, the project settings file, no
+retry, and one-at-a-time Lighthouse concurrency.</p>
+<p>The provider requires <code>purpose</code>, <code>routes</code>, <code>settingsFile</code>, and <code>profile</code>.
+<code>purpose</code> is <code>performance</code>, <code>seo</code>, or <code>best-practices</code>. <code>url</code> and
+<code>endpointName</code> are optional target selectors. <code>budget</code> names a budget in the
+project settings file; Nova requires it when resolving blocking performance
+nodes. Performance uses 3 or 5 runs (default 3); SEO and best practices use
+exactly 1 run. <code>acceptances[]</code> defaults empty. <code>timeoutMs</code> defaults to
+120000 and ranges from 10000 to 180000.</p>
+<p>Each acceptance requires <code>audit</code>, <code>route</code>, <code>reason</code>, and <code>expiresAt</code>. The audit
+names one Lighthouse finding on one route. The reason has 8–1024 characters,
+and the expiry must be a real calendar date that has not passed (valid through
+the end of that UTC day). Only matching route/audit acceptances with a valid
+expiry suppress SEO or best-practice failures; accepted findings remain
+informational. Expired or invalid-calendar acceptances leave matching findings
+unsuppressed, rather than causing an execution error on their own. Acceptances
+do not suppress performance budget breaches.</p>
+<p>The retry-safe provider needs <code>browser.lighthouse</code>. It stores every report and,
+for performance, marks one complete median-score representative per route.
+Budget metrics come from that representative report. A budget breach or
+unaccepted finding fails. Missing profile, forbidden origin, unavailable Chrome
+or Lighthouse, timeout, or malformed report errors.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/perf.v1.json">Performance suite and modes</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/lighthouse/schemas/config.schema.json">complete Lighthouse schema</a></p>
+</blockquote>
+<h2 id="9-visual-suite">9. Visual Suite</h2>
+<p><strong>Purpose:</strong> Compare current browser images with reviewed Git baselines.
+<strong>Boundary:</strong> The provider never creates or updates a baseline. Baseline review
+is a separate human change.</p>
+<p>The shipped blocking node uses <code>.swarm/visual/baselines.json</code>,
+<code>.swarm/browser-profiles.json</code>, target <code>home-desktop</code>, comparison
+<code>strict-v1</code>, zero retries, and browser concurrency 2.</p>
+<p><code>manifestFile</code>, <code>profileFile</code>, and non-empty <code>targets</code> are required. Optional
+<code>url</code> or <code>endpointName</code> selects the origin. <code>comparisonProfile</code> defaults to
+<code>strict-v1</code> and also permits <code>balanced-v1</code>. <code>overrides</code> changes declared target
+thresholds within policy. <code>masks[]</code> handles named dynamic regions. <code>timeoutMs</code>
+defaults to 30000 and ranges from 1000 to 120000.</p>
+<p><code>overrides.maximumDifferencePercent</code> accepts 0–100. It changes the permitted
+share of different pixels. <code>overrides.pixelThreshold</code> accepts 0–1 and changes
+the per-pixel comparison threshold. <code>overrides.uncertaintyMarginPercent</code>
+accepts 0–100 and reserves a boundary for uncertain comparisons. An override
+can make a declared target stricter or looser within operator policy.</p>
+<p>Each <code>masks[]</code> item requires one <code>target</code> and 1–32 unique <code>selectors</code>. A mask
+applies only to that named target. It does not hide a region in other targets.</p>
+<p>The retry-safe provider needs <code>browser.visual</code>. Evidence includes log,
+baseline, current image, difference image, and test report. A valid comparison
+outside its threshold fails. Missing baseline, baseline digest mismatch,
+browser family/version mismatch, invalid mask, forbidden origin, or malformed
+PNG errors. Exact browser identity is a prerequisite, not incidental metadata.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/visual.v1.json">Visual suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/visual/schemas/config.schema.json">complete visual schema</a></p>
+</blockquote>
+<h2 id="10-end-to-end-suite">10. End-to-End Suite</h2>
+<p><strong>Purpose:</strong> Run project-owned Playwright tests against a typed or approved
+endpoint. <strong>Boundary:</strong> KubeClaw does not rewrite test selection, assertions,
+authentication setup, Playwright retries, screenshots, video, or trace policy.</p>
+<p>The shipped blocking node uses project directory <code>.</code>, config file
+<code>playwright.config.ts</code>, four workers, a 600000 ms timeout, zero Buster retries,
+and browser concurrency 1.</p>
+<p><code>projectDirectory</code> and <code>configFile</code> are required. <code>url</code> and <code>endpointName</code> are
+optional target selectors. <code>workers</code> defaults to 4, ranges from 1 to 64, and is
+also capped by the attempt process limit. <code>timeoutMs</code> defaults to the attempt
+timeout and ranges from 1000 to 3600000. <code>minimumExecutedTests</code> defaults to 1
+and ranges from 0 to 100000; blocking mode still enforces at least one.
+<code>requiredTests[]</code> defaults empty and names tests that must appear exactly once
+as executed.</p>
+<p>The provider is not retry-safe and needs <code>browser.playwright</code>. It forces a JSON
+reporter, no maximum-failure early exit, and an attempt-owned output directory.
+It emits logs, test reports, screenshots, video, traces, and bounded test
+artifacts. Unexpected test failures fail. In a usable report, an insufficient
+executed-test count, unexecuted tests, or a required title that is missing,
+ambiguous, skipped, or unexecuted also produces a failed result. A flaky test
+that passes under the project retry policy is not itself a failure. Zero
+discovered tests, invalid report, attachment limit, or execution failure without
+a reported failed test is an error.</p>
+<p>Nova validates imported provider details before it accepts the result. It emits
+<code>TEST_PROVIDER_E2E_DETAILS_INVALID</code> when the detail object has unknown fields,
+does not use <code>test-provider.e2e.v1</code>, or fails the closed E2E-result schema. This
+is a result-contract failure, not a failed browser assertion. Preserve the raw
+result and compare the provider and Nova contract versions before retrying.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/validation.ts#L55-L69">E2E detail validation</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/e2e.v1.json">E2E suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/playwright/schemas/config.schema.json">complete Playwright schema</a></p>
+</blockquote>
+<h2 id="11-security-suite">11. Security Suite</h2>
+<p><strong>Purpose:</strong> Combine five distinct security decisions. <strong>Boundary:</strong> The suite
+does not make one scanner authoritative for every surface. All five shipped
+nodes are blocking, retry-safe, use strict-v1 policy, and have zero configured
+retries. Headers has concurrency 2; every scanner group has concurrency 1.</p>
+<table>
+<thead>
+<tr>
+<th>Node and provider</th>
+<th>Required input</th>
+<th>Configuration</th>
+<th>Failure meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>security-headers</code>, <code>kubeclaw.security-headers@1</code></td>
+<td>Deployment value</td>
+<td>Required <code>profile</code> (<code>web-https-v1</code> or <code>api-http-v1</code>), non-empty <code>paths</code>, and <code>policy</code>; optional <code>requestTimeoutMs</code> and per-header <code>rules</code></td>
+<td>The live response violates required header policy.</td>
+</tr>
+<tr>
+<td><code>dependency-security</code>, <code>kubeclaw.dependency-scan-trivy@1</code></td>
+<td>Repository</td>
+<td>Required <code>projectDirectory</code> and <code>policy</code>; optional <code>timeoutMs</code> 1000–900000</td>
+<td>The dependency inventory contains a policy-blocking finding.</td>
+</tr>
+<tr>
+<td><code>image-security</code>, <code>kubeclaw.image-scan-trivy@1</code></td>
+<td>Immutable image value</td>
+<td>Required <code>policy</code>; optional <code>timeoutMs</code> 1000–900000</td>
+<td>The scanned image contains a policy-blocking finding.</td>
+</tr>
+<tr>
+<td><code>kubernetes-policy-security</code>, <code>kubeclaw.kubernetes-policy-security@1</code></td>
+<td>Checked-manifest artifact</td>
+<td>Required <code>policy</code>; optional <code>timeoutMs</code> 1000–300000</td>
+<td>Static Kubernetes content violates policy.</td>
+</tr>
+<tr>
+<td><code>kubernetes-runtime-security</code>, <code>kubeclaw.kubernetes-runtime-security@1</code></td>
+<td>Deployment and checked manifest</td>
+<td>Required <code>policy</code>; optional <code>timeoutMs</code> 1000–300000</td>
+<td>Deployed state differs from the allowed runtime security posture.</td>
+</tr>
+</tbody>
+</table>
+<p>Every <code>policy</code> requires <code>profile: strict-v1</code>. Optional <code>acceptances[]</code> has at
+most 128 entries. Each entry requires exact <code>findingId</code>, a reason of 8–1024
+characters, and an <code>expiresAt</code> date-time. The fixed policy blocks critical and
+high findings, active threats, and vulnerabilities without fixes. An
+acceptance suppresses blocking only while its exact ID and expiry are valid.</p>
+<p>The exact acceptance fields are <code>acceptances[].findingId</code>,
+<code>acceptances[].reason</code>, and <code>acceptances[].expiresAt</code>.</p>
+<p>Header <code>requestTimeoutMs</code> defaults to 10000. Header <code>rules.add[]</code> and
+<code>rules.replace[]</code> contain at most 32 entries with <code>id</code>, <code>header</code>, <code>severity</code>,
+<code>kind</code>, and an optional <code>value</code>; <code>kind</code> is <code>present</code>, <code>equals</code>, <code>contains</code>, or
+<code>hsts-min-age</code>. <code>rules.remove[]</code> contains at most 32 unique rule IDs.
+Dependency and image scan timeouts default to 300000. Kubernetes policy and
+runtime scan timeouts default to 120000. Header <code>rules</code> can narrow named
+requirements; they cannot grant network access. The providers need
+<code>network.http</code>, <code>security.scan</code>, or <code>kubernetes.runtime-security</code> according to the provider
+and emit logs.</p>
+<p>A policy finding fails. Missing Trivy or database, stale or unavailable scan
+data, forbidden target, input digest mismatch, timeout, cancellation, malformed
+scanner output, or cluster read failure errors. Real provider verification
+needs Trivy, a populated advisory database, registry access for image scans,
+and a disposable cluster for runtime checks. Unit tests alone do not prove
+those dependencies.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/security.v1.json">Exact five-node security suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/plugin.json">all five provider contracts</a> ·
+<a href="https://github.com/datrab/kubeclaw/tree/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas">strict configuration schemas</a></p>
+</blockquote>
+<h2 id="12-size-budget-suite">12. Size Budget Suite</h2>
+<p><strong>Purpose:</strong> Measure a build artifact and compare it with absolute or growth
+limits. <strong>Boundary:</strong> It does not build the artifact and does not decide which
+files belong to a release. The empty suite expects a
+<code>kubeclaw.size-budget@1</code> project node.</p>
+<p><code>format</code> defaults to <code>auto</code> and can be <code>file</code>, <code>tar</code>, or <code>tar-gzip</code>.
+<code>maximumTotalBytes</code> and
+<code>maximumFileCount</code> set limits on the whole measured artifact. Each
+<code>matchingFiles[]</code> rule separately sums the bytes of paths matching its glob;
+it does not filter the overall byte or file totals. Each rule requires <code>id</code>,
+glob <code>pattern</code>, and <code>maximumBytes</code>;
+<code>requireMatch</code> defaults to <code>true</code>. <code>maximumGrowthBytes</code> and <code>maximumGrowthPercent</code> compare with
+the optional baseline input. <code>largestFiles</code> selects 1–100 retained diagnostic
+entries and defaults to 10. <code>matchingFiles[]</code> defaults empty. All budget fields
+are optional at schema level so an advisory measurement can emit
+facts, but a useful blocking node must declare at least one enforced limit.</p>
+<p>The retry-safe provider requires a <code>build-output</code> artifact and no host
+capability. It accepts an optional prior <code>baseline</code>, and returns a canonical
+new baseline. Evidence includes log and baseline. Exceeded limits fail. Unsafe
+archive paths, malformed archive, digest or size mismatch, missing required
+baseline for a growth rule, decompression limit, or unsupported format errors.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/size-budget.v1.json">Size suite</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/schemas/config.schema.json">complete size schema</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/plugin.json">ports and evidence</a></p>
+</blockquote>
+<h2 id="additional-installed-providers">Additional Installed Providers</h2>
+<p>These providers are installed but do not define another shipped suite:</p>
+<ul>
+<li><code>kubeclaw.coverage-budget@1</code> consumes one required and up to seven optional
+LCOV artifacts. <code>minimumLinePercent</code> is 0–100; <code>combine</code> defaults to <code>true</code>
+and controls combined or weakest-input evaluation. Both fields are optional at schema level. A
+blocking use needs a minimum.</li>
+<li><code>kubeclaw.demo-auth-smoke@1</code> consumes deployment, generated credentials, and
+exposure. It verifies unauthenticated denial, JSON login, a protected
+response, exact username, and declared business assertions. It is deliberately
+not retry-safe because a lost response can leave a live session. All fields
+are required: <code>protocol</code> must be <code>json-session.v1</code>; <code>loginPath</code>,
+<code>usernameKey</code>, <code>passwordKey</code>, <code>cookieName</code>, <code>protectedPath</code>, and
+<code>usernamePointer</code> identify the exact flow; <code>assertions[]</code> contains 1–16
+objects with a JSON <code>pointer</code> and scalar <code>equals</code> value.</li>
+<li>The JUnit report adapter parses bounded XML into common case and finding data.
+It rejects DTDs, entities, malformed XML, invalid durations, and excessive
+depth or size. It never changes the original report or the gate decision.</li>
+</ul>
+<p>Their presence explains why the provider count is larger than the suite count.
+Provider, suite, and report-adapter identities are different namespaces.</p>
+<h2 id="inputs-outputs-and-composition">Inputs, Outputs, and Composition</h2>
+<table>
+<thead>
+<tr>
+<th>Typed value or artifact</th>
+<th>Typical producer</th>
+<th>Typical consumer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubeclaw.container-image@1</code></td>
+<td>Container build</td>
+<td>Kubernetes fixture, image scan</td>
+</tr>
+<tr>
+<td>checked Kubernetes YAML</td>
+<td>Direct command or policy preparation</td>
+<td>Kubernetes fixture, static and runtime security</td>
+</tr>
+<tr>
+<td><code>kubeclaw.kubernetes-deployment-fixture@1</code></td>
+<td>Kubernetes fixture</td>
+<td>HTTP, API, browsers, headers, runtime security, exposure</td>
+</tr>
+<tr>
+<td><code>kubeclaw.generated-demo-credentials@1</code></td>
+<td>Kubernetes fixture</td>
+<td>Demo authentication smoke</td>
+</tr>
+<tr>
+<td><code>kubeclaw.public-endpoint-fixture@1</code></td>
+<td>Tailscale exposure</td>
+<td>HTTP, API, Axe, Lighthouse, visual, Playwright</td>
+</tr>
+<tr>
+<td><code>text/lcov</code></td>
+<td>Direct command</td>
+<td>Coverage budget</td>
+</tr>
+<tr>
+<td>build archive</td>
+<td>Direct command or build packaging</td>
+<td>Size budget</td>
+</tr>
+<tr>
+<td>size baseline</td>
+<td>Size budget</td>
+<td>Later size-budget comparison</td>
+</tr>
+</tbody>
+</table>
+<p>A link must name the producer node, output port, consumer node, and input port.
+Schema and media types must match. The resolver rejects a link that relies only
+on similar names. This makes data movement visible in the plan and prevents a
+test from reading an undeclared file or resource.</p>
+<h2 id="evidence-and-reports">Evidence and Reports</h2>
+<p>Evidence is immutable attempt output. A provider can declare only types in its
+manifest. Buster checks relative path safety, file presence, digest, size,
+duplicate IDs, and outcome-specific requirements before storage. Logs are
+runner-owned evidence. A report is evidence plus a declared format that an
+installed adapter can normalize.</p>
+<p>The current report adapter supports JUnit XML. Normalization can cap retained
+case details, but the original report remains stored and the adapter still
+validates the complete document. A provider result with a missing required
+report is an error, even when its process returned zero.</p>
+<h2 id="error-codes-and-safe-actions">Error Codes and Safe Actions</h2>
+<p>An error code identifies the boundary that could not produce trustworthy test
+facts. A failed assertion is a provider result with findings, not an
+exception code. Preserve the complete code suffix because it can contain the
+node, field, port, or artifact that failed.</p>
+<p>Use the <a href="buster-error-codes.html">exact Buster error-code reference</a> to find every
+code emitted by the shipped suite providers. The table below is the shorter
+routing view. It groups codes by the operator action that they require.</p>
+<table>
+<thead>
+<tr>
+<th>Suite or boundary</th>
+<th>Code families and important exact codes</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plan and suite</td>
+<td><code>TEST_PLAN_SUITE_*</code>, <code>TEST_PLAN_NODE_*</code>, <code>TEST_PLAN_CONFIGURATION_INVALID</code>, <code>TEST_PLAN_MATRIX_*</code>, <code>TEST_PLAN_DEPENDENCY_*</code>, <code>TEST_PLAN_PORT_*</code>, <code>TEST_PLAN_COVERAGE_*</code></td>
+<td>Correct the declaration or installed registry. Do not send an unresolved plan.</td>
+</tr>
+<tr>
+<td>Unit and reports</td>
+<td><code>DIRECT_COMMAND_*</code>, <code>TEST_REPORT_*</code>, <code>JUNIT_*</code>, <code>COVERAGE_*</code></td>
+<td>Check catalogue executable, paths, exit, report/LCOV bytes, and declared outputs. Keep JUnit required when the tool supports it.</td>
+</tr>
+<tr>
+<td>Container build</td>
+<td><code>CONTAINER_BUILD_*</code></td>
+<td>Check repository paths, definition, BuildKit, registry policy, pushed manifest, and digest equality.</td>
+</tr>
+<tr>
+<td>Kubernetes fixture</td>
+<td><code>KUBERNETES_FIXTURE_*</code></td>
+<td>Check image/manifest inputs, lease status, broker authorization, credentials, readiness, and cleanup. Do not bypass the lease.</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td><code>HTTP_CONFIG_*</code>, <code>HTTP_INPUT_*</code>, <code>HTTP_TARGET_*</code>, <code>HTTP_REQUEST_FAILED</code>, <code>HTTP_REQUEST_TIMEOUT</code>, <code>HTTP_RESPONSE_INVALID</code></td>
+<td>Separate invalid declaration, target selection, transport failure, and assertion findings.</td>
+</tr>
+<tr>
+<td>Tailscale exposure</td>
+<td><code>TAILSCALE_EXPOSURE_*</code></td>
+<td>Check deployment lease, selected endpoint, ingress owner/generation, Tailscale readiness, handoff, and release.</td>
+</tr>
+<tr>
+<td>API flow</td>
+<td><code>API_FLOW_*</code></td>
+<td>Validate the flow file, variables, dependencies, bounded steps, origin policy, response limits, and cleanup result.</td>
+</tr>
+<tr>
+<td>OpenAPI</td>
+<td><code>OPENAPI_*</code></td>
+<td>Validate the document and selected operation against the supported subset; then inspect request and response facts.</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td><code>AXE_*</code> and <code>BROWSER_AXE_*</code></td>
+<td>Check target, profile, route, acceptance expiry, browser policy, and bounded result.</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td><code>LIGHTHOUSE_*</code> and <code>BROWSER_LIGHTHOUSE_*</code></td>
+<td>Check target, settings, profile, budget, Chrome launch, network evidence, and representative report.</td>
+</tr>
+<tr>
+<td>Visual</td>
+<td><code>VISUAL_*</code> and <code>BROWSER_VISUAL_*</code></td>
+<td>Check baseline contract/digest, browser identity, masks, target selection, PNG limits, and comparison output.</td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td><code>PLAYWRIGHT_*</code> and <code>BROWSER_PLAYWRIGHT_*</code></td>
+<td>Check project/config paths, target, process isolation, JSON report, executed-test minimum, required titles, and attachments.</td>
+</tr>
+<tr>
+<td>Security</td>
+<td><code>SECURITY_*</code>, <code>DEPENDENCY_SCAN_*</code>, <code>IMAGE_SCAN_*</code>, <code>KUBERNETES_POLICY_*</code>, <code>KUBERNETES_RUNTIME_SECURITY_*</code></td>
+<td>Check strict policy, acceptance expiry, database evidence, immutable inputs, scanner result, and live cluster proof.</td>
+</tr>
+<tr>
+<td>Size budget</td>
+<td><code>SIZE_BUDGET_*</code></td>
+<td>Check input and baseline digests, archive safety, glob rules, decompression limits, and blocking budget presence.</td>
+</tr>
+<tr>
+<td>Remote engine</td>
+<td><code>BUSTER_REMOTE_*</code>, <code>BUSTER_SOURCE_*</code>, <code>TEST_PROVIDER_*</code>, <code>TEST_REPORT_ADAPTER_*</code></td>
+<td>Diagnose admission, store, package, attempt, evidence, result, and import in that order. Never translate an integrity error into a test failure.</td>
+</tr>
+</tbody>
+</table>
+<p>The code family is stable for operator routing. The generated exact reference
+must stay equal to the provider and capability sources. Do not infer retry
+safety from <code>TIMEOUT</code> or <code>FAILED</code>. Use the provider contract and attempt state.</p>
+<h2 id="configuration-precedence">Configuration Precedence</h2>
+<ol>
+<li>The versioned suite supplies nodes and defaults.</li>
+<li>A permitted suite override changes the selected node fields.</li>
+<li>Project-local nodes add explicit work and links.</li>
+<li>Provider schema validation rejects unknown or invalid configuration.</li>
+<li>Nova policy caps matrices, retries, and concurrency.</li>
+<li>Buster operator policy supplies capability endpoints and stricter runtime
+limits; it cannot make an invalid plan valid.</li>
+</ol>
+<p>An omitted value is not automatically a provider default. The tables above say
+when the schema defines a default. Otherwise the provider or capability must
+derive it explicitly, or validation fails. Never infer a default from an
+example.</p>
+<h2 id="verification-matrix">Verification Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Minimum checks</th>
+<th>Environment claim</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Suite composition</td>
+<td><code>npm run verify:test-gate:suite-resolver</code></td>
+<td>Deterministic local contract proof.</td>
+</tr>
+<tr>
+<td>Provider manifest/schema</td>
+<td><code>npm run verify:test-gate:provider-registry</code> and package tests</td>
+<td>Discovery, identity, schema, and provider logic.</td>
+</tr>
+<tr>
+<td>Runner or evidence</td>
+<td><code>npm run verify:test-gate:plan-runner</code></td>
+<td>Local execution-contract proof.</td>
+</tr>
+<tr>
+<td>One concrete provider</td>
+<td>Its <code>verify:test-gate:*implementation</code> script</td>
+<td>Read the script; some checks need real tools or network.</td>
+</tr>
+<tr>
+<td>Namespace fixture</td>
+<td><code>go test ./cmd/buster-namespace-controller/...</code> plus Helm rendering</td>
+<td>Controller logic and rendered policy, not live cluster proof.</td>
+</tr>
+<tr>
+<td>Browser, scanner, BuildKit, registry, Kubernetes, or Tailscale</td>
+<td>Provider check in a disposable configured environment</td>
+<td>Live integration proof.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exact-suite-checks">Exact suite checks</h3>
+<p>Use the implementation command after a schema, provider, runtime, or report
+change. Use the live command only in its configured environment. A preflight
+command proves that dependencies and policy are ready; it does not replace the
+implementation command.</p>
+<table>
+<thead>
+<tr>
+<th>Suite</th>
+<th>Local implementation check</th>
+<th>Live or production check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td><code>npm run verify:test-gate:phase8</code></td>
+<td><code>npm run verify:test-gate:unit-live</code></td>
+</tr>
+<tr>
+<td>Container build</td>
+<td><code>npm run verify:test-gate:container-build-implementation</code></td>
+<td><code>npm run verify:test-gate:container-build-live</code></td>
+</tr>
+<tr>
+<td>Kubernetes fixture</td>
+<td><code>npm run verify:test-gate:kubernetes-fixture-implementation</code></td>
+<td><code>npm run verify:test-gate:kubernetes-fixture-live</code></td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td><code>npm run verify:test-gate:http-implementation</code></td>
+<td><code>npm run verify:test-gate:http-live</code></td>
+</tr>
+<tr>
+<td>Tailscale exposure</td>
+<td><code>npm run verify:test-gate:tailscale-exposure-implementation</code></td>
+<td><code>npm run verify:test-gate:tailscale-exposure-live</code></td>
+</tr>
+<tr>
+<td>API</td>
+<td><code>npm run verify:test-gate:api-implementation</code></td>
+<td><code>npm run verify:test-gate:api-cutover</code></td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td><code>npm run verify:test-gate:a11y-implementation</code></td>
+<td><code>npm run verify:test-gate:a11y-live</code></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td><code>npm run verify:test-gate:lighthouse-implementation</code></td>
+<td><code>npm run verify:test-gate:lighthouse-live</code></td>
+</tr>
+<tr>
+<td>Visual</td>
+<td><code>npm run verify:test-gate:visual-implementation</code></td>
+<td><code>npm run verify:test-gate:visual-live</code></td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td><code>npm run verify:test-gate:e2e-implementation</code></td>
+<td><code>npm run verify:test-gate:e2e-live</code></td>
+</tr>
+<tr>
+<td>Security</td>
+<td><code>npm run verify:test-gate:security-implementation</code></td>
+<td><code>npm run verify:test-gate:security-live</code></td>
+</tr>
+<tr>
+<td>Size budget</td>
+<td><code>npm run verify:test-gate:size-budget-implementation</code></td>
+<td><code>npm run verify:test-gate:size-budget-production</code></td>
+</tr>
+</tbody>
+</table>
+<p>API and size budget have no live alias. Their right-hand commands are the
+strongest registered production-boundary checks. A successful check does not
+claim that an unrelated external target is healthy.</p>
+<h3 id="configure-execute-and-diagnose-each-suite">Configure, execute, and diagnose each suite</h3>
+<p>The commands above are maintained verification programs. The <code>implementation</code>
+commands use controlled fixtures and prove provider behavior without claiming
+that an external service is ready. A <code>live</code> command uses configured external
+dependencies or submits a real remote plan. Read its source before use because
+the source defines required environment variables and safety checks. Never set
+an environment flag only to make a precondition disappear.</p>
+<p>For a project run, put the configuration described below in the applicable
+test scope, resolve it, and let Nova submit it as described in the
+<a href="../use/workflows/buster-suite.html#supported-execution-paths">operator workflow</a>.
+The platform operator must first enable the matching capability in the
+<a href="buster-runtime-configuration.html#capability-blocks">Buster runtime configuration</a>.
+For a repository proof, first complete the canonical
+<a href="../use/quickstart.html#locked-dependency-installation">Locked Dependency Installation</a>,
+then run the exact command from the repository root. A command must exit zero
+and print its final success record. Keep the
+command, output, Git revision, and external target identity together.</p>
+<table>
+<thead>
+<tr>
+<th>Suite</th>
+<th>Project configuration that makes work explicit</th>
+<th>Executable repository proof</th>
+<th>What to inspect first when it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>Select <code>kubeclaw.unit-suite@1</code>; add a <code>direct-command</code> node with an operator-catalog executable and a declared JUnit path. Start from <code>unit-suite-blocking.json</code>.</td>
+<td><code>npm run verify:test-gate:phase8</code>; use <code>npm run verify:test-gate:unit-live</code> only with the remote token, source key, and configured Buster route required by its source.</td>
+<td>Catalogue denial or process start means runtime policy. A zero exit with missing or invalid JUnit means report production, not transport.</td>
+</tr>
+<tr>
+<td>Container build</td>
+<td>Add <code>kubeclaw.container-build@1</code> to the empty suite; select exactly one Dockerfile or template definition and an allowed Linux platform.</td>
+<td><code>npm run verify:test-gate:container-build-implementation</code>; then <code>npm run verify:test-gate:container-build-live</code> where BuildKit and the target registry are configured.</td>
+<td>Separate BuildKit execution from registry manifest read-back. A pushed digest that cannot be read and matched is an error.</td>
+</tr>
+<tr>
+<td>Kubernetes fixture</td>
+<td>Add a manifest-producing node and link its checked-manifest output to <code>kubeclaw.kubernetes-fixture@1</code>; use an immutable image and bounded retention.</td>
+<td><code>npm run verify:test-gate:kubernetes-fixture-implementation</code>; the remote production path is <code>npm run verify:test-gate:kubernetes-fixture-live</code>.</td>
+<td>Inspect broker authorization, lease phase, manifest/image binding, readiness, and cleanup in that order. Preserve a retained lease expiry.</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>Add <code>kubeclaw.http@1</code> with an approved direct target or a typed deployment/exposure input, expected statuses, and bounded response size.</td>
+<td><code>npm run verify:test-gate:http-implementation</code>; use <code>npm run verify:test-gate:http-live</code> for the complete remote fixture path or the explicitly gated <code>http-capability-live</code> check for one in-cluster origin.</td>
+<td>Distinguish origin-policy denial and transport error from a received response that violates an assertion.</td>
+</tr>
+<tr>
+<td>Tailscale exposure</td>
+<td>Link a retained deployment to <code>kubeclaw.tailscale-exposure@1</code>; choose <code>release</code> or the durable <code>await-readiness</code> handoff and an allowed host suffix.</td>
+<td><code>npm run verify:test-gate:tailscale-exposure-implementation</code>; use <code>npm run verify:test-gate:tailscale-exposure-live</code> only with the cluster, Tailscale operator, immutable image, and remote credentials required by the script.</td>
+<td>Inspect deployment ownership, exposure generation, ingress status, handoff, and release. Never delete an object owned by a newer generation.</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Select <code>kubeclaw.api-suite@1</code>; provide <code>.swarm/api-flow.json</code> and <code>.swarm/openapi.json</code>, then override target selection and operations for the project.</td>
+<td><code>npm run verify:test-gate:api-implementation</code>; <code>npm run verify:test-gate:api-cutover</code> is the strongest registered boundary check, not a general external API health test.</td>
+<td>For flow, inspect the first failed step and cleanup result. For OpenAPI, inspect supported-subset validation and operation selection before network evidence.</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>Select <code>kubeclaw.a11y-suite@1</code>; provide the endpoint and optional project profile, and use only exact, reasoned, expiring acceptances.</td>
+<td><code>npm run verify:test-gate:a11y-implementation</code>; use <code>npm run verify:test-gate:a11y-live</code> with the configured browser and remote endpoint path.</td>
+<td>Separate browser launch or origin denial from Axe violations. An expired acceptance cannot suppress a violation; a matching violation remains a failed finding, not an execution error.</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Select <code>kubeclaw.lighthouse-suite@1</code>; provide the settings file, profile, target, and operator-known budget for blocking performance.</td>
+<td><code>npm run verify:test-gate:lighthouse-implementation</code>; use <code>npm run verify:test-gate:lighthouse-live</code> with its Chrome, target, and remote-runtime prerequisites.</td>
+<td>Inspect Chrome launch and bounded report parsing before score or audit findings. Compare the retained median representative with all run summaries.</td>
+</tr>
+<tr>
+<td>Visual</td>
+<td>Select <code>kubeclaw.visual-suite@1</code>; commit a reviewed baseline manifest, images, browser profile, and exact browser identity.</td>
+<td><code>npm run verify:test-gate:visual-implementation</code>; use <code>npm run verify:test-gate:visual-live</code> only in an environment with the required browser and target.</td>
+<td>Check baseline digest and browser family/version before pixel findings. A provider failure must not update the baseline.</td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td>Select <code>kubeclaw.e2e-suite@1</code>; commit the Playwright configuration and tests, set a positive blocking test minimum, and declare required test titles where omission matters.</td>
+<td><code>npm run verify:test-gate:e2e-implementation</code>; use <code>npm run verify:test-gate:e2e-live</code> with the sandbox, browsers, remote endpoint, and credentials declared by the script.</td>
+<td>Inspect sandbox/process admission, Playwright JSON, executed-test count, required titles, and attachment limits before individual assertions.</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Select <code>kubeclaw.security-suite@1</code>; link its deployment, image, and checked manifest; configure strict policies and exact expiring acceptances.</td>
+<td><code>npm run verify:test-gate:security-implementation</code>; use <code>npm run verify:test-gate:security-live</code> only with Trivy databases, registry access, cluster observation, endpoint, and remote runtime ready.</td>
+<td>Route by node. Check database freshness for Trivy, response evidence for headers, immutable input binding for static scans, and observation freshness for runtime security.</td>
+</tr>
+<tr>
+<td>Size budget</td>
+<td>Add <code>kubeclaw.size-budget@1</code> to the empty suite, link one build-output artifact, and set at least one blocking absolute or growth limit.</td>
+<td><code>npm run verify:test-gate:size-budget-implementation</code>; <code>npm run verify:test-gate:size-budget-production</code> proves the production boundary without an external build service.</td>
+<td>Check artifact digest and archive safety before budget findings. A growth rule without a valid baseline is an error.</td>
+</tr>
+</tbody>
+</table>
+<p>The empty suites need an added project node. The composed suites still need
+their project files, targets, and typed inputs. A resolver success with no node
+in an empty suite proves only that the declaration is valid; it does not prove
+that a test ran. The final result must name an attempt for every required node,
+show a passed gate decision, import all evidence, and prove cleanup or bounded
+retention.</p>
+<p>For a worked composition and diagnosis path, continue with
+<a href="../use/workflows/buster-suite.html">Run and diagnose a Buster suite</a>. For a new
+provider or suite contract, continue with <a href="../extend/buster.html">Extend Buster</a>.</p>
+</main></body></html>

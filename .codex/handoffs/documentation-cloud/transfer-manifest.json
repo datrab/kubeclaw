@@ -1,0 +1,55 @@
+{
+  "scope": "Temporary Cloud handoff integrity, not documentation acceptance",
+  "files": [
+    {
+      "path": "CLOUD-PROMPT.txt",
+      "bytes": 1260,
+      "sha256": "64243aaf7511e173cef835c5991d20f274c55bcc65e40d558aa9de26a99087bc"
+    },
+    {
+      "path": "README.md",
+      "bytes": 10802,
+      "sha256": "367749f45f42eca416e0a7acc55365c6990e70c35942f8350d17a4202628d29f"
+    },
+    {
+      "path": "current-state.json",
+      "bytes": 2195,
+      "sha256": "80a3779f90a0c2e6ffc42e3e322356da17a2b5af514666c54fa7ace359895bef"
+    },
+    {
+      "path": "evidence-index.json",
+      "bytes": 254391,
+      "sha256": "f28a42239bb1ca9c4fa6b97b926a6d12cc6de3823d6d7a83d723f0e897118401"
+    },
+    {
+      "path": "evidence.tar.gz",
+      "bytes": 6782683,
+      "sha256": "0b11b5ceabbd26066eab79049224a9c443c5cde7523f5883ace3b9df3b3cc7ef"
+    },
+    {
+      "path": "goal-objective.md",
+      "bytes": 7180,
+      "sha256": "8ad236553fa5bae741fcdcb284016acbc4a72a4f1fe74fd55041fc1bbf9deb4e"
+    },
+    {
+      "path": "original-handoff.md",
+      "bytes": 17307,
+      "sha256": "3fb97eb63e005d6a7473cfc667cd5a2ee6657372af138cf31a7b7f7cd699b0b1"
+    },
+    {
+      "path": "verify-transfer.py",
+      "bytes": 1389,
+      "sha256": "350bdeaca2072e861afe53183d258c40afa750b8bdf2f159b11aeba97c0f8d1f"
+    },
+    {
+      "path": "worktree-files.json",
+      "bytes": 3041,
+      "sha256": "3097d01fc20b057f908519e725c94bbb4e90b4f40f9267654bd9ca19eaa3d841"
+    },
+    {
+      "path": "worktree.patch.gz",
+      "bytes": 117542,
+      "sha256": "987302bb1e95907dffba44191f8263723f86f684e8afcb7d04d39568a8adc29f"
+    }
+  ]
+}

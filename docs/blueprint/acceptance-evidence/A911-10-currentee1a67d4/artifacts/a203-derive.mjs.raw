@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import {deriveNativeOperationFacts,nativeOperationFactDigest} from './docs-api-output-role-classification.mjs';
+const root=import.meta.dirname;
+const authority=JSON.parse(fs.readFileSync(root+'/selected-authority.json','utf8'));
+const operation=authority.operations[0];
+const out={source:operation.source,priorExpected:operation.factsDigest,scope:'Existing unchanged original fact derivation over two isolated provider-generator source texts; no generator/runtime execution, no broad authority repin.'};
+for(const variant of ['before','after']) {
+ const facts=deriveNativeOperationFacts(root+'/'+variant,operation.source,operation.selectors);
+ if(!facts)throw new Error('Selected operation unavailable');
+ out[variant]={facts,digest:nativeOperationFactDigest(facts)};
+}
+if(out.before.digest!==out.priorExpected)throw new Error('Original authority baseline mismatch; no update allowed');
+fs.writeFileSync(root+'/result.json',JSON.stringify(out,null,2)+'\n');
+console.log(JSON.stringify({before:out.before.digest,after:out.after.digest,changed:out.before.digest!==out.after.digest}));

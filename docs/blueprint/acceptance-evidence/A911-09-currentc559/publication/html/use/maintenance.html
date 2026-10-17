@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/maintenance.html"></head><body><main>
+<h1 id="maintain-and-retire">Maintain and Retire</h1>
+<p>Status: source-backed maintenance boundaries; no general runtime upgrade pair or generic rotation command is currently established
+Audience: release maintainer, platform operator, security operator
+Owner: release engineering and platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/versions.json">versions.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/releases/ops-images.json">releases/ops-images.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/deploy.sh">scripts/deploy.sh</a>
+Applies to: current release-selection and deployment contracts
+Last verified: 2026-10-11; local projection, snippet and synthetic teardown checks only; no live upgrade, rotation or retirement result is available</p>
+<h2 id="objective">Objective</h2>
+<p>Change software, data, credentials, certificates, or capacity without losing rollback evidence.
+Remove KubeClaw only after data and access have named owners.</p>
+<h2 id="cluster-authority-binding-for-every-maintenance-task">Cluster Authority Binding for Every Maintenance Task</h2>
+<p>Before any cluster command on this page, complete
+<a href="install.html#bind-cluster-authority">Bind Cluster Authority</a>. Keep the same bound
+shell for upgrade, rollback, rotation, GitOps, or decommission work. Every raw
+<code>kubectl</code>, Helm, or <code>scripts/deploy.sh</code> command below must inherit its exported
+read-only <code>KUBECONFIG</code>, <code>NAMESPACE</code>, and <code>PRISM_NAMESPACE</code>. The binding section
+validates and freezes both namespace names before any command here; every shown
+<code>&lt;context&gt;</code> must equal <code>EXPECTED_CONTEXT</code>.
+Run <code>assert_cluster_binding</code> immediately before each command block. Stop on any
+mismatch and follow the binding section's recovery; never fall back to the
+default kubeconfig.</p>
+<h2 id="canonical-upgrade-and-rollback-procedure">Canonical Upgrade and Rollback Procedure</h2>
+<!-- operator-task: upgrade-rollback -->
+<p>This section is the sole authority for <code>upgrade-rollback</code>. Start with a healthy
+installed release, independent administration, a complete old/new version pair,
+verified isolated restore media, enough capacity, and no uncertain external
+effect. Run source planning from <code>&lt;repository-root&gt;</code> and deployment checks from
+the administration machine. Release receipts, data-schema authorities, Helm or
+Git desired state, running image IDs, and application readers are authoritative.</p>
+<p>The current compatibility matrix is deliberately empty:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Supported old version</th>
+<th>Supported new version</th>
+<th>Data compatibility</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova/Buster runtime release</td>
+<td>None recorded</td>
+<td>None recorded</td>
+<td>Not established</td>
+<td>Stop before mutation</td>
+</tr>
+<tr>
+<td>Prism application and database</td>
+<td>None recorded</td>
+<td>None recorded</td>
+<td>Not established</td>
+<td>Stop before mutation</td>
+</tr>
+<tr>
+<td>Shared Redis/PostgreSQL/LiteLLM</td>
+<td>None recorded</td>
+<td>None recorded</td>
+<td>Component-specific proof absent</td>
+<td>Stop before mutation</td>
+</tr>
+</tbody>
+</table>
+<p>An image, chart, or tool version in <code>versions.json</code> is not an upgrade-pair
+claim. Until a row names and proves an exact pair, the commands later in this
+page may verify or redeploy the currently selected release but must not be used
+to claim an upgrade.</p>
+<p>For a future supported pair, complete <a href="#prepare-a-release-change">Prepare a Release Change</a>,
+<a href="#change-plan">Change Plan</a>, <a href="#render-and-compare">Render and Compare</a>,
+<a href="#upgrade-order">Upgrade Order</a>, the component section, and
+<a href="#rollback-decision">Rollback Decision</a>. Gate every step on the expected native
+and application observation. Abort before the irreversible point on a failed
+gate. After an incompatible data write, image rollback is forbidden; use the
+declared data recovery or forward repair.</p>
+<p>Expected completion is the intended immutable release, compatible data,
+four-level readiness, functional reader success, and reopened admission. Retain
+old/new receipts, pair proof, backup and restore evidence, rendered diff,
+commands and output, each health gate, irreversible point, running identities,
+rollback or forward-repair result, cleanup, and final acceptance.</p>
+<h2 id="canonical-rotation-procedure">Canonical Rotation Procedure</h2>
+<!-- operator-task: rotation -->
+<p>This section is the sole authority for <code>rotation</code>. Start with a healthy system,
+complete producer/consumer inventory, credential or trust authority access, an
+authority-specific issue and revoke operation, a maintenance window, and a
+tested emergency route. Run cluster observation from the administration
+machine and issuance/revocation only through the external owning authority.</p>
+<p>Before changing trust, capture non-secret references and consumers:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;$NAMESPACE&quot; get secrets \
+  -o custom-columns='NAME:.metadata.name,TYPE:.type,CREATED:.metadata.creationTimestamp'
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;$NAMESPACE&quot; get deploy,statefulset,cronjob \
+  -o yaml &gt; &quot;&lt;evidence-dir&gt;/credential-consumers.yaml&quot;
+</code></pre>
+<p>Do not store Secret data. Use <a href="#credential-rotation">Credential Rotation</a> for
+the ordered transition and <a href="#certificate-and-spire-rotation">Certificate and SPIRE Rotation</a>
+for its current limit. Stop before issuance if the authority-specific command,
+dual-trust capability, full consumer list, positive/negative check, expiry, or
+rollback owner is absent. The repository provides no generic rotation command.</p>
+<p>Expected completion is new-identity success, unrelated-identity denial,
+old-identity denial after revocation, all consumers healthy, temporary material
+removed, and an independent recovery path retained. Recovery before revocation
+is to restore the exact old consumer configuration; after revocation, follow
+the external authority's recovery process. Retain only names, versions,
+timestamps, consumer rollout identities, positive/negative observations,
+revocation receipt, cleanup, and blocked boundary.</p>
+<h3 id="rotation-failure-distinction">Rotation Failure Distinction</h3>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Cause class</th>
+<th>Safe response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Old identity works and new identity fails</td>
+<td>New issuance, distribution, mount, or consumer reload</td>
+<td>Keep old trust active and repair the named new path</td>
+</tr>
+<tr>
+<td>Both intended identities fail</td>
+<td>Authority, shared trust root, or consumer configuration</td>
+<td>Stop the rotation and use independent access</td>
+</tr>
+<tr>
+<td>New identity works and old identity still works after recorded revocation</td>
+<td>Revocation or cache propagation</td>
+<td>Keep the window open and reconcile the external authority</td>
+</tr>
+<tr>
+<td>Unrelated identity works</td>
+<td>Grant, allowlist, or peer-verification failure</td>
+<td>Restrict access and treat the result as a security incident</td>
+</tr>
+<tr>
+<td>Service is ready but protected data is unreadable</td>
+<td>Encryption-key or data-version mismatch</td>
+<td>Keep writers fenced and restore the exact prior key/configuration set</td>
+</tr>
+</tbody>
+</table>
+<h2 id="canonical-decommission-procedure">Canonical Decommission Procedure</h2>
+<!-- operator-task: decommission -->
+<p>This section and <a href="#controlled-retirement">Controlled Retirement</a> are the sole
+authority for <code>decommission</code>. Start only after new admission is disabled,
+external exposure is restricted, active and uncertain work is reconciled,
+final backups and isolated restore proof pass, and every Kubernetes and external
+resource has an owner and retain/delete decision. Run from independent
+administration, not the target Ops Pod.</p>
+<p>The application namespace must be dedicated before broad teardown. If any
+resource in it is shared or unregistered, do not run <code>teardown</code> or
+<code>teardown-all</code>; use separately approved resource-specific removal instead. Before broad removal, establish the complete
+<a href="#establish-the-complete-deletion-window">deletion window</a> and compare the original
+and current object identities. Keep the exclusion through final verification.
+Retain the pre-removal inventory, final backup group, access revocation
+receipts, command confirmations and output, post-removal inventory, retained
+audit location and retention end date, and every failed cleanup. There is no
+automatic rollback after PVC or namespace deletion; recovery is from the final
+verified media through the canonical restore procedure.</p>
+<h3 id="retire-the-former-qdrant-installation">Retire the Former Qdrant Installation</h3>
+<p>Use this procedure only for the former <code>qdrant</code> release in namespace <code>kubeclaw</code>.
+Qdrant is not a current platform dependency. A PersistentVolumeClaim (PVC) is a
+namespaced request to use storage. A PersistentVolume (PV) is the cluster-wide
+record of a volume. Its <code>claimRef</code> identifies the claim by namespace, name, and
+UID. A UID identifies one lifetime of an object. <code>resourceVersion</code> is an opaque
+version of the object. The reclaim policy selects the action after claim release.
+This procedure sets <code>Delete</code> on selected bound PVs and deletes selected PVCs.
+It is not a general storage cleanup command.</p>
+<p>Run from an independent administration host and the pinned source checkout.
+Use Bash, Python 3, Helm, kubectl, and the
+<a href="README.html#version-and-tool-boundary">shared version and tool boundary</a>.
+Record actual client, server, and storage-driver versions. The platform owner
+must accept that combination; the repository supplies no compatibility matrix.
+Complete <a href="install.html#bind-cluster-authority">Bind Cluster Authority</a> with
+<code>NAMESPACE=kubeclaw</code>. Keep that bound shell and its read-only <code>KUBECONFIG</code>.</p>
+<p>The authenticated administrator needs PVC get/list/watch/delete access in
+<code>kubeclaw</code> and PV get/list/watch/patch access at cluster scope. Deletion waits first get the object. If it remains present, positive-timeout
+waits list/watch that resource with a name selector. Named StatefulSet deletion and Helm release removal also need
+the relevant dependent-workload get/list/watch permissions in <code>kubeclaw</code>, plus
+Helm release-record reads/deletion and removal permissions for the installed
+release resources. The platform owner must verify the exact resource/verb
+combinations for the installed release and selected clients before any
+destructive request; use scoped grants where the authority supports them.
+The script deletes StatefulSet <code>qdrant</code>, Services <code>qdrant</code> and <code>qdrant-headless</code>, Secrets
+<code>qdrant-auth</code> and <code>qdrant-tls</code>, and NetworkPolicy <code>kubeclaw-qdrant-ingress</code>.
+It attempts to delete the same-named CiliumNetworkPolicy only when its own API
+discovery succeeds and matches <code>ciliumnetworkpolicies.cilium.io</code>. Successful
+discovery before invocation does not guarantee successful discovery inside
+the script. Confirm removal later through a successful named read-back.
+Inventory and diagnosis need discovery, workload/event reads, and, when used,
+StorageClass, CSIDriver, VolumeAttachment, and controller-log reads. Confirm
+these permissions with the platform owner before starting. Do not grant broader
+access merely to make a failed command succeed. Namespace selection does not
+limit PV authority.</p>
+<h4 id="establish-the-deletion-window">Establish the deletion window</h4>
+<p>Complete the <a href="#canonical-decommission-procedure">decommission prerequisites</a>
+and <a href="#controlled-retirement">retained evidence decisions</a> first. Stop former
+Qdrant consumers and writers. The storage owner must approve each selected
+claim and backing volume for deletion. Record the data owner, backup location,
+retention end date, disposal owner, and isolated restore result if the data must
+remain recoverable. Keep backups and audit evidence outside the target storage.
+Stop on shared storage, uncertain ownership, incomplete backup, or missing
+required restore proof.</p>
+<p><strong>Before any destructive operation, the platform and storage owners must
+confirm a window that excludes concurrent PVC replacement, PV recreation under
+a reused name, rebinding, and competing policy edits.</strong> Identify and suspend
+competing administrators and desired-state controllers through their owning
+authorities. Keep the exclusion in effect until all uncertain results are
+reconciled. Storage deletion controllers must remain available. Stopping
+consumers alone does not establish this window. Stop before running the script
+if the owners cannot establish or maintain it.</p>
+<p>The script has no concurrency fence. Its initial read compares only the PV
+<code>claimRef</code> namespace/name/UID with the selected PVC. Its later JSON Patch tests
+those same three fields before adding <code>persistentVolumeReclaimPolicy=Delete</code>.
+It does not test PV UID, <code>resourceVersion</code>, or the prior policy. The later PVC
+delete uses the captured <strong>name without a UID precondition</strong>. The external window
+and the original/current comparisons below are required because these guards
+do not exclude replacement objects or competing edits.</p>
+<h4 id="capture-and-compare-the-exact-storage-inventory">Capture and compare the exact storage inventory</h4>
+<ol>
+<li>
+<p>Select a new private evidence directory outside Git, disposable project
+storage, and the target volumes. <code>&lt;evidence-dir&gt;</code> is an absolute directory
+owned by the operator and retained by the audit owner. Do not store Secret
+values, kubeconfig contents, volume credentials, or unfiltered annotations.
+Capture versions and the release/resource names:</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+test &quot;$NAMESPACE&quot; = kubeclaw || exit 126
+export KUBE_CONTEXT=&quot;$EXPECTED_CONTEXT&quot;
+export QDRANT_EVIDENCE=&quot;&lt;evidence-dir&gt;&quot;
+case &quot;$QDRANT_EVIDENCE&quot; in /*) ;; *) exit 126 ;; esac
+umask 077
+test ! -e &quot;$QDRANT_EVIDENCE&quot; || exit 126
+mkdir -m 0700 -- &quot;$QDRANT_EVIDENCE&quot;
+git rev-parse HEAD &gt; &quot;$QDRANT_EVIDENCE/source.txt&quot;
+kubectl --context &quot;$KUBE_CONTEXT&quot; version -o json &gt; &quot;$QDRANT_EVIDENCE/versions.json&quot;
+helm version --short &gt; &quot;$QDRANT_EVIDENCE/helm-version.txt&quot;
+python3 --version &gt; &quot;$QDRANT_EVIDENCE/python-version.txt&quot;
+helm --kube-context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw list --all \
+  &gt; &quot;$QDRANT_EVIDENCE/releases-before.txt&quot;
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw get \
+  statefulset/qdrant service/qdrant service/qdrant-headless \
+  secret/qdrant-auth secret/qdrant-tls networkpolicy/kubeclaw-qdrant-ingress \
+  --ignore-not-found -o name &gt; &quot;$QDRANT_EVIDENCE/resources-before.txt&quot;
+kubectl --context &quot;$KUBE_CONTEXT&quot; api-resources -o name \
+  &gt; &quot;$QDRANT_EVIDENCE/api-resources.txt&quot;
+</code></pre>
+<p>If <code>ciliumnetworkpolicies.cilium.io</code> is present in the discovery file, also
+capture the named policy. If discovery is denied or fails, stop; absence
+from failed discovery is not proof that the API is absent.</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw get \
+  ciliumnetworkpolicy/kubeclaw-qdrant-ingress --ignore-not-found -o name \
+  &gt; &quot;$QDRANT_EVIDENCE/cilium-policy-before.txt&quot;
+</code></pre>
+</li>
+<li>
+<p>Set <code>QDRANT_SNAPSHOT=before</code> and run this read-only capture. Python uses only
+its standard library. It retains selected identity fields, not Secret data
+or arbitrary metadata. It reads each selected full PV response in memory
+and writes the fields needed for comparison. The storage handle is the
+identifier used to locate the backing volume; keep it private.</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+export QDRANT_SNAPSHOT=before
+</code></pre>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+case &quot;$QDRANT_SNAPSHOT&quot; in before|current) ;; *) exit 126 ;; esac
+mkdir -m 0700 -- &quot;$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT&quot; || exit 126
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw get pvc -o json |
+  python3 -c '
+import json, pathlib, sys
+directory = pathlib.Path(sys.argv[1])
+selected = []
+for claim in json.load(sys.stdin)[&quot;items&quot;]:
+    m, s = claim[&quot;metadata&quot;], claim[&quot;spec&quot;]
+    labels = m.get(&quot;labels&quot;, {})
+    known = m[&quot;name&quot;] in (&quot;qdrant-storage-qdrant-0&quot;, &quot;qdrant-snapshots-qdrant-0&quot;)
+    owned = (labels.get(&quot;app.kubernetes.io/instance&quot;) == &quot;qdrant&quot; and
+             labels.get(&quot;app.kubernetes.io/name&quot;, labels.get(&quot;app&quot;)) == &quot;qdrant&quot;)
+    if known or owned:
+        selected.append({&quot;name&quot;: m[&quot;name&quot;], &quot;uid&quot;: m[&quot;uid&quot;],
+            &quot;resourceVersion&quot;: m[&quot;resourceVersion&quot;], &quot;volumeName&quot;: s.get(&quot;volumeName&quot;, &quot;-&quot;),
+            &quot;storageClassName&quot;: s.get(&quot;storageClassName&quot;),
+            &quot;deletionTimestamp&quot;: m.get(&quot;deletionTimestamp&quot;), &quot;finalizers&quot;: m.get(&quot;finalizers&quot;, [])})
+with (directory / &quot;claims.json&quot;).open(&quot;x&quot;) as stream:
+    json.dump(selected, stream, indent=2)
+with (directory / &quot;claims.tsv&quot;).open(&quot;x&quot;) as stream:
+    for claim in selected:
+        print(claim[&quot;name&quot;], claim[&quot;uid&quot;], claim[&quot;volumeName&quot;], sep=&quot;\t&quot;, file=stream)
+' &quot;$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT&quot;
+while IFS=$'\t' read -r claim uid volume; do
+  test &quot;$volume&quot; != - || continue
+  assert_cluster_binding || exit 126
+  kubectl --context &quot;$KUBE_CONTEXT&quot; get pv &quot;$volume&quot; -o json |
+    python3 -c '
+import json, sys
+pv = json.load(sys.stdin)
+m, s = pv[&quot;metadata&quot;], pv[&quot;spec&quot;]
+csi = s.get(&quot;csi&quot;, {})
+print(json.dumps({&quot;name&quot;: m[&quot;name&quot;], &quot;uid&quot;: m[&quot;uid&quot;], &quot;resourceVersion&quot;: m[&quot;resourceVersion&quot;],
+    &quot;claimRef&quot;: {key: s.get(&quot;claimRef&quot;, {}).get(key) for key in (&quot;namespace&quot;, &quot;name&quot;, &quot;uid&quot;)},
+    &quot;policyPresent&quot;: &quot;persistentVolumeReclaimPolicy&quot; in s,
+    &quot;policy&quot;: s.get(&quot;persistentVolumeReclaimPolicy&quot;), &quot;storageClassName&quot;: s.get(&quot;storageClassName&quot;),
+    &quot;driver&quot;: csi.get(&quot;driver&quot;), &quot;storageHandle&quot;: csi.get(&quot;volumeHandle&quot;),
+    &quot;sourceTypes&quot;: sorted(set(s) - {&quot;capacity&quot;, &quot;accessModes&quot;, &quot;claimRef&quot;, &quot;persistentVolumeReclaimPolicy&quot;,
+        &quot;storageClassName&quot;, &quot;mountOptions&quot;, &quot;volumeMode&quot;, &quot;nodeAffinity&quot;, &quot;volumeAttributesClassName&quot;}),
+    &quot;deletionTimestamp&quot;: m.get(&quot;deletionTimestamp&quot;), &quot;finalizers&quot;: m.get(&quot;finalizers&quot;, []),
+    &quot;phase&quot;: pv.get(&quot;status&quot;, {}).get(&quot;phase&quot;)}, indent=2))
+' &gt; &quot;$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT/pv-$volume.json&quot;
+done &lt; &quot;$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT/claims.tsv&quot;
+</code></pre>
+<p>The selector is exactly the two known names <strong>OR</strong> instance label <code>qdrant</code>
+<strong>AND</strong> name label <code>qdrant</code>. The legacy <code>app</code> label is used only when
+<code>app.kubernetes.io/name</code> is absent, not when that label is empty, null, or a
+different value. Known names are selected even without labels; selection
+alone is not ownership approval. Review every row with the storage owner.</p>
+</li>
+<li>
+<p>For each bound claim, require PV <code>claimRef</code> to equal <code>kubeclaw</code>, the captured
+PVC name, and its UID. Record PVC name/UID/volumeName, PV name/UID/version,
+all three reference values, original policy presence/value, storage class,
+driver, storage handle, and the storage owner's authority reference. A
+non-CSI source requires the owner to identify its actual plugin, backing
+location, and disposal procedure from the recorded source type; missing
+CSI fields are not proof of missing storage. For a CSI volume, inspect the
+exact discovered driver and class names with the read-only queries below.
+If the class is absent, ask the owner to resolve the actual provisioning
+authority. Never substitute today's default class for a captured volume.</p>
+<p>The script records <code>-</code> for an unbound selected claim (<code>volumeName</code> absent). It has
+no PV patch and no PV wait, but the script still deletes the PVC by name.
+The owner must confirm that no allocation or provisioning is in progress
+and no binding will occur during the window. Stop on incomplete identity,
+changed binding, missing PV, deleting object, mismatched reference, unknown
+driver/backend owner, or inability to retain the inventory. An empty
+selection does not prove earlier storage was erased; reconcile known former
+volumes with the owner before treating absence as completion.</p>
+</li>
+<li>
+<p>Immediately before invocation, set <code>QDRANT_SNAPSHOT=current</code> and repeat the
+capture block in step 2, without changing or overwriting <code>before</code>. Compare
+selected row sets and every recorded field. PVC/PV names and UIDs, bound
+volume, reference triplet, storage class/source/driver/handle, and original
+policy must match. Review any <code>resourceVersion</code> change with the platform
+owner against current state, even if the visible fields match; version
+changes can come from controllers. Do not silently accept a changed policy,
+null or absent value. The script always writes <code>Delete</code>, replacing an
+existing member or adding an absent member after its guards pass. Stop and
+establish a new reviewed plan on a difference. These reads are observations,
+not an atomic guard; the external exclusion remains mandatory.</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+export QDRANT_SNAPSHOT=current
+</code></pre>
+</li>
+</ol>
+<h4 id="run-once-and-read-back-the-result">Run once and read back the result</h4>
+<p>After both owners confirm the unchanged inventory and active exclusion, run
+one destructive command. Capture its output and status; do not pipe it through
+a command that loses the script's exit status.</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+if KUBE_CONTEXT=&quot;$EXPECTED_CONTEXT&quot; bash scripts/remove-qdrant.sh --delete-data \
+  &gt; &quot;$QDRANT_EVIDENCE/retirement-output.txt&quot; 2&gt;&amp;1; then
+  qdrant_status=0
+else
+  qdrant_status=$?
+fi
+printf '%s\n' &quot;$qdrant_status&quot; &gt; &quot;$QDRANT_EVIDENCE/retirement-status.txt&quot;
+</code></pre>
+<p>The script prechecks all selected bound PV references, then uninstalls Helm and
+removes the named remaining workload/access resources. Only then does it patch
+each PV, delete its PVC, wait up to 180 seconds for that PVC, and wait up to
+180 seconds for PV API deletion. A later failure can leave earlier claims or
+resources removed. A stored <code>Delete</code> policy permits irreversible storage
+removal after release. Neither a patch response nor a wait duration proves
+storage deletion. Review output for the last completed operation, but reconcile
+current state even on exit zero.</p>
+<p>The script runs its Cilium API-discovery pipeline inside an <code>if</code>. Bash does
+not stop the script when that pipeline fails. For example, a discovery
+<code>Forbidden</code> error can skip Cilium policy deletion, permit later PV patches and
+PVC deletions, and still produce exit zero. Output is redirected during this
+invocation; the operator inspects it after the script returns. This procedure
+does not provide an automatic stop before those later writes. Review both
+standard output and standard error in the captured file, and perform the
+full original-identity and named-resource read-back even after exit zero. A
+discovery error or missing Cilium removal observation leaves cleanup uncertain.
+Stop further operator writes, retain the exclusion, and have the platform and
+storage owners reconcile all preceding and later effects. If successful
+discovery shows the API, require a successful named policy read-back; absence
+from a failed discovery or a failed read is not proof of removal.</p>
+<p>Deletion-wait access can fail after the server accepted a deletion. In the
+pinned kubectl source, <code>delete --wait</code> can tolerate a Forbidden or unsupported
+wait result and return success. Thus an exit status alone cannot prove that
+the object is gone. The separate PV <code>wait</code> also needs list/watch access while
+the object remains present. Read back the original identities and deletion
+state through the owning authority before any continuation on a denied wait.</p>
+<p>For <strong>each original row</strong>, copy <code>&lt;claim-name&gt;</code>, <code>&lt;pv-name&gt;</code>, and
+<code>&lt;original-pvc-uid&gt;</code> from <code>before</code>, not from a new selection. Run the PVC query
+for all rows; run the PV and PV-event queries only for bound rows. These queries
+show identities, policy, deletion state, and finalizers (entries that delay API
+removal until required cleanup completes). Save their output and status in new
+private observation files; do not overwrite the originals. <code>--ignore-not-found</code>
+permits a successful empty result, but an API error does not prove absence.</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw get pvc &quot;&lt;claim-name&gt;&quot; \
+  --ignore-not-found -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,VERSION:.metadata.resourceVersion,PV:.spec.volumeName,DELETING:.metadata.deletionTimestamp,FINALIZERS:.metadata.finalizers'
+kubectl --context &quot;$KUBE_CONTEXT&quot; get pv &quot;&lt;pv-name&gt;&quot; --ignore-not-found \
+  -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,VERSION:.metadata.resourceVersion,CLAIMNS:.spec.claimRef.namespace,CLAIM:.spec.claimRef.name,CLAIMUID:.spec.claimRef.uid,POLICY:.spec.persistentVolumeReclaimPolicy,DRIVER:.spec.csi.driver,HANDLE:.spec.csi.volumeHandle,CLASS:.spec.storageClassName,PHASE:.status.phase,DELETING:.metadata.deletionTimestamp,FINALIZERS:.metadata.finalizers'
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw get events \
+  --field-selector 'involvedObject.uid=&lt;original-pvc-uid&gt;' --sort-by=.metadata.creationTimestamp
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace kubeclaw get pods \
+  -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,CLAIMS:.spec.volumes[*].persistentVolumeClaim.claimName'
+</code></pre>
+<p>For a bound row, <code>&lt;original-pv-uid&gt;</code> is the original PV UID. Inspect cluster
+attachments and the discovered storage authority. Replace <code>&lt;storage-class&gt;</code>
+and <code>&lt;driver&gt;</code> only with present, verified values from the inventory. Omit a
+class or CSI-driver query when that field is absent; the owner must identify
+the applicable non-CSI or migrated provisioner instead.</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+kubectl --context &quot;$KUBE_CONTEXT&quot; get events --all-namespaces \
+  --field-selector 'involvedObject.uid=&lt;original-pv-uid&gt;' --sort-by=.metadata.creationTimestamp
+kubectl --context &quot;$KUBE_CONTEXT&quot; get volumeattachments.storage.k8s.io \
+  -o custom-columns='NAME:.metadata.name,PV:.spec.source.persistentVolumeName,DRIVER:.spec.attacher,NODE:.spec.nodeName,ATTACHED:.status.attached,ATTACHERROR:.status.attachError.message,DETACHERROR:.status.detachError.message'
+kubectl --context &quot;$KUBE_CONTEXT&quot; get storageclass &quot;&lt;storage-class&gt;&quot; \
+  -o custom-columns='NAME:.metadata.name,PROVISIONER:.provisioner,POLICY:.reclaimPolicy'
+kubectl --context &quot;$KUBE_CONTEXT&quot; get csidriver &quot;&lt;driver&gt;&quot; \
+  -o custom-columns='NAME:.metadata.name,ATTACHREQUIRED:.spec.attachRequired'
+</code></pre>
+<p>The class policy is a provisioning setting, not proof of the current PV policy.
+Match attachment rows by the original PV name and verify its UID separately.
+A missing attachment does not prove backend deletion. Event retention is
+limited; no event is not proof of success. The provisioner is the component
+that creates or deletes backing storage; the backend is the storage system it
+uses. The storage owner must identify the actual controller namespace, workload,
+and container, including migration if present. Inspect that exact controller:</p>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace &quot;&lt;controller-namespace&gt;&quot; get \
+  &quot;&lt;controller-kind&gt;/&lt;controller-name&gt;&quot; \
+  -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,READY:.status.readyReplicas,DESIRED:.spec.replicas'
+kubectl --context &quot;$KUBE_CONTEXT&quot; --namespace &quot;&lt;controller-namespace&gt;&quot; logs \
+  &quot;&lt;controller-kind&gt;/&lt;controller-name&gt;&quot; -c &quot;&lt;controller-container&gt;&quot; --since=30m
+</code></pre>
+<p>Use a time range that covers the recorded attempt. Inspect logs privately and
+retain only sanitized lines for the original handle/UID and deletion result.
+Do not publish credentials or backend configuration. For a controller managed
+outside Kubernetes, obtain equivalent health and deletion observations from
+its owner. This repository does not supply a driver-specific backend command.
+Stop until the owner supplies its read-only lookup and disposal audit for the
+original handle, including retained snapshots, replicas, exports, and backups.</p>
+<h4 id="distinguish-failure-before-another-write">Distinguish failure before another write</h4>
+<p>On any failed or uncertain operation, stop further writes, retain the exclusion,
+and preserve output, status, original policy, current stored policy, identities,
+deleting state, events, and owner observations. Use the queries above before
+choosing a continuation. The following observations require different actions:</p>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Distinguishing check</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binding, tool, read, or initial ownership precheck fails</td>
+<td>Check exit/output; compare current PVC UID/volume and PV reference with <code>before</code></td>
+<td>No script removal precedes a failed initial precheck. Correct access or tools through their owners; on identity mismatch stop and obtain a new plan. A pre-existing deletion remains possible.</td>
+</tr>
+<tr>
+<td><code>Forbidden</code> or <code>Unauthorized</code></td>
+<td>Identify the denied request/resource/verb in output; ask the authority to verify that exact permission and read back earlier resources</td>
+<td>Stop. A denial of one request does not undo earlier removals. Do not widen grants or rerun blindly.</td>
+</tr>
+<tr>
+<td>Discovery fails inside the script, including <code>Forbidden</code>, even with exit zero</td>
+<td>Review captured stderr and the named Cilium policy; read back every original PVC/PV and named release/access resource</td>
+<td>Cilium deletion can have been skipped while later storage writes completed. Stop further operator writes and require platform/storage-owner reconciliation. No automatic interruption prevented those effects.</td>
+</tr>
+<tr>
+<td>Later patch rejects a test, reports 422, validation failure, admission denial, conflict, or NotFound</td>
+<td>Read the same PV name and compare original UID/reference/policy/version; inspect the returned error</td>
+<td>Earlier Helm/access removal can already be complete. Preserve both states; resolve ownership or admission with the platform owner. Matching claimRef alone is insufficient.</td>
+</tr>
+<tr>
+<td>Patch response is lost or interrupted</td>
+<td>Read original PV/PVC identities, policy and deletion state; ask the storage owner for the original handle's result</td>
+<td>No response does not mean no write. <code>Delete</code> may already be stored and deletion may have started. Stop until reconciled; do not resend the patch.</td>
+</tr>
+<tr>
+<td>PVC deletion fails, loses its response, or times out</td>
+<td>Query the original name; distinguish absence, original UID with deletion timestamp/finalizers, and a different UID; inspect using Pods/events</td>
+<td>A different UID is a replacement: stop. An original terminating claim needs the owner to resolve remaining consumers/protection. Absence permits only owner reconciliation of PV/backend state. Do not delete the name again.</td>
+</tr>
+<tr>
+<td>PV wait times out</td>
+<td>Query original PV UID/reference/policy/phase/deleting state, attachments, events, and controller health/logs</td>
+<td>A retained original PV can be waiting for claim release, controller work, finalizer cleanup, attachment release, or backend deletion. Keep writes stopped while the platform/storage owners identify that path.</td>
+</tr>
+<tr>
+<td>Protection/finalizers, attachments, volume-in-use or <code>VolumeFailedDelete</code> errors remain</td>
+<td>Compare remaining Pod claim use, attachment state/errors and provisioner/backend receipt</td>
+<td>Owners resolve the actual consumer, detach, controller, authorization or storage failure. Do not force-delete objects or remove finalizers; backend removal can precede failed API cleanup.</td>
+</tr>
+<tr>
+<td>Original PVC/PV APIs are absent, but backend outcome is unknown</td>
+<td>Require successful API reads plus the owner's lookup/audit for the original storage handle</td>
+<td>Record API absence only. Stop disposal acceptance until storage evidence distinguishes removed data from retained/unknown data.</td>
+</tr>
+</tbody>
+</table>
+<p>Controllers can continue deletion while the script is stopped. A controller
+retry is not authority for an operator retry. Any continuation requires owners
+to reconcile each original resource and backend effect, confirm the exclusion,
+and specify the exact remaining operation and new evidence. There is no general
+partial-resume command. Do not blindly repeat the script or change the policy
+back as rollback. A policy change cannot recover erased data. After storage
+removal, recovery requires retained verified media and the storage owner's
+restore procedure.</p>
+<h4 id="verify-completion-and-retain-evidence">Verify completion and retain evidence</h4>
+<p>Repeat the release, named workload/access, and original PVC/PV observations.
+Repeat successful API discovery through the platform authority, and read back
+the named Cilium policy if the API is present. If discovery fails, keep Cilium
+cleanup unresolved; do not treat the script's skipped branch as API absence. Expected Kubernetes result: the former release and named
+resources are absent, each original selected claim is absent, and each bound
+original PV is absent, with successful reads and no replacement UID. An unbound
+row has only a claim-removal result. Record unexpected new selected claims and
+stop; do not expand removal scope. Obtain separate storage-owner disposal
+receipts for each original handle and the selected retention decisions. API
+absence and the script's completion message do not prove backend erasure.
+Roll out updated agents through their approved deployment procedure to remove
+former Qdrant health probes.</p>
+<p>Retain the owners' approvals and window record, actual versions, source commit,
+original/current inventories, original policy and storage identity, sanitized
+output/status/timestamps, observations, backend receipts, backup/restore proof,
+retention end date, recovery owner, and unresolved cleanup. The script deletes
+its temporary claim inventory on exit; that inventory is not retained evidence.
+Release the exclusion only after owner reconciliation. Dispose of temporary
+administration access through its credential owner after verification; retain
+required audit and recovery data until its recorded retention end. No live
+retirement, backend erasure, or restore result is established by this guide.</p>
+<blockquote>
+<p><strong>Source evidence — bounded Qdrant retirement</strong></p>
+<p><strong>Claim:</strong> The script's fixed selector captures claim name/UID/volumeName. The script prechecks the reference and removes release/access resources. It then applies three reference tests plus <code>add Delete</code>, deletes PVCs by name, and waits for PVC/PV API deletion.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L6-L18">Intent, context, tools, and temporary inventory</a>. <a href="https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L20-L30">Exact selection</a>. <a href="https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L35-L43">Precheck</a>. <a href="https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L46-L55">Release/resource removal</a>. <a href="https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L57-L77">Patch and waits</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/0403b262df2dba24747a19d1f8f42ef3334ef779/scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs#L13-L29">The seven selected existing-PV receiving contracts</a> explain the ordered patch, guard limits, and controller/backend boundary. These source expectations use Kubernetes v1.35.0, not a live compatibility claim. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/apiserver/pkg/endpoints/handlers/patch.go#L403-L417">The API server rejects malformed or failed JSON patches</a>. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1321-L1389">Deletion reconciliation is separate</a>, and <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1495-L1540">backend removal can precede finalizer failure</a>.</p>
+<p><strong>Wait permissions and limit:</strong> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/kubectl/pkg/cmd/wait/delete.go#L45-L51">Positive-timeout deletion waits get, then list/watch the named resource</a>, with <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/kubectl/pkg/cmd/wait/delete.go#L79-L89">the selected list/watch calls</a>. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/kubectl/pkg/cmd/delete/delete.go#L460-L477">The delete command invokes that wait and can tolerate a denied or unsupported wait</a>. These pinned client expectations do not prove the operator's actual permissions.</p>
+<p><strong>Reason:</strong> The <a href="https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L33-L34">producer comment</a> says PVC deletion alone can leave retained PVs and data. Inference: setting <code>Delete</code> connects approved claim retirement to storage disposal. The historical reason for these specific incomplete concurrency guards is unknown. Platform operations owns reassessment when ownership, drivers, or retention requirements change.</p>
+<p><strong>Test evidence:</strong> Local command syntax, synthetic exact selection, sanitized capture, read-only observation, discovery-denial and binding-refusal checks do not execute retirement against Kubernetes.</p>
+<p><strong>Revision:</strong> Product sources checked at <code>51975b92ed5154b76c65793e55933b4d8659d05d</code>; selected upstream expectations at <code>66452049f3d692768c39c797b21b793dce80314e</code>.</p>
+<p><strong>Limit:</strong> No live authorization, admission, controller, driver, data-disposal, or recovery result is established. External exclusion and owner-supplied backend observations remain mandatory prerequisites.</p>
+</blockquote>
+<h2 id="supported-versions">Supported Versions</h2>
+<p>Use <code>versions.json</code> for the selected Ops Pod Codex CLI version; it also drives
+<code>ops/pod/package.json</code> and <code>charts/ops-pod/Chart.yaml</code>. A selected version is not
+an accepted upgrade pair or proof of a running installation.</p>
+<p>Use the <a href="README.html#version-and-tool-boundary">shared version rules</a>.
+Every maintenance plan must name the old and new source, image, chart, configuration, schema, and data versions.
+An absent compatibility statement means that rollback or mixed-version operation is not approved.</p>
+<h2 id="maintenance-principles">Maintenance Principles</h2>
+<ul>
+<li>Change one governed release set, not isolated image tags.</li>
+<li>Use immutable image and code-bundle identities.</li>
+<li>Back up before stateful migration.</li>
+<li>Rehearse restore before the production change.</li>
+<li>Define the irreversible point before starting.</li>
+<li>Keep the previous compatible release and recovery media.</li>
+<li>Rotate credentials by consumer group.</li>
+<li>Never use image rollback to downgrade incompatible data.</li>
+<li>Preserve failed evidence separately from later success.</li>
+</ul>
+<h2 id="version-authorities">Version Authorities</h2>
+<table>
+<thead>
+<tr>
+<th>Authority</th>
+<th>Purpose</th>
+<th>Does not prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>versions.json</code></td>
+<td>Reviewed build inputs and tool versions</td>
+<td>A published or deployed image</td>
+</tr>
+<tr>
+<td><code>releases/runtime-images.json</code></td>
+<td>Selected runtime image receipts and digests</td>
+<td>Live Pod identity or data compatibility</td>
+</tr>
+<tr>
+<td><code>releases/ops-images.json</code></td>
+<td>Selected Ops image receipts and digests</td>
+<td>Mobile pairing or cluster access</td>
+</tr>
+<tr>
+<td><code>releases/values/*.yaml</code></td>
+<td>Source-bound generated image values</td>
+<td>Private setting correctness</td>
+</tr>
+<tr>
+<td>Private overlays</td>
+<td>Environment settings without alternate first-party images</td>
+<td>Schema migration safety</td>
+</tr>
+<tr>
+<td>Pod <code>imageID</code></td>
+<td>Actual pulled image identity</td>
+<td>Active code-bundle identity by itself</td>
+</tr>
+<tr>
+<td>Database migration table</td>
+<td>Applied schema state</td>
+<td>Application compatibility by itself</td>
+</tr>
+</tbody>
+</table>
+<p>Use all applicable authorities in one change record.</p>
+<h2 id="prepare-a-release-change">Prepare a Release Change</h2>
+<h3 id="acquire-a-reviewed-runtime-selection">Acquire a reviewed runtime selection</h3>
+<p>A receipt is the build's stored record of its source commit, workflow run and
+attempt, and immutable image digests. Promotion selects that record; it does
+not rebuild the images. The selection commit is the Git commit that contains
+the accepted receipts and generated values. It is usually later than the
+image-build commit. Record both. If <code>releases/runtime-code.json</code> is selected,
+record its separate code-bundle commit and run/attempt too. Code bundles are
+archives loaded by the agent; they are not container images.</p>
+<p>The current checkout has no <code>releases/runtime-images.json</code>. Stop runtime
+installation until the release owner accepts a selection. The release maintainer performs
+this task in <code>github.com/datrab/kubeclaw</code>, or the explicitly approved repository
+whose receipts and image references the environment uses:</p>
+<ol>
+<li>Open <strong>Actions → Build Runtime Images And Skill Bundles</strong>. Select one
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L43-L53">successful run on <code>main</code>, triggered by <code>push</code> or <code>workflow_dispatch</code></a>. Record
+its numeric run ID, attempt and full source commit. Confirm the durable
+release <code>runtime-images-&lt;run-id&gt;-&lt;attempt&gt;</code> contains exactly the intended
+<code>runtime-images.json</code> receipt and images. A successful code-only build can
+have no image receipt; it is not sufficient for this manual image promotion.</li>
+<li>Confirm that <strong>Actions → Promote image release</strong> is enabled and the maintainer
+can dispatch it. The workflow reads Actions, release contents and packages.
+The repository administrator must configure <code>DEPENDENCY_APP_ID</code> and
+<code>DEPENDENCY_APP_PRIVATE_KEY</code> for a GitHub App installed on this repository.
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L77-L86">The workflow creates its App token from those configured inputs</a>.
+Its token must be authorized to push the <code>release/runtime-&lt;run-id&gt;</code> branch
+and create a pull request (Contents write and Pull requests write). Reviewers need the repository's review and merge
+authority under branch protection. Stop if the app or authority is absent;
+do not use an operator's cluster credentials as a substitute.</li>
+<li>Choose <strong>Run workflow</strong>, branch <code>main</code>, <code>family=runtime</code>, and
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L1-L14"><code>source_run_id=&lt;run-id&gt;</code></a>. Record the promotion run ID. Wait for its source
+verification, materialization, immutable-image scan, and PR creation to
+finish. The <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L65-L76">scan and artifact steps</a> run before the
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L107-L113">branch push and PR creation</a>. On success, retain the <code>proposed-runtime-release</code> artifact and the
+PR <strong>Select runtime release <run-id></strong>, branch <code>release/runtime-&lt;run-id&gt;</code>,
+base <code>main</code>. An artifact or a partially pushed branch without that accepted
+PR does not authorize installation. If a run fails, retain its failed step;
+check whether the branch or PR already exists before deciding to retry.</li>
+<li>Review the receipt's source run/attempt, source commit and image digests,
+the scan outcome, generated <code>releases/values/*.yaml</code>, selected code receipt
+if present, and every other changed file. Stop on stale chart/value bytes,
+missing images or bundles, incompatible private settings, or an unexplained
+change. Obtain the change and data-compatibility approvals before merge.
+With <code>GITOPS_ENABLED=true</code>, this workflow also proposes production Argo
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L101-L111">manifests</a>: after continuous GitOps is bootstrapped, merging can authorize
+automatic deployment. Obtain that environment owner's approval before
+merge. The separate <strong>Publish production deployment</strong> workflow can push
+compatible selections to <code>main</code> when GitOps is enabled; do not treat that
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/auto-promote-runtime.yaml#L14-L18">automatic path</a> as completion of this manual promotion task.</li>
+<li>Merge the approved selection PR. Record the full accepted checkout commit
+on <code>main</code>, PR URL, review approvals, promotion run and artifact. This is
+<code>&lt;selection-commit&gt;</code> below. Do not check out only the image-build commit:
+that commit need not contain the later selection files.</li>
+</ol>
+<p>No workflow was dispatched for this page, and no successful promotion,
+scan or merge is claimed.</p>
+<h3 id="obtain-and-verify-the-selected-checkout">Obtain and verify the selected checkout</h3>
+<p>Run on the administration machine. <code>&lt;new-checkout-path&gt;</code> is a new disposable
+absolute directory; <code>&lt;selection-commit&gt;</code> is the reviewed 40-character checkout
+commit from the preceding step. Git read access is required. The checkout may
+contain production GitOps files, but these commands do not sync or deploy them.</p>
+<pre><code class="language-bash">export SELECTED_CHECKOUT_COMMIT=&quot;&lt;selection-commit&gt;&quot;
+export SELECTED_REPOSITORY_URL=&quot;https://github.com/datrab/kubeclaw.git&quot;
+export SELECTED_CHECKOUT_PATH=&quot;&lt;new-checkout-path&gt;&quot;
+[[ $SELECTED_CHECKOUT_COMMIT =~ ^[a-f0-9]{40}$ ]] || exit 1
+case &quot;$SELECTED_CHECKOUT_PATH&quot; in /*) ;; *) exit 1 ;; esac
+test ! -e &quot;$SELECTED_CHECKOUT_PATH&quot;
+git clone --no-checkout &quot;$SELECTED_REPOSITORY_URL&quot; &quot;$SELECTED_CHECKOUT_PATH&quot;
+cd &quot;$SELECTED_CHECKOUT_PATH&quot;
+git checkout --detach &quot;$SELECTED_CHECKOUT_COMMIT&quot;
+test &quot;$(git rev-parse HEAD)&quot; = &quot;$SELECTED_CHECKOUT_COMMIT&quot;
+test -z &quot;$(git status --porcelain)&quot;
+test -f releases/runtime-images.json
+</code></pre>
+<p>Complete <a href="quickstart.html#locked-dependency-installation">Locked Dependency Installation</a>
+in this disposable checkout. Follow its locked installation and retain the
+registry identity, lock digest, tool versions and installation result. The repository administrator supplies a read-only GitHub identity in
+<code>GITHUB_TOKEN</code> for the verification below; do not put it in arguments or logs.
+<code>GITHUB_REPOSITORY</code> is the owner/repository whose stored receipts you accepted.
+The verifier checks every selected runtime/code/Ops receipt present in the
+checkout, so that identity must be able to read each corresponding run and
+release. Stop if the identity or receipt access is unavailable.</p>
+<pre><code class="language-bash">export GITHUB_REPOSITORY=&quot;datrab/kubeclaw&quot;
+: &quot;${GITHUB_TOKEN:?Read-only GitHub receipt-verification identity required}&quot;
+export GITHUB_TOKEN
+node scripts/updates/verify-release-source.mjs
+node scripts/updates/materialize-release.mjs --family=runtime --check
+npm run versions:check
+node --input-type=module &lt;&lt;'NODE'
+import { selectedRelease } from './scripts/updates/deployment-release.mjs';
+const release = selectedRelease(process.cwd(), 'runtime');
+console.log(JSON.stringify({ imageCommit: release.commit,
+  imageRun: release.sourceRunId, imageAttempt: release.sourceRunAttempt,
+  codeCommit: release.code?.commit ?? null,
+  codeRun: release.code?.sourceRunId ?? null,
+  codeAttempt: release.code?.sourceRunAttempt ?? null }));
+NODE
+test -z &quot;$(git status --porcelain)&quot;
+unset GITHUB_TOKEN
+</code></pre>
+<p>Expected observation: each command exits zero; the identity report matches
+the reviewed receipt(s), and the worktree stays clean. <code>--check</code> compares the
+existing generated values without replacing them. If values are absent or
+stale, stop. In a separate disposable repair checkout, the release maintainer
+may run <code>node scripts/updates/materialize-release.mjs --family=runtime</code>, review
+its exact generated diff and commit it through another selection PR. Resume
+only from that accepted clean commit and repeat these checks. Do not repair
+values in the installation checkout, invent a receipt, or replace a digest
+with <code>latest</code>.</p>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/updates/deployment-release.mjs#L33-L43">local release boundary rejects absent selection</a>.
+The <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/updates/release-configuration.mjs#L25-L38">configuration verifier requires the exact source file set and bytes</a>
+from the <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/updates/materialize-release.mjs#L5-L9">selected code commit, or image commit when no code receipt is selected</a>.
+A later documentation-only checkout is eligible only when the release owner
+explicitly accepts its commit and these same checks pass. The checks establish
+configuration equality, not that owner's approval, data compatibility or live
+readiness. Record the checkout commit separately from the receipt commits.</p>
+<p>Retain the review/merge references, run and attempt identities, artifact and
+receipt digests, scan status, checkout commit, sanitized check outputs and
+exit statuses. For Ops image acquisition, use the same workflow with <code>family=ops</code>
+and a successful <code>.github/workflows/build-ops-mcp.yaml</code> run; its local family
+check is <code>--family=ops</code>. This does not authorize an Ops deployment.</p>
+<p>If version inputs change, use the controlled generation path in a separate
+reviewed change:</p>
+<pre><code class="language-bash">npm run versions:sync
+npm run versions:check
+node --test tests/verification/deployment/versions.test.mjs
+</code></pre>
+<p>Review every generated diff with the version change. Do not edit generated
+digests to make a check pass.</p>
+<h2 id="change-plan">Change Plan</h2>
+<p>Record this plan before deployment:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope</td>
+<td>Exact roles, charts, data stores, configuration, and credentials</td>
+</tr>
+<tr>
+<td>Compatibility</td>
+<td>Old and new image, contract, schema, and data versions</td>
+</tr>
+<tr>
+<td>Backup</td>
+<td>Completed group and successful isolated restore proof</td>
+</tr>
+<tr>
+<td>Capacity</td>
+<td>Space for old data, new data, backup, migration, and image pulls</td>
+</tr>
+<tr>
+<td>Order</td>
+<td>Infrastructure, migrations, applications, and access changes</td>
+</tr>
+<tr>
+<td>Stop point</td>
+<td>Last condition where no production data changed</td>
+</tr>
+<tr>
+<td>Irreversible point</td>
+<td>First incompatible schema or first accepted new-format write</td>
+</tr>
+<tr>
+<td>Rollback</td>
+<td>Exact compatible release and client routing action</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Native checks, application checks, and negative security checks</td>
+</tr>
+<tr>
+<td>Owner</td>
+<td>Operator for execution, rollback, data, security, and acceptance</td>
+</tr>
+</tbody>
+</table>
+<p>Do not start with an undecided irreversible point.</p>
+<h2 id="render-and-compare">Render and Compare</h2>
+<p>Before rendering, <a href="install.html#select-prism-and-check-the-trust-boundary">select Prism and check the trust boundary</a>.
+Keep the reviewed exported <code>KUBECLAW_DEPLOY_PRISM</code> value in the bound shell.
+Render the actual selected configuration:</p>
+<pre><code class="language-bash">assert_cluster_binding
+case &quot;$KUBECLAW_DEPLOY_PRISM&quot; in true|false) ;; *) exit 1 ;; esac
+./scripts/deploy.sh render nova &gt; &quot;&lt;evidence-dir&gt;/nova.yaml&quot;
+./scripts/deploy.sh render buster &gt; &quot;&lt;evidence-dir&gt;/buster.yaml&quot;
+if [[ $KUBECLAW_DEPLOY_PRISM == true ]]; then
+  ./scripts/deploy.sh render prism &gt; &quot;&lt;evidence-dir&gt;/prism.yaml&quot;
+fi
+</code></pre>
+<p>Protect rendered files because they can reveal private configuration.</p>
+<p>Compare these subjects:</p>
+<ul>
+<li>Image repository and digest.</li>
+<li>Code-bundle commit and contract.</li>
+<li>Service accounts and RBAC.</li>
+<li>Secret references.</li>
+<li>Ports, Services, and network policies.</li>
+<li>PVC names, size, access mode, and StorageClass.</li>
+<li>Resource requests, limits, and scheduling constraints.</li>
+<li>Migration and backup Jobs.</li>
+<li>ConfigMap and Pod-template checksums.</li>
+</ul>
+<p>Stop if ownership moves between Helm and Argo without a reviewed transfer.
+Two controllers must not manage the same resource.</p>
+<h2 id="gitops-operation">GitOps Operation</h2>
+<p>This section starts with healthy, already Argo-owned Applications. The Git
+repository remains the desired-state authority. Treat transfer from an existing
+Helm installation as a separate change with a retained resource and data
+inventory. The current activation preflight <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/gitops.mjs#L123-L145">rejects existing Helm releases,
+Helm-owned resources, and unmanaged existing resources</a>.
+The imperative <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/gitops-owner.mjs#L14-L27">ownership guard also rejects claimed namespaces and retained
+Argo tracking metadata</a>.
+Deleting an Application without its workloads does not transfer ownership.</p>
+<p>The repository supplies no supported in-place Helm-to-Argo takeover procedure.
+Stop before sync or imperative deployment when ownership is mixed or the
+platform owner has not supplied a versioned transfer procedure. That procedure
+must retain the old desired state and data, stop competing reconciliation,
+identify every transferred resource, verify one resulting owner, define the
+rollback boundary, and prove health plus application reads. Do not remove Helm
+or Argo ownership metadata merely to make a preflight pass.</p>
+<p>Before sync, inspect each selected Application:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl -n argocd get applications.argoproj.io
+kubectl -n argocd get application &quot;&lt;application&gt;&quot; -o yaml
+</code></pre>
+<p>Record <code>spec.source.targetRevision</code>, <code>status.sync.revision</code>, and the operation result revision.
+Confirm that the resolved commit equals the intended immutable source.</p>
+<p>The current platform health script can compare a branch name with a resolved commit.
+That comparison can report a false unhealthy result.
+<a href="../status/open-issues.html#continuous-gitops-health-compares-a-branch-name-with-resolved-commit-ids">The continuous GitOps revision mismatch</a> tracks the correction.</p>
+<p>Do not bypass that gap by accepting any revision.
+Resolve the branch to the intended commit and record both values.</p>
+<p>For rollback, revert the reviewed Git change and sync the compatible prior state.
+Do not use Argo history rollback while automatic sync can immediately reverse it.</p>
+<p>Keep database rollback rules separate from manifest rollback.</p>
+<h2 id="upgrade-order">Upgrade Order</h2>
+<p>Use this order unless a component guide requires a narrower sequence:</p>
+<ol>
+<li>Verify independent administration and backup access.</li>
+<li>Complete and verify backups.</li>
+<li>Rehearse restore with the target tools.</li>
+<li>Confirm storage and node capacity.</li>
+<li>Update cluster-level prerequisites before dependent workloads.</li>
+<li>Update identity, registry, and stateful infrastructure.</li>
+<li>Run required data migrations.</li>
+<li>Deploy Nova and Buster role images.</li>
+<li>Deploy Prism database and application changes in their declared order.</li>
+<li>Run component smoke and native data checks.</li>
+<li>Run worker-trust positive and negative checks when trust changed.</li>
+<li>Compare running image IDs and active bundle commits.</li>
+<li>Reopen admission.</li>
+<li>Retain the old release until the observation window ends.</li>
+</ol>
+<p>Do not combine a CNI migration with an unrelated application upgrade.
+<a href="../status/open-issues.html#concrete-single-node-cni-cutover-and-independent-rollback-remain-unproved">Single-node CNI cutover and rollback</a> tracks the missing proof.</p>
+<h2 id="stateless-role-upgrade">Stateless Role Upgrade</h2>
+<p>Upgrade one role first when compatibility permits:</p>
+<pre><code class="language-bash">assert_cluster_binding
+./scripts/deploy.sh agent nova
+./scripts/deploy.sh smoke-agent nova
+</code></pre>
+<p>Then inspect the running identity:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl -n &quot;$NAMESPACE&quot; get deployment agent-nova -o jsonpath='{.spec.template.spec.containers[*].image}{&quot;\n&quot;}'
+kubectl -n &quot;$NAMESPACE&quot; get pods -l app.kubernetes.io/instance=agent-nova -o jsonpath='{range .items[*]}{.status.containerStatuses[*].imageID}{&quot;\n&quot;}{end}'
+</code></pre>
+<p>Repeat for Buster after Nova verification.</p>
+<p>Use atomic Helm deployment results as one signal.
+Still verify application health and durable state.</p>
+<h2 id="stateful-service-upgrade">Stateful Service Upgrade</h2>
+<p>Each stateful service requires its own recorded plan. Apply the common sequence below, then use the service-specific verification and rollback boundary in <a href="recovery.html">Recovery</a>.</p>
+<p>The common safe sequence is:</p>
+<ol>
+<li>Inventory every writer and reader.</li>
+<li>Back up and verify the source.</li>
+<li>Restore into an isolated target.</li>
+<li>Verify native and application reads.</li>
+<li>Fence source writes and drain connections.</li>
+<li>Apply the declared migration.</li>
+<li>Switch clients once.</li>
+<li>Verify data and application behavior.</li>
+<li>Record the first new-format write.</li>
+<li>Keep the old store read-only until rollback expiry.</li>
+</ol>
+<p>Never run old and new writers against one store unless the contract permits it.</p>
+<h2 id="prism-upgrade">Prism Upgrade</h2>
+<p>Prism separates application rollback from database rollback.
+An application rollback is safe only while its schema remains compatible.</p>
+<p>Before the change:</p>
+<pre><code class="language-bash">assert_cluster_binding
+./scripts/deploy.sh prism-status
+kubectl -n &quot;$PRISM_NAMESPACE&quot; get cronjob,job,pvc
+kubectl -n &quot;$PRISM_NAMESPACE&quot; get deployment,statefulset -o wide
+</code></pre>
+<p>After the change:</p>
+<pre><code class="language-bash">assert_cluster_binding
+./scripts/deploy.sh prism-smoke
+kubectl -n &quot;$PRISM_NAMESPACE&quot; get jobs -l app=prism-migrate
+kubectl -n &quot;$PRISM_NAMESPACE&quot; logs job/prism-migrate --all-containers
+</code></pre>
+<p>The Helm hook can delete the successful migration Job.
+Capture its logs during deployment when migration evidence is required.</p>
+<p>Open one real project and baseline before accepting the upgrade.</p>
+<h2 id="rollback-decision">Rollback Decision</h2>
+<p>Choose by data state:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Permitted response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No mutation began</td>
+<td>Return to previous manifests or images</td>
+</tr>
+<tr>
+<td>Compatible additive migration</td>
+<td>Roll back only when both versions support the schema</td>
+</tr>
+<tr>
+<td>Incompatible migration, no new writes</td>
+<td>Restore the verified pre-change backup or follow declared reverse migration</td>
+</tr>
+<tr>
+<td>Incompatible migration with new writes</td>
+<td>Do not image-roll back; use forward repair or an approved data-loss decision</td>
+</tr>
+<tr>
+<td>External effect accepted</td>
+<td>Reconcile the effect before retry or rollback</td>
+</tr>
+<tr>
+<td>Credential rotation partly complete</td>
+<td>Finish dual-trust transition or restore the exact old trust set</td>
+</tr>
+</tbody>
+</table>
+<p>Record why the selected path preserves accepted data.</p>
+<h2 id="credential-rotation">Credential Rotation</h2>
+<p>Inventory every producer and consumer before rotation.
+Group credentials by purpose:</p>
+<ul>
+<li>Kubernetes administrator and emergency access.</li>
+<li>GitHub and registry access.</li>
+<li>Git deploy keys and code-bundle reader.</li>
+<li>OpenClaw gateway and provider tokens.</li>
+<li>PostgreSQL roles and database URLs.</li>
+<li>Tailscale OAuth and auth keys.</li>
+<li>Pipeline source-attestation keypair.</li>
+<li>Prism runtime and database credentials.</li>
+<li>Ops Pod MCP bearer and optional GitHub token.</li>
+</ul>
+<p>Use this sequence:</p>
+<ol>
+<li>Create the new credential in its external authority.</li>
+<li>Add dual trust only when the consumer supports it.</li>
+<li>Update one consumer group.</li>
+<li>Verify positive access with the new identity.</li>
+<li>Verify denied access for an unrelated identity.</li>
+<li>Move every remaining consumer.</li>
+<li>Revoke the old credential.</li>
+<li>Verify old access now fails.</li>
+<li>Remove temporary files and old Secret keys.</li>
+<li>Record rotation time and affected workloads.</li>
+</ol>
+<p>Do not rotate the one-active-key source-attestation pair during active dispatch.
+The current design needs a maintenance window.</p>
+<h2 id="certificate-and-spire-rotation">Certificate and SPIRE Rotation</h2>
+<p>An <a href="../reference/glossary.html#svid">SVID (SPIFFE Verifiable Identity Document)</a>
+is a workload credential. These deployed paths use a short-lived X.509
+certificate that contains the workload's SPIFFE identity. Observe its expiry
+and the certificate authority (CA) expiry before the maintenance window.
+Verify SPIRE server persistence and CSI readiness.
+After rotation, verify identity and application permission separately. A valid
+SVID does not grant application permission; retain both the positive authorized
+request and the negative wrong-identity result.</p>
+<p>Use the <a href="worker-trust.html">Worker Trust runbook</a> for the detailed sequence.</p>
+<p>The complete expiry and restore contract remains open.
+<a href="../status/open-issues.html#spire-persistence-certificate-lifetime-and-recovery-contract-is-incomplete">SPIRE persistence, certificate lifetime and recovery</a> tracks that work.</p>
+<h2 id="registry-and-buildkit-maintenance">Registry and BuildKit Maintenance</h2>
+<p>Prepare BuildKit, the Buster runtime, and Kubernetes node pulls from the same
+registry contract. A projection is a client configuration file derived from
+that contract. Different endpoint, trust, or credential choices between clients
+can let a build succeed while the node cannot pull its result.</p>
+<h3 id="prepare-the-client-projections">Prepare the client projections</h3>
+<p>Start in <code>&lt;repository-root&gt;</code> on the administration machine after locked
+installation of repository dependencies and successful release/configuration
+preflight. Use the reviewed Buster render from <a href="#render-and-compare">Render and Compare</a>
+or the install render. <code>&lt;buster-render-file&gt;</code> is that protected YAML file.
+<code>&lt;new-registry-preparation-dir&gt;</code> is a new private directory outside Git and the
+incident evidence directory. It will contain a node file with credentials.</p>
+<p>The registry owner must first supply a node-reachable origin, DNS, HTTPS, the
+credential authority, and an owned storage/backup process. Select these inputs
+in <code>runtimeInfrastructure.registry</code>: <code>endpoint</code>, <code>transport</code>, <code>authSecretName</code>,
+<code>usernameKey</code>, and <code>passwordKey</code>. A private CA also needs <code>caSecretName</code>,
+<code>caSecretKey</code>, and the absolute host path <code>nodeCaFile</code>. The render maps the
+worker's CA path separately. Configure <code>runtimeInfrastructure.dockerHubMirror</code>
+only when the cache owner supplies its distinct origin, transport, and trust.
+An omitted or explicitly empty mirror disables that route. The writable
+registry and the mirror must have different hosts. Credentials require HTTPS;
+<code>http-lab</code> permits anonymous access only in the controlled lab.</p>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/_registry-clients.tpl#L15-L44">chart builds <code>registry-clients.v1</code> and credential references from these
+settings</a>.
+It rejects unsafe transport, incomplete trust, and competing sidecar settings.
+Ask the credential authority to inject the same selected username and password
+into <code>KUBECLAW_REGISTRY_USERNAME</code> and <code>KUBECLAW_REGISTRY_PASSWORD</code> in this
+restricted shell, without placing values in command arguments, Git, or logs.
+Do not retrieve or print Kubernetes Secret contents for this task.</p>
+<p>Extract the contract from exactly one rendered Buster runtime container and
+produce three new files. These commands write local files only:</p>
+<pre><code class="language-bash">umask 077
+export BUSTER_RENDER_FILE=&quot;&lt;buster-render-file&gt;&quot;
+export REGISTRY_PREP_DIR=&quot;&lt;new-registry-preparation-dir&gt;&quot;
+test -f &quot;$BUSTER_RENDER_FILE&quot; &amp;&amp; test ! -L &quot;$BUSTER_RENDER_FILE&quot;
+test ! -e &quot;$REGISTRY_PREP_DIR&quot;
+mkdir -m 0700 &quot;$REGISTRY_PREP_DIR&quot;
+node --input-type=module - &quot;$BUSTER_RENDER_FILE&quot; \
+  &quot;$REGISTRY_PREP_DIR/registry-clients.json&quot; &lt;&lt;'NODE'
+import fs from 'node:fs';
+import { parseAllDocuments } from 'yaml';
+const [renderFile, outputFile] = process.argv.slice(2);
+const documents = parseAllDocuments(fs.readFileSync(renderFile, 'utf8'));
+if (documents.some(document =&gt; document.errors.length)) throw new Error('rendered YAML is invalid');
+const containers = documents.map(document =&gt; document.toJSON())
+  .filter(document =&gt; document?.kind === 'Deployment')
+  .flatMap(document =&gt; document.spec?.template?.spec?.containers ?? [])
+  .filter(container =&gt; container.name === 'buster-v2-runtime');
+if (containers.length !== 1) throw new Error('one rendered Buster runtime is required');
+const entries = (containers[0].env ?? []).filter(entry =&gt; entry.name === 'KUBECLAW_REGISTRY_CONFIG');
+if (entries.length !== 1 || typeof entries[0].value !== 'string') {
+  throw new Error('one literal rendered registry contract is required');
+}
+const contract = JSON.parse(entries[0].value);
+if (contract.schemaVersion !== 'registry-clients.v1') throw new Error('wrong registry contract version');
+fs.writeFileSync(outputFile, `${JSON.stringify(contract)}\n`, { flag: 'wx', mode: 0o600 });
+NODE
+for registry_output in buildkit runtime node; do
+  node scripts/registry-client-config.mjs &quot;$REGISTRY_PREP_DIR/registry-clients.json&quot; \
+    &quot;$registry_output&quot; &quot;$REGISTRY_PREP_DIR/$registry_output.config&quot;
+done
+node --input-type=module - &quot;$REGISTRY_PREP_DIR&quot; &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import { registryClientConfig } from './scripts/registry-client-config.mjs';
+const directory = process.argv[2];
+const bytes = name =&gt; fs.readFileSync(path.join(directory, name));
+const contract = JSON.parse(bytes('registry-clients.json'));
+const expected = registryClientConfig(contract, process.env);
+assert.equal(bytes('buildkit.config').toString(), expected.buildkit);
+assert.deepEqual(JSON.parse(bytes('runtime.config')), expected.runtime);
+assert.deepEqual(JSON.parse(bytes('node.config')), expected.node);
+const files = ['registry-clients.json', 'buildkit.config', 'runtime.config', 'node.config'];
+for (const name of files) {
+  const file = fs.lstatSync(path.join(directory, name));
+  assert.ok(file.isFile() &amp;&amp; !file.isSymbolicLink());
+  assert.equal(file.mode &amp; 0o777, 0o600);
+}
+console.log(JSON.stringify({ registryOrigin: expected.runtime.registryBaseUrl,
+  registryReference: expected.runtime.registryReference,
+  mirrorOrigin: contract.dockerHubMirror?.endpoint || null,
+  contractDigest: 'sha256:' + crypto.createHash('sha256').update(bytes('registry-clients.json')).digest('hex'),
+  projectionDigests: Object.fromEntries(files.slice(1).map(name =&gt;
+    [name, 'sha256:' + crypto.createHash('sha256').update(bytes(name)).digest('hex')])),
+  privateModesVerified: true, scope: 'local-client-generation' }));
+NODE
+</code></pre>
+<p>Expected observation: every command exits zero, all four files have mode
+<code>0600</code>, and the final non-secret report identifies the selected origin,
+reference, optional mirror, contract digest, and projection digests. Retain
+that report, tool versions, render digest, command exit statuses, and the
+external credential-authority reference. Store the generated node file only
+with its credential authority; never copy its contents into evidence.
+The <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/registry-client-config.mjs#L23-L54">generator validates clients and authentication</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/registry-client-config.mjs#L98-L118">writes private new files without overwriting them</a>.</p>
+<p>Stop on a missing release/render, absent or duplicate runtime container,
+invalid JSON/YAML, implicit or contradictory transport, missing credential,
+incomplete trust pair, shared writable/cache host, existing output, or differing
+projection. Preserve only the sanitized failure and input digest. Correct the
+owned Helm input or credential source, render again, and start in a new output
+directory. Do not patch the generated files.</p>
+<h3 id="install-and-prove-the-selected-clients">Install and prove the selected clients</h3>
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th>Implemented configuration path</th>
+<th>Remaining operator proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BuildKit and Buster</td>
+<td>The deployed entrypoint regenerates its BuildKit TOML and runtime JSON from the same rendered contract, then starts BuildKit with that TOML.</td>
+<td>Verify the selected immutable workload and CA mount, authenticated build/push, manifest digest read, and Buster evidence import.</td>
+</tr>
+<tr>
+<td>Kubernetes node/K3s</td>
+<td>The generator produces <code>node.config</code> as JSON, which is also valid YAML. It contains registry routing, node CA paths, and credentials.</td>
+<td>The platform owner must install it on every selected node, install matching CA bytes, perform the platform's reload/restart, and prove an uncached CRI pull of the selected digest.</td>
+</tr>
+<tr>
+<td>Mirror</td>
+<td>Client generation routes <code>docker.io</code> to the optional selected cache.</td>
+<td>Separately prove warm pull, cold pull, cache storage/retention, and the selected outage policy.</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/docker/buster-runtime-entrypoint.sh#L11-L31">entrypoint creates and consumes the worker projections</a>.
+The <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/k3s-registries.yaml#L1-L7">node example explicitly selects no registry or mirror and states the
+installation limit</a>.
+Local generation does not install a node configuration, provision its DNS,
+TLS, or authentication, or prove a cold pull. This repository supplies no
+complete node installation, restart, rollback, or uncached-pull procedure.
+Stop before node installation or new runtime deployment when the platform owner
+has not provided a versioned procedure for those steps. It must name each node,
+existing configuration backup, destination, CA authority, restart effect,
+immutable test image, cold-pull observation, rollback, and cleanup. This limit
+must be removed by a maintained node procedure and a recorded per-node cold
+pull; changing the generator alone does not remove it.</p>
+<p>After all platform prerequisites pass, use the healthy and recovery
+<a href="diagnose.html#registry-endpoint-unavailable-during-buildkit-push">Registry/BuildKit exercise</a>
+to prove the runtime build path. Its receipt verifies push and manifest identity;
+retain a separate node pull result. Neither <code>/v2/</code> nor a cached pull proves the
+complete path. Before activation, recovery is to discard only the new local
+projection directory and retain the previous client configuration. After node
+activation, use the platform's exact prior configuration and restart procedure;
+reconcile a possibly completed push before another build.</p>
+<p>After retained proof or a safe stop, unset the injected registry credentials
+and remove only <code>$REGISTRY_PREP_DIR</code> through the credential owner's disposal
+policy. Confirm that directory is absent. Do not delete the reviewed render,
+registry data, image receipts, or existing node configuration as preparation
+cleanup.</p>
+<h3 id="preserve-image-lifetime-during-collection">Preserve image lifetime during collection</h3>
+<p>Before garbage collection:</p>
+<ol>
+<li>Stop registry writers.</li>
+<li>Record referenced manifests and release receipts.</li>
+<li>Verify storage backup.</li>
+<li>Use exclusive registry maintenance.</li>
+<li>Pull every retained selected digest after collection.</li>
+<li>Test cached and uncached client paths separately.</li>
+</ol>
+<p>Do not claim an online cache miss proves outage behavior.</p>
+<p>Long-lived rootless BuildKit isolation remains incomplete.
+<a href="../status/open-issues.html#long-lived-rootless-buildkit-lacks-a-job-specific-process-boundary">The BuildKit job-specific process boundary</a> remains open.</p>
+<h2 id="capacity-and-retention">Capacity and Retention</h2>
+<p>Use the <a href="capacity.html#canonical-capacity-and-retention-procedure">canonical capacity and retention procedure</a>.
+This page defines no second cleanup path.</p>
+<h2 id="security-rescan">Security Rescan</h2>
+<p>Run the release security process against selected immutable digests.
+Record scanner version and advisory database identity.</p>
+<p>Do not classify every failed rescan as a confirmed vulnerability.
+Scanner errors and missing release selections also fail the job.</p>
+<p><a href="../status/open-issues.html#release-security-rescan-needs-attention">The release security rescan issue</a> tracks the unresolved result.</p>
+<h2 id="controlled-retirement">Controlled Retirement</h2>
+<p>Retirement is a data and access operation, not only a Helm uninstall.</p>
+<h3 id="1-inventory-ownership-and-retained-evidence">1. Inventory ownership and retained evidence</h3>
+<p>Capture the exact local scope before changing access:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;$NAMESPACE&quot; get \
+  deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,configmap,secret,serviceaccount,role,rolebinding,networkpolicy,ciliumnetworkpolicy \
+  -o name &gt; &quot;&lt;evidence-dir&gt;/namespaced-resources-before.txt&quot;
+helm list -n &quot;$NAMESPACE&quot; &gt; &quot;&lt;evidence-dir&gt;/helm-before.txt&quot;
+</code></pre>
+<p>Add cluster-scoped SPIRE registrations, admission policy, DNS, Tailnet, OAuth,
+registry, GitHub, backup, monitoring, external volumes, Ops namespace, and
+credential identities to the inventory using each owning authority. Confirm the
+application namespace is dedicated. Preserve audit records and their reader,
+location, retention end date, and destruction owner before revoking access.</p>
+<p>Stop if a resource is unregistered, shared, ownerless, or selected evidence
+depends on the namespace that would be deleted.</p>
+<h4 id="establish-the-complete-deletion-window">Establish the complete deletion window</h4>
+<p>Before any removal, the platform and storage owners must establish and verify
+an externally enforced exclusion for the complete deletion window. It must
+prevent recreation of the original namespace, replacement of a PVC or PV under
+a reused name, new PVC creation, new provisioning, rebinding, and competing
+configuration or retention changes. Identify every administrator, controller,
+operator and desired-state reconciler that can make those changes. Their owners
+must restrict or suspend those actions and reconcile in-progress provisioning
+before approving removal. Keep storage deletion controllers available to
+complete approved disposal. Record the enforcement method, owners, affected
+identities, start time, checks that prove exclusion, and loss-of-exclusion stop
+condition. Stopping application writers alone does not establish this window.</p>
+<p>Preserve an independently approved original inventory outside the target
+namespace and storage. For each namespace, retain its name and UID. For every
+PVC, retain its name, namespace, UID, bound PV name and storage class. For each
+bound PV, retain its name, UID, complete claim reference (namespace/name/UID),
+reclaim policy, driver and provider asset identity. The storage owner supplies
+non-CSI and Pending-claim identities, reconciliation of in-progress allocation,
+and exact provider observation procedures; an absent PV does not prove that no
+asset exists. Retain provider snapshots, replicas and backup/export identities
+with each data owner's separate retain/delete approval and recovery scope.
+The names-only resource listing above is discovery, not this identity record.</p>
+<p>Immediately before removal, capture current identities in new evidence files
+through the owning authorities. Compare the full namespace/PVC/PV sets, UIDs,
+bindings, policies and provider assets with the approved original inventory.
+Review controller-driven version or disposition changes with both owners.
+Stop for a new or replacement object, changed binding, incomplete inventory,
+failed read, missing provider proof, or any unapproved data scope. Require a new
+reviewed plan rather than expanding the deletion set. These comparisons are
+non-atomic observations: they do not make a later name-based delete safe by
+themselves. The externally enforced exclusion must remain proven during all
+removal, uncertain-result reconciliation and final independent verification.</p>
+<p>If either owner cannot prove or maintain that exclusion, do not run <code>teardown</code>
+or <code>teardown-all</code>. Keep the data and evidence. The owners must supply a separate
+exact-resource procedure that protects each original identity at the destructive
+request, covers backing assets and dependent resources, states required rights,
+and provides independent read-back and recovery. There is no universal fence
+or provider cleanup command in this repository. Broad removal can resume only
+after both owners qualify the exclusion and unchanged approved identities;
+an alternative can proceed only after its own identity and recovery proof.</p>
+<h3 id="2-restrict-exposure-and-stop-new-work">2. Restrict exposure and stop new work</h3>
+<p>Disable public or Tailnet admission, new pipeline/project admission, scheduled
+jobs, and external writers through their owning authorities. Revoke interactive
+access that is no longer needed, while retaining one independent emergency
+administrator until verification finishes.</p>
+<p>The repository has no generic command for DNS, OAuth, Tailnet, GitHub, registry,
+backup, or monitoring authorities. Record each authority's exact command and
+receipt in the plan. Stop if any required authority-specific operation is
+missing; do not delete workloads first and leave reachable unmanaged access.</p>
+<h3 id="3-resolve-existing-work">3. Resolve existing work</h3>
+<p>Let safe work finish.
+Reconcile external effects.
+Record blocked work and its evidence.</p>
+<p>The CLI has no separate cancel command.
+Use the approved incident boundary for necessary containment.</p>
+<h3 id="4-export-and-back-up">4. Export and back up</h3>
+<p>Create final verified backups for every authoritative store.
+Copy them to the retained independent destination.</p>
+<p>Export release receipts, configuration digests, decisions, and audit records.
+Keep credentials in their separate authority.</p>
+<p>Re-run integrity and the supported isolated component restore before deletion.
+Stop if a final group or its encryption/key authority is incomplete.</p>
+<h3 id="5-revoke-workload-identities-and-external-resources">5. Revoke workload identities and external resources</h3>
+<p>After work is quiescent and evidence is independently readable, revoke workload
+credentials, SPIRE registrations, deploy keys, provider tokens, registry write
+access, and application-specific DNS or exposure. Remove external resources only
+through their owners. Keep backup-reader identity until retention ends.</p>
+<p>Verify each revoked identity is denied and every intentionally retained reader
+still works. An unknown revocation result is a stop condition.</p>
+<h3 id="6-remove-workloads-by-scope">6. Remove workloads by scope</h3>
+<p>Choose one command for the intended scope.
+Do not run these commands as a sequence.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Removes</th>
+<th>Keeps</th>
+<th>Required decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>./scripts/deploy.sh teardown-agents</code></td>
+<td>Nova and Buster Helm releases</td>
+<td>Infrastructure, namespace, Secrets, and PVCs</td>
+<td>Confirm that no run or external effect remains active or uncertain</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh teardown-prism</code></td>
+<td>Prism and Prism-agent Helm releases</td>
+<td>Namespace, Secrets, and kept Prism PVCs</td>
+<td>Confirm that Prism admission and writes have stopped</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh teardown</code></td>
+<td>Agents, selected infrastructure, Prism when enabled, and <strong>every PVC left in the application namespace</strong></td>
+<td>Namespace, Secrets, and separately applied PostgreSQL recovery CronJob, ConfigMaps and CiliumNetworkPolicies; other objects outside the removal list can also remain</td>
+<td>Confirm final verified backups, approve application-data deletion, and approve removal or explicit retention of remaining objects</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh teardown-all</code></td>
+<td>The complete application namespace and every resource in it</td>
+<td>Nothing in that namespace</td>
+<td>Approve final namespace, Secret, and remaining-state deletion</td>
+</tr>
+</tbody>
+</table>
+<p><code>teardown</code> is destructive even though it keeps the namespace and Secrets.
+After other removals, <code>cleanup_leftover_pvcs()</code> enumerates and deletes all remaining PVCs
+by name without a UID precondition, including claims retained by
+a Helm keep policy. A new claim can enter that later set; a replacement with
+the same name can pass a names-only precheck. <code>teardown-all</code> deletes the
+namespace by name without a UID precondition. Freezing shell namespace strings
+and kubeconfig does not freeze object lifetimes. Both broad commands require
+the complete deletion-window exclusion and original/current comparisons above.
+Stop before confirmation if any PVC lacks a verified final backup and a named destruction approval.</p>
+<p>When PostgreSQL recovery was installed, <code>teardown</code> does not remove these
+separately applied objects:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Name</th>
+<th>Consequence of retention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CronJob</td>
+<td><code>litellm-postgresql-backup</code></td>
+<td>The backup schedule remains; suspension does not delete it</td>
+</tr>
+<tr>
+<td>ConfigMap</td>
+<td><code>litellm-postgresql-backup-settings</code></td>
+<td>Recovery configuration remains</td>
+</tr>
+<tr>
+<td>ConfigMap</td>
+<td><code>litellm-postgresql-backup-script</code></td>
+<td>Recovery script remains</td>
+</tr>
+<tr>
+<td>CiliumNetworkPolicy</td>
+<td><code>litellm-postgresql-backup</code></td>
+<td>Backup-workload network rules remain</td>
+</tr>
+<tr>
+<td>CiliumNetworkPolicy</td>
+<td><code>litellm-postgresql-backup-database</code></td>
+<td>Database ingress rules remain</td>
+</tr>
+</tbody>
+</table>
+<p>A ConfigMap stores workload configuration. A CiliumNetworkPolicy selects
+Cilium network access rules. These objects are applied separately from the
+PostgreSQL Helm release. Uninstalling that release does not remove them. The
+backup PVC <code>litellm-postgresql-backup</code> is still included in the remaining-PVC
+deletion. A retained schedule cannot continue backup work after its volume and
+database are removed.</p>
+<p>Before approving that PVC deletion, the database and platform owners must
+record the recovery objects' actual names, namespaces, creating UIDs, ownership,
+suspension state and dependent Jobs/Pods in the signed inventory. Complete the
+final independent backup, export, integrity and restore proof in step 4 first.
+Choose explicit retention or owner-approved removal for each object. For
+retention, record the purpose, suspended schedule, reader, deadline and eventual
+removal owner. For removal, the owners must supply the exact identity-checked
+commands, required rights and independent named read-back procedure. Stop if
+that procedure or any ownership decision is missing; this page supplies no
+unconditional name-based deletion command. Reconcile existing backup Jobs and
+Pods before removal and verify their selected retained or absent state.</p>
+<p>After <code>teardown</code>, use that approved procedure to remove only the recorded
+remaining objects, or verify their explicit retained state. A denied read,
+timeout, changed UID or unexpected object stops verification. Preserve the
+inventory and failed output for the owner; do not repeat <code>teardown</code> to remove
+objects that it does not select.</p>
+<p>Before selecting the command, both owners must confirm the active exclusion,
+current identity comparison and independently approved data/backup scope.
+Reassert the bound cluster and exact namespace values immediately before the
+command. Do not change the kubeconfig's current context here:</p>
+<pre><code class="language-bash">assert_cluster_binding
+test &quot;&lt;context&gt;&quot; = &quot;$EXPECTED_CONTEXT&quot;
+test &quot;$NAMESPACE&quot; = &quot;&lt;namespace&gt;&quot;
+test &quot;$PRISM_NAMESPACE&quot; = &quot;&lt;prism-namespace&gt;&quot;
+assert_cluster_binding
+kubectl -n &quot;$NAMESPACE&quot; get pvc
+</code></pre>
+<p>Expected observation: the binding assertion succeeds and PVC names agree with
+the signed inventory. This listing supplements the mandatory UID, binding and
+provider-asset comparison; it cannot authorize deletion by itself. Abort the
+prompt on any difference or loss of exclusion. A prompt protects only against
+accidental invocation; it does not prove identity, exclusion, ownership or backup.</p>
+<p>After <code>teardown</code>, verify that no PVC remains and review the retained Secrets
+and recovery objects:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl -n &quot;$NAMESPACE&quot; get pvc
+kubectl -n &quot;$NAMESPACE&quot; get secrets
+kubectl -n &quot;$NAMESPACE&quot; get cronjob,job,pods,configmap,ciliumnetworkpolicy
+</code></pre>
+<p>Run <code>teardown-all</code> only with separate final namespace deletion approval, the
+unchanged original namespace UID and the still-proven complete exclusion:</p>
+<pre><code class="language-bash">assert_cluster_binding
+./scripts/deploy.sh teardown-all
+</code></pre>
+<p>That command destroys the namespace and included state.</p>
+<blockquote>
+<p><strong>Source evidence — teardown scopes</strong></p>
+<p><strong>Claim:</strong> <code>teardown-agents</code> and <code>teardown-prism</code> remove bounded workload releases. <code>teardown</code> keeps the namespace, Secrets and separately applied PostgreSQL recovery CronJob, ConfigMaps and CiliumNetworkPolicies, but deletes every remaining PVC, including the backup PVC. <code>teardown-all</code> deletes the namespace.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2692-L2699">The bounded agent teardown uninstalls only Nova and Buster</a>. <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2780-L2791">The cleanup helper re-enumerates remaining PVC names and deletes without UID preconditions</a>. <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2806-L2817">The namespace branch deletes the complete namespace</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/deploy.sh#L2749-L2778">Infrastructure removal selects specific releases and manifests</a>; <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/deploy.sh#L1151-L1162">installation applies recovery resources separately</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2828-L2838"><code>KUBECLAW_DEPLOY_PRISM</code> decides whether broad teardown first uninstalls Prism</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/render-postgresql-recovery.mjs#L61-L81">The recovery renderer defines the CronJob</a>, <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/render-postgresql-recovery.mjs#L84-L97">both policies</a>, and <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/render-postgresql-recovery.mjs#L116-L120">both ConfigMaps plus the backup PVC</a>.</p>
+<p><strong>Test evidence:</strong> Local synthetic execution of the exact teardown helpers issues backup-PVC deletion and no deletion of these five recovery objects. No repository test executes destructive PVC deletion against a live namespace. The documented command paths are protected by a regression check.</p>
+<p><strong>Revision:</strong> Checked at <code>430633accc4a374a740b5f12f384eeeb9dce228d</code>; the older deploy links contain the same complete file.</p>
+<p><strong>Limit:</strong> The available static evidence does not prove successful cleanup, backup integrity, external-resource removal, or data-destruction approval in a live environment.</p>
+</blockquote>
+<h3 id="7-verify-retirement-and-cleanup">7. Verify retirement and cleanup</h3>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; get namespace &quot;&lt;namespace&gt;&quot; --ignore-not-found
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;$NAMESPACE&quot; get \
+  deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,configmap,secret,serviceaccount,role,rolebinding,networkpolicy,ciliumnetworkpolicy \
+  --ignore-not-found
+helm list -n &quot;$NAMESPACE&quot;
+</code></pre>
+<p>Keep the exclusion active. Read back every original namespace/PVC/PV identity,
+binding and provider asset through successful independently retained owner
+observations. Distinguish original absence, an original terminating object and
+a replacement UID; any replacement or unexpected claim is a stop, not a new
+removal target. Kubernetes absence does not prove provider erasure. Obtain the
+storage owner's disposal or retention receipt for every original asset and
+reconcile in-progress provisioning before accepting completion.</p>
+<p>For <code>teardown-all</code>, expected namespace output is empty. For a narrower command,
+expected retained objects must match its <code>Keeps</code> column and the signed retained
+inventory, including all ConfigMaps and CiliumNetworkPolicies and the recovery
+CronJob and its Jobs/Pods. A resource-list error does not establish absence.
+Verify external DNS/exposure is absent, revoked identities are
+denied, monitoring and backup schedules have the selected retained/removed
+state, and retained backups still pass integrity and reader checks.</p>
+<p>Record the retention end date and destruction owner for remaining data.
+Both owners may release the exclusion only after final independent verification
+and all uncertain outcomes are reconciled. Remove temporary administration
+credentials only after that verification.
+If local deletion fails partially, do not repeat the broad command blindly;
+compare actual state with the before inventory and remove only an owned exact
+resource. Deleted PVC or namespace state is recoverable only from verified
+backup media.</p>
+<h2 id="evidence-to-retain">Evidence to Retain</h2>
+<ul>
+<li>Change plan and approvals.</li>
+<li>Old and new release selections.</li>
+<li>Rendered diff and private-overlay digest.</li>
+<li>Completed backup and restore proof.</li>
+<li>Migration output and irreversible-point record.</li>
+<li>Running image IDs and active bundle commits.</li>
+<li>Positive and negative credential checks.</li>
+<li>Rollback decision and result.</li>
+<li>Final data export and retirement inventory.</li>
+<li>Revocation and cleanup verification.</li>
+</ul>
+</main></body></html>

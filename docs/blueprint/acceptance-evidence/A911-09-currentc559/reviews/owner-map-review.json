@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The supplied generated output matches the authored SDK ownership metadata and retains documentation automation as owner of sdk-exports.md. Ownership remains derived from page metadata, with no duplicated authority introduced. No actionable defects were found in the scoped generated changes. This assessment does not constitute gate acceptance.",
+  "overall_confidence": 0.96
+}

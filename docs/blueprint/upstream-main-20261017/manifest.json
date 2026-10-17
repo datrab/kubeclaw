@@ -1,0 +1,75 @@
+{
+  "purpose": "Exact incoming main documentation preserved separately from immutable legacy extraction baseline; not reader/AP acceptance.",
+  "inputs": [
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/ROADMAP.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/ROADMAP.md",
+      "gitBlob": "978a49a9f2c81e673175240e9cf74303a25a5a7f",
+      "sha256": "e4de77f416a297b8b695fda4b16b9bb8b88b63660e67f5b90493aa4fc589c94e"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/architecture/prism-openclaw-runtime.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/architecture/prism-openclaw-runtime.md",
+      "gitBlob": "9e4188d3d015de8cf6e08db1d5ce2f7be03f997f",
+      "sha256": "eaebc4e631edab6e3cdd05c48f2cd9d89a44a21c37efc5a63f6d3878da09db85"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/deployment/continuous-gitops.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/deployment/continuous-gitops.md",
+      "gitBlob": "c4c4b4f9212b546a706f038e255c6303bcdb9d6d",
+      "sha256": "bc7a493a393eb1fb8450df5de585e3f0fbcb5cd350fe61ace6dfcaa48e3f6c36"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/operations/automatic-runtime-deployments.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/operations/automatic-runtime-deployments.md",
+      "gitBlob": "373f28e5d10b6effb55ba6403a13611e2bde785f",
+      "sha256": "17ff4e185d14e456c179e9a205752d40ebc30249c3cd16fa87cb82f0da4618a0"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/operations/ax41-rollout.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/operations/ax41-rollout.md",
+      "gitBlob": "02d6ab5061737063774a9c025d7134ed7b1799f4",
+      "sha256": "7d6a0ce4738ae0c0d40c80693cf850fed003a9744f750bb201af980494e5a80a"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/operations/native-worker-host-pools.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/operations/native-worker-host-pools.md",
+      "gitBlob": "07ef91a5629c820bc6b379aa66b1c23a6adc555d",
+      "sha256": "7e85eb6b9679fa0f70c25320851bb75c2c15a8e64bb85c9382ab8c06cee346f7"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/operations/openclaw-audit-recovery.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/operations/openclaw-audit-recovery.md",
+      "gitBlob": "a1eec6805ad24bb3a16a0e015800b06fd4040755",
+      "sha256": "05a8b739445d45466c4b468990ed2f10730a4205d0a36cb40d302fc41df57d59"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/ops/ops-pod.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/ops/ops-pod.md",
+      "gitBlob": "c523a2b59e1c5bc8396656ebadeab6de9a07e854",
+      "sha256": "b674e4f2464127a4851953db8451031159e2faa68f246321551c65267b55f060"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/reference/helm-values.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/reference/helm-values.md",
+      "gitBlob": "9051b77547e79b3b404151f7dbdd0aa1234c0e37",
+      "sha256": "9c83564766697c6f7dcb3f190332710fdfdd9c433f7f0761b7417841ecbc25dd"
+    },
+    {
+      "upstreamRevision": "ca8027649ba54629f9551b645ab0833b723e4da3",
+      "upstreamPath": "docs/runbooks/prism-recovery.md",
+      "retainedPath": "docs/blueprint/upstream-main-20261017/runbooks/prism-recovery.md",
+      "gitBlob": "dfa16ae0545121e4c2862c0dcd7f11a45dc52d8d",
+      "sha256": "7703540e295d6dc10201baec48c44c51f689a52256053401fa89da55a6525a7e"
+    }
+  ]
+}

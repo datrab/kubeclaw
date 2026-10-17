@@ -1,10 +1,15 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { agentPrompt } from '../../../skills/prism/server/agent-prompt.mjs';
+import { prismDatabaseBootstrapConfig } from '../../../skills/prism/config/database-bootstrap.ts';
+import { parseAllDocuments } from 'yaml';
 const source=readFileSync(new URL("../../../scripts/deploy.sh",import.meta.url),"utf8");
 const chartValues=readFileSync(new URL("../../../charts/prism/values.yaml",import.meta.url),"utf8");
 const chartSchema=readFileSync(new URL("../../../charts/prism/values.schema.json",import.meta.url),"utf8");
 const workloads=readFileSync(new URL("../../../charts/prism/templates/workloads.yaml",import.meta.url),"utf8");
 const jobs=readFileSync(new URL("../../../charts/prism/templates/jobs.yaml",import.meta.url),"utf8");
+const backupJobs=readFileSync(new URL("../../../charts/prism/templates/backup.yaml",import.meta.url),"utf8");
+const backupScript=readFileSync(new URL("../../../charts/prism/files/prism-backup.sh",import.meta.url),"utf8");
 const secretInventory=JSON.parse(readFileSync(new URL("../../../docs/generated/inventory/secret-setup.json",import.meta.url),"utf8"));
 const ingestion=readFileSync(new URL("../../../charts/prism/templates/ingestion.yaml",import.meta.url),"utf8");
 const postgresql=readFileSync(new URL("../../../charts/prism/templates/postgresql.yaml",import.meta.url),"utf8");
@@ -16,10 +21,12 @@ const namespacePolicies=readFileSync(new URL("../../../my-values/infra/network-p
 const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
 const agentValues=readFileSync(new URL("../../../my-values/prism-agent-values.yaml",import.meta.url),"utf8");
 const agentBridge=readFileSync(new URL("../../../skills/prism/server/agent-bridge.mjs",import.meta.url),"utf8");
+const agentRunner=readFileSync(new URL("../../../skills/prism/server/agent-job-runner.mjs",import.meta.url),"utf8");
 const studioRequest=readFileSync(new URL("../../../skills/prism/server/studio-request.ts",import.meta.url),"utf8");
 const studioServer=readFileSync(new URL("../../../skills/prism/server/studio.ts",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control-server.ts",import.meta.url),"utf8");
 const databaseBootstrap=readFileSync(new URL("../../../skills/prism/server/bootstrap-database.ts",import.meta.url),"utf8");
+const databaseRoles=readFileSync(new URL("../../../skills/prism/server/database-roles.ts",import.meta.url),"utf8");
 const databaseMigrate=readFileSync(new URL("../../../skills/prism/server/migrate.ts",import.meta.url),"utf8");
 const firstMigration=readFileSync(new URL("../../../skills/prism/storage/migrations/001_prism.sql",import.meta.url),"utf8");
 const imageWorkflow=readFileSync(new URL("../../../.github/workflows/build-images.yaml",import.meta.url),"utf8");
@@ -41,7 +48,15 @@ assert.match(agentValues,/codeBundle:[\s\S]*existingSecret:\s*"github-bundle-rea
   "Prism code bundle must use the existing private-release reader");
 assert.match(agentValues,/repoUrl:\s*"git@github\.com:datrab\/kubeclaw\.git"/u,
   "Prism project checkout must remain on the explicit SSH remote");
-for(const sourceText of [agentValues,agentBridge]){
+assert.match(agentBridge,/import \{ AgentJobRunner,controlRequest \} from '\.\/agent-job-runner\.mjs'/u,
+  "Prism bridge must use its durable job runner");
+assert.match(agentRunner,/import \{ agentPrompt \} from '\.\/agent-prompt\.mjs'/u,
+  "Prism job runner must use the shared prompt builder");
+assert(agentRunner.includes("'--message',agentPrompt(job)"),
+  "Prism runner must send the generated prompt to the agent");
+const generatedPrompt=agentPrompt({id:'fixture-job',fence:1,operation:'design-set',request:{projectId:'fixture-project',
+  preferences:{request:{brief:'fixture'},generationId:'fixture-generation',snapshotDigest:'fixture-digest',snapshot:{}}}});
+for(const sourceText of [agentValues,generatedPrompt]){
   assert(sourceText.includes("/app/skills/packages/prism-contract/schemas/prism-v1.schema.json"),
     "Prism prompts must read the canonical schema from the code bundle");
   assert(sourceText.includes("/app/skills/packages/prism-contract/fixtures/minimal-web.json"),
@@ -84,18 +99,25 @@ assert(workloads.includes("runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000
   "Prism application pods must use a numeric non-root identity; the images declare the named node user");
 assert(jobs.includes("runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000"),
   "Prism migration jobs must use the control image's numeric non-root identity");
-assert.match(jobs,
-  /name: restore-proof[\s\S]*cleanup\(\)\{[\s\S]*trap - EXIT[\s\S]*dropdb --if-exists prism_restore_proof[\s\S]*trap cleanup EXIT[\s\S]*pg_restore --dbname=prism_restore_proof/u,
-  "Prism restore proof must unconditionally drop its temporary database while preserving the original failure");
+assert.match(backupJobs,/list "backup" "verify" "database-proof"[\s\S]*prism-restore-proof[\s\S]*command: \["bash", "\/backup-program\/prism-backup\.sh", \{\{ \$mode \| quote \}\}\]/u,
+  "Prism scheduled database proof must execute the shared backup program");
+assert.match(backupScript,
+  /cleanup_proof\(\)[\s\S]*trap - EXIT TERM INT[\s\S]*proof_created == 1[\s\S]*dropdb -- "\$proof_database"[\s\S]*status != 0[\s\S]*exit "\$status"[\s\S]*trap cleanup_proof EXIT[\s\S]*createdb -- "\$proof_database"[\s\S]*proof_created=1[\s\S]*pg_restore --exit-on-error --single-transaction --dbname="\$proof_database"/u,
+  "Prism database proof must clean up only its owned temporary database while preserving the original failure");
 assert.match(jobs,/name: bootstrap-database-roles[\s\S]*mountPath: \/tmp[\s\S]*name: migrate[\s\S]*mountPath: \/tmp[\s\S]*name: tmp[\s\S]*emptyDir:/u,
   "Prism migration containers need a writable temporary filesystem under a read-only root");
 assert.match(source,/capture_prism_migration_logs[\s\S]*bootstrap-database-roles migrate[\s\S]*Prism Helm deployment failed; captured migration output follows/u,
   "Prism deployment must preserve migration diagnostics before atomic cleanup");
 assert.doesNotMatch(source,/kubectl rollout restart deployment\/"\$prism_workload"/u,
   "Prism deploys must not restart digest-pinned application images");
-assert.match(databaseBootstrap,/ECONNREFUSED[\s\S]*maxAttempts = 60[\s\S]*retrying bootstrap/u,
+assert.equal(prismDatabaseBootstrapConfig({ADMIN_DATABASE_URL:'postgresql://fixture.invalid/db',
+  PRISM_MIGRATOR_PASSWORD:'fixture',PRISM_RUNTIME_PASSWORD:'fixture',PRISM_READONLY_PASSWORD:'fixture'}).maximumAttempts,60,
+  "Prism database bootstrap configuration must retain bounded attempts");
+assert.match(databaseBootstrap,/ECONNREFUSED[\s\S]*attempt <= config.maximumAttempts[\s\S]*retrying bootstrap/u,
   "Prism database bootstrap must tolerate bounded PostgreSQL startup races");
-assert.match(databaseBootstrap,/GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA prism TO prism_runtime[\s\S]*ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator/u,
+assert(databaseBootstrap.includes('await bootstrapPrismDatabaseRoles(admin, config.adminUrl, config.passwords)'),
+  "Prism bootstrap must execute its shared database role setup");
+assert.match(databaseRoles,/GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA prism TO prism_runtime[\s\S]*ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator/u,
   "Prism bootstrap must repair runtime privileges left by interrupted migrations");
 assert.match(databaseMigrate,/infrastructure: "preprovisioned"/u,
   "the production migrator must require infrastructure prepared by the admin bootstrap");
@@ -115,8 +137,20 @@ assert.doesNotMatch(networkPolicy,/name: prism-default-deny\s*\}\s*\n?spec:\s*\{
   "Prism default-deny must never select every pod in a shared namespace");
 assert.doesNotMatch(networkPolicy,/name: prism-dns\s*\}\s*\n?spec:\s*\n?\s*podSelector:\s*\{\s*\}/u,
   "Prism DNS allowance must not broaden egress for every pod in a shared namespace");
-assert(namespacePolicies.includes('port: 18891'),'Nova/Buster NetworkPolicies must include the provider-plan port 18891');
-assert(!namespacePolicies.includes('port: 18892'),'Nova/Buster NetworkPolicies must not retain the retired suite-worker port 18892');
+const parsedNamespacePolicies=parseAllDocuments(namespacePolicies).map(document=>{
+  assert.equal(document.errors.length,0,'namespace network policies must parse');return document.toJSON();
+});
+function declaredPorts(value:unknown):number[]{
+  if(Array.isArray(value))return value.flatMap(declaredPorts);
+  if(!value||typeof value!=='object')return [];
+  return Object.entries(value).flatMap(([key,item])=>key==='port'?[Number(item)]:declaredPorts(item));
+}
+for(const name of ['kubeclaw-nova-buster-test-gates','kubeclaw-buster-test-gates-from-nova']){
+  const policy=parsedNamespacePolicies.find(value=>value?.metadata?.name===name);
+  assert(policy&&declaredPorts(policy.spec).includes(18891),`${name} must include provider-plan port 18891`);
+}
+assert(!parsedNamespacePolicies.flatMap(declaredPorts).includes(18892),
+  'Nova/Buster NetworkPolicies must not retain the retired suite-worker port 18892');
 assert(!control.includes('roles.includes("approver")'),"any authenticated Prism user must be able to approve");
 assert(/all\)[\s\S]*?cmd_prism[\s\S]*?cmd_agents/.test(source),"deploy all must install Prism before agents");
 assert(source.includes('PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"'),"Prism must default to the KubeClaw namespace");

@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-17T12:09:36.724853+00:00",
+  "primaryGate": "A911-10",
+  "publishedRevision": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "changedSourceFiles": [
+    "scripts/docs-governance.mjs",
+    "scripts/lib/docs-route-continuity.mjs",
+    "scripts/tests/docs-route-continuity.test.mjs",
+    "scripts/docs-published-route-baseline.json"
+  ],
+  "sourceImpact": "Builtin-only new baseline read and pure route validator; no source discovery/native/producer/parser code changed. Existing current166page map is byte-identical; no production generation or reader-source changes. Machine baseline moved out of docs so no undocumented classification or reader asset introduced.",
+  "actualEvidence": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/review.json",
+      "sha256": "8e6fb9edd4d732a947528765a2c74b55bfd052f2240b2f2d2d2e5aea5aaa0916"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/actual-focused-result.json",
+      "sha256": "b4ba297e0686dbedefb4ec56e13bee5954ca6135808a5f2f49a44dd956fd2398"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/actual-link-transition-result.json",
+      "sha256": "beb32714cd7b4a60987c35f2d63fbbaa98ce70f844c45bb3b83131b774476e4a"
+    }
+  ],
+  "A91109": "c559 reviewed/c48 evidence/af792 registration immutable and exact accepted1/12 retained. New governance changes independently bounded-reviewed and tested; no claim that historical A91109 PASS approves new/current source.",
+  "remaining": "Full current source-family reference Remove/Rename proof and distinct Source/Reader/Quality A91110 decisions not yet qualified.",
+  "canonicalWrites": false,
+  "formalAcceptance": false
+}

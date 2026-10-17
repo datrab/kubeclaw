@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/workflows/wait-resume.html"></head><body><main>
+<h1 id="rehearse-human-approval-and-resume">Rehearse Human Approval and Resume</h1>
+<p>Status: source and bounded local checks available; full local lifecycle and deployment execution open
+Audience: pipeline authors and operators
+Owner: product integration maintainers; platform operations owns execution access
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/human-approval">skills/nova/plugins/human-approval</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution">skills/nova/core/execution</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/wait-store">skills/common/plugins/wait-store</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/operator-messaging">skills/common/plugins/operator-messaging</a>
+Applies to: <code>pipeline-definition.v2</code>, <code>pipeline-platform.v2</code>, <code>resume-signal.v2</code>
+Last verified: 2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence
+Source revision: <code>ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a</code>; wait/journal corrections checked at <code>929aadbad08b41e7a8504950f05dc0f526b706d6</code></p>
+<p>This guide supplies a complete disposable approval input set. Nova executes
+the installed human-approval stage, persists a wait, and sends its request to a
+notification receiver. An operator then supplies one decision. Nova records
+that decision and starts a second attempt. The second attempt returns <code>passed</code>
+without sending another notification.</p>
+<p>The <a href="../operate.html#canonical-run-control-procedure">canonical run-control procedure</a>
+owns the start, audit, signal, and recovery rules. Follow those rules throughout
+this exercise. The concrete commands below bind that procedure to this input set.
+An approval here concerns the disposable rehearsal request. It is not demo or
+product acceptance.</p>
+<p><strong>Execution status:</strong> input schemas, focused plugin boundary/guidance checks,
+receiver contract checks, and runtime registration validation passed within
+their local scope. Runtime validation selected the installed stage and four
+adapters; it did not start an approval run. These checks do not establish a
+completed local wait/resume lifecycle. The full local rehearsal has no successful
+execution evidence.
+The mandatory deployment wait/resume run remains open and unexecuted.</p>
+<h2 id="input-set">Input Set</h2>
+<p>Use these three files from the same checkout:</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Exact file</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline</td>
+<td><a href="wait-resume/approval.pipeline.json">approval.pipeline.json</a></td>
+<td>One <code>approval</code> stage of type <code>kubeclaw.decision.human-approval</code>; no dependent stage or external product change.</td>
+</tr>
+<tr>
+<td>Platform template</td>
+<td><a href="wait-resume/platform.template.json">platform.template.json</a></td>
+<td>Exact registrations, grants, loopback receiver, secret selector, and storage placeholders. Materialize a private copy before use.</td>
+</tr>
+<tr>
+<td>Signal template</td>
+<td><a href="wait-resume/signal.template.json">signal.template.json</a></td>
+<td>All eight required envelope fields and the approval payload. Replace its identities and deliberately stale time from the new durable wait. Never submit the unchanged template.</td>
+</tr>
+</tbody>
+</table>
+<p>The wait-stage package is <code>skills/nova/plugins/human-approval/plugin.json</code>,
+registration <code>kubeclaw.human-approval:approval</code>, module <code>src/stage.ts</code>, export
+<code>execute</code>. This exercise uses the generic approval registration, not the
+separate architecture approval registration. Generic approval accepts a summary
+and an operator decision; it does not bind a source/report digest. Use a
+separate contract when that binding is required.</p>
+<p>The pipeline sets <code>maxAttempts: 2</code>, <code>maxRemediationCycles: 0</code>,
+<code>timeoutMs: 10000</code>, and <code>timeoutMinutes: 60</code>. The initial waiting attempt consumes
+one attempt. The resumed attempt consumes the second. Setting <code>maxAttempts: 1</code>
+would exhaust the attempt budget when the stage tries to wait. The 60-minute
+expiry limits when Core accepts the decision. It is distinct from the 10-second
+stage execution limit. This guide schedules no retry or remediation.</p>
+<p>The platform selects these providers and grants:</p>
+<table>
+<thead>
+<tr>
+<th>Consumer</th>
+<th>Capability and provider</th>
+<th>Effective scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubeclaw.human-approval:approval</code></td>
+<td><code>signal.wait</code> → <code>kubeclaw.wait-store:waits</code></td>
+<td><code>approval.resolved</code>, issuer ID <code>operator:local</code></td>
+</tr>
+<tr>
+<td>Same stage</td>
+<td><code>operator.request</code> → <code>kubeclaw.operator-messaging:operator</code></td>
+<td>Target <code>operators</code></td>
+</tr>
+<tr>
+<td>Operator adapter</td>
+<td><code>network.http</code> → <code>kubeclaw.network-http:http</code></td>
+<td>Loopback origin <code>http://127.0.0.1:18765</code>; POST, listed headers, and byte/time limits also enforced by adapter configuration</td>
+</tr>
+<tr>
+<td>Operator adapter</td>
+<td><code>secrets.read</code> → <code>kubeclaw.secret-resolver:secrets</code></td>
+<td>Secret name <code>operator.webhook</code>, selected from environment variable <code>WAIT_REHEARSAL_WEBHOOK_KEY</code></td>
+</tr>
+</tbody>
+</table>
+<p>The notification adapter signs its HTTP body with an HMAC key. That transport
+signature authenticates the notification to this local receiver. The later
+resume envelope is <strong>unsigned</strong>. Its issuer is self-asserted by the file's
+creator. Restricted signal creation and CLI access are the effective operator
+authority; issuer matching does not authenticate a person.</p>
+<blockquote>
+<p><strong>Source evidence — installed stage and budgets</strong></p>
+<p><strong>Claim:</strong> Generic approval creates one wait and notification, then applies resumed guidance in a separate attempt.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/plugins/human-approval/src/stage.ts#L13-L54"><code>execute</code> branches on guidance before creating effects</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/lifecycle/reducer.ts#L69-L72">The reducer counts completed attempts and stops an exhausted wait</a>, <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/lifecycle/reducer.ts#L96-L101">wait projection</a>, <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/lifecycle/reducer.ts#L124-L128">attempt count</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/plugins/human-approval/plugin.json#L5-L19">The installed registration declares both required capabilities</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/plugins/human-approval/src/approval.ts#L102-L129"><code>parseApprovalGuidance</code> validates decision, payload issuer, and reason</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/tests/verification/reliability/operator-retention-authority-fixture.test.mjs#L83-L125">The production-package local HTTP fixture asserts one notification and two causal attempts</a>. Focused plugin boundary and guidance unit checks passed locally. These checks do not prove a completed lifecycle.</p>
+<p><strong>Revision:</strong> <code>ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a</code>.</p>
+<p><strong>Limit:</strong> Source and unit checks do not prove a deployed approval flow or authenticated human identity.</p>
+</blockquote>
+<h2 id="starting-conditions">Starting Conditions</h2>
+<p>Use an isolated Linux operator host with Node.js 24 and the paired npm version.
+Complete <a href="../quickstart.html#locked-dependency-installation">the canonical checkout and dependency setup</a>.
+Run all commands from that checkout, in Bash, as the same restricted operator.
+Define <code>preserve_run_state</code> from <a href="../operate.html#inspect-a-run">Inspect a Run</a> in
+that terminal before starting. Its platform and run variables are bound below.
+Keep this function available until the final audit.
+The repository and installed packages must stay unchanged during the run.
+Record the full commit and require a clean checkout before the measured run.
+These instructions apply to the source revision above; a changed package or
+graph requires a new governed run.</p>
+<p>The host must have <code>/usr/bin/flock</code> with <code>--exclusive</code>, <code>--timeout</code>, and
+<code>--conflict-exit-code</code>. Test the exact interface on a disposable file:</p>
+<pre><code class="language-bash">lock_probe=$(mktemp)
+if /usr/bin/flock --exclusive --timeout 1 --conflict-exit-code 75 &quot;$lock_probe&quot; true; then
+  rm &quot;$lock_probe&quot;
+else
+  probe_status=$?
+  rm &quot;$lock_probe&quot;
+  printf 'Stop: required flock interface failed, exit %s\n' &quot;$probe_status&quot; &gt;&amp;2
+  exit 1
+fi
+</code></pre>
+<p>Stop on failure. A <code>PATH</code> override cannot replace the fixed executable. Do not
+disable locking or substitute a lock mock. Use a platform-approved operator
+host that passes this exact prerequisite before continuing.</p>
+<p>The local exercise needs an unused loopback port 18765, a new private directory
+outside the checkout, capacity for Core/delivery/wait records, and permission to
+start and stop the disposable receiver. It requires no cluster or live provider.
+Stop on a bind error; do not use an unrelated service already on that port.</p>
+<h2 id="prepare-the-private-inputs-and-receiver">Prepare the Private Inputs and Receiver</h2>
+<p>These setup steps are for the local rehearsal only. For a deployment, first
+complete <a href="#deployment-registration">Deployment Registration</a>.</p>
+<p>Create a new private directory and materialize the platform. The loader resolves
+installation and Core paths from the platform file's directory. Adapter roots
+are set explicitly to absolute paths by this step.</p>
+<pre><code class="language-bash">umask 077
+export WAIT_REHEARSAL_ROOT=$(mktemp -d &quot;${TMPDIR:-/tmp}/wait-resume.XXXXXXXX&quot;)
+export WAIT_REHEARSAL_WEBHOOK_KEY=$(node --input-type=module -e 'import crypto from &quot;node:crypto&quot;; process.stdout.write(crypto.randomBytes(32).toString(&quot;hex&quot;));')
+export WAIT_REHEARSAL_RUN_ID=&quot;run:wait-resume:$(node --input-type=module -e 'import crypto from &quot;node:crypto&quot;; process.stdout.write(crypto.randomUUID());')&quot;
+node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import crypto from 'node:crypto';
+const root = process.env.WAIT_REHEARSAL_ROOT;
+const base = 'docs/site/use/workflows/wait-resume/';
+const originals = ['approval.pipeline.json', 'platform.template.json', 'signal.template.json'];
+const inputManifest = originals.map(name =&gt; {
+  const file = path.join(root, name);
+  fs.copyFileSync(base + name, file, fs.constants.COPYFILE_EXCL);
+  const bytes = fs.readFileSync(file);
+  return { path: name, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') };
+});
+fs.writeFileSync(path.join(root, 'input-manifest.json'), JSON.stringify(inputManifest, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+const p = JSON.parse(fs.readFileSync(path.join(root, 'platform.template.json'), 'utf8'));
+p.installationRoots = ['skills/common/plugins', 'skills/nova/plugins'].map(x =&gt; path.resolve(x));
+p.trustedBuiltinRoots = [...p.installationRoots];
+p.storageRoot = path.join(root, 'core');
+p.adapters['kubeclaw.wait-store:waits'].root = path.join(root, 'waits');
+p.adapters['kubeclaw.operator-messaging:operator'].deliveryRoot = path.join(root, 'deliveries');
+fs.writeFileSync(path.join(root, 'platform.json'), JSON.stringify(p, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+fs.copyFileSync(path.join(root, 'approval.pipeline.json'), path.join(root, 'pipeline.json'), fs.constants.COPYFILE_EXCL);
+fs.writeFileSync(path.join(root, 'run-id.txt'), process.env.WAIT_REHEARSAL_RUN_ID + '\n', { flag: 'wx' });
+fs.writeFileSync(path.join(root, 'source-commit.txt'), execFileSync('git', ['rev-parse', 'HEAD']), { flag: 'wx' });
+NODE
+</code></pre>
+<p>The setup copies all three original inputs and records their exact byte counts
+and SHA-256 digests in <code>input-manifest.json</code>. Materialization and signal creation
+use those private copies. Keep the originals unchanged.</p>
+<p>The setup command generates the key for this disposable receiver; it is not a
+deployment credential. Do not print it, write it to evidence, or reuse it for deployment.</p>
+<p>Start this receiver as a child of the same Bash terminal. Leave that terminal
+open until cleanup. It checks the real adapter's HMAC
+header and stores the delivered body and idempotency identity, without the key
+or signature. A 202 response supplies a notification receipt, not approval.</p>
+<pre><code class="language-bash">node --input-type=module &gt; &quot;$WAIT_REHEARSAL_ROOT/receiver.stdout&quot; 2&gt; &quot;$WAIT_REHEARSAL_ROOT/receiver.stderr&quot; &lt;&lt;'NODE' &amp;
+import fs from 'node:fs';
+import path from 'node:path';
+import http from 'node:http';
+import crypto from 'node:crypto';
+const root = process.env.WAIT_REHEARSAL_ROOT;
+const key = process.env.WAIT_REHEARSAL_WEBHOOK_KEY;
+if (!root || !key) throw new Error('Restricted receiver configuration is required');
+const file = path.join(root, 'receiver.jsonl');
+const server = http.createServer(async (req, res) =&gt; {
+  if (req.method !== 'POST' || req.url !== '/messages') { res.writeHead(404); res.end(); return; }
+  const chunks = []; let size = 0;
+  for await (const chunk of req) {
+    size += chunk.length;
+    if (size &gt; 16384) { res.writeHead(413); res.end(); return; }
+    chunks.push(chunk);
+  }
+  const body = Buffer.concat(chunks).toString('utf8');
+  const id = req.headers['idempotency-key'];
+  const signature = 'v1=' + crypto.createHmac('sha256', key).update(`${id}.${body}`).digest('hex');
+  if (!id || req.headers['x-kubeclaw-signature'] !== signature) { res.writeHead(403); res.end(); return; }
+  fs.appendFileSync(file, JSON.stringify({ idempotencyKey: id, payload: JSON.parse(body) }) + '\n', { mode: 0o600 });
+  res.writeHead(202, { 'content-type': 'application/json' });
+  res.end(JSON.stringify({ messageId: 'wait-rehearsal-local' }));
+});
+server.on('error', error =&gt; { console.error(error.message); process.exitCode = 1; });
+server.listen(18765, '127.0.0.1', () =&gt; console.log('Local receiver ready on 127.0.0.1:18765'));
+process.on('SIGINT', () =&gt; server.close());
+NODE
+WAIT_REHEARSAL_RECEIVER_PID=$!
+for receiver_check in {1..50}; do
+  test -s &quot;$WAIT_REHEARSAL_ROOT/receiver.stdout&quot; &amp;&amp; break
+  kill -0 &quot;$WAIT_REHEARSAL_RECEIVER_PID&quot; || break
+  sleep 0.1
+done
+test -s &quot;$WAIT_REHEARSAL_ROOT/receiver.stdout&quot; || { cat &quot;$WAIT_REHEARSAL_ROOT/receiver.stderr&quot; &gt;&amp;2; exit 1; }
+</code></pre>
+<p>Require the readiness line in <code>receiver.stdout</code>. Keep the child process ID for
+cleanup. Keep the key out of command arguments and logs.</p>
+<h2 id="validate-registration-and-start">Validate Registration and Start</h2>
+<p>Validate the exact runtime using the exported Nova validator. This performs
+package discovery, grant checks, module activation, and stage input checks.
+It does not execute stages, send the approval request, or prove receiver
+reachability.</p>
+<pre><code class="language-bash">node --input-type=module &lt;&lt;'NODE'
+import path from 'node:path';
+import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
+import { loadPipelineDefinition, validatePipelineRuntimeV2 } from '@kubeclaw/nova-core';
+const root = process.env.WAIT_REHEARSAL_ROOT;
+const platform = loadPlatformConfig(path.join(root, 'platform.json'));
+const pipeline = loadPipelineDefinition(path.join(root, 'pipeline.json'));
+console.log(JSON.stringify(await validatePipelineRuntimeV2(platform, pipeline)));
+NODE
+</code></pre>
+<p>Stop if validation fails. Keep its diagnostic and correct the private input
+before starting a run. An explicit graph uses this validation path; the
+project-only <code>--compile</code> action does not compile this graph.</p>
+<p>Start with the canonical explicit-graph command, and retain both outputs and
+the exit status. These commands intentionally record exit 1 for <code>waiting</code>.
+They do not turn every nonzero result into an accepted observation.</p>
+<pre><code class="language-bash">start_status=0
+npm run pipeline -- \
+  --platform &quot;$WAIT_REHEARSAL_ROOT/platform.json&quot; \
+  --pipeline &quot;$WAIT_REHEARSAL_ROOT/pipeline.json&quot; \
+  --run-id &quot;$WAIT_REHEARSAL_RUN_ID&quot; \
+  &gt; &quot;$WAIT_REHEARSAL_ROOT/start.stdout&quot; 2&gt; &quot;$WAIT_REHEARSAL_ROOT/start.stderr&quot; || start_status=$?
+printf '%s\n' &quot;$start_status&quot; &gt; &quot;$WAIT_REHEARSAL_ROOT/start.exit&quot;
+</code></pre>
+<p>Require start exit 1 and JSON <code>status: waiting</code> before continuing. Stop on a
+start error or any other state. Confirm the command exited and no writer owns
+this run. The receiver has finished its one request. Preserve the private
+Core run and the three known adapter/receiver files before the first audit.
+Define this helper in the same terminal. It uses the canonical run copy, then
+copies each store without parsing or removing partial bytes. It retains adapter
+bytes even if the Core copy has an incomplete journal; its nonzero result stops
+before audit:</p>
+<pre><code class="language-bash">export RUN_CONTROL_PLATFORM=&quot;$WAIT_REHEARSAL_ROOT/platform.json&quot;
+export RUN_CONTROL_RUN_ID=&quot;$WAIT_REHEARSAL_RUN_ID&quot;
+preserve_rehearsal_state() {
+  preservation_status=0
+  preserve_run_state || preservation_status=$?
+  node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+const source = process.env.WAIT_REHEARSAL_ROOT;
+const target = process.env.RUN_CONTROL_OBSERVATION_ROOT;
+const files = ['waits/records/store.json', 'deliveries/records/store.json', 'receiver.jsonl'];
+const manifest = files.map(file =&gt; {
+  const original = path.join(source, file);
+  if (!fs.lstatSync(original).isFile()) throw new Error('Regular store file required: ' + file);
+  const bytes = fs.readFileSync(original);
+  const copy = path.join(target, 'adapters', file);
+  fs.mkdirSync(path.dirname(copy), { recursive: true, mode: 0o700 });
+  fs.writeFileSync(copy, bytes, { flag: 'wx', mode: 0o600 });
+  assert.deepEqual(fs.readFileSync(original), bytes);
+  assert.deepEqual(fs.readFileSync(copy), bytes);
+  return { path: file, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') };
+});
+fs.writeFileSync(path.join(target, 'adapter-manifest.json'), JSON.stringify(manifest, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+NODE
+  adapter_copy_status=$?
+  test &quot;$preservation_status&quot; -eq 0 &amp;&amp; test &quot;$adapter_copy_status&quot; -eq 0
+}
+preserve_rehearsal_state || exit 1
+printf '%s\n' &quot;$RUN_CONTROL_OBSERVATION_ROOT&quot; &gt; &quot;$WAIT_REHEARSAL_ROOT/wait.raw-state.txt&quot;
+cp -R -- &quot;$RUN_CONTROL_OBSERVATION_ROOT&quot; &quot;$WAIT_REHEARSAL_ROOT/wait.raw-state&quot; || exit 1
+npm run pipeline -- \
+  --platform &quot;$WAIT_REHEARSAL_ROOT/platform.json&quot; \
+  --audit &quot;$WAIT_REHEARSAL_RUN_ID&quot; \
+  &gt; &quot;$WAIT_REHEARSAL_ROOT/wait.audit.stdout&quot; 2&gt; &quot;$WAIT_REHEARSAL_ROOT/wait.audit.stderr&quot;
+printf '%s\n' &quot;$?&quot; &gt; &quot;$WAIT_REHEARSAL_ROOT/wait.audit.exit&quot;
+</code></pre>
+<p>Require start exit 1 with JSON <code>status: waiting</code>, stage <code>approval</code> waiting,
+<code>attemptsUsed: 1</code>, and audit exit 0. A start error, <code>failed</code>, or <code>blocked</code> is a
+stop. npm writes its script banner before the CLI JSON; retain the whole output.</p>
+<p>Read the durable wait with the strict non-mutating parser. It rejects
+incomplete records and sequence or hash errors; it does not create locks or
+repair the journal. Stop on failure and preserve raw bytes before any audit or
+recovery. Read from the hash-verified journal, not from a copied example
+or the notification alone. This script also creates the valid signal and the
+two declared negative inputs. It records the creation time and budget summary.</p>
+<pre><code class="language-bash">node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+import { runRoot } from './skills/nova/core/execution/run-root.ts';
+const root = process.env.WAIT_REHEARSAL_ROOT;
+const run = runRoot(path.join(root, 'core'), process.env.WAIT_REHEARSAL_RUN_ID);
+const eventsFile = path.join(run, 'events.jsonl');
+const records = parseHashJournal(fs.readFileSync(eventsFile), eventsFile);
+const completed = records.filter(r =&gt; r.entry.type === 'attempt.completed');
+if (completed.length !== 1 || completed[0].entry.payload.result.outcome !== 'wait') throw new Error('Expected one completed waiting attempt');
+const creation = completed[0].entry;
+const wait = creation.payload.result.wait;
+if (wait.signalType !== 'approval.resolved' || wait.authorizedIssuer.id !== 'operator:local' || Date.now() &gt;= Date.parse(wait.expiresAt)) throw new Error('Unexpected or expired wait');
+const signal = JSON.parse(fs.readFileSync(path.join(root, 'signal.template.json'), 'utf8'));
+const id = 'signal:' + crypto.randomUUID();
+Object.assign(signal, { signalId: id, idempotencyKey: id, waitId: wait.waitId, signalType: wait.signalType, issuer: wait.authorizedIssuer, issuedAt: new Date().toISOString() });
+signal.payload.issuer = wait.authorizedIssuer;
+const write = (name, value) =&gt; fs.writeFileSync(path.join(root, name), JSON.stringify(value, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+write('active-wait.json', { wait, createdAt: creation.occurredAt, journalHead: records.at(-1).hash, attemptsUsed: 1 });
+write('valid.signal.json', signal);
+write('wrong-wait.signal.json', { ...signal, waitId: 'wait:wrong-rehearsal' });
+write('wrong-issuer.signal.json', { ...signal, issuer: { type: 'operator', id: 'operator:wrong' } });
+fs.writeFileSync(path.join(root, 'run-root.txt'), run + '\n', { flag: 'wx' });
+NODE
+</code></pre>
+<p>Read <code>active-wait.json</code> and compare its summary, issuer, wait identity, signal
+type, and expiry with the receiver body. Generic waits can have explicit null
+expiry; this human-approval input always sets a date-time. The signal must be
+issued at or after the recorded creation time, and Core's current clock must
+remain before expiry. Core does not check an upper bound on <code>issuedAt</code> against
+its current time or expiry. Set the accurate operator time; do not treat this
+minimum-time check as rejection of a future timestamp. Review the decision
+before submission.</p>
+<h2 id="observe-the-durable-authority">Observe the Durable Authority</h2>
+<p>The run root recorded in <code>run-root.txt</code> contains <code>events.jsonl</code>, <code>effects.jsonl</code>,
+graph/package snapshots, and, after valid resume, <code>signals.jsonl</code>. The adapter
+stores are <code>$WAIT_REHEARSAL_ROOT/waits/records/store.json</code> and
+<code>$WAIT_REHEARSAL_ROOT/deliveries/records/store.json</code>. Read them without editing.</p>
+<p>In <code>effects.jsonl</code>, match the <code>signal.wait</code> create request to its completed
+receipt and returned <code>wait-request.v2</code>. Match the <code>operator.request</code> publish
+request to its accepted and completed records. The notification receipt has
+<code>accepted: true</code>, target <code>operators</code>, HTTP status 202, and the local message ID.
+Its request idempotency key matches <code>receiver.jsonl</code>. The HMAC is a transport
+check; this receipt cannot resolve the wait.</p>
+<p>In the delivery store, retain the <code>notification-delivery-request.v1</code> and
+<code>notification-delivery-receipt.v1</code> records, bound to the original attempt and
+request. In the wait store, retain the <code>wait-value.v1</code> record with the same
+wait. The wait store keeps creation evidence after resolution; Core's journal
+determines whether the wait remains active.</p>
+<blockquote>
+<p><strong>Source evidence — input validation, notification, and durable records</strong></p>
+<p><strong>Claim:</strong> The input set uses installed registrations and a notification receipt distinct from Core's later signal resolution.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/execution/engine.ts#L18-L22">The exported validator prepares the runtime and checks the graph</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/execution/runner.ts#L40-L47">The runner checks stage schemas against their owners</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69">The platform loader resolves paths</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugins/operator-messaging/src/adapter.ts#L44-L62">Operator delivery signs the exact body and records the response</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugins/wait-store/src/adapter.ts#L214-L237">Wait creation derives an identity from the effect key and persists it</a>. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/telemetry/audit.ts#L14-L27">Audit reads the verified journal and reports its head</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/plugins/human-approval/schemas/config.schema.json#L1-L29">Approval config</a> and <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/plugins/human-approval/schemas/input.schema.json#L1-L14">approval input</a> constrain the stage. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugins/operator-messaging/schemas/config.schema.json#L1-L70">Notification target and quotas</a> constrain delivery. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugins/network-http/schemas/config.schema.json#L1-L1">HTTP origin, methods, headers, and limits</a> constrain network access. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugins/secret-resolver/schemas/config.schema.json#L1-L1">Environment secret selector</a> selects the key source.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/tests/verification/reliability/operator-retention-authority-fixture.test.mjs#L60-L108">The installed-package test identifies original effects, HMAC body, wait identity, delivery record, and receipt</a>. Published input schema checks and exported runtime validation passed locally. Those checks do not execute or prove the complete installed-package HTTP lifecycle.</p>
+<p><strong>Revision:</strong> <code>ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a</code>.</p>
+<p><strong>Limit:</strong> Validation does not execute the receiver or the stage. The local receiver has no reconciliation lookup endpoint; uncertain delivery requires a safe stop.</p>
+</blockquote>
+<p>Before testing signals, define this read-only observation helper. It records
+SHA-256 and byte count, including the absence of <code>signals.jsonl</code>, plus attempt
+and resolution counts. A comparison fails on any difference. It does not edit
+the authority files. Preserve the full files with these observations.</p>
+<pre><code class="language-bash">authority_snapshot() {
+  node --input-type=module - &quot;$1&quot; &quot;${2:-}&quot; &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+const root = process.env.WAIT_REHEARSAL_ROOT;
+const run = fs.readFileSync(path.join(root, 'run-root.txt'), 'utf8').trim();
+const files = {
+  events: path.join(run, 'events.jsonl'), effects: path.join(run, 'effects.jsonl'),
+  signals: path.join(run, 'signals.jsonl'),
+  waits: path.join(root, 'waits/records/store.json'),
+  deliveries: path.join(root, 'deliveries/records/store.json'),
+  receiver: path.join(root, 'receiver.jsonl'),
+};
+const hashes = Object.fromEntries(Object.entries(files).map(([name, file]) =&gt; {
+  if (!fs.existsSync(file)) { if (name !== 'signals') throw new Error('Missing authority: ' + name); return [name, null]; }
+  const bytes = fs.readFileSync(file);
+  return [name, { bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') }];
+}));
+const journals = ['events', 'effects', 'signals'];
+for (const name of journals) {
+  if (hashes[name] !== null) parseHashJournal(fs.readFileSync(files[name]), files[name]);
+}
+const events = parseHashJournal(fs.readFileSync(files.events), files.events).map(record =&gt; record.entry);
+const completed = events.filter(e =&gt; e.type === 'attempt.completed');
+const snapshot = { hashes, attemptsUsed: completed.length,
+  outcomes: completed.map(e =&gt; e.payload.result.outcome),
+  resolutions: events.filter(e =&gt; e.type === 'wait.resolved').length };
+const [name, compare] = process.argv.slice(2);
+if (compare) assert.deepEqual(snapshot, JSON.parse(fs.readFileSync(path.join(root, compare + '.authority.json'), 'utf8')));
+fs.writeFileSync(path.join(root, name + '.authority.json'), JSON.stringify(snapshot, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+NODE
+}
+authority_snapshot before
+</code></pre>
+<h2 id="reject-the-wrong-inputs-then-resume-once">Reject the Wrong Inputs, Then Resume Once</h2>
+<p>This helper invokes only the canonical explicit-graph resume command. It
+retains each response and status. Run it in the original operator terminal.</p>
+<pre><code class="language-bash">resume_case() {
+  case_name=$1
+  signal_file=$2
+  resume_status=0
+  npm run pipeline -- \
+    --platform &quot;$WAIT_REHEARSAL_ROOT/platform.json&quot; \
+    --pipeline &quot;$WAIT_REHEARSAL_ROOT/pipeline.json&quot; \
+    --run-id &quot;$WAIT_REHEARSAL_RUN_ID&quot; \
+    --signal &quot;$signal_file&quot; \
+    &gt; &quot;$WAIT_REHEARSAL_ROOT/$case_name.stdout&quot; 2&gt; &quot;$WAIT_REHEARSAL_ROOT/$case_name.stderr&quot; || resume_status=$?
+  printf '%s\n' &quot;$resume_status&quot; &gt; &quot;$WAIT_REHEARSAL_ROOT/$case_name.exit&quot;
+}
+resume_case wrong-wait &quot;$WAIT_REHEARSAL_ROOT/wrong-wait.signal.json&quot;
+authority_snapshot after-wrong-wait before
+</code></pre>
+<p>Require exit 1 and <code>WAIT_UNKNOWN_OR_STALE:wait:wrong-rehearsal</code>. Compare the
+five retained authority files with the before checksums; require unchanged
+bytes and absent signal journal. Stop on any changed authority or other error.</p>
+<p>Then test the wrong envelope issuer:</p>
+<pre><code class="language-bash">resume_case wrong-issuer &quot;$WAIT_REHEARSAL_ROOT/wrong-issuer.signal.json&quot;
+authority_snapshot after-wrong-issuer before
+</code></pre>
+<p>Require exit 1 and <code>WAIT_ISSUER_DENIED:operator:operator:wrong</code>. Require the same
+unchanged authority files and absent signal journal. The payload issuer stays
+unchanged in this negative case, so it tests Core's envelope issuer matching.
+Do not correct a rejected signal by editing durable state.</p>
+<p>Submit the reviewed valid bytes only after both negative checks pass:</p>
+<pre><code class="language-bash">resume_case valid &quot;$WAIT_REHEARSAL_ROOT/valid.signal.json&quot;
+</code></pre>
+<p>Require valid exit 0 and <code>status: succeeded</code> before the final audit. If the
+response is lost, nonzero, or uncertain, stop and use the preservation and
+reconciliation steps in <a href="#failure-and-interruption">Failure and Interruption</a>.
+After the command exits and all writers are stopped, preserve raw state again:</p>
+<pre><code class="language-bash">preserve_rehearsal_state || exit 1
+printf '%s\n' &quot;$RUN_CONTROL_OBSERVATION_ROOT&quot; &gt; &quot;$WAIT_REHEARSAL_ROOT/final.raw-state.txt&quot;
+cp -R -- &quot;$RUN_CONTROL_OBSERVATION_ROOT&quot; &quot;$WAIT_REHEARSAL_ROOT/final.raw-state&quot; || exit 1
+npm run pipeline -- \
+  --platform &quot;$WAIT_REHEARSAL_ROOT/platform.json&quot; \
+  --audit &quot;$WAIT_REHEARSAL_RUN_ID&quot; \
+  &gt; &quot;$WAIT_REHEARSAL_ROOT/final.audit.stdout&quot; 2&gt; &quot;$WAIT_REHEARSAL_ROOT/final.audit.stderr&quot;
+printf '%s\n' &quot;$?&quot; &gt; &quot;$WAIT_REHEARSAL_ROOT/final.audit.exit&quot;
+authority_snapshot after-valid
+</code></pre>
+<p>Require valid exit 0, <code>status: succeeded</code>, stage <code>approval</code> succeeded,
+<code>attemptsUsed: 2</code>, and audit exit 0. Require these causal observations:</p>
+<ol>
+<li>The first <code>attempt.completed</code> result is <code>wait</code>.</li>
+<li>Exactly one <code>wait.resolved</code> names this wait. Its <code>causationId</code> equals the
+signal's <code>signalId</code>, and its payload contains the exact submitted signal.</li>
+<li>A second, different attempt ID completes with <code>passed</code>, after the resolution.</li>
+<li><code>signals.jsonl</code> contains one signal. The final journal records <code>run.succeeded</code>.</li>
+<li>The wait store, delivery store, and receiver file are unchanged. There is
+still one HTTP notification and no second publish effect. No remediation
+cycle has been used.</li>
+</ol>
+<p>Record the event, effect, and signal journal checksums at this point. The valid
+decision has advanced durable state. There is no rollback operation that
+restores the earlier wait. Preserve the completed run; use a new run for new work.</p>
+<p>Replay the same file without changing a byte, time, ID, or key:</p>
+<pre><code class="language-bash">resume_case replay &quot;$WAIT_REHEARSAL_ROOT/valid.signal.json&quot;
+authority_snapshot after-replay after-valid
+</code></pre>
+<p>Require exit 1 with <code>WAIT_RUN_TERMINAL</code> for this successful run. Other supported
+stale-resolution paths can return <code>WAIT_ALREADY_RESOLVED</code> or
+<code>WAIT_UNKNOWN_OR_STALE</code>; they are not a saved successful CLI response. Require
+unchanged event, effect, signal, wait, delivery, and receiver files. Attempt
+count stays two; resolution count stays one. An identical stored signal is
+idempotent, but terminal/stale checks run before signal storage on this replay.</p>
+<p>Check the retained causal chain with this read-only command:</p>
+<pre><code class="language-bash">node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+const root = process.env.WAIT_REHEARSAL_ROOT;
+const run = fs.readFileSync(path.join(root, 'run-root.txt'), 'utf8').trim();
+const readJournal = name =&gt; {
+  const file = path.join(run, name);
+  return parseHashJournal(fs.readFileSync(file), file).map(record =&gt; record.entry);
+};
+const events = readJournal('events.jsonl');
+const signal = JSON.parse(fs.readFileSync(path.join(root, 'valid.signal.json'), 'utf8'));
+const completed = events.filter(e =&gt; e.type === 'attempt.completed');
+const resolved = events.filter(e =&gt; e.type === 'wait.resolved');
+assert.deepEqual(completed.map(e =&gt; e.payload.result.outcome), ['wait', 'passed']);
+assert.equal(resolved.length, 1);
+assert.equal(resolved[0].identity.waitId, signal.waitId);
+assert.equal(resolved[0].causationId, signal.signalId);
+assert.deepEqual(resolved[0].payload.signal, signal);
+assert.notEqual(completed[0].identity.attemptId, completed[1].identity.attemptId);
+assert(completed[0].sequence &lt; resolved[0].sequence &amp;&amp; resolved[0].sequence &lt; completed[1].sequence);
+assert.equal(events.filter(e =&gt; e.type === 'run.succeeded').length, 1);
+assert.deepEqual(readJournal('signals.jsonl'), [signal]);
+const effects = readJournal('effects.jsonl');
+const publish = effects.filter(e =&gt; e.type === 'requested' &amp;&amp; e.request.capability === 'operator.request');
+assert.equal(publish.length, 1);
+const receipt = effects.find(e =&gt; e.type === 'completed' &amp;&amp; e.receipt.idempotencyKey === publish[0].request.idempotencyKey);
+assert.equal(receipt.receipt.result.accepted, true);
+assert.equal(receipt.receipt.result.status, 202);
+assert.equal(fs.readFileSync(path.join(root, 'receiver.jsonl'), 'utf8').trim().split('\n').length, 1);
+console.log(JSON.stringify({ localCausalChecks: 'passed', attemptsUsed: 2, resolutions: 1, notifications: 1, deployment: false }));
+NODE
+</code></pre>
+<blockquote>
+<p><strong>Source evidence — authority and exact replay</strong></p>
+<p><strong>Claim:</strong> Core validates the active wait before storing a signal, writes one causal resolution, and rejects post-resolution replay before consuming another attempt.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/execution/engine-run.ts#L82-L100">Resume checks and record order</a> govern submission. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/execution/engine-run.ts#L109-L122">Signal deduplication and causal event</a> preserve resolution identity. <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/nova/core/execution/engine-snapshots.ts#L137-L144">Issuer, current-time expiry, and creation-time freshness</a> constrain acceptance.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L777-L802">The closed envelope requires eight fields and excludes a signature field</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a/tests/verification/reliability/attempt-projection-recovery.test.mjs#L25-L76">Recovery prefix test</a>. The test truncates private journal copies at each original completion/projection prefix. It checks rejection, expiry, one resolution, and two attempts. Available evidence does not establish successful execution of these lifecycle assertions. This test does not prove deployment behavior.</p>
+<p><strong>Revision:</strong> <code>ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a</code>.</p>
+<p><strong>Limit:</strong> Neither this source nor a local fixture proves the mandatory deployed run. Do not truncate or rewrite an operator run's journals to reproduce test-only crash prefixes.</p>
+</blockquote>
+<h2 id="failure-and-interruption">Failure and Interruption</h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Cause to distinguish</th>
+<th>Safe next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FILE_MUTEX_ACQUIRE_FAILED</code></td>
+<td>Required fixed host lock interface unavailable</td>
+<td>Stop before state claims. Use a supported host; preserve the failed attempt.</td>
+</tr>
+<tr>
+<td>Registry, provider, grant, or config validation error</td>
+<td>Wrong package/configuration selection</td>
+<td>Correct before a new run. Do not change a running graph or package snapshot.</td>
+</tr>
+<tr>
+<td>Receiver 403 or delivery error</td>
+<td>Missing/wrong secret, HMAC, origin/header permission, or receiver response</td>
+<td>Preserve request and receipt evidence. If delivery outcome is uncertain, stop and reconcile through the owning receiver. Do not replay publication by starting another run.</td>
+</tr>
+<tr>
+<td><code>WAIT_UNKNOWN_OR_STALE</code></td>
+<td>Wrong identity or resolved wait</td>
+<td>Preserve raw state before reading the same run's durable audit. Do not guess a replacement wait.</td>
+</tr>
+<tr>
+<td><code>WAIT_ISSUER_DENIED</code> or <code>WAIT_SIGNAL_TYPE_MISMATCH</code></td>
+<td>Envelope differs from the active wait</td>
+<td>Stop this submission; compare the reviewed signal with the durable request.</td>
+</tr>
+<tr>
+<td><code>WAIT_SIGNAL_STALE</code> or <code>WAIT_EXPIRED</code></td>
+<td>Issue time predates creation or current clock reached expiry</td>
+<td>Preserve the rejection. Do not change the clock or journal; expired approval needs a new governed run.</td>
+</tr>
+<tr>
+<td>Valid command response lost</td>
+<td>Acceptance may already be durable</td>
+<td>Stop writers and preserve raw run and adapter state before audit. Inspect complete hash-verified journals, then audit under the canonical procedure. Keep the original signal bytes, ID, time, and key. Do not invent a successor signal or repeat an uncertain effect.</td>
+</tr>
+<tr>
+<td><code>RECOVERY_SIGNAL_REQUIRED</code></td>
+<td>Recovery found an active wait</td>
+<td>Follow the canonical signal procedure. Recovery cannot create approval.</td>
+</tr>
+<tr>
+<td>Terminal run error</td>
+<td>Run already succeeded, failed, blocked, or cancelled</td>
+<td>Preserve the terminal audit. Use a new governed run for new work.</td>
+</tr>
+</tbody>
+</table>
+<p>For process interruption, use <a href="../operate.html#recover-after-interruption">Recover After Interruption</a>
+with the original graph, platform, package identities, run ID, and storage.
+Preserve raw partial bytes and checksums before the first audit or recovery.
+Stop on incomplete or corrupt journal records; do not trim them for inspection.
+Reconcile unresolved external effects before any permitted canonical repair or
+recovery. Audit can create lock files and truncate an unterminated journal tail;
+its success alone does not prove that an external operation completed. For this
+local input set, use <code>preserve_rehearsal_state</code> after writers stop; it binds the
+known Core and adapter paths. A missing file is a stop, not permission to create
+replacement authority. This guide supplies no
+generic receipt import or cancellation command. Stopping the local receiver
+does not cancel a durable Nova run. A signal payload with <code>decision: rejected</code>
+is a separate decision that yields <code>blocked</code> with reason <code>approval.rejected</code>;
+do not mutate the approved signal or replay it as a rejection.</p>
+<h2 id="final-check-and-cleanup">Final Check and Cleanup</h2>
+<p>Stop the owned receiver child after retaining the last request evidence:</p>
+<pre><code class="language-bash">kill -INT &quot;$WAIT_REHEARSAL_RECEIVER_PID&quot;
+wait &quot;$WAIT_REHEARSAL_RECEIVER_PID&quot;
+node --input-type=module &lt;&lt;'NODE'
+import net from 'node:net';
+const connection = net.connect({ host: '127.0.0.1', port: 18765 });
+connection.on('connect', () =&gt; { connection.destroy(); console.error('Stop: a listener remains'); process.exitCode = 1; });
+connection.on('error', error =&gt; { if (error.code !== 'ECONNREFUSED') { console.error(error.message); process.exitCode = 1; } });
+NODE
+</code></pre>
+<p>Require receiver exit and refused connection. If a listener remains, inspect
+its ownership before termination; do not kill an unrelated listener.</p>
+<p>Retain a restricted evidence copy outside the disposable directory. Include
+the source commit, package and graph snapshots, materialized platform and
+pipeline, all three original inputs, <code>input-manifest.json</code>, and actual signal
+bytes, run ID, commands, timestamps,
+exit statuses, wait/final audits, replay output, all journals, wait/delivery stores,
+receiver body, checksum/byte-count comparisons, and final operator decision.
+Do not retain the HMAC key. Check the copy's file digests before removing any
+source copy. A stopped or uncertain run requires preservation, not successful
+cleanup status.</p>
+<p>Before copying, save the nonsecret command transcript, start/end timestamps,
+signal-review decision, final operator decision, and any blocked step in the
+private root. The command blocks do not generate these operator records. Do not
+record environment values or enable shell tracing around the key. Stop writers
+before the archive copy.</p>
+<p>Create and verify the restricted local evidence copy:</p>
+<pre><code class="language-bash">export WAIT_REHEARSAL_ARCHIVE_ROOT=$(mktemp -d &quot;${TMPDIR:-/tmp}/wait-resume-evidence.XXXXXXXX&quot;)
+node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+const source = process.env.WAIT_REHEARSAL_ROOT;
+const target = process.env.WAIT_REHEARSAL_ARCHIVE_ROOT;
+fs.cpSync(source, target, { recursive: true, force: false, errorOnExist: true });
+function inventory(root, relative = '') {
+  return fs.readdirSync(path.join(root, relative)).sort().flatMap(name =&gt; {
+    const file = path.join(relative, name);
+    const stat = fs.lstatSync(path.join(root, file));
+    if (stat.isDirectory()) return inventory(root, file);
+    if (!stat.isFile()) throw new Error('Unsupported evidence entry: ' + file);
+    const bytes = fs.readFileSync(path.join(root, file));
+    return [{ path: file, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') }];
+  });
+}
+const original = inventory(source);
+const inputs = JSON.parse(fs.readFileSync(path.join(source, 'input-manifest.json'), 'utf8'));
+assert.deepEqual(inputs.map(input =&gt; input.path), ['approval.pipeline.json', 'platform.template.json', 'signal.template.json']);
+for (const input of inputs) {
+  assert.deepEqual(original.find(file =&gt; file.path === input.path), input);
+}
+assert.deepEqual(inventory(target), original);
+fs.writeFileSync(path.join(target, 'archive-manifest.json'), JSON.stringify(original, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+console.log(JSON.stringify({ retainedEvidence: target, filesVerified: original.length }));
+NODE
+</code></pre>
+<p>Require exit 0 and retain <code>WAIT_REHEARSAL_ARCHIVE_ROOT</code>. The copy includes all
+local state and diagnostic output, not the environment key. Move it to the
+approved retention location before temporary storage can expire.</p>
+<p>After the evidence copy is verified and the receiver has exited, remove only
+this new local rehearsal directory. Verify its identity before removal:</p>
+<pre><code class="language-bash">case &quot;$WAIT_REHEARSAL_ROOT&quot; in
+  &quot;${TMPDIR:-/tmp}&quot;/wait-resume.*) test -f &quot;$WAIT_REHEARSAL_ROOT/run-id.txt&quot; || exit 1 ;;
+  *) printf 'Stop: unexpected rehearsal root\n' &gt;&amp;2; exit 1 ;;
+esac
+test &quot;$(cat &quot;$WAIT_REHEARSAL_ROOT/run-id.txt&quot;)&quot; = &quot;$WAIT_REHEARSAL_RUN_ID&quot; || exit 1
+rm -r -- &quot;$WAIT_REHEARSAL_ROOT&quot;
+unset WAIT_REHEARSAL_WEBHOOK_KEY WAIT_REHEARSAL_ROOT WAIT_REHEARSAL_RUN_ID
+</code></pre>
+<p>Unset <code>WAIT_REHEARSAL_RECEIVER_PID</code> too. The archive retains authoritative local
+run evidence. This disposable cleanup rule does not authorize deleting shared
+deployment journals, waits, delivery records, lock files, or secret bindings.</p>
+<h2 id="deployment-registration">Deployment Registration</h2>
+<p><strong>Status: mandatory, open, and unexecuted.</strong> The input set gives exact
+pipeline, platform-template, signal-template, and wait-stage package paths. The
+platform template is a loopback fixture; it is not a registered deployment
+platform. The local receiver and <code>operator:local</code> label are not a deployment
+authority or credential. This guide supplies no deployment registration.</p>
+<p>Before a measured deployment run, platform operations and product integration
+maintainers must jointly record:</p>
+<ul>
+<li>The immutable checkout and runtime/image identity, supported execution host,
+protected operator principal, CLI route, and signal-file ownership/access.</li>
+<li>The exact installed human-approval package content identity, adapter package
+identities, pipeline file and digest, materialized platform file and digest,
+signal-template path and digest, and new run ID with clean journal.</li>
+<li>Approved durable Core, wait, and notification store paths, permissions,
+capacity, retention owner, and backup/evidence location.</li>
+<li>Registered notification target, endpoint/origin, receiver authority, permitted
+network route, named secret binding and environment selector, rotation owner,
+receipt query/reconciliation procedure, and cleanup authority. Record secret
+names and owners; never their values.</li>
+<li>The deployment operator issuer ID in stage config and the matching wait grant,
+target grant, provider selections, adapter origin/method/header permissions,
+byte/time limits, and active-adapter list. Review the effective configuration
+before the run; do not edit it after wait creation.</li>
+</ul>
+<p>Stop before deployment execution while any registration is missing. This is
+the current blocked step, owned by platform operations for host/access/storage
+and product integration maintainers for the registered workflow and packages.
+Do not replace the missing registration with a localhost result.</p>
+<p>Closure requires a fresh protected deployment run at the recorded immutable
+revision, persisted wait and journal head, wrong wait and wrong issuer rejection
+before valid submission, exactly one causal resolution, two completed attempts,
+the unchanged original delivery receipt, exact replay returning terminal/stale
+rejection with no second transition or budget, and cleanup that preserves all
+required evidence. Keep actual deployment outputs, exit codes, identities,
+checksums, and observations. An unexecuted or blocked run stays open even when
+all templates and local tests validate.</p>
+</main></body></html>

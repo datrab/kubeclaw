@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/README.html"></head><body><main>
+<h1 id="reference">Reference</h1>
+<p>Status: current
+Audience: operator, plugin author, maintainer, developer
+Owner: documentation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs">scripts/docs-generate.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs">scripts/docs-publication.mjs</a>
+Applies to: current repository source and generated inventories
+Last verified: 2026-09-17</p>
+<h2 id="purpose">Purpose</h2>
+<p>Use this section when you know what value, command, contract, or registration you
+need. The Understand section explains system behavior. The Use section gives
+procedures. This section gives exact names and source-backed facts.</p>
+<h2 id="configuration-and-operation">Configuration and Operation</h2>
+<ul>
+<li><a href="errors.html">Errors and safe diagnostics</a> maps diagnostic representations, owning boundaries, effects, and safe retry decisions.</li>
+<li><a href="events.html">Events and payloads</a> separates canonical records, actual consumers, delivery, ordering, retention, and audit effects.</li>
+<li><a href="contracts.html">Contracts, versions, and compatibility</a> Identify selected producer/reader versions, migration and retirement limits.</li>
+<li><a href="stores-and-retention.html">Stores, paths, and retention</a> Select authoritative data groups, quotas, cleanup and original-reader recovery boundaries.</li>
+<li><a href="images-and-digests.html">Images, digests, and release selection</a> Connect source/platform/image/bundle identities, promotion/deployment and verification limits.</li>
+<li><a href="configuration.html">Configuration</a> selects the owning consumer, effective-value rules, change boundary, and detailed family reference.</li>
+<li><a href="schemas.html">Schema authorities</a> maps registered and other named contracts to their actual validators, versions, and recursive interpretation limits.</li>
+<li><a href="roles-and-package-ownership.html">Roles and package ownership</a> separates bundle selection and package owners from Nova caller grants, Buster configuration, and Prism native-host authority.</li>
+<li><a href="pipeline-platform.html">Pipeline platform</a> documents the operator-owned package, trust, capability, adapter, observer, storage, isolation, timeout, and issuer authority.</li>
+<li><a href="nova-project.html">Nova project</a> documents every <code>nova-project.v2</code> source field and its deterministic compilation boundary.</li>
+<li><a href="pipeline-definition.html">Pipeline definition</a> documents the explicit <code>pipeline-definition.v2</code> graph contract and semantic graph rules.</li>
+<li><a href="pipeline-json.html">Project pipeline JSON</a> separates authored <code>.swarm/pipeline.json</code>, Nova compiler input, explicit execution graphs, and runtime progress.</li>
+<li><a href="worker-profiles-and-roles.html">Worker profiles and roles</a> documents worker identity, capabilities, resources, admission, and runtime roles.</li>
+<li><a href="host-and-prism-configuration.html">Host and Prism configuration</a> documents compact swarm input, Prism startup settings, native host policy, and consumer boundaries.</li>
+<li><a href="plugin-configuration.html">Plugin configuration</a> lists every registered configuration schema recursively, including defaults, constraints, branches, owners, and consumers.</li>
+<li><a href="buster-suites.html">Buster suites and providers</a> gives the complete twelve-suite surface, provider fields, defaults, ports, evidence, prerequisites, and checks.</li>
+<li><a href="buster-runtime-configuration.html">Buster runtime configuration</a> explains the service, store, authentication, limits, and capability policy that make those providers available.</li>
+<li><a href="buster-provider-configuration.html">Buster provider configuration</a> gives every exact nested field path, type, default, limit, and choice in all shipped provider schemas.</li>
+<li><a href="buster-error-codes.html">Buster error codes</a> lists every exact error emitted by the shipped suite providers and gives the safe action for each boundary.</li>
+<li><a href="lint-policy.html">Lint policy</a> explains loading, precedence, scope, severity, baselines, admission, packs, failures, and report evidence.</li>
+<li><a href="lint-policy-generated.html">Generated lint policy facts</a> lists every exact shipped tool, target, filter, timeout, threshold, admission, waiver, and pack value.</li>
+<li><a href="lint-rules.html">Lint rules and findings</a> explains repository-owned rules, normalized findings, external-code boundaries, remediation, and operational failures.</li>
+<li><a href="cli.html">CLI commands</a> lists the deployment command surface.</li>
+<li><a href="environment-variables.html">Environment variables</a> lists deployment and secret-setup variables.</li>
+<li><a href="helm-values.html">Helm values</a> lists current value families and Secret references.</li>
+<li><a href="secrets.html">Secrets</a> lists names, keys, owners, consumers, and recovery rules.</li>
+<li><a href="endpoints.html">Endpoints</a> catalogues Services, ports, ingresses, inbound routes, outbound connections, trust boundaries, health, and failure effects.</li>
+<li><a href="service-routing.html">Service routes and diagnosis</a> connects supported Service producers to ports, endpoints, DNS, network owners, and read-only failure checks.</li>
+<li><a href="configuration-precedence.html">Configuration precedence</a> identifies which source wins for each consumer without treating unrelated configuration families as one override stack.</li>
+<li><a href="api-object-updates.html">API object updates</a> explains client-side apply, patches, Argo operation selection, field ownership, and recovery boundaries.</li>
+<li><a href="configuration-change-impact.html">Configuration change impact</a> maps changes to restart, new-run, republish, host, rollout, and data procedures.</li>
+<li><a href="configuration-errors.html">Configuration errors</a> maps validation and admission signals to their owner and safe corrective action.</li>
+<li><a href="project-pipeline-publication.html">Project pipeline publication</a> documents the coupled <code>.swarm/progress.json</code> and <code>.swarm/pipeline.json</code> publication contract.</li>
+<li><a href="configuration-compatibility.html">Configuration compatibility</a> documents current version markers, pinned identities, and fail-closed compatibility boundaries.</li>
+<li><a href="verification-commands.html">Verification commands</a> maps claims to checks.</li>
+<li><a href="workflows.html">Workflow inventory</a> lists repository automation and triggers.</li>
+<li><a href="platform-surfaces-generated.html">Generated platform surface inventory</a> maps current runtime resources, Secret references, endpoints, stores, events, and Ops MCP tools to their detailed explanations.</li>
+</ul>
+<h2 id="extension-runtime">Extension Runtime</h2>
+<ul>
+<li><a href="sdk.html">Plugin SDK</a> explains both entrypoints, public helpers and types, exact JSON/digest rules, source identity, compatibility and rejection boundaries.</li>
+<li><a href="sdk-exports.html">Complete SDK exports and fields</a> records every discovered export, member and recursive schema rule with its consumer meaning and source.</li>
+<li><a href="capabilities.html">Capabilities</a> lists every grantable capability and registration.</li>
+<li><a href="../extend/plugin-catalogue/README.html">Plugin catalogue</a> lists every extension package.</li>
+<li><a href="../extend/contracts.html">Extension contracts</a> explains registration inputs and results.</li>
+</ul>
+<h2 id="shared-language">Shared Language</h2>
+<ul>
+<li><a href="glossary.html">Glossary</a> defines the terms used across the documentation.</li>
+</ul>
+<h2 id="documentation-maintenance">Documentation Maintenance</h2>
+<ul>
+<li><a href="documentation-site.html">Documentation site and publication</a> explains navigation, source evidence, allowed inputs, local staging, and rendered-site limits.</li>
+<li><a href="documentation-governance.html">Documentation governance</a> defines canonical ownership, source authority, metadata, decision, status, and route-lifecycle rules.</li>
+<li><a href="generated-documentation-map.json">Generated documentation map</a> maps every reader page to its owner, sources, status, and required checks.</li>
+<li><a href="documentation-route-registry.json">Route registry</a> records public redirects, deprecated terms, and their successors.</li>
+</ul>
+<h2 id="coverage-boundary">Coverage boundary</h2>
+<p>These references cover current authored configuration and the readers that
+consume it. Registration-specific configuration remains canonical in the
+recursive plugin catalogue, while runtime events and progress records are
+outputs rather than authoring inputs. An absent value grants no authority:
+check the owning contract before adding a field, port, package, or credential.</p>
+</main></body></html>

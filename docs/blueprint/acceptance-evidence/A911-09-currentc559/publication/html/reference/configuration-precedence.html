@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/configuration-precedence.html"></head><body><main>
+<h1 id="configuration-precedence-and-effective-values">Configuration Precedence and Effective Values</h1>
+<p>Status: current cross-component reference
+Audience: operator, pipeline author, maintainer
+Owner: platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/openclaw-agent-observer/src/index.ts">skills/common/plugins/openclaw-agent-observer/src/index.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts">skills/common/plugins/openclaw-agent-observer/src/observer-support.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/openclaw-agent-observer/src/config.ts">skills/common/plugins/openclaw-agent-observer/src/config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.ts">skills/common/plugin-runtime/foundation/config/platform.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-runtime.ts">skills/nova/core/execution/engine-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/resolver.ts">skills/nova/core/test-gates/resolver.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/e2e/support/platform-config.ts">tests/verification/e2e/support/platform-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/e2e/support/config-profiles/standard.json">tests/verification/e2e/support/config-profiles/standard.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/e2e/real-run-workspace.mjs">tests/verification/e2e/real-run-workspace.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/values.yaml">charts/kubeclaw/values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/deployment.yaml">charts/kubeclaw/templates/deployment.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/configmap-swarm-config.yaml">charts/kubeclaw/templates/configmap-swarm-config.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/_helpers.tpl">charts/kubeclaw/templates/_helpers.tpl</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/values.schema.json">charts/prism/values.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/ci-values.yaml">charts/prism/ci-values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/_product-decisions.tpl">charts/prism/templates/_product-decisions.tpl</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/workloads.yaml">charts/prism/templates/workloads.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/gitops/templates/applications.yaml">charts/gitops/templates/applications.yaml</a>
+Applies to: current pipeline, project, chart, host, and Prism configuration
+Last verified: 2026-10-09 at source revision <code>10e95ee97567cd42357e95d2a443aee4732b359c</code>
+Helm sections verified: 2026-10-10 at source revision <code>ec2a42ed215a2fa7dbd3172ef70ef446084963a9</code>; other families retain the evidence revisions below.
+Compact profile section verified: 2026-10-10 at source revision <code>fe426bd75db277b04cf405cc2057063b75fa0a1d</code>.</p>
+<h2 id="the-governing-rule">The governing rule</h2>
+<p>Precedence exists only inside a consumer that implements a merge. Two files
+that configure different consumers do not override each other. For example,
+Helm values can render a Nova pod environment, but they do not merge into the
+<code>pipeline-platform.v2</code> JSON passed to Nova.</p>
+<p>Use this sequence to find an effective value:</p>
+<ol>
+<li>Identify the process or registration that consumes the field.</li>
+<li>Identify the one loaded artifact or implemented merge for that consumer.</li>
+<li>Apply only the documented defaults and override order below.</li>
+<li>Record the loaded value and check any later conversion at its actual
+consumer. A schema-valid number can differ from the timer delay it produces.</li>
+</ol>
+<h2 id="precedence-by-family">Precedence by family</h2>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Resolution order and override rules</th>
+<th>Important boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline platform</td>
+<td>Schema-required value → optional consumer default (<code>effectLockTtlMs</code> only)</td>
+<td>One <code>--platform</code> file; no second file or project merge. Relative paths resolve from its canonical directory. <code>shutdownTimeoutMs</code> has no schema maximum, but Node timer delays above 2,147,483,647 ms become 1 ms. Check the <a href="configuration-change-impact.html#timer-range-and-stop-condition">timer range and stop condition</a>.</td>
+</tr>
+<tr>
+<td>Explicit pipeline graph</td>
+<td>Exact <code>stage.config</code>/<code>stage.input</code> values → defaults or derived values implemented by that stage</td>
+<td>Stage validation does not insert schema defaults. <code>pipeline-definition.v2</code> fields do not inherit from <code>nova-project.v2</code>; the compiler materializes a new graph.</td>
+</tr>
+<tr>
+<td>Nova project</td>
+<td>Compiler constants → optional project fields → compiler-derived repository/source bindings</td>
+<td>Array order does not control module order. The topological graph and ID tie-break do.</td>
+</tr>
+<tr>
+<td><code>.swarm/pipeline.json</code> test nodes</td>
+<td>Select suite templates and apply exclusions/overrides → add distinct suite and direct nodes → merge matrix configuration → resolve provider schema defaults and validate policy limits</td>
+<td>Node-ID conflicts reject; direct nodes and suite additions do not override selected nodes. Scope concurrency may narrow a suite ceiling, never widen it. Provider plan output is resolved data, not another authoring layer.</td>
+</tr>
+<tr>
+<td>Coupled <code>.swarm</code> files</td>
+<td>Committed generation selected by <code>.scaffold-publication/current.json</code></td>
+<td>When publication metadata exists, loose <code>progress.json</code> and <code>pipeline.json</code> must match it. No fallback on damage.</td>
+</tr>
+<tr>
+<td>Helm</td>
+<td>Chart defaults → supplied values files/CLI values in Helm's order → rendered manifest</td>
+<td>The running process sees only the rendered result. GitOps can reapply its declared source after manual cluster edits.</td>
+</tr>
+<tr>
+<td>Kubernetes environment</td>
+<td>Literal rendered value or selected ConfigMap/Secret key → fallback under the exact process loader condition</td>
+<td>An empty value selects a fallback for `</td>
+</tr>
+<tr>
+<td>Compact swarm profile expander</td>
+<td>Standard profile → supplied webhook and context fields → validated recursive <code>overrides</code> → template substitution using the original <code>repo_root</code> input</td>
+<td>Overrides can replace existing context fields. Placeholder input can differ from the effective root. The caller can make further changes after expansion; see the bounded flow below. This is not the pipeline-platform authority.</td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>Prism Helm values → rendered environment/files → defaults under each loader's empty-value rule → root-owned native pool policy for aggregate capacity</td>
+<td>Environment cannot override host cgroup capacity. SPIFFE mode changes which credential variables are authoritative.</td>
+</tr>
+<tr>
+<td>Plugin configuration</td>
+<td>Exact supplied stage/observer/adapter config → that consumer's implemented fallback; test-provider authored values → schema-default resolution → provider fallback</td>
+<td>The registry validates stages, observers, and adapters without inserting defaults. Its test-provider resolver clones values and inserts schema defaults. Grants remain separate and cannot be created by plugin config.</td>
+</tr>
+</tbody>
+</table>
+<p>An arrow shows the order in which that consumer resolves its inputs. A later
+step replaces an earlier value only where the named merge or override permits
+it. Defaults and fallbacks apply under each consumer's own missing- or
+empty-value conditions; they are not a universal higher-priority input.</p>
+<h3 id="test-node-composition-and-configuration">Test-node composition and configuration</h3>
+<p>Within a suite selection, <code>suites.&lt;instance&gt;.overrides.&lt;node&gt;</code> changes an
+existing template node. Its <code>uses</code> remains the template's provider contract.
+Configuration objects merge recursively; arrays and scalar values replace
+the corresponding earlier value. Evidence outcome settings merge separately.</p>
+<p>Suite <code>add</code> and direct scope <code>tests</code> or <code>fixtures</code> compose distinct node IDs.
+A suite addition cannot reuse a template ID, even if that template node was
+excluded. A direct declaration cannot reuse an already selected node ID.
+Either collision fails with <code>TEST_PLAN_NODE_DUPLICATE</code>; neither declaration
+wins. Remove an unintended duplicate or deliberately change the selection.
+Do not rely on declaration order to choose a winner.</p>
+<p>Matrix values then merge into each selected node's configuration. The provider
+resolver validates a clone and inserts schema defaults only for absent values.
+Policy defaults and maxima govern separate execution settings. Requests above
+the applicable timeout, limit, or concurrency maximum reject; the resolver
+does not reduce them to that maximum. The minimum requested concurrency across
+selected suites is a separate composition rule. A direct scope limit may
+lower that suite ceiling but cannot raise it.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L236-L243">suite override merge</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L370-L380">selected nodes and suite-add collision</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L328-L331">shared duplicate-ID guard</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L384-L389">direct declarations</a>.
+See also <a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L546-L566">matrix merge and timeout bound</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121">provider configuration resolution</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/common/plugin-runtime/foundation/registry/schema.ts#L86-L110">clone and schema defaults</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L427-L434">execution limit bounds</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L333-L351">suite and scope concurrency</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L696-L704">policy concurrency bound</a>.</p>
+<h2 id="compact-profile-inputs-and-overrides">Compact profile inputs and overrides</h2>
+<p>The compact expander converts the <code>standard</code> profile into a configuration
+object. It has its own input checks and merge. It does not merge into the
+<code>pipeline-platform.v2</code> file used by the Nova platform loader.</p>
+<p>The accepted top-level fields are <code>_doc</code>, <code>profile</code>, <code>features</code>, <code>tuning</code>,
+<code>overrides</code>, <code>discord_webhook_url</code>, <code>project</code>, <code>repo_root</code>, <code>paths</code>, and <code>run_id</code>.
+Before expansion, the input must select <code>profile: &quot;standard&quot;</code>. The <code>features</code>
+object must contain exactly <code>observability</code>, <code>buster</code>, and <code>discord_alerts</code>,
+each set to <code>true</code>. The <code>tuning</code> object must contain <code>safety_margins</code>,
+<code>retention</code>, <code>alerts</code>, <code>logs</code>, <code>checks</code>, and <code>determinism</code>, with the exact
+values shown below. These objects select the supported profile shape; they
+are not arbitrary feature switches. An unsupported profile, extra top-level
+key, incomplete feature/tuning object, or mismatched fixed value rejects.
+<code>overrides</code>, when supplied, must be an object, not an array or <code>null</code>.
+A supplied <code>discord_webhook_url</code> must be a string.</p>
+<p>The expander then performs these operations:</p>
+<ol>
+<li>Clone the standard profile.</li>
+<li>Insert a supplied <code>discord_webhook_url</code>, then supplied <code>project</code>,
+<code>repo_root</code>, <code>paths</code>, and <code>run_id</code> context fields.</li>
+<li>Validate every override target against that resulting object. Each target
+key must already exist. A nested object override requires an existing
+object at that path, and each nested target key must also exist.</li>
+<li>Merge validated object overrides recursively. Replace each other supplied
+value, including an array or <code>null</code>, at its existing target.</li>
+<li>Expand placeholders in strings, including strings inside arrays and maps.
+The placeholder context contains only <code>repo_root</code> from the original input.</li>
+</ol>
+<p>An override can therefore replace a context field inserted in step 2. If that
+field is absent from both the profile and the supplied context, the override
+rejects. For example, <code>overrides.paths.example</code> requires <code>paths.example</code> to
+exist before override validation. The target check does not validate the type
+or bounds of every replacement value. Acceptance by this helper alone does
+not prove that a downstream consumer will accept the configuration.</p>
+<p>This complete input illustrates two different repository roots. Both paths
+are synthetic strings; the expander does not open either repository.</p>
+<pre><code class="language-json">{
+  &quot;profile&quot;: &quot;standard&quot;,
+  &quot;features&quot;: { &quot;observability&quot;: true, &quot;buster&quot;: true, &quot;discord_alerts&quot;: true },
+  &quot;tuning&quot;: {
+    &quot;safety_margins&quot;: &quot;high&quot;, &quot;retention&quot;: &quot;high&quot;, &quot;alerts&quot;: &quot;rich&quot;,
+    &quot;logs&quot;: &quot;verbose&quot;, &quot;checks&quot;: &quot;strict&quot;, &quot;determinism&quot;: &quot;strict&quot;
+  },
+  &quot;project&quot;: &quot;raw-project&quot;,
+  &quot;repo_root&quot;: &quot;/raw-repository&quot;,
+  &quot;paths&quot;: { &quot;example&quot;: &quot;/raw-path&quot; },
+  &quot;run_id&quot;: &quot;raw-run&quot;,
+  &quot;overrides&quot;: {
+    &quot;project&quot;: &quot;override-project&quot;,
+    &quot;repo_root&quot;: &quot;/override-repository&quot;,
+    &quot;paths&quot;: { &quot;example&quot;: &quot;${repo_root}/example&quot; },
+    &quot;run_id&quot;: &quot;override-run&quot;
+  }
+}
+</code></pre>
+<p>The checked expander result has <code>project: &quot;override-project&quot;</code>,
+<code>repo_root: &quot;/override-repository&quot;</code>, and <code>run_id: &quot;override-run&quot;</code>.
+However, <code>paths.example</code> becomes <code>/raw-repository/example</code>: substitution
+reads the original root, not the overridden effective root. A referenced
+placeholder rejects if its original context value is missing, is not a string,
+or contains only whitespace. The diagnostic mentions <code>REPO_ROOT</code>, but this
+expansion function does not read that environment variable.</p>
+<p>Check the caller before treating this output as final. The real end-to-end run
+builder supplies a worktree root and run ID before expansion. After expansion,
+it applies its own normalization, assigns the run ID again, selects a webhook
+from its environment or configuration, and applies scenario changes. Thus an
+expander override of <code>run_id</code> does not control that builder's final run ID.
+Inputs without compact authority fields (<code>profile</code>, <code>features</code>, <code>tuning</code>, or
+<code>overrides</code>) pass through the expander unchanged; the helper's compact checks
+do not validate that other input form.</p>
+<blockquote>
+<p><strong>Source evidence — compact profile expansion</strong></p>
+<p><strong>Claim:</strong> The expander inserts supplied context before validating and merging overrides. It substitutes placeholders with the original root input. Caller changes can follow expansion.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L163-L183"><code>expandSwarmConfig</code> input checks</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L185-L199">context, override, and substitution order</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L104-L128"><code>assertOverrideTargets</code> and recursive merge</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L131-L149">placeholder input guard and traversal</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1500-L1520">run-builder supplied context</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1533-L1537">later run-builder changes</a>.</li>
+</ul>
+<p><strong>Contract or setting:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L19-L36">supported input fields and fixed feature/tuning values</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/config-profiles/standard.json#L46-L51">known-path example defaults</a>.</li>
+</ul>
+<p><strong>Test evidence:</strong> On 2026-10-10, Node.js <code>v24.21.0</code> ran 17 isolated assertions against the pinned expander. All passed. Checks covered supplied-context and webhook overrides, raw-root substitution, unknown and absent targets, object-over-scalar rejection, array/null replacement, nested-map preservation, and empty overrides. They also covered missing or whitespace-only placeholder input, unsupported profiles, fixed feature/tuning checks, extra top-level keys, invalid override shape, and noncompact pass-through. The repository-root example above produced the stated values.</p>
+<p><strong>Revision:</strong> <code>fe426bd75db277b04cf405cc2057063b75fa0a1d</code></p>
+<p><strong>Limit:</strong> These checks execute the expander, not the complete run builder or a deployed consumer. Caller adjustments were checked from source. Expansion does not prove valid repositories, credentials, runtime paths, or downstream behavior.</p>
+</blockquote>
+<h2 id="helm-collection-precedence">Helm collection precedence</h2>
+<p>A map is a set of named entries, such as <code>nodeSelector</code>. An array is an ordered
+list, such as <code>extraEnv</code>. A scalar is one value, such as <code>gateway.port</code>. These
+types have different merge rules. For the ordered values files checked with
+Helm 3.22.0, Helm reads chart defaults first and applies <code>-f</code> files from left to
+right. A later scalar replaces the earlier scalar. A later array replaces the
+whole earlier array; it does not append entries or merge entries by <code>name</code>.
+Helm merges maps recursively: later entries replace matching entries, but
+earlier entries remain when the later map does not supply their keys.</p>
+<p>Therefore, a later <code>{}</code> supplies no keys and does not clear an earlier map.
+A later <code>[]</code> replaces an earlier array with zero entries. In the checked
+KubeClaw <code>nodeSelector</code> case, a later YAML <code>null</code> removes the earlier mapping
+during value preparation. The template then omits <code>spec.template.spec.nodeSelector</code>.
+This is a removal request to Helm, not a <code>null</code> value delivered to a process.
+Do not transfer this result to a field whose schema requires the mapping or
+rejects the resulting absent or empty value.</p>
+<h3 id="check-an-ordered-overlay-without-a-cluster">Check an ordered overlay without a cluster</h3>
+<p>Start in the repository root at the stated source revision. Use Helm 3.22.0
+and a new local directory for the three example files and rendered output.
+These values contain synthetic environment and scheduling entries. They are
+for a local render; they are not a deployment profile. Helm needs the chart
+files, but this check needs no Kubernetes credentials or existing Secret.</p>
+<p>Create <code>base.yaml</code> in that directory:</p>
+<pre><code class="language-yaml">extraEnv:
+  - name: HELM_PRECEDENCE_EXAMPLE
+    value: base
+nodeSelector:
+  pool: base
+gateway:
+  port: 19000
+  resources:
+    requests:
+      cpu: 333m
+      memory: 701Mi
+</code></pre>
+<p>Create <code>empty.yaml</code>:</p>
+<pre><code class="language-yaml">extraEnv: []
+nodeSelector: {}
+</code></pre>
+<p>Create <code>remove.yaml</code>:</p>
+<pre><code class="language-yaml">extraEnv: []
+nodeSelector: null
+</code></pre>
+<p>Use the files' paths in place of <code>example-dir</code>:</p>
+<pre><code class="language-sh">helm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml &gt; example-dir/base-render.yaml
+helm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml -f example-dir/empty.yaml &gt; example-dir/empty-render.yaml
+helm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml -f example-dir/remove.yaml &gt; example-dir/remove-render.yaml
+</code></pre>
+<p>Inspect the <code>agent-nova</code> Deployment's pod template and its <code>kubeclaw</code> container.
+The first render contains <code>HELM_PRECEDENCE_EXAMPLE=base</code> and <code>nodeSelector.pool=base</code>.
+The second removes that environment entry but retains <code>nodeSelector.pool=base</code>.
+The third removes that environment entry and the complete <code>nodeSelector</code> block.
+It does not remove the chart's other environment entries. All three commands
+exited zero in the local check. Reversing the first two files restores the base
+environment entry because the populated array is then last.</p>
+<p>A further checked overlay replaced <code>pool</code> with <code>later</code>, added <code>zone: selected</code>,
+and replaced only <code>gateway.resources.requests.cpu</code> with <code>444m</code>. The rendered
+map contained both selector keys, and memory remained <code>701Mi</code>. Replacing
+<code>extraEnv</code> with one different entry removed the earlier entry completely.
+Two repeated <code>--set gateway.port=19002</code> and <code>--set gateway.port=19003</code> options
+after the files selected port <code>19003</code>. This evidence covers ordered files and
+repeated options of the same kind. It does not establish an ordering rule for
+every combination of different CLI option kinds or upgrade reuse options.</p>
+<p>Stop if Helm exits nonzero. Inspect its schema or template error before changing
+an overlay. A zero exit proves a local render only. Retain the input order,
+Helm version, source revision, output, and error stream. Remove the synthetic
+local files after inspection when you no longer need this evidence.</p>
+<h3 id="validate-the-complete-effective-collection">Validate the complete effective collection</h3>
+<p>Helm validates merged values against the chart schema before it can produce a
+successful render. A valid item does not prove that its containing collection
+is valid. For Prism:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Effective-value requirement</th>
+<th>Checked failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>imagePullSecrets</code></td>
+<td>At least one item; each item has a nonempty <code>name</code> and no extra properties.</td>
+<td>An explicit <code>[]</code> fails the array minimum.</td>
+</tr>
+<tr>
+<td><code>control.productDecisions.operators</code></td>
+<td>Unique strings, at most 100 items; each string has 1–512 characters and no surrounding whitespace. When decisions are enabled, at least one operator is required.</td>
+<td>Duplicate items, 101 items, and an enabled empty list fail schema validation.</td>
+</tr>
+<tr>
+<td><code>images.control</code>, <code>images.studio</code>, <code>images.worker</code>, <code>images.ingestion</code></td>
+<td>Each image requires a repository, immutable digest, and <code>pullPolicy</code> of <code>IfNotPresent</code> or <code>Never</code>.</td>
+<td><code>Always</code> and an explicit empty <code>pullPolicy</code> fail for each of the four images.</td>
+</tr>
+</tbody>
+</table>
+<p>Enabled product decisions also require their issuer, HTTPS origin/controller
+settings, credential references, and authenticated Tailscale ingress. The
+operator list alone does not enable a valid authority. For example, this
+render ends with a schema error, before Kubernetes can choose an image policy:</p>
+<pre><code class="language-sh">helm template precedence-example charts/prism --namespace default -f charts/prism/ci-values.yaml --set-string images.control.pullPolicy=
+</code></pre>
+<p>The CI file supplies synthetic image digests and a synthetic native host binding
+so that the unchanged baseline can render. It is not evidence of a real image,
+Secret, prepared host, or available worker. The baseline exited zero; the
+explicit empty policy exited one. Do not bypass schema validation to treat
+the rejected value as a supported configuration.</p>
+<p>The GitOps chart also has collection and scalar template guards. Empty
+<code>groups</code> fails with <code>release groups are required</code>. Its <code>revision</code> must contain
+exactly 40 lowercase hexadecimal characters; <code>main</code> fails with <code>revision must be a complete Git commit</code>. A local render with a synthetic complete revision,
+one group, and one destination succeeded. That render proves accepted input
+shape and the selected Application fields, not that the commit exists in Git
+or that Argo CD has reconciled it.</p>
+<h3 id="trace-the-render-to-the-actual-receiver">Trace the render to the actual receiver</h3>
+<p>Merge is only the first decision. A template can apply another fallback.
+For KubeClaw, an empty <code>gateway.url</code> renders a local URL using <code>gateway.port</code>;
+it does not disable the gateway destination. Empty <code>swarmConfigJson</code>,
+<code>semgrepConfigYaml</code>, and <code>eslintConfigMjs</code> select the checked-in chart files
+for the rendered ConfigMap. They do not remove those policies. These results
+were checked against the rendered URL and all three file payloads.</p>
+<p>An existing-Secret setting selects a reference, not the credential's contents.
+The checked <code>auth.existingSecret=precedence-synthetic</code> and
+<code>auth.existingSecretKey=synthetic-key</code> rendered that name/key pair for
+<code>OPENCLAW_GATEWAY_TOKEN</code> and rendered no generated Secret. Helm did not check
+whether that Secret or key exists. Keep the pair in evidence and redact data.</p>
+<p>A schema <code>default</code> annotation does not establish insertion into rendered or
+runtime values. Check the chart's actual values, template fallback, rendered
+field, and process loader separately. The complete boundary is authored values
+→ Helm merge and validation → rendered manifest → Kubernetes admission and
+resource reconciliation → process startup and readiness. A local render stops
+before admission. See <a href="configuration-change-impact.html#helm-render-and-runtime-impact">Configuration change impact</a>
+for the effect of each rendered change.</p>
+<blockquote>
+<p><strong>Source evidence — Helm effective collections</strong></p>
+<p><strong>Claim:</strong> Ordered overlays can clear a list without clearing a map; KubeClaw templates consume the resulting collections and apply field-specific fallbacks. Prism validates whole collections and image policies before rendering.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395">KubeClaw extra environment receiver</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662">scheduling receivers</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442">nested resource receiver</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1296-L1299">gateway URL fallback and token reference</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/_helpers.tpl#L46-L62">Secret reference selection</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-swarm-config.yaml#L10-L27">ConfigMap file fallbacks</a>.</li>
+</ul>
+<p><strong>Contract or setting:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L518-L521">KubeClaw collection defaults</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28">Prism image policy contract</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L79-L109">image reference bindings and pull-secret collection</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150">operator collection limits</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258">enabled operator minimum</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L1-L13">enabled authority template guards</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L1-L5">GitOps revision and group guards</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L51">GitOps selected Application fields</a>.</li>
+</ul>
+<p><strong>Test evidence:</strong> On 2026-10-10, Helm <code>v3.22.0+g144ca65</code> rendered an isolated copy of the pinned charts. Twenty-four assertions passed: ten successful renders and fourteen expected schema or template failures. The <a href="#check-an-ordered-overlay-without-a-cluster">ordered-overlay example</a>, reversed file order, recursive map preservation, whole-array replacement, repeated scalar CLI precedence, synthetic Secret reference, and file/URL fallbacks were checked. Prism checks covered the CI baseline, eight empty/<code>Always</code> policy failures, empty pull secrets, duplicate operators, 101 operators, and enabled empty operators. GitOps checks covered empty groups, accepted complete-revision shape, and branch-revision rejection.</p>
+<p><strong>Revision:</strong> <code>ec2a42ed215a2fa7dbd3172ef70ef446084963a9</code></p>
+<p><strong>Limit:</strong> These checks prove the named local render results. They do not validate every field or schema combination, API admission, Secret availability, GitOps reconciliation, pod rollout, runtime load, readiness, or a live operation.</p>
+</blockquote>
+<h2 id="where-defaults-are-applied">Where defaults are applied</h2>
+<p>A schema <code>default</code> is an annotation. It becomes an effective value only when a
+consumer inserts it or implements the same fallback itself. Stage, observer,
+and adapter validation leaves omitted optional fields absent. The stage executor
+passes <code>definition.config</code> unchanged, and adapter startup returns the validated
+configuration unchanged. The test-provider resolver instead clones its input
+and validates that clone with default insertion enabled.</p>
+<p>The OpenClaw agent observer has its own merge. Registration configuration is
+applied first, then service configuration, then hook configuration. A later
+defined key wins. An <code>undefined</code> key is ignored, but <code>null</code> and an empty value
+replace the earlier value. Each merged key that is not <code>undefined</code> then wins
+over its environment variable. The field normalizer runs after that choice.
+For example, an empty <code>redisHost</code> replaces a valid environment host and becomes
+absent after trimming; it does not select the environment host again.
+<code>redisTls</code> falls back to <code>false</code>. Required event and queue limits have no
+fallback. See the <a href="plugin-configuration.html">plugin field reference</a> and
+<a href="environment-variables.html">environment reader contracts</a> for each field's
+bounds and failure rules.</p>
+<p>For example, the human-approval schema advertises <code>timeoutMinutes: 60</code>. The
+registry leaves an omitted timeout absent. The approval parser then applies
+<code>config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES</code>, whose constant is
+60. An explicit valid integer wins. An empty string fails schema validation,
+and zero fails the minimum of 1. A schema annotation therefore does not prove
+that the registry applied this timeout.</p>
+<p>Collections can also have effective defaults and conditions. The direct-command
+provider uses <code>args: []</code>, <code>workingDirectory: &quot;.&quot;</code>, and <code>environment: {}</code> when
+those fields are absent. It then inserts <code>CI: &quot;true&quot;</code>. Empty arguments remain
+empty; an empty environment map still produces the CI entry. <code>reports: []</code> is
+valid only with <code>resultMode: &quot;exit-code&quot;</code>; <code>&quot;junit-required&quot;</code> requires a report.
+The shipped common command-runner rejects any command environment payload, so
+this provider needs a compatible executor before it can run through that
+boundary. The <a href="plugin-configuration.html">plugin configuration reference</a> records
+these conditions beside the affected fields.</p>
+<p>Environment defaults also depend on the exact operator. Buster's generated
+runtime file uses <code>Number(process.env.BUSTER_V2_MAX_ACTIVE_JOBS || 2)</code>. Both an
+absent value and an empty string select 2. The non-empty string <code>&quot;0&quot;</code> selects
+numeric zero; it does not select the fallback. Do not replace this behavior
+with an absent-only rule.</p>
+<blockquote>
+<p><strong>Source evidence — default application</strong></p>
+<p><strong>Claim:</strong> Registration validation preserves authored values; test-provider resolution inserts schema defaults in a clone; individual consumers apply their own fallbacks and collection rules.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L48-L81">stage, observer, and adapter validation</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121">test-provider resolution</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/schema.ts#L94-L113">validation and cloned default insertion</a>.</li>
+</ul>
+<p><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/stage-executor.ts#L70-L74">Stage configuration handoff</a>; <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/adapter-startup.ts#L50-L53">adapter configuration handoff</a>; <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/src/approval.ts#L67-L80">approval timeout fallback</a></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/buster/plugins/direct-command/src/provider.js#L58-L84">Command defaults and report-mode conditions</a>; <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/command-runner/src/adapter.ts#L54-L59">common command-runner environment rejection</a>; <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/docker/buster-runtime-entrypoint.sh#L178-L187">Buster empty-string fallback</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/schemas/config.schema.json#L22-L29">approval timeout type and range</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65">platform configuration contract checks</a> passed locally with Node 24.21.0. This contract check does not execute a deployed plugin.</p>
+<p><strong>Revision:</strong> <code>10e95ee97567cd42357e95d2a443aee4732b359c</code></p>
+<p><strong>Limit:</strong> Source evidence establishes default selection and the executor incompatibility. It does not establish successful direct-command execution through the shipped common command-runner.</p>
+</blockquote>
+<h2 id="absence-empty-null-and-false">Absence, empty, null, and false</h2>
+<p>These values are not interchangeable:</p>
+<ul>
+<li>Absent optional field: the named consumer may apply its default.</li>
+<li>Empty object: explicit object with no entries. It can mean “enable none,” but
+only if the containing schema permits it.</li>
+<li>Empty array: explicit zero selections. Some fields accept it
+(<code>activeAdapters</code>); others reject it (<code>installationRoots</code>).</li>
+<li><code>null</code>: a value only where the schema explicitly admits it. Nova Blueprint
+deliverable selectors use <code>null</code> to state “not declared.” Helm can instead
+consume <code>null</code> as a removal request before schema validation, as in the
+bounded <code>nodeSelector</code> example above.</li>
+<li><code>false</code>: explicit disablement. For example, <code>testAgentEnabled: false</code> does not
+disable provider execution.</li>
+<li>Empty string: often invalid, but a few chart values use it as an unconfigured
+placeholder that must become non-empty when a feature is enabled.</li>
+</ul>
+<p>Do not use truthiness as a general precedence rule. Check the exact loader.</p>
+<h2 id="safe-effective-value-inspection">Safe effective-value inspection</h2>
+<p>Use artifacts that the consumer already exposes. Do not print secret values.</p>
+<table>
+<thead>
+<tr>
+<th>Consumer</th>
+<th>Safe proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova platform</td>
+<td>Record the platform file digest, canonical path, schema check, resolved non-secret paths, registration IDs, provider IDs, and redacted configuration keys. The run snapshot records the effective provider/grant/adapter/observer authority.</td>
+</tr>
+<tr>
+<td>Project compiler</td>
+<td>Use <code>--compile</code> to a new file and record <code>definitionDigest</code>, <code>stageCount</code>, stage types, dependency edges, and non-secret configuration. Compilation has no runtime effects.</td>
+</tr>
+<tr>
+<td><code>.swarm</code> test authoring</td>
+<td>Run scaffold <code>--check</code>/<code>--print</code>; resolve a plan in an isolated check; record <code>planDigest</code>, node IDs, provider digests, limits, coverage, and concurrency.</td>
+</tr>
+<tr>
+<td>Helm</td>
+<td>Run schema validation and render manifests. Inspect image digests, resource limits, volume paths, identity names, and Secret references, not Secret data.</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>Compare workload generation/checksum and environment sources. Use the Secret name/key pair as evidence, never decoded contents.</td>
+</tr>
+<tr>
+<td>Prism native</td>
+<td>Inspect the policy digest, node identity, cgroup files, and readiness result. Do not treat Helm requests as actual host capacity.</td>
+</tr>
+</tbody>
+</table>
+<p>Redaction must preserve structure. Replace a secret value with <code>&lt;redacted&gt;</code> and
+retain its source name/key. Hashing a low-entropy token is not safe redaction.</p>
+<h2 id="conflicts-and-common-mistakes">Conflicts and common mistakes</h2>
+<ul>
+<li>A stage agent name does not override the runtime-dispatch adapter target.</li>
+<li>Provider configuration does not grant the provider a capability.</li>
+<li><code>activeAdapters</code> controls activation; an entry in <code>adapters</code> alone does not.</li>
+<li>A project's <code>maximumConcurrency</code>, a graph's <code>maxConcurrency</code>, a test plan's
+group limits, and a worker's capacity govern different schedulers.</li>
+<li>Editing a live ConfigMap does not change GitOps authority and may be reverted.</li>
+<li>Editing a materialized <code>.swarm/pipeline.json</code> without publishing its pair
+produces divergence, not a higher-precedence project value.</li>
+<li>Changing environment after a process captured its startup snapshot has no
+effect on that process.</li>
+</ul>
+<blockquote>
+<p><strong>Source evidence — observer configuration</strong></p>
+<p><strong>Claim:</strong> The observer merges registration, service and hook inputs. Later null and empty values remain explicit. Each defined merged key wins over its environment fallback before normalization.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/index.ts#L192-L200">merge call and source order</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts#L21-L29">defined-key merge</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/config.ts#L87-L111">key selection and normalization</a>.</li>
+</ul>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L9-L32">inline host-plugin schema</a></p>
+<p><strong>Test evidence:</strong> Local checks exercised the actual merge and resolver with absent, explicit, null, empty, whitespace, invalid and out-of-range values. These checks used no live Redis connection.</p>
+<p><strong>Revision:</strong> <code>10e95ee97567cd42357e95d2a443aee4732b359c</code></p>
+<p><strong>Limit:</strong> The schema advertises field types. The resolver and Redis transport apply additional runtime guards; a valid field alone does not prove a working observer connection.</p>
+</blockquote>
+<blockquote>
+<p><strong>Source evidence — implemented merges</strong></p>
+<p><strong>Claim:</strong> Platform paths resolve from one canonical file, test scopes have an explicit template/project/policy resolution order, and compact profile overrides can change only known paths.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69">platform load and path base</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L304-L353">suite expansion and lowest requested concurrency</a>.</li>
+</ul>
+<p><a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L354-L393">Suite overrides, direct nodes, and project concurrency</a>; <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/e2e/support/platform-config.ts#L98-L129">known-path compact overrides</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/engine-runtime.ts#L29-L42">runtime records the effective authority subset</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65">platform configuration contract checks</a></p>
+<p><strong>Revision:</strong> <code>10e95ee97567cd42357e95d2a443aee4732b359c</code></p>
+<p><strong>Limit:</strong> This precedence map does not replace Helm's own multi-file ordering or an external GitOps controller's declared reconciliation policy.</p>
+</blockquote>
+</main></body></html>

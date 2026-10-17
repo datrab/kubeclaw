@@ -1,0 +1,1377 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/prism-data.html"></head><body><main>
+<h1 id="prism-data-from-design-intent-to-a-verified-baseline">Prism Data: From Design Intent to a Verified Baseline</h1>
+<p>Status: implemented with stated limits
+Audience: Prism developer, platform engineer, operator, and incident responder
+Owner: Prism maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/prism/v1">contracts/prism/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism">skills/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism">charts/prism</a>
+Evidence revision: <code>b2b85d4c8d3174aa41507cde77637227bb709e1e</code>
+Applies to: prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema
+Last verified: source, schema, migration, chart, and test inspection on 2026-09-19; backup source changes reconciled on 2026-10-17 (source inspection, not a live restore)</p>
+<h2 id="purpose">Purpose</h2>
+<p>Prism turns design intent into a revisioned design document and then into an
+approved baseline bundle. It also keeps the evidence that explains how the
+design was selected.</p>
+<p>This page explains the data model and the rules that protect it. It follows a
+project through design requests, design rounds, documents, revisions,
+approval, rendering, and publication. It also explains corpus retrieval,
+preferences, PostgreSQL, file artifacts, and backup behavior.</p>
+<p>The key idea is simple: Prism does not overwrite an accepted fact when it can
+add a new fact. A document revision, a preference event, an approval, and a
+baseline are separate records. This costs storage and adds joins, but it makes
+the reason for a result visible and makes stale work easier to reject.</p>
+<h2 id="the-data-map">The Data Map</h2>
+<pre><code class="language-mermaid">flowchart LR
+    Project[Project] --&gt; Request[Design request]
+    Request --&gt; Round[Design round]
+    Round --&gt; Direction[Three directions]
+    Direction --&gt; Document[Design document]
+    Document --&gt; Revision[Immutable revisions]
+    Revision --&gt; Approval[Approval]
+    Approval --&gt; Baseline[Baseline record]
+    Baseline --&gt; Bundle[Content-addressed bundle]
+    Preference[Preference events] --&gt; Snapshot[Generation snapshot]
+    Snapshot --&gt; Round
+    Corpus[Governed corpus] --&gt; Retrieval[Rights-filtered retrieval]
+    Retrieval --&gt; Round
+    Document --&gt; Renderer[Renderer and browser capture]
+    Renderer --&gt; Bundle
+    ArtifactStore[Content-addressed artifact store] --&gt; Request
+    ArtifactStore --&gt; Corpus
+    ArtifactStore --&gt; Bundle
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project</td>
+<td>Directed connection</td>
+<td>Design request</td>
+</tr>
+<tr>
+<td>Design request</td>
+<td>Directed connection</td>
+<td>Design round</td>
+</tr>
+<tr>
+<td>Design round</td>
+<td>Directed connection</td>
+<td>Three directions</td>
+</tr>
+<tr>
+<td>Three directions</td>
+<td>Directed connection</td>
+<td>Design document</td>
+</tr>
+<tr>
+<td>Design document</td>
+<td>Directed connection</td>
+<td>Immutable revisions</td>
+</tr>
+<tr>
+<td>Immutable revisions</td>
+<td>Directed connection</td>
+<td>Approval</td>
+</tr>
+<tr>
+<td>Approval</td>
+<td>Directed connection</td>
+<td>Baseline record</td>
+</tr>
+<tr>
+<td>Baseline record</td>
+<td>Directed connection</td>
+<td>Content-addressed bundle</td>
+</tr>
+<tr>
+<td>Preference events</td>
+<td>Directed connection</td>
+<td>Generation snapshot</td>
+</tr>
+<tr>
+<td>Generation snapshot</td>
+<td>Directed connection</td>
+<td>Design round</td>
+</tr>
+<tr>
+<td>Governed corpus</td>
+<td>Directed connection</td>
+<td>Rights-filtered retrieval</td>
+</tr>
+<tr>
+<td>Rights-filtered retrieval</td>
+<td>Directed connection</td>
+<td>Design round</td>
+</tr>
+<tr>
+<td>Design document</td>
+<td>Directed connection</td>
+<td>Renderer and browser capture</td>
+</tr>
+<tr>
+<td>Renderer and browser capture</td>
+<td>Directed connection</td>
+<td>Content-addressed bundle</td>
+</tr>
+<tr>
+<td>Content-addressed artifact store</td>
+<td>Directed connection</td>
+<td>Design request</td>
+</tr>
+<tr>
+<td>Content-addressed artifact store</td>
+<td>Directed connection</td>
+<td>Governed corpus</td>
+</tr>
+<tr>
+<td>Content-addressed artifact store</td>
+<td>Directed connection</td>
+<td>Content-addressed bundle</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: A project owns design requests. The active request owns the
+current design round. A round produces three direction records and three
+documents. Each document points to its current immutable revision. Preference
+events become a fixed generation snapshot before generation starts. Corpus
+retrieval can supply governed reference material. A matching approval permits
+Prism to render every view, state, and viewport and publish one
+content-addressed baseline bundle.</p>
+<blockquote>
+<p><strong>Source evidence — relational ownership</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L1-L74">The first migration defines projects, documents, revisions, directions, baselines, corpus records, preferences, engine operations, and approvals</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/013_design_round.sql#L1-L22">The round migration binds a round to its request, preference generation, parent round, source document, and source revision</a>.</p>
+</blockquote>
+<h2 id="four-forms-of-truth">Four Forms of Truth</h2>
+<table>
+<thead>
+<tr>
+<th>Form of truth</th>
+<th>Main record</th>
+<th>Can it change?</th>
+<th>Why Prism keeps it separate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current product intent</td>
+<td>Active <code>design_request</code></td>
+<td>A newer architecture revision can supersede it.</td>
+<td>Old design work must not become valid for new architecture input.</td>
+</tr>
+<tr>
+<td>Design history</td>
+<td><code>design_revision</code> rows</td>
+<td>Existing rows are not updated by normal editing.</td>
+<td>Undo, audit, stale-write detection, and exact approval need stable revisions.</td>
+</tr>
+<tr>
+<td>Human decision</td>
+<td><code>preference_event</code> and <code>approval</code></td>
+<td>Events can be retracted by a new event. An approval remains bound to one revision.</td>
+<td>Feedback and release authority have different meanings.</td>
+</tr>
+<tr>
+<td>Published delivery</td>
+<td><code>baseline</code> plus artifact bytes</td>
+<td>A published object is immutable.</td>
+<td>A downstream consumer must receive the exact approved files.</td>
+</tr>
+</tbody>
+</table>
+<p>An item can be current without being approved. An item can be approved without
+being published. A bundle can exist but no longer match the active
+architecture. Prism checks each boundary instead of treating one status as a
+substitute for another.</p>
+<h2 id="projects-and-design-requests">Projects and Design Requests</h2>
+<p>A project has an internal UUID and a unique external ID. The external ID is
+the stable product-facing key. The internal UUID is the relational key.
+Project status supports <code>active</code>, <code>approved</code>, and <code>archived</code>, but the current
+request and current round determine whether design output is current.</p>
+<p>A design request binds these items:</p>
+<ul>
+<li>the project;</li>
+<li>an architecture artifact ID and digest;</li>
+<li>a positive architecture revision;</li>
+<li>the complete request JSON;</li>
+<li>an <code>active</code> or <code>superseded</code> state;</li>
+<li>the current design round, after a round starts.</li>
+</ul>
+<p>Prism accepts the same architecture revision again only when its digest and
+request content still match. The comparison ignores <code>approvalId</code> because that
+field asks Prism to return an already approved result. It does not change the
+design intent. A newer architecture revision supersedes older active requests.
+A lower revision fails as stale input.</p>
+<p>This rule has a cost: a caller cannot correct content while it reuses the same
+revision number. It must publish a new architecture revision. That cost gives
+the revision number one stable meaning.</p>
+<blockquote>
+<p><strong>Source evidence — architecture frontier</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/006_design_request.sql#L1-L17">The design-request table requires positive revisions, keeps one project/revision pair, and has an active-request index</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L63-L82">The transition check rejects an older revision or a changed digest at the same revision</a>.
+It also rejects changed request content and an approval for different architecture.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L215-L229">Control locks the project, validates the transition, supersedes older requests, and records the active request in one transaction</a>.</p>
+</blockquote>
+<h2 id="design-rounds-and-directions">Design Rounds and Directions</h2>
+<h3 id="why-a-round-is-a-stored-object">Why a round is a stored object</h3>
+<p>A round is not only a request to an agent. It is the frozen context for one
+generation. It stores the architecture identity, parent round, source
+document and revision, feedback, request, start identity, result identity, and
+result.</p>
+<p>The round ID is also the preference-generation ID. This one-to-one identity
+prevents a generation result from being paired with a different preference
+snapshot.</p>
+<p>The <code>start_key</code> is unique per project. A repeat with the same input returns the
+recorded generation. A repeat with different input fails. This makes a retry
+safe without making unrelated starts equivalent.</p>
+<h3 id="the-current-round-frontier">The current-round frontier</h3>
+<p>The active request points to one current round. A new child round must name
+the current parent round and the exact current document revision. The project
+row is locked while Prism checks and moves this frontier. Two concurrent child
+starts cannot both become current.</p>
+<p>When a result arrives, Prism checks the frontier again. It rejects the result
+when the request became inactive, the architecture changed, the round is no
+longer current, or the source document changed. A late agent response is
+therefore evidence of completed work, but it is not authority to change the
+product.</p>
+<h3 id="exactly-three-directions">Exactly three directions</h3>
+<p>A design-set result must contain exactly three unique direction keys. Prism
+also checks material diversity. Its signature includes theme values, view
+surfaces, visual node types and visual properties, and component structure.
+Different copy alone is not a different direction. A pair needs a material
+distance of at least three.</p>
+<p>Prism writes all three documents and direction records in one transaction.
+If the second or third write fails, the complete set rolls back. This is more
+expensive than partial publication, but it prevents a user from choosing from
+an incomplete comparison.</p>
+<blockquote>
+<p><strong>Source evidence — round admission and delivery</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L14-L43">Round start locks the project, checks its inputs, captures evidence, inserts the round, and advances the request frontier</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L46-L59">Result binding supports exact replay and rejects stale architecture, stale rounds, and changed source documents</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L151-L178">Direction-set creation validates three designs and writes their documents, revisions, direction records, and round result in one transaction</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/directions/index.ts#L4-L37">The diversity gate gives extra weight to node type and root-structure differences and rejects a distance below three</a>.</p>
+</blockquote>
+<h2 id="design-documents">Design Documents</h2>
+<p>A design document is data, not free-form HTML. Its closed contract contains:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>meta</code></td>
+<td>Document, project, schema, revision, title, and timestamps.</td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td>Colors, typography, spacing, radius, shadow, motion, breakpoints, and design rules.</td>
+</tr>
+<tr>
+<td><code>assets</code></td>
+<td>References and metadata for images, icons, media, and fonts.</td>
+</tr>
+<tr>
+<td><code>components</code></td>
+<td>Reusable node trees with optional variants.</td>
+</tr>
+<tr>
+<td><code>views</code></td>
+<td>Surface-specific node trees, states, responsive patches, and optional mock data.</td>
+</tr>
+<tr>
+<td><code>flows</code></td>
+<td>Declared starts, successes, recovery targets, and transitions.</td>
+</tr>
+</tbody>
+</table>
+<p>The JSON Schema closes declared objects with <code>additionalProperties: false</code>.
+The semantic validator then performs checks that JSON Schema alone cannot do.
+It validates theme values, node properties, component references, variants,
+patch targets, and component cycles.</p>
+<p>All contract inputs also have general complexity limits: 32 MiB of encoded
+JSON, depth 256, one million visited nodes, and one million object properties.
+These are admission limits. They are not a promise that a document near each
+limit will render quickly or fit the service memory limit.</p>
+<p>Prism supports 37 node types. The catalog gives each type an allowed property
+set, required properties, and child-count rules. A renderer change is not
+complete until the schema, semantic catalog, renderer, evaluation behavior,
+tests, and baseline compatibility agree.</p>
+<blockquote>
+<p><strong>Source evidence — closed document contract</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/schemas/prism-v1.schema.json#L281-L519">The contract defines document metadata, theme, assets, components, views, and flows as closed structures</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/document-semantics.ts#L7-L136">The semantic validator checks themes, patch targets, component references, component cycles, views, states, and responsive groups</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/complexity.ts#L1-L68">The complexity guard defines the four general JSON limits and rejects cycles, accessors, sparse arrays, non-finite numbers, and excessive input</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/node-catalog.ts#L1-L189">The node catalog lists the supported node types, allowed properties, required properties, and child rules</a>.</p>
+</blockquote>
+<h2 id="operations-and-revisions">Operations and Revisions</h2>
+<p>Prism supports insert, remove, duplicate, move, property update, responsive
+property update, and batch operations. Every operation carries
+<code>baseRevision</code>. A batch requires every child operation to carry the same base
+revision.</p>
+<p>The domain layer clones the document, applies the operation, increments the
+revision once, advances <code>updatedAt</code>, verifies unique node IDs, and validates
+the complete result. It refuses these unsafe changes:</p>
+<ul>
+<li>an operation against a different revision;</li>
+<li>a missing or duplicate node;</li>
+<li>an insert or move outside the child range;</li>
+<li>movement into the same node or one of its descendants;</li>
+<li>movement or removal of a root node;</li>
+<li>a batch with mixed base revisions;</li>
+<li>a result that fails the document contract.</li>
+</ul>
+<p>The storage layer then inserts a new <code>design_revision</code>. It changes the
+document's <code>current_revision_id</code> only when that pointer still names the
+revision that was read. This compare-and-swap update is the final concurrency
+check. A concurrent writer can leave only one new revision as current. The
+losing transaction rolls back, including its inserted revision.</p>
+<p>Restore does not move the pointer backwards. It copies the selected historical
+content into a new revision and records a <code>revision.restored</code> operation. This
+preserves both the undo action and all history after the source revision.</p>
+<p><code>replace</code> is the whole-document path used by agent results. It checks the
+expected revision ID, records a parent link and operation evidence, and uses
+the same compare-and-swap update. Agent delivery adds a job fence and replay
+record around this write.</p>
+<blockquote>
+<p><strong>Source evidence — deterministic editing</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/domain/index.ts#L5-L113">The domain operation union and application code define all operations, structural guards, one revision increment, and final validation</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L262-L292">Revision apply inserts the child revision and advances the current pointer with a compare-and-swap condition</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L240-L260">Restore creates a new revision instead of changing or deleting historical revisions</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/tests/verification/contracts/check-prism-postgres-transactions.mts#L26-L41">The native PostgreSQL regression proves one winner from eight concurrent replacements and proves rollback of a failed transaction</a>.</p>
+</blockquote>
+<h2 id="direction-decisions-and-preference-evidence">Direction Decisions and Preference Evidence</h2>
+<p>Selecting a direction and learning from that choice are one transaction. Prism
+locks the project and direction, confirms that the direction is proposed,
+confirms that it belongs to the current round and active request, and confirms
+that its source revision is still current. It then selects that direction,
+rejects competing current directions, and records a preference event.</p>
+<p>Feedback actions are <code>selected</code>, <code>rejected</code>, <code>liked</code>, <code>disliked</code>,
+<code>preserved</code>, <code>changed</code>, <code>reverted</code>, and <code>retracted</code>. An event declares whether
+its learning scope is <code>project</code> or <code>personal</code> and whether its source is
+<code>explicit</code> or <code>observed</code>.</p>
+<p>An idempotency key for a direction decision has at most 200 characters. Prism
+derives a stable event ID and request digest from the actor, key, target, and
+input. An exact repeat returns the stored response. Reuse for a different
+decision fails.</p>
+<h3 id="projection-and-decay">Projection and decay</h3>
+<p>Preference projection is deterministic:</p>
+<ul>
+<li>selected and liked evidence adds 1;</li>
+<li>preserved evidence adds 0.5;</li>
+<li>rejected, disliked, and reverted evidence subtracts 1;</li>
+<li>a retraction removes its target event from the projection;</li>
+<li>effective strength halves every 180 days from the last evidence time.</li>
+</ul>
+<p>The projection key includes user, projection type, learning scope, project
+when applicable, context, and trait. Project evidence overrides personal
+evidence for the same context and trait in an effective generation snapshot.
+A per-project user policy can disable personal evidence. It defaults to
+enabled for an identified subject. A null subject receives no personal event
+history.</p>
+<p>Before generation, Prism stores the eligible events, full profile, effective
+profile, target, policy version, subject, project, policy result, reference
+time, and digest. Future events cannot change a generation that already
+started.</p>
+<p>The pipeline cannot nominate an arbitrary user. A personal subject must match
+the platform-owned <code>PRISM_PIPELINE_PREFERENCE_SUBJECT</code>, and that value must
+match <code>user-</code> plus 24 lowercase hexadecimal characters. An empty chart value
+disables pipeline personal learning.</p>
+<blockquote>
+<p><strong>Source evidence — decisions and preferences</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/direction-decisions.ts#L10-L60">Direction decision uses project and row locks, validates the current round and revision, and records its preference receipt in one transaction</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/preferences/index.ts#L42-L88">Preference projection defines identity, deduplication, retraction, scoring, context, scope, and 180-day decay</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/preference-snapshot.ts#L5-L37">Generation snapshots apply the personal policy, project override, reference time, and content digest before storage</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/pipeline-preference-subject.ts#L1-L10">Pipeline preference identity is platform-owned and fails when a request does not equal the configured subject</a>.</p>
+</blockquote>
+<h2 id="evaluation-approval-and-publication">Evaluation, Approval, and Publication</h2>
+<h3 id="evaluation-is-advisory-and-blocking">Evaluation is advisory and blocking</h3>
+<p>The evaluator emits stable finding IDs from the finding content. Findings have
+three levels:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>blocking</code></td>
+<td>Approval and publication stop.</td>
+</tr>
+<tr>
+<td><code>review</code></td>
+<td>A human must accept the exact finding ID before approval.</td>
+</tr>
+<tr>
+<td><code>information</code></td>
+<td>Evidence only. It does not change status.</td>
+</tr>
+</tbody>
+</table>
+<p>Current findings cover view coverage, broken references, flow completeness,
+responsive coverage, accessible labels and alternatives, and heading and
+content structure. The type model also reserves <code>information</code> findings and a
+<code>visual-quality</code> gate, but the current evaluator does not emit them. The
+evaluator does not perform full browser conformance. Browser capture adds
+interactive-label and contrast findings during baseline publication.</p>
+<h3 id="approval-is-revision-authority">Approval is revision authority</h3>
+<p>Here, “human” means an authenticated Prism Studio session. It does not mean
+that Control proved an operator role or project membership. The session carries
+roles, but the general project, document, approval, baseline, corpus, and
+artifact routes do not enforce those roles or a project access-control list.
+Every authenticated Studio session can currently list all projects and can
+address shared resources when it knows their identifiers. Approval therefore
+binds a person and revision for integrity and audit, but is not an
+authorization boundary between Studio users.</p>
+<p>Approval confirms all of these facts:</p>
+<ul>
+<li>project and document ownership match;</li>
+<li>the document is the current revision;</li>
+<li>no blocking evaluation finding exists;</li>
+<li>the caller accepted the exact current set of review finding IDs;</li>
+<li>the document belongs to the current round of the active request;</li>
+<li>the approval stores the architecture digest that was active at that time.</li>
+</ul>
+<p>The supplied <code>designDigest</code> is stored, but publication recomputes the digest
+from the current document and compares it with the approval. A caller cannot
+make an approval valid for different bytes by supplying only a label.</p>
+<h3 id="a-baseline-is-stronger-than-an-approval">A baseline is stronger than an approval</h3>
+<p>Publication first looks for an existing baseline for the same approval,
+project, and document. An exact repeat returns that record before Control
+rechecks the current request, round, architecture, warning set, selected
+direction, or current document revision. This is idempotent replay of an old
+publication result, not fresh proof that it remains current. A new publication
+requires the approved revision, architecture digest, accepted warning set,
+and selected direction to remain current.</p>
+<p>These are application preflight checks, not one long database transaction.
+Browser rendering happens after the checks and before the baseline insert.
+The code does not hold the document row lock or recheck its current-revision
+pointer at the final insert. A concurrent revision can therefore advance the
+document during rendering while publication completes for the earlier approved
+revision. The bundle remains internally bound to that approved revision, but
+the baseline is not proof that the revision was still current at commit time.
+The pipeline lookup checks the active request, current round, architecture,
+approval, and baseline. It does not compare the approved revision with the
+document's current-revision pointer. Operators must prevent concurrent editing
+during approval and publication until this boundary is strengthened.</p>
+<p>Prism then creates:</p>
+<ul>
+<li>the design document;</li>
+<li>a generated design specification;</li>
+<li>acceptance criteria for each view state and flow;</li>
+<li>a quality report with accepted warnings;</li>
+<li>every referenced asset;</li>
+<li>a PNG and accessibility-tree capture for every view, state, and compact,
+regular, and wide viewport;</li>
+<li>a preview index;</li>
+<li>a manifest and checksums.</li>
+</ul>
+<p>Any browser accessibility finding blocks publication. New bundles use baseline
+archive v2. The checksum document has fixed fields and a deterministic UTF-16
+JSON encoding. The archive accepts at most 4,094 payload files because the
+complete file set, including manifest and checksum files, is limited to 4,096.
+Paths must be relative, normalized, and free of empty, dot, parent, backslash,
+and NUL segments.</p>
+<p>Two digests have different meanings. <code>bundle_digest</code> is the SHA-256 digest of
+the deterministic checksum document for the payload files. The artifact ID is
+the SHA-256 digest of the complete serialized archive object, including the
+manifest, checksum document, text-file map, and Base64 binary-file map. The
+archive is a JSON envelope, not a tar or ZIP file. A consumer must not compare
+these two digests as if they identify the same byte sequence.</p>
+<p>Document and request digests usually use <code>JSON.stringify</code> on the accepted
+object. They are stable for a saved object and its replay, but they are not a
+general canonical-JSON identity. A semantically equal object with a different
+member insertion order can have a different digest. Baseline v2 canonicalizes
+its closed checksum map separately.</p>
+<p>The bundle bytes enter the content-addressed artifact store before the
+baseline row is inserted. If the database insert then fails, an unreferenced
+immutable file can remain. This is safe for integrity but can consume storage.
+There is no automatic artifact garbage collector in the current implementation.</p>
+<blockquote>
+<p><strong>Source evidence — quality and release authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/evaluation/index.ts#L27-L36">Evaluation derives stable findings and maps them to the final status</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/evaluation/index.ts#L37-L235">It checks references, accessibility, responsive groups, and flows</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L521-L565">Approval binds the current revision, active architecture, quality result, and exact accepted warning IDs</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L108-L123">The shared Studio guard verifies the session and CSRF value and returns roles, but does not apply a role or project-membership rule</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L567-L595">Existing-baseline replay returns after the approval, project, and document lookup and before the new-publication checks</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L567-L645">Publication rechecks revision, digest, architecture, warnings, and selected direction before it assembles evidence</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L646-L752">Prism renders every view, state, and viewport and blocks on missing or failing accessibility evidence</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L753-L797">The final baseline insert follows rendering without a second current-revision check</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L69-L70">The pipeline lookup does not join the document current-revision pointer</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/baseline-archive.ts#L23-L91">The v2 archive code validates paths and file sets, computes deterministic checksums, validates the manifest, and returns the exact archive bytes</a>.</p>
+</blockquote>
+<h2 id="renderer-and-assets">Renderer and Assets</h2>
+<p>The renderer never accepts arbitrary HTML or CSS from a design document. It
+maps the closed node catalog to fixed HTML templates. Text and attribute
+values are escaped. Style construction accepts only known properties and
+validated values. Theme tokens start with <code>$</code> and resolve through the theme
+object. Unknown or unsafe values do not become style declarations.</p>
+<p>State patches apply first and viewport patches apply second. A viewport patch
+therefore wins when both set the same property. Component variants apply
+before instance overrides. Data references use a <code>$data</code> path and resolve
+against view mock data or list-item data.</p>
+<p>The HTML document has a restrictive content-security policy. It permits no
+default source, permits images and fonts only as data URLs, and permits inline
+style for the generated style block. Browser capture uses fixed locale
+<code>en-US</code>, timezone <code>UTC</code>, reduced motion, a height of 1,000 pixels, and widths
+390, 768, and 1,440 for the three viewports. Animations, transitions, and the
+caret are disabled before capture. These choices reduce visual drift. They do
+not make browser output identical across different Chromium versions, so the
+renderer metadata includes the browser version.</p>
+<p>Document assets contain artifact references and media metadata. Control loads
+the bytes from its artifact store and passes data URLs to the worker. The sum
+of assets used for a render or baseline is limited to 6,000,000 bytes. The
+worker also rejects an individual supplied data URL longer than 16,000,000
+characters. Studio preview accepts PNG, JPEG, WebP, SVG, and a total of
+6,000,000 bytes, uses a 30-second deadline, and verifies each SHA-256 digest.</p>
+<p>The public artifact upload accepts at most 6,000,000 decoded bytes and rejects
+non-canonical Base64. The internal worker artifact route accepts at most
+134,217,728 bytes and verifies that the digest in the URL matches the body.
+These are different routes for different trust and evidence needs.</p>
+<blockquote>
+<p><strong>Source evidence — deterministic safe rendering</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/renderer/index.ts#L4-L120">The renderer escapes text and attributes, resolves only known token forms, and builds styles from an allowlisted set</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/renderer/index.ts#L177-L304">The renderer maps every supported node to fixed HTML and fails on missing components or assets</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/engine/render-operation.ts#L37-L139">Render operation applies the content-security policy and fixed browser capture environment</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/studio/preview-assets.ts#L3-L65">Studio preview enforces media, size, timeout, same-origin, and digest checks</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-artifacts.ts#L17-L52">The internal route authenticates the caller, limits evidence to 128 MiB, and binds upload bytes to the URL digest</a>.</p>
+</blockquote>
+<h2 id="content-addressed-artifact-storage">Content-Addressed Artifact Storage</h2>
+<p>An artifact ID has the form <code>artifact:sha256:&lt;64 lowercase hexadecimal characters&gt;</code>. The filesystem path is <code>&lt;root&gt;/&lt;first two hex characters&gt;/&lt;complete hex digest&gt;</code>.</p>
+<p>Publication uses this durable sequence:</p>
+<ol>
+<li>Copy caller bytes before the first asynchronous action.</li>
+<li>Create and synchronize the directory path.</li>
+<li>Create a unique pending file with mode <code>0600</code>.</li>
+<li>Write and synchronize its bytes.</li>
+<li>Create the final immutable name with a hard link.</li>
+<li>If that name exists, read it without following links and verify its digest.</li>
+<li>Synchronize the directory.</li>
+<li>Remove the pending name and synchronize the directory again.</li>
+</ol>
+<p>A hard link avoids replacement of an existing object. An existing name is
+accepted only when its bytes match. Reads use <code>O_NOFOLLOW</code>, require a regular
+file, and verify the complete digest. The implementation gives durable local
+publication on the mounted filesystem. It does not provide replication,
+remote object storage, encryption by itself, automatic deletion, or repair of
+a corrupt object.</p>
+<p>Control uses one ReadWriteOnce persistent volume for these files and therefore
+requires one Control replica. The workload uses <code>Recreate</code> so two Control pods
+do not write the single-writer volume during rollout.</p>
+<p>The public artifact download route checks only the general Studio session and
+the artifact digest. It does not verify project ownership or membership. A
+digest proves byte identity; it is not an access grant. In the current system,
+however, any authenticated Studio user who knows a digest can fetch that
+artifact. Operators must treat artifact digests as sensitive identifiers until
+Control enforces resource authorization.</p>
+<blockquote>
+<p><strong>Source evidence — local CAS</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/artifacts.ts#L6-L67">The artifact store implements pending-file publication, file and directory synchronization, hard-link collision handling, no-follow reads, and digest verification</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L914-L920">The public artifact route reads by digest after the general session guard and does not perform a project lookup</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L1-L9">The chart rejects more than one Control replica while artifact storage is ReadWriteOnce</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L217-L230">The artifact claim is ReadWriteOnce, retained across chart deletion, and excluded from Argo pruning</a>.</p>
+</blockquote>
+<h2 id="corpus-ingestion">Corpus Ingestion</h2>
+<p>The corpus stores reference material for design use. It separates item
+identity, immutable revision content, rights policy, and embedding evidence.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>corpus_item</code></td>
+<td>Stable item identity, current revision pointer, and active, restricted, expired, or removed status.</td>
+</tr>
+<tr>
+<td><code>corpus_revision</code></td>
+<td>Normalized metadata, search text, source evidence, normalization version, content digest, and rights link.</td>
+</tr>
+<tr>
+<td><code>rights_policy</code></td>
+<td>Retention class, original and derivative rules, embedding permission, design-use permission, validity time, and policy basis.</td>
+</tr>
+<tr>
+<td><code>corpus_embedding</code></td>
+<td>One embedding per revision with model, model version, normalization version, and source digest.</td>
+</tr>
+</tbody>
+</table>
+<p>Ingestion validates an optional source-content digest and rejects unsafe direct
+public addresses. The separate ingestion service performs DNS resolution,
+rejects private or special addresses, pins the selected address for the HTTPS
+request, allows at most three redirects, requires every redirect to stay on
+HTTPS, limits the response to 6,000,000 bytes, and permits a fixed media-type
+set. It rejects active SVG content.</p>
+<p>Acquired bytes enter quarantine before publication. Quarantine files use
+their digest as the name. The TTL defaults to one hour and is clamped between
+one minute and one day. Control verifies the returned digest, creates an
+embedding, writes a restricted corpus revision, requests quarantine cleanup,
+and activates the exact revision only after publication and cleanup succeed.
+If publication and cleanup both fail, the returned aggregate error preserves
+both failures.</p>
+<p>Identical normalized input has one content digest. A transaction advisory lock
+serializes that digest before lookup and insertion. Concurrent identical
+requests therefore return the same revision instead of racing through four
+tables. All rights, item, revision, pointer, and embedding writes share one
+transaction.</p>
+<p>Rights <code>full</code> and <code>derived</code> permit design use. <code>analysis-only</code> and <code>temporary</code>
+do not. The current writer always records <code>retain_original=false</code>,
+<code>allow_embedding=true</code>, and a policy basis of <code>explicit-ingestion-policy</code>.
+The schema also knows <code>forbidden</code>, but the current <code>CorpusInput</code> type does not
+accept it.</p>
+<p>The current ingestion path does not copy acquired source bytes into the
+content-addressed artifact store. It stores normalized metadata and the source
+content digest, then removes the quarantine file. The <code>source_artifact_id</code> and
+<code>analysis_artifact_id</code> columns remain empty on this path. Thus, the source
+digest proves which acquired bytes the service processed only while independent
+evidence still has those bytes. It does not let Prism reconstruct them.</p>
+<p>Retention names are policy metadata, not a deletion scheduler. The current
+writer does not set <code>valid_until</code>. Search observes <code>valid_until</code> when another
+authority sets it, and <code>expire()</code> can change an item to <code>expired</code>, but no
+current background task expires or removes corpus records.</p>
+<p>Important current boundary: the Control endpoint rejects <code>public-web</code> input
+until a source policy is approved. The ingestion code can acquire public web
+content, but the user-facing Control path does not grant that authority.
+Ingestion is also disabled by default in chart values.</p>
+<blockquote>
+<p><strong>Source evidence — governed ingestion</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L5-L148">Corpus input, source rules, embedding limits, digest locking, and atomic insertion are implemented here</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/ingestion.ts#L10-L80">The ingestion service enforces DNS and address policy, HTTPS, redirect, size, media, SVG, quarantine, and TTL rules</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L810-L842">Control keeps a new item restricted until digest verification, embedding, database publication, and quarantine cleanup complete</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/integration/corpus-pool.mts#L24-L80">The native pool test injects failures at every corpus write boundary and verifies full rollback</a>.
+It also verifies one result from 12 concurrent identical requests.</p>
+</blockquote>
+<h2 id="retrieval-embeddings-ranking-and-access-boundaries">Retrieval, Embeddings, Ranking, and Access Boundaries</h2>
+<h3 id="admission-before-ranking">Admission before ranking</h3>
+<p>Retrieval first admits only the current revision of an active corpus item. Its
+rights policy must permit design use and must not be past <code>valid_until</code>.
+Vector retrieval also requires the same embedding model as the query.</p>
+<p>Required metadata uses JSON containment. Avoided metadata is excluded. The
+same match rules run again in application code before final selection. This
+second pass is a defense against differences between SQL JSON containment and
+the intended scalar-or-array matching rules.</p>
+<p>This is a rights filter, not a user or project access-control list. Corpus
+records have no tenant, project, owner, or reader column. All authenticated
+Control users that can reach corpus search share the same active,
+design-usable corpus. Do not document or depend on per-project corpus privacy;
+it is not implemented.</p>
+<h3 id="text-and-vector-ranking">Text and vector ranking</h3>
+<p>Without a query embedding, PostgreSQL uses a generated <code>simple</code> language
+<code>tsvector</code>, <code>websearch_to_tsquery</code>, and <code>ts_rank</code>. A GIN index supports the text
+match.</p>
+<p>With an embedding, Prism builds two ranked lists of at most 100 candidates:
+text relevance and pgvector cosine distance. It combines them with reciprocal
+rank fusion:</p>
+<p><code>1 / (60 + text rank) + 1 / (60 + vector rank)</code></p>
+<p>This avoids comparing raw text and vector scores, which have different units.
+The fixed constant 60 reduces the influence of small rank differences. The
+cost is loss of raw score magnitude.</p>
+<p>The final SQL candidate request is <code>max(limit * 10, 100)</code>. The public endpoint
+intends to clamp <code>limit</code> to 1 through 50 and <code>sourceFamilyLimit</code> to 1 through
+10, with default 2. Nonnumeric query values currently become <code>NaN</code> instead of
+a clean validation error; callers must not rely on them being sanitized. The
+hybrid query creates at most 100 text candidates and 100 vector candidates, so
+the fused set has an effective ceiling of 200 even when the calculated SQL
+limit is 500. Preferred
+metadata moves matching candidates ahead without excluding other candidates.
+The family cap then limits one source family before Prism stops at the caller
+limit. Each result explains its ranking method, the reported preference match,
+source family, and diversity cap. The current <code>preferredMatched</code> value is also
+<code>true</code> when no preferred filter was supplied because an absent filter counts as
+a match. Treat it as an ordering explanation, not proof that the caller asked
+for a preference. A short result sets a coverage-gap message.</p>
+<h3 id="embedding-limits-and-scaling-cost">Embedding limits and scaling cost</h3>
+<p>Ingestion accepts 1 through 4,096 finite embedding values. Search accepts a
+non-empty finite vector. PostgreSQL enforces dimensional compatibility when it
+performs distance comparison. The table uses the unconstrained <code>vector</code> type,
+and there is no HNSW or IVFFlat index in the migrations. Current vector ranking
+is exact and can become expensive as the eligible corpus grows. Model
+partitioning happens by a text equality filter, not separate tables or vector
+indexes.</p>
+<blockquote>
+<p><strong>Source evidence — retrieval policy and algorithm</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L150-L185">The hybrid query applies active-status, rights, validity, model, required, and avoid filters and fuses text and vector ranks</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L186-L249">Application selection applies metadata matching, preference ordering, source-family diversity, explanations, and the final limit</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L844-L886">The API clamps result and family limits and reports a coverage gap</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L40-L57">The schema creates the generated text vector and its GIN index</a>.
+It creates no approximate vector index. <a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L71-L74">It indexes text search and rights lookup</a>.</p>
+</blockquote>
+<h2 id="other-durable-coordination-records">Other Durable Coordination Records</h2>
+<p>Not every Prism table stores visible design content. Some tables make remote
+work repeat-safe or preserve a security decision.</p>
+<h3 id="native-engine-operations">Native engine operations</h3>
+<p><code>engine_operation</code> uses the idempotency key as its primary key. Before remote
+dispatch, Control stores the complete worker-attempt envelope, request digest,
+execution ID, and operation. A repeat with the same request returns the saved
+attempt and, when present, its result. A repeat with different input fails.</p>
+<p>Control records the bound terminal result before it hydrates the returned
+artifacts. Thus, a hydration failure cannot make a retry execute the remote
+operation again. A separate completion timestamp is set only for a stored
+completed result.</p>
+<p>Migration 017 adds a database check for the v3 attempt identity and a trigger
+that makes the accepted identity immutable. After an attempt exists, an update
+cannot change its envelope, idempotency key, creation time, execution ID,
+request digest, or operation. A stored result and completion time also cannot
+change. Historical rows without a v3 attempt remain readable. A pending
+historical row needs explicit reconciliation because it does not contain the
+complete accepted identity.</p>
+<h3 id="agent-jobs">Agent jobs</h3>
+<p>An <code>agent_job</code> uses the preference-generation ID as its ID. This binds one
+design-set or revision job to one captured generation. Accepted jobs have no
+fence. Claim changes the job to <code>running</code>, writes a random fence, runner ID,
+16-minute expiry, and complete attempt envelope in one transaction.</p>
+<p>Only one job in a session can be <code>running</code> or <code>needs_nova</code>. Expired running
+work is not returned to the queue. It becomes <code>needs_nova</code> because Control
+cannot know whether the external agent performed an action. Accepted work
+whose source changed becomes <code>superseded</code> before dispatch.</p>
+<p>A result writer must hold the job row lock, present the current fence, and
+arrive before expiry. An exact repeated payload returns the stored result. A
+different payload fails. This trades automatic recovery for protection from a
+late or replaced agent that writes to a new product state.</p>
+<h3 id="nonces-and-product-decisions">Nonces and product decisions</h3>
+<p><code>worker_request_nonce</code> makes secret-authenticated internal requests one-use.
+The authentication window is five minutes. Consumption deletes at most 1,000
+expired rows, then inserts the audience and hashed nonce under a composite
+primary key. A conflict means replay. SPIFFE mode uses peer identity instead
+of this shared-secret request format.</p>
+<p>Product decisions have a separate durable intent and receipt. The intent row
+stores actor, normalized intent digest, payload digest, and signed envelope.
+The receipt table stores the external result. A repeated decision ID must have
+the same actor and normalized intent. A repeated receipt must have identical
+JSON content. These records survive temporary demonstration-namespace cleanup.</p>
+<h3 id="defined-but-not-active-brief-revisions">Defined but not active: brief revisions</h3>
+<p>The first migration defines <code>brief_revision</code> with project-local revision and
+content-digest uniqueness and an optional parent revision. The inspected
+runtime does not write or read this table. Current architecture input is stored
+as a <code>design_request</code> plus a content-addressed architecture artifact. Treat
+<code>brief_revision</code> as a reserved schema surface, not as the current source of
+project intent.</p>
+<blockquote>
+<p><strong>Source evidence — durable coordination</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L10-L45">Native operation reservation locks the idempotency key, commits the accepted attempt before dispatch, and returns only a matching stored attempt or result</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L47-L68">Result recording binds the receipt to the stored attempt and refuses a conflicting second result</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/017_native_operation_identity.sql#L1-L30">The database constraint and trigger protect v3 native-operation identity and completed results</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L31-L53">Agent job claim serializes admission, expires uncertain running work to <code>needs_nova</code>, supersedes stale accepted work, and creates a 16-minute fenced attempt</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L84-L100">Agent result commit checks the row lock, fence, live claim, and payload digest</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-auth.ts#L3-L86">The nonce store and verifier implement bounded cleanup, one-use insertion, a five-minute time window, HMAC validation, and replay rejection</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/product-decisions.ts#L4-L28">Product decision storage makes normalized intent and receipt retries conflict-safe</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L6-L10">The initial schema defines brief revisions, while active request storage is a separate later table</a>.</p>
+</blockquote>
+<h2 id="postgresql-ownership-and-migrations">PostgreSQL Ownership and Migrations</h2>
+<p>Prism uses three application roles:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prism_migrator</code></td>
+<td>Owns the <code>prism</code> schema and runs migrations.</td>
+</tr>
+<tr>
+<td><code>prism_runtime</code></td>
+<td>Select, insert, update, and delete on Prism tables.</td>
+</tr>
+<tr>
+<td><code>prism_readonly</code></td>
+<td>Select on Prism tables.</td>
+</tr>
+</tbody>
+</table>
+<p>The bootstrap job is additive. It creates a missing role, but it does not
+rotate an existing password. For an existing role, it first proves that the
+server rejects a random wrong password with PostgreSQL code <code>28P01</code>. It then
+checks the configured password. If server authentication does not prove the
+password, bootstrap stops. Credential rotation is therefore a separate
+operator transition.</p>
+<p>Bootstrap uses a transaction advisory lock. It creates the pgvector extension,
+schema ownership, current grants, and default grants. It retries connection
+startup failures at most 60 times with a 2,000 ms delay and a 5,000 ms
+connection timeout.</p>
+<p>Schema migration reads files whose names match <code>NNN_name.sql</code>, sorts them,
+and records each applied filename in <code>prism.schema_migration</code>. One transaction
+and one transaction advisory lock cover the complete pending set. A failing
+migration rolls back the set and releases the reserved pool connection.</p>
+<p>In deployed <code>preprovisioned</code> mode, migration refuses to run unless the current
+user owns the existing <code>prism</code> schema. It does not create database-wide roles,
+extensions, or schemas. Those actions belong to the bootstrap job. Embedded
+mode exists for tests and local use and can create them.</p>
+<p>Migrations are forward-only files. There is no down-migration runner. Migration
+010 is an example of explicit data preservation: before it restores uniqueness
+for directions with no source document, it archives displaced duplicate rows
+with their complete JSON and reason.</p>
+<h3 id="complete-migration-reference">Complete migration reference</h3>
+<p>The order is part of the database contract. Do not rename or edit an applied
+file. Add the next numbered file.</p>
+<table>
+<thead>
+<tr>
+<th>Migration</th>
+<th>Durable change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql"><code>001_prism.sql</code></a></td>
+<td>Creates the initial project, document, revision, direction, baseline, rights, corpus, preference, approval, and engine-operation model.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/002_engine_operation_results.sql"><code>002_engine_operation_results.sql</code></a></td>
+<td>Adds request identity and the stored result to engine operations.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/003_worker_nonce.sql"><code>003_worker_nonce.sql</code></a></td>
+<td>Adds one-use internal-authentication nonces and their expiry index.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/004_approval_warnings.sql"><code>004_approval_warnings.sql</code></a></td>
+<td>Records which evaluation warnings a reviewer accepted.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/005_direction_source.sql"><code>005_direction_source.sql</code></a></td>
+<td>Binds a direction to its source document and revision and changes direction uniqueness.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/006_design_request.sql"><code>006_design_request.sql</code></a></td>
+<td>Adds architecture-bound design requests and the approval architecture digest.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/007_direction_evidence.sql"><code>007_direction_evidence.sql</code></a></td>
+<td>Adds structured evidence to each direction.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/008_document_request_binding.sql"><code>008_document_request_binding.sql</code></a></td>
+<td>Binds each Design Document to the design request that authorized it.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/009_corpus_source_evidence.sql"><code>009_corpus_source_evidence.sql</code></a></td>
+<td>Adds a validated source-content digest to corpus revisions.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql"><code>010_direction_unsourced_uniqueness.sql</code></a></td>
+<td>Archives displaced duplicates before restoring uniqueness for directions without a source document.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/011_preference_wire_ids.sql"><code>011_preference_wire_ids.sql</code></a></td>
+<td>Adds stable wire IDs and conflict-safe request and response receipts to preference events.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/012_preference_generation.sql"><code>012_preference_generation.sql</code></a></td>
+<td>Adds per-project personal-preference policy and stored generation snapshots.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/013_design_round.sql"><code>013_design_round.sql</code></a></td>
+<td>Adds design rounds and binds current requests and documents to their round.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/014_agent_jobs.sql"><code>014_agent_jobs.sql</code></a></td>
+<td>Adds durable fenced Agent jobs and idempotent revision-start records.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/015_product_decisions.sql"><code>015_product_decisions.sql</code></a></td>
+<td>Adds the separate signed product-decision audit and controller receipts.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql"><code>016_preference_legacy_insert_compatibility.sql</code></a></td>
+<td>Lets an older writer omit a preference wire ID during an application rollback.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/017_native_operation_identity.sql"><code>017_native_operation_identity.sql</code></a></td>
+<td>Stores the complete Worker V3 attempt identity and prevents later identity mutation.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — bootstrap and migration</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/database-roles.ts#L8-L57">Role bootstrap verifies password authentication, serializes setup, creates missing roles, and installs ownership and grants</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/config/database-bootstrap.ts#L1-L10">Bootstrap retry defaults and retryable connection failures are explicit</a> and <a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/bootstrap-database.ts#L1-L20">applied by the bootstrap entry point</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L21-L74">Migration uses one reserved connection, transaction, advisory lock, ownership preflight, migration journal, rollback, and release</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql#L1-L32">The duplicate-direction migration archives displaced legacy rows before it adds the partial unique index</a>.</p>
+</blockquote>
+<h2 id="transactions-locks-and-compare-and-swap">Transactions, Locks, and Compare-and-Swap</h2>
+<p>Prism uses different concurrency tools for different identities.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Protected identity</th>
+<th>Why this tool fits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transaction</td>
+<td>One multi-table business change</td>
+<td>All writes commit or all writes roll back.</td>
+</tr>
+<tr>
+<td>Transaction advisory lock</td>
+<td>Migration name space, corpus digest, preference wire ID, or bootstrap</td>
+<td>The lock key is logical and does not need an existing row.</td>
+</tr>
+<tr>
+<td><code>FOR UPDATE</code></td>
+<td>Project, direction, job, or other mutable frontier</td>
+<td>Competing decisions must see one ordered current state.</td>
+</tr>
+<tr>
+<td><code>FOR SHARE</code></td>
+<td>Parent project or source revision during child creation</td>
+<td>The referenced state must not change during validation and write.</td>
+</tr>
+<tr>
+<td>Compare-and-swap update</td>
+<td><code>design_document.current_revision_id</code></td>
+<td>Only the writer based on the current parent can advance the document.</td>
+</tr>
+<tr>
+<td>Unique constraint</td>
+<td>External ID, revision number, digest, wire ID, start key</td>
+<td>The database is the last defense against duplicates.</td>
+</tr>
+<tr>
+<td>Fence value</td>
+<td>Agent job delivery</td>
+<td>A prior or replaced runner cannot commit a result.</td>
+</tr>
+</tbody>
+</table>
+<p>The generic transaction helper reserves one pool connection. This is
+essential: <code>BEGIN</code> on one connection and writes on another would not form one
+transaction. It always attempts rollback after the callback fails and always
+releases a pooled connection.</p>
+<p>The normal Control entry point creates a <code>pg.Pool</code> with library defaults. The
+repository does not add a statement timeout, lock timeout, or maximum pool size.
+The nonce readiness path is different: it owns a private pool of four
+connections, admits at most four active operations, and uses the same deadline
+for connect, statement, and lock timeout. Its default is 750 ms. On request
+cancellation or dependency deadline, it destroys the connection so timed-out
+SQL cannot continue in the background.</p>
+<p>This distinction matters during incidents. A healthy nonce probe does not
+prove that all Control database operations have a deadline. A blocked Control
+query can wait according to PostgreSQL or connection-string settings.</p>
+<blockquote>
+<p><strong>Source evidence — concurrency boundaries</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L79-L96">The transaction helper reserves one connection and owns begin, commit, rollback, and release</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L273-L291">The document pointer update is conditional on the parent revision ID and fails with <code>revision conflict</code> when it loses</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-readiness.ts#L32-L106">The nonce dependency pool has four connections, a 750 ms default, admission control, server timeouts, cancellation, diagnostics, and connection destruction</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control.ts#L1-L9">The production Control entry point uses a normal pool and closes it after server shutdown</a>.</p>
+</blockquote>
+<h2 id="backup-verification-restore-proof-and-retention">Backup, Verification, Restore Proof, and Retention</h2>
+<h3 id="what-one-backup-contains">What one backup contains</h3>
+<p>The scheduled backup groups the PostgreSQL dump and the complete
+content-addressed artifact tree. This pairing is necessary because database
+rows refer to artifact IDs but do not contain the artifact bytes.</p>
+<p>Backup takes the database snapshot first and copies the immutable artifact
+superset second. An artifact published after the snapshot can be copied but is
+unreferenced by that dump. An artifact referenced by the snapshot was already
+published durably before its database row committed, so it must be available
+for copying unless an operator changes or deletes storage concurrently.</p>
+<p>Each group contains:</p>
+<ul>
+<li><code>database.dump</code> in PostgreSQL custom format;</li>
+<li><code>artifacts/</code> with digest-named objects;</li>
+<li><code>ARTIFACTS.sha256</code> rebuilt from the copied files;</li>
+<li><code>metadata.txt</code> with format, database, application image, scope, credential
+boundary, completion time, and dump version;</li>
+<li><code>SHA256SUMS</code> for the dump, metadata, and artifact index.</li>
+</ul>
+<p>The job writes into <code>.incomplete-*</code>, synchronizes the group, renames it to
+<code>backup-*</code> without replacement, synchronizes the backup root, and verifies the
+published group. A failed partial group is intentionally retained for incident
+inspection and capacity accounting.</p>
+<h3 id="database-readiness-before-backup-or-restore-proof">Database readiness before backup or restore proof</h3>
+<p>Backup and database proof first wait for PostgreSQL readiness. The precondition
+uses a 30-second timeout, with a one-second forced-termination grace period.
+It repeats <code>pg_isready</code> only for rejection or no-response results (codes 1 and
+2), sleeping one second between attempts. Other readiness failures stop at
+once. A missing tool reports <code>PRISM_BACKUP_TOOL_MISSING_pg_isready</code>; an
+unsuccessful readiness wait reports <code>PRISM_BACKUP_DATABASE_NOT_READY</code>.</p>
+<p>This wait is inside the overall operation deadline. It does not retry a dump
+or restore, verify credentials, or prove successful service recovery. A ready
+server can still reject the subsequent database operation.</p>
+<h3 id="verification-and-restore-proof">Verification and restore proof</h3>
+<p>Verification does not trust artifact filenames alone. It enumerates regular
+files without symbolic links, checks the two-level digest path, hashes every
+object, reconstructs the index, compares it with the stored index, verifies
+the top-level checksums, format marker, and group size.</p>
+<p>The database proof restores the latest verified dump into a random new
+database with <code>--single-transaction</code>. It runs count queries on project,
+design-revision, and baseline tables and then drops the proof database. This is
+a database smoke test. It does not restore artifacts into a separate volume,
+start Prism from restored state, restore external credentials, or prove an
+off-site disaster-recovery procedure.</p>
+<h3 id="schedule-limits-and-retention-boundary">Schedule, limits, and retention boundary</h3>
+<p>Default chart policy is:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backup schedule</td>
+<td>Daily at 02:00</td>
+</tr>
+<tr>
+<td>Verification schedule</td>
+<td>Sunday at 03:00</td>
+</tr>
+<tr>
+<td>Database proof schedule</td>
+<td>Sunday at 04:00</td>
+</tr>
+<tr>
+<td>Maximum one group</td>
+<td>85,899,345,920 bytes, 80 GiB</td>
+</tr>
+<tr>
+<td>Maximum retained bytes</td>
+<td>96,636,764,160 bytes, 90 GiB</td>
+</tr>
+<tr>
+<td>Maximum operation duration</td>
+<td>3,600 seconds</td>
+</tr>
+<tr>
+<td>CronJob deadline</td>
+<td>Maximum duration plus 30 seconds</td>
+</tr>
+<tr>
+<td>Concurrent jobs</td>
+<td>Forbidden</td>
+</tr>
+<tr>
+<td>Job retries</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Successful / failed Job history</td>
+<td>One of each per CronJob</td>
+</tr>
+<tr>
+<td>Finished Job TTL</td>
+<td>3,600 seconds</td>
+</tr>
+</tbody>
+</table>
+<p>The backup script takes a non-blocking exclusive file lock and places one
+deadline around the complete operation. It does not automatically delete old
+groups. <code>maximumRetainedBytes</code> is a hard capacity gate, not a retention-age
+policy. When retained data leaves insufficient allowance, the next backup
+fails. An operator must preserve required copies and remove groups through a
+separate controlled process.</p>
+<p>The finished-Job TTL also applies to manual Jobs copied from these templates.
+Collect needed pod logs and Job diagnostics before cleanup; this policy bounds
+Job history, not backup-file retention. Kubernetes cleanup timing is not an
+exact one-hour log-availability guarantee.</p>
+<p>The chart retains the existing backup and restore container identities
+(<code>proof</code> and <code>restore-proof</code>) and explicitly clears legacy container arguments.
+This avoids keeping an old inline backup or restore program beside the current
+script during adoption; the verification container remains <code>verify</code>.</p>
+<p>The chart keeps the backup and artifact claims when Helm or Argo removes the
+release. It does not create an off-host copy. Credentials and external journals
+are outside the backup group and require a separate recovery authority.</p>
+<blockquote>
+<p><strong>Source evidence — backup behavior</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/values.yaml#L64-L73">Backup configuration declares schedules, byte ceilings, duration, and the explicit no-auto-expiry and off-host-copy boundary</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L1-L84">The script validates configuration, tools, roots, object paths, checksums, manifests, and group size</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L27-L45">The readiness precondition waits only before backup and database proof, without retrying either operation</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L86-L138">Backup takes the dump first, copies and hashes immutable artifacts, synchronizes, atomically publishes, and verifies the group</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L140-L175">The database proof restores the latest group into a random database and states its limited smoke-test scope</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L178-L191">The whole operation runs under one deadline and non-blocking exclusive lock</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/backup.yaml#L9-L90">The CronJobs forbid overlap, disable retries, and mount the artifact source read-only</a>.</p>
+</blockquote>
+<h2 id="failure-and-recovery-matrix">Failure and Recovery Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Durable state</th>
+<th>Safe next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operation uses a stale base revision.</td>
+<td>The losing transaction has no new revision.</td>
+<td>Reload current content and decide whether to reapply the intent.</td>
+</tr>
+<tr>
+<td>Agent result arrives after a new round or architecture.</td>
+<td>Old round and job evidence remain, but the current frontier does not move.</td>
+<td>Start a new round from the current request and revision.</td>
+</tr>
+<tr>
+<td>Direction-set write fails part way.</td>
+<td>The transaction rolls back all documents, revisions, directions, and result updates.</td>
+<td>Retry with the same generation only after the cause is corrected.</td>
+</tr>
+<tr>
+<td>Preference event ID repeats with identical content.</td>
+<td>One event exists.</td>
+<td>Treat the repeat as success.</td>
+</tr>
+<tr>
+<td>Preference ID or decision idempotency key repeats with different content.</td>
+<td>The first record remains authoritative.</td>
+<td>Use a new key only for a genuinely new intent.</td>
+</tr>
+<tr>
+<td>Corpus publication fails.</td>
+<td>The corpus transaction rolls back. Quarantine cleanup is attempted separately.</td>
+<td>Resolve publication and cleanup errors; do not activate a partial record.</td>
+</tr>
+<tr>
+<td>Corpus cleanup fails after database publication.</td>
+<td>The item remains restricted because activation occurs after cleanup.</td>
+<td>Remove quarantine safely, then repeat the controlled publication path.</td>
+</tr>
+<tr>
+<td>Artifact name exists with different bytes.</td>
+<td>Existing object remains unchanged.</td>
+<td>Treat it as storage corruption; investigate and restore from verified backup.</td>
+</tr>
+<tr>
+<td>Approval no longer matches current revision, warnings, round, or architecture.</td>
+<td>Approval remains as historical evidence. No new baseline is created.</td>
+<td>Evaluate and approve the new current revision.</td>
+</tr>
+<tr>
+<td>Bundle file write succeeds but baseline insert fails.</td>
+<td>An unreferenced immutable artifact can remain.</td>
+<td>Diagnose the database failure. Exact retry can reuse content-addressed bytes.</td>
+</tr>
+<tr>
+<td>Migration fails.</td>
+<td>The migration transaction rolls back and no filename is recorded.</td>
+<td>Correct the failing migration or environment, then rerun.</td>
+</tr>
+<tr>
+<td>Backup capacity is exhausted.</td>
+<td>Existing complete and incomplete groups remain. No group is deleted.</td>
+<td>Preserve required copies, investigate incomplete groups, and free capacity by policy.</td>
+</tr>
+<tr>
+<td>Backup verification fails.</td>
+<td>The suspect group remains for investigation.</td>
+<td>Do not restore from it. Select a verified group or recover from an off-host copy.</td>
+</tr>
+<tr>
+<td>Database proof succeeds.</td>
+<td>It proves SQL restore and three basic queries only.</td>
+<td>Continue the full recovery procedure; do not claim complete disaster recovery.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="implemented-boundaries">Implemented Boundaries</h2>
+<p>The following statements prevent the current implementation from being
+described as more complete than it is.</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Implemented now</th>
+<th>Not implemented or not proved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revision history</td>
+<td>Append-only normal editing, parent links, restore-as-new, compare-and-swap current pointer.</td>
+<td>A database trigger does not make every revision column immutable against privileged direct SQL.</td>
+</tr>
+<tr>
+<td>Approval</td>
+<td>Current-revision, current-round, architecture, quality, and warning checks; digest is enforced at publication.</td>
+<td>Multi-person quorum, expiry, revocation, and cryptographic approval signatures are not part of this table.</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>Deterministic v2 archive, checksums, complete previews, CAS object, idempotent lookup.</td>
+<td>Publication does not lock the document across rendering or recheck the current pointer at commit. Automatic artifact garbage collection and remote publication are absent.</td>
+</tr>
+<tr>
+<td>Corpus rights</td>
+<td>Status, retention class, validity time, embedding and design-use flags.</td>
+<td>Per-user, per-project, and tenant ACLs are absent. Retention labels do not schedule expiry or deletion.</td>
+</tr>
+<tr>
+<td>Corpus source evidence</td>
+<td>Normalized metadata and the SHA-256 digest of acquired bytes.</td>
+<td>The current path does not retain the acquired bytes or set the source and analysis artifact columns.</td>
+</tr>
+<tr>
+<td>Public sources</td>
+<td>Hardened acquisition code and quarantine exist.</td>
+<td>Control rejects public-web ingestion until policy approval; chart ingestion is off by default.</td>
+</tr>
+<tr>
+<td>Embeddings</td>
+<td>Model and version evidence, finite vector checks, pgvector cosine distance.</td>
+<td>Fixed dimensions, approximate indexes, automatic re-embedding, and model migration are absent.</td>
+</tr>
+<tr>
+<td>Ranking</td>
+<td>Text rank, exact vector rank, reciprocal-rank fusion, preference boost, avoidance, and family diversity.</td>
+<td>Learned ranking and calibrated cross-model scoring are absent.</td>
+</tr>
+<tr>
+<td>Renderer</td>
+<td>Closed node model, escaped HTML, controlled style output, fixed browser environment, capture evidence.</td>
+<td>It is not a general web browser or arbitrary HTML/CSS/JavaScript renderer.</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>Roles, pgvector, forward migrations, pooled transactions, locks, constraints, and recovery tests.</td>
+<td>Automatic failover and point-in-time recovery are not provided by the Prism chart.</td>
+</tr>
+<tr>
+<td>Backup</td>
+<td>Local immutable database-and-artifact groups, scheduled verification, and SQL restore smoke test.</td>
+<td>Automatic expiry, off-host replication, credential recovery, and full service restore proof are separate operator work.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="change-guide">Change Guide</h2>
+<p>Use the smallest complete change surface. A change that updates only one row
+in this table is usually incomplete.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Required surfaces</th>
+<th>Main risks to test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add a document field</td>
+<td>JSON Schema, generated validator, TypeScript type, semantic checks, renderer or consumer, fixtures, baseline compatibility.</td>
+<td>Closed-schema rejection, old document reading, complexity, deterministic archive bytes.</td>
+</tr>
+<tr>
+<td>Add a node type</td>
+<td>Node catalog, property rules, schema if needed, renderer, evaluation, Studio adapter, tests.</td>
+<td>Unsafe HTML or CSS, child rules, accessibility, component and patch behavior.</td>
+</tr>
+<tr>
+<td>Add an operation</td>
+<td>Operation schema and type, domain application, revision evidence, Studio client, tests.</td>
+<td>Revision increment, batch behavior, structural invariants, compare-and-swap conflict.</td>
+</tr>
+<tr>
+<td>Change round behavior</td>
+<td>Round schema migration, start and result binding, agent job identity, current-frontier queries, transaction tests.</td>
+<td>Late result admission, duplicate start, parent race, partial direction set.</td>
+</tr>
+<tr>
+<td>Add preference evidence</td>
+<td>Event schema, projection identity and score, snapshot policy version, prompt consumer, migration when storage changes.</td>
+<td>Retraction, project/personal isolation, deterministic reference time, old snapshot replay.</td>
+</tr>
+<tr>
+<td>Change retrieval</td>
+<td>Corpus schema, ingestion evidence, rights admission, SQL and application filters, explanation, native PostgreSQL tests.</td>
+<td>Rights bypass, model mismatch, vector dimensions, ranking drift, pool rollback.</td>
+</tr>
+<tr>
+<td>Add an asset media type</td>
+<td>Document schema, upload validation, preview loader, render input, baseline extension map, content-security policy, backup.</td>
+<td>active content, size amplification, digest mismatch, browser support.</td>
+</tr>
+<tr>
+<td>Change baseline files</td>
+<td>Archive profile or compatible reader, manifest schema, checksum codec, importer, fixture and archive tests.</td>
+<td>Byte drift, path injection, missing evidence, old bundle readability.</td>
+</tr>
+<tr>
+<td>Add a table or index</td>
+<td>Forward migration, grants, bootstrap assumptions, PGlite tests and native PostgreSQL tests, backup restore proof.</td>
+<td>transaction rollback, lock time, extension availability, production ownership.</td>
+</tr>
+<tr>
+<td>Change retention</td>
+<td>Chart values and schema, backup program, capacity tests, runbook, off-host policy.</td>
+<td>silent deletion, incomplete group removal, loss of last verified copy.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verification-map">Verification Map</h2>
+<p>Use test evidence that matches the behavior under review.</p>
+<table>
+<thead>
+<tr>
+<th>Behavior</th>
+<th>Relevant evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Document schema and semantic rules</td>
+<td><code>contracts/prism/v1/tests/contracts.test.mts</code>; <code>skills/prism/tests/domain.test.mts</code></td>
+</tr>
+<tr>
+<td>Revisions, restore, artifacts, and migrations</td>
+<td><code>skills/prism/tests/storage.test.mts</code>; <code>skills/prism/tests/domain-storage.test.mts</code></td>
+</tr>
+<tr>
+<td>Real pooled transactions and concurrent revision writes</td>
+<td><code>tests/verification/contracts/check-prism-postgres-transactions.mts</code> with a dedicated PostgreSQL server</td>
+</tr>
+<tr>
+<td>Corpus rights and ranking</td>
+<td><code>skills/prism/tests/corpus.test.mts</code></td>
+</tr>
+<tr>
+<td>Corpus rollback and concurrency on native PostgreSQL</td>
+<td><code>skills/prism/integration/corpus-pool.mts</code> with a dedicated local PostgreSQL server</td>
+</tr>
+<tr>
+<td>Preferences and generation snapshots</td>
+<td><code>skills/prism/tests/preferences-generation.test.mts</code>; <code>skills/prism/tests/product-decisions.test.mts</code></td>
+</tr>
+<tr>
+<td>Renderer and browser evidence</td>
+<td><code>skills/prism/tests/renderer.test.mts</code>; <code>skills/prism/tests/renderer-remediation.test.mts</code></td>
+</tr>
+<tr>
+<td>Artifact crash durability</td>
+<td><code>skills/prism/tests/artifact-durability.test.mts</code></td>
+</tr>
+<tr>
+<td>Baseline archive compatibility</td>
+<td><code>tests/verification/integration/prism-baseline-archive.test.mts</code>; <code>tests/verification/integration/prism-archive.test.mts</code></td>
+</tr>
+<tr>
+<td>Backup rendering and behavior</td>
+<td><code>tests/verification/deployment/prism-backup.test.mts</code>; Helm render checks</td>
+</tr>
+</tbody>
+</table>
+<p>PGlite tests prove much of the SQL and transaction design quickly. They do not
+prove native PostgreSQL pool scheduling, server locks, pgvector extension
+behavior, filesystem durability, or browser capture. Use the named native,
+filesystem, and browser tests for those claims.</p>
+</main></body></html>

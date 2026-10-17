@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/host-and-prism-configuration.html"></head><body><main>
+<h1 id="host-openclaw-and-prism-configuration">Host, OpenClaw, and Prism Configuration</h1>
+<p>Status: current configuration map with explicit consumer boundaries
+Audience: platform operator, Prism operator, host administrator
+Owner: platform operations and Prism
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/swarm.config.json">charts/kubeclaw/files/config/swarm.config.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/e2e/support/platform-config.ts">tests/verification/e2e/support/platform-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/values.yaml">charts/prism/values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/values.schema.json">charts/prism/values.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/control-config.ts">skills/prism/server/control-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/worker-config.ts">skills/prism/server/worker-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/config/native-worker.ts">skills/prism/config/native-worker.ts</a>
+Applies to: current shipped chart configuration and Prism service loaders
+Last verified: 2026-10-09 at source revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code></p>
+<h2 id="configuration-families">Configuration families</h2>
+<p>There is no one “KubeClaw config.” Select the family by consumer.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Consumer</th>
+<th>Authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pipeline-platform.v2</code> JSON passed to Nova</td>
+<td>Plugin runtime and Nova Core</td>
+<td>Package trust, providers, capability grants, adapters, observers, state root, and decision issuers. This is the pipeline runtime authority.</td>
+</tr>
+<tr>
+<td>KubeClaw Helm values and rendered OpenClaw configuration</td>
+<td>Kubernetes chart, gateway, host plugins, agent runtime</td>
+<td>Deployment images, pods, volumes, service accounts, gateway, OpenClaw agents, and Secret references.</td>
+</tr>
+<tr>
+<td><code>swarm.config.json</code></td>
+<td>Current real-run verification support and shipped classic-pipeline configuration path</td>
+<td>Compact selection of one test/runtime profile. It is not accepted by the <code>pipeline-platform.v2</code> loader and grants no plugin capability.</td>
+</tr>
+<tr>
+<td>Prism Helm values</td>
+<td>Prism chart</td>
+<td>Images, replicas, native host binding, storage, trust mode, product decisions, and deployment resources.</td>
+</tr>
+<tr>
+<td>Prism process environment</td>
+<td>Individual Prism service loaders</td>
+<td>Rendered service URLs, credentials, timeouts, ingress limits, native limits, and exact trust identities.</td>
+</tr>
+<tr>
+<td>Root-owned native pool policy</td>
+<td>Prism native supervisor</td>
+<td>Aggregate resource capacity in a Linux <a href="glossary.html#cgroup">control group (cgroup)</a> and host identity. An environment variable only points to it.</td>
+</tr>
+</tbody>
+</table>
+<p>For Helm and Secret key details, use <a href="helm-values.html">Helm values</a>,
+<a href="environment-variables.html">Environment variables</a>, and <a href="secrets.html">Secrets</a>.
+This page explains which layer owns the effective value and how runtime
+loaders admit it. Generated references own the field and default inventories.</p>
+<h2 id="compact-swarmconfigjson">Compact <code>swarm.config.json</code></h2>
+<p>The chart ships this compact shape:</p>
+<pre><code class="language-json">{
+  &quot;profile&quot;: &quot;standard&quot;,
+  &quot;features&quot;: {
+    &quot;observability&quot;: true,
+    &quot;buster&quot;: true,
+    &quot;discord_alerts&quot;: true
+  },
+  &quot;tuning&quot;: {
+    &quot;safety_margins&quot;: &quot;high&quot;,
+    &quot;retention&quot;: &quot;high&quot;,
+    &quot;alerts&quot;: &quot;rich&quot;,
+    &quot;logs&quot;: &quot;verbose&quot;,
+    &quot;checks&quot;: &quot;strict&quot;,
+    &quot;determinism&quot;: &quot;strict&quot;
+  },
+  &quot;overrides&quot;: {}
+}
+</code></pre>
+<p>The shipped expander is currently part of real-run verification support. It is
+not the production plugin-platform loader. Code that calls this expander
+accepts the following compact fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_doc</code></td>
+<td>Optional documentation string; it has no runtime authority.</td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>Must be <code>standard</code>; no other profile is registered.</td>
+</tr>
+<tr>
+<td><code>features</code></td>
+<td>Required exact object: all three keys <code>observability</code>, <code>buster</code>, and <code>discord_alerts</code> must be <code>true</code>; no extra keys. These are profile assertions, not independent switches.</td>
+</tr>
+<tr>
+<td><code>tuning</code></td>
+<td>Required exact object: <code>safety_margins</code>, <code>retention</code>, <code>alerts</code>, <code>logs</code>, <code>checks</code>, and <code>determinism</code> must have the shipped values shown above.</td>
+</tr>
+<tr>
+<td><code>overrides</code></td>
+<td>Optional object; default <code>{}</code>. Every leaf path must already exist in the expanded profile. Objects merge recursively; scalar and array leaves replace.</td>
+</tr>
+<tr>
+<td><code>discord_webhook_url</code></td>
+<td>Optional string copied to the expanded config. Keep it out of checked-in files; chart rendering obtains it from a Secret.</td>
+</tr>
+<tr>
+<td><code>run_id</code></td>
+<td>Optional run-scoped identity copied to the expanded config.</td>
+</tr>
+<tr>
+<td><code>project</code>, <code>repo_root</code>, <code>paths</code></td>
+<td>Runtime-derived fields accepted and copied by the expander. Do not set them in the chart's static source.</td>
+</tr>
+</tbody>
+</table>
+<p>Any compact authority field (<code>profile</code>, <code>features</code>, <code>tuning</code>, or <code>overrides</code>)
+selects compact handling. Unknown compact keys fail. Override paths cannot add
+new effective keys. The expander substitutes <code>${repo_root}</code> placeholders after
+overrides and fails if the required non-empty context is absent.</p>
+<p>The expanded standard profile contains classic pipeline timing, lock, Git,
+gateway, Buster, telemetry, agent-observability, lint, agent-dispatch, and host
+plugin settings. These values are a shipped verification/runtime baseline, not
+defaults for <code>pipeline-platform.v2</code>. Do not copy <code>providers</code>, <code>grants</code>, or
+storage authority from it by inference.</p>
+<h2 id="openclaw-and-codex-boundary">OpenClaw and Codex boundary</h2>
+<p>ACP means <a href="https://docs.openclaw.ai/tools/acp-agents">Agent Client Protocol</a>.
+OpenClaw uses an ACP backend plugin to run external coding tools in sessions.
+The runtime-dispatch target <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L230-L238">selects this path with <code>runtime: &quot;acp&quot;</code></a>.
+See <a href="../understand/openclaw.html#session-lifecycle">OpenClaw session lifecycle</a>
+for polling, cancellation, and uncertain session recovery.</p>
+<p>Helm renders OpenClaw gateway configuration and managed agent entries. The
+gateway configuration controls the host process, authentication, model route,
+ACP backend, channel, and plugin allowlist. Pipeline stage fields such as
+<code>agent</code> and <code>agentRole</code> select a target already configured by the runtime
+dispatch adapter; they do not edit OpenClaw configuration or grant host plugin
+permissions.</p>
+<p>Codex/ACP and subagent selection can appear in an expanded swarm profile or a
+runtime-dispatch target. The effective transport still comes from the consumer
+that loads that configuration. A model name is routing data, not proof that
+credentials, network access, or provider capacity exist.</p>
+<h2 id="prism-helm-roots">Prism Helm roots</h2>
+<p>SPIFFE identifies workloads, and SPIRE issues their credentials. Mutual TLS
+(mTLS) authenticates both ends of a protected connection with certificates.
+See <a href="glossary.html#svid">workload credentials</a> for the identity delivery path.</p>
+<p>The Prism values schema requires these roots: <code>images</code>, <code>imagePullSecrets</code>,
+<code>control</code>, <code>studio</code>, <code>worker</code>, <code>postgresql</code>, <code>secrets</code>, and <code>artifactStorage</code>.
+The checked values also define <code>ingestion</code>, <code>backup</code>, <code>tailscale</code>, and
+<code>workerTrust</code>.</p>
+<p>Important recursive boundaries are:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Constraint and consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>images.{control,studio,worker,ingestion}</code></td>
+<td>Closed <code>{repository,digest,pullPolicy}</code>. Repository is non-empty; digest is lowercase <code>sha256:</code>; pull policy is <code>IfNotPresent</code> or <code>Never</code>. Digest changes executable identity and rolls workloads.</td>
+</tr>
+<tr>
+<td><code>control.productDecisions</code></td>
+<td>Explicit enable flag, operators, token lifetime, issuer/origin/revision, signing Secret name/key, controller URL/namespace/release, CA Secret name/key, and audience. When enabled, operators are non-empty and HTTPS/Kubernetes-name constraints apply.</td>
+</tr>
+<tr>
+<td><code>control.pipelinePreferenceSubject</code></td>
+<td>Empty disables pipeline personal preference; a non-empty value must name an already authorized Prism subject.</td>
+</tr>
+<tr>
+<td><code>worker.replicas</code></td>
+<td>Exact <code>1</code>; the current native ownership model does not support horizontal worker replicas.</td>
+</tr>
+<tr>
+<td><code>worker.native</code></td>
+<td>Required closed <code>{nodeName,namespace,policyDigest,closeTimeoutMs}</code>. Node/namespace are non-empty after host preparation; digest is 64 lowercase hexadecimal characters; timeout is 1–2,147,483,647.</td>
+</tr>
+<tr>
+<td><code>worker.shutdownTimeoutMs</code></td>
+<td>Integer 1–2,147,483,647.</td>
+</tr>
+<tr>
+<td><code>worker.terminationGracePeriodSeconds</code></td>
+<td>Integer 1–2,147,483. Keep it longer than the worker's bounded shutdown path.</td>
+</tr>
+<tr>
+<td><code>ingestion</code></td>
+<td><code>enabled</code>, non-negative <code>replicas</code>, and <code>quarantineTtlMs</code> from 60,000 to 86,400,000. Enabling it requires explicit CPU/memory requests and limits.</td>
+</tr>
+<tr>
+<td><code>postgresql</code></td>
+<td>Deployment/storage choice and existing credential Secret. Database storage and artifacts are independent retained data.</td>
+</tr>
+<tr>
+<td><code>secrets.runtime</code>, <code>secrets.database</code></td>
+<td>Names of existing Secrets consumed by templates. Values are references, never inline credential defaults.</td>
+</tr>
+<tr>
+<td><code>artifactStorage</code></td>
+<td>Persistent size and optional storage class. It does not configure database retention.</td>
+</tr>
+<tr>
+<td><code>workerTrust.spiffe</code></td>
+<td>Selects SPIFFE/mTLS proxying and exact trust-domain/service-account identities. When disabled, shared Secret paths are required instead.</td>
+</tr>
+</tbody>
+</table>
+<p>Use Helm schema validation and a rendered-manifest inspection for the exhaustive
+deployment surface. Runtime loaders below remain the authority for process
+defaults and conditional requirements.</p>
+<h2 id="prism-control-process">Prism Control process</h2>
+<p>Use the <a href="environment-variables.html#variables">generated environment inventory</a>
+for the complete variable contract and exact selected defaults. It identifies
+each producer and runtime reader; chart-injected values must be changed through
+their producer. This page explains the loader's conditional admission rules.</p>
+<p>Control always requires non-empty session, ingress, and ingestion authentication
+settings. Exact <code>WORKER_TRUST_SPIFFE_ENABLED=true</code> selects SPIFFE and requires
+the Nova, worker, Control, and agent identities. The test-runner identity is a
+separate optional peer. Other flag values select shared-secret mode, which
+requires dispatch and worker secrets instead. A configured peer ID is an exact
+allowlist value, not evidence that the peer has received a valid identity.</p>
+<p><code>PRISM_PIPELINE_PREFERENCE_SUBJECT</code> is optional. Absence disables pipeline
+personal preference; a selected subject must already be authorized at startup.
+The database URL is supplied by the chart's runtime-role Secret. Listener,
+artifact-root, service URL, result-size, and dispatch-timeout settings apply to
+Control only. A Studio or agent loopback URL must not replace a worker URL.</p>
+<p>Product-decision configuration is disabled unless
+<code>PRISM_PRODUCT_DECISIONS_ENABLED=true</code>. When enabled, the loader requires
+<code>PRISM_PRODUCT_ORIGIN</code>, <code>PRISM_PRODUCT_CONTROLLER_URL</code>,
+<code>PRISM_PRODUCT_OPERATORS</code> (non-empty unique JSON string array),
+<code>PRISM_PRODUCT_PRIVATE_KEY_FILE</code> (dedicated Ed25519 key),
+<code>PRISM_PRODUCT_ISSUER</code>, <code>PRISM_PRODUCT_CONTROLLER_CA_FILE</code>, and
+<code>PRISM_PRODUCT_CONTROLLER_TOKEN_FILE</code>. Both URLs must be credential-free HTTPS
+origins with <code>/</code> as the path.</p>
+<h2 id="prism-worker-and-native-supervisor">Prism Worker and native supervisor</h2>
+<p>The <a href="environment-variables.html#variables">generated environment inventory</a>
+records Worker and native-supervisor variables, defaults, and integer limits.
+Worker ingress limits bound active requests, probe requests, connections, input
+bytes, request-body time, and shutdown time. In SPIFFE mode the worker requires
+the exact Control identity; outside that mode it requires the worker secret
+and database URL. The chart supplies the database URL in both modes.</p>
+<p>The supervisor additionally requires normalized absolute pool-policy and
+launcher paths, a production engine content digest, and a host-created policy.
+Its CPU, memory, process-count, Linux user and group IDs (UID/GID), ownership, journal, output, result,
+poll, drain, and close settings bound a native attempt. Process environment
+cannot enlarge aggregate capacity admitted by the root-owned host policy.</p>
+<p>The native child receives <code>KUBECLAW_NATIVE_SCOPE</code>, input limit, Control URL,
+trust mode, and artifact authentication from the supervisor. These are
+derived/admission values, not operator alternatives to the pool policy.</p>
+<h2 id="studio-ingestion-and-database-bootstrap">Studio, ingestion, and database bootstrap</h2>
+<p>Studio validates its listener port and Control request timeout. Its packaged
+UI root, Control destination, and ingress authentication belong to the Studio
+process. The standalone loader permits an empty ingress secret; production
+must supply trusted ingress through the chart and prove the private access path.</p>
+<p>Ingestion requires its own ingestion secret and temporary quarantine root.
+A quarantine TTL outside the supported range is clamped; a non-integer is
+rejected. This lifetime removes quarantined acquisition content, not published
+corpus, approval, or artifact data. Use the generated environment rows for exact
+bounds and defaults.</p>
+<p>Database bootstrap requires the administrative database URL and separate
+migrator, runtime, and read-only role passwords. Its retry and connection policy
+comes from the bootstrap loader; ordinary service startup does not rotate
+credentials. A new password must be coordinated with the database role and all
+consumers, not applied as a Pod-only environment change.</p>
+<h2 id="precedence-and-operational-impact">Precedence and operational impact</h2>
+<p>Helm values render Kubernetes environment, volume, Secret, and workload
+identity. The process reads the rendered environment once at startup; changing
+a Secret or value does not mutate an already loaded snapshot. Roll the affected
+workload after a configuration change. Native pool policy and node preparation
+must complete before the Prism worker can become ready.</p>
+<p>Environment values rendered directly by a chart take precedence only because
+the process reads them; they do not override <code>pipeline-platform.v2</code>. Compact
+swarm-profile overrides apply only inside a caller that invokes the expander.
+See <a href="configuration-precedence.html">Configuration precedence</a>.</p>
+<blockquote>
+<p><strong>Source evidence — consumer separation</strong></p>
+<p><strong>Claim:</strong> The compact swarm profile is expanded only by its explicit caller, while Prism captures separate process configuration and conditional trust requirements at startup.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/support/platform-config.ts#L152-L199">compact detection and expansion</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-config.ts#L9-L64">Control loader</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/worker-config.ts#L1-L38">worker loader</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/files/config/swarm.config.json#L1-L18">shipped compact source</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L4-L35">result, deadline, identity, and resource settings</a></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L38-L47">Host admission settings</a>; <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L50-L83">supervisor paths and bounds</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/tests/control-server-config.test.mts#L1-L58">Prism Control configuration tests</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node --test skills/prism/tests/control-server-config.test.mts</code>: three tests passed, exit zero. Verification did not include a cluster or native-worker check.</p>
+<p><strong>Revision:</strong> <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code></p>
+<p><strong>Limit:</strong> Checked values and rendered manifests do not prove live node capacity, external identity issuance, database health, or credential validity.</p>
+</blockquote>
+</main></body></html>

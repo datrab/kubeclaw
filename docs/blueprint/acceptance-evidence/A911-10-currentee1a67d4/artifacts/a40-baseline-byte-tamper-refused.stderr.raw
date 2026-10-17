@@ -1,0 +1,11 @@
+file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:131
+  throw new Error('Published-route baseline bytes changed; do not repin to hide route loss.');
+        ^
+
+Error: Published-route baseline bytes changed; do not repin to hide route loss.
+    at file:///home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/governance-fixture/scripts/docs-governance.mjs:131:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

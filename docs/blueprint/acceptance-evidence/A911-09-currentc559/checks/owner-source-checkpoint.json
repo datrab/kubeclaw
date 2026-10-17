@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-17T10:02:10.023819+00:00",
+  "commit": "c57587b895fd21503334e422270b478200783b6c",
+  "parent": "3354d2d1e641e8332326d0a1641f459b2d494c62",
+  "tree": "d7b1532685782ce2cb1716bf2c3abdb47dfc0a55",
+  "files": {
+    "docs/site/reference/sdk.md": {
+      "beforeSha256": "a81dcb81c5c0083162479087bb5b7b9a7afa5c331fd6eb5cb33f51ad9f484e2a",
+      "sha256": "251936d12b380f17334d1cd4d6027f1ac8dd9ce559130a1abf9800eb3ef9ed7b"
+    }
+  },
+  "reviewSha256": "4889b32155120360ed87a4e4f391757b21729c0f2177a1184cd4d18651a72e22",
+  "remoteHeads": {
+    "refs/heads/checkpoint/pr13-documentation-overhaul": "c57587b895fd21503334e422270b478200783b6c",
+    "refs/heads/docs/documentation-overhaul": "c57587b895fd21503334e422270b478200783b6c"
+  },
+  "remoteVerified": true,
+  "ciCheckoutHEADUnchanged": "d4c0a624d737bd212cb8611fa7b8f7510143b567",
+  "ciIndexUnchanged": true,
+  "dirtyFilesPreserved": {
+    "docs/blueprint/generated/ap08-extension-inventory.json": "822e863ff05624e6580076034167874c722f22ec6223965acaf80b092ac7c4d5",
+    "docs/blueprint/generated/ap08-repeat-review-scope.json": "3d0807252a3fdb6155fecd8e895abe3b2d0ee1651e2831d10d83974a5aaa128c",
+    "docs/blueprint/generated/ap09-catalogue.json": "14f9964758a6043940ff9021d2015041f1b4ede68244ed5b484bbef6b592f221",
+    "docs/generated/inventory/documentation-source-revision.json": "9efc911526c2141bd4d54cb639ab11bc0666d264ca21e85abcdf99b28e548644",
+    "docs/generated/inventory/platform-surfaces.json": "72088cf84832f5190367c16d0850586859a0d3a2c265f39f678357dd403234a4",
+    "docs/site/reference/configuration.md": "b779bbae77574e89dcb6399a83e8205eb3d7ac5d8945eb204e56758f1bdd2cb9",
+    "docs/site/reference/errors.md": "de9682946fb2f1e5fc1f7738b9575c704af8fbc3ace4641fa9d548695305bd68",
+    "docs/site/reference/lint-policy-generated.md": "a312a9123bc811eb8de01c67f8f79b6b7c440496fd3846d6d3c936005196fdbf",
+    "docs/site/reference/platform-surfaces-generated.md": "eabbef2a02c754c3a7dc43c42ad4970e22bce26c77cd3b90b091313e6fdb33ae",
+    "docs/site/reference/schemas.md": "d12b634601a17fd221b8e5ea53097dc08a2a7ece5f998eec11c9354c67b00b41",
+    "docs/site/reference/stores-and-retention.md": "d1b106592236737450c9a255088d167242d4ffd76f64726c4dc8f29d6fec9394",
+    "docs/site/understand/telemetry.md": "84f9e58f79d254523e85952a8e035003179ba997ac8ae6ffd2a001486bd2a23d"
+  },
+  "canonicalWrites": false,
+  "formalAcceptance": false
+}

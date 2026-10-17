@@ -1,0 +1,32 @@
+{
+  "utc": "2026-10-17T12:26:26.088929+00:00",
+  "primaryGate": "A911-10",
+  "state": "A91110_PROVENANCE_FIX_PUSHED_FULL_SOURCE_GATE_REVIEW_RUNNING",
+  "publishedRevision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+  "basis": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/continuation-result.json",
+    "sha256": "454106c267578b146f2131800b1d4774c9afc16df5626302ee6a4bc9cc125023"
+  },
+  "nextAction": "Exakten laufenden vollständigen Source-Gate-Reviewer konsumieren; bei Befund gezielt korrigieren, sonst getrennte Reader/Quality-Gate-Entscheidungen und persistierte Registrierung schließen. Kein anderer Primärpunkt.",
+  "existingReviewer": {
+    "sessionId": "nimble-sage",
+    "result": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/source-review.json",
+    "processStatus": "tool result must be collected; no duplicate reviewer"
+  },
+  "dossier": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/dossier.json",
+    "sha256": "3f476819462280d7ef2a5fb57b3f4fce34d7c640302700701fda82c1ebd129b5"
+  },
+  "sourceReviewResult": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/source-review.json",
+  "constraints": [
+    "Do not duplicate/cancel healthy source reviewer. Consume its completed actual result in same run.",
+    "Keep Source/Reader/Quality roles distinct; bounded patch review and15tests are not gate acceptance.",
+    "Preserve originalc559/c48/af792accepted1/12; canonical original freeze5682entries plus exact matrixmetadata delta only.",
+    "Current remoteee1 contains provider guard/source-pin correction, one exact selected operation authority digest, providerpage and one map.lastVerified field. Never push stale original generator/authority/map over it.",
+    "CIHEAD/index/all24dirtyfiles unchanged; fetch/reconcile remote through temporary publishing index before later push.",
+    "Source provenance15cases exactv3; v4only1ASCII trailing-space change, independently currentimpact-qualified and affected output checks repeated. Do not claim15rerun atv4.",
+    "54pre-existing currentmap metadatadeltas inclSDKowner remain; no fullcurrentGovernance/CI/native/P17/fullGo/261/89PASS.",
+    "No primary-gate switch; only exactA91110criterion dependencies."
+  ],
+  "formalAcceptance": false
+}

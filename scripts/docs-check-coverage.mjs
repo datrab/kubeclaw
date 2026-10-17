@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const topicMapPath = 'docs/DOCUMENTATION_TOPIC_MAP.md';
+const topicMapPath = 'docs/site/product-surfaces.md';
 
 const vagueTopicLanguage = /\bremaining weakness\b|\bunresolved weakness\b|\bvague weakness\b/i;
 

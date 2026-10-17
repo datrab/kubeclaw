@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/communication.html"></head><body><main>
+<h1 id="communication-end-to-end-transport-and-failure-contracts">Communication: End-To-End Transport And Failure Contracts</h1>
+<p>Status: implemented paths documented; unavailable guarantees stated explicitly
+Audience: platform operator, runtime maintainer, integration developer, security reviewer
+Owner: runtime and platform maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-test-gate/v1">contracts/pipeline-test-gate/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-worker-core/v1">contracts/pipeline-worker-core/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core">skills/nova/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core">skills/worker/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/redis-transport">skills/common/plugins/redis-transport</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw">charts/kubeclaw</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism">charts/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/reliability">tests/verification/reliability</a>
+Evidence revision: <code>13bff0a18a64e74f2cbbaa1978e746fcdeff0c10</code>
+Applies to: current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths
+Last verified: code, schema, chart, manifest, and focused test inspection on 2026-09-21</p>
+<h2 id="how-to-read-this-page">How To Read This Page</h2>
+<p>A connection is safe only when its message, identity, time, ordering, storage,
+and failure rules agree. A diagram can show direction, but it cannot show all
+these conditions. The matrix below is therefore the primary communication
+inventory.</p>
+<p>“None” means that the implementation deliberately has no mechanism. “Owner
+store” means the receiving domain persists the accepted operation. “Caller
+journal” means Nova or the invoking runtime keeps the durable intent. A retry is
+safe only when the row names an idempotency or identity rule.</p>
+<h2 id="prism-request-topology">Prism Request Topology</h2>
+<p>The production design path does not connect Nova directly to Prism Control.
+The complete path is:</p>
+<pre><code class="language-mermaid">flowchart LR
+    Nova[Nova Prism stage] --&gt;|runtime.dispatch| NEnvoy[Nova loopback Envoy 28080]
+    NEnvoy --&gt;|SPIFFE mTLS| AEnvoy[agent-prism Envoy 18082]
+    AEnvoy --&gt;|loopback 18080| Bridge[Prism agent bridge]
+    Bridge --&gt;|loopback Envoy 28080 then mTLS| Control[Prism Control 8443 to 8080]
+    Control --&gt; DB[(Prism PostgreSQL)]
+    Bridge --&gt;|claim durable job| Control
+    Bridge --&gt;|one OpenClaw CLI process| Gateway[OpenClaw gateway]
+    Gateway --&gt;|fenced design tool| Control
+    Control --&gt;|native attempt through Envoy| Worker[Prism Worker]
+    Control --&gt;|optional acquired corpus| Ingestion[Prism Ingestion]
+    Gateway --&gt;|managed reasoning| OpenAI[OpenAI provider]
+    Gateway --&gt;|memory embeddings| LiteLLM[LiteLLM]
+    LiteLLM --&gt; Provider[Vertex embedding provider]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova Prism stage</td>
+<td>Directed connection — runtime.dispatch</td>
+<td>Nova loopback Envoy 28080</td>
+</tr>
+<tr>
+<td>Nova loopback Envoy 28080</td>
+<td>Directed connection — SPIFFE mTLS</td>
+<td>agent-prism Envoy 18082</td>
+</tr>
+<tr>
+<td>agent-prism Envoy 18082</td>
+<td>Directed connection — loopback 18080</td>
+<td>Prism agent bridge</td>
+</tr>
+<tr>
+<td>Prism agent bridge</td>
+<td>Directed connection — loopback Envoy 28080 then mTLS</td>
+<td>Prism Control 8443 to 8080</td>
+</tr>
+<tr>
+<td>Prism Control 8443 to 8080</td>
+<td>Directed connection</td>
+<td>Prism PostgreSQL</td>
+</tr>
+<tr>
+<td>Prism agent bridge</td>
+<td>Directed connection — claim durable job</td>
+<td>Prism Control 8443 to 8080</td>
+</tr>
+<tr>
+<td>Prism agent bridge</td>
+<td>Directed connection — one OpenClaw CLI process</td>
+<td>OpenClaw gateway</td>
+</tr>
+<tr>
+<td>OpenClaw gateway</td>
+<td>Directed connection — fenced design tool</td>
+<td>Prism Control 8443 to 8080</td>
+</tr>
+<tr>
+<td>Prism Control 8443 to 8080</td>
+<td>Directed connection — native attempt through Envoy</td>
+<td>Prism Worker</td>
+</tr>
+<tr>
+<td>Prism Control 8443 to 8080</td>
+<td>Directed connection — optional acquired corpus</td>
+<td>Prism Ingestion</td>
+</tr>
+<tr>
+<td>OpenClaw gateway</td>
+<td>Directed connection — managed reasoning</td>
+<td>OpenAI provider</td>
+</tr>
+<tr>
+<td>OpenClaw gateway</td>
+<td>Directed connection — memory embeddings</td>
+<td>LiteLLM</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td>Directed connection</td>
+<td>Vertex embedding provider</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: Nova sends one idempotent request to its loopback Envoy. Envoy
+authenticates the Nova workload to the <code>agent-prism</code> Envoy. That proxy forwards
+to the bridge on loopback. The bridge sends the request through its second
+loopback Envoy listener to Prism Control. The first hop validates Nova. Control
+validates the Prism Agent identity, persists the request and agent job in
+PostgreSQL, and returns waiting state. The bridge later claims that durable job,
+starts one OpenClaw CLI process, and the OpenClaw Prism tool commits exactly
+three designs or one revision back to Control with the job ID and fence.
+Control, not OpenClaw, owns the final document, revision, approval, and job state.</p>
+<p>The bridge and Control have different failure boundaries. A 30-second bridge
+dispatch timeout can lose the HTTP response after Control committed the request.
+The caller must reconcile the same idempotency key. After the bridge claims a
+job, any uncertain OpenClaw launch becomes <code>needs_nova</code>; the implementation does
+not replay it. A claim expires after 16 minutes. The OpenClaw attempt allows 15
+minutes plus 10 seconds for cleanup, and its local logs and result are each
+limited to 1 MiB. PostgreSQL retains the job, request digest, stable session key,
+fence, result, and outcome. The OpenClaw PVC retains gateway session state, but
+it is not the authority for Control state.</p>
+<blockquote>
+<p><strong>Source evidence — the complete Prism bridge</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/prism-design/src/stage.ts#L10-L34">Nova derives the dispatch idempotency key from run, architecture, and phase</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L130">Nova and Prism-agent proxies define the two mTLS hops and loopback listeners</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L175-L197">the agent-to-Control cluster</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/agent-bridge.mjs#L1-L37">The bridge bounds request size and dispatch/read time, polls once per second, and stops its runner on shutdown</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/runtime-dispatch/src/adapter.ts#L63-L89">The shared dispatch adapter defaults request and response limits to 1 MiB</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/agent-attempt.ts#L10-L28">The OpenClaw attempt fixes its timeout, cleanup period, and output limits</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L202-L240">Control persists the request before job admission</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/agent-jobs.ts#L31-L65">The job store enforces one active session, a 16-minute fence, and <code>needs_nova</code></a>.</p>
+</blockquote>
+<h2 id="complete-connection-matrix">Complete Connection Matrix</h2>
+<p>The <a href="platform-and-operations.html#embedding-client-limits-and-failure-rules">embedding client limits and failure rules</a> give the pinned source, attempt budgets, cancellation limits, and source-versus-live boundary for the LiteLLM row below.</p>
+<table>
+<thead>
+<tr>
+<th>Sender → receiver</th>
+<th>Purpose and schema</th>
+<th>Transport / endpoint</th>
+<th>Authentication and authorization</th>
+<th>Timeout and ordering</th>
+<th>Retry, persistence, and deduplication</th>
+<th>Backpressure</th>
+<th>Failure effect and recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova → Buster</td>
+<td>Submit <code>buster-plan-job.v1</code>; read status, <code>buster-plan-result.v1</code>, and digest-bound evidence.</td>
+<td>HTTP(S): <code>POST /v1/plan-jobs</code>; <code>GET</code> or <code>DELETE /v1/plan-jobs/:jobId</code>; <code>GET .../results/:digest</code> and <code>.../evidence/:digest</code>.</td>
+<td>Bearer token of at least 32 characters, or loopback HTTP behind a SPIFFE proxy; capability and fixed plan/source grants are in the job.</td>
+<td>One gate deadline; polling is at least 10 ms; cleanup defaults to 10 s. Submit precedes status and import.</td>
+<td>Nova stores intent first. Job ID derives from idempotency key. Buster locks and stores one job. Retry uses the same ID. Import records pending before blobs and completes once.</td>
+<td>Configured response/result ceilings, plan limits, Buster concurrency, and evidence byte limits.</td>
+<td>Retry only classified transport/server failures within the deadline. Lost response causes status reconciliation, never a new job. Digest or identity mismatch blocks import.</td>
+</tr>
+<tr>
+<td>Nova → Prism agent bridge → Control</td>
+<td>Submit <code>prism.design-request.v1</code>; receive <code>202 waiting</code> or an approved archive.</td>
+<td><code>POST /v1/dispatch</code>: Nova Envoy <code>127.0.0.1:28080</code> → <code>agent-prism:8080</code>/Envoy <code>18082</code> → bridge <code>127.0.0.1:18080</code> → its Envoy <code>28080</code> → Control mTLS Service <code>8443</code> → app <code>8080</code>.</td>
+<td>SPIFFE authenticates Nova to agent-prism and agent-prism to Control. Control admits Nova, Prism Agent, or test runner. The idempotency key and configured preference subject are mandatory. HMAC is only the non-SPIFFE Control fallback.</td>
+<td>Adapter request/response defaults are 1 MiB; bridge and Control accept at most 2 MB. Bridge dispatch is 30 s. Architecture revisions must move forward.</td>
+<td>PostgreSQL stores the request before job admission. Dispatch idempotency starts one design round. Existing approved baseline is returned for the bound approval.</td>
+<td>Body ceilings, database pool, one active agent session, and bridge admission.</td>
+<td>Invalid peer, transition, schema, or signature fails closed. Reconcile a lost response with the same key; it is not a new design identity.</td>
+</tr>
+<tr>
+<td>Prism Control → native Prism Worker</td>
+<td>Execute <code>worker-attempt-envelope.v3</code>; receive <code>worker-attempt-result.v3</code>.</td>
+<td>HTTP <code>POST /v1/attempts</code>; <code>/health</code>, <code>/bootstrap</code>, and <code>/ready</code> separate liveness and admission.</td>
+<td>SPIFFE Control allowlist or body-bound HMAC with timestamp and one-time nonce. Worker profile, claim, package, capability, and attempt digests authorize work.</td>
+<td>Envelope queue deadline, attempt timeout, claim expiry, and cleanup deadlines. Worker executes one admitted native attempt at a time.</td>
+<td>Control operation store reserves idempotency identity and records terminal result before hydration. Conflicting results are rejected.</td>
+<td>Input ceiling, one native attempt, declared CPU/memory/task/log/evidence budgets.</td>
+<td>503 means dependency, reconciliation, or busy; 422 means rejected input/execution. Reconcile stored operation and Worker journal before retry.</td>
+</tr>
+<tr>
+<td>Prism Control ↔ Prism Agent Bridge / OpenClaw</td>
+<td>Claim durable agent jobs and commit exactly three designs or one next revision.</td>
+<td>Control agent-job HTTP routes through loopback Envoy; bridge listens on <code>127.0.0.1:18080</code> and polls each second.</td>
+<td>SPIFFE Prism Agent identity at Control. Job ID and fence bind mutation tools.</td>
+<td>Bridge dispatch timeout 30 s; control reads 10 s; one active job; accepted job fence lasts 16 minutes.</td>
+<td>PostgreSQL owns job state. Stable session key and job fence prevent replacement. A lost launch becomes an explicit errored/needs-Nova state.</td>
+<td>One active job, 2 MB bridge body, fixed attempt and model limits.</td>
+<td>Do not spawn again after uncertain launch. Inspect durable job; Nova resolves <code>needs_nova</code>. Shutdown stops polling and terminates the owned process.</td>
+</tr>
+<tr>
+<td>Prism Control → Ingestion</td>
+<td>Acquire allowed corpus input into quarantine, verify it, and delete it after publication.</td>
+<td>HTTP <code>POST /v1/acquisitions</code> and <code>DELETE /v1/acquisitions/:sha256</code> at <code>prism-ingestion:8080</code>.</td>
+<td>Bearer <code>PRISM_INGESTION_SECRET</code>; NetworkPolicy permits Control only. Control rejects public-web input until a source policy is approved.</td>
+<td>Acquisition 30 s; cleanup 10 s; request 2 MB; acquired body 6 MB; HTTPS fetch 15 s with at most three redirects.</td>
+<td>Quarantine file name is the SHA-256. Control verifies bytes, stores an inactive corpus revision and embedding, cleans quarantine, then activates the exact revision.</td>
+<td>One 4 GiB <code>emptyDir</code>; TTL defaults to one hour and is clamped to 1 minute–1 day.</td>
+<td>Acquisition, digest, embedding, publication, and cleanup errors stay distinct. Do not activate the corpus until storage and cleanup complete.</td>
+</tr>
+<tr>
+<td>Prism Control → native Worker → design provider</td>
+<td>Generate, render, evaluate, ingest, or publish a bounded native attempt.</td>
+<td>Control calls Worker through Envoy/mTLS; the per-attempt host invokes the in-process Prism engine.</td>
+<td>Control and Worker SPIFFE IDs, claim/fence, accepted profile, resource policy, and content digest.</td>
+<td>Attempt 300 s; cleanup 10 s; queue claim 10 minutes; Worker request-body timeout defaults to 120 s.</td>
+<td>Control operation state and Worker native journal bind the result. The current native host instantiates <code>DeterministicDesignProvider</code>; it does not call the available OpenAI-compatible provider.</td>
+<td>One native attempt, 16 MiB result, 128 MiB evidence, 64 files, and cgroup budgets.</td>
+<td>Reconcile a failed or interrupted attempt from Control state and the Worker journal. Do not infer an external provider call from a provider class that is not composed.</td>
+</tr>
+<tr>
+<td>Nova, Buster, or Prism OpenClaw → managed OpenAI</td>
+<td>Supply reasoning for one OpenClaw agent session. Provider request and response schemas are owned by the pinned OpenClaw runtime, not by Nova or Prism contracts.</td>
+<td>External provider transport selected by OpenClaw; the repository configures provider <code>openai</code> and allowed model IDs, but not a fixed remote URL.</td>
+<td>OpenClaw OAuth profiles authenticate the external account. The role model selection and generated allowlist authorize <code>openai/gpt-5.6-sol</code> and <code>openai/gpt-5.5</code>.</td>
+<td>Provider timeout and retry policy are not defined in this repository. The owning pipeline deadline, Prism 15-minute attempt, and OpenClaw session order remain the outer bounds.</td>
+<td>OpenClaw retains session state. Prism also retains job ID and fence; Nova retains its effect and stage records. No repository contract proves provider-side request deduplication.</td>
+<td>Provider quotas, OpenClaw session limits, and the owning operation deadline.</td>
+<td>Preserve and reconcile the same session or durable job after an unknown outcome. Do not create a replacement agent merely because transport failed.</td>
+</tr>
+<tr>
+<td>Nova, Buster, or Prism OpenClaw → LiteLLM → Vertex</td>
+<td>Create remote memory-search embeddings. Agent reasoning uses the separately configured managed OpenAI model route.</td>
+<td>OpenAI-compatible <code>http://litellm.kubeclaw.svc.cluster.local:4000/v1</code>; model <code>gemini-embedding-001</code>; LiteLLM routes to Vertex AI.</td>
+<td>OpenClaw receives <code>LITELLM_API_KEY</code>; LiteLLM reads its master key and mounted Google service-account credential.</td>
+<td>Pinned source: 60 s per query attempt; 10 min per inline index request; query cancellation propagates. The role probe calls only <code>/health</code>.</td>
+<td>Memory manager allows at most three query attempts; index requests allow three transient or five rate-limit attempts, with recursive splitting for selected failures. These are attempt counts, not a whole-run ceiling. LiteLLM PostgreSQL and OpenClaw memory state have separate owners.</td>
+<td>Index input estimate: 8,000 UTF-8 bytes per group; success response: 16 MiB and 30 s body-idle limit. No adapter request-body cap. Provider quota and gateway capacity remain external.</td>
+<td>Keep the owning operation incomplete on timeout, auth, quota, provider, or vector error. Diagnose and prove one real embedding; health success is not route proof.</td>
+</tr>
+<tr>
+<td>Discord service and allowed user ↔ Nova or Buster OpenClaw</td>
+<td>Carry the two enabled bot channels, allowed commands, threaded sessions, replies, and Buster execution approvals.</td>
+<td>External Discord bot gateway and HTTPS APIs as implemented by the pinned OpenClaw Discord plugin. The repository fixes channel IDs but not Discord service endpoints.</td>
+<td>Distinct <code>DISCORD_TOKEN</code> Secret keys authenticate each bot. Channel, allowed-user, owner, mention, and Buster approver lists authorize application handling.</td>
+<td>Guild messages require a mention. The configured inbound worker limit is 12 hours; thread idle is 999 hours. External request timeout, reconnect, and rate-limit retry are not defined here.</td>
+<td>OpenClaw retains role session state. Discord retains external message identity. No Discord message can replace a Nova journal, Buster receipt, or Prism row, and no repository contract proves end-to-end message deduplication.</td>
+<td>Discord limits, one gateway's session controls, and external rate controls.</td>
+<td>Keep domain state unchanged on disconnect, denial, or uncertain reply. Restore the same bot and channel, then prove an allowed user and a denied user without replaying an uncertain command.</td>
+</tr>
+<tr>
+<td>Prism Control / Worker → Prism PostgreSQL</td>
+<td>Transact projects, revisions, operations, agent jobs, approvals, preferences, corpus, and worker nonces.</td>
+<td>PostgreSQL to <code>prism-postgresql:5432</code>; separate runtime, migration, backup, and test URLs.</td>
+<td>Credentials come from <code>prism-postgresql-auth</code>; NetworkPolicy restricts named Prism clients.</td>
+<td>Pool, statement, lock, and transaction limits are owner-specific. Worker dependency checks default to 750 ms.</td>
+<td>PostgreSQL is authoritative. Row locks, unique keys, advisory locks, revision CAS, and job fences serialize conflicts.</td>
+<td>Database pool and retained PVC.</td>
+<td>Stop Prism mutation when unavailable. Restore the matched database-and-artifact group and reconcile operations before new admission.</td>
+</tr>
+<tr>
+<td>Nova stage → Forge or Echo via runtime adapter</td>
+<td><code>kubeclaw.implementation.v2</code> or the Echo review request; strict typed completion.</td>
+<td>In-process capability call, then OpenClaw Gateway HTTP/MCP/ACP for the selected allowlisted target.</td>
+<td>Core capability grant, target ID allowlist, named secret; optional verified workspace owner. OpenClaw controls model/tool access.</td>
+<td>Target polling defaults 1–15 s and session deadline 30 minutes. One session identity orders all polls and result collection.</td>
+<td>Core effect identity and runtime idempotency key; session identity is reconciled after lost response. Final artifact is stored by the stage.</td>
+<td>Fixed prompt/context/output budgets; target response sizes; bounded session polls.</td>
+<td>Parser rejection blocks the stage. Abort sends cancel/stop and must prove terminal state. Unresolved cleanup blocks retry to prevent duplicate agents.</td>
+</tr>
+<tr>
+<td>Nova Core → stage</td>
+<td>Invoke stage with <code>StageInvocationContract</code>; receive <code>stage-result.v2</code>, wait, effects, facts, and artifacts.</td>
+<td>In-process module call for direct activation; isolated stage IPC when that activation is selected.</td>
+<td>Registry snapshot, package digest, registration ID, role selection, stage capability grant, attempt lease and fence.</td>
+<td>Attempt lease and abort signal propagate. Scheduler orders graph dependencies; stages do not select successors.</td>
+<td>Run journal and attempt records are authoritative. Attempt number and effect idempotency keys prevent reuse.</td>
+<td>Declared input/artifact limits, scheduler concurrency, effect limits, and isolation channel limits.</td>
+<td>Invalid result or expired fence cannot change lifecycle. Core records failure and applies declared retry/repair policy.</td>
+</tr>
+<tr>
+<td>Stage → adapter</td>
+<td>Request one effect such as Git, artifact, secret, dispatch, Redis, or Buster transport.</td>
+<td>In-process capability router; adapter can then use local or network transport.</td>
+<td>Exact capability grant, operation, resource type and canonical ID; confidential calls hide secret results from ordinary stage data.</td>
+<td>Caller abort and effect deadline propagate. Core journals intent before uncertain external work.</td>
+<td>Effect ID and idempotency key bind retries. Adapter-specific reconciliation decides whether an unknown result can repeat.</td>
+<td>Adapter request/response limits and bounded cleanup scope.</td>
+<td>Unknown external outcome becomes reconciliation-required. Do not translate it into an ordinary stage retry.</td>
+</tr>
+<tr>
+<td>Buster provider → configured HTTP(S) target</td>
+<td>Execute a Buster <code>network.http</code> request whose method and complete URL are supplied by the admitted provider request; inventory identity is <code>DYNAMIC {configuredUrl}</code>.</td>
+<td>Fetch with manual redirects; HTTP or HTTPS only. WebSocket is a separately gated operation and is not this HTTP family.</td>
+<td>The capability request must name <code>network.http</code>, <code>network.url</code>, and an allowed operation. Runtime policy checks exact origin or suffix, port, exact-origin authority, method, request headers, and optional registry-health credentials; URL credentials and fragments are denied.</td>
+<td>The request timeout is the smaller configured request value or runtime maximum and is combined with caller cancellation. There is no automatic redirect or request retry.</td>
+<td>The invoker stores no response or deduplication state. The owning Buster job/attempt and its evidence remain authoritative, so an uncertain non-idempotent target outcome needs target-specific reconciliation.</td>
+<td>Configured request and response byte ceilings; request header entries and requested response-header names are each limited to 32; WebSocket message count/bytes are separately bounded.</td>
+<td>Denied policy, cancellation, timeout, redirect, response overflow, or transport error fails the provider request. Do not replay a mutating configured method unless the owning effect and remote target make that replay safe.</td>
+</tr>
+<tr>
+<td>Granted stage/plugin → common <code>network.http</code> adapter → configured HTTP(S) target</td>
+<td>Execute the common adapter's runtime-configured method and URL; inventory identity is <code>DYNAMIC {configuredUrl}</code>.</td>
+<td>Fetch to the request canonical URL with manual redirects and connection close.</td>
+<td>Core must grant <code>network.http</code>/<code>request</code>; the adapter requires an exact configured origin and allowed method/header set, rejects URL credentials, and checks the current fence for non-confidential calls. Any application credential is an explicitly allowed request header, not implicit adapter identity.</td>
+<td>Caller cancellation propagates; adapter timeout defaults to 30 s. It performs one request and never follows or retries a redirect.</td>
+<td>The adapter is stateless. Core's effect journal, effect ID, and idempotency key own retry/reconciliation; the remote service owns any accepted mutation.</td>
+<td>Request and decompressed response each default to 1 MiB and are configurable; response collection stops at the ceiling.</td>
+<td>Origin, method, header, fence, timeout, redirect, size, HTTP, decode, or transport failure rejects the effect. Preserve an unknown remote outcome for reconciliation rather than turning it into a fresh stage retry.</td>
+</tr>
+<tr>
+<td>Core → observer</td>
+<td>Deliver lifecycle and telemetry events after authoritative state changes.</td>
+<td>In-process observer callback; an observer may emit to Redis or another sink through a granted adapter.</td>
+<td>Observer registration and narrow telemetry capabilities. Observer has no lifecycle-write grant.</td>
+<td>Delivery follows committed lifecycle order; observer deadline applies.</td>
+<td>Canonical journal is the source of truth. Sink delivery can deduplicate by event/idempotency identity.</td>
+<td>Observer queue and sink bounds.</td>
+<td>Observer failure can degrade visibility but cannot reverse or invent pipeline state. Replay from authority where supported.</td>
+</tr>
+<tr>
+<td>Native supervisor ↔ unprivileged worker host</td>
+<td>Carry role-defined control messages; process input/result use the Worker envelope/result contracts.</td>
+<td>One duplex native control stream with 4-byte big-endian length framing; process stdin/stdout is separate.</td>
+<td>Local process ownership, fixed executable, dropped privilege, attempt identity, cgroup, and journal. No network credential.</td>
+<td>Single reader; writes serialize in call order. Attempt, close, poll, and cleanup timeouts come from native policy.</td>
+<td>Native journal records accepted input, process result, spooled output, and sealed result. The framing layer has no message deduplication.</td>
+<td>Per-message and total-session byte ceilings; stdout/stderr spool and result limits. Stream write backpressure is awaited.</td>
+<td>Truncated, oversized, closed, or ambiguous channel fails the attempt. Supervisor terminates and drains the owned process tree before recovery.</td>
+</tr>
+<tr>
+<td>Plugin → Redis</td>
+<td>Publish transport payload or telemetry JSON.</td>
+<td>RESP over <code>redis://</code> or TLS over <code>rediss://</code>; <code>AUTH</code>, then one Lua <code>EVAL</code>. Stream is <code>&lt;prefix&gt;:v2:&lt;kind&gt;:&lt;encoded target&gt;</code>.</td>
+<td>Password is resolved through <code>secrets.read</code>; URL cannot contain credentials. TLS validates the server hostname in <code>rediss</code> mode. Capability must match publisher or telemetry adapter.</td>
+<td>Configured timeout, maximum 300 s. Redis stream IDs order accepted entries per stream.</td>
+<td>Lua checks a digest-derived dedup key, then <code>XADD MAXLEN ~</code>, then stores entry ID with configured TTL. Redis is transport, not run authority.</td>
+<td>Payload ≤1 MiB; response ≤about 1 MiB; <code>maxLen</code> ≤1,000,000; socket pressure and timeout stop the call.</td>
+<td>Connection, auth, protocol, timeout, or response failure rejects the effect. Reconcile by the same idempotency key; lifecycle recovers from Nova's journal.</td>
+</tr>
+<tr>
+<td>OpenClaw observer → Redis</td>
+<td>Write agent-observability v1 control or payload events and failed-control dead letters.</td>
+<td><code>XADD MAXLEN ~</code> to fixed <code>pipeline:agent-observability:{control,payload,deadletter}:v1</code> streams.</td>
+<td>Observer Redis credentials and optional TLS; host policy controls which OpenClaw hooks enter the writer.</td>
+<td>One queue drains control before payload. Each command has a configured timeout. Control retries use bounded exponential delay; payload writes try once.</td>
+<td>Redis retains entries to approximate configured length. Runtime sequence/content suppression reduces duplicate observations, but there is no atomic Redis dedup key and no consumer acknowledgement here.</td>
+<td>Separate bounded control and payload queues. A full queue drops the new event for that same queue. Control drain priority does not evict a payload event.</td>
+<td>Failed control writes go to the dead-letter stream after bounded retry. If that write also fails, counters and warnings are the only evidence. Telemetry loss never changes lifecycle authority.</td>
+</tr>
+<tr>
+<td>Browser → Prism Studio static responder</td>
+<td>Load the Studio shell or a built asset. The server route is the method-agnostic SPA fallback <code>ANY /*</code>, excluding exact <code>/health</code> and <code>/ready</code> and the proxied <code>/v1/*</code> prefix; <code>/v1</code> without the trailing slash is therefore static fallback input.</td>
+<td>HTTPS through the private Tailscale Ingress, then local filesystem streaming. Missing files fall back to <code>index.html</code>; this path never calls Control.</td>
+<td>Tailnet route policy protects external reachability. The static responder itself does not require the Prism session cookie and grants no domain authority; browser API mutations still use the separate <code>/v1/*</code> proxy with session and CSRF checks.</td>
+<td>There is no application fallback timer or ordering state. The response stream awaits filesystem and socket backpressure; health and API classification precede fallback selection.</td>
+<td>Built Studio files are deployment content, not mutable domain state. The fallback writes no database, journal, session, or deduplication record.</td>
+<td>Traversal outside the configured root is denied. Content streams without buffering the whole file; limits are filesystem, server, and ingress bounds rather than a route body quota.</td>
+<td>Invalid URL encoding returns 400, traversal returns 403, a missing fallback index returns 404, and other I/O failures return 500. Repair or redeploy the static bundle; never infer Control state from a successful shell response.</td>
+</tr>
+<tr>
+<td>User → Prism Studio / Control</td>
+<td>Browser session, project and revision work, approval, publication.</td>
+<td>HTTPS Tailscale Ingress to Studio; Studio proxies the <code>/v1/*</code> prefix to Control.</td>
+<td>Tailscale identity exchange, signed 15-minute session cookie, CSRF cookie/header for mutations, product-role checks.</td>
+<td>Studio proxy timeout; disconnect aborts upstream. Revision CAS orders edits and approval.</td>
+<td>PostgreSQL persists domain state. Operation and revision identities reject stale writes.</td>
+<td>Request/body limits, pool limits, one publication per locked project path.</td>
+<td>Authentication, CSRF, stale revision, validation, or publication evidence failure stops mutation. Reload authoritative revision and retry explicitly.</td>
+</tr>
+<tr>
+<td>Private client → Tailscale-published service</td>
+<td>Reach Prism Studio, Archviewer, Argo/Ops surfaces, or a temporary Buster fixture.</td>
+<td>Tailnet DNS and Tailscale Ingress; Buster exposure returns a typed HTTPS endpoint and lease.</td>
+<td>Tailnet device/user ACL plus service auth where present. Archviewer also requires Basic auth. Temporary fixture authority is namespace-lease and capability bound.</td>
+<td>Readiness and lease deadlines are service-specific. Exposure must exist before tests use it and release follows consumers.</td>
+<td>Platform routes have controller state. Buster exposure persists lease identity; it is not a general durable message queue.</td>
+<td>Ingress/service limits and test concurrency.</td>
+<td>DNS, certificate, ACL, readiness, or lease failure blocks that consumer. Release or retain according to cleanup policy; never reuse a stale lease URL.</td>
+</tr>
+<tr>
+<td>Nova / Buster → Git</td>
+<td>Clone or fetch source; create a local worktree; commit selected files; merge an exact revision.</td>
+<td>Operator-configured Git SSH/HTTPS remote and local filesystem worktrees. No supported local Git-mirror service exists in the current repository.</td>
+<td>Deploy key and host trust at Git transport; Core capability grants and workspace owner records for mutation.</td>
+<td>Git command deadlines; expected parent and source revision impose order.</td>
+<td>Git objects and refs persist. Attempt generation separates worktrees. Commit SHA and owner record bind identity.</td>
+<td>Repository size, command output, path count, disk, and lock-wait bounds.</td>
+<td>Stale parent, conflict, lock timeout, remote failure, or owner mismatch blocks. Reconcile refs before retry. A managed Git mirror remains roadmap work and has no current fallback contract.</td>
+</tr>
+<tr>
+<td>Buster → BuildKit → OCI registry</td>
+<td>Build an image, push immutable manifest/layers, verify digest, then let consumers pull it.</td>
+<td>BuildKit client protocol to rootless BuildKit; OCI Distribution API to local registry; upstream pulls may use Docker Hub mirror.</td>
+<td>Registry client configuration controls endpoints and credentials. Current lab local registry is anonymous HTTP; it is not production-grade HTTPS.</td>
+<td>Build and push deadlines are provider settings. Manifest digest binds later verification and pull order.</td>
+<td>BuildKit cache and registry blobs persist independently. Content digests deduplicate layers and bind the selected manifest.</td>
+<td>Build context, output, cache, disk, concurrent build, and registry limits.</td>
+<td>Build, push, digest check, or pull failure fails the node. Retry only after checking whether the digest exists. A mirror miss is not local-registry success.</td>
+</tr>
+<tr>
+<td>Workload → SPIRE / Envoy → protected service</td>
+<td>Obtain SVID, establish mTLS, and forward verified SPIFFE identity to loopback application HTTP.</td>
+<td>SPIFFE Workload API over CSI socket; Envoy mTLS listener and local plaintext application listener.</td>
+<td>SPIRE issues workload identity. Envoy validates peer trust domain and SAN. Application accepts forwarded identity only from loopback proxy and an exact peer allowlist.</td>
+<td>SVID rotation is handled by workload API/Envoy. Application request deadlines still apply.</td>
+<td>No message persistence or deduplication at mTLS. Domain stores retain accepted operations.</td>
+<td>Envoy connection/request limits plus application limits.</td>
+<td>Missing SVID, invalid SAN, unlisted peer, non-loopback forwarded header, or proxy failure denies the request. Restore identity/proxy; never fall back silently to anonymous remote HTTP.</td>
+</tr>
+<tr>
+<td>Codex client → Ops MCP → Kubernetes API</td>
+<td>Request read-only cluster, Argo, workload, event, or log evidence.</td>
+<td>Bearer-authenticated MCP at Pod loopback <code>127.0.0.1:8080/mcp</code>; Ops MCP uses <code>GET {kubernetesApiPath}</code> over HTTPS to the configured Kubernetes API origin. The symbolic path covers tool-selected core and grouped API paths without inventing one static URL.</td>
+<td>Rotating bearer for MCP; projected ServiceAccount token is re-read for every request, the configured CA verifies TLS, and RBAC authorizes Kubernetes reads; optional exact Origin allowlist and namespace enum constrain MCP callers.</td>
+<td>Each Kubernetes request has a 10 s timeout and 8 MiB response ceiling; logs have 64 KiB. Lists reduce page size only after an oversized response. <code>namespace_overview</code> and <code>get_events</code> have no aggregate page, duration, scan-item, or encoded-output ceiling.</td>
+<td>No durable MCP session or result store and no automatic general retry. Kubernetes supplies current state and continuation tokens; oversized list pages alone are retried with a smaller page size and the same selectors/token.</td>
+<td>Per-request and log ceilings. The two full-scan tools remain unbounded at operation level.</td>
+<td>Invalid path, token/CA, 401/403, RBAC, API, timeout, parse, or size error returns no write. Prefer a one-page or single-object tool. Do not interpret an absent full-scan response as an empty namespace.</td>
+</tr>
+<tr>
+<td>Ops MCP → Hubble Relay</td>
+<td>Read bounded Cilium flow evidence.</td>
+<td>Fixed <code>hubble observe</code> process to <code>hubble-relay.cilium.svc.cluster.local:4245</code>.</td>
+<td>Ops Pod process and cluster network boundary; result filtering rechecks exact namespace and Pod identity.</td>
+<td>Two concurrent queries; 12 s; maximum 15-minute window; 2 MiB raw and 192 KiB returned; 1–50 flows.</td>
+<td>No lossless cursor. Warnings and partial reasons are part of the result.</td>
+<td>Query semaphore, byte ceilings, and Hubble peer capacity.</td>
+<td>Partial, lost-event, timeout, parse, relay, or process failure cannot prove absence of traffic or drops. Narrow the window and retain partial reasons.</td>
+</tr>
+<tr>
+<td>Prometheus / Alloy → monitoring stores → Grafana</td>
+<td>Project metrics and logs for diagnosis.</td>
+<td>Prometheus scrapes; Alloy reads CRI logs and posts to Loki <code>/loki/api/v1/push</code>; Grafana queries configured data sources.</td>
+<td>Target-specific scrape identity; checked-in Loki uses network controls, not application auth; Grafana reads an existing admin Secret.</td>
+<td>Profile-specific scrape and batch settings; Prometheus retains 15 days and Loki 720 hours.</td>
+<td>Prometheus, Loki, and Alloy positions hold derived observations only.</td>
+<td>Collector queues, storage, retention, and backend availability.</td>
+<td>Monitoring failure reduces visibility. Recover backend before collectors and correlate gaps with canonical journals; do not synthesize lifecycle events.</td>
+</tr>
+</tbody>
+</table>
+<p>The two <code>{configuredUrl}</code> records and <code>{kubernetesApiPath}</code> are deliberately
+symbolic. They describe active runtime provider families whose concrete targets
+exist only after an admitted request selects them. They are not wildcard server
+routes and must not be expanded into fabricated concrete endpoints. Likewise,
+Studio's <code>/*</code> record is explicitly a static-response fallback with exclusions;
+it is not a general application catchall.</p>
+<blockquote>
+<p><strong>Source evidence — dynamic HTTP families and Studio fallback</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/network-http-runtime.ts#L185-L198">Buster validates the configured URL, origin, and port before it permits the dynamic target</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/network-http-runtime.ts#L208-L268">The request path enforces the method, headers, timeout, and byte ceilings before and during the dynamic fetch</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/network-http/src/adapter.ts#L18-L51">The common adapter converts its configured origins, methods, headers, timeout, and byte limits into an enforceable policy</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/network-http/src/adapter.ts#L53-L100">Its fetch path applies cancellation, timeout, redirect, and response-size controls</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/network-http/src/adapter.ts#L107-L137">Activation binds the dynamic canonical URL and method to that policy and checks the execution fence</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/kubernetes.mjs#L1-L58">Ops MCP fixes HTTPS and GET while accepting a validated dynamic Kubernetes API path, rotating token, CA, timeout, and response ceiling</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/studio-request.ts#L89-L139">Studio classifies health first, proxies only <code>/v1/</code>, and sends every other path to the bounded static-file/SPA responder</a>.</p>
+</blockquote>
+<h3 id="dynamic-prism-route-families">Dynamic Prism Route Families</h3>
+<p>Prism Control matches several routes at runtime because project, document,
+revision, direction, job, artifact, and decision IDs are part of the path. The
+families below are application contracts, not a promise that any arbitrary ID
+is valid. Each handler authenticates first, then checks ownership or binding in
+PostgreSQL or the artifact store.</p>
+<table>
+<thead>
+<tr>
+<th>Route family</th>
+<th>Caller and authority</th>
+<th>State, ordering, and limits</th>
+<th>Failure and safe continuation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code>, <code>GET /ready</code></td>
+<td>Kubernetes or an operator. Health proves the process; readiness also executes <code>SELECT 1</code>. Neither route grants domain authority.</td>
+<td>No mutation. Readiness depends on Prism PostgreSQL.</td>
+<td>Keep admission stopped when readiness fails. Process health alone cannot justify a write.</td>
+</tr>
+<tr>
+<td><code>POST /v1/session</code></td>
+<td>Tailscale-authenticated browser exchanges trusted identity headers for a signed 15-minute session and a separate CSRF value.</td>
+<td>Session cookie is HTTP-only; mutation requests must carry the CSRF value. Product mode also checks the exact configured Origin.</td>
+<td>Reject missing or changed identity and origin. Start a new authenticated browser session; do not reuse a failed mutation as proof of success.</td>
+</tr>
+<tr>
+<td><code>POST /v1/dispatch</code></td>
+<td>Nova, Prism Agent, or test-runner over the protected proxy path; HMAC is the non-SPIFFE fallback.</td>
+<td>Body is at most 2 MB. Idempotency key, preference subject, project, architecture digest, and forward-only revision bind admission. PostgreSQL records the request before an agent job.</td>
+<td>A lost response is reconciled with the same key. Invalid identity, signature, schema, project transition, or stale revision fails closed.</td>
+</tr>
+<tr>
+<td>`/v1/agent/jobs/{claim</td>
+<td><job></td>
+<td><job>/finish}<code>and</code>GET /v1/agent-jobs/<job>`</td>
+<td>The Prism Agent identity claims, reads, and finishes the durable job; an authenticated human can read the separate public status receipt.</td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/design-sets</code> and <code>POST /v1/agent/revisions</code></td>
+<td>Only the protected Prism Agent tool identity can commit generated work.</td>
+<td>A design set has exactly three unique directions. A revision must belong to the project and increment the expected revision once. Job ID, generation, and fence bind both writes.</td>
+<td>Reject stale fence, changed project/document, invalid generation, or schema. Reconcile the durable job rather than submitting an unbound replacement.</td>
+</tr>
+<tr>
+<td><code>GET/POST /v1/projects</code>, <code>GET /v1/projects/&lt;projectId&gt;/brief</code>, and <code>GET/POST /v1/projects/&lt;projectId&gt;/directions</code></td>
+<td>Authenticated Studio user lists or creates projects, reads the active architecture, reads directions, or starts another agent round.</td>
+<td>PostgreSQL owns the project and active request. A new round binds user, document, expected revision, parent round, architecture digest, and an explicit idempotency key.</td>
+<td>Reload the active project and round after conflict. Do not attach a result from an old architecture or preference generation.</td>
+</tr>
+<tr>
+<td>`POST /v1/directions/<id>/{feedback</td>
+<td>select}`</td>
+<td>Authenticated Studio user records preference feedback or selects one direction.</td>
+<td>The idempotency header, user identity, direction ID, action, and optional document bind the decision. PostgreSQL serializes the change.</td>
+</tr>
+<tr>
+<td><code>POST /v1/documents</code>, <code>GET /v1/documents/&lt;documentId&gt;</code>, <code>GET .../revisions</code>, <code>POST .../revisions/&lt;revisionId&gt;/restore</code>, <code>POST .../operations</code>, and <code>POST .../engine</code></td>
+<td>Authenticated Studio user creates a document in an active project, reads it, restores or edits it, or requests a bounded agent/native operation.</td>
+<td>Creation requires an active design request and a valid document. Revision compare-and-set, operation identity, base revision, worker envelope, and artifact digests order later changes. <code>generate</code> becomes a durable agent job; render, evaluate, and publish use the native Worker.</td>
+<td>Missing active request, invalid document, stale revision, or changed digest stops the mutation. Re-read the current project and revision before another request.</td>
+</tr>
+<tr>
+<td><code>POST /v1/approvals</code> and <code>POST /v1/baselines</code></td>
+<td>Authenticated Studio user accepts the current design and then publishes its bound baseline.</td>
+<td>Approval binds project, current revision, design digest, architecture digest, operator, and accepted warning IDs. Publication checks that binding, renders every declared view/state/viewport, stores content-addressed files, and records one bundle digest.</td>
+<td>Any stale digest, changed warning, missing selection, render failure, or accessibility failure blocks publication. Repair the same revision or create an explicit later revision; never relabel bytes.</td>
+</tr>
+<tr>
+<td><code>POST /v1/artifacts</code>, <code>GET /v1/artifacts/&lt;sha256:64hex&gt;</code>, and protected <code>GET/POST /v1/internal/artifacts/&lt;sha256:64hex&gt;</code></td>
+<td>Authenticated Studio writes up to 6 MB of canonical base64; authenticated readers fetch by digest; Control, Worker, and Prism Agent use the protected internal route.</td>
+<td>Content hash is the identity. The store, not a caller filename, owns retrieval. The internal route requires an exact trusted workload identity or the configured non-SPIFFE secret.</td>
+<td>Reject malformed base64, oversized content, digest mismatch, or unauthorized peer. Restore the same content-addressed bytes; do not mint a different digest for missing content.</td>
+</tr>
+<tr>
+<td><code>POST /v1/corpus</code>, <code>GET /v1/corpus/search</code>, <code>DELETE /v1/acquisitions/&lt;64hex&gt;</code>, <code>GET/POST /v1/preferences</code>, and <code>PUT /v1/preferences/policy</code></td>
+<td>Authenticated Studio user governs approved corpus and personal preference input. Control coordinates optional Ingestion, native embedding, PostgreSQL, and cleanup. Ingestion accepts the protected cleanup request.</td>
+<td>Corpus activation occurs only after acquisition, digest verification, embedding, inactive revision storage, and quarantine deletion. The cleanup path uses raw 64-hex without the <code>sha256:</code> prefix. Search limits results to 50. Preference identity must match the session.</td>
+<td>Keep an item inactive if publication or cleanup fails. Do not activate partial input. Repair the classified step, then continue with the same source digest or create an explicit new revision.</td>
+</tr>
+<tr>
+<td><code>GET/POST /v1/product-decisions</code>, <code>GET .../subjects</code>, <code>POST .../&lt;decisionId&gt;/recover</code>, and <code>GET .../operator</code></td>
+<td>An authenticated operator records or reconciles an optional signed product decision. The static operator page has no authority by itself.</td>
+<td>Input is at most 32 KB. PostgreSQL stores intent before the external controller call. Decision ID, payload digest, signed envelope, actor, lease identity, generation, and receipt bind the outcome.</td>
+<td>A lost controller response remains <code>pending</code>. Recover the same decision ID; never issue a replacement decision while the result is unknown.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — route matching and authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L141-L200">Control separates health, database readiness, session exchange, and protected pipeline dispatch</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L242-L278">The agent tool routes bind exactly three designs or one forward revision to the protected agent identity</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/agent-job-routes.ts#L6-L26">Claim, read, and finish use the same <code>/v1/agent/jobs</code> family and bind finish to the durable job fence</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/agent-bridge.mjs#L20-L31">The Bridge reads that protected job family</a>, and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/agent-job-runner.mjs#L39-L47">the runner submits the finish result to the same family</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L346-L386">Project and direction routes bind an active request and explicit round identity</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L389-L444">Document routes preserve revision and operation ordering</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L445-L488">Agent generation records a durable job instead of an inline model result</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L521-L565">Approval binds the current architecture and design revision</a>, and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L567-L625">baseline publication rechecks the approval before generating evidence</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L799-L808">Public artifact upload and download bind content to size and digest</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/internal-artifacts.ts#L17-L53">the internal route authenticates exact workload peers</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L810-L842">Corpus publication keeps acquisition, digest verification, storage, cleanup, and activation in explicit order</a>, and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L844-L887">search bounds results and filters</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L888-L920">Preference routes bind policy and events to the authenticated user</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/product-decisions.ts#L42-L70">Product decisions store intent and expose recovery of the same decision</a>, and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/product-decisions.ts#L73-L104">the route layer authenticates every data action</a>.</p>
+</blockquote>
+<h2 id="endpoint-catalogue">Endpoint Catalogue</h2>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Important endpoints</th>
+<th>Caller identity</th>
+<th>Main limit or failure response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buster remote plan</td>
+<td><code>/v1/plan-jobs</code>, <code>/v1/plan-jobs/:id</code>, <code>/results/:digest</code>, <code>/evidence/:digest</code></td>
+<td>Nova bearer or SPIFFE proxy</td>
+<td>Configured response/result/evidence ceilings; contract or digest mismatch fails.</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td><code>/v1/dispatch</code>, protected agent job/tool routes, public job status, internal artifacts, user <code>/v1</code> routes</td>
+<td>Nova, Prism Agent, Worker, test runner, or signed user session according to route</td>
+<td>Dispatch body 2 MB; route-specific validation and database transaction.</td>
+</tr>
+<tr>
+<td>Prism Studio</td>
+<td>Exact <code>/health</code> and <code>/ready</code>; proxied <code>/v1/*</code>; static SPA fallback <code>ANY /*</code> excluding those paths</td>
+<td>Private browser through Tailscale; static fallback itself has no application session authority</td>
+<td>Proxy request 2 MB and configured timeout; static traversal is denied and missing fallback index is 404. <code>/v1</code> without a trailing slash is static, not proxied.</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td><code>/health</code>, <code>/bootstrap</code>, <code>/ready</code>, <code>POST /v1/attempts</code></td>
+<td>Control SPIFFE ID or HMAC principal</td>
+<td>503 for busy/dependency/reconciliation; 422 for rejected attempt.</td>
+</tr>
+<tr>
+<td>Prism Agent Bridge</td>
+<td><code>/health</code>, <code>/ready</code>, <code>/v1/dispatch</code>, <code>/v1/design-set</code>, <code>/v1/revise</code> on loopback</td>
+<td>Same-pod OpenClaw/Envoy path and durable job ID</td>
+<td>2 MB body; 30 s dispatch; 10 s job read.</td>
+</tr>
+<tr>
+<td>Buster <code>network.http</code> provider</td>
+<td><code>DYNAMIC {configuredUrl}</code> with a configured HTTP method</td>
+<td>Admitted Buster capability request plus origin/suffix, port, method, and header policy</td>
+<td>Runtime execution/request/response ceilings; redirects and implicit retry are denied.</td>
+</tr>
+<tr>
+<td>Common <code>network.http</code> adapter</td>
+<td><code>DYNAMIC {configuredUrl}</code> with a configured HTTP method</td>
+<td>Core capability grant and adapter exact-origin/method/header policy; fence for non-confidential calls</td>
+<td>30 s, 1 MiB request, and 1 MiB response defaults; redirects and adapter retry are denied.</td>
+</tr>
+<tr>
+<td>Ops MCP</td>
+<td><code>/healthz</code>, <code>/mcp</code> on loopback 8080; outbound <code>GET {kubernetesApiPath}</code> over configured API HTTPS origin</td>
+<td>Shared MCP bearer and optional Origin allowlist; projected Kubernetes bearer, CA, and RBAC</td>
+<td>Logs 64 KiB; Kubernetes 8 MiB/10 s; Hubble 2 MiB raw/192 KiB output/12 s.</td>
+</tr>
+<tr>
+<td>Archviewer</td>
+<td><code>/healthz</code>, static document paths on 3456</td>
+<td>Tailnet route plus Basic auth for documents</td>
+<td>No directory listing; 401/403/404 fail closed.</td>
+</tr>
+<tr>
+<td>OCI registry</td>
+<td><code>/v2/</code> and OCI blob/manifest routes</td>
+<td>Anonymous HTTP in the current lab service</td>
+<td>Not suitable as the final production registry security posture.</td>
+</tr>
+<tr>
+<td>Local registry</td>
+<td><code>registry-local:5001</code> Service to container port 5000, <code>/v2/</code> health and OCI routes</td>
+<td>Anonymous in the current lab</td>
+<td>ReadWriteOncePod storage and one Recreate writer; no TLS or registry authentication.</td>
+</tr>
+<tr>
+<td>Docker Hub mirror</td>
+<td><code>registry-mirror:5000</code>, <code>/v2/</code> and pull-through OCI routes</td>
+<td>Cluster network boundary; upstream Docker Hub policy applies</td>
+<td>Cache is not source authority; a running mirror does not configure clients.</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td><code>redis-master.kubeclaw.svc.cluster.local:6379</code></td>
+<td>Password; optional TLS is adapter-specific</td>
+<td>Streams and dedup keys are bounded transport state, not canonical run state.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL</td>
+<td><code>prism-postgresql:5432</code></td>
+<td>Four chart-managed database identities and NetworkPolicy</td>
+<td>Domain transactions stop when unavailable; restore database and artifact set to one recovery point.</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td><code>litellm.kubeclaw.svc.cluster.local:4000/v1</code>; <code>/health/liveliness</code>, <code>/health/readiness</code></td>
+<td>Consumer API key and provider credentials</td>
+<td>OpenAI-compatible model/embedding gateway; not lifecycle authority.</td>
+</tr>
+<tr>
+<td>Managed OpenAI</td>
+<td>Endpoint and wire protocol are owned by the pinned OpenClaw runtime; selected models are <code>openai/gpt-5.6-sol</code> and <code>openai/gpt-5.5</code></td>
+<td>OpenClaw OAuth profile and model allowlist</td>
+<td>A gateway health response does not prove a reasoning request; provider retry behavior is not specified here.</td>
+</tr>
+<tr>
+<td>Vertex AI</td>
+<td>External HTTPS route selected by LiteLLM for <code>gemini-embedding-001</code></td>
+<td>Mounted Google service-account identity, LiteLLM model configuration, and upstream project policy</td>
+<td>Prove a valid vector, not only LiteLLM readiness. Quota and provider availability remain external.</td>
+</tr>
+<tr>
+<td>Discord</td>
+<td>External bot gateway and HTTPS APIs selected by the pinned OpenClaw plugin; distinct configured Nova and Buster channels</td>
+<td>Per-role bot token plus channel, user, mention, owner, and approver rules</td>
+<td>Bot delivery has no pipeline authority. External reconnect and rate-limit retry are not specified in this repository.</td>
+</tr>
+<tr>
+<td>Prometheus / Grafana</td>
+<td>Chart-managed scrape endpoints; Grafana NodePort 30030 in the lab values</td>
+<td>Grafana existing admin Secret; scrape authorization is chart/target specific</td>
+<td>Optional monitoring. Prometheus retains 15 days on a 20 GiB claim in the checked-in values.</td>
+</tr>
+<tr>
+<td>Alloy → Loki</td>
+<td><code>POST http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push</code></td>
+<td>Monitoring namespace/network boundary; checked-in Loki has <code>auth_enabled: false</code></td>
+<td>Optional log projection. Alloy positions persist on each node; Loki retains 720 hours in the checked-in values.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — service and optional monitoring endpoints</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/services.yaml#L1-L47">Prism Services expose Studio, Control, Worker, ingestion, and their mTLS variants on separate ports</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-local.yaml#L1-L55">The local registry defines one retained writer</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-local.yaml#L56-L106">Its Service maps port 5001 to port 5000 and probes <code>/v2/</code></a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L1-L55">The mirror names Docker Hub as its only upstream</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L56-L94">exposes its bounded Service on port 5000</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75">The generated gateway separates OpenAI OAuth from the LiteLLM embedding client</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L77-L108">The agent block fixes the allowed reasoning models</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-config.yaml#L1-L14">LiteLLM maps the one public model name to Vertex project and location</a>, and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-deployment.yaml#L35-L75">its Deployment mounts the Google identity</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L38-L58">Nova selects its enabled Discord bot identity, channel, and allowed users</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L41-L65">Buster selects a different enabled channel and execution approver</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L180-L232">The rendered Discord block applies token indirection, user rules, mention behavior, session binding, and execution approvers</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79">Alloy discovers and processes node log streams</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L101">sends them to the exact Loki push URL</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L1-L44">Prometheus and Grafana values define credentials, persistence, retention, resources, and the lab NodePort</a>.</p>
+</blockquote>
+<h2 id="detailed-transport-notes">Detailed Transport Notes</h2>
+<h3 id="nova-and-buster">Nova And Buster</h3>
+<p>Nova creates the complete job before transport. The job contains the resolved
+plan, signed source snapshot, repository archive identity, per-node grants,
+concurrency, stage ID, and request digest. Buster stores admission under the
+derived job ID. Status polling and cancellation address that same ID. Result and
+evidence downloads include a digest in the URL; Nova hashes received bytes
+before import.</p>
+<blockquote>
+<p><strong>Source evidence — remote calls and content binding</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L23-L74">The transport defines endpoint, authentication, and request rules</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L75-L134">It defines remote operations and response ceilings</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L135-L194">It checks result and evidence digests</a>.</p>
+</blockquote>
+<h3 id="core-plugins-and-worker-control">Core, Plugins, And Worker Control</h3>
+<p>Core communication is an authority boundary even when it is an in-process
+function call. Registry selection and a capability grant occur before the call.
+The invocation context carries attempt identity, fence, abort signal, config,
+and effect access. A result is data until Core validates and reduces it.</p>
+<p>The native control channel deliberately knows nothing about message meaning.
+It preserves message boundaries and provides one ordered writer, one reader,
+and byte ceilings. The specialist role must define schema and durable phase
+acknowledgment. This keeps binary framing reusable without making it a hidden
+state machine.</p>
+<blockquote>
+<p><strong>Source evidence — bounded framing</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-control-channel.ts#L1-L45">The channel validates limits and serializes framed writes</a>, then <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-control-channel.ts#L46-L74">rejects a second reader and truncated or oversized input</a>.</p>
+</blockquote>
+<h3 id="redis">Redis</h3>
+<p>The Redis publisher sends <code>AUTH</code> and one atomic Lua operation on a fresh socket.
+The script returns the earlier stream entry when the dedup key exists. Otherwise
+it appends the payload with approximate stream trimming and stores the new entry
+ID for <code>dedupTtlMs</code>. The dedup TTL must cover the caller's retry window. After
+it expires, the same key can create another entry.</p>
+<p>The current adapter is a publisher, not a consumer-group implementation. It
+does not promise end-to-end acknowledgement, replay position, or lossless
+retention. Consumers must define those rules separately. Redis interruption
+does not change Nova's durable lifecycle record.</p>
+<p>The OpenClaw observer uses different, fixed observability streams. It keeps
+control and payload queues separate, drains control first, retries only control
+writes, and sends exhausted control events to a bounded dead-letter stream.
+This path intentionally favors lifecycle-shaped observations over large model
+payloads under pressure. It still does not create a durable consumer contract.</p>
+<p>Redis migration is a storage operation, not a live protocol negotiation. The
+migration check preserves stream entries, consumer pending state, and absolute
+dedup expiry. It also proves that a lost-ack retry returns the original entry
+after restore. Stop writers, verify the snapshot digest, migrate to an empty
+target, verify it, and then cut clients over. Do not let two Redis instances
+accept writes under one logical stream prefix.</p>
+<blockquote>
+<p><strong>Source evidence — stream, atomic deduplication, and limits</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L1-L48">The adapter validates bounded configuration</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L49-L91">atomically deduplicates before <code>XADD</code></a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/stream-identity.ts#L1-L8">Stream names include version, kind, encoded target, and a hashed idempotency key</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/resp.ts#L1-L40">The RESP decoder bounds scalar and bulk replies</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/resp.ts#L41-L67">permits only the required reply forms</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L140-L195">The OpenClaw writer applies queue priority and bounded retry</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L196-L255"><code>MAXLEN</code> plus dead-letter handling</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/reliability/redis-migration.test.mts#L12-L60">The native migration test creates stream, pending-consumer, and dedup-expiry state</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/reliability/redis-migration.test.mts#L61-L83">verifies that state after migration</a>.</p>
+</blockquote>
+<h3 id="spiffe-and-mtls">SPIFFE And mTLS</h3>
+<p>Applications do not parse a remote client's self-asserted SPIFFE header. Envoy
+terminates mTLS and forwards verified client-certificate identity to the local
+application. The application then requires a loopback proxy connection and an
+exact allowed SPIFFE ID. This two-part check stops a remote caller from adding
+the forwarding header directly.</p>
+<p>SPIFFE protects transport identity. It does not replace attempt, job, digest,
+fence, capability, or application-role authorization.</p>
+<blockquote>
+<p><strong>Source evidence — application-side peer proof</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/trust.ts#L1-L52">Worker trust accepts one URI identity, validates its form, checks loopback proxy origin, and enforces the exact allowlist</a>.</p>
+</blockquote>
+<h3 id="git-oci-buildkit-and-tailscale">Git, OCI, BuildKit, And Tailscale</h3>
+<p>These paths move artifacts or expose services; they do not decide pipeline
+state. A Git commit binds source. Git currently uses the configured remote
+directly; the repository does not provide a supported Git-mirror service. An
+OCI manifest digest binds image content.
+A Tailscale lease binds a temporary private endpoint. Nova and Buster import
+these identities into their own durable records before they use the result.</p>
+<p>The local registry and Docker Hub mirror have different jobs. The local
+registry stores KubeClaw build output on Service port 5001. The mirror caches
+Docker Hub pulls on port 5000. A cache hit does not prove that a locally built
+image exists, and a pushed local image does not prove that clients use the
+mirror. Generated node, BuildKit, and runtime client configuration must select
+the correct endpoint explicitly.</p>
+<blockquote>
+<p><strong>Source evidence — content and route wiring</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/buster-runtime-entrypoint.sh#L1-L38">The Buster runtime starts rootless BuildKit with generated registry configuration</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104">One generator produces node, BuildKit, and runtime registry client settings from the selected endpoints</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/archviewer.yaml#L22-L53">Archviewer demonstrates a private Tailscale Ingress whose Cilium rule binds the exact owning proxy</a>.</p>
+</blockquote>
+<h3 id="prism-ingestion-providers-and-state">Prism Ingestion, Providers, And State</h3>
+<p>Control is the coordinator for all three paths, but it does not perform every
+effect in its own process.</p>
+<ul>
+<li>For corpus acquisition, Control sends a bearer-authenticated request to the
+optional Ingestion workload. Ingestion applies protocol, address, redirect,
+media-type, size, and active-SVG checks. Control verifies the returned digest.
+It calls the native Worker for the embedding, writes the inactive relational
+revision, deletes the quarantine file, and activates the exact revision last.</li>
+<li>For current native design-engine operations, Control sends a V3 worker
+envelope to Prism Worker. The isolated host composes
+<code>DeterministicDesignProvider</code>. The OpenAI-compatible provider class is
+available to other compositions, but it is not the current native worker's
+provider. This distinction prevents a source file from becoming a false
+runtime edge.</li>
+<li>For OpenClaw memory search, the <code>agent-prism</code> gateway calls the configured
+LiteLLM embedding route. OpenClaw's reasoning model is a separate configured
+managed OpenAI route. Prism Control does not call LiteLLM on this path.</li>
+</ul>
+<p><strong>Decision status:</strong> The implementation admits durable Control state before the
+external OpenClaw action. <strong>Historical reason:</strong> Unknown. <strong>Current rationale
+(inference):</strong> The durable job and fence make an uncertain external launch
+visible instead of silently duplicating model work. The cost is a stop state,
+<code>needs_nova</code>, that requires operator or Nova reconciliation. Reconsider this
+boundary only if an external agent protocol can prove replay safety and bind the
+same Control result receipt after a lost response.</p>
+<blockquote>
+<p><strong>Source evidence — Prism adjacent paths</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L810-L842">Control acquires, verifies, embeds, stores, cleans, and activates a corpus revision in that order</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/ingestion.ts#L10-L58">Ingestion bounds TTL and remote HTTPS acquisition</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/ingestion.ts#L60-L97">authenticates, validates, quarantines, and classifies failures</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/native-worker-host.ts#L1-L24">The native worker host composes the deterministic provider</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/engine/design-providers.ts#L38-L96">The optional OpenAI-compatible provider uses a 60-second default timeout</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/engine/design-providers.ts#L121-L155">It validates embedding status and vectors</a>.</p>
+</blockquote>
+<h3 id="operations-and-monitoring">Operations And Monitoring</h3>
+<p>Ops MCP is a read path, not a repair path. A local client authenticates to the
+MCP server. The server then uses a projected ServiceAccount token for HTTPS GET
+requests to Kubernetes. The Hubble tool is different: it starts one fixed CLI
+against Hubble Relay and returns bounded, possibly partial flow evidence. The
+MCP server cannot mutate a workload through either path.</p>
+<p>Prometheus, Alloy, Loki, and Grafana are also projections. Prometheus scrapes
+metrics. Alloy reads node CRI logs and pushes batches to Loki. Grafana reads the
+stores. A dashboard or log line can locate a symptom, but only the owning
+journal, database row, receipt, or digest proves the system transition.</p>
+<blockquote>
+<p><strong>Source evidence — observation paths</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L85-L101">The deployed MCP binds to loopback and mounts the kube-api token volume</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L74-L77">Codex conditionally mounts the same volume</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/kubernetes.mjs#L1-L58">Kubernetes reads fix TLS, token rotation, timeout, and response size</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/kubernetes.mjs#L59-L98">List reads reduce pages and preserve continuation</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/hubble.mjs#L1-L59">Hubble fixes endpoint, concurrency, time, and byte ceilings</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tools/ops-mcp/src/hubble.mjs#L60-L118">returns explicit partial-result reasons</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79">Alloy discovers and processes CRI log files</a> and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L101">pushes them to the fixed Loki endpoint</a>.</p>
+</blockquote>
+<h2 id="complete-showcase-success-trace">Complete Showcase Success Trace</h2>
+<p>Use the <a href="../use/workflows/examples/request-trace-success.json">successful request trace</a>
+to inspect every identity and authority handoff. Use the matching
+<a href="../use/workflows/examples/request-trace-redis-unavailable.json">Redis-unavailable trace</a>
+to follow the safe-stop and recovery boundary. These files are contract
+examples. Their status fields prevent a reader from confusing them with live
+execution evidence.</p>
+<p>This reference describes all dependencies that the checked-in complete showcase
+requires or enables for this workflow. It is intentionally larger than the
+portable pipeline contract. A smaller graph can omit a conditional provider or
+human channel, but it must not claim that the checked-in profile is healthy
+while one of its mandatory readiness endpoints is absent.</p>
+<p>This is a target acceptance trace, not a record of a completed run. Buster
+values do not select the writable registry and mirror client contract without
+deployment overrides. Each step below states the intended owner so that this
+missing deployment input and every required live proof remain visible.</p>
+<ol>
+<li>The operator selects one deployment profile before any workload starts.
+That profile names the CNI, storage classes, registry and mirror endpoints,
+secrets, and one deployment owner. The selected values are configuration
+authority; a Helm release or Argo Application is only the reconciler.</li>
+<li>K3s supplies API, scheduling, DNS, storage, and one Pod network. The current
+secured profile uses Cilium policies. Live allowed-and-denied requests and
+Hubble flows prove enforcement; checked-in manifests prove only intent.</li>
+<li>SPIRE derives workload identities from namespace and ServiceAccount. Envoy
+obtains rotating SVIDs and proves the exact Nova, Buster, Prism Agent,
+Control, and Worker identities. The application also checks that the
+forwarded identity came from loopback. SPIRE is transport identity, not job
+authority.</li>
+<li>The deployment first supplies Buster's unresolved writable-registry and
+mirror client selection. The writable registry and Docker Hub mirror then
+answer <code>/v2/</code> at those selected endpoints. A cold digest-pinned Docker Hub
+pull through inspected client configuration proves the mirror route. A
+push/read/pull proves the current anonymous HTTP lab registry path; it does
+not satisfy the planned authenticated HTTPS production boundary. Registry
+blobs are artifact authority; the mirror remains a replaceable cache.</li>
+<li>Redis authenticates with <code>redis-secrets/redis-password</code>. Nova and Buster
+readiness perform <code>PING</code>, and the configured stream check writes one bounded
+observation. Redis owns that transport entry, but Nova's journal remains
+lifecycle authority.</li>
+<li>LiteLLM PostgreSQL starts with the <code>litellm</code> database identity. The separate
+Prism PostgreSQL release exposes distinct runtime, migration, backup, and
+test identities. Each database proves its own readiness and retained volume;
+neither can restore the other.</li>
+<li>LiteLLM starts under one selected deployment owner. An authenticated request
+for <code>gemini-embedding-001</code> uses the mounted Google service-account identity
+and returns a valid Vertex vector. LiteLLM owns gateway state, Vertex owns
+the provider result, and neither owns an agent session or pipeline state.</li>
+<li>Nova and Buster start their enabled Discord channels with different bot
+tokens and channel IDs. One allowed user message and one denied-user check
+prove the application rules. Discord owns message delivery; the receiving
+OpenClaw session and later Nova records own local progress.</li>
+<li>The operator asks Nova to start the workflow through the allowed Discord
+channel. OpenClaw uses the configured managed OpenAI model under its OAuth
+profile. The response helps Nova form the request, but only Nova Core can
+admit a pipeline run and write its canonical journal.</li>
+<li>Nova resolves the exact Git revision through its mounted deploy-key identity,
+verifies the source tree, and stores the source identity before execution.
+Git objects and the commit identify source; a branch name or successful SSH
+connection does not.</li>
+<li>Nova records the Prism stage attempt and reads the digest-bound architecture
+artifact. Its runtime-dispatch effect derives one idempotency key from run,
+architecture digest, and phase. The journal is authority before transport.</li>
+<li>Nova's Envoy presents its SPIFFE identity to <code>agent-prism</code>. The agent Envoy
+verifies Nova and forwards to the loopback bridge. The bridge uses the Prism
+Agent identity through its second Envoy to reach Control.</li>
+<li>Control validates body size, peer, idempotency key, preference subject,
+schema, and forward-only architecture revision. Prism PostgreSQL commits the
+project, request, preference generation, and agent job before <code>202 waiting</code>.</li>
+<li>The bridge claims the durable job. PostgreSQL records runner, expiry,
+attempt envelope, and fence. OpenClaw can use its stable project session and
+managed OpenAI reasoning route. Memory search can use the already proved
+LiteLLM-to-Vertex route. The Prism tool can return exactly three designs
+bound to job ID, generation, and fence.</li>
+<li>Control locks and validates the result, writes its digest and terminal job
+state, and rejects stale or changed input. The bridge commits its Worker
+receipt through the protected finish route. A model response or process
+exit alone is not Prism success.</li>
+<li>The operator reaches Prism Studio through the private Tailscale route,
+exchanges Tailnet identity for a signed application session, selects one
+direction, and approves its exact digest. Tailscale owns the route; Prism
+PostgreSQL owns selection and approval.</li>
+<li>Nova resumes with the authorized signal and a new deterministic phase key.
+Control returns the approved content-addressed baseline archive. Nova
+verifies its manifest and digests before its artifact store and journal
+record the imported baseline.</li>
+<li>Nova submits the digest-bound Buster job under the same run. Buster admits
+one job ID and stores its source, plan, result, and evidence. A suite that
+needs a private fixture obtains one Tailscale lease; its generation and
+owner bind use and release.</li>
+<li>After the missing registry-client selection is supplied and proved, the
+container-build node calls Buster's local rootless BuildKit socket.
+BuildKit uses the selected mirror for eligible upstream Docker Hub content
+and pushes the output to the writable registry. Buster verifies the
+immutable manifest digest before it records node success. BuildKit cache is
+replaceable; the registry digest and Buster receipt are authoritative.</li>
+<li>Nova imports Buster result and evidence bytes only after digest checks and
+records completion in its journal. Redis observers can then publish derived
+events with the original idempotency identity, and Discord can report the
+result. Neither delivery can create or change the terminal run state.</li>
+</ol>
+<p>Every step names the authenticated caller, the state owner, and the record that
+can advance the workflow. DNS, a ready Pod, an HTTP 200 response, a Discord
+message, a model answer, or a cache hit is never a substitute for that owner
+record.</p>
+<blockquote>
+<p><strong>Source evidence — full showcase bindings</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L1278-L1300">The role workload receives exact Git, Redis, LiteLLM, and gateway configuration</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L1301-L1343">It renders the selected provider routes</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L1365-L1388">It turns selected dependencies into readiness inputs</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104">The registry contract creates separate writable-registry and Docker Hub mirror settings for BuildKit and nodes</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L82-L112">Nova's selected capability routes bind Buster and Prism to their protected endpoints</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L202-L240">Control stores the design request before returning waiting state</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/agent-jobs.ts#L31-L65">The durable agent store binds claim, fence, and non-replay outcome</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/buster-runtime-entrypoint.sh#L4-L61">The Buster entrypoint starts rootless BuildKit only after it writes selected registry configuration</a>.</p>
+</blockquote>
+<h2 id="dependency-failure-traces-to-an-operator-decision">Dependency Failure Traces To An Operator Decision</h2>
+<table>
+<thead>
+<tr>
+<th>Failure trace</th>
+<th>Evidence to inspect</th>
+<th>Safe operator decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redis</td>
+<td>The transport effect reports connection, authentication, timeout, protocol, or no-eviction capacity failure. Nova's journal still shows the committed lifecycle state; Redis stream absence does not.</td>
+<td>Stop only consumers that require the failed transport. Restore the same Redis authority, then reconcile or replay with the original idempotency key. Do not create lifecycle events from stream contents.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL or LiteLLM PostgreSQL</td>
+<td>Prism <code>/ready</code>, transaction errors, or agent-job reads identify the Prism database. LiteLLM startup, route, or database errors identify the separate gateway database.</td>
+<td>Stop the affected domain. Restore the correct owner and credentials. For Prism, restore its matched artifacts and reconcile operations. For LiteLLM, verify models and keys, then one real route. Never cross-restore these databases.</td>
+</tr>
+<tr>
+<td>Registry or BuildKit</td>
+<td>BuildKit log and socket state show builder health. The OCI registry answers whether the expected immutable digest exists. A build timeout can occur after a push.</td>
+<td>Stop the build node and inspect the digest before retry. Reuse a verified manifest if the recorded attempt permits it. If absent, repair builder/registry and resume with the same attempt identity. Never change the digest or trust a tag.</td>
+</tr>
+<tr>
+<td>Tailscale</td>
+<td>Inspect the exact fixture lease/Ingress generation, proxy readiness, Tailnet DNS/TLS/ACL, and application response. Internal service state can remain healthy.</td>
+<td>Do not allocate a replacement while the first outcome is uncertain. Reconcile or release the recorded owner, restore the route, prove the same client path, and then resume the consumer.</td>
+</tr>
+<tr>
+<td>LiteLLM or upstream embedding provider</td>
+<td>Separate <code>/health</code>, PostgreSQL, master-key authentication, model presence, Vertex credential/quota, and one embedding response. The <a href="platform-and-operations.html#embedding-client-limits-and-failure-rules">pinned memory client rules</a> define per-call retries and cancellation; they do not prove deployed route behavior.</td>
+<td>Keep the model-backed operation incomplete. Do not loop on 401/403, 429, invalid model, or invalid vector. Repair the classified boundary and retry only within the owner deadline with the same identity.</td>
+</tr>
+<tr>
+<td>Git origin</td>
+<td>Verify whether the exact commit already exists and matches the recorded source identity. A failed fetch and an existing checkout are different facts.</td>
+<td>Use a verified existing snapshot only when it is the required commit and the workflow permits it. Otherwise stop, restore access to that exact revision, and fetch it. Do not substitute a newer branch head.</td>
+</tr>
+</tbody>
+</table>
+<p>These are decision traces, not proof that a live recovery ran. Retain the owner
+record, failing observation, repair evidence, and final end-to-end check for a
+live incident.</p>
+<h2 id="global-retry-rules">Global Retry Rules</h2>
+<ol>
+<li>Retry an in-memory calculation when it made no external change.</li>
+<li>Retry a transport call only with the same durable operation identity.</li>
+<li>Reconcile a lost response before creating new work.</li>
+<li>Do not retry an expired claim, stale revision, failed identity proof, invalid
+schema, digest mismatch, or authorization denial as a transient error.</li>
+<li>Apply pressure at the narrowest boundary. Do not increase every byte, queue,
+or concurrency limit to solve one oversized request.</li>
+<li>Preserve the authoritative record before returning an ambiguous error.</li>
+</ol>
+<h2 id="evidence-limits">Evidence Limits</h2>
+<p>Contract and focused tests prove parsing, identities, limits, deterministic
+retries, and failure mapping. They do not by themselves prove live DNS, Tailnet
+ACLs, TLS certificates, SPIRE issuance, NetworkPolicy enforcement, registry
+retention, BuildKit isolation, Redis durability settings, or external model
+behavior. Those claims need the matching deployment and live acceptance checks.</p>
+</main></body></html>

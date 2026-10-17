@@ -1,0 +1,53 @@
+{
+  "utc": "2026-10-17T12:26:26.088929+00:00",
+  "state": "A91110_PROVENANCE_FIX_PUSHED_FULL_SOURCE_GATE_REVIEW_RUNNING",
+  "acceptanceId": "A911-10",
+  "result": "Source-Remove/Rename am Originalprovider tatsächlich ausgeführt; veraltete historische Source-Zuordnung korrigiert, bestehender Guide-Aufruf erhalten. Exakte neue4Dateien und eine abgeleitete Autoritätsänderung begrenzt unabhängig sauber geprüft und alsee1a67d4 auf PR+Backup verifiziert. Vollständige Source-Gate-Entscheidung folgt; keine zusätzliche formale Abnahme.",
+  "checkpoint": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/checkpoint-receipt.json",
+    "sha256": "d8b13e111c12e1b2686a6960cd93bec9d70d1308765558d30ba91d33667a8805"
+  },
+  "sourceTransition": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-transition-result.json",
+    "sha256": "821a7e9538666f1e9b85927dafe14fd105562b17583805ab2e449614521adf2b"
+  },
+  "sourceProvenanceMutationActual": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json",
+    "sha256": "4cbb7eb91f3ce1862e311a2949729d408741b59773172294a349e0fd52b185da"
+  },
+  "currentSourceImpact": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-package-result.json",
+    "sha256": "2e07f9c1feaa75181cdc4f75f712161bbb17aa1041d989b0c52a44441101a826"
+  },
+  "packageReview": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/package-review.json",
+    "sha256": "28e5649c280cd09389067ad0ec94ea66ea2dd725ee15a5b6c6451de1f414a462"
+  },
+  "freshCensus": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/fresh-canonical-census.json",
+    "sha256": "ec6d02cb608fa55b924d31a0531ca748a67b30b494fcac3eca82c4d89929d57e"
+  },
+  "dossier": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/dossier.json",
+    "sha256": "3f476819462280d7ef2a5fb57b3f4fce34d7c640302700701fda82c1ebd129b5"
+  },
+  "sourceGateReview": null,
+  "preservedOpen": "54vorbestehende Map-Metadatenabweichungen und4semantisch unpassende Pipeline-Fixture-Ziele offen belassen; kein blindes Repin oder Gesamt-Governance-PASS.",
+  "accepted": {
+    "package": "AP09.11",
+    "completed": 1,
+    "total": 12,
+    "ids": [
+      "A911-09"
+    ]
+  },
+  "nextAction": "Exakten laufenden vollständigen Source-Gate-Reviewer konsumieren; bei Befund gezielt korrigieren, sonst getrennte Reader/Quality-Gate-Entscheidungen und persistierte Registrierung schließen. Kein anderer Primärpunkt.",
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "ciGreen": false,
+  "dirtyPathsPreserved": 24,
+  "remoteHeads": {
+    "refs/heads/checkpoint/pr13-documentation-overhaul": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+    "refs/heads/docs/documentation-overhaul": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120"
+  }
+}

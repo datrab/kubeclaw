@@ -1,0 +1,187 @@
+# Documentation Governance
+
+Status: current maintenance contract
+Audience: documentation contributor, maintainer, reviewer
+Owner: documentation
+Evidence: [scripts/docs-governance.mjs](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs); [scripts/docs-publication.mjs](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs); [scripts/docs-status.mjs](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-status.mjs); [docs/status/open-issues.json](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/status/open-issues.json)
+Applies to: all reader-facing files below docs/site
+Last verified: source-bound maintenance revision; publication and reader results remain separate
+
+## Purpose
+
+This page explains which document owns each type of information. It also explains how to keep that information current.
+
+A link can work while its statement is false. A generated table can be current while its explanation is unclear.
+For these reasons, KubeClaw checks source facts and authored explanations through separate paths.
+
+## One Canonical Home for Each Topic
+
+Use the following homes. Link to a canonical page when another reader path needs the same explanation.
+Do not copy the explanation into a second page.
+
+| Information | Canonical home | Owner role |
+| --- | --- | --- |
+| System behavior and component boundaries | `understand/` | The named component or platform owner |
+| Operator procedures and recovery | `use/` | Platform operations |
+| Extension contracts and development tasks | `extend/` | Plugin foundation or the named specialist owner |
+| Exact generated facts and shared terms | `reference/` | Documentation and the source component owner |
+| Enduring choices and their reasons | `decisions/` | Platform architecture or the named decision owner |
+| Current implementation limits | `status/current.md` and `status/open-issues.md` | Platform architecture and platform maintainers |
+| Planned work | `status/roadmap.md` | Platform maintainers |
+| Environment acceptance | `status/acceptance.md` | Platform operations |
+
+A page can link to several areas. It must not become a second authority for their facts.
+For example, an operator procedure can summarize a trust boundary and link to its full architecture explanation.
+
+## Source Authority
+
+Use the narrowest source that owns a fact.
+
+1. A schema owns accepted fields, types, required values, and structural limits.
+2. A runtime manifest owns package membership for that role.
+3. Implementation source owns current behavior.
+4. A focused test proves only the behavior that it executes.
+5. A decision record owns an approved reason or constraint.
+6. The open-issue register owns incomplete implementation work.
+7. A live acceptance record owns results from a real environment.
+
+Do not use code as proof of approval. Do not use an accepted decision as proof of implementation.
+Do not use a local test as proof of deployment behavior.
+
+The publication tool checks page metadata and repository evidence paths. See the
+[metadata check](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-publication.mjs#L831-L861).
+The status generator reads the machine-owned issue register. See the
+[status source boundary](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-status.mjs#L113-L159).
+
+## Generator prerequisites
+
+Run documentation generators from the repository root with Node.js 24 and
+installed repository dependencies. API output discovery requires Helm
+3.22.0 and Go 1.26.3 on `PATH`. Helm renders local charts against the declared
+Kubernetes 1.35.0 API baseline; rendering does not deploy them. The Go helper
+uses the standard parser to inspect the controller's source. It does not build
+or run the controller. The documentation workflow
+pins the same Helm and Go versions for both validation and trusted regeneration.
+Use `node --version`, `helm version --short`, and `go version` to confirm the tools before generation.
+If a required tool is absent, install it through the development environment's
+approved toolchain procedure. A missing parser is a failed prerequisite, not
+permission to omit controller-produced API objects from the inventory.
+
+## Authored Explanations and Generated Facts
+
+Authored text explains purpose, sequence, reasons, consequences, failure, and recovery.
+A maintainer reviews this text when a source dependency changes.
+
+Generated content lists repetitive facts from manifests, schemas, or registers.
+Do not edit generated content by hand. Change its source or generator, and then regenerate it.
+
+Use the [generated page map](generated-documentation-map.json) to locate each
+page's declared owner, content kind, source dependencies, and checks. Do not
+maintain a second manual inventory here. The governance generator builds the map from reader-page
+metadata; it does not prove complete source discovery or successful checks.
+A missing or stale page entry must be corrected through its metadata and the
+map generator before the change is called covered.
+
+The plugin catalogue has two input authorities. Source manifests and schemas
+own mechanical package facts. Maintainers own the purpose, use, exclusions, and
+limits in the catalogue guidance input. The generator reads that guidance; do
+not edit its generated package pages as a second authored authority. See the
+[current page construction](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-publication.mjs#L255-L299).
+The plugin-foundation owner maintains package guidance. Documentation and the
+source component owner maintain the generated-fact route. For other families,
+use the page's named owner and the
+[maintenance workflow](../extend/documentation-maintenance.md#choose-one-fact-authority-and-its-explanation).
+
+## Required Page Metadata
+
+Every Markdown page has six fields directly below its title.
+
+| Field | Meaning | Update trigger |
+| --- | --- | --- |
+| `Status` | The page's present claim, not a completion slogan | Its implementation or decision state changes |
+| `Audience` | The reader roles that need the page | A supported task or reader path changes |
+| `Owner` | The role that reviews and maintains the page | Component responsibility changes |
+| `Evidence` | Repository sources that support the page | A source moves, splits, or loses authority |
+| `Applies to` | The versions, components, or scope of the claim | Compatibility or scope changes |
+| `Last verified` | The last source or environment review and its limit | The page receives a new applicable check |
+
+The generated [documentation map](generated-documentation-map.json) records these fields for every page.
+It also assigns the checks that protect each page. The generator fails if any page lacks required metadata.
+
+Run these commands after a documentation change:
+
+```bash
+npm run docs:governance:generate
+npm run docs:governance:check
+npm run docs:publish-check
+```
+
+The first command updates the map. The second command detects drift without changing files.
+The final command runs the complete local publication gate.
+
+## Decision Records
+
+A stable decision identifier never changes its meaning. A decision record includes these items when evidence exists:
+
+- the problem and its constraints;
+- the selected approach and its scope;
+- alternatives that the source records;
+- the reason for the choice;
+- benefits, costs, and operational consequences;
+- approval status and provenance;
+- implementation and verification status; and
+- its successor or related decisions.
+
+If historical evidence does not name an alternative, date, or approver, say that it is unknown.
+Do not invent history to make the record look complete.
+
+An accepted decision can have partial implementation. A replaced decision remains in history and points to its successor.
+The successor states which part it replaces. It also states which earlier guarantees remain valid.
+
+## Deprecation, Redirect, and Supersession
+
+Use these rules before changing a published route or term:
+
+1. Select the successor page or term.
+2. State why the old item is no longer correct.
+3. State the compatibility period when one exists.
+4. Add a redirect before removing a published route.
+5. Link the old decision to its successor when historical meaning matters.
+6. Remove an alias only after its declared compatibility period ends.
+
+The repository has no earlier public-route manifest. Therefore, this documentation does not invent redirects for unknown historical URLs.
+The [route registry](documentation-route-registry.json) records declared redirects and deprecated terms.
+The generated map establishes the current route baseline. Future route changes must preserve declared redirects in the registry.
+
+A repository source path is not automatically a published route. Moving an internal record does not create a public redirect requirement.
+
+## Definition of Complete
+
+A page is not complete because it exists or because a build passes. Completion requires all applicable results below:
+
+- claims agree with their source and declared revision;
+- mechanisms, ownership, failures, recovery, and limits have sufficient detail;
+- significant choices include reasons and consequences;
+- a new technical reader can follow the explanation without chat history;
+- instructions contain prerequisites, observations, stop conditions, and recovery;
+- extension tasks produce the declared checked result;
+- links and evidence resolve in source and publication output;
+- an owner, source dependency, and check protect the page; and
+- source, local-test, deployment, and human-acceptance states remain distinct.
+
+The project controlled-language review applies ASD-STE100 principles. Formal
+ASD-STE100 verification or certification is not an acceptance gate and is not
+claimed by this documentation.
+
+## Change Procedure
+
+1. Identify the canonical page and its owner in the generated map.
+2. Read each listed source dependency before changing a claim.
+3. Update authored explanation and generated facts through their separate paths.
+4. Update decision and status pages when authority or implementation state changes.
+5. Refresh `Last verified` with the actual check scope.
+6. Generate the documentation map.
+7. Run the mapped checks and the complete publication gate.
+8. Record checks that need a live environment as pending.
+
+Do not change `Last verified` after a formatting-only edit. Do not claim a live result from static implementation evidence.

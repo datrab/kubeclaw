@@ -1,5 +1,6 @@
 import { resolveSourceRevision } from '@kubeclaw/plugin-sdk';
 import { validateLintReport } from './engine/report-contract.ts';
+import path from 'node:path';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 
 interface LintInput {
@@ -81,7 +82,16 @@ async function execute(
     },
   });
   if (sourceRevision !== undefined && response.sourceRevision !== sourceRevision) throw new Error('LINT_SOURCE_REVISION_MISMATCH');
-  const report = { ...validateLintReport(response.report), ...(sourceRevision === undefined ? {} : { sourceRevision }) };
+  const report = { ...validateLintReport(response.report, {
+    policyProject: requiredConfig(context.contract.config, 'policyProject'),
+    tier,
+    scope: input.modulePath ? path.normalize(input.modulePath) : 'full',
+    ...(input.project ? { project: input.project } : {}),
+    visibility: {
+      debt: context.contract.config.includeDebt === true,
+      experimental: context.contract.config.includeExperimental === true,
+    },
+  }), ...(sourceRevision === undefined ? {} : { sourceRevision }) };
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json',
     resource: { type: 'artifact.object', canonicalId: `lint:${tier}:${input.project || 'project'}` },

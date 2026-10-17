@@ -1,0 +1,49 @@
+import subprocess,json,hashlib,shutil,re
+from pathlib import Path
+from datetime import datetime,timezone
+P=Path(__file__).resolve().parent; R=P/'repo'; F=P/'governance-fixture'; B=P.parent.parent.parent.parent/'ci-green/repo'
+B=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo')
+assert not F.exists(),'one-shot fixture already exists'
+review=json.loads((P/'review.json').read_text());assert review.get('findings')==[],review
+manifest=json.loads((P/'manifest.json').read_text())
+for f,h in manifest['files'].items():assert hashlib.sha256((R/f).read_bytes()).hexdigest()==h,f
+release={'utc':datetime.now(timezone.utc).isoformat(),'scope':'Only exact new pure helper tests and original governance script in external copied fixture. Node builtins only, no production import/build/generation.','review':{'path':str(P/'review.json'),'sha256':hashlib.sha256((P/'review.json').read_bytes()).hexdigest()},'inputs':manifest['files'],'allowedEffects':['Read fixed baseline and copied166markdown pages/catalogue/operator-tasks/registry.','Write external logs, copied route/owner/registry variants and generated map in fixture only.'],'notAuthorized':['canonical writes','CI dirty mutation','source-family target import','production generation','formal gate acceptance']}
+(P/'focused-release.json').write_text(json.dumps(release,ensure_ascii=False,indent=2)+'\n')
+cases=[]
+def run(name,args,code):
+ p=subprocess.run(args,cwd=F if F.exists() else R,text=True,capture_output=True,timeout=60)
+ (P/(name+'.stdout')).write_text(p.stdout);(P/(name+'.stderr')).write_text(p.stderr)
+ row={'id':name,'argv':args,'exitCode':p.returncode,'expectedExit':code,'stdout':p.stdout,'stderr':p.stderr};cases.append(row)
+ assert p.returncode==code,(name,p.returncode,p.stdout,p.stderr)
+ return p
+run('pure-tests',['node','--test','scripts/tests/docs-route-continuity.test.mjs'],0)
+for f in ['scripts/docs-governance.mjs','scripts/lib/docs-route-continuity.mjs','scripts/docs-published-route-baseline.json']:
+ t=F/f;t.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(R/f,t)
+for f in ['docs/blueprint/generated/ap09-catalogue.json','docs/operator-tasks.json','docs/site/reference/documentation-route-registry.json','docs/site/reference/generated-documentation-map.json']:
+ t=F/f;t.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(B/f,t)
+for source in (B/'docs/site').rglob('*.md'):
+ t=F/source.relative_to(B);t.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,t)
+mapfile=F/'docs/site/reference/generated-documentation-map.json';before=mapfile.read_bytes()
+run('full166-baseline-check',['node','scripts/docs-governance.mjs','--check'],0);assert mapfile.read_bytes()==before
+old=F/'docs/site/reference/documentation-governance.md';new=F/'docs/site/reference/renamed-governance.md';original=old.read_bytes()
+reg=F/'docs/site/reference/documentation-route-registry.json';registry=json.loads(reg.read_text());regbytes=reg.read_bytes()
+old.rename(new)
+run('rename-refused-before-generation',['node','scripts/docs-governance.mjs'],1);assert mapfile.read_bytes()==before
+run('rename-refused-check',['node','scripts/docs-governance.mjs','--check'],1);assert mapfile.read_bytes()==before
+new.write_text(re.sub(r'^Owner: .+$','Owner: renamed governance maintainers',new.read_text(),flags=re.M))
+registry['redirects']=[{'from':'/reference/documentation-governance/','to':'/reference/renamed-governance/','reason':'Synthetic route rename; replacement page owns current guidance.'}];reg.write_text(json.dumps(registry,indent=2)+'\n')
+run('rename-owned-successor-generate',['node','scripts/docs-governance.mjs'],0)
+run('rename-owned-successor-check',['node','scripts/docs-governance.mjs','--check'],0)
+rows=json.loads(mapfile.read_text())['pages'];assert all(x['route']!='/reference/documentation-governance/' for x in rows)
+assert next(x for x in rows if x['route']=='/reference/renamed-governance/')['owner']=='renamed governance maintainers'
+new.unlink();reg.write_bytes(regbytes);mapfile.write_bytes(before)
+run('removal-refused-before-generation',['node','scripts/docs-governance.mjs'],1);assert mapfile.read_bytes()==before
+registry=json.loads(regbytes);registry['redirects']=[{'from':'/reference/documentation-governance/','to':'/reference/','reason':'Synthetic removal; maintained reference index is the declared successor.'}];reg.write_text(json.dumps(registry,indent=2)+'\n')
+run('removal-owned-successor-generate',['node','scripts/docs-governance.mjs'],0)
+run('removal-owned-successor-check',['node','scripts/docs-governance.mjs','--check'],0)
+rows=json.loads(mapfile.read_text())['pages'];assert len(rows)==165;assert all(x['route']!='/reference/documentation-governance/' for x in rows)
+base=F/'scripts/docs-published-route-baseline.json';base.write_text(base.read_text()+'\n')
+run('baseline-byte-tamper-refused',['node','scripts/docs-governance.mjs'],1)
+result={'utc':datetime.now(timezone.utc).isoformat(),'state':'BOUNDED_ROUTE_CONTINUITY_REGRESSIONS_PASS','primaryGate':'A911-10','pureTests':10,'originalGovernanceIntegrationCases':len(cases)-1,'cases':cases,'unchangedBaselineOutputSHA256':hashlib.sha256(before).hexdigest(),'baselineCheckReadOnly':True,'renameRefusalPreservedOutput':True,'removalRefusalPreservedOutput':True,'successorOwnerAndOldMapRemovalAsserted':True,'productionWrites':False,'formalAcceptance':False,'remaining':'Current-link/anchor migration, source-family removal/rename and separate independent Source/Reader/Quality full-gate decisions remain open. Valid redirected synthetic fixture does NOT assert unchanged incoming old markdown links are migrated.'}
+(P/'actual-focused-result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({k:v for k,v in result.items() if k!='cases'},ensure_ascii=False,indent=2))

@@ -1,73 +1,61 @@
-# 1. Verified platform inventory
+# 1. Inventory and evidence rules
 
-## Purpose
+Status: AP02 migration specification.
 
-This artifact answers: **what exists now, what is only designed, and where is each claim proved?**
+## Baseline and reuse
 
-The exhaustive inventory is generated from inert plugin manifests, runtime-role manifests, package ownership, contracts, and source boundaries:
+The [AP01 report](ap01-baseline/README.md) is the baseline: 5,221 tracked files, 2,773 files under `docs/`, and 963 Markdown files across the repository. Its file inventory covers paths and blob identities, not completed content review. Include the new migration artifacts themselves when refreshing the inventory.
 
-- [Human-readable inventory](generated/platform-inventory.md)
-- [Machine-readable inventory](generated/platform-inventory.json)
+| Existing source | Reuse and limit |
+| --- | --- |
+| `ap01-baseline/file-inventory.tsv` | Complete baseline path list and scope proposals; each editorial decision still needs a reading |
+| `ap01-baseline/plugin-manifests.tsv` | All 48 pipeline plugins, two OpenClaw extensions and one Codex plugin; presence is not activation |
+| `generated/platform-inventory.json` | Earlier blueprint inventory; missing two current pipeline plugins; refresh from manifests |
+| `generated/migration-ledger.csv` | Earlier filename-based suggestions only; not an editable review ledger |
+| `../generated/inventory/plugin-system.json` | All 997 paths in its own search roots are current at AP01; its narrower roots omit the Prism OpenClaw extension and Codex plugin |
+| `../site/extend/plugin-catalogue/` | Existing pages for all 50 packages under `skills/`; audit prose and examples, do not recreate blindly |
 
-## Verified platform model
+## Scope
 
-The implemented platform has these layers:
+Read every documentation file, including root and component READMEs, instructions, designs, operations material, examples, diagrams, generated references and review texts. Inspect non-prose files under `docs/` for their role before disposition. Fixtures, license text and third-party assets are not editorial deletion candidates merely because they are text. Still check their consumers when moving documentation.
 
-1. **Nova Core** is the orchestration and canonical pipeline-lifecycle authority.
-2. **Plugin Foundation and SDK** provide discovery, validation, grants, isolation, activation, execution, effects, and extension contracts shared by runtime roles.
-3. **Worker Core** provides a neutral attempt envelope, worker lifecycle, capacity, execution, and result boundary. It does not own specialist meaning.
-4. **Worker Engines** add specialist semantics above Worker Core. Buster is the only packaged engine today.
-5. **Plugins** add stages, observers, capability adapters, test providers, and report adapters without embedding their behavior in core.
-6. **Contracts and telemetry** carry versioned cross-boundary data.
-7. **Runtime packaging and Kubernetes deployment** assemble role-specific bundles and deploy Nova and Buster.
+Inventory implementation, scripts, contracts, chart values, role manifests and tests as evidence and consumers. This does not authorize deleting them. AP01's literal-reference scan is an initial dependency map, not a complete link graph. AP03 must inspect relative links, dynamic path construction and additional formats for each affected file.
 
-## Names that must be documented accurately
+## Describe each boundary accurately
 
-| Name | Current status | Documentation rule |
+| Surface | Evidence starting point | Required distinction |
 | --- | --- | --- |
-| Nova | Implemented orchestrator runtime role | Give Nova Core its own architecture space and distinguish core authority from installed plugins. |
-| Worker Core | Implemented neutral shared package | Explain lifecycle, attempt execution, capacity, signing/digests, progress, failure, and telemetry without Buster terminology. |
-| Buster | Implemented separate runtime role and Worker Core–based test engine | Document engine, service boundary, suites, providers, evidence, isolation, and deployment. |
-| Forge | Implemented as a dispatched implementation specialist behind `kubeclaw.implementation-agent` | Do not present Forge as a Worker Core engine or separate packaged role unless code changes. Document its protocol and Nova-owned dispatch boundary. |
-| Echo | Implemented as a dispatched review specialist governed by `kubeclaw.review` | Do not present Echo as lifecycle authority or a Worker Core engine. Document proposals, evidence verification, policy, reduction, and failure-closed behavior. |
-| Prism | Designed contract and preview sidecar; no packaged runtime role or engine implementation | Publish in a clearly labeled “Designed” area until source, packaging, and verification prove implementation. Never list it as a current engine. |
+| Nova | `packaging/runtime/roles/nova.json`; `skills/nova/core/` | Canonical orchestration versus plugin policy and agent proposals |
+| Plugin Foundation and SDK | `skills/common/plugin-runtime/` | Discovery, grants, activation, effects and five registration contracts |
+| Worker Core | `skills/worker/core/`; `contracts/pipeline-worker-core/v1` | Shared attempt lifecycle versus engine semantics; assess actual runner integration |
+| Buster | `packaging/runtime/roles/buster.json`; `skills/buster/engine/` | Packaged engine/service versus complete attempt-budget and cleanup integration |
+| Prism | `packaging/runtime/roles/prism.json`; `skills/prism/`; `charts/prism/` | Existing source and packaged role versus integration, recovery and live acceptance |
+| Forge and Echo | `skills/nova/plugins/implementation-agent/`; `skills/nova/plugins/review/` | Dispatched specialists versus runtime roles and deterministic lifecycle authority |
+| OpenClaw extensions | `skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json`; `skills/prism/openclaw-plugin/openclaw.plugin.json` | Host extensions, not pipeline registrations |
+| Codex operations plugin | `plugins/kubeclaw-ops/.codex-plugin/plugin.json` | Codex plugin/skill interface, not OpenClaw or pipeline API |
+| Operations access | `charts/ops-pod/`; `scripts/deploy-ops-pod.sh`; PR #12 | Intended Devbox/Ops Pod path, repository configuration and actual deployment are separate |
 
-## Inventory coverage
+Do not claim that Prism is designed-only or absent from role packaging. Do not turn the presence of its role into a claim that every Prism workflow has been deployed and verified. Existing worker and retention findings also prevent a blanket claim that every historical execution path has already been retired.
 
-The generated inventory covers all of the following:
+## Evidence is specific to the claim
 
-- Runtime roles and their exact package/plugin composition.
-- Core and engine source boundaries.
-- Every `plugin.json` package.
-- Every stage, observer, adapter, test-provider, and report-adapter registration.
-- Required and provided capabilities for every registration.
-- The grantable and core-only capability vocabulary.
-- Versioned contract families.
-- External capability routes.
-- Package ownership and dependency direction.
-- Implemented, changing, and designed-only specialist boundaries.
+There is no universal ranking in which a schema automatically overrides executable behavior. Use the evidence needed for the statement:
 
-## Truth hierarchy
+| Claim | Required evidence |
+| --- | --- |
+| Intended contract | Versioned schema, exported type or accepted decision |
+| Actual behavior | Reachable implementation and suitable behavioral verification |
+| Included in a runtime | Role/package manifests and assembly checks |
+| Configured by default | Current defaults, readers, precedence and rendered configuration |
+| Deployed and usable | Evidence from the actual target environment and relevant task |
+| Historical intent | Original decision or design source, explicitly historical |
 
-When sources disagree, documentation uses this order:
+If contract, implementation and test disagree, describe the discrepancy and link the remaining work. A test that asserts the defect is not proof of its correction. An agent's conclusion is not a replacement for the referenced evidence.
 
-1. Versioned contracts and schemas.
-2. Runtime manifests and package ownership.
-3. Executed verification tests.
-4. Production implementation.
-5. Deployment manifests and rendered configuration.
-6. Generated inventories.
-7. Existing prose.
-8. Plans, roadmaps, and phase documents.
+For each important surface keep independent fields: implementation state (absent/partial/implemented), packaging/activation state, verification scope (source inspection/local test/live test), source revision, and remaining work. Unknown is allowed and must say what would resolve it. Avoid one status badge that collapses all these dimensions.
 
-Existing prose is evidence of intended explanation or past reasoning. It is not proof of current behavior.
+## Status sources and completion
 
-## Completion test
+The finding register at the baseline records 141 of 154 locally verified and 13 incomplete, plus five verified integration findings. GitHub issue #7 is additional open work. Refresh these sources before migration; keep local completion distinct from outstanding live acceptance. AP04 will extract actionable, deduplicated live tasks from the evidence index and original reports.
 
-This artifact is complete when the generator reports:
-
-- all plugin manifests inventoried;
-- all registration surfaces counted;
-- all runtime roles and contracts found;
-- no component status inferred from prose alone; and
-- all conflicted source paths disclosed for later reverification.
+Coverage must account for every runtime role, engine/specialist boundary, manifest, registration, capability, contract family, configuration family, persistent store and operational dependency. Generated counts prove inventory coverage only. Content coverage and task verification use [artifact 4](04-evidence-matrix.md).

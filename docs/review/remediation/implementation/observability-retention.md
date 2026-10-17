@@ -1,12 +1,12 @@
 # Observability retention assessment
 
-PCR-OBS-002 remains partial/open. D01 and D07 settle the retention policy but do
+PCR-OBS-002 remains partial/open. [D01](../../../site/decisions/runtime-and-operations.md#d01) and [D07](../../../site/decisions/runtime-and-operations.md#d07) settle the retention policy but do
 not supply the missing safe quota-release mechanism identified in the original
 foundation.observability review. D09 independently requires durable worker
 recovery without depending on Clawdeck. No runtime source, limit, current data,
 automatic deletion policy or central log store was changed in this slice.
 
-The [operator contract](../../../operations/observability-retention.md) documents
+The [historical operator contract](../../../_legacy-source/operations/observability-retention.md) documents
 actual configured/derived roots, record/blob/attempt/admission defaults, full-store
 errors, read-only filesystem measurements, existing cleanup boundaries and the
 requirements for a later manual retirement operation. Disk/Git logs remain until
@@ -36,5 +36,5 @@ by a separately reviewed writer-fenced transition that preserves deduplication
 and references. Until that mechanism exists and passes real quota/crash/replay
 tests, the primary finding cannot be declared closed by policy documentation.
 
-Exact scope: `docs/operations/observability-retention.md`, this note, and a link in
+Exact historical scope: `docs/_legacy-source/operations/observability-retention.md`, this note, and a link in
 `skills/common/plugin-runtime/foundation/observability/README.md`.

@@ -1,0 +1,99 @@
+# Plugin Catalogue
+
+Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: [scripts/docs-publication.mjs](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs)
+Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins
+Last verified: generated source listing only; package checks and their limits are recorded on each package page
+
+## Purpose
+
+Use this catalogue to find every installable extension package and its declared surfaces.
+
+The catalogue contains 51 packages.
+
+Each package page combines two separate authorities. Maintainers write the practical
+guidance separately from generated facts. The publication generator
+reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated
+refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.
+
+The plugin-foundation owner maintains purpose, use, exclusion, and limit text in
+`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains
+the manifest and schema facts. Do not edit generated catalogue pages as a second
+authority. Change the owning input, then regenerate and run the declared checks.
+
+## Stage Packages
+
+- [kubeclaw.architecture-validator](kubeclaw.architecture-validator.md)
+- [kubeclaw.blueprint-sync](kubeclaw.blueprint-sync.md)
+- [kubeclaw.buster-quality-gate](kubeclaw.buster-quality-gate.md)
+- [kubeclaw.case-study](kubeclaw.case-study.md)
+- [kubeclaw.delivery-lint](kubeclaw.delivery-lint.md)
+- [kubeclaw.demo-handoff](kubeclaw.demo-handoff.md)
+- [kubeclaw.human-approval](kubeclaw.human-approval.md)
+- [kubeclaw.implementation-agent](kubeclaw.implementation-agent.md)
+- [kubeclaw.lint](kubeclaw.lint.md)
+- [kubeclaw.pipeline-review](kubeclaw.pipeline-review.md)
+- [kubeclaw.preflight-contract](kubeclaw.preflight-contract.md)
+- [kubeclaw.prism-design](kubeclaw.prism-design.md)
+- [kubeclaw.project-summary](kubeclaw.project-summary.md)
+- [kubeclaw.review](kubeclaw.review.md)
+
+## Observer Packages
+
+- [kubeclaw.agent-observability](kubeclaw.agent-observability.md)
+- [kubeclaw.notification-observer](kubeclaw.notification-observer.md)
+- [kubeclaw.telemetry-observer](kubeclaw.telemetry-observer.md)
+
+## Capability adapter Packages
+
+- [kubeclaw.artifact-store](kubeclaw.artifact-store.md)
+- [kubeclaw.command-runner](kubeclaw.command-runner.md)
+- [kubeclaw.demo-handoff](kubeclaw.demo-handoff.md)
+- [kubeclaw.git-workspace](kubeclaw.git-workspace.md)
+- [kubeclaw.lint](kubeclaw.lint.md)
+- [kubeclaw.network-http](kubeclaw.network-http.md)
+- [kubeclaw.openclaw-agent-events](kubeclaw.openclaw-agent-events.md)
+- [kubeclaw.operator-messaging](kubeclaw.operator-messaging.md)
+- [kubeclaw.pipeline-review](kubeclaw.pipeline-review.md)
+- [kubeclaw.redis-transport](kubeclaw.redis-transport.md)
+- [kubeclaw.remote-test-gate](kubeclaw.remote-test-gate.md)
+- [kubeclaw.repository-adapter](kubeclaw.repository-adapter.md)
+- [kubeclaw.runtime-dispatch](kubeclaw.runtime-dispatch.md)
+- [kubeclaw.secret-resolver](kubeclaw.secret-resolver.md)
+- [kubeclaw.state-store](kubeclaw.state-store.md)
+- [kubeclaw.telemetry-store](kubeclaw.telemetry-store.md)
+- [kubeclaw.transport-publisher](kubeclaw.transport-publisher.md)
+- [kubeclaw.wait-store](kubeclaw.wait-store.md)
+
+## Test provider Packages
+
+- [kubeclaw.api-flow](kubeclaw.api-flow.md)
+- [kubeclaw.axe](kubeclaw.axe.md)
+- [kubeclaw.container-build](kubeclaw.container-build.md)
+- [kubeclaw.coverage-budget](kubeclaw.coverage-budget.md)
+- [kubeclaw.demo-auth-smoke](kubeclaw.demo-auth-smoke.md)
+- [kubeclaw.direct-command](kubeclaw.direct-command.md)
+- [kubeclaw.http](kubeclaw.http.md)
+- [kubeclaw.kubernetes-fixture](kubeclaw.kubernetes-fixture.md)
+- [kubeclaw.lighthouse](kubeclaw.lighthouse.md)
+- [kubeclaw.openapi](kubeclaw.openapi.md)
+- [kubeclaw.playwright](kubeclaw.playwright.md)
+- [kubeclaw.security-providers](kubeclaw.security-providers.md)
+- [kubeclaw.size-budget](kubeclaw.size-budget.md)
+- [kubeclaw.tailscale-exposure](kubeclaw.tailscale-exposure.md)
+- [kubeclaw.visual](kubeclaw.visual.md)
+
+## Report adapter Packages
+
+- [kubeclaw.junit-report](kubeclaw.junit-report.md)
+
+## OpenClaw extension Packages
+
+- [kubeclaw-agent-observer](kubeclaw-agent-observer.md)
+- [kubeclaw-prism](kubeclaw-prism.md)
+
+## Codex plugin Packages
+
+- [kubeclaw-ops](kubeclaw-ops.md)

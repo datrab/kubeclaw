@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-17T12:08:39.760670+00:00",
+  "state": "BOUNDED_ROUTE_CORRECTION_PUSHED_BOTH_REFS_VERIFIED",
+  "base": "23eb0dd828f08138bed79b188ffd1a434e24e02a",
+  "commit": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "tree": "830c4cf2255392d7c1760b7fae3dcdafab6c1225",
+  "files": {
+    "scripts/docs-published-route-baseline.json": "c9fd21962ade0616a71cc5f0a30363b0020ed26028fd88444a9934197d76f6b7",
+    "scripts/docs-governance.mjs": "94f45c1d481c906687f5de6612143000f231162d136e2a6f46004e6d03348a2a",
+    "scripts/lib/docs-route-continuity.mjs": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449",
+    "scripts/tests/docs-route-continuity.test.mjs": "afeea510841cff67d9d49c90e4d08671772a7f258647476e980ad853b1ff999b"
+  },
+  "remoteHeads": {
+    "refs/heads/checkpoint/pr13-documentation-overhaul": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+    "refs/heads/docs/documentation-overhaul": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9"
+  },
+  "remoteVerified": true,
+  "ciHEADUnchanged": "d4c0a624d737bd212cb8611fa7b8f7510143b567",
+  "ciIndexSHA256Unchanged": "e33d804d851d1b4ac04b4bf9a28104852be8f45fc78bf12aef98fdfe4c8cd00e",
+  "originalDirtyPathsPreserved": 24,
+  "canonicalWrites": false,
+  "formalAcceptance": false,
+  "ciGreen": false,
+  "review": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/review.json",
+    "sha256": "8e6fb9edd4d732a947528765a2c74b55bfd052f2240b2f2d2d2e5aea5aaa0916"
+  },
+  "actual": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/actual-focused-result.json",
+    "sha256": "b4ba297e0686dbedefb4ec56e13bee5954ca6135808a5f2f49a44dd956fd2398"
+  },
+  "checkpointMethod": "Same isolated-index read-tree/commit-tree/atomic normal-FF invariant as git-checkpoint.py, pinned to fetched remote; canonical-only helper cannot snapshot this external candidate without stale-source rollback. No CI checkout/index/worktree mutation."
+}

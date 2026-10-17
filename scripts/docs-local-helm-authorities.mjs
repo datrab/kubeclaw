@@ -1,0 +1,258 @@
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import { apiFieldSchemaAuthority } from './docs-api-schema-authorities.mjs';
+import { yamlFieldPathWithoutRoot } from './yaml-field-path.mjs';
+
+const registryUrl = new URL('./docs-local-helm-field-authorities.json', import.meta.url);
+const registryText = fs.readFileSync(registryUrl, 'utf8');
+const registryLines = registryText.split('\n');
+const registry = JSON.parse(registryText);
+const registryEvidenceCache = new Map();
+const registryEvidence = (sourcePath, fieldPath) => {
+  const cacheKey = `${sourcePath}#${fieldPath}`;
+  if (registryEvidenceCache.has(cacheKey)) return registryEvidenceCache.get(cacheKey);
+  const fileLine = registryLines.findIndex((line) => line === `    ${JSON.stringify(sourcePath)}: {`);
+  assert(fileLine >= 0, `${sourcePath}: local Helm authority file block has no exact JSON line`);
+  const nextFileLine = registryLines.findIndex((line, index) => index > fileLine && /^    "[^"]+": \{$/u.test(line));
+  const fieldLine = registryLines.findIndex((line, index) => index > fileLine
+    && (nextFileLine < 0 || index < nextFileLine)
+    && line === `        ${JSON.stringify(fieldPath)}: {`);
+  assert(fieldLine >= 0, `${sourcePath}#${fieldPath}: local Helm authority object has no exact JSON line`);
+  let objectEnd = registryLines.findIndex((line, index) => index > fieldLine
+    && ((nextFileLine < 0 || index < nextFileLine) && /^        "(?:\\.|[^"])+": \{$/u.test(line)));
+  const fieldsEnd = registryLines.findIndex((line, index) => index > fieldLine && line === '      }');
+  if (objectEnd < 0 || (fieldsEnd >= 0 && fieldsEnd < objectEnd)) objectEnd = fieldsEnd;
+  assert(objectEnd > fieldLine, `${sourcePath}#${fieldPath}: local Helm authority object range has no end`);
+  const failureLine = registryLines.findIndex((line, index) => index > fieldLine && index < objectEnd
+    && /^          "failure":/u.test(line));
+  assert(failureLine > fieldLine, `${sourcePath}#${fieldPath}: semantic contract has no exact failure line`);
+  const endLine = failureLine + 1;
+  const registration = {
+    path: 'scripts/docs-local-helm-field-authorities.json',
+    line: fieldLine + 1,
+    sourceLineSha256: crypto.createHash('sha256').update(registryLines[fieldLine]).digest('hex'),
+  };
+  const contract = {
+    path: registration.path,
+    line: registration.line,
+    endLine,
+    sourceRangeSha256: crypto.createHash('sha256').update(registryLines.slice(fieldLine, endLine).join('\n')).digest('hex'),
+  };
+  const result = { registration, contract };
+  registryEvidenceCache.set(cacheKey, result);
+  return result;
+};
+
+export function localHelmAuthorityFile(sourcePath) {
+  return registry.files[sourcePath] ?? null;
+}
+
+export function localHelmFieldAuthority(sourcePath, fieldPath) {
+  const declaration = localHelmAuthorityFile(sourcePath);
+  const authority = declaration?.fields[fieldPath];
+  const evidence = authority ? registryEvidence(sourcePath, fieldPath) : null;
+  return authority ? {
+    ...authority,
+    sourceFileSha256: declaration.sourceSha256,
+    chartRoot: declaration.chartRoot,
+    semanticAuthorityEvidence: evidence.registration,
+    semanticContractEvidence: evidence.contract,
+  } : null;
+}
+
+export function localHelmAuthorityPaths(sourcePath) {
+  return Object.keys(localHelmAuthorityFile(sourcePath)?.fields ?? {}).sort();
+}
+
+export function localHelmChartAuthority(chartRoot) {
+  return registry.charts[chartRoot] ?? null;
+}
+
+export function localHelmChartRoots() {
+  return Object.keys(registry.charts).sort();
+}
+
+export function localHelmAuthorityStats() {
+  return {
+    files: Object.keys(registry.files).length,
+    fields: Object.values(registry.files).reduce((sum, file) => sum + Object.keys(file.fields).length, 0),
+    templates: Object.values(registry.charts).reduce((sum, chart) => sum + Object.keys(chart.templates).length, 0),
+  };
+}
+
+const sha256 = (value) => crypto.createHash('sha256').update(value).digest('hex');
+const canonicalHelmPath = (value) => yamlFieldPathWithoutRoot(value, { arrayWildcard: true });
+
+export function assertLocalHelmAuthorityRegistry(repositoryRoot = process.cwd(), { verifyBytes = true } = {}) {
+  assert.equal(registry.version, 2);
+  assert.match(registry.semanticPolicy ?? '', /explicit field contract/u);
+  for (const [sourcePath, declaration] of Object.entries(registry.files)) {
+    assert.match(declaration.sourceSha256, /^[a-f0-9]{64}$/u, `${sourcePath}: invalid source digest`);
+    if (verifyBytes) {
+      const absoluteSource = path.join(repositoryRoot, sourcePath);
+      assert(fs.existsSync(absoluteSource), `${sourcePath}: authority source is missing`);
+      assert.equal(sha256(fs.readFileSync(absoluteSource)), declaration.sourceSha256,
+        `${sourcePath}: authority source bytes changed`);
+    }
+    assert(registry.charts[declaration.chartRoot], `${sourcePath}: missing chart contract ${declaration.chartRoot}`);
+    for (const [fieldPath, authority] of Object.entries(declaration.fields)) {
+      const { registration: semanticEvidence, contract: semanticContract } = registryEvidence(sourcePath, fieldPath);
+      assert(semanticEvidence.line > 1, `${sourcePath}#${fieldPath}: semantic authority points to line 1`);
+      assert.equal(sha256(registryLines[semanticEvidence.line - 1]), semanticEvidence.sourceLineSha256,
+        `${sourcePath}#${fieldPath}: semantic authority line digest changed`);
+      assert(semanticContract.endLine >= semanticContract.line,
+        `${sourcePath}#${fieldPath}: semantic authority object range is invalid`);
+      assert.equal(sha256(registryLines.slice(semanticContract.line - 1, semanticContract.endLine).join('\n')), semanticContract.sourceRangeSha256,
+        `${sourcePath}#${fieldPath}: semantic authority object range changed`);
+      assert(fieldPath.startsWith('$.'), `${sourcePath}#${fieldPath}: field path is not exact`);
+      assert(!['typed-rendered-value', 'bounded-integer', 'container-path', 'duration', 'kubernetes-or-runtime-name', 'network-or-source-url', 'numeric-security-mode', 'protocol-selector'].includes(authority.group),
+        `${sourcePath}#${fieldPath}: mechanical or conflated fallback authority is forbidden`);
+      assert(Object.hasOwn(authority, 'selectedBaseline'), `${sourcePath}#${fieldPath}: selected baseline is missing`);
+      assert.equal(authority.semanticAuthority, 'explicit-field-contract', `${sourcePath}#${fieldPath}: semantic authority was not explicitly approved`);
+      for (const name of ['purpose', 'acceptedValues', 'emptyBehavior', 'impact', 'failure']) {
+        assert(typeof authority[name] === 'string' && authority[name].length >= 20, `${sourcePath}#${fieldPath}: incomplete ${name}`);
+      }
+      if (authority.apiSchemaAuthority) {
+        const proof = authority.apiSchemaAuthority;
+        assert.deepEqual(proof, apiFieldSchemaAuthority(proof.apiVersion, proof.kind, proof.fieldPath), `${sourcePath}#${fieldPath}: pinned collection API schema changed`);
+      }
+      if (authority.chartSchemaContract) {
+        const proof = authority.chartSchemaContract;
+        assert.equal(proof.path, `${declaration.chartRoot}/values.schema.json`, `${sourcePath}#${fieldPath}: chart schema is outside the selected chart`);
+        assert.equal(proof.fieldPath, fieldPath, `${sourcePath}#${fieldPath}: schema contract belongs to another field`);
+        assert.match(proof.sourceSha256, /^[a-f0-9]{64}$/u, `${sourcePath}#${fieldPath}: chart schema digest is missing`);
+        assert(proof.schema && typeof proof.schema === 'object', `${sourcePath}#${fieldPath}: exact collection schema is missing`);
+        if (verifyBytes) assert.equal(sha256(fs.readFileSync(path.join(repositoryRoot, proof.path))), proof.sourceSha256, `${sourcePath}#${fieldPath}: chart schema bytes changed`);
+      }
+      assert(Array.isArray(authority.consumerProof) && authority.consumerProof.length > 0,
+        `${sourcePath}#${fieldPath}: exact consumer proof is missing`);
+      for (const consumer of authority.consumerProof) {
+        assert(consumer.path.startsWith(`${declaration.chartRoot}/templates/`), `${sourcePath}#${fieldPath}: consumer is outside the selected chart`);
+        assert(consumer.kind?.startsWith('helm-template'), `${sourcePath}#${fieldPath}: consumer is not an exact Helm template binding`);
+        assert(typeof consumer.templateExpression === 'string' && consumer.templateExpression.length > 0,
+          `${sourcePath}#${fieldPath}: consumer expression is missing`);
+        assert.equal(consumer.exactValuePath, fieldPath.replace(/^\$\.?/u, ''),
+          `${sourcePath}#${fieldPath}: consumer proof is not bound to this exact leaf`);
+        assert(typeof consumer.bindingKind === 'string' && consumer.bindingKind.length > 0,
+          `${sourcePath}#${fieldPath}: Helm binding kind is missing`);
+        assert(typeof consumer.bindingProof === 'string' && consumer.bindingProof.length >= 20,
+          `${sourcePath}#${fieldPath}: leaf-to-expression binding proof is incomplete`);
+        assert(Number.isSafeInteger(consumer.line) && consumer.line > 0,
+          `${sourcePath}#${fieldPath}: consumer line is missing`);
+        assert.match(consumer.sourceLineSha256 ?? '', /^[a-f0-9]{64}$/u,
+          `${sourcePath}#${fieldPath}: consumer line digest is missing`);
+        assert.match(consumer.contextSha256 ?? '', /^[a-f0-9]{64}$/u,
+          `${sourcePath}#${fieldPath}: consumer context digest is missing`);
+        assert(typeof consumer.receiver === 'string' && consumer.receiver.length > 0,
+          `${sourcePath}#${fieldPath}: rendered receiver is missing`);
+        assert(typeof consumer.condition === 'string' && consumer.condition.length > 0,
+          `${sourcePath}#${fieldPath}: render condition is missing`);
+        assert(typeof consumer.defaultProof === 'string' && consumer.defaultProof.length > 0,
+          `${sourcePath}#${fieldPath}: default selection proof is missing`);
+        assert(Array.isArray(consumer.receiverProof) && consumer.receiverProof.length > 0,
+          `${sourcePath}#${fieldPath}: receiver proof list is empty`);
+        assert.doesNotMatch(consumer.receiver, /^(?:exact template output|render branch|dynamic rendered value)/u,
+          `${sourcePath}#${fieldPath}: receiver description is generic`);
+        assert(Array.isArray(consumer.conditionProof), `${sourcePath}#${fieldPath}: condition proof list is missing`);
+        if (consumer.condition !== 'unconditional in the linked template branch') {
+          assert(consumer.conditionProof.length > 0,
+            `${sourcePath}#${fieldPath}: conditional consumption has no branch proof`);
+        }
+        assert(consumer.defaultProofEvidence?.path === sourcePath && consumer.defaultProofEvidence?.fieldPath === fieldPath,
+          `${sourcePath}#${fieldPath}: selected-value proof does not bind the exact source field`);
+        assert.equal(consumer.defaultProofEvidence.sourceSha256, declaration.sourceSha256,
+          `${sourcePath}#${fieldPath}: selected-value proof has the wrong source digest`);
+        if (consumer.defaultClauseProof) {
+          assert(['primary', 'fallback'].includes(consumer.defaultClauseProof.role),
+            `${sourcePath}#${fieldPath}: nested default role is invalid`);
+          assert(consumer.defaultClauseProof.left && consumer.defaultClauseProof.fallback,
+            `${sourcePath}#${fieldPath}: nested default operands are incomplete`);
+          assert.equal(consumer.defaultClauseProof.sourceLineSha256, consumer.sourceLineSha256,
+            `${sourcePath}#${fieldPath}: nested default proof is not bound to the consumer line`);
+        }
+        assert(Array.isArray(consumer.defaultClauseProofs),
+          `${sourcePath}#${fieldPath}: complete default-clause proof list is missing`);
+        for (const proof of consumer.defaultClauseProofs) {
+          assert(['primary', 'fallback'].includes(proof.role),
+            `${sourcePath}#${fieldPath}: default-clause role is invalid`);
+          assert(proof.left && proof.fallback,
+            `${sourcePath}#${fieldPath}: default-clause operands are incomplete`);
+          assert.equal(proof.sourceLineSha256, consumer.sourceLineSha256,
+            `${sourcePath}#${fieldPath}: default-clause proof is not bound to the consumer line`);
+        }
+        if (verifyBytes) {
+          const templateText = fs.readFileSync(path.join(repositoryRoot, consumer.path), 'utf8');
+          const lines = templateText.split('\n');
+          assert.equal(sha256(lines[consumer.line - 1] ?? ''), consumer.sourceLineSha256,
+            `${sourcePath}#${fieldPath}: exact consumer line changed`);
+          const start = Math.max(0, consumer.line - 4);
+          const end = Math.min(lines.length, consumer.line + 3);
+          assert.equal(sha256(lines.slice(start, end).join('\n')), consumer.contextSha256,
+            `${sourcePath}#${fieldPath}: consumer context changed while its value expression may be unchanged`);
+          if (/\{\{-?\s*define\s+"[^"]+"/u.test(lines.slice(0, consumer.line).join('\n'))) {
+            assert(consumer.receiverProof.some((receiver) => /exact (?:transitive )?call site for Helm helper .* (?:with root-context argument|with \.Values\.)/u.test(receiver.relation ?? '')),
+              `${sourcePath}#${fieldPath}: helper value has no exact parameter/root include/template call-site proof`);
+          }
+          for (const receiver of consumer.receiverProof) {
+            assert(Number.isSafeInteger(receiver.line) && receiver.line > 0,
+              `${sourcePath}#${fieldPath}: receiver line is invalid`);
+            assert(typeof receiver.relation === 'string' && receiver.relation.length >= 12,
+              `${sourcePath}#${fieldPath}: receiver relationship is not explained`);
+            const receiverPath = receiver.path ?? consumer.path;
+            assert(receiverPath.startsWith(`${declaration.chartRoot}/templates/`),
+              `${sourcePath}#${fieldPath}: receiver is outside the selected chart`);
+            const receiverLines = fs.readFileSync(path.join(repositoryRoot, receiverPath), 'utf8').split('\n');
+            assert.equal(sha256(receiverLines[receiver.line - 1] ?? ''), receiver.sourceLineSha256,
+              `${sourcePath}#${fieldPath}: downstream receiver changed`);
+          }
+          for (const condition of consumer.conditionProof) {
+            assert(condition.path === consumer.path && Number.isSafeInteger(condition.line) && condition.line > 0,
+              `${sourcePath}#${fieldPath}: branch proof is outside the consumer template`);
+            assert.equal(sha256(lines[condition.line - 1] ?? ''), condition.sourceLineSha256,
+              `${sourcePath}#${fieldPath}: branch condition changed`);
+          }
+        }
+      }
+      assert.doesNotMatch(authority.purpose, /^Sets .+ in the rendered .+ resources\.$/u, `${sourcePath}#${fieldPath}: tautological render-only purpose`);
+      assert(!/-unresolved$/u.test(authority.group), `${sourcePath}#${fieldPath}: unresolved semantic proposal was accepted`);
+      assert(Array.isArray(authority.runtimeConsumerProof), `${sourcePath}#${fieldPath}: runtime proof list is missing`);
+      for (const proof of authority.runtimeConsumerProof) {
+        assert(typeof proof.path === 'string' && Number.isSafeInteger(proof.line) && proof.line > 0,
+          `${sourcePath}#${fieldPath}: runtime proof location is invalid`);
+        assert((typeof proof.authority === 'string' && proof.authority.length >= 20)
+          || (typeof proof.access === 'string' && typeof proof.environment === 'string'),
+          `${sourcePath}#${fieldPath}: runtime proof relationship is not explained`);
+        if (proof.sourceLineSha256) {
+          const proofLines = fs.readFileSync(path.join(repositoryRoot, proof.path), 'utf8').split('\n');
+          assert.equal(sha256(proofLines[proof.line - 1] ?? ''), proof.sourceLineSha256,
+            `${sourcePath}#${fieldPath}: runtime consumer line changed`);
+        }
+      }
+      if (authority.group === 'environment-runtime-contract') {
+        assert(Array.isArray(authority.runtimeConsumerProof) && authority.runtimeConsumerProof.length > 0,
+          `${sourcePath}#${fieldPath}: environment delivery has no runtime-boundary proof`);
+      }
+    }
+  }
+  for (const [chartRoot, chart] of Object.entries(registry.charts)) {
+    assert(Object.keys(chart.templates).length > 0, `${chartRoot}: empty template authority set`);
+    for (const [templatePath, sha256] of Object.entries(chart.templates)) {
+      assert(templatePath.startsWith(`${chartRoot}/templates/`), `${templatePath}: template is outside ${chartRoot}`);
+      assert.match(sha256, /^[a-f0-9]{64}$/u, `${templatePath}: invalid template digest`);
+      if (verifyBytes) {
+        const absoluteTemplate = path.join(repositoryRoot, templatePath);
+        assert(fs.existsSync(absoluteTemplate), `${templatePath}: pinned template is missing`);
+        assert.equal(crypto.createHash('sha256').update(fs.readFileSync(absoluteTemplate)).digest('hex'), sha256,
+          `${templatePath}: pinned template bytes changed`);
+      }
+    }
+  }
+}
+
+if (!process.argv.includes('--allow-local-helm-authority-maintenance')) {
+  // Import-time validation proves the registry structure. The inventory calls
+  // this function again with its selected --root to prove the actual bytes.
+  assertLocalHelmAuthorityRegistry(process.cwd(), { verifyBytes: false });
+}

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html"></head><body><main>
+<h1 id="kubeclawdemo-auth-smoke">kubeclaw.demo-auth-smoke</h1>
+<p>Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/demo-auth-smoke/plugin.json">skills/buster/plugins/demo-auth-smoke/plugin.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/demo-auth-smoke/README.md">skills/buster/plugins/demo-auth-smoke/README.md</a>
+Applies to: pipeline-plugin-v2; package 1.0.0
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.</p>
+<h2 id="purpose">Purpose</h2>
+<p>Exercise the demo authentication session as a Buster provider.</p>
+<h2 id="when-to-use-it">When To Use It</h2>
+<p>Use it when the demo path needs a focused authenticated smoke check.</p>
+<h2 id="when-not-to-use-it">When Not To Use It</h2>
+<p>Do not use it as a general identity-provider security assessment.</p>
+<h2 id="most-important-limit">Most Important Limit</h2>
+<p>It validates the configured demo session path and its available environment only.</p>
+<p>The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/README.md">Package guide</a></li>
+<li><a href="../contracts.html">Shared extension contracts</a></li>
+<li><a href="../testing.html#use-a-proof-ladder">Proof and failure exercises</a></li>
+<li><a href="../testing.html#install-and-activate-by-surface">Install and activate</a></li>
+<li><a href="../testing.html#update-or-replace">Update or replace</a></li>
+<li><a href="../testing.html#disable-safely">Disable safely</a></li>
+<li><a href="../testing.html#remove-and-inspect-remaining-state">Remove and inspect remaining state</a></li>
+<li><a href="../host-and-engine.html">Host and engine boundaries</a></li>
+</ul>
+<h2 id="package-reference">Package Reference</h2>
+<ul>
+<li>Host: <code>pipeline-runtime</code>.</li>
+<li>Package identity: <code>kubeclaw.demo-auth-smoke@1.0.0</code>.</li>
+<li>Runtime-role manifest inclusion: <code>buster</code></li>
+<li>Manifest: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/plugin.json">skills/buster/plugins/demo-auth-smoke/plugin.json</a></li>
+</ul>
+<h2 id="boundaries">Boundaries</h2>
+<ul>
+<li>The manifest declares extension identity and requested authority.</li>
+<li>Nova and Buster apply the selection rules for each declared surface.</li>
+<li>Platform grants or resolved plans supply authority separately from package code.</li>
+<li>Pipeline Core keeps canonical lifecycle authority.</li>
+<li>The package cannot use undeclared capabilities.</li>
+</ul>
+<h2 id="registration-summary">Registration Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>ID</th>
+<th>Public contract or type</th>
+<th>Module</th>
+<th>Export</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test provider</td>
+<td><code>session</code></td>
+<td><code>kubeclaw.demo-auth-smoke@1</code></td>
+<td><code>src/provider.js</code></td>
+<td><code>provider</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="test-provider-session">test provider: session</h2>
+<p>Public identifier: <code>kubeclaw.demo-auth-smoke@1</code>.
+Global registration ID: <code>kubeclaw.demo-auth-smoke:session</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>network.http</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json">schemas/config.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>protocol</code> (constant; required; value <code>json-session.v1</code>)</li>
+<li><code>loginPath</code> (string; required; minLength <code>1</code>; maxLength <code>2048</code>)</li>
+<li><code>usernameKey</code> (string; required; minLength <code>1</code>; maxLength <code>2048</code>)</li>
+<li><code>passwordKey</code> (string; required; minLength <code>1</code>; maxLength <code>2048</code>)</li>
+<li><code>cookieName</code> (string; required; minLength <code>1</code>; maxLength <code>2048</code>)</li>
+<li><code>protectedPath</code> (string; required; minLength <code>1</code>; maxLength <code>2048</code>)</li>
+<li><code>usernamePointer</code> (string; required; minLength <code>1</code>; maxLength <code>2048</code>)</li>
+<li><code>assertions</code> (array; required; minItems <code>1</code>; maxItems <code>16</code>)</li>
+</ul>
+<p>Input schema: No package-specific inputSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Result schema: No package-specific resultSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>session</code></td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td><code>kubeclaw.demo-auth-smoke@1</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/provider.js</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/config.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputs</code></td>
+<td><code>[{&quot;name&quot;:&quot;deployment&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;required&quot;:true,&quot;schemaId&quot;:&quot;kubeclaw.kubernetes-deployment-fixture@1&quot;},{&quot;name&quot;:&quot;credentials&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;required&quot;:true,&quot;schemaId&quot;:&quot;kubeclaw.generated-demo-credentials@1&quot;},{&quot;name&quot;:&quot;exposure&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;required&quot;:true,&quot;schemaId&quot;:&quot;kubeclaw.public-endpoint-fixture@1&quot;}]</code></td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td><code>[{&quot;name&quot;:&quot;authentication&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;schemaId&quot;:&quot;kubeclaw.demo-auth-evidence@1&quot;,&quot;required&quot;:true}]</code></td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;network.http&quot;]</code></td>
+</tr>
+<tr>
+<td><code>retrySafe</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>matrixFields</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>reportFormats</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>evidenceTypes</code></td>
+<td><code>[&quot;log&quot;]</code></td>
+</tr>
+<tr>
+<td><code>evidenceDefaults</code></td>
+<td><code>{&quot;onPass&quot;:[&quot;log&quot;],&quot;onFail&quot;:[&quot;log&quot;],&quot;onError&quot;:[&quot;log&quot;]}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inputs:</p>
+<ul>
+<li><code>deployment</code>: value; required.</li>
+<li><code>credentials</code>: value; required.</li>
+<li><code>exposure</code>: value; required.</li>
+</ul>
+<p>Outputs:</p>
+<ul>
+<li><code>authentication</code>: value; required.</li>
+</ul>
+<h2 id="failure-behavior">Failure Behavior</h2>
+<p>The test requires an unauthenticated negative control, successful login, and protected business assertions. Its local integration command builds the credential producer with Go.</p>
+<p>Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the <a href="../../use/plugins.html#3-activate-and-prove-health">startup stop rules</a>.</p>
+<h2 id="package-checks">Package Checks</h2>
+<p>Recorded local command result on 2026-09-16: <code>unavailable</code>.</p>
+<p>The command requires the Go executable, which is absent on this host.</p>
+<p>Run the package command:</p>
+<pre><code class="language-bash">npm test --prefix skills/buster/plugins/demo-auth-smoke
+</code></pre>
+<p>Package test files found: 0. This is file discovery, not an executed test count.</p>
+<p>Exact package test script (run from the package directory):</p>
+<pre><code class="language-text">node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts
+</code></pre>
+<p>Local package checks do not prove live host or cluster readiness.
+The result above states the exact local limit. Run the package command in the target environment before activation.</p>
+<h2 id="source-evidence">Source Evidence</h2>
+<ul>
+<li>Manifest: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/plugin.json">skills/buster/plugins/demo-auth-smoke/plugin.json</a></li>
+<li>Package implementation guide: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/README.md">skills/buster/plugins/demo-auth-smoke/README.md</a></li>
+<li>Module for <code>session</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/src/provider.js">src/provider.js</a></li>
+</ul>
+</main></body></html>

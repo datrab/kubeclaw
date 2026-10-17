@@ -1,5 +1,7 @@
 # WP05 bounded Git/repository implementation
 
+> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../../site/status/open-issues.md) and [the canonical JSON](../../../status/open-issues.json). [Local closure provenance](../../../site/decisions/acceptance.md) and [live acceptance](../../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
+
 Findings implemented: PCR-GIT-001 and PCR-REPOSITORY-001. Source findings read in
 `kubeclaw.git-workspace.md`, `kubeclaw.repository-adapter.md`, and the register's
 preserved source_finding_text. No register, commits or staging changed by this

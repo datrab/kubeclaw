@@ -5,12 +5,13 @@
   "projectSchema": "skills/buster/plugins/http/schemas/config.schema.json",
   "exampleFiles": ["contracts/pipeline-test-gate/v1/examples/http.json"],
   "configurationMarkerFields": ["url", "endpointName", "expectedStatuses"],
+  "suiteSection": "4. HTTP Suite",
   "documents": {
-    "userGuide": "docs/architecture/pipeline-test-gate-http-user-guide.md",
-    "operatorGuide": "docs/architecture/pipeline-test-gate-http-operator-guide.md",
-    "configurationReference": "docs/architecture/pipeline-test-gate-http-configuration-reference.md",
-    "errorReference": "docs/architecture/pipeline-test-gate-http-error-reference.md",
-    "securityModel": "docs/architecture/pipeline-test-gate-http-security-model.md"
+    "userGuide": "docs/site/reference/buster-suites.md",
+    "operatorGuide": "docs/site/reference/buster-suites.md",
+    "configurationReference": "docs/site/reference/buster-provider-configuration.md",
+    "errorReference": "docs/site/reference/buster-error-codes.md",
+    "securityModel": "docs/site/reference/buster-suites.md"
   },
   "operatorFields": [
     "allowedCapabilities",

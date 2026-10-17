@@ -1,0 +1,26 @@
+from pathlib import Path
+import json,shutil,subprocess,hashlib,difflib
+C=Path(__file__).resolve().parent;D=C.parent/'provenance-correction-v4';D.mkdir();R=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo');S='scripts/generate-buster-provider-reference.mjs';PAGE='docs/site/reference/buster-provider-configuration.md';AUTH='scripts/docs-api-producer-adapter-authorities.json';V='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def g(*a):return subprocess.check_output(['git',*a],cwd=R)
+(D/'checkpoint-failure.json').write_text(json.dumps({'failure':'git diff --cached --check rejected generated maintenance line597 trailing space; no commit or push occurred.','materialRecovery':'Remove only final ASCII space from generator maintenance string and generated markdown line; rerun affected current output equality and exact selected authority fact computation, then review coherent corrected package. Original15mutation receipt reused only with explicit one-character whitespace-only impact, not renamed current-bytePASS.','sourceResult':str(C/'actual-result.json')},indent=2)+'\n')
+shutil.copytree(C/'current-fixture',D/'current-fixture');F=D/'current-fixture';old=(C/'candidate'/S).read_text();new=old.replace('--revision=<full-source-commit>`. \',','--revision=<full-source-commit>`.\',');assert old!=new and len(old)-len(new)==1
+(F/S).write_text(new);logs=[]
+for name,args in [('current-provider-write',['node',S,'--write']),('current-provider-noarg-check',['node',S])]:
+ r=subprocess.run(args,cwd=F,text=True,capture_output=True,timeout=60)
+ for ext,text in [('stdout',r.stdout),('stderr',r.stderr)]:(D/(name+'.'+ext)).write_text(text)
+ assert r.returncode==0,(name,r.stderr[:1000]);logs.append({'id':name,'exitCode':r.returncode,'stdoutSHA256':sha(r.stdout.encode()),'stderrSHA256':sha(r.stderr.encode())})
+assert (C/'candidate'/PAGE).read_text().replace('--revision=<full-source-commit>`. \n','--revision=<full-source-commit>`.\n')==(F/PAGE).read_text()
+A=D/'authority-impact';shutil.copytree(C/'authority-impact',A,ignore=shutil.ignore_patterns('node_modules'));(A/'node_modules').symlink_to(R/'node_modules',target_is_directory=True);(A/'after'/S).write_text(new)
+r=subprocess.run(['node',str(A/'derive.mjs')],capture_output=True,text=True,timeout=60);assert r.returncode==0,r.stderr
+facts=json.loads((A/'result.json').read_text());raw=g('show',V+':'+AUTH);assert raw.count(facts['before']['digest'].encode())==1;(F/AUTH).write_bytes(raw.replace(facts['before']['digest'].encode(),facts['after']['digest'].encode()))
+prior=json.loads((C/'current-package-result.json').read_text());files={}
+for f in prior['files']:
+ o=D/'candidate'/f;o.parent.mkdir(parents=True,exist_ok=True);b=(F/f).read_bytes();o.write_bytes(b);files[f]=sha(b)
+ (D/(Path(f).name+'.diff')).write_text(''.join(difflib.unified_diff(g('show',V+':'+f).decode().splitlines(True),b.decode().splitlines(True),fromfile='before/'+f,tofile='after/'+f)))
+prior.update(files=files,changedOutputChecks=logs,previousMutationReceipt={'path':str(C/'actual-result.json'),'sha256':sha((C/'actual-result.json').read_bytes())},sourceImpactWhitespaceOnly={'beforeSHA256':sha(old.encode()),'afterSHA256':sha(new.encode()),'difference':'Only1trailing ASCII space removed from maintenance instruction literal; all executable statements, inputs/source-pin/caller semantics and emitted provider rows identical. Prior15case receipt is v3 exactscope; current4review never claims rerun15 at newbytes.'},authorityDelta={'source':S,'before':facts['before']['digest'],'after':facts['after']['digest'],'baselineReproduced':True,'onlyOneOperationUpdated':True})
+(D/'current-package-result.json').write_text(json.dumps(prior,indent=2)+'\n');shutil.copyfile(C/'checkpoint.py',D/'checkpoint.py')
+s=(D/'checkpoint.py').read_text().replace("bind(P/'actual-result.json')","bind(P.parent/'provenance-correction-v3/actual-result.json')");(D/'checkpoint.py').write_text(s)
+for p in (D/'candidate').rglob('*'):
+ if p.is_file():assert all(l.rstrip()==l for l in p.read_text().splitlines()),p
+print(json.dumps({'files':files,'authorityAfter':facts['after']['digest'],'whitespacePreflight':'clean'},indent=2))

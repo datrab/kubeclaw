@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/echo.html"></head><body><main>
+<h1 id="echo-evidence-bound-review-and-policy-reduction">Echo: Evidence-Bound Review And Policy Reduction</h1>
+<p>Status: implemented with explicit model and repository evidence limits
+Audience: pipeline operator, Echo maintainer, policy author, security reviewer
+Owner: Echo maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/src">skills/nova/plugins/review/src</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/schemas">skills/nova/plugins/review/schemas</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/tests">skills/nova/plugins/review/tests</a>
+Evidence revision: <code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code>
+Applies to: review, repository-audit, and repository-revalidation stages
+Last verified: source, schema, manifest, and focused test inspection on 2026-09-20</p>
+<h2 id="purpose-and-decision-boundary">Purpose And Decision Boundary</h2>
+<p>Echo examines a fixed repository subject and proposes evidence-backed findings.
+Echo does not approve a pipeline and does not change canonical run state. The
+review plugin validates Echo's output, verifies evidence, applies a declared
+policy, and returns a typed result. Nova applies that result to the lifecycle.</p>
+<p>The model can find a defect, but it cannot change the reviewed commit, redefine
+the policy, or certify its own output. The source proves this authority split,
+but it does not record the historical reason for choosing it. The current
+design assessment is an inference: deterministic verification and reduction
+make a probabilistic review useful without giving the model lifecycle
+authority. The cost is a larger contract, more stored evidence, and more safe
+stops when evidence is incomplete. Reconsider the split only if a replacement
+keeps immutable subject identity, independent policy ownership, and a
+deterministic final decision.</p>
+<blockquote>
+<p><strong>Source evidence — three bounded review stages</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/plugin.json#L1-L54">The package registers review, repository audit, and revalidation with read and artifact capabilities only</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/stage.ts#L1-L28">The stage resolves policy, prepares evidence, dispatches Echo, verifies output, reduces the decision, and persists the result</a>.</p>
+</blockquote>
+<h2 id="fixed-review-subject">Fixed Review Subject</h2>
+<p>The input contains a task, revisions, allowed scope, requirements, evidence,
+and context candidates. A revision is either a fixed base or the result of a
+named implementation stage. The preparation path resolves the base and head,
+builds a changed-file manifest, binds its digest, and freezes the review bundle.</p>
+<p>The review subject is therefore not “the current checkout.” It is the tuple of
+base revision, head revision, changed-manifest digest, policy digest, bundle
+digest, and attempt identity. Later report validation repeats these bindings.
+This prevents a report for one diff from being reused for another diff.</p>
+<p>The schema allows at most 128 evidence records, 256 requirements, and 4,096
+context candidates. Each evidence item has a SHA-256 digest. Context candidates
+carry a path, reasons, and dependency depth from 1 through 8.</p>
+<blockquote>
+<p><strong>Source evidence — subject admission</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/schemas/input.schema.json#L1-L35">The stage input schema defines task, revision, scope, requirement, evidence, and context bounds</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/review-report-contract.ts#L123-L140">The final report validator binds report identity to revisions, manifest, policy, and bundle digests</a>.</p>
+</blockquote>
+<h2 id="review-repository-audit-and-revalidation">Review, Repository Audit, And Revalidation</h2>
+<p>The three stages share policy reduction but do not share one configuration
+shape.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Input and execution</th>
+<th>Stage configuration and defaults</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ordinary <code>review</code></td>
+<td>Reviews one declared base/head subject with requirements, evidence, allowed prefixes, and admitted context candidates. It can make one bounded context expansion.</td>
+<td><code>agent</code> is required. <code>profile</code> defaults to <code>gate</code>. <code>policy</code> is optional. The semantic and report encodings are fixed optional compatibility selectors. It does not accept repository-audit reviewer identity fields.</td>
+</tr>
+<tr>
+<td><code>repository-audit</code></td>
+<td>Inventories a repository revision, compiles component and boundary jobs, dispatches jobs with bounded concurrency and retries, verifies selected findings, reduces them, and stores a repository report. Input <code>grade</code> defaults to <code>standard</code>, <code>mode</code> to <code>execute</code>, and <code>scope</code> to the repository. <code>plan</code> stores a plan without model execution; <code>resume</code> uses a matching prepared plan.</td>
+<td><code>agent</code> and exact <code>reviewerModel</code> are required. <code>reviewerRuntime</code> defaults to <code>subagent</code>, <code>reviewerAgentId</code> to <code>codex</code>, <code>reviewerThinking</code> to <code>high</code>, and policy <code>profile</code> to <code>audit</code>. Model and runtime identity are part of cache and attestation identity.</td>
+</tr>
+<tr>
+<td><code>repository-revalidation</code></td>
+<td>Reads one digest-bound earlier repository report, freezes the newer revision, and rechecks its confirmed findings against current source.</td>
+<td>Uses the repository-audit configuration shape and identity defaults. Input <code>grade</code> defaults to <code>standard</code>; the baseline report reference is required.</td>
+</tr>
+</tbody>
+</table>
+<p>Repository-audit input owns scale and cost limits. A grade supplies the complete
+default profile. Explicit <code>overrides</code> then replace named values. They do not
+change the runtime target's fixed 900,000-byte, 120,000-input-token,
+6,000-output-token, and 128,000-context-token ceilings. Ordinary review instead
+uses the limits inside <code>review-policy.v2</code>.</p>
+<blockquote>
+<p><strong>Source evidence — the paths have distinct configuration contracts</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/plugin.json#L5-L50">The manifest binds ordinary review to one schema and both repository paths to another</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/stage.ts#L30-L49">Ordinary review resolves <code>agent</code>, the <code>gate</code> default, and optional policy</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-audit-stage.ts#L102-L124">Repository audit resolves required reviewer identity and its <code>audit</code> default</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-review-profile.ts#L322-L357">Repository input resolves grade, mode, scope, and named overrides into a digest</a>.</p>
+</blockquote>
+<h2 id="echo-output">Echo Output</h2>
+<p>Echo returns <code>echo-review-output.v1</code> with:</p>
+<ul>
+<li>a bounded summary;</li>
+<li>the evidence records it inspected;</li>
+<li>one assessment for every required condition;</li>
+<li>proposed findings;</li>
+<li>an optional request for more context.</li>
+</ul>
+<p>An assessment is <code>satisfied</code>, <code>violated</code>, or <code>unverified</code>. A satisfied or
+violated assessment needs evidence. Findings use categories <code>correctness</code>,
+<code>security</code>, <code>contract</code>, <code>architecture</code>, or <code>simplification</code>, and priorities
+<code>P0</code> through <code>P3</code>. Each finding states claim, impact, location, evidence,
+recommended fix, relation to the change, relation to scope, and evidence
+strength. Echo must label inferred or insufficient evidence; it cannot present
+both as direct evidence.</p>
+<blockquote>
+<p><strong>Source evidence — review language is a contract</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/echo-review-contract.ts#L11-L62">The Echo contract defines assessment, category, priority, scope, change, and evidence values</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/echo-review-contract.ts#L81-L133">The same contract defines the complete finding and output records</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/echo-review-contract.ts#L207-L237">The generated schema requires evidence for satisfied and violated requirements</a>.</p>
+</blockquote>
+<h2 id="policy-and-certification">Policy And Certification</h2>
+<p>For ordinary review, the selected profile is <code>gate</code> by default. For repository
+audit and revalidation it is <code>audit</code> by default. <code>lean</code> is also valid. The
+stage first loads the complete built-in profile. The resolver validates a supplied
+<code>review-policy.v2</code> as a complete policy. It then replaces the
+built-in policy; fields are not deep-merged. There is no per-request policy
+override in these stage inputs. The policy controls:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blocking</td>
+<td>Which priorities and categories can block, and whether the defect must be introduced by the diff and have direct evidence.</td>
+</tr>
+<tr>
+<td>Limits</td>
+<td>Proposal, root-cause, bundle, file, context, expansion, and advisory ceilings.</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Treatment of outside-scope, unknown-scope, and pre-existing defects.</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Which findings need semantic verification and what happens when evidence or a requirement remains unverified.</td>
+</tr>
+<tr>
+<td>Simplification</td>
+<td>Enabled rules, confidence, and recommendation limit.</td>
+</tr>
+<tr>
+<td>Ranking and follow-up</td>
+<td>Stable ordering and disposition of non-blocking work.</td>
+</tr>
+<tr>
+<td>Governor</td>
+<td>Change-size, ownership, and remediation-cycle limits.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — policy precedence</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/review-policy-resolver.ts#L45-L87">The resolver validates each candidate and selects the last complete policy: built-in, then settings policy</a>.</p>
+</blockquote>
+<p>The plugin creates a certified reduction input under the fixed orchestrator
+issuer. Echo cannot create this certificate. The reducer uses only certified
+input to produce <code>passed</code>, <code>request_fix</code>, <code>blocked</code>, or
+<code>orchestrator_required</code>. If human or orchestrator action is required, the stage
+can emit an attempt-bound <code>kubeclaw.review.resolve</code> wait request.</p>
+<h2 id="findings-reports-and-repair">Findings, Reports, And Repair</h2>
+<p>The report keeps accepted items by stable digest key. Each item records its
+disposition, origin, priority, category, message, recommended fix, and reason.
+Provenance separates verified findings from Echo proposals. Omitted counts are
+retained, so a size limit cannot silently look like an empty report.</p>
+<p>A blocking finding causes <code>request_fix</code> when the resolved policy gives it the
+blocking disposition. Nova can start a separate
+repair attempt and later run repository revalidation. Revalidation must use the
+new fixed revision and the earlier review evidence. It does not mutate the old
+report. <code>orchestrator_required</code> is a safe stop when policy cannot derive a
+decision, evidence is insufficient, ownership is unclear, or a configured
+governor limit is reached.</p>
+<p>The repository and artifact adapters are the data authorities. Echo receives
+only the frozen bundle or compiled job source. <code>runtime.dispatch</code> must be
+granted for the configured target, <code>git.repository.read</code> must admit the subject,
+and artifact grants must admit the referenced evidence and report namespace.
+Echo has no Git write capability. Reports, prepared plans, cache artifacts, and
+revalidation reports are immutable attempt evidence; a later run writes new
+artifacts instead of editing them.</p>
+<h2 id="failure-and-recovery">Failure And Recovery</h2>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Effect</th>
+<th>Safe response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Invalid input or policy</td>
+<td>No Echo decision is trusted; integrity issue enters reduction.</td>
+<td>Correct the declaration. Do not weaken validation.</td>
+</tr>
+<tr>
+<td>Bundle or context exceeds a policy limit</td>
+<td>Review blocks or requests orchestrator action according to policy.</td>
+<td>Narrow declared scope or raise a reviewed policy limit.</td>
+</tr>
+<tr>
+<td>Echo requests valid extra context</td>
+<td>The stage expands only admitted candidates and reruns the bounded semantic flow.</td>
+<td>Supply named paths; do not grant arbitrary repository traversal.</td>
+</tr>
+<tr>
+<td>Echo output is malformed or contradicts evidence</td>
+<td>Parsing or verification fails closed.</td>
+<td>Preserve evidence and retry only after fixing the target or contract mismatch.</td>
+</tr>
+<tr>
+<td>Repository changed during review</td>
+<td>Subject proof fails.</td>
+<td>Freeze a new head and start a new review.</td>
+</tr>
+<tr>
+<td>Cancellation or interruption reaches an active model dispatch</td>
+<td>The stage has no valid final review result; the OpenClaw adapter must reconcile the session effect.</td>
+<td>Keep the fixed subject and stored evidence. Start no new attempt until session cleanup is terminal or explicitly unresolved for operator action.</td>
+</tr>
+<tr>
+<td>Review needs an external decision</td>
+<td>Attempt enters the fixed orchestrator wait.</td>
+<td>Resume with the authorized signal; do not edit stored report state.</td>
+</tr>
+<tr>
+<td>Repository job reaches a retry limit, phase budget, cost bound, or wall deadline</td>
+<td>The audit fails closed; incomplete work cannot become a complete report.</td>
+<td>Preserve the prepared plan and artifacts. Correct the dependency or select a reviewed grade/override, then use the declared resume path. Do not call the model outside the stage.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-and-diagnosis">Operation And Diagnosis</h2>
+<p>For ordinary review, inspect the stage outcome, policy digest, subject digests,
+unverified requirements, accepted findings, omitted counts, and any wait
+request. For repository audit, also inspect the resolved profile digest,
+coverage, job counts, cache hits and misses, dispatch accounting, retry counts,
+verification accounting, and completeness record. Stop if the runtime
+attestation differs from configured runtime, agent, model, or thinking identity.
+Do not interpret a stored <code>plan</code> result as an executed review.</p>
+<p>When a model call fails, first determine whether the dispatch effect is known.
+<code>EFFECT_OUTCOME_UNRESOLVED</code> stops repository revalidation retries. Reconcile the
+OpenClaw session before a new attempt. Other repository job failures can retry
+only within <code>maxRetries</code>, the shared phase retry budget, cost budget, and wall
+deadline.</p>
+<blockquote>
+<p><strong>Source evidence — bounded repository retry</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review/src/repository-revalidation-stage.ts#L184-L213">Revalidation retries within the configured count but stops on an unresolved external effect</a>.</p>
+</blockquote>
+<h2 id="extension-and-verification">Extension And Verification</h2>
+<p>Add a category, priority, policy field, or report version only as a coordinated
+contract change. Update types, schema generators, parsers, reducer, report
+builder, compatibility rules, tests, and this page. Do not add an instruction
+only to a prompt; unvalidated prompt behavior is not a product contract.</p>
+<p>This coordinated boundary is the implemented design. Its historical selection
+reason is not recorded. The current assessment is that one versioned contract
+prevents the prompt, parser, reducer, and stored report from assigning different
+meanings to the same finding. The cost is a broad change set for a new review
+concept. Reconsider it only with a versioned compatibility and migration path.</p>
+<p>The package contains focused tests for subject identity, policy profiles,
+evidence authority, verification, slicing, clustering, governor decisions,
+reports, revalidation, and Echo output. These tests prove deterministic logic.
+They do not prove the accuracy of every model judgment. A production review
+still needs the fixed repository bytes and the configured runtime target.</p>
+</main></body></html>

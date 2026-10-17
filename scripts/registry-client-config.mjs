@@ -81,7 +81,7 @@ function validateRouting(registry,mirror){
 }
 
 function clients(input){
-  if(input?.schemaVersion!=='registry-clients.v1')throw new Error('registry-clients.v1 configuration is required; see docs/operations/registry-clients.md');
+  if(input?.schemaVersion!=='registry-clients.v1')throw new Error('registry-clients.v1 configuration is required; see docs/site/understand/platform-and-operations.md#writable-local-oci-registry');
   contractShape(input);
   const registry=endpoint(input.registry,'registry');
   const mirror=input.dockerHubMirror?.endpoint?endpoint(input.dockerHubMirror,'dockerHubMirror'):null;

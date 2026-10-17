@@ -6,12 +6,93 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
+import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } from './plugin-source-closure.mjs';
+import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
+import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
+import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
+import { publicationAssets, copyPublicationAssets, publicationPages, publicationManifest } from './lib/docs-publication-assets.mjs';
+import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
 const catalogueRoot = path.join(siteRoot, 'extend', 'plugin-catalogue');
+const operatorPluginPage = path.join(siteRoot, 'use', 'plugins.md');
+const operatorMatrixStart = '<!-- BEGIN GENERATED OPERATOR PLUGIN MATRIX -->';
+const operatorMatrixEnd = '<!-- END GENERATED OPERATOR PLUGIN MATRIX -->';
 const command = process.argv[2] ?? 'check';
 const errors = [];
+
+function markdownLinkTargets(text) {
+  return [...stripMarkdownCodeAndRawHtml(text).matchAll(/(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g)]
+    .map((match) => match[1]);
+}
+
+function markdownInlineCode(value) {
+  const text = String(value);
+  const longest = Math.max(0, ...[...text.matchAll(/`+/gu)].map((match) => match[0].length));
+  const delimiter = '`'.repeat(longest + 1);
+  const padding = /^[` ]|[` ]$/u.test(text) ? ' ' : '';
+  return `${delimiter}${padding}${text}${padding}${delimiter}`;
+}
+
+function schemaConstraint(name, value) {
+  return markdownInlineCode(`${name}=${JSON.stringify(value)}`);
+}
+
+function schemaConditions(conditions) {
+  return conditions.map(markdownInlineCode).join(' and ');
+}
+
+function schemaSemanticText(field) {
+  const text = field.meaning?.text ?? '';
+  const visible = stripMarkdownCodeAndRawHtml(text);
+  const links = markdownInlineLinks(text);
+  const values = [...new Set([
+    field.meaning?.acceptedValues,
+    field.path,
+    ...(field.constraints ?? []).map(({ name, value }) => `${name}=${JSON.stringify(value)}`),
+  ].filter(Boolean))].sort((a, b) => b.length - a.length);
+  let result = '';
+  for (let cursor = 0; cursor < text.length;) {
+    const insideLink = links.some((link) => cursor >= link.start && cursor < link.end);
+    const value = !insideLink && values.find((candidate) => visible.startsWith(candidate, cursor));
+    if (value) { result += markdownInlineCode(value); cursor += value.length; }
+    else result += text[cursor++];
+  }
+  return result;
+}
+
+if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a-link)'))
+  !== JSON.stringify(['target.md'])) {
+  throw new Error('publication link parser must retain valid links and ignore escaped schema regex syntax');
+}
+
+if (JSON.stringify(markdownLinkTargets('[before](before.md)\n```bash\n[[ $NAMESPACE =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]\n[example](fenced.md)\n```\n`[example](inline.md)`\n[after](after.md)'))
+  !== JSON.stringify(['before.md', 'after.md'])) {
+  throw new Error('publication link parser must ignore code examples and retain surrounding reader links');
+}
+
+// Exercise the shipped operator target grammar: bare schema syntax really does
+// resemble a link, while rendered constraints and predicates must remain data.
+const messagingSchema = JSON.parse(fs.readFileSync(path.join(root, 'skills/common/plugins/operator-messaging/schemas/config.schema.json'), 'utf8'));
+const messagingTargetPattern = Object.keys(messagingSchema.properties.targets.patternProperties)[0];
+const schemaRenderingExample = [
+  schemaConstraint('pattern', messagingTargetPattern),
+  schemaConstraint('if', { properties: { target: { pattern: messagingTargetPattern } } }),
+  schemaConditions([`if ${JSON.stringify({ pattern: messagingTargetPattern })}`, 'literal `` delimiter [example](data.md)']),
+  schemaSemanticText({ path: '$.target', constraints: [{ name: 'pattern', value: messagingTargetPattern }], meaning: {
+    acceptedValues: `string with pattern=${JSON.stringify(messagingTargetPattern)}`,
+    text: `Accepted values: string with pattern=${JSON.stringify(messagingTargetPattern)}. Failure: $.target rejects pattern=${JSON.stringify(messagingTargetPattern)}. [$.target](../reference/configuration-precedence.md)`,
+  } }),
+  '[Configuration precedence](../reference/configuration-precedence.md)',
+].join('; ');
+if (!markdownLinkTargets(messagingTargetPattern).length
+  || JSON.stringify(markdownLinkTargets(schemaRenderingExample)) !== JSON.stringify(['../reference/configuration-precedence.md', '../reference/configuration-precedence.md'])
+  || !schemaRenderingExample.includes(JSON.stringify(messagingTargetPattern))
+  || !schemaRenderingExample.includes('[$.target](../reference/configuration-precedence.md)')) {
+  throw new Error('schema rendering must preserve exact regexp data, ignore schema-shaped links and retain a genuine reader link');
+}
 
 function walk(directory) {
   if (!fs.existsSync(directory)) return [];
@@ -49,35 +130,86 @@ const extensionKeys = [
   ['test provider', 'testProviders'],
   ['report adapter', 'reportAdapters'],
 ];
-const extensionKinds = [...extensionKeys.map(([kind]) => kind), 'OpenClaw extension'];
+const extensionKinds = [...extensionKeys.map(([kind]) => kind), 'OpenClaw extension', 'Codex plugin'];
 
-const pluginFiles = walk(path.join(root, 'skills'))
-  .filter((target) => ['plugin.json', 'openclaw.plugin.json'].includes(path.basename(target)))
-  .sort();
+const inventory = readJson(path.join(root, 'docs', 'blueprint', 'generated', 'ap08-extension-inventory.json'));
+const inventoryById = new Map(inventory.packages.map((item) => [item.id, item]));
+const guidance = readJson(path.join(root, 'docs', 'blueprint', 'AP08-catalogue-guidance.json'));
+const guidanceById = new Map(guidance.records.map((item) => [item.id, item]));
+const localVerification = readJson(path.join(root, 'docs', 'blueprint', 'AP08-local-verification.json'));
+const localVerificationById = new Map(localVerification.groups.flatMap((group) =>
+  group.packages.map((id) => [id, { result: group.result, reason: group.reason }])));
+const sourceRevision = readJson(path.join(root, 'docs/generated/inventory/documentation-source-revision.json')).revision;
+if (!/^[0-9a-f]{40}$/u.test(sourceRevision)) throw new Error('documentation source revision must be a full Git commit SHA');
+git('cat-file', '-e', `${sourceRevision}^{commit}`);
+const sourceBase = `${remoteBase()}/blob/${sourceRevision}`;
+const pinnedSources = new Map();
+function sourceEvidenceLink(item) {
+  const relative = rel(item.file);
+  if (relative.startsWith('../') || path.isAbsolute(relative)) throw new Error(`Source evidence escapes repository: ${relative}`);
+  if (!pinnedSources.has(relative)) {
+    const entry = git('ls-tree', sourceRevision, '--', relative);
+    if (!/^(?:100644|100755) blob [0-9a-f]{40}\t/u.test(entry)) throw new Error(`Source evidence is not a tracked regular file at ${sourceRevision}: ${relative}`);
+    const pinned = execFileSync('git', ['-C', root, 'show', `${sourceRevision}:${relative}`], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+    const current = fs.readFileSync(item.file, 'utf8');
+    if (pinned !== current) throw new Error(`Source evidence differs from documentation source revision ${sourceRevision}: ${relative}`);
+    const lines = pinned.split('\n');
+    if (pinned.endsWith('\n')) lines.pop();
+    pinnedSources.set(relative, lines);
+  }
+  const end = item.endLine ?? item.line;
+  if (!Number.isSafeInteger(item.line) || !Number.isSafeInteger(end) || item.line < 1 || end < item.line || end - item.line >= 60 || end > pinnedSources.get(relative).length) {
+    throw new Error(`Invalid pinned source evidence range: ${relative}:${item.line}-${end}`);
+  }
+  return `[${relative}:${item.line}${end === item.line ? '' : `-${end}`}](${sourceBase}/${relative}#L${item.line}-L${end})`;
+}
+
+const pluginFiles = [
+  ...walk(path.join(root, 'skills'))
+    .filter((target) => ['plugin.json', 'openclaw.plugin.json'].includes(path.basename(target))),
+  ...walk(path.join(root, 'plugins'))
+    .filter((target) => path.basename(target) === 'plugin.json'
+      && path.basename(path.dirname(target)) === '.codex-plugin'),
+].sort();
 
 const plugins = pluginFiles.map((file) => {
   const sourceManifest = readJson(file);
-  const directory = path.dirname(file);
+  const codex = path.basename(path.dirname(file)) === '.codex-plugin';
+  const directory = codex ? path.dirname(path.dirname(file)) : path.dirname(file);
   const packageFile = path.join(directory, 'package.json');
   const packageValue = fs.existsSync(packageFile) ? readJson(packageFile) : {};
-  const pipeline = path.basename(file) === 'plugin.json';
-  const manifest = pipeline ? sourceManifest : {
+  const pipeline = path.basename(file) === 'plugin.json' && !codex;
+  const openclaw = path.basename(file) === 'openclaw.plugin.json';
+  const manifest = pipeline ? sourceManifest : openclaw ? {
     ...sourceManifest,
     apiVersion: 'openclaw-plugin',
+    packageVersion: sourceManifest.version,
+  } : {
+    ...sourceManifest,
+    id: sourceManifest.name,
+    apiVersion: 'codex-plugin',
     packageVersion: sourceManifest.version,
   };
   const registrations = pipeline
     ? extensionKeys.flatMap(([kind, key]) =>
       (manifest[key] ?? []).map((registration) => ({ ...registration, kind })))
-    : (packageValue.openclaw?.extensions ?? []).map((module, index) => ({
+    : openclaw ? (packageValue.openclaw?.extensions ?? []).map((module, index) => ({
       kind: 'OpenClaw extension',
       id: index === 0 ? manifest.id : `${manifest.id}-${index + 1}`,
       module,
       requiredCapabilities: [],
-    }));
-  const tests = walk(directory).filter((target) => /(?:^|\/)(?:tests?|__tests__)(?:\/|$)/u.test(target));
-  const readme = path.join(directory, 'README.md');
-  return { manifest, file, directory, registrations, packageValue, tests, readme, pipeline };
+      configSchemaObject: manifest.configSchema,
+    })) : [{
+      kind: 'Codex plugin',
+      id: manifest.id,
+      module: manifest.skills,
+      requiredCapabilities: manifest.interface?.capabilities ?? [],
+    }];
+  const mechanical = inventoryById.get(manifest.id);
+  const tests = mechanical?.testFiles?.map((target) => path.join(root, target))
+    ?? walk(directory).filter((target) => /(?:^|\/)(?:tests?|__tests__)(?:\/|$)/u.test(target));
+  const guide = mechanical?.authoredGuide ? path.join(root, mechanical.authoredGuide) : path.join(directory, 'README.md');
+  return { manifest, file, directory, registrations, packageValue, tests, guide, pipeline, openclaw, codex, mechanical };
 });
 
 function list(values) {
@@ -88,51 +220,114 @@ function registrationName(registration) {
   return registration.type ?? registration.contractId ?? registration.id;
 }
 
-function useText(kinds) {
-  if (kinds.has('stage')) return 'Use this package when a pipeline graph needs one of its declared stage types.';
-  if (kinds.has('test provider')) return 'Use this package when a test plan needs one of its declared provider contracts.';
-  if (kinds.has('report adapter')) return 'Use this package when a test plan must normalize one of its declared report formats.';
-  if (kinds.has('observer')) return 'Use this package when an immutable lifecycle record must reach one of its declared observer targets.';
-  if (kinds.has('OpenClaw extension')) return 'Use this package when OpenClaw agent hooks must enter the KubeClaw observability boundary.';
-  return 'Use this package when a granted capability needs one of its declared adapters.';
+function manifestValue(value) {
+  if (value === undefined) return 'Not declared.';
+  if (Array.isArray(value) && value.length === 0) return 'Empty list.';
+  if (typeof value === 'string') return markdownInlineCode(value);
+  return markdownInlineCode(JSON.stringify(value));
+}
+
+function sourceLink(label, target) {
+  return `[${label}](${sourceBase}/${rel(target)})`;
+}
+
+function schemaFacts(directory, schemaPath, inlineSchema, manifestFile) {
+  if (!schemaPath && !inlineSchema) return { link: 'None.', fields: 'Not applicable.' };
+  const target = schemaPath ? path.join(directory, schemaPath) : manifestFile;
+  if (!fs.existsSync(target)) return { link: `Missing path: \`${schemaPath}\`.`, fields: 'Unavailable.' };
+  const schema = inlineSchema ?? readJson(target);
+  const required = new Set(schema.required ?? []);
+  const fields = Object.entries(schema.properties ?? {}).map(([name, value]) => {
+    const type = Array.isArray(value.type) ? value.type.join(' or ') : value.type ?? (value.const !== undefined ? 'constant' : value.enum ? 'enumeration' : value.$ref ? 'referenced schema' : 'schema-defined');
+    const flags = [required.has(name) ? 'required' : 'optional'];
+    if (Object.hasOwn(value, 'default')) flags.push(`default ${markdownInlineCode(JSON.stringify(value.default))}`);
+    if (value.writeOnly) flags.push('sensitive write-only value');
+    if (value.enum) flags.push(`allowed ${manifestValue(value.enum)}`);
+    if (Object.hasOwn(value, 'const')) flags.push(`value ${manifestValue(value.const)}`);
+    for (const bound of ['minimum', 'maximum', 'minLength', 'maxLength', 'minItems', 'maxItems', 'pattern']) {
+      if (Object.hasOwn(value, bound)) flags.push(`${bound} ${manifestValue(value[bound])}`);
+    }
+    if (value.$ref) flags.push(`reference ${manifestValue(value.$ref)}`);
+    return `\`${name}\` (${type}; ${flags.join('; ')})`;
+  });
+  return {
+    link: sourceLink(schemaPath ?? 'Inline host schema in the manifest', target),
+    fields: fields.length ? fields.map((field) => `- ${field}`).join('\n') : 'The schema declares no top-level fields.',
+  };
 }
 
 function pluginPage(plugin) {
-  const { manifest, file, directory, registrations, packageValue, tests, readme, pipeline } = plugin;
-  const kinds = new Set(registrations.map((item) => item.kind));
+  const { manifest, file, directory, registrations, packageValue, tests, guide, pipeline, openclaw, codex, mechanical } = plugin;
+  const authored = guidanceById.get(manifest.id);
+  const localResult = localVerificationById.get(manifest.id);
   const sourceRoot = rel(directory);
   const verification = packageValue.scripts?.test
     ? `npm test --prefix ${sourceRoot}`
-    : 'npm run verify:plugin-system-v2';
+    : tests.length === 1 ? `node --test ${rel(tests[0])}` : 'No package-local automated command is declared.';
+  const roles = mechanical?.includedRoles?.length ? mechanical.includedRoles.map((role) => `\`${role}\``).join(', ') : 'No runtime role.';
+  const host = mechanical?.host ?? (pipeline ? 'pipeline-runtime' : openclaw ? 'openclaw' : 'codex');
   const lines = [
     `# ${manifest.id}`,
     '',
     'Status: implemented',
     'Audience: plugin author, operator, maintainer',
-    `Owner: ${manifest.id}`,
-    `Evidence: ${rel(file)}`,
+    'Owner: plugin-foundation',
+    `Evidence: ${rel(file)}; ${rel(guide)}`,
     `Applies to: ${manifest.apiVersion}; package ${manifest.packageVersion}`,
-    'Last verified: generated during publication',
+    `Last verified: source facts revision ${sourceRevision}; package behavior sources revision ${guidance.evidenceRevision}. Local command results and their limits appear under Package Checks.`,
     '',
     '## Purpose',
     '',
-    `This package provides ${registrations.length} registered extension${registrations.length === 1 ? '' : 's'} through the canonical plugin runtime.`,
+    authored?.purpose ?? 'Authored guidance is missing.',
     '',
     '## When To Use It',
     '',
-    useText(kinds),
+    authored?.useWhen ?? 'Authored use guidance is missing.',
+    '',
+    '## When Not To Use It',
+    '',
+    authored?.avoidWhen ?? 'Authored exclusion guidance is missing.',
+    '',
+    '## Most Important Limit',
+    '',
+    authored?.criticalLimit ?? 'Authored limit guidance is missing.',
+    '',
+    'The package guide explains package-specific behavior. The shared guides explain',
+    'the contract and lifecycle rules that apply to this package.',
+    '',
+    `- ${sourceLink('Package guide', guide)}`,
+    '- [Shared extension contracts](../contracts.md)',
+    '- [Proof and failure exercises](../testing.md#use-a-proof-ladder)',
+    '- [Install and activate](../testing.md#install-and-activate-by-surface)',
+    '- [Update or replace](../testing.md#update-or-replace)',
+    '- [Disable safely](../testing.md#disable-safely)',
+    '- [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)',
+    '- [Host and engine boundaries](../host-and-engine.md)',
+    '',
+    '## Package Reference',
+    '',
+    `- Host: \`${host}\`.`,
+    `- Package identity: \`${manifest.id}@${manifest.packageVersion}\`.`,
+    `- Runtime-role manifest inclusion: ${roles}`,
+    ...(authored?.deploymentNote ? [`- Additional packaging path: ${authored.deploymentNote}`] : []),
+    `- Manifest: ${sourceLink(rel(file), file)}`,
     '',
     '## Boundaries',
     '',
     ...(pipeline ? [
       '- The manifest declares extension identity and requested authority.',
-      '- Platform policy grants authority separately.',
-      '- Core validates lifecycle effects and owns canonical pipeline state.',
+      '- Nova and Buster apply the selection rules for each declared surface.',
+      '- Platform grants or resolved plans supply authority separately from package code.',
+      '- Pipeline Core keeps canonical lifecycle authority.',
       '- The package cannot use undeclared capabilities.',
-    ] : [
-      '- OpenClaw owns hook registration and plugin activation.',
-      '- The plugin writes only the configured observability streams.',
+    ] : openclaw ? [
+      '- OpenClaw owns hook or tool registration and plugin activation.',
+      '- The host validates the package configuration before activation.',
       '- The plugin does not own pipeline scheduling or lifecycle state.',
+    ] : [
+      '- Codex owns plugin and skill discovery.',
+      '- The manifest supplies guidance and declares its interface capability.',
+      '- External tool connections remain separate from this package.',
     ]),
     '',
     '## Registration Summary',
@@ -147,16 +342,30 @@ function pluginPage(plugin) {
       `## ${registration.kind}: ${registration.id}`,
       '',
       `Public identifier: \`${registrationName(registration)}\`.`,
+      ...(pipeline ? [`Global registration ID: \`${manifest.id}:${registration.id}\`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.`] : []),
       '',
-      `Required capabilities: ${list(registration.requiredCapabilities)}`,
+      `${codex ? 'Codex interface capabilities' : 'Required capabilities'}: ${list(registration.requiredCapabilities)}`,
       '',
       `Provided capabilities: ${list(registration.providesCapabilities)}`,
       '',
-      `Configuration schema: ${registration.configSchema ? `\`${registration.configSchema}\`` : 'None.'}`,
+      `Configuration schema: ${schemaFacts(directory, registration.configSchema, registration.configSchemaObject, file).link}`,
       '',
-      `Input schema: ${registration.inputSchema ? `\`${registration.inputSchema}\`` : 'None.'}`,
+      'Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):',
       '',
-      `Result schema: ${registration.resultSchema ? `\`${registration.resultSchema}\`` : 'None.'}`,
+      schemaFacts(directory, registration.configSchema, registration.configSchemaObject, file).fields,
+      '',
+      `Input schema: ${registration.inputSchema ? schemaFacts(directory, registration.inputSchema, undefined, file).link : pipeline ? 'No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : openclaw ? 'Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.' : 'Natural-language skill trigger; no JSON input schema.'}`,
+      '',
+      `Result schema: ${registration.resultSchema ? schemaFacts(directory, registration.resultSchema, undefined, file).link : pipeline ? 'No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : 'The host owns the response contract.'}`,
+      ...(registration.checkpointSchema ? ['', `Checkpoint schema: ${schemaFacts(directory, registration.checkpointSchema, undefined, file).link}`] : []),
+      '',
+      'Declared manifest facts:',
+      '',
+      '| Field | Exact declared value |',
+      '| --- | --- |',
+      ...Object.entries(registration)
+        .filter(([key]) => !['kind', 'configSchemaObject'].includes(key))
+        .map(([key, value]) => `| \`${key}\` | ${manifestValue(value)} |`),
     );
     if (registration.inputs?.length) {
       lines.push('', 'Inputs:', '', ...registration.inputs.map((item) => `- \`${item.name}\`: ${item.kind}; ${item.required ? 'required' : 'optional'}.`));
@@ -169,26 +378,43 @@ function pluginPage(plugin) {
     '',
     '## Failure Behavior',
     '',
-    'Registry validation rejects a missing module, export, schema, or capability declaration.',
-    'Runtime policy rejects authority that the operator did not grant.',
-    'Core records a validated failure without giving the plugin lifecycle authority.',
+    ...(authored?.operationNote ? [authored.operationNote, ''] : []),
+    ...(pipeline ? [
+      'Registry validation checks declared paths, schemas, and capability names.',
+      'Activation or the Buster loader checks executable exports; discovery does not import package code.',
+      'The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.',
+      'The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.',
+      'Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).',
+    ] : openclaw ? [
+      'OpenClaw rejects invalid host configuration or an unavailable extension module.',
+      'External dependency failure appears in the extension result or host diagnostics. Check the package-specific request limits before activation.',
+    ] : [
+      'An absent plugin prevents skill discovery. Missing external tools prevent the diagnostic workflow, not discovery.',
+      'The current package has no package-local automated acceptance test.',
+    ]),
     '',
-    '## Verification',
+    '## Package Checks',
     '',
-    'Run:',
+    `Recorded local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
     '',
-    '```bash',
-    verification,
-    '```',
+    localResult?.reason ?? 'No local verification result exists.',
     '',
-    `Package tests found: ${tests.length}.`,
+    'Run the package command:',
+    '',
+    ...(verification.startsWith('No ') ? [verification] : ['```bash', verification, '```']),
+    '',
+    `Package test files found: ${tests.length}. This is file discovery, not an executed test count.`,
+    ...(packageValue.scripts?.test ? ['', 'Exact package test script (run from the package directory):', '', '```text', packageValue.scripts.test, '```'] : []),
+    '',
+    'Local package checks do not prove live host or cluster readiness.',
+    'The result above states the exact local limit. Run the package command in the target environment before activation.',
     '',
     '## Source Evidence',
     '',
-    `- Manifest: \`${rel(file)}\``,
-    `- Package root: \`${sourceRoot}\``,
-    `- Authored package guide: \`${rel(readme)}\``,
-    ...tests.map((target) => `- Test: \`${rel(target)}\``),
+    `- Manifest: ${sourceLink(rel(file), file)}`,
+    `- Package implementation guide: ${sourceLink(rel(guide), guide)}`,
+    ...registrations.filter((item) => item.module).map((item) => `- Module for \`${item.id}\`: ${sourceLink(item.module, path.join(directory, item.module))}`),
+    ...tests.map((target) => `- Test: ${sourceLink(rel(target), target)}`),
   );
   return `${lines.join('\n')}\n`;
 }
@@ -204,11 +430,21 @@ function catalogueIndex() {
     'Audience: plugin author, operator, maintainer',
     'Owner: plugin-foundation',
     'Evidence: scripts/docs-publication.mjs',
-    'Applies to: pipeline-plugin-v2',
-    'Last verified: generated during publication', '',
+    'Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins',
+    'Last verified: generated source listing only; package checks and their limits are recorded on each package page', '',
     '## Purpose', '',
-    'Use this catalogue to find every installed plugin package and its declared extension surfaces.', '',
+    'Use this catalogue to find every installable extension package and its declared surfaces.', '',
     `The catalogue contains ${plugins.length} packages.`,
+    '',
+    'Each package page combines two separate authorities. Maintainers write the practical',
+    'guidance separately from generated facts. The publication generator',
+    'reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated',
+    'refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.',
+    '',
+    'The plugin-foundation owner maintains purpose, use, exclusion, and limit text in',
+    '`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains',
+    'the manifest and schema facts. Do not edit generated catalogue pages as a second',
+    'authority. Change the owning input, then regenerate and run the declared checks.',
   ];
   for (const [kind, entries] of groups) {
     lines.push('', `## ${kind[0].toUpperCase()}${kind.slice(1)} Packages`, '');
@@ -218,45 +454,277 @@ function catalogueIndex() {
   return `${lines.join('\n')}\n`;
 }
 
+function markdownCell(value) {
+  return String(value).replaceAll('|', '\\|').replaceAll('\n', ' ').trim();
+}
+
+function registrationSchemaFacts(plugin, registration) {
+  const target = registration.configSchema ? path.join(plugin.directory, registration.configSchema) : plugin.file;
+  const schema = registration.configSchemaObject ?? (registration.configSchema && fs.existsSync(target) ? readJson(target) : undefined);
+  if (registration.configSchema && !schema) return { fields: [], predicates: [], diagnostics: [`Missing registration schema ${rel(target)}`] };
+  return schema ? dependencySchemaFacts(schema, target) : { fields: [], predicates: [], diagnostics: [] };
+}
+
+const configurationSemanticsPath = path.join(root, 'docs/generated/inventory/configuration-schemas.json');
+const configurationSemantics = fs.existsSync(configurationSemanticsPath) ? readJson(configurationSemanticsPath) : { files: [] };
+const dependencyAnalysisCache = new Map();
+const busterDependencyRoutes = pluginCapabilityRoutes(path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts'), root);
+function registrationDependencyFacts(plugin, registration) {
+  const key = `${plugin.file}:${registration.id}`;
+  if (dependencyAnalysisCache.has(key)) return dependencyAnalysisCache.get(key);
+  const schema = registrationSchemaFacts(plugin, registration);
+  const fieldWords = (field) => field.replace(/([a-z0-9])([A-Z])/gu, '$1.$2').toLowerCase().split(/[^a-z0-9]+/u);
+  const endpoints = schema.fields.filter((field) => fieldWords(field.path).some((word) => ['endpoint', 'url', 'origin', 'origins', 'host', 'hosts', 'ports', 'port', 'address'].includes(word)));
+  const sensitiveHints = new Set(Object.entries(plugin.manifest.uiHints ?? {}).filter(([, hint]) => hint.sensitive).map(([field]) => field));
+  const secrets = schema.fields.filter((field) => field.constraints.writeOnly || sensitiveHints.has(field.path)
+    || fieldWords(field.path).some((word) => ['secret', 'secrets', 'token', 'password', 'credential', 'credentials'].includes(word))
+    || /(?:apiKey|caPath|certPath|keyPath)$/u.test(field.path));
+  const required = [...new Set(registration.requiredCapabilities ?? [])].sort();
+  const provided = [...new Set(registration.providesCapabilities ?? [])].sort();
+  const modulePath = registration.module ? path.join(plugin.directory, registration.module) : null;
+  const moduleIsFile = modulePath && fs.existsSync(modulePath) && fs.statSync(modulePath).isFile();
+  const closure = pluginSourceClosure(moduleIsFile ? modulePath : null, root);
+  const invocation = pluginInvocationFacts(closure, registration.export);
+  const routes = registration.kind === 'test provider' ? busterDependencyRoutes : [];
+  const boundary = invocationDependencyBoundaries(invocation, root, { ...registration, manifestFile: rel(plugin.file), routes });
+  const implementation = [...invocation.selectedSources.values()].join('\n');
+  const evidenceLink = sourceEvidenceLink;
+  const evidence = [...new Set(invocation.evidence.map(evidenceLink))].join(', ')
+    || (moduleIsFile ? sourceLink(`${registration.export ?? 'Host entrypoint'} in ${rel(modulePath)}`, modulePath) : sourceLink('Host manifest', plugin.file));
+  const called = [...new Set(invocation.evidence.filter((item) => item.kind === 'capability').map((item) => item.name))].sort();
+  const direct = [...new Set(invocation.evidence.filter((item) => ['client', 'client-owner'].includes(item.kind)).map((item) => item.name))].sort();
+  const roles = plugin.mechanical?.includedRoles ?? [];
+  const namespace = plugin.openclaw ? 'OpenClaw host activation and tool configuration'
+    : plugin.codex ? 'Codex host MCP connection'
+      : ['test provider', 'report adapter'].includes(registration.kind) ? 'Buster resolved-plan runtime routes'
+        : roles.length === 1 && roles[0] === 'nova' ? 'Nova platform grants and adapter selection'
+          : 'selected pipeline runtime capability binding';
+  // A capability identifies an authority boundary. It does not identify the
+  // configured provider instance or prove that its remote target is reachable.
+  const delegated = called.filter((name) => !['artifacts.read', 'artifacts.write', 'state.read', 'state.append', 'secrets.read', 'signal.wait', 'report.evidence.read', 'test.plan.evidence'].includes(name));
+  const providerEvidence = delegated.map((name) => {
+    const route = registration.kind === 'test provider' ? busterDependencyRoutes.find((item) => item.capability === name) : undefined;
+    if (route) return `\`${name}\`: ${evidenceLink(route)} binds \`${route.constructor ?? route.variable}\` from ${route.providerFiles.map((target) => sourceLink(rel(target), target)).join(', ')}; runtime configuration selector \`${route.selector}\` must be supplied and allowed by Buster. This is client ownership; verify the configured instance separately`;
+    const candidates = plugins.flatMap((provider) => provider.registrations.filter((item) => (item.providesCapabilities ?? []).includes(name)).map((item) =>
+      `[${provider.manifest.id}:${item.id}](${sourceBase}/${rel(provider.file)})`));
+    return `\`${name}\`: ${candidates.length ? `installed provider candidates ${candidates.join(', ')}` : 'route implementation belongs to the host runtime'}; ${namespace} selects the actual binding`;
+  });
+  const diagnostics = [...schema.diagnostics, ...boundary.diagnostics];
+  const boundaryEvidence = (item) => item.evidence.map(evidenceLink).join(', ');
+  const service = direct.length || delegated.length || boundary.records.some((item) => ['remote-command', 'selected-program', 'host-tools', 'runtime-client'].includes(item.scope));
+  const noExternalProof = moduleIsFile && !service && !diagnostics.length && !endpoints.length && !secrets.length;
+  const serviceText = [
+    ...boundary.records.map((item) => `${item.service} ${boundaryEvidence(item)}.`),
+    direct.length ? `Client calls or client owners loaded by the invocation: ${direct.map((name) => `\`${name}\``).join(', ')}. ${evidence}.` : '',
+    providerEvidence.length ? `Delegated operations: ${providerEvidence.join('<br>')}. Call authority: ${evidence}.` : '',
+    !service && called.length ? `Invokes ${called.map((name) => `\`${name}\``).join(', ')} through ${namespace}. ${evidence}.` : '',
+    noExternalProof ? `No direct remote call in the resolved invocation of \`${registration.export ?? 'host entrypoint'}\`; its artifact, verified local store, and host capability consumers retain their own authority. ${evidence}.` : '',
+    diagnostics.length ? `Dependency documentation blocked: ${diagnostics.map((item) => item.replaceAll(root + path.sep, '')).join('; ')}. Owner: \`${rel(plugin.file)}\`. The maintainer must qualify these invocation authorities before publishing a complete dependency claim.` : '',
+    !service && !noExternalProof && !diagnostics.length ? `Configuration declares endpoint or credential authority; the linked invocation owns whether the selected configuration uses it. ${evidence}.` : '',
+  ].filter(Boolean).join('<br>');
+  const environmentBindings = [...implementation.matchAll(/configuredValue\(config,\s*env,\s*['"]([^'"]+)['"],\s*['"]([^'"]+)['"]\)/gu)].map((match) => ({ field: match[1], environment: match[2] }));
+  const configFile = configurationSemantics.files.find((item) => item.path === (registration.configSchema ? rel(path.join(plugin.directory, registration.configSchema)) : `${rel(plugin.file)}#$.configSchema`));
+  const semanticPath = (field) => `$.${field.replaceAll('{key}', '.{*}').replace(/\{key matches ("(?:\\.|[^"\\])*")\}/gu, (_all, pattern) => `.{pattern:${JSON.parse(pattern)}}`)}`;
+  function renderField(field) {
+    const constraint = Object.entries(field.constraints).filter(([name]) => !['description', 'default'].includes(name)).map(([name, value]) => schemaConstraint(name, value)).join('; ');
+    const binding = environmentBindings.find((item) => item.field === field.path);
+    const semantics = configFile?.fields?.filter((item) => item.path === semanticPath(field.path)) ?? [];
+    const authority = [...new Set(semantics.map(schemaSemanticText).filter(Boolean))].join(' ');
+    const fallback = Object.hasOwn(field.constraints, 'default') ? ` Schema default annotation: ${markdownInlineCode(JSON.stringify(field.constraints.default))}; the runtime consumer decides insertion or fallback.` : '';
+    return `${markdownInlineCode(field.path)}: ${constraint || 'schema permits this field'}${field.conditions.length ? `; applies ${schemaConditions(field.conditions)}` : ''}.${binding ? ` Explicit configuration wins when it is not undefined; otherwise process \`${binding.environment}\` supplies the value. The linked parser owns empty-value normalization.` : ''}${authority ? ` ${authority}` : fallback}`;
+  }
+  const parentPaths = new Set([...endpoints, ...secrets].map((field) => field.path.lastIndexOf('.') < 0 ? '$' : field.path.slice(0, field.path.lastIndexOf('.'))));
+  const authFields = schema.fields.filter((field) => /(?:authentication|redisTls|redisNetworkIsolation)$/u.test(field.path));
+  const predicates = schema.predicates.filter((item) => parentPaths.has(item.path) && ['required', 'dependentRequired', 'not', 'if', 'anyOf', 'oneOf'].includes(item.keyword));
+  const schemaContract = [...new Set([
+    ...authFields.map(renderField),
+    ...predicates.map((item) => `${markdownInlineCode(item.path)}: ${item.conditions.length ? `applies ${schemaConditions(item.conditions)}; ` : ''}${schemaConstraint(item.keyword, item.value)}`),
+  ])].join('<br>');
+  let endpoint = endpoints.length ? [...new Set(endpoints.map(renderField)), schemaContract, `The runtime request and selected configuration supply the concrete instance. ${evidence}.`].filter(Boolean).join('<br>')
+    : boundary.records.length && !diagnostics.length ? ''
+      : service ? `The invocation or delegated runtime binding supplies the target; no plugin-local endpoint field. ${evidence}.`
+      : !diagnostics.length ? `No plugin-local endpoint: the resolved registration uses local or host-owned inputs. ${evidence}.` : `Endpoint authority is blocked by unresolved invocation analysis. ${evidence}.`;
+  let secret = secrets.length ? [...new Set(secrets.map(renderField)), schemaContract, called.includes('secrets.read') ? `Credential names resolve through ${namespace} and secrets.read. Secret projection and rotation belong to the selected runtime authority.` : plugin.openclaw ? 'The OpenClaw deployment owns sensitive configuration, process environment, credential projection, and rotation.' : 'The linked runtime consumer owns the declared credential value or reference.'].filter(Boolean).join('<br>')
+    : boundary.records.length && !diagnostics.length ? ''
+      : called.includes('secrets.read') ? `The invocation resolves secrets.read through ${namespace}; inspect its linked request for the actual credential selector. ${evidence}.`
+      : service ? `The delegated provider or target may require credentials; this registration declares no plugin-local Secret field. Verify its selected binding.`
+        : !diagnostics.length ? `No schema-declared credential field or secrets.read call; environment inputs and qualified consumers below retain their own authority. ${evidence}.` : `Credential authority is blocked by unresolved invocation analysis. ${evidence}.`;
+  for (const input of invocation.environmentInputs) {
+    const chain = input.provenance.map((item) => `${markdownInlineCode(item.name)} derives from ${markdownInlineCode(item.expression)} (${evidenceLink(item)})`).join('; ');
+    secret += `${secret ? '<br>' : ''}Environment input: ${markdownInlineCode(input.expression)}${input.dynamic ? '; the environment name is computed at runtime' : ''}. ${chain ? `${chain}. ` : ''}The process owner supplies and rotates environment values; an environment read alone does not classify the value as a credential. ${evidenceLink(input)}.`;
+  }
+  const qualifiedOwners = boundary.records.map((item) => `${item.dataOwner} ${boundaryEvidence(item)}.`);
+  let dataOwner = direct.length ? `The selected client target owns service data. This registration owns only the request/result and local state declared by its consumer. ${evidence}.`
+    : called.length ? `Each invoked capability retains its own artifact, state, repository, message, or remote-service authority. The caller owns only its contract-defined result. ${evidence}.`
+      : qualifiedOwners.length ? ''
+        : !diagnostics.length ? `The registration transforms its host input or local files; no remote data owner is established. ${evidence}.` : `Data ownership requires the unresolved runtime authority above.`;
+  let reachability = boundary.records.some((item) => ['runtime-client', 'host-tools', 'credential-provider'].includes(item.scope)) && !diagnostics.length ? ''
+    : service ? `Run a bounded operation through the selected ${namespace} binding and verify its expected result. Direct client or provider code availability proves no configured endpoint or reachability. Retain failure, timeout, and cancellation results separately. ${evidence}.`
+    : !diagnostics.length ? `No direct network preflight for this invocation. Verify local store and artifact/capability access using the registration's contract. ${evidence}.` : 'A complete dependency preflight requires qualification of the unresolved invocation authority above.';
+  for (const item of boundary.records) {
+    const proof = `${boundaryEvidence(item)}.`;
+    endpoint += `${endpoint ? '<br>' : ''}${item.endpoint} ${proof}`;
+    secret += `${secret ? '<br>' : ''}${item.secret} ${proof}`;
+    dataOwner += `${dataOwner ? '<br>' : ''}${item.dataOwner} ${proof}`;
+    reachability += `${reachability ? '<br>' : ''}${item.check} ${proof}`;
+  }
+  const digest = crypto.createHash('sha256').update(JSON.stringify(schema).replaceAll(root, '$ROOT')).update(implementation).update(JSON.stringify({ called, direct, diagnostics, required, provided, environmentInputs: invocation.environmentInputs, boundaries: boundary.records }).replaceAll(root, '$ROOT')).digest('hex');
+  const facts = { required, provided, serviceText, endpoint, secret, dataOwner, reachability, diagnostics, digest };
+  dependencyAnalysisCache.set(key, facts);
+  return facts;
+}
+
+function operatorPluginMatrix() {
+  const selectionRows = [...plugins].sort((a, b) => a.manifest.id.localeCompare(b.manifest.id)).map((plugin) => {
+    const authored = guidanceById.get(plugin.manifest.id);
+    const host = plugin.mechanical?.host ?? (plugin.pipeline ? 'pipeline-runtime' : plugin.openclaw ? 'openclaw' : 'codex');
+    const roles = plugin.mechanical?.includedRoles?.length ? plugin.mechanical.includedRoles.join(', ') : 'no shipped runtime role declared';
+    const surfaces = [...new Set(plugin.registrations.map((item) => item.kind))].sort().join(', ');
+    const required = [...new Set(plugin.registrations.flatMap((item) => item.requiredCapabilities ?? []))].sort();
+    const inputs = [...new Set(plugin.registrations.flatMap((item) => (item.inputs ?? []).map((input) => `${input.name}:${input.schemaId ?? input.kind}`)))].sort();
+    const dependencies = [
+      required.length ? `capabilities: ${required.join(', ')}` : 'no manifest-declared capability',
+      inputs.length ? `inputs: ${inputs.join(', ')}` : 'no manifest-declared input',
+    ].join('; ');
+    const purpose = authored?.purpose ?? `Blocked guidance: source owner \`${rel(plugin.file)}\` must add a maintained operator purpose before publication.`;
+    return `| [\`${plugin.manifest.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md) | ${markdownCell(purpose)} | ${markdownCell(`${host}; roles: ${roles}; surfaces: ${surfaces}`)} | ${markdownCell(dependencies)} |`;
+  });
+  const dependencyRows = [...plugins].sort((a, b) => a.manifest.id.localeCompare(b.manifest.id)).flatMap((plugin) => {
+    const authored = guidanceById.get(plugin.manifest.id);
+    return plugin.registrations.map((registration) => {
+      const facts = registrationDependencyFacts(plugin, registration);
+      for (const diagnostic of facts.diagnostics) {
+        const error = `${rel(plugin.file)} registration ${registration.id}: ${diagnostic.replaceAll(root + path.sep, '')}`;
+        if (!errors.includes(error)) errors.push(error);
+      }
+      const capability = [
+        facts.required.length ? `requires: ${facts.required.join(', ')}` : 'requires: none declared',
+        facts.provided.length ? `provides: ${facts.provided.join(', ')}` : 'provides: none declared',
+      ].join('; ');
+      const failure = rebaseMarkdownLinks(authored?.operationNote ?? `Blocked failure guidance: source owner \`${rel(plugin.file)}\` must describe the failure effect.`, path.join(catalogueRoot, `${plugin.manifest.id}.md`), operatorPluginPage);
+      return `| [\`${plugin.manifest.id}:${registration.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md#${registration.kind.replaceAll(' ', '-').toLowerCase()}-${String(registration.id).toLowerCase().replace(/[^a-z0-9-]/gu, '-')}) | ${markdownCell(facts.serviceText)} | ${markdownCell(facts.endpoint)} | ${markdownCell(capability)} | ${markdownCell(facts.secret)} | ${markdownCell(facts.dataOwner)} | ${markdownCell(facts.reachability)} | ${markdownCell(failure)} | <!-- dependency-source ${facts.digest} -->`;
+    });
+  });
+  const registrationCount = plugins.reduce((sum, plugin) => sum + plugin.registrations.length, 0);
+  if (selectionRows.length !== plugins.length) throw new Error('operator plugin matrix lost a discovered package');
+  if (dependencyRows.length !== registrationCount) throw new Error('operator plugin matrix lost a discovered registration');
+  const matrixFacts = [...selectionRows, ...dependencyRows].join('\n');
+  if (/source-backed unknown/iu.test(matrixFacts)) throw new Error('operator plugin matrix contains an unexplained source-backed unknown');
+
+  return [
+    operatorMatrixStart,
+    '',
+    '> Generated from every discovered plugin manifest, role inventory, recursive dependency schemas, registration invocation authority, configuration semantic inventory, and maintained catalogue guidance. Do not edit these rows by hand.',
+    '',
+    '### All-package selection matrix',
+    '',
+    '| Package | Operator task | Host, role, and surface | Declared dependencies |',
+    '| --- | --- | --- | --- |',
+    ...selectionRows,
+    '',
+    '### Per-registration external dependency matrix',
+    '',
+    '| Package registration | External service | Endpoint authority fields | Capabilities | Secret-reference fields | Data owner | Reachability check | Failure effect |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+    ...dependencyRows,
+    '',
+    operatorMatrixEnd,
+  ].join('\n');
+}
+
+function replaceOperatorMatrix(text) {
+  const start = text.indexOf(operatorMatrixStart);
+  const end = text.indexOf(operatorMatrixEnd);
+  if (start < 0 || end < start) throw new Error(`${rel(operatorPluginPage)} lacks generated operator matrix markers`);
+  return `${text.slice(0, start)}${operatorPluginMatrix()}${text.slice(end + operatorMatrixEnd.length)}`;
+}
+
 function capabilityPage() {
-  const vocabulary = fs.readFileSync(path.join(root, 'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts'), 'utf8');
-  const capabilities = [...vocabulary.matchAll(/^\s{2}'([^']+)': definition\(/gmu)].map((match) => match[1]);
-  const users = new Map(capabilities.map((id) => [id, []]));
-  for (const plugin of plugins) {
+  const vocabularyPath = path.join(root, 'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts');
+  const busterRuntimePath = path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts');
+  const vocabulary = fs.readFileSync(vocabularyPath, 'utf8');
+  const busterRuntime = fs.readFileSync(busterRuntimePath, 'utf8');
+  const quoted = (source) => [...source.matchAll(/'([^']+)'/gu)].map((match) => match[1]);
+  const novaDefinitions = [...vocabulary.matchAll(/^\s{2}'([^']+)': definition\(\s*\[([^\]]*)\],\s*\[([^\]]*)\],\s*\[([^\]]*)\]/gmsu)]
+    .map((match) => ({ id: match[1], operations: quoted(match[2]), resources: quoted(match[3]), constraints: quoted(match[4]) }));
+  const declaredNovaIds = [...vocabulary.matchAll(/^\s{2}'([^']+)': definition\(/gmu)].map((match) => match[1]);
+  if (novaDefinitions.length !== declaredNovaIds.length) errors.push('Capability catalogue cannot parse every Nova capability definition');
+  if (new Set(declaredNovaIds).size !== declaredNovaIds.length) errors.push('Nova capability vocabulary contains a duplicate identifier');
+  const novaUsers = new Map(novaDefinitions.map(({ id }) => [id, []]));
+  const busterCapabilities = [...new Set(
+    [...busterRuntime.matchAll(/routes\.set\('([^']+)'/gu)].map((match) => match[1]),
+  )].sort();
+  if (busterCapabilities.length === 0) errors.push('Capability catalogue found no Buster runtime routes');
+  const busterUsers = new Map(busterCapabilities.map((id) => [id, []]));
+  for (const plugin of plugins.filter((item) => item.pipeline)) {
     for (const registration of plugin.registrations) {
-      for (const id of [...(registration.requiredCapabilities ?? []), ...(registration.providesCapabilities ?? [])]) {
-        if (!users.has(id)) users.set(id, []);
-        users.get(id).push(`${plugin.manifest.id}:${registration.id}`);
+      const declared = [...(registration.requiredCapabilities ?? []), ...(registration.providesCapabilities ?? [])];
+      const users = registration.kind === 'test provider' ? busterUsers
+        : registration.kind === 'report adapter' ? null : novaUsers;
+      for (const id of declared) {
+        if (!users?.has(id)) {
+          errors.push(`${rel(plugin.file)} registration ${registration.id} declares unknown ${registration.kind === 'test provider' ? 'Buster runtime' : 'Nova grant'} capability: ${id}`);
+          continue;
+        }
+        users.get(id).push(`[\`${plugin.manifest.id}:${registration.id}\`](${sourceBase}/${rel(plugin.file)})`);
       }
     }
   }
+  const novaRows = novaDefinitions.sort((a, b) => a.id.localeCompare(b.id)).map((definition) =>
+    `| \`${definition.id}\` | ${definition.operations.map((item) => `\`${item}\``).join(', ')} | ${definition.resources.map((item) => `\`${item}\``).join(', ')} | ${definition.constraints.map((item) => `\`${item}\``).join(', ')} | ${[...new Set(novaUsers.get(definition.id))].join('<br>') || 'No installed Nova registration.'} |`);
+  const busterRows = busterCapabilities.map((id) =>
+    `| \`${id}\` | ${[...new Set(busterUsers.get(id))].join('<br>') || 'No installed test provider.'} |`);
   return `${[
     '# Capability Catalogue', '',
     'Status: implemented',
     'Audience: plugin author, operator, security reviewer',
     'Owner: plugin-foundation',
-    'Evidence: skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts',
-    'Applies to: pipeline-plugin-v2',
-    'Last verified: generated during publication', '',
+    'Evidence: skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts; skills/buster/engine/test-gates/remote-plan-service.ts',
+    'Applies to: Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities',
+    'Last verified: generated source listing only; package checks and their limits are recorded on each package page', '',
     '## Purpose', '',
-    'This catalogue lists each grantable capability and every registration that declares it.', '',
-    '| Capability | Declared by |',
+    'Use this catalogue to identify the authority system that interprets a capability name.',
+    'Nova grants and Buster runtime capabilities are separate allowlists.',
+    'A shared name does not transfer a Nova grant into Buster or a Buster route into Nova.', '',
+    '> **Source evidence — separate authority systems**', '>',
+    `> ${sourceLink('Nova defines operations, resource types, and grant constraints', vocabularyPath)}.`, '>',
+    `> ${sourceLink('Buster builds explicit runtime routes for allowed test-provider capabilities', busterRuntimePath)}.`, '',
+    '## Nova Grant Vocabulary', '',
+    'Nova validates these names when it compiles platform grants and dispatches capability calls.',
+    'The operation, resource, and constraint columns are part of that Nova contract.', '',
+    '| Nova capability | Operations | Resource types | Required constraint lists | Declared by |',
+    '| --- | --- | --- | --- | --- |',
+    ...novaRows, '',
+    '## Buster Test-Provider Runtime Capabilities', '',
+    'Buster checks these names when it resolves and runs a test-provider node.',
+    'The production runtime must also configure a concrete route for each allowed name.',
+    'The test-provider contract owns request details; this table does not define Nova grant constraints.', '',
+    '| Buster runtime capability | Requested by |',
     '| --- | --- |',
-    ...[...users].sort(([a], [b]) => a.localeCompare(b)).map(([id, registrations]) => `| \`${id}\` | ${[...new Set(registrations)].map((item) => `\`${item}\``).join('<br>') || 'No installed registration.'} |`),
+    ...busterRows, '',
+    '## Names Used By Both Systems', '',
+    'Some names occur in both tables because both systems describe the same external action.',
+    'Each system still performs its own admission check and uses its own request contract.',
+    'Configure and verify both boundaries when Nova submits work that Buster later executes.',
   ].join('\n')}\n`;
 }
 
+const publicationManifestPath = path.join(root, 'docs/config/documentation-publication-manifest.json');
 const generated = new Map([
+  [publicationManifestPath, `${JSON.stringify(publicationManifest(siteRoot, readJson(path.join(root, 'docs/config/documentation-tree-classification.json'))), null, 2)}\n`],
   [path.join(catalogueRoot, 'README.md'), catalogueIndex()],
   [path.join(siteRoot, 'reference', 'capabilities.md'), capabilityPage()],
   ...plugins.map((plugin) => [path.join(catalogueRoot, `${plugin.manifest.id}.md`), pluginPage(plugin)]),
 ]);
 
 function generate() {
+  const operatorContent = replaceOperatorMatrix(fs.readFileSync(operatorPluginPage, 'utf8'));
+  if (errors.length) return;
   for (const [target, content] of generated) {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, content);
   }
+  fs.writeFileSync(operatorPluginPage, operatorContent);
 }
 
 function compareGenerated() {
@@ -266,6 +734,10 @@ function compareGenerated() {
   const expected = new Set([...generated].map(([target]) => target));
   for (const target of walk(catalogueRoot).filter((file) => file.endsWith('.md'))) {
     if (!expected.has(target)) errors.push(`${rel(target)} has no installed plugin`);
+  }
+  if (fs.existsSync(operatorPluginPage)) {
+    const current = fs.readFileSync(operatorPluginPage, 'utf8');
+    if (replaceOperatorMatrix(current) !== current) errors.push(`${rel(operatorPluginPage)} operator plugin matrix is stale`);
   }
 }
 
@@ -301,38 +773,180 @@ function checkLanguage(file, text) {
   }
 }
 
+function numberedIds(prefix, first, last, width) {
+  return Array.from({ length: last - first + 1 }, (_, index) => `${prefix}${String(first + index).padStart(width, '0')}`);
+}
+
+function checkDecisionContracts() {
+  const decisionRoot = path.join(siteRoot, 'decisions');
+  const core = fs.readFileSync(path.join(decisionRoot, 'core-and-plugins.md'), 'utf8');
+  const coreIds = [...core.matchAll(/^## (ADR-\d{3}):/gmu)].map((match) => match[1]);
+  const expectedCoreIds = numberedIds('ADR-', 1, 14, 3);
+  if (JSON.stringify(coreIds) !== JSON.stringify(expectedCoreIds)) errors.push('core-and-plugins decision IDs must contain ADR-001 through ADR-014 in order');
+  for (const [index, id] of coreIds.entries()) {
+    const start = core.indexOf(`## ${id}:`);
+    const end = index + 1 < coreIds.length ? core.indexOf(`## ${coreIds[index + 1]}:`, start) : core.length;
+    const record = core.slice(start, end);
+    for (const field of ['**Context.**', '**Decision.**', '**Actual alternatives.**', '**Reason and consequences.**', '**Approval and provenance.**', '**Implementation.**', '**Evidence.**', '**Supersession and related decisions.**']) {
+      if (!record.includes(field)) errors.push(`docs/site/decisions/core-and-plugins.md ${id} lacks ${field}`);
+    }
+  }
+
+  const testGate = fs.readFileSync(path.join(decisionRoot, 'test-gate.md'), 'utf8');
+  const testGateIds = [...testGate.matchAll(/^## (D-\d{3}):/gmu)].map((match) => match[1]);
+  const expectedTestGateIds = numberedIds('D-', 1, 119, 3);
+  if (JSON.stringify(testGateIds) !== JSON.stringify(expectedTestGateIds)) errors.push('test-gate decision IDs must contain D-001 through D-119 in order');
+  for (const [index, id] of testGateIds.entries()) {
+    const start = testGate.indexOf(`## ${id}:`);
+    const end = index + 1 < testGateIds.length ? testGate.indexOf(`## ${testGateIds[index + 1]}:`, start) : testGate.length;
+    const record = testGate.slice(start, end);
+    for (const field of ['**Decision.**', '**Reason, consequences and actual alternatives.**', '**Approval/source.**']) {
+      if (!record.includes(field)) errors.push(`docs/site/decisions/test-gate.md ${id} lacks ${field}`);
+    }
+  }
+  for (const shared of ['**Implementation and verification for every record.**', '**Alternatives and supersession.**']) {
+    if (!testGate.includes(shared)) errors.push(`docs/site/decisions/test-gate.md lacks shared record field ${shared}`);
+  }
+
+  const runtime = fs.readFileSync(path.join(decisionRoot, 'runtime-and-operations.md'), 'utf8');
+  for (const id of [...numberedIds('ADR-', 15, 22, 3), ...numberedIds('D', 1, 16, 2)]) {
+    if (!runtime.includes(`## ${id}\n`)) errors.push(`docs/site/decisions/runtime-and-operations.md lacks ${id}`);
+  }
+
+  const groupedRecords = new Map([
+    ['echo.md', ['## Grouped Record Contract', '| Authority and policy |', '| Evidence verification |', '| Governor and repair |', '| Simplification and reporting |', '| Repair history |', '| Large changes and audit |']],
+    ['prism.md', ['## Decision Group Accountability', '| Product and data ownership |', '| Design Document and editor |', '| Retrieval and preferences |', '| Durable operations and publication |']],
+    ['implementation.md', ['## Derived Record Accountability', '| Repository history |', '| Versioned JSON |', '| Native admission |', '| Human decisions |', '| Reliable delivery |']],
+  ]);
+  for (const [page, required] of groupedRecords) {
+    const text = fs.readFileSync(path.join(decisionRoot, page), 'utf8');
+    for (const token of required) {
+      if (!text.includes(token)) {
+        errors.push(`docs/site/decisions/${page} lacks grouped record ${token}`);
+        continue;
+      }
+      if (!token.startsWith('| ')) continue;
+      const row = text.split('\n').find((line) => line.startsWith(token));
+      const cells = row?.split('|').slice(1, -1).map((cell) => cell.trim()) ?? [];
+      if (cells.length !== 7 || cells.some((cell) => cell.length < 12)) {
+        errors.push(`docs/site/decisions/${page} grouped record ${token} must supply all seven decision fields`);
+      }
+    }
+  }
+}
+
 function checkSite() {
   compareGenerated();
-  const pages = walk(siteRoot).filter((file) => file.endsWith('.md')).sort();
+  checkDecisionContracts();
+  const pluginIds = new Set(plugins.map((plugin) => plugin.manifest.id));
+  if (guidance.records.length !== plugins.length) {
+    errors.push(`Catalogue guidance has ${guidance.records.length} records for ${plugins.length} discovered packages`);
+  }
+  for (const record of guidance.records) {
+    if (!pluginIds.has(record.id)) errors.push(`Catalogue guidance contains unknown package: ${record.id}`);
+    for (const field of ['purpose', 'useWhen', 'avoidWhen', 'criticalLimit']) {
+      if (typeof record[field] !== 'string' || record[field].length < 24) errors.push(`Catalogue guidance ${record.id} has no useful ${field}`);
+    }
+  }
+  for (const plugin of plugins) if (!guidanceById.has(plugin.manifest.id)) errors.push(`Catalogue guidance is missing ${plugin.manifest.id}`);
+  if (localVerificationById.size !== plugins.length) {
+    errors.push(`Local verification has ${localVerificationById.size} results for ${plugins.length} discovered packages`);
+  }
+  for (const plugin of plugins) if (!localVerificationById.has(plugin.manifest.id)) errors.push(`Local verification is missing ${plugin.manifest.id}`);
+  let pages = [];
+  try {
+    pages = publicationPages(siteRoot, JSON.parse(fs.readFileSync(path.join(root, 'docs/config/documentation-tree-classification.json'), 'utf8')));
+  } catch (error) { errors.push(error.message); }
+  try { publicationAssets(siteRoot); }
+  catch (error) { errors.push(error.message); }
   for (const file of pages) {
     const text = fs.readFileSync(file, 'utf8');
-    for (const field of metadataFields) if (!new RegExp(`^${field}: .+`, 'mu').test(text)) errors.push(`${rel(file)} has no ${field} metadata`);
+    const readerMetadata = file.endsWith('reference/platform-surfaces-generated.md')
+      ? metadataFields.filter((field) => !['Owner', 'Evidence'].includes(field))
+      : metadataFields;
+    for (const field of readerMetadata) if (!new RegExp(`^${field}: .+`, 'mu').test(text)) errors.push(`${rel(file)} has no ${field} metadata`);
     const evidence = text.match(/^Evidence: (.+)$/mu)?.[1];
     for (const item of evidence?.split(';').map((value) => value.trim()) ?? []) {
       if (!fs.existsSync(path.join(root, item))) errors.push(`${rel(file)} cites missing evidence: ${item}`);
     }
     checkLanguage(file, text);
-    for (const match of text.matchAll(/\[[^\]]+\]\(([^)]+)\)/gu)) {
-      const target = match[1];
+    for (const target of markdownLinkTargets(text.replace(/`[^`\n]*`/gu, 'code'))) {
       if (target.startsWith('http') || target.startsWith('#')) continue;
       const local = path.resolve(path.dirname(file), target.split('#')[0]);
       if (!fs.existsSync(local)) errors.push(`${rel(file)} links to missing page: ${target}`);
     }
   }
-  for (const plugin of plugins) if (!fs.existsSync(plugin.readme)) errors.push(`${rel(plugin.directory)} has no authored README.md`);
+  for (const plugin of plugins) if (!fs.existsSync(plugin.guide)) errors.push(`${rel(plugin.directory)} has no detected authored guide`);
   const requiredPages = [
     'docs/site/README.md',
+    'docs/site/product-surfaces.md',
     'docs/site/understand/README.md',
     'docs/site/understand/request-to-result.md',
     'docs/site/use/README.md',
     'docs/site/use/quickstart.md',
     'docs/site/use/recovery.md',
+    'docs/site/use/capacity.md',
+    'docs/site/use/plugins.md',
+    'docs/site/use/demo-delivery.md',
     'docs/site/extend/README.md',
     'docs/site/extend/first-plugin.md',
     'docs/site/extend/testing.md',
     'docs/site/status/current.md',
+    'docs/site/reference/pipeline-platform.md',
+    'docs/site/reference/nova-project.md',
+    'docs/site/reference/pipeline-definition.md',
+    'docs/site/reference/pipeline-json.md',
+    'docs/site/reference/plugin-configuration.md',
+    'docs/site/reference/worker-profiles-and-roles.md',
+    'docs/site/reference/host-and-prism-configuration.md',
+    'docs/site/reference/endpoints.md',
+    'docs/site/reference/configuration-precedence.md',
+    'docs/site/reference/configuration-change-impact.md',
+    'docs/site/reference/configuration-errors.md',
+    'docs/site/reference/project-pipeline-publication.md',
+    'docs/site/reference/configuration-compatibility.md',
   ];
   for (const page of requiredPages) if (!fs.existsSync(path.join(root, page))) errors.push(`${page} is required by a reader journey`);
+  const entry = fs.readFileSync(path.join(siteRoot, 'README.md'), 'utf8');
+  for (const route of [
+    'understand/README.md',
+    'use/quickstart.md',
+    'use/operate.md',
+    'use/capacity.md',
+    'use/plugins.md',
+    'use/demo-delivery.md',
+    'extend/first-plugin.md',
+    'reference/README.md',
+    'product-surfaces.md',
+  ]) {
+    if (!entry.includes(`](${route}`)) errors.push(`docs/site/README.md does not expose reader route ${route}`);
+  }
+  const surfaceMap = fs.readFileSync(path.join(siteRoot, 'product-surfaces.md'), 'utf8');
+  const expectedSurfaceCounts = { CTL: 7, SPC: 6, CFG: 8, API: 11, COM: 4, DAT: 6, TEL: 3, SEC: 7, DEP: 10, OPT: 5, OPS: 6, EXT: 11 };
+  const surfaceRows = [...surfaceMap.matchAll(/^\| (SUR-([A-Z]+)-(\d{2})) \| ([^|]+) \| ([^|]+) \| ([^|]+) \| (Detailed|Partial|Indexed) \|$/gmu)]
+    .map((match) => ({ id: match[1], family: match[2], ordinal: Number(match[3]), surface: match[4].trim(), reading: match[5].trim(), authority: match[6].trim(), coverage: match[7] }));
+  const apparentSurfaceRows = [...surfaceMap.matchAll(/^\| SUR-[A-Z]+-\d{2} \|/gmu)].length;
+  if (surfaceRows.length !== apparentSurfaceRows) {
+    errors.push(`docs/site/product-surfaces.md has ${apparentSurfaceRows - surfaceRows.length} malformed surface rows; each row needs ID, surface, primary reading, source authority, and coverage`);
+  }
+  const surfaceIds = new Set();
+  for (const row of surfaceRows) {
+    if (!Object.hasOwn(expectedSurfaceCounts, row.family)) errors.push(`docs/site/product-surfaces.md contains unknown surface family SUR-${row.family}`);
+    if (surfaceIds.has(row.id)) errors.push(`docs/site/product-surfaces.md contains duplicate surface ID ${row.id}`);
+    surfaceIds.add(row.id);
+    if (!row.surface) errors.push(`docs/site/product-surfaces.md ${row.id} has no surface description`);
+    if (!/\]\((?!https?:)[^)]+\)/u.test(row.reading)) errors.push(`docs/site/product-surfaces.md ${row.id} has no local primary-reading link`);
+    if (!/https:\/\/github\.com\/datrab\/kubeclaw\/(?:blob|tree)\/[0-9a-f]{40}\//u.test(row.authority)) {
+      errors.push(`docs/site/product-surfaces.md ${row.id} has no revision-pinned source-authority link`);
+    }
+  }
+  for (const [family, count] of Object.entries(expectedSurfaceCounts)) {
+    const actual = surfaceRows.filter((row) => row.family === family).map((row) => row.ordinal).sort((a, b) => a - b);
+    const expected = Array.from({ length: count }, (_, index) => index + 1);
+    if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+      errors.push(`docs/site/product-surfaces.md SUR-${family} inventory must contain the continuous range 01-${String(count).padStart(2, '0')}; found ${actual.map((value) => String(value).padStart(2, '0')).join(', ') || 'none'}`);
+    }
+  }
   const taskSections = ['## Objective', '## Prerequisites', '## Procedure', '## Expected Result', '## Verification', '## Common Failures', '## Recovery'];
   for (const relative of ['docs/site/use/quickstart.md', 'docs/site/use/recovery.md', 'docs/site/extend/first-plugin.md']) {
     if (!fs.existsSync(path.join(root, relative))) continue;
@@ -348,6 +962,7 @@ function checkSite() {
   }
   const schema = readJson(path.join(root, 'skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json'));
   const ajv = new Ajv2020({ allErrors: true, strict: true });
+  addFormats(ajv);
   ajv.addSchema(schema);
   const validateManifest = ajv.compile({ $ref: `${schema.$id}#/$defs/pluginManifest` });
   const tutorial = fs.readFileSync(path.join(root, 'docs/site/extend/first-plugin.md'), 'utf8');
@@ -359,7 +974,25 @@ function checkSite() {
       errors.push(`first-plugin JSON block ${index + 1} is invalid JSON: ${error.message}`);
     }
   }
-  if (pages.some((file) => /(?:phase|audit|implementation-plan|roadmap)/u.test(path.basename(file)))) errors.push('Published site contains an internal planning page');
+  const operate = fs.readFileSync(path.join(root, 'docs/site/use/operate.md'), 'utf8');
+  const resumeSignals = [];
+  for (const [index, block] of [...operate.matchAll(/```json\n([\s\S]+?)\n```/gu)].entries()) {
+    try {
+      const value = JSON.parse(block[1]);
+      if (value.schemaVersion === 'resume-signal.v2') resumeSignals.push({ index, value });
+    } catch {
+      // Other checks report malformed examples. This check selects only valid resume-signal JSON.
+    }
+  }
+  if (resumeSignals.length !== 1) {
+    errors.push(`docs/site/use/operate.md must contain exactly one resume-signal.v2 JSON example; found ${resumeSignals.length}`);
+  } else {
+    const validateResumeSignal = ajv.compile({ $ref: `${schema.$id}#/$defs/resumeSignal` });
+    if (!validateResumeSignal(resumeSignals[0].value)) {
+      errors.push(`operate resume-signal JSON block ${resumeSignals[0].index + 1} fails the canonical schema: ${ajv.errorsText(validateResumeSignal.errors)}`);
+    }
+  }
+  if (pages.some((file) => /(?:phase|audit|implementation-plan)/u.test(path.basename(file)))) errors.push('Published site contains an internal planning page');
   if (plugins.length !== walk(catalogueRoot).filter((file) => file.endsWith('.md') && path.basename(file) !== 'README.md').length) errors.push('Plugin catalogue coverage is incomplete');
   return pages;
 }
@@ -386,19 +1019,30 @@ function build() {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, text);
   }
+  const assets = publicationAssets(siteRoot);
+  copyPublicationAssets(siteRoot, outputRoot, assets);
   const report = {
     schemaVersion: 'kubeclaw-docs-publication.v1',
     revision,
+    sourceManifestSha256: crypto.createHash('sha256').update(fs.readFileSync(publicationManifestPath)).digest('hex'),
     pageCount: pages.length,
+    assetPaths: assets,
     pluginCount: plugins.length,
     pageDigest: crypto.createHash('sha256').update(pages.map((file) => fs.readFileSync(file)).join('')).digest('hex'),
-    checks: ['metadata', 'controlled-language', 'links', 'reader-journeys', 'plugin-coverage', 'release-pinned-evidence'],
+    checks: ['metadata', 'controlled-language', 'links', 'reader-journeys', 'plugin-coverage', 'release-pinned-evidence', 'documentation-ownership-map', 'route-registry'],
   };
   fs.writeFileSync(path.join(outputRoot, 'build-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   console.log(`built ${pages.length} publication pages for ${revision}`);
 }
 
-if (command === 'generate') generate();
+if (command === 'dependency-report') {
+  const records = plugins.flatMap((plugin) => plugin.registrations.map((registration) => ({
+    id: `${plugin.manifest.id}:${registration.id}`,
+    ...registrationDependencyFacts(plugin, registration),
+  })));
+  console.log(JSON.stringify({ packageCount: plugins.length, registrationCount: records.length, records }, null, 2));
+} else if (command === 'operator-matrix') console.log(operatorPluginMatrix());
+else if (command === 'generate') generate();
 else if (command === 'check') checkSite();
 else if (command === 'build') build();
 else errors.push(`Unknown command: ${command}`);

@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/pipeline-definition.html"></head><body><main>
+<h1 id="pipeline-definition">Pipeline Definition</h1>
+<p>Status: current configuration reference
+Audience: pipeline author, plugin author, operator
+Owner: Nova Core
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/graph-build.ts">skills/nova/core/execution/graph-build.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/pipeline-loop.ts">skills/nova/core/execution/pipeline-loop.ts</a>
+Applies to: <code>pipeline-definition.v2</code>
+Last verified: 2026-09-21 at source revision <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<h2 id="purpose-and-boundary">Purpose and boundary</h2>
+<p>A pipeline definition is the executable graph consumed by Nova Core. It says
+which registered stage types run, their dependency order, their typed
+plugin-owned configuration and input, and the limits on attempts and repair.
+It does not install plugins, grant capabilities, choose adapters, hold
+credentials, or record runtime progress. Those concerns belong to the
+<a href="pipeline-platform.html">platform configuration</a> and the durable run store.</p>
+<p>The Core CLI accepts this document through <code>--pipeline</code>. The Nova project
+compiler also produces this exact contract from <code>nova-project.v2</code>.</p>
+<h2 id="top-level-fields">Top-level fields</h2>
+<p>The object is closed. All four fields are required and have no implicit
+default.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type and constraints</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exact <code>pipeline-definition.v2</code></td>
+<td>Selects this contract.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>1–192 characters; starts with an ASCII letter or digit; remaining characters are letters, digits, <code>.</code>, <code>_</code>, <code>:</code>, or <code>-</code></td>
+<td>Stable pipeline identity stored in the graph snapshot.</td>
+</tr>
+<tr>
+<td><code>maxConcurrency</code></td>
+<td>Integer ≥ 1</td>
+<td>Maximum graph stages that Core may execute at once. It does not override a provider's own concurrency group.</td>
+</tr>
+<tr>
+<td><code>stages</code></td>
+<td>Non-empty array of stage objects</td>
+<td>Nodes in the graph. Declaration order is not execution order.</td>
+</tr>
+</tbody>
+</table>
+<p>Stage IDs and dependency IDs use the local-ID form: 1–96 lowercase characters,
+starting with a letter or digit and continuing with lowercase letters, digits,
+<code>.</code>, <code>_</code>, or <code>-</code>. A stage <code>type</code> is a namespaced ID of at most 160 lowercase
+characters and must contain at least one <code>.</code>, <code>_</code>, or <code>-</code> separator.</p>
+<h2 id="complete-stage-field-reference">Complete stage field reference</h2>
+<p>Every stage is a closed object. <code>activation</code> and <code>on</code> are optional; every other
+top-level stage field in this table is required.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type, required state, and constraints</th>
+<th>Consumer and meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stages[].id</code></td>
+<td>Required local ID; unique in the graph</td>
+<td>Core identity for events, dependencies, and persisted state.</td>
+</tr>
+<tr>
+<td><code>stages[].type</code></td>
+<td>Required namespaced ID</td>
+<td>Registry resolves the one installed stage owner. Missing ownership stops preparation.</td>
+</tr>
+<tr>
+<td><code>stages[].dependsOn</code></td>
+<td>Required array of unique local IDs; may be empty</td>
+<td>Ordinary edges. All dependencies must finish as <code>succeeded</code> or <code>skipped</code> before this stage becomes ready.</td>
+</tr>
+<tr>
+<td><code>stages[].config</code></td>
+<td>Required JSON object; <code>{}</code> is allowed by the envelope</td>
+<td>The owner registration validates it against its configuration schema before activation.</td>
+</tr>
+<tr>
+<td><code>stages[].input</code></td>
+<td>Required JSON object; <code>{}</code> is allowed by the envelope</td>
+<td>The owner registration validates it against its input schema at execution. Do not put results from prior runs here.</td>
+</tr>
+<tr>
+<td><code>stages[].activation</code></td>
+<td>Optional closed object</td>
+<td>Adds a fact-based condition. The stage is skipped if the exact condition is not met.</td>
+</tr>
+<tr>
+<td><code>stages[].activation.sourceStage</code></td>
+<td>Required when <code>activation</code> exists; local ID</td>
+<td>Must identify an ordinary ancestor, not the stage itself.</td>
+</tr>
+<tr>
+<td><code>stages[].activation.fact</code></td>
+<td>Required namespaced ID</td>
+<td>Key read from the source stage's successful result facts.</td>
+</tr>
+<tr>
+<td><code>stages[].activation.equals</code></td>
+<td>Required string, number, boolean, or <code>null</code></td>
+<td>Compared with <code>Object.is</code>; a missing fact does not equal <code>null</code> and causes a skip.</td>
+</tr>
+<tr>
+<td><code>stages[].execution</code></td>
+<td>Required closed object</td>
+<td>All budgets and deadlines for this node.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.maxAttempts</code></td>
+<td>Required integer ≥ 1</td>
+<td>Total invocation ceiling, including initial work and attempts needed for configured repair policy.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.maxRemediationCycles</code></td>
+<td>Required integer ≥ 0</td>
+<td>Direct repair-cycle ceiling when no category budget owns the repair.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.maxTechnicalRetries</code></td>
+<td>Optional integer 0–100</td>
+<td>Technical retry allowance. If omitted, category-budget validation treats it as zero.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.repairCategory</code></td>
+<td>Optional local ID</td>
+<td>Charges a failed check's repair request to a category on its repair owner. The owner must declare that category.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.repairBudget</code></td>
+<td>Optional closed object</td>
+<td>Declares categorized repair limits owned by this stage.</td>
+</tr>
+<tr>
+<td><code>...repairBudget.categories</code></td>
+<td>Required non-empty object with at most 32 local-ID keys; each value integer 0–100</td>
+<td>Per-category maximum repair orders. A zero explicitly denies the category.</td>
+</tr>
+<tr>
+<td><code>...repairBudget.maximumOrchestratorOrders</code></td>
+<td>Required integer 0 or 1</td>
+<td>Additional human/orchestrator-directed order allowance.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.orchestratorAfterAttempt</code></td>
+<td>Optional integer ≥ 1 and strictly less than <code>maxAttempts</code></td>
+<td>On the matching retry outcome, pause for an orchestrator rather than immediately schedule the next attempt.</td>
+</tr>
+<tr>
+<td><code>stages[].execution.timeoutMs</code></td>
+<td>Required integer ≥ 1</td>
+<td>Deadline passed to stage execution. It is not a whole-run timeout.</td>
+</tr>
+<tr>
+<td><code>stages[].on</code></td>
+<td>Optional closed object</td>
+<td>Outcome routes. It may be <code>{}</code>.</td>
+</tr>
+<tr>
+<td><code>stages[].on.request_fix</code></td>
+<td>Optional local ID</td>
+<td>Target stage to run when this stage returns <code>request_fix</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>JSON values under <code>config</code> and <code>input</code> may contain null, booleans, finite
+numbers, strings, arrays, and objects. The envelope does not set size limits;
+the selected registration schema can impose them.</p>
+<h2 id="graph-rules-beyond-json-schema">Graph rules beyond JSON Schema</h2>
+<p>Core builds and validates the graph after contract validation:</p>
+<ul>
+<li>Stage IDs are unique; every dependency, activation source, and repair target
+exists; self edges are invalid.</li>
+<li>Ordinary dependency edges must be acyclic.</li>
+<li>An activation source must be an ordinary ancestor. An activation-controlled
+node cannot also be a repair target.</li>
+<li>A repair edge must be ordered relative to the requesting stage. Two unordered
+requesters cannot share one repair target.</li>
+<li>A repair-only target is a leaf. This prevents ordinary downstream work from
+running as a side effect of repair.</li>
+<li>A declared <code>repairCategory</code> must exist on its repair owner. The owner's
+<code>maxAttempts</code> must be at least one plus all category allowances, the
+orchestrator allowance, and technical retries.</li>
+</ul>
+<p>These restrictions remove ambiguous execution and deadlock-prone repair
+graphs. They also mean that a JSON-Schema-valid document can still fail graph
+construction.</p>
+<h2 id="minimal-executable-shape">Minimal executable shape</h2>
+<p>The stage type and its two JSON objects must match an installed registration.
+This example shows the graph contract; it does not promise that
+<code>example.validate</code> is installed.</p>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: &quot;pipeline-definition.v2&quot;,
+  &quot;id&quot;: &quot;example:validate&quot;,
+  &quot;maxConcurrency&quot;: 1,
+  &quot;stages&quot;: [
+    {
+      &quot;id&quot;: &quot;validate&quot;,
+      &quot;type&quot;: &quot;example.validate&quot;,
+      &quot;dependsOn&quot;: [],
+      &quot;config&quot;: {},
+      &quot;input&quot;: { &quot;subject&quot;: &quot;candidate&quot; },
+      &quot;execution&quot;: {
+        &quot;maxAttempts&quot;: 1,
+        &quot;maxRemediationCycles&quot;: 0,
+        &quot;timeoutMs&quot;: 60000
+      }
+    }
+  ]
+}
+</code></pre>
+<p>Run it only after validating the platform and installed registration:</p>
+<pre><code class="language-bash">npm run pipeline -- \
+  --platform &quot;/absolute/path/platform.json&quot; \
+  --pipeline &quot;/absolute/path/definition.json&quot; \
+  --run-id &quot;run:example-001&quot;
+</code></pre>
+<h2 id="activation-results-and-empty-values">Activation, results, and empty values</h2>
+<p>An absent <code>activation</code> means unconditional scheduling after dependencies. An
+activation mismatch produces a durable <code>stage.skipped</code> event; skipped stages
+satisfy downstream ordinary dependencies. This makes optional branches
+explicit without changing graph structure.</p>
+<p>The graph does not declare a generic result schema. Each stage registration
+validates its own input and returns the shared stage-result contract. A
+non-passing result must include a reason. <code>passed</code> can publish scalar facts for
+later activation. Runtime results, attempts, facts, waits, and artifacts belong
+to journals and snapshots, never back into the definition.</p>
+<p>Empty <code>dependsOn</code>, <code>config</code>, or <code>input</code> values are meaningful and valid at the
+envelope level. An empty <code>stages</code> array, empty <code>repairBudget.categories</code>, or
+unknown field is invalid. An empty <code>on</code> object has no effect.</p>
+<h2 id="precedence-changes-and-recovery">Precedence, changes, and recovery</h2>
+<p>There is no field-level merge. Core uses the single loaded definition. Plugin
+schemas determine defaults inside <code>config</code> and <code>input</code>; Core does not insert
+them into this file.</p>
+<p>At run creation, Core stores a normalized graph snapshot and digest. Recovery
+rebuilds the graph from the supplied definition using the stored snapshot
+version and rejects a different pipeline ID or digest. Changes to stage order
+alone do not change execution semantics, but normalized snapshot ordering can
+affect historical digest formats. Do not edit a definition to continue an
+existing run. Use the original bytes and packages, or start a new run.</p>
+<h2 id="failure-index">Failure index</h2>
+<table>
+<thead>
+<tr>
+<th>Error family</th>
+<th>Typical cause</th>
+<th>Corrective action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contract validation error</td>
+<td>Wrong version, ID form, missing required field, unknown field, or invalid bound</td>
+<td>Correct the field before runtime preparation.</td>
+</tr>
+<tr>
+<td><code>GRAPH_DUPLICATE_STAGE</code>, <code>GRAPH_DEPENDENCY_MISSING</code>, <code>GRAPH_CYCLE</code></td>
+<td>Invalid ordinary graph</td>
+<td>Make IDs unique and dependencies present and acyclic.</td>
+</tr>
+<tr>
+<td><code>GRAPH_ACTIVATION_*</code></td>
+<td>Source missing, self-referential, not an ancestor, or attached to a repair target</td>
+<td>Put the fact source on the ordinary path before the conditional node.</td>
+</tr>
+<tr>
+<td><code>GRAPH_REMEDIATION_*</code>, <code>GRAPH_SHARED_REMEDIATION_TARGET</code></td>
+<td>Repair target missing, unordered, shared ambiguously, or not a leaf</td>
+<td>Redesign the repair edge so its execution order and return path are unique.</td>
+</tr>
+<tr>
+<td><code>GRAPH_REPAIR_*</code>, <code>GRAPH_TECHNICAL_RETRY_BUDGET_INVALID</code></td>
+<td>Category missing or total attempt ceiling too small</td>
+<td>Recalculate the owner budget; do not increase retries without bounding effects.</td>
+</tr>
+<tr>
+<td><code>PIPELINE_STAGE_OWNER_MISSING</code></td>
+<td>No trusted installed registration owns <code>type</code></td>
+<td>Correct the stage type or platform package set.</td>
+</tr>
+<tr>
+<td>Registration configuration/input error</td>
+<td><code>config</code> or <code>input</code> violates the selected plugin schema</td>
+<td>Use the plugin's exact contract; Core cannot reinterpret the value.</td>
+</tr>
+<tr>
+<td><code>RECOVERY_GRAPH_DIGEST_MISMATCH</code></td>
+<td>Definition changed after run creation</td>
+<td>Restore the original definition for recovery or start a new run.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — graph validation and scheduling</strong></p>
+<p><strong>Claim:</strong> The schema defines the complete field envelope, while graph construction adds dependency, activation, repair-order, and budget invariants before execution.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/graph-build.ts#L8-L44">stage, dependency, and repair-edge validation</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/graph-build.ts#L47-L96">cycle, ordering, activation, and leaf validation</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/pipeline-loop.ts#L86-L115">activation scheduling</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L450-L503"><code>stageDefinition</code> identity, data, activation, and execution fields</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L506-L529">repair and pipeline envelope fields</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-phase6.mjs#L75-L123">ordinary and repair graph checks</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-phase6.mjs#L124-L152">execution and activation rejection checks</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node tests/verification/contracts/check-plugin-system-v2-phase6.mjs</code> against implementation revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code>: exit zero and <code>ok: true</code>. The local process used util-linux <code>flock</code> 2.42.3 at <code>/usr/bin/flock</code>, supplied through a temporary PRoot file binding without changing system files. BusyBox <code>flock</code> lacks the required timeout option and cannot run this check. This establishes the local contract; it does not establish a deployment.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<p><strong>Limit:</strong> A valid graph proves neither that an external effect succeeds nor that the selected stages provide sufficient product coverage.</p>
+</blockquote>
+</main></body></html>

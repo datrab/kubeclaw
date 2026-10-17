@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/components-and-authority.html"></head><body><main>
+<h1 id="components-and-authority">Components and Authority</h1>
+<p>Status: implemented with stated limits
+Audience: new reader, architecture reader, maintainer, security reviewer
+Owner: platform architecture
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core">skills/nova/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core">skills/worker/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>
+Evidence revision: <code>13bff0a18a64e74f2cbbaa1978e746fcdeff0c10</code>
+Applies to: current source and declared runtime roles
+Last verified: source and contract inspection on 2026-09-19</p>
+<h2 id="purpose">Purpose</h2>
+<p>This page explains what each KubeClaw part does.
+It also explains what each part must not do.</p>
+<p>The boundary matters more than the component name.
+Most serious failures occur when two parts believe that they own the same decision.</p>
+<h2 id="authority-map">Authority Map</h2>
+<pre><code class="language-mermaid">flowchart TB
+    Human[Human or calling system] --&gt;|project and signals| Nova
+    Nova --&gt;|bounded task| Forge
+    Nova --&gt;|fixed review subject| Echo
+    Nova --&gt;|design request| Prism
+    Nova --&gt;|immutable test plan| Buster
+    Prism --&gt;|approved baseline| Nova
+    Forge --&gt;|commits and artifacts| Nova
+    Echo --&gt;|findings and evidence| Nova
+    Buster --&gt;|facts and evidence| Nova
+    Buster --&gt; Worker[Worker Core]
+    Prism --&gt; Worker
+    Runtime[Plugin runtime] --&gt; Nova
+    Runtime --&gt; Buster
+    Runtime --&gt; Prism
+</code></pre>
+<p>Text version: A human gives the project and signals to Nova.
+Nova delegates bounded work to Forge, Echo, Prism, and Buster.
+All specialists return facts or artifacts to Nova.
+Nova makes the canonical lifecycle decision.
+Buster and Prism use Worker Core.
+The plugin runtime loads declared extension points for each applicable role.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human or calling system</td>
+<td>Directed connection — project and signals</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — bounded task</td>
+<td>Forge</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — fixed review subject</td>
+<td>Echo</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — design request</td>
+<td>Prism</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — immutable test plan</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>Directed connection — approved baseline</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Forge</td>
+<td>Directed connection — commits and artifacts</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Echo</td>
+<td>Directed connection — findings and evidence</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Buster</td>
+<td>Directed connection — facts and evidence</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Buster</td>
+<td>Directed connection</td>
+<td>Worker Core</td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>Directed connection</td>
+<td>Worker Core</td>
+</tr>
+<tr>
+<td>Plugin runtime</td>
+<td>Directed connection</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Plugin runtime</td>
+<td>Directed connection</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>Plugin runtime</td>
+<td>Directed connection</td>
+<td>Prism</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nova-and-nova-core">Nova and Nova Core</h2>
+<p>Nova and Nova Core are related, but they are not two names for the same thing.</p>
+<p><strong>Nova</strong> is the complete runtime role.
+It is the process that an operator deploys and starts.
+The role contains Nova Core, the project compiler, shared contracts, and selected plugins.
+It also contains adapters for repositories, artifacts, dispatch, waits, secrets, telemetry, and transport.</p>
+<p><strong>Nova Core</strong> is the deterministic control engine inside that role.
+Core owns graph execution, lifecycle state, effects, recovery, waits, and final run closure.
+Core starts without product-specific stages.
+The configured plugin registry supplies those stages and their bounded capabilities.</p>
+<p>This distinction prevents two common mistakes.
+A Nova deployment is not only the scheduler code.
+Installing a Nova plugin also does not make that plugin part of Core.</p>
+<pre><code class="language-mermaid">flowchart TB
+    Role[Nova runtime role] --&gt; Entry[Pipeline entry point]
+    Entry --&gt; Project[Project compiler and CLI]
+    Entry --&gt; Core[Nova Core]
+    Role --&gt; Runtime[Plugin runtime]
+    Runtime --&gt; Plugins[Selected plugins and adapters]
+    Project --&gt;|fixed graph| Core
+    Core --&gt;|bounded invocation| Plugins
+    Plugins --&gt;|typed facts and receipts| Core
+</code></pre>
+<p>Text version: The Nova role contains the entry point, project compiler, Nova Core, plugin runtime, and selected extensions.
+The compiler gives Core a fixed graph.
+Core invokes plugins and interprets their typed results.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova runtime role</td>
+<td>Directed connection</td>
+<td>Pipeline entry point</td>
+</tr>
+<tr>
+<td>Pipeline entry point</td>
+<td>Directed connection</td>
+<td>Project compiler and CLI</td>
+</tr>
+<tr>
+<td>Pipeline entry point</td>
+<td>Directed connection</td>
+<td>Nova Core</td>
+</tr>
+<tr>
+<td>Nova runtime role</td>
+<td>Directed connection</td>
+<td>Plugin runtime</td>
+</tr>
+<tr>
+<td>Plugin runtime</td>
+<td>Directed connection</td>
+<td>Selected plugins and adapters</td>
+</tr>
+<tr>
+<td>Project compiler and CLI</td>
+<td>Directed connection — fixed graph</td>
+<td>Nova Core</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Directed connection — bounded invocation</td>
+<td>Selected plugins and adapters</td>
+</tr>
+<tr>
+<td>Selected plugins and adapters</td>
+<td>Directed connection — typed facts and receipts</td>
+<td>Nova Core</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — role and engine boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/nova.json#L1-L61">The Nova role lists Core, project code, shared contracts, and its selected plugins</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/pipeline.ts#L1-L14">The Nova entry point exports Core and starts the separate project CLI</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L36-L43">A new Core run freezes the graph, prepares plugins, writes snapshots, and starts the runner</a>.</p>
+</blockquote>
+<h3 id="nova-core-the-process-authority">Nova Core: The Process Authority</h3>
+<p>Nova owns the pipeline graph and the canonical run state.
+It decides which stage is ready.
+It starts bounded attempts and records their results.
+It applies retry, wait, repair, cancellation, and terminal rules.</p>
+<p>Nova does not own the meaning of every specialist operation.
+For example, Buster knows how to execute a test plan.
+Nova knows whether the verified test result blocks the pipeline.</p>
+<p><strong>Why this design exists:</strong> One writer makes recovery deterministic.
+If two schedulers advanced the same run, replay could produce two different histories.</p>
+<p><strong>Cost:</strong> Nova is a central decision boundary.
+Its durable state and recovery rules need careful protection.</p>
+<p><strong>Reconsider when:</strong> A future design can prove one ordered authority across multiple writers.
+No current decision approves that change.</p>
+<blockquote>
+<p><strong>Source evidence — scheduling and closure</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/pipeline-loop.ts#L20-L37"><code>PipelineLoop.run()</code> selects ready stages, records decisions, pauses, and finalizes</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/pipeline-loop.ts#L137-L143"><code>PipelineLoop.#finalize()</code> derives one terminal result from stage states</a>.</p>
+<p><a href="../decisions/core-and-plugins.html#adr-001-core-owns-canonical-lifecycle-authority">ADR-001 records the decision and its consequences</a>.</p>
+</blockquote>
+<h2 id="foundation-and-sdk-the-shared-language">Foundation and SDK: The Shared Language</h2>
+<p>The Foundation package validates platform configuration, manifests, schemas, and package integrity.
+It also provides isolation and durable observability mechanics.</p>
+<p>The SDK defines the values that Core and plugins exchange.
+Examples include a stage definition, a stage result, an effect request, and an artifact reference.</p>
+<p>Foundation and SDK do not schedule the pipeline.
+They provide rules and tools that several runtimes use.</p>
+<p><strong>Why this design exists:</strong> Shared contracts prevent each component from inventing a private message format.
+They also permit validation before execution.</p>
+<p><strong>Cost:</strong> Contract changes require explicit version and compatibility work.</p>
+<blockquote>
+<p><strong>Source evidence — fixed registry</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317"><code>buildRegistry()</code> rejects duplicate packages, registrations, stage owners, and provider contracts</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137"><code>activateRegistry()</code> loads only enabled registrations and checks package digests</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L894-L963">The versioned schema defines capability grants and trust scope</a>.</p>
+</blockquote>
+<h2 id="worker-core-the-neutral-attempt-controller">Worker Core: The Neutral Attempt Controller</h2>
+<p>Worker Core sits below specialist engines.
+It does not decide whether a design is good or a test proves quality.</p>
+<p>It handles mechanics that all workers need:</p>
+<ul>
+<li>worker identity and supported protocol;</li>
+<li>profiles and capacity;</li>
+<li>attempt and claim identity;</li>
+<li>queue and claim deadlines;</li>
+<li>duplicate-attempt rejection;</li>
+<li>cancellation and drain behavior;</li>
+<li>process limits and resource observations;</li>
+<li>durable attempt admission and result binding;</li>
+<li>cleanup state.</li>
+</ul>
+<p><strong>Why this design exists:</strong> Buster and Prism need the same safety controls.
+Duplicated controls would drift and create different recovery behavior.</p>
+<p><strong>Cost:</strong> Specialist results must fit a neutral envelope.
+Specialist policy cannot leak into Worker Core.</p>
+<blockquote>
+<p><strong>Source evidence — neutral controls</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/local-runtime.ts#L155-L204"><code>LocalWorkerRuntime.runAttempt()</code> checks readiness, capacity, claims, deadlines, protocols, profiles, and replay</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-executor.ts#L20-L60"><code>executeNativeWorkerAttempt()</code> persists admission before launch and seals the result before delivery</a>.</p>
+<p><a href="../decisions/core-and-plugins.html#adr-002-use-one-neutral-worker-core-below-specialist-engines">ADR-002 explains the neutral-core decision</a>.</p>
+</blockquote>
+<h2 id="buster-the-test-engine">Buster: The Test Engine</h2>
+<p>Buster executes immutable test plans.
+Its providers can run HTTP, browser, accessibility, performance, security, container, and Kubernetes checks.</p>
+<p>Buster owns test execution semantics and evidence collection.
+It does not own the canonical pipeline graph.
+It does not convert test facts into Nova's final lifecycle verdict.</p>
+<p>The Buster role contains Worker Core, the Buster engine, declared providers, and required adapters.
+Nova sends a resolved plan and a read-only source snapshot.
+Buster returns a result that remains bound to that plan and run.</p>
+<p><strong>Why this design exists:</strong> Test execution can evolve without adding provider logic to Nova.
+Evidence also remains separate from quality policy.</p>
+<p><strong>Cost:</strong> The remote handoff needs strict identities, durable stores, and result import checks.</p>
+<blockquote>
+<p><strong>Source evidence — Buster boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/src/index.ts#L1-L23">The Buster engine exports Worker Core, plan service, provider loader, and result stores</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/buster.json#L49-L59">The Buster role grants read-only source access and plan execution</a>.</p>
+<p><a href="../decisions/core-and-plugins.html#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core">ADR-003 explains why test semantics stay outside Nova and Worker Core</a>.</p>
+</blockquote>
+<h2 id="prism-the-design-engine-and-product-surface">Prism: The Design Engine and Product Surface</h2>
+<p>Prism turns product constraints into a design document and a rendered baseline.
+It keeps revisioned design state and supports human approval.</p>
+<p>Prism can prepare Forge assignments and a Buster visual plan from an approved baseline.
+It does not replace Nova's product architecture or pipeline authority.
+It does not make Forge the owner of design approval.</p>
+<p>Prism has source, a runtime-role manifest, native worker integration, services, and a Helm chart.
+These facts prove implementation presence.
+They do not prove deployment in each environment.</p>
+<p><strong>Why this design exists:</strong> Design decisions must remain inspectable before implementation changes the product.
+An approved baseline also gives visual tests a stable comparison target.</p>
+<p><strong>Cost:</strong> Prism adds state, artifact, approval, and provenance boundaries.
+Its current result path provides no durable artifact signature. Buster remote
+results also use digest and receipt bindings, not Ed25519 signatures. The
+separate signed source snapshot comes from Nova.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L416-L429">The Buster result contract carries a digest and receipt</a>,
+while <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L385-L401">the source snapshot carries the Ed25519 attestation</a>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Source evidence — baseline handoff</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/pipeline-adapter/index.ts#L20-L57"><code>toBusterPlan()</code> and <code>toForgeAssignments()</code> derive bounded handoffs from one baseline</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/prism.json#L1-L28">The Prism role includes Worker Core and the Prism engine</a>.</p>
+<p><a href="../decisions/prism.html">Prism decisions explain design ownership and current limits</a>.</p>
+</blockquote>
+<h2 id="forge-the-implementation-specialist">Forge: The Implementation Specialist</h2>
+<p>Forge is the specialist identity used for implementation work.
+The current implementation-agent plugin dispatches that work through the runtime adapter.</p>
+<p>Forge can receive a bounded task, use a workspace, produce commits, and return artifacts.
+It cannot write Nova's lifecycle journal.
+It cannot silently add a capability that the stage did not receive.</p>
+<p>Forge is not a current runtime role manifest.
+Its plugin can be present without being enabled in a given project.
+Its configured runtime target can also be unreachable.</p>
+<p><strong>Why this design exists:</strong> The implementation specialist needs tools, but it must not receive scheduler authority.</p>
+<blockquote>
+<p><strong>Source evidence — Forge permissions</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/implementation-agent/plugin.json#L1-L26">The implementation stage declares dispatch, workspace, commit, merge, and artifact capabilities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79"><code>createPluginInvocationContext()</code> denies missing grants and checks each requested resource</a>.</p>
+</blockquote>
+<h2 id="echo-the-review-specialist">Echo: The Review Specialist</h2>
+<p>Echo is the specialist identity used for agent-assisted review.
+The review plugin sends a fixed review subject and receives proposed findings.</p>
+<p>Echo can assess evidence and propose findings.
+It cannot declare a verified revision, accept its own findings, or change lifecycle state.
+Nova-owned code validates evidence and applies the configured policy.</p>
+<p>Echo is not a current runtime role manifest.
+The review package can be present while its stages remain disabled or unreachable.</p>
+<p><strong>Why this design exists:</strong> A creative reviewer can find subtle problems.
+A deterministic boundary must still verify identity, evidence, and policy.</p>
+<blockquote>
+<p><strong>Source evidence — Echo permissions</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/review/plugin.json#L1-L54">The review plugin declares three review stages and read-only repository access</a>.</p>
+<p><a href="../decisions/echo.html">Echo decisions separate observations from lifecycle verdicts</a>.</p>
+</blockquote>
+<h2 id="the-plugin-runtime-the-controlled-connection-layer">The Plugin Runtime: The Controlled Connection Layer</h2>
+<p>A plugin package declares one or more registrations.
+The registry knows these registration kinds:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Purpose</th>
+<th>Can change lifecycle state?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage</td>
+<td>Performs one graph step and returns a typed stage result.</td>
+<td>No. Core interprets the result.</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>Receives committed events for telemetry or notification.</td>
+<td>No.</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>Performs a controlled external effect.</td>
+<td>No. It returns a receipt.</td>
+</tr>
+<tr>
+<td>Test provider</td>
+<td>Performs one declared Buster test operation.</td>
+<td>No.</td>
+</tr>
+<tr>
+<td>Report adapter</td>
+<td>Reads one declared report format and normalizes facts.</td>
+<td>No.</td>
+</tr>
+<tr>
+<td>OpenClaw extension</td>
+<td>Connects OpenClaw hooks to a host integration.</td>
+<td>No pipeline authority.</td>
+</tr>
+</tbody>
+</table>
+<p>Discovery means that the runtime found and validated a package declaration.
+Registration means that the fixed registry contains its declared surface.
+Activation means that configuration enabled one registration and loaded its executable.
+Invocation means that an active stage reached that executable with a valid lease.</p>
+<p>These are four different events.</p>
+<p><strong>Why this design exists:</strong> A manifest makes authority visible before code runs.
+Separate platform grants let an operator reduce that requested authority.</p>
+<p><strong>Cost:</strong> Installation alone does nothing useful.
+The operator must configure providers, grants, and reachable runtime targets.</p>
+<h2 id="runtime-role-engine-and-specialist">Runtime Role, Engine, and Specialist</h2>
+<p>These terms are related, but they are not synonyms.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain meaning</th>
+<th>Current examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime role</td>
+<td>A declared package and plugin bundle for one deployable purpose.</td>
+<td>Nova, Buster, Prism.</td>
+</tr>
+<tr>
+<td>Engine</td>
+<td>Code that interprets one class of work.</td>
+<td>Nova lifecycle, Buster test plan, Prism design operation.</td>
+</tr>
+<tr>
+<td>Specialist</td>
+<td>A bounded worker identity used through dispatch.</td>
+<td>Forge, Echo.</td>
+</tr>
+<tr>
+<td>Plugin</td>
+<td>A package that declares one or more extension registrations.</td>
+<td>Implementation agent, review, artifact store.</td>
+</tr>
+</tbody>
+</table>
+<p>Role packaging decides what bytes can enter an image.
+Registry activation decides what executable surfaces enter one run.
+Capability grants decide what an invocation can request.
+Network and service configuration decide what a running component can reach.</p>
+<h2 id="how-authority-moves-through-one-stage">How Authority Moves Through One Stage</h2>
+<pre><code class="language-mermaid">flowchart LR
+    Manifest[Plugin manifest] --&gt; Registry[Validated fixed registry]
+    Config[Platform configuration] --&gt; Activation[Selected activation]
+    Registry --&gt; Activation
+    Nova[Nova Core] --&gt;|attempt and revocable lease| Context[Bounded invocation context]
+    Activation --&gt; Plugin[Active plugin registration]
+    Context --&gt; Plugin
+    Plugin --&gt;|typed result| Nova
+    Plugin --&gt;|capability request| Context
+    Context --&gt;|grant and resource check| Adapter[Selected capability adapter]
+    Adapter --&gt;|external operation| External[External resource]
+    External --&gt;|known outcome| Adapter
+    Adapter --&gt;|durable receipt| Journal[Effect journal]
+    Journal --&gt; Nova
+</code></pre>
+<p>Text version: The manifest enters a validated registry.
+Platform configuration selects registrations from that registry for activation.
+Nova gives an active plugin one attempt and one revocable lease through a bounded context.
+The plugin returns a typed result to Nova.
+For an external operation, the plugin must request a capability through the same context.
+The context checks the grant and the requested resource before it calls the selected adapter.
+The adapter performs the operation and records its known outcome as a durable receipt.
+Nova uses the typed result and durable evidence to make the lifecycle decision.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plugin manifest</td>
+<td>Directed connection</td>
+<td>Validated fixed registry</td>
+</tr>
+<tr>
+<td>Platform configuration</td>
+<td>Directed connection</td>
+<td>Selected activation</td>
+</tr>
+<tr>
+<td>Validated fixed registry</td>
+<td>Directed connection</td>
+<td>Selected activation</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Directed connection — attempt and revocable lease</td>
+<td>Bounded invocation context</td>
+</tr>
+<tr>
+<td>Selected activation</td>
+<td>Directed connection</td>
+<td>Active plugin registration</td>
+</tr>
+<tr>
+<td>Bounded invocation context</td>
+<td>Directed connection</td>
+<td>Active plugin registration</td>
+</tr>
+<tr>
+<td>Active plugin registration</td>
+<td>Directed connection — typed result</td>
+<td>Nova Core</td>
+</tr>
+<tr>
+<td>Active plugin registration</td>
+<td>Directed connection — capability request</td>
+<td>Bounded invocation context</td>
+</tr>
+<tr>
+<td>Bounded invocation context</td>
+<td>Directed connection — grant and resource check</td>
+<td>Selected capability adapter</td>
+</tr>
+<tr>
+<td>Selected capability adapter</td>
+<td>Directed connection — external operation</td>
+<td>External resource</td>
+</tr>
+<tr>
+<td>External resource</td>
+<td>Directed connection — known outcome</td>
+<td>Selected capability adapter</td>
+</tr>
+<tr>
+<td>Selected capability adapter</td>
+<td>Directed connection — durable receipt</td>
+<td>Effect journal</td>
+</tr>
+<tr>
+<td>Effect journal</td>
+<td>Directed connection</td>
+<td>Nova Core</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>The graph names a stage type and fixed limits.</li>
+<li>The registry resolves exactly one package as the stage owner.</li>
+<li>Platform configuration enables the required registration and adapters.</li>
+<li>Core creates an attempt identity and a revocable lease.</li>
+<li>The context contains only granted capabilities and visible artifacts.</li>
+<li>The plugin requests effects through that context.</li>
+<li>Adapters perform permitted effects and return durable receipts.</li>
+<li>The plugin returns a typed stage result.</li>
+<li>Core maps that result to one lifecycle action.</li>
+</ol>
+<p>The plugin never receives a direct method that changes the canonical stage state.</p>
+<blockquote>
+<p><strong>Source evidence — bounded plugin invocation</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137"><code>activateRegistry()</code> activates only configured registrations after package-integrity and import checks</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79"><code>createPluginInvocationContext()</code> checks the lease, grant, and requested resource</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/durable-invocation.ts#L39-L117"><code>DurableInvocation</code> records requests and receipts around the selected adapter</a>.</p>
+</blockquote>
+<h2 id="failure-domains-and-stop-boundaries">Failure Domains And Stop Boundaries</h2>
+<p>A component boundary must also be a failure boundary.
+One failed dependency must not silently move authority to another component.</p>
+<table>
+<thead>
+<tr>
+<th>Failure domain</th>
+<th>Direct dependency</th>
+<th>Authoritative retained data</th>
+<th>Safe response</th>
+<th>Forbidden response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project compilation</td>
+<td>Project document, repository layout, and fixed source revision</td>
+<td>Validated project input and compiled graph</td>
+<td>Reject the input before a run starts</td>
+<td>Guess a revision, path, module, or graph edge</td>
+</tr>
+<tr>
+<td>Nova process</td>
+<td>Durable run root and immutable package bytes</td>
+<td>Graph snapshot, registry snapshot, lifecycle journal, signals, and effect records</td>
+<td>Recover from the recorded history with the same identities</td>
+<td>Continue from process memory or current package bytes</td>
+</tr>
+<tr>
+<td>Plugin registry</td>
+<td>Installed manifests, schemas, package roots, and trust configuration</td>
+<td>Canonical package and registration identities with digests</td>
+<td>Reject discovery, admission, conflict, or activation as a startup error</td>
+<td>Import unvalidated code or select a registration by load order</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>Selected provider, grant, resource constraint, and external service</td>
+<td>Effect request, idempotency key, acceptance state, and receipt</td>
+<td>Recover the receipt or stop for reconciliation</td>
+<td>Repeat an accepted effect because its response was lost</td>
+</tr>
+<tr>
+<td>Redis transport</td>
+<td>Redis availability, stream policy, and authenticated callers</td>
+<td>Transport records and the component's own durable control state</td>
+<td>Retry transport delivery within its contract; recover authority from the owning store</td>
+<td>Treat Redis delivery as the canonical lifecycle decision</td>
+</tr>
+<tr>
+<td>Buster service</td>
+<td>Immutable plan, source snapshot, providers, Worker Core, and result store</td>
+<td>Remote job status, complete plan result, evidence identities, and import record</td>
+<td>Resume or import only after identity and terminal-result checks</td>
+<td>Convert transport completion directly into a quality verdict</td>
+</tr>
+<tr>
+<td>Worker host</td>
+<td>Profile, capacity pool, trusted supervisor, engine, and persistent attempt stores</td>
+<td>Admission, claim, ownership, journal, output spool, observations, cleanup, and sealed result</td>
+<td>Reconcile ownership and process state; stop when either remains uncertain</td>
+<td>Launch a replacement attempt while an earlier process can still run</td>
+</tr>
+<tr>
+<td>Prism service</td>
+<td>PostgreSQL, artifact storage, Worker Core, and approved design identities</td>
+<td>Projects, revisions, operations, approvals, bundles, and immutable artifacts</td>
+<td>Recover canonical records and rebuild only declared projections</td>
+<td>Treat a preview, editor state, or local receipt as canonical approval</td>
+</tr>
+<tr>
+<td>Git or artifact storage</td>
+<td>Repository or object-store availability and exact identity</td>
+<td>Commit identity or artifact digest, namespace, size, and producer</td>
+<td>Stop or recover the exact object before dependent work continues</td>
+<td>Substitute a newer commit or an object with the same display name</td>
+</tr>
+<tr>
+<td>Observer or telemetry sink</td>
+<td>Event subscription, delivery policy, and sink</td>
+<td>Core journal plus observer-owned checkpoint and delivery evidence</td>
+<td>Preserve lifecycle truth and expose degraded or exhausted delivery</td>
+<td>Reconstruct lifecycle state from a dashboard or notification</td>
+</tr>
+<tr>
+<td>Kubernetes and required services</td>
+<td>Scheduling, storage, DNS, identities, registries, BuildKit, databases, and configured network paths</td>
+<td>Component-owned persistent volumes and external service stores</td>
+<td>Stop the affected operation and preserve diagnostic evidence</td>
+<td>Claim platform readiness from manifests or local source checks alone</td>
+</tr>
+</tbody>
+</table>
+<p>The table separates three questions.
+A dependency can transport data, store authority, or present a projection.
+Those roles are not interchangeable.</p>
+<h2 id="data-authority-and-derived-copies">Data Authority And Derived Copies</h2>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Canonical owner</th>
+<th>Permitted copies or projections</th>
+<th>Required identity check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compiled pipeline graph</td>
+<td>Nova run snapshot</td>
+<td>Operator display and audit read model</td>
+<td>Run ID and graph digest</td>
+</tr>
+<tr>
+<td>Lifecycle state</td>
+<td>Nova lifecycle journal and reducer</td>
+<td>Status page, notification, telemetry, and audit projection</td>
+<td>Run, stage, attempt, event sequence, and schema version</td>
+</tr>
+<tr>
+<td>Plugin selection</td>
+<td>Frozen registry and package snapshot</td>
+<td>Catalogue and activation diagnostics</td>
+<td>Package ID, version, content digest, registration ID, and API version</td>
+</tr>
+<tr>
+<td>External effect outcome</td>
+<td>Adapter receipt in the effect journal</td>
+<td>Stage evidence and recovery diagnostics</td>
+<td>Effect ID, idempotency key, owner attempt, capability, and resource</td>
+</tr>
+<tr>
+<td>Human or orchestrator response</td>
+<td>Accepted resume-signal record</td>
+<td>Resolved-wait lifecycle event</td>
+<td>Wait, signal, issuer, issue time, and idempotency identity</td>
+</tr>
+<tr>
+<td>Worker attempt fact</td>
+<td>Worker journal, ownership state, and sealed terminal result</td>
+<td>Buster or Prism specialist result</td>
+<td>Attempt, claim generation, engine, profile, protocol, result digest, and transport identity</td>
+</tr>
+<tr>
+<td>Test-plan result</td>
+<td>Buster result store</td>
+<td>Nova import record, report, and operator view</td>
+<td>Job, plan, run, source, request, result, and evidence digests</td>
+</tr>
+<tr>
+<td>Design state</td>
+<td>Prism PostgreSQL records and immutable artifact objects</td>
+<td>Studio projection, preview, export, Forge assignment, and Buster plan</td>
+<td>Project, design, revision, operation, approval, bundle, and artifact identities</td>
+</tr>
+<tr>
+<td>Source state</td>
+<td>Git object database and authorized workspace</td>
+<td>Source archive, diff, review bundle, and build context</td>
+<td>Repository identity and immutable commit digest</td>
+</tr>
+<tr>
+<td>Large evidence</td>
+<td>Artifact store</td>
+<td>Report attachment and bounded display summary</td>
+<td>Artifact ID, namespace, digest, size, and producer attempt</td>
+</tr>
+</tbody>
+</table>
+<h2 id="communication-persistence-and-retention-map">Communication, Persistence, And Retention Map</h2>
+<p>This table lists each communication path that crosses a component boundary in
+the documented platform baseline. It does not list private calls inside one
+component. A later implementation can replace a transport only if it preserves
+the contract, authority, persistence, and failure behavior in the same row.</p>
+<table>
+<thead>
+<tr>
+<th>Producer</th>
+<th>Consumer</th>
+<th>Contract or message</th>
+<th>Transport</th>
+<th>Authoritative persistence</th>
+<th>Retention or cleanup owner</th>
+<th>Effect of a failed handoff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project author or automation</td>
+<td>Nova project compiler</td>
+<td><code>nova-project.v2</code>, referenced control files, and the selected source revision</td>
+<td>CLI arguments and local files</td>
+<td>Admitted project input, compiled graph, and source identity in the run root</td>
+<td>Nova run-root policy</td>
+<td>Compilation stops before execution. Nova does not guess a missing file, revision, or graph value.</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Stage plugin</td>
+<td>Resolved stage input, attempt lease, limits, grants, and typed stage result</td>
+<td>In-process call for trusted code; bounded child protocol for an external stage</td>
+<td>Nova lifecycle journal, plugin-state journal, effect journal, and artifacts</td>
+<td>Nova run owner and artifact-store policy</td>
+<td>The attempt fails, times out, or stops for reconciliation. A returned result cannot directly change lifecycle state.</td>
+</tr>
+<tr>
+<td>Stage or observer plugin</td>
+<td>Capability adapter</td>
+<td>Capability, operation, canonical resource, payload, effect identity, and fence</td>
+<td>Bounded host context; external plugins relay requests through the isolated protocol</td>
+<td>Effect request, acceptance, receipt, and resource-lock record</td>
+<td>Nova effect and lock-store policy</td>
+<td>Authority is denied before the adapter, or recovery stops if an accepted effect has no known result.</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Observer plugin</td>
+<td>Ordered lifecycle or plugin-domain event with run and sequence identity</td>
+<td>Observer invocation through the admitted registry</td>
+<td>Core journal plus observer delivery attempts and checkpoints</td>
+<td>Core retains the event; observer policy retains or expires delivery evidence</td>
+<td>Required-observer exhaustion fails the flush. Optional-observer failure records a visible gap without rewriting lifecycle truth.</td>
+</tr>
+<tr>
+<td>Nova test gate</td>
+<td>Buster remote-plan service</td>
+<td>Immutable plan job, source snapshot identity, status, result, and evidence digests</td>
+<td>Authenticated HTTP or loopback HTTP behind the SPIFFE proxy</td>
+<td>Nova dispatch/import stores and Buster job/result stores</td>
+<td>Nova owns import records; Buster owns jobs, results, and evidence</td>
+<td>Nova retries only declared transport failures. It reconciles the same job identity before a new dispatch.</td>
+</tr>
+<tr>
+<td>Buster or Prism runtime</td>
+<td>Worker Core</td>
+<td>Worker envelope, profile, claim, cancellation, progress, logs, evidence, and terminal result</td>
+<td>Local runtime call or a role-owned remote transport</td>
+<td>Worker attempt journal, ownership store, output spool, and result seal</td>
+<td>Worker host policy and the calling role's result policy</td>
+<td>Admission rejects before launch, or recovery fences new work until ownership and process state are safe.</td>
+</tr>
+<tr>
+<td>Trusted native supervisor</td>
+<td>Unprivileged specialist host</td>
+<td>Length-bounded envelope, framed control messages, cancellation, and provisional result</td>
+<td>Standard input/output plus a private framed control endpoint</td>
+<td>Supervisor-owned journal, spool, ownership record, observations, and final seal</td>
+<td>Native worker host policy</td>
+<td>The supervisor terminates and drains the process tree. It does not accept a result while control requests remain unsettled.</td>
+</tr>
+<tr>
+<td>Redis transport adapter</td>
+<td>Redis and an external consumer</td>
+<td><code>transport.publish</code> or <code>telemetry.emit</code> payload plus idempotency identity</td>
+<td>RESP over <code>redis:</code> or TLS-protected <code>rediss:</code></td>
+<td>Redis stream and deduplication key; lifecycle authority stays in Nova</td>
+<td>Redis stream length and deduplication TTL from platform configuration</td>
+<td>Delivery can retry within adapter policy. Redis loss cannot create or change a lifecycle decision.</td>
+</tr>
+<tr>
+<td>Source-capable stage or service</td>
+<td>Git repository and isolated workspace</td>
+<td>Repository identity, immutable revision, allowed path, commit, merge, or sync request</td>
+<td>Git process through the selected capability adapter</td>
+<td>Git object database; Nova stores the accepted commit identity</td>
+<td>Repository owner and workspace-cleanup policy</td>
+<td>The operation stops on identity or path mismatch. Recovery does not substitute the current branch head.</td>
+</tr>
+<tr>
+<td>Buster container-build provider</td>
+<td>BuildKit and OCI registry</td>
+<td>Bounded build context, Dockerfile, platform, image reference, and digest-bearing result</td>
+<td>BuildKit API and OCI registry protocol</td>
+<td>BuildKit cache is derived; registry content digest is the image authority</td>
+<td>BuildKit cache policy and registry retention policy</td>
+<td>The suite reports an execution error or failed check. It does not treat a local cache hit as a published image.</td>
+</tr>
+<tr>
+<td>Prism services</td>
+<td>PostgreSQL and artifact storage</td>
+<td>Projects, revisions, operations, approvals, retrieval records, bundles, and artifact identities</td>
+<td>PostgreSQL protocol and artifact capability calls</td>
+<td>PostgreSQL owns relational design state; artifact storage owns immutable bytes</td>
+<td>Prism database and artifact retention policy</td>
+<td>Prism stops the affected operation. It can rebuild a declared projection, but it cannot recreate an approval from a preview.</td>
+</tr>
+<tr>
+<td>Private service</td>
+<td>Authorized remote user or test client</td>
+<td>Service-specific HTTP route</td>
+<td>Kubernetes Service plus Tailscale exposure when the declared path needs private external access</td>
+<td>The service store remains authoritative; Tailscale stores connectivity state only</td>
+<td>Service owner and Tailscale operator</td>
+<td>The service can remain healthy while the route is unavailable. Route recovery must not replay product work.</td>
+</tr>
+<tr>
+<td>Helm or Argo CD owner</td>
+<td>Kubernetes API</td>
+<td>Rendered Kubernetes objects and declared ownership labels</td>
+<td>Kubernetes API</td>
+<td>Kubernetes stores desired and observed object state; component stores retain product truth</td>
+<td>The selected deployment owner</td>
+<td>Reconciliation stops or reports drift. Direct Helm and Argo CD must not control the same object set.</td>
+</tr>
+<tr>
+<td>Runtime and platform exporters</td>
+<td>Monitoring stack</td>
+<td>Metrics, logs, and traces with correlation identity</td>
+<td>Scrape, log, or trace protocol selected by the deployment</td>
+<td>Monitoring storage is a diagnostic projection</td>
+<td>Monitoring retention policy</td>
+<td>Loss reduces visibility. It does not change the run, attempt, effect, or approval state.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — component-boundary communication</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/stage-executor.ts#L31-L119">Nova dispatches a resolved attempt through one bounded stage context</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197">The remote-plan transport binds HTTP jobs, results, and evidence to stable identities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/telemetry/observers.ts#L14-L106">Observer delivery records attempts and advances provenance-bound checkpoints</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L14-L91">The Redis adapter publishes with a stream bound and a deduplication key</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/attempt-executor.ts#L30-L106">Worker Core binds specialist work to the generic execution hooks</a>.</p>
+<p><strong>Limit:</strong> The table proves source-level contracts and ownership. Deployment-specific retention periods and live reachability still require the target environment's configuration and acceptance evidence.</p>
+</blockquote>
+<p><strong>Why this design exists:</strong> Recovery needs one answer for each fact.
+A cache or transport copy can disappear without changing the fact's owner.</p>
+<p><strong>Cost:</strong> Each handoff needs explicit identities and duplicate checks.
+The system stops when it cannot prove that two copies describe the same fact.</p>
+<p><strong>Rejected alternative:</strong> A shared database or message bus does not become one
+universal authority merely because several components can read it.</p>
+<blockquote>
+<p><strong>Source evidence — retained authority across boundaries</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L36-L43">Nova writes graph and registry snapshots before execution</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/durable-invocation.ts#L88-L117">The effect path records a request before invocation and records the returned receipt</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-result-import.ts#L213-L247">Nova verifies a terminal Buster result and its evidence before import</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-executor.ts#L20-L60">Worker Core writes admission before launch and seals the result before delivery</a>.</p>
+<p><strong>Limit:</strong> These source paths prove ordering and validation in the inspected implementation. They do not prove storage durability or service availability in a live environment.</p>
+</blockquote>
+<h2 id="read-next">Read Next</h2>
+<ul>
+<li><a href="request-state-recovery.html">Request, State, and Recovery</a> follows these boundaries through a complete run.</li>
+<li><a href="nova-core.html">Nova Core</a> gives the detailed lifecycle, scheduling, effect, recovery, and audit model.</li>
+<li><a href="plugin-runtime.html">Plugin Runtime</a> gives the detailed package, registry, grant, activation, and isolation model.</li>
+<li><a href="worker-core.html">Worker Core</a> gives the detailed claim, process, resource, journal, ownership, and result model.</li>
+<li><a href="deployment-and-trust.html">Deployment and Trust</a> maps them to pods, identities, networks, and stores.</li>
+<li><a href="../extend/plugin-catalogue/README.html">Plugin catalogue</a> lists discovered extension packages.</li>
+<li><a href="../decisions/README.html">Decisions</a> preserves the detailed reasons and rejected alternatives.</li>
+</ul>
+</main></body></html>

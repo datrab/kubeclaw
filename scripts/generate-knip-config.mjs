@@ -93,7 +93,9 @@ const workspaces = {
   '.': {
     // The live Kubernetes fixture invokes this host executable via execFileSync;
     // it is not a JavaScript module import.
-    ignoreUnresolved: ['^/usr/local/bin/kubectl$'],
+    ignoreUnresolved: ['^/usr/local/bin/kubectl$', '^/usr/bin/systemd-notify$'],
+    // The lint plugin invokes the root-installed ESLint CLI via safeExec.
+    ignoreDependencies: ['eslint'],
     entry: [
       'scripts/**/*.{mjs,cjs}',
       'charts/kubeclaw/files/config/eslint*.mjs',
@@ -161,6 +163,9 @@ const workspaces = {
     ignoreDependencies: ['@openai/codex'],
   },
   'tools/ops-mcp': {
+    // @modelcontextprotocol/node and @hono/node-server require this peer;
+    // the ops server imports the MCP transport, not Hono directly.
+    ignoreDependencies: ['hono'],
     entry: ['src/server.mjs', 'test/*.test.mjs'],
     project: ['src/**/*.mjs', 'test/**/*.mjs'],
   },

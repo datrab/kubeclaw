@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/README.html"></head><body><main>
+<h1 id="extend-kubeclaw">Extend KubeClaw</h1>
+<p>Status: implemented with the verification limits stated in each guide
+Audience: plugin author, engine author, maintainer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.ts">skills/common/plugin-runtime/foundation/config/platform.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry">skills/common/plugin-runtime/foundation/registry</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/package-ownership.json">packaging/runtime/package-ownership.json</a>
+Evidence revision: <code>bcf032f241b432bf920baa9ee5f727947921447d</code>
+Applies to: pipeline-plugin-v2, current OpenClaw and Codex manifests, Worker Core contracts
+Last verified: source and focused local checks on 2026-09-16</p>
+<p>The design explanations below describe the current contract tradeoffs. A linked
+ADR supplies historical decision evidence where available. Other benefits, costs,
+and alternatives are inferences from the current boundaries, not a claim about
+the original authors' motives.</p>
+<h2 id="purpose">Purpose</h2>
+<p>Use this guide before you create a package or change Core.
+It identifies the smallest supported change that solves your problem.</p>
+<p>Use <a href="documentation-maintenance.html">Maintain documentation</a> to connect a source
+change to its page owner, generated facts, checks, reader task, and safe retirement.</p>
+<p>Use the <a href="developer-handbook.html">Developer handbook</a> to prepare a checkout,
+choose component checks, and follow build and release procedures.
+For a bounded Core change, use the <a href="examples/platform-change-nova-lifecycle.json">administrative retry diagnostic exercise</a>
+with the handbook’s <a href="developer-handbook.html#practice-a-bounded-lifecycle-change-and-removal">lifecycle change procedure</a>.</p>
+<ul>
+<li><a href="platform/README.html">Platform component changes</a> selects the smallest internal owner, required checks, compatibility, and recovery boundaries.</li>
+</ul>
+<p>Use <a href="platform/prism.html">Extend Prism safely</a> when the change belongs to a Prism
+contract, service, document operation, renderer, retrieval path, Studio,
+storage boundary, or pipeline handoff.</p>
+<p>Use <a href="buster.html">Extend Buster</a> for a test provider, fixture, suite, or report
+adapter. Use <a href="platform/buster.html">Develop Buster Core</a> for plan, wire, engine,
+result-authority, capability, or namespace-controller changes.</p>
+<p>Use <a href="lint.html">Extend Lint</a> for lint policy, rules, tools, targets, baselines,
+Kubernetes policy packs, report validation, and their proof requirements.</p>
+<p>A smaller change has fewer trust, recovery, packaging, and maintenance consequences.
+However, configuration cannot create behavior that no installed component supplies.</p>
+<p>This guide assumes that you understand Git, TypeScript, JSON Schema, and automated tests.
+It explains KubeClaw-specific boundaries when they affect your choice.</p>
+<h2 id="first-identify-the-behavior-owner">First Identify The Behavior Owner</h2>
+<p>Ask one question first: which component must own the new behavior?</p>
+<ul>
+<li>A project declaration selects existing behavior.</li>
+<li>A pipeline registration adds bounded behavior to an existing runtime.</li>
+<li>A host extension adds behavior to OpenClaw or Codex.</li>
+<li>A specialist engine interprets one class of worker attempt.</li>
+<li>A runtime role assembles an exact deployable package set.</li>
+<li>Core owns scheduling, canonical state, and the extension security model.</li>
+</ul>
+<p>Do not start with a directory name.
+Start with the responsibility that must change.</p>
+<h2 id="decision-flow">Decision Flow</h2>
+<pre><code class="language-mermaid">flowchart TD
+    Need[State the new behavior] --&gt; Existing{Does an installed component already supply it?}
+    Existing --&gt;|Yes| Config[Change project or platform configuration]
+    Existing --&gt;|No| Host{Does a host own the behavior?}
+    Host --&gt;|OpenClaw or Codex| HostExtension[Create a host extension]
+    Host --&gt;|Pipeline runtime| Runtime{What does the behavior do?}
+    Runtime --&gt;|Run one graph step| Stage[Create a stage]
+    Runtime --&gt;|Consume committed events| Observer[Create an observer]
+    Runtime --&gt;|Use an existing external authority type| Adapter[Create a capability adapter]
+    Runtime --&gt;|Run a test or fixture| Provider[Create a test provider]
+    Runtime --&gt;|Read a declared report format| Report[Create a report adapter]
+    Runtime --&gt;|Interpret specialist worker attempts| Engine[Change or add a specialist engine]
+    Runtime --&gt;|Change scheduling, canonical state, or trust rules| Core[Change Core or Foundation]
+    Engine --&gt; Role{Does a current role contain the required packages?}
+    Role --&gt;|Yes| ExistingRole[Change the engine in that role]
+    Role --&gt;|No| NewRole[Add package ownership and a runtime role]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State the new behavior</td>
+<td>Directed connection</td>
+<td>Does an installed component already supply it?</td>
+</tr>
+<tr>
+<td>Does an installed component already supply it?</td>
+<td>Directed connection — Yes</td>
+<td>Change project or platform configuration</td>
+</tr>
+<tr>
+<td>Does an installed component already supply it?</td>
+<td>Directed connection — No</td>
+<td>Does a host own the behavior?</td>
+</tr>
+<tr>
+<td>Does a host own the behavior?</td>
+<td>Directed connection — OpenClaw or Codex</td>
+<td>Create a host extension</td>
+</tr>
+<tr>
+<td>Does a host own the behavior?</td>
+<td>Directed connection — Pipeline runtime</td>
+<td>What does the behavior do?</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Run one graph step</td>
+<td>Create a stage</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Consume committed events</td>
+<td>Create an observer</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Use an existing external authority type</td>
+<td>Create a capability adapter</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Run a test or fixture</td>
+<td>Create a test provider</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Read a declared report format</td>
+<td>Create a report adapter</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Interpret specialist worker attempts</td>
+<td>Change or add a specialist engine</td>
+</tr>
+<tr>
+<td>What does the behavior do?</td>
+<td>Directed connection — Change scheduling, canonical state, or trust rules</td>
+<td>Change Core or Foundation</td>
+</tr>
+<tr>
+<td>Change or add a specialist engine</td>
+<td>Directed connection</td>
+<td>Does a current role contain the required packages?</td>
+</tr>
+<tr>
+<td>Does a current role contain the required packages?</td>
+<td>Directed connection — Yes</td>
+<td>Change the engine in that role</td>
+</tr>
+<tr>
+<td>Does a current role contain the required packages?</td>
+<td>Directed connection — No</td>
+<td>Add package ownership and a runtime role</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: First check whether configuration can select installed behavior.
+If not, identify the host and the behavior type.
+Pipeline behavior uses one of five registration types when a public contract fits.
+Specialist attempt semantics belong in an engine.
+Scheduling, canonical state, new authority types, and registry rules require a Core or Foundation change.</p>
+<h2 id="quick-choice-table">Quick Choice Table</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Smallest fitting change</th>
+<th>Do not use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select or configure an installed pipeline or host component</td>
+<td>Configuration</td>
+<td>The required implementation or capability ID does not exist</td>
+</tr>
+<tr>
+<td>Add one typed graph operation</td>
+<td>Stage</td>
+<td>The work only observes events or performs a reusable external effect</td>
+</tr>
+<tr>
+<td>Send telemetry or notifications from committed events</td>
+<td>Observer</td>
+<td>Delivery must change pipeline state</td>
+</tr>
+<tr>
+<td>Access a controlled external resource</td>
+<td>Capability adapter</td>
+<td>The capability vocabulary has no matching authority type</td>
+</tr>
+<tr>
+<td>Execute a test or manage a test fixture</td>
+<td>Test provider</td>
+<td>The change decides pipeline scheduling or quality policy</td>
+</tr>
+<tr>
+<td>Normalize one declared report format</td>
+<td>Report adapter</td>
+<td>The code executes the test or decides whether the gate passes</td>
+</tr>
+<tr>
+<td>Add OpenClaw hooks or tools</td>
+<td>OpenClaw extension</td>
+<td>Nova must schedule the behavior as a graph stage</td>
+</tr>
+<tr>
+<td>Add Codex-facing skills</td>
+<td>Codex plugin</td>
+<td>The running pipeline must load the code</td>
+</tr>
+<tr>
+<td>Interpret a new specialist attempt contract</td>
+<td>Worker engine plus role packaging</td>
+<td>One pipeline stage can complete the work through public capabilities</td>
+</tr>
+<tr>
+<td>Assemble a new deployable runtime identity</td>
+<td>Runtime role plus package ownership</td>
+<td>An existing role already owns the behavior</td>
+</tr>
+<tr>
+<td>Change lifecycle, scheduling, trust, registry, or capability vocabulary</td>
+<td>Core or Foundation change</td>
+<td>A public extension contract already contains the required authority</td>
+</tr>
+</tbody>
+</table>
+<p>The term “integration” does not name a registration type.
+Classify an integration by its behavior.
+Use an adapter for an external effect, an observer for event delivery, or a host extension for host hooks.</p>
+<h2 id="choose-configuration-first">Choose Configuration First</h2>
+<p>Use configuration when all required code and public contract types already exist.
+Configuration can select behavior and set values.
+It cannot create a new implementation.</p>
+<p>Project configuration can:</p>
+<ul>
+<li>choose implementation, lint, review, and test behavior that the project compiler supports;</li>
+<li>supply stage configuration and a complete, digest-bound provider plan;</li>
+<li>select installed stage types in an explicit <code>pipeline-definition.v2</code> graph;</li>
+<li>set graph concurrency and stage execution limits in that explicit graph;</li>
+<li>use only registrations and capability grants that the platform already supplies.</li>
+</ul>
+<p>The higher-level project file and an explicit pipeline graph are not the same input.
+The project compiler owns its graph shape and several execution limits.
+Do not assume that every field in <code>pipeline-definition.v2</code> is a project-file option.</p>
+<p>A resolved test plan already contains the selected provider and report-adapter identities.
+The test-plan resolver binds those identities from the installed registry.
+Resolver policy can select an exact report adapter for a format.
+Project input does not independently load a report adapter.</p>
+<p>Platform configuration can:</p>
+<ul>
+<li>point to operator-staged installation roots;</li>
+<li>identify trusted built-in roots and approved external package digests;</li>
+<li>map each capability ID to an installed capability-adapter registration;</li>
+<li>grant bounded capability constraints to registrations;</li>
+<li>configure adapters and observers;</li>
+<li>activate adapters explicitly and observers through their configured registration IDs;</li>
+<li>set storage, shutdown, isolation, and administrative identities.</li>
+</ul>
+<p>Capability-provider selection is not test-provider selection.
+The <code>providers</code> field in <code>pipeline-platform.v2</code> maps capability IDs to adapters.
+Buster test providers come from the installed registry and a resolved test plan.</p>
+<p>Project input cannot add an installation root or grant Foundation plugin authority.
+This rule prevents a repository from installing executable code through its own pipeline declaration.</p>
+<p>A project can carry a complete Buster provider plan with its own <code>grants</code> field.
+Those grants belong to bounded test-provider execution in that resolved plan.
+They do not modify <code>pipeline-platform.v2.grants</code>, install a package, or authorize a pipeline registration.</p>
+<p><strong>Why this boundary exists:</strong> Project authors control requested work.
+Operators control installed code and resource authority.
+Combining both powers would let a repository approve its own executable dependencies.</p>
+<p><strong>Cost:</strong> An operator must stage and approve new code before a project can select it.</p>
+<p><strong>Reconsider when:</strong> A future installation service can preserve independent trust approval, immutable package identity, and rollback evidence.</p>
+<blockquote>
+<p><strong>Source evidence — configuration selects but does not create authority</strong></p>
+<p><strong>Platform fields:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L27"><code>PlatformConfig</code> separates installation, trust, providers, grants, adapters, and observers</a>.</p>
+<p><strong>Capability mapping:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L119">Foundation resolves <code>platform.providers</code> as capability-to-adapter mappings and rejects missing or invalid providers</a>.</p>
+<p><strong>Runtime sequence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/engine-runtime.ts#L29-L50"><code>prepareRuntime()</code> discovers packages before it resolves grants and activates registrations</a>.</p>
+<p><strong>Project compiler:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/project/compiler.ts#L60-L113">The compiler fixes its stage execution policy and validates the supplied resolved provider plan and its digest</a>.</p>
+<p><strong>Explicit graph:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L529">The pipeline schema exposes graph concurrency and stage execution fields</a>.</p>
+<p><strong>Negative test:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L44-L63">The platform check rejects project-controlled installation roots</a>.</p>
+<p><strong>Decision:</strong> <a href="../decisions/core-and-plugins.html#adr-007-grant-bounded-capabilities-instead-of-ambient-authority">ADR-007 explains the separate operator grant</a>.</p>
+<p><strong>Local result:</strong> The focused platform-configuration check passed on 2026-09-16.</p>
+</blockquote>
+<h2 id="choose-a-pipeline-registration">Choose A Pipeline Registration</h2>
+<p>Use a pipeline plugin when the pipeline runtime must load new code through <code>pipeline-plugin-v2</code>.
+One package can declare several registrations.
+Each registration has its own identity and contract fields.
+Configuration and capability fields differ by registration type.</p>
+<p>The repository currently contains 48 pipeline packages and 67 registrations.
+The <a href="plugin-catalogue/README.html">plugin catalogue</a> lists the installed packages.</p>
+<p>The five registration types are not interchangeable.
+Choose the type that matches the responsibility.</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Selection owner</th>
+<th>Execution owner</th>
+<th>Authority model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage</td>
+<td>Pipeline graph plus Nova runtime preparation</td>
+<td>Nova through Foundation activation</td>
+<td>Requests declared capabilities; Core interprets the result</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>Platform observer configuration</td>
+<td>Nova observer runtime through Foundation activation</td>
+<td>Requests capabilities; cannot change lifecycle state</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>Platform provider mapping and active-adapter list</td>
+<td>Nova adapter runtime through Foundation activation</td>
+<td>Provides declared capability IDs and can request declared dependencies</td>
+</tr>
+<tr>
+<td>Test provider</td>
+<td>Resolved test plan bound to an installed provider contract</td>
+<td>Buster provider sandbox</td>
+<td>Receives the provider context and the plan's bounded grants</td>
+</tr>
+<tr>
+<td>Report adapter</td>
+<td>Resolver policy or one unambiguous installed format implementation</td>
+<td>Buster report-adapter sandbox</td>
+<td>Receives bounded report bytes and runtime limits; the manifest has no capability request</td>
+</tr>
+</tbody>
+</table>
+<h3 id="stage">Stage</h3>
+<p>A stage performs one graph operation and returns a typed stage result.
+Core interprets that result and changes canonical lifecycle state.</p>
+<p>Choose a stage when:</p>
+<ul>
+<li>the graph must order the new operation;</li>
+<li>the operation needs declared input and result schemas;</li>
+<li>retry, timeout, remediation, or wait behavior applies to the graph step;</li>
+<li>the result can use the existing stage-result outcomes.</li>
+</ul>
+<p>Do not use a stage to bypass a capability adapter.
+A stage requests authority through its invocation context.
+It does not import privileged runtime services directly.</p>
+<h3 id="observer">Observer</h3>
+<p>An observer consumes committed events through explicit subscriptions.
+It owns delivery policy and a checkpoint schema.</p>
+<p>Choose an observer for telemetry, notification, or another event projection.
+Do not use an observer to advance the scheduler or rewrite canonical history.</p>
+<p>An observer can fail delivery according to its declared policy.
+That policy does not give the observer lifecycle authority.</p>
+<h3 id="capability-adapter">Capability Adapter</h3>
+<p>An adapter supplies one or more existing capability IDs.
+It performs a controlled external operation and returns a receipt.</p>
+<p>Choose an adapter for Git, HTTP, artifact, secret, transport, or state access.
+The capability vocabulary must already contain the required authority type.</p>
+<p>Adding a new capability ID changes the security model.
+That work belongs in Foundation and requires a Core-level review.</p>
+<p>Current activation rejects an external long-lived capability adapter.
+Such an adapter needs a persistent isolated adapter runtime that the current activation path does not provide.</p>
+<h3 id="test-provider">Test Provider</h3>
+<p>A test provider executes one declared test or fixture contract for Buster.
+It declares ports, evidence types, retry safety, matrix fields, and report formats.</p>
+<p>Choose a provider when the work produces test facts or owns fixture preparation and cleanup.
+Do not place Buster test semantics in Nova or neutral Worker Core.</p>
+<p>A suite composes existing provider declarations.
+Create or change suite configuration when existing providers already supply every required operation.</p>
+<h3 id="report-adapter">Report Adapter</h3>
+<p>A report adapter normalizes one declared report format.
+It identifies the format, contract version, media types, module, and export.</p>
+<p>Choose a report adapter when a provider already produces the report.
+Do not let a report adapter execute tests or decide gate policy.</p>
+<blockquote>
+<p><strong>Source evidence — five different registration contracts</strong></p>
+<p><strong>Contract:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L194-L449">The manifest schema defines stage, observer, adapter, test-provider, and report-adapter arrays</a>.</p>
+<p><strong>Registry:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317"><code>buildRegistry()</code> creates separate indexes and rejects conflicting ownership</a>.</p>
+<p><strong>SDK:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/sdk/src/index.ts#L1-L28">The public SDK exports invocation, observer, adapter, provider, and report types</a>.</p>
+<p><strong>Decision:</strong> <a href="../decisions/core-and-plugins.html#adr-006-use-five-explicit-registration-surfaces">ADR-006 explains why one generic hook does not fit all five responsibilities</a>.</p>
+<p><strong>Local result:</strong> Contract and registry checks passed on 2026-09-16.</p>
+</blockquote>
+<h2 id="understand-discovery-binding-and-activation">Understand Discovery, Binding, And Activation</h2>
+<p>Package presence does not mean that executable code ran.
+KubeClaw uses two execution paths after common discovery.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Applicable surfaces</th>
+<th>What happens</th>
+<th>What it proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discovery and registry build</td>
+<td>All five pipeline surfaces</td>
+<td>Foundation reads <code>plugin.json</code>, schemas, package bytes, trust evidence, and provenance; it then indexes every registration</td>
+<td>The package is present, trusted for discovery, and structurally acceptable</td>
+</tr>
+<tr>
+<td>Nova enablement</td>
+<td>Stage, observer, capability adapter</td>
+<td>The graph and platform configuration select registrations; Nova resolves capability grants</td>
+<td>Policy permits those selected registrations and resources</td>
+</tr>
+<tr>
+<td>Foundation activation</td>
+<td>Stage, observer, capability adapter</td>
+<td>Foundation checks package integrity and loads only selected executable exports</td>
+<td>Nova can invoke those three selected surface types</td>
+</tr>
+<tr>
+<td>Test-plan binding</td>
+<td>Test provider, report adapter</td>
+<td>The resolver binds provider contracts and report formats to exact installed package identities</td>
+<td>The resolved plan names the implementation that Buster must use</td>
+</tr>
+<tr>
+<td>Buster execution</td>
+<td>Test provider, report adapter</td>
+<td>Buster verifies package identity, snapshots code, and invokes a bounded child process</td>
+<td>Buster can execute the plan-bound provider or normalize its report</td>
+</tr>
+</tbody>
+</table>
+<p>This separation stops package code from running during discovery.
+It also gives a run a stable package and registration identity.</p>
+<p>Trusted first-party stages, observers, and adapters can run after import auditing.
+External stages and observers use Foundation's isolated invocation path.
+External capability adapters stop at the unsupported persistent-host boundary described above.</p>
+<p>Test providers and report adapters do not use <code>activateRegistry()</code>.
+Buster loads them through separate sandboxed runtimes after test-plan binding.</p>
+<blockquote>
+<p><strong>Source evidence — inert discovery before selected activation</strong></p>
+<p><strong>Discovery:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/discovery.ts#L77-L137"><code>discoverPackages()</code> reads manifests, computes package digests, and records trust provenance</a>.</p>
+<p><strong>Activation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137"><code>activateRegistry()</code> checks package integrity and loads only enabled stages, observers, and adapters</a>.</p>
+<p><strong>External limit:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L86">The loader rejects external adapters without a persistent isolated adapter runtime</a>.</p>
+<p><strong>Test-plan binding:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/test-gates/resolver.ts#L512-L585">The resolver binds installed provider contracts and exact report-adapter identities into each plan node</a>.</p>
+<p><strong>Provider execution:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/provider-loader.ts#L36-L79">Buster verifies the provider package digest and creates an attempt-specific snapshot</a>.</p>
+<p><strong>Report execution:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/report-adapter-runtime.ts#L266-L320">Buster verifies report bytes and package identity before it runs the selected adapter</a>.</p>
+<p><strong>Decision:</strong> <a href="../decisions/core-and-plugins.html#adr-005-discover-inert-manifests-and-freeze-exact-registrations">ADR-005 explains inert discovery and frozen registration identity</a>.</p>
+</blockquote>
+<h2 id="choose-a-host-extension">Choose A Host Extension</h2>
+<p>OpenClaw and Codex use their own host manifests.
+They do not use <code>pipeline-plugin-v2</code> registration arrays.</p>
+<p>Choose an OpenClaw extension when OpenClaw must load hooks or tools.
+The current repository contains an agent observer and the Prism tool extension.</p>
+<p>Use OpenClaw host configuration instead when an installed extension already exposes
+the required hook or tool and its configuration schema contains the required field.</p>
+<p>Choose a Codex plugin when Codex must expose a skill or another Codex-facing resource.
+The current <code>kubeclaw-ops</code> package points Codex to its troubleshooting skill.</p>
+<p>Host installation does not add a Nova stage.
+Pipeline installation does not activate a host extension.
+When both hosts need related behavior, document and test both activation paths.</p>
+<p>Repository presence also does not prove host installation.
+Use host-specific inspection to prove activation and a real invocation to prove reachability.</p>
+<blockquote>
+<p><strong>Source evidence — host manifests remain separate</strong></p>
+<p><strong>OpenClaw observer:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L1-L35">The manifest declares startup activation and its configuration schema</a>.</p>
+<p><strong>Prism tools:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17">The Prism manifest declares two OpenClaw tool contracts</a>.</p>
+<p><strong>Codex:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L25">The Ops manifest points to its skill directory and declares read capability</a>.</p>
+<p><strong>Limit:</strong> These manifest links prove repository declarations. They do not prove installation in an OpenClaw or Codex host.</p>
+</blockquote>
+<h2 id="choose-a-worker-engine-or-runtime-role">Choose A Worker Engine Or Runtime Role</h2>
+<p>Worker Core runs one bounded attempt.
+A specialist engine gives domain meaning to that attempt.
+Buster interprets test work, while Prism interprets design work.</p>
+<p>Choose an engine change when a new specialist operation needs Worker Core limits, progress, logs, cancellation, evidence, and cleanup.
+Do not create an engine when one stage and public capabilities can complete the work.</p>
+<p>The current repository has no drop-in worker-engine manifest or generic engine loader.
+An engine requires source, contract integration, package ownership, and inclusion in a runtime role.</p>
+<p>A runtime role is the deployable identity and exact package set.
+Current role manifests declare Nova, Buster, and Prism.
+A new role requires packaging, entrypoint, ownership, dependency, image, deployment, and operational work.</p>
+<p><strong>Why this boundary exists:</strong> Worker Core owns neutral execution mechanics.
+The engine owns specialist meaning.
+The role limits which code and authority reach one deployed process.</p>
+<p><strong>Cost:</strong> A new engine or role has a larger release and operations surface than a plugin.</p>
+<p><strong>Reconsider when:</strong> The repository adds a stable engine manifest and a loader with equivalent trust, compatibility, and recovery controls.</p>
+<blockquote>
+<p><strong>Source evidence — engines and roles are package boundaries</strong></p>
+<p><strong>Worker contract:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-worker-core/v1/src/types.ts#L28-L65"><code>WorkerProfileV1</code> binds a worker type to one exact engine identity</a>.</p>
+<p><strong>Operation boundary:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L62-L89"><code>WorkerAttemptOperation</code> defines prepare, execute, terminate, measurement, cleanup, and evidence hooks</a>.</p>
+<p><strong>Package ownership:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/package-ownership.json#L8-L26">The package map assigns Worker Core and specialist engines to explicit roles</a>.</p>
+<p><strong>Role example:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/nova.json#L1-L61">The Nova role lists every package, plugin, and host extension in its bundle</a>.</p>
+<p><strong>Local result:</strong> The runtime-role manifest check passed for all three roles on 2026-09-16.</p>
+</blockquote>
+<h2 id="choose-a-core-or-foundation-change">Choose A Core Or Foundation Change</h2>
+<p>Change Core or Foundation only when no public extension contract can own the behavior safely.</p>
+<p>A Core or Foundation change applies when you must:</p>
+<ul>
+<li>add or change canonical lifecycle states or transitions;</li>
+<li>change graph scheduling, retry, remediation, wait, or cancellation authority;</li>
+<li>add a capability ID or change its resource constraints;</li>
+<li>change discovery, trust, grant, isolation, or activation rules;</li>
+<li>change frozen snapshot or compatibility semantics;</li>
+<li>add a public extension surface;</li>
+<li>change the neutral Worker Core protocol or ownership model.</li>
+</ul>
+<p>Plugins cannot receive <code>lifecycle.write</code>, <code>scheduler.advance</code>, <code>canonical_events.modify</code>, or <code>registry.mutate</code>.
+These names describe forbidden authority, not grantable capabilities.</p>
+<p><strong>Why this boundary exists:</strong> Extension code must not redefine the controls that contain it.</p>
+<p><strong>Cost:</strong> A Core change affects every compatible extension and requires wider regression evidence.</p>
+<p><strong>Reconsider when:</strong> A repeated need has stable semantics and can become a bounded public contract without leaking Core authority.</p>
+<blockquote>
+<p><strong>Source evidence — Core keeps control authority</strong></p>
+<p><strong>Capability boundary:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L109-L127">Foundation lists Core-only capability names and rejects unknown public capabilities</a>.</p>
+<p><strong>Lifecycle decision:</strong> <a href="../decisions/core-and-plugins.html#adr-001-core-owns-canonical-lifecycle-authority">ADR-001 explains why Core alone changes canonical lifecycle state</a>.</p>
+<p><strong>Role decision:</strong> <a href="../decisions/core-and-plugins.html#adr-012-assemble-exact-role-specific-runtime-bundles">ADR-012 explains exact role-specific runtime bundles</a>.</p>
+</blockquote>
+<h2 id="unsupported-shortcuts">Unsupported Shortcuts</h2>
+<p>The current implementation does not support these shortcuts:</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Why it stops</th>
+<th>Supported direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Put executable code in project configuration</td>
+<td>Project input has no installation authority</td>
+<td>Stage the package through operator-controlled installation and trust policy</td>
+</tr>
+<tr>
+<td>Use an unknown capability string</td>
+<td>Foundation uses a closed capability vocabulary</td>
+<td>Add a reviewed Foundation contract or use an existing capability</td>
+</tr>
+<tr>
+<td>Let a plugin update lifecycle state directly</td>
+<td>Core owns lifecycle transitions</td>
+<td>Return a typed result that Core interprets</td>
+</tr>
+<tr>
+<td>Import filesystem, process, network, or secrets authority directly</td>
+<td>Package boundaries require capability adapters</td>
+<td>Request the matching declared capability</td>
+</tr>
+<tr>
+<td>Run an external long-lived adapter through current activation</td>
+<td>The persistent isolated adapter host does not exist</td>
+<td>Use a trusted built-in adapter or implement the missing host separately</td>
+</tr>
+<tr>
+<td>Treat a suite as an executable scheduler</td>
+<td>Buster owns execution order and evidence rules</td>
+<td>Keep the suite declarative and add a provider when behavior is missing</td>
+</tr>
+<tr>
+<td>Load a Worker engine from <code>plugin.json</code></td>
+<td>No engine registration or generic engine loader exists</td>
+<td>Add engine code, contract integration, package ownership, and role inclusion</td>
+</tr>
+<tr>
+<td>Add an undeclared runtime role through project input</td>
+<td>Build-time manifests own role composition</td>
+<td>Add and verify the role through packaging and deployment work</td>
+</tr>
+<tr>
+<td>Assume a host manifest activates a pipeline plugin</td>
+<td>The hosts use different loaders and contracts</td>
+<td>Install and verify each host path separately</td>
+</tr>
+<tr>
+<td>Hot-reload package bytes into an active run</td>
+<td>A run binds immutable package identity</td>
+<td>Start later runs with the new package and retain old bytes for recovery</td>
+</tr>
+</tbody>
+</table>
+<h2 id="apply-the-decision-to-common-requests">Apply The Decision To Common Requests</h2>
+<table>
+<thead>
+<tr>
+<th>Request</th>
+<th>Choice</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Increase an installed stage timeout</td>
+<td>Configuration</td>
+<td>The stage and timeout field already exist</td>
+</tr>
+<tr>
+<td>Add another existing Buster suite to a gate</td>
+<td>Configuration</td>
+<td>The suite composes installed providers</td>
+</tr>
+<tr>
+<td>Run a new kind of source check in the graph</td>
+<td>Stage</td>
+<td>The graph must order a new typed operation</td>
+</tr>
+<tr>
+<td>Send committed failure events to a new sink</td>
+<td>Observer</td>
+<td>The sink consumes events and does not control state</td>
+</tr>
+<tr>
+<td>Call a new service through existing HTTP authority</td>
+<td>Configuration or adapter</td>
+<td>Reuse the adapter when its resource model fits; otherwise add an adapter</td>
+</tr>
+<tr>
+<td>Grant access to a new network origin</td>
+<td>Platform configuration</td>
+<td>The existing <code>network.http</code> capability already models origins</td>
+</tr>
+<tr>
+<td>Introduce a new external authority type</td>
+<td>Foundation plus adapter</td>
+<td>An adapter cannot invent a capability ID</td>
+</tr>
+<tr>
+<td>Execute a new browser test contract</td>
+<td>Test provider</td>
+<td>Buster must run and record test evidence</td>
+</tr>
+<tr>
+<td>Parse a new XML report dialect</td>
+<td>Report adapter</td>
+<td>Parsing does not execute the test or decide policy</td>
+</tr>
+<tr>
+<td>Add an OpenClaw design tool</td>
+<td>OpenClaw extension</td>
+<td>OpenClaw owns tool registration</td>
+</tr>
+<tr>
+<td>Change the Redis endpoint of the installed OpenClaw observer</td>
+<td>OpenClaw host configuration</td>
+<td>The installed extension already exposes Redis settings</td>
+</tr>
+<tr>
+<td>Add Codex troubleshooting instructions</td>
+<td>Codex plugin or skill</td>
+<td>Codex owns skill discovery</td>
+</tr>
+<tr>
+<td>Add a new specialist worker family</td>
+<td>Engine plus role packaging</td>
+<td>Worker Core supplies mechanics; use a new role only when no current role can own the package set</td>
+</tr>
+<tr>
+<td>Add a new terminal pipeline state</td>
+<td>Core</td>
+<td>Canonical lifecycle semantics change</td>
+</tr>
+</tbody>
+</table>
+<p>If two rows appear to fit, choose the row with the narrower authority.
+Then verify that the public contract contains every required input, output, failure, and cleanup behavior.</p>
+<h2 id="verify-your-choice-before-you-implement">Verify Your Choice Before You Implement</h2>
+<p>Write these facts before you create files:</p>
+<ol>
+<li>State the problem in one sentence.</li>
+<li>Name the component that must own the result.</li>
+<li>List the required inputs, outputs, state, and external effects.</li>
+<li>Identify the current public contract that contains those needs.</li>
+<li>List required capability IDs and resource constraints.</li>
+<li>State retry, duplicate-input, cancellation, resume, and cleanup behavior.</li>
+<li>Identify the host that discovers and activates the code.</li>
+<li>Identify the runtime role that includes the package.</li>
+<li>State how a test will prove activation and one intentional failure.</li>
+<li>Record any need that the public contract cannot express.</li>
+</ol>
+<p>If item 10 changes authority or lifecycle semantics, stop the plugin design.
+Review a Core, Foundation, engine, or role change instead.</p>
+<h2 id="current-verification-boundary">Current Verification Boundary</h2>
+<p>The evidence on this page uses the revision in its metadata.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Result on 2026-09-16</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform configuration contract</td>
+<td>Passed</td>
+<td>Project input cannot add installation authority</td>
+</tr>
+<tr>
+<td>Plugin contract validation</td>
+<td>Passed</td>
+<td>The current manifest contract recognizes the declared v2 shapes</td>
+</tr>
+<tr>
+<td>Registry behavior</td>
+<td>Passed</td>
+<td>Discovery and registry conflict checks passed locally</td>
+</tr>
+<tr>
+<td>Runtime-role manifests</td>
+<td>Passed</td>
+<td>Three current roles have valid package and capability closure</td>
+</tr>
+<tr>
+<td>Full package-boundary check</td>
+<td>Failed</td>
+<td>The check rejects a current Buster quality-stage root contract import</td>
+</tr>
+</tbody>
+</table>
+<p>The package-boundary failure occurs after the required OpenClaw contract generation step.
+The check rejects <code>@kubeclaw/pipeline-test-gate-contract</code> in <code>buster-quality-gate/src/stage.ts</code>.
+This result prevents a claim that the complete import-boundary suite passes.
+It does not change the narrower contract, registry, configuration, or role results above.</p>
+<p>These checks did not use a target cluster, OpenClaw host, Codex host, or external package installation.</p>
+<h2 id="continue-with-the-correct-guide">Continue With The Correct Guide</h2>
+<ul>
+<li><a href="first-plugin.html">Create And Activate A First Pipeline Plugin</a> covers package testing, role inclusion, activation, success, intentional failure, and reversal.</li>
+<li><a href="contracts.html">Understand The Five Pipeline Extension Contracts</a> compares stages, observers, capability adapters, test providers, and report adapters.</li>
+<li><a href="effectful-plugin.html">Build A Plugin That Uses External State Or Effects</a> explains idempotency, uncertain outcomes, retry, cancellation, resume, and cleanup.</li>
+<li><a href="buster.html">Extend Buster</a> covers providers, fixtures, suite templates, evidence, isolation, and report adapters.</li>
+<li><a href="nova.html">Extend Nova</a> covers stages, adapters, observers, role inclusion, and the lint authoring boundary.</li>
+<li><a href="host-and-engine.html">Extend Hosts, Worker Engines, And Runtime Roles</a> covers OpenClaw, Codex, specialist engines, and deployable role identities.</li>
+<li><a href="testing.html">Test And Manage An Extension</a> covers proof, diagnosis, update, replacement, disablement, removal, and remaining state.</li>
+<li><a href="plugin-catalogue/README.html">Plugin Catalogue</a> joins maintained guidance with generated facts and local results for every discovered package.</li>
+<li><a href="../understand/components-and-authority.html">System Components And Authority</a> explains how extensions fit the complete platform.</li>
+<li><a href="../decisions/core-and-plugins.html">Core And Plugin Decisions</a> preserves the design reasons and their evidence limits.</li>
+</ul>
+<p>The linked pipeline, effect, Buster, Nova, host, lifecycle, and catalogue guides add detailed procedures.
+This page remains the authority for selecting the correct extension class.</p>
+</main></body></html>

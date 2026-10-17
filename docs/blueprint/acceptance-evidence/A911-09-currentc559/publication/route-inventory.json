@@ -1,0 +1,1002 @@
+{
+  "schemaVersion": "kubeclaw-publication-routes.v1",
+  "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "routes": [
+    {
+      "route": "/README.html",
+      "sourcePath": "docs/site/README.md",
+      "outputPath": "README.html",
+      "canonicalUrl": "/README.html"
+    },
+    {
+      "route": "/decisions/README.html",
+      "sourcePath": "docs/site/decisions/README.md",
+      "outputPath": "decisions/README.html",
+      "canonicalUrl": "/decisions/README.html"
+    },
+    {
+      "route": "/decisions/acceptance.html",
+      "sourcePath": "docs/site/decisions/acceptance.md",
+      "outputPath": "decisions/acceptance.html",
+      "canonicalUrl": "/decisions/acceptance.html"
+    },
+    {
+      "route": "/decisions/core-and-plugins.html",
+      "sourcePath": "docs/site/decisions/core-and-plugins.md",
+      "outputPath": "decisions/core-and-plugins.html",
+      "canonicalUrl": "/decisions/core-and-plugins.html"
+    },
+    {
+      "route": "/decisions/echo.html",
+      "sourcePath": "docs/site/decisions/echo.md",
+      "outputPath": "decisions/echo.html",
+      "canonicalUrl": "/decisions/echo.html"
+    },
+    {
+      "route": "/decisions/implementation.html",
+      "sourcePath": "docs/site/decisions/implementation.md",
+      "outputPath": "decisions/implementation.html",
+      "canonicalUrl": "/decisions/implementation.html"
+    },
+    {
+      "route": "/decisions/prism.html",
+      "sourcePath": "docs/site/decisions/prism.md",
+      "outputPath": "decisions/prism.html",
+      "canonicalUrl": "/decisions/prism.html"
+    },
+    {
+      "route": "/decisions/runtime-and-operations.html",
+      "sourcePath": "docs/site/decisions/runtime-and-operations.md",
+      "outputPath": "decisions/runtime-and-operations.html",
+      "canonicalUrl": "/decisions/runtime-and-operations.html"
+    },
+    {
+      "route": "/decisions/test-gate.html",
+      "sourcePath": "docs/site/decisions/test-gate.md",
+      "outputPath": "decisions/test-gate.html",
+      "canonicalUrl": "/decisions/test-gate.html"
+    },
+    {
+      "route": "/extend/README.html",
+      "sourcePath": "docs/site/extend/README.md",
+      "outputPath": "extend/README.html",
+      "canonicalUrl": "/extend/README.html"
+    },
+    {
+      "route": "/extend/buster.html",
+      "sourcePath": "docs/site/extend/buster.md",
+      "outputPath": "extend/buster.html",
+      "canonicalUrl": "/extend/buster.html"
+    },
+    {
+      "route": "/extend/contracts.html",
+      "sourcePath": "docs/site/extend/contracts.md",
+      "outputPath": "extend/contracts.html",
+      "canonicalUrl": "/extend/contracts.html"
+    },
+    {
+      "route": "/extend/developer-handbook.html",
+      "sourcePath": "docs/site/extend/developer-handbook.md",
+      "outputPath": "extend/developer-handbook.html",
+      "canonicalUrl": "/extend/developer-handbook.html"
+    },
+    {
+      "route": "/extend/documentation-maintenance.html",
+      "sourcePath": "docs/site/extend/documentation-maintenance.md",
+      "outputPath": "extend/documentation-maintenance.html",
+      "canonicalUrl": "/extend/documentation-maintenance.html"
+    },
+    {
+      "route": "/extend/effectful-plugin.html",
+      "sourcePath": "docs/site/extend/effectful-plugin.md",
+      "outputPath": "extend/effectful-plugin.html",
+      "canonicalUrl": "/extend/effectful-plugin.html"
+    },
+    {
+      "route": "/extend/first-plugin.html",
+      "sourcePath": "docs/site/extend/first-plugin.md",
+      "outputPath": "extend/first-plugin.html",
+      "canonicalUrl": "/extend/first-plugin.html"
+    },
+    {
+      "route": "/extend/host-and-engine.html",
+      "sourcePath": "docs/site/extend/host-and-engine.md",
+      "outputPath": "extend/host-and-engine.html",
+      "canonicalUrl": "/extend/host-and-engine.html"
+    },
+    {
+      "route": "/extend/lint.html",
+      "sourcePath": "docs/site/extend/lint.md",
+      "outputPath": "extend/lint.html",
+      "canonicalUrl": "/extend/lint.html"
+    },
+    {
+      "route": "/extend/nova.html",
+      "sourcePath": "docs/site/extend/nova.md",
+      "outputPath": "extend/nova.html",
+      "canonicalUrl": "/extend/nova.html"
+    },
+    {
+      "route": "/extend/platform/README.html",
+      "sourcePath": "docs/site/extend/platform/README.md",
+      "outputPath": "extend/platform/README.html",
+      "canonicalUrl": "/extend/platform/README.html"
+    },
+    {
+      "route": "/extend/platform/buster.html",
+      "sourcePath": "docs/site/extend/platform/buster.md",
+      "outputPath": "extend/platform/buster.html",
+      "canonicalUrl": "/extend/platform/buster.html"
+    },
+    {
+      "route": "/extend/platform/prism.html",
+      "sourcePath": "docs/site/extend/platform/prism.md",
+      "outputPath": "extend/platform/prism.html",
+      "canonicalUrl": "/extend/platform/prism.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/README.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/README.md",
+      "outputPath": "extend/plugin-catalogue/README.html",
+      "canonicalUrl": "/extend/plugin-catalogue/README.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw-agent-observer.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw-agent-observer.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw-agent-observer.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw-ops.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw-ops.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw-ops.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw-prism.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw-prism.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw-prism.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.agent-observability.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.agent-observability.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.agent-observability.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.api-flow.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.api-flow.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.api-flow.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.architecture-validator.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.artifact-store.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.artifact-store.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.artifact-store.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.axe.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.axe.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.axe.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.blueprint-sync.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.buster-quality-gate.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.case-study.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.case-study.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.case-study.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.command-runner.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.command-runner.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.command-runner.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.container-build.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.container-build.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.container-build.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.coverage-budget.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.delivery-lint.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.demo-handoff.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.direct-command.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.direct-command.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.direct-command.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.git-workspace.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.git-workspace.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.git-workspace.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.http.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.http.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.http.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.human-approval.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.human-approval.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.human-approval.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.implementation-agent.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.junit-report.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.junit-report.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.junit-report.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.lighthouse.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.lighthouse.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.lighthouse.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.lint.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.lint.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.lint.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.network-http.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.network-http.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.network-http.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.notification-observer.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.notification-observer.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.notification-observer.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.openapi.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.openapi.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.openapi.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.operator-messaging.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.pipeline-review.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.playwright.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.playwright.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.playwright.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.preflight-contract.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.prism-design.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.prism-design.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.prism-design.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.project-summary.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.project-summary.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.project-summary.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.redis-transport.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.redis-transport.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.redis-transport.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.remote-test-gate.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.repository-adapter.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.review.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.review.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.review.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.runtime-dispatch.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.secret-resolver.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.security-providers.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.security-providers.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.security-providers.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.size-budget.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.size-budget.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.size-budget.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.state-store.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.state-store.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.state-store.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.tailscale-exposure.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.telemetry-observer.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.telemetry-store.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.transport-publisher.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.visual.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.visual.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.visual.html"
+    },
+    {
+      "route": "/extend/plugin-catalogue/kubeclaw.wait-store.html",
+      "sourcePath": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "outputPath": "extend/plugin-catalogue/kubeclaw.wait-store.html",
+      "canonicalUrl": "/extend/plugin-catalogue/kubeclaw.wait-store.html"
+    },
+    {
+      "route": "/extend/testing.html",
+      "sourcePath": "docs/site/extend/testing.md",
+      "outputPath": "extend/testing.html",
+      "canonicalUrl": "/extend/testing.html"
+    },
+    {
+      "route": "/product-surfaces.html",
+      "sourcePath": "docs/site/product-surfaces.md",
+      "outputPath": "product-surfaces.html",
+      "canonicalUrl": "/product-surfaces.html"
+    },
+    {
+      "route": "/reference/README.html",
+      "sourcePath": "docs/site/reference/README.md",
+      "outputPath": "reference/README.html",
+      "canonicalUrl": "/reference/README.html"
+    },
+    {
+      "route": "/reference/api-object-updates.html",
+      "sourcePath": "docs/site/reference/api-object-updates.md",
+      "outputPath": "reference/api-object-updates.html",
+      "canonicalUrl": "/reference/api-object-updates.html"
+    },
+    {
+      "route": "/reference/buster-error-codes.html",
+      "sourcePath": "docs/site/reference/buster-error-codes.md",
+      "outputPath": "reference/buster-error-codes.html",
+      "canonicalUrl": "/reference/buster-error-codes.html"
+    },
+    {
+      "route": "/reference/buster-provider-configuration.html",
+      "sourcePath": "docs/site/reference/buster-provider-configuration.md",
+      "outputPath": "reference/buster-provider-configuration.html",
+      "canonicalUrl": "/reference/buster-provider-configuration.html"
+    },
+    {
+      "route": "/reference/buster-runtime-configuration.html",
+      "sourcePath": "docs/site/reference/buster-runtime-configuration.md",
+      "outputPath": "reference/buster-runtime-configuration.html",
+      "canonicalUrl": "/reference/buster-runtime-configuration.html"
+    },
+    {
+      "route": "/reference/buster-suites.html",
+      "sourcePath": "docs/site/reference/buster-suites.md",
+      "outputPath": "reference/buster-suites.html",
+      "canonicalUrl": "/reference/buster-suites.html"
+    },
+    {
+      "route": "/reference/capabilities.html",
+      "sourcePath": "docs/site/reference/capabilities.md",
+      "outputPath": "reference/capabilities.html",
+      "canonicalUrl": "/reference/capabilities.html"
+    },
+    {
+      "route": "/reference/cli.html",
+      "sourcePath": "docs/site/reference/cli.md",
+      "outputPath": "reference/cli.html",
+      "canonicalUrl": "/reference/cli.html"
+    },
+    {
+      "route": "/reference/configuration-change-impact.html",
+      "sourcePath": "docs/site/reference/configuration-change-impact.md",
+      "outputPath": "reference/configuration-change-impact.html",
+      "canonicalUrl": "/reference/configuration-change-impact.html"
+    },
+    {
+      "route": "/reference/configuration-compatibility.html",
+      "sourcePath": "docs/site/reference/configuration-compatibility.md",
+      "outputPath": "reference/configuration-compatibility.html",
+      "canonicalUrl": "/reference/configuration-compatibility.html"
+    },
+    {
+      "route": "/reference/configuration-errors.html",
+      "sourcePath": "docs/site/reference/configuration-errors.md",
+      "outputPath": "reference/configuration-errors.html",
+      "canonicalUrl": "/reference/configuration-errors.html"
+    },
+    {
+      "route": "/reference/configuration-precedence.html",
+      "sourcePath": "docs/site/reference/configuration-precedence.md",
+      "outputPath": "reference/configuration-precedence.html",
+      "canonicalUrl": "/reference/configuration-precedence.html"
+    },
+    {
+      "route": "/reference/configuration.html",
+      "sourcePath": "docs/site/reference/configuration.md",
+      "outputPath": "reference/configuration.html",
+      "canonicalUrl": "/reference/configuration.html"
+    },
+    {
+      "route": "/reference/contracts.html",
+      "sourcePath": "docs/site/reference/contracts.md",
+      "outputPath": "reference/contracts.html",
+      "canonicalUrl": "/reference/contracts.html"
+    },
+    {
+      "route": "/reference/documentation-governance.html",
+      "sourcePath": "docs/site/reference/documentation-governance.md",
+      "outputPath": "reference/documentation-governance.html",
+      "canonicalUrl": "/reference/documentation-governance.html"
+    },
+    {
+      "route": "/reference/documentation-site.html",
+      "sourcePath": "docs/site/reference/documentation-site.md",
+      "outputPath": "reference/documentation-site.html",
+      "canonicalUrl": "/reference/documentation-site.html"
+    },
+    {
+      "route": "/reference/endpoints.html",
+      "sourcePath": "docs/site/reference/endpoints.md",
+      "outputPath": "reference/endpoints.html",
+      "canonicalUrl": "/reference/endpoints.html"
+    },
+    {
+      "route": "/reference/environment-variables.html",
+      "sourcePath": "docs/site/reference/environment-variables.md",
+      "outputPath": "reference/environment-variables.html",
+      "canonicalUrl": "/reference/environment-variables.html"
+    },
+    {
+      "route": "/reference/errors.html",
+      "sourcePath": "docs/site/reference/errors.md",
+      "outputPath": "reference/errors.html",
+      "canonicalUrl": "/reference/errors.html"
+    },
+    {
+      "route": "/reference/events.html",
+      "sourcePath": "docs/site/reference/events.md",
+      "outputPath": "reference/events.html",
+      "canonicalUrl": "/reference/events.html"
+    },
+    {
+      "route": "/reference/glossary.html",
+      "sourcePath": "docs/site/reference/glossary.md",
+      "outputPath": "reference/glossary.html",
+      "canonicalUrl": "/reference/glossary.html"
+    },
+    {
+      "route": "/reference/helm-values.html",
+      "sourcePath": "docs/site/reference/helm-values.md",
+      "outputPath": "reference/helm-values.html",
+      "canonicalUrl": "/reference/helm-values.html"
+    },
+    {
+      "route": "/reference/host-and-prism-configuration.html",
+      "sourcePath": "docs/site/reference/host-and-prism-configuration.md",
+      "outputPath": "reference/host-and-prism-configuration.html",
+      "canonicalUrl": "/reference/host-and-prism-configuration.html"
+    },
+    {
+      "route": "/reference/images-and-digests.html",
+      "sourcePath": "docs/site/reference/images-and-digests.md",
+      "outputPath": "reference/images-and-digests.html",
+      "canonicalUrl": "/reference/images-and-digests.html"
+    },
+    {
+      "route": "/reference/lint-policy-generated.html",
+      "sourcePath": "docs/site/reference/lint-policy-generated.md",
+      "outputPath": "reference/lint-policy-generated.html",
+      "canonicalUrl": "/reference/lint-policy-generated.html"
+    },
+    {
+      "route": "/reference/lint-policy.html",
+      "sourcePath": "docs/site/reference/lint-policy.md",
+      "outputPath": "reference/lint-policy.html",
+      "canonicalUrl": "/reference/lint-policy.html"
+    },
+    {
+      "route": "/reference/lint-rules.html",
+      "sourcePath": "docs/site/reference/lint-rules.md",
+      "outputPath": "reference/lint-rules.html",
+      "canonicalUrl": "/reference/lint-rules.html"
+    },
+    {
+      "route": "/reference/nova-project.html",
+      "sourcePath": "docs/site/reference/nova-project.md",
+      "outputPath": "reference/nova-project.html",
+      "canonicalUrl": "/reference/nova-project.html"
+    },
+    {
+      "route": "/reference/pipeline-definition.html",
+      "sourcePath": "docs/site/reference/pipeline-definition.md",
+      "outputPath": "reference/pipeline-definition.html",
+      "canonicalUrl": "/reference/pipeline-definition.html"
+    },
+    {
+      "route": "/reference/pipeline-json.html",
+      "sourcePath": "docs/site/reference/pipeline-json.md",
+      "outputPath": "reference/pipeline-json.html",
+      "canonicalUrl": "/reference/pipeline-json.html"
+    },
+    {
+      "route": "/reference/pipeline-platform.html",
+      "sourcePath": "docs/site/reference/pipeline-platform.md",
+      "outputPath": "reference/pipeline-platform.html",
+      "canonicalUrl": "/reference/pipeline-platform.html"
+    },
+    {
+      "route": "/reference/platform-surfaces-generated.html",
+      "sourcePath": "docs/site/reference/platform-surfaces-generated.md",
+      "outputPath": "reference/platform-surfaces-generated.html",
+      "canonicalUrl": "/reference/platform-surfaces-generated.html"
+    },
+    {
+      "route": "/reference/plugin-configuration.html",
+      "sourcePath": "docs/site/reference/plugin-configuration.md",
+      "outputPath": "reference/plugin-configuration.html",
+      "canonicalUrl": "/reference/plugin-configuration.html"
+    },
+    {
+      "route": "/reference/project-pipeline-publication.html",
+      "sourcePath": "docs/site/reference/project-pipeline-publication.md",
+      "outputPath": "reference/project-pipeline-publication.html",
+      "canonicalUrl": "/reference/project-pipeline-publication.html"
+    },
+    {
+      "route": "/reference/roles-and-package-ownership.html",
+      "sourcePath": "docs/site/reference/roles-and-package-ownership.md",
+      "outputPath": "reference/roles-and-package-ownership.html",
+      "canonicalUrl": "/reference/roles-and-package-ownership.html"
+    },
+    {
+      "route": "/reference/schemas.html",
+      "sourcePath": "docs/site/reference/schemas.md",
+      "outputPath": "reference/schemas.html",
+      "canonicalUrl": "/reference/schemas.html"
+    },
+    {
+      "route": "/reference/sdk-exports.html",
+      "sourcePath": "docs/site/reference/sdk-exports.md",
+      "outputPath": "reference/sdk-exports.html",
+      "canonicalUrl": "/reference/sdk-exports.html"
+    },
+    {
+      "route": "/reference/sdk.html",
+      "sourcePath": "docs/site/reference/sdk.md",
+      "outputPath": "reference/sdk.html",
+      "canonicalUrl": "/reference/sdk.html"
+    },
+    {
+      "route": "/reference/secrets.html",
+      "sourcePath": "docs/site/reference/secrets.md",
+      "outputPath": "reference/secrets.html",
+      "canonicalUrl": "/reference/secrets.html"
+    },
+    {
+      "route": "/reference/service-routing.html",
+      "sourcePath": "docs/site/reference/service-routing.md",
+      "outputPath": "reference/service-routing.html",
+      "canonicalUrl": "/reference/service-routing.html"
+    },
+    {
+      "route": "/reference/stores-and-retention.html",
+      "sourcePath": "docs/site/reference/stores-and-retention.md",
+      "outputPath": "reference/stores-and-retention.html",
+      "canonicalUrl": "/reference/stores-and-retention.html"
+    },
+    {
+      "route": "/reference/verification-commands.html",
+      "sourcePath": "docs/site/reference/verification-commands.md",
+      "outputPath": "reference/verification-commands.html",
+      "canonicalUrl": "/reference/verification-commands.html"
+    },
+    {
+      "route": "/reference/worker-profiles-and-roles.html",
+      "sourcePath": "docs/site/reference/worker-profiles-and-roles.md",
+      "outputPath": "reference/worker-profiles-and-roles.html",
+      "canonicalUrl": "/reference/worker-profiles-and-roles.html"
+    },
+    {
+      "route": "/reference/workflows.html",
+      "sourcePath": "docs/site/reference/workflows.md",
+      "outputPath": "reference/workflows.html",
+      "canonicalUrl": "/reference/workflows.html"
+    },
+    {
+      "route": "/status/acceptance.html",
+      "sourcePath": "docs/site/status/acceptance.md",
+      "outputPath": "status/acceptance.html",
+      "canonicalUrl": "/status/acceptance.html"
+    },
+    {
+      "route": "/status/current.html",
+      "sourcePath": "docs/site/status/current.md",
+      "outputPath": "status/current.html",
+      "canonicalUrl": "/status/current.html"
+    },
+    {
+      "route": "/status/open-issues.html",
+      "sourcePath": "docs/site/status/open-issues.md",
+      "outputPath": "status/open-issues.html",
+      "canonicalUrl": "/status/open-issues.html"
+    },
+    {
+      "route": "/status/roadmap.html",
+      "sourcePath": "docs/site/status/roadmap.md",
+      "outputPath": "status/roadmap.html",
+      "canonicalUrl": "/status/roadmap.html"
+    },
+    {
+      "route": "/understand/README.html",
+      "sourcePath": "docs/site/understand/README.md",
+      "outputPath": "understand/README.html",
+      "canonicalUrl": "/understand/README.html"
+    },
+    {
+      "route": "/understand/archviewer.html",
+      "sourcePath": "docs/site/understand/archviewer.md",
+      "outputPath": "understand/archviewer.html",
+      "canonicalUrl": "/understand/archviewer.html"
+    },
+    {
+      "route": "/understand/buster-namespace-controller.html",
+      "sourcePath": "docs/site/understand/buster-namespace-controller.md",
+      "outputPath": "understand/buster-namespace-controller.html",
+      "canonicalUrl": "/understand/buster-namespace-controller.html"
+    },
+    {
+      "route": "/understand/buster.html",
+      "sourcePath": "docs/site/understand/buster.md",
+      "outputPath": "understand/buster.html",
+      "canonicalUrl": "/understand/buster.html"
+    },
+    {
+      "route": "/understand/codex-integration.html",
+      "sourcePath": "docs/site/understand/codex-integration.md",
+      "outputPath": "understand/codex-integration.html",
+      "canonicalUrl": "/understand/codex-integration.html"
+    },
+    {
+      "route": "/understand/communication.html",
+      "sourcePath": "docs/site/understand/communication.md",
+      "outputPath": "understand/communication.html",
+      "canonicalUrl": "/understand/communication.html"
+    },
+    {
+      "route": "/understand/components-and-authority.html",
+      "sourcePath": "docs/site/understand/components-and-authority.md",
+      "outputPath": "understand/components-and-authority.html",
+      "canonicalUrl": "/understand/components-and-authority.html"
+    },
+    {
+      "route": "/understand/data-and-state.html",
+      "sourcePath": "docs/site/understand/data-and-state.md",
+      "outputPath": "understand/data-and-state.html",
+      "canonicalUrl": "/understand/data-and-state.html"
+    },
+    {
+      "route": "/understand/deployment-and-trust.html",
+      "sourcePath": "docs/site/understand/deployment-and-trust.md",
+      "outputPath": "understand/deployment-and-trust.html",
+      "canonicalUrl": "/understand/deployment-and-trust.html"
+    },
+    {
+      "route": "/understand/echo.html",
+      "sourcePath": "docs/site/understand/echo.md",
+      "outputPath": "understand/echo.html",
+      "canonicalUrl": "/understand/echo.html"
+    },
+    {
+      "route": "/understand/forge.html",
+      "sourcePath": "docs/site/understand/forge.md",
+      "outputPath": "understand/forge.html",
+      "canonicalUrl": "/understand/forge.html"
+    },
+    {
+      "route": "/understand/nova-core.html",
+      "sourcePath": "docs/site/understand/nova-core.md",
+      "outputPath": "understand/nova-core.html",
+      "canonicalUrl": "/understand/nova-core.html"
+    },
+    {
+      "route": "/understand/openclaw.html",
+      "sourcePath": "docs/site/understand/openclaw.md",
+      "outputPath": "understand/openclaw.html",
+      "canonicalUrl": "/understand/openclaw.html"
+    },
+    {
+      "route": "/understand/ops-mcp.html",
+      "sourcePath": "docs/site/understand/ops-mcp.md",
+      "outputPath": "understand/ops-mcp.html",
+      "canonicalUrl": "/understand/ops-mcp.html"
+    },
+    {
+      "route": "/understand/pipeline-dependencies.html",
+      "sourcePath": "docs/site/understand/pipeline-dependencies.md",
+      "outputPath": "understand/pipeline-dependencies.html",
+      "canonicalUrl": "/understand/pipeline-dependencies.html"
+    },
+    {
+      "route": "/understand/platform-and-operations.html",
+      "sourcePath": "docs/site/understand/platform-and-operations.md",
+      "outputPath": "understand/platform-and-operations.html",
+      "canonicalUrl": "/understand/platform-and-operations.html"
+    },
+    {
+      "route": "/understand/plugin-runtime.html",
+      "sourcePath": "docs/site/understand/plugin-runtime.md",
+      "outputPath": "understand/plugin-runtime.html",
+      "canonicalUrl": "/understand/plugin-runtime.html"
+    },
+    {
+      "route": "/understand/prism-data.html",
+      "sourcePath": "docs/site/understand/prism-data.md",
+      "outputPath": "understand/prism-data.html",
+      "canonicalUrl": "/understand/prism-data.html"
+    },
+    {
+      "route": "/understand/prism-runtime.html",
+      "sourcePath": "docs/site/understand/prism-runtime.md",
+      "outputPath": "understand/prism-runtime.html",
+      "canonicalUrl": "/understand/prism-runtime.html"
+    },
+    {
+      "route": "/understand/prism.html",
+      "sourcePath": "docs/site/understand/prism.md",
+      "outputPath": "understand/prism.html",
+      "canonicalUrl": "/understand/prism.html"
+    },
+    {
+      "route": "/understand/request-state-recovery.html",
+      "sourcePath": "docs/site/understand/request-state-recovery.md",
+      "outputPath": "understand/request-state-recovery.html",
+      "canonicalUrl": "/understand/request-state-recovery.html"
+    },
+    {
+      "route": "/understand/request-to-result.html",
+      "sourcePath": "docs/site/understand/request-to-result.md",
+      "outputPath": "understand/request-to-result.html",
+      "canonicalUrl": "/understand/request-to-result.html"
+    },
+    {
+      "route": "/understand/security-and-trust.html",
+      "sourcePath": "docs/site/understand/security-and-trust.md",
+      "outputPath": "understand/security-and-trust.html",
+      "canonicalUrl": "/understand/security-and-trust.html"
+    },
+    {
+      "route": "/understand/telemetry.html",
+      "sourcePath": "docs/site/understand/telemetry.md",
+      "outputPath": "understand/telemetry.html",
+      "canonicalUrl": "/understand/telemetry.html"
+    },
+    {
+      "route": "/understand/worker-core.html",
+      "sourcePath": "docs/site/understand/worker-core.md",
+      "outputPath": "understand/worker-core.html",
+      "canonicalUrl": "/understand/worker-core.html"
+    },
+    {
+      "route": "/understand/worker-trust.html",
+      "sourcePath": "docs/site/understand/worker-trust.md",
+      "outputPath": "understand/worker-trust.html",
+      "canonicalUrl": "/understand/worker-trust.html"
+    },
+    {
+      "route": "/use/README.html",
+      "sourcePath": "docs/site/use/README.md",
+      "outputPath": "use/README.html",
+      "canonicalUrl": "/use/README.html"
+    },
+    {
+      "route": "/use/capacity.html",
+      "sourcePath": "docs/site/use/capacity.md",
+      "outputPath": "use/capacity.html",
+      "canonicalUrl": "/use/capacity.html"
+    },
+    {
+      "route": "/use/demo-delivery.html",
+      "sourcePath": "docs/site/use/demo-delivery.md",
+      "outputPath": "use/demo-delivery.html",
+      "canonicalUrl": "/use/demo-delivery.html"
+    },
+    {
+      "route": "/use/diagnose.html",
+      "sourcePath": "docs/site/use/diagnose.md",
+      "outputPath": "use/diagnose.html",
+      "canonicalUrl": "/use/diagnose.html"
+    },
+    {
+      "route": "/use/install.html",
+      "sourcePath": "docs/site/use/install.md",
+      "outputPath": "use/install.html",
+      "canonicalUrl": "/use/install.html"
+    },
+    {
+      "route": "/use/maintenance.html",
+      "sourcePath": "docs/site/use/maintenance.md",
+      "outputPath": "use/maintenance.html",
+      "canonicalUrl": "/use/maintenance.html"
+    },
+    {
+      "route": "/use/operate.html",
+      "sourcePath": "docs/site/use/operate.md",
+      "outputPath": "use/operate.html",
+      "canonicalUrl": "/use/operate.html"
+    },
+    {
+      "route": "/use/plugins.html",
+      "sourcePath": "docs/site/use/plugins.md",
+      "outputPath": "use/plugins.html",
+      "canonicalUrl": "/use/plugins.html"
+    },
+    {
+      "route": "/use/prism-studio.html",
+      "sourcePath": "docs/site/use/prism-studio.md",
+      "outputPath": "use/prism-studio.html",
+      "canonicalUrl": "/use/prism-studio.html"
+    },
+    {
+      "route": "/use/quickstart.html",
+      "sourcePath": "docs/site/use/quickstart.md",
+      "outputPath": "use/quickstart.html",
+      "canonicalUrl": "/use/quickstart.html"
+    },
+    {
+      "route": "/use/recovery.html",
+      "sourcePath": "docs/site/use/recovery.md",
+      "outputPath": "use/recovery.html",
+      "canonicalUrl": "/use/recovery.html"
+    },
+    {
+      "route": "/use/worker-trust.html",
+      "sourcePath": "docs/site/use/worker-trust.md",
+      "outputPath": "use/worker-trust.html",
+      "canonicalUrl": "/use/worker-trust.html"
+    },
+    {
+      "route": "/use/workflows/README.html",
+      "sourcePath": "docs/site/use/workflows/README.md",
+      "outputPath": "use/workflows/README.html",
+      "canonicalUrl": "/use/workflows/README.html"
+    },
+    {
+      "route": "/use/workflows/buster-suite.html",
+      "sourcePath": "docs/site/use/workflows/buster-suite.md",
+      "outputPath": "use/workflows/buster-suite.html",
+      "canonicalUrl": "/use/workflows/buster-suite.html"
+    },
+    {
+      "route": "/use/workflows/kubernetes-fixture.html",
+      "sourcePath": "docs/site/use/workflows/kubernetes-fixture.md",
+      "outputPath": "use/workflows/kubernetes-fixture.html",
+      "canonicalUrl": "/use/workflows/kubernetes-fixture.html"
+    },
+    {
+      "route": "/use/workflows/wait-resume.html",
+      "sourcePath": "docs/site/use/workflows/wait-resume.md",
+      "outputPath": "use/workflows/wait-resume.html",
+      "canonicalUrl": "/use/workflows/wait-resume.html"
+    }
+  ]
+}

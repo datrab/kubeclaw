@@ -207,11 +207,20 @@ const oldDocFiles = walk(path.join(root, 'docs'))
   .filter((filePath) => !filePath.startsWith('docs/blueprint/') && !filePath.startsWith('docs/site/'))
   .sort();
 
+function originalDocumentationPath(filePath) {
+  const prefix = 'docs/_legacy-source/';
+  return filePath.startsWith(prefix) ? `docs/${filePath.slice(prefix.length)}` : filePath;
+}
+
 function migration(filePath) {
   const name = path.basename(filePath);
+  if (filePath === 'docs/operator-tasks.json') return ['internal-machine-authority', 'documentation build pipeline', 'Keep the operator-task registry outside the published reader site; publish only the validated task procedures and reference views.'];
   if (filePath.startsWith('docs/diagrams/') && filePath.endsWith('.svg')) return ['replace-then-delete', '/architecture/interactive', 'Extract topology, labels, flows, and accessibility text; implement as responsive HTML.'];
   if (filePath.startsWith('docs/generated/inventory/')) return ['regenerate-internal', '/reference/generated', 'Keep source data in build output; publish rendered reference pages, not raw internal inventory navigation.'];
   if (filePath.startsWith('docs/generated/reference/')) return ['internal-only', 'documentation build pipeline', 'Retain generator documentation outside the published site.'];
+  if (filePath.startsWith('docs/config/')) return ['internal-machine-authority', 'documentation build pipeline', 'Keep documentation mapping and generator configuration outside the published reader site.'];
+  if (filePath.startsWith('docs/status/')) return ['internal-machine-authority', '/status', 'Keep machine-readable status authority outside the reader site; publish only its generated reader view.'];
+  if (filePath.startsWith('docs/review/')) return ['delete-after-reader-coverage', 'Git history', 'Remove this internal review artifact after the canonical site contains every current fact and durable decision.'];
   if (filePath.includes('/templates/')) return ['internal-only', 'documentation contributor tooling', 'Retain only if used by the new documentation pipeline; do not publish as product documentation.'];
   if (filePath.startsWith('docs/examples/')) return ['keep-and-verify', '/extend/examples', 'Execute or schema-check the example and link it from the relevant task page.'];
   if (filePath.startsWith('docs/decisions/')) return ['extract-decisions-then-delete', '/decisions', 'Promote durable current decisions with implementation evidence; remove migration-specific ledger bookkeeping.'];
@@ -240,7 +249,7 @@ function migration(filePath) {
 }
 
 const ledgerRows = oldDocFiles.map((filePath) => {
-  const [disposition, destination, extraction] = migration(filePath);
+  const [disposition, destination, extraction] = migration(originalDocumentationPath(filePath));
   return { source: filePath, disposition, destination, extraction, proof: 'pending rewrite; source path existence verified' };
 });
 const ledgerHeader = ['source', 'disposition', 'destination', 'required extraction', 'completion proof'];

@@ -1,0 +1,95 @@
+{
+  "utc": "2026-10-17T12:25:29.880549+00:00",
+  "acceptanceId": "A911-10",
+  "criterion": {
+    "id": "A911-10",
+    "passCondition": "Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.",
+    "automaticFailure": "Die Prüfung testet nur Addition oder lässt nach Removal/Rename eine alte Autorität bestehen.",
+    "state": "not-accepted",
+    "evidence": [],
+    "reviews": [],
+    "readerFixtureIds": [],
+    "executionScenarioIds": []
+  },
+  "reviewedRevision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+  "role": "Distinct independent Source gate assessment, then Reader/Quality only after source findings resolved. This dossier is not acceptance.",
+  "claimedEvidenceScope": {
+    "historicalRoutes": "43 retained committed map snapshots;166 known current routes, no observed loss. No invented pre-registry URLs or deployed HTTP serving.",
+    "pageRenameRemoval": "Original governance and new pinned route-continuity guard reject missing historical route/owner, allow declared direct owned successor; original link/anchor checker proves stale/migrated path+anchor outcomes.",
+    "sourceRenameRemoval": "Real optional maximumSteps provider schema field Remove/Rename in isolated original generator; no addition-only surrogate. Source-pinning correction requires exact committed input bytes, rejects uncommitted/old/missing/tree pins, correctly migrates removed/renamed row and current immutable source URLs.",
+    "currentImpact": "V3 exact15case preflight+actual; V4 only1trailing-space change in maintenance literal, current write/noarg checks rerun and independently impact-qualified; no false current-byte15rerun. Same ownerbuster and same page route, so sourcefield redirect not applicable; route transitions proved separately.",
+    "actualSourcePathChanges": "All28preregistered variants(22unique sourcepaths) unchanged/present between c559 and publishedb1. No actual source path deletion/rename events in that interval. Not coverage proof for all history or A91101/07.",
+    "remainingOtherScopes": "54 pre-existing currentmap metadata mismatches includingSDKowner preserved; not hidden by global map regeneration and not claimed fullcurrentgovernancePASS. Four preregistered pipeline variants point to GitHubActions workflow inventory rather than product compiler scope; authority not changed. Overall A91111all84mutations, native/P17/fullGo/261/89 remain separate genuine open obligations; prove exact dependency if needed here."
+  },
+  "requirementPortions": [
+    "GOV-007 knownroute disposition and truthful history",
+    "MNT-009 affected source/reference orphan avoidance",
+    "MNT-013 affected link/anchor/source pin migration",
+    "MNT-015 affected current ownership",
+    "MNT-017 safe change/rename/removal maintenance procedure"
+  ],
+  "artifacts": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/receipt.json",
+      "sha256": "e8fa9c32eed9486b59def14aa6ef4adb0f9058a194e2be342a6b7e0541052994"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/applicability-and-baseline-verification.json",
+      "sha256": "1608e400b26430f46cf1a85111ab04ebfbbc25c403070687de2a0dcd0363339e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/correction-v2/actual-focused-result.json",
+      "sha256": "b4ba297e0686dbedefb4ec56e13bee5954ca6135808a5f2f49a44dd956fd2398"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-route-history-v1/actual-link-transition-result.json",
+      "sha256": "beb32714cd7b4a60987c35f2d63fbbaa98ce70f844c45bb3b83131b774476e4a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/source-transition-ledger.json",
+      "sha256": "ccb43eb0e32535a35bd2eb669980371e9ebe9c3784c2f8330d52ab00b4ba5d83"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/source-reference-relations.json",
+      "sha256": "86bc93267572092e6abaac5e8ae87a2b61855f3515ed6f0a0c0396af973290aa"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/pinned-source-link-resolution.json",
+      "sha256": "49f1c68c826ba05c426f740cef1dd4195f9615870cc10738b4a3e291f74db1db"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provider-transition-result.json",
+      "sha256": "821a7e9538666f1e9b85927dafe14fd105562b17583805ab2e449614521adf2b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json",
+      "sha256": "4cbb7eb91f3ce1862e311a2949729d408741b59773172294a349e0fd52b185da"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-package-result.json",
+      "sha256": "2e07f9c1feaa75181cdc4f75f712161bbb17aa1041d989b0c52a44441101a826"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/package-review.json",
+      "sha256": "28e5649c280cd09389067ad0ec94ea66ea2dd725ee15a5b6c6451de1f414a462"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/checkpoint-receipt.json",
+      "sha256": "d8b13e111c12e1b2686a6960cd93bec9d70d1308765558d30ba91d33667a8805"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/fresh-canonical-census.json",
+      "sha256": "ec6d02cb608fa55b924d31a0531ca748a67b30b494fcac3eca82c4d89929d57e"
+    }
+  ],
+  "acceptedBefore": {
+    "package": "AP09.11",
+    "ids": [
+      "A911-09"
+    ],
+    "accepted": 1,
+    "total": 12,
+    "exactScope": "c559reviewed/c48evidence/af792registration immutable; no blanketcurrentheadPASS"
+  },
+  "formalAcceptance": false
+}

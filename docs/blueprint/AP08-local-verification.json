@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "ap08-local-verification.v1",
+  "date": "2026-09-16",
+  "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+  "environment": "Linux workspace with Node.js 24 and BusyBox userland",
+  "groups": [
+    {
+      "result": "passed",
+      "reason": "The package-local command completed with exit code 0.",
+      "packages": [
+        "kubeclaw-agent-observer", "kubeclaw-prism", "kubeclaw.api-flow",
+        "kubeclaw.command-runner", "kubeclaw.container-build", "kubeclaw.coverage-budget",
+        "kubeclaw.direct-command", "kubeclaw.git-workspace", "kubeclaw.http",
+        "kubeclaw.junit-report", "kubeclaw.kubernetes-fixture", "kubeclaw.network-http",
+        "kubeclaw.openapi", "kubeclaw.redis-transport", "kubeclaw.repository-adapter",
+        "kubeclaw.secret-resolver", "kubeclaw.tailscale-exposure", "kubeclaw.telemetry-observer"
+      ]
+    },
+    {
+      "result": "unavailable",
+      "reason": "The command reached a persistent-path check, but BusyBox flock has no required --timeout option.",
+      "packages": [
+        "kubeclaw.agent-observability", "kubeclaw.architecture-validator", "kubeclaw.artifact-store",
+        "kubeclaw.blueprint-sync", "kubeclaw.buster-quality-gate", "kubeclaw.case-study",
+        "kubeclaw.delivery-lint", "kubeclaw.human-approval", "kubeclaw.implementation-agent",
+        "kubeclaw.lint", "kubeclaw.notification-observer", "kubeclaw.openclaw-agent-events",
+        "kubeclaw.operator-messaging", "kubeclaw.pipeline-review", "kubeclaw.preflight-contract",
+        "kubeclaw.prism-design", "kubeclaw.project-summary", "kubeclaw.review",
+        "kubeclaw.runtime-dispatch", "kubeclaw.state-store", "kubeclaw.telemetry-store",
+        "kubeclaw.transport-publisher", "kubeclaw.wait-store"
+      ]
+    },
+    {
+      "result": "unavailable",
+      "reason": "The command requires a configured real Chromium or Playwright browser that is absent on this host.",
+      "packages": ["kubeclaw.axe", "kubeclaw.lighthouse", "kubeclaw.playwright", "kubeclaw.visual"]
+    },
+    {
+      "result": "unavailable",
+      "reason": "The command requires the Go executable, which is absent on this host.",
+      "packages": ["kubeclaw.demo-auth-smoke", "kubeclaw.remote-test-gate"]
+    },
+    {
+      "result": "unavailable",
+      "reason": "The command requires the OpenSSL executable, which is absent on this host.",
+      "packages": ["kubeclaw.demo-handoff"]
+    },
+    {
+      "result": "unavailable",
+      "reason": "The command requires a real Trivy cache and executable, which are absent on this host.",
+      "packages": ["kubeclaw.security-providers"]
+    },
+    {
+      "result": "unavailable",
+      "reason": "The command requires GNU tar --format=ustar, which BusyBox tar does not provide.",
+      "packages": ["kubeclaw.size-budget"]
+    },
+    {
+      "result": "not-run",
+      "reason": "The Codex package declares no package-local automated test; connected-tool and missing-tool reader exercises remain required.",
+      "packages": ["kubeclaw-ops"]
+    }
+  ]
+}

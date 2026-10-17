@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/pipeline-json.html"></head><body><main>
+<h1 id="project-test-pipeline-swarmpipelinejson">Project Test Pipeline (<code>.swarm/pipeline.json</code>)</h1>
+<p>Status: current configuration reference
+Audience: project author, test-plan author, pipeline operator
+Owner: Nova test-plan resolver and project setup
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/pipeline.ts">skills/nova/core/test-gates/pipeline.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/types.ts">skills/nova/core/test-gates/types.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/resolver.ts">skills/nova/core/test-gates/resolver.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/published-pair.ts">skills/common/plugin-runtime/foundation/config/published-pair.ts</a>
+Applies to: current <code>.swarm/pipeline.json</code> project test declarations
+Last verified: 2026-09-21 at source revision <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<h2 id="four-different-artifacts">Four different artifacts</h2>
+<p>KubeClaw uses several JSON artifacts that can contain the word “pipeline.” They
+are not interchangeable.</p>
+<table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>Author or producer</th>
+<th>Consumer</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.swarm/pipeline.json</code></td>
+<td>Project author, often through the project scaffold</td>
+<td>Nova test-plan loader and resolver</td>
+<td>Declares project test providers, fixtures, suite selections, links, conditions, and concurrency for modules and Buster gates.</td>
+</tr>
+<tr>
+<td><code>nova-project.v2</code> document</td>
+<td>Project operator</td>
+<td>Nova project compiler</td>
+<td>Declares repository modules, source admission, implementation/lint/quality stages, coverage, and optional demo handoff. See <a href="nova-project.html">Nova project</a>.</td>
+</tr>
+<tr>
+<td><code>pipeline-definition.v2</code> document</td>
+<td>Graph author or Nova project compiler</td>
+<td>Nova Core</td>
+<td>Complete executable stage graph. See <a href="pipeline-definition.html">Pipeline definition</a>.</td>
+</tr>
+<tr>
+<td><code>.swarm/progress.json</code> and durable run state</td>
+<td>Scaffold for the first; Nova runtime for journals and snapshots</td>
+<td>Project setup and runtime recovery</td>
+<td><code>progress.json</code> carries the compact project/module/gate authoring state. Runtime attempts, facts, waits, results, and cursors live below the platform <code>storageRoot</code>; they do not belong in either <code>.swarm</code> authoring file.</td>
+</tr>
+</tbody>
+</table>
+<p>The Core CLI flag <code>--pipeline</code> means a <code>pipeline-definition.v2</code> graph. It does
+not mean <code>.swarm/pipeline.json</code>.</p>
+<h2 id="location-and-publication-requirement">Location and publication requirement</h2>
+<p>The test-plan loader accepts only a file named <code>pipeline.json</code> whose parent
+directory is named <code>.swarm</code>. It reads that file together with
+<code>.swarm/progress.json</code> through the coupled-publication reader. If publication
+metadata exists, loose files must match the committed generation. A damaged or
+partial publication does not fall back to the loose copy.</p>
+<p>Use the scaffold's <code>--apply</code> operation to publish the pair. See
+<a href="project-pipeline-publication.html">Project pipeline publication</a>.</p>
+<h2 id="root-fields">Root fields</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Required state and type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>project</code></td>
+<td>Required non-empty string</td>
+<td>Project identity returned with the selected test scope. It must agree with the project scaffold.</td>
+</tr>
+<tr>
+<td><code>lint</code></td>
+<td>Optional lint declaration</td>
+<td>Selects project Kubernetes inputs for the full lint stage.</td>
+</tr>
+<tr>
+<td><code>modules</code></td>
+<td>Object keyed by module ID</td>
+<td>A module's test scope. A module that includes Buster needs a matching object.</td>
+</tr>
+<tr>
+<td><code>gates</code></td>
+<td>Object keyed by gate ID</td>
+<td>A Buster gate's cumulative test scope.</td>
+</tr>
+</tbody>
+</table>
+<p>The loader projects only these fields. Do not rely on unknown root or scope
+fields being rejected: ignored input has no effect and is unsafe as policy.</p>
+<p><code>lint</code> is closed by the loader's checks:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uses</code></td>
+<td>Exact <code>kubeclaw.lint.full</code>.</td>
+</tr>
+<tr>
+<td><code>policyProject</code></td>
+<td>Non-empty string.</td>
+</tr>
+<tr>
+<td><code>rawManifests</code></td>
+<td>Unique array of non-empty strings.</td>
+</tr>
+<tr>
+<td><code>helmCharts</code></td>
+<td>Unique array of non-empty strings.</td>
+</tr>
+</tbody>
+</table>
+<p>At least one manifest or chart is required when <code>lint</code> exists. Paths are
+project inputs to the lint registration; this loader does not prove that the
+files exist.</p>
+<h2 id="test-scope-fields">Test scope fields</h2>
+<p>Each <code>modules.&lt;id&gt;</code> or <code>gates.&lt;id&gt;</code> value can contain these fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type and empty behavior</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>coverage</code></td>
+<td>Optional <code>gate-coverage.v1</code> object</td>
+<td>Independent mapping from requirements to mandatory declared node IDs. Usually generated from <code>nova-project.v2</code>; see below.</td>
+</tr>
+<tr>
+<td><code>suites</code></td>
+<td>Object from local suite instance ID to a suite selection</td>
+<td>Expands a shipped <code>test-suite-template.v1</code>. <code>{}</code> adds no nodes.</td>
+</tr>
+<tr>
+<td><code>tests</code></td>
+<td>Object from stable node ID to node declaration</td>
+<td>Direct blocking or advisory test nodes.</td>
+</tr>
+<tr>
+<td><code>fixtures</code></td>
+<td>Object from stable node ID to node declaration</td>
+<td>Setup/resource nodes. Their resolved <code>mode</code> is <code>null</code>, not blocking/advisory.</td>
+</tr>
+<tr>
+<td><code>concurrencyLimits</code></td>
+<td>Object from stable group ID to positive integer</td>
+<td>Narrows the limit for used concurrency groups. An unused declared group is invalid.</td>
+</tr>
+</tbody>
+</table>
+<p>A scope that resolves to no suite, test, or fixture is invalid. Test and fixture
+IDs must not collide. Stable IDs are at most 256 characters, start with an
+ASCII letter or digit, and then use letters, digits, <code>.</code>, <code>_</code>, <code>:</code>, <code>/</code>, or
+<code>-</code>; suite-local IDs cannot contain <code>/</code>.</p>
+<h2 id="suite-selection-fields">Suite selection fields</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type and rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>suites.&lt;instance&gt;.uses</code></td>
+<td>Required versioned contract ID such as <code>kubeclaw.unit-suite@1</code>; the template must be installed in the resolver catalogue.</td>
+</tr>
+<tr>
+<td><code>suites.&lt;instance&gt;.exclude</code></td>
+<td>Optional string array of template-local node IDs. Every ID must exist in the selected template. Exclusion is recorded for coverage; it is not a passing result.</td>
+</tr>
+<tr>
+<td><code>suites.&lt;instance&gt;.overrides.&lt;node&gt;</code></td>
+<td>Optional partial node declaration without <code>uses</code>. The node must exist. <code>config</code> deep-merges; arrays and scalar values replace; evidence outcome lists merge by field.</td>
+</tr>
+<tr>
+<td><code>suites.&lt;instance&gt;.add.&lt;node&gt;</code></td>
+<td>Optional complete test-node declaration. The ID must not collide with a template node.</td>
+</tr>
+</tbody>
+</table>
+<p>Template-local references in <code>needs</code> and <code>inputs.from</code> receive the suite
+instance prefix. A reference already containing <code>/</code> is treated as explicit.</p>
+<h2 id="complete-node-declaration">Complete node declaration</h2>
+<p><code>uses</code> is required for a direct node and forbidden in a suite override. All
+other fields are optional. Unknown fields are invalid.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type, default, and constraints</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uses</code></td>
+<td>Versioned provider contract ID matching <code>name@positive-version</code></td>
+<td>Selects an installed test-provider registration.</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>JSON object; default <code>{}</code></td>
+<td>Deep-merged with matrix values, then validated against the selected provider schema. Provider defaults are resolved there.</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>blocking</code> or <code>advisory</code>; test default <code>blocking</code>; fixtures resolve to <code>null</code></td>
+<td>Blocking failures affect the gate. Advisory results remain evidence without failing the gate.</td>
+</tr>
+<tr>
+<td><code>review.agent</code></td>
+<td>Closed object with required stable <code>agent</code> ID</td>
+<td>Requests provider-result assessment by that agent where the runtime supports it.</td>
+</tr>
+<tr>
+<td><code>needs[]</code></td>
+<td>String node ID, or closed <code>{nodeId, acceptedResults?}</code></td>
+<td>Adds a dependency. A string means only <code>passed</code> is accepted.</td>
+</tr>
+<tr>
+<td><code>needs[].acceptedResults</code></td>
+<td>Non-empty unique subset of <code>passed</code>, <code>failed</code>, <code>skipped</code>, <code>errored</code>, <code>cancelled</code>, <code>timed_out</code></td>
+<td>Allows a downstream node to run after the listed effects.</td>
+</tr>
+<tr>
+<td><code>inputs.&lt;port&gt;.from</code></td>
+<td>Required stable source node ID</td>
+<td>Source node for a typed value or artifact link.</td>
+</tr>
+<tr>
+<td><code>inputs.&lt;port&gt;.output</code></td>
+<td>Required stable output-port name</td>
+<td>Source output. Provider port kind and schema must match the target input.</td>
+</tr>
+<tr>
+<td><code>inputs.&lt;port&gt;.mediaType</code></td>
+<td>Optional non-empty string</td>
+<td>Selects one common artifact media type. It is invalid on a value link.</td>
+</tr>
+<tr>
+<td><code>when.changedPaths</code></td>
+<td>Optional non-empty array of relative glob patterns</td>
+<td>Node is skipped unless at least one changed path matches. Absolute and parent-traversal patterns are invalid.</td>
+</tr>
+<tr>
+<td><code>when.moduleType</code></td>
+<td>Optional non-empty string or non-empty string array</td>
+<td>Node is skipped unless the resolver fact matches.</td>
+</tr>
+<tr>
+<td><code>when.pipelineStage</code></td>
+<td>Optional non-empty string or non-empty string array</td>
+<td>Node is skipped unless the resolver fact matches.</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Positive integer; defaults to resolver policy <code>defaultTimeoutMs</code>; cannot exceed <code>maximumTimeoutMs</code></td>
+<td>Per-node execution timeout. Resolver policy is supplied by the caller, not this file.</td>
+</tr>
+<tr>
+<td><code>limits</code></td>
+<td>Partial object with <code>cpuMillis</code>, <code>memoryBytes</code>, <code>logBytes</code>, <code>artifactBytes</code>, <code>artifactFiles</code>, <code>processes</code></td>
+<td>Missing values come from resolver policy. CPU, memory, and processes are at least 1; log/artifact counts and bytes may be 0; all are capped by policy.</td>
+</tr>
+<tr>
+<td><code>retries</code></td>
+<td>Integer from 0 through policy maximum; default 1 for retry-safe providers, otherwise 0</td>
+<td>Number of retries after the first execution.</td>
+</tr>
+<tr>
+<td><code>acceptUnsafeRetry</code></td>
+<td>Boolean; default false</td>
+<td>Required to request retries from a provider that does not declare retry safety. It accepts duplicate-effect risk; it does not make the operation idempotent.</td>
+</tr>
+<tr>
+<td><code>concurrencyGroup</code></td>
+<td>Stable ID</td>
+<td>Places the node under the resolved group limit.</td>
+</tr>
+<tr>
+<td><code>matrix.&lt;field&gt;</code></td>
+<td>Non-empty array of JSON values</td>
+<td>Produces the Cartesian product of fields. The provider must allow each matrix field and the total must fit policy. Matrix values override matching <code>config</code> fields.</td>
+</tr>
+<tr>
+<td><code>evidence.onPass</code></td>
+<td>String array</td>
+<td>Evidence types retained for passed execution.</td>
+</tr>
+<tr>
+<td><code>evidence.onFail</code></td>
+<td>String array</td>
+<td>Evidence types retained for failed execution.</td>
+</tr>
+<tr>
+<td><code>evidence.onError</code></td>
+<td>String array</td>
+<td>Evidence types retained for errors. Every type must be supported by the provider.</td>
+</tr>
+</tbody>
+</table>
+<p>An <code>inputs</code> link also creates a <code>passed</code> dependency. A conflicting explicit
+dependency is invalid. All required provider input ports must be linked. A
+matrix source cannot feed one link because it would be ambiguous. Dependencies
+must be acyclic.</p>
+<p>Provider-specific <code>config</code> is exhaustively listed in
+<a href="buster-provider-configuration.html">Buster provider configuration</a>.</p>
+<h2 id="coverage-object">Coverage object</h2>
+<p><code>coverage</code> is a closed <code>gate-coverage.v1</code> object. It is independent of provider
+selection so that choosing a suite cannot silently define what “enough testing”
+means.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exact <code>gate-coverage.v1</code>.</td>
+</tr>
+<tr>
+<td><code>projectId</code></td>
+<td>Stable ID matching the resolved plan project.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><code>module</code> or <code>cumulative</code>. Module coverage has exactly one module and no integration requirements.</td>
+</tr>
+<tr>
+<td><code>baseRevision</code></td>
+<td>40- or 64-character lowercase hexadecimal revision.</td>
+</tr>
+<tr>
+<td><code>modules[]</code></td>
+<td>1–128 closed objects with unique <code>moduleId</code>, non-empty unique <code>ownedPaths</code>, and non-empty requirements.</td>
+</tr>
+<tr>
+<td><code>modules[].requirements[]</code></td>
+<td>Closed <code>{id,statement}</code>; IDs are unique within the complete policy and statements are non-empty.</td>
+</tr>
+<tr>
+<td><code>integrationRequirements[]</code></td>
+<td>Closed <code>{id,statement}</code> objects. Their references use <code>moduleId: null</code>.</td>
+</tr>
+<tr>
+<td><code>requiredChecks[]</code></td>
+<td>Non-empty closed <code>{checkId,requirementRefs,nodeIds}</code> objects. IDs and references within a check are unique.</td>
+</tr>
+<tr>
+<td><code>requiredChecks[].requirementRefs[]</code></td>
+<td>Closed <code>{moduleId,requirementId}</code>; must name a declared requirement.</td>
+</tr>
+<tr>
+<td><code>requiredChecks[].nodeIds[]</code></td>
+<td>Pre-matrix declaration IDs. Every resulting matrix node is required.</td>
+</tr>
+<tr>
+<td><code>policyDigest</code></td>
+<td><code>sha256:</code> digest calculated from the object without this field.</td>
+</tr>
+</tbody>
+</table>
+<p>Every declared requirement must be referenced by at least one required check.
+An excluded, missing, skipped, fixture, or advisory node does not satisfy a
+mandatory blocking check.</p>
+<h2 id="working-direct-node-example">Working direct-node example</h2>
+<p>This scope declares one blocking command and makes the group limit explicit.
+The installed <code>kubeclaw.direct-command@1</code> schema validates its <code>config</code>.</p>
+<pre><code class="language-json">{
+  &quot;project&quot;: &quot;sample&quot;,
+  &quot;modules&quot;: {
+    &quot;api&quot;: {
+      &quot;tests&quot;: {
+        &quot;unit&quot;: {
+          &quot;uses&quot;: &quot;kubeclaw.direct-command@1&quot;,
+          &quot;mode&quot;: &quot;blocking&quot;,
+          &quot;retries&quot;: 0,
+          &quot;concurrencyGroup&quot;: &quot;unit&quot;,
+          &quot;config&quot;: {
+            &quot;executable&quot;: &quot;npm&quot;,
+            &quot;args&quot;: [&quot;test&quot;],
+            &quot;workingDirectory&quot;: &quot;.&quot;,
+            &quot;resultMode&quot;: &quot;exit-code&quot;
+          }
+        }
+      },
+      &quot;concurrencyLimits&quot;: { &quot;unit&quot;: 1 }
+    }
+  },
+  &quot;gates&quot;: {}
+}
+</code></pre>
+<p>This JSON alone is not executable. It must be paired with matching
+<code>progress.json</code>, resolved with an installed registry and caller policy, and
+embedded as a verified provider plan in the Nova project flow.</p>
+<h2 id="precedence-and-defaults">Precedence and defaults</h2>
+<p>Resolution order is:</p>
+<ol>
+<li>A selected suite supplies its template nodes and concurrency ceilings.</li>
+<li><code>exclude</code> removes named template nodes.</li>
+<li><code>overrides</code> changes remaining template nodes; nested <code>config</code> objects merge.</li>
+<li><code>add</code>, direct <code>tests</code>, and direct <code>fixtures</code> add project nodes.</li>
+<li>Scope <code>concurrencyLimits</code> may narrow, never widen, a suite limit.</li>
+<li>Matrix values override provider configuration fields for each variation.</li>
+<li>Provider schema defaults resolve configuration.</li>
+<li>Resolver policy fills timeouts, resource limits, retries, and maximums.</li>
+</ol>
+<p>There is no precedence from <code>.swarm/progress.json</code> into a field of this file.
+The scaffold generates both from one edited scaffold, and consumers use each
+for its own contract.</p>
+<h2 id="errors-and-safe-correction">Errors and safe correction</h2>
+<p><code>TEST_PLAN_PIPELINE_NAME_INVALID</code> and <code>TEST_PLAN_PIPELINE_LOCATION_INVALID</code>
+mean that the file is not the canonical <code>.swarm/pipeline.json</code>. A wrapped
+<code>TEST_PLAN_PIPELINE_INVALID</code> can mean malformed JSON, a bad publication pair,
+or a missing root/scope object.</p>
+<p>Resolver errors begin with <code>TEST_PLAN_</code>. The suffix identifies the boundary:
+<code>FIELD_UNKNOWN</code>, <code>SUITE_MISSING</code>, <code>NODE_DUPLICATE</code>, <code>PROVIDER_INVALID</code>,
+<code>CONFIGURATION_INVALID</code>, <code>DEPENDENCY_*</code>, <code>INPUT_*</code>, <code>LINK_*</code>, <code>MATRIX_*</code>,
+<code>TIMEOUT_INVALID</code>, <code>LIMIT_INVALID</code>, <code>RETRY_*</code>, <code>EVIDENCE_INVALID</code>,
+<code>CONCURRENCY_*</code>, or <code>COVERAGE_*</code>. Correct the declaration or its operator-owned
+resolver policy; do not edit a resolved plan digest.</p>
+<blockquote>
+<p><strong>Source evidence — authored test declaration</strong></p>
+<p><strong>Claim:</strong> The loader selects one module or gate scope only from a coupled <code>.swarm/pipeline.json</code>.</p>
+<p>The resolver validates and expands nodes, suites, links, conditions, limits, evidence, matrices, and concurrency.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/pipeline.ts#L12-L51">canonical scope loader</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/pipeline.ts#L54-L78">lint loader</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/resolver.ts#L113-L156">links and conditions</a></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/resolver.ts#L159-L196">Limits and matrix fields</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/resolver.ts#L197-L220">retry, concurrency, and evidence fields</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/types.ts#L4-L43">node declaration interfaces</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/types.ts#L46-L69">suite and scope interfaces</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/pipeline-test-gate/v1/src/coverage.ts#L4-L27">coverage contract</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-pipeline-test-suite-resolver.mts#L155-L209">coupled pipeline scope and lint loading</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-pipeline-test-suite-resolver.mts#L219-L260">resolution, expansion, bounds, and determinism</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node tests/verification/contracts/check-pipeline-test-suite-resolver.mts</code> against implementation revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code>: exit zero and <code>ok: true</code> for ten nodes and two links. This is local resolution evidence; it does not establish provider execution or live service reachability.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<p><strong>Limit:</strong> Project setup and resolution validate declared local contracts. They do not prove that a remote provider ran or that the selected checks are sufficient unless the independent coverage policy requires them.</p>
+</blockquote>
+</main></body></html>

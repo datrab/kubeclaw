@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 997
+    "files": 999
   },
   "runtime": {
     "roots": [
@@ -1425,7 +1425,9 @@
         "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
         "skills/nova/plugins/lint/tests/live-function.test.ts",
         "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs",
         "skills/nova/plugins/lint/tests/remediation.test.mjs",
+        "skills/nova/plugins/lint/tests/report-contract.test.mjs",
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
         "skills/nova/plugins/lint/tsconfig.json"
       ],
@@ -2932,7 +2934,9 @@
     "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
     "skills/nova/plugins/lint/tests/live-function.test.ts",
     "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+    "skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs",
     "skills/nova/plugins/lint/tests/remediation.test.mjs",
+    "skills/nova/plugins/lint/tests/report-contract.test.mjs",
     "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
     "skills/nova/plugins/lint/tsconfig.json",
     "skills/nova/plugins/pipeline-review/README.md",

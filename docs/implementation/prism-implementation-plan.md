@@ -10,7 +10,7 @@ Status: approved execution sequence
 Execution status: final pre-build plan
 
 Architecture source:
-[Prism Design Engine Architecture](../architecture/prism-design-engine-architecture.md)
+[Prism Design Engine Architecture](../_legacy-source/architecture/prism-design-engine-architecture.md)
 
 Spike source:
 [Prism Foundation Spikes](../spikes/prism-foundation-spikes.md)
