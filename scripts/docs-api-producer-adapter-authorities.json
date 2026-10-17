@@ -68838,6 +68838,44 @@
             "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
           }
         ]
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "semanticClass": "fixed-cwd-relative-remote-fault-probe-module",
+        "sourceSha256": "456bdf9ad5926084bb89bbf9b4bc7ec5e58c1b4f426cffbfd79531b417c4db38",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('tests/verification/reliability/nova-remote-faults.mts')).href)",
+            "operationSha256": "a528a93dc369322c4618e4b1cd168ab5d9667b6524d704793382926ea407ebf9"
+          }
+        ],
+        "inputConstraints": {
+          "root": "process.cwd() at path.resolve during late dynamic import; temporary source/archive/runtime roots are separately selected by mkdtemp(os.tmpdir())",
+          "modulePaths": [
+            "tests/verification/reliability/nova-remote-faults.mts"
+          ],
+          "qualificationScope": "Passive exact dynamic-import/caller/input metadata only; NOT test execution, module initialization, dependencies or effect qualification",
+          "runtimeAcquisitionAuthorized": false,
+          "selectedCheckoutBinding": "Scanner-selected graph root binding is not enforced runtime cwd equality. Existence and recorded bytes do not authorize loading selected probe or its dependency closure.",
+          "callerBranches": [
+            {
+              "scope": "whole module with top-level effects; no main guard",
+              "sequence": "Static runtime imports initialize before top-level temp/archive/tar/key generation and stores/services. Runtime listeners and readiness work start before outer main try. Dynamic fault-probe import occurs late inside main try after transport/conflict assertions, then awaited checkRemoteFaults receives live services, token, temp root and helper closures. Main finally awaits runtime.stop THEN rmSync; failed stop can prevent rmSync. Console JSON only after successful body and cleanup."
+            }
+          ],
+          "unqualifiedEffects": [
+            "All imported package modules, capability/readiness probes and transitive initialization; TypeScript type-only imports are not runtime acquisition",
+            "Temporary directory/mkdir/write/read operations and synchronous /usr/bin/tar child process before main try; crypto key generation/signing/hash/serialization and source attestation",
+            "Persistent Buster/Nova job/import stores, source archive extraction, runtime roots and execute callback reads/writes; conditional evidence and large result construction; cancellation abort listener",
+            "HTTP servers and loopback listeners, authenticated transport/fetch health/bootstrap/readiness/job/result/evidence traffic; missing BuildKit executable/socket dependency probes; service readiness/shutdown lifecycle",
+            "Temporary mutation and restoration of KUBECLAW_CAPABILITY_PROVIDERS under nested finally; unavailable runtime stop in its finally; failures before later main try may leave earlier state/listeners uncleaned",
+            "Concurrent accept/idempotency and dispatch paths; polling timers, cancellation, restart recovery, changed registry, bad token and conflicting request assertions; all actual observed outcomes unqualified",
+            "Late cwd-relative fault-probe module initialization and awaited checkRemoteFaults with live port/token/temporary/service/job/novaStore capabilities; all selected probe effects remain unqualified",
+            "Hanging HTTP server timeout proof and nested closeAllConnections/close; SPIFFE header server/probe assertions and cleanup; main awaited runtime.stop followed by recursive forced temporary deletion may throw or skip later cleanup; no rollback guarantee",
+            "Final JSON console output follows successful cleanup; this metadata is NOT execution evidence or green CI"
+          ]
+        },
+        "authorityInputs": []
       }
     ]
   }
