@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-17T02:54:26.698510+00:00",
+  "status": "ORIGINAL_PRISM_SHUTDOWN_SOURCE_AUTHOR_MIGRATED_NATIVE_BOOT_RECEIVING_OPEN",
+  "sourceCommit": "5520023c76f4cfa03248f8b1e7c6935117086839",
+  "verifiedRemoteHead": "5520023c76f4cfa03248f8b1e7c6935117086839",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-prism-shutdown-current-owner-20261017",
+  "change": "Original native shutdown producer now delivers complete current central pipeline authors, selects actual worker binding/profile and writes the four coupled listener/shutdown/close/drain values. Original native process signal/evidence/cancellation/nonzero deadline assertions unchanged. No alternate policy root, defaults, synthetic receipt or v10 promotion.",
+  "checks": {
+    "sourceInputControls": "PASS: two original coupled profiles; exact eight authored values, whole file-set equality outside four leaves, immutable captures, missing required leaf rejection/restored positive, canonical authors unchanged",
+    "strictPrismTypecheck": true,
+    "diffCheck": true
+  },
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
+      "unchanged": true
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/cases.json",
+      "unchanged": true
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "path": "docs/review/remediation/config-final-reconciliation-20261016/requirements.json",
+      "unchanged": true
+    }
+  },
+  "sourceSha256": {
+    "skills/prism/tests/worker-process-shutdown-native.mts": "21d78e1c9021749ec897857e49177d2d7503b7938bdf9986f10b7bd3e6d61b16",
+    "skills/prism/tests/fixtures/worker-shutdown-policy.mts": "7eedeb4410b526e2348ab4227166fa1ad3960ce644bff93260fa1d39a4dbd7fa"
+  },
+  "nativeGate": "NOT RUN: isolated pool/UID/capabilities/cgroup unavailable; no unchanged native failure replay. Source fixture is not boot authentication.",
+  "receivingResidual": {
+    "boundary": "skills/prism/tests/worker-process-shutdown-native.mts process spawn -> skills/prism/server/worker.ts runNativePrismWorker",
+    "constraint": "Original process still sends SWARM_CONFIG and PRISM_CONTROL_INTERNAL_URL, but production startup now requires verifyPipelineBootReceipt(/run/pipeline-delivery, prism-worker) and rejects both legacy policy environment authors. A real guest must publish/install the full selected immutable generation/expected receipt with installed role identity and central controlInternalUrl, then execute the SAME original process assertions. Source author migration does NOT resolve that boot receiving seam. No synthesized boot capture or source-loader entrypoint bypass.",
+    "otherOriginalResiduals": [
+      "worker-listener-config.test.mts negative entrypoint fixtures still use retired chart-local author",
+      "control-listener.test.mts process fixtures/control-policy.mts still use retired author and missing installed authenticated delivery"
+    ]
+  },
+  "independentReview": "OPEN: no callable native spawn/reviewer/collaboration tool in fresh discovery; CONFIG subagents0, parent done. No new reviewer result; unchanged same-surface initialization EROFS not retried. Author checks not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Complete genuine authenticated original process fixture generation/publication/installed boot transport, preserving actual entrypoint and original assertions. Continue QB-R02 real source/producer/build/baseline inputStore ownership/reservation/accounting/sealed snapshot/publication and sole-root/boot+Nova receiving. Keep BUDGET_SOURCE_RECEIPT_REQUIRED, denied-v10 and independent/history/native/archive/fullC0-C6 gates OPEN.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker UID/GID1000 with delegated writable cgroup and native pool/capabilities, sufficiently large root-trusted writable archive storage and isolated migrated PostgreSQL. Original historical import additionally needs real CHOWN SETUID/SETGID1003 authority. No UID/kernel/trust spoof or skips.",
+  "writerLock": "SAME nonblocking shared repository lock; released on command exit",
+  "noHistoricalFollowup": true
+}

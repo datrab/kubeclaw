@@ -1,0 +1,12 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "coupledProfiles": 2,
+  "authoredLeavesPerProfile": 4,
+  "completeFileSetUnchangedOutsideLeaves": true,
+  "immutableCapture": true,
+  "missingLeafRejected": true,
+  "restoredPositive": true,
+  "nativeExecuted": false,
+  "bootAuthenticated": false,
+  "fullAcceptance": "OPEN"
+}
