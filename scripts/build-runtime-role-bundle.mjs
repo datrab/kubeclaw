@@ -223,14 +223,16 @@ while (dependencyQueue.length > 0) {
   const sourceRoot = path.join(root, 'node_modules', name);
   assert(fs.existsSync(path.join(sourceRoot, 'package.json')), `runtime dependency is not installed: ${name}`);
   const manifest = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'package.json'), 'utf8'));
-  const files = selectedFiles(sourceRoot, undefined, ['node_modules', 'test', 'tests', '.github']);
+  // Published dependency folders named test/tests can be runtime modules
+  // (e.g. Playwright lib/mcp/test/testBackend). Preserve the package closure.
+  const files = selectedFiles(sourceRoot, undefined, ['node_modules']);
   const before = contentDigest(sourceRoot, files);
   const target = path.posix.join('skills/node_modules', name);
   copySelection(sourceRoot, files, target);
   assertSelectionUnchanged(sourceRoot, files, before, `runtime dependency ${name}`, undefined,
-    ['node_modules', 'test', 'tests', '.github']);
+    ['node_modules']);
   trackSelection(sourceRoot, files, before, `runtime dependency ${name}`, undefined,
-    ['node_modules', 'test', 'tests', '.github']);
+    ['node_modules']);
   dependencyRecords.push({ name, version: manifest.version, sourceDigest: before, files: files.length, target });
   for (const dependency of Object.keys(manifest.dependencies ?? {})) {
     if (!internalPackageNames.has(dependency)) dependencyQueue.push(dependency);

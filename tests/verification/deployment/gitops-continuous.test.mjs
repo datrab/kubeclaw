@@ -70,10 +70,13 @@ test('initial registration creates all children without starting workload syncs'
 
 test('configuration and agent code select bundles while generated deployments do not rebuild', () => {
   for (const file of ['charts/kubeclaw/templates/deployment.yaml', 'charts/prism/values.yaml',
-    'my-values/nova-values.yaml', 'gitops/production/config.json', 'gitops/production/overlays/prism.yaml', 'skills/nova/core/engine.ts']) {
+    'my-values/nova-values.yaml', 'gitops/production/config.json', 'gitops/production/overlays/prism.yaml', 'skills/nova/project/cli.ts']) {
     assert.equal(isImageInput(file), false, file);
     assert.equal(isDeploymentInput(file), true, file);
   }
+  // Core execution is part of the actual embedded image inputs, unlike delivered project code.
+  assert.equal(isImageInput('skills/nova/core/execution/engine-runtime.ts'), true);
+  assert.equal(isDeploymentInput('skills/nova/core/execution/engine-runtime.ts'), true);
   for (const file of ['releases/runtime-code.json', 'releases/gitops/x/nova/resources.yaml', 'gitops/production/apps/applications.yaml']) {
     assert.equal(isImageInput(file), false); assert.equal(isDeploymentInput(file), false);
   }

@@ -141,7 +141,7 @@ export async function verifyQualityProviderRuntime(options: {
       new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},

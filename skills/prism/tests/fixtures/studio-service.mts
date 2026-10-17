@@ -38,7 +38,7 @@ export async function studio(t: TestContext, control: string, controlTimeoutMs =
     // the unchanged HTTP assertions to run as the genuine image user.
     assert.equal(process.getuid?.(), 1000, 'image proof requires actual runtime UID1000');
     const proof = process.env.PRISM_STUDIO_IMAGE_PROOF;
-    const id = selectedPort === undefined ? String(controlTimeoutMs) : 'canonical';
+    const id = ingressSecret === '' ? 'no-ingress' : selectedPort === undefined ? String(controlTimeoutMs) : 'canonical';
     fixture = { root: path.join(proof, id), author: path.join(proof, id, 'author') };
     code = '/app/prism';
     const selection = JSON.parse(fs.readFileSync(path.join(fixture.root, 'selection.json'), 'utf8'));

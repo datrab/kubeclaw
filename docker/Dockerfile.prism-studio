@@ -27,9 +27,10 @@ COPY --from=build /image/studio-proof /opt/prism-studio-proof
 RUN chown node:node /opt/prism-studio-proof/*/author/components/prism-studio.config.json
 USER node
 ENV NODE_ENV=production STUDIO_ROOT=/opt/prism-studio
-RUN --mount=type=bind,source=skills/prism/tests/studio-service.test.mts,target=/app/prism/skills/prism/tests/studio-service.test.mts \
-    --mount=type=bind,source=skills/prism/tests/fixtures/studio-service.mts,target=/app/prism/skills/prism/tests/fixtures/studio-service.mts \
-    --mount=type=bind,source=skills/prism/tests/studio-canonical-image.mts,target=/app/prism/skills/prism/tests/studio-canonical-image.mts \
-    PRISM_STUDIO_IMAGE_PROOF=/opt/prism-studio-proof node --test --test-concurrency=1 /app/prism/skills/prism/tests/studio-service.test.mts /app/prism/skills/prism/tests/studio-canonical-image.mts
+# Keep proof-only bind mounts outside the sealed runtime bundle being verified.
+RUN --mount=type=bind,source=skills/prism/tests/studio-service.test.mts,target=/opt/prism-studio-tests/studio-service.test.mts \
+    --mount=type=bind,source=skills/prism/tests/fixtures/studio-service.mts,target=/opt/prism-studio-tests/fixtures/studio-service.mts \
+    --mount=type=bind,source=skills/prism/tests/studio-canonical-image.mts,target=/opt/prism-studio-tests/studio-canonical-image.mts \
+    PRISM_STUDIO_IMAGE_PROOF=/opt/prism-studio-proof node --test --test-concurrency=1 /opt/prism-studio-tests/studio-service.test.mts /opt/prism-studio-tests/studio-canonical-image.mts
 EXPOSE 8080
 CMD ["node","--experimental-strip-types","skills/packages/prism-engine/server/studio.ts"]

@@ -7,7 +7,7 @@ const [repository, image] = process.argv.slice(2);
 if (process.getuid?.() !== 0 || !path.isAbsolute(repository ?? '') || !path.isAbsolute(image ?? '')) throw new Error('STUDIO_PROOF_ROOT_BUILD_REQUIRED');
 const proof = path.join(image, 'studio-proof');
 fs.mkdirSync(proof);
-for (const id of ['150', '250', '600', 'canonical']) {
+for (const id of ['150', '250', '600', 'canonical', 'no-ingress']) {
   const root = path.join(proof, id), author = path.join(root, 'author');
   fs.mkdirSync(root); fs.cpSync(path.join(repository, 'config'), author, { recursive: true });
   const entry = JSON.parse(fs.readFileSync(path.join(author, 'pipeline.config.json'), 'utf8'));
@@ -16,7 +16,8 @@ for (const id of ['150', '250', '600', 'canonical']) {
   const file = path.join(author, entry.components['prism-studio']);
   const component = JSON.parse(fs.readFileSync(file, 'utf8'));
   const settings = component.profiles[binding[0].profileId].settings;
-  if (id !== 'canonical') Object.assign(settings, { port: 19080, controlUrl: 'http://127.0.0.1:19081', controlTimeoutMs: Number(id) });
+  if (id !== 'canonical') Object.assign(settings, { port: 19080, controlUrl: 'http://127.0.0.1:19081', controlTimeoutMs: Number(id === 'no-ingress' ? '250' : id) });
+  if (id === 'no-ingress') settings.controlUrl = 'http://127.0.0.1:1';
   fs.writeFileSync(file, JSON.stringify(component));
   const { port, controlUrl, controlTimeoutMs } = settings;
   fs.writeFileSync(path.join(root, 'selection.json'), JSON.stringify({ port, controlUrl, controlTimeoutMs }), { mode: 0o444 });
