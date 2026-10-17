@@ -68876,6 +68876,59 @@
           ]
         },
         "authorityInputs": []
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+        "semanticClass": "fixed-git-legacy-visual-temp-module",
+        "sourceSha256": "e926d4ffd747021cdd0f88a7cc0d4cabc7cd20a8c2ba2d9aeb72b1d82c266452",
+        "operations": [
+          {
+            "expression": "import(`${pathToFileURL(legacyModule).href}?proof=1`)",
+            "operationSha256": "a185e66be5b82e2eefe7e69e65c8253fb30220eeca36f661f1bc429bc1fb604b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "Ambient process.cwd() for git show (no cwd option) and for mkdtempSync prefix; scanner graph root equality is NOT enforced",
+          "modulePaths": [],
+          "qualificationScope": "Passive exact caller and operation metadata only; NOT legacy byte custody, module initialization, selected dependency closure, execution or AP qualification",
+          "runtimeAcquisitionAuthorized": false,
+          "historicalSourceObservations": [
+            {
+              "revisionExpression": "4029dabd3",
+              "commit": "4029dabd3e353f1eab4d9d21cd0765c9f6a98dce",
+              "path": "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg.ts",
+              "gitBlob": "a54dc5a33c9e39fbe4f0ad52862adb930ab69711",
+              "sha256": "aea45a1ff2210b7cde7b842076525c3bd7dc32ebeaee09897c800bd3ee1c32d4",
+              "enforcedByScanner": false
+            },
+            {
+              "revisionExpression": "4029dabd3",
+              "commit": "4029dabd3e353f1eab4d9d21cd0765c9f6a98dce",
+              "path": "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-image.ts",
+              "gitBlob": "39871a7513a02e2454e0f9f02c77748f9e9a9732",
+              "sha256": "3636733653d7323805ede160ce34bbd05b0599d83c868127d9c0e5ef3a8336ac",
+              "enforcedByScanner": false
+            }
+          ],
+          "selectedModule": "git show 4029dabd3:skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-image.ts -> utf8 text -> temporary/visual-reg-image.ts -> pathToFileURL href plus ?proof=1; query is part of loader module identity",
+          "historicalBindingLimit": "Historical records are observed read-only evidence only. Scanner hashes recipe/caller but does NOT re-read git object, validate git executable/repository identity, enforce temporary file bytes or bind transitive dependencies. No acquired module is added as a qualified dependency edge.",
+          "callerBranches": [
+            {
+              "scope": "whole top-level module; no main guard",
+              "sequence": "Static imports initialize, git show visual-reg.ts and three regex assertions run before mkdtempSync outside try. Inside try second git show/write then awaited query-suffixed import precedes PNG creation, invoker construction and comparisons. Finally rmSync runs only after entry to try; JSON prints after successful body and cleanup."
+            }
+          ],
+          "unqualifiedEffects": [
+            "Static imports node builtins, pngjs and @kubeclaw/buster-engine initialization and all transitive effects",
+            "execFileSync git show twice with ambient executable lookup, inherited environment/cwd and default timeout/buffer; first source is regex-inspected only, second source written then dynamically loaded; failure before try has no established cleanup",
+            "cwd-relative temporary creation; UTF8 legacy module write; query-suffixed file URL loader identity and legacy module imports resolving relative to temporary cwd child, not original historical module directory",
+            "Three 8x8 PNG encodes with red channel zero/255 and alpha255; baseline write, actual overwrite unchanged then changed; legacy compare may read/write diffFile and have further effects; no outcome established",
+            "BrowserVisualCapabilityInvoker construction with literal limits and loopback allowedOrigin; two awaited browser.visual compare calls with base64 baseline/current and AbortController signal; literal allowedOrigin is not proof of absence of network/browser effects",
+            "Assertions zero unchanged diffCount, positive changed diffCount, changed width/height equality; asynchronous/decoder/native/dependency effects unqualified",
+            "Recursive forced rmSync finally may throw, mask earlier error or fail; no rollback guarantee. Final JSON only on successful body and cleanup"
+          ]
+        },
+        "authorityInputs": []
       }
     ]
   }

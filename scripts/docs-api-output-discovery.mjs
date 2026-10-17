@@ -36,6 +36,11 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
   {
+    "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+    "semanticClass": "fixed-git-legacy-visual-temp-module",
+    "recipeSha256": "d4df95c1dac61d3456fa97ab8e5850f0c3bf86e4f0add0af28a1505a25eccb9b"
+  },
+  {
     "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
     "semanticClass": "fixed-cwd-relative-remote-fault-probe-module",
     "recipeSha256": "05bd530a75bb7f37cda22b8d713f6f6f9883f4e07e66666c6f0066e232a8ba4b"
