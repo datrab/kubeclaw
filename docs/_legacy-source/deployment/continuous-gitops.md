@@ -25,6 +25,16 @@ muessen erhalten bleiben. Dadurch funktioniert auch ein Squash-Merge des PRs,
 ohne einen temporaeren PR-Commit als Deployment-Revision vorauszusetzen.
 Neue Anwendungs-Konfiguration wirkt erst mit einem neuen Deployment-PR.
 
+Die generierten Kinder markieren ihren unveraenderlichen Bundle-Pfad mit
+`kubeclaw.dev/immutable-bundle-path`. Wenn ein spaeterer `main`-Commit dieses
+Bundle nicht aendert, darf dessen erfolgreicher Sync weiter als Nachweis dienen:
+Argo aktualisiert die verglichene Revision auch ohne erneuten Sync. Die
+Health-Pruefung verlangt weiterhin `Synced`, gesunde Workloads, einen
+erfolgreichen Vorgang und exakt denselben Repository-/Bundle-/Directory-Bezug.
+Ein anderes Bundle, Drift, fehlgeschlagene Hooks oder ein nicht markierter
+veraenderlicher Quellpfad werden dadurch nicht freigegeben. Die Lua-Pruefung
+benoetigt keine zusaetzlichen Standardbibliotheken (`useOpenLibs`).
+
 ## Einmalige Einrichtung
 
 Argo CD muss bereits laufen und das Repository lesen koennen. Bei einem privaten

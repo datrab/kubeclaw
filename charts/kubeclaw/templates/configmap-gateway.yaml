@@ -10,6 +10,10 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 data:
+  reset-managed-plugin-projects.mjs: |
+{{ .Files.Get "files/reset-managed-plugin-projects.mjs" | indent 4 }}
+  restore-managed-plugin-config.mjs: |
+{{ .Files.Get "files/restore-managed-plugin-config.mjs" | indent 4 }}
   openclaw.json: |
     {
       "meta": {
@@ -91,11 +95,27 @@ data:
           },
           "modelPolicy": {
             "allow": [
+              {{- if has .Values.agent.model.primary (list "openai/gpt-6-astra" "openai/gpt-6.1-sol") }}
+              "openai/gpt-6-astra",
+              "openai/gpt-6.1-sol",
+              {{- end }}
               "openai/gpt-5.6-sol",
               "openai/gpt-5.5"
             ]
           },
           "models": {
+            {{- if has .Values.agent.model.primary (list "openai/gpt-6-astra" "openai/gpt-6.1-sol") }}
+            "openai/gpt-6.1-sol": {
+              "agentRuntime": {
+                "id": "codex"
+              }
+            },
+            "openai/gpt-6-astra": {
+              "agentRuntime": {
+                "id": "codex"
+              }
+            },
+            {{- end }}
             "openai/gpt-5.6-sol": {
               "agentRuntime": {
                 "id": "codex"
@@ -217,7 +237,7 @@ data:
               {{- if $discordGuildUsers }}
               "users": {{ $discordGuildUsers | uniq | toJson }},
               {{- end }}
-              "requireMention": true
+              "requireMention": {{ .Values.discord.requireMention | toJson }}
             }
           },
           "threadBindings": {

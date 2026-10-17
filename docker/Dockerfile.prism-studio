@@ -11,10 +11,12 @@ FROM ${NODE_BASE}
 USER root
 WORKDIR /app/prism
 COPY --from=build /build/skills/prism/dist-studio /app/prism/dist-studio
-COPY --from=build /build/skills/prism/server/studio.ts /app/prism/server/studio.ts
-COPY --from=build /build/skills/prism/server/proxy-headers.ts /app/prism/server/proxy-headers.ts
+COPY --from=build /build/skills/prism/server /app/prism/server
 RUN chown -R node:node /app/prism
 USER node
 ENV NODE_ENV=production PORT=8080 STUDIO_ROOT=/app/prism/dist-studio
+# Exercise the packaged service as its runtime user, without build dependencies.
+RUN --mount=type=bind,source=skills/prism/tests/studio-service.test.mts,target=/app/prism/tests/studio-service.test.mts \
+    node --test /app/prism/tests/studio-service.test.mts
 EXPOSE 8080
 CMD ["node","--experimental-strip-types","server/studio.ts"]

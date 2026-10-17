@@ -19,6 +19,9 @@ const fields = [...Object.entries(manifest.buildArgs), ...Object.values(manifest
 for (const [key] of fields) assert.ok(deps.some(dep => dep.replaceString?.includes(`"${key}"`)), `Undiscovered pin: ${key}`);
 assert.ok(deps.every(dep => !dep.skipReason));
 assert.ok(deps.some(dep => dep.depName === 'openclaw/openclaw'));
+const codex = deps.filter(dep => dep.depName === '@openai/codex');
+assert.equal(codex.length, 1, 'Expected exactly one central Codex pin');
+assert.equal(codex[0].currentValue, manifest.codex.version);
 for (const [key, image] of Object.entries(manifest.automation)) {
   const matches = deps.filter(dep => dep.replaceString?.includes(`"${key}"`));
   assert.equal(matches.length, 1, `Expected exactly one discovered automation pin: ${key}`);

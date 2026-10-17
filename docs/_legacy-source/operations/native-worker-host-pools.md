@@ -13,6 +13,45 @@ contract. Prism now has an explicit native V3 startup/chart/runtime selection.
 Buster's complete fixture/host integration is still being completed. Creating pools alone does
 not activate native workers or close the original four findings.
 
+## Tool-independent resource contract
+
+The Buster browser cgroup startup path retains the supervisor's restricted
+capabilities. It temporarily reclaims ownership of its validated, dedicated
+directory before inspecting it, then delegates the control files before the
+directory itself. This also handles a mode-0700 directory left by a previous
+worker. It also reclaims the existing `cgroup.subtree_control` file before
+writing controller settings: the previous worker owns that mode-0644 file too,
+and reclaiming the directory alone does not grant write access to it.
+Delegating the directory first prevents the supervisor from reaching
+the files because it has no DAC override. Image acceptance executes the actual
+setup code against filesystem fixtures with the production capability set,
+covering both initial and repeated delegation with retained directory and file
+ownership, and asserting unchanged control-file modes. No additional capabilities or
+broader directory permissions are required.
+
+Operator requirement confirmed 2026-09-17: role pools limit aggregate CPU,
+memory and Linux tasks, not executable names, browser vendors or versions.
+Changing a browser within an existing task adapter must not require changing
+host pool policy, reinstalling NRI or creating a vendor-specific host service.
+The Buster `browser` child is a delegation boundary for task execution, not a
+Chromium allocation. Per-run descendants inherit the enclosing role ceiling;
+they must not grant each browser an additional copy of the role's budget.
+
+Keep executable installation, supported engines and invocation rules in the
+image/task adapter configuration. Existing visual/axe adapters name Chromium,
+Firefox and WebKit; Lighthouse has a Chrome-specific executable interface.
+The resource layer does not remove those tool compatibility requirements or
+promise support for arbitrary browsers without an adapter. New tools must keep
+the same accounting, sandbox, descendant cleanup and admission requirements.
+
+The current Playwright path creates per-run groups under the browser delegation.
+This does not demonstrate that all browser capabilities or all Buster tasks use
+the host pool. Before claiming general production coverage, exercise the actual
+adapter paths, process-tree accounting and cleanup. Browser replacement tests
+must keep the host policy unchanged and demonstrate that aggregate limits still
+hold. Do not loosen executable, filesystem or network permissions merely to
+make the resource pool generic.
+
 ## One source for this host policy
 
 Edit `my-values/infra/native-worker-pools.yaml` (or its private selected copy).

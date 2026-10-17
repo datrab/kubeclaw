@@ -12,22 +12,39 @@ const environment = 'gitops/production';
 const root = path.resolve(import.meta.dirname, '..');
 const dump = documents => documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\n');
 
-export function continuousDocuments(result, namespace) {
+export function continuousDocuments(result, namespace, config = {}) {
   const documents = structuredClone(result.documents);
   const application = documents.find(document => document.kind === 'Application');
   application.spec.source = { repoURL: result.values.repository, targetRevision: 'main',
     path: `${environment}/apps`, directory: { include: 'applications.yaml' } };
   if (application.metadata.namespace !== namespace) throw new Error('GITOPS_ARGO_NAMESPACE_MISMATCH');
+  // During registration, apply definitions together without starting a root
+  // sync operation that would wait indefinitely on unsynced manual children.
+  if (config.runtimeAutoSync === false) delete application.spec.syncPolicy.automated;
   return documents;
 }
 
-export function continuousApplications(manifest) {
+export function continuousApplications(manifest, config = {}) {
+  if (config.runtimeAutoSync !== undefined && typeof config.runtimeAutoSync !== 'boolean') throw new Error('GITOPS_AUTOSYNC_CONFIG_INVALID');
   const documents = yaml.loadAll(manifest).filter(Boolean);
   for (const document of documents) {
     if (document.kind === 'Application') {
       // Unique bundle directories survive later promotions. Tracking main also
       // survives squash merges; no transient PR commit needs to stay reachable.
       document.spec.source.targetRevision = 'main';
+      // Health can reuse a successful sync after unrelated main commits only
+      // for the unique release paths produced by the immutable bundle exporter.
+      const annotations = document.metadata.annotations ??= {};
+      delete annotations['kubeclaw.dev/immutable-bundle-path'];
+      if (/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}\/(buster|nova|prism)$/u.test(document.spec.source.path ?? '')
+        && document.spec.source.directory?.include === 'resources.yaml') {
+        annotations['kubeclaw.dev/immutable-bundle-path'] = document.spec.source.path;
+      }
+      if (config.runtimeAutoSync === false) {
+        delete document.spec.syncPolicy.automated;
+        // Register all children together, even before any workload is healthy.
+        document.metadata.annotations['argocd.argoproj.io/sync-wave'] = '0';
+      }
     }
   }
   return documents;
@@ -42,16 +59,16 @@ function configuration(repository) {
 }
 
 export function renderContinuousEnvironment(repository, directory, url, revision, config) {
-  const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace);
+  const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));
   try {
     const values = path.join(temporary, 'values.yaml');
     fs.writeFileSync(values, yaml.dump(result.values));
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-    return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace) },
-      files: { 'apps/applications.yaml': dump(continuousApplications(rendered)),
-        'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace)),
+    return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
+      files: { 'apps/applications.yaml': dump(continuousApplications(rendered, config)),
+        'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 }

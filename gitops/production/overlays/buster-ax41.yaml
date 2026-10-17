@@ -1,0 +1,57 @@
+# Initial AX41 Pod sizing; not a full-pipeline or capacity acceptance result.
+# Browser tasks use the separately reserved 1.5 CPU / 8 GiB host pool.
+# Keep volume references aligned with the selected Buster base values.
+nodeSelector:
+  kubernetes.io/hostname: ax41-production
+podAnnotations:
+  kubeclaw.dev/native-worker-role: buster
+  kubeclaw.dev/native-worker-policy: b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af
+gateway:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 1Gi
+      ephemeral-storage: 1Gi
+    limits:
+      cpu: '1'
+      memory: 2Gi
+      ephemeral-storage: 50Gi
+busterRuntimeResources:
+  requests:
+    cpu: 500m
+    memory: 2Gi
+    ephemeral-storage: 8Gi
+  limits:
+    cpu: 1500m
+    memory: 8Gi
+    ephemeral-storage: 60Gi
+extraVolumes:
+  - name: buster-v2-state
+    persistentVolumeClaim:
+      claimName: agent-buster-runtime-state
+  - name: buster-api-token
+    projected:
+      defaultMode: 288
+      sources:
+        - serviceAccountToken:
+            path: token
+            expirationSeconds: 3600
+        - configMap:
+            name: kube-root-ca.crt
+            items:
+              - key: ca.crt
+                path: ca.crt
+        - downwardAPI:
+            items:
+              - path: namespace
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+  - name: buster-browser-cgroup
+    hostPath:
+      path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster/browser
+      type: Directory
+runtimeInfrastructure:
+  registry:
+    endpoint: http://registry-local.kubeclaw.svc.cluster.local:5001
+    transport: http-lab

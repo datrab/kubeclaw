@@ -153,6 +153,13 @@ const workspaces = {
       'tests/**/*.{ts,mts,mjs}', 'integration/*.mts', 'studio/*.test.tsx', 'studio/main.tsx'],
     project: ['**/*.{ts,tsx,mts,mjs}'],
   },
+  'ops/pod': {
+    entry: ['test/*.test.mjs'],
+    project: ['test/**/*.mjs'],
+    // The smoke test executes the package's installed .bin/codex shim rather
+    // than importing its JavaScript entrypoint, which Knip cannot infer.
+    ignoreDependencies: ['@openai/codex'],
+  },
   'tools/ops-mcp': {
     entry: ['src/server.mjs', 'test/*.test.mjs'],
     project: ['src/**/*.mjs', 'test/**/*.mjs'],
@@ -181,6 +188,7 @@ const config = {
     'eslint',
     'gofmt',
     'flock',
+    'setpriv',
     'systemd-analyze',
     'uv',
     'go',

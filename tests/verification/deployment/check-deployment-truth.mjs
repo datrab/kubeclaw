@@ -224,8 +224,8 @@ assert.match(
 );
 assert.match(
   chart,
-  /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
-  'the setup container must preserve official plugin provenance while installing from the offline image cache',
+  /name: tmp-permissions[\s\S]*chmod 1777 \/tmp[\s\S]*capabilities:[\s\S]*add:[\s\S]*- FOWNER[\s\S]*name: openclaw-state-migration[\s\S]*name: init-setup[\s\S]*stdin: true[\s\S]*tty: true[\s\S]*PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*openclaw plugins uninstall "\$plugin_id" --keep-files --force[\s\S]*reset-managed-plugin-projects\.mjs \/config\/npm\/projects[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --no-enable --accept-capabilities[\s\S]*restore-managed-plugin-config\.mjs[\s\S]*openclaw doctor --fix --non-interactive[\s\S]*openclaw plugins registry --refresh/,
+  'the setup container must reset stale managed locks before installing official plugins from the authoritative offline cache',
 );
 for (const plugin of ['acpx', 'discord']) {
   assert.ok(values.includes(`"npm:@openclaw/${plugin}@${expectedOpenClawVersion}"`),
@@ -284,8 +284,13 @@ assert.match(
 );
 assert.match(
   prismStudioDockerfile,
-  /COPY --from=build \/build\/skills\/prism\/server\/proxy-headers\.ts \/app\/prism\/server\/proxy-headers\.ts/,
+  /COPY --from=build \/build\/skills\/prism\/server \/app\/prism\/server/,
   'the Prism Studio image must package every imported server module',
+);
+assert.match(
+  prismStudioDockerfile,
+  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/tests\/studio-service\.test\.mts\s*\\\n\s*node --test \/app\/prism\/tests\/studio-service\.test\.mts/,
+  'the final Studio image must pass HTTP regression tests as its runtime user',
 );
 
 assert.match(
@@ -623,11 +628,6 @@ assert.match(
   /"exec":\s*\{\s*"timeoutSeconds":\s*604800,\s*"mode":\s*"full"\s*\}/,
   'fresh configs must use the canonical OpenClaw 2026.8 exec policy keys',
 );
-assert.match(
-  gatewayConfig,
-  /"modelPolicy":\s*\{\s*"allow":\s*\[\s*"openai\/gpt-5\.6-sol",\s*"openai\/gpt-5\.5"\s*\]/,
-  'fresh configs must explicitly allow exactly the managed primary and fallback models',
-);
 assert.doesNotMatch(
   gatewayConfig,
   /"lastTouchedAt":|"timeoutSec":|"security":\s*"full"|"ask":\s*"off"|"ownerDisplay":|"eventQueue":|"retry":|"channelStaleEventThresholdMinutes":|"channelMaxRestartsPerHour":|"resetOnExit":/,
@@ -926,6 +926,22 @@ const helm = spawnSync(
 );
 if (helm.error?.code !== 'ENOENT') {
   assert.equal(helm.status, 0, `helm template failed:\n${helm.stderr}`);
+  const assertManagedModels = rendered => {
+    const configMap = loadAll(rendered).find(object => object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
+    assert.ok(configMap, 'the rendered gateway configuration must be present');
+    const defaults = JSON.parse(configMap.data['openclaw.json']).agents.defaults;
+    const models = ['openai/gpt-6-astra', 'openai/gpt-6.1-sol'].includes(defaults.model.primary)
+      ? ['openai/gpt-6-astra', 'openai/gpt-6.1-sol', 'openai/gpt-5.6-sol', 'openai/gpt-5.5']
+      : ['openai/gpt-5.6-sol', 'openai/gpt-5.5'];
+    assert.deepEqual(defaults.modelPolicy.allow, models,
+      'fresh configs must retain approved models and allow Astra and 6.1 Sol for their managed primaries');
+    for (const model of [defaults.model.primary, ...defaults.model.fallbacks]) {
+      assert.ok(models.includes(model), 'every primary and fallback must be permitted');
+    }
+    assert.deepEqual(Object.keys(defaults.models).sort(), [...models].sort(),
+      'every managed model must retain its runtime configuration');
+  };
+  assertManagedModels(helm.stdout);
   assert.match(helm.stdout, /kind: Deployment/, 'chart must render a Deployment');
   assert.doesNotMatch(
     helm.stdout,
@@ -967,6 +983,7 @@ if (helm.error?.code !== 'ENOENT') {
     /name:\s*buster-v2-runtime/,
     'Buster must render its isolated v2 suite worker',
   );
+  assertManagedModels(busterHelm.stdout);
   assert.match(
     busterHelm.stdout,
     /containerPort:\s*18891/,
@@ -1010,6 +1027,7 @@ if (helm.error?.code !== 'ENOENT') {
     `Nova provider-role helm template failed:\n${novaHelm.stderr}`,
   );
   const novaObjects = loadAll(novaHelm.stdout);
+  assertManagedModels(novaHelm.stdout);
   const viewer = kind => novaObjects.find(object => object?.kind === kind && object.metadata.name === 'agent-nova-archviewer');
   assert.equal(viewer('Service')?.spec.type, 'ClusterIP');
   assert.deepEqual(viewer('Service').spec.ports, [{ name: 'http', port: 3456, targetPort: 'archviewer', protocol: 'TCP' }]);

@@ -66,13 +66,16 @@ export function readCommittedBundle(repository, directory, revision) {
   return bundle;
 }
 
-export function bootstrapDocuments(repository, directory, url, revision, argoNamespace) {
+export function bootstrapDocuments(repository, directory, url, revision, argoNamespace, naming = {}) {
   const address = new URL(url);
   if (address.protocol !== 'https:' || address.username || address.password || address.search || address.hash
     || !address.hostname || !gitOpsName(argoNamespace)) throw new Error('GITOPS_REPOSITORY_OR_NAMESPACE_INVALID');
   const bundle = readCommittedBundle(repository, directory, revision);
   if (bundle.groups.some(group => group.namespace === argoNamespace || group.resources.some(resource => resource.namespace === argoNamespace))) throw new Error('GITOPS_ADMIN_NAMESPACE_CANNOT_HOST_WORKLOADS');
-  const name = `${bundle.groups[0].namespace}-runtime`;
+  const name = naming.rootName ?? `${bundle.groups[0].namespace}-runtime`;
+  const bootstrapProject = naming.bootstrapProject ?? name;
+  const workloadProject = naming.workloadProject ?? `${name}-workloads`;
+  if (!gitOpsName(bootstrapProject) || !gitOpsName(workloadProject) || bootstrapProject === workloadProject) throw new Error('GITOPS_PROJECT_NAME_INVALID');
   if (!gitOpsName(name)) throw new Error('GITOPS_APPLICATION_NAME_INVALID');
   const cluster = new Map(), namespaced = new Map();
   for (const group of bundle.groups) for (const resource of group.resources) {
@@ -80,18 +83,18 @@ export function bootstrapDocuments(repository, directory, url, revision, argoNam
     (gitOpsClusterKinds.has(resource.kind) ? cluster : namespaced).set(`${entry.group}/${entry.kind}`, entry);
   }
   const destinations = [...new Set(bundle.groups.flatMap(group => [group.namespace, ...group.resources.map(resource => resource.namespace).filter(Boolean)]))].sort();
-  const values = { repository: url, revision, destinations, rootName: name, project: `${name}-workloads`, groups: bundle.groups,
+  const values = { repository: url, revision, destinations, rootName: name, project: workloadProject, groups: bundle.groups,
     clusterResourceWhitelist: [...cluster.values()], namespaceResourceWhitelist: [...namespaced.values()] };
   if (!gitOpsName(values.project)) throw new Error('GITOPS_PROJECT_NAME_INVALID');
   const documents = [
-    { apiVersion: 'argoproj.io/v1alpha1', kind: 'AppProject', metadata: { name, namespace: argoNamespace, labels: { 'kubeclaw.dev/gitops-root': name } }, spec: {
+    { apiVersion: 'argoproj.io/v1alpha1', kind: 'AppProject', metadata: { name: bootstrapProject, namespace: argoNamespace, labels: { 'kubeclaw.dev/gitops-root': name } }, spec: {
       description: 'Administrative bootstrap: only this reviewed repository may define runtime Applications and their Project.',
       sourceRepos: [url], destinations: [{ namespace: argoNamespace, server: 'https://kubernetes.default.svc' }],
       clusterResourceWhitelist: [], namespaceResourceWhitelist: [{ group: 'argoproj.io', kind: 'Application' }, { group: 'argoproj.io', kind: 'AppProject' }],
     } },
     { apiVersion: 'argoproj.io/v1alpha1', kind: 'Application', metadata: { name, namespace: argoNamespace, labels: { 'kubeclaw.dev/gitops-root': name },
       annotations: { 'kubeclaw.dev/runtime-namespaces': JSON.stringify([...new Set(bundle.groups.map(group => group.namespace))]) } }, spec: {
-      project: name, source: { repoURL: url, targetRevision: revision, path: 'charts/gitops', helm: { valuesObject: values } },
+      project: bootstrapProject, source: { repoURL: url, targetRevision: revision, path: 'charts/gitops', helm: { valuesObject: values } },
       destination: { server: 'https://kubernetes.default.svc', namespace: argoNamespace },
       syncPolicy: { automated: { prune: false, selfHeal: true, allowEmpty: false }, syncOptions: ['FailOnSharedResource=true'] },
     } },
@@ -106,15 +109,15 @@ function verifyArgoConfiguration(repository, argoNamespace, get) {
   get(['get', 'csidriver', 'csi.spiffe.io']);
 }
 
-function isBootstrapApplication(application, rootName, argoNamespace) {
+function isBootstrapApplication(application, rootName, argoNamespace, project) {
   return application.metadata?.name === rootName && application.metadata?.namespace === argoNamespace
-    && application.metadata?.labels?.['kubeclaw.dev/gitops-root'] === rootName && application.spec?.project === rootName;
+    && application.metadata?.labels?.['kubeclaw.dev/gitops-root'] === rootName && application.spec?.project === project;
 }
 
 function verifyApplicationOwners(result, argoNamespace, applications, namespace) {
   for (const application of applications) {
     if (!claimedNamespaces(application).includes(namespace)) continue;
-    if (isBootstrapApplication(application, result.values.rootName, argoNamespace)) continue;
+    if (isBootstrapApplication(application, result.values.rootName, argoNamespace, result.documents.find(document => document.kind === 'Application').spec.project)) continue;
     const expected = result.bundle.groups.some(group => group.name === application.metadata?.name && group.namespace === namespace);
     if (!expected || application.metadata?.namespace !== argoNamespace || application.spec?.project !== result.values.project) throw new Error(`GITOPS_OTHER_APPLICATION_PRESENT:${namespace}`);
   }

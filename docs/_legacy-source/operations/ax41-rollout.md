@@ -4,6 +4,12 @@ This runbook records the selected single-node configuration and the migration
 sequence. It is not evidence that the native host setup has been activated.
 Last reviewed: 2026-09-16.
 
+Execution order updated by the operator on 2026-09-17: Argo adoption and automatic
+KubeClaw code/image rollout -> required Pods running through Argo -> open issues -> central
+operator configuration -> real pipeline verification and completed docs -> Cilium
+-> HTTPS/mTLS. See the [current roadmap](../ROADMAP.md#near-term-sequence).
+Historical migration/repair instructions below do not override this order.
+
 ## Configuration sources
 
 ### NRI launcher identity repair (2026-09-16)
@@ -271,6 +277,39 @@ native workers must remain disabled until effective reservations pass preflight.
    checks. Merely syncing a Cilium Application is not the migration procedure.
 
 ## Requirements for a future one-click installer
+
+Existing scripts have stable `Installer-Step` identifiers and are classified in
+the [installer step catalog](../../scripts/install/README.md), including historical
+repair scripts that must not be replayed on every installation.
+
+Operator requirement confirmed 2026-09-17: one entry point runs on the Controlnode,
+including adding subsequent nodes. The current commands below are rollout and
+repair procedures, not that completed installer.
+
+The installer must use the selected kubeconfig for cluster operations and explicit
+SSH/sudo access for host preparation. Reuse tested implementation steps without
+requiring an interactive host shell, temporary build-directory paths or manual
+Node/Go installation on every worker. Versioned native binaries should be built
+centrally and verified before installation on matching node architectures.
+
+First support a compatible existing cluster; later provide explicit creation and
+join modes for supported distributions. Failed detection must never be treated as
+permission to overwrite a cluster. Detect unsupported runtime/NRI arrangements
+before changing the node; managed Kubernetes without host access may not support
+this native execution architecture.
+
+Adding a node must consume inventory and role assignments, validate its independent
+capacity, prepare only required native pools, and generate node-specific policy
+bindings. Reconcile Kubernetes placement through Git/Argo after verification.
+Joining an ordinary application node must not install Buster/Prism host pools.
+Do not automatically move local-path PVCs, expand task concurrency, restart existing
+nodes or rebalance workloads as a side effect of adding capacity. Those require
+explicit placement, storage and workload policies.
+
+Keep authored inventory aligned with the planned central operator configuration
+audit and selected software versions in `versions.json`; generated identities and
+credentials stay outside Git. Completion requires successful fresh setup, rerun,
+interruption recovery and second-node onboarding tests, plus a real workload test.
 
 Use the existing renderer and preflight instead of duplicating their policy
 logic. Expose explicit prepare, inspect, apply, verify and recovery stages.

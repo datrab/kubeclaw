@@ -24,6 +24,7 @@ test('continuous root follows the reviewed production directory without inline f
   assert.deepEqual(docs[1].metadata.annotations, result.documents[1].metadata.annotations);
   assert.deepEqual(docs[1].spec.syncPolicy, result.documents[1].spec.syncPolicy);
   assert.deepEqual(result, original);
+  assert.equal(continuousDocuments(result, 'argocd', {runtimeAutoSync: false})[1].spec.syncPolicy.automated, undefined);
   assert.throws(() => continuousDocuments(result, 'wrong'), /NAMESPACE_MISMATCH/);
 });
 
@@ -33,7 +34,14 @@ test('child applications survive squash merges and retain immutable bundle direc
     spec: { source: { targetRevision: 'b'.repeat(40), path: 'releases/gitops/runtime-123-1/nova', directory: { include: 'resources.yaml' } },
       syncPolicy: { automated: { prune: false, selfHeal: true } } } };
   const docs = continuousApplications([project, app].map(value => yaml.dump(value)).join('---\n'));
-  assert.deepEqual(docs, [project, { ...app, spec: { ...app.spec, source: { ...app.spec.source, targetRevision: 'main' } } }]);
+  assert.deepEqual(docs, [project, { ...app,
+    metadata: { ...app.metadata, annotations: { ...app.metadata.annotations, 'kubeclaw.dev/immutable-bundle-path': app.spec.source.path } },
+    spec: { ...app.spec, source: { ...app.spec.source, targetRevision: 'main' } } }]);
+  for (const source of [{ path: 'charts/kubeclaw', directory: { include: 'resources.yaml' } },
+    { path: app.spec.source.path, directory: { include: 'other.yaml' } }]) {
+    const mutable = structuredClone(docs[1]); mutable.spec.source = source;
+    assert.equal(continuousApplications(yaml.dump(mutable))[0].metadata.annotations['kubeclaw.dev/immutable-bundle-path'], undefined);
+  }
 });
 
 test('automatic deployment requires successful main provenance and explicit bootstrap', () => {
@@ -47,6 +55,17 @@ test('automatic deployment requires successful main provenance and explicit boot
   const publish = workflow.jobs.publish.steps.at(-1).run;
   assert.ok(publish.indexOf('verify-release-source') < publish.indexOf('git push'));
   assert.doesNotMatch(publish, /git push.*--force/);
+});
+
+test('initial registration creates all children without starting workload syncs', () => {
+  const app = {kind: 'Application', metadata: {annotations: {'argocd.argoproj.io/sync-wave': '1'}},
+    spec: {source: {targetRevision: 'a'.repeat(40)}, syncPolicy: {automated: {selfHeal: true}, syncOptions: ['FailOnSharedResource=true']}}};
+  const [manual] = continuousApplications(yaml.dump(app), {runtimeAutoSync: false});
+  assert.equal(manual.spec.syncPolicy.automated, undefined);
+  assert.equal(manual.metadata.annotations['argocd.argoproj.io/sync-wave'], '0');
+  assert.deepEqual(manual.spec.syncPolicy.syncOptions, ['FailOnSharedResource=true']);
+  assert.ok(continuousApplications(yaml.dump(app), {runtimeAutoSync: true})[0].spec.syncPolicy.automated);
+  assert.throws(() => continuousApplications(yaml.dump(app), {runtimeAutoSync: 'false'}), /AUTOSYNC_CONFIG_INVALID/);
 });
 
 test('configuration and agent code select bundles while generated deployments do not rebuild', () => {
@@ -96,6 +115,16 @@ test('real Helm environment rendering remains identical after the bundle commit 
     assert.throws(() => rollbackRevision(root, '--all'), /MUST_BE_FULL_COMMIT/);
     const render = revision => renderContinuousEnvironment(root, directory, 'https://github.com/example/kubeclaw.git', revision, { argoNamespace: 'argocd' });
     const expected = render(first);
+    const named = renderContinuousEnvironment(root, directory, 'https://github.com/example/kubeclaw.git', first,
+      { argoNamespace: 'argocd', naming: { rootName: 'kubeclaw', bootstrapProject: 'kubeclaw-bootstrap', workloadProject: 'kubeclaw' } });
+    const namedBootstrap = yaml.loadAll(named.files['bootstrap.yaml']);
+    assert.equal(namedBootstrap.find(d => d.kind === 'Application').metadata.name, 'kubeclaw');
+    assert.equal(namedBootstrap.find(d => d.kind === 'Application').spec.project, 'kubeclaw-bootstrap');
+    const namedChildren = yaml.loadAll(named.files['apps/applications.yaml']);
+    assert.equal(namedChildren.find(d => d.kind === 'AppProject').metadata.name, 'kubeclaw');
+    assert.equal(namedChildren.filter(d => d.kind === 'Application' && d.spec.project === 'kubeclaw').length, 3);
+    assert.throws(() => renderContinuousEnvironment(root, directory, 'https://github.com/example/kubeclaw.git', first,
+      { argoNamespace: 'argocd', naming: { bootstrapProject: 'kubeclaw', workloadProject: 'kubeclaw' } }), /PROJECT_NAME_INVALID/);
     const apps = yaml.loadAll(expected.files['apps/applications.yaml']).filter(document => document?.kind === 'Application');
     assert.equal(apps.length, 3);
     for (const app of apps) {

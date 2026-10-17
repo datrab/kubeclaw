@@ -2,5 +2,15 @@
   "namespace": "kubeclaw",
   "prismNamespace": "kubeclaw",
   "argoNamespace": "argocd",
-  "overlays": {}
+  "runtimeAutoSync": true,
+  "overlays": {
+    "buster": "gitops/production/overlays/buster-ax41.yaml",
+    "nova": "gitops/production/overlays/nova-ax41.yaml",
+    "prism": "gitops/production/overlays/prism-ax41.yaml"
+  },
+  "naming": {
+    "rootName": "kubeclaw",
+    "bootstrapProject": "kubeclaw-bootstrap",
+    "workloadProject": "kubeclaw"
+  }
 }

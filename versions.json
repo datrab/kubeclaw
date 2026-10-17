@@ -1,8 +1,11 @@
 {
   "schemaVersion": 1,
   "openclaw": {
-    "version": "2026.9.4",
-    "digest": "sha256:cc596b846506a5f4cfcee111394a2725f375f01cca2ebb492a161fd1b747f101"
+    "version": "2026.10.3",
+    "digest": "sha256:70b8dbd23f8d27a206f43f9828fdebc87289e50d56dc55177354c9270d764026"
+  },
+  "codex": {
+    "version": "0.162.0"
   },
   "buildArgs": {
     "ARCHVIEWER_BASE": "docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de",
@@ -10,7 +13,7 @@
     "BUSTER_NODE_BASE": "node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
     "CONTROLLER_GO_BASE": "golang:1.22-bookworm@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253",
     "CONTROLLER_RUNTIME_BASE": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
-    "DEBIAN_SNAPSHOT": "20260901T000000Z",
+    "DEBIAN_SNAPSHOT": "20261008T000000Z",
     "GOCYCLO_VERSION": "v0.6.0",
     "GOVULNCHECK_VERSION": "v1.1.4",
     "GO_SHA256_AMD64": "5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053",
@@ -50,10 +53,14 @@
     "KUBECONFORM_SHA256_AMD64": "2b4ebeaa4d5ac4843cf8f7b7e66a8874252b6b71bc7cbfc4ef1cbf85acec7c07",
     "KUBECONFORM_SHA256_ARM64": "582a8a3eb3c33feb065928728ddac6e544c4f0b1234fd78fc1e4c4175a422b22",
     "GH_VERSION": "2.100.0",
-    "OPS_TOOLS_GO_BASE": "golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628",
+    "OPS_TOOLS_GO_BASE": "golang:1.26.9-alpine3.24@sha256:cdfd4fe2da6b225d8b40c6b7a105736e548e83ff56d5d8f9394446eeb5eb84e0",
     "GH_SOURCE_SHA256": "39d5123f08a553a6fa69e46de86c22d04d97a217e03d0e6584b66d0fea50f1fe",
+    "OPS_HELM_SOURCE_SHA256": "02a324971cb708b7d32ab751772fb765b81df6d3e93c0c3e845b3f5baaf80c65",
+    "OPS_HELM_GIT_COMMIT": "144ca65f8501953fa8b41cd1d37c7223051c85b7",
     "OPS_NPM_TAR_VERSION": "7.5.21",
-    "OPS_NPM_BRACE_VERSION": "5.0.9",
+    "OPS_NPM_BRACE_VERSION": "5.0.12",
+    "OPS_NPM_HTTP_CACHE_VERSION": "4.3.0",
+    "OPS_NPM_UNDICI_VERSION": "6.28.1",
     "OPS_NPM_IP_VERSION": "10.3.1"
   },
   "imageOverrides": {
@@ -63,9 +70,7 @@
     },
     "ops-pod": {
       "KUBECTL_VERSION": "v1.34.11",
-      "HELM_VERSION": "v3.22.0",
-      "HELM_SHA256_AMD64": "1e4ab49e429626cf6c6958d914248b78c9730803c2751b87627e171dc800e7bb",
-      "HELM_SHA256_ARM64": "f14e804dfee240f55525b667488fe9adca349e63e00c9af634c0beb1421ac310"
+      "HELM_VERSION": "v3.22.0"
     }
   },
   "infrastructure": {

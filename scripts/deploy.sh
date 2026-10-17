@@ -549,16 +549,7 @@ default_bundle_expected_commit() {
 }
 
 bundle_values_field() {
-  local values="$1" overlay="$2" field="$3" key="${4:-}" result=""
-  if [[ -n $overlay ]]; then
-    if [[ -n $key ]]; then result="$(yaml_get_nested_section_key "$overlay" codeBundle "$field" "$key")";
-    else result="$(yaml_get_section_key "$overlay" codeBundle "$field")"; fi
-  fi
-  if [[ -z $result ]]; then
-    if [[ -n $key ]]; then result="$(yaml_get_nested_section_key "$values" codeBundle "$field" "$key")";
-    else result="$(yaml_get_section_key "$values" codeBundle "$field")"; fi
-  fi
-  printf '%s\n' "$result"
+  node "$REPO_DIR/scripts/bundle-values-field.mjs" "$1" "$2" "$3" "${4:-}"
 }
 
 require_selected_runtime() {
@@ -1408,6 +1399,11 @@ deploy_agent() {
 
   helm_args=(--values "$values_file")
   if [[ -n $private_values ]]; then helm_args+=(--values "$private_values"); fi
+  if [[ "$role" == buster && -n "$private_values" ]]; then
+    local runtime_resources
+    runtime_resources="$(node "$REPO_DIR/scripts/buster-resource-overlay.mjs" "$values_file" "$private_values")"
+    if [[ -n "$runtime_resources" ]]; then helm_args+=(--set-json "$runtime_resources"); fi
+  fi
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
     helm_args+=(--set probes.dependencies.litellm.enabled=false)
   fi

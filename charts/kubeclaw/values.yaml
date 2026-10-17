@@ -104,10 +104,10 @@ initSetup:
 # npm remains in offline mode against the cache baked into the gateway image.
 # The install-mode marker forces a one-time repair when provenance rules change.
 pluginSeed:
-  installMode: "official-npm-v1"
+  installMode: "official-npm-v3-authoritative-reseed"
   specs:
-    - "npm:@openclaw/acpx@2026.9.4"
-    - "npm:@openclaw/discord@2026.9.4"
+    - "npm:@openclaw/acpx@2026.10.3"
+    - "npm:@openclaw/discord@2026.10.3"
 
 # =============================================================================
 # CAPABILITY PROVIDERS
@@ -186,6 +186,7 @@ stitch:
 # =============================================================================
 
 discord:
+  requireMention: true
   enabled: false
   channelId: ""
   # Discord user IDs allowed to approve exec commands (array of "user:<id>" strings)
@@ -527,6 +528,8 @@ extraContainers: []
 # Supply Secret/<existingSecret> with an htpasswd key outside the repository.
 archviewer:
   enabled: false
+  # Both providers require active enforcement; policies are additive.
+  networkPolicyProvider: cilium
   existingSecret: ""
   hostname: nova-architecture
   tailscaleOperatorNamespace: tailscale

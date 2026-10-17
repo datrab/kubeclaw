@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installer-Step: native.activate; category: initial-install-ax41. See scripts/install/README.md.
 # Initial activation for the inspected AX41 installation. Restarts K3s.
 set -euo pipefail
 umask 077

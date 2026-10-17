@@ -24,6 +24,26 @@ configuration() {
 
 artifact_name() { [[ $1 =~ ^([a-f0-9]{2})/([a-f0-9]{64})$ && ${BASH_REMATCH[2]:0:2} == "${BASH_REMATCH[1]}" ]]; }
 
+database_ready() {
+  # New pods can start before their allowed network paths are usable. Bound
+  # this precondition separately; never retry a dump or a restore operation.
+  command -v pg_isready >/dev/null || fail TOOL_MISSING_pg_isready
+  printf '%s\n' PRISM_BACKUP_DATABASE_READINESS_CHECK >&2
+  if timeout --signal=TERM --kill-after=1 30 bash -c '
+    while true; do
+      if pg_isready --quiet --timeout=1; then exit 0; else status=$?; fi
+      case "$status" in
+        1|2) sleep 1 ;;
+        *) exit "$status" ;;
+      esac
+    done
+  '; then
+    printf '%s\n' PRISM_BACKUP_DATABASE_READY >&2
+  else
+    fail DATABASE_NOT_READY
+  fi
+}
+
 artifact_index() {
   local root=$1 item relative sum listing
   listing=$(mktemp "$BACKUP_ROOT/.objects-XXXXXXXX")
@@ -75,6 +95,7 @@ backup_group() {
   (( allowance > 0 )) || fail RETAINED_CAPACITY_EXCEEDED
   (( allowance <= BACKUP_MAXIMUM_BYTES )) || allowance=$BACKUP_MAXIMUM_BYTES
   (( allowance >= 1024 )) || fail RETAINED_CAPACITY_EXCEEDED
+  database_ready
   stage=$(mktemp -d "$BACKUP_ROOT/.incomplete-$(date -u +%Y%m%dT%H%M%SZ)-XXXXXXXX")
   mkdir -- "$stage/artifacts"
   # Artifact publication is durable and immutable before a DB reference is
@@ -129,6 +150,7 @@ database_proof() {
   # in script-scoped variables so an SQL failure cannot lose the owned DB name.
   proof_created=0
   group=$(latest_group)
+  database_ready
   # Preserve the original scheduled SQL restore check, but never pre-drop a
   # fixed database name. This is a DB smoke test, not an independent DR proof.
   proof_database="prism_proof_${RANDOM}_${RANDOM}_$$"

@@ -10,6 +10,25 @@ import { selectedCode, validateCodeReceipt } from '../../../scripts/updates/code
 import { isImageInput, isDeploymentInput, inputDigest } from '../../../scripts/updates/runtime-inputs.mjs';
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
 
+test('deploy bundle fields decode folded URLs and preserve overlay credential selection', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'bundle-fields-'));
+  try {
+    const base = path.join(dir, 'base.yaml');
+    const overlay = path.join(dir, 'overlay.yaml');
+    const url = 'https://github.com/datrab/kubeclaw/releases/download/code-bundles-123-2/prism.tgz';
+    fs.writeFileSync(base, `codeBundle:\n  archiveUrl: >-\n    ${url}\n  auth:\n    existingSecret: base-reader\n    existingSecretKey: token\n`);
+    fs.writeFileSync(overlay, 'codeBundle:\n  auth:\n    existingSecret: private-reader\n');
+    const script = fs.readFileSync('scripts/deploy.sh', 'utf8');
+    const fn = script.slice(script.indexOf('bundle_values_field() {'), script.indexOf('\nrequire_selected_runtime()'));
+    const read = (...args) => execFileSync('bash', ['-c', `${fn}\nbundle_values_field "$@"`, 'test', base, overlay, ...args], {
+      env: { ...process.env, REPO_DIR: process.cwd().replaceAll('\\', '/') }, encoding: 'utf8',
+    }).trim();
+    assert.equal(read('archiveUrl'), url);
+    assert.equal(read('auth', 'existingSecret'), 'private-reader');
+    assert.equal(read('auth', 'existingSecretKey'), 'token');
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 function code(commit) {
   return { schemaVersion: 1, commit, sourceRunId: 123, sourceRunAttempt: 2,
     bundles: Object.fromEntries(['nova', 'buster', 'prism'].map(role => [role, {
@@ -139,5 +158,13 @@ test('real materialization and Helm render enable pinned bundles for all three a
       validateRenderedRelease(rendered, rendered, selected, true);
       assert.match(rendered, /sha256sum -c/);
     }
+    fs.appendFileSync(path.join(root, 'charts/kubeclaw/values.yaml'), '\n# Next deployment candidate\n');
+    const materialize = flags => spawnSync(process.execPath,
+      [path.join(source, 'scripts/updates/materialize-release.mjs'), ...flags], {cwd: root, encoding: 'utf8'});
+    assert.match(materialize(['--check']).stderr, /RELEASE_CONFIGURATION_CHANGED/);
+    assert.equal(materialize(['--check', '--check-selected-source']).status, 0);
+    assert.match(materialize(['--check-selected-source']).stderr, /SELECTED_SOURCE_CHECK_ONLY/);
+    fs.appendFileSync(path.join(root, 'releases/values/nova.yaml'), '\ntampered: true\n');
+    assert.match(materialize(['--check', '--check-selected-source']).stderr, /Release values drift/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

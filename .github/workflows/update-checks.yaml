@@ -21,6 +21,8 @@ jobs:
           version: v3.18.4
       - name: Check generated versions and release receipt validation
         run: |
+          sudo apt-get update -qq && sudo apt-get install -y lua5.1
+          LUA_BIN=lua5.1 node --test tests/verification/deployment/gitops-health.test.mjs
           node scripts/check-action-pins.mjs
           node --test tests/verification/contracts/action-pins.test.mjs tests/verification/deployment/upstream-fetch.test.mjs
           node scripts/versions.mjs --check
@@ -29,16 +31,24 @@ jobs:
           node scripts/check-platform-services.mjs
           python3 tests/verification/deployment/data-plane-inventory_test.py
           node --test tests/verification/deployment/node-registry-inventory.test.mjs
-          node --test tests/verification/deployment/runtime-image-workflows.test.mjs tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs
+          node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
+          node --test tests/verification/deployment/archviewer-policy-provider.test.mjs
+          node --test tests/verification/deployment/browser-pool-maintenance.test.mjs
+          node --test tests/verification/deployment/gitops-adoption-shape.test.mjs
+          node --test tests/verification/deployment/prism-backup.test.mts
+          node --test tests/verification/deployment/prism-agent-health.test.mjs
+          node --test tests/verification/deployment/runtime-image-workflows.test.mjs tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs tests/verification/deployment/plugin-project-reset.test.mjs
           node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/code-release.test.mjs
           node --test tests/verification/deployment/gitops-release.test.mjs
           if test -f gitops/production/selection.json; then
             bundle="$(node -p 'JSON.parse(require("fs").readFileSync("gitops/production/selection.json", "utf8")).directory')"
             node scripts/gitops-continuous.mjs check "$bundle" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
           elif test -f releases/runtime-images.json; then
-            node scripts/updates/materialize-release.mjs --check
+            node scripts/updates/materialize-release.mjs --check --check-selected-source
           fi
-          if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
+          if test -f releases/ops-images.json; then
+            node scripts/updates/materialize-release.mjs --check --check-selected-source --family=ops
+          fi
       - name: Verify selected digests against successful source workflow receipts
         env:
           GITHUB_TOKEN: ${{ github.token }}

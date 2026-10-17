@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { selectedRelease } from './updates/deployment-release.mjs';
+import { prepareAdoptionShape } from './gitops-adoption-shape.mjs';
 
 export const gitOpsDigest = bytes => createHash('sha256').update(bytes).digest('hex');
 export const gitOpsName = value => typeof value === 'string' && /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(value);
@@ -78,7 +79,7 @@ function renderGroup(root, relative, role, namespace, prismNamespace, environmen
     cwd: root, env: { ...environment, NAMESPACE: namespace, PRISM_NAMESPACE: prismNamespace },
     encoding: 'utf8', maxBuffer: 32 * 1024 * 1024, timeout: 120000, stdio: ['ignore', 'pipe', 'pipe'],
   });
-  const documents = yaml.loadAll(rendered).filter(Boolean), inspected = inspectGitOpsResources(documents, destination);
+  const documents = prepareAdoptionShape(yaml.loadAll(rendered).filter(Boolean)), inspected = inspectGitOpsResources(documents, destination);
   for (const document of documents) document.metadata.labels = { ...document.metadata.labels, 'kubeclaw.dev/gitops-owner': name };
   const manifest = documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\n');
   return { manifest, group: { role, name, namespace: destination, helmReleases, path: `${relative}/${role}`,

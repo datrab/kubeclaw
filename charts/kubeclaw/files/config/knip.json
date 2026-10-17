@@ -7,6 +7,7 @@
     "eslint",
     "gofmt",
     "flock",
+    "setpriv",
     "systemd-analyze",
     "uv",
     "go",
@@ -91,6 +92,17 @@
       "project": [
         "src/**/*.{ts,mts,mjs}",
         "tests/**/*.mts"
+      ]
+    },
+    "ops/pod": {
+      "entry": [
+        "test/*.test.mjs"
+      ],
+      "project": [
+        "test/**/*.mjs"
+      ],
+      "ignoreDependencies": [
+        "@openai/codex"
       ]
     },
     "skills/buster/engine": {

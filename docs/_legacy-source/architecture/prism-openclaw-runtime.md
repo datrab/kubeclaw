@@ -47,6 +47,12 @@ Envoy owns workload identity and encrypted service-to-service transport. Nova
 cannot reach the bridge directly, and the Prism agent cannot reach Control without
 presenting the `agent-prism` SPIFFE identity.
 
+The bridge binds only to loopback. Its Kubernetes health checks run inside the
+container against `127.0.0.1:18080`; pod-IP HTTP probes cannot reach that listener.
+The Prism agent also requires TCP 6379 to the same-namespace Redis workload for
+the shared agent stream. Its dedicated network policy permits that exact peer
+and port without granting the broader egress policy used by other agents.
+
 The worker has no `PRISM_PROVIDER_*` environment variables, provider Secret, or
 LiteLLM/internet egress rule. `agent-prism` uses the same managed OpenAI model
 policy as Nova and Buster: `openai/gpt-5.6-sol` with `openai/gpt-5.5` fallback.

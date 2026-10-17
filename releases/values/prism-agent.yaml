@@ -1,0 +1,159 @@
+# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.
+agentRole: prism
+gateway:
+  startupDoctor:
+    enabled: true
+    nodeOptions: '--max-old-space-size=3072'
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: '2'
+        memory: 4Gi
+image:
+  repository: ghcr.io/datrab/kubeclaw-prism-agent
+  digest: sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1
+  tag: ''
+  pullPolicy: IfNotPresent
+imagePullSecrets:
+  - name: ghcr-secret
+runAsRoot: false
+codeBundle:
+  enabled: true
+  archiveUrl: >-
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/prism-92518c7ce206baf67a573e0e78f97269ae06447b.tgz
+  expectedCommit: 92518c7ce206baf67a573e0e78f97269ae06447b
+  contractVersion: v2
+  auth:
+    existingSecret: github-bundle-reader
+    existingSecretKey: token
+  sha256: dcbd4a27720f3ea31aa67e462af2111520819429d8515b401ad50b3e06732ac0
+auth:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: gatewayToken-prism
+litellm:
+  endpoint: http://litellm.kubeclaw.svc.cluster.local:4000/v1
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: litellmApiKey
+discord:
+  enabled: false
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: discordToken-prism
+  channelId: ''
+commands:
+  ownerAllowFrom:
+    - discord:849379821536804864
+  allowFromDiscord:
+    - '849379821536804864'
+    - user:849379821536804864
+agent:
+  project: prism
+  model:
+    primary: openai/gpt-5.6-sol
+    fallbacks:
+      - openai/gpt-5.5
+  git:
+    enabled: true
+    secretName: git-deploy-key-nova
+    repoUrl: git@github.com:datrab/kubeclaw.git
+serviceAccount:
+  create: true
+  automount: false
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
+service:
+  gatewayPort: 8080
+  gatewayTargetPort: prism-dispatch
+  bridgeEnabled: false
+extraEnv:
+  - name: PRISM_CONTROL_URL
+    value: http://127.0.0.1:28080
+  - name: PRISM_STUDIO_PUBLIC_URL
+    value: https://prism-studio
+extraContainers:
+  - name: prism-agent-bridge
+    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1
+    imagePullPolicy: Always
+    command:
+      - node
+      - /opt/kubeclaw-prism/agent-bridge.mjs
+    env:
+      - name: PORT
+        value: '18080'
+      - name: PRISM_CONTROL_URL
+        value: http://127.0.0.1:28080
+      - name: PRISM_STUDIO_PUBLIC_URL
+        value: https://prism-studio
+      - name: OPENCLAW_GATEWAY_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: openclaw-shared-secrets
+            key: gatewayToken-prism
+    volumeMounts:
+      - name: config
+        mountPath: /home/node/.openclaw
+      - name: tmp
+        mountPath: /tmp
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+    readinessProbe:
+      exec:
+        command:
+          - node
+          - '-e'
+          - >-
+            fetch('http://127.0.0.1:18080/ready',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+      initialDelaySeconds: 3
+    livenessProbe:
+      exec:
+        command:
+          - node
+          - '-e'
+          - >-
+            fetch('http://127.0.0.1:18080/health',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+      initialDelaySeconds: 10
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+workspace:
+  enabled: true
+  overrideOnRestart: true
+  soul: >
+    You are Prism, KubeClaw's single design agent. Nova gives you an architecture and product context.
+
+    Produce exactly three materially distinct, complete, accessible Prism designs and commit them with
+    prism_create_design_set.
+
+    When Studio or Discord sends feedback, continue the same project session and commit the complete update with
+    prism_apply_revision.
+
+    Never call a model provider outside OpenClaw. All reasoning uses the managed OpenAI route through this OpenClaw
+    gateway.
+  tools: >
+    prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.
+
+    prism_apply_revision is mandatory for Studio or Discord design changes.
+
+    Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json for the canonical contract and
+    /app/skills/packages/prism-contract/fixtures/minimal-web.json for a minimal valid example before creating a
+    document.
+probes:
+  dependencies:
+    redis:
+      enabled: false
+    registries:
+      enabled: false
+      endpoints: []
