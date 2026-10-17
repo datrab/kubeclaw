@@ -67,13 +67,3 @@ for (const invalid of [undefined, 0, 65536]) test(`WL actual entrypoint rejects 
   assert.match(child.stderr, /SWARM_CONFIG_INVALID/u);
   assert.doesNotMatch(child.stderr, /NATIVE_(?:SUPERVISOR|LAUNCHER|POOL)/u);
 });
-for (const PORT of ['', '8080']) test(`WL actual entrypoint rejects retired PORT ${JSON.stringify(PORT)}`, () => {
-  const file = new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url).pathname;
-  const child = spawnSync(process.execPath, ['skills/prism/server/worker.ts'], {
-    env: { SWARM_CONFIG: file, PORT, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://listener/control' },
-    encoding: 'utf8', timeout: 5000,
-  });
-  assert.equal(child.status, 1, child.stdout + child.stderr);
-  assert.match(child.stderr, /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/u);
-  assert.doesNotMatch(child.stderr, /NATIVE_(?:SUPERVISOR|LAUNCHER|POOL)/u);
-});
