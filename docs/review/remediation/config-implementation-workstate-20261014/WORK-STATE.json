@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T00:52:23.205530+00:00",
+  "updatedAt": "2026-10-17T00:59:54.716071+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "EXACT_50_PLATFORM_BOUNDARY_MATRIX_COMPOSED_CENTRAL_RECEIVING_OPEN",
+  "status": "EXACT_62_PLATFORM_BOUNDARY_MATRIX_COMPOSED_CENTRAL_RECEIVING_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue authentic QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root boot/Nova receiving. Central selected platform receiving/history remains OPEN for exact50 rows. Four section-candidate and13 unresolved semantic owner groups remain; do not report these source-navigation joins as implementation or rerun unchanged green suites. Preserve all original independent/history/native/archive/C0-C6 gates.",
+  "nextAction": "Continue authentic QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root boot/Nova receiving. Central selected platform receiving/history remains OPEN for exact62 rows. Three section-candidate and13 unresolved semantic owner groups remain; matrix joins are not implementation. Preserve all original independent/history/native/archive/full C0-C6 gates; no unchanged green replay.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -25328,6 +25328,42 @@
     "productiveQualityBootImplemented": false,
     "externalOwner": "Raven",
     "resumeCondition": "Unchanged suitable isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficient genuinely root-trusted writable archive storage and isolated migrated PostgreSQL.",
+    "writerLock": "SAME nonblocking; released at bounded command exit",
+    "noHistoricalFollowup": true
+  },
+  "redisPlatformMatrix20261017": {
+    "at": "2026-10-17T00:59:54.716071+00:00",
+    "status": "EXACT_62_PLATFORM_BOUNDARY_MATRIX_COMPOSED_CENTRAL_RECEIVING_OPEN",
+    "matrixCommit": "7fe5a1c1f5f4c92ff9c7327c80a0d8378f85e1c7",
+    "matrixRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-redis-platform-matrix-20261017",
+    "productionSourceChanged": false,
+    "newOriginalFieldJoins": 12,
+    "composedOpenPlatformRows": 62,
+    "rootPathRows": 11,
+    "admissionTargetProcessRows": 51,
+    "checks": {
+      "negativeControlsPassed": 21,
+      "negativeControlsTotal": 21,
+      "restoredDeterministic": true,
+      "prior50Preserved": true,
+      "whole62Composed": true,
+      "fullRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "integrityFailures": 0
+    },
+    "concreteConstraint": "All12 original Redis fields across publisher and telemetry remain supplied platform.adapters. Adjacent Core Redis payload/reply buffers author none. Removed misleading candidate, preserved all12 remainingFieldIds. Actual secret reference/TLS/stream retention/dedup TTL/socket deadline consumers joined separately. Central selected author/profile/schema/delivery and original whole configuration recovery remain OPEN. Matrix closeout, NOT production implementation.",
+    "independentReview": "OPEN; native spawn/review not exposed; CONFIG active/recent reviewers0; no new reviewer output. Unchanged app-server EROFS not retried.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged suitable isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL.",
     "writerLock": "SAME nonblocking; released at bounded command exit",
     "noHistoricalFollowup": true
   }

@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-17T00:59:54.716071+00:00",
+  "status": "EXACT_62_PLATFORM_BOUNDARY_MATRIX_COMPOSED_CENTRAL_RECEIVING_OPEN",
+  "matrixCommit": "7fe5a1c1f5f4c92ff9c7327c80a0d8378f85e1c7",
+  "matrixRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-redis-platform-matrix-20261017",
+  "productionSourceChanged": false,
+  "newOriginalFieldJoins": 12,
+  "composedOpenPlatformRows": 62,
+  "rootPathRows": 11,
+  "admissionTargetProcessRows": 51,
+  "checks": {
+    "negativeControlsPassed": 21,
+    "negativeControlsTotal": 21,
+    "restoredDeterministic": true,
+    "prior50Preserved": true,
+    "whole62Composed": true,
+    "fullRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "integrityFailures": 0
+  },
+  "concreteConstraint": "All12 original Redis fields across publisher and telemetry remain supplied platform.adapters. Adjacent Core Redis payload/reply buffers author none. Removed misleading candidate, preserved all12 remainingFieldIds. Actual secret reference/TLS/stream retention/dedup TTL/socket deadline consumers joined separately. Central selected author/profile/schema/delivery and original whole configuration recovery remain OPEN. Matrix closeout, NOT production implementation.",
+  "independentReview": "OPEN; native spawn/review not exposed; CONFIG active/recent reviewers0; no new reviewer output. Unchanged app-server EROFS not retried.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged suitable isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL.",
+  "writerLock": "SAME nonblocking; released at bounded command exit",
+  "noHistoricalFollowup": true
+}
