@@ -77,7 +77,7 @@ Do not edit generated content by hand. Change its source or generator, and then 
 
 Use the [generated page map](generated-documentation-map.json) to locate each
 page's declared owner, content kind, source dependencies, and checks. Do not
-maintain a second manual inventory here. The map is generated from reader-page
+maintain a second manual inventory here. The governance generator builds the map from reader-page
 metadata; it does not prove complete source discovery or successful checks.
 A missing or stale page entry must be corrected through its metadata and the
 map generator before the change is called covered.

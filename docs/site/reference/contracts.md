@@ -99,7 +99,7 @@ Buster's contract checker first applies its selected schema, then the
 per-definition relations for plans, reports, attempts, results, coverage and
 status. The provider execution interface owns cleanup/termination/resources;
 report reading and normalization has separate limits. Neither can be replaced
-with a stage-result schema just because both return JSON.
+with a stage-result schema because both return JSON.
 
 **Source — Buster validator and caller boundaries:**
 [checkPipelineTestGateContract semantic dispatch](../../../contracts/pipeline-test-gate/v1/src/validation.ts#L250-L277) (`contracts/pipeline-test-gate/v1/src/validation.ts:250-277`, current-checkout SHA-256 `0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a`). [LoadedTestProvider / TestProviderLoader](../../../skills/buster/engine/test-gates/provider-loader.ts#L14-L39) (`skills/buster/engine/test-gates/provider-loader.ts:14-39`, current-checkout SHA-256 `8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85`). [ReportArtifactReader and runtime limit interface](../../../skills/buster/engine/test-gates/report-adapter-runtime.ts#L1-L32) (`skills/buster/engine/test-gates/report-adapter-runtime.ts:1-32`, current-checkout SHA-256 `0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9`).
@@ -111,7 +111,7 @@ with a stage-result schema just because both return JSON.
 
 Retirement removes old data or an interface only after its readers and retained
 work no longer require it. Migration is a defined transformation with its own
-writer, destination, validation and recovery procedure. Neither follows just
+writer, destination, validation and recovery procedure. Neither follows solely
 from publishing a newer schema or package.
 
 1. Record the exact current writer, logical ID, record version, encoding,
@@ -156,5 +156,5 @@ validators, all engine operations or every writer/reader pair. Other host,
 OpenClaw/Codex, operations and external contract roots remain to be reconciled.
 Current generated inventories do not generate this authored central hub.
 Use [Documentation maintenance](../extend/documentation-maintenance.md) when a
-contract, reader, version or removal route changes. No validator, upgrade,
-retirement, migration or recovery was executed for this page.
+contract, reader, version or removal route changes. We ran no validator, upgrade,
+retirement, migration or recovery for this page.

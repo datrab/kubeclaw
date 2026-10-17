@@ -228,7 +228,7 @@ and consumers. Start with the canonical schema and encoding meaning, then the
 source generator, generated types/exports and every supported caller. A TypeScript
 optional field is not compatibility proof for a closed JSON schema. Package
 version, wire version, source digest and portable JSON encoding are different
-identities; choose the appropriate transition explicitly.
+identities; choose the transition for the intended identity change explicitly.
 
 Follow [Change SDK or shared contracts](../developer-handbook.md#change-sdk-or-shared-contracts)
 and the [SDK reference](../../reference/sdk.md). The SDK check compiles the genuine

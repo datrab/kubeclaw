@@ -797,7 +797,7 @@ audit entry, but journal acquisition is **not byte-preserving or write-free**.
 parent directory and uses the stable `events.jsonl.append-lock` file through
 `FileMutex`, which opens the lock file and invokes `/usr/bin/flock` before
 loading the journal. This can create/open lock metadata even when there is no
-tail to repair. The parent-directory preparation is normally a no-op when the
+tail to repair. The parent-directory preparation is expected to be a no-op when the
 event file already exists; it is still part of the constructor path.
 
 When the existing journal is neither empty nor terminated by a line feed

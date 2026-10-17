@@ -160,7 +160,7 @@ To maintain these references, use the prerequisite and failure guidance in
 [Documentation maintenance](../extend/documentation-maintenance.md). Inventory
 checks and mutation tests can launch external tools; they are not passive
 reads. A missing source/tool guard is a stop, not a reason to skip semantics.
-No check, reload, live consumer or deployment was executed to produce this page.
+We ran no check, reload, live consumer or deployment to produce this page.
 
 Global family discovery and inverse consumer coverage are still incomplete.
 In particular, unsupported/unresolved sources must be classified before this

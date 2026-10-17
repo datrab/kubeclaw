@@ -352,9 +352,9 @@ restoration record, end-consumer verification, and cleanup result.
 >
 > **Implementation:** [Fault-window helpers](#bind-the-fault-window-to-object-lifetimes) and [memory observer helpers](#prepare-the-openclaw-memory-reader); the [maintained smoke wrapper](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L1571-L1579) is a separate runtime check.
 >
-> **Contract or setting:** [JSON Patch test semantics](https://www.rfc-editor.org/rfc/rfc6902#section-4.6) and [Kubernetes update conflicts](https://kubernetes.io/docs/reference/using-api/api-concepts/#updates-to-existing-resources); namespace/consumer exclusion and Node.js 24 are required above each procedure.
+> **Contract or setting:** [JSON Patch test semantics](https://www.rfc-editor.org/rfc/rfc6902#section-4.6) and [Kubernetes update conflicts](https://kubernetes.io/docs/reference/using-api/api-concepts/#updates-to-existing-resources). Each procedure requires namespace/consumer exclusion and Node.js 24 above.
 >
-> **Test evidence:** There is no maintained repository test for these page-defined fault-binding, cause-classification and cleanup helpers as a complete procedure. **LOCAL CHECKS PASSED:** 32 Bash and 53 Node syntax checks in their published modes; 20 native-default CommonJS programs ran on synthetic fixtures, with bounded mutation/cause probes. The six actual dependency scenarios are **NOT EXECUTED**.
+> **Test evidence:** There is no maintained repository test for these page-defined fault-binding, cause-classification and cleanup helpers as a complete procedure. **LOCAL CHECKS PASSED:** 32 Bash and 53 Node syntax checks in their published modes. Also: 20 native-default CommonJS programs ran on synthetic fixtures, with bounded mutation/cause probes. The six actual dependency scenarios are **NOT EXECUTED**.
 >
 > **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
 >
@@ -597,7 +597,7 @@ state are separate observations. The checks for this page did not execute a Redi
 >
 > **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
 >
-> **Limit:** No actual Redis denial, in-window live audit, authenticated stream recovery or unchanged-PVC result was executed here.
+> **Limit:** We ran no actual Redis denial, in-window live audit or authenticated stream recovery here. We established no unchanged-PVC result.
 
 
 Before the first audit in this exercise, complete
@@ -771,13 +771,13 @@ reports a failed readiness database query as status 422.
 >
 > **Implementation:** [Control ready query](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L145-L149); [WorkerNonceDatabase limits](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/worker-readiness.ts#L32-L50); [LiteLLM database startup configuration](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/litellm-deployment.yaml#L32-L63).
 >
-> **Contract or setting:** [Control DATABASE_URL Secret reference](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/prism/templates/workloads.yaml#L98-L103) and [Control HTTP error response](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L923-L931); the five-second direct SQL observer is an operator limit.
+> **Contract or setting:** [Control DATABASE_URL Secret reference](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/prism/templates/workloads.yaml#L98-L103) and [Control HTTP error response](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L923-L931). The five-second direct SQL observer is an operator limit.
 >
 > **Test evidence:** [Worker native connection-refusal and query-cancellation tests](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/tests/worker-readiness.test.mts#L8-L41): **SOURCE ONLY; NOT EXECUTED**. The cancellation case requires an isolated migrated database. These tests do not cover Control, Studio or the opposite LiteLLM outage. There is no maintained repository test for that complete two-window procedure. **LOCAL CHECKS PASSED:** direct cause-classifier vectors used a private SQL dependency double.
 >
 > **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
 >
-> **Limit:** No live database loss/restoration or Studio reader was executed. The existing-document comparison cannot verify a retained artifact digest.
+> **Limit:** We ran no live database loss/restoration or Studio reader. The existing-document comparison cannot verify a retained artifact digest.
 
 
 This exercise targets Prism PostgreSQL only. Precondition: `prism-smoke` passes,
@@ -1306,7 +1306,7 @@ operator output. It fails if that output lacks a recognizable rejection.
 >
 > **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
 >
-> **Limit:** No actual OAuth rejection, Tailnet device/route, authorized client response or cluster cleanup was executed here.
+> **Limit:** We ran no actual OAuth rejection, Tailnet device/route, authorized client response or cluster cleanup here.
 
 
 Precondition: the official operator is ready, `IngressClass/tailscale` exists,
@@ -2260,7 +2260,7 @@ or loop on the failure.
 
 The policy's successful CREATE response supplies its UID. A failed CREATE,
 lost response, missing frozen identity, or same-name replacement stops automatic
-cleanup; a later lookup cannot prove which CREATE was accepted. The platform
+cleanup; a later lookup cannot prove which CREATE the API server accepted. The platform
 owner must resolve that uncertainty through the independent administration route.
 Do not adopt or delete a later same-name object. The restore helper sends
 UID/resource-version DeleteOptions through
@@ -2434,7 +2434,7 @@ bounded_memory_cli 210 search --agent main \
 >
 > **Contract or setting:** [Query/index retry profiles](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L65-L82); [managed memory settings and SecretRef](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75); [restart synchronization](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L516-L524).
 >
-> **Test evidence:** There is no maintained KubeClaw repository test for these operator memory helpers or the selected target-image CLI exercise. **LOCAL CHECKS PASSED:** published Bash/Node syntax, extracted binding/consumer guards, and owned Linux process probes for normal exit, deadline escalation and a surviving descendant after direct-child close. Those probes used a synthetic child, not OpenClaw. The linked CLI, configuration and retry sources are **SOURCE ONLY**; the actual target-image memory reader is **NOT EXECUTED**.
+> **Test evidence:** There is no maintained KubeClaw repository test for these operator memory helpers or the selected target-image CLI exercise. **LOCAL CHECKS PASSED:** published Bash/Node syntax and extracted binding/consumer guards. Also: owned Linux process probes for normal exit, deadline escalation and a surviving descendant after direct-child close. Those probes used a synthetic child, not OpenClaw. The linked CLI, configuration and retry sources are **SOURCE ONLY**; the actual target-image memory reader is **NOT EXECUTED**.
 >
 > **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`; KubeClaw configuration `4d3068465a2e202d2d5073b77e9273c308497995`.
 >
@@ -2479,7 +2479,7 @@ executed here.
 >
 > **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
 >
-> **Limit:** No actual unavailable-origin exercise, Git fetch, full pipeline, restored run or remote import was executed here.
+> **Limit:** We ran no actual unavailable-origin exercise, Git fetch, full pipeline, restored run or remote import here.
 
 Before either run audit below, complete
 [Inspect a Run](operate.md#inspect-a-run) and define the canonical

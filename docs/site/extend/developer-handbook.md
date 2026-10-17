@@ -179,7 +179,9 @@ Run these steps in order. Stop at the first nonzero exit.
 >
 > Claim: the root install owns the listed workspaces; CI uses Node 24 and an explicit launcher build.
 > Implementation: [workspace membership](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L1-L25), [launcher build](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-plugin-sandbox.mjs#L1-L25).
-> Contract or setting: [journal append and fsync](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/state/journal.ts#L125-L156), [absolute GNU lock invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/state/file-mutex.ts#L4-L23), [CI setup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L9-L37).
+> Contract or setting: [journal append and fsync](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/state/journal.ts#L125-L156).
+> [absolute GNU lock invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/state/file-mutex.ts#L4-L23).
+> [CI setup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L9-L37).
 > Validation: run the lifecycle and registry contract checks in the prepared checkout. Run the clean-checkout procedure separately.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -267,8 +269,13 @@ environment variable being present.
 > **Source evidence — separate environments**
 >
 > Claim: browser, service, Go, documentation, and separately locked package setup are distinct.
-> Implementation: [Prism bootstrap](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/bootstrap-prism-tests.sh#L1-L8), [service binary extraction and output variables](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-reliability-services.sh#L1-L38), [separate package installs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/remediation-native.yaml#L20-L37).
-> Contract or setting: [NRI toolchain](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/native-worker-nri/go.mod#L1-L13), [root Go module](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/go.mod#L1-L3), [documentation tool versions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/docs-checks.yaml#L20-L38), [Studio browser/port selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/studio/playwright.config.mjs#L1-L7).
+> Implementation: [Prism bootstrap](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/bootstrap-prism-tests.sh#L1-L8).
+> [service binary extraction and output variables](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-reliability-services.sh#L1-L38).
+> [separate package installs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/remediation-native.yaml#L20-L37).
+> Contract or setting: [NRI toolchain](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/native-worker-nri/go.mod#L1-L13).
+> [root Go module](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/go.mod#L1-L3).
+> [documentation tool versions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/docs-checks.yaml#L20-L38).
+> [Studio browser/port selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/studio/playwright.config.mjs#L1-L7).
 > Required fixture: [native Registry fixture prerequisites](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L45).
 > Test evidence: [native Registry fixture prerequisites](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L45). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -334,7 +341,10 @@ its current contract; do not silently bypass the boundary.
 > **Source evidence — ownership and source rules**
 >
 > Claim: package/import direction, role membership, erasable source, and generated-file rules are enforced separately.
-> Implementation: [dependency checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L110-L118), [import enforcement](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L138-L151), [TypeScript config and tracked-output checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L7-L42), [source/manifest rules](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L43-L95).
+> Implementation: [dependency checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L110-L118).
+> [import enforcement](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-runtime-package-ownership.mjs#L138-L151).
+> [TypeScript config and tracked-output checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L7-L42).
+> [source/manifest rules](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-erasable-typescript.mjs#L43-L95).
 > Contract or setting: [owner directions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/packaging/runtime/package-ownership.json#L54-L80), [compiler options](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tsconfig.base.json#L1-L16).
 > Required check: [temporary plugin compilation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-v2-plugins.mjs#L6-L43).
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
@@ -498,7 +508,10 @@ not new service entrypoints.
    cancellation and CPU measurements. Debug results cannot establish timing,
    successful recovery or a native cleanup budget.
 
-Caller selection is defined by [Nova/Worker command routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L166), [Buster plan-runner routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L72-L88), [SDK values caller](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/package.json#L5-L12), and [Prism/Studio commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L12-L29). These are source-backed debug routes, not recorded debug executions.
+The following sources define caller selection: [Nova/Worker command routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L166).
+[Buster plan-runner routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L72-L88).
+[SDK values caller](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/package.json#L5-L12).
+[Prism/Studio commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L12-L29). These are source-backed debug routes, not recorded debug executions.
 
 ## Run Lint for a selected source change
 
@@ -548,7 +561,9 @@ guide's known deployment boundary rather than inventing a Nova-pod invocation.
 > **Source evidence — Lint check and exit contract**
 >
 > Claim: focused, live, and report paths have distinct prerequisites and outcomes.
-> Implementation: [package check sequence](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/plugins/lint/package.json#L1-L16), [report CLI inputs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/run-lint-report.mjs#L8-L28), [validated report and exit selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/run-lint-report.mjs#L110-L145).
+> Implementation: [package check sequence](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/plugins/lint/package.json#L1-L16).
+> [report CLI inputs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/run-lint-report.mjs#L8-L28).
+> [validated report and exit selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/run-lint-report.mjs#L110-L145).
 > Contract or setting: the linked Lint policy/extension guides own policy and deployment limits.
 > Validation: run the analyzer on the selected sources and confirm its report before exercising the deployed stage.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
@@ -636,7 +651,9 @@ Read the Nova chain as these separate outcomes:
 > **Source evidence — lifecycle and restart**
 >
 > Claim: live result handling and replay must preserve the same bounded lifecycle decision.
-> Implementation: [result guard and accounting](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/reducer.ts#L96-L136), [decision recording and administrative stop](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/execution/run-decisions.ts#L29-L60), [terminal event payload](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/execution/run-decisions.ts#L103-L129).
+> Implementation: [result guard and accounting](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/reducer.ts#L96-L136).
+> [decision recording and administrative stop](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/execution/run-decisions.ts#L29-L60).
+> [terminal event payload](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/execution/run-decisions.ts#L103-L129).
 > Contract or setting: [completed-attempt replay](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/recovery-state.ts#L39-L69), [interrupted state reset](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/nova/core/lifecycle/recovery-state.ts#L153-L180).
 > Required fixtures: [Process-death fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/lifecycle.test.mts#L61-L81), [old/current graph recovery](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/project-recovery-version.test.mjs#L14-L34). Prepare the required GNU lock executable before running recovery checks.
 > Test evidence: [Process-death fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/lifecycle.test.mts#L61-L81). Status: source-only; no execution result is asserted.
@@ -809,7 +826,9 @@ module/build caches are not fixture cleanup and must not be deleted blindly.
 >
 > Claim: native-runtime contains real Helm rendering, a static NRI build and a separate mandatory race-enabled Go test.
 > Implementation: [Helm render call](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L14-L21), [negative Helm renders and owned temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L58-L64).
-> Contract or setting: [complete native-runtime command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L291-L291), [child-local static cgo setting and Go identity](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-native-worker-nri.mjs#L10-L18); [upstream race requirements](https://go.dev/doc/articles/race_detector#requirements).
+> Contract or setting: [complete native-runtime command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L291-L291).
+> [child-local static cgo setting and Go identity](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-native-worker-nri.mjs#L10-L18).
+> [upstream race requirements](https://go.dev/doc/articles/race_detector#requirements).
 > Test evidence: [original static binary and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/prism-native-runtime.test.mjs#L66-L78). Status: source-only; no render, build or race-test result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for repository definitions; upstream race requirements were inspected separately.
 > Limit: setup observations do not prove test completion, native-host ownership or cluster execution.
@@ -936,8 +955,23 @@ shared pool service or remove its identities as package-test cleanup.
 > **Source evidence — native fixture authority**
 >
 > Claim: native tests require actual accounted pools, exact fixture inputs and supervisor authority; rendering a setup bundle is not preparing a host.
-> Implementation: [mandatory live cgroup input](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L19-L20), [live-scope inputs and retained kernel assertions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L95-L136), [host render bundle and unit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L9-L70), [host setup/retained service](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-native-worker-pools.mjs#L81-L121).
-> Contract or setting: [central Node and separate Ops selections](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L27-L29), [complete-subtree populated observation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-observation.ts#L52-L67), [separate unknown-scope recovery guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-worker-ownership.ts#L244-L251), [exact generated Node selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L12-L15), [service executable selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L49-L56), [exact process Node guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-native-worker-pools.mjs#L8-L18), [pool controls, not descendant-empty assertion](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-pool.ts#L33-L61), [direct root occupancy guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-scope.ts#L15-L28), [trusted root/launcher guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-supervisor-authority.ts#L4-L22), [native preflight actual host and Node](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/native-worker-node-preflight.mjs#L26-L48), [exact NRI Go selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-native-worker-nri.mjs#L7-L18), [systemd parser check](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/native-worker-node.test.mjs#L30-L47), [Prism pool/engine configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/config/native-worker.ts#L53-L84).
+> Implementation: [mandatory live cgroup input](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L19-L20).
+> [live-scope inputs and retained kernel assertions](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/reliability/worker-native-scope-live.mts#L95-L136).
+> [host render bundle and unit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L9-L70).
+> [host setup/retained service](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-native-worker-pools.mjs#L81-L121).
+> Contract or setting: [central Node and separate Ops selections](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L27-L29).
+> [complete-subtree populated observation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-observation.ts#L52-L67).
+> [separate unknown-scope recovery guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-worker-ownership.ts#L244-L251).
+> [exact generated Node selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L12-L15).
+> [service executable selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/render-native-worker-node.mjs#L49-L56).
+> [exact process Node guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/prepare-native-worker-pools.mjs#L8-L18).
+> [pool controls, not descendant-empty assertion](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-pool.ts#L33-L61).
+> [direct root occupancy guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-resource-scope.ts#L15-L28).
+> [trusted root/launcher guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/worker/core/worker/native-supervisor-authority.ts#L4-L22).
+> [native preflight actual host and Node](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/native-worker-node-preflight.mjs#L26-L48).
+> [exact NRI Go selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/build-native-worker-nri.mjs#L7-L18).
+> [systemd parser check](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/deployment/native-worker-node.test.mjs#L30-L47).
+> [Prism pool/engine configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/config/native-worker.ts#L53-L84).
 > Test evidence: [Prism isolated-pool harness and owned shutdown](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/worker-harness.mts#L14-L36). Status: source-only; no host preparation or test execution is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: input preflight and host receipt do not prove fixture completion or deployed trust.
@@ -1009,7 +1043,9 @@ processes and temporary archive/state after retaining their evidence.
 > **Source evidence — fixed remote archive executable**
 >
 > Claim: these remote fixtures require the absolute tar path; generic bundle scripts use PATH selection.
-> Implementation: [remote archive creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts#L43-L51), [restart tar configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-process-restart.mts#L169-L180), [real-provider tar configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-real-provider.mts#L108-L119).
+> Implementation: [remote archive creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts#L43-L51).
+> [restart tar configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-process-restart.mts#L169-L180).
+> [real-provider tar configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-real-provider.mts#L108-L119).
 > Contract or setting: [generic bundle tar selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/package-agent-skill-bundle.sh#L27-L44).
 > Prerequisite: the generic role-bundle script uses GNU tar selected through `PATH`. The remote archive fixtures require `/usr/bin/tar`. Check each selected executable before its route.
 > Test evidence: [remote archive creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts#L43-L51). Status: source-only; no execution result is asserted.
@@ -1209,7 +1245,9 @@ role. Do not use the transaction CI database or any populated/shared server.
 >
 > Claim: the two tests have separate admin/runtime authorities and retain database state between processes.
 > Implementation: [admin guards, creation and migration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-journal.mts#L19-L42), [journal connection/temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-journal.mts#L57-L61).
-> Contract or setting: [runtime URL/user/database guards](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L15-L19), [role credentials/extension/grants](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/database-roles.ts#L43-L58), [ordered npm command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L292-L292).
+> Contract or setting: [runtime URL/user/database guards](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L15-L19).
+> [role credentials/extension/grants](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/database-roles.ts#L43-L58).
+> [ordered npm command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L292-L292).
 > Test evidence: [real refusal, retained identity and temp cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/tests/native/operation-http.mts#L21-L47). Status: source-only; no database or command execution is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: real SQL/refusal checks do not prove a running native Worker or live design delivery.
@@ -1248,8 +1286,12 @@ Interpret Prism checks and service starts separately:
 > **Source evidence — Prism startup and selection**
 >
 > Claim: component tests and real services have distinct entrypoints and configuration.
-> Implementation: [package commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L1-L44), [Control listener](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/control.ts#L1-L9), [native Worker startup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/worker.ts#L12-L36).
-> Contract or setting: [Control secrets/trust/endpoints](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/control-config.ts#L22-L59), [Studio configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/studio-config.ts#L1-L18), [native transaction CI fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L196-L223).
+> Implementation: [package commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L1-L44).
+> [Control listener](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/control.ts#L1-L9).
+> [native Worker startup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/worker.ts#L12-L36).
+> Contract or setting: [Control secrets/trust/endpoints](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/control-config.ts#L22-L59).
+> [Studio configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/server/studio-config.ts#L1-L18).
+> [native transaction CI fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L196-L223).
 > Validation: start the selected service chain and run its native checks in the supported environment.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -1466,7 +1508,10 @@ Interpret telemetry and observability results before claiming delivery:
 >
 > Claim: generated representations are byte-checked and pipeline reconciliation has distinct durability/reader checks.
 > Implementation: [gofmt and byte drift behavior](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/generate-telemetry-contracts.mjs#L9-L39), [reconciliation check chain](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L84-L84).
-> Contract or setting: [contract generator assertions and PATH Go invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/telemetry/v1/tests/contracts.test.mjs#L130-L150), [separate Go module](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/pipeline-observability/v1/go/go.mod#L1-L5), [dependency lock](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/pipeline-observability/v1/go/go.sum#L1-L2), [absolute Go invocation and cache cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-observability-contracts.mts#L45-L52).
+> Contract or setting: [contract generator assertions and PATH Go invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/telemetry/v1/tests/contracts.test.mjs#L130-L150).
+> [separate Go module](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/pipeline-observability/v1/go/go.mod#L1-L5).
+> [dependency lock](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/pipeline-observability/v1/go/go.sum#L1-L2).
+> [absolute Go invocation and cache cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-pipeline-observability-contracts.mts#L45-L52).
 > Validation: regenerate the telemetry contracts, check the store, and run the selected native chain.
 > Test evidence: [contract generator assertions and PATH Go invocation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/contracts/telemetry/v1/tests/contracts.test.mjs#L130-L150). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -1804,8 +1849,12 @@ Interpret security/performance results without changing their acceptance inputs:
 > **Source evidence — security and scale limits**
 >
 > Claim: scanner data and journal scale checks require real dependencies and have bounded proof.
-> Implementation: [scanner report and nonzero failure contract](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/scan-runtime-images.sh#L118-L145), [real security database setup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L174-L194), [journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37).
-> Contract or setting: [required predeclared retention budget](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L10-L29), [retention measurement and limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L98-L136), [explicit-GC retention command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L31-L31).
+> Implementation: [scanner report and nonzero failure contract](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/scan-runtime-images.sh#L118-L145).
+> [real security database setup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L174-L194).
+> [journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37).
+> Contract or setting: [required predeclared retention budget](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L10-L29).
+> [retention measurement and limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/integration/engine-capture-retention.mts#L98-L136).
+> [explicit-GC retention command](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L31-L31).
 > Prerequisite: journal scale checks require GNU `flock`. Verify that executable before measuring, and retain the actual timing, exit status, and output.
 > Test evidence: [journal load, timing and cleanup](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/contracts/check-nova-journal-scale.mts#L7-L37). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -1855,9 +1904,15 @@ run is missing proof, not a passed merge/release gate.
 > **Source evidence — workflow authority**
 >
 > Claim: trigger, trust, conditional image build, and promotion are separate controls.
-> Implementation: [image dependency/matrix selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L1-L50), [optional live identity](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L188-L224), [read-only documentation job](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/docs-checks.yaml#L1-L19).
-> Contract or setting: [Ops event boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L1-L50), [promotion source-run verification](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/promote-runtime.yaml#L1-L59), [daily scan failure tracking](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/release-security.yaml#L1-L43).
-> Required CI checks: [shard/native/service jobs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L82-L137), [browser/security jobs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L139-L194), [native PostgreSQL job](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L196-L223). Retain the selected run and its artifacts.
+> Implementation: [image dependency/matrix selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L1-L50).
+> [optional live identity](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L188-L224).
+> [read-only documentation job](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/docs-checks.yaml#L1-L19).
+> Contract or setting: [Ops event boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L1-L50).
+> [promotion source-run verification](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/promote-runtime.yaml#L1-L59).
+> [daily scan failure tracking](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/release-security.yaml#L1-L43).
+> Required CI checks: [shard/native/service jobs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L82-L137).
+> [browser/security jobs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L139-L194).
+> [native PostgreSQL job](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/pipeline-reliability.yaml#L196-L223). Retain the selected run and its artifacts.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: workflow source cannot establish branch-protection settings, available secrets, or actual job execution.
@@ -1936,8 +1991,10 @@ For a selected tool/base change:
    [documentation-change chain](#documentation-change-chain). Keep old identities
    available while recovery still references them.
 
-The conditional updater and partial-write boundary are defined by
-[receipt fast path and update order](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L72-L86), [uv platforms/options and exact Go](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L36-L69), and [sync command sequencing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L283-L284). This describes expected source behavior, not an observed updater run.
+The following sources define the conditional updater and partial-write boundary:
+[receipt fast path and update order](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L72-L86).
+[uv platforms/options and exact Go](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L36-L69).
+[sync command sequencing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L283-L284). This describes expected source behavior, not an observed updater run.
 
 A contract change needs a declared compatibility decision. Preserve supported
 old schema versions and retained byte encodings, or add a new version with a
@@ -1992,8 +2049,13 @@ Interpret release-tool fixtures separately from release operations:
 > **Source evidence — version, receipt, promotion, rollback**
 >
 > Claim: generated versions and immutable release selection have separate authorities; rollback does not restore data.
-> Implementation: [central tool/image inputs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L1-L59), [version command interface](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/versions.mjs#L178-L181), [image receipt creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L86-L105).
-> Contract or setting: [bundle checksums/source release](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L142-L178), [GitOps promotion consequence](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/promote-runtime.yaml#L84-L113), [rollback contract](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/rollback-runtime.yaml#L1-L35), [rollback safety limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/rollback-runtime.yaml#L47-L64).
+> Implementation: [central tool/image inputs](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/versions.json#L1-L59).
+> [version command interface](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/versions.mjs#L178-L181).
+> [image receipt creation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L86-L105).
+> Contract or setting: [bundle checksums/source release](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L142-L178).
+> [GitOps promotion consequence](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/promote-runtime.yaml#L84-L113).
+> [rollback contract](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/rollback-runtime.yaml#L1-L35).
+> [rollback safety limit](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/rollback-runtime.yaml#L47-L64).
 > Validation: build the selected image and qualify publication, promotion, and rollback as separate operations with their required identities.
 > Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
@@ -2184,8 +2246,15 @@ navigation. Changing the constant alone cannot establish a correct explanation.
 > **Source evidence — protected Core guide revision guard**
 >
 > Claim: one hardcoded revision controls the three Core guides, and the checker compares each linked current file with immutable Git source before checking its ranges.
-> Implementation: [shared revision](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L9-L10), [Nova guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L20-L23), [Plugin Runtime guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L52-L54), [Worker guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L77-L79), [guide metadata, all link revisions and whole-file equality](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L103-L132).
-> Contract or setting: [common generator full-commit selection and lock-write boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L24-L52), [common tracked/untracked source guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L54-L69), [required navigation and surface checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L142-L157); the common generator independently owns `docs/generated/inventory/documentation-source-revision.json` and rejects current source/tool inputs not in its selected full commit.
+> Implementation: [shared revision](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L9-L10).
+> [Nova guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L20-L23).
+> [Plugin Runtime guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L52-L54).
+> [Worker guide selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L77-L79).
+> [guide metadata, all link revisions and whole-file equality](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L103-L132).
+> Contract or setting: [common generator full-commit selection and lock-write boundary](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L24-L52).
+> [common tracked/untracked source guard](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/docs-generate.mjs#L54-L69).
+> [required navigation and surface checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L142-L157).
+> The common generator independently owns `docs/generated/inventory/documentation-source-revision.json` and rejects current source/tool inputs not in its selected full commit.
 > Test evidence: [local terminal guard result fields](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L300-L306). Status: source-only; no change-repin execution is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for the unchanged selected Core checker and the cited common source-revision/write guards. The current common generator has additional source changes; these narrow unchanged guards do not certify its full current implementation.
 > Limit: local equality/metadata success does not prove source URL availability, complete semantic correctness, rendered output or the changed lifecycle task.
@@ -2291,6 +2360,6 @@ link cleanup and the declared route redirect before deleting a public page.
 | Platform restore or a component application-restore route is not demonstrated | Follow [recovery limits](../use/recovery.md). Platform/store owners prepare isolated-target proof; stop before destructive cutover. | Original application readers and cross-service identity/data checks pass on an independent target with a declared rollback boundary. |
 
 A change check is complete only after its exact command finishes in the
-supported environment and its required observations are recorded. Native
+supported environment and you record its required observations. Native
 execution, rendered charts, target images, deployment, live dependencies,
 release operations, and platform restore each require their own results.

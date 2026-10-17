@@ -325,7 +325,7 @@ this measurement task does not install or repair a host.
 > Claim: HTTP capacity and native attempt/storage capacity are separate fences.
 > Implementation: [request/probe rejection](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/worker-lifecycle.ts#L41-L69), [native journal and accepted budgets](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/native-worker-execution.ts#L12-L46), [node reservation validation](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/native-worker-node-capacity.mjs#L54-L72).
 > Contract or setting: [ingress settings](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/worker-config.ts#L17-L29), [native policy](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/config/native-worker.ts#L25-L35), [supervisor/store limits](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/config/native-worker.ts#L50-L84).
-> Test evidence: [reserved-probe HTTP test](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/tests/worker-ingress-capacity.test.mts#L21-L55) inspected, not executed; no native-host or live admission check was executed for this page.
+> Test evidence: [reserved-probe HTTP test](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/tests/worker-ingress-capacity.test.mts#L21-L55) inspected, not executed; we ran no native-host or live admission check for this page.
 > Revision: `ad312e3e4f15223809fadef90bd90e1f689ce941`.
 > Limit: source defaults and an HTTP probe do not prove accepted host reservations or successful attempt recovery.
 
@@ -381,7 +381,7 @@ cleanup; this page supplies no stage-deletion command.
 > Claim: both components retain failed staging and enforce different allowances; neither expires groups automatically.
 > Implementation: [Prism allowance and staging](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/files/prism-backup.sh#L66-L117), [LiteLLM allowance and staging](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/postgresql-recovery.sh#L56-L95).
 > Contract or setting: [Prism ceilings](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/values.yaml#L62-L74), [Prism claim/class](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/templates/jobs.yaml#L61-L74), [LiteLLM policy](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/my-values/infra/postgresql-recovery.yaml#L1-L15).
-> Test evidence: no backup, restore, copy or cleanup was executed for this page.
+> Test evidence: we ran no backup, restore, copy or cleanup for this page.
 > Revision: `ad312e3e4f15223809fadef90bd90e1f689ce941`.
 > Limit: scheduled resources and ceilings do not establish off-node recovery, a measured budget, or an isolated application restore. Use [canonical recovery](recovery.md#canonical-backup-and-restore-procedure) for integrity, encryption, credential and original-reader boundaries.
 

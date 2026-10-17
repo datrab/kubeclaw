@@ -332,4 +332,4 @@ routes. Slot/role/recipe removal or rename must update consumers and links;
 a stored hash or a complete-looking table is not add/change/remove drift proof.
 The current page generators do not make this authored reference an image
 inventory generator. No build, scan, OCI inspection, workflow, Helm render,
-registry/network call, container, deployment or rollback was executed here.
+registry/network call, container, deployment or rollback ran here.

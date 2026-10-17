@@ -149,7 +149,7 @@ the design viewport, not the browser width or this control visibility.
 >
 > **Test evidence:** The [maintained development browser tests](https://github.com/datrab/kubeclaw/blob/164d2042d818021d71f267fe4f33d119e0f1d646/skills/prism/studio/tests/studio.spec.mjs#L3-L39)
 > cover the desktop text toggle, preview, mobile insertion, and page width.
-> Their execution status is recorded in [Local Development and Verification](#local-development-and-verification).
+> Find their execution status in [Local Development and Verification](#local-development-and-verification).
 >
 > **Revision:** `164d2042d818021d71f267fe4f33d119e0f1d646`.
 >
@@ -2233,7 +2233,7 @@ that publication as the current reviewed design.
 4. Keep handoff stopped until these owners establish the exact outcomes and the
    human confirms which current content is intended. If a genuine new revision
    must be approved, repeat its preview and evaluation under established writer
-   exclusion, only after the earlier outcome is resolved. Do not reuse the old
+   exclusion, only after you resolve the earlier outcome. Do not reuse the old
    approval for changed content or manufacture a change to escape uniqueness.
 
 There is no supported generic repair command for this boundary. Do not delete or

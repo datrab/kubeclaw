@@ -124,7 +124,7 @@ exactly-once guarantee across a lost connection and later retry.
 2. Delivery uses configured `maxAttempts`, `backoffMs` and `timeoutMs`; retained
    prior attempts count toward the maximum rather than resetting on every drain.
 3. Each invocation gets an observer-delivery wrapper and a revocable lease.
-   Success is recorded before checkpoint advance. Conflicting checkpoint event
+   The delivery path records success before checkpoint advance. Conflicting checkpoint event
    IDs at the same sequence fail; regression also fails.
 4. A required observer failure throws. Best-effort failure records the failure
    and blocks later events for that observer/run in this drain; it is not a
@@ -210,7 +210,7 @@ fail. This is not general corrupt-journal recovery.
    exhausted delivery attempts and a lost acknowledgement need different actions.
 4. Establish the original authority and cleanup before replay. Repair the sink
    and use its supported bounded recovery path; do not re-execute the original
-   business action just to repopulate a telemetry projection.
+   business action solely to repopulate a telemetry projection.
 5. Retain restored delivery/result evidence and unresolved gaps separately.
    A dashboard becoming green does not prove the missing source or sink history
    was recovered. Use [Diagnosis](../use/diagnose.md) and [Recovery](../use/recovery.md)
@@ -230,5 +230,5 @@ When a type, payload, identity, subscription, retry or retention rule changes,
 update its exact authority and consumer explanation together. Use
 [Documentation maintenance](../extend/documentation-maintenance.md); existing
 name extraction does not generate this authored hub or prove every producer
-has an owner. No extractor, parser, audit, replay, live delivery or recovery
-command was executed for this page.
+has an owner. We ran no extractor, parser, audit, replay, live delivery or recovery
+command for this page.

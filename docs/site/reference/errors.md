@@ -174,5 +174,5 @@ Use [Documentation maintenance](../extend/documentation-maintenance.md) when
 an error's code, trigger, representation, owner or retry behavior changes.
 Keep generated facts separate from authored interpretation; update the affected
 reader route as well as the exact source identity. The existing Buster generator
-does not generate this central hub. No extractor, diagnostic, audit, restart,
-retry, repair or live recovery command was executed for this page.
+does not generate this central hub. We ran no extractor, diagnostic, audit, restart,
+retry, repair or live recovery command for this page.

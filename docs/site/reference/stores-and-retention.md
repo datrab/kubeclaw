@@ -215,6 +215,6 @@ is disposable or a conditional supported route is irrelevant.
 Use [Documentation maintenance](../extend/documentation-maintenance.md) when
 paths, owners, readers, quota dimensions, expiry, retirement or restore behavior
 changes. Preserve authored explanation separately from generated facts; the
-current page generator does not generate this hub. No backup, database,
-cleanup, restore, audit, replay or live application recovery was executed for
-this page, and no successful restore/loss/time result is invented.
+current page generator does not generate this hub. We ran no backup, database,
+cleanup, restore, audit, replay or live application recovery for
+this page. We claim no successful restore/loss/time result.

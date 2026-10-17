@@ -112,8 +112,8 @@ public input. Static target existence alone does not prove recursive semantics.
 A **custom resource definition (CRD)** is a Kubernetes
 `CustomResourceDefinition`: it declares the schema of an additional API
 resource. **Common Expression Language (CEL)** rules attached to that schema
-express object constraints for API-server admission—whether a create or update
-can be accepted. Admission is not controller reconciliation: the Buster
+express object constraints for API-server admission—whether the API server
+can accept a create or update. Admission is not controller reconciliation: the Buster
 controller separately reads a lease's `spec` and `status` and acts on it.
 These are different consumers, not two names for the same validation step.
 For this lease, the chart condition, installed API group/version, and the
@@ -147,7 +147,7 @@ The Buster lease CRD is not plain JSON Schema: its chart conditions, templated
 identity and CEL expressions remain part of the authority. Source presence
 proves neither successful Helm rendering nor API admission. Nova project
 helper closure and embedded review generation/parser equivalence also need
-separate validation; no command was executed for this catalogue.
+separate validation; we ran no command for this catalogue.
 
 ## Interpret nested constraints and defaults
 
@@ -194,7 +194,7 @@ of omitting the rule or substituting a simpler parser.
 
 The following **12 named companions** were found beyond configuration and the
 37 registration files. Their source and manual/generated consumer relationships
-are distinct; no direct schema-loading or recursive parity claim follows just
+are distinct; no direct schema-loading or recursive parity claim follows solely
 from a filename. No companion is labelled obsolete without version evidence.
 
 | Named companion | Actual source route | Remaining interpretation boundary |
@@ -251,5 +251,5 @@ The config generator does not currently emit this hub. See
 [Documentation maintenance](../extend/documentation-maintenance.md) for
 source-owned generation/check prerequisites and partial-write recovery. Real
 recursive equivalence, current-byte drift rejection, intended add/change/remove
-coverage, clean reproduction and reader validation remain separate work. No
-schema/parser/compiler, product, Helm or API validation was executed for this page.
+coverage, clean reproduction and reader validation remain separate work. We ran no
+schema/parser/compiler, product, Helm or API validation for this page.
