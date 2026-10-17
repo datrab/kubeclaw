@@ -19524,9 +19524,36 @@
       "id": "A911-10",
       "passCondition": "Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.",
       "automaticFailure": "Die Prüfung testet nur Addition oder lässt nach Removal/Rename eine alte Autorität bestehen.",
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "revision": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+          "evidenceCommit": "5401ea249aac6f78cae0105177572f44b9c79437",
+          "ledger": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/ledger.json",
+          "ledgerSha256": "528111709196af7d5e24f160c4c72e88e433469ddaa429f79ec65fde77f40b4a",
+          "scope": "A911-10 only; known-route/source-field Removal/Rename and historical attribution. Not deployedHTTP, all84/native/P17/fullGo or final261/89 PASS."
+        }
+      ],
+      "reviews": [
+        {
+          "id": "codex:01a149d6-1204-7793-89ea-0644b8ecf5b1",
+          "role": "source",
+          "verdict": "PASS",
+          "report_artifact_id": "current-source-review"
+        },
+        {
+          "id": "codex:01a149d6-dc7a-7da1-905a-74f8ce9bb8a9",
+          "role": "reader",
+          "verdict": "PASS",
+          "report_artifact_id": "current-reader-review"
+        },
+        {
+          "id": "codex:01a149d6-e08d-7030-b6ae-a1f05da85ebc",
+          "role": "quality",
+          "verdict": "PASS",
+          "report_artifact_id": "current-quality-review"
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": []
     },
