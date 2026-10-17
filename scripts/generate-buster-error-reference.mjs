@@ -793,7 +793,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumLogBytes (bytes) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumLogBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Set maximumLogBytes to a positive safe integer in bytes; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -802,7 +802,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumExecutionMs (milliseconds) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumExecutionMs to a positive safe integer in milliseconds; changing per-request limits does not repair this constructor option.",
+      "Set maximumExecutionMs to a positive safe integer in milliseconds; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -811,7 +811,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumManifestBytes (bytes) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumManifestBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Set maximumManifestBytes to a positive safe integer in bytes; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -820,7 +820,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumManifestBytes (bytes) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumManifestBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Set maximumManifestBytes to a positive safe integer in bytes; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -829,7 +829,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumResources (resources) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumResources to a positive safe integer in resources; changing per-request limits does not repair this constructor option.",
+      "Set maximumResources to a positive safe integer in resources; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -838,7 +838,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumPersistentVolumeClaimBytes (bytes) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumPersistentVolumeClaimBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Set maximumPersistentVolumeClaimBytes to a positive safe integer in bytes; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -847,7 +847,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumPersistentVolumeTotalBytes (bytes) is not a positive safe integer, or is smaller than maximumPersistentVolumeClaimBytes.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumPersistentVolumeTotalBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option. Keep maximumPersistentVolumeTotalBytes at least as large as maximumPersistentVolumeClaimBytes.",
+      "Set maximumPersistentVolumeTotalBytes to a positive safe integer in bytes; per-request limits do not repair this constructor option. Keep maximumPersistentVolumeTotalBytes at least as large as maximumPersistentVolumeClaimBytes.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -856,7 +856,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumRetentionSeconds (seconds) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumRetentionSeconds to a positive safe integer in seconds; changing per-request limits does not repair this constructor option.",
+      "Set maximumRetentionSeconds to a positive safe integer in seconds; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],
@@ -865,7 +865,7 @@ const finiteFamilyDiagnoses = new Map([
     [
       "The runtime option maximumExecutionMs (milliseconds) is not a positive safe integer.",
       "Runtime construction stops at the rejected option.",
-      "Set maximumExecutionMs to a positive safe integer in milliseconds; changing per-request limits does not repair this constructor option.",
+      "Set maximumExecutionMs to a positive safe integer in milliseconds; per-request limits do not repair this constructor option.",
       "Recreate the runtime only after its owning options pass validation."
     ]
   ],

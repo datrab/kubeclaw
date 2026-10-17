@@ -293,7 +293,8 @@
     "verify:prism:native-worker": "node --test --test-concurrency=1 skills/prism/tests/*.native.mts skills/prism/integration/worker-concurrent-resource-attribution.mts",
     "docs:status:generate": "node scripts/docs-status.mjs",
     "docs:status:check": "node scripts/docs-status.mjs --check",
-    "docs:sdk:check": "node scripts/docs-sdk-reference.mjs --check"
+    "docs:sdk:check": "node scripts/docs-sdk-reference.mjs --check",
+    "docs:drift:error-code:check": "node scripts/check-error-code-drift.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
