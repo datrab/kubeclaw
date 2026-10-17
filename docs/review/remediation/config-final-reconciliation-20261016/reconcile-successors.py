@@ -174,6 +174,17 @@ for identity,row in dispatch_rows.items():
     original=originals.get(identity)
     if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged':raise ValueError('Dispatch original/acceptance drift: '+identity)
     if identity not in dispatch_exact and row['centralPhysicalAuthor'] is not None:raise ValueError('Dispatch invented central author')
+core_platform_path=str((OUT/'core-platform-successors.json').relative_to(ROOT))
+core_platform_joins=read(core_platform_path)
+core_platform_rows={r['id']:r for r in core_platform_joins['rows']}
+core_platform_exact={i:r for i,r in core_platform_rows.items() if r['status']=='EXACT_EXISTING_CENTRAL_LEASE_MEMORY_SOURCE_JOIN'}
+core_platform_protocol={i:r for i,r in core_platform_rows.items() if r['status']=='PROTOCOL_SCHEMA_VERSION_NOT_OPERATOR_GAP'}
+if len(core_platform_rows)!=54 or len(core_platform_joins['rows'])!=54 or len(core_platform_exact)!=2 or len(core_platform_protocol)!=1:raise ValueError('Core54 source partition drift')
+for identity,row in core_platform_rows.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged':raise ValueError('Core54 original/acceptance drift: '+identity)
+    if identity not in core_platform_exact and row['centralPhysicalAuthor'] is not None:raise ValueError('Core54 invented central author')
+    if identity in core_platform_protocol and row['class']!='protocol-invariant':raise ValueError('Core54 protocol classification drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -305,6 +316,17 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group['candidateSuccessors']=[]
         group['status']='PARTIAL_EXACT_DISPATCH_PROFILE_SOURCE_JOIN'
         group['constraint']=dispatch_joins['constraint']
+    core_platform=[core_platform_rows[i] for i in ids if i in core_platform_rows]
+    if core_platform:
+        if {r['id'] for r in core_platform}!=set(ids):raise ValueError('Incomplete Core54 source group')
+        group['exactCoreLeaseMemoryMappings']=[r for r in core_platform if r['id'] in core_platform_exact]
+        group['originalCoreProtocolInvariants']=[r for r in core_platform if r['id'] in core_platform_protocol]
+        group['explicitCorePlatformResiduals']=[r for r in core_platform if r['id'] not in core_platform_exact and r['id'] not in core_platform_protocol]
+        group['remainingFieldIds']=[i for i in ids if i not in core_platform_exact and i not in core_platform_protocol]
+        group['corePlatformSupplementalJoin']=pin(core_platform_path)
+        group['candidateSuccessors']=[]
+        group['status']='PARTIAL_EXACT_CORE_LEASE_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS'
+        group['constraint']=core_platform_joins['constraint']
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
@@ -336,12 +358,14 @@ plugin_policy_joined = [r['id'] for g in groups for r in g.get('explicitPluginPo
 if set(plugin_policy_joined)!=set(plugin_policy_rows) or len(plugin_policy_joined)!=len(set(plugin_policy_joined)):raise ValueError('Plugin policies not conserved across historical groups')
 dispatch_joined=[r['id'] for g in groups for r in g.get('exactDispatchProfileMappings',[])+g.get('explicitDispatchResiduals',[])]
 if set(dispatch_joined)!=set(dispatch_rows) or len(dispatch_joined)!=len(set(dispatch_joined)):raise ValueError('Dispatch identities not conserved across historical groups')
+core_platform_joined=[r['id'] for g in groups for r in g.get('exactCoreLeaseMemoryMappings',[])+g.get('originalCoreProtocolInvariants',[])+g.get('explicitCorePlatformResiduals',[])]
+if set(core_platform_joined)!=set(core_platform_rows) or len(core_platform_joined)!=len(set(core_platform_joined)):raise ValueError('Core54 identities not conserved across historical groups')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
               "exactPrismAttemptSourceJoins": len(attempt_exact), "explicitPrismAttemptReceivingResiduals": len(attempt_open), "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
-              "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
+              "exactCoreLeaseMemorySourceJoins":len(core_platform_exact), "originalCoreProtocolInvariants":len(core_platform_protocol), "explicitCorePlatformReceivingResiduals":len(core_platform_rows)-len(core_platform_exact)-len(core_platform_protocol), "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",
           "requiredGates": "All2409 fields/6845 cases/50 requirements/fullC0-C6, applicable original effects/history/mutants, native/archive and fresh integrated independent review remain mandatory"}
 if len(groups) != 45:

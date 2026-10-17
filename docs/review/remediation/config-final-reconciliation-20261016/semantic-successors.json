@@ -33,13 +33,16 @@
     "exactPrismServiceSourceJoins": 16,
     "staticReviewOwnerPointers": 222,
     "originalTargetDerivedFields": 6,
+    "exactCoreLeaseMemorySourceJoins": 2,
+    "originalCoreProtocolInvariants": 1,
+    "explicitCorePlatformReceivingResiduals": 51,
     "exactDispatchSelectedProfileSourceJoins": 7,
     "explicitDispatchReceivingResiduals": 35,
     "explicitPluginPolicyReceivingResiduals": 17,
     "exactNotificationCoreSourceJoins": 2,
     "explicitNotificationReceivingResiduals": 24,
     "groupsByStatus": {
-      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 1,
+      "PARTIAL_EXACT_CORE_LEASE_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS": 1,
       "UNRESOLVED_SEMANTIC_OWNER_JOIN": 10,
       "PARTIAL_EXACT_PRISM_BOUNDARY_SOURCE_JOIN": 1,
       "PARTIAL_EXACT_PRISM_ATTEMPT_SOURCE_JOIN": 2,
@@ -119,8 +122,6 @@
       "fieldCount": 54,
       "exactExistingMappings": [],
       "remainingFieldIds": [
-        "RT-CORE-LEASE-MEMORY",
-        "RT-PLATFORM-SCHEMAVERSION",
         "RT-PLATFORM-INSTALLATIONROOTS",
         "RT-PLATFORM-TRUSTEDBUILTINROOTS",
         "RT-PLATFORM-EXTERNALTRUST",
@@ -171,21 +172,3156 @@
         "RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS",
         "RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS",
         "RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES",
-        "RT-OBSERVER-LEASE-MEMORY",
         "RT-RESOLVER-RETRY-DEFAULT"
       ],
-      "candidateSuccessors": [
+      "candidateSuccessors": [],
+      "status": "PARTIAL_EXACT_CORE_LEASE_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS",
+      "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactCoreLeaseMemoryMappings": [
         {
-          "owner": {
+          "id": "RT-CORE-LEASE-MEMORY",
+          "original": "D228#/rows/1009",
+          "originalObjectSha256": "550613ab253516669a1c0ec4a244b7728823a77705aedc5817d2b2b42d22d48a",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-CORE-LEASE-MEMORY-MISSING",
+            "RT-CORE-LEASE-MEMORY-ALT",
+            "RT-CORE-LEASE-MEMORY-MUTANT"
+          ],
+          "owner": "nova-core",
+          "originalSource": {
+            "path": "skills/nova/core/execution/stage-executor.ts",
+            "field": "InvocationLease.limits.memoryBytes",
+            "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "EXACT_EXISTING_CENTRAL_LEASE_MEMORY_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
             "path": "config/nova/core.config.json",
             "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
           },
-          "pointer": "/profiles/standard/settings",
-          "qualification": "Mixed platform/Core history; do not assume all54 fields moved here"
+          "pointer": "/profiles/standard/settings/stageMemoryBytes",
+          "valueSha256": "4588d7109c692c6ff29d1f1192602d9c645971a67440dbce287a221482bc270d",
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json",
+            "sha256": "a358fdd2cf37070b4cc132520cb0922c949b1ce91b89a1656a3b81161ed400f5",
+            "pointer": "/properties/stageMemoryBytes",
+            "fragmentSha256": "ea288f4ef558f5f1682c9ec4c9395734bd8290c18c696889964cd2b24e1dcfe8"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "const settings=captureCoreRuntimePolicy(",
+            "lines": [
+              113
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/stage-executor.ts",
+              "sha256": "2e7974c7b5e5aa99d1020273b7bf403e4eb966a5b310bae41c65b5d87b55a42e",
+              "anchor": "memoryBytes: this.#options.stageMemoryBytes",
+              "lines": [
+                73
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "stageMemoryBytes: context.runtime.corePolicy.stageMemoryBytes",
+              "lines": [
+                30
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/runner.ts",
+              "sha256": "c32baed6debcef03e32e051278ab13df86a01cf6f49e9796321b89cff9212ba7",
+              "anchor": "stageMemoryBytes: this.#options.stageMemoryBytes",
+              "lines": [
+                75
+              ]
+            }
+          ],
+          "originalCapture": {
+            "path": "skills/nova/core/execution/engine-snapshots.ts",
+            "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+            "anchor": "configuration: runtime.configuration",
+            "lines": [
+              131
+            ]
+          },
+          "originalRestore": {
+            "path": "skills/nova/core/execution/engine-snapshots.ts",
+            "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+            "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+            "lines": [
+              152
+            ]
+          }
+        },
+        {
+          "id": "RT-OBSERVER-LEASE-MEMORY",
+          "original": "D228#/rows/1440",
+          "originalObjectSha256": "6be0327ae5c1063dd062f39a795e3e04ea3ad002cdc8e89bef753be3fcde1c25",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-OBSERVER-LEASE-MEMORY-MISSING",
+            "RT-OBSERVER-LEASE-MEMORY-ALT",
+            "RT-OBSERVER-LEASE-MEMORY-MUTANT"
+          ],
+          "owner": "nova-core",
+          "originalSource": {
+            "path": "skills/nova/core/telemetry/observer-delivery.ts",
+            "field": "InvocationLease.limits.memoryBytes",
+            "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "EXACT_EXISTING_CENTRAL_LEASE_MEMORY_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "pointer": "/profiles/standard/settings/observerMemoryBytes",
+          "valueSha256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json",
+            "sha256": "a358fdd2cf37070b4cc132520cb0922c949b1ce91b89a1656a3b81161ed400f5",
+            "pointer": "/properties/observerMemoryBytes",
+            "fragmentSha256": "ea288f4ef558f5f1682c9ec4c9395734bd8290c18c696889964cd2b24e1dcfe8"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+            "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965",
+            "anchor": "const settings=captureCoreRuntimePolicy(",
+            "lines": [
+              113
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/telemetry/observer-delivery.ts",
+              "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb",
+              "anchor": "memoryBytes: options.memoryBytes",
+              "lines": [
+                23
+              ]
+            },
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "memoryBytes: runtime.corePolicy.observerMemoryBytes",
+              "lines": [
+                127
+              ]
+            }
+          ],
+          "originalCapture": {
+            "path": "skills/nova/core/execution/engine-snapshots.ts",
+            "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+            "anchor": "configuration: runtime.configuration",
+            "lines": [
+              131
+            ]
+          },
+          "originalRestore": {
+            "path": "skills/nova/core/execution/engine-snapshots.ts",
+            "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+            "anchor": "return captureCoreRuntimePolicy(configuration.corePolicy)",
+            "lines": [
+              152
+            ]
+          }
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
-      "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "originalCoreProtocolInvariants": [
+        {
+          "id": "RT-PLATFORM-SCHEMAVERSION",
+          "original": "D228#/rows/1243",
+          "originalObjectSha256": "f7631f0ca86d87ed8a35853f1e132108ce6a3828da20a088b085cfe3ccfc2061",
+          "class": "protocol-invariant",
+          "caseIds": [
+            "RT-PLATFORM-SCHEMAVERSION-MISSING",
+            "RT-PLATFORM-SCHEMAVERSION-ALT",
+            "RT-PLATFORM-SCHEMAVERSION-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.schemaVersion",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "PROTOCOL_SCHEMA_VERSION_NOT_OPERATOR_GAP",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/schemaVersion",
+            "fragmentSha256": "47819fa403d88391d86d604cce8caf4bddaa6c43723f1a5c6faf41dea0e383ff"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "qualification": "Protocol version identity retained; not operator externalization or runtime acceptance"
+        }
+      ],
+      "explicitCorePlatformResiduals": [
+        {
+          "id": "RT-PLATFORM-INSTALLATIONROOTS",
+          "original": "D228#/rows/1244",
+          "originalObjectSha256": "54a7a45a2bad06753e5a9f4760af1ee40a3d86d1bc8cac17cd90a85eeb5f86f5",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-INSTALLATIONROOTS-MISSING",
+            "RT-PLATFORM-INSTALLATIONROOTS-ALT",
+            "RT-PLATFORM-INSTALLATIONROOTS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.installationRoots",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/installationRoots",
+            "fragmentSha256": "db4bed201c04b3fec8f099b0f5528758c39a96e95746a82a2f2f4767f74072ae"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/installationRoots"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "installationRoots: platform.installationRoots",
+              "lines": [
+                54
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-TRUSTEDBUILTINROOTS",
+          "original": "D228#/rows/1245",
+          "originalObjectSha256": "e5afdd5d79cce418d11bbea1e94c605681af71873bf8de3a9a6c71af5da27286",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-TRUSTEDBUILTINROOTS-MISSING",
+            "RT-PLATFORM-TRUSTEDBUILTINROOTS-ALT",
+            "RT-PLATFORM-TRUSTEDBUILTINROOTS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.trustedBuiltinRoots",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/trustedBuiltinRoots",
+            "fragmentSha256": "db4bed201c04b3fec8f099b0f5528758c39a96e95746a82a2f2f4767f74072ae"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/trustedBuiltinRoots"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "trustedBuiltinRoots: platform.trustedBuiltinRoots",
+              "lines": [
+                55
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-EXTERNALTRUST",
+          "original": "D228#/rows/1246",
+          "originalObjectSha256": "d625cf69dcb9b4911a43cc310e358276d206d1bc02b421e1cb0f9750a4f55499",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-EXTERNALTRUST-MISSING",
+            "RT-PLATFORM-EXTERNALTRUST-ALT",
+            "RT-PLATFORM-EXTERNALTRUST-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.externalTrust",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/externalTrust",
+            "fragmentSha256": "632edfe5d8e2c45885250068bdc318d348b137357144ef68204b6ae6401edcc2"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/externalTrust"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "platform.externalTrust.allowedSourceDigests",
+              "lines": [
+                55
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-PROVIDERS",
+          "original": "D228#/rows/1247",
+          "originalObjectSha256": "2bf463ad1e7f13795b068a38808ef62f3ad900d2edb98d1767bcf9c7e028fbe9",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-PROVIDERS-MISSING",
+            "RT-PLATFORM-PROVIDERS-ALT",
+            "RT-PLATFORM-PROVIDERS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.providers",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/providers",
+            "fragmentSha256": "7eeb5d4548fe3e579ab1576b60cbe44ea4d4c7dbfc1db8e9d7b8c6d0acdc30a2"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/providers"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "providers: new Map(Object.entries(platform.providers))",
+              "lines": [
+                59
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-GRANTS",
+          "original": "D228#/rows/1248",
+          "originalObjectSha256": "80e01d30bb0e5a96e1250c4a68f382300f4379075bb23402974c4740b6d1c07b",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-GRANTS-MISSING",
+            "RT-PLATFORM-GRANTS-ALT",
+            "RT-PLATFORM-GRANTS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.grants",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/grants",
+            "fragmentSha256": "9e14fd95142a656bef8a6b77947ce70872a113ec5b79d4fb450324c8d4b4bd5b"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/grants"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "grants: nestedMap(platform.grants)",
+              "lines": [
+                59
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-ADAPTERS",
+          "original": "D228#/rows/1249",
+          "originalObjectSha256": "c672cca177f0beb50557add1424a304795115ff4c6d039a0d246b522bbe663f2",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-ADAPTERS-MISSING",
+            "RT-PLATFORM-ADAPTERS-ALT",
+            "RT-PLATFORM-ADAPTERS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.adapters",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/adapters",
+            "fragmentSha256": "788838d987811cc41ce5d8ec655a7347dc84f55461fd424ffae04962f7acab0d"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/adapters"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "selectedAdapterConfigurations(platform.adapters",
+              "lines": [
+                47
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-ACTIVEADAPTERS",
+          "original": "D228#/rows/1250",
+          "originalObjectSha256": "0f860b601bde462fda86c3308c50c08cb0c79d554b3eedaf3845526a832288c8",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-ACTIVEADAPTERS-MISSING",
+            "RT-PLATFORM-ACTIVEADAPTERS-ALT",
+            "RT-PLATFORM-ACTIVEADAPTERS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.activeAdapters",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/activeAdapters",
+            "fragmentSha256": "c10d522fb1e53f783aec4e2ac4798956bbd751f7c60ff993a025218a0bd240a7"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/activeAdapters"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "platform.activeAdapters.forEach",
+              "lines": [
+                75
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-OBSERVERS",
+          "original": "D228#/rows/1251",
+          "originalObjectSha256": "3ee31b5dc85aec1f50997e8533a1156d69d1acb6db0ef3489c0b8fa03fc6c889",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-OBSERVERS-MISSING",
+            "RT-PLATFORM-OBSERVERS-ALT",
+            "RT-PLATFORM-OBSERVERS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.observers",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/observers",
+            "fragmentSha256": "788838d987811cc41ce5d8ec655a7347dc84f55461fd424ffae04962f7acab0d"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/observers"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "Object.keys(platform.observers)",
+              "lines": [
+                75
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-ISOLATION",
+          "original": "D228#/rows/1252",
+          "originalObjectSha256": "bb12353b8f4c235cd83ca96888dd88d4383a8883b288e9b4eb0f795b55c4b146",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-ISOLATION-MISSING",
+            "RT-PLATFORM-ISOLATION-ALT",
+            "RT-PLATFORM-ISOLATION-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.isolation",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/isolation",
+            "fragmentSha256": "80fed085c86a2a8affda385c2497b09e5999c403787d2f00437ed8b3f3dfbe96"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/isolation"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "platform.isolation, inspected.corePolicy.isolationSession",
+              "lines": [
+                71
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-STORAGEROOT",
+          "original": "D228#/rows/1253",
+          "originalObjectSha256": "0b7fe8f042aee80dafc9586808883c3962326c653400c934ac8a55f45c520907",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-STORAGEROOT-MISSING",
+            "RT-PLATFORM-STORAGEROOT-ALT",
+            "RT-PLATFORM-STORAGEROOT-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.storageRoot",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/storageRoot",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/storageRoot"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "resolveRunRoot(platform.storageRoot",
+              "lines": [
+                39,
+                64,
+                92
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-SHUTDOWNTIMEOUTMS",
+          "original": "D228#/rows/1254",
+          "originalObjectSha256": "f9953d61b80525b4dbfba7d44d605eaae43c05fe6af3bb0ca0eda7d95d1db682",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-SHUTDOWNTIMEOUTMS-MISSING",
+            "RT-PLATFORM-SHUTDOWNTIMEOUTMS-ALT",
+            "RT-PLATFORM-SHUTDOWNTIMEOUTMS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.shutdownTimeoutMs",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/shutdownTimeoutMs",
+            "fragmentSha256": "2a1379ebe9f4b632fbdf3732d4b86b26e9fbf2aa92cf2449dde7bf4dc122060f"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/shutdownTimeoutMs"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "shutdownTimeoutMs: platform.shutdownTimeoutMs",
+              "lines": [
+                120
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-EFFECTLOCKTTLMS",
+          "original": "D228#/rows/1255",
+          "originalObjectSha256": "9142ea3d4626fa0e55d50c74c85509ec136392d5b71ab2406459499acc4f842a",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-EFFECTLOCKTTLMS-MISSING",
+            "RT-PLATFORM-EFFECTLOCKTTLMS-ALT",
+            "RT-PLATFORM-EFFECTLOCKTTLMS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.effectLockTtlMs",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/effectLockTtlMs",
+            "fragmentSha256": "e4f915b91ae90b9374445a1bd579396a15a8cc66bf8879f9883d673f43c26d5d"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/effectLockTtlMs"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "platform.effectLockTtlMs, runtime.corePolicy.resourceAcquisition",
+              "lines": [
+                112
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-ORCHESTRATORISSUERID",
+          "original": "D228#/rows/1256",
+          "originalObjectSha256": "9e5742b072f3bf01eb219ca6871433936d8d9bd0bb7e2924c0409685adb81414",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-ORCHESTRATORISSUERID-MISSING",
+            "RT-PLATFORM-ORCHESTRATORISSUERID-ALT",
+            "RT-PLATFORM-ORCHESTRATORISSUERID-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.orchestratorIssuerId",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/orchestratorIssuerId",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/orchestratorIssuerId"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-run.ts",
+              "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+              "anchor": "orchestratorIssuerId: context.platform.orchestratorIssuerId",
+              "lines": [
+                31
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS",
+          "original": "D228#/rows/1257",
+          "originalObjectSha256": "81b4bce3368ddf7ca0e52ed8c389953debec28e9ea16871de9ee37dd172c66ad",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS-MISSING",
+            "RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS-ALT",
+            "RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS-MUTANT"
+          ],
+          "owner": "nova-platform",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.administrativeDecisionIssuers",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_PLATFORM_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "schema": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "sha256": "e269f2dfa4f99d06e9b3eb08173f40d540d3c26133fba06574fa3c2338596fab",
+            "pointer": "/properties/administrativeDecisionIssuers",
+            "fragmentSha256": "9505c1ffa375998c226ec648ababa48cf86b5406c3be722ce7baa31a1dd3989f"
+          },
+          "loader": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "return validatedPlatformConfig(value, path.dirname(canonical), canonical)",
+            "lines": [
+              68
+            ]
+          },
+          "currentAuthor": {
+            "platformPointer": "/administrativeDecisionIssuers"
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/execution/engine-admin.ts",
+              "sha256": "bc4606714023afef5b49b49124e3550f6bc1ac02853d0e3b412a3a0617488929",
+              "anchor": "this.#platform.administrativeDecisionIssuers.some",
+              "lines": [
+                68
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-GRANT-REPORT-EVIDENCE-READ-ALLOWEDRUNIDS",
+          "original": "D228#/rows/1258",
+          "originalObjectSha256": "b8cff1326cf2b467df799876c03304942dcaf0a8fa53c0f0a157bfc67815c619",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-REPORT-EVIDENCE-READ-ALLOWEDRUNIDS-MISSING",
+            "RT-GRANT-REPORT-EVIDENCE-READ-ALLOWEDRUNIDS-ALT",
+            "RT-GRANT-REPORT-EVIDENCE-READ-ALLOWEDRUNIDS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.report.evidence.read.constraints.allowedRunIds",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "report.evidence.read",
+          "constraintKey": "allowedRunIds",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/report.evidence.read/allowedRunIds"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'report.evidence.read': definition(",
+            "lines": [
+              38
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRunIds'",
+            "lines": [
+              38
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-STATE-READ-ALLOWEDNAMESPACES",
+          "original": "D228#/rows/1259",
+          "originalObjectSha256": "3d826ed64122964ad1805aadca34feac4f67c38d21f6e28aff0e79f576a32c97",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-STATE-READ-ALLOWEDNAMESPACES-MISSING",
+            "RT-GRANT-STATE-READ-ALLOWEDNAMESPACES-ALT",
+            "RT-GRANT-STATE-READ-ALLOWEDNAMESPACES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.state.read.constraints.allowedNamespaces",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "state.read",
+          "constraintKey": "allowedNamespaces",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/state.read/allowedNamespaces"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'state.read': definition(",
+            "lines": [
+              39
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespaces'",
+            "lines": [
+              39,
+              40,
+              41,
+              42,
+              69,
+              99
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-STATE-APPEND-ALLOWEDNAMESPACES",
+          "original": "D228#/rows/1260",
+          "originalObjectSha256": "99d9fbbcfaf3f33393ed1a44dfd5998ca011f2060a8a8bc7e5cdf40b4dc4ef84",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-STATE-APPEND-ALLOWEDNAMESPACES-MISSING",
+            "RT-GRANT-STATE-APPEND-ALLOWEDNAMESPACES-ALT",
+            "RT-GRANT-STATE-APPEND-ALLOWEDNAMESPACES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.state.append.constraints.allowedNamespaces",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "state.append",
+          "constraintKey": "allowedNamespaces",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/state.append/allowedNamespaces"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'state.append': definition(",
+            "lines": [
+              40
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespaces'",
+            "lines": [
+              39,
+              40,
+              41,
+              42,
+              69,
+              99
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-ARTIFACTS-READ-ALLOWEDNAMESPACES",
+          "original": "D228#/rows/1261",
+          "originalObjectSha256": "b9beba9c8ac1b25548845a585249fa92bcdc8b146b1e6051fc9234f7561048ea",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-ARTIFACTS-READ-ALLOWEDNAMESPACES-MISSING",
+            "RT-GRANT-ARTIFACTS-READ-ALLOWEDNAMESPACES-ALT",
+            "RT-GRANT-ARTIFACTS-READ-ALLOWEDNAMESPACES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.artifacts.read.constraints.allowedNamespaces",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "artifacts.read",
+          "constraintKey": "allowedNamespaces",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/artifacts.read/allowedNamespaces"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'artifacts.read': definition(",
+            "lines": [
+              41
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespaces'",
+            "lines": [
+              39,
+              40,
+              41,
+              42,
+              69,
+              99
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-ARTIFACTS-WRITE-ALLOWEDNAMESPACES",
+          "original": "D228#/rows/1262",
+          "originalObjectSha256": "7b5c582d78416506682696682987132e94e3c6a27bebaa49383dce8c691482e8",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-ARTIFACTS-WRITE-ALLOWEDNAMESPACES-MISSING",
+            "RT-GRANT-ARTIFACTS-WRITE-ALLOWEDNAMESPACES-ALT",
+            "RT-GRANT-ARTIFACTS-WRITE-ALLOWEDNAMESPACES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.artifacts.write.constraints.allowedNamespaces",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "artifacts.write",
+          "constraintKey": "allowedNamespaces",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/artifacts.write/allowedNamespaces"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'artifacts.write': definition(",
+            "lines": [
+              42
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespaces'",
+            "lines": [
+              39,
+              40,
+              41,
+              42,
+              69,
+              99
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-RUNTIME-DISPATCH-ALLOWEDAGENTS",
+          "original": "D228#/rows/1263",
+          "originalObjectSha256": "a47fdf216c9fbe4a6625597dcc55e9e4b24784cbeb4316c339973f68f9521d04",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-RUNTIME-DISPATCH-ALLOWEDAGENTS-MISSING",
+            "RT-GRANT-RUNTIME-DISPATCH-ALLOWEDAGENTS-ALT",
+            "RT-GRANT-RUNTIME-DISPATCH-ALLOWEDAGENTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.runtime.dispatch.constraints.allowedAgents",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "runtime.dispatch",
+          "constraintKey": "allowedAgents",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/runtime.dispatch/allowedAgents"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'runtime.dispatch': definition(",
+            "lines": [
+              43
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedAgents'",
+            "lines": [
+              43
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-REPOSITORY-READ-ALLOWEDPREFIXES",
+          "original": "D228#/rows/1264",
+          "originalObjectSha256": "372322233ff384784aff08eaeb02735c450fe0fd360b377f8b5cd522c72556ab",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-REPOSITORY-READ-ALLOWEDPREFIXES-MISSING",
+            "RT-GRANT-GIT-REPOSITORY-READ-ALLOWEDPREFIXES-ALT",
+            "RT-GRANT-GIT-REPOSITORY-READ-ALLOWEDPREFIXES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.repository.read.constraints.allowedPrefixes",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.repository.read",
+          "constraintKey": "allowedPrefixes",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.repository.read/allowedPrefixes"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.repository.read': definition(",
+            "lines": [
+              44
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedPrefixes'",
+            "lines": [
+              48
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDROOTS",
+          "original": "D228#/rows/1265",
+          "originalObjectSha256": "852458ea1ffddc2945720c2714691cb107fd8d9233742b44a102215c9a550258",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDROOTS-ALT",
+            "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.workspace.create.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.workspace.create",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.workspace.create/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.workspace.create': definition(",
+            "lines": [
+              50
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDWORKSPACEROOTS",
+          "original": "D228#/rows/1266",
+          "originalObjectSha256": "32eb174db83bf018c513adfb9c70cc57713fc77cab3881446fbb1ad53a853a22",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDWORKSPACEROOTS-MISSING",
+            "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDWORKSPACEROOTS-ALT",
+            "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDWORKSPACEROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.workspace.create.constraints.allowedWorkspaceRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.workspace.create",
+          "constraintKey": "allowedWorkspaceRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.workspace.create/allowedWorkspaceRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.workspace.create': definition(",
+            "lines": [
+              50
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedWorkspaceRoots'",
+            "lines": [
+              53,
+              58,
+              82,
+              87,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDROOTS",
+          "original": "D228#/rows/1267",
+          "originalObjectSha256": "0d3f481ce655cf23a2a1d025c2a1c7f9b681402ae11a6952ffc67fde59dcc6d9",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDROOTS-ALT",
+            "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.workspace.remove.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.workspace.remove",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.workspace.remove/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.workspace.remove': definition(",
+            "lines": [
+              55
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDWORKSPACEROOTS",
+          "original": "D228#/rows/1268",
+          "originalObjectSha256": "77704f9cf5aca96f896532b7501b55d6149fb4a8bce895304294ed9538defe19",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDWORKSPACEROOTS-MISSING",
+            "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDWORKSPACEROOTS-ALT",
+            "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDWORKSPACEROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.workspace.remove.constraints.allowedWorkspaceRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.workspace.remove",
+          "constraintKey": "allowedWorkspaceRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.workspace.remove/allowedWorkspaceRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.workspace.remove': definition(",
+            "lines": [
+              55
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedWorkspaceRoots'",
+            "lines": [
+              53,
+              58,
+              82,
+              87,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-COMMIT-ALLOWEDROOTS",
+          "original": "D228#/rows/1269",
+          "originalObjectSha256": "4d345572583e34adde0da024ca62969bc0f57f3be2ed7084e6c3f30897180618",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-COMMIT-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-GIT-COMMIT-ALLOWEDROOTS-ALT",
+            "RT-GRANT-GIT-COMMIT-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.commit.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.commit",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.commit/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.commit': definition(",
+            "lines": [
+              60
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-MERGE-ALLOWEDROOTS",
+          "original": "D228#/rows/1270",
+          "originalObjectSha256": "243c682bd602f419c1438fe7f20b59931d11d253baebb6bcdc57c7aeaab56ca2",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-MERGE-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-GIT-MERGE-ALLOWEDROOTS-ALT",
+            "RT-GRANT-GIT-MERGE-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.merge.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.merge",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.merge/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.merge': definition(",
+            "lines": [
+              61
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-GIT-SYNC-ALLOWEDROOTS",
+          "original": "D228#/rows/1271",
+          "originalObjectSha256": "040f5942e2e13bd259b7a0699797240be8ff1afccaccce7107e9429c2f558efa",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-GIT-SYNC-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-GIT-SYNC-ALLOWEDROOTS-ALT",
+            "RT-GRANT-GIT-SYNC-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.git.sync.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "git.sync",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/git.sync/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'git.sync': definition(",
+            "lines": [
+              62
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-SIGNAL-WAIT-ALLOWEDSIGNALTYPES",
+          "original": "D228#/rows/1272",
+          "originalObjectSha256": "137909e378be0f58212b4d7af45a16d7269af0031fb1ad65a5c100319a658c2c",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-SIGNAL-WAIT-ALLOWEDSIGNALTYPES-MISSING",
+            "RT-GRANT-SIGNAL-WAIT-ALLOWEDSIGNALTYPES-ALT",
+            "RT-GRANT-SIGNAL-WAIT-ALLOWEDSIGNALTYPES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.signal.wait.constraints.allowedSignalTypes",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "signal.wait",
+          "constraintKey": "allowedSignalTypes",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/signal.wait/allowedSignalTypes"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'signal.wait': definition(",
+            "lines": [
+              63
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedSignalTypes'",
+            "lines": [
+              66
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-SIGNAL-WAIT-ALLOWEDISSUERIDS",
+          "original": "D228#/rows/1273",
+          "originalObjectSha256": "4f27ae520aaf194178ec8a3e14f00a0fa36caa5270ad96236706519f94c05482",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-SIGNAL-WAIT-ALLOWEDISSUERIDS-MISSING",
+            "RT-GRANT-SIGNAL-WAIT-ALLOWEDISSUERIDS-ALT",
+            "RT-GRANT-SIGNAL-WAIT-ALLOWEDISSUERIDS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.signal.wait.constraints.allowedIssuerIds",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "signal.wait",
+          "constraintKey": "allowedIssuerIds",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/signal.wait/allowedIssuerIds"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'signal.wait': definition(",
+            "lines": [
+              63
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedIssuerIds'",
+            "lines": [
+              66
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-OPERATOR-RECEIPT-ALLOWEDTARGETS",
+          "original": "D228#/rows/1274",
+          "originalObjectSha256": "0ffbe3e7ccba8a56cf9f2a5fdc1826bd3d322365f7754bf648ecf8f1f3cde834",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-OPERATOR-RECEIPT-ALLOWEDTARGETS-MISSING",
+            "RT-GRANT-OPERATOR-RECEIPT-ALLOWEDTARGETS-ALT",
+            "RT-GRANT-OPERATOR-RECEIPT-ALLOWEDTARGETS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.operator.receipt.constraints.allowedTargets",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "operator.receipt",
+          "constraintKey": "allowedTargets",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/operator.receipt/allowedTargets"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'operator.receipt': definition(",
+            "lines": [
+              68
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedTargets'",
+            "lines": [
+              68,
+              70,
+              105
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-DEMO-HANDOFF-ALLOWEDNAMESPACES",
+          "original": "D228#/rows/1275",
+          "originalObjectSha256": "fb1b64cd293f2702dac21f7a621751ad47fcf61782ac8b23dd3a3c24a2df31bd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-DEMO-HANDOFF-ALLOWEDNAMESPACES-MISSING",
+            "RT-GRANT-DEMO-HANDOFF-ALLOWEDNAMESPACES-ALT",
+            "RT-GRANT-DEMO-HANDOFF-ALLOWEDNAMESPACES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.demo.handoff.constraints.allowedNamespaces",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "demo.handoff",
+          "constraintKey": "allowedNamespaces",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/demo.handoff/allowedNamespaces"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'demo.handoff': definition(",
+            "lines": [
+              69
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespaces'",
+            "lines": [
+              39,
+              40,
+              41,
+              42,
+              69,
+              99
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-OPERATOR-REQUEST-ALLOWEDTARGETS",
+          "original": "D228#/rows/1276",
+          "originalObjectSha256": "f8832618373c36d8a70099a92dc6bd969cf2d26d48fe881752841d6bca5418dd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-OPERATOR-REQUEST-ALLOWEDTARGETS-MISSING",
+            "RT-GRANT-OPERATOR-REQUEST-ALLOWEDTARGETS-ALT",
+            "RT-GRANT-OPERATOR-REQUEST-ALLOWEDTARGETS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.operator.request.constraints.allowedTargets",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "operator.request",
+          "constraintKey": "allowedTargets",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/operator.request/allowedTargets"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'operator.request': definition(",
+            "lines": [
+              70
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedTargets'",
+            "lines": [
+              68,
+              70,
+              105
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-TELEMETRY-EMIT-ALLOWEDEVENTPREFIXES",
+          "original": "D228#/rows/1277",
+          "originalObjectSha256": "a92581fd5e1660fd686eb023bbe07d85b95c6829d8d9e911df0246ed1a1947eb",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-TELEMETRY-EMIT-ALLOWEDEVENTPREFIXES-MISSING",
+            "RT-GRANT-TELEMETRY-EMIT-ALLOWEDEVENTPREFIXES-ALT",
+            "RT-GRANT-TELEMETRY-EMIT-ALLOWEDEVENTPREFIXES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.telemetry.emit.constraints.allowedEventPrefixes",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "telemetry.emit",
+          "constraintKey": "allowedEventPrefixes",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/telemetry.emit/allowedEventPrefixes"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'telemetry.emit': definition(",
+            "lines": [
+              71
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedEventPrefixes'",
+            "lines": [
+              71
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-SECRETS-READ-ALLOWEDNAMES",
+          "original": "D228#/rows/1278",
+          "originalObjectSha256": "a1fcee2238bd1220a4d0360e974b50fd3883b67a580e86b9fb3392c9d325027b",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-SECRETS-READ-ALLOWEDNAMES-MISSING",
+            "RT-GRANT-SECRETS-READ-ALLOWEDNAMES-ALT",
+            "RT-GRANT-SECRETS-READ-ALLOWEDNAMES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.secrets.read.constraints.allowedNames",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "secrets.read",
+          "constraintKey": "allowedNames",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/secrets.read/allowedNames"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'secrets.read': definition(",
+            "lines": [
+              72
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNames'",
+            "lines": [
+              72
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-NETWORK-HTTP-ALLOWEDORIGINS",
+          "original": "D228#/rows/1279",
+          "originalObjectSha256": "a9831f5789fd6fc464f049c22b265848cde248eee187459d9f8597e309d2ea92",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-NETWORK-HTTP-ALLOWEDORIGINS-MISSING",
+            "RT-GRANT-NETWORK-HTTP-ALLOWEDORIGINS-ALT",
+            "RT-GRANT-NETWORK-HTTP-ALLOWEDORIGINS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.network.http.constraints.allowedOrigins",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "network.http",
+          "constraintKey": "allowedOrigins",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/network.http/allowedOrigins"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'network.http': definition(",
+            "lines": [
+              73
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedOrigins'",
+            "lines": [
+              73
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-COMMAND-EXECUTE-ALLOWEDEXECUTABLES",
+          "original": "D228#/rows/1280",
+          "originalObjectSha256": "aa0c98bd8a967a84b0dd65dce7c6e120b311d43bb63c5e3846bc6fd2e195f844",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-COMMAND-EXECUTE-ALLOWEDEXECUTABLES-MISSING",
+            "RT-GRANT-COMMAND-EXECUTE-ALLOWEDEXECUTABLES-ALT",
+            "RT-GRANT-COMMAND-EXECUTE-ALLOWEDEXECUTABLES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.command.execute.constraints.allowedExecutables",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "command.execute",
+          "constraintKey": "allowedExecutables",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/command.execute/allowedExecutables"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'command.execute': definition(",
+            "lines": [
+              74
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedExecutables'",
+            "lines": [
+              77
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-COMMAND-EXECUTE-ALLOWEDWORKINGROOTS",
+          "original": "D228#/rows/1281",
+          "originalObjectSha256": "4bf4c8741970b894eca52c833091f98bb789b1d8b51e02cc16264c5008c0e352",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-COMMAND-EXECUTE-ALLOWEDWORKINGROOTS-MISSING",
+            "RT-GRANT-COMMAND-EXECUTE-ALLOWEDWORKINGROOTS-ALT",
+            "RT-GRANT-COMMAND-EXECUTE-ALLOWEDWORKINGROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.command.execute.constraints.allowedWorkingRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "command.execute",
+          "constraintKey": "allowedWorkingRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/command.execute/allowedWorkingRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'command.execute': definition(",
+            "lines": [
+              74
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedWorkingRoots'",
+            "lines": [
+              77,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-CONTAINER-BUILD-ALLOWEDPLATFORMS",
+          "original": "D228#/rows/1282",
+          "originalObjectSha256": "0dc3485ee3093212a96564b1615f1844bfb1f510ef298872d0c7e2899f0c95a6",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-CONTAINER-BUILD-ALLOWEDPLATFORMS-MISSING",
+            "RT-GRANT-CONTAINER-BUILD-ALLOWEDPLATFORMS-ALT",
+            "RT-GRANT-CONTAINER-BUILD-ALLOWEDPLATFORMS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.container.build.constraints.allowedPlatforms",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "container.build",
+          "constraintKey": "allowedPlatforms",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/container.build/allowedPlatforms"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'container.build': definition(",
+            "lines": [
+              79
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedPlatforms'",
+            "lines": [
+              82
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-CONTAINER-BUILD-ALLOWEDWORKSPACEROOTS",
+          "original": "D228#/rows/1283",
+          "originalObjectSha256": "6b2075038e65c01e17871228e1e5d630db17476ef15ed044db82a25e9339f356",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-CONTAINER-BUILD-ALLOWEDWORKSPACEROOTS-MISSING",
+            "RT-GRANT-CONTAINER-BUILD-ALLOWEDWORKSPACEROOTS-ALT",
+            "RT-GRANT-CONTAINER-BUILD-ALLOWEDWORKSPACEROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.container.build.constraints.allowedWorkspaceRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "container.build",
+          "constraintKey": "allowedWorkspaceRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/container.build/allowedWorkspaceRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'container.build': definition(",
+            "lines": [
+              79
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedWorkspaceRoots'",
+            "lines": [
+              53,
+              58,
+              82,
+              87,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDNAMESPACEPREFIXES",
+          "original": "D228#/rows/1284",
+          "originalObjectSha256": "1bc5406a83c16a4d293adbc3006a5330063ff8f9ab7150f9d89d36f77d6304bd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDNAMESPACEPREFIXES-MISSING",
+            "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDNAMESPACEPREFIXES-ALT",
+            "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDNAMESPACEPREFIXES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.kubernetes.fixture.constraints.allowedNamespacePrefixes",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "kubernetes.fixture",
+          "constraintKey": "allowedNamespacePrefixes",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/kubernetes.fixture/allowedNamespacePrefixes"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'kubernetes.fixture': definition(",
+            "lines": [
+              84
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespacePrefixes'",
+            "lines": [
+              87,
+              92
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDWORKSPACEROOTS",
+          "original": "D228#/rows/1285",
+          "originalObjectSha256": "1117b45c53d91a279bc31760c667c69335cc9d3f7de56e4f044d20205c42533c",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDWORKSPACEROOTS-MISSING",
+            "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDWORKSPACEROOTS-ALT",
+            "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDWORKSPACEROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.kubernetes.fixture.constraints.allowedWorkspaceRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "kubernetes.fixture",
+          "constraintKey": "allowedWorkspaceRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/kubernetes.fixture/allowedWorkspaceRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'kubernetes.fixture': definition(",
+            "lines": [
+              84
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedWorkspaceRoots'",
+            "lines": [
+              53,
+              58,
+              82,
+              87,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-KUBERNETES-EXPOSURE-ALLOWEDNAMESPACEPREFIXES",
+          "original": "D228#/rows/1286",
+          "originalObjectSha256": "da846e0905a41a012bac13eb2130e4b650038378ae0307c815438056a36176fb",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-KUBERNETES-EXPOSURE-ALLOWEDNAMESPACEPREFIXES-MISSING",
+            "RT-GRANT-KUBERNETES-EXPOSURE-ALLOWEDNAMESPACEPREFIXES-ALT",
+            "RT-GRANT-KUBERNETES-EXPOSURE-ALLOWEDNAMESPACEPREFIXES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.kubernetes.exposure.constraints.allowedNamespacePrefixes",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "kubernetes.exposure",
+          "constraintKey": "allowedNamespacePrefixes",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/kubernetes.exposure/allowedNamespacePrefixes"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'kubernetes.exposure': definition(",
+            "lines": [
+              89
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespacePrefixes'",
+            "lines": [
+              87,
+              92
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-LINT-EXECUTE-ALLOWEDPROJECTS",
+          "original": "D228#/rows/1287",
+          "originalObjectSha256": "64e851c6d842b643b3123bfa597c287468e53d570bf824811f80923f338effcd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDPROJECTS-MISSING",
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDPROJECTS-ALT",
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDPROJECTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.lint.execute.constraints.allowedProjects",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "lint.execute",
+          "constraintKey": "allowedProjects",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/lint.execute/allowedProjects"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'lint.execute': definition(",
+            "lines": [
+              94
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedProjects'",
+            "lines": [
+              97
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-LINT-EXECUTE-ALLOWEDROOTS",
+          "original": "D228#/rows/1288",
+          "originalObjectSha256": "e802fd00cf2b0fdd14805b624b4b42085b16cc35b13f1c5c07bba724d2e4ee86",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDROOTS-ALT",
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.lint.execute.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "lint.execute",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/lint.execute/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'lint.execute': definition(",
+            "lines": [
+              94
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-LINT-EXECUTE-ALLOWEDPOLICYROOTS",
+          "original": "D228#/rows/1289",
+          "originalObjectSha256": "28cf91e486ad88edf75511b679906f888b81ac3171a9242fc324c3d66aec6ff0",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDPOLICYROOTS-MISSING",
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDPOLICYROOTS-ALT",
+            "RT-GRANT-LINT-EXECUTE-ALLOWEDPOLICYROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.lint.execute.constraints.allowedPolicyRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "lint.execute",
+          "constraintKey": "allowedPolicyRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/lint.execute/allowedPolicyRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'lint.execute': definition(",
+            "lines": [
+              94
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedPolicyRoots'",
+            "lines": [
+              97,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-TEST-PLAN-EVIDENCE-ALLOWEDNAMESPACES",
+          "original": "D228#/rows/1290",
+          "originalObjectSha256": "230b132d70b271c9ea929dd0d57afcefa56022335bb9e5ac2a9be26c43313cf8",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-TEST-PLAN-EVIDENCE-ALLOWEDNAMESPACES-MISSING",
+            "RT-GRANT-TEST-PLAN-EVIDENCE-ALLOWEDNAMESPACES-ALT",
+            "RT-GRANT-TEST-PLAN-EVIDENCE-ALLOWEDNAMESPACES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.test.plan.evidence.constraints.allowedNamespaces",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "test.plan.evidence",
+          "constraintKey": "allowedNamespaces",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/test.plan.evidence/allowedNamespaces"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'test.plan.evidence': definition(",
+            "lines": [
+              99
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedNamespaces'",
+            "lines": [
+              39,
+              40,
+              41,
+              42,
+              69,
+              99
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS",
+          "original": "D228#/rows/1291",
+          "originalObjectSha256": "d0f3d11d23ad48af71da1330a53e7ec87fe9af075bda3528347717c37e349599",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS-MISSING",
+            "RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS-ALT",
+            "RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.test.plan.execute.constraints.allowedRoots",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "test.plan.execute",
+          "constraintKey": "allowedRoots",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/test.plan.execute/allowedRoots"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'test.plan.execute': definition(",
+            "lines": [
+              100
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedRoots'",
+            "lines": [
+              53,
+              58,
+              60,
+              61,
+              62,
+              97,
+              103,
+              143
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS",
+          "original": "D228#/rows/1292",
+          "originalObjectSha256": "b0bd4deb3853edadfaf74ea87098ee26dc41490be287f2b28aa83f45bf119f00",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS-MISSING",
+            "RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS-ALT",
+            "RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.transport.publish.constraints.allowedTargets",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "transport.publish",
+          "constraintKey": "allowedTargets",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/transport.publish/allowedTargets"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'transport.publish': definition(",
+            "lines": [
+              105
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedTargets'",
+            "lines": [
+              68,
+              70,
+              105
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES",
+          "original": "D228#/rows/1293",
+          "originalObjectSha256": "696bf4074bae0b2e14355a470dc09ba990cfed1b6553b4323f5e338969df6a82",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES-MISSING",
+            "RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES-ALT",
+            "RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES-MUTANT"
+          ],
+          "owner": "nova-platform/capability grant owner",
+          "originalSource": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "field": "CAPABILITY_DEFINITIONS.agent.events.subscribe.constraints.allowedSources",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SUPPLIED_GRANT_VALUES_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "capability": "agent.events.subscribe",
+          "constraintKey": "allowedSources",
+          "currentAuthor": {
+            "platformPointer": "/grants/{enabled-registration}/agent.events.subscribe/allowedSources"
+          },
+          "vocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'agent.events.subscribe': definition(",
+            "lines": [
+              106
+            ]
+          },
+          "constraintVocabulary": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+            "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+            "anchor": "'allowedSources'",
+            "lines": [
+              106
+            ]
+          },
+          "valueReceiving": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "grants: nestedMap(platform.grants)",
+            "lines": [
+              59
+            ]
+          },
+          "validation": {
+            "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+            "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+            "anchor": "constraints: validateCapabilityConstraints(capability, constraints)",
+            "lines": [
+              170
+            ]
+          },
+          "qualification": "Vocabulary declares permitted keys, not centrally authored allowed values; no authority hardening or grant change"
+        },
+        {
+          "id": "RT-RESOLVER-RETRY-DEFAULT",
+          "original": "D228#/rows/1441",
+          "originalObjectSha256": "2eec10e7d2b5604ded224e0f910d19ddb77c2e3624eb0c6c605012a2639eb8fe",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-RESOLVER-RETRY-DEFAULT-MISSING",
+            "RT-RESOLVER-RETRY-DEFAULT-ALT",
+            "RT-RESOLVER-RETRY-DEFAULT-MUTANT"
+          ],
+          "owner": "nova-test-plan-resolver",
+          "originalSource": {
+            "path": "skills/nova/core/test-gates/resolver.ts",
+            "field": "DEFAULT_RETRY_COUNT",
+            "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+          },
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "FIXED_RESOLVER_RETRY_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "source": {
+            "path": "skills/nova/core/test-gates/resolver.ts",
+            "sha256": "dac5efd2eab0b45d6bea8c14b76715e8af84f8abc4b3fb68456db556ece4caa8",
+            "anchor": "const DEFAULT_RETRY_COUNT = 1;",
+            "lines": [
+              36
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/nova/core/test-gates/resolver.ts",
+              "sha256": "dac5efd2eab0b45d6bea8c14b76715e8af84f8abc4b3fb68456db556ece4caa8",
+              "anchor": "requestedRetries ?? DEFAULT_RETRY_COUNT",
+              "lines": [
+                575
+              ]
+            }
+          ]
+        }
+      ],
+      "corePlatformSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/core-platform-successors.json",
+        "sha256": "2454aea14dcae4c02dd1ace86ef210f619b9069443285b38a546fe1e477e546c"
+      },
+      "constraint": "Two existing central lease-memory joins do not own the original Platform or grant values. One schema-version row remains protocol-invariant, not an operator-setting gap. 50 supplied Platform/grant rows and the fixed resolver retry default remain central-receiving OPEN. Capability vocabulary declares constraint keys, not allowed values. Preserve original class/IDs/cases, authenticated source/history/delivery and every independent/native gate; no new runtime acceptance.",
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
