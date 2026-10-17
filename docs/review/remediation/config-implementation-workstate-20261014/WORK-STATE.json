@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T02:39:46.774302+00:00",
+  "updatedAt": "2026-10-17T02:44:27.153785+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "All45 historical locator groups now classified; finish coherent coordinated sole-root deployment/profile/schema/file-set/actual boot+Nova receivers and genuine QB-R02 original producer/source/build/baseline inputStore reservation/accounting/sealed snapshot/publication. Keep BUDGET_SOURCE_RECEIPT_REQUIRED, denied-v10 and full2409/6845/50 independent/history/native/archive/C0-C6 gates OPEN. Do not replay unchanged green matrix checks as implementation.",
+  "nextAction": "Continue genuine QB-R02 original producer/source/build/baseline association and inputStore reservation/accounting/sealed snapshot/publication; coordinated authenticated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 unchanged. Required independent/full original/history/native/archive/C0-C6 gates OPEN. Native preparation source fixtures now use current central authors; real guest provisioning/manifests must deliver the same complete file-set. Do not replay unchanged green suites or native infrastructure failures.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -26427,6 +26427,64 @@
     "resumeCondition": "Original history filesystem-import test needs genuine isolated root CHOWN and SETUID/SETGID authority for UID/GID1003. Full gates additionally need Docker UID/GID1000 delegated writable cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No spoof/skips/assertion weakening.",
     "nextAction": "Continue genuine QB-R02 source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and authenticated coordinated sole-root/boot/Nova receiving without denied-v10 promotion. Remaining native-preparation fixture legacy SWARM_CONFIG/flat-author reads require coordinated real guest input migration; do not fake boot receipts. Do not repeat unchanged chown/native failures or component aggregate.",
     "writerLock": "SAME nonblocking shared lock acquired for mutations and commits; released at command exit",
+    "noHistoricalFollowup": true
+  },
+  "nativePreparationCurrentOwner20261017": {
+    "at": "2026-10-17T02:44:27.153785+00:00",
+    "status": "NATIVE_PREPARATION_SOURCE_FIXTURES_CENTRAL_OWNER_MIGRATED_NATIVE_ACCEPTANCE_OPEN",
+    "sourceCommit": "3c8ba8bc202a43d0ddd66a861f3369fde1d1e55e",
+    "sourceRemoteVerified": true,
+    "verifiedRemoteHead": "3c8ba8bc202a43d0ddd66a861f3369fde1d1e55e",
+    "evidence": "docs/review/remediation/config-native-preparation-current-owner-20261017",
+    "change": "Original native preparation source producer and real ownership/extraction fixtures now capture complete current pipeline owners through production captureSwarmSettings and the actual Buster runtime tuple. Original recovery quota writes exactly maximumRecords=2 to the selected profile in the same complete central file-set. No flat author/full-facade refill or new boot receipt. All original capability/UID/real cgroup/launcher/journal/ledger/crash/negative assertions preserved.",
+    "checks": {
+      "strictNativeFixtureTypecheck": true,
+      "sourceInputControls": {
+        "passed": 9,
+        "total": 9,
+        "nativeExecuted": false,
+        "log": "source-input-controls.txt"
+      },
+      "diffCheck": true
+    },
+    "originalRoster": {
+      "fields": {
+        "required": 2409,
+        "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+        "unchanged": true
+      },
+      "cases": {
+        "required": 6845,
+        "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+        "unchanged": true
+      },
+      "requirements": {
+        "required": 50,
+        "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+        "unchanged": true
+      }
+    },
+    "sourceSha256": {
+      "tests/fixtures/test-gate/native-preparation.mts": "436306b19d3f1b26e5efba7c9a7dfc27117593a9df25ba64c772922cb91b187c",
+      "tests/verification/reliability/buster-preparation-native-recovery-live.mts": "01a09dfe90276a2dfc1e3d1b00ad3deeaf54576146f2d649f7bb62d0ed2a66f3"
+    },
+    "originalCasesNewlyAccepted": 0,
+    "originalResultsChanged": false,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "independentReview": "OPEN: no callable native spawn/reviewer/collaboration tool discovered, CONFIG subagents0, parent done. No new independent report. Recorded unchanged app-server EROFS not retried; author checks do not constitute independent/native acceptance.",
+    "nativeGate": "NOT RUN: known unchanged missing isolated capability-limited Linux guest, genuine UID/GID and delegated writable cgroup. Source-input controls do not execute native ownership/extraction or authenticate deployment. No new skip or failure replay.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Original history filesystem-import test needs genuine isolated root CHOWN and SETUID/SETGID authority for UID/GID1003. Full gates additionally need Docker UID/GID1000 delegated writable cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No spoof/skips/assertion weakening. Native preparation guest additionally needs original exact capability mask0x1e1, trusted native case parent and launcher/node/pool inputs; SWARM_CONFIG locator now names complete current central pipeline authors, not retired flat chart author.",
+    "QB_R02_constraint": {
+      "preparation": "runner-attempt-preparation.ts invocationInputs reads actual latest original producer AttemptResultV1 but projects only ArtifactRefV1 into ProviderInvocationV1. No original source/build/baseline receipt association or inputStore receiver exists in TestPlanRunnerOptions.",
+      "store": "artifacts.ts EvidenceStore.store only publishes output artifacts. PreparationSourceLedger reserves staged wire/source extraction, not linked provider input artifacts; it cannot be relabeled as an inputStore artifact reservation/validity API.",
+      "decision": "Keep BUDGET_SOURCE_RECEIPT_REQUIRED at runner/loader/session. No fake receipt from metadata, task/ENV/CLI/private root, parallel ledger or output writer. Required ABI is defined; genuine original store integration remains source work, not missing design approval."
+    },
+    "nextAction": "Continue genuine QB-R02 original producer/source/build/baseline association and inputStore reservation/accounting/sealed snapshot/publication; coordinated authenticated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 unchanged. Required independent/full original/history/native/archive/C0-C6 gates OPEN. Native preparation source fixtures now use current central authors; real guest provisioning/manifests must deliver the same complete file-set. Do not replay unchanged green suites or native infrastructure failures.",
+    "writerLock": "SAME shared nonblocking repository lock; released at command exit",
     "noHistoricalFollowup": true
   }
 }
