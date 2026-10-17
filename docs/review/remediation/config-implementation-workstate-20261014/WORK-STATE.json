@@ -26293,6 +26293,8 @@
     "writerLock": "SAME nonblocking shared lock; released at command exit",
     "qualityActivationAllowed": false,
     "sealedInputStoreImplemented": false,
-    "productiveQualityBootImplemented": false
+    "productiveQualityBootImplemented": false,
+    "matrixCommit": "33d117e04e252cb452036a6ad670f8c6b17ba087",
+    "matrixRemoteVerified": true
   }
 }
