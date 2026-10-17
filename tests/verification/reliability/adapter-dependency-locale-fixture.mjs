@@ -46,8 +46,8 @@ const core=JSON.stringify(pathToFileURL(path.join(runtimeRoot,'skills/nova/core/
 const engine=JSON.stringify(pathToFileURL(path.join(runtimeRoot,'skills/nova/core/execution/engine-runtime.ts')).href);
 const worker=`import fs from 'node:fs';import path from 'node:path';import * as core from ${core};import {prepareRuntime} from ${engine};
   const directory=process.argv[1],{platform,definition}=JSON.parse(fs.readFileSync(path.join(directory,'fixture.json'))),prepared=await prepareRuntime(platform,definition);
-  const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,
-    async emitDomainEvent(){throw new Error('UNEXPECTED_DOMAIN_EVENT');},effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(directory,'effects.jsonl')),undefined,undefined,new core.FileResourceLockManager(path.join(directory,'locks')),1000)});
+  const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),shutdownTimeoutMs:1000,
+    async emitDomainEvent(){throw new Error('UNEXPECTED_DOMAIN_EVENT');},effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(directory,'effects.jsonl'),prepared.corePolicy),undefined,undefined,new core.FileResourceLockManager(path.join(directory,'locks'),prepared.corePolicy),1000,prepared.corePolicy.resourceAcquisition)});
   await runtime.start();try{const result=await runtime.invoke('runtime.dispatch',{runId:'run:locale',stageId:'one',attemptId:'attempt:one',attemptNumber:1},'parent:one',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}},new AbortController().signal);process.stdout.write(JSON.stringify({locale:Intl.DateTimeFormat().resolvedOptions().locale,result}));}finally{await runtime.shutdown();}`;
 
   const child=spawn(process.execPath,['--input-type=module','-e',worker,directory],{cwd:runtimeRoot,env:{...process.env,LANG:locale,LC_ALL:locale},stdio:['ignore','pipe','pipe']});

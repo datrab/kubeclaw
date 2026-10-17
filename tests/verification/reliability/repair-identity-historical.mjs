@@ -16,7 +16,7 @@ function dependency(source, destination) {
 /** Original producer overlay. No checkout, network, old Git object, or tag removal. */
 function materializeCore(destination, historical) {
   fs.mkdirSync(destination, { recursive: true });
-  for (const name of ['skills', 'tests', 'contracts']) {
+  for (const name of ['skills', 'tests', 'contracts', 'config']) {
     fs.cpSync(path.join(checkout, name), path.join(destination, name), {
       recursive: true, verbatimSymlinks: true,
       filter: file => !file.split(path.sep).includes('node_modules'),
@@ -39,6 +39,16 @@ function materializeCore(destination, historical) {
     const target = path.join(destination, file.path);
     assert(target.startsWith(`${destination}${path.sep}`));
     fs.mkdirSync(path.dirname(target), { recursive: true }); fs.writeFileSync(target, bytes);
+  }
+  if (!historical) {
+    // Keep archived bytes intact. Only the current receiver uses today's explicit
+    // policy ABI; the historical overlay retains its original journal dependency.
+    const producer = path.join(destination, producerPath);
+    const original = fs.readFileSync(producer, 'utf8');
+    const oldCall = 'new FileJournal(stored.journal)';
+    assert.equal(original.split(oldCall).length, 2);
+    fs.writeFileSync(producer, "import { TEST_CORE_POLICY } from '../../../../tests/fixtures/core-runtime-policy.mjs';\n"
+      + original.replace(oldCall, 'new FileJournal(stored.journal, TEST_CORE_POLICY.journalAppendLockTimeoutMs)'));
   }
   assert.equal(fs.realpathSync(path.join(modules, '@kubeclaw/plugin-sdk')), path.join(destination, 'skills/common/plugin-runtime/sdk'));
   return { destination, producer: path.join(destination, producerPath), archive };
