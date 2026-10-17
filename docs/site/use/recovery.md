@@ -667,14 +667,14 @@ against deployed backup media.
 
 > **Source evidence — copied group verification**
 >
-> Claim: the existing script verifies a dynamically selected group; the private
+> **Claim:** the existing script verifies a dynamically selected group; the private
 > single-group export and returned-path comparison bind this invocation.
-> Implementation: [configuration/tools](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L11-L35),
+> **Implementation:** [configuration/tools](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L11-L35),
 > [publication](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L56-L95),
 > [group verifier](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L97-L129),
 > [scheduled reuse and latest-only CLI](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L166-L185).
-> Contract or setting: the [rendered Job runs `scheduled`](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/render-postgresql-recovery.mjs#L63-L83).
-> Test evidence: [The native harness asserts backup verification, scheduled
+> **Contract or setting:** the [rendered Job runs `scheduled`](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/render-postgresql-recovery.mjs#L63-L83).
+> **Test evidence:** [The native harness asserts backup verification, scheduled
 > reuse, secret exclusion and wrong-key rejection](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/tests/verification/deployment/postgresql-recovery-native.mts#L110-L117).
 > Status: **SOURCE ONLY; NOT EXECUTED**. These assertions are not an observed
 > native test result. The page's private-root copy-selection guards have no
@@ -683,8 +683,8 @@ against deployed backup media.
 > The full offline check **FAILED** on BusyBox `realpath` options and musl
 > regular-expression support. Native media verification, live Job execution
 > and transfer remain **NOT EXECUTED**.
-> Revision: KubeClaw `ebcc04066d42c94b4a4e0fc85e3393dae3d61f78`.
-> Limit: offline integrity is not restore or application proof.
+> **Revision:** KubeClaw `ebcc04066d42c94b4a4e0fc85e3393dae3d61f78`.
+> **Limit:** offline integrity is not restore or application proof.
 
 After local verification and owner approval of the group's backup point,
 transfer the complete immutable group to encrypted independent storage with

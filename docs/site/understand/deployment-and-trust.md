@@ -48,6 +48,18 @@ flowchart LR
     Nova -. event delivery .-> Telemetry[Telemetry and observers]
 ```
 
+Text version: Nova calls Buster through its protected route. For Prism, Nova
+first reaches the `agent-prism` Envoy and loopback bridge. The bridge reaches
+Control through a second protected route. Control persists an agent job before
+the bridge launches OpenClaw. OpenClaw commits a fenced result back to Control.
+Studio calls Control through the application route. Control can call the native
+Worker, optional Ingestion workload, and Prism PostgreSQL. The Prism OpenClaw
+gateway can call LiteLLM for memory embeddings. Nova, Buster, Prism, OpenClaw,
+and LiteLLM keep different owner state. Observers receive committed events only
+after Nova writes them. Managed OpenAI reasoning, Vertex embeddings through
+LiteLLM, and the enabled Nova and Buster Discord channels are external paths;
+none of them owns pipeline or Prism state.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -75,19 +87,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Discord users and service | Directed connection — enabled bot channels | Nova role |
 | Discord users and service | Directed connection — enabled bot channels | Buster role |
 | Nova role | Dotted relationship — event delivery | Telemetry and observers |
-
-
-Text version: Nova calls Buster through its protected route. For Prism, Nova
-first reaches the `agent-prism` Envoy and loopback bridge. The bridge reaches
-Control through a second protected route. Control persists an agent job before
-the bridge launches OpenClaw. OpenClaw commits a fenced result back to Control.
-Studio calls Control through the application route. Control can call the native
-Worker, optional Ingestion workload, and Prism PostgreSQL. The Prism OpenClaw
-gateway can call LiteLLM for memory embeddings. Nova, Buster, Prism, OpenClaw,
-and LiteLLM keep different owner state. Observers receive committed events only
-after Nova writes them. Managed OpenAI reasoning, Vertex embeddings through
-LiteLLM, and the enabled Nova and Buster Discord channels are external paths;
-none of them owns pipeline or Prism state.
 
 > **Source evidence — deployed Prism path**
 >
@@ -337,6 +336,13 @@ flowchart LR
     Restore --> Artifacts
 ```
 
+Text version: Nova owns its run records, and Buster owns its remote-job and evidence records.
+Prism Control owns relational state and content-addressed artifacts.
+Prism Worker keeps separate native ownership and process records.
+Applicable role deployments also keep separate OpenClaw state.
+Prism backup and restore must treat its database and artifacts as one matched group.
+Restore verification must complete before Prism enables new writes.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -354,14 +360,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Matched Prism backup group | Directed connection | Restore and digest verification |
 | Restore and digest verification | Directed connection | PostgreSQL state |
 | Restore and digest verification | Directed connection | Content-addressed artifact PVC |
-
-
-Text version: Nova owns its run records, and Buster owns its remote-job and evidence records.
-Prism Control owns relational state and content-addressed artifacts.
-Prism Worker keeps separate native ownership and process records.
-Applicable role deployments also keep separate OpenClaw state.
-Prism backup and restore must treat its database and artifacts as one matched group.
-Restore verification must complete before Prism enables new writes.
 
 | Store | Owner | Data | Failure effect |
 | --- | --- | --- | --- |

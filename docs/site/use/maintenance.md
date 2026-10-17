@@ -520,6 +520,10 @@ retirement, backend erasure, or restore result is established by this guide.
 
 ## Supported Versions
 
+Use `versions.json` for the selected Ops Pod Codex CLI version; it also drives
+`ops/pod/package.json` and `charts/ops-pod/Chart.yaml`. A selected version is not
+an accepted upgrade pair or proof of a running installation.
+
 Use the [shared version rules](README.md#version-and-tool-boundary).
 Every maintenance plan must name the old and new source, image, chart, configuration, schema, and data versions.
 An absent compatibility statement means that rollback or mixed-version operation is not approved.
@@ -1251,8 +1255,8 @@ Do not run these commands as a sequence.
 | `./scripts/deploy.sh teardown-all` | The complete application namespace and every resource in it | Nothing in that namespace | Approve final namespace, Secret, and remaining-state deletion |
 
 `teardown` is destructive even though it keeps the namespace and Secrets.
-After other removals, `cleanup_leftover_pvcs()` enumerates the PVCs again and
-deletes each by name without a UID precondition, including claims retained by
+After other removals, `cleanup_leftover_pvcs()` enumerates and deletes all remaining PVCs
+by name without a UID precondition, including claims retained by
 a Helm keep policy. A new claim can enter that later set; a replacement with
 the same name can pass a names-only precheck. `teardown-all` deletes the
 namespace by name without a UID precondition. Freezing shell namespace strings

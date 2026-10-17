@@ -1414,9 +1414,9 @@ Status: open. Severity: high.
 
 ### Problem and impact
 
-When Nova selects the installed kubeclaw.operator-messaging adapter for operator.request, the Prism stage publishes architectureDigest as a top-level notification field that the closed messaging payload contract rejects.
+When Nova selects the installed kubeclaw.operator-messaging adapter for operator.request, the Prism stage publishes architectureDigest as a top-level notification field. The closed messaging payload contract rejects that field.
 
-Control can already have admitted design work and wait-store can already have committed a record, while the stage returns blocked and Core has no active approval wait. The intended Studio-to-Nova handoff cannot complete through this path.
+Control can already have admitted design work and wait-store can already have committed a record. The stage returns blocked while Core has no active approval wait. The intended Studio-to-Nova handoff cannot complete through this path.
 
 ### Components and current state
 
@@ -1437,14 +1437,14 @@ The linked implementations show dispatch, wait-store creation, then notification
 ### Reproduction and verification procedure
 
 - Read stage.ts dispatch/wait/publish sequence and the complete PAYLOAD_KEYS set. Pass the producer-shaped notification to parsePayload; expect OPERATOR_PAYLOAD_UNKNOWN_FIELD:architectureDigest.
-- After separately authorized repair, exercise the actual selected installed adapter and Core path in an isolated environment; distinguish committed Control work, wait-store records, effect receipts, notification delivery and active Core stage wait.
+- After separately authorized repair, exercise the actual selected installed adapter and Core path in an isolated environment. Distinguish committed Control work, wait-store records, effect receipts, notification delivery and active Core stage wait.
 
 ### Completion criteria
 
 - The exact Prism notification passes the selected closed receiver contract; tests reject unsupported fields and incompatible selected providers.
 - The full original path records successful notification delivery and returns outcome wait so Core records the active approval wait.
 - Failure and interruption tests preserve original identities and reconcile Control, wait-store and effects without duplicate jobs, replacement runs or invented receipt imports.
-- A separately recorded installed journey accepts the original authorized signal, verifies and stores the exact approved bundle; documentation and generated status report local and live evidence separately.
+- A separately recorded installed journey accepts the original authorized signal, verifies and stores the exact approved bundle. Documentation and generated status report local and live evidence separately.
 
 ### Separate environment acceptance
 

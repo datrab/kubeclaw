@@ -13,6 +13,85 @@ This page separates planned work from current behavior. A roadmap item is not a
 deployment guarantee. Current behavior needs implementation, verification, and
 operator guidance before it leaves this page.
 
+## Near-Term Sequence
+
+Operator-selected order, updated 2026-09-17. This supersedes earlier suggestions
+to migrate Cilium before starting the workers. Current priority is stage 1.
+
+1. **Finish Argo adoption and automatic runtime deployment.** Put intended
+   workloads/infrastructure under Argo with separate Applications. KubeClaw code
+   merges publish verified bundles and update the selected deployment; image-input
+   changes build/verify images before selection and rollout. Prove both paths.
+   Keep infrastructure and Codex Ops child syncs manual as previously requested;
+   platform root reconciliation may remain automatic. Preserve PVCs and Secrets.
+   Establish the KubeClaw parent and individual Buster, Nova and Prism Applications
+   before stabilizing their Pods. Review adoption diffs and ownership before the
+   first sync; an Application being registered is not evidence of runtime health.
+   Routine deployment changes should flow through Git and Argo. Host-level K3s,
+   NRI and cgroup maintenance still needs the existing host management path.
+2. **Get the required Pods running through Argo.** Start and verify Buster, Nova
+   and Prism with their dependencies on the existing network. Require Ready
+   containers and stable restarts; Pod readiness alone is not pipeline acceptance.
+   Resolve immediate startup blockers here. Optional UI networking must not
+   silently force a CNI migration or lose access controls.
+3. **Resolve the open issues.** Inventory and triage the current tracker (operator
+   estimate around 15, not a verified count), fix defects and verify their actual
+   behavior. Do not postpone a stage-1/2 blocking defect merely to preserve this
+   ordering. Include the known HTTP registry scanner compatibility gap without
+   converting a failed security scan into success.
+4. **Centralize operator configuration.** Remove hardcoded deployment-specific
+   settings from code and resolve them from configuration files through the single
+   operator configuration audit below. Keep versions in `versions.json`, Secrets
+   external, and protocol/security invariants in code. No duplicated editable
+   sources; prove configuration reaches each runtime consumer.
+5. **Exercise the full pipeline and finish documentation together.** Use a real
+   project (ClawDeck is the existing candidate), verify success/failure/cleanup
+   paths and document actual operations and recovery. Fix findings rather than
+   treating green Pods or CI as an end-to-end pass.
+6. **Migrate to Cilium.** Plan the network maintenance separately, cover every
+   existing application and verify connectivity, policy enforcement and recovery.
+7. **Deploy HTTPS/mTLS transport protection.** Reuse the planned Envoy/SPIRE
+   architecture for Redis/registry and required clients, then close plaintext
+   bypasses and verify rotation and negative access tests.
+
+Throughout these stages, label reusable installation steps, keep their contracts
+and docs current, and build toward Controlnode-driven node onboarding. Finish
+fresh-install, rerun and recovery verification before calling the installer
+one-click. Cilium/HTTPS are deferred work, not implied prerequisites for stage 1.
+
+Source: [operator-selected roadmap at the incoming main revision](https://github.com/datrab/kubeclaw/blob/ca8027649ba54629f9551b645ab0833b723e4da3/docs/ROADMAP.md). This preserves the dated planning order, not a current deployment or acceptance result.
+
+## Controlnode Installer and Repeatable Node Onboarding
+
+Status: required operator experience, agreed 2026-09-17; not implemented as a
+complete installer. Finish the current worker adoption and Cilium work while
+capturing reusable steps, rather than requiring operators to replay repair scripts.
+
+- One Controlnode entry point must orchestrate cluster inspection, node preparation,
+  Argo bootstrap and verification. Operators must not log into each host and build
+  binaries manually. SSH/sudo is an implementation detail for node-level work;
+  Kubernetes API operations use the selected kubeconfig context.
+- Support an existing compatible K3s/Kubernetes cluster first. Later add explicit
+  cluster creation; never reinstall an existing cluster based on failed discovery.
+- Make adding a node an inventory change and a targeted installer run: validate
+  capacity/runtime, join if required, configure only its assigned roles, verify
+  readiness, and reconcile placement. Keep the operator configuration audit's
+  single-source requirement; do not add another competing configuration file.
+- Native pools are installed only on nodes assigned native execution. Render
+  per-node identities, policies and resource budgets; AX41 paths, names, digests
+  and build directories must not become global defaults. Additional nodes do not
+  automatically increase application concurrency or move local-path PVC data.
+- Keep role pools independent of executable/browser selection. A compatible
+  browser/tool replacement changes its image or task adapter, not host resource
+  policy. Validate inherited aggregate limits and cleanup across supported tools;
+  distinguish adapter compatibility from resource-pool capability.
+- Preserve current sync policy: platform root may reconcile Application definitions;
+  infrastructure/Codex Ops children stay manual, while validated KubeClaw runtime
+  releases may autosync. Bootstrap completion is not an image-release selection.
+- Acceptance requires fresh setup, unchanged rerun, interrupted-run recovery,
+  adding a second node without restarting unrelated workloads, and a real workload
+  smoke test. Print completed/pending steps without exposing credentials.
+
 ## Automated Host Bootstrap and Recovery
 
 The repository does not prepare a complete supported host from an empty machine.

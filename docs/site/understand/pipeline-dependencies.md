@@ -78,6 +78,12 @@ flowchart LR
     Prism -->|approved result| Core
 ```
 
+Text version: Git supplies a fixed source revision to Nova.
+Nova Core controls the run.
+The showcase platform provides Redis, LiteLLM, Prism, BuildKit, both registry services, and Tailscale.
+The active graph determines which service receives work during one run.
+Buster and Prism return bounded results to Core.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -99,13 +105,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism | Directed connection | Prism PostgreSQL |
 | Buster role | Directed connection — verified result | Nova Core |
 | Prism | Directed connection — approved result | Nova Core |
-
-
-Text version: Git supplies a fixed source revision to Nova.
-Nova Core controls the run.
-The showcase platform provides Redis, LiteLLM, Prism, BuildKit, both registry services, and Tailscale.
-The active graph determines which service receives work during one run.
-Buster and Prism return bounded results to Core.
 
 The complete lab deploys and verifies every solid-line dependency shown here.
 One individual graph can leave a service idle when it has no matching stage.

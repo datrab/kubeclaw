@@ -36,6 +36,13 @@ flowchart TB
     Runtime --> Prism
 ```
 
+Text version: A human gives the project and signals to Nova.
+Nova delegates bounded work to Forge, Echo, Prism, and Buster.
+All specialists return facts or artifacts to Nova.
+Nova makes the canonical lifecycle decision.
+Buster and Prism use Worker Core.
+The plugin runtime loads declared extension points for each applicable role.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -56,14 +63,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Plugin runtime | Directed connection | Nova |
 | Plugin runtime | Directed connection | Buster |
 | Plugin runtime | Directed connection | Prism |
-
-
-Text version: A human gives the project and signals to Nova.
-Nova delegates bounded work to Forge, Echo, Prism, and Buster.
-All specialists return facts or artifacts to Nova.
-Nova makes the canonical lifecycle decision.
-Buster and Prism use Worker Core.
-The plugin runtime loads declared extension points for each applicable role.
 
 ## Nova and Nova Core
 
@@ -95,6 +94,10 @@ flowchart TB
     Plugins -->|typed facts and receipts| Core
 ```
 
+Text version: The Nova role contains the entry point, project compiler, Nova Core, plugin runtime, and selected extensions.
+The compiler gives Core a fixed graph.
+Core invokes plugins and interprets their typed results.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -109,11 +112,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Project compiler and CLI | Directed connection — fixed graph | Nova Core |
 | Nova Core | Directed connection — bounded invocation | Selected plugins and adapters |
 | Selected plugins and adapters | Directed connection — typed facts and receipts | Nova Core |
-
-
-Text version: The Nova role contains the entry point, project compiler, Nova Core, plugin runtime, and selected extensions.
-The compiler gives Core a fixed graph.
-Core invokes plugins and interprets their typed results.
 
 > **Source evidence — role and engine boundary**
 >
@@ -368,6 +366,15 @@ flowchart LR
     Journal --> Nova
 ```
 
+Text version: The manifest enters a validated registry.
+Platform configuration selects registrations from that registry for activation.
+Nova gives an active plugin one attempt and one revocable lease through a bounded context.
+The plugin returns a typed result to Nova.
+For an external operation, the plugin must request a capability through the same context.
+The context checks the grant and the requested resource before it calls the selected adapter.
+The adapter performs the operation and records its known outcome as a durable receipt.
+Nova uses the typed result and durable evidence to make the lifecycle decision.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -387,16 +394,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | External resource | Directed connection — known outcome | Selected capability adapter |
 | Selected capability adapter | Directed connection — durable receipt | Effect journal |
 | Effect journal | Directed connection | Nova Core |
-
-
-Text version: The manifest enters a validated registry.
-Platform configuration selects registrations from that registry for activation.
-Nova gives an active plugin one attempt and one revocable lease through a bounded context.
-The plugin returns a typed result to Nova.
-For an external operation, the plugin must request a capability through the same context.
-The context checks the grant and the requested resource before it calls the selected adapter.
-The adapter performs the operation and records its known outcome as a durable receipt.
-Nova uses the typed result and durable evidence to make the lifecycle decision.
 
 1. The graph names a stage type and fixed limits.
 2. The registry resolves exactly one package as the stage owner.

@@ -227,7 +227,7 @@
     "docs:site-boundary:check": "node scripts/check-site-reader-boundary.mjs",
     "docs:tree:generate": "node scripts/docs-tree-boundary.mjs",
     "docs:tree:check": "node scripts/docs-tree-boundary.mjs --check",
-    "docs:tree:mutations": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs",
+    "docs:tree:mutations": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs",
     "docs:parity:check": "node scripts/docs-parity-check.mjs",
     "docs:parity:manifest": "node scripts/docs-parity-check.mjs --deletion-manifest=docs/generated/inventory/documentation-deletion-manifest.json",
     "docs:parity:manifest:check": "node scripts/docs-parity-check.mjs --check-deletion-manifest=docs/generated/inventory/documentation-deletion-manifest.json",

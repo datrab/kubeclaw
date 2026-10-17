@@ -84,6 +84,13 @@ flowchart TB
     Monitor[Monitoring stack] -. observes .-> Runtime
 ```
 
+Text version: the host supports K3s. K3s supplies scheduling, DNS, storage, and
+the network used by workloads. Cilium owns the Pod network in the supported
+secured deployment. Flannel is an architectural alternative only. Argo CD can
+own deployment reconciliation. Redis, registries, BuildKit, Tailscale,
+PostgreSQL, and LiteLLM support selected runtime paths. Monitoring and the Ops
+Pod remain separate operational surfaces.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -110,14 +117,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Discord bot and webhook APIs | Directed connection | Nova, Buster, and Prism |
 | Ops Pod | Directed connection — read and optional bounded exec | K3s control plane and nodes |
 | Monitoring stack | Dotted relationship — observes | Nova, Buster, and Prism |
-
-
-Text version: the host supports K3s. K3s supplies scheduling, DNS, storage, and
-the network used by workloads. Cilium owns the Pod network in the supported
-secured deployment. Flannel is an architectural alternative only. Argo CD can
-own deployment reconciliation. Redis, registries, BuildKit, Tailscale,
-PostgreSQL, and LiteLLM support selected runtime paths. Monitoring and the Ops
-Pod remain separate operational surfaces.
 
 ## Host and K3s Boundary
 
@@ -300,7 +299,7 @@ supplies a credential value after the non-secret endpoint has been selected.
 | Rootless BuildKit | Buster runtime owner; builds and pushes an image for container-build nodes. | Local BuildKit socket `unix:///run/user/1000/buildkit/buildkitd.sock`; Unix ownership and Pod isolation are the identity boundary. Registry identity comes from the shared registry contract. | Buster values set `CONTAINER_BUILD_BUILDKIT_HOST`; the entrypoint requires `BUILDKIT_HOST`, state root, and registry contract. No cluster TCP default exists. | Entrypoint permits 60 one-second worker checks; provider readiness and an actual digest-bound build are stronger checks. |
 | Tailscale | Tailscale operator owns private Ingress routes; Buster owns each temporary exposure lease. Human clients and exposure tests consume different routes. | Tailnet HTTPS/DNS; OAuth identity comes from `tailscale/operator-oauth`; each published service can add application authentication. | Operator values leave OAuth fields empty so the chart reads the existing Secret. The `tailscale` IngressClass and tags are defaults; selected Helm values win. A fixture’s lease and generation are separate runtime authority. | Operator rollout, proxy readiness, Tailnet DNS/TLS/ACL, and the application check. A created Ingress alone is insufficient. |
 | LiteLLM gateway | Platform gateway owner; routes current remote memory-search embeddings; Nova and Buster also make gateway health part of readiness. | OpenAI-compatible HTTP at `litellm.kubeclaw.svc.cluster.local:4000/v1`; consumer key from `openclaw-shared-secrets/litellmApiKey`; gateway master key and database URL from `litellm-secrets`. | `deploy.sh` enables the direct profile by default and disables role probes only when `KUBECLAW_DEPLOY_LITELLM=false`. The separate GitOps profile has a different image, fixed NodePort, and no Pod probes. The selected owner and its rendered resources win. | Direct Pod probes check liveness/readiness. Role readiness calls authenticated `/health`. Only a real embedding proves the configured route. |
-| Managed OpenAI reasoning | OpenClaw provider owner; supplies Nova, Buster, and Prism agent reasoning. It does not own Core state or Prism results. | Provider traffic is owned by the pinned OpenClaw runtime. The generated configuration selects OpenAI OAuth profiles and the allowed `openai/gpt-5.6-sol` and `openai/gpt-5.5` model IDs. OAuth material lives in OpenClaw's protected persistent state, not in the public ConfigMap. | Role values select primary and fallback models. The generated allowlist limits those choices. Persistent OpenClaw configuration is retained across restart and synchronizes the managed auth section from the selected chart input. | Gateway readiness does not prove a provider request. Prove one bounded agent request and retain its session/error evidence without logging credentials. |
+| Managed OpenAI reasoning | OpenClaw provider owner; supplies Nova, Buster, and Prism agent reasoning. It does not own Core state or Prism results. | Provider traffic is owned by the pinned OpenClaw runtime. The generated configuration selects OpenAI OAuth profiles. Role values select the primary and fallback models: the selected Nova profile uses `openai/gpt-6.1-sol` with `openai/gpt-5.5` fallback; chart defaults and the selected Prism profile use `openai/gpt-5.6-sol` with that fallback. The chart always allows the two GPT-5 IDs and adds `openai/gpt-6-astra` and `openai/gpt-6.1-sol` only when the selected primary is one of those GPT-6 IDs. Each configured reasoning-model entry binds `agentRuntime.id` to `codex`. OAuth material lives in OpenClaw's protected persistent state, not in the public ConfigMap. | Role values select primary and fallback models. The generated allowlist limits those choices. Persistent OpenClaw configuration is retained across restart and synchronizes the managed auth section from the selected chart input. | Gateway readiness does not prove a provider request. Prove one bounded agent request and retain its session/error evidence without logging credentials. |
 | Vertex embedding provider | Google Cloud owner; returns vectors for the one LiteLLM model route. LiteLLM is the direct caller; OpenClaw memory search is the consumer. | HTTPS through LiteLLM; model `vertex_ai/gemini-embedding-001`, project and location from `litellm-config`; Google identity from mounted `google-sa-key`. | The externally managed ConfigMap and Secret supply route and identity. The direct renderer binds ConfigMap bytes to the Pod checksum; the GitOps Deployment does not. | One authenticated embedding with a valid vector proves the route. LiteLLM process health does not prove credential, quota, model, or provider health. |
 | Discord | Discord owns bot gateway and HTTPS APIs; enabled Nova and Buster OpenClaw gateways consume bot channels. Selected notification adapters can consume the separately injected webhook. | External Discord endpoints are selected by the pinned OpenClaw plugin or by the secret URL. Bot identities come from `discordToken-nova` and `discordToken-buster`; the webhook identity is the secret URL. User and channel allowlists restrict application handling. | Nova and Buster values set `discord.enabled=true`, distinct channel IDs, token keys, allowed users, and the shared webhook key. Prism leaves Discord disabled. Selected role values win; the repository does not fix Discord API retry policy. | A gateway process can be ready while Discord is unavailable. Prove an allowed inbound message and its bounded reply; prove notification delivery separately when that path is selected. |
 | SPIRE and Envoy | Identity platform owner and each workload owner; issue SVIDs, authenticate mTLS peers, and forward verified identity to Buster and Prism applications. | SPIFFE Workload API on the CSI Unix socket; Envoy listeners use 8443 or role-specific ports and local plaintext loopback. ServiceAccount-derived SPIFFE IDs are the identities. | `workerTrust.spiffe.enabled` defaults to `false` in generic charts. The supported secured values enable it and select trust domain `kubeclaw.internal`; rendered chart values define exact peers and Envoy image. There is no anonymous fallback. | SPIRE/CSI readiness, Envoy `/bootstrap`, `/ready`, and `/health`, then allowed and denied peer requests. |
@@ -335,6 +334,14 @@ supplies a credential value after the non-secret endpoint has been selected.
 > [The gateway configuration separates managed OpenAI reasoning from the LiteLLM memory route](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75) and [limits the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L77-L108).
 >
 > [Nova enables its Discord channel and token source](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L38-L58), and [Buster enables its distinct channel and execution approver](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L41-L65).
+
+### Initialization and verification dependency signals
+
+Rendered init containers can reuse the selected role image to prepare temporary-directory permissions. These image pulls are startup dependencies, not additional pipeline authorities. Their image and registry follow the selected values and release profile, not an independently selected latest version.
+
+Prism's bridge readiness probe calls its local `127.0.0.1:18080/ready` endpoint. This checks that listener only; it does not establish external reachability, project correctness, or pipeline acceptance.
+
+Backup and restore-proof Jobs use the rendered PostgreSQL client image, `prism-postgresql` host, `postgres` user and the password from `prism-postgresql-auth`. A separate `PRISM_BACKUP_IMAGE` value identifies the selected backup image. These client, registry and credential references are dependencies of the verification operation; they are not proof that a backup or restore succeeded. Verify the actual Job result and its retained evidence before making a durability or recovery claim.
 
 ## Rootless BuildKit
 
@@ -601,12 +608,12 @@ This memory error does not write a Nova stage result or a Prism operation row.
 > **Source evidence — selected embedding client**
 >
 > **Claim:** The limits and retries above belong to the selected memory client.
-> **Implementation:** The linked adapter, JSON/vector readers, and memory manager.
-> **Contract or setting:** The chart selects `openai-compatible`, the remote key,
+> **Implementation:** The [selected adapter](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L281-L323), JSON/vector readers, and memory manager.
+> **Contract or setting:** The [chart selection](https://github.com/datrab/kubeclaw/blob/b15da2fb96ce6b11678b6572af1661067af03430/charts/kubeclaw/templates/configmap-gateway.yaml#L65-L79) supplies `openai-compatible`, the remote key,
 > and `gemini-embedding-001`; upstream defaults select the timeout and retry budgets.
 > **Test evidence:** No upstream client test or deployed embedding result is
 > established by these implementation links.
-> **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`.
+> **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`; chart selection at KubeClaw `b15da2fb96ce6b11678b6572af1661067af03430`.
 > **Limit:** No image/source attestation, live route result, provider quota proof,
 > or end-to-end owner deadline follows from these implementation links.
 

@@ -68,6 +68,12 @@ sequenceDiagram
     N-->>H: Terminal state and project summary
 ```
 
+Text version: Nova validates and compiles the project.
+Forge implements it, and Echo reviews a fixed revision.
+Nova then sends a fixed test plan to Buster.
+Worker Core controls each Buster attempt.
+Nova verifies the returned evidence and closes the run.
+
 **Text alternative to the diagram**
 
 Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.
@@ -90,13 +96,6 @@ Participants: Human or caller, Nova, Forge, Echo, Buster, Worker Core.
 | 12 | Buster | Dashed reply — Stored result and evidence references | Nova |
 | 13 | Nova | Self-action — Verify, import once, and decide | Nova |
 | 14 | Nova | Dashed reply — Terminal state and project summary | Human or caller |
-
-
-Text version: Nova validates and compiles the project.
-Forge implements it, and Echo reviews a fixed revision.
-Nova then sends a fixed test plan to Buster.
-Worker Core controls each Buster attempt.
-Nova verifies the returned evidence and closes the run.
 
 ### 1. Admit the Project
 
@@ -246,6 +245,15 @@ flowchart TD
     Running -->|external outcome cannot be reconciled| Blocked
 ```
 
+Text version: Nova moves a ready stage from pending to scheduled.
+Nova records the attempt and moves the stage to running when invocation starts.
+A passing result succeeds the stage.
+A permitted technical retry creates another bounded attempt.
+A cooldown, approval, or external signal puts the stage in waiting.
+A declared product defect uses a separate repair budget and repair stage.
+Nova blocks progress when a repair budget is exhausted or an external result remains uncertain.
+A known terminal error fails the stage, and cancellation moves it to cancelled.
+
 **Text alternative to the diagram**
 
 Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
@@ -267,16 +275,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Running | Directed connection — known terminal failure or timeout | Failed |
 | Running | Directed connection — cancellation | Cancelled |
 | Running | Directed connection — external outcome cannot be reconciled | Blocked |
-
-
-Text version: Nova moves a ready stage from pending to scheduled.
-Nova records the attempt and moves the stage to running when invocation starts.
-A passing result succeeds the stage.
-A permitted technical retry creates another bounded attempt.
-A cooldown, approval, or external signal puts the stage in waiting.
-A declared product defect uses a separate repair budget and repair stage.
-Nova blocks progress when a repair budget is exhausted or an external result remains uncertain.
-A known terminal error fails the stage, and cancellation moves it to cancelled.
 
 The diagram shows control decisions, not every journal event.
 Recovery reconstructs these decisions from the journal before it permits the next transition.

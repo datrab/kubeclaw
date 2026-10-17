@@ -3163,6 +3163,94 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/blueprint/upstream-main-20261017/ROADMAP.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/ROADMAP.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/ROADMAP.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/architecture/prism-openclaw-runtime.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/architecture/prism-openclaw-runtime.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/architecture/prism-openclaw-runtime.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/deployment/continuous-gitops.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/deployment/continuous-gitops.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/deployment/continuous-gitops.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/manifest.json",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/manifest.json",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/manifest.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/operations/automatic-runtime-deployments.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/operations/automatic-runtime-deployments.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/operations/automatic-runtime-deployments.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/operations/ax41-rollout.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/operations/ax41-rollout.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/operations/ax41-rollout.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/operations/native-worker-host-pools.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/operations/native-worker-host-pools.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/operations/native-worker-host-pools.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/operations/openclaw-audit-recovery.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/operations/openclaw-audit-recovery.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/operations/openclaw-audit-recovery.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/ops/ops-pod.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/ops/ops-pod.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/ops/ops-pod.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/reference/helm-values.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/reference/helm-values.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/reference/helm-values.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/upstream-main-20261017/runbooks/prism-recovery.md",
+      "class": "internal-documentation-input",
+      "purpose": "Preserved exact upstream main documentation input; immutable legacy baseline remains unchanged.",
+      "originalPath": "docs/blueprint/upstream-main-20261017/runbooks/prism-recovery.md",
+      "expectedPath": "docs/blueprint/upstream-main-20261017/runbooks/prism-recovery.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/config/documentation-parity-batches.json",
       "class": "internal-documentation-input",
       "purpose": "documentation configuration authority",
@@ -3369,6 +3457,14 @@
       "originalPath": "docs/generated/inventory/operator-tasks.json",
       "expectedPath": "docs/generated/inventory/operator-tasks.json",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/generated/inventory/ops-tool-versions.json",
+      "class": "internal-documentation-input",
+      "purpose": "Generated Ops tool version selection from versions.json; maintained by scripts/versions.mjs and Renovate, not a reader or immutable legacy source.",
+      "originalPath": "docs/generated/inventory/ops-tool-versions.json",
+      "expectedPath": "docs/generated/inventory/ops-tool-versions.json",
+      "introducedAfterBaseline": true
     },
     {
       "path": "docs/generated/inventory/platform-surfaces.json",

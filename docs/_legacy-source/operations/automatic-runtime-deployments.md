@@ -51,21 +51,6 @@ build never publishes a production selection. Generated pushes use
 
 ## Initial adoption and prerequisites
 
-Production naming is configured in `gitops/production/config.json`: the root
-Application is `kubeclaw`, and the workload AppProject is `kubeclaw`. The three
-independently syncable child Applications are `kubeclaw-buster`,
-`kubeclaw-prism` and `kubeclaw-nova`. Prism groups its agent and service resources;
-it does not collapse them into a single Kubernetes Deployment. The administrative
-root uses a separate `kubeclaw-bootstrap` AppProject so workload permissions do
-not include management of Argo Applications. Naming changes do not rename live
-applications automatically; production runtime adoption has not yet occurred.
-
-Initial adoption still requires selected image/bundle receipts, reviewed AX41
-overlays and explicit migration of existing Helm ownership without deleting
-persistent data. Creating empty Applications or bypassing these checks is not
-a deployment. Deferred registry mTLS does not remove Buster's existing HTTPS
-registry requirement for its full build/scan pipeline.
-
 Automatic publication is gated by repository variable `GITOPS_ENABLED=true`.
 Enable it only after the production overlays, existing Secrets, namespace
 ownership and native-worker host prerequisites have been verified and the
@@ -92,35 +77,3 @@ selection. Database and persistent application data are not rolled back.
 Local selection/render tests do not establish that the live cluster has adopted
 these applications. Record the first successful publication and Argo rollout
 separately during the AX41 migration.
-
-## Register all runtime Applications before starting workloads
-
-`runtimeAutoSync: false` in `gitops/production/config.json` is the initial adoption
-stage. The production generator creates all three child Applications in the same
-wave, with no automatic workload sync. The parent is also manual during this
-stage, so no root operation waits on unsynced children; the registration command
-applies all definitions together. This is temporary: after reviewing
-the resource diffs and completing adoption, set `runtimeAutoSync: true` in Git
-and regenerate the production Applications through the release workflow.
-
-Once `gitops/production/selection.json`, `bootstrap.yaml` and
-`apps/applications.yaml` have been prepared and committed, run on the Controlnode:
-
-```sh
-export KUBE_CONTEXT="$(kubectl config current-context)"
-node scripts/install/register-runtime-argo.mjs check
-node scripts/install/register-runtime-argo.mjs apply
-```
-
-The registration step validates the committed bundle and generated definitions,
-rejects conflicting existing Application/Project owners, and performs an API
-dry-run before applying only Applications and AppProjects. It does not apply
-workloads, delete Helm releases, modify Secrets/PVCs, or verify host pools.
-Use Argo diffs to review the first workload sync. Registration alone is not a
-completed ownership migration, functioning auto-deployment or pipeline test.
-
-CI checks previously selected values against their recorded source using
-`materialize-release.mjs --check --check-selected-source`. This allows a new
-chart candidate to build without pretending the previous release contains it.
-The option is read-only; ordinary materialization and deployment retain strict
-matching of the current configuration to the selected successful release.

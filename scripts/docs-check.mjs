@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { stripFencedCodeAndComments } from './lib/docs-markdown-anchors.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs/site');
@@ -28,7 +29,8 @@ function activeMarkdownFiles() {
   return walk(docsRoot, (filePath) => filePath.endsWith('.md'));
 }
 
-function markdownLinkTargets(text) {
+export function markdownLinkTargets(text) {
+  text = stripFencedCodeAndComments(text).replace(/`[^`\n]*`/gu, 'code');
   // Match actual Markdown links, not escaped schema syntax such as
   // `\[a-z\](?:...)` emitted by generated configuration references.
   const linkRe = /(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g;
@@ -37,7 +39,7 @@ function markdownLinkTargets(text) {
 
 function checkLocalLinks(files) {
   for (const file of files) {
-    const text = fs.readFileSync(file, 'utf8').replace(/`[^`\n]*`/gu, 'code');
+    const text = fs.readFileSync(file, 'utf8');
     for (const rawTarget of markdownLinkTargets(text)) {
       let target = rawTarget.trim();
       if (
@@ -255,4 +257,4 @@ function main() {
   console.log(`docs check passed (${files.length} active markdown files)`);
 }
 
-main();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
