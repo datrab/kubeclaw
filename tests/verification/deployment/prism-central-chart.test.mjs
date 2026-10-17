@@ -11,14 +11,21 @@ function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-central-chart-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const author = path.join(root, 'config'), chart = path.join(root, 'chart');
-  fs.cpSync('config', author, { recursive: true }); fs.cpSync('charts/prism', chart, { recursive: true });
+  fs.cpSync('config', author, { recursive: true }); fs.cpSync('charts/prism', chart, { recursive: true, dereference: true });
   const values = yaml.load(fs.readFileSync('charts/prism/ci-values.yaml', 'utf8'));
   values.ingestion = { enabled: true, replicas: 1, resources: { requests: { cpu: '100m', memory: '128Mi' }, limits: { cpu: '1', memory: '1Gi' } } };
   const valuesFile = path.join(root, 'values.yaml');
   const render = (namespace = 'kubeclaw') => {
     fs.writeFileSync(valuesFile, yaml.dump(values));
-    fs.writeFileSync(path.join(chart, 'files/pipeline/prism-topology.json'), JSON.stringify(prismChartProjection(author)));
-    return yaml.loadAll(execFileSync('helm', ['template', 'prism', chart, '--namespace', namespace, '-f', valuesFile], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+    const projection = prismChartProjection(author);
+    fs.writeFileSync(path.join(chart, 'files/pipeline/prism-topology.json'), JSON.stringify(projection));
+    const packaged = path.join(root, 'packaged');
+    fs.rmSync(packaged, { recursive: true, force: true }); fs.mkdirSync(packaged);
+    execFileSync('helm', ['package', chart, '--destination', packaged], { stdio: 'pipe' });
+    const archives = fs.readdirSync(packaged).filter(file => file.endsWith('.tgz')); assert.equal(archives.length, 1);
+    const archive = path.join(packaged, archives[0]);
+    assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive, 'prism/files/pipeline/prism-topology.json'], { encoding: 'utf8' })), projection);
+    return yaml.loadAll(execFileSync('helm', ['template', projection.deployment.releaseName, archive, '--namespace', namespace, '-f', valuesFile], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
   };
   return { root, author, chart, values, render };
 }
