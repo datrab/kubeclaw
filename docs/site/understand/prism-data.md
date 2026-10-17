@@ -4,9 +4,9 @@ Status: implemented with stated limits
 Audience: Prism developer, platform engineer, operator, and incident responder
 Owner: Prism maintainers
 Evidence: contracts/prism/v1; skills/prism; charts/prism
-Evidence revision: `4e52c72788ac002788bc036a497d76c13e6a35fd`
+Evidence revision: `b2b85d4c8d3174aa41507cde77637227bb709e1e`
 Applies to: prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema
-Last verified: source, schema, migration, chart, and test inspection on 2026-09-19
+Last verified: source, schema, migration, chart, and test inspection on 2026-09-19; backup source changes reconciled on 2026-10-17 (source inspection, not a live restore)
 
 ## Purpose
 
@@ -82,9 +82,9 @@ content-addressed baseline bundle.
 
 > **Source evidence — relational ownership**
 >
-> [The first migration defines projects, documents, revisions, directions, baselines, corpus records, preferences, engine operations, and approvals](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/001_prism.sql#L1-L74).
+> [The first migration defines projects, documents, revisions, directions, baselines, corpus records, preferences, engine operations, and approvals](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L1-L74).
 >
-> [The round migration binds a round to its request, preference generation, parent round, source document, and source revision](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/013_design_round.sql#L1-L22).
+> [The round migration binds a round to its request, preference generation, parent round, source document, and source revision](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/013_design_round.sql#L1-L22).
 
 ## Four Forms of Truth
 
@@ -128,12 +128,12 @@ the revision number one stable meaning.
 
 > **Source evidence — architecture frontier**
 >
-> [The design-request table requires positive revisions, keeps one project/revision pair, and has an active-request index](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/006_design_request.sql#L1-L17).
+> [The design-request table requires positive revisions, keeps one project/revision pair, and has an active-request index](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/006_design_request.sql#L1-L17).
 >
-> [The transition check rejects an older revision or a changed digest at the same revision](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/design-generations.ts#L63-L82).
+> [The transition check rejects an older revision or a changed digest at the same revision](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L63-L82).
 > It also rejects changed request content and an approval for different architecture.
 >
-> [Control locks the project, validates the transition, supersedes older requests, and records the active request in one transaction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L215-L229).
+> [Control locks the project, validates the transition, supersedes older requests, and records the active request in one transaction](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L215-L229).
 
 ## Design Rounds and Directions
 
@@ -180,13 +180,13 @@ an incomplete comparison.
 
 > **Source evidence — round admission and delivery**
 >
-> [Round start locks the project, checks its inputs, captures evidence, inserts the round, and advances the request frontier](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/design-generations.ts#L14-L43).
+> [Round start locks the project, checks its inputs, captures evidence, inserts the round, and advances the request frontier](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L14-L43).
 >
-> [Result binding supports exact replay and rejects stale architecture, stale rounds, and changed source documents](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/design-generations.ts#L46-L59).
+> [Result binding supports exact replay and rejects stale architecture, stale rounds, and changed source documents](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L46-L59).
 >
-> [Direction-set creation validates three designs and writes their documents, revisions, direction records, and round result in one transaction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L151-L178).
+> [Direction-set creation validates three designs and writes their documents, revisions, direction records, and round result in one transaction](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L151-L178).
 >
-> [The diversity gate gives extra weight to node type and root-structure differences and rejects a distance below three](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/directions/index.ts#L4-L37).
+> [The diversity gate gives extra weight to node type and root-structure differences and rejects a distance below three](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/directions/index.ts#L4-L37).
 
 ## Design Documents
 
@@ -218,13 +218,13 @@ tests, and baseline compatibility agree.
 
 > **Source evidence — closed document contract**
 >
-> [The contract defines document metadata, theme, assets, components, views, and flows as closed structures](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/schemas/prism-v1.schema.json#L281-L519).
+> [The contract defines document metadata, theme, assets, components, views, and flows as closed structures](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/schemas/prism-v1.schema.json#L281-L519).
 >
-> [The semantic validator checks themes, patch targets, component references, component cycles, views, states, and responsive groups](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/document-semantics.ts#L7-L136).
+> [The semantic validator checks themes, patch targets, component references, component cycles, views, states, and responsive groups](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/document-semantics.ts#L7-L136).
 >
-> [The complexity guard defines the four general JSON limits and rejects cycles, accessors, sparse arrays, non-finite numbers, and excessive input](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/complexity.ts#L1-L68).
+> [The complexity guard defines the four general JSON limits and rejects cycles, accessors, sparse arrays, non-finite numbers, and excessive input](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/complexity.ts#L1-L68).
 >
-> [The node catalog lists the supported node types, allowed properties, required properties, and child rules](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/node-catalog.ts#L1-L189).
+> [The node catalog lists the supported node types, allowed properties, required properties, and child rules](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/node-catalog.ts#L1-L189).
 
 ## Operations and Revisions
 
@@ -262,13 +262,13 @@ record around this write.
 
 > **Source evidence — deterministic editing**
 >
-> [The domain operation union and application code define all operations, structural guards, one revision increment, and final validation](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L5-L113).
+> [The domain operation union and application code define all operations, structural guards, one revision increment, and final validation](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/domain/index.ts#L5-L113).
 >
-> [Revision apply inserts the child revision and advances the current pointer with a compare-and-swap condition](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L292).
+> [Revision apply inserts the child revision and advances the current pointer with a compare-and-swap condition](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L262-L292).
 >
-> [Restore creates a new revision instead of changing or deleting historical revisions](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L240-L260).
+> [Restore creates a new revision instead of changing or deleting historical revisions](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L240-L260).
 >
-> [The native PostgreSQL regression proves one winner from eight concurrent replacements and proves rollback of a failed transaction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/tests/verification/contracts/check-prism-postgres-transactions.mts#L26-L41).
+> [The native PostgreSQL regression proves one winner from eight concurrent replacements and proves rollback of a failed transaction](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/tests/verification/contracts/check-prism-postgres-transactions.mts#L26-L41).
 
 ## Direction Decisions and Preference Evidence
 
@@ -317,13 +317,13 @@ disables pipeline personal learning.
 
 > **Source evidence — decisions and preferences**
 >
-> [Direction decision uses project and row locks, validates the current round and revision, and records its preference receipt in one transaction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/direction-decisions.ts#L10-L60).
+> [Direction decision uses project and row locks, validates the current round and revision, and records its preference receipt in one transaction](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/direction-decisions.ts#L10-L60).
 >
-> [Preference projection defines identity, deduplication, retraction, scoring, context, scope, and 180-day decay](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L42-L88).
+> [Preference projection defines identity, deduplication, retraction, scoring, context, scope, and 180-day decay](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/preferences/index.ts#L42-L88).
 >
-> [Generation snapshots apply the personal policy, project override, reference time, and content digest before storage](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/preference-snapshot.ts#L5-L37).
+> [Generation snapshots apply the personal policy, project override, reference time, and content digest before storage](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/preference-snapshot.ts#L5-L37).
 >
-> [Pipeline preference identity is platform-owned and fails when a request does not equal the configured subject](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/pipeline-preference-subject.ts#L1-L10).
+> [Pipeline preference identity is platform-owned and fails when a request does not equal the configured subject](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/pipeline-preference-subject.ts#L1-L10).
 
 ## Evaluation, Approval, and Publication
 
@@ -430,23 +430,23 @@ There is no automatic artifact garbage collector in the current implementation.
 
 > **Source evidence — quality and release authority**
 >
-> [Evaluation derives stable findings and maps them to the final status](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L27-L36).
-> [It checks references, accessibility, responsive groups, and flows](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L37-L235).
+> [Evaluation derives stable findings and maps them to the final status](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/evaluation/index.ts#L27-L36).
+> [It checks references, accessibility, responsive groups, and flows](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/evaluation/index.ts#L37-L235).
 >
-> [Approval binds the current revision, active architecture, quality result, and exact accepted warning IDs](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L521-L565).
+> [Approval binds the current revision, active architecture, quality result, and exact accepted warning IDs](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L521-L565).
 >
-> [The shared Studio guard verifies the session and CSRF value and returns roles, but does not apply a role or project-membership rule](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L108-L123).
+> [The shared Studio guard verifies the session and CSRF value and returns roles, but does not apply a role or project-membership rule](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L108-L123).
 >
-> [Existing-baseline replay returns after the approval, project, and document lookup and before the new-publication checks](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L567-L595).
+> [Existing-baseline replay returns after the approval, project, and document lookup and before the new-publication checks](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L567-L595).
 >
-> [Publication rechecks revision, digest, architecture, warnings, and selected direction before it assembles evidence](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L567-L645).
+> [Publication rechecks revision, digest, architecture, warnings, and selected direction before it assembles evidence](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L567-L645).
 >
-> [Prism renders every view, state, and viewport and blocks on missing or failing accessibility evidence](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L646-L752).
+> [Prism renders every view, state, and viewport and blocks on missing or failing accessibility evidence](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L646-L752).
 >
-> [The final baseline insert follows rendering without a second current-revision check](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L753-L797).
-> [The pipeline lookup does not join the document current-revision pointer](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/design-generations.ts#L69-L70).
+> [The final baseline insert follows rendering without a second current-revision check](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L753-L797).
+> [The pipeline lookup does not join the document current-revision pointer](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/design-generations.ts#L69-L70).
 >
-> [The v2 archive code validates paths and file sets, computes deterministic checksums, validates the manifest, and returns the exact archive bytes](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/baseline-archive.ts#L23-L91).
+> [The v2 archive code validates paths and file sets, computes deterministic checksums, validates the manifest, and returns the exact archive bytes](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/contracts/prism/v1/src/baseline-archive.ts#L23-L91).
 
 ## Renderer and Assets
 
@@ -484,15 +484,15 @@ These are different routes for different trust and evidence needs.
 
 > **Source evidence — deterministic safe rendering**
 >
-> [The renderer escapes text and attributes, resolves only known token forms, and builds styles from an allowlisted set](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/renderer/index.ts#L4-L120).
+> [The renderer escapes text and attributes, resolves only known token forms, and builds styles from an allowlisted set](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/renderer/index.ts#L4-L120).
 >
-> [The renderer maps every supported node to fixed HTML and fails on missing components or assets](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/renderer/index.ts#L177-L304).
+> [The renderer maps every supported node to fixed HTML and fails on missing components or assets](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/renderer/index.ts#L177-L304).
 >
-> [Render operation applies the content-security policy and fixed browser capture environment](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/render-operation.ts#L37-L139).
+> [Render operation applies the content-security policy and fixed browser capture environment](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/engine/render-operation.ts#L37-L139).
 >
-> [Studio preview enforces media, size, timeout, same-origin, and digest checks](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/preview-assets.ts#L3-L65).
+> [Studio preview enforces media, size, timeout, same-origin, and digest checks](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/studio/preview-assets.ts#L3-L65).
 >
-> [The internal route authenticates the caller, limits evidence to 128 MiB, and binds upload bytes to the URL digest](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/internal-artifacts.ts#L17-L52).
+> [The internal route authenticates the caller, limits evidence to 128 MiB, and binds upload bytes to the URL digest](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-artifacts.ts#L17-L52).
 
 ## Content-Addressed Artifact Storage
 
@@ -531,13 +531,13 @@ Control enforces resource authorization.
 
 > **Source evidence — local CAS**
 >
-> [The artifact store implements pending-file publication, file and directory synchronization, hard-link collision handling, no-follow reads, and digest verification](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L6-L67).
+> [The artifact store implements pending-file publication, file and directory synchronization, hard-link collision handling, no-follow reads, and digest verification](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/artifacts.ts#L6-L67).
 >
-> [The public artifact route reads by digest after the general session guard and does not perform a project lookup](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L914-L920).
+> [The public artifact route reads by digest after the general session guard and does not perform a project lookup](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L914-L920).
 >
-> [The chart rejects more than one Control replica while artifact storage is ReadWriteOnce](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/templates/workloads.yaml#L1-L9).
+> [The chart rejects more than one Control replica while artifact storage is ReadWriteOnce](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L1-L9).
 >
-> [The artifact claim is ReadWriteOnce, retained across chart deletion, and excluded from Argo pruning](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/templates/workloads.yaml#L217-L230).
+> [The artifact claim is ReadWriteOnce, retained across chart deletion, and excluded from Argo pruning](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L217-L230).
 
 ## Corpus Ingestion
 
@@ -597,13 +597,13 @@ Ingestion is also disabled by default in chart values.
 
 > **Source evidence — governed ingestion**
 >
-> [Corpus input, source rules, embedding limits, digest locking, and atomic insertion are implemented here](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L5-L148).
+> [Corpus input, source rules, embedding limits, digest locking, and atomic insertion are implemented here](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L5-L148).
 >
-> [The ingestion service enforces DNS and address policy, HTTPS, redirect, size, media, SVG, quarantine, and TTL rules](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/ingestion.ts#L10-L80).
+> [The ingestion service enforces DNS and address policy, HTTPS, redirect, size, media, SVG, quarantine, and TTL rules](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/ingestion.ts#L10-L80).
 >
-> [Control keeps a new item restricted until digest verification, embedding, database publication, and quarantine cleanup complete](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L810-L842).
+> [Control keeps a new item restricted until digest verification, embedding, database publication, and quarantine cleanup complete](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L810-L842).
 >
-> [The native pool test injects failures at every corpus write boundary and verifies full rollback](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/integration/corpus-pool.mts#L24-L80).
+> [The native pool test injects failures at every corpus write boundary and verifies full rollback](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/integration/corpus-pool.mts#L24-L80).
 > It also verifies one result from 12 concurrent identical requests.
 
 ## Retrieval, Embeddings, Ranking, and Access Boundaries
@@ -668,14 +668,14 @@ indexes.
 
 > **Source evidence — retrieval policy and algorithm**
 >
-> [The hybrid query applies active-status, rights, validity, model, required, and avoid filters and fuses text and vector ranks](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L150-L185).
+> [The hybrid query applies active-status, rights, validity, model, required, and avoid filters and fuses text and vector ranks](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L150-L185).
 >
-> [Application selection applies metadata matching, preference ordering, source-family diversity, explanations, and the final limit](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L186-L249).
+> [Application selection applies metadata matching, preference ordering, source-family diversity, explanations, and the final limit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/corpus/index.ts#L186-L249).
 >
-> [The API clamps result and family limits and reports a coverage gap](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L844-L886).
+> [The API clamps result and family limits and reports a coverage gap](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L844-L886).
 >
-> [The schema creates the generated text vector and its GIN index](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/001_prism.sql#L40-L57).
-> It creates no approximate vector index. [It indexes text search and rights lookup](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/001_prism.sql#L71-L74).
+> [The schema creates the generated text vector and its GIN index](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L40-L57).
+> It creates no approximate vector index. [It indexes text search and rights lookup](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L71-L74).
 
 ## Other Durable Coordination Records
 
@@ -744,21 +744,21 @@ project intent.
 
 > **Source evidence — durable coordination**
 >
-> [Native operation reservation locks the idempotency key, commits the accepted attempt before dispatch, and returns only a matching stored attempt or result](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/native-operation-store.ts#L10-L45).
+> [Native operation reservation locks the idempotency key, commits the accepted attempt before dispatch, and returns only a matching stored attempt or result](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L10-L45).
 >
-> [Result recording binds the receipt to the stored attempt and refuses a conflicting second result](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/native-operation-store.ts#L47-L68).
+> [Result recording binds the receipt to the stored attempt and refuses a conflicting second result](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L47-L68).
 >
-> [The database constraint and trigger protect v3 native-operation identity and completed results](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/017_native_operation_identity.sql#L1-L30).
+> [The database constraint and trigger protect v3 native-operation identity and completed results](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/017_native_operation_identity.sql#L1-L30).
 >
-> [Agent job claim serializes admission, expires uncertain running work to `needs_nova`, supersedes stale accepted work, and creates a 16-minute fenced attempt](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/agent-jobs.ts#L31-L53).
+> [Agent job claim serializes admission, expires uncertain running work to `needs_nova`, supersedes stale accepted work, and creates a 16-minute fenced attempt](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L31-L53).
 >
-> [Agent result commit checks the row lock, fence, live claim, and payload digest](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/agent-jobs.ts#L84-L100).
+> [Agent result commit checks the row lock, fence, live claim, and payload digest](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L84-L100).
 >
-> [The nonce store and verifier implement bounded cleanup, one-use insertion, a five-minute time window, HMAC validation, and replay rejection](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/internal-auth.ts#L3-L86).
+> [The nonce store and verifier implement bounded cleanup, one-use insertion, a five-minute time window, HMAC validation, and replay rejection](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-auth.ts#L3-L86).
 >
-> [Product decision storage makes normalized intent and receipt retries conflict-safe](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/product-decisions.ts#L4-L28).
+> [Product decision storage makes normalized intent and receipt retries conflict-safe](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/product-decisions.ts#L4-L28).
 >
-> [The initial schema defines brief revisions, while active request storage is a separate later table](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/001_prism.sql#L6-L10).
+> [The initial schema defines brief revisions, while active request storage is a separate later table](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql#L6-L10).
 
 ## PostgreSQL Ownership and Migrations
 
@@ -804,33 +804,33 @@ file. Add the next numbered file.
 
 | Migration | Durable change |
 | --- | --- |
-| [`001_prism.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/001_prism.sql) | Creates the initial project, document, revision, direction, baseline, rights, corpus, preference, approval, and engine-operation model. |
-| [`002_engine_operation_results.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/002_engine_operation_results.sql) | Adds request identity and the stored result to engine operations. |
-| [`003_worker_nonce.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/003_worker_nonce.sql) | Adds one-use internal-authentication nonces and their expiry index. |
-| [`004_approval_warnings.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/004_approval_warnings.sql) | Records which evaluation warnings a reviewer accepted. |
-| [`005_direction_source.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/005_direction_source.sql) | Binds a direction to its source document and revision and changes direction uniqueness. |
-| [`006_design_request.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/006_design_request.sql) | Adds architecture-bound design requests and the approval architecture digest. |
-| [`007_direction_evidence.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/007_direction_evidence.sql) | Adds structured evidence to each direction. |
-| [`008_document_request_binding.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/008_document_request_binding.sql) | Binds each Design Document to the design request that authorized it. |
-| [`009_corpus_source_evidence.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/009_corpus_source_evidence.sql) | Adds a validated source-content digest to corpus revisions. |
-| [`010_direction_unsourced_uniqueness.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql) | Archives displaced duplicates before restoring uniqueness for directions without a source document. |
-| [`011_preference_wire_ids.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/011_preference_wire_ids.sql) | Adds stable wire IDs and conflict-safe request and response receipts to preference events. |
-| [`012_preference_generation.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/012_preference_generation.sql) | Adds per-project personal-preference policy and stored generation snapshots. |
-| [`013_design_round.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/013_design_round.sql) | Adds design rounds and binds current requests and documents to their round. |
-| [`014_agent_jobs.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/014_agent_jobs.sql) | Adds durable fenced Agent jobs and idempotent revision-start records. |
-| [`015_product_decisions.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/015_product_decisions.sql) | Adds the separate signed product-decision audit and controller receipts. |
-| [`016_preference_legacy_insert_compatibility.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql) | Lets an older writer omit a preference wire ID during an application rollback. |
-| [`017_native_operation_identity.sql`](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/017_native_operation_identity.sql) | Stores the complete Worker V3 attempt identity and prevents later identity mutation. |
+| [`001_prism.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/001_prism.sql) | Creates the initial project, document, revision, direction, baseline, rights, corpus, preference, approval, and engine-operation model. |
+| [`002_engine_operation_results.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/002_engine_operation_results.sql) | Adds request identity and the stored result to engine operations. |
+| [`003_worker_nonce.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/003_worker_nonce.sql) | Adds one-use internal-authentication nonces and their expiry index. |
+| [`004_approval_warnings.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/004_approval_warnings.sql) | Records which evaluation warnings a reviewer accepted. |
+| [`005_direction_source.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/005_direction_source.sql) | Binds a direction to its source document and revision and changes direction uniqueness. |
+| [`006_design_request.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/006_design_request.sql) | Adds architecture-bound design requests and the approval architecture digest. |
+| [`007_direction_evidence.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/007_direction_evidence.sql) | Adds structured evidence to each direction. |
+| [`008_document_request_binding.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/008_document_request_binding.sql) | Binds each Design Document to the design request that authorized it. |
+| [`009_corpus_source_evidence.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/009_corpus_source_evidence.sql) | Adds a validated source-content digest to corpus revisions. |
+| [`010_direction_unsourced_uniqueness.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql) | Archives displaced duplicates before restoring uniqueness for directions without a source document. |
+| [`011_preference_wire_ids.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/011_preference_wire_ids.sql) | Adds stable wire IDs and conflict-safe request and response receipts to preference events. |
+| [`012_preference_generation.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/012_preference_generation.sql) | Adds per-project personal-preference policy and stored generation snapshots. |
+| [`013_design_round.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/013_design_round.sql) | Adds design rounds and binds current requests and documents to their round. |
+| [`014_agent_jobs.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/014_agent_jobs.sql) | Adds durable fenced Agent jobs and idempotent revision-start records. |
+| [`015_product_decisions.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/015_product_decisions.sql) | Adds the separate signed product-decision audit and controller receipts. |
+| [`016_preference_legacy_insert_compatibility.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql) | Lets an older writer omit a preference wire ID during an application rollback. |
+| [`017_native_operation_identity.sql`](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/017_native_operation_identity.sql) | Stores the complete Worker V3 attempt identity and prevents later identity mutation. |
 
 > **Source evidence — bootstrap and migration**
 >
-> [Role bootstrap verifies password authentication, serializes setup, creates missing roles, and installs ownership and grants](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/database-roles.ts#L8-L57).
+> [Role bootstrap verifies password authentication, serializes setup, creates missing roles, and installs ownership and grants](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/database-roles.ts#L8-L57).
 >
-> [Bootstrap retry defaults and retryable connection failures are explicit](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/config/database-bootstrap.ts#L1-L10) and [applied by the bootstrap entry point](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/bootstrap-database.ts#L1-L20).
+> [Bootstrap retry defaults and retryable connection failures are explicit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/config/database-bootstrap.ts#L1-L10) and [applied by the bootstrap entry point](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/bootstrap-database.ts#L1-L20).
 >
-> [Migration uses one reserved connection, transaction, advisory lock, ownership preflight, migration journal, rollback, and release](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L21-L74).
+> [Migration uses one reserved connection, transaction, advisory lock, ownership preflight, migration journal, rollback, and release](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L21-L74).
 >
-> [The duplicate-direction migration archives displaced legacy rows before it adds the partial unique index](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql#L1-L32).
+> [The duplicate-direction migration archives displaced legacy rows before it adds the partial unique index](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql#L1-L32).
 
 ## Transactions, Locks, and Compare-and-Swap
 
@@ -865,13 +865,13 @@ query can wait according to PostgreSQL or connection-string settings.
 
 > **Source evidence — concurrency boundaries**
 >
-> [The transaction helper reserves one connection and owns begin, commit, rollback, and release](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L79-L96).
+> [The transaction helper reserves one connection and owns begin, commit, rollback, and release](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L79-L96).
 >
-> [The document pointer update is conditional on the parent revision ID and fails with `revision conflict` when it loses](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L273-L291).
+> [The document pointer update is conditional on the parent revision ID and fails with `revision conflict` when it loses](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/storage/index.ts#L273-L291).
 >
-> [The nonce dependency pool has four connections, a 750 ms default, admission control, server timeouts, cancellation, diagnostics, and connection destruction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/worker-readiness.ts#L32-L106).
+> [The nonce dependency pool has four connections, a 750 ms default, admission control, server timeouts, cancellation, diagnostics, and connection destruction](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-readiness.ts#L32-L106).
 >
-> [The production Control entry point uses a normal pool and closes it after server shutdown](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control.ts#L1-L9).
+> [The production Control entry point uses a normal pool and closes it after server shutdown](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control.ts#L1-L9).
 
 ## Backup, Verification, Restore Proof, and Retention
 
@@ -900,6 +900,19 @@ The job writes into `.incomplete-*`, synchronizes the group, renames it to
 `backup-*` without replacement, synchronizes the backup root, and verifies the
 published group. A failed partial group is intentionally retained for incident
 inspection and capacity accounting.
+
+### Database readiness before backup or restore proof
+
+Backup and database proof first wait for PostgreSQL readiness. The precondition
+uses a 30-second timeout, with a one-second forced-termination grace period.
+It repeats `pg_isready` only for rejection or no-response results (codes 1 and
+2), sleeping one second between attempts. Other readiness failures stop at
+once. A missing tool reports `PRISM_BACKUP_TOOL_MISSING_pg_isready`; an
+unsuccessful readiness wait reports `PRISM_BACKUP_DATABASE_NOT_READY`.
+
+This wait is inside the overall operation deadline. It does not retry a dump
+or restore, verify credentials, or prove successful service recovery. A ready
+server can still reject the subsequent database operation.
 
 ### Verification and restore proof
 
@@ -930,6 +943,8 @@ Default chart policy is:
 | CronJob deadline | Maximum duration plus 30 seconds |
 | Concurrent jobs | Forbidden |
 | Job retries | None |
+| Successful / failed Job history | One of each per CronJob |
+| Finished Job TTL | 3,600 seconds |
 
 The backup script takes a non-blocking exclusive file lock and places one
 deadline around the complete operation. It does not automatically delete old
@@ -938,23 +953,35 @@ policy. When retained data leaves insufficient allowance, the next backup
 fails. An operator must preserve required copies and remove groups through a
 separate controlled process.
 
+The finished-Job TTL also applies to manual Jobs copied from these templates.
+Collect needed pod logs and Job diagnostics before cleanup; this policy bounds
+Job history, not backup-file retention. Kubernetes cleanup timing is not an
+exact one-hour log-availability guarantee.
+
+The chart retains the existing backup and restore container identities
+(`proof` and `restore-proof`) and explicitly clears legacy container arguments.
+This avoids keeping an old inline backup or restore program beside the current
+script during adoption; the verification container remains `verify`.
+
 The chart keeps the backup and artifact claims when Helm or Argo removes the
 release. It does not create an off-host copy. Credentials and external journals
 are outside the backup group and require a separate recovery authority.
 
 > **Source evidence — backup behavior**
 >
-> [Backup configuration declares schedules, byte ceilings, duration, and the explicit no-auto-expiry and off-host-copy boundary](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.yaml#L64-L73).
+> [Backup configuration declares schedules, byte ceilings, duration, and the explicit no-auto-expiry and off-host-copy boundary](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/values.yaml#L64-L73).
 >
-> [The script validates configuration, tools, roots, object paths, checksums, manifests, and group size](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/files/prism-backup.sh#L1-L64).
+> [The script validates configuration, tools, roots, object paths, checksums, manifests, and group size](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L1-L84).
 >
-> [Backup takes the dump first, copies and hashes immutable artifacts, synchronizes, atomically publishes, and verifies the group](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/files/prism-backup.sh#L66-L117).
+> [The readiness precondition waits only before backup and database proof, without retrying either operation](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L27-L45).
 >
-> [The database proof restores the latest group into a random database and states its limited smoke-test scope](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/files/prism-backup.sh#L119-L153).
+> [Backup takes the dump first, copies and hashes immutable artifacts, synchronizes, atomically publishes, and verifies the group](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L86-L138).
 >
-> [The whole operation runs under one deadline and non-blocking exclusive lock](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/files/prism-backup.sh#L156-L169).
+> [The database proof restores the latest group into a random database and states its limited smoke-test scope](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L140-L175).
 >
-> [The CronJobs forbid overlap, disable retries, and mount the artifact source read-only](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/templates/backup.yaml#L9-L79).
+> [The whole operation runs under one deadline and non-blocking exclusive lock](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/files/prism-backup.sh#L178-L191).
+>
+> [The CronJobs forbid overlap, disable retries, and mount the artifact source read-only](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/backup.yaml#L9-L90).
 
 ## Failure and Recovery Matrix
 
