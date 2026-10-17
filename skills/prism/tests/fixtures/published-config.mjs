@@ -40,8 +40,15 @@ export async function publishedControlConfig(t, changes = {}, workerChanges = un
   }
   if (mutateAuthor !== undefined) await mutateAuthor(author);
   execFileSync('cc', ['-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', path.join(repo, 'scripts/pipeline-publish.c'), '-o', publisher]);
+  // Publish from the actual checked-out source identity. This remains local
+  // source verification, not proof that the worktree equals a clean commit.
+  const revision = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim();
+  const builtAt = new Date().toISOString();
   execFileSync(process.execPath, [path.join(repo, 'scripts/build-runtime-role-bundle.mjs'), 'prism', code,
-    'a'.repeat(40), 'config-service-test-fixture', '2026-10-15T00:00:00Z'], { cwd: repo, stdio: 'pipe' });
+    revision, 'config-service-test-fixture', builtAt], { cwd: repo, stdio: 'pipe' });
+  const receipt = JSON.parse(fs.readFileSync(path.join(code, 'manifest.json'), 'utf8'));
+  assert.equal(receipt.commit, revision);
+  assert.equal(receipt.builtAt, builtAt);
   const services = declaredPipelineServices(author, { role: 'prism', namespace: 'kubeclaw', releaseName: deployment === 'agent-bridge' ? 'agent-prism' : 'prism', deployment });
   await materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher });
   const mount = path.join(root, 'transport'); fs.mkdirSync(mount);
