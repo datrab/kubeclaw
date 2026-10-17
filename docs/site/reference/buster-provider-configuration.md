@@ -6,7 +6,7 @@ Owner: buster
 Evidence: scripts/generate-buster-provider-reference.mjs; skills/buster/plugins/api-flow/schemas/config.schema.json; skills/buster/plugins/api-flow/schemas/flow.schema.json; skills/buster/plugins/axe/schemas/config.schema.json; skills/buster/plugins/container-build/schemas/config.schema.json; skills/buster/plugins/coverage-budget/schemas/config.schema.json; skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json; skills/buster/plugins/direct-command/schemas/config.schema.json; skills/buster/plugins/http/schemas/config.schema.json; skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json; skills/buster/plugins/lighthouse/schemas/config.schema.json; skills/buster/plugins/openapi/schemas/config.schema.json; skills/buster/plugins/playwright/schemas/config.schema.json; skills/buster/plugins/security-providers/schemas/dependency.schema.json; skills/buster/plugins/security-providers/schemas/headers.schema.json; skills/buster/plugins/security-providers/schemas/image.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json; skills/buster/plugins/size-budget/schemas/config.schema.json; skills/buster/plugins/tailscale-exposure/schemas/config.schema.json; skills/buster/plugins/visual/schemas/config.schema.json
 Evidence revision: `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
 Applies to: complete JSON configuration contracts for all shipped Buster test providers
-Last verified: generated from current provider schemas on 2026-09-19
+Last verified: generated from exact committed provider inputs 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f
 
 ## How To Read The Tables
 
@@ -594,6 +594,6 @@ not invent a default when the schema has none.
 
 ## Maintenance Rule
 
-Change a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write`.
+Change and commit a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.
 Review the changed paths and limits as a contract change. The reference freshness gate
 rejects a stale file and rejects a provider that is absent from this inventory.

@@ -1594,7 +1594,7 @@
       "audience": "pipeline author, operator, test maintainer",
       "owner": "buster",
       "appliesTo": "complete JSON configuration contracts for all shipped Buster test providers",
-      "lastVerified": "generated from current provider schemas on 2026-09-19",
+      "lastVerified": "generated from exact committed provider inputs 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f",
       "sourceDependencies": [
         "scripts/generate-buster-provider-reference.mjs",
         "skills/buster/plugins/api-flow/schemas/config.schema.json",

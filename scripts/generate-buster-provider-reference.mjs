@@ -1,13 +1,47 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const pluginRoot = path.join(root, 'skills/buster/plugins');
 const target = path.join(root, 'docs/site/reference/buster-provider-configuration.md');
-const revision = '3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f';
+const revisionArgument = process.argv.find((argument) => argument.startsWith('--revision='));
+const storedRevision = fs.existsSync(target)
+  ? fs.readFileSync(target, 'utf8').match(/^Evidence revision: `([a-f0-9]{40})`$/mu)?.[1]
+  : undefined;
+const revision = revisionArgument?.slice('--revision='.length) ?? storedRevision
+  ?? '3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f';
+assert(/^[a-f0-9]{40}$/u.test(revision), 'BUSTER_PROVIDER_SOURCE_REVISION: supply a full lowercase source commit');
+let revisionType;
+try {
+  revisionType = execFileSync('git', ['cat-file', '-t', revision], {
+    cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+  }).trim();
+} catch {
+  throw new Error(`BUSTER_PROVIDER_SOURCE_REVISION: source commit does not exist: ${revision}`);
+}
+assert.equal(revisionType, 'commit', 'BUSTER_PROVIDER_SOURCE_REVISION: source revision must identify a commit object');
+
+// Historical source links must describe these exact current inputs, not merely
+// an older schema at the same path. A new schema requires its committed source.
+function pinnedJson(relativePath) {
+  const current = fs.readFileSync(path.join(root, relativePath), 'utf8');
+  let pinned;
+  try {
+    pinned = execFileSync('git', ['show', `${revision}:${relativePath}`], {
+      cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+  } catch {
+    throw new Error(`BUSTER_PROVIDER_SOURCE_REVISION: missing committed source ${revision}:${relativePath}`);
+  }
+  assert.equal(current, pinned,
+    `BUSTER_PROVIDER_SOURCE_REVISION: current input differs from ${revision}:${relativePath}; commit the source and supply --revision=<commit>`);
+  return JSON.parse(current);
+}
 
 function resolvePointer(schema, pointer) {
   assert(pointer.startsWith('#/'), `unsupported external schema reference: ${pointer}`);
@@ -117,11 +151,11 @@ const providers = [];
 for (const pluginName of fs.readdirSync(pluginRoot).sort()) {
   const manifestPath = path.join(pluginRoot, pluginName, 'plugin.json');
   if (!fs.existsSync(manifestPath)) continue;
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  const manifest = pinnedJson(path.posix.join('skills/buster/plugins', pluginName, 'plugin.json'));
   for (const provider of manifest.testProviders ?? []) {
     const file = path.posix.join('skills/buster/plugins', pluginName, provider.configSchema);
     providers.push({ contractId: provider.contractId, file,
-      schema: JSON.parse(fs.readFileSync(path.join(root, file), 'utf8')) });
+      schema: pinnedJson(file) });
   }
 }
 providers.sort((a, b) => a.contractId.localeCompare(b.contractId));
@@ -137,7 +171,7 @@ assert.equal(containerRows.get('definition.template')?.presence, 'Conditional',
   'the template must be conditional on its definition choice');
 
 const flowFile = 'skills/buster/plugins/api-flow/schemas/flow.schema.json';
-const flow = JSON.parse(fs.readFileSync(path.join(root, flowFile), 'utf8'));
+const flow = pinnedJson(flowFile);
 const sources = [...new Set([...providers.map((provider) => provider.file), flowFile])].sort();
 const lines = [
   '# Buster Provider Configuration', '',
@@ -147,7 +181,7 @@ const lines = [
   `Evidence: scripts/generate-buster-provider-reference.mjs; ${sources.join('; ')}`,
   `Evidence revision: \`${revision}\``,
   'Applies to: complete JSON configuration contracts for all shipped Buster test providers',
-  'Last verified: generated from current provider schemas on 2026-09-19', '',
+  `Last verified: generated from exact committed provider inputs ${revision}`, '',
   '## How To Read The Tables', '',
   'A dotted name is an object path. `[]` identifies each array item. `{}` identifies',
   'each value in a map. “Required” means that the immediate parent always requires',
@@ -218,7 +252,7 @@ for (const provider of providers) appendContract(provider.contractId, provider.s
 appendContract('kubeclaw.api-flow-document@1', flow, flowFile);
 
 lines.push('## Maintenance Rule', '',
-  'Change a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write`.',
+  'Change and commit a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',
   'Review the changed paths and limits as a contract change. The reference freshness gate',
   'rejects a stale file and rejects a provider that is absent from this inventory.', '');
 
