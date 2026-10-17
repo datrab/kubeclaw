@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T01:38:55.406755+00:00",
+  "updatedAt": "2026-10-17T01:45:02.493949+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "EXACT_GITOPS8_GENERATED_BINDING_LANES_CENTRAL_JOIN_OPEN",
+  "status": "EXACT_OPERATOR11_ENV_SECRET_FILE_SOURCE_LANES_CENTRAL_BINDING_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue5 unresolved semantic groups and supported coordinated source/consumer/capture/delivery implementation. GitOps8 are generated bindings, not eight independently editable settings; continuous main revision projection recorded. Keep all prior receiving residuals, QB-R02 inputStore/source/accounting/sealed/publication and sole-root boot/Nova receiving OPEN; preserve BUDGET_SOURCE_RECEIPT_REQUIRED, denied-v10 and full2409/6845/50 independent/history/native/archive/C0-C6 gates.",
+  "nextAction": "Continue4 unresolved historical navigation groups and coherent coordinated source/consumer/capture/delivery implementation. All11 operator bindings remain central author/profile/schema/delivery/history residuals; secret bytes remain external, token projection is not static Secret. Preserve prior receiving residuals, genuine QB-R02 inputStore/receipt/accounting/sealed/publication and sole-root boot/Nova receiving, BUDGET_SOURCE_RECEIPT_REQUIRED, denied-v10 and full2409/6845/50 independent/history/native/archive/C0-C6 gates.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -25760,5 +25760,40 @@
     "qualityActivationAllowed": false,
     "sealedInputStoreImplemented": false,
     "productiveQualityBootImplemented": false
+  },
+  "operatorBindingsMatrix20261017": {
+    "at": "2026-10-17T01:45:02.493949+00:00",
+    "matrixCommit": "c4f2b7b678c5ab85bc9d61cf15cebba3dfdc0574",
+    "matrixRemoteVerified": true,
+    "scope": "Exact11 original deployment operator ENV and secret-file source matrix only; no runtime implementation",
+    "evidence": "docs/review/remediation/config-operator-bindings-matrix-20261017",
+    "originalFields": 11,
+    "databaseExternalSecretEnvReferences": 4,
+    "ordinaryProductOperatorSettings": 4,
+    "kubernetesSecretFiles": 2,
+    "projectedServiceAccountTokenFiles": 1,
+    "checks": {
+      "passed": 15,
+      "total": 15,
+      "restoredDeterministic": true,
+      "all44UnrelatedGroupsUnchanged": true,
+      "historicalGroupsPreserved": 45,
+      "remainingUnresolvedHistoricalGroups": 4,
+      "preservedCounts": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      }
+    },
+    "centralReceivingResiduals": 11,
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "independentReview": "OPEN; no native spawn/reviewer callable; parent terminal; CONFIG subagents0; no new independent output; unchanged same-surface EROFS not retried",
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged isolated Linux Docker actual UID1000/GID1000 writable delegated cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL",
+    "writerLock": "SAME nonblocking repository lock; released at command exit; no historical followup"
   }
 }
