@@ -1,8 +1,9 @@
 import { writeWorkerShutdownPolicy } from './fixtures/worker-shutdown-policy.mts';
 import { nativeResourcePolicy, nativeControlSettings } from './native/resource-policy.mts';
-import test from 'node:test';
+import test, { before, after } from 'node:test';
+import { preparePrismProcessPublication, spawnInstalledPrismProcess, type PrismProcessPublication } from './fixtures/published-process.mjs';
 import assert from 'node:assert/strict';
-import { spawn, type ChildProcess } from 'node:child_process';
+import { type ChildProcess } from 'node:child_process';
 import { createServer, type ServerResponse } from 'node:http';
 import { createServer as createTcpServer } from 'node:net';
 import { once } from 'node:events';
@@ -16,10 +17,26 @@ import { handleInternalArtifact } from '../server/internal-artifacts.ts';
 
 assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true', 'A dedicated native test pool is required');
 
-async function authoredConfig(t: { after(fn: () => Promise<void>): void }, shutdownTimeoutMs: number, port: number, closeTimeoutMs: number, drainTimeoutMs: number): Promise<string> {
+// Build once outside the original twelve-second process deadlines. Each case
+// still materializes/authenticates its own complete selected generation.
+let builtRole: PrismProcessPublication;
+// Genuine host identity/launcher/pool inputs remain external; never copy policy
+// ENV authors or manufacture the native engine digest. Missing inputs still fail.
+const nativeEnvironment = Object.fromEntries(['PRISM_ENGINE_CONTENT_DIGEST', 'PRISM_NATIVE_POOL_POLICY_FILE',
+  'PRISM_NATIVE_LAUNCHER', 'PLAYWRIGHT_BROWSERS_PATH', 'NODE_ENV'].flatMap(key =>
+  process.env[key] === undefined ? [] : [[key, process.env[key]]]));
+before(async () => {
+  const root = await mkdtemp(join(tmpdir(), 'prism-shutdown-package-'));
+  try {
+    builtRole = await preparePrismProcessPublication(writeWorkerShutdownPolicy(root, 1500, 23456, 1000, 100, 'http://127.0.0.1:1'), 'prism-worker');
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+after(async () => { if (builtRole) await rm(builtRole.root, {recursive: true, force: true}); });
+
+async function authoredConfig(t: { after(fn: () => Promise<void>): void }, shutdownTimeoutMs: number, port: number, closeTimeoutMs: number, drainTimeoutMs: number, controlInternalUrl: string): Promise<string> {
   const root = await mkdtemp(join(tmpdir(), 'prism-shutdown-config-'));
   t.after(() => rm(root, { recursive: true, force: true }));
-  return writeWorkerShutdownPolicy(root, shutdownTimeoutMs, port, closeTimeoutMs, drainTimeoutMs);
+  return writeWorkerShutdownPolicy(root, shutdownTimeoutMs, port, closeTimeoutMs, drainTimeoutMs, controlInternalUrl);
 }
 
 async function unusedPort(): Promise<number> {
@@ -62,11 +79,9 @@ async function setup(t: { after(callback: () => Promise<void>): void }, phase: '
   const address = control.address(); assert(address && typeof address !== 'string');
   const origin = new URL(`http://127.0.0.1:${address.port}`);
   const port = await unusedPort(), workerOrigin = new URL(`http://127.0.0.1:${port}`);
-  const child = spawn(process.execPath, [new URL('../server/worker.ts', import.meta.url).pathname], {
-    env: { ...process.env, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control',
-      PRISM_WORKER_SECRET: 'local', DATABASE_URL: '', PRISM_CONTROL_INTERNAL_URL: origin.href, SWARM_CONFIG: await authoredConfig(t, 1500, port, 1000, 100) },
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  const {child} = await spawnInstalledPrismProcess(t, await authoredConfig(t, 1500, port, 1000, 100, origin.href),
+    'prism-worker', { ...nativeEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control',
+      PRISM_WORKER_SECRET: 'local', DATABASE_URL: '' }, false, builtRole.code);
   let stderr = ''; child.stderr!.setEncoding('utf8'); child.stderr!.on('data', data => { stderr += String(data); });
   const exit = once(child, 'exit') as Promise<[number | null, NodeJS.Signals | null]>;
   t.after(async () => {
@@ -121,11 +136,9 @@ for (const signal of ['SIGTERM', 'SIGINT'] as const) {
     tcp.listen(0, '127.0.0.1'); await once(tcp, 'listening');
     const address = tcp.address(); assert(address && typeof address !== 'string');
     const port = await unusedPort(), origin = new URL(`http://127.0.0.1:${port}`);
-    const child = spawn(process.execPath, [new URL('../server/worker.ts', import.meta.url).pathname], {
-      env: { ...process.env, WORKER_TRUST_SPIFFE_ENABLED: 'false', PRISM_WORKER_SECRET: 'local',
-        DATABASE_URL: `postgresql://local:local@127.0.0.1:${address.port}/local`, PRISM_CONTROL_INTERNAL_URL: 'http://127.0.0.1:1',
-        SWARM_CONFIG: await authoredConfig(t, 30, port, 20, 5) }, stdio: ['ignore', 'pipe', 'pipe'],
-    });
+    const {child} = await spawnInstalledPrismProcess(t, await authoredConfig(t, 30, port, 20, 5, 'http://127.0.0.1:1'),
+      'prism-worker', { ...nativeEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'false', PRISM_WORKER_SECRET: 'local',
+        DATABASE_URL: `postgresql://local:***@127.0.0.1:${address.port}/local` }, false, builtRole.code);
     let stderr = ''; child.stderr!.setEncoding('utf8'); child.stderr!.on('data', data => { stderr += String(data); });
     const exit = once(child, 'exit') as Promise<[number | null, NodeJS.Signals | null]>;
     t.after(async () => {

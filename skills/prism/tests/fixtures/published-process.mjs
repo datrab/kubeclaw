@@ -15,7 +15,7 @@ const installed = ['/app/prism', '/etc/kubeclaw/config', '/run/pipeline-delivery
 /** Prepare genuine, immutable package/generation/expected receipts from the
  * caller's complete original source authors. This does not admit native work.
  */
-export async function preparePrismProcessPublication(entryFile, callerId) {
+export async function preparePrismProcessPublication(entryFile, callerId, builtRolePackage) {
   assert.ok(['prism-control', 'prism-worker'].includes(callerId));
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-process-publication-'));
   try {
@@ -26,8 +26,14 @@ export async function preparePrismProcessPublication(entryFile, callerId) {
     const publisher = path.join(root, 'publish');
     execFileSync('cc', ['-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', path.join(repo, 'scripts/pipeline-publish.c'), '-o', publisher]);
     const revision = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], {cwd: repo, encoding: 'utf8'}).trim();
-    execFileSync(process.execPath, [path.join(repo, 'scripts/build-runtime-role-bundle.mjs'), 'prism', code,
-      revision, 'original-process-test-fixture', new Date().toISOString()], {cwd: repo, stdio: 'pipe'});
+    if (builtRolePackage) {
+      // Copy the SAME genuine builder output, never a hand-built identity. The
+      // materializer below authenticates its manifest and every packaged byte.
+      fs.cpSync(builtRolePackage, code, {recursive: true, verbatimSymlinks: true});
+    } else {
+      execFileSync(process.execPath, [path.join(repo, 'scripts/build-runtime-role-bundle.mjs'), 'prism', code,
+        revision, 'original-process-test-fixture', new Date().toISOString()], {cwd: repo, stdio: 'pipe'});
+    }
     const services = declaredPipelineServices(author, {role: 'prism', namespace: 'kubeclaw', releaseName: 'prism'});
     await materializePipelineGeneration({authorRoot: author, packageRoot: code, output, services, publisher});
     const mount = path.join(root, 'transport'); fs.mkdirSync(mount);
@@ -43,14 +49,14 @@ export async function preparePrismProcessPublication(entryFile, callerId) {
  * lifetime. Existing installations are never overwritten or removed. A native
  * worker still owes its real launcher/cgroup/pool admission inside the guest.
  */
-export async function spawnInstalledPrismProcess(t, entryFile, callerId, environment, failedDiagnosticSink = false) {
+export async function spawnInstalledPrismProcess(t, entryFile, callerId, environment, failedDiagnosticSink = false, builtRolePackage) {
   assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true', 'An explicit isolated process test guest is required');
   assert.equal(process.getuid?.(), 0, 'Fixture installation requires genuine guest root');
   assert.ok(!failedDiagnosticSink || callerId === 'prism-control');
   // Fail before compiling if the guest has another installed owner. Exclusive
   // directory creation below is the actual reservation, not this early check.
   for (const target of installed) assert.equal(fs.existsSync(target), false, `Existing installation: ${target}`);
-  const publication = await preparePrismProcessPublication(entryFile, callerId);
+  const publication = await preparePrismProcessPublication(entryFile, callerId, builtRolePackage);
   const owned = [], parents = [];
   let child, exited;
   const remove = () => {
