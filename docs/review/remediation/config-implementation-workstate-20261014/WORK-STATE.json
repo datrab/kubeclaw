@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T00:40:32.579546+00:00",
+  "updatedAt": "2026-10-17T00:45:19.263618+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "COMPONENT_SOURCE_TEST_MODE_FIXED_510_ORIGINAL_CHECKS_PASS_FULL_AGGREGATE_NOT_ACCEPTED",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -25256,5 +25256,43 @@
     "sourceHashes": {
       "package.json": "c5e52a254dcb6359a9a4edc6d2ccd9383754c9dbab0607115b73dcecc788f95d"
     }
+  },
+  "platformBoundaryMatrix20261017": {
+    "at": "2026-10-17T00:45:19.263618+00:00",
+    "status": "EXACT_32_PLATFORM_BOUNDARY_MATRIX_RESOLVED_RECEIVING_REMAINS_OPEN",
+    "matrixCommit": "8ed1a319a2cd9363b48b30e57269ac620fa19405",
+    "matrixRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-platform-boundaries-20261017",
+    "productionSourceChanged": false,
+    "matrixRows": 32,
+    "rootPathRows": 6,
+    "admissionTargetRows": 26,
+    "checks": {
+      "negativeControlsRejected": 10,
+      "negativeControlsTotal": 10,
+      "restoredDeterministic": true,
+      "fullRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "integrityFailures": 0
+    },
+    "qualification": "Executable source-navigation matrix closeout, NOT production implementation or restored/full runtime proof. Current32 selected platform author/delivery/history joins remain OPEN; no invented Core scalar pointer, secret bytes or grant/authority changes. Container joins do not close variant children.",
+    "concreteConstraints": [
+      "Actual platform.adapters clone supplies roots, allowlists, event hooks, endpoint/secret references; central Core scalar owner does not author these fields.",
+      "Registry snapshot retains configuration, but recovery receives supplied platform again and restores specific selected profiles only; not full retained root/allowlist/target closure.",
+      "Existing network method/header schema+reader defaults and operator format=json remain explicit source residuals; no new policy author or behavior change.",
+      "QB-R02 authentic producer/source/build/baseline and original inputStore reservation/accounting/sealed-version/publication API still absent; activation fence unchanged."
+    ],
+    "independentReview": "OPEN: CONFIG active/recent reviewers0; current tool discovery native spawn/reviewer absent; unchanged same-surface EROFS not retried.",
+    "originalCasesNewlyAccepted": 0,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "fullC0C6Complete": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged: genuine isolated Linux Docker/UID1000/GID1000/delegated writable cgroup, sufficient genuinely root-trusted archive storage, isolated migrated real PostgreSQL.",
+    "writerLock": "SAME nonblocking, released on each bounded command exit; no parent followup"
   }
 }
