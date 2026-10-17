@@ -1,0 +1,1882 @@
+{
+  "scope": "All32 previously generic adapter/delivery platform residuals, exact current receiving joins; source navigation, NOT implementation or independent acceptance",
+  "roster": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
+  },
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "integrityFailures": [],
+  "counts": {
+    "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE": 6,
+    "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE": 26
+  },
+  "snapshot": {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+    "anchor": "configuration: runtime.configuration",
+    "lines": [
+      131
+    ]
+  },
+  "recovery": {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+    "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+    "lines": [
+      66,
+      94
+    ]
+  },
+  "rows": [
+    {
+      "id": "RT-fe607ddd5cfa8df5",
+      "original": "D228#/rows/479",
+      "originalObjectSha256": "430e5b393a99eaa33b6aad275562cc638bdf0d17b1902f21cd101c0f543041e6",
+      "class": "operator-setting",
+      "originalField": "artifactRoot",
+      "caseIds": [
+        "RT-fe607ddd5cfa8df5-CONTRACT",
+        "RT-fe607ddd5cfa8df5-ALTERNATE",
+        "RT-fe607ddd5cfa8df5-BINDING",
+        "RT-fe607ddd5cfa8df5-MUTANT",
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION"
+      ],
+      "plugin": "kubeclaw.artifact-store",
+      "registration": "kubeclaw.artifact-store:artifact-store",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.artifact-store:artifact-store/artifactRoot",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "sha256": "34237559d13cebd2d8f5c4ce6da7e70c14837e23e2c03bb3f4e4b54239b6533c",
+        "anchor": "const configured = context.config.artifactRoot;",
+        "lines": [
+          158
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/artifact-store/plugin.json",
+        "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f"
+      },
+      "schema": {
+        "path": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+        "sha256": "c3c7cdb3207ae4901991136f671cb633c22226b591b53e1ead2b0a47cf4c810d",
+        "pointer": "/properties/artifactRoot",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-0b11b3282059d1db",
+      "original": "D228#/rows/501",
+      "originalObjectSha256": "f898b2e7ff0db510eaf157b77d11cd1631af85b6875fc6e33d8e332b50d3f3dc",
+      "class": "operator-setting",
+      "originalField": "allowedOrigins",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-0b11b3282059d1db-CONTRACT",
+        "RT-0b11b3282059d1db-ALTERNATE",
+        "RT-0b11b3282059d1db-BINDING",
+        "RT-0b11b3282059d1db-MUTANT"
+      ],
+      "plugin": "kubeclaw.network-http",
+      "registration": "kubeclaw.network-http:http",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.network-http:http/allowedOrigins",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+        "anchor": "config.allowedOrigins",
+        "lines": [
+          22
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/network-http/plugin.json",
+        "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+      },
+      "schema": {
+        "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+        "sha256": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+        "pointer": "/properties/allowedOrigins",
+        "fragmentSha256": "b377ceef3eeca65a81f561a640b1dc55480771741b6b9f157a99484f8b2f82e4"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-db4ff06654e4c996",
+      "original": "D228#/rows/502",
+      "originalObjectSha256": "e5ea2d1c4553199566688446ee08d7024c5a4f1a5ba0ddc209d8f04d445068cd",
+      "class": "operator-setting",
+      "originalField": "allowedOrigins[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-0b11b3282059d1db-CONTRACT",
+        "RT-0b11b3282059d1db-ALTERNATE",
+        "RT-0b11b3282059d1db-BINDING",
+        "RT-0b11b3282059d1db-MUTANT"
+      ],
+      "plugin": "kubeclaw.network-http",
+      "registration": "kubeclaw.network-http:http",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.network-http:http/allowedOrigins",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+        "anchor": "config.allowedOrigins",
+        "lines": [
+          22
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/network-http/plugin.json",
+        "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+      },
+      "schema": {
+        "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+        "sha256": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+        "pointer": "/properties/allowedOrigins/items",
+        "fragmentSha256": "f9757109fae32f55a22a6fe81eec0503fb3976db0fb4c7fc85a3d794d8014521"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-8510aae902279dfa",
+      "original": "D228#/rows/503",
+      "originalObjectSha256": "bc7dd7fb7552f3bd8a5267cb081f940d1fedc3288670de237fc096f8f230bcc7",
+      "class": "operator-setting",
+      "originalField": "allowedMethods",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-8510aae902279dfa-CONTRACT",
+        "RT-8510aae902279dfa-ALTERNATE",
+        "RT-8510aae902279dfa-BINDING",
+        "RT-8510aae902279dfa-MUTANT"
+      ],
+      "plugin": "kubeclaw.network-http",
+      "registration": "kubeclaw.network-http:http",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.network-http:http/allowedMethods",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+        "anchor": "config.allowedMethods",
+        "lines": [
+          34
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/network-http/plugin.json",
+        "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+      },
+      "schema": {
+        "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+        "sha256": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+        "pointer": "/properties/allowedMethods",
+        "fragmentSha256": "6ec99211641508e31bae908ee9640e7a00f13005b4c13954616709cd1d61a23e"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-8e9540f20d6b3e93",
+      "original": "D228#/rows/504",
+      "originalObjectSha256": "a1fdb6b52966a03a003962be02573fa136a3bf2438e0c04ebbab960262c9fd7c",
+      "class": "operator-setting",
+      "originalField": "allowedMethods[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-8510aae902279dfa-CONTRACT",
+        "RT-8510aae902279dfa-ALTERNATE",
+        "RT-8510aae902279dfa-BINDING",
+        "RT-8510aae902279dfa-MUTANT"
+      ],
+      "plugin": "kubeclaw.network-http",
+      "registration": "kubeclaw.network-http:http",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.network-http:http/allowedMethods",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+        "anchor": "config.allowedMethods",
+        "lines": [
+          34
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/network-http/plugin.json",
+        "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+      },
+      "schema": {
+        "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+        "sha256": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+        "pointer": "/properties/allowedMethods/items",
+        "fragmentSha256": "34e627aa5d9873da7a21c0e9f54bd24e2f3b0c38c4902a3e0444287f7d800854"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-bdbb356d7dbdb05b",
+      "original": "D228#/rows/505",
+      "originalObjectSha256": "3525e05947a5d66134da5f273e1d8f6b0e09d1b62b2d401d660799cd2df70d53",
+      "class": "operator-setting",
+      "originalField": "allowedHeaders",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-bdbb356d7dbdb05b-CONTRACT",
+        "RT-bdbb356d7dbdb05b-ALTERNATE",
+        "RT-bdbb356d7dbdb05b-BINDING",
+        "RT-bdbb356d7dbdb05b-MUTANT"
+      ],
+      "plugin": "kubeclaw.network-http",
+      "registration": "kubeclaw.network-http:http",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.network-http:http/allowedHeaders",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+        "anchor": "config.allowedHeaders",
+        "lines": [
+          26
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/network-http/plugin.json",
+        "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+      },
+      "schema": {
+        "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+        "sha256": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+        "pointer": "/properties/allowedHeaders",
+        "fragmentSha256": "4a81c0806507d953a27b004e264bae7c1f9dcf115e768dc97b11ea69656c6a7d"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-129d37457d0a92b8",
+      "original": "D228#/rows/506",
+      "originalObjectSha256": "2f8764397938cd743c0d6ca688982f833285034b3dafe1f6198c893fc7e90509",
+      "class": "operator-setting",
+      "originalField": "allowedHeaders[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-bdbb356d7dbdb05b-CONTRACT",
+        "RT-bdbb356d7dbdb05b-ALTERNATE",
+        "RT-bdbb356d7dbdb05b-BINDING",
+        "RT-bdbb356d7dbdb05b-MUTANT"
+      ],
+      "plugin": "kubeclaw.network-http",
+      "registration": "kubeclaw.network-http:http",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.network-http:http/allowedHeaders",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+        "anchor": "config.allowedHeaders",
+        "lines": [
+          26
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/network-http/plugin.json",
+        "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3"
+      },
+      "schema": {
+        "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+        "sha256": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+        "pointer": "/properties/allowedHeaders/items",
+        "fragmentSha256": "4def32e8111217e8bc4d708dea60bb441a8c97dc8748923fb7d8e53a2e1b0922"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-f147a119a6b3075c",
+      "original": "D228#/rows/526",
+      "originalObjectSha256": "cea94035bf5de7831e8a9f0d71cfbbf9d4f7cf0e31d13b39bfa243027b32f293",
+      "class": "operator-setting",
+      "originalField": "hooks",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-f147a119a6b3075c-CONTRACT",
+        "RT-f147a119a6b3075c-ALTERNATE",
+        "RT-f147a119a6b3075c-BINDING",
+        "RT-f147a119a6b3075c-MUTANT"
+      ],
+      "plugin": "kubeclaw.openclaw-agent-events",
+      "registration": "kubeclaw.openclaw-agent-events:source",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.openclaw-agent-events:source/hooks",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "sha256": "13c4a4e6860218ffc69021a61149f9beacb5c638d9ec8029ed37058ddbf92b24",
+        "anchor": "const configured = context.config.hooks;",
+        "lines": [
+          81
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5"
+      },
+      "schema": {
+        "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+        "sha256": "97d0a454126087b4504786e260dca9bc88445b81b5184b7270ef3505e4abc8f0",
+        "pointer": "/properties/hooks",
+        "fragmentSha256": "1c3cd8482ee9f3dc29c3aff0755b1b1a8ea387df52b55160e5e567bd1e37a730"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-4e83aedfa46f2ef9",
+      "original": "D228#/rows/527",
+      "originalObjectSha256": "0f7306d1da9689aede892b4be946a8b07f50cef27c3ab563e9965602819f926f",
+      "class": "operator-setting",
+      "originalField": "hooks[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-f147a119a6b3075c-CONTRACT",
+        "RT-f147a119a6b3075c-ALTERNATE",
+        "RT-f147a119a6b3075c-BINDING",
+        "RT-f147a119a6b3075c-MUTANT"
+      ],
+      "plugin": "kubeclaw.openclaw-agent-events",
+      "registration": "kubeclaw.openclaw-agent-events:source",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.openclaw-agent-events:source/hooks",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "sha256": "13c4a4e6860218ffc69021a61149f9beacb5c638d9ec8029ed37058ddbf92b24",
+        "anchor": "const configured = context.config.hooks;",
+        "lines": [
+          81
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5"
+      },
+      "schema": {
+        "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+        "sha256": "97d0a454126087b4504786e260dca9bc88445b81b5184b7270ef3505e4abc8f0",
+        "pointer": "/properties/hooks/items",
+        "fragmentSha256": "54ba9aedac87651e5ff436493ef65a6de49f8e15e65a88fd1916886743a581a9"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-2d3acb6254db0bd3",
+      "original": "D228#/rows/604",
+      "originalObjectSha256": "f469427de40445807a8bfda3cc576187a6f2754a7fc71158a627064ac26e3195",
+      "class": "operator-setting",
+      "originalField": "root",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-2d3acb6254db0bd3-CONTRACT",
+        "RT-2d3acb6254db0bd3-ALTERNATE",
+        "RT-2d3acb6254db0bd3-BINDING",
+        "RT-2d3acb6254db0bd3-MUTANT"
+      ],
+      "plugin": "kubeclaw.state-store",
+      "registration": "kubeclaw.state-store:state",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.state-store:state/root",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/state-store/src/adapter.ts",
+        "sha256": "9a4a50442aa2702cc9247f92369dee18392b1a06d569a8800a3773c618d8bfd8",
+        "anchor": "const configured = context.config.root;",
+        "lines": [
+          25
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/state-store/plugin.json",
+        "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb"
+      },
+      "schema": {
+        "path": "skills/common/plugins/state-store/schemas/config.schema.json",
+        "sha256": "449db2752cf767126691a08a78298f2785781c9df8e5cee2f15bca1851e615fa",
+        "pointer": "/properties/root",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-7990fce633c970b7",
+      "original": "D228#/rows/609",
+      "originalObjectSha256": "27f864982fe631f92aa06cf483db01f13d3fc799d49644cd6bab8454041fbdd7",
+      "class": "operator-setting",
+      "originalField": "root",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-7990fce633c970b7-CONTRACT",
+        "RT-7990fce633c970b7-ALTERNATE",
+        "RT-7990fce633c970b7-BINDING",
+        "RT-7990fce633c970b7-MUTANT"
+      ],
+      "plugin": "kubeclaw.telemetry-store",
+      "registration": "kubeclaw.telemetry-store:telemetry",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.telemetry-store:telemetry/root",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "sha256": "d2dc84c9a4b281b7ec76c3f4661d9826fbee6adb7e3677ff8d6370f86540f16c",
+        "anchor": "const root = context.config.root;",
+        "lines": [
+          6
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/telemetry-store/plugin.json",
+        "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848"
+      },
+      "schema": {
+        "path": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+        "sha256": "eff0b9ae5c03a448dac4d852d5a540d4eb53a11c39b12e3862ed8bde2067e1e9",
+        "pointer": "/properties/root",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-e2763afc0bd85f56",
+      "original": "D228#/rows/621",
+      "originalObjectSha256": "1e90fcb421dd6525b6503bef40f971b370a42cd414247de33ba013b1ad0775c7",
+      "class": "operator-setting",
+      "originalField": "root",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-e2763afc0bd85f56-CONTRACT",
+        "RT-e2763afc0bd85f56-ALTERNATE",
+        "RT-e2763afc0bd85f56-BINDING",
+        "RT-e2763afc0bd85f56-MUTANT"
+      ],
+      "plugin": "kubeclaw.wait-store",
+      "registration": "kubeclaw.wait-store:waits",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.wait-store:waits/root",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/wait-store/src/adapter.ts",
+        "sha256": "02c39ce1c2799ab1167f87249a02a14a25f608eb93e5ef7c3be712a6e3e40ca7",
+        "anchor": "const root = context.config.root;",
+        "lines": [
+          199
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/wait-store/plugin.json",
+        "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed"
+      },
+      "schema": {
+        "path": "skills/common/plugins/wait-store/schemas/config.schema.json",
+        "sha256": "449db2752cf767126691a08a78298f2785781c9df8e5cee2f15bca1851e615fa",
+        "pointer": "/properties/root",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-552bd4d0492fab1d",
+      "original": "D228#/rows/531",
+      "originalObjectSha256": "c4b66673742bd1a3ddb29ab28f9748c0b056536d8693457a31a10423f5794dc9",
+      "class": "operator-setting",
+      "originalField": "deliveryRoot",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-552bd4d0492fab1d-CONTRACT",
+        "RT-552bd4d0492fab1d-ALTERNATE",
+        "RT-552bd4d0492fab1d-BINDING",
+        "RT-552bd4d0492fab1d-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/deliveryRoot",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.deliveryRoot",
+        "lines": [
+          105,
+          122
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/deliveryRoot",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-d7622cdd4244b3f1",
+      "original": "D228#/rows/534",
+      "originalObjectSha256": "c42cd75f033ff06d81554038d8b6a71a6cfdaf22119ce2ad6b01f20dc293f7c2",
+      "class": "operator-setting",
+      "originalField": "targets",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-d7622cdd4244b3f1-CONTRACT",
+        "RT-d7622cdd4244b3f1-ALTERNATE",
+        "RT-d7622cdd4244b3f1-BINDING",
+        "RT-d7622cdd4244b3f1-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-dcd5ac9d37c243a6",
+      "original": "D228#/rows/535",
+      "originalObjectSha256": "4f9df52796c24730ac7c6252fa7c8ee3a5e4e2a74fac5bb9bd892474e3261c77",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-d7622cdd4244b3f1-CONTRACT",
+        "RT-d7622cdd4244b3f1-ALTERNATE",
+        "RT-d7622cdd4244b3f1-BINDING",
+        "RT-d7622cdd4244b3f1-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-83ccdc231deed9a9",
+      "original": "D228#/rows/536",
+      "originalObjectSha256": "ec1382f8ab3cb07bb2e69e93ad91738493a169e42e0e70865fe0744cce73f793",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-83ccdc231deed9a9-CONTRACT",
+        "RT-83ccdc231deed9a9-ALTERNATE",
+        "RT-83ccdc231deed9a9-BINDING",
+        "RT-83ccdc231deed9a9-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-71341df9de05ed86",
+      "original": "D228#/rows/537",
+      "originalObjectSha256": "5f709b9c204ad37cfcd91c0c9d6e284ed3823f11a1e4f7bdde70c724ffd5cd4f",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-71341df9de05ed86-CONTRACT",
+        "RT-71341df9de05ed86-ALTERNATE",
+        "RT-71341df9de05ed86-BINDING",
+        "RT-71341df9de05ed86-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-2a83b3acac2068cb",
+      "original": "D228#/rows/538",
+      "originalObjectSha256": "1843d3a31a002f6ad4ef48fad56593f6bb729b1ee4292e634a8922db96143eaa",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-2a83b3acac2068cb-CONTRACT",
+        "RT-2a83b3acac2068cb-ALTERNATE",
+        "RT-2a83b3acac2068cb-BINDING",
+        "RT-2a83b3acac2068cb-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-772a8c40be07c07a",
+      "original": "D228#/rows/539",
+      "originalObjectSha256": "31f9573e64b043ac12d284806a19844a33413770ff7a2816e2121299672389bf",
+      "class": "secret-reference",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointSecret",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-772a8c40be07c07a-CONTRACT",
+        "RT-772a8c40be07c07a-ALTERNATE",
+        "RT-772a8c40be07c07a-BINDING",
+        "RT-772a8c40be07c07a-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-683826beb925aa1c",
+      "original": "D228#/rows/540",
+      "originalObjectSha256": "15a208674c42bcee2d627d260636cf4064dc905296d348a4bc00570eea658488",
+      "class": "secret-reference",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.tokenSecret",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-683826beb925aa1c-CONTRACT",
+        "RT-683826beb925aa1c-ALTERNATE",
+        "RT-683826beb925aa1c-BINDING",
+        "RT-683826beb925aa1c-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-05f1178492977f20",
+      "original": "D228#/rows/542",
+      "originalObjectSha256": "158db0c7ac8ae88102b4192f9dd7bae9618ed894bd364fbf008e5e97fa94cba8",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.format",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-05f1178492977f20-CONTRACT",
+        "RT-05f1178492977f20-ALTERNATE",
+        "RT-05f1178492977f20-BINDING",
+        "RT-05f1178492977f20-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-21d7512fb63f1a6d",
+      "original": "D228#/rows/543",
+      "originalObjectSha256": "4cda876b779806179897f0214afed8771d37ab6a330f6f17d4f9902267054990",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-d7622cdd4244b3f1-CONTRACT",
+        "RT-d7622cdd4244b3f1-ALTERNATE",
+        "RT-d7622cdd4244b3f1-BINDING",
+        "RT-d7622cdd4244b3f1-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-3d54e3f064a0be9b",
+      "original": "D228#/rows/544",
+      "originalObjectSha256": "45d30be7b386ad100e2465791648b4dfc63b28b8b9fa571ba5e4ffa5fd23ea0d",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-71341df9de05ed86-CONTRACT",
+        "RT-71341df9de05ed86-ALTERNATE",
+        "RT-71341df9de05ed86-BINDING",
+        "RT-71341df9de05ed86-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-008cf900234ae1d4",
+      "original": "D228#/rows/545",
+      "originalObjectSha256": "d9f102fc605b4ea278e23c6c65bb4bbdf090dd846a5ab6e47ffabf39804063ad",
+      "class": "secret-reference",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.tokenSecret",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-683826beb925aa1c-CONTRACT",
+        "RT-683826beb925aa1c-ALTERNATE",
+        "RT-683826beb925aa1c-BINDING",
+        "RT-683826beb925aa1c-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-2b068a652df2feb1",
+      "original": "D228#/rows/546",
+      "originalObjectSha256": "733cab69c5ce013ebdb6c0a5444cf28349afdd91b2d14458b6f96257c67a6a97",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-d7622cdd4244b3f1-CONTRACT",
+        "RT-d7622cdd4244b3f1-ALTERNATE",
+        "RT-d7622cdd4244b3f1-BINDING",
+        "RT-d7622cdd4244b3f1-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-b83bd993f1967671",
+      "original": "D228#/rows/547",
+      "originalObjectSha256": "e86e691148804d5fc5955cf777aeb7023516c31c2cc849e3b7ad166c57f9ce8b",
+      "class": "operator-setting",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-2a83b3acac2068cb-CONTRACT",
+        "RT-2a83b3acac2068cb-ALTERNATE",
+        "RT-2a83b3acac2068cb-BINDING",
+        "RT-2a83b3acac2068cb-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-45e983e05fd5d5c0",
+      "original": "D228#/rows/548",
+      "originalObjectSha256": "2a2e908fbea4cb5eddc67d543c841375d7e89a22f0889baa49d3dafabf14abca",
+      "class": "secret-reference",
+      "originalField": "targets.{^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointSecret",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-772a8c40be07c07a-CONTRACT",
+        "RT-772a8c40be07c07a-ALTERNATE",
+        "RT-772a8c40be07c07a-BINDING",
+        "RT-772a8c40be07c07a-MUTANT"
+      ],
+      "plugin": "kubeclaw.operator-messaging",
+      "registration": "kubeclaw.operator-messaging:operator",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.operator-messaging:operator/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+        "anchor": "config.targets",
+        "lines": [
+          104,
+          121
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/operator-messaging/plugin.json",
+        "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563"
+      },
+      "schema": {
+        "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-aa4b934140cba02d",
+      "original": "D228#/rows/613",
+      "originalObjectSha256": "9c51fc914213765180d5b7d7df85cfc7e49d7895b64fd78f46a0c6c504906f52",
+      "class": "operator-setting",
+      "originalField": "deliveryRoot",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-aa4b934140cba02d-CONTRACT",
+        "RT-aa4b934140cba02d-ALTERNATE",
+        "RT-aa4b934140cba02d-BINDING",
+        "RT-aa4b934140cba02d-MUTANT"
+      ],
+      "plugin": "kubeclaw.transport-publisher",
+      "registration": "kubeclaw.transport-publisher:publisher",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.transport-publisher:publisher/deliveryRoot",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+        "anchor": "config.deliveryRoot",
+        "lines": [
+          97,
+          107,
+          210
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/transport-publisher/plugin.json",
+        "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+      },
+      "schema": {
+        "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+        "sha256": "6d7844ca2b3e4322a69036a56633f652893c09d568f099ff75d5fd642bd4013d",
+        "pointer": "/properties/deliveryRoot",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-dd3300dafba3cec4",
+      "original": "D228#/rows/616",
+      "originalObjectSha256": "59e63be93377031d15fc9645a141aae828b8e580f8c25368fe2f569e548b5056",
+      "class": "operator-setting",
+      "originalField": "targets",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-dd3300dafba3cec4-CONTRACT",
+        "RT-dd3300dafba3cec4-ALTERNATE",
+        "RT-dd3300dafba3cec4-BINDING",
+        "RT-dd3300dafba3cec4-MUTANT"
+      ],
+      "plugin": "kubeclaw.transport-publisher",
+      "registration": "kubeclaw.transport-publisher:publisher",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.transport-publisher:publisher/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+        "anchor": "config.targets",
+        "lines": [
+          73,
+          84,
+          209
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/transport-publisher/plugin.json",
+        "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+      },
+      "schema": {
+        "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+        "sha256": "6d7844ca2b3e4322a69036a56633f652893c09d568f099ff75d5fd642bd4013d",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-91ddf4c78b4c536b",
+      "original": "D228#/rows/617",
+      "originalObjectSha256": "7a20e1ebc540a8cf6321cdf126179343e496f4c6082e105710a360b9f33e2694",
+      "class": "operator-setting",
+      "originalField": "targets.{key}",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-dd3300dafba3cec4-CONTRACT",
+        "RT-dd3300dafba3cec4-ALTERNATE",
+        "RT-dd3300dafba3cec4-BINDING",
+        "RT-dd3300dafba3cec4-MUTANT"
+      ],
+      "plugin": "kubeclaw.transport-publisher",
+      "registration": "kubeclaw.transport-publisher:publisher",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.transport-publisher:publisher/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+        "anchor": "config.targets",
+        "lines": [
+          73,
+          84,
+          209
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/transport-publisher/plugin.json",
+        "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+      },
+      "schema": {
+        "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+        "sha256": "6d7844ca2b3e4322a69036a56633f652893c09d568f099ff75d5fd642bd4013d",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-176ced91a5aa7a4c",
+      "original": "D228#/rows/618",
+      "originalObjectSha256": "1251002170fcd3e549fcc65b3c0f29c89d719b5202679ac19ce55581b3aea2d6",
+      "class": "operator-setting",
+      "originalField": "targets.{key}.endpoint",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-176ced91a5aa7a4c-CONTRACT",
+        "RT-176ced91a5aa7a4c-ALTERNATE",
+        "RT-176ced91a5aa7a4c-BINDING",
+        "RT-176ced91a5aa7a4c-MUTANT"
+      ],
+      "plugin": "kubeclaw.transport-publisher",
+      "registration": "kubeclaw.transport-publisher:publisher",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.transport-publisher:publisher/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+        "anchor": "config.targets",
+        "lines": [
+          73,
+          84,
+          209
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/transport-publisher/plugin.json",
+        "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+      },
+      "schema": {
+        "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+        "sha256": "6d7844ca2b3e4322a69036a56633f652893c09d568f099ff75d5fd642bd4013d",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-387dde0cfb3d039e",
+      "original": "D228#/rows/619",
+      "originalObjectSha256": "6db4bc09aef56fd04a53e496064fa97d5382b3c0e1342f21944fbddff241459c",
+      "class": "secret-reference",
+      "originalField": "targets.{key}.signingSecret",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-387dde0cfb3d039e-CONTRACT",
+        "RT-387dde0cfb3d039e-ALTERNATE",
+        "RT-387dde0cfb3d039e-BINDING",
+        "RT-387dde0cfb3d039e-MUTANT"
+      ],
+      "plugin": "kubeclaw.transport-publisher",
+      "registration": "kubeclaw.transport-publisher:publisher",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.transport-publisher:publisher/targets",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "sha256": "90c1855afaad8e1aab757af1008ca5749f20ff1582255db282bf7dba75273abd",
+        "anchor": "config.targets",
+        "lines": [
+          73,
+          84,
+          209
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/transport-publisher/plugin.json",
+        "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+      },
+      "schema": {
+        "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+        "sha256": "6d7844ca2b3e4322a69036a56633f652893c09d568f099ff75d5fd642bd4013d",
+        "pointer": "/properties/targets",
+        "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
+      },
+      "centralPhysicalAuthor": null,
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    }
+  ],
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "retainedDefaults": [
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+      "anchor": "config.allowedHeaders ??",
+      "lines": [
+        26
+      ]
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+      "anchor": "config.allowedMethods as",
+      "lines": [
+        34
+      ]
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/config.ts",
+      "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900",
+      "anchor": "const format = raw.format ?? 'json';",
+      "lines": [
+        70
+      ]
+    }
+  ],
+  "independentReview": "OPEN; no new independent reviewer output; no native acceptance inferred"
+}
