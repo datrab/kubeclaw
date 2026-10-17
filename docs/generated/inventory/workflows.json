@@ -312,6 +312,7 @@
         "node skills/prism/tests/native/postgres-suite.mts transactions",
         "node skills/prism/tests/native/postgres-suite.mts worker-readiness",
         "npm ci --ignore-scripts",
+        "npm ci --include=dev --ignore-scripts",
         "npm run knip:check",
         "npm run test:corpus-pool --workspace @kubeclaw/prism",
         "npm run test:review-operations",
