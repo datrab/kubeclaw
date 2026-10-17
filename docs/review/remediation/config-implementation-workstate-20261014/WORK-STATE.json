@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T03:26:35.946574+00:00",
+  "updatedAt": "2026-10-17T03:32:21.387815+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set and actual boot+Nova receiving, including real E2E run-scoped legacy config replacement, and genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Preserve original UID1000 CLI and three invalid-port process obligations plus all independent/history/native/archive/full C0-C6 gates. Do not repeat unchanged local green suites.",
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E run-scoped legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed bytes/publication. Keep original UID1000 CLI, three invalid-port entrypoint obligations, independent/full original/history/native/archive C0-C6 gates OPEN. Do not repeat unchanged local green readiness checks.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -26874,7 +26874,7 @@
       "routingIntegrity": "Exact suffix/helper preservation plus actual existing glob membership",
       "diffCheck": true
     },
-    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable \u2139 summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
+    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable ℹ summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
     "originalRoster": {
       "fields": {
         "required": 2409,
@@ -26963,6 +26963,54 @@
     "externalOwner": "Raven",
     "resumeCondition": "Suitable isolated Linux Docker guest with genuine UID/GID1000, delegated writable cgroup/native pool, privileged installer and original authority; sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No spoof or gate removal.",
     "writerLock": "SAME nonblocking lock for every write/check/commit/push; released on command exit",
+    "noHistoricalFollowup": true
+  },
+  "readinessAuthenticatedDelivery20261017": {
+    "at": "2026-10-17T03:32:21.387815+00:00",
+    "status": "ORIGINAL_WHOLE_READINESS_15_OF_15_AUTHENTICATED_DELIVERY_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "a5e70748777e7c29386bff270e5332e347886911",
+    "branch": "codex/config-c0-semantic-inventory-20261012",
+    "remoteHead": "a5e70748777e7c29386bff270e5332e347886911",
+    "verified": true,
+    "evidence": "docs/review/remediation/config-readiness-authenticated-delivery-20261017",
+    "change": "Original readiness render proof now verifies real HEAD/build receipt, both genuine Buster preparation/runtime caller captures, immutable full two-field A/B policies, cross-caller denial, actual delivered source mutation/restore, retained original A under B and both real chart generators. Original separate Helm bootstrap/readiness/liveness test repaired: genuine current image delivery and generated topology, actual selected release/namespace, no synthetic delivery receipt. Original probe assertions unchanged. No production policy/default/activation changes.",
+    "checks": {
+      "requiredCommand": "npm run verify:buster:readiness-config",
+      "strictReadinessTypecheck": true,
+      "wholeOriginalReadiness": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "completeProfiles": 2,
+      "authenticatedCallerTypes": 2,
+      "crossCallerNegatives": 4,
+      "deliveredSourceMutationNegatives": 4,
+      "restoredCallerPositives": 4,
+      "charts": 2,
+      "originalProbeAssertionsUnchanged": true,
+      "syntaxAndDiffCheck": true,
+      "roster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "unchanged": true
+      }
+    },
+    "retainedFailure": "whole-readiness.txt:14/15, original Helm readiness test failed Buster release identity must match central bindings; actual original fixture migrated to selected identity+genuine delivery, whole-readiness-restored.txt15/15. Not native BuildKit/OCI/kernel/container acceptance.",
+    "independentReview": "OPEN: fresh native spawn/review/collaboration discovery empty, CONFIG reviewers0, parent terminal; unchanged same-surface app-server EROFS not replayed. Author verification only.",
+    "originalCasesNewlyAccepted": 0,
+    "originalResultsChanged": false,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E run-scoped legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed bytes/publication. Keep original UID1000 CLI, three invalid-port entrypoint obligations, independent/full original/history/native/archive C0-C6 gates OPEN. Do not repeat unchanged local green readiness checks.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted archive storage and migrated isolated PostgreSQL; no trust/identity/kernel spoof or skipped acceptance.",
+    "writerLock": "SAME nonblocking shared lock; released at bounded command exit",
     "noHistoricalFollowup": true
   }
 }
