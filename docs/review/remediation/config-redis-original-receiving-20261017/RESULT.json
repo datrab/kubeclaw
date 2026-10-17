@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-17T05:19:01.833496+00:00",
+  "status": "DUAL_REDIS_ORIGINAL_RECOVERY_SOURCE_IMPLEMENTED_INDEPENDENT_REVIEW_OPEN",
+  "sourceCommit": "0e02e5b234aa1703a6ee934e66838350c2e0bd14",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-redis-original-receiving-20261017",
+  "productionSourceChanged": true,
+  "scope": "Original receiving/recovery for publisher and telemetry, not new central author or full12 original acceptance",
+  "sourceFieldsPerRegistration": [
+    "url",
+    "passwordSecret",
+    "streamPrefix",
+    "maxLen",
+    "dedupTtlMs",
+    "timeoutMs"
+  ],
+  "originalReceivers": [
+    "recoverPipeline",
+    "resumePipeline",
+    "reopenPipeline"
+  ],
+  "checks": {
+    "originalNovaWaitResumeAndWire": {
+      "passed": 2,
+      "total": 2
+    },
+    "originalRedisBuffers": {
+      "passed": 3,
+      "total": 3
+    },
+    "nonRedisOriginalRecoveryCompatibility": {
+      "passed": 1,
+      "total": 1
+    },
+    "strictNovaTypecheck": true,
+    "diffCheck": true,
+    "originalCoreRemovedAfterB": true,
+    "originalPublisherAndTelemetryTargetsRetained": true,
+    "changedGrantsRejectBeforeRedisEffects": true,
+    "registrationAbsenceAndPolicyMismatchReject": true,
+    "snapshotUnchangedAfterResume": true,
+    "secretBytesNotCaptured": true
+  },
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allThreeAuthoritativeHashesUnchanged": true
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "remainingRedisWork": "All12 original IDs stay remainingFieldIds: coordinated sole central author/profile/schema/delivery, full original field-specific/native/history effects and independent acceptance remain OPEN. This change proves original receiving restoration only. Socket server is controlled RESP fixture, not real Redis server acceptance. recoverPipeline reaches original SIGNAL_REQUIRED; admin path source-wired/typechecked, not newly executed.",
+  "independentReview": "OPEN: fresh ALL_TOOLS discovery has no native spawn/reviewer/collaboration tool; CONFIG subagents0; parent terminal failed, no productive owner. Existing independent engine attempts reached model but HTTP429 twice, no report; not retried unchanged and not called clean. New source is not independently accepted.",
+  "qualityBoundary": {
+    "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
+    "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",
+    "neededImplementation": "Coordinate the SAME approved root/schema/all-profile/file-set/source closure/generation/service/image/package receipt/delivery and original reader, then derive complete policies from authenticated original boot into actual Nova resolver. Do not promote denied v10 or fake receipts.",
+    "inputStore": "runner-attempt-preparation.invocationInputs has ArtifactRefV1 from producer AttemptResultV1, no authenticated sourceRevision/buildDigest/originalInputReceiptDigest/baseline association/storeVersion or inputStore-owned reservations/validity/publication lifecycle. Need actual producer/result/source receipt joins and same original store accounting/sealed bytes/fences before provider execution. Keep BUDGET_SOURCE_RECEIPT_REQUIRED."
+  },
+  "externalOwner": "Raven",
+  "resumeCondition": "Independent review: original same-engine upstream availability. Native: suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL; original history privileges as recorded. Local source work remains authorized and unfinished.",
+  "writerLock": "SAME exclusive nonblocking lock for each mutation/test/commit/push; released at command exit",
+  "historicalFollowupDispatched": false
+}

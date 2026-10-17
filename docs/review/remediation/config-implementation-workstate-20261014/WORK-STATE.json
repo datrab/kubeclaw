@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T05:03:52.167043+00:00",
+  "updatedAt": "2026-10-17T05:19:01.833496+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
+  "status": "REDIS_ORIGINAL_RECOVERY_IMPLEMENTED_QUALITY_BOOT_INPUTSTORE_AND_FULL_ACCEPTANCE_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "PRIORITY: implement actual coordinated boot/root/source/file-set/delivery -> Quality policy map, then actual inputStore-owned QB-R02 immutable original sealed snapshots/producer/build/source/baseline/reservation/publication fence. Keep BUDGET_SOURCE_RECEIPT_REQUIRED until authentic complete path proven. No new policy root, task receipt authority, denied v10 promotion or fabricated provenance. Central receiving residuals remain implementation work; do not substitute unrelated fixture/Helm/matrix cleanup. Current independent review reached model and failed HTTP429 twice, no review result; preserve this separate from source/native blockers and retry same engine only when upstream available. External native/archive host access requested. Full C0-C6 OPEN.",
+  "nextAction": "PRIORITY: coordinated approved sole-root/schema/all-profile/source/file-set/authenticated boot/delivery to actual Nova Quality policy map, then authentic QB-R02 producer/build/source/baseline/inputStore ownership/reservations/accounting/sealed bytes/publication. Exact current APIs and constraints recorded in config-redis-original-receiving-20261017/RESULT.json. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied v10. Dual Redis original restoration implemented at 0e02e5b234aa1703a6ee934e66838350c2e0bd14; central Redis12 author/profile/schema/delivery and original history/field-specific/independent acceptance remain OPEN. Continue supported required central receiving residuals when one Quality seam cannot safely progress. Independent same-engine review requires upstream availability; latest known HTTP429, no report. Full2409/6845/50 and C0-C6 independent/native/archive gates remain mandatory.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -28939,5 +28939,72 @@
       "fullC0C6Accepted": false
     },
     "nextAction": "Required productive source recovery remains unfinished; do not substitute formatting/evidence for source implementation. Continue actual coordinated receiving chain under same lock; no denied-v10 activation or fabricated provenance."
+  },
+  "redisOriginalReceiving20261017": {
+    "at": "2026-10-17T05:19:01.833496+00:00",
+    "status": "DUAL_REDIS_ORIGINAL_RECOVERY_SOURCE_IMPLEMENTED_INDEPENDENT_REVIEW_OPEN",
+    "sourceCommit": "0e02e5b234aa1703a6ee934e66838350c2e0bd14",
+    "sourceRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-redis-original-receiving-20261017",
+    "productionSourceChanged": true,
+    "scope": "Original receiving/recovery for publisher and telemetry, not new central author or full12 original acceptance",
+    "sourceFieldsPerRegistration": [
+      "url",
+      "passwordSecret",
+      "streamPrefix",
+      "maxLen",
+      "dedupTtlMs",
+      "timeoutMs"
+    ],
+    "originalReceivers": [
+      "recoverPipeline",
+      "resumePipeline",
+      "reopenPipeline"
+    ],
+    "checks": {
+      "originalNovaWaitResumeAndWire": {
+        "passed": 2,
+        "total": 2
+      },
+      "originalRedisBuffers": {
+        "passed": 3,
+        "total": 3
+      },
+      "nonRedisOriginalRecoveryCompatibility": {
+        "passed": 1,
+        "total": 1
+      },
+      "strictNovaTypecheck": true,
+      "diffCheck": true,
+      "originalCoreRemovedAfterB": true,
+      "originalPublisherAndTelemetryTargetsRetained": true,
+      "changedGrantsRejectBeforeRedisEffects": true,
+      "registrationAbsenceAndPolicyMismatchReject": true,
+      "snapshotUnchangedAfterResume": true,
+      "secretBytesNotCaptured": true
+    },
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "allThreeAuthoritativeHashesUnchanged": true
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "remainingRedisWork": "All12 original IDs stay remainingFieldIds: coordinated sole central author/profile/schema/delivery, full original field-specific/native/history effects and independent acceptance remain OPEN. This change proves original receiving restoration only. Socket server is controlled RESP fixture, not real Redis server acceptance. recoverPipeline reaches original SIGNAL_REQUIRED; admin path source-wired/typechecked, not newly executed.",
+    "independentReview": "OPEN: fresh ALL_TOOLS discovery has no native spawn/reviewer/collaboration tool; CONFIG subagents0; parent terminal failed, no productive owner. Existing independent engine attempts reached model but HTTP429 twice, no report; not retried unchanged and not called clean. New source is not independently accepted.",
+    "qualityBoundary": {
+      "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
+      "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",
+      "neededImplementation": "Coordinate the SAME approved root/schema/all-profile/file-set/source closure/generation/service/image/package receipt/delivery and original reader, then derive complete policies from authenticated original boot into actual Nova resolver. Do not promote denied v10 or fake receipts.",
+      "inputStore": "runner-attempt-preparation.invocationInputs has ArtifactRefV1 from producer AttemptResultV1, no authenticated sourceRevision/buildDigest/originalInputReceiptDigest/baseline association/storeVersion or inputStore-owned reservations/validity/publication lifecycle. Need actual producer/result/source receipt joins and same original store accounting/sealed bytes/fences before provider execution. Keep BUDGET_SOURCE_RECEIPT_REQUIRED."
+    },
+    "externalOwner": "Raven",
+    "resumeCondition": "Independent review: original same-engine upstream availability. Native: suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL; original history privileges as recorded. Local source work remains authorized and unfinished.",
+    "writerLock": "SAME exclusive nonblocking lock for each mutation/test/commit/push; released at command exit",
+    "historicalFollowupDispatched": false
   }
 }
