@@ -33,11 +33,13 @@
     "exactPrismServiceSourceJoins": 16,
     "staticReviewOwnerPointers": 222,
     "originalTargetDerivedFields": 6,
+    "exactDispatchSelectedProfileSourceJoins": 7,
+    "explicitDispatchReceivingResiduals": 35,
     "explicitPluginPolicyReceivingResiduals": 17,
     "exactNotificationCoreSourceJoins": 2,
     "explicitNotificationReceivingResiduals": 24,
     "groupsByStatus": {
-      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 2,
+      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 1,
       "UNRESOLVED_SEMANTIC_OWNER_JOIN": 10,
       "PARTIAL_EXACT_PRISM_BOUNDARY_SOURCE_JOIN": 1,
       "PARTIAL_EXACT_PRISM_ATTEMPT_SOURCE_JOIN": 2,
@@ -49,6 +51,7 @@
       "PARTIAL_EXACT_NOTIFICATION_SOURCE_JOIN": 1,
       "PARTIAL_EXACT_DELIVERY_SOURCE_JOIN": 2,
       "EXACT_EXISTING_SCOPED_MAPPING": 7,
+      "PARTIAL_EXACT_DISPATCH_PROFILE_SOURCE_JOIN": 1,
       "EXACT_PRISM_SERVICE_SOURCE_JOIN": 3,
       "EXACT_PRISM_CONTROL_SOURCE_JOIN": 1,
       "EXACT_PRISM_BOUNDARY_SOURCE_JOIN": 1
@@ -19194,8 +19197,6 @@
         "RT-811424859e2b8e12",
         "RT-7bf750afaa2acece",
         "RT-6f606ecb42591563",
-        "RT-4ae6e81930cb55df",
-        "RT-b5e77bf6e3b4023e",
         "RT-f97126234123f8c3",
         "RT-b55e80f6fa92fb22",
         "RT-72ea7fb2b806e9be",
@@ -19214,7 +19215,6 @@
         "RT-6d4934d73ec165e6",
         "RT-d7a39fcd094662e4",
         "RT-fb6d0fce3b9e2cd9",
-        "RT-b86ed6b7457ef6fc",
         "RT-a7c746c48003f145",
         "RT-3683aabfbafa8fab",
         "RT-f72ae0fd088c9c65",
@@ -19223,49 +19223,2349 @@
         "RT-27fffc024fe2e554",
         "RT-3cafd75f2079b320",
         "RT-af08af7aec0d41b6",
-        "RT-d1a36abf922578fa",
-        "RT-f0111c4803cfd0a7",
-        "RT-d815b693cf75c75f",
-        "RT-85bf86430cdc9475",
         "RT-dd0ae3cebdfdf35f",
         "RT-549874e9f0d2c907",
         "RT-93c98519785b41f3",
         "RT-RUNTIME-RESULT-PATH-BYTES"
       ],
-      "candidateSuccessors": [
+      "candidateSuccessors": [],
+      "status": "PARTIAL_EXACT_DISPATCH_PROFILE_SOURCE_JOIN",
+      "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactDispatchProfileMappings": [
         {
-          "owner": {
-            "path": "config/nova/core.config.json",
-            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
-          },
-          "pointer": "/profiles/standard/settings/openClawDispatch",
-          "consumer": {
-            "path": "skills/nova/core/execution/engine-runtime.ts",
-            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
-            "anchor": "policy.openClawDispatch",
+          "id": "RT-4ae6e81930cb55df",
+          "original": "D228#/rows/566",
+          "originalObjectSha256": "7dd32a8c40b949ae77dce0de3e8f251d4a34ff3e9c342b62bdc6d5375a370793",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-4ae6e81930cb55df-CONTRACT",
+            "RT-4ae6e81930cb55df-ALTERNATE",
+            "RT-4ae6e81930cb55df-BINDING",
+            "RT-4ae6e81930cb55df-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxRequestBytes",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
             "lines": [
-              214
+              124
             ]
-          }
-        },
-        {
-          "owner": {
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
             "path": "config/nova/core.config.json",
             "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
           },
-          "pointer": "/profiles/standard/settings/httpDispatch",
-          "consumer": {
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/httpDispatch/targetByteProfiles/standard/maxRequestBytes",
+              "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{original-target}/byteProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.byteProfile,enumerable:true",
+              "lines": [
+                179
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "byteProfile:retainedHttpSelections[",
+              "lines": [
+                162
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targetByteProfiles/additionalProperties/properties/maxRequestBytes",
+            "fragmentSha256": "02ca07878008a17b2cd715d3ba673f4485763912d2eb14754cf3738e65146a2a"
+          },
+          "projection": {
             "path": "skills/nova/core/execution/engine-runtime.ts",
             "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
             "anchor": "policy.httpDispatch",
             "lines": [
               213
             ]
-          }
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "profiles.get(value.byteProfile)",
+            "lines": [
+              83
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+              "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+              "anchor": "> target.maxRequestBytes",
+              "lines": [
+                132
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-b5e77bf6e3b4023e",
+          "original": "D228#/rows/567",
+          "originalObjectSha256": "d132cdae199ce1a3cec7a2ba6a8adbaa7616efa65bda9f83cacf1f90a094a0bc",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-b5e77bf6e3b4023e-CONTRACT",
+            "RT-b5e77bf6e3b4023e-ALTERNATE",
+            "RT-b5e77bf6e3b4023e-BINDING",
+            "RT-b5e77bf6e3b4023e-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxResponseBytes",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/httpDispatch/targetByteProfiles/standard/maxResponseBytes",
+              "valueSha256": "50b4b069390c1d7966da182649bb2caddb412a2f9012425b5e9ec0ef4ec68545"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{original-target}/byteProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.byteProfile,enumerable:true",
+              "lines": [
+                179
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "byteProfile:retainedHttpSelections[",
+              "lines": [
+                162
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targetByteProfiles/additionalProperties/properties/maxResponseBytes",
+            "fragmentSha256": "02ca07878008a17b2cd715d3ba673f4485763912d2eb14754cf3738e65146a2a"
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.httpDispatch",
+            "lines": [
+              213
+            ]
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "profiles.get(value.byteProfile)",
+            "lines": [
+              83
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+              "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+              "anchor": "target.maxResponseBytes",
+              "lines": [
+                160
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-b86ed6b7457ef6fc",
+          "original": "D228#/rows/586",
+          "originalObjectSha256": "0744f137cb7fe5a9dcde814948524dc795701b3b7492499ef76e281b9b2623d1",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-b86ed6b7457ef6fc-CONTRACT",
+            "RT-b86ed6b7457ef6fc-ALTERNATE",
+            "RT-b86ed6b7457ef6fc-BINDING",
+            "RT-b86ed6b7457ef6fc-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.spawnIntervalMs",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/standard/spawnIntervalMs",
+              "valueSha256": "9f69998560dcfd8016442e0a32e959191df095817a164ce844c64ec5a8b0cc1b"
+            },
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/production-pipeline/spawnIntervalMs",
+              "valueSha256": "9f69998560dcfd8016442e0a32e959191df095817a164ce844c64ec5a8b0cc1b"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{original-target}/timingProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.timingProfile,enumerable:true",
+              "lines": [
+                170
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "timingProfile:retainedTimingSelections[",
+              "lines": [
+                152
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/$defs/targetTiming/properties/spawnIntervalMs",
+            "fragmentSha256": "3682bd9a5af37045228833596c1aa31c4a1fef8ccc0445acaeab97cee8845870"
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.openClawDispatch",
+            "lines": [
+              214
+            ]
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "const timing = profiles[raw.timingProfile]!;",
+            "lines": [
+              52
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "setTimeout(resolve, target.spawnIntervalMs)",
+              "lines": [
+                203
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-d1a36abf922578fa",
+          "original": "D228#/rows/595",
+          "originalObjectSha256": "59c81975ac3e940b90a085a76110c0e69ed8df4ffef1af0a59a8beeb9f9117e8",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-d1a36abf922578fa-CONTRACT",
+            "RT-d1a36abf922578fa-ALTERNATE",
+            "RT-d1a36abf922578fa-BINDING",
+            "RT-d1a36abf922578fa-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.pollMs",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/standard/pollMs",
+              "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+            },
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/production-pipeline/pollMs",
+              "valueSha256": "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{original-target}/timingProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.timingProfile,enumerable:true",
+              "lines": [
+                170
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "timingProfile:retainedTimingSelections[",
+              "lines": [
+                152
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/$defs/targetTiming/properties/pollMs",
+            "fragmentSha256": "8768289caf9a0ce43d60adf3c26ee64e0c5bed57f83d5650357c27e9c9e324fb"
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.openClawDispatch",
+            "lines": [
+              214
+            ]
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "const timing = profiles[raw.timingProfile]!;",
+            "lines": [
+              52
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+              "sha256": "9a36db6520fd1fa5718d35708eaeaa2a5668d18263271c86b8851b6982c72cc9",
+              "anchor": "target.pollMs *",
+              "lines": [
+                245
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-f0111c4803cfd0a7",
+          "original": "D228#/rows/596",
+          "originalObjectSha256": "0e007b828cfbbcdd43eb92d09943a197f2bbba54705f3ed1c0816896f1a7c0c4",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f0111c4803cfd0a7-CONTRACT",
+            "RT-f0111c4803cfd0a7-ALTERNATE",
+            "RT-f0111c4803cfd0a7-BINDING",
+            "RT-f0111c4803cfd0a7-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxPollMs",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/standard/maxPollMs",
+              "valueSha256": "d4c999ae43633bd2036188d2bca68e1be8202b2cc1f3a1c42a728eaff7d2483d"
+            },
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/production-pipeline/maxPollMs",
+              "valueSha256": "d4c999ae43633bd2036188d2bca68e1be8202b2cc1f3a1c42a728eaff7d2483d"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{original-target}/timingProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.timingProfile,enumerable:true",
+              "lines": [
+                170
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "timingProfile:retainedTimingSelections[",
+              "lines": [
+                152
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/$defs/targetTiming/properties/maxPollMs",
+            "fragmentSha256": "8768289caf9a0ce43d60adf3c26ee64e0c5bed57f83d5650357c27e9c9e324fb"
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.openClawDispatch",
+            "lines": [
+              214
+            ]
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "const timing = profiles[raw.timingProfile]!;",
+            "lines": [
+              52
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+              "sha256": "9a36db6520fd1fa5718d35708eaeaa2a5668d18263271c86b8851b6982c72cc9",
+              "anchor": "Math.min(target.maxPollMs,",
+              "lines": [
+                245
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-d815b693cf75c75f",
+          "original": "D228#/rows/597",
+          "originalObjectSha256": "29e742490ed46d5643da6815acce042322449e21d505f5e06ce97109ab4071b5",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-d815b693cf75c75f-CONTRACT",
+            "RT-d815b693cf75c75f-ALTERNATE",
+            "RT-d815b693cf75c75f-BINDING",
+            "RT-d815b693cf75c75f-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxPolls",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/standard/maxPolls",
+              "valueSha256": "e49ec846db7527df7ff483009fe61700e6435072c8c5b551ab08f0a13fc45a07"
+            },
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/production-pipeline/maxPolls",
+              "valueSha256": "15197cf7214b58e67cae565e573ffd9aa44bcb81f8ee5d7185dfe8da0a16ef43"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{original-target}/timingProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.timingProfile,enumerable:true",
+              "lines": [
+                170
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "timingProfile:retainedTimingSelections[",
+              "lines": [
+                152
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/$defs/targetTiming/properties/maxPolls",
+            "fragmentSha256": "ea288f4ef558f5f1682c9ec4c9395734bd8290c18c696889964cd2b24e1dcfe8"
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.openClawDispatch",
+            "lines": [
+              214
+            ]
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "const timing = profiles[raw.timingProfile]!;",
+            "lines": [
+              52
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+              "sha256": "9a36db6520fd1fa5718d35708eaeaa2a5668d18263271c86b8851b6982c72cc9",
+              "anchor": "poll < target.maxPolls",
+              "lines": [
+                237
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-85bf86430cdc9475",
+          "original": "D228#/rows/598",
+          "originalObjectSha256": "f29f1d59b64f1b093a74dd9c6da46be018e471a65cd9ccca183e64fc9592680e",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-85bf86430cdc9475-CONTRACT",
+            "RT-85bf86430cdc9475-ALTERNATE",
+            "RT-85bf86430cdc9475-BINDING",
+            "RT-85bf86430cdc9475-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.sessionTimeoutMs",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN",
+          "centralPhysicalAuthor": {
+            "path": "config/nova/core.config.json",
+            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          },
+          "centralProfiles": [
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/standard/sessionTimeoutMs",
+              "valueSha256": "37bf94938358f1fd6031153af84471b3d8340245e0bc61606ecc70ce65381aa8"
+            },
+            {
+              "pointer": "/profiles/standard/settings/openClawDispatch/targetTimingProfiles/production-pipeline/sessionTimeoutMs",
+              "valueSha256": "37bf94938358f1fd6031153af84471b3d8340245e0bc61606ecc70ce65381aa8"
+            }
+          ],
+          "selector": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{original-target}/timingProfile",
+            "originalCapture": {
+              "path": "skills/nova/core/execution/engine-snapshots.ts",
+              "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+              "anchor": "value:target.timingProfile,enumerable:true",
+              "lines": [
+                170
+              ]
+            },
+            "originalRestore": {
+              "path": "skills/nova/core/execution/engine-runtime.ts",
+              "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+              "anchor": "timingProfile:retainedTimingSelections[",
+              "lines": [
+                152
+              ]
+            }
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/$defs/targetTiming/properties/sessionTimeoutMs",
+            "fragmentSha256": "1a3c2cb9cd19779aeb56820e0bd8e233cc9727530b258d0e5ce8230593f966e2"
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "policy.openClawDispatch",
+            "lines": [
+              214
+            ]
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "const timing = profiles[raw.timingProfile]!;",
+            "lines": [
+              52
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+              "sha256": "9a36db6520fd1fa5718d35708eaeaa2a5668d18263271c86b8851b6982c72cc9",
+              "anchor": "AbortSignal.timeout(target.sessionTimeoutMs)",
+              "lines": [
+                231
+              ]
+            }
+          ]
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
-      "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "explicitDispatchResiduals": [
+        {
+          "id": "RT-20b9ad8b0de71e60",
+          "original": "D228#/rows/561",
+          "originalObjectSha256": "504f07fd0139d08b0ad041693096d86c332cbc5ff728f30f4eaa248b80809594",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-20b9ad8b0de71e60-CONTRACT",
+            "RT-20b9ad8b0de71e60-ALTERNATE",
+            "RT-20b9ad8b0de71e60-BINDING",
+            "RT-20b9ad8b0de71e60-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets",
+            "fragmentSha256": "a94c2f41ab493d41637cb779fe52c677660d1f9e444a9fe4991650f5ec47c25a"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              103
+            ]
+          }
+        },
+        {
+          "id": "RT-b4a4c190d5327eef",
+          "original": "D228#/rows/562",
+          "originalObjectSha256": "61d274c5ac4609275562bf34672e7c509b085a73210ed711a0a91c647f3c1583",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-20b9ad8b0de71e60-CONTRACT",
+            "RT-20b9ad8b0de71e60-ALTERNATE",
+            "RT-20b9ad8b0de71e60-BINDING",
+            "RT-20b9ad8b0de71e60-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties",
+            "fragmentSha256": "0c115e017dec3ee3c6b1883e20a07282f8e2e3301f8f3ba9e37ebdbb3a7187fd"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              103
+            ]
+          }
+        },
+        {
+          "id": "RT-811424859e2b8e12",
+          "original": "D228#/rows/563",
+          "originalObjectSha256": "7f1a913a565ee3426d344488ff596edea5a0612212d99426584ff6eb58ec523a",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-811424859e2b8e12-CONTRACT",
+            "RT-811424859e2b8e12-ALTERNATE",
+            "RT-811424859e2b8e12-BINDING",
+            "RT-811424859e2b8e12-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.endpoint",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}/endpoint"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties/properties/endpoint",
+            "fragmentSha256": "f9757109fae32f55a22a6fe81eec0503fb3976db0fb4c7fc85a3d794d8014521"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "value.endpoint",
+            "lines": [
+              70
+            ]
+          }
+        },
+        {
+          "id": "RT-7bf750afaa2acece",
+          "original": "D228#/rows/564",
+          "originalObjectSha256": "312911b7d92a6251cc7f22cadd1eeb3b9d83ceb60005614eeae2101e3914670a",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-7bf750afaa2acece-CONTRACT",
+            "RT-7bf750afaa2acece-ALTERNATE",
+            "RT-7bf750afaa2acece-BINDING",
+            "RT-7bf750afaa2acece-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.authentication",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}/authentication"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties/properties/authentication",
+            "fragmentSha256": "5c6fc72dca124c7ecfd4fe0ddffce360aa088e5a0b57436810fb6a32c1e5fb5e"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "value.authentication",
+            "lines": [
+              71
+            ]
+          }
+        },
+        {
+          "id": "RT-6f606ecb42591563",
+          "original": "D228#/rows/565",
+          "originalObjectSha256": "e9fc85d9a3210cd5151f60a4ea539becb9fa6094b81d52d9de3348ab926c9c18",
+          "class": "secret-reference",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-6f606ecb42591563-CONTRACT",
+            "RT-6f606ecb42591563-ALTERNATE",
+            "RT-6f606ecb42591563-BINDING",
+            "RT-6f606ecb42591563-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.tokenSecret",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}/tokenSecret"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties/properties/tokenSecret",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "value.tokenSecret",
+            "lines": [
+              72,
+              87
+            ]
+          }
+        },
+        {
+          "id": "RT-f97126234123f8c3",
+          "original": "D228#/rows/568",
+          "originalObjectSha256": "e4b25b54edada4402ea4b41cd5db7d7c529fde663f4b0405e64882f946d0df41",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-20b9ad8b0de71e60-CONTRACT",
+            "RT-20b9ad8b0de71e60-ALTERNATE",
+            "RT-20b9ad8b0de71e60-BINDING",
+            "RT-20b9ad8b0de71e60-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties",
+            "fragmentSha256": "0c115e017dec3ee3c6b1883e20a07282f8e2e3301f8f3ba9e37ebdbb3a7187fd"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              103
+            ]
+          }
+        },
+        {
+          "id": "RT-b55e80f6fa92fb22",
+          "original": "D228#/rows/569",
+          "originalObjectSha256": "e08d6238919bdd75344155155b82b53ee35dda3e5569098b05ebfca3c9c96984",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-20b9ad8b0de71e60-CONTRACT",
+            "RT-20b9ad8b0de71e60-ALTERNATE",
+            "RT-20b9ad8b0de71e60-BINDING",
+            "RT-20b9ad8b0de71e60-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties",
+            "fragmentSha256": "0c115e017dec3ee3c6b1883e20a07282f8e2e3301f8f3ba9e37ebdbb3a7187fd"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              103
+            ]
+          }
+        },
+        {
+          "id": "RT-72ea7fb2b806e9be",
+          "original": "D228#/rows/570",
+          "originalObjectSha256": "b0dfd48de49da39a42e40b489043b5b5b1ac3d9b746b4ba2e06cd44c62ebd860",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-7bf750afaa2acece-CONTRACT",
+            "RT-7bf750afaa2acece-ALTERNATE",
+            "RT-7bf750afaa2acece-BINDING",
+            "RT-7bf750afaa2acece-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.authentication",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}/authentication"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties/properties/authentication",
+            "fragmentSha256": "5c6fc72dca124c7ecfd4fe0ddffce360aa088e5a0b57436810fb6a32c1e5fb5e"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "value.authentication",
+            "lines": [
+              71
+            ]
+          }
+        },
+        {
+          "id": "RT-b3f4212a5c1c0e9c",
+          "original": "D228#/rows/571",
+          "originalObjectSha256": "317ec9e896ab1343e2f2e15358a8749b5b16575ed6d050c822d28ae9e78d3723",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-20b9ad8b0de71e60-CONTRACT",
+            "RT-20b9ad8b0de71e60-ALTERNATE",
+            "RT-20b9ad8b0de71e60-BINDING",
+            "RT-20b9ad8b0de71e60-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties",
+            "fragmentSha256": "0c115e017dec3ee3c6b1883e20a07282f8e2e3301f8f3ba9e37ebdbb3a7187fd"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              103
+            ]
+          }
+        },
+        {
+          "id": "RT-ba128d546b0c0958",
+          "original": "D228#/rows/572",
+          "originalObjectSha256": "83d20d6146b84653d985cf68b4c9a264f9abee2b2f36c807127fa761a78790d7",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-811424859e2b8e12-CONTRACT",
+            "RT-811424859e2b8e12-ALTERNATE",
+            "RT-811424859e2b8e12-BINDING",
+            "RT-811424859e2b8e12-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.endpoint",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}/endpoint"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties/properties/endpoint",
+            "fragmentSha256": "f9757109fae32f55a22a6fe81eec0503fb3976db0fb4c7fc85a3d794d8014521"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "value.endpoint",
+            "lines": [
+              70
+            ]
+          }
+        },
+        {
+          "id": "RT-5dd888323602fcb0",
+          "original": "D228#/rows/573",
+          "originalObjectSha256": "4d3ef88d6187688f216f9e38eac835720fe15e829d3054829bd8c94c8a237fff",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-20b9ad8b0de71e60-CONTRACT",
+            "RT-20b9ad8b0de71e60-ALTERNATE",
+            "RT-20b9ad8b0de71e60-BINDING",
+            "RT-20b9ad8b0de71e60-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties",
+            "fragmentSha256": "0c115e017dec3ee3c6b1883e20a07282f8e2e3301f8f3ba9e37ebdbb3a7187fd"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              103
+            ]
+          }
+        },
+        {
+          "id": "RT-7b5d494eae67159d",
+          "original": "D228#/rows/574",
+          "originalObjectSha256": "e6c297e139d6d096150ad2a29a16cc3e445ed9b614ae67028e94a0f908f7f120",
+          "class": "secret-reference",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-6f606ecb42591563-CONTRACT",
+            "RT-6f606ecb42591563-ALTERNATE",
+            "RT-6f606ecb42591563-BINDING",
+            "RT-6f606ecb42591563-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.tokenSecret",
+          "registration": "kubeclaw.runtime-dispatch:runtime",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "export function activate(",
+            "lines": [
+              124
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:runtime/targets/{key}/tokenSecret"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+            "sha256": "d2dc9e7deee202d931104daf3bebf2854b1193ff035e6f89b33285714d79a49f",
+            "pointer": "/properties/targets/additionalProperties/properties/tokenSecret",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "sha256": "4e988fdbd64153b0107c1e6cb23c8ac6f81799d99275265976eb65a2d5b291cd",
+            "anchor": "value.tokenSecret",
+            "lines": [
+              72,
+              87
+            ]
+          }
+        },
+        {
+          "id": "RT-1e9776be6c1d997d",
+          "original": "D228#/rows/575",
+          "originalObjectSha256": "05ba38a82a0fe6eedc819179b15e5121ba8d917de7f8a1eeabf2a6a8931e9b49",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-1e9776be6c1d997d-CONTRACT",
+            "RT-1e9776be6c1d997d-ALTERNATE",
+            "RT-1e9776be6c1d997d-BINDING",
+            "RT-1e9776be6c1d997d-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets",
+            "fragmentSha256": "9e96b1ff06d9a155bafad5a7681a8b665495e1f110c6f516d7d5f65570eb1233"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              86
+            ]
+          }
+        },
+        {
+          "id": "RT-331350a782d1e18b",
+          "original": "D228#/rows/576",
+          "originalObjectSha256": "ee74f82d876b86954913b292e286016d381d9c97f07ed8384700cefe0426fa2f",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-1e9776be6c1d997d-CONTRACT",
+            "RT-1e9776be6c1d997d-ALTERNATE",
+            "RT-1e9776be6c1d997d-BINDING",
+            "RT-1e9776be6c1d997d-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties",
+            "fragmentSha256": "ade774896c0bb47b7b693e8ff25f14ecf7e0e85498fd6736d9baef22c37e2e66"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "Object.entries(raw.targets)",
+            "lines": [
+              86
+            ]
+          }
+        },
+        {
+          "id": "RT-889c83e23be50148",
+          "original": "D228#/rows/577",
+          "originalObjectSha256": "0ff87c0f82146b7538ecf0c770103441ce51e75dd139becce70d6b5e73a269e8",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-889c83e23be50148-CONTRACT",
+            "RT-889c83e23be50148-ALTERNATE",
+            "RT-889c83e23be50148-BINDING",
+            "RT-889c83e23be50148-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.endpoint",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/endpoint"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/endpoint",
+            "fragmentSha256": "f9757109fae32f55a22a6fe81eec0503fb3976db0fb4c7fc85a3d794d8014521"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.endpoint",
+            "lines": [
+              53
+            ]
+          }
+        },
+        {
+          "id": "RT-835aba66d51b9e5b",
+          "original": "D228#/rows/578",
+          "originalObjectSha256": "ccd4542248e21c4536bcaee94824e4e4b6eb9f85ad96297c3f1c1c85dc6b372d",
+          "class": "secret-reference",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-835aba66d51b9e5b-CONTRACT",
+            "RT-835aba66d51b9e5b-ALTERNATE",
+            "RT-835aba66d51b9e5b-BINDING",
+            "RT-835aba66d51b9e5b-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.tokenSecret",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/tokenSecret"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/tokenSecret",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.tokenSecret",
+            "lines": [
+              58
+            ]
+          }
+        },
+        {
+          "id": "RT-cb53ff8dac9b8144",
+          "original": "D228#/rows/579",
+          "originalObjectSha256": "dffc190c09bdbaeb13e9c40115fe506adc712ad5373928957c1058240920803c",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-cb53ff8dac9b8144-CONTRACT",
+            "RT-cb53ff8dac9b8144-ALTERNATE",
+            "RT-cb53ff8dac9b8144-BINDING",
+            "RT-cb53ff8dac9b8144-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.runtime",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/runtime"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/runtime",
+            "fragmentSha256": "955c28eab4b1b1c076f0dbe99e576ded0da50d9221f935753f685fc9c69c05c8"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.runtime",
+            "lines": [
+              20
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.runtime",
+              "lines": [
+                234,
+                241,
+                247
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-838197376f68e4a2",
+          "original": "D228#/rows/580",
+          "originalObjectSha256": "60575eef32bbff24feadb4dfce9cacb212b1b91ab30d9f808a6dcfb069b9ff7e",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-838197376f68e4a2-CONTRACT",
+            "RT-838197376f68e4a2-ALTERNATE",
+            "RT-838197376f68e4a2-BINDING",
+            "RT-838197376f68e4a2-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.agentId",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/agentId"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/agentId",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.agentId",
+            "lines": [
+              20
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.agentId",
+              "lines": [
+                240,
+                247
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-358f9081695f8703",
+          "original": "D228#/rows/581",
+          "originalObjectSha256": "d2975d3590eac2068ab28d24f230d5ce843ebd1ebe07a8deb91d910d1e4d70bd",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-358f9081695f8703-CONTRACT",
+            "RT-358f9081695f8703-ALTERNATE",
+            "RT-358f9081695f8703-BINDING",
+            "RT-358f9081695f8703-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.agentRole",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/agentRole"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/agentRole",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.agentRole",
+            "lines": [
+              59
+            ]
+          }
+        },
+        {
+          "id": "RT-671b7ce4e2aa02a2",
+          "original": "D228#/rows/582",
+          "originalObjectSha256": "8083c9266294387c60326d115fb7128c1c8a2581393f686d62609564bd93aaae",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-671b7ce4e2aa02a2-CONTRACT",
+            "RT-671b7ce4e2aa02a2-ALTERNATE",
+            "RT-671b7ce4e2aa02a2-BINDING",
+            "RT-671b7ce4e2aa02a2-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.model",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/model"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/model",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.model",
+            "lines": [
+              20
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.model",
+              "lines": [
+                240,
+                247,
+                290,
+                294
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-6d4934d73ec165e6",
+          "original": "D228#/rows/583",
+          "originalObjectSha256": "3ddcab682e3d23206697cd0e215dbfda45a94c85d2924d7c03b4c7621af5b5d1",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-6d4934d73ec165e6-CONTRACT",
+            "RT-6d4934d73ec165e6-ALTERNATE",
+            "RT-6d4934d73ec165e6-BINDING",
+            "RT-6d4934d73ec165e6-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.thinking",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/thinking"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/thinking",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.thinking",
+            "lines": [
+              20
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.thinking",
+              "lines": [
+                240,
+                247
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-d7a39fcd094662e4",
+          "original": "D228#/rows/584",
+          "originalObjectSha256": "707b63f36895d0089143ca085b0bf52e7e3dee29f20ee2071aae7d20efd32c5a",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-d7a39fcd094662e4-CONTRACT",
+            "RT-d7a39fcd094662e4-ALTERNATE",
+            "RT-d7a39fcd094662e4-BINDING",
+            "RT-d7a39fcd094662e4-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.controllerSessionKey",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/controllerSessionKey"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/controllerSessionKey",
+            "fragmentSha256": "f5f89a05eb2c77a976de0f9ec54586bc512a1a7f8546cf81b274e06a4c399a87"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.controllerSessionKey",
+            "lines": [
+              66
+            ]
+          }
+        },
+        {
+          "id": "RT-fb6d0fce3b9e2cd9",
+          "original": "D228#/rows/585",
+          "originalObjectSha256": "3394c8a06bb17676ff42b58374020ed161fbb465fce144cddd6cca0445002409",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-fb6d0fce3b9e2cd9-CONTRACT",
+            "RT-fb6d0fce3b9e2cd9-ALTERNATE",
+            "RT-fb6d0fce3b9e2cd9-BINDING",
+            "RT-fb6d0fce3b9e2cd9-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.collectorMode",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/collectorMode"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/collectorMode",
+            "fragmentSha256": "f56777819c8be28f711bc04bdfdb5fb6a82bdaf4109198c616273cb0003e4137"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.collectorMode",
+            "lines": [
+              63
+            ]
+          }
+        },
+        {
+          "id": "RT-a7c746c48003f145",
+          "original": "D228#/rows/587",
+          "originalObjectSha256": "4f5e1118586da1f383219247013a2438a9947b60721903f625894fe563febbee",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-a7c746c48003f145-CONTRACT",
+            "RT-a7c746c48003f145-ALTERNATE",
+            "RT-a7c746c48003f145-BINDING",
+            "RT-a7c746c48003f145-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.tokenizerEncoding",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "FIXED_TARGET_CAPACITY_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/tokenizerEncoding"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/tokenizerEncoding",
+            "fragmentSha256": "853ae7fd51440300d9686ee4badc3b9bc72df1c319fb48f31a1768a6f4796812"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.tokenizerEncoding",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.tokenizerEncoding",
+              "lines": [
+                131,
+                140,
+                141,
+                146,
+                169
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-3683aabfbafa8fab",
+          "original": "D228#/rows/588",
+          "originalObjectSha256": "6c88f0ae05e565aad54c3fd249442ac5c2d5fb5edb11e75b5d8938962aceef1c",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-3683aabfbafa8fab-CONTRACT",
+            "RT-3683aabfbafa8fab-ALTERNATE",
+            "RT-3683aabfbafa8fab-BINDING",
+            "RT-3683aabfbafa8fab-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxPromptBytes",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "FIXED_TARGET_CAPACITY_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/maxPromptBytes"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/maxPromptBytes",
+            "fragmentSha256": "89a051b65fc272b2e12914c4665a0a79b3693d64b07925f2b22517110c5160f6"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.maxPromptBytes",
+            "lines": [
+              7
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.maxPromptBytes",
+              "lines": [
+                130
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-f72ae0fd088c9c65",
+          "original": "D228#/rows/589",
+          "originalObjectSha256": "9c7e20d73b289e8a33a86305a08dddfeaa478e5e63d27d9743d61aaf5a9a94e4",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f72ae0fd088c9c65-CONTRACT",
+            "RT-f72ae0fd088c9c65-ALTERNATE",
+            "RT-f72ae0fd088c9c65-BINDING",
+            "RT-f72ae0fd088c9c65-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxInputTokens",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "FIXED_TARGET_CAPACITY_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/maxInputTokens"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/maxInputTokens",
+            "fragmentSha256": "70cf3dccf7816693e54d4b3a84c69bc37f0afc40af314528117f1bd9dbbdf0eb"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.maxInputTokens",
+            "lines": [
+              8
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.maxInputTokens",
+              "lines": [
+                132,
+                133
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-bbe7b4706efa257f",
+          "original": "D228#/rows/590",
+          "originalObjectSha256": "5c6efd7669ff6c7f3cc5f3d43261c497a4efadadc648ad87c128c8a882fdcd38",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-bbe7b4706efa257f-CONTRACT",
+            "RT-bbe7b4706efa257f-ALTERNATE",
+            "RT-bbe7b4706efa257f-BINDING",
+            "RT-bbe7b4706efa257f-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxOutputTokens",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "FIXED_TARGET_CAPACITY_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/maxOutputTokens"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/maxOutputTokens",
+            "fragmentSha256": "092694a1e1561361751e0f8a8f83fff5e9fef5107295d63de8d058fe46e649a5"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.maxOutputTokens",
+            "lines": [
+              9
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.maxOutputTokens",
+              "lines": [
+                132,
+                143,
+                144,
+                170
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-4a6bb21eea8e1b01",
+          "original": "D228#/rows/591",
+          "originalObjectSha256": "00b4c04252399aa7481a3cb03e300a0c0ca5f40e672b270e0fefe1de81262ac2",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-4a6bb21eea8e1b01-CONTRACT",
+            "RT-4a6bb21eea8e1b01-ALTERNATE",
+            "RT-4a6bb21eea8e1b01-BINDING",
+            "RT-4a6bb21eea8e1b01-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.maxContextTokens",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "FIXED_TARGET_CAPACITY_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/maxContextTokens"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/maxContextTokens",
+            "fragmentSha256": "cb5266d9c38e469fa4998510dbedf00e08aa7e26fc2486b8b522166e1685c83e"
+          },
+          "normalization": {
+            "path": "skills/common/plugin-runtime/foundation/config/openclaw-target-capacity.ts",
+            "sha256": "418e1f3b9582c433da99f0815f0cc5ecf2ef142ecc2bdfcac15cb2fee2a10620",
+            "anchor": "raw.maxContextTokens",
+            "lines": [
+              10
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "target.maxContextTokens",
+              "lines": [
+                132,
+                133
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-27fffc024fe2e554",
+          "original": "D228#/rows/592",
+          "originalObjectSha256": "20bcafdfff514ba7090f166a2faee59f7384a062de78bf5aa5947effb501bff3",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-27fffc024fe2e554-CONTRACT",
+            "RT-27fffc024fe2e554-ALTERNATE",
+            "RT-27fffc024fe2e554-BINDING",
+            "RT-27fffc024fe2e554-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.cwd",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/cwd"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/cwd",
+            "fragmentSha256": "ce43946511cfbbf8831067d579d16d80ec75f67f47ab8353a5ce996bfa373519"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.cwd",
+            "lines": [
+              59
+            ]
+          }
+        },
+        {
+          "id": "RT-3cafd75f2079b320",
+          "original": "D228#/rows/593",
+          "originalObjectSha256": "17fe4557cf26ee56ad365af5dff7c7438695055869e70e8f78e9f73a49b49b27",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-3cafd75f2079b320-CONTRACT",
+            "RT-3cafd75f2079b320-ALTERNATE",
+            "RT-3cafd75f2079b320-BINDING",
+            "RT-3cafd75f2079b320-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.repositoryRoot",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/repositoryRoot"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/repositoryRoot",
+            "fragmentSha256": "ce43946511cfbbf8831067d579d16d80ec75f67f47ab8353a5ce996bfa373519"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.repositoryRoot",
+            "lines": [
+              59
+            ]
+          }
+        },
+        {
+          "id": "RT-af08af7aec0d41b6",
+          "original": "D228#/rows/594",
+          "originalObjectSha256": "25ff23e013c120489d5996f07d136841723688b52f6ad8f6e25e5c96ea73dae8",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-af08af7aec0d41b6-CONTRACT",
+            "RT-af08af7aec0d41b6-ALTERNATE",
+            "RT-af08af7aec0d41b6-BINDING",
+            "RT-af08af7aec0d41b6-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.workspaceRoot",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/workspaceRoot"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/workspaceRoot",
+            "fragmentSha256": "bbeb8b5cfe3b8a0fb5bfe915b9ab5b8d0d3099861ef58779ef5c206eae75f9ad"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.workspaceRoot",
+            "lines": [
+              60,
+              70
+            ]
+          }
+        },
+        {
+          "id": "RT-dd0ae3cebdfdf35f",
+          "original": "D228#/rows/599",
+          "originalObjectSha256": "367d309872bbca21d68f19ecf1d6d7c0dfc9aa4d0f86b29373bd67ad9a86ae7f",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-dd0ae3cebdfdf35f-CONTRACT",
+            "RT-dd0ae3cebdfdf35f-ALTERNATE",
+            "RT-dd0ae3cebdfdf35f-BINDING",
+            "RT-dd0ae3cebdfdf35f-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.resultPathPrefix",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/resultPathPrefix"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/resultPathPrefix",
+            "fragmentSha256": "9d339cc9c9d13d172282477ef100ee0dbff9c20e9870f22089ca9d3d23b846d2"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.resultPathPrefix",
+            "lines": [
+              61
+            ]
+          }
+        },
+        {
+          "id": "RT-549874e9f0d2c907",
+          "original": "D228#/rows/600",
+          "originalObjectSha256": "13b528d0be12ed49096c96a42ca9f4293a9875d5b000fe9fd7943bee1ad665b6",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-549874e9f0d2c907-CONTRACT",
+            "RT-549874e9f0d2c907-ALTERNATE",
+            "RT-549874e9f0d2c907-BINDING",
+            "RT-549874e9f0d2c907-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.resultEndpoint",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/resultEndpoint"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/resultEndpoint",
+            "fragmentSha256": "f9757109fae32f55a22a6fe81eec0503fb3976db0fb4c7fc85a3d794d8014521"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.resultEndpoint",
+            "lines": [
+              61
+            ]
+          }
+        },
+        {
+          "id": "RT-93c98519785b41f3",
+          "original": "D228#/rows/601",
+          "originalObjectSha256": "5aad305cdebef8b633b4f637dc7e7a6e1d90f4cf0282083740b64d95dac64701",
+          "class": "secret-reference",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-93c98519785b41f3-CONTRACT",
+            "RT-93c98519785b41f3-ALTERNATE",
+            "RT-93c98519785b41f3-BINDING",
+            "RT-93c98519785b41f3-MUTANT"
+          ],
+          "owner": "kubeclaw.runtime-dispatch",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "originalField": "targets.{key}.resultTokenSecret",
+          "registration": "kubeclaw.runtime-dispatch:openclaw",
+          "activation": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+            "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+            "anchor": "export function activate(",
+            "lines": [
+              18
+            ]
+          },
+          "status": "SUPPLIED_DISPATCH_TARGET_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "currentAuthor": {
+            "platformPointer": "/adapters/kubeclaw.runtime-dispatch:openclaw/targets/{key}/resultTokenSecret"
+          },
+          "schema": {
+            "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+            "sha256": "f612b62b4ea229bffc72ddb4d0152863a322e8249967ca63e81ec0686dd76014",
+            "pointer": "/properties/targets/additionalProperties/properties/resultTokenSecret",
+            "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+          },
+          "receiver": {
+            "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+            "sha256": "01089d2e305658b9627c0c76bac67cbba123082db92d34a870127365a36ff11e",
+            "anchor": "raw.resultTokenSecret",
+            "lines": [
+              62
+            ]
+          }
+        },
+        {
+          "id": "RT-RUNTIME-RESULT-PATH-BYTES",
+          "original": "D228#/rows/1014",
+          "originalObjectSha256": "10d492cd8b30fbcc0c0e75b4b6287b049ee0cff955795cad0a54e45a436436f4",
+          "class": "operator-setting",
+          "caseIds": [
+            "RT-RUNTIME-RESULT-PATH-BYTES-MISSING",
+            "RT-RUNTIME-RESULT-PATH-BYTES-ALT",
+            "RT-RUNTIME-RESULT-PATH-BYTES-MUTANT"
+          ],
+          "owner": "review/runtime-dispatch shared envelope binding",
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "status": "SHARED_SDK_LITERAL_CENTRAL_RECEIVING_OPEN",
+          "centralPhysicalAuthor": null,
+          "originalField": "RUNTIME_RESULT_FILE_MAX_BYTES",
+          "source": {
+            "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+            "sha256": "a2b18a4fd9655b88fc4e13d785a1671849779c90bd2ed7dc02c5735c609e6113",
+            "anchor": "export const RUNTIME_RESULT_FILE_MAX_BYTES = 2_048;",
+            "lines": [
+              1
+            ]
+          },
+          "actualEffects": [
+            {
+              "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+              "sha256": "a2b18a4fd9655b88fc4e13d785a1671849779c90bd2ed7dc02c5735c609e6113",
+              "anchor": "Buffer.byteLength(resultFile, 'utf8') > RUNTIME_RESULT_FILE_MAX_BYTES",
+              "lines": [
+                17
+              ]
+            },
+            {
+              "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+              "sha256": "939625a3e1f719828910a74bc9f350c1b4cc119465a6b4db1305eb6cb4551a67",
+              "anchor": "Buffer.byteLength(file, 'utf8') > RUNTIME_RESULT_FILE_MAX_BYTES",
+              "lines": [
+                184
+              ]
+            },
+            {
+              "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+              "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a",
+              "anchor": "fixedBytes + RUNTIME_RESULT_FILE_MAX_BYTES",
+              "lines": [
+                66
+              ]
+            }
+          ]
+        }
+      ],
+      "dispatchSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/dispatch-successors.json",
+        "sha256": "616c620cd9435fa2a0af4cbedbf4336fab222e97d1b4f9896b09fbf6bbbe8f84"
+      },
+      "constraint": "Seven exact existing central byte/timing profile joins do not own original target endpoint/auth/identity/workspace/result settings. 34 target/normalization fields and one shared SDK result pathname limit remain central-receiving OPEN. Five target capacity fields still normalize from fixed source literals; Review sharing is not externalization. Preserve original class/secret-reference identities, selectors, history, full roster and native/independent gates. No source setting or original case newly accepted.",
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {

@@ -165,6 +165,15 @@ if len(plugin_policy_rows)!=17 or len(plugin_policy_joins['rows'])!=17: raise Va
 for identity,row in plugin_policy_rows.items():
     original=originals.get(identity)
     if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['centralPhysicalAuthor'] is not None or row['runtimeAcceptance']!='OPEN; original results unchanged': raise ValueError('Plugin policy original/acceptance drift: '+identity)
+dispatch_path = str((OUT/'dispatch-successors.json').relative_to(ROOT))
+dispatch_joins = read(dispatch_path)
+dispatch_rows = {r['id']:r for r in dispatch_joins['rows']}
+dispatch_exact = {i:r for i,r in dispatch_rows.items() if r['status']=='ORIGINAL_TARGET_SELECTED_DISPATCH_PROFILE_SOURCE_JOIN'}
+if len(dispatch_rows)!=42 or len(dispatch_joins['rows'])!=42 or len(dispatch_exact)!=7:raise ValueError('Dispatch source roster drift')
+for identity,row in dispatch_rows.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged':raise ValueError('Dispatch original/acceptance drift: '+identity)
+    if identity not in dispatch_exact and row['centralPhysicalAuthor'] is not None:raise ValueError('Dispatch invented central author')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -286,6 +295,16 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group['candidateSuccessors']=[]
         group['status']='EXACT_PLUGIN_POLICY_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN'
         group['constraint']=plugin_policy_joins['constraint']
+    dispatch = [dispatch_rows[i] for i in ids if i in dispatch_rows]
+    if dispatch:
+        if {r['id'] for r in dispatch}!=set(ids):raise ValueError('Incomplete dispatch source group')
+        group['exactDispatchProfileMappings']=[r for r in dispatch if r['id'] in dispatch_exact]
+        group['explicitDispatchResiduals']=[r for r in dispatch if r['id'] not in dispatch_exact]
+        group['remainingFieldIds']=[i for i in ids if i not in dispatch_exact]
+        group['dispatchSupplementalJoin']=pin(dispatch_path)
+        group['candidateSuccessors']=[]
+        group['status']='PARTIAL_EXACT_DISPATCH_PROFILE_SOURCE_JOIN'
+        group['constraint']=dispatch_joins['constraint']
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
@@ -315,12 +334,14 @@ if set(control_joined) != set(control_exact) or len(control_joined) != len(set(c
     raise ValueError('Prism control mappings/residuals not conserved across historical groups')
 plugin_policy_joined = [r['id'] for g in groups for r in g.get('explicitPluginPolicyResiduals', [])]
 if set(plugin_policy_joined)!=set(plugin_policy_rows) or len(plugin_policy_joined)!=len(set(plugin_policy_joined)):raise ValueError('Plugin policies not conserved across historical groups')
+dispatch_joined=[r['id'] for g in groups for r in g.get('exactDispatchProfileMappings',[])+g.get('explicitDispatchResiduals',[])]
+if set(dispatch_joined)!=set(dispatch_rows) or len(dispatch_joined)!=len(set(dispatch_joined)):raise ValueError('Dispatch identities not conserved across historical groups')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
               "exactPrismAttemptSourceJoins": len(attempt_exact), "explicitPrismAttemptReceivingResiduals": len(attempt_open), "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
-              "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
+              "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",
           "requiredGates": "All2409 fields/6845 cases/50 requirements/fullC0-C6, applicable original effects/history/mutants, native/archive and fresh integrated independent review remain mandatory"}
 if len(groups) != 45:
