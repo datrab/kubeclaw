@@ -6,7 +6,7 @@ Owner: Prism maintainers
 Evidence: contracts/prism/v1; skills/prism; charts/prism
 Evidence revision: `b2b85d4c8d3174aa41507cde77637227bb709e1e`
 Applies to: prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema
-Last verified: source, schema, migration, chart, and test inspection on 2026-09-19; backup source changes reconciled on 2026-10-17 (source inspection, not a live restore)
+Last verified: source, schema, migration, chart, and test inspection on 2026-09-19; backup behavior checked against the cited implementation on 2026-10-17; no live restore result is established
 
 ## Purpose
 

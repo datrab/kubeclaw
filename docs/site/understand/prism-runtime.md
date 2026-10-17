@@ -6,7 +6,7 @@ Owner: Prism maintainers
 Evidence: skills/prism; contracts/prism/v1; charts/prism; my-values/prism-agent-values.yaml
 Evidence revision: `b2b85d4c8d3174aa41507cde77637227bb709e1e`
 Applies to: the current Prism Control, Studio, native Worker, Ingestion service, Agent Bridge, and pipeline adapter
-Last verified: source, deployment, and test inspection on 2026-09-19; Prism Agent values changes reconciled on 2026-10-17 (source inspection, not a live readiness test)
+Last verified: source, deployment, and test inspection on 2026-09-19; Prism Agent values checked against the cited implementation on 2026-10-17; no live readiness result is established
 
 ## Purpose
 
@@ -786,7 +786,7 @@ The deployed Prism Agent values enable SPIFFE and disable Redis and registry pro
 Those values also enable the startup doctor before gateway startup, with
 `--max-old-space-size=3072`. Its resource requests are 100m CPU and 256Mi
 memory; limits are two CPUs and 4Gi memory. The heap setting is not the
-container memory limit. These settings configure migration headroom, not proof
+container memory limit. These are configured migration headroom, not proof
 that a particular persistent state will migrate successfully or fit in memory.
 
 
