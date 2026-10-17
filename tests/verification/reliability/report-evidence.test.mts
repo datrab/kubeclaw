@@ -14,7 +14,7 @@ import { FileJournal } from '../../../skills/nova/core/state/journal.ts';
 import { runRoot } from '../../../skills/nova/core/execution/run-root.ts';
 import { activate as evidenceAdapter } from '../../../skills/nova/plugins/pipeline-review/src/evidence-adapter.ts';
 import { activate as artifactAdapter } from '../../../skills/common/plugins/artifact-store/src/adapter.ts';
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import type { EvidenceSelection } from '../../../skills/nova/plugins/pipeline-review/src/evidence-bundle.ts';
 
 // Real Git/Core source producers and original artifact reads. No model factuality claim.
@@ -136,7 +136,7 @@ test('historical report source authority rejects foreign, stale, missing and cha
       const options={storageRoot:config.storageRoot,maximumBytes:config.maximumJournalBytes,orchestratorIssuerId:'nova'};
       try {
         const snapshot=JSON.parse(originalSnapshot.toString());delete snapshot.registry.effectAuditVersion;
-        const {digest:_old,...unsigned}=snapshot;snapshot.digest=sha256Text(canonicalJson(unsigned));
+        const {digest:_old,...unsigned}=snapshot;snapshot.digest=sha256Text(snapshot.schemaVersion === 'run-snapshot.v1' ? canonicalJson(unsigned) : portableJson(unsigned));
         fs.writeFileSync(snapshotFile,JSON.stringify(snapshot));
         assert.throws(()=>readRunEvidence({...first,snapshotDigest:snapshot.digest},options),/EFFECT_MODE_UNVERIFIABLE/);
         fs.writeFileSync(snapshotFile,originalSnapshot);

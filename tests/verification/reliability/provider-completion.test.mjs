@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import { createRequire } from 'node:module';
 import { spawnSync } from 'node:child_process';
 import { assessPlaywrightReport } from '../../../skills/buster/plugins/playwright/src/provider.js';
 
@@ -17,10 +18,14 @@ test('real Playwright reports distinguish execution, defects and all-skipped sui
       test('broken behavior', () => expect(2 + 2).toBe(5));
       test.skip('unimplemented behavior', () => {});
     `);
+    // Resolve the CLI from the same Playwright instance used by the generated tests.
+    const playwright = createRequire(import.meta.resolve('@playwright/test'));
+    const cli = path.join(path.dirname(playwright.resolve('playwright/package.json')), 'cli.js');
     for (const [selection, expected] of [['working behavior', 'passed'], ['broken behavior', 'failed'], ['unimplemented behavior', 'failed']]) {
-      const run = spawnSync(process.execPath, ['node_modules/playwright/cli.js', 'test', '--config', path.join(root, 'playwright.config.mjs'), '--grep', selection], { encoding: 'utf8', timeout: 30000 });
+      const run = spawnSync(process.execPath, [cli, 'test', '--config', path.join(root, 'playwright.config.mjs'), '--grep', selection], { encoding: 'utf8', timeout: 30000 });
       assert.equal(run.error, undefined);
       const report = JSON.parse(run.stdout);
+      assert.deepEqual(report.errors, [], run.stderr);
       const decision = assessPlaywrightReport(report, {}, 'blocking');
       assert.equal(decision.outcome, expected, JSON.stringify(decision));
       assert.equal(run.status, selection === 'broken behavior' ? 1 : 0);
