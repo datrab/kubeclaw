@@ -157,3 +157,21 @@ test('noncanonical alias and indirect controls cannot stand in for bundle consum
     failure(shell('deploy.sh', ['render', 'nova', 'code'], { NOVA_VALUES_FILE: overlay }), /(?:Duplicate|Unexpected|Indirect) reserved bundle control/);
   }
 }));
+
+test('conditional agent preflight rejects invalid YAML helpers before image deployment', () => fixture(({ root, shell }) => {
+  const overlay = path.join(root, 'invalid-helper.yaml');
+  for (const codeBundle of [
+    { archiveUrl: 123 }, { auth: { existingSecret: 123 } },
+    { auth: { existingSecretKey: 123 } },
+  ]) {
+    fs.writeFileSync(overlay, yaml.dump({ codeBundle }));
+    const result = shell('deploy.sh', ['agent', 'nova', '--with-code'], { NOVA_VALUES_FILE: overlay });
+    failure(result, /Bundle field must be a string/);
+    assert.doesNotMatch(result.stderr + result.stdout, /unexpected cluster access|Agent Deploy: nova/,
+      'invalid helper must stop conditional preflight before image deployment');
+  }
+  fs.writeFileSync(overlay, yaml.dump({ busterRuntimeResources: { image: 'invalid' } }));
+  const result = shell('deploy.sh', ['agent', 'buster', '--with-code'], { BUSTER_VALUES_FILE: overlay });
+  failure(result, /BUSTER_RESOURCE_OVERLAY_INVALID/);
+  assert.doesNotMatch(result.stderr + result.stdout, /unexpected cluster access|Agent Deploy: buster/);
+}));

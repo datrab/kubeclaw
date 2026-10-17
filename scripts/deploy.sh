@@ -1352,11 +1352,11 @@ deploy_agent() {
     bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
 
     if [[ -z $bundle_auth_secret ]]; then
-      bundle_auth_secret="$(bundle_values_field "$values_file" "$private_values" auth existingSecret)"
+      bundle_auth_secret="$(bundle_values_field "$values_file" "$private_values" auth existingSecret)" || return 1
     fi
     if [[ -z $bundle_auth_key || $bundle_auth_key == "token" ]]; then
       local values_auth_key=""
-      values_auth_key="$(bundle_values_field "$values_file" "$private_values" auth existingSecretKey)"
+      values_auth_key="$(bundle_values_field "$values_file" "$private_values" auth existingSecretKey)" || return 1
       if [[ -n $values_auth_key ]]; then
         bundle_auth_key="$values_auth_key"
       fi
@@ -1369,7 +1369,7 @@ deploy_agent() {
       fi
       info "Selected ${role} code bundle commit: ${bundle_expected_commit}" >&2
     fi
-    if [[ -z $bundle_archive_url ]]; then bundle_archive_url="$(bundle_values_field "$values_file" "$private_values" archiveUrl)"; fi
+    if [[ -z $bundle_archive_url ]]; then bundle_archive_url="$(bundle_values_field "$values_file" "$private_values" archiveUrl)" || return 1; fi
     if [[ -z $bundle_archive_url ]]; then
       if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit" "$image_repo")"; then
         bundle_archive_url=""
@@ -1401,7 +1401,7 @@ deploy_agent() {
   if [[ -n $private_values ]]; then helm_args+=(--values "$private_values"); fi
   if [[ "$role" == buster && -n "$private_values" ]]; then
     local runtime_resources
-    runtime_resources="$(node "$REPO_DIR/scripts/buster-resource-overlay.mjs" "$values_file" "$private_values")"
+    runtime_resources="$(node "$REPO_DIR/scripts/buster-resource-overlay.mjs" "$values_file" "$private_values")" || { [[ -z $override_file ]] || rm -f "$override_file"; return 1; }
     if [[ -n "$runtime_resources" ]]; then helm_args+=(--set-json "$runtime_resources"); fi
   fi
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
@@ -1691,11 +1691,11 @@ cmd_prism() {
   prism_bundle_auth_key="$(bundle_env_for_role prism auth_key)"
   prism_bundle_archive_url="$(bundle_env_for_role prism archive_url)"
   if [[ -z $prism_bundle_auth_secret ]]; then
-    prism_bundle_auth_secret="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecret)"
+    prism_bundle_auth_secret="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecret)" || return 1
   fi
   if [[ -z $prism_bundle_auth_key || $prism_bundle_auth_key == "token" ]]; then
     local prism_values_auth_key=""
-    prism_values_auth_key="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecretKey)"
+    prism_values_auth_key="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecretKey)" || return 1
     if [[ -n $prism_values_auth_key ]]; then
       prism_bundle_auth_key="$prism_values_auth_key"
     fi
@@ -1707,7 +1707,7 @@ cmd_prism() {
     fi
     info "Selected Prism code bundle commit: ${prism_bundle_expected_commit}" >&2
   fi
-  if [[ -z $prism_bundle_archive_url ]]; then prism_bundle_archive_url="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" archiveUrl)"; fi
+  if [[ -z $prism_bundle_archive_url ]]; then prism_bundle_archive_url="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" archiveUrl)" || return 1; fi
   if [[ -z $prism_bundle_archive_url ]]; then
     prism_bundle_archive_url="$(default_bundle_archive_url prism "$prism_bundle_expected_commit" "$prism_agent_image_repo")" || true
   fi
