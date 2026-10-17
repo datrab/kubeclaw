@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs';
+import { createHash } from 'node:crypto';
+import { assertRouteContinuity } from './lib/docs-route-continuity.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -120,6 +122,15 @@ for (const redirect of routeRegistry.redirects ?? []) {
   if (redirect.from === redirect.to) throw new Error(`Redirect points to itself: ${redirect.from}`);
   redirectSources.add(redirect.from);
 }
+
+// Pinned once to the published af792991 map. A new snapshot is not an
+// automatic escape hatch for a removed route; changing this pin needs review.
+const baselinePath = path.join(root, 'docs/config/documentation-published-route-baseline.json');
+const baselineBytes = fs.readFileSync(baselinePath);
+if (createHash('sha256').update(baselineBytes).digest('hex') !== 'c9fd21962ade0616a71cc5f0a30363b0020ed26028fd88444a9934197d76f6b7') {
+  throw new Error('Published-route baseline bytes changed; do not repin to hide route loss.');
+}
+assertRouteContinuity(JSON.parse(baselineBytes), pages, routeRegistry);
 
 const output = `${JSON.stringify({
   schemaVersion: 'kubeclaw-documentation-map.v1',

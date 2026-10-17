@@ -1,0 +1,839 @@
+{
+  "schemaVersion": "kubeclaw-published-route-baseline.v1",
+  "sourceRevision": "af792991b9bad92b43b6e1f52832a02ca71a5256",
+  "sourceMapPath": "docs/site/reference/generated-documentation-map.json",
+  "sourceMapSHA256": "d71a48aaa124f62b48f24eb6dbdeb64ae3692217e2ac4870661f3587fa6a6456",
+  "boundary": "Known committed documentation map; not evidence of external serving or routes before the first registry. Do not advance this baseline to hide route removals.",
+  "pages": [
+    {
+      "page": "docs/site/README.md",
+      "route": "/",
+      "owner": "documentation"
+    },
+    {
+      "page": "docs/site/decisions/README.md",
+      "route": "/decisions/",
+      "owner": "platform-architecture"
+    },
+    {
+      "page": "docs/site/decisions/acceptance.md",
+      "route": "/decisions/acceptance/",
+      "owner": "platform-maintainers"
+    },
+    {
+      "page": "docs/site/decisions/core-and-plugins.md",
+      "route": "/decisions/core-and-plugins/",
+      "owner": "KubeClaw maintainers"
+    },
+    {
+      "page": "docs/site/decisions/echo.md",
+      "route": "/decisions/echo/",
+      "owner": "review-plugin maintainers"
+    },
+    {
+      "page": "docs/site/decisions/implementation.md",
+      "route": "/decisions/implementation/",
+      "owner": "platform maintainers"
+    },
+    {
+      "page": "docs/site/decisions/prism.md",
+      "route": "/decisions/prism/",
+      "owner": "Prism maintainers"
+    },
+    {
+      "page": "docs/site/decisions/runtime-and-operations.md",
+      "route": "/decisions/runtime-and-operations/",
+      "owner": "platform maintainers"
+    },
+    {
+      "page": "docs/site/decisions/test-gate.md",
+      "route": "/decisions/test-gate/",
+      "owner": "KubeClaw maintainers"
+    },
+    {
+      "page": "docs/site/extend/README.md",
+      "route": "/extend/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/buster.md",
+      "route": "/extend/buster/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/extend/contracts.md",
+      "route": "/extend/contracts/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/developer-handbook.md",
+      "route": "/extend/developer-handbook/",
+      "owner": "developer experience maintainers"
+    },
+    {
+      "page": "docs/site/extend/documentation-maintenance.md",
+      "route": "/extend/documentation-maintenance/",
+      "owner": "documentation"
+    },
+    {
+      "page": "docs/site/extend/effectful-plugin.md",
+      "route": "/extend/effectful-plugin/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/first-plugin.md",
+      "route": "/extend/first-plugin/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/host-and-engine.md",
+      "route": "/extend/host-and-engine/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/lint.md",
+      "route": "/extend/lint/",
+      "owner": "lint"
+    },
+    {
+      "page": "docs/site/extend/nova.md",
+      "route": "/extend/nova/",
+      "owner": "nova"
+    },
+    {
+      "page": "docs/site/extend/platform/README.md",
+      "route": "/extend/platform/",
+      "owner": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "page": "docs/site/extend/platform/buster.md",
+      "route": "/extend/platform/buster/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/extend/platform/prism.md",
+      "route": "/extend/platform/prism/",
+      "owner": "Prism maintainers"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/README.md",
+      "route": "/extend/plugin-catalogue/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "route": "/extend/plugin-catalogue/kubeclaw-agent-observer/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "route": "/extend/plugin-catalogue/kubeclaw-ops/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "route": "/extend/plugin-catalogue/kubeclaw-prism/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.agent-observability/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.api-flow/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.architecture-validator/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.artifact-store/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.axe/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.blueprint-sync/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.buster-quality-gate/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.case-study/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.command-runner/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.container-build/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.coverage-budget/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.delivery-lint/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.demo-auth-smoke/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.demo-handoff/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.direct-command/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.git-workspace/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.http/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.human-approval/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.implementation-agent/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.junit-report/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.kubernetes-fixture/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.lighthouse/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.lint/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.network-http/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.notification-observer/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.openapi/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.openclaw-agent-events/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.operator-messaging/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.pipeline-review/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.playwright/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.preflight-contract/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.prism-design/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.project-summary/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.redis-transport/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.remote-test-gate/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.repository-adapter/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.review/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.runtime-dispatch/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.secret-resolver/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.security-providers/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.size-budget/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.state-store/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.tailscale-exposure/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.telemetry-observer/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.telemetry-store/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.transport-publisher/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.visual/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.wait-store/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/extend/testing.md",
+      "route": "/extend/testing/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/product-surfaces.md",
+      "route": "/product-surfaces/",
+      "owner": "documentation architecture"
+    },
+    {
+      "page": "docs/site/reference/README.md",
+      "route": "/reference/",
+      "owner": "documentation"
+    },
+    {
+      "page": "docs/site/reference/api-object-updates.md",
+      "route": "/reference/api-object-updates/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/reference/buster-error-codes.md",
+      "route": "/reference/buster-error-codes/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/reference/buster-provider-configuration.md",
+      "route": "/reference/buster-provider-configuration/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "route": "/reference/buster-runtime-configuration/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/reference/buster-suites.md",
+      "route": "/reference/buster-suites/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/reference/capabilities.md",
+      "route": "/reference/capabilities/",
+      "owner": "plugin-foundation"
+    },
+    {
+      "page": "docs/site/reference/cli.md",
+      "route": "/reference/cli/",
+      "owner": "platform-operations"
+    },
+    {
+      "page": "docs/site/reference/configuration-change-impact.md",
+      "route": "/reference/configuration-change-impact/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/reference/configuration-compatibility.md",
+      "route": "/reference/configuration-compatibility/",
+      "owner": "configuration-owning components"
+    },
+    {
+      "page": "docs/site/reference/configuration-errors.md",
+      "route": "/reference/configuration-errors/",
+      "owner": "configuration-owning components"
+    },
+    {
+      "page": "docs/site/reference/configuration-precedence.md",
+      "route": "/reference/configuration-precedence/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/reference/configuration.md",
+      "route": "/reference/configuration/",
+      "owner": "documentation; consumer semantics belong to the named component"
+    },
+    {
+      "page": "docs/site/reference/contracts.md",
+      "route": "/reference/contracts/",
+      "owner": "documentation; named contract and store components own behavior"
+    },
+    {
+      "page": "docs/site/reference/documentation-governance.md",
+      "route": "/reference/documentation-governance/",
+      "owner": "documentation"
+    },
+    {
+      "page": "docs/site/reference/documentation-site.md",
+      "route": "/reference/documentation-site/",
+      "owner": "documentation"
+    },
+    {
+      "page": "docs/site/reference/endpoints.md",
+      "route": "/reference/endpoints/",
+      "owner": "the source component listed for each route or connection"
+    },
+    {
+      "page": "docs/site/reference/environment-variables.md",
+      "route": "/reference/environment-variables/",
+      "owner": "platform-operations"
+    },
+    {
+      "page": "docs/site/reference/errors.md",
+      "route": "/reference/errors/",
+      "owner": "documentation; named components own diagnostic and delivery semantics"
+    },
+    {
+      "page": "docs/site/reference/events.md",
+      "route": "/reference/events/",
+      "owner": "documentation; named components own diagnostic and delivery semantics"
+    },
+    {
+      "page": "docs/site/reference/glossary.md",
+      "route": "/reference/glossary/",
+      "owner": "documentation"
+    },
+    {
+      "page": "docs/site/reference/helm-values.md",
+      "route": "/reference/helm-values/",
+      "owner": "platform-operations"
+    },
+    {
+      "page": "docs/site/reference/host-and-prism-configuration.md",
+      "route": "/reference/host-and-prism-configuration/",
+      "owner": "platform operations and Prism"
+    },
+    {
+      "page": "docs/site/reference/images-and-digests.md",
+      "route": "/reference/images-and-digests/",
+      "owner": "documentation; release owners select artifacts and workload owners verify deployment"
+    },
+    {
+      "page": "docs/site/reference/lint-policy-generated.md",
+      "route": "/reference/lint-policy-generated/",
+      "owner": "lint"
+    },
+    {
+      "page": "docs/site/reference/lint-policy.md",
+      "route": "/reference/lint-policy/",
+      "owner": "lint"
+    },
+    {
+      "page": "docs/site/reference/lint-rules.md",
+      "route": "/reference/lint-rules/",
+      "owner": "lint"
+    },
+    {
+      "page": "docs/site/reference/nova-project.md",
+      "route": "/reference/nova-project/",
+      "owner": "Nova project compiler"
+    },
+    {
+      "page": "docs/site/reference/pipeline-definition.md",
+      "route": "/reference/pipeline-definition/",
+      "owner": "Nova Core"
+    },
+    {
+      "page": "docs/site/reference/pipeline-json.md",
+      "route": "/reference/pipeline-json/",
+      "owner": "Nova test-plan resolver and project setup"
+    },
+    {
+      "page": "docs/site/reference/pipeline-platform.md",
+      "route": "/reference/pipeline-platform/",
+      "owner": "plugin runtime and Nova Core"
+    },
+    {
+      "page": "docs/site/reference/platform-surfaces-generated.md",
+      "route": "/reference/platform-surfaces-generated/",
+      "owner": "platform maintainers"
+    },
+    {
+      "page": "docs/site/reference/plugin-configuration.md",
+      "route": "/reference/plugin-configuration/",
+      "owner": "configuration source owners listed for each schema"
+    },
+    {
+      "page": "docs/site/reference/project-pipeline-publication.md",
+      "route": "/reference/project-pipeline-publication/",
+      "owner": "Nova project setup"
+    },
+    {
+      "page": "docs/site/reference/roles-and-package-ownership.md",
+      "route": "/reference/roles-and-package-ownership/",
+      "owner": "runtime packaging, Nova, Buster, Prism, and Worker Core maintainers"
+    },
+    {
+      "page": "docs/site/reference/schemas.md",
+      "route": "/reference/schemas/",
+      "owner": "documentation; consumer semantics belong to the named component"
+    },
+    {
+      "page": "docs/site/reference/sdk-exports.md",
+      "route": "/reference/sdk-exports/",
+      "owner": "documentation automation"
+    },
+    {
+      "page": "docs/site/reference/sdk.md",
+      "route": "/reference/sdk/",
+      "owner": "documentation automation"
+    },
+    {
+      "page": "docs/site/reference/secrets.md",
+      "route": "/reference/secrets/",
+      "owner": "platform-security"
+    },
+    {
+      "page": "docs/site/reference/service-routing.md",
+      "route": "/reference/service-routing/",
+      "owner": "platform networking"
+    },
+    {
+      "page": "docs/site/reference/stores-and-retention.md",
+      "route": "/reference/stores-and-retention/",
+      "owner": "documentation; named contract and store components own behavior"
+    },
+    {
+      "page": "docs/site/reference/verification-commands.md",
+      "route": "/reference/verification-commands/",
+      "owner": "platform-maintainers"
+    },
+    {
+      "page": "docs/site/reference/worker-profiles-and-roles.md",
+      "route": "/reference/worker-profiles-and-roles/",
+      "owner": "worker core and Prism"
+    },
+    {
+      "page": "docs/site/reference/workflows.md",
+      "route": "/reference/workflows/",
+      "owner": "platform-maintainers"
+    },
+    {
+      "page": "docs/site/status/acceptance.md",
+      "route": "/status/acceptance/",
+      "owner": "platform operator"
+    },
+    {
+      "page": "docs/site/status/current.md",
+      "route": "/status/current/",
+      "owner": "platform-architecture"
+    },
+    {
+      "page": "docs/site/status/open-issues.md",
+      "route": "/status/open-issues/",
+      "owner": "platform-maintainers"
+    },
+    {
+      "page": "docs/site/status/roadmap.md",
+      "route": "/status/roadmap/",
+      "owner": "platform-maintainers"
+    },
+    {
+      "page": "docs/site/understand/README.md",
+      "route": "/understand/",
+      "owner": "platform architecture"
+    },
+    {
+      "page": "docs/site/understand/archviewer.md",
+      "route": "/understand/archviewer/",
+      "owner": "Archviewer maintainers"
+    },
+    {
+      "page": "docs/site/understand/buster-namespace-controller.md",
+      "route": "/understand/buster-namespace-controller/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/understand/buster.md",
+      "route": "/understand/buster/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/understand/codex-integration.md",
+      "route": "/understand/codex-integration/",
+      "owner": "Codex integration maintainers"
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "route": "/understand/communication/",
+      "owner": "runtime and platform maintainers"
+    },
+    {
+      "page": "docs/site/understand/components-and-authority.md",
+      "route": "/understand/components-and-authority/",
+      "owner": "platform architecture"
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "route": "/understand/data-and-state/",
+      "owner": "state-owning component maintainers"
+    },
+    {
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "route": "/understand/deployment-and-trust/",
+      "owner": "platform architecture and operations"
+    },
+    {
+      "page": "docs/site/understand/echo.md",
+      "route": "/understand/echo/",
+      "owner": "Echo maintainers"
+    },
+    {
+      "page": "docs/site/understand/forge.md",
+      "route": "/understand/forge/",
+      "owner": "Forge maintainers"
+    },
+    {
+      "page": "docs/site/understand/nova-core.md",
+      "route": "/understand/nova-core/",
+      "owner": "Nova maintainers"
+    },
+    {
+      "page": "docs/site/understand/openclaw.md",
+      "route": "/understand/openclaw/",
+      "owner": "OpenClaw integration maintainers"
+    },
+    {
+      "page": "docs/site/understand/ops-mcp.md",
+      "route": "/understand/ops-mcp/",
+      "owner": "Ops MCP maintainers"
+    },
+    {
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "route": "/understand/pipeline-dependencies/",
+      "owner": "platform architecture and pipeline owners"
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "route": "/understand/platform-and-operations/",
+      "owner": "platform architecture and operations"
+    },
+    {
+      "page": "docs/site/understand/plugin-runtime.md",
+      "route": "/understand/plugin-runtime/",
+      "owner": "plugin-runtime maintainers"
+    },
+    {
+      "page": "docs/site/understand/prism-data.md",
+      "route": "/understand/prism-data/",
+      "owner": "Prism maintainers"
+    },
+    {
+      "page": "docs/site/understand/prism-runtime.md",
+      "route": "/understand/prism-runtime/",
+      "owner": "Prism maintainers"
+    },
+    {
+      "page": "docs/site/understand/prism.md",
+      "route": "/understand/prism/",
+      "owner": "Prism maintainers"
+    },
+    {
+      "page": "docs/site/understand/request-state-recovery.md",
+      "route": "/understand/request-state-recovery/",
+      "owner": "Nova Core"
+    },
+    {
+      "page": "docs/site/understand/request-to-result.md",
+      "route": "/understand/request-to-result/",
+      "owner": "Nova Core"
+    },
+    {
+      "page": "docs/site/understand/security-and-trust.md",
+      "route": "/understand/security-and-trust/",
+      "owner": "platform security and runtime maintainers"
+    },
+    {
+      "page": "docs/site/understand/telemetry.md",
+      "route": "/understand/telemetry/",
+      "owner": "observability maintainers"
+    },
+    {
+      "page": "docs/site/understand/worker-core.md",
+      "route": "/understand/worker-core/",
+      "owner": "Worker Core maintainers"
+    },
+    {
+      "page": "docs/site/understand/worker-trust.md",
+      "route": "/understand/worker-trust/",
+      "owner": "Worker Core and platform operations"
+    },
+    {
+      "page": "docs/site/use/README.md",
+      "route": "/use/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/use/capacity.md",
+      "route": "/use/capacity/",
+      "owner": "platform operations and each named data owner"
+    },
+    {
+      "page": "docs/site/use/demo-delivery.md",
+      "route": "/use/demo-delivery/",
+      "owner": "product operations"
+    },
+    {
+      "page": "docs/site/use/diagnose.md",
+      "route": "/use/diagnose/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/use/install.md",
+      "route": "/use/install/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/use/maintenance.md",
+      "route": "/use/maintenance/",
+      "owner": "release engineering and platform operations"
+    },
+    {
+      "page": "docs/site/use/operate.md",
+      "route": "/use/operate/",
+      "owner": "Nova Core and platform operations"
+    },
+    {
+      "page": "docs/site/use/plugins.md",
+      "route": "/use/plugins/",
+      "owner": "platform configuration owner"
+    },
+    {
+      "page": "docs/site/use/prism-studio.md",
+      "route": "/use/prism-studio/",
+      "owner": "Prism maintainers"
+    },
+    {
+      "page": "docs/site/use/quickstart.md",
+      "route": "/use/quickstart/",
+      "owner": "platform operations"
+    },
+    {
+      "page": "docs/site/use/recovery.md",
+      "route": "/use/recovery/",
+      "owner": "platform operations and data owners"
+    },
+    {
+      "page": "docs/site/use/worker-trust.md",
+      "route": "/use/worker-trust/",
+      "owner": "platform operations and workload-identity owner"
+    },
+    {
+      "page": "docs/site/use/workflows/README.md",
+      "route": "/use/workflows/",
+      "owner": "product integration maintainers"
+    },
+    {
+      "page": "docs/site/use/workflows/buster-suite.md",
+      "route": "/use/workflows/buster-suite/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/use/workflows/kubernetes-fixture.md",
+      "route": "/use/workflows/kubernetes-fixture/",
+      "owner": "buster"
+    },
+    {
+      "page": "docs/site/use/workflows/wait-resume.md",
+      "route": "/use/workflows/wait-resume/",
+      "owner": "product integration maintainers; platform operations owns execution access"
+    }
+  ]
+}
