@@ -1,4 +1,5 @@
-import { readTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs/promises';
@@ -59,8 +60,11 @@ test('real historical producer preserves full and compacted jobs in the fixed-UI
   const originalBytes = await fs.readFile(originalFile);
   await fs.chmod(originalFile, 0o444);
   const descriptor = await digestHistoricalFile(originalFile, 16777216);
-  const config = readTestBundle(canonicalSwarmEntry);
-  const settings = { ...config['buster-engine'].settings.preparation, maximumActivePreparations: 1 };
+  // Current complete central authors and the actual consumed-owner tuple. This
+  // filesystem-import fixture does not authenticate a productive boot or v10.
+  const capture = captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline()));
+  const settings = { ...(capture.components['buster-engine']!.settings as unknown as BusterSettings).preparation,
+    maximumActivePreparations: 1 };
   const importId = 'a'.repeat(32), sourceRoot = path.join(root, 'sources'), group = path.join(sourceRoot, importId);
   await fs.mkdir(sourceRoot, { mode: 0o755 }); await fs.mkdir(group, { mode: 0o1770 });
   await fs.chown(group, 0, 1003); await fs.chmod(group, 0o1770);
