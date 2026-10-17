@@ -185,6 +185,15 @@ for identity,row in core_platform_rows.items():
     if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged':raise ValueError('Core54 original/acceptance drift: '+identity)
     if identity not in core_platform_exact and row['centralPhysicalAuthor'] is not None:raise ValueError('Core54 invented central author')
     if identity in core_platform_protocol and row['class']!='protocol-invariant':raise ValueError('Core54 protocol classification drift')
+author_residual_path=str((OUT/'author-residual-successors.json').relative_to(ROOT))
+author_residual_joins=read(author_residual_path)
+author_residual_rows={r['id']:r for r in author_residual_joins['rows']}
+author_residual_exact={i:r for i,r in author_residual_rows.items() if r['status']=='EXACT_EXISTING_CONTROL_LIFETIME_SOURCE_JOIN'}
+if len(author_residual_rows)!=4 or len(author_residual_joins['rows'])!=4 or len(author_residual_exact)!=1:raise ValueError('Four author source lanes drift')
+for identity,row in author_residual_rows.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged':raise ValueError('Author original/acceptance drift')
+    if identity not in author_residual_exact and row['centralPhysicalAuthor'] is not None:raise ValueError('Invented author source')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -327,6 +336,15 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group['candidateSuccessors']=[]
         group['status']='PARTIAL_EXACT_CORE_LEASE_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS'
         group['constraint']=core_platform_joins['constraint']
+    author_residual=[author_residual_rows[i] for i in ids if i in author_residual_rows]
+    if author_residual:
+        if {r['id'] for r in author_residual}!=set(ids):raise ValueError('Incomplete author residual group')
+        group['exactAuthorLifetimeMappings']=[r for r in author_residual if r['id'] in author_residual_exact]
+        group['explicitAuthorPolicyResiduals']=[r for r in author_residual if r['id'] not in author_residual_exact]
+        group['remainingFieldIds']=[i for i in ids if i not in author_residual_exact]
+        group['authorResidualSupplementalJoin']=pin(author_residual_path)
+        group['status']='EXACT_AUTHOR_SOURCE_LANES_WITH_RECEIVING_RESIDUALS'
+        group['constraint']=author_residual_joins['constraint']
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
@@ -360,6 +378,8 @@ dispatch_joined=[r['id'] for g in groups for r in g.get('exactDispatchProfileMap
 if set(dispatch_joined)!=set(dispatch_rows) or len(dispatch_joined)!=len(set(dispatch_joined)):raise ValueError('Dispatch identities not conserved across historical groups')
 core_platform_joined=[r['id'] for g in groups for r in g.get('exactCoreLeaseMemoryMappings',[])+g.get('originalCoreProtocolInvariants',[])+g.get('explicitCorePlatformResiduals',[])]
 if set(core_platform_joined)!=set(core_platform_rows) or len(core_platform_joined)!=len(set(core_platform_joined)):raise ValueError('Core54 identities not conserved across historical groups')
+author_residual_joined=[r['id'] for g in groups for r in g.get('exactAuthorLifetimeMappings',[])+g.get('explicitAuthorPolicyResiduals',[])]
+if set(author_residual_joined)!=set(author_residual_rows) or len(author_residual_joined)!=len(set(author_residual_joined)):raise ValueError('Author source lanes not conserved')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
