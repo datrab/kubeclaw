@@ -25,7 +25,13 @@ jobs:
         with:
           version: v3.18.4
       - name: Check generated versions and release receipt validation
+        id: policy-checks
+        shell: bash
         run: |
+          # Keep the original fail-fast command sequence; expose its exact failed
+          # subcommand when anonymous GitHub step-log access is unavailable.
+          exec > >(tee "$RUNNER_TEMP/policy-checks.log") 2>&1
+          set -x
           sudo apt-get update -qq && sudo apt-get install -y lua5.1
           LUA_BIN=lua5.1 node --test tests/verification/deployment/gitops-health.test.mjs
           node scripts/check-action-pins.mjs
@@ -51,6 +57,14 @@ jobs:
             node scripts/updates/materialize-release.mjs --check --check-selected-source
           fi
           if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
+      - name: Retain original policy failure diagnostics
+        if: ${{ failure() && steps.policy-checks.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: policy-checks-failure-${{ github.sha }}
+          path: ${{ runner.temp }}/policy-checks.log
+          retention-days: 7
+          if-no-files-found: error
       - name: Verify selected digests against successful source workflow receipts
         env:
           GITHUB_TOKEN: ${{ github.token }}

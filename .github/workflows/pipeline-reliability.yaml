@@ -118,11 +118,22 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - name: Run native authority tests in an actual accounted Linux scope
+        id: native-tests
+        shell: bash
         run: |
           sudo systemd-run --scope --quiet \
             -p MemoryAccounting=yes -p TasksAccounting=yes -p CPUAccounting=yes \
             env "PATH=$PATH" PRISM_NATIVE_ISOLATED_TEST_POOL=true \
-              "$(command -v node)" scripts/reliability-tests.mjs native
+              "$(command -v node)" scripts/reliability-tests.mjs native \
+            2>&1 | tee "$RUNNER_TEMP/native-reliability.log"
+      - name: Retain original native failure diagnostics
+        if: ${{ failure() && steps.native-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: native-reliability-failure-${{ github.sha }}
+          path: ${{ runner.temp }}/native-reliability.log
+          retention-days: 7
+          if-no-files-found: error
 
   service-reliability:
     runs-on: ubuntu-latest
