@@ -1,3 +1,4 @@
+import {prismChartProjection} from '../../../scripts/generate-prism-chart-config.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { execFile, spawn } from 'node:child_process';
@@ -108,7 +109,9 @@ test('native lock prevents overlap and whole-operation deadline kills blocked du
 
 test('actual Helm render runs the group script and verification has no database credentials', async () => {
   const helm = process.env.HELM_BIN ?? 'helm';
-  const { stdout } = await execute(helm, ['template', 'prism', 'charts/prism', '-n', 'default', '-f', 'charts/prism/ci-values.yaml']);
+  const topology = prismChartProjection(path.resolve('config'));
+  assert.deepEqual(JSON.parse(await readFile('charts/prism/files/pipeline/prism-topology.json', 'utf8')), topology);
+  const { stdout } = await execute(helm, ['template', topology.deployment.releaseName, 'charts/prism', '-n', topology.deployment.namespace, '-f', 'charts/prism/ci-values.yaml']);
   const docs = loadAll(stdout) as any[];
   const config = docs.find(item => item?.kind === 'ConfigMap' && item.metadata.name === 'prism-backup-script');
   assert.equal(config.data['prism-backup.sh'], await readFile(script, 'utf8'));

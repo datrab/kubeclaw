@@ -1,3 +1,7 @@
+import path from 'node:path';
+import os from 'node:os';
+import {fixtureBusterImageDelivery} from '../../fixtures/buster-image-delivery.mjs';
+import {busterChartProjection} from '../../../scripts/generate-buster-chart-config.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
@@ -6,12 +10,28 @@ import yaml from 'js-yaml';
 import {loadNativeNodePolicy,nativePoolPolicy} from '../../../scripts/native-worker-node-policy.mjs';
 import {busterResourceArgument} from '../../../scripts/buster-resource-overlay.mjs';
 
-test('AX41 Buster uses a bounded browser child without replacing runtime image or credentials',()=>{
- const base=yaml.load(fs.readFileSync('releases/values/buster.yaml','utf8'));
+test('AX41 Buster uses a bounded browser child without replacing runtime image or credentials',t=>{
+ // Current authored container/credential shape plus immutable selected images;
+ // historical releases/values predate the central startup contract.
+ const base=yaml.load(fs.readFileSync('my-values/buster-values.yaml','utf8'));
+ const images=JSON.parse(fs.readFileSync('releases/runtime-images.json','utf8')).images;
+ for(const container of base.extraContainers){
+  const name=container.image?.match(/\/kubeclaw-([^:@]+)(?::|@)/)?.[1];
+  if(name){assert.match(images[name],/@sha256:[a-f0-9]{64}$/);container.image=images[name];}
+ }
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'ax41-render-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const baseFile=path.join(root,'base.yaml');fs.writeFileSync(baseFile,yaml.dump(base));
  const overlay=yaml.load(fs.readFileSync('gitops/production/overlays/buster-ax41.yaml','utf8'));
- const docs=yaml.loadAll(execFileSync('helm',['template','agent-buster','charts/kubeclaw','-n','kubeclaw','-f','releases/values/buster.yaml','-f','gitops/production/overlays/buster-ax41.yaml','--set-json',busterResourceArgument(base,overlay)],{encoding:'utf8',maxBuffer:32*1024*1024})).filter(Boolean);
+ const topology=busterChartProjection(path.resolve('config'));
+ assert.deepEqual(JSON.parse(fs.readFileSync('charts/kubeclaw/files/pipeline/buster-topology.json','utf8')),topology);
+ // Public transport fixture only, not installed-image/native acceptance.
+ const policy=loadNativeNodePolicy('my-values/infra/native-worker-pools-ax41.yaml');
+ const pool=nativePoolPolicy(policy,'buster');
+ const delivery=fixtureBusterImageDelivery('a'.repeat(40),path.resolve('config'));
+ const docs=yaml.loadAll(execFileSync(process.env.HELM_BIN??'helm',['template',topology.deployment.releaseName,'charts/kubeclaw','-n',topology.deployment.namespace,'-f',baseFile,'-f','gitops/production/overlays/buster-ax41.yaml','--set-json',busterResourceArgument(base,overlay),'--set-json',`pipelineDelivery.buster=${JSON.stringify(delivery)}`,'--set-json',`busterNative=${JSON.stringify({nodeName:pool.nodeName,namespace:policy.pools.buster.namespace,policyDigest:pool.policyDigest})}`],{encoding:'utf8',maxBuffer:32*1024*1024})).filter(Boolean);
  const pod=docs.find(d=>d.kind==='Deployment'&&d.metadata.name==='agent-buster').spec.template;
- const pool=nativePoolPolicy(loadNativeNodePolicy('my-values/infra/native-worker-pools-ax41.yaml'),'buster');
+
  assert.equal(pod.metadata.annotations['kubeclaw.dev/native-worker-policy'],pool.policyDigest);
  assert.equal(pod.metadata.annotations['kubeclaw.dev/native-worker-role'],'buster');
  assert.equal(pod.spec.nodeSelector['kubernetes.io/hostname'],pool.nodeName);
