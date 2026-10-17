@@ -3,12 +3,12 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { spawnSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 import yaml from 'js-yaml';
 import { busterChartProjection } from '../../../scripts/generate-buster-chart-config.mjs';
 import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
 import { buildBusterImageBundle } from '../../../scripts/build-buster-image-bundle.mjs';
-import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { declaredPipelineServices } from '../../../scripts/updates/pipeline-generation.mjs';
 
 // Preserve the original A/B, malformed-leaf, boundary and rollout obligations.
@@ -30,6 +30,7 @@ test('central readiness A/B and malformed policies follow actual image/chart gen
    const document=structuredClone(baseline);document.profiles.runtime.settings.dependencyReadiness=policy;
    fs.writeFileSync(owner,JSON.stringify(document));
   };
+  const revision=execFileSync('git',['rev-parse','--verify','HEAD'],{cwd:repository,encoding:'utf8'}).trim();
   const charts={};
   for(const name of ['kubeclaw','prism']) {
    charts[name]=path.join(root,name);fs.cpSync(`charts/${name}`,charts[name],{recursive:true,dereference:true});
@@ -43,12 +44,40 @@ test('central readiness A/B and malformed policies follow actual image/chart gen
    const file=path.join(root,`${name}-values.yaml`);fs.writeFileSync(file,yaml.dump(values[name]));
    return spawnSync('helm',['template',projection.deployment.releaseName,charts[name],'--namespace',projection.deployment.namespace,'-f',file],{encoding:'utf8',maxBuffer:16*1024*1024});
   };
+  let retained;
   for(const [index,policy] of [{maximumExecutionMs:300,maximumOutputBytes:64},{maximumExecutionMs:2500,maximumOutputBytes:1024}].entries()) {
    writePolicy(policy);
-   const bundle=await buildBusterImageBundle({repository:privateRepository,output:path.join(root,`image-${index}`),revision:'a'.repeat(40),builtAt:'2026-10-16T00:00:00Z'});
+   const builtAt=new Date().toISOString();
+   const bundle=await buildBusterImageBundle({repository:privateRepository,output:path.join(root,`image-${index}`),revision,builtAt});
+   const manifest=JSON.parse(fs.readFileSync(path.join(bundle.packageRoot,'manifest.json'),'utf8'));
+   assert.equal(manifest.commit,revision);assert.equal(manifest.builtAt,builtAt);
+   assert.equal(bundle.metadata.revision,revision);
+   const foundation=path.join(bundle.packageRoot,'skills/packages/plugin-foundation/config');
+   const boot=await import(pathToFileURL(path.join(foundation,'pipeline-boot.mjs')).href);
+   const receiver=await import(pathToFileURL(path.join(foundation,'pipeline-composition.ts')).href);
    const services=declaredPipelineServices(authorRoot,{role:'buster',namespace:bundle.metadata.namespace,releaseName:bundle.metadata.releaseName});
-   const runtime=services.find(service=>service.callerId==='buster-preparation');assert(runtime);
-   assert.deepEqual(captureSwarmSettings(path.join(bundle.systemRoot,'pipeline.config.json'),runtime).components['buster-engine'].settings.dependencyReadiness,policy);
+   const captures=[];
+   for(const caller of ['buster-preparation','buster-runtime']) {
+    assert(services.some(service=>service.callerId===caller));
+    const transport=path.join(root,`transport-${index}-${caller}`);fs.mkdirSync(transport);
+    fs.cpSync(path.join(path.dirname(bundle.systemRoot),'expected',caller),path.join(transport,'version-A'),{recursive:true});
+    fs.symlinkSync('version-A',path.join(transport,'..data'));
+    const capture=()=>boot.capturePipelineBootReceipts(transport,bundle.systemRoot,caller,bundle.packageRoot,'/app/skills');
+    const selected=capture();
+    const settings=receiver.projectBusterSettings(selected,caller);
+    assert.deepEqual(settings.dependencyReadiness,policy);assert(Object.isFrozen(settings.dependencyReadiness));
+    assert.throws(()=>receiver.projectBusterSettings(selected,caller==='buster-runtime'?'buster-preparation':'buster-runtime'),/PIPELINE_VERIFIED_CAPTURE_REQUIRED/u);
+    captures.push({caller,capture,selected});
+   }
+   const delivered=path.join(bundle.packageRoot,'skills/packages/buster-engine/remote-plan-cli.ts');
+   const source=fs.readFileSync(delivered);assert.deepEqual(source,fs.readFileSync('skills/buster/engine/remote-plan-cli.ts'));
+   try {
+    fs.appendFileSync(delivered,'\n// changed delivered readiness source\n');
+    for(const {capture} of captures)assert.throws(capture,/PIPELINE_PACKAGE_READBACK_MISMATCH/u);
+   } finally {fs.writeFileSync(delivered,source);}
+   for(const {caller,capture} of captures)assert.deepEqual(receiver.projectBusterSettings(capture(),caller).dependencyReadiness,policy);
+   if(!retained)retained={receiver,captures,policy};
+   else for(const {caller,selected} of retained.captures)assert.deepEqual(retained.receiver.projectBusterSettings(selected,caller).dependencyReadiness,retained.policy);
    values.kubeclaw.pipelineDelivery={buster:bundle.metadata};
    for(const [name,project] of [['kubeclaw',busterChartProjection],['prism',prismChartProjection]]) {
     const projection=project(authorRoot), filename=name==='kubeclaw'?'buster-topology.json':'prism-topology.json';
