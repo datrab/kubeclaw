@@ -12,7 +12,8 @@ import {
 } from '@kubeclaw/worker-core';
 import { createRemotePlanJob } from '@kubeclaw/nova-core';
 import { attestSourceSnapshot } from '@kubeclaw/pipeline-test-gate-contract';
-import { loadBusterPreparationSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { readTestPipeline, busterRuntimeSelection } from '../config/pipeline-components.mjs';
 import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gates/source-snapshot.ts';
 import { PreparationSourceLedger } from '../../../skills/buster/engine/test-gates/preparation-ledger.ts';
 import { PreparationIngress } from '../../../skills/buster/engine/test-gates/preparation-channel.ts';
@@ -26,6 +27,15 @@ export function requiredNativeInput(name: string): string {
   const value = process.env[name];
   assert.ok(value && path.isAbsolute(value), `${name} must name the existing trusted guest input; unavailable cases cannot be skipped`);
   return value;
+}
+
+/** Source-fixture selection only: not productive boot authentication or a native receipt.
+ * The separately prepared guest supplies the complete current central author set.
+ */
+export function captureNativePreparationSettings(file: string) {
+  const selection = busterRuntimeSelection(readTestPipeline(file));
+  const capture = captureSwarmSettings(file, selection);
+  return (capture.components['buster-engine']!.settings as unknown as BusterSettings).preparation;
 }
 
 export async function requireBusterParentAuthority(): Promise<void> {
@@ -63,7 +73,7 @@ export async function createNativePreparationJob(root: string, archiveKind: 'com
   execFileSync('git', ['-C', repository, 'add', '.']);
   execFileSync('git', ['-C', repository, '-c', 'user.name=Native Proof', '-c', 'user.email=proof@example.invalid', 'commit', '-qm', 'source']);
   const keys = crypto.generateKeyPairSync('ed25519');
-  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });
+  const settings = captureNativePreparationSettings(requiredNativeInput('SWARM_CONFIG'));
   let snapshot = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:native-preparation',
     pipelineStageId: 'native-preparation', creatorAuthority: 'nova:native-preparation',
     attestationPrivateKey: keys.privateKey.export({ type: 'pkcs8', format: 'pem' }), maximumArchiveBytes: settings.maximumArchiveBytes });
@@ -88,7 +98,7 @@ export async function withNativePreparation<T>(root: string,
   run: (execution: PreparationExecutionOptions, store: PreparedBusterPlanJobStore) => Promise<T>,
   beforeRecovery?: (execution: PreparationExecutionOptions) => void): Promise<T> {
   await requireBusterParentAuthority();
-  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });
+  const settings = captureNativePreparationSettings(requiredNativeInput('SWARM_CONFIG'));
   const cgroupRoot = requiredNativeInput('KUBECLAW_WORKER_TEST_CGROUP_ROOT');
   const launcher = requiredNativeInput('KUBECLAW_WORKER_TEST_LAUNCHER');
   const nodeIdentity = readNativeWorkerNodeIdentity(requiredNativeInput('KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE'));

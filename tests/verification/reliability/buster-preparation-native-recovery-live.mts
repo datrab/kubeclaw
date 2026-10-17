@@ -1,4 +1,4 @@
-import { readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { readTestPipeline, writeTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -122,10 +122,12 @@ test('centrally authored two-record quota retains the real input and rejects ext
   { timeout: 600_000 }, async () => {
     const root = await createNativeCaseRoot('record-quota');
     await createNativePreparationJob(root);
-    const document = readTestBundle(requiredNativeInput('SWARM_CONFIG'));
-    document['buster-engine'].settings.preparation.maximumRecords = 2;
-    const config = path.join(root, 'small-record-profile.json');
-    writeTestBundle(config, document);
+    const document = readTestPipeline(requiredNativeInput('SWARM_CONFIG'));
+    const binding = busterRuntimeSelection(document).bindings.find(row => row.owner === 'buster-engine');
+    assert.ok(binding, 'actual Buster runtime binding is required; no fallback profile');
+    document['buster-engine'].profiles[binding.profileId].settings.preparation.maximumRecords = 2;
+    const config = path.join(root, 'small-record-profile', 'pipeline.config.json');
+    writeTestPipeline(config, document);
     const environment: NodeJS.ProcessEnv = { ...process.env, SWARM_CONFIG: config };
     delete environment.NODE_TEST_CONTEXT;
     const fixture = fileURLToPath(new URL('../../fixtures/test-gate/native-preparation-quota.mts', import.meta.url));
