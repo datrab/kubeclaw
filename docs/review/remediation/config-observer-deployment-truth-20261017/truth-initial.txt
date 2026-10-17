@@ -1,0 +1,221 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the token branch must enter the actual native parent
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/check-deployment-truth.mjs:906:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '#!/bin/sh\n' +
+    'set -eu\n' +
+    '\n' +
+    'if [ "${BUSTER_PLAN_CONFIG_ROOT+x}" = x ]; then\n' +
+    '  echo "BUSTER_PLAN_CONFIG_ROOT is retired; runtime configuration uses the fixed root-owned image namespace" >&2\n' +
+    '  exit 1\n' +
+    'fi\n' +
+    '# Capture a validated physical generation before the first runtime effect.\n' +
+    'node /opt/buster-image-tools/scripts/buster-cluster-preflight.mjs\n' +
+    '# Initialize only the stable lock, then acquire authority before config-root mutations.\n' +
+    'node /usr/local/libexec/buster-runtime-config-root.mjs --lifetime-lock >/dev/null\n' +
+    'exec 9<>/run/kubeclaw-buster/lifetime.lock\n' +
+    'flock -n 9 || { echo "Buster runtime is already active" >&2; exit 1; }\n' +
+    'runtime_config_root="$(node /usr/local/libexec/buster-runtime-config-root.mjs)"\n' +
+    '\n' +
+    'worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required when SPIFFE transport is unavailable}"\n' +
+    'trusted_peer_spiffe_id="${BUSTER_TRUSTED_PEER_SPIFFE_ID:-}"\n' +
+    'unset BUSTER_V2_TOKEN\n' +
+    'socket="${BUILDKIT_HOST:?BUILDKIT_HOST is required}"\n' +
+    'address="${socket#unix://}"\n' +
+    'state="${BUILDKIT_STATE_DIR:?BUILDKIT_STATE_DIR is required}"\n' +
+    'otel_socket="${BUILDKIT_OTEL_SOCKET_PATH:-${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is required}/buildkit/otel-grpc.sock}"\n' +
+    'registry_client_dir="$(mktemp -d /tmp/registry-clients.XXXXXX)"\n' +
+    'registry_contract="$registry_client_dir/input.json"\n' +
+    'printf \'%s\' "${KUBECLAW_REGISTRY_CONFIG:?Explicit registry endpoint/transport/auth configuration is required; see docs/operations/registry-clients.md}" >"$registry_contract"\n' +
+    'chmod 0600 "$registry_contract"\n' +
+    'node /opt/buster-image-tools/scripts/registry-client-config.mjs "$registry_contract" buildkit "$registry_client_dir/buildkit.toml"\n' +
+    'node /opt/buster-image-tools/scripts/registry-client-config.mjs "$registry_contract" runtime "$registry_client_dir/runtime.json"\n' +
+    `registry="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")).registryReference)' "$registry_client_dir/runtime.json")"\n` +
+    'config="$runtime_config_root/buildkit.toml"\n' +
+    'buildkit_log="$runtime_config_root/buildkit.log"\n' +
+    'mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "$state" "$(dirname "$config")"\n' +
+    'cp "$registry_client_dir/buildkit.toml" "$config"\n' +
+    'chown root:builder "$config"\n' +
+    'chmod 0640 "$config"\n' +
+    '\n' +
+    'setpriv \\\n' +
+    '  --reuid=1000 \\\n' +
+    '  --regid=1000 \\\n' +
+    '  --init-groups \\\n' +
+    '  rootlesskit --net=host buildkitd \\\n' +
+    '  --config "$config" \\\n' +
+    '  --addr "$socket" \\\n' +
+    '  --otel-socket-path "$otel_socket" \\\n' +
+    '  --root "$state" \\\n' +
+    '  --oci-worker-no-process-sandbox \\\n' +
+    '  >"$buildkit_log" 2>&1 9>&- &\n' +
+    'buildkit_pid=$!\n' +
+    'worker_pid=""\n' +
+    'kube_service_account_root="${BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT:-/var/run/buster-worker/kubernetes}"\n' +
+    'plan_state_dir="${BUSTER_PLAN_STATE_DIR:-/var/lib/buster-v2/plan-jobs}"\n' +
+    'plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/var/lib/buster-v2/runs}"\n' +
+    'browser_playwright_cgroup_root="${BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT:?BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT is required}"\n' +
+    '\n' +
+    'cleanup() {\n' +
+    '  if [ -n "$worker_pid" ]; then\n' +
+    '    kill "$worker_pid" 2>/dev/null || true\n' +
+    '    wait "$worker_pid" 2>/dev/null || true\n' +
+    '  fi\n' +
+    '  kill "$buildkit_pid" 2>/dev/null || true\n' +
+    '  wait "$buildkit_pid" 2>/dev/null || true\n' +
+    '}\n' +
+    'trap cleanup EXIT INT TERM\n' +
+    '\n' +
+    'attempt=0\n' +
+    'until buildctl --addr "$socket" debug workers >/dev/null 2>&1; do\n' +
+    '  attempt=$((attempt + 1))\n' +
+    '  if [ "$attempt" -ge 60 ]; then\n' +
+    '    cat "$buildkit_log" >&2\n' +
+    '    exit 1\n' +
+    '  fi\n' +
+    '  sleep 1\n' +
+    'done\n' +
+    '\n' +
+    '# The pod mounts one dedicated cgroup v2 subtree. The worker never receives\n' +
+    '# the host cgroup root. Production browser execution cannot use sampled\n' +
+    '# accounting because short-lived descendants could escape a sample.\n' +
+    'test -d "$browser_playwright_cgroup_root"\n' +
+    'canonical_browser_playwright_cgroup_root="$(realpath "$browser_playwright_cgroup_root")"\n' +
+    'expected_browser_playwright_cgroup_root="$(realpath -m /var/run/kubeclaw-browser-cgroup)"\n' +
+    'if [ "$canonical_browser_playwright_cgroup_root" != "$expected_browser_playwright_cgroup_root" ]; then\n' +
+    '  echo "browser Playwright cgroup root is unsafe" >&2\n' +
+    '  exit 1\n' +
+    'fi\n' +
+    '# A previous worker may have left this mode-0700 directory owned by builder.\n' +
+    '# The supervisor has CHOWN but no DAC override, so reclaim traversal while\n' +
+    '# validating/configuring it, then hand off the directory last.\n' +
+    'chown root:builder "$browser_playwright_cgroup_root"\n' +
+    'test -f "$browser_playwright_cgroup_root/cgroup.controllers"\n' +
+    'for controller in pids memory cpu; do\n' +
+    '  grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.controllers" \\\n' +
+    '    || { echo "required browser cgroup controller is unavailable: $controller" >&2; exit 1; }\n' +
+    'done\n' +
+    'if [ -s "$browser_playwright_cgroup_root/cgroup.procs" ]; then\n' +
+    '  echo "browser Playwright cgroup subtree contains host processes" >&2\n' +
+    '  exit 1\n' +
+    'fi\n' +
+    '# The previous worker also owns the control file. Reclaim write ownership before\n' +
+    '# enabling controllers; CHOWN does not grant DAC override on a builder-owned file.\n' +
+    'chown root:builder "$browser_playwright_cgroup_root/cgroup.subtree_control"\n' +
+    `printf '+pids +memory +cpu' >"$browser_playwright_cgroup_root/cgroup.subtree_control"\n` +
+    'for controller in pids memory cpu; do\n' +
+    '  grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.subtree_control" \\\n' +
+    '    || { echo "required browser cgroup controller is not delegated: $controller" >&2; exit 1; }\n' +
+    'done\n' +
+    'chown builder:builder "$browser_playwright_cgroup_root/cgroup.procs" "$browser_playwright_cgroup_root/cgroup.subtree_control" "$browser_playwright_cgroup_root"\n' +
+    '\n' +
+    '# BuildKit creates the socket as the non-root builder. Apply its shared-group\n' +
+    '# permissions as that owner; the restricted supervisor intentionally does not\n' +
+    '# retain CAP_FOWNER.\n' +
+    'setpriv \\\n' +
+    '  --reuid=1000 \\\n' +
+    '  --regid=1000 \\\n' +
+    '  --init-groups \\\n' +
+    '  chgrp 1002 "$address"\n' +
+    'setpriv \\\n' +
+    '  --reuid=1000 \\\n' +
+    '  --regid=1000 \\\n' +
+    '  --init-groups \\\n' +
+    '  chmod 0660 "$address"\n' +
+    '\n' +
+    '# The supervisor retains only CHOWN/KILL/SETUID/SETGID/SETPCAP. Keep the pod fsGroup\n' +
+    '# (1000) for projected credentials and add the socket group (1002) so its\n' +
+    '# BuildKit readiness checks can connect after the ownership transition above.\n' +
+    '# worker.ts clears all supplementary groups and capabilities before suite code.\n' +
+    ': "${BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:?BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY is required}"\n' +
+    'if [ "$plan_state_dir" != /var/lib/buster-v2/plan-jobs ] || [ "$plan_run_dir" != /var/lib/buster-v2/runs ]; then\n' +
+    "  echo 'Buster native state requires the fixed /var/lib/buster-v2 PVC namespace' >&2\n" +
+    '  exit 1\n' +
+    'fi\n' +
+    'if [ -n "${BUSTER_V2_STATE_DIR+x}${BUSTER_V2_RUN_DIR+x}" ]; then\n' +
+    "  echo 'BUSTER_V2_STATE_DIR/BUSTER_V2_RUN_DIR were replaced by the fixed Buster PVC namespace' >&2\n" +
+    '  exit 1\n' +
+    'fi\n' +
+    'node /usr/local/libexec/buster-state-root.mjs\n' +
+    '# The generated configuration remains root-owned for the full parent lifetime.\n' +
+    '# Its fixed ancestor and existing files were validated before acquiring the\n' +
+    '# startup lock; the service receives only group read/traverse access.\n' +
+    'chown root:root "$runtime_config_root"\n' +
+    'chmod 0750 "$runtime_config_root"\n' +
+    '\n' +
+    'test -r "$kube_service_account_root/token"\n' +
+    'test -r "$kube_service_account_root/ca.crt"\n' +
+    'test -r "$kube_service_account_root/namespace"\n' +
+    `kube_namespace="$(tr -d '\\r\\n' < "$kube_service_account_root/namespace")"\n` +
+    'case "$kube_namespace" in\n' +
+    `  ''|*[!a-z0-9-]*) echo "projected Kubernetes namespace is invalid" >&2; exit 1 ;;\n` +
+    'esac\n' +
+    'kubeconfig="$runtime_config_root/kubeconfig"\n' +
+    'cat >"$kubeconfig" <<EOF\n' +
+    'apiVersion: v1\n' +
+    'kind: Config\n' +
+    'clusters:\n' +
+    '- name: in-cluster\n' +
+    '  cluster:\n' +
+    '    certificate-authority: $kube_service_account_root/ca.crt\n' +
+    '    server: https://${KUBERNETES_SERVICE_HOST:?KUBERNETES_SERVICE_HOST is required}:${KUBERNETES_SERVICE_PORT:?KUBERNETES_SERVICE_PORT is required}\n' +
+    'users:\n' +
+    '- name: buster\n' +
+    '  user:\n' +
+    '    tokenFile: $kube_service_account_root/token\n' +
+    'contexts:\n' +
+    '- name: buster\n' +
+    '  context:\n' +
+    '    cluster: in-cluster\n' +
+    '    namespace: $kube_namespace\n' +
+    '    user: buster\n' +
+    'current-context: buster\n' +
+    'EOF\n' +
+    '\n' +
+    'RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_client_dir/runtime.json" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \\\n' +
+    '  BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \\\n' +
+    '  BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \\\n' +
+    '  BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \\\n' +
+    '  BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT="$browser_playwright_cgroup_root" \\\n' +
+    `  BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'\n` +
+    "const fs = require('fs');\n" +
+    "const path = require('path');\n" +
+    'const root = process.env.RUNTIME_CONFIG_ROOT;\n' +
+    'const registry = process.env.REGISTRY_REFERENCE;\n' +
+    "const plugins = '/app/skills/plugins';\n" +
+    "const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')\n" +
+    "  .split(',').map((value) => value.trim()).filter(Boolean);\n" +
+    "const exactBrowserOrigins = (process.env.BUSTER_BROWSER_AXE_EXACT_ORIGINS || '')\n" +
+    "  .split(',').map((value) => value.trim()).filter(Boolean);\n" +
+    "fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({\n" +
+    "  schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,\n" +
+    "  corePolicySelection: { file: '/etc/kubeclaw/nova/core.config.json', profile: 'standard' },\n" +
+    '  installationRoots: [plugins], trustedBuiltinRoots: [plugins],\n' +
+    '  externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },\n' +
+    '  providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},\n' +
+    "  storageRoot: '/tmp/buster-plan-platform', shutdownTimeoutMs: 10_000,\n" +
+    "  orchestratorIssuerId: 'buster', administrativeDecisionIssuers: [],\n" +
+    '}, null, 2)}\\n`);\n' +
+    "fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({\n" +
+    "  schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',\n" +
+    "  host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),\n" +
+    '  ...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID\n' +
+    '    ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }\n' +
+    "    : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),\n" +
+    "  sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',\n" +
+    "  trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',\n" +
+    '  stateRoot: process.env.BUSTER_V2_STATE_DIR,\n' +
+    '  runtimeRoot: process.env.BUSTER'... 5172 more characters,
+  expected: /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
