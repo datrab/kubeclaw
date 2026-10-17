@@ -8898,9 +8898,9 @@ function buildRuntimeInputInventory(yamlInventory) {
     path: sourcePath,
     sourceDigest: sha256(read(sourcePath)),
     purpose: sourcePath.startsWith(observerCanonicalPrefix)
-      ? 'tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection'
+      ? 'tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires tracing the exact field reader'
       : sourcePath === observerSyncSource ? 'tracked producer of observer runtime contract copies from contracts/agent-observability/v1/src'
-        : 'candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection',
+        : 'candidate runtime consumer of a discovered configuration schema; field-level ownership requires tracing the exact field reader',
     ...(sourcePath.startsWith(observerCanonicalPrefix) ? { materialization: { producer: observerSyncSource, runtimePath: `${observerGeneratedPrefix}${sourcePath.slice(observerCanonicalPrefix.length)}`, mode: 'byte-for-byte copy; ignored build output is not source authority' } } : {}),
   }));
   const classifiedCliFlags = classifyCliFacts(cliFlags);

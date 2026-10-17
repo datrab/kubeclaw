@@ -59,7 +59,7 @@ and docs current, and build toward Controlnode-driven node onboarding. Finish
 fresh-install, rerun and recovery verification before calling the installer
 one-click. Cilium/HTTPS are deferred work, not implied prerequisites for stage 1.
 
-Source: [operator-selected roadmap at the incoming main revision](https://github.com/datrab/kubeclaw/blob/ca8027649ba54629f9551b645ab0833b723e4da3/docs/ROADMAP.md). This preserves the dated planning order, not a current deployment or acceptance result.
+Source: [operator-selected roadmap at the incoming main revision](https://github.com/datrab/kubeclaw/commit/ca8027649ba54629f9551b645ab0833b723e4da3). This preserves the dated planning order, not a current deployment or acceptance result.
 
 ## Controlnode Installer and Repeatable Node Onboarding
 

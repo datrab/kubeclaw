@@ -594,7 +594,7 @@ for the changed diagnostic; existing tests do not automatically cover it.
 The Core guide check protects its component explanation and exact linked
 source bytes. If a Core source file changed, complete
 [the protected Core source-revision procedure](#update-protected-core-source-revisions)
-before that documentation check can pass. Then complete the
+before that Core guide check can pass. Then complete the
 [documentation-change chain](#documentation-change-chain).
 
 For a graph/compiler change, complete the
@@ -663,7 +663,7 @@ Run the Nova product checks and new assertions, including the invalid transition
 and actual crash/replay cases. Record the reason, stage status, attempt counters,
 journal identity, schema/graph identities, and every failure or skip. Product
 success does not pass a failed documentation chain. Before the required Core
-guide/common documentation checks, complete
+guide/common page checks, complete
 [the protected source-revision procedure](#update-protected-core-source-revisions)
 in this scratch checkout. Its temporary local commits may identify changed
 source and documentation authorities for local Git checks. They do not make a
@@ -676,8 +676,8 @@ changes. Restore the exact recorded original bytes, including the original
 hardcoded checker revision and all three Core guide revisions. Do not retain a
 changed-source pin after removing its source. Compare tracked source, docs and
 generated output with the saved baseline, rerun the selected product and
-complete documentation checks, and retain each real result. A documentation
-check that failed before removal stays failed for the changed phase; successful
+complete documentation-chain commands, and retain each real result. A command
+that failed before removal stays failed for the changed phase; successful
 removal cannot rewrite it as success. Keep local commit identities and logs
 outside the scratch tree before deleting only that owned tree.
 No successful exercise is claimed by the presence of this file or handbook.

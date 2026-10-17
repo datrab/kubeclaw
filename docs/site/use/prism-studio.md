@@ -348,7 +348,7 @@ approved pipeline input.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -459,7 +459,7 @@ empty. The deploy script rejects an empty or invalid selected digest.
 >
 > **Contract or setting:** [The chart defaults leave the four image digests empty](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/charts/prism/values.yaml#L1-L7).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -500,7 +500,7 @@ operator-supplied file adds private values but cannot replace selected release t
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -547,7 +547,7 @@ unconsumed override; schema acceptance alone does not prove an effect.
 >
 > **Contract or setting:** [Selected defaults include storage, backup, exposure, and trust](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/charts/prism/values.yaml#L44-L92).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -582,7 +582,7 @@ root-managed pool policy. Missing or invalid admission values stop startup.
 >
 > **Contract or setting:** [validates its preference and trust boundary](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/prism/server/control-config.ts#L9-L38).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -617,7 +617,7 @@ separate from the Baseline Bundle approval flow.
 >
 > **Contract or setting:** [Control rejects an incomplete SPIFFE trust policy and otherwise requires the fallback secrets](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/prism/server/control-config.ts#L16-L55).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -746,7 +746,7 @@ chart supports them.
 >
 > **Contract or setting:** [role, image, bundle, and registry value families](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/charts/kubeclaw/values.yaml#L16-L63).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -815,7 +815,7 @@ namespaces, operator target, signal type, and issuer ID.
 >
 > **Contract or setting:** [The Prism stage configuration schema is closed and requires all four fields](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/plugins/prism-design/schemas/config.schema.json#L1-L1).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -857,7 +857,7 @@ memory-search embeddings. Follow [the two route boundaries](#separate-reasoning-
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -948,7 +948,7 @@ until the old workload can no longer return.
 >
 > **Contract or setting:** [Migrations take one advisory lock and commit each ordered migration name in one transaction](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/prism/storage/index.ts#L21-L75).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1261,7 +1261,7 @@ through the installed messaging adapter until the
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1318,7 +1318,7 @@ Do not clear storage or create a replacement request to hide the uncertainty.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1371,7 +1371,7 @@ Project content cannot select another person's subject.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1422,7 +1422,7 @@ session; a new key does not release the predecessor.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1516,7 +1516,7 @@ not authorize replay or release a blocked project session.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1555,7 +1555,7 @@ After response loss, stop restore actions and follow
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1602,7 +1602,7 @@ See [ARIA snapshot](../reference/glossary.md#aria-snapshot).
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1666,7 +1666,7 @@ and evaluate the newly loaded revision before accepting warnings.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1770,7 +1770,7 @@ Do not submit a Nova signal until the original approval and exact bundle are ver
 >
 > **Contract or setting:** [allows one approval per project/design digest](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/prism/storage/migrations/001_prism.sql#L67-L70).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1865,7 +1865,7 @@ make a resolved wait accept another CLI invocation.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1902,7 +1902,7 @@ was approved. The approval and active architecture binding supply that authority
 >
 > **Contract or setting:** [profiles, safe paths, and canonical checksum encoding](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/contracts/prism/v1/src/baseline-archive.ts#L1-L54).
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -1949,7 +1949,7 @@ revocation or data removal.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
@@ -2708,7 +2708,7 @@ directory-sync steps before it acknowledges an object.
 >
 > **Contract or setting:** The linked implementation defines this behavior; no separate operator setting changes this boundary.
 >
-> **Test evidence:** Source inspection only for this callout; no new execution of this deployed path is recorded here. Local sample checks do not prove this behavior in a deployment.
+> **Test evidence:** This callout describes the implementation contract, not an observed deployment result. Local sample checks do not prove this behavior in a deployment.
 >
 > **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`.
 >
