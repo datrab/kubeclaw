@@ -1,0 +1,39 @@
+[
+  {
+    "name": "integrated",
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=30000",
+      "tests/verification/reliability/nova-publisher-original-recovery.test.mjs",
+      "tests/verification/reliability/nova-operator-original-recovery.test.mjs",
+      "tests/verification/reliability/nova-redis-original-recovery.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 18.3,
+    "log": "integrated.txt"
+  },
+  {
+    "name": "nova-typecheck",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.6,
+    "log": "nova-typecheck.txt"
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.1,
+    "log": "diff-check.txt"
+  }
+]
