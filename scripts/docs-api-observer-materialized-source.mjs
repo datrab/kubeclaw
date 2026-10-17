@@ -18,7 +18,7 @@ const pins = {
   "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts": "63ff685537b415cbe5a67c4b8d4ada42241ef2187fc278ec75ec403855763ac8",
   "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs": "9cf81c81f0fa85ea740e578d6a3e10bcf86c7d85dec3c1ea287f3e7bab7d9fab",
   "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs": "82b56e00d0aa995ec786f53b8d07036622507f47101dda78a02f2f2fe13b6098",
-  "skills/common/plugins/openclaw-agent-observer/package.json": "6b11285263ea87e3b0642db57faaea2960fbe15b7db11a7286e96f73732cb63b",
+  "skills/common/plugins/openclaw-agent-observer/package.json": "3685149c841d4a5a65e8e1b99e20fcf405fe0020c608f965ee334045997d60ce",
   "skills/common/plugins/openclaw-agent-observer/.gitignore": "6a422561c8e2c996c88b744abd47737ecf65612a1fea716496425276f20329af",
   "contracts/agent-observability/v1/src/complexity.ts": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
   "contracts/agent-observability/v1/src/constants.ts": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
