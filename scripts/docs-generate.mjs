@@ -13,6 +13,7 @@ import {
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
 import { generateSdkReference } from './docs-sdk-reference.mjs';
+import { renderProductPipeline } from './docs-product-pipeline-reference.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -822,6 +823,8 @@ ${table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/
   workflow.jobs.map((job) => `\`${job}\``).join(', '),
   workflow.commandAndActionRefs.map((ref) => `\`${ref}\``).join('<br>'),
 ]))}
+${renderProductPipeline(root)}
+
 ${generatedEnd()}
 ## Drift Guardrails
 
