@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.project-summary",
+  "instanceId": "fixture.project-summary",
+  "profiles": {
+    "A": {
+      "processing": {
+        "kubeclaw.project-summary:summary": {
+          "agentRole": "summary-diagnostic-A"
+        }
+      }
+    },
+    "RT-2b6e3bc13743e80c-A": {
+      "processing": {
+        "kubeclaw.project-summary:summary": {
+          "agentRole": "summary-diagnostic-A"
+        }
+      }
+    },
+    "RT-2b6e3bc13743e80c-B": {
+      "processing": {
+        "kubeclaw.project-summary:summary": {
+          "agentRole": "summary-diagnostic-B"
+        }
+      }
+    },
+    "RT-0086141ada6be298-A": {
+      "processing": {
+        "kubeclaw.project-summary:summary": {
+          "agentRole": "summary-diagnostic-A"
+        }
+      }
+    },
+    "RT-0086141ada6be298-B": {
+      "processing": {
+        "kubeclaw.project-summary:summary": {
+          "agentRole": "summary-diagnostic-A",
+          "deliveryManifestEncoding": "delivery-manifest.utf16-v1"
+        }
+      }
+    }
+  }
+}

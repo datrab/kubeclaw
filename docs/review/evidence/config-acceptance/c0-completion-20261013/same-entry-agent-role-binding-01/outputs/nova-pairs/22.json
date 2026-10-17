@@ -1,0 +1,26 @@
+{
+  "root": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/entries/Nova/22.json",
+    "sha256": "a1e87181a91f0ee7e6f7149797632e562a7f3167bbcf305463f8d267c93f0b7f"
+  },
+  "tuple": {
+    "kind": "stage",
+    "packageId": "kubeclaw.prism-design",
+    "registrationId": "kubeclaw.prism-design:design",
+    "instanceId": "fixture.prism-design",
+    "ownerPath": "plugins/kubeclaw.prism-design.config.json",
+    "profileId": "RT-8e39db110874a9d6-A",
+    "serviceInstanceId": "fixture.service.nova-runtime"
+  },
+  "configuration": {
+    "agent": "prism",
+    "target": "case-operator-a",
+    "issuerId": "case-issuer-a",
+    "timeoutMinutes": 60
+  },
+  "sourceCurrentWire": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8e39db110874a9d6/A.json",
+    "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894"
+  },
+  "temporalEligibility": "next unstarted M only inside original R/S/H target maps/source/grants/deadlines/counters; no model stopping or originalR reread/reset"
+}

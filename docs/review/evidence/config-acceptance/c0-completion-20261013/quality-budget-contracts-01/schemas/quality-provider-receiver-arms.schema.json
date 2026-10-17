@@ -1,0 +1,519 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "contractId",
+        "taskSchemaDigest",
+        "values",
+        "selectedPolicy"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "provider-configuration.v2"
+        },
+        "contractId": {
+          "const": "kubeclaw.size-budget@1"
+        },
+        "taskSchemaDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {}
+        },
+        "selectedPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion",
+            "binding",
+            "processing",
+            "declarations"
+          ],
+          "properties": {
+            "schemaVersion": {
+              "const": "selected-registration-policy.v1"
+            },
+            "binding": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "packageId",
+                "registrationId",
+                "instanceId",
+                "profileId",
+                "serviceInstanceId",
+                "rootDigest",
+                "ownerDigest",
+                "profileDigest",
+                "packageVersion",
+                "packageContentDigest",
+                "ownerSchemaDigest",
+                "taskSchemaDigest",
+                "readerVersion",
+                "c3RuntimeSchemaDigest",
+                "c3ReferenceContractDigest"
+              ],
+              "properties": {
+                "instanceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+                },
+                "profileId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+                },
+                "serviceInstanceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+                },
+                "kind": {
+                  "const": "test-provider"
+                },
+                "packageId": {
+                  "const": "kubeclaw.size-budget"
+                },
+                "registrationId": {
+                  "const": "kubeclaw.size-budget:artifact"
+                },
+                "packageVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "readerVersion": {
+                  "const": "pipeline-entry.v10/provider-configuration.v2"
+                },
+                "rootDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "ownerDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "profileDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "packageContentDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "ownerSchemaDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "taskSchemaDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "c3RuntimeSchemaDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "c3ReferenceContractDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                }
+              }
+            },
+            "processing": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "format": {
+                  "enum": [
+                    "auto",
+                    "file",
+                    "tar",
+                    "tar-gzip"
+                  ]
+                },
+                "maximumTotalBytes": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "maximumFileCount": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100000
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "matchingFiles": {
+                  "type": "array",
+                  "maxItems": 32,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "pattern",
+                      "maximumBytes",
+                      "requireMatch"
+                    ],
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/name"
+                      },
+                      "pattern": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "maximumBytes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "requireMatch": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "maximumGrowthBytes": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "maximumGrowthPercent": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1000000
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "largestFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "format",
+                "maximumTotalBytes",
+                "maximumFileCount",
+                "matchingFiles",
+                "maximumGrowthBytes",
+                "maximumGrowthPercent",
+                "largestFiles"
+              ]
+            },
+            "declarations": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "evidenceDefaults",
+                "retrySafe",
+                "matrixFields"
+              ],
+              "properties": {
+                "evidenceDefaults": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "onPass",
+                    "onFail",
+                    "onError"
+                  ],
+                  "properties": {
+                    "onPass": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "log",
+                          "size-budget-baseline"
+                        ]
+                      }
+                    },
+                    "onFail": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "log",
+                          "size-budget-baseline"
+                        ]
+                      }
+                    },
+                    "onError": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "log",
+                          "size-budget-baseline"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "retrySafe": {
+                  "type": "boolean"
+                },
+                "matrixFields": {
+                  "type": "array",
+                  "maxItems": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "contractId",
+        "taskSchemaDigest",
+        "values",
+        "selectedPolicy"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "provider-configuration.v2"
+        },
+        "contractId": {
+          "const": "kubeclaw.coverage-budget@1"
+        },
+        "taskSchemaDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {}
+        },
+        "selectedPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion",
+            "binding",
+            "processing",
+            "declarations"
+          ],
+          "properties": {
+            "schemaVersion": {
+              "const": "selected-registration-policy.v1"
+            },
+            "binding": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "packageId",
+                "registrationId",
+                "instanceId",
+                "profileId",
+                "serviceInstanceId",
+                "rootDigest",
+                "ownerDigest",
+                "profileDigest",
+                "packageVersion",
+                "packageContentDigest",
+                "ownerSchemaDigest",
+                "taskSchemaDigest",
+                "readerVersion",
+                "c3RuntimeSchemaDigest",
+                "c3ReferenceContractDigest"
+              ],
+              "properties": {
+                "instanceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+                },
+                "profileId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+                },
+                "serviceInstanceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+                },
+                "kind": {
+                  "const": "test-provider"
+                },
+                "packageId": {
+                  "const": "kubeclaw.coverage-budget"
+                },
+                "registrationId": {
+                  "const": "kubeclaw.coverage-budget:lcov"
+                },
+                "packageVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "readerVersion": {
+                  "const": "pipeline-entry.v10/provider-configuration.v2"
+                },
+                "rootDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "ownerDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "profileDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "packageContentDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "ownerSchemaDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "taskSchemaDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "c3RuntimeSchemaDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "c3ReferenceContractDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                }
+              }
+            },
+            "processing": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "minimumLinePercent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "combine": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "minimumLinePercent",
+                "combine"
+              ]
+            },
+            "declarations": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "evidenceDefaults",
+                "retrySafe",
+                "matrixFields"
+              ],
+              "properties": {
+                "evidenceDefaults": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "onPass",
+                    "onFail",
+                    "onError"
+                  ],
+                  "properties": {
+                    "onPass": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "log"
+                        ]
+                      }
+                    },
+                    "onFail": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "log"
+                        ]
+                      }
+                    },
+                    "onError": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "log"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "retrySafe": {
+                  "type": "boolean"
+                },
+                "matrixFields": {
+                  "type": "array",
+                  "maxItems": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    }
+  }
+}

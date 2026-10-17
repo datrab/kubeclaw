@@ -1,0 +1,1504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Complete selected controller-role Chart profile and generated role projections; proposal only",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "controller-role-profile.v1-proposal"
+    },
+    "profileId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "role": {
+      "const": "buster"
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "busterNamespaceBroker": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "const": false
+                }
+              },
+              "required": [
+                "enabled"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "const": true
+                },
+                "allowedPrefixes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 42,
+                    "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                  }
+                },
+                "defaultTtlSeconds": {
+                  "type": "integer",
+                  "minimum": 60,
+                  "maximum": 9223372036
+                },
+                "maxTtlSeconds": {
+                  "type": "integer",
+                  "minimum": 60,
+                  "maximum": 9223372036
+                },
+                "controller": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "imageRef": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "reference": {
+                          "const": "namespace-controller"
+                        },
+                        "sourceRef": {
+                          "const": "existing-selected-controller-image-author"
+                        },
+                        "receiptStatus": {
+                          "const": "external-required-no-invented-OCI-digest"
+                        }
+                      },
+                      "required": [
+                        "reference",
+                        "sourceRef",
+                        "receiptStatus"
+                      ]
+                    },
+                    "imagePullPolicy": {
+                      "enum": [
+                        "Always",
+                        "IfNotPresent",
+                        "Never"
+                      ]
+                    },
+                    "allowedAccess": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "subject": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 127,
+                            "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?/[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                          },
+                          "modes": {
+                            "type": "array",
+                            "minItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "enum": [
+                                "deployer",
+                                "tester"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "subject",
+                          "modes"
+                        ]
+                      }
+                    },
+                    "allowedSourceSecrets": {
+                      "type": "array",
+                      "minItems": 0,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 253,
+                        "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+                      }
+                    },
+                    "pollIntervalMs": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9223372036854
+                    },
+                    "resources": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "requests": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "cpu": {
+                              "type": "string",
+                              "pattern": "^(?:[1-9][0-9]*m|[1-9][0-9]*)$"
+                            },
+                            "memory": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*(?:Ki|Mi|Gi|Ti|Pi|Ei)$"
+                            }
+                          },
+                          "required": [
+                            "cpu",
+                            "memory"
+                          ]
+                        },
+                        "limits": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "cpu": {
+                              "type": "string",
+                              "pattern": "^(?:[1-9][0-9]*m|[1-9][0-9]*)$"
+                            },
+                            "memory": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*(?:Ki|Mi|Gi|Ti|Pi|Ei)$"
+                            }
+                          },
+                          "required": [
+                            "cpu",
+                            "memory"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "requests",
+                        "limits"
+                      ]
+                    },
+                    "readiness": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "enabled": {
+                              "const": false
+                            }
+                          },
+                          "required": [
+                            "enabled"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "enabled": {
+                              "const": true
+                            },
+                            "audience": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 1024,
+                              "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                            },
+                            "producerNamespace": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 63,
+                              "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                            },
+                            "producerServiceAccount": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 63,
+                              "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                            },
+                            "tlsSecretRef": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "namespace": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                                },
+                                "keys": {
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 253,
+                                    "pattern": "^[A-Za-z0-9._-]+$"
+                                  }
+                                },
+                                "providerRef": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 1024
+                                },
+                                "revisionCapability": {
+                                  "const": "must-resolve-original-revision-at-activation"
+                                }
+                              },
+                              "required": [
+                                "namespace",
+                                "name",
+                                "keys",
+                                "providerRef",
+                                "revisionCapability"
+                              ]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 65535
+                            }
+                          },
+                          "required": [
+                            "enabled",
+                            "audience",
+                            "producerNamespace",
+                            "producerServiceAccount",
+                            "tlsSecretRef",
+                            "port"
+                          ]
+                        }
+                      ]
+                    },
+                    "policy": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "httpClientTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "runtimeSecurityRefreshSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "runtimeSecurityFutureSkewSeconds": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9223372036
+                        },
+                        "runtimeSecurityMaximumFindings": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "runtimeSecurityMaximumSerializedBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "apiResponseMaximumBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "apiRequestMaximumBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "apiDiagnosticMaximumBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "namespaceDeletionTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "readyReadHeaderTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "readyReadTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "readyWriteTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "readyIdleTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "readyMaxHeaderBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "readyHandlerTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "readyMaximumBodyBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "defaultDemoRetentionSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "authorizationMaximumBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "readyObservationMaximumAgeSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "productHandlerTimeoutSeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        },
+                        "productMaximumBodyBytes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "productDecisionMaximumValiditySeconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9223372036
+                        }
+                      },
+                      "required": [
+                        "httpClientTimeoutSeconds",
+                        "runtimeSecurityRefreshSeconds",
+                        "runtimeSecurityFutureSkewSeconds",
+                        "runtimeSecurityMaximumFindings",
+                        "runtimeSecurityMaximumSerializedBytes",
+                        "apiResponseMaximumBytes",
+                        "apiRequestMaximumBytes",
+                        "apiDiagnosticMaximumBytes",
+                        "namespaceDeletionTimeoutSeconds"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "imageRef",
+                    "imagePullPolicy",
+                    "allowedAccess",
+                    "allowedSourceSecrets",
+                    "pollIntervalMs",
+                    "resources",
+                    "readiness",
+                    "policy"
+                  ],
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "readiness": {
+                            "properties": {
+                              "enabled": {
+                                "const": true
+                              }
+                            },
+                            "required": [
+                              "enabled"
+                            ],
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "then": {
+                        "properties": {
+                          "policy": {
+                            "required": [
+                              "readyReadHeaderTimeoutSeconds",
+                              "readyReadTimeoutSeconds",
+                              "readyWriteTimeoutSeconds",
+                              "readyIdleTimeoutSeconds",
+                              "readyMaxHeaderBytes",
+                              "readyHandlerTimeoutSeconds",
+                              "readyMaximumBodyBytes",
+                              "defaultDemoRetentionSeconds",
+                              "authorizationMaximumBytes",
+                              "readyObservationMaximumAgeSeconds"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "readyReadHeaderTimeoutSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              },
+                              "readyReadTimeoutSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              },
+                              "readyWriteTimeoutSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              },
+                              "readyIdleTimeoutSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              },
+                              "readyMaxHeaderBytes": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9007199254740991
+                              },
+                              "readyHandlerTimeoutSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              },
+                              "readyMaximumBodyBytes": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9007199254740991
+                              },
+                              "defaultDemoRetentionSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              },
+                              "authorizationMaximumBytes": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9007199254740991
+                              },
+                              "readyObservationMaximumAgeSeconds": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9223372036
+                              }
+                            }
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "else": {
+                        "properties": {
+                          "policy": {
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "readyReadHeaderTimeoutSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyReadHeaderTimeoutSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyReadTimeoutSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyReadTimeoutSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyWriteTimeoutSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyWriteTimeoutSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyIdleTimeoutSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyIdleTimeoutSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyMaxHeaderBytes"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyMaxHeaderBytes": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9007199254740991
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyHandlerTimeoutSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyHandlerTimeoutSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyMaximumBodyBytes"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyMaximumBodyBytes": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9007199254740991
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "defaultDemoRetentionSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "defaultDemoRetentionSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "authorizationMaximumBytes"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "authorizationMaximumBytes": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9007199254740991
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "readyObservationMaximumAgeSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "readyObservationMaximumAgeSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "productHandlerTimeoutSeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "productHandlerTimeoutSeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "productMaximumBodyBytes"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "productMaximumBodyBytes": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9007199254740991
+                                    }
+                                  }
+                                },
+                                {
+                                  "required": [
+                                    "productDecisionMaximumValiditySeconds"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "productDecisionMaximumValiditySeconds": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 9223372036
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "type": "object"
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "enabled",
+                "allowedPrefixes",
+                "defaultTtlSeconds",
+                "maxTtlSeconds",
+                "controller"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "busterNamespaceBroker"
+      ]
+    },
+    "readonlyBindings": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "roleApplicability": {
+              "const": "enabled-buster-controller"
+            },
+            "releaseNamespace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 63,
+              "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+            },
+            "releaseName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 63,
+              "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+            },
+            "sharedLease": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "apiGroup": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+                },
+                "apiVersion": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$"
+                },
+                "groupSettingId": {
+                  "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup"
+                },
+                "versionSettingId": {
+                  "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion"
+                }
+              },
+              "required": [
+                "apiGroup",
+                "apiVersion",
+                "groupSettingId",
+                "versionSettingId"
+              ]
+            },
+            "api": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024,
+                  "pattern": "^[^\\s/\\u0000]+$"
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "origin": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024,
+                  "pattern": "^https://"
+                },
+                "providerRef": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "credentialRoot": {
+                  "const": "/var/run/secrets/kubernetes.io/serviceaccount"
+                },
+                "namespaceFile": {
+                  "const": "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+                },
+                "tokenFile": {
+                  "const": "/var/run/secrets/kubernetes.io/serviceaccount/token"
+                },
+                "caFile": {
+                  "const": "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+                },
+                "receiptStatus": {
+                  "const": "external-required"
+                }
+              },
+              "required": [
+                "host",
+                "port",
+                "origin",
+                "providerRef",
+                "credentialRoot",
+                "namespaceFile",
+                "tokenFile",
+                "caFile",
+                "receiptStatus"
+              ]
+            },
+            "roles": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "controllerServiceAccount": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 63,
+                  "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                },
+                "secretRole": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 63,
+                  "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                },
+                "deployerRole": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 63,
+                  "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                },
+                "testerRole": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 63,
+                  "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                }
+              },
+              "required": [
+                "controllerServiceAccount",
+                "secretRole",
+                "deployerRole",
+                "testerRole"
+              ]
+            },
+            "product": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "enabled": {
+                      "const": false
+                    },
+                    "sourceSettingId": {
+                      "const": "AUTH-PRISM-PRODUCT-ENABLE"
+                    },
+                    "selectedControlSourceRef": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "sourceSettingId",
+                    "selectedControlSourceRef"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "enabled": {
+                      "const": true
+                    },
+                    "sourceSettingId": {
+                      "const": "AUTH-PRISM-PRODUCT-ENABLE"
+                    },
+                    "selectedControlSourceRef": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024
+                    },
+                    "audience": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024,
+                      "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                    },
+                    "producer": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 180,
+                      "pattern": "^system:serviceaccount:[a-z0-9-]+:[a-z0-9-]+$"
+                    },
+                    "issuer": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024,
+                      "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                    },
+                    "actors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                      }
+                    },
+                    "verifyKeyRef": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "originalSigningAuthorityRef": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024
+                        },
+                        "decodedPublicKeyBytes": {
+                          "const": 32
+                        },
+                        "proofStatus": {
+                          "const": "external-required-no-private-bytes"
+                        }
+                      },
+                      "required": [
+                        "originalSigningAuthorityRef",
+                        "decodedPublicKeyBytes",
+                        "proofStatus"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "sourceSettingId",
+                    "selectedControlSourceRef",
+                    "audience",
+                    "producer",
+                    "issuer",
+                    "actors",
+                    "verifyKeyRef"
+                  ]
+                }
+              ]
+            },
+            "maximumDemoRetentionSeconds": {
+              "const": 9223372036
+            },
+            "executionModel": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "mode": {
+                  "const": "serial-reconcileAll-then-sleep"
+                },
+                "workers": {
+                  "const": 1
+                },
+                "queue": {
+                  "const": "no-independent-queue-author"
+                }
+              },
+              "required": [
+                "mode",
+                "workers",
+                "queue"
+              ]
+            },
+            "storage": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "mode": {
+                  "const": "kubernetes-api-CR-status"
+                },
+                "epochSeam": {
+                  "const": "BusterNamespaceLease.status.deliveryPolicyEpoch"
+                },
+                "localBusinessPVCorStore": {
+                  "const": false
+                }
+              },
+              "required": [
+                "mode",
+                "epochSeam",
+                "localBusinessPVCorStore"
+              ]
+            },
+            "shutdown": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "graceSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9223372036
+                },
+                "sourceRef": {
+                  "const": "charts/kubeclaw/values.yaml#/settings/shutdown/terminationGracePeriodSeconds"
+                },
+                "mode": {
+                  "const": "stop-new-admissions-join-original-uncertain-effects-reconcile"
+                }
+              },
+              "required": [
+                "graceSeconds",
+                "sourceRef",
+                "mode"
+              ]
+            },
+            "resourceNamePrefix": {
+              "const": "agent-buster"
+            }
+          },
+          "required": [
+            "roleApplicability",
+            "releaseNamespace",
+            "releaseName",
+            "sharedLease",
+            "api",
+            "roles",
+            "product",
+            "maximumDemoRetentionSeconds",
+            "executionModel",
+            "storage",
+            "shutdown",
+            "resourceNamePrefix"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "roleApplicability": {
+              "const": "controller-omitted"
+            },
+            "sharedLease": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "apiGroup": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+                },
+                "apiVersion": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$"
+                },
+                "groupSettingId": {
+                  "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup"
+                },
+                "versionSettingId": {
+                  "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion"
+                }
+              },
+              "required": [
+                "apiGroup",
+                "apiVersion",
+                "groupSettingId",
+                "versionSettingId"
+              ]
+            },
+            "activationGate": {
+              "const": "no-active-original-leases-or-explicit-original-A-recovery-drain"
+            }
+          },
+          "required": [
+            "roleApplicability",
+            "sharedLease",
+            "activationGate"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "role",
+    "settings",
+    "readonlyBindings"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "settings": {
+            "properties": {
+              "busterNamespaceBroker": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "enabled"
+                ],
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "readonlyBindings": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "roleApplicability": {
+                "const": "enabled-buster-controller"
+              },
+              "releaseNamespace": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+              },
+              "releaseName": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+              },
+              "sharedLease": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "apiGroup": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+                  },
+                  "apiVersion": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$"
+                  },
+                  "groupSettingId": {
+                    "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup"
+                  },
+                  "versionSettingId": {
+                    "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion"
+                  }
+                },
+                "required": [
+                  "apiGroup",
+                  "apiVersion",
+                  "groupSettingId",
+                  "versionSettingId"
+                ]
+              },
+              "api": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "host": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "pattern": "^[^\\s/\\u0000]+$"
+                  },
+                  "port": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 65535
+                  },
+                  "origin": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "pattern": "^https://"
+                  },
+                  "providerRef": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "credentialRoot": {
+                    "const": "/var/run/secrets/kubernetes.io/serviceaccount"
+                  },
+                  "namespaceFile": {
+                    "const": "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+                  },
+                  "tokenFile": {
+                    "const": "/var/run/secrets/kubernetes.io/serviceaccount/token"
+                  },
+                  "caFile": {
+                    "const": "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+                  },
+                  "receiptStatus": {
+                    "const": "external-required"
+                  }
+                },
+                "required": [
+                  "host",
+                  "port",
+                  "origin",
+                  "providerRef",
+                  "credentialRoot",
+                  "namespaceFile",
+                  "tokenFile",
+                  "caFile",
+                  "receiptStatus"
+                ]
+              },
+              "roles": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "controllerServiceAccount": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 63,
+                    "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                  },
+                  "secretRole": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 63,
+                    "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                  },
+                  "deployerRole": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 63,
+                    "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                  },
+                  "testerRole": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 63,
+                    "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+                  }
+                },
+                "required": [
+                  "controllerServiceAccount",
+                  "secretRole",
+                  "deployerRole",
+                  "testerRole"
+                ]
+              },
+              "product": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "enabled": {
+                        "const": false
+                      },
+                      "sourceSettingId": {
+                        "const": "AUTH-PRISM-PRODUCT-ENABLE"
+                      },
+                      "selectedControlSourceRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      }
+                    },
+                    "required": [
+                      "enabled",
+                      "sourceSettingId",
+                      "selectedControlSourceRef"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "enabled": {
+                        "const": true
+                      },
+                      "sourceSettingId": {
+                        "const": "AUTH-PRISM-PRODUCT-ENABLE"
+                      },
+                      "selectedControlSourceRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "audience": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                      },
+                      "producer": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 180,
+                        "pattern": "^system:serviceaccount:[a-z0-9-]+:[a-z0-9-]+$"
+                      },
+                      "issuer": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                      },
+                      "actors": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024,
+                          "pattern": "^[^\\s\\u0000\\r\\n]+$"
+                        }
+                      },
+                      "verifyKeyRef": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "originalSigningAuthorityRef": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "decodedPublicKeyBytes": {
+                            "const": 32
+                          },
+                          "proofStatus": {
+                            "const": "external-required-no-private-bytes"
+                          }
+                        },
+                        "required": [
+                          "originalSigningAuthorityRef",
+                          "decodedPublicKeyBytes",
+                          "proofStatus"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "enabled",
+                      "sourceSettingId",
+                      "selectedControlSourceRef",
+                      "audience",
+                      "producer",
+                      "issuer",
+                      "actors",
+                      "verifyKeyRef"
+                    ]
+                  }
+                ]
+              },
+              "maximumDemoRetentionSeconds": {
+                "const": 9223372036
+              },
+              "executionModel": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "const": "serial-reconcileAll-then-sleep"
+                  },
+                  "workers": {
+                    "const": 1
+                  },
+                  "queue": {
+                    "const": "no-independent-queue-author"
+                  }
+                },
+                "required": [
+                  "mode",
+                  "workers",
+                  "queue"
+                ]
+              },
+              "storage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "const": "kubernetes-api-CR-status"
+                  },
+                  "epochSeam": {
+                    "const": "BusterNamespaceLease.status.deliveryPolicyEpoch"
+                  },
+                  "localBusinessPVCorStore": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "mode",
+                  "epochSeam",
+                  "localBusinessPVCorStore"
+                ]
+              },
+              "shutdown": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "graceSeconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9223372036
+                  },
+                  "sourceRef": {
+                    "const": "charts/kubeclaw/values.yaml#/settings/shutdown/terminationGracePeriodSeconds"
+                  },
+                  "mode": {
+                    "const": "stop-new-admissions-join-original-uncertain-effects-reconcile"
+                  }
+                },
+                "required": [
+                  "graceSeconds",
+                  "sourceRef",
+                  "mode"
+                ]
+              },
+              "resourceNamePrefix": {
+                "const": "agent-buster"
+              }
+            },
+            "required": [
+              "roleApplicability",
+              "releaseNamespace",
+              "releaseName",
+              "sharedLease",
+              "api",
+              "roles",
+              "product",
+              "maximumDemoRetentionSeconds",
+              "executionModel",
+              "storage",
+              "shutdown",
+              "resourceNamePrefix"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "properties": {
+          "readonlyBindings": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "roleApplicability": {
+                "const": "controller-omitted"
+              },
+              "sharedLease": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "apiGroup": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+                  },
+                  "apiVersion": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$"
+                  },
+                  "groupSettingId": {
+                    "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup"
+                  },
+                  "versionSettingId": {
+                    "const": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion"
+                  }
+                },
+                "required": [
+                  "apiGroup",
+                  "apiVersion",
+                  "groupSettingId",
+                  "versionSettingId"
+                ]
+              },
+              "activationGate": {
+                "const": "no-active-original-leases-or-explicit-original-A-recovery-drain"
+              }
+            },
+            "required": [
+              "roleApplicability",
+              "sharedLease",
+              "activationGate"
+            ]
+          }
+        },
+        "type": "object"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "root": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/entries/Nova/7.json",
+    "sha256": "01057b79b60e507430fe1637fe87f4e717b9131049ff76186bdbbec58ae57a3a"
+  },
+  "tuple": {
+    "kind": "stage",
+    "packageId": "kubeclaw.implementation-agent",
+    "registrationId": "kubeclaw.implementation-agent:implementation",
+    "instanceId": "fixture.implementation-agent",
+    "ownerPath": "plugins/kubeclaw.implementation-agent.config.json",
+    "profileId": "RT-6442142673149854-B",
+    "serviceInstanceId": "fixture.service.nova-runtime"
+  },
+  "configuration": {
+    "agent": "case-target-a",
+    "agentRole": "implementation-diagnostic-B"
+  },
+  "sourceCurrentWire": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-6442142673149854/B.json",
+    "sha256": "303488dc5941dc44ac4b113dd2245749577875d696ecfa6830e47d2724b269bc"
+  },
+  "temporalEligibility": "next unstarted M only inside original R/S/H target maps/source/grants/deadlines/counters; no model stopping or originalR reread/reset"
+}

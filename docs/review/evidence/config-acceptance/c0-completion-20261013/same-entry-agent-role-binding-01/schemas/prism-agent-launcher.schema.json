@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prism-agent-launcher.config.proposed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "owner",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "prism-agent-launcher.v1"
+    },
+    "owner": {
+      "const": "prism-agent-launcher"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "limits",
+          "claimLifetimeMs",
+          "terminationGraceMs",
+          "agentId",
+          "claimHttpTimeoutMs",
+          "finishHttpTimeoutMs"
+        ],
+        "properties": {
+          "limits": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "timeoutMs",
+              "cleanupTimeoutMs",
+              "logBytes",
+              "resultBytes",
+              "evidenceBytes",
+              "evidenceFiles"
+            ],
+            "properties": {
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 2146970000,
+                "multipleOf": 1000
+              },
+              "cleanupTimeoutMs": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "logBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16777216
+              },
+              "resultBytes": {
+                "type": "integer",
+                "minimum": 171,
+                "maximum": 9007199254740991
+              },
+              "evidenceBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "evidenceFiles": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              }
+            }
+          },
+          "claimLifetimeMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "terminationGraceMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "agentId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "claimHttpTimeoutMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "finishHttpTimeoutMs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        }
+      }
+    }
+  },
+  "$comment": "Default-free closed same existing proposed engine author. Crossfield and authentic roster/parser/source/claim relations in receiving-contract.json mandatory, not replaced by shape. No accepted/implemented root selection."
+}

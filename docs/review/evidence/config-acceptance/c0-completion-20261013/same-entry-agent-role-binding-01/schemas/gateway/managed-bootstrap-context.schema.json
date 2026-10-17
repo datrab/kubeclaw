@@ -1,0 +1,461 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contexts",
+    "nativeFullSchema"
+  ],
+  "properties": {
+    "nativeFullSchema": {
+      "const": "pinned validateConfigObjectRaw and actual image/native plugin schema still required; this managed69 schema is NOT a substitute full OpenClaw validator"
+    },
+    "contexts": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "qualification",
+              "systemAgent",
+              "agentModel",
+              "commandsAuthorization",
+              "discordEnabled",
+              "gatewayPort",
+              "gatewayTokenRef",
+              "discordTokenRef",
+              "installedPluginAllow",
+              "roleSpecificPluginEntries",
+              "secretsProviderContext",
+              "authProfileContext",
+              "sourceRoleAuthor",
+              "agentRole",
+              "nativeSecretRefRefinement",
+              "roleSpecificProjectionSource",
+              "discordApprovers",
+              "guildUserProjection",
+              "sourceAuthorizationRecipe",
+              "association"
+            ],
+            "properties": {
+              "qualification": {
+                "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+              },
+              "systemAgent": {
+                "const": {
+                  "agentId": "main"
+                }
+              },
+              "agentModel": {
+                "const": {
+                  "primary": "openai/gpt-5.6-sol",
+                  "fallbacks": [
+                    "openai/gpt-5.5"
+                  ],
+                  "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+                }
+              },
+              "commandsAuthorization": {
+                "const": {
+                  "ownerAllowFrom": [
+                    "discord:849379821536804864"
+                  ],
+                  "discord": [
+                    "849379821536804864",
+                    "user:849379821536804864"
+                  ]
+                }
+              },
+              "discordEnabled": {
+                "const": true
+              },
+              "gatewayPort": {
+                "const": 18789
+              },
+              "gatewayTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "OPENCLAW_GATEWAY_TOKEN"
+                }
+              },
+              "discordTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "DISCORD_TOKEN"
+                }
+              },
+              "installedPluginAllow": {
+                "const": [
+                  "discord",
+                  "acpx",
+                  "codex",
+                  "openai",
+                  "kubeclaw-agent-observer"
+                ]
+              },
+              "roleSpecificPluginEntries": {
+                "const": {
+                  "discord": {
+                    "enabled": true
+                  },
+                  "kubeclaw-agent-observer": {
+                    "enabled": true,
+                    "config": {
+                      "enabled": true,
+                      "redisNetworkIsolation": "isolated",
+                      "maxEventBytes": 3145728,
+                      "maxQueuePerStream": 100,
+                      "redisCommandTimeoutMs": 5000,
+                      "streamMaxLen": 10000,
+                      "deadLetterMaxLen": 1000,
+                      "controlWriteMaxAttempts": 3,
+                      "controlWriteRetryBaseMs": 100,
+                      "controlWriteRetryMaxMs": 1000,
+                      "hookPriority": -100,
+                      "hookTimeoutMs": 1000
+                    },
+                    "hooks": {
+                      "allowConversationAccess": true
+                    }
+                  }
+                }
+              },
+              "secretsProviderContext": {
+                "const": {
+                  "providers": {
+                    "default": {
+                      "source": "env",
+                      "allowlist": [
+                        "LITELLM_API_KEY",
+                        "DLV_TEST_EMBEDDING_TOKEN",
+                        "DLV_TEST_GATEWAY_PASSWORD",
+                        "OPENCLAW_GATEWAY_TOKEN"
+                      ]
+                    },
+                    "delivery-test": {
+                      "source": "env",
+                      "allowlist": [
+                        "DLV_TEST_EMBEDDING_TOKEN"
+                      ]
+                    }
+                  }
+                }
+              },
+              "authProfileContext": {
+                "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+              },
+              "sourceRoleAuthor": {
+                "const": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer"
+              },
+              "agentRole": {
+                "const": "buster"
+              },
+              "nativeSecretRefRefinement": {
+                "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+              },
+              "roleSpecificProjectionSource": {
+                "const": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers"
+              },
+              "discordApprovers": {
+                "const": [
+                  "user:849379821536804864"
+                ]
+              },
+              "guildUserProjection": {
+                "const": [
+                  "849379821536804864"
+                ]
+              },
+              "sourceAuthorizationRecipe": {
+                "const": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+              },
+              "association": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ownerPath",
+                  "ownerProfileId",
+                  "receivingProfileId",
+                  "role",
+                  "instanceId",
+                  "sourceRecipeId",
+                  "sourceInputs"
+                ],
+                "properties": {
+                  "ownerPath": {
+                    "const": "charts/kubeclaw/values.yaml"
+                  },
+                  "ownerProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "receivingProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "role": {
+                    "const": "buster"
+                  },
+                  "instanceId": {
+                    "const": "agent-buster-gateway"
+                  },
+                  "sourceRecipeId": {
+                    "enum": [
+                      "captured-chart-local-A",
+                      "captured-chart-local-B",
+                      "captured-chart-Ready-port-contrast",
+                      "captured-chart-ready-product-off",
+                      "captured-chart-role-off"
+                    ]
+                  },
+                  "sourceInputs": {
+                    "const": [
+                      {
+                        "path": "charts/kubeclaw/values.yaml",
+                        "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                      },
+                      {
+                        "path": "my-values/buster-values.yaml",
+                        "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "qualification",
+              "systemAgent",
+              "agentModel",
+              "commandsAuthorization",
+              "discordEnabled",
+              "gatewayPort",
+              "gatewayTokenRef",
+              "discordTokenRef",
+              "installedPluginAllow",
+              "roleSpecificPluginEntries",
+              "secretsProviderContext",
+              "authProfileContext",
+              "sourceRoleAuthor",
+              "agentRole",
+              "nativeSecretRefRefinement",
+              "roleSpecificProjectionSource",
+              "discordApprovers",
+              "guildUserProjection",
+              "sourceAuthorizationRecipe",
+              "association"
+            ],
+            "properties": {
+              "qualification": {
+                "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+              },
+              "systemAgent": {
+                "const": {
+                  "agentId": "main"
+                }
+              },
+              "agentModel": {
+                "const": {
+                  "primary": "openai/gpt-6-astra",
+                  "fallbacks": [
+                    "openai/gpt-5.5"
+                  ],
+                  "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+                }
+              },
+              "commandsAuthorization": {
+                "const": {
+                  "ownerAllowFrom": [
+                    "discord:849379821536804864"
+                  ],
+                  "discord": [
+                    "849379821536804864",
+                    "user:849379821536804864"
+                  ]
+                }
+              },
+              "discordEnabled": {
+                "const": true
+              },
+              "gatewayPort": {
+                "const": 18789
+              },
+              "gatewayTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "OPENCLAW_GATEWAY_TOKEN"
+                }
+              },
+              "discordTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "DISCORD_TOKEN"
+                }
+              },
+              "installedPluginAllow": {
+                "const": [
+                  "discord",
+                  "acpx",
+                  "codex",
+                  "openai",
+                  "kubeclaw-agent-observer"
+                ]
+              },
+              "roleSpecificPluginEntries": {
+                "const": {
+                  "discord": {
+                    "enabled": true
+                  },
+                  "kubeclaw-agent-observer": {
+                    "enabled": true,
+                    "config": {
+                      "enabled": true,
+                      "redisNetworkIsolation": "isolated",
+                      "maxEventBytes": 3145728,
+                      "maxQueuePerStream": 100,
+                      "redisCommandTimeoutMs": 5000,
+                      "streamMaxLen": 10000,
+                      "deadLetterMaxLen": 1000,
+                      "controlWriteMaxAttempts": 3,
+                      "controlWriteRetryBaseMs": 100,
+                      "controlWriteRetryMaxMs": 1000,
+                      "hookPriority": -100,
+                      "hookTimeoutMs": 1000
+                    },
+                    "hooks": {
+                      "allowConversationAccess": true
+                    }
+                  }
+                }
+              },
+              "secretsProviderContext": {
+                "const": {
+                  "providers": {
+                    "default": {
+                      "source": "env",
+                      "allowlist": [
+                        "LITELLM_API_KEY",
+                        "DLV_TEST_EMBEDDING_TOKEN",
+                        "DLV_TEST_GATEWAY_PASSWORD",
+                        "OPENCLAW_GATEWAY_TOKEN"
+                      ]
+                    },
+                    "delivery-test": {
+                      "source": "env",
+                      "allowlist": [
+                        "DLV_TEST_EMBEDDING_TOKEN"
+                      ]
+                    }
+                  }
+                }
+              },
+              "authProfileContext": {
+                "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+              },
+              "sourceRoleAuthor": {
+                "const": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer"
+              },
+              "agentRole": {
+                "const": "buster"
+              },
+              "nativeSecretRefRefinement": {
+                "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+              },
+              "roleSpecificProjectionSource": {
+                "const": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers"
+              },
+              "discordApprovers": {
+                "const": [
+                  "user:849379821536804864"
+                ]
+              },
+              "guildUserProjection": {
+                "const": [
+                  "849379821536804864"
+                ]
+              },
+              "sourceAuthorizationRecipe": {
+                "const": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+              },
+              "association": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ownerPath",
+                  "ownerProfileId",
+                  "receivingProfileId",
+                  "role",
+                  "instanceId",
+                  "sourceRecipeId",
+                  "sourceInputs"
+                ],
+                "properties": {
+                  "ownerPath": {
+                    "const": "charts/kubeclaw/values.yaml"
+                  },
+                  "ownerProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "receivingProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "role": {
+                    "const": "buster"
+                  },
+                  "instanceId": {
+                    "const": "agent-buster-gateway"
+                  },
+                  "sourceRecipeId": {
+                    "enum": [
+                      "captured-chart-local-A",
+                      "captured-chart-local-B",
+                      "captured-chart-Ready-port-contrast",
+                      "captured-chart-ready-product-off",
+                      "captured-chart-role-off"
+                    ]
+                  },
+                  "sourceInputs": {
+                    "const": [
+                      {
+                        "path": "charts/kubeclaw/values.yaml",
+                        "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                      },
+                      {
+                        "path": "my-values/buster-values.yaml",
+                        "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

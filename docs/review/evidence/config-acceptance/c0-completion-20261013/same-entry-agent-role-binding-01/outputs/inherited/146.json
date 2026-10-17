@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.playwright@1",
+  "taskSchemaDigest": "sha256:41f2755b0ddec7ca1f6150d74fba0ca66d6d968a58be0d9226ec015074d25c3a",
+  "values": {
+    "url": "http://127.0.0.1:18080",
+    "projectDirectory": "playwright",
+    "configFile": "playwright.config.ts"
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.playwright",
+      "registrationId": "kubeclaw.playwright:playwright",
+      "instanceId": "fixture.playwright",
+      "profileId": "RT-fbdecaab60720898-A",
+      "serviceInstanceId": "fixture.service.buster-browser-runtime",
+      "ownerPath": "plugins/kubeclaw.playwright.config.json",
+      "rootDigest": "sha256:e96d1cc8bc0b4fe0fa3c2944a658a221ac5403c6bfbcfc7f8972b12f11b0dd1e",
+      "ownerDigest": "sha256:4c7ca44c6e28f1f9745090283a96b5e3b96235b7fffb99a6a17676c35d75134f",
+      "profileDigest": "sha256:41ae1b7e772117c656e353e1b426675db918048ae990c17c32af08991bfa037c",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:6a57e70b6e95041f7c09ca4f397d36a8414541f7e7b4de8a89e51c737fe6a7ef",
+      "ownerSchemaDigest": "sha256:b5b3e59b42d722a7d1e6767447f41777d41a62f6c940bb7335d35335d262a100",
+      "taskSchemaDigest": "sha256:41f2755b0ddec7ca1f6150d74fba0ca66d6d968a58be0d9226ec015074d25c3a",
+      "readerVersion": "pipeline-entry.v9/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "runtimeRole": "buster",
+      "componentInstanceId": "fixture.service.buster-browser-runtime",
+      "componentProfileId": "browser-source-A",
+      "componentOwnerDigest": "sha256:db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+      "componentProfileDigest": "sha256:3f57729163ae695896028dddbc9a8565266a9a28f060c950ac3c3dfbe388ac67",
+      "workerComponentProfileDigest": "sha256:bd819145a22dcf8018de07820a9589f1901163b17df01208dc4591a8c74d9b5c",
+      "nativeResourcePolicyDigest": "sha256:8d90ad343baf0794aa75c6fbb2c160bc7627d861256aecb3adb1126c8c88b7cd"
+    },
+    "processing": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 2,
+      "requiredTests": [
+        "home.spec.ts > project-owned assertion > real-chromium"
+      ]
+    },
+    "declarations": {
+      "retrySafe": false,
+      "matrixFields": [],
+      "evidenceDefaults": {
+        "onPass": [
+          "log",
+          "test-report",
+          "screenshot",
+          "video",
+          "trace",
+          "test-artifact"
+        ],
+        "onFail": [
+          "log",
+          "test-report",
+          "screenshot",
+          "video",
+          "trace",
+          "test-artifact"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "registrationId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-registration-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.coverage-budget"
+    },
+    "registrationId": {
+      "const": "kubeclaw.coverage-budget:lcov"
+    },
+    "instanceId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "processing",
+          "declarations"
+        ],
+        "properties": {
+          "processing": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "minimumLinePercent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "combine": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "minimumLinePercent",
+              "combine"
+            ]
+          },
+          "declarations": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "evidenceDefaults",
+              "retrySafe",
+              "matrixFields"
+            ],
+            "properties": {
+              "evidenceDefaults": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "onPass",
+                  "onFail",
+                  "onError"
+                ],
+                "properties": {
+                  "onPass": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "log"
+                      ]
+                    }
+                  },
+                  "onFail": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "log"
+                      ]
+                    }
+                  },
+                  "onError": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "log"
+                      ]
+                    }
+                  }
+                }
+              },
+              "retrySafe": {
+                "type": "boolean"
+              },
+              "matrixFields": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

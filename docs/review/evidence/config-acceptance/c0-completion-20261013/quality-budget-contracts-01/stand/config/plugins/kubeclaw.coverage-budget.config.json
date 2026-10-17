@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.coverage-budget",
+  "registrationId": "kubeclaw.coverage-budget:lcov",
+  "instanceId": "fixture.coverage-budget",
+  "profiles": {
+    "A": {
+      "processing": {
+        "minimumLinePercent": 50,
+        "combine": true
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    },
+    "B": {
+      "processing": {
+        "minimumLinePercent": 75,
+        "combine": false
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    },
+    "facts": {
+      "processing": {
+        "minimumLinePercent": 0,
+        "combine": true
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    }
+  }
+}
