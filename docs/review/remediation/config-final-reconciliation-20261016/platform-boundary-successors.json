@@ -1,5 +1,5 @@
 {
-  "scope": "All32 previously generic adapter/delivery platform residuals, exact current receiving joins; source navigation, NOT implementation or independent acceptance",
+  "scope": "All50 original adapter/delivery/command-workspace platform residuals, exact current receiving joins; source navigation, NOT implementation or independent acceptance",
   "roster": {
     "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
     "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9"
@@ -11,8 +11,8 @@
   },
   "integrityFailures": [],
   "counts": {
-    "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE": 6,
-    "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE": 26
+    "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE": 11,
+    "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE": 39
   },
   "snapshot": {
     "path": "skills/nova/core/execution/engine-snapshots.ts",
@@ -84,6 +84,7 @@
         "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -140,6 +141,7 @@
         "fragmentSha256": "b377ceef3eeca65a81f561a640b1dc55480771741b6b9f157a99484f8b2f82e4"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -196,6 +198,7 @@
         "fragmentSha256": "f9757109fae32f55a22a6fe81eec0503fb3976db0fb4c7fc85a3d794d8014521"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -252,6 +255,7 @@
         "fragmentSha256": "6ec99211641508e31bae908ee9640e7a00f13005b4c13954616709cd1d61a23e"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -308,6 +312,7 @@
         "fragmentSha256": "34e627aa5d9873da7a21c0e9f54bd24e2f3b0c38c4902a3e0444287f7d800854"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -364,6 +369,7 @@
         "fragmentSha256": "4a81c0806507d953a27b004e264bae7c1f9dcf115e768dc97b11ea69656c6a7d"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -420,6 +426,7 @@
         "fragmentSha256": "4def32e8111217e8bc4d708dea60bb441a8c97dc8748923fb7d8e53a2e1b0922"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -476,6 +483,7 @@
         "fragmentSha256": "1c3cd8482ee9f3dc29c3aff0755b1b1a8ea387df52b55160e5e567bd1e37a730"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -532,6 +540,7 @@
         "fragmentSha256": "54ba9aedac87651e5ff436493ef65a6de49f8e15e65a88fd1916886743a581a9"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -588,6 +597,7 @@
         "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -644,6 +654,7 @@
         "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -700,6 +711,7 @@
         "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -757,6 +769,7 @@
         "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -814,6 +827,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -871,6 +885,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -928,6 +943,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -985,6 +1001,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1042,6 +1059,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1099,6 +1117,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1156,6 +1175,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1213,6 +1233,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1270,6 +1291,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1327,6 +1349,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1384,6 +1407,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1441,6 +1465,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1498,6 +1523,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1555,6 +1581,7 @@
         "fragmentSha256": "23f7c07174c2a7fe60acb7159846981e6dbfcac767a949c3cbec4d48377a0f85"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1613,6 +1640,7 @@
         "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1671,6 +1699,7 @@
         "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1729,6 +1758,7 @@
         "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1787,6 +1817,7 @@
         "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
@@ -1845,6 +1876,1033 @@
         "fragmentSha256": "646406757d079ed32d31e889b3c8cc60408559f5fa443c67883047e777aae942"
       },
       "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-719c34694bda7da3",
+      "original": "D228#/rows/483",
+      "originalObjectSha256": "b084dc5bdf2a425177313c8f9a7bf32707e9f44c1fa184715ab6d53de7b62908",
+      "class": "operator-setting",
+      "originalField": "allowedExecutables",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-719c34694bda7da3-CONTRACT",
+        "RT-719c34694bda7da3-ALTERNATE",
+        "RT-719c34694bda7da3-BINDING",
+        "RT-719c34694bda7da3-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/allowedExecutables",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.allowedExecutables",
+        "lines": [
+          63
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/allowedExecutables",
+        "fragmentSha256": "db4bed201c04b3fec8f099b0f5528758c39a96e95746a82a2f2f4767f74072ae"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-aa9dd3f7b7063af2",
+      "original": "D228#/rows/484",
+      "originalObjectSha256": "c28b416f1fdae0a7d81abe97dcfba64d0d3ecd02d38b565873a8fbfd97a20bb8",
+      "class": "operator-setting",
+      "originalField": "allowedExecutables[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-719c34694bda7da3-CONTRACT",
+        "RT-719c34694bda7da3-ALTERNATE",
+        "RT-719c34694bda7da3-BINDING",
+        "RT-719c34694bda7da3-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/allowedExecutables",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.allowedExecutables",
+        "lines": [
+          63
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/allowedExecutables/items",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-3979e2eb6a3144a3",
+      "original": "D228#/rows/485",
+      "originalObjectSha256": "0b4df63a3397ac39a165276593743dab900422952f03d2b4eed4f7bb8d5c83ef",
+      "class": "operator-setting",
+      "originalField": "executableCatalog",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-3979e2eb6a3144a3-CONTRACT",
+        "RT-3979e2eb6a3144a3-ALTERNATE",
+        "RT-3979e2eb6a3144a3-BINDING",
+        "RT-3979e2eb6a3144a3-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/executableCatalog",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.executableCatalog",
+        "lines": [
+          66
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/executableCatalog",
+        "fragmentSha256": "227efe8de4d7095564bf5b0e21f1ee7b3fbdf4000cfef40bc0ed51d9f07c55e1"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-6e1ee234e778dab7",
+      "original": "D228#/rows/486",
+      "originalObjectSha256": "552ea5b4a3cbdf9d9e03b2204e6d762470a82bffdb2f8e9b9054b631cce31077",
+      "class": "operator-setting",
+      "originalField": "executableCatalog.{key}",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-3979e2eb6a3144a3-CONTRACT",
+        "RT-3979e2eb6a3144a3-ALTERNATE",
+        "RT-3979e2eb6a3144a3-BINDING",
+        "RT-3979e2eb6a3144a3-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/executableCatalog",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.executableCatalog",
+        "lines": [
+          66
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/executableCatalog/additionalProperties",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-fcb7dbadb1bdfc8b",
+      "original": "D228#/rows/487",
+      "originalObjectSha256": "952f37913bf3b6e2d3636266f1dc6a58c06719b13699273c0c008a987665924e",
+      "class": "operator-setting",
+      "originalField": "allowedWorkingRoots",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-fcb7dbadb1bdfc8b-CONTRACT",
+        "RT-fcb7dbadb1bdfc8b-ALTERNATE",
+        "RT-fcb7dbadb1bdfc8b-BINDING",
+        "RT-fcb7dbadb1bdfc8b-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/allowedWorkingRoots",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.allowedWorkingRoots",
+        "lines": [
+          68
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/allowedWorkingRoots",
+        "fragmentSha256": "db4bed201c04b3fec8f099b0f5528758c39a96e95746a82a2f2f4767f74072ae"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-bb7f4b9d6cfde469",
+      "original": "D228#/rows/488",
+      "originalObjectSha256": "5909cb9fdfe255d953bc849d4e72ce343fd89ea1555ee63343938d15336c2c8f",
+      "class": "operator-setting",
+      "originalField": "allowedWorkingRoots[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-fcb7dbadb1bdfc8b-CONTRACT",
+        "RT-fcb7dbadb1bdfc8b-ALTERNATE",
+        "RT-fcb7dbadb1bdfc8b-BINDING",
+        "RT-fcb7dbadb1bdfc8b-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/allowedWorkingRoots",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.allowedWorkingRoots",
+        "lines": [
+          68
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/allowedWorkingRoots/items",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-7dd887bcfcec252b",
+      "original": "D228#/rows/489",
+      "originalObjectSha256": "1de2f31eab54e94df6835fc3bd487ae681924ef04969e49960d8b2ee266ebe68",
+      "class": "operator-setting",
+      "originalField": "maxOutputBytes",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-7dd887bcfcec252b-CONTRACT",
+        "RT-7dd887bcfcec252b-ALTERNATE",
+        "RT-7dd887bcfcec252b-BINDING",
+        "RT-7dd887bcfcec252b-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/maxOutputBytes",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.maxOutputBytes",
+        "lines": [
+          79
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/maxOutputBytes",
+        "fragmentSha256": "2a1379ebe9f4b632fbdf3732d4b86b26e9fbf2aa92cf2449dde7bf4dc122060f"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-f9e1ad6b65748879",
+      "original": "D228#/rows/490",
+      "originalObjectSha256": "0a71f60a4907f3e4ab5fbc4afeb65a2d5f724d4a7d88972fee6ae0979cf6296a",
+      "class": "operator-setting",
+      "originalField": "maxExecutionMs",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-f9e1ad6b65748879-CONTRACT",
+        "RT-f9e1ad6b65748879-ALTERNATE",
+        "RT-f9e1ad6b65748879-BINDING",
+        "RT-f9e1ad6b65748879-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/maxExecutionMs",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.maxExecutionMs",
+        "lines": [
+          80
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/maxExecutionMs",
+        "fragmentSha256": "2a1379ebe9f4b632fbdf3732d4b86b26e9fbf2aa92cf2449dde7bf4dc122060f"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-d9081d9fd0de9117",
+      "original": "D228#/rows/491",
+      "originalObjectSha256": "6387997cff69c96714215bf42235b605a6aaf9ead382a3cf59faeca67efe8ae3",
+      "class": "operator-setting",
+      "originalField": "terminationGraceMs",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-d9081d9fd0de9117-CONTRACT",
+        "RT-d9081d9fd0de9117-ALTERNATE",
+        "RT-d9081d9fd0de9117-BINDING",
+        "RT-d9081d9fd0de9117-MUTANT"
+      ],
+      "plugin": "kubeclaw.command-runner",
+      "registration": "kubeclaw.command-runner:command",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.command-runner:command/terminationGraceMs",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "sha256": "c47a707058a5d9bc93b39b36b94298914bb352e4e1fdde8ffdb5ede9acb76775",
+        "anchor": "context.config.terminationGraceMs",
+        "lines": [
+          81
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/command-runner/plugin.json",
+        "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146"
+      },
+      "schema": {
+        "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+        "sha256": "4860af4e003353487cc15750c1072e7a8da620a7123daa24fa10b73b8de27ba9",
+        "pointer": "/properties/terminationGraceMs",
+        "fragmentSha256": "2a1379ebe9f4b632fbdf3732d4b86b26e9fbf2aa92cf2449dde7bf4dc122060f"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-ec81a268ddd2e1c8",
+      "original": "D228#/rows/492",
+      "originalObjectSha256": "adf457cdd73573f8ff5f8f3e7e4568ee65fac253cc835f5f8d3aa878dc8dc6a0",
+      "class": "operator-setting",
+      "originalField": "allowedRepositoryRoots",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-ec81a268ddd2e1c8-CONTRACT",
+        "RT-ec81a268ddd2e1c8-ALTERNATE",
+        "RT-ec81a268ddd2e1c8-BINDING",
+        "RT-ec81a268ddd2e1c8-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/allowedRepositoryRoots",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.allowedRepositoryRoots",
+        "lines": [
+          7
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/allowedRepositoryRoots",
+        "fragmentSha256": "db4bed201c04b3fec8f099b0f5528758c39a96e95746a82a2f2f4767f74072ae"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-6c75d0bbbab913fa",
+      "original": "D228#/rows/493",
+      "originalObjectSha256": "6961f909c4c8617ca4e567425e29d0deb8dc8e59ae9dbde0f9d7a31f35b05a7e",
+      "class": "operator-setting",
+      "originalField": "allowedRepositoryRoots[]",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-ec81a268ddd2e1c8-CONTRACT",
+        "RT-ec81a268ddd2e1c8-ALTERNATE",
+        "RT-ec81a268ddd2e1c8-BINDING",
+        "RT-ec81a268ddd2e1c8-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/allowedRepositoryRoots",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.allowedRepositoryRoots",
+        "lines": [
+          7
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/allowedRepositoryRoots/items",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-1d83816d293a466f",
+      "original": "D228#/rows/494",
+      "originalObjectSha256": "7c7d26b35d5789b47efbb28a1cb4cab2fa668482809efa254eec1a7f7c0b1dbe",
+      "class": "operator-setting",
+      "originalField": "workspaceRoot",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-1d83816d293a466f-CONTRACT",
+        "RT-1d83816d293a466f-ALTERNATE",
+        "RT-1d83816d293a466f-BINDING",
+        "RT-1d83816d293a466f-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/workspaceRoot",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.workspaceRoot",
+        "lines": [
+          10
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/workspaceRoot",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-8db8a36ca53dc1eb",
+      "original": "D228#/rows/495",
+      "originalObjectSha256": "81dbd011539e9d5814b008b9dc73dadfb14d9902720a6c75947cc588da2be086",
+      "class": "operator-setting",
+      "originalField": "gitExecutable",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-8db8a36ca53dc1eb-CONTRACT",
+        "RT-8db8a36ca53dc1eb-ALTERNATE",
+        "RT-8db8a36ca53dc1eb-BINDING",
+        "RT-8db8a36ca53dc1eb-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/gitExecutable",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.gitExecutable",
+        "lines": [
+          13
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/gitExecutable",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-ee08794926c7a01e",
+      "original": "D228#/rows/496",
+      "originalObjectSha256": "ab5ee632acb67e50656903316c85629658a7952909899ad1be82b598def94cc1",
+      "class": "operator-setting",
+      "originalField": "authorName",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-ee08794926c7a01e-CONTRACT",
+        "RT-ee08794926c7a01e-ALTERNATE",
+        "RT-ee08794926c7a01e-BINDING",
+        "RT-ee08794926c7a01e-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/authorName",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.authorName",
+        "lines": [
+          14
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/authorName",
+        "fragmentSha256": "fc1323deb19ebcede5b9ed4e86009becb88d243deabddada478f7799f09acac6"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-924e0a54a2b58e33",
+      "original": "D228#/rows/497",
+      "originalObjectSha256": "6c8eb51f86da33fcdd073587f093fd9571b4d730f7749918286e4af3d1e92b1e",
+      "class": "operator-setting",
+      "originalField": "authorEmail",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-924e0a54a2b58e33-CONTRACT",
+        "RT-924e0a54a2b58e33-ALTERNATE",
+        "RT-924e0a54a2b58e33-BINDING",
+        "RT-924e0a54a2b58e33-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/authorEmail",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.authorEmail",
+        "lines": [
+          15
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/authorEmail",
+        "fragmentSha256": "fc1323deb19ebcede5b9ed4e86009becb88d243deabddada478f7799f09acac6"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-e7d8e869522d5493",
+      "original": "D228#/rows/498",
+      "originalObjectSha256": "affa9f9f26522b2ab9f9c9fe87a501ad640e89b854a017c3774f26034504947d",
+      "class": "operator-setting",
+      "originalField": "maxExecutionMs",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-e7d8e869522d5493-CONTRACT",
+        "RT-e7d8e869522d5493-ALTERNATE",
+        "RT-e7d8e869522d5493-BINDING",
+        "RT-e7d8e869522d5493-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/maxExecutionMs",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.maxExecutionMs",
+        "lines": [
+          16
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/maxExecutionMs",
+        "fragmentSha256": "deb121b00e44962c2ed9064963ac81e86eb04b8f0069d62d1cdd0e319b88446b"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-0a9cbc8ea275031f",
+      "original": "D228#/rows/499",
+      "originalObjectSha256": "1f4a8dcd62e193c0e9640b4a179c184b8ef89c1cd5e80ee9386657c97f8f0073",
+      "class": "operator-setting",
+      "originalField": "maxOutputBytes",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-0a9cbc8ea275031f-CONTRACT",
+        "RT-0a9cbc8ea275031f-ALTERNATE",
+        "RT-0a9cbc8ea275031f-BINDING",
+        "RT-0a9cbc8ea275031f-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/maxOutputBytes",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.maxOutputBytes",
+        "lines": [
+          17
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/maxOutputBytes",
+        "fragmentSha256": "967fd57a0c7d512baf1ca6dd5f491228bed74076445f33fa7f8a4ba960fb9597"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+      "runtimeAcceptance": "OPEN; no original result changed",
+      "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+      "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."
+    },
+    {
+      "id": "RT-82517260abb0c254",
+      "original": "D228#/rows/500",
+      "originalObjectSha256": "ce1a71c0617d7f3551d1a795845242ace3a14f18db5e273f6ca6c9e625377829",
+      "class": "operator-setting",
+      "originalField": "terminationGraceMs",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-82517260abb0c254-CONTRACT",
+        "RT-82517260abb0c254-ALTERNATE",
+        "RT-82517260abb0c254-BINDING",
+        "RT-82517260abb0c254-MUTANT"
+      ],
+      "plugin": "kubeclaw.git-workspace",
+      "registration": "kubeclaw.git-workspace:git",
+      "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+      "platformPointerTemplate": "/adapters/kubeclaw.git-workspace:git/terminationGraceMs",
+      "sourceLane": {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+        "anchor": "readonly adapters:",
+        "lines": [
+          17
+        ]
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+        "lines": [
+          141
+        ]
+      },
+      "consumer": {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "sha256": "61625b9e5f385025808beab01e164dc305951513be267c20e4c90b2792dd7c2f",
+        "anchor": "context.config.terminationGraceMs",
+        "lines": [
+          18
+        ]
+      },
+      "manifest": {
+        "path": "skills/common/plugins/git-workspace/plugin.json",
+        "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802"
+      },
+      "schema": {
+        "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+        "sha256": "c1543aa2b1ea5d53dc0cb1f6781f1371aedb4a30c007efc7660de89bed5aa55d",
+        "pointer": "/properties/terminationGraceMs",
+        "fragmentSha256": "d5fcf6c2abfc5d3e938b5477e9418f0d557745a2fbd887d64f826882b2bedf29"
+      },
+      "centralPhysicalAuthor": null,
+      "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
       "runtimeAcceptance": "OPEN; no original result changed",
       "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
       "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."

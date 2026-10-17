@@ -13,6 +13,8 @@ PLATFORM = "skills/common/plugin-runtime/foundation/config/platform.ts"
 SNAPSHOTS = "skills/nova/core/execution/engine-snapshots.ts"
 RUN = "skills/nova/core/execution/engine-run.ts"
 SPECS = {
+ "kubeclaw.command-runner": ("command", None, None),
+ "kubeclaw.git-workspace": ("git", None, None),
  "kubeclaw.artifact-store": ("artifact-store", "artifactRoot", "const configured = context.config.artifactRoot;"),
  "kubeclaw.state-store": ("state", "root", "const configured = context.config.root;"),
  "kubeclaw.telemetry-store": ("telemetry", "root", "const root = context.config.root;"),
@@ -54,20 +56,28 @@ def build():
  originals = {r["id"]:r for r in roster["fields"]}
  cases = {r["id"] for r in roster["cases"]}
  selected = []
- for name,count in [("adapter",12),("delivery",20)]:
-  rows = [r for g in read(str((OUT / (name+"-successors.json")).relative_to(ROOT)))["groups"] for r in g["rows"] if "JOIN_OPEN" in r["status"]]
+ platform_fields = [r for r in read(str((OUT / "fields.json").relative_to(ROOT)))
+  if r["owner"] in ["kubeclaw.command-runner", "kubeclaw.git-workspace"] and r["explicitConfigLocatorObservations"]]
+ if len(platform_fields)!=18: raise ValueError("Command/workspace original roster drift")
+ for name,count in [("adapter",12),("delivery",20),("command-workspace",18)]:
+  rows = platform_fields if name=="command-workspace" else [r for g in read(str((OUT / (name+"-successors.json")).relative_to(ROOT)))["groups"] for r in g["rows"] if "JOIN_OPEN" in r["status"]]
   if len(rows)!=count: raise ValueError(f"Changed residual set: {name}; reconcile explicitly")
   for row in rows:
    ref = originals[row["id"]]; original = resolve(ref["original"])
-   if row["original"]!=ref["original"] or row["originalObjectSha256"]!=ref["sha256"] or row["caseIds"]!=ref["caseIds"] or row["class"]!=original.get("class",original.get("classification")) or row["originalField"]!=original["field"]: raise ValueError(f"Residual drift: {row['id']}")
+   if row["original"]!=ref["original"] or row["originalObjectSha256"]!=ref["sha256"] or row["caseIds"]!=ref["caseIds"] or row["class"]!=original.get("class",original.get("classification")) or row.get("originalField",original["field"])!=original["field"]: raise ValueError(f"Residual drift: {row['id']}")
    if not set(row["caseIds"])<=cases: raise ValueError("Foreign original case")
+   if row.get("owner",original["owner"])!=original["owner"]: raise ValueError("Original owner drift")
+   row = {**row, "originalField":original["field"]}
    plugin = original["owner"]; registration,field,text = SPECS[plugin]
    base = "skills/common/plugins/"+plugin.removeprefix("kubeclaw.")
    manifest = read(base+"/plugin.json")
    entry = next(e for e in manifest["adapters"] if e["id"]==registration)
    schema_path = base+"/"+entry["configSchema"]
    schema = read(schema_path)
-   if plugin=="kubeclaw.network-http":
+   if plugin in ["kubeclaw.command-runner","kubeclaw.git-workspace"]:
+    field = row["originalField"].removesuffix("[]").removesuffix(".{key}")
+    text = "context.config."+field
+   elif plugin=="kubeclaw.network-http":
     field = row["originalField"].removesuffix("[]")
     text = "config."+field
    elif plugin in ["kubeclaw.operator-messaging","kubeclaw.transport-publisher"]:
@@ -77,8 +87,10 @@ def build():
    fragment = pointer(schema,loc)
    if row["originalField"].endswith("[]"):
     loc += "/items"; fragment = pointer(schema,loc)
+   if plugin in ["kubeclaw.command-runner","kubeclaw.git-workspace"] and row["originalField"].endswith(".{key}"):
+    loc += "/additionalProperties"; fragment = pointer(schema,loc)
    consumer = base+"/src/"+("config.ts" if plugin=="kubeclaw.operator-messaging" else "adapter.ts")
-   classification = "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE" if field in ["root","artifactRoot","deliveryRoot"] else "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE"
+   classification = "ROOT_PATH_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE" if field in ["root","artifactRoot","deliveryRoot","workspaceRoot","allowedWorkingRoots","allowedRepositoryRoots"] else "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE"
    selected.append({**{k:row[k] for k in ["id","original","originalObjectSha256","class","originalField","caseIds"]},
     "plugin":plugin,"registration":plugin+":"+registration,"status":classification,
     "platformPointerTemplate":"/adapters/"+(plugin+":"+registration).replace("~","~0").replace("/","~1")+"/"+field,
@@ -86,11 +98,11 @@ def build():
     "projection":anchor(RUNTIME,"const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);"),
     "consumer":anchor(consumer,text),"manifest":pin(base+"/plugin.json"),
     "schema":{**pin(schema_path),"pointer":loc,"fragmentSha256":digest(fragment)},
-    "centralPhysicalAuthor":None,"runtimeAcceptance":"OPEN; no original result changed",
+    "centralPhysicalAuthor":None,"currentConfigurationLane":"Original supplied PlatformConfig.adapters, not adjacent Core scalar sections", "runtimeAcceptance":"OPEN; no original result changed",
     "history":"OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
     "constraint":"Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child."})
- if len({r["id"] for r in selected})!=32: raise ValueError("Incomplete/duplicate residual joins")
- return {"scope":"All32 previously generic adapter/delivery platform residuals, exact current receiving joins; source navigation, NOT implementation or independent acceptance", "roster":pin(ROSTER),"preservedCounts":expected,
+ if len(selected)!=50 or len({r["id"] for r in selected})!=50: raise ValueError("Incomplete/duplicate residual joins")
+ return {"scope":"All50 original adapter/delivery/command-workspace platform residuals, exact current receiving joins; source navigation, NOT implementation or independent acceptance", "roster":pin(ROSTER),"preservedCounts":expected,
   "integrityFailures":[],"counts":dict(collections.Counter(r["status"] for r in selected)),
   "snapshot":anchor(SNAPSHOTS,"configuration: runtime.configuration"),
   "recovery":anchor(RUN,"prepareRuntime(platform, definition, retained.corePolicy"),

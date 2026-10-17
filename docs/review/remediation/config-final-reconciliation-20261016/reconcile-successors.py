@@ -136,6 +136,17 @@ control_exact = {r['id']: r for r in control_joins['rows'] if r['status'] == 'EX
 control_open = {r['id']: r for r in control_joins['rows'] if r['status'] == 'PRISM_CONTROL_RECEIVING_IMPLEMENTATION_OPEN'}
 if len(control_exact) != 14 or len(control_open) != 0 or set(control_exact) & (set(attempt_exact) | set(engine_exact) | set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
     raise ValueError('Prism control roster overlap/drift')
+platform_path = str((OUT / 'platform-boundary-successors.json').relative_to(ROOT))
+platform_joins = read(platform_path)
+platform_open = {r['id']:r for r in platform_joins['rows']}
+if len(platform_open)!=50 or len(platform_joins['rows'])!=50:
+    raise ValueError('Platform boundary roster drift')
+for identity,row in platform_open.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds']):
+        raise ValueError('Platform boundary original drift: '+identity)
+    if row['centralPhysicalAuthor'] is not None or row['runtimeAcceptance']!='OPEN; no original result changed':
+        raise ValueError('Platform boundary falsely closed: '+identity)
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -230,6 +241,15 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group["definition"] = pin("docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/RECEIVING-AND-ORACLES.md")
     if group["candidateSuccessors"] and not exact and not scalar_exact and not delivery and not prism and not boundary and not engine and not attempt and not control:
         group["status"] = "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN"
+    platform = [platform_open[i] for i in ids if i in platform_open]
+    if platform:
+        group['explicitPlatformResiduals'] = platform
+        group['platformSupplementalJoin'] = pin(platform_path)
+        if old in ['config/plugins/kubeclaw.command-runner/default/standard.json', 'config/plugins/kubeclaw.git-workspace/default/standard.json']:
+            if {row['id'] for row in platform}!=set(ids): raise ValueError('Incomplete command/workspace group')
+            group['candidateSuccessors'] = []
+            group['status'] = 'EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN'
+            group['constraint'] = 'Adjacent Core catalog/cleanup/monitoring/error-excerpt sections author none of these18 original fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.'
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
