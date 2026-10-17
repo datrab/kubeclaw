@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T04:56:36.637081+00:00",
+  "updatedAt": "2026-10-17T05:03:52.167043+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -28909,5 +28909,35 @@
     },
     "externalPrerequisite": "isolated Linux/Docker/UID-GID1000/delegated writable cgroup and root-trusted sufficient archive disk; user access clarification requested without secrets",
     "priority": "Functional receiving chain before further unrelated test/fixture/matrix cleanup; tests only to prove changed integration or unblock that integration"
+  },
+  "supervisorStatusFormat20261017": {
+    "at": "2026-10-17T05:03:52.167043+00:00",
+    "status": "STATUS_FORMAT_IMPLEMENTED_SOURCE_RECOVERY_INCOMPLETE",
+    "request": "Raven seven-section automation status",
+    "activeInstructions": "/home/node/.openclaw/workspace/automation/config-status-15min.md",
+    "instructionsSha256": "37ddaf4219a0d81f0cb665c5f8c1ed4e1551b244c9c53fea3fef740173029c03",
+    "verifiedSevenSections": true,
+    "cadencePreserved": true,
+    "delivery": "existing cron reads active instruction path on each firing; no extra channel message",
+    "parentStatus": "failed before reply with claimed-thread error; no followup queued",
+    "activeConfigSubagents": 0,
+    "productiveRepositoryProcessesObserved": 0,
+    "writerLock": "same exclusive nonblocking lock acquired; released at command exit",
+    "sourceImplementationChanged": false,
+    "sourceRecoveryCompleted": false,
+    "exactSourceSeam": {
+      "boot": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs#captureBoot authenticates current Swarm generation and installed caller package; no productive Nova Quality map",
+      "sourceAdmission": "skills/buster/engine/test-gates/budget-source-admission.ts#assertBudgetSourceAdmission unconditionally denies selected size/coverage v2 until original authenticated inputStore producer/source/build/baseline and accounting/publication fence is wired",
+      "needed": "coordinated adopted sole-root/schema/all-profile/file-set/delivery with actual Nova receiver; original inputStore sealed bytes and original reservation/publication association across runner/loader/session; not a receipt-shaped task field"
+    },
+    "independentReview": "OPEN; current WORK-STATE records two upstream HTTP429 failures, no result; stale EROFS not relabelled current; not retried unchanged",
+    "externalBlockers": "isolated Linux Docker genuine UID/GID1000 delegated writable cgroup and sufficiently large genuinely root-trusted archive storage; owner Raven; resume on access availability",
+    "originalScope": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "fullC0C6Accepted": false
+    },
+    "nextAction": "Required productive source recovery remains unfinished; do not substitute formatting/evidence for source implementation. Continue actual coordinated receiving chain under same lock; no denied-v10 activation or fabricated provenance."
   }
 }
