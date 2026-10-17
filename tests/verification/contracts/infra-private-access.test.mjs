@@ -1,5 +1,6 @@
-import { readTestBundle, projectTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
@@ -52,10 +53,12 @@ test('authored Argo ingress and operator values identify external OAuth and shar
 });
 
 test('actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled', () => {
-  const settings = projectTestBundle(readTestBundle(canonicalSwarmEntry));
+  // Use the same whole-profile projection as normal chart publication.
+  // No retired chart-local author or reconstructed settings facade.
+  const settings = prismChartProjection(fileURLToPath(new URL('../../../config/', import.meta.url)));
   for (const enabled of [true, false]) {
-    const manifests = documents(execFileSync(process.env.HELM ?? 'helm', ['template', 'prism', 'charts/prism',
-      '--namespace', 'default', '-f', 'charts/prism/ci-values.yaml',
+    const manifests = documents(execFileSync(process.env.HELM ?? 'helm', ['template', settings.deployment.releaseName, 'charts/prism',
+      '--namespace', settings.deployment.namespace, '-f', 'charts/prism/ci-values.yaml',
       '--set', `tailscale.enabled=${enabled}`, '--set', 'tailscale.hostname=private-studio-test'],
     { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
     const service = manifests.find(item => item.kind === 'Service' && item.metadata.name === 'prism-studio');
