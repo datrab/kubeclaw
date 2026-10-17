@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T04:43:39.780104+00:00",
+  "updatedAt": "2026-10-17T04:49:41.787935+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -28833,5 +28833,47 @@
     "resumeCondition": "Unchanged genuine isolated Linux Docker UID1000 delegated writable cgroup/native pool, trusted writable archive storage and migrated isolated PostgreSQL.",
     "writerLock": "SAME shared nonblocking exclusive lock; released on bounded command exit",
     "noHistoricalFollowup": true
+  },
+  "registryPackagedDelivery20261017": {
+    "at": "2026-10-17T04:49:41.787935+00:00",
+    "status": "ORIGINAL_REGISTRY_ARCHIVE_AND_AUTHENTIC_DELIVERY_5_OF_5_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "791dda5d8d1b00de9082a557f9df7d40fbe65568",
+    "verifiedRemoteHead": "791dda5d8d1b00de9082a557f9df7d40fbe65568",
+    "sourceRemoteVerified": true,
+    "testedBaseCommit": "2b1f8cbc0ae2637084de37649e7947f9c9dca35b",
+    "evidence": "docs/review/remediation/config-registry-packaged-delivery-20261017",
+    "change": "Original registry Helm consumer renders complete normal chart archive from selected sole-root release/namespace. Genuine Buster build verifies actual revision/timestamp, both caller captures, immutable projection and cross-caller rejection; archive topology readback matches delivered generation. All original registry assertions preserved, including missing/duplicate/misspelled/scheme/mirror negatives, trusted CA scoped mount and credential isolation. Original HTTPS manifest real-server controls pass. No production policy/default/authority changed.",
+    "checks": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "exitCode": 0,
+      "log": "tests.txt",
+      "originalAssertionsPreserved": true,
+      "syntaxAndDiffCheck": true
+    },
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+      "unchangedFromHEAD": true,
+      "originalResultsChanged": false
+    },
+    "sourceSha256": "9e5be7eab227a5a43e4f0dc5863d0ef4c7b52c45cdaab6832da4f4944fc50686",
+    "independentReview": "OPEN: no callable native spawn/review/collaboration tools; CONFIG subagents0, parent terminal, no fresh report; unchanged helper EROFS not retried. Author checks only.",
+    "qualification": "Actual local package build/capture and full archive Helm render only. Native/OCI identities used for render are synthetic vectors, not boot/native proof. Source revision does not certify clean worktree. No original cases newly accepted.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficiently large genuinely root-trusted writable archive filesystem and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped acceptance.",
+    "writerLock": "SAME nonblocking exclusive writer lock during mutation/checks/commit/push, released at bounded command exit",
+    "noHistoricalFollowup": true,
+    "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
   }
 }
