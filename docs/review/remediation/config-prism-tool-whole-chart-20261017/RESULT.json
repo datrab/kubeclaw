@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-17T03:54:43.090544+00:00",
+  "status": "ORIGINAL_PRISM_TOOL_FULL_PACKAGED_CHART_4_OF_4_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "acffa01ef1bd80cc00a5f86eb6db78fc7b717b4a",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-prism-tool-whole-chart-20261017",
+  "change": "Replaced manually selected two-template gateway chart with complete original Kubeclaw chart and normal Helm .tgz packaging. Complete A/B/restored-A central source projections, actual Deployment/bridge command+both probes and both real HTTP tool endpoints verified; retained startup A and per-call override denial preserved. No production source/schema/default/authority change.",
+  "checks": {
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "completeChartPackages": 3,
+    "wrongNamespaceNegatives": 3,
+    "actualToolRequests": 8,
+    "missingCentralAuthorNegative": true,
+    "syntaxAndDiffCheck": true
+  },
+  "qualification": "Whole local chart rendering for this role, NOT installed gateway, authenticated role boot, OCI, native or global acceptance. Former isolated renderer passed; no preexisting production failure claimed.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "unchanged": true,
+    "originalResultsChanged": false
+  },
+  "independentReview": "OPEN: native spawn/review/collaboration discovery empty; CONFIG subagents0; parent done with no pending reviewer result; known same-surface app-server EROFS not retried. Author checks only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "writerLock": "SAME nonblocking exclusive repository lock for edits/checks/commits/push; released at each bounded command exit",
+  "noHistoricalFollowup": true,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No trust/identity/kernel spoof or skipped gates.",
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
+}
