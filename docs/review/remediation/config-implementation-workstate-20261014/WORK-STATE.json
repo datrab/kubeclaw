@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T02:03:55.230724+00:00",
+  "updatedAt": "2026-10-17T02:24:57.224115+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -26324,5 +26324,54 @@
     "productiveQualityBootImplemented": false,
     "matrixCommit": "f27e276b0d85b2077238e26ee3e4d133fd6f3c45",
     "matrixRemoteVerified": true
+  },
+  "componentAggregateCloseout20261017": {
+    "at": "2026-10-17T02:24:57.224115+00:00",
+    "status": "ORIGINAL_AGGREGATE_COMPLETED_REQUIRED_UID_GATE_FAILED",
+    "command": "npm run verify:config:components",
+    "testedSourceHead": "4baaec6f9b7a9132f94ec7881fb501964e1431a3",
+    "testRunnerSummary": {
+      "tests": 652,
+      "pass": 651,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMs": 938762.277033,
+    "strictSourceTypecheck": "PASSED: command advanced past original tsc && into all original suites",
+    "commandExitCode": null,
+    "commandExitQualification": "Initial shell collector hit execution-surface600s timeout; original test tree continued and full failure summary collected without restart. Do not fabricate lost npm exit status. Test runner completed with one failed test.",
+    "logSha256": "7949055d88f01634d7fbcaebd4b1d015ec580d5371284129b1289463bb80498f",
+    "failure": {
+      "test": "tests/verification/deployment/buster-admission-render.test.mjs:48",
+      "reason": "Actual process UID0 differs from original required UID1000; assertion unchanged",
+      "actualCredentialDropAttempt": "NOT_EXECUTED: OS denied user=1000/group=1000 subprocess identity probe with PermissionError EPERM; original test never admitted",
+      "owner": "Raven",
+      "resume": "Run original aggregate on genuine UID/GID1000 service environment; no fake UID/trust/kernel or changed assertions"
+    },
+    "independentReview": "OPEN: no native spawn/reviewer tool exposed; CONFIG subagents0; unchanged same-surface app-server EROFS not retried",
+    "qualification": "Complete author component aggregate observed, NOT green; no production source/test/assertion/default/schema changed. Packaging/boot/Helm effect proofs do not establish native/whole-task acceptance.",
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "originalResultsChanged": false,
+      "originalCasesNewlyAccepted": 0
+    },
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "remaining": [
+      "Genuine QB-R02 original producer/source/build/baseline inputStore-owned reservation/accounting/sealed byte snapshot/prepublication validity",
+      "Authenticated coordinated sole-root/all-profile/schema/file-set/boot+actual Nova receiving; no denied-v10 promotion",
+      "Independent complete-source/original/history/native/archive/full C0-C6 acceptance"
+    ],
+    "externalOwner": "Raven",
+    "externalResumeCondition": "Genuine isolated Linux Docker/UID1000/GID1000/delegated writable cgroup plus sufficient genuinely root-trusted writable archive storage and isolated migrated PostgreSQL",
+    "writerLock": "SAME nonblocking repository lock; released at command exit",
+    "noHistoricalFollowup": true,
+    "evidence": "docs/review/remediation/config-component-aggregate-closeout-20261017"
   }
 }
