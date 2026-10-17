@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/quickstart.html"></head><body><main>
+<h1 id="operator-quickstart">Operator Quickstart</h1>
+<p>Status: convenience source check only; canonical install and run procedures own operator acceptance
+Audience: operator
+Owner: platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/package.json">package.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/deploy.sh">scripts/deploy.sh</a>
+Applies to: current repository checkout
+Last verified: 2026-09-16, local command execution</p>
+<h2 id="objective">Objective</h2>
+<p>Confirm that a checkout can enter the full installation or pipeline procedure.
+This quickstart makes no cluster change and starts no external effect.
+It is not a second install, readiness, or run-control authority.</p>
+<p>Use <a href="install.html">Plan and Install</a> for deployment.
+Use <a href="operate.html">Configure and Operate</a> to start a governed run.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Use a clean KubeClaw checkout.</li>
+<li>Install Node.js major version 24 and its supplied npm version.</li>
+<li>Install Go and make <code>go</code> available on <code>PATH</code>. The generated-documentation
+checks use it to inspect Go producers.</li>
+<li>Run commands from the repository root.</li>
+<li>Use the npm registry and credentials selected by the repository or host package
+authority. Keep network and DNS access to that registry when the package cache
+is incomplete. Do not print registry tokens into the evidence record.</li>
+<li>Use a disposable checkout when an existing <code>node_modules</code> directory contains
+local state. <code>npm ci</code> removes that directory and installs the lockfile state.</li>
+</ul>
+<h2 id="supported-versions">Supported Versions</h2>
+<p>Use the <a href="README.html#version-and-tool-boundary">shared version rules</a>.
+This portable quickstart requires Node.js 24 and Go.
+The repository does not declare an accepted Go version range; record <code>go version</code>.
+It does not require Kubernetes, Helm, kubectl, or a delegated cgroup.</p>
+<h2 id="locked-dependency-installation">Locked Dependency Installation</h2>
+<p>This is the canonical <code>npm ci</code> safety contract for operator procedures. Run it
+from the repository root in a disposable checkout, before any procedure that
+links here. The package authority is <code>package-lock.json</code>; the network authority
+is the registry returned by <code>npm config get registry</code>, together with the host's
+DNS, TLS, proxy, and npm credential configuration. Never copy <code>.npmrc</code>, tokens,
+authorization headers, or npm debug logs into retained evidence.</p>
+<p>Set <code>&lt;dependency-evidence-dir&gt;</code> to a new access-restricted directory outside
+the checkout. <code>npm ci</code> deletes and recreates <code>node_modules</code>; it must not run in
+a checkout whose existing dependency tree or files are owned by another task.</p>
+<pre><code class="language-bash">set -euo pipefail
+umask 077
+test &quot;$(git rev-parse --show-toplevel)&quot; = &quot;$PWD&quot;
+test ! -e &quot;&lt;dependency-evidence-dir&gt;&quot;
+mkdir -m 0700 &quot;&lt;dependency-evidence-dir&gt;&quot;
+git status --short &gt; &quot;&lt;dependency-evidence-dir&gt;/worktree-before.txt&quot;
+git rev-parse HEAD &gt; &quot;&lt;dependency-evidence-dir&gt;/source-commit.txt&quot;
+node --version &gt; &quot;&lt;dependency-evidence-dir&gt;/node-version.txt&quot;
+npm --version &gt; &quot;&lt;dependency-evidence-dir&gt;/npm-version.txt&quot;
+sha256sum package-lock.json &gt; &quot;&lt;dependency-evidence-dir&gt;/package-lock.sha256&quot;
+npm config get registry | node -e '
+let value=&quot;&quot;; process.stdin.on(&quot;data&quot;, c =&gt; value += c).on(&quot;end&quot;, () =&gt; {
+  const url = new URL(value.trim());
+  url.username = &quot;&quot;; url.password = &quot;&quot;; url.search = &quot;&quot;; url.hash = &quot;&quot;;
+  process.stdout.write(url.toString() + &quot;\n&quot;);
+});' &gt; &quot;&lt;dependency-evidence-dir&gt;/registry.txt&quot;
+set +e
+npm ci --ignore-scripts &gt; &quot;&lt;dependency-evidence-dir&gt;/npm-ci.stdout.txt&quot; \
+  2&gt; &quot;&lt;dependency-evidence-dir&gt;/npm-ci.stderr.txt&quot;
+npm_ci_status=$?
+set -e
+printf '%s\n' &quot;$npm_ci_status&quot; &gt; &quot;&lt;dependency-evidence-dir&gt;/npm-ci.exit-status.txt&quot;
+test &quot;$npm_ci_status&quot; -eq 0
+git status --short &gt; &quot;&lt;dependency-evidence-dir&gt;/worktree-after.txt&quot;
+cmp &quot;&lt;dependency-evidence-dir&gt;/worktree-before.txt&quot; \
+  &quot;&lt;dependency-evidence-dir&gt;/worktree-after.txt&quot;
+</code></pre>
+<p>Expected observations: the sanitized registry URL names the approved endpoint,
+the lock digest is nonempty, the exit-status file contains <code>0</code>, npm output
+reports a completed lockfile installation, and the before/after worktree files
+match. Stop and retain the sanitized files on DNS, TLS, proxy, authentication,
+package-not-found, integrity, engine, disk, or permission failure. Do not change
+the registry, lockfile, or package versions merely to pass.</p>
+<p>If no later step needs the installed tree, have the checkout owner remove the
+entire disposable checkout. If later steps continue in it, retain
+<code>node_modules</code> until those steps finish and then use the same owner-approved
+checkout cleanup. Do not delete an unproven path or an independently owned
+dependency tree.</p>
+<h2 id="procedure">Procedure</h2>
+<ol>
+<li>
+<p>Complete <a href="#locked-dependency-installation">Locked Dependency Installation</a>.</p>
+</li>
+<li>
+<p>Confirm the source identity if continuing in the installed checkout.</p>
+</li>
+</ol>
+<pre><code class="language-bash">git status --short
+git rev-parse HEAD
+node --version
+npm --version
+command -v go
+go version
+</code></pre>
+<ol start="3">
+<li>Check generated documentation and the installed plugin inventory.</li>
+</ol>
+<pre><code class="language-bash">npm run docs:check:generated
+npm run plugin-system:inventory:check
+</code></pre>
+<ol start="4">
+<li>Confirm the pipeline entry point.</li>
+</ol>
+<pre><code class="language-bash">npm pkg get scripts.pipeline
+</code></pre>
+<h2 id="expected-result">Expected Result</h2>
+<p>The worktree output contains no unexpected change.
+Both checks exit with code zero.</p>
+<p><code>npm ci</code> reports a completed lockfile installation from the selected registry.
+Record a registry authentication, DNS, TLS, package-not-found, or integrity
+error as its own failure; do not change the registry or lockfile merely to pass.</p>
+<p>The final command prints <code>&quot;node skills/nova/pipeline.ts&quot;</code>.
+It does not start a run.</p>
+<p>The pipeline command does not implement a <code>--help</code> option.
+Use the exact project and explicit-graph forms in <a href="operate.html#understand-the-two-command-forms">Configure and Operate</a>.</p>
+<h2 id="verification">Verification</h2>
+<p>Confirm that the inventory check matches every installed manifest and registration.
+Confirm that generated documentation matches its source inventories.</p>
+<p>Keep the source commit before continuing to installation or operation.</p>
+<p>Retain the complete dependency-installation evidence directory, the
+generated-documentation result, plugin-inventory result, and printed pipeline
+entry point.</p>
+<h2 id="common-failures">Common Failures</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Cause class</th>
+<th>Next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dirty worktree</td>
+<td>Local or generated files differ</td>
+<td>Review the changes; do not discard unknown work</td>
+</tr>
+<tr>
+<td><code>npm ci</code> fails</td>
+<td>Lockfile, registry, network, or runtime mismatch</td>
+<td>Correct the named prerequisite</td>
+</tr>
+<tr>
+<td>Generated file drift</td>
+<td>Source inventory changed</td>
+<td>Run the named generator and review its diff</td>
+</tr>
+<tr>
+<td>Plugin validation fails</td>
+<td>Manifest, module, schema, export, trust, or grant error</td>
+<td>Repair the exact reported boundary</td>
+</tr>
+<tr>
+<td>Pipeline entry point differs</td>
+<td>The checkout and documentation do not describe the same command</td>
+<td>Stop and review the selected source revision</td>
+</tr>
+</tbody>
+</table>
+<h2 id="full-isolation-contract-verification">Full Isolation Contract Verification</h2>
+<p>The full plugin-system verifier is not a portable quickstart check.
+It requires a host administrator to provide a real writable and delegated cgroup-v2 subtree.</p>
+<p>On a prepared verification host, use:</p>
+<pre><code class="language-bash">export KUBECLAW_TEST_CGROUP_ROOT=&quot;&lt;delegated-cgroup-v2-root&gt;&quot;
+npm run verify:plugin-system-v2
+</code></pre>
+<p>The variable alone does not create the delegation.
+Use <a href="../reference/verification-commands.html">Verification Commands</a> for the required checks and their evidence boundaries.</p>
+<h2 id="recovery">Recovery</h2>
+<p>Do not delete the lockfile or replace versions to bypass a failed check.
+Return to the selected source commit and use its supported tool versions.</p>
+<p>If the checkout already contains user changes, preserve them.
+Use a separate clean checkout for the operator preflight.</p>
+<p>The installed <code>node_modules</code> tree is the only persistent quickstart output.
+Keep it when the same checkout continues to another documented task. Otherwise,
+remove the disposable checkout through its workspace owner; do not use an
+unbounded filesystem command. This quickstart creates no cluster, provider, or
+external runtime resource.</p>
+</main></body></html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/verification-commands.html"></head><body><main>
+<h1 id="verification-commands">Verification Commands</h1>
+<p>Status: generated reference
+Audience: operator, developer
+Owner: platform-maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/generated/inventory/deploy-script.json">docs/generated/inventory/deploy-script.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs">scripts/docs-generate.mjs</a>
+Applies to: local and deployment verification
+Last verified: generated from current inventory</p>
+<h2 id="summary">Summary</h2>
+<p>This page lists deployment verification commands plus source-backed local checks.</p>
+<!-- BEGIN GENERATED: source-backed reference -->
+<p>Generated from: <code>scripts/deploy.sh</code></p>
+<h2 id="deployment-verification-commands">Deployment Verification Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>./scripts/deploy.sh nova-production-preflights &lt;image&gt;</code></td>
+<td>Run all required proofs after all source cutovers</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh image</code></td>
+<td>Deploy both agents using image/runtime values</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh image &lt;name&gt;</code></td>
+<td>Deploy one agent using image/runtime values</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh smoke</code></td>
+<td>Run pod-level smoke checks for Nova + Buster</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh smoke-agent &lt;name&gt;</code></td>
+<td>Run pod-level smoke checks for one agent</td>
+</tr>
+<tr>
+<td><code>./scripts/deploy.sh status</code></td>
+<td>Show all pods and services</td>
+</tr>
+</tbody>
+</table>
+<!-- END GENERATED -->
+<h2 id="local-documentation-and-deployment-checks">Local Documentation And Deployment Checks</h2>
+<pre><code class="language-bash">npm run verify:plugin-system-v2
+npm run typecheck:skills
+npm run docs:inventory:check
+npm run docs:generate:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root &quot;$PWD&quot;
+git diff --check
+</code></pre>
+<h2 id="claim-to-test-map">Claim-To-Test Map</h2>
+<table>
+<thead>
+<tr>
+<th>Claim class</th>
+<th>Source or verifier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Documentation inventory and generated references are current</td>
+<td><code>npm run docs:inventory:check</code>; <code>npm run docs:generate:check</code>; <code>node scripts/docs-check.mjs</code></td>
+</tr>
+<tr>
+<td>Core, package, capability, lifecycle, recovery, isolation, and malicious-package checks pass</td>
+<td><code>npm run verify:plugin-system-v2</code></td>
+</tr>
+<tr>
+<td>Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source</td>
+<td><code>node tests/verification/deployment/check-deployment-truth.mjs --source-root &quot;$PWD&quot;</code></td>
+</tr>
+<tr>
+<td>Documentation surface links and generated docs expectations stay valid</td>
+<td><code>npm run docs:check</code></td>
+</tr>
+<tr>
+<td>Restart, recovery, retry, crash, and resume behavior remain source-backed</td>
+<td><code>node tests/verification/contracts/check-plugin-system-v2-phase7.mjs</code>; <code>node tests/verification/contracts/check-plugin-system-v2-resume.mjs</code></td>
+</tr>
+<tr>
+<td>The complete real model-backed workflow works</td>
+<td><code>node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full</code></td>
+</tr>
+<tr>
+<td>Proposed doc edits have no whitespace errors</td>
+<td><code>git diff --check</code></td>
+</tr>
+<tr>
+<td>Referenced source paths/config keys exist</td>
+<td>Use a targeted <code>test -e</code>/ <code>rg -q</code> sanity check for newly cited paths and keys before closing the docs pass.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="generated-from">Generated from</h2>
+<ul>
+<li><code>../generated/inventory/deploy-script.json</code></li>
+<li><code>../../scripts/docs-generate.mjs</code></li>
+</ul>
+</main></body></html>

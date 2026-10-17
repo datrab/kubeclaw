@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/decisions/echo.html"></head><body><main>
+<h1 id="echo-evidence-decisions-and-controlled-repair">Echo: evidence, decisions, and controlled repair</h1>
+<p>Status: current decisions; implementation and live acceptance are separate
+Audience: developers, operators, and architecture readers
+Owner: review-plugin maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/src/review-policy-profiles.ts">skills/nova/plugins/review/src/review-policy-profiles.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/src/review-governor-decision.ts">skills/nova/plugins/review/src/review-governor-decision.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/src/repository-audit-stage.ts">skills/nova/plugins/review/src/repository-audit-stage.ts</a>
+Applies to: source revision <code>ad67f9bb5c75cfa8cc1b926668aec1dd0168452c</code>
+Last verified: 2026-09-15; no model execution result is available</p>
+<h2 id="why-these-boundaries-exist">Why these boundaries exist</h2>
+<p>A review model can find a real problem. It can also cite the wrong version or mistake a suspicion for a defect.
+The system must therefore check the evidence before it asks a worker to change code.
+Echo proposes findings. The review plugin checks their evidence and applies the selected policy.
+Core records the result and controls repair, retry, waiting, and recovery.</p>
+<p>This division avoids a second controller hidden inside the review model.
+It also has a cost: missing evidence can stop a review even when its proposed finding sounds convincing.
+That stop is deliberate. An unverified claim must not become an instruction to repair code.</p>
+<h2 id="grouped-record-contract">Grouped Record Contract</h2>
+<p>The original Echo source contains many small decisions that share one context,
+reason, and implementation boundary. The tables below retain each stable ID and
+its exact requirement. The following group records supply the fields that those
+rows share. This avoids repeating the same explanation for every ID without
+removing its identity.</p>
+<table>
+<thead>
+<tr>
+<th>Decision group</th>
+<th>Context and selected approach</th>
+<th>Recorded alternatives</th>
+<th>Consequences</th>
+<th>Approval</th>
+<th>Implementation and verification</th>
+<th>Supersession</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authority and policy</td>
+<td>A model can propose findings but cannot own lifecycle truth. The plugin verifies evidence and applies one frozen policy.</td>
+<td>Model-owned verdicts, partial policy merges, and configurable trust limits are rejected.</td>
+<td>Missing required evidence stops or escalates the review. This costs execution time but prevents unsupported repair.</td>
+<td>The decision record identifies agreement but does not name an approver or approval date.</td>
+<td>The policy, parser, reducer, and report implement the bounded paths described here. No model or production execution result is available.</td>
+<td>D-ER-009 and D-ER-029 replace D-ER-008. D-ER-034 clarifies D-ER-006 and D-ER-018.</td>
+</tr>
+<tr>
+<td>Evidence verification</td>
+<td>Echo receives a bounded, immutable source bundle. Independent code verifies paths, revisions, scope, and cited evidence.</td>
+<td>Unbounded repository access, model-supplied authoritative source, and repeated expansion are rejected.</td>
+<td>Review input becomes reproducible. Limits can require orchestration when safe evidence does not fit.</td>
+<td>The decision record does not name an approver or approval date for this group.</td>
+<td>Bundle construction and semantic verification exist. A complete production review result is not available.</td>
+<td>The hardened discovery rules qualify the earlier no-discovery rules. Large-change slicing qualifies the earlier single-expansion rule.</td>
+</tr>
+<tr>
+<td>Governor and repair</td>
+<td>Only independently confirmed and eligible findings can request repair. Core retains lifecycle and repair-budget authority.</td>
+<td>Trusting Echo's verdict, allowing a verifier to rewrite findings, and treating transport failure as rejection are rejected.</td>
+<td>The proof chain is longer, but uncertainty cannot silently mutate source.</td>
+<td>The decision record does not name an approver or approval date for this group.</td>
+<td>Governor, verification, reduction, and history source exist. Live model quality remains an acceptance gate.</td>
+<td>D-ER4-016–022 replace the temporary repair prohibition and reconciliation blocks.</td>
+</tr>
+<tr>
+<td>Simplification and reporting</td>
+<td>Optional simplification facts and grouped causes can improve a report but cannot create authority.</td>
+<td>Automatic repair from advisory simplification and a second mutable report database are rejected.</td>
+<td>Reports remain bounded and useful while every blocker still affects the result.</td>
+<td>The decision record does not identify a separate approval event for this editorial group.</td>
+<td>Current source implements inspected rule, grouping, and report paths. This page does not claim model-accuracy proof.</td>
+<td>SIM001–SIM008 replace PT001–008. Current report identity rules replace earlier report-v1 assumptions where stated.</td>
+</tr>
+<tr>
+<td>Repair history</td>
+<td>Core-certified remediation cycles and the immutable prior report control repair growth.</td>
+<td>Attempt count as a repair counter and a fabricated replacement baseline are rejected.</td>
+<td>A missing or corrupt history blocks instead of resetting the budget.</td>
+<td>The decision has no named approver or separate approval date.</td>
+<td>The governor history contains the required state. No live repair-cycle result is available.</td>
+<td>Core-certified <code>remediationCyclesUsed</code> replaces plugin-owned cycle counting.</td>
+</tr>
+<tr>
+<td>Large changes and audit</td>
+<td>Large reviews use deterministic slices. Whole-repository audit is a separate non-repairing registration.</td>
+<td>Silent file omission, arbitrary browsing, and audit-triggered repair are rejected.</td>
+<td>Complete evidence needs more planning and can require orchestration for oversized connected groups.</td>
+<td>The decision record does not name an approver or approval date for this group.</td>
+<td>Repository-audit source exists. Production model performance and completeness remain unverified.</td>
+<td>The separate audit registration replaces the earlier implication that audit findings can request repair.</td>
+</tr>
+</tbody>
+</table>
+<p>The records below preserve stable decision IDs and their current requirements.
+Implementation does not by itself prove operator approval or production acceptance.
+The current rules in the next section replace intermediate rules explicitly.</p>
+<h2 id="current-rules-and-replaced-intermediate-rules">Current rules and replaced intermediate rules</h2>
+<table>
+<thead>
+<tr>
+<th>Earlier rule</th>
+<th>Current interpretation and reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-ER-008: consolidate the old PASS/FAIL contract</td>
+<td>Historical intermediate step. D-ER-009 and D-ER-029 replace it with structured assessments and proposals. The old parser must not return as a fallback.</td>
+</tr>
+<tr>
+<td>D-ER-031: no proposal may request repair</td>
+<td>Replaced by D-ER4-016–022. Only independently confirmed, eligible findings may request repair. The temporary blanket block is obsolete.</td>
+</tr>
+<tr>
+<td>D-ER-006 and D-ER-018: preserve resolved policy</td>
+<td>D-ER-034 clarifies storage: Core preserves the complete graph configuration. The plugin freezes its resolved policy without a second mutable policy store.</td>
+</tr>
+<tr>
+<td>D-ER-012/025/032: policy v1 and report v1</td>
+<td>Policy v2 and report v2 add governor controls. Current semantic encoding also supports versioned report identities. Preserve each stored version's bytes and hash rules.</td>
+</tr>
+<tr>
+<td>D-ER-017: authorized run override</td>
+<td>The resolver supports an explicitly authorized complete value. This is not evidence that the public stage exposes an arbitrary per-run override.</td>
+</tr>
+<tr>
+<td>D-ER3-001/004/019: no repository discovery</td>
+<td>The hardened design adds bounded discovery at the same frozen Git revision. Normal review remains focused on the diff. A separate repository-audit registration owns whole-repository review.</td>
+</tr>
+<tr>
+<td>D-ER3-005/016: one expansion</td>
+<td>The focused flow retains one cumulative expansion. Large changes can use deterministic slices, with one merged verification and report. They cannot omit a changed file silently.</td>
+</tr>
+<tr>
+<td>D-ER4-003: optional separate verifier target</td>
+<td>D-ER4-011 selects a fresh invocation on the configured review target. Do not document a second model setting as an exposed capability without source proof.</td>
+</tr>
+<tr>
+<td>D-ER4-013/015/018: temporary reconciliation and mapping blocks</td>
+<td>D-ER4-021 removes these intermediate blocks after the complete private proof chain is established.</td>
+</tr>
+<tr>
+<td>D-ER4-001/013: transport exceptions belong to Core</td>
+<td>Still the general rule. One explicit exception exists: failure to read governor history creates certified invalid state, a report, and a blocked result.</td>
+</tr>
+<tr>
+<td>PT001–008 simplification rules</td>
+<td>Historical proposal. The versioned SIM001–SIM008 registry owns current rule identities. Simplification advice cannot cause automatic repair.</td>
+</tr>
+<tr>
+<td>Plugin counts its own repair cycles</td>
+<td>Replaced by Core-certified remediationCyclesUsed. Retries and repair cycles are different counters.</td>
+</tr>
+<tr>
+<td>Audit findings can ask Core for repair</td>
+<td>Not true for repository-audit. It produces a nonblocking report after complete coverage and verification. The audit itself blocks if its evidence is incomplete.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="authority-and-policy-decisions">Authority and Policy Decisions</h2>
+<p>These decisions establish authority, policy, and evidence limits.
+Their shared reason is to make the same input produce the same bounded decision without trusting model control instructions.
+Complete policy replacement avoids hidden values from partial merges.
+Fixed trust limits prevent configuration from granting additional authority.</p>
+<table>
+<thead>
+<tr>
+<th>Original decision</th>
+<th>Preserved requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-ER-001</td>
+<td>Echo reports assessments and proposed findings; it cannot issue lifecycle verdicts or verified identities.</td>
+</tr>
+<tr>
+<td>D-ER-002</td>
+<td>The plugin owns review contracts, verification, policy, ranking, and reduction to StageResult.</td>
+</tr>
+<tr>
+<td>D-ER-003</td>
+<td>Core alone owns durable attempts, transitions, retries, repairs, waits, and recovery.</td>
+</tr>
+<tr>
+<td>D-ER-004</td>
+<td>Reuse StageResult. Review input and policy contracts do not create another lifecycle result.</td>
+</tr>
+<tr>
+<td>D-ER-005</td>
+<td>Distinguish missing evidence, invalid output, verified defects, and repairs outside the permitted scope.</td>
+</tr>
+<tr>
+<td>D-ER-006</td>
+<td>Freeze the complete policy for the attempt. Later configuration needs explicit Core provenance.</td>
+</tr>
+<tr>
+<td>D-ER-007</td>
+<td>Configuration cannot weaken trust invariants, discard required evidence, or grant lifecycle authority.</td>
+</tr>
+<tr>
+<td>D-ER-008</td>
+<td>Consolidate executable contract authority before migration. The old PASS/FAIL implementation is superseded.</td>
+</tr>
+<tr>
+<td>D-ER-009</td>
+<td>Accept a closed structured assessment/proposal object. Require complete requirement IDs and cited inspected evidence.</td>
+</tr>
+<tr>
+<td>D-ER-010</td>
+<td>Treat model-authored priority, scope, change relation, and root-cause hints as claims until verified.</td>
+</tr>
+<tr>
+<td>D-ER-011</td>
+<td>Identify evidence by kind and digest. Cited evidence must belong to inspected and offered evidence.</td>
+</tr>
+<tr>
+<td>D-ER-012</td>
+<td>Use one complete declarative policy shape for files and future UI; lifecycle settings remain Core-owned.</td>
+</tr>
+<tr>
+<td>D-ER-013</td>
+<td>Use bounded typed values and versioned SIM rules. Reject partial policy patches and impossible follow-up capacity.</td>
+</tr>
+<tr>
+<td>D-ER-014</td>
+<td>Keep P0–P3 meanings fixed. A policy can select blocking priorities but cannot redefine them.</td>
+</tr>
+<tr>
+<td>D-ER-015</td>
+<td>Retain mandatory P0 correctness, security, and contract coverage through non-configurable trust invariants.</td>
+</tr>
+<tr>
+<td>D-ER-016</td>
+<td>Use one hard-limit authority. Per-attempt configuration may lower limits but cannot raise hard ceilings.</td>
+</tr>
+<tr>
+<td>D-ER-017</td>
+<td>Resolve complete built-in, settings, then explicitly authorized run values. Validate every supplied source.</td>
+</tr>
+<tr>
+<td>D-ER-018</td>
+<td>Freeze resolved value, source history, and digest. D-ER-034 clarifies that no second persistence store is needed.</td>
+</tr>
+<tr>
+<td>D-ER-019</td>
+<td>Reduce only certified plugin state. Raw model output and a claimed verified marker are insufficient.</td>
+</tr>
+<tr>
+<td>D-ER-020</td>
+<td>Return passed, request_fix, blocked, or orchestrator_required through the existing StageResult contract.</td>
+</tr>
+<tr>
+<td>D-ER-021</td>
+<td>Apply fixed decision precedence. Integrity and missing required evidence cannot be hidden by a clean finding list.</td>
+</tr>
+<tr>
+<td>D-ER-022</td>
+<td>Insufficient evidence is not a verified finding and cannot create a repair request.</td>
+</tr>
+<tr>
+<td>D-ER-023</td>
+<td>Check JSON Schema and semantic-parser agreement with the same valid and invalid corpus.</td>
+</tr>
+<tr>
+<td>D-ER-024</td>
+<td>Check plugin outcomes against the canonical StageResult schema, including each non-pass path.</td>
+</tr>
+<tr>
+<td>D-ER-025</td>
+<td>Use complete gate, lean, and audit profiles with the same implementation. Profiles do not own retries.</td>
+</tr>
+<tr>
+<td>D-ER-026</td>
+<td>Evaluate different policy values instead of adding profile-specific reducers or parsers.</td>
+</tr>
+<tr>
+<td>D-ER-027</td>
+<td>Publish comparable version, policy, source, verification, and count facts on their specified result fields.</td>
+</tr>
+<tr>
+<td>D-ER-028</td>
+<td>Do not invent latency, token, or cost measurements without actual instrumentation and an execution context.</td>
+</tr>
+<tr>
+<td>D-ER-029</td>
+<td>Use only the structured review-domain response on the live stage; remove the legacy verdict parser.</td>
+</tr>
+<tr>
+<td>D-ER-030</td>
+<td>Freeze exact evidence and requirements before dispatch. Reject missing, duplicate, unknown, and over-limit data.</td>
+</tr>
+<tr>
+<td>D-ER-031</td>
+<td>Historically block unverified proposals during cutover. Semantic verification later replaces this temporary restriction.</td>
+</tr>
+<tr>
+<td>D-ER-032</td>
+<td>Generate configuration schemas from one TypeScript authority. A future UI must use the same contract.</td>
+</tr>
+<tr>
+<td>D-ER-033</td>
+<td>Use the trusted SDK hash utility rather than privileged Node crypto imports inside the plugin graph.</td>
+</tr>
+<tr>
+<td>D-ER-034</td>
+<td>Core freezes graph configuration; the plugin freezes resolution. Recovery checks the original graph identity.</td>
+</tr>
+<tr>
+<td>D-ER-035</td>
+<td>Use the actual review-specific orchestrator issuer; Core persists and validates the resulting wait.</td>
+</tr>
+<tr>
+<td>D-ER-036</td>
+<td>Check bytes and supported JSON shape before allocation and hashing. Raw overflow blocks; valid parsed limit excess can escalate.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="evidence-verification-decisions">Evidence Verification Decisions</h2>
+<table>
+<thead>
+<tr>
+<th>Original decision</th>
+<th>Preserved requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-ER3-001</td>
+<td>Read immutable authorized Git data through the existing repository adapter; require an ancestor base and frozen head.</td>
+</tr>
+<tr>
+<td>D-ER3-002</td>
+<td>Upstream analyzers supply candidate paths and provenance. The plugin selects context; the adapter supplies source bytes.</td>
+</tr>
+<tr>
+<td>D-ER3-003</td>
+<td>Require full immutable revisions and normalized repository-relative paths.</td>
+</tr>
+<tr>
+<td>D-ER3-004</td>
+<td>Keep focused review bounded by file, byte, depth, ownership, and inclusion-reason limits.</td>
+</tr>
+<tr>
+<td>D-ER3-005</td>
+<td>Permit one structured context expansion; this is review input, not lifecycle control.</td>
+</tr>
+<tr>
+<td>D-ER3-006</td>
+<td>Use a frozen bundle with task, revision, scope, evidence, context, selection, and policy identity; keep its digest outside it.</td>
+</tr>
+<tr>
+<td>D-ER3-007</td>
+<td>Generate the bundle schema from TypeScript. Enforce UTF-8 byte and depth limits at the semantic boundary.</td>
+</tr>
+<tr>
+<td>D-ER3-008</td>
+<td>Strictly parse and normalize bundle fields, paths, identities, scope, evidence, and limits before freezing.</td>
+</tr>
+<tr>
+<td>D-ER3-009</td>
+<td>Hash normalized frozen content and retain private certification. Equivalent input ordering must not alter identity.</td>
+</tr>
+<tr>
+<td>D-ER3-010</td>
+<td>Require ordered typed candidate provenance rooted in changed files. Reject cycles, invalid depth, and undeclared relations.</td>
+</tr>
+<tr>
+<td>D-ER3-011</td>
+<td>Apply active context limits and record why candidates are omitted. Hard ceilings remain fixed.</td>
+</tr>
+<tr>
+<td>D-ER3-012</td>
+<td>Accept requests only for known omitted candidates and unverified requirements. Consume the initial selection after expansion.</td>
+</tr>
+<tr>
+<td>D-ER3-013</td>
+<td>Use reserved file and byte capacity for cumulative expansion. Never remove previously supplied context.</td>
+</tr>
+<tr>
+<td>D-ER3-014</td>
+<td>Prove the repository manifest and every selected source before dispatch. Missing changed-file context requires orchestration.</td>
+</tr>
+<tr>
+<td>D-ER3-015</td>
+<td>Dispatch exactly one certified bundle snapshot; callers cannot supply authoritative head, source bytes, or changed paths.</td>
+</tr>
+<tr>
+<td>D-ER3-016</td>
+<td>Reprove the expanded bundle and redispatch once. Transport failures remain Core-owned.</td>
+</tr>
+<tr>
+<td>D-ER3-017</td>
+<td>Freeze HEAD when review begins, after implementation commits. Keep the attempt-bound HMAC proof private from Echo.</td>
+</tr>
+<tr>
+<td>D-ER3-018</td>
+<td>Derive changed-file context automatically. Rank and bound optional candidates before reading their source.</td>
+</tr>
+<tr>
+<td>D-ER3-019</td>
+<td>Keep whole-project audit a separate authorized mode; do not widen the normal gate implicitly.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="governor-and-repair-decisions">Governor and Repair Decisions</h2>
+<table>
+<thead>
+<tr>
+<th>Original decision</th>
+<th>Preserved requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-ER4-001</td>
+<td>Keep runtime exceptions under Core retry authority; a malformed completed verifier response is an integrity failure.</td>
+</tr>
+<tr>
+<td>D-ER4-002</td>
+<td>Verify against the final expanded bundle, never the obsolete first bundle.</td>
+</tr>
+<tr>
+<td>D-ER4-003</td>
+<td>Reuse runtime.dispatch with a fresh verifier invocation instead of adding a service or queue.</td>
+</tr>
+<tr>
+<td>D-ER4-004</td>
+<td>Verify eligible proposals only. This verifier does not prove that Echo found every defect.</td>
+</tr>
+<tr>
+<td>D-ER4-005</td>
+<td>Require an exact digest-bound result per proposal: confirmed, rejected, or insufficient_evidence.</td>
+</tr>
+<tr>
+<td>D-ER4-006</td>
+<td>The verifier cannot rewrite a proposal, add a finding, or choose a pipeline outcome.</td>
+</tr>
+<tr>
+<td>D-ER4-007</td>
+<td>Generate verifier schemas from TypeScript and strictly parse and freeze completed responses.</td>
+</tr>
+<tr>
+<td>D-ER4-008</td>
+<td>Use bounded changed-head-line ranges from Git. A changed file alone does not prove an introduced defect.</td>
+</tr>
+<tr>
+<td>D-ER4-009</td>
+<td>Derive scope and change relation from reviewed locations and line proof, not Echo's claims.</td>
+</tr>
+<tr>
+<td>D-ER4-010</td>
+<td>Collapse exact proposals by canonical digest, but enforce raw proposal limits before deduplication or repository work.</td>
+</tr>
+<tr>
+<td>D-ER4-011</td>
+<td>Use one fresh invocation on the configured review target only for eligible proposals.</td>
+</tr>
+<tr>
+<td>D-ER4-012</td>
+<td>Bind run, stage, attempt, bundle, policy, and proposal set. Reject requests above the 24 MiB hard ceiling.</td>
+</tr>
+<tr>
+<td>D-ER4-013</td>
+<td>A transport error is not rejection or uncertainty. Later reconciliation replaces the temporary response block.</td>
+</tr>
+<tr>
+<td>D-ER4-014</td>
+<td>Require exact response digests, eligible ID set, and offered evidence. Keep verdict classes separate.</td>
+</tr>
+<tr>
+<td>D-ER4-015</td>
+<td>Missing or mismatched output is integrity failure, not rejection. Clear all unbound verdicts.</td>
+</tr>
+<tr>
+<td>D-ER4-016</td>
+<td>Only reconciled confirmed IDs create certified findings. Insufficient evidence cannot enter this path.</td>
+</tr>
+<tr>
+<td>D-ER4-017</td>
+<td>Hash semantic finding content and repository base, excluding line hints. Normalize path/symbol sets before hashing.</td>
+</tr>
+<tr>
+<td>D-ER4-018</td>
+<td>Require proved scope and reviewed source for repairability. Bind the entire private policy-to-finding proof chain.</td>
+</tr>
+<tr>
+<td>D-ER4-019</td>
+<td>The configured verifier mode controls eligibility: disabled, p0-only, or all-blockers.</td>
+</tr>
+<tr>
+<td>D-ER4-020</td>
+<td>Route uncertainty through rejection, follow-up, or orchestration. No uncertainty path can request repair.</td>
+</tr>
+<tr>
+<td>D-ER4-021</td>
+<td>Remove intermediate blocks only when certified state feeds the complete reducer. A violation without a proposal is invalid.</td>
+</tr>
+<tr>
+<td>D-ER4-022</td>
+<td>Gate uncertainty requires orchestration; lean and audit retain it as nonblocking follow-up.</td>
+</tr>
+<tr>
+<td>D-ER4-023</td>
+<td>Record actual verifier execution identities and verdict counts. Do not fabricate cost or latency measurements.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="simplification-shared-causes-and-reports">Simplification, shared causes, and reports</h2>
+<p>A partial source view cannot prove that a symbol is unused everywhere.
+Optional analyzer facts must therefore identify the exact base, head, and changed manifest.
+Missing or malformed optional facts produce diagnostics, not a correctness blocker.
+An internally corrupted certified manifest still blocks the review.</p>
+<p>SIM001–SIM008 have fixed versioned meanings.
+The miner checks the enabled rule, confidence, reviewed location, and source identity.
+It resolves duplicates through a stable source-digest/fact-ID order.
+The plugin alone creates the reserved candidate manifest and binds it to its policy and revision.
+Expansion rebuilds this manifest for the expanded source set.
+Simplification proposals remain advisory, even when a caller tries to bypass the parser.
+The hardened implementation adds a conservative SIM002 producer for forwarding-only functions.
+A wrapper that owns compatibility or policy must be preserved.</p>
+<p>A verifier-confirmed stable root-cause slug can group related findings.
+A missing or invalid slug creates a separate group for that finding.
+The group identity includes the repository base and certified semantic fields, not free text or line hints.
+Private proof binds a cause to the exact finding fingerprint.
+Integer weights rank groups; fingerprints and group IDs break ties deterministically.</p>
+<p>Every verified blocker affects the result before report limits apply.
+A short repair batch cannot hide an omitted blocker or change a failure to a pass.
+Record omitted groups and instances, and bind the selected set by digest against later mutation.
+The advisory limit is the smaller of maxAdvisories and maxRecommendations.
+Follow-up limits also retain omitted counts.</p>
+<p>Each completed attempt with an established bundle writes one immutable report.
+The returned artifact must match namespace, report ID, digest, bytes, run, stage, and attempt.
+An invalid write result blocks. Failure after expansion uses the latest established bundle.
+If confirmed finding normalization fails, preserve the certified proposal as follow-up; do not invent a repairable finding.
+The report uses the existing StageResult attachment, not another controller or result contract.</p>
+<p>These choices preserve complete decision evidence while keeping the operator's report usable.
+They avoid another database or mutable report ledger. The cost is strict identity checking on every report read and write.</p>
+<h2 id="repair-growth-and-history">Repair growth and history</h2>
+<p>The first completed review records a baseline in its immutable report.
+Later repair attempts read it through the exact prior ArtifactRef from Core.
+A missing baseline after a repair cannot be replaced by a newly invented baseline.
+A history-provider failure becomes certified invalid state and produces a blocked report.
+Other transport errors remain Core-owned.</p>
+<p>The governor uses Core's remediationCyclesUsed, not the number of attempts.
+At this source revision, built-in profiles use two repair cycles, a growth multiplier of two,
+an allowance of two additional files, and 100 additional non-test lines.
+The effective growth limit is the larger of relative growth and the absolute allowance.
+This gives a small change useful room without permitting unlimited growth.
+Most-specific ownership prefixes determine owners. Canonical test paths do not consume the non-test line budget.</p>
+<p>Scope or ownership excess requires orchestration before the cycle check.
+A clean last repair can pass only when it remains within scope.
+The governor cannot turn a blocker into a pass or create a new model finding.
+It is an earlier policy threshold; Core still owns the hard lifecycle budget.</p>
+<p>Source evidence: <a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-policy-profiles.ts#L56">built-in governor profile</a>
+sets the limits. <a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-governor-decision.ts#L20-L35">applyReviewGovernor</a>
+keeps a result that does not request another repair when only the cycle limit is exhausted.
+It separately escalates scope breaches and blocks invalid state. These links support the source behavior;
+the available evidence does not include an executed repair cycle.</p>
+<h2 id="large-changes-and-repository-audits">Large changes and repository audits</h2>
+<p>Frozen reviewed source becomes citeable evidence through its digest.
+Every cited location needs the matching source citation and applicable changed-line proof.
+Bounded discovery includes imports, callers, tests, contracts, configuration, ownership, and public exports.
+Resolve emitted .js imports back to tracked TypeScript where the source rules require it.
+Apply a result limit after proving real matches, with a separate scan ceiling.</p>
+<p>For a large diff, preserve connected source groups as atomic slices.
+If a group or the complete changed set exceeds limits, request orchestration.
+Merge slice results once, preserve blocking citations before optional evidence, and create one verifier result and report.</p>
+<p>Whole-repository audit is a separate registration.
+Its map uses sorted JSONL files, relations, exclusions, slices, and boundary streams with independent counts and digests.
+Strongly connected components remain whole. Cut edges need exact endpoint evidence.
+Unresolved relations, missing files, overflow, or incomplete jobs block the audit itself.
+Component jobs inspect source; boundary jobs inspect exact relation excerpts; holistic jobs inspect bounded system topology.
+A topology expansion does not grant arbitrary browsing.</p>
+<p>Cache keys bind unit content, policy, protocol, model identity, and evidence version.
+An imported cache result must also prove an earlier attempt of the same stage and run.
+Corrupt or conflicting cache records block. A missing record starts a new execution.
+A prepared plan can pass to a dependent execute stage in the same run, after identity checks.
+Completed results are saved immediately so another failed job does not erase them.</p>
+<p>Token budgets use the actual tokenizer, including the final runtime envelope.
+The source contract specifies o200k_base, 900,000 prompt bytes, 120,000 input tokens,
+128,000 context tokens, and 6,000 output tokens. These are source-version limits, not universal model capacities.
+The old byte count presented as tokens is superseded.
+Historical cost estimates and million-line compilation timings do not prove live model performance.</p>
+<p>Repository audit never requests repair. Its report is nonblocking only when the audit itself has complete evidence.
+The older final sentence that suggests P0 audit findings can request repair is superseded by this explicit registration boundary.</p>
+<h2 id="evidence-implementation-and-acceptance">Evidence, implementation, and acceptance</h2>
+<p>The source files below implement the inspected boundaries.
+No new package-test run or complete production review execution is claimed.
+The historical local HTTP fixtures replace the external model service; they cannot establish model accuracy.
+Echo production promotion remains a separate <a href="../status/acceptance.html#echo-promotion-as-a-separate-product-decision">product decision</a>.
+The old biased clean samples and incomplete paired batches must not be used to claim a promotion percentage.</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-policy-profiles.ts">review-policy-profiles.ts</a></li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-governor-decision.ts">review-governor-decision.ts</a></li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-governor-history.ts">review-governor-history.ts</a></li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-semantic-flow.ts">review-semantic-flow.ts</a></li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-report-flow.ts">review-report-flow.ts</a></li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/repository-audit-stage.ts">repository-audit-stage.ts</a></li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-semantics.ts">review-semantics.ts</a></li>
+</ul>
+</main></body></html>

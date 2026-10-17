@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/codex-integration.html"></head><body><main>
+<h1 id="codex-integration-ops-plugin-and-runtime-boundary">Codex Integration: Ops Plugin And Runtime Boundary</h1>
+<p>Status: implemented as a local plugin package and an optional Ops Pod
+Audience: Codex operator, plugin maintainer, platform operator, security specialist
+Owner: Codex integration maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/plugins/kubeclaw-ops">plugins/kubeclaw-ops</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/.agents/plugins/marketplace.json">.agents/plugins/marketplace.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/ops-pod">charts/ops-pod</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tools/ops-mcp">tools/ops-mcp</a>
+Evidence revision: <code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code>
+Applies to: <code>kubeclaw-ops@0.2.0</code> and the current local marketplace entry
+Last verified: manifest, skill, chart, service, and test inspection on 2026-09-21</p>
+<h2 id="what-the-plugin-does">What The Plugin Does</h2>
+<p>The <code>kubeclaw-ops</code> Codex plugin provides one troubleshooting skill. The skill
+teaches Codex how to correlate Argo CD state, Kubernetes workloads and events,
+bounded pod logs, and Hubble flows. It instructs Codex to report evidence and a
+safe next action. It explicitly forbids the agent from claiming that it
+performed a mutation.</p>
+<p>The plugin is not a Nova pipeline plugin. It loads no Nova stage, adapter, or
+observer. It also does not embed an MCP server. The Ops MCP connection must be
+available separately in the Codex environment.</p>
+<h2 id="request-data-and-error-path">Request, Data, And Error Path</h2>
+<ol>
+<li>An operator asks Codex to diagnose a cluster symptom. The troubleshooting
+skill selects an Ops MCP tool and the narrowest namespace, object, time, and
+result bounds that can answer the question.</li>
+<li>The Codex host sends an MCP request to the separate service. In the Ops Pod,
+this is loopback <code>127.0.0.1:8080/mcp</code>. Every request carries the bearer token.</li>
+<li>Ops MCP checks the bearer value, optional browser origin, tool schema, and
+namespace allowlist. It then reads the Kubernetes API or starts the fixed
+Hubble CLI. Kubernetes calls use the projected ServiceAccount token and CA.</li>
+<li>Ops MCP returns reduced JSON text with continuation or partial-result
+metadata where the tool supports it. The namespace and event full-scan tools
+do not have aggregate scan or output bounds. Codex correlates the evidence,
+states these limits, and reports a safe next action. The skill does not
+authorize a repair.</li>
+<li>Authentication, RBAC, transport, size, timeout, or partial-result failures
+remain visible at their boundary. Codex must not fill a missing result from
+memory or state that a mutation succeeded.</li>
+</ol>
+<p>Codex home and workspace data persist on their claims. The MCP server has no
+durable result or session store. Kubernetes and Hubble remain the authorities
+for live observations. The optional Tailscale container has a separate state
+claim; removing the plugin does not remove any of these stores.</p>
+<blockquote>
+<p><strong>Source evidence — package and marketplace boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26">The plugin manifest declares one skill directory and the <code>Read</code> interface capability</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/.agents/plugins/marketplace.json#L1-L20">The local marketplace makes installation available and requests authentication on install</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L33">The skill defines the evidence order and forbids mutation claims</a>.</p>
+</blockquote>
+<h2 id="installation-and-activation">Installation And Activation</h2>
+<p>The personal marketplace points <code>kubeclaw-ops</code> to
+<code>./plugins/kubeclaw-ops</code>. Install that entry in the Codex host and complete the
+requested connection setup. Codex discovers the manifest under
+<code>.codex-plugin/plugin.json</code> and the skill under <code>skills/</code>.</p>
+<p>Installation makes instructions available. It does not grant Kubernetes
+access. Tool calls work only when the host also has a configured Ops MCP
+connection and valid bearer credential. Missing tools must stop evidence
+collection; the agent must not replace them with guessed cluster state.</p>
+<p>For an update, replace the plugin with the selected package revision, reconnect
+if its connection requirements changed, and verify that the skill lists only
+tools provided by the service. For removal, disconnect the MCP connection and
+remove the plugin. Neither action deletes cluster objects, logs, or MCP-side
+history.</p>
+<h2 id="deployed-ops-pod">Deployed Ops Pod</h2>
+<p>The optional Ops Pod runs Codex and Ops MCP as separate containers in one
+single-replica StatefulSet. They share a pod network, bearer Secret, and Pod
+ServiceAccount identity, but have different filesystems and processes. MCP
+listens only on <code>127.0.0.1:8080</code>; Codex connects over the pod loopback.</p>
+<p>The Codex and MCP containers run as user 1000, use the runtime-default seccomp profile,
+drop all Linux capabilities, forbid privilege escalation, and have read-only
+root filesystems. Codex has persistent home and workspace volumes. MCP always
+mounts the projected, one-hour ServiceAccount token and CA. When
+<code>rbac.execNamespaces</code> is non-empty, Codex mounts that same projected volume and
+a generated kubeconfig. This is the default because the default list contains
+<code>kubeclaw</code>. The bearer Secret is mounted read-only into both containers.</p>
+<p>This pod-level boundary matters: the plugin's <code>Read</code> label and the MCP tool
+annotations describe their user interfaces. They do not reduce ServiceAccount
+RBAC. With the default execution namespace, the shared ServiceAccount has
+<code>pods/exec</code> <code>create</code>. The MCP API does not expose an exec tool and its Kubernetes
+client sends GET requests only, but the MCP process holds the same credential.
+Therefore, interface authority is read-only while effective process authority
+is wider.</p>
+<blockquote>
+<p><strong>Source evidence — process and credential layout</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L1-L45">The chart requires immutable digests for the Codex and MCP images and fixes one writer</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L49-L84">Codex receives its own environment, persistent mounts, and readiness boundary</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L85-L112">MCP receives the loopback, namespace, bearer, Kubernetes, and probe settings</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L69-L101">The same projected token volume is always mounted into MCP and conditionally mounted into Codex</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L137-L158">The shared volume projects one rotating token, pod namespace, and cluster CA</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L113-L164">The optional Tailscale container uses its separately configured image and state</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L1-L58">RBAC grants cluster reads and creates namespace-scoped bindings separately</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L60-L91">Optional pod-exec access is confined to the explicitly listed namespaces</a>.</p>
+</blockquote>
+<h2 id="workspace-and-network-boundaries">Workspace And Network Boundaries</h2>
+<p>The StatefulSet has one replica because one persistent Codex identity and
+workspace must not have concurrent writers. The home claim is 2 GiB. The
+workspace claim uses <code>persistence.size</code>, 20 GiB by default. A rolling update
+must release the old writer before the new writer uses the claim.</p>
+<p>Default NetworkPolicy denies ingress. Egress allows DNS, the discovered API
+server addresses, and public TCP 443 while excluding private, Tailnet,
+link-local, and loopback ranges. Optional userspace Tailscale adds its UDP paths
+and a loopback SOCKS endpoint without <code>NET_ADMIN</code> or host networking.</p>
+<h2 id="configuration-and-precedence">Configuration And Precedence</h2>
+<p>Helm values are the deployment authority. The template writes the resulting
+environment variables and mounts; the processes consume those rendered values.
+There is no later plugin-level override for Kubernetes namespaces or bearer
+source.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Default or rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codexImage</code>, <code>mcpImage</code></td>
+<td>Required <code>image@sha256:digest</code>; Helm render fails for a tag or empty value.</td>
+</tr>
+<tr>
+<td><code>bearerSecret</code></td>
+<td><code>codex-ops-bearer</code>; key <code>token</code> is mounted into both containers.</td>
+</tr>
+<tr>
+<td><code>githubSecret</code></td>
+<td>Empty; when set, key <code>token</code> becomes <code>GH_TOKEN</code> in Codex only.</td>
+</tr>
+<tr>
+<td><code>persistence.size</code></td>
+<td>20 GiB workspace; Codex home is fixed at 2 GiB.</td>
+</tr>
+<tr>
+<td><code>rbac.namespaces</code></td>
+<td><code>[kubeclaw]</code>; controls MCP namespaced reads.</td>
+</tr>
+<tr>
+<td><code>rbac.execNamespaces</code></td>
+<td><code>[kubeclaw]</code>; a non-empty list mounts the shared API token and kubeconfig into Codex and grants the Pod ServiceAccount <code>pods/exec</code> <code>create</code> in each listed namespace. MCP always mounts the same projected token. An empty list removes the Codex mount and exec Roles; it does not remove MCP read access. No setting adds an exec MCP tool.</td>
+</tr>
+<tr>
+<td><code>argoNamespace</code>, <code>defaultNamespace</code></td>
+<td><code>argocd</code> and <code>kubeclaw</code>.</td>
+</tr>
+<tr>
+<td>Network policy</td>
+<td>Enabled; Cilium mode false until deployment discovery enables it; API server port 6443.</td>
+</tr>
+<tr>
+<td><code>tailscale.enabled</code></td>
+<td><code>false</code>. When enabled, the default image is mutable tag <code>ghcr.io/tailscale/tailscale:v1.102.3</code>; the chart does not require a digest for this optional image. Pin a tested digest for a controlled deployment.</td>
+</tr>
+</tbody>
+</table>
+<p>The immutable-image guard therefore covers the two required application
+containers only. It does not cover the optional Tailscale default. Enabling
+Tailscale without replacing that tag weakens release reproducibility.</p>
+<blockquote>
+<p><strong>Source evidence — deployment defaults and the image exception</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L1-L46">Values define storage, namespace, network, and disabled Tailscale defaults</a>.</p>
+</blockquote>
+<h2 id="connection-failure-and-recovery">Connection Failure And Recovery</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Observable result</th>
+<th>Safe recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plugin is absent or disabled</td>
+<td>Skill is unavailable.</td>
+<td>Install or enable the declared marketplace package.</td>
+</tr>
+<tr>
+<td>MCP connection is absent</td>
+<td>Instructions exist, but tool calls are unavailable.</td>
+<td>Configure the MCP endpoint and bearer token. Do not infer live state.</td>
+</tr>
+<tr>
+<td>Bearer token is invalid or rotating</td>
+<td>MCP returns 401 or readiness becomes false.</td>
+<td>Repair the Secret; the server rereads the file on each request.</td>
+</tr>
+<tr>
+<td>ServiceAccount lacks a resource</td>
+<td>Kubernetes returns a bounded API error.</td>
+<td>Inspect RBAC. Do not widen all namespaces by default.</td>
+</tr>
+<tr>
+<td>Logs or Hubble output are partial</td>
+<td>Result includes truncation or partial metadata.</td>
+<td>Narrow or continue the query and state the evidence limit.</td>
+</tr>
+<tr>
+<td>Codex process needs login or remote recovery</td>
+<td>MCP can remain healthy; Codex readiness can fail.</td>
+<td>Use the declared operator access path. MCP never claims Codex is ready.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operation-change-and-recovery-boundary">Operation, Change, And Recovery Boundary</h2>
+<p>Check Codex readiness and MCP readiness separately. Then make one narrowly
+scoped tool call and retain its request parameters, response metadata, and
+time. Avoid a full namespace or event scan when a single-object or one-page
+tool can answer the question. A running pod is not evidence that bearer
+authentication, RBAC, the API route, Hubble, or Codex login works. On rollout,
+verify that the previous StatefulSet writer has released both claims before the
+replacement becomes active.</p>
+<p>Change troubleshooting guidance inside the plugin skill only when the existing
+Ops MCP contract can support it. A new evidence source or tool is an Ops MCP
+service change, not a skill-only extension. It requires server validation,
+least-privilege RBAC and network changes, chart wiring, the skill tool list,
+service tests, and this guide. In the colocated profile, new RBAC applies to the
+shared ServiceAccount and changes the effective authority of both processes
+when Codex has the token mount. Adding a mutation tool is outside the supported
+<code>kubeclaw-ops</code> boundary. Use another separately authorized system for changes.</p>
+<p>The historical reason for colocating Codex and MCP is not recorded. The current
+design assessment is an inference: loopback MCP avoids a cluster-wide MCP
+listener, and separate processes keep instruction packaging apart from the
+evidence implementation. Credentials are not separate in the default profile.
+The costs are a shared credential boundary, shared pod failure domain, one
+persistent writer, and coupled rollout. Set <code>rbac.execNamespaces=[]</code> when Codex
+does not need direct Kubernetes execution; Codex then has no API token mount and
+MCP retains its read path. If Codex must keep exec while MCP must have a strictly
+read-only credential, use separate pods and ServiceAccounts. Reconsider
+colocation when that isolation, independent scaling, or remote clients justify
+the extra authenticated network boundary.</p>
+<p>See <a href="ops-mcp.html">Ops MCP</a> for every tool and service limit. The plugin tests are
+manifest and instruction checks. The chart and MCP tests cover their own
+boundaries. A live validation still needs a Codex connection, Kubernetes API,
+and Hubble Relay for network evidence.</p>
+</main></body></html>

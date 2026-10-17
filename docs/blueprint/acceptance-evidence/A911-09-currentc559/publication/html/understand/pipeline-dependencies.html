@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/pipeline-dependencies.html"></head><body><main>
+<h1 id="pipeline-dependencies">Pipeline Dependencies</h1>
+<p>Status: documented showcase baseline; implementation and live-proof gaps are stated
+Audience: architecture reader, operator, maintainer, security reviewer
+Owner: platform architecture and pipeline owners
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core">skills/nova/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/redis-transport">skills/common/plugins/redis-transport</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine">skills/buster/engine</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw">charts/kubeclaw</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism">charts/prism</a>
+Applies to: current source, role declarations, charts, and selected infrastructure
+Last verified: 2026-09-16</p>
+<h2 id="purpose">Purpose</h2>
+<p>A pipeline is more than its sequence of stages.
+It also needs source, state, model access, build services, image storage, and selected exposure paths.</p>
+<p>This page explains those dependencies as one system.
+It separates Core authority from the mandatory showcase deployment baseline.
+It also identifies the stage that actively consumes each service.</p>
+<h2 id="dependency-classes">Dependency Classes</h2>
+<p>KubeClaw uses five dependency classes.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core</td>
+<td>Every durable run needs it.</td>
+<td>Nova run storage.</td>
+</tr>
+<tr>
+<td>Showcase baseline</td>
+<td>Every complete learning-lab deployment provides it.</td>
+<td>Redis, Tailscale, registries, and BuildKit.</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>A deployed role needs it.</td>
+<td>Prism needs its PostgreSQL database.</td>
+</tr>
+<tr>
+<td>Stage</td>
+<td>A selected stage needs it.</td>
+<td>Container build needs BuildKit and a writable registry.</td>
+</tr>
+<tr>
+<td>Access</td>
+<td>A user or operator path needs it.</td>
+<td>A private Tailscale route.</td>
+</tr>
+</tbody>
+</table>
+<p>An unavailable stage dependency can block one path without corrupting Nova state.
+An unavailable Core dependency can stop safe progress for every run.</p>
+<p>The showcase baseline is stricter than the smallest executable graph.
+A run might not call every baseline service.
+The platform still proves each service before it claims full readiness.</p>
+<h2 id="required-showcase-baseline">Required Showcase Baseline</h2>
+<p>The complete KubeClaw learning lab requires these pipeline-facing services:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Why the baseline requires it</th>
+<th>Active consumer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes, DNS, network, and storage</td>
+<td>Supply execution, service discovery, traffic boundaries, and durable volumes.</td>
+<td>All deployed roles and services.</td>
+</tr>
+<tr>
+<td>SPIRE and Envoy</td>
+<td>Supply exact workload identity and protected service routes.</td>
+<td>Nova, Buster, and Prism worker paths.</td>
+</tr>
+<tr>
+<td>Git source origin</td>
+<td>Supplies exact source revisions.</td>
+<td>Nova workspaces and source adapters.</td>
+</tr>
+<tr>
+<td>Nova durable storage</td>
+<td>Preserves canonical run state and recovery evidence.</td>
+<td>Nova Core.</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>Supplies shared transport, health, telemetry, and observer paths.</td>
+<td>Nova role and selected integrations.</td>
+</tr>
+<tr>
+<td>LiteLLM and its PostgreSQL</td>
+<td>Supply the selected embedding path and gateway state.</td>
+<td>OpenClaw memory search.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL</td>
+<td>Preserves design and approval state.</td>
+<td>Prism Control and bounded Prism clients.</td>
+</tr>
+<tr>
+<td>Rootless BuildKit</td>
+<td>Builds project images in the Buster boundary.</td>
+<td>Buster container-build provider.</td>
+</tr>
+<tr>
+<td>Writable local OCI registry</td>
+<td>Stores produced images by immutable digest.</td>
+<td>BuildKit, Buster, and Kubernetes nodes.</td>
+</tr>
+<tr>
+<td>Docker Hub pull-through mirror</td>
+<td>Caches reviewed public base-image pulls.</td>
+<td>BuildKit and configured node runtimes.</td>
+</tr>
+<tr>
+<td>Tailscale</td>
+<td>Supplies private access and pipeline exposure fixtures.</td>
+<td>Users, operators, and Buster exposure stages.</td>
+</tr>
+</tbody>
+</table>
+<p>The chart still permits reduced developer configurations.
+Those configurations do not represent the complete showcase baseline.
+This difference is a deployment profile, not a change to Nova Core semantics.</p>
+<h2 id="complete-pipeline-map">Complete Pipeline Map</h2>
+<pre><code class="language-mermaid">flowchart LR
+    Git[Git source origin] --&gt;|fixed revision| Nova[Nova role]
+    Nova --&gt; Core[Nova Core]
+    Nova --&gt;|embedding requests| Model[LiteLLM gateway]
+    Model --&gt; ModelDB[(LiteLLM PostgreSQL)]
+    Nova --&gt;|events or messages| Redis[(Redis)]
+    Core --&gt;|fixed test plan| Buster[Buster role]
+    Buster --&gt;|container build| BuildKit[Rootless BuildKit]
+    BuildKit --&gt;|push image| Registry[(Writable OCI registry)]
+    Mirror[(Docker Hub mirror)] --&gt;|cached base image| BuildKit
+    Registry --&gt;|digest pull| TestPod[Test workload]
+    Buster --&gt;|selected exposure stage| Tail[Tailscale controller]
+    Core --&gt;|selected design stage| Prism[Prism]
+    Prism --&gt; PrismDB[(Prism PostgreSQL)]
+    Buster --&gt;|verified result| Core
+    Prism --&gt;|approved result| Core
+</code></pre>
+<p>Text version: Git supplies a fixed source revision to Nova.
+Nova Core controls the run.
+The showcase platform provides Redis, LiteLLM, Prism, BuildKit, both registry services, and Tailscale.
+The active graph determines which service receives work during one run.
+Buster and Prism return bounded results to Core.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git source origin</td>
+<td>Directed connection — fixed revision</td>
+<td>Nova role</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Directed connection</td>
+<td>Nova Core</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Directed connection — embedding requests</td>
+<td>LiteLLM gateway</td>
+</tr>
+<tr>
+<td>LiteLLM gateway</td>
+<td>Directed connection</td>
+<td>LiteLLM PostgreSQL</td>
+</tr>
+<tr>
+<td>Nova role</td>
+<td>Directed connection — events or messages</td>
+<td>Redis</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Directed connection — fixed test plan</td>
+<td>Buster role</td>
+</tr>
+<tr>
+<td>Buster role</td>
+<td>Directed connection — container build</td>
+<td>Rootless BuildKit</td>
+</tr>
+<tr>
+<td>Rootless BuildKit</td>
+<td>Directed connection — push image</td>
+<td>Writable OCI registry</td>
+</tr>
+<tr>
+<td>Docker Hub mirror</td>
+<td>Directed connection — cached base image</td>
+<td>Rootless BuildKit</td>
+</tr>
+<tr>
+<td>Writable OCI registry</td>
+<td>Directed connection — digest pull</td>
+<td>Test workload</td>
+</tr>
+<tr>
+<td>Buster role</td>
+<td>Directed connection — selected exposure stage</td>
+<td>Tailscale controller</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Directed connection — selected design stage</td>
+<td>Prism</td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>Directed connection</td>
+<td>Prism PostgreSQL</td>
+</tr>
+<tr>
+<td>Buster role</td>
+<td>Directed connection — verified result</td>
+<td>Nova Core</td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>Directed connection — approved result</td>
+<td>Nova Core</td>
+</tr>
+</tbody>
+</table>
+<p>The complete lab deploys and verifies every solid-line dependency shown here.
+One individual graph can leave a service idle when it has no matching stage.</p>
+<h2 id="nova-nova-core-and-their-host-role">Nova, Nova Core, and Their Host Role</h2>
+<p>Nova is the deployable orchestration role.
+Nova Core is the state machine and execution engine inside that role.</p>
+<p>The Nova role also contains the project compiler and the plugin runtime.
+Its declared plugins connect Core to Git, Redis, artifacts, model-backed specialists, Buster, and Prism.</p>
+<p>Core writes the fixed graph and registry snapshot before it starts execution.
+It records lifecycle events in the run store.
+It remains the only authority that can close or recover the complete run.</p>
+<p><strong>Why this design exists:</strong> Core must remain deterministic and independent from specialist implementation details.
+The Nova role can add controlled integrations without adding them to the state machine.</p>
+<p><strong>Failure effect:</strong> A lost Nova run store prevents safe recovery.
+A failed optional adapter can block its stages while the canonical run record remains intact.</p>
+<blockquote>
+<p><strong>Source evidence — Nova contains more than Core</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L11-L56">The role manifest includes Nova Core, project code, contracts, and selected plugins</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/pipeline.ts#L5-L14">The entry point exports Core and starts the project CLI as a separate layer</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43">Core writes the graph and registry snapshots before it runs the pipeline</a>.</p>
+</blockquote>
+<h2 id="git-source-and-the-missing-git-mirror">Git Source and the Missing Git Mirror</h2>
+<p>Git provides the source identity for compilation, implementation, review, and tests.
+Nova binds work to a repository root and an exact revision.
+Role deployments can clone the configured origin into a workspace.</p>
+<p>The current repository does not implement a shared Git mirror service.
+It uses the configured Git origin and local workspaces.
+The Docker Hub mirror described below is an OCI registry mirror, not a Git mirror.</p>
+<p>This distinction is important.
+A Git mirror would cache repository objects and reduce dependence on the upstream Git service.
+It would also need synchronization, authentication, freshness, and failover rules.
+None of those rules exist as a supported KubeClaw contract today.</p>
+<p><strong>Why exact revisions exist:</strong> Branch names can move during a run.
+An exact commit lets Nova detect changed input and prevents silent source substitution.</p>
+<p><strong>Failure effect:</strong> A fresh clone or fetch fails when the Git origin is unavailable.
+An existing workspace is not proof that a new run can fetch its required revision.</p>
+<p><strong>Recovery rule:</strong> Restore access to the same revision.
+Do not replace it with a newer branch head during recovery.</p>
+<blockquote>
+<p><strong>Source evidence — current Git path</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L25-L56">The Nova role selects the Git workspace and repository adapters</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/kubeclaw/templates/deployment.yaml#L374-L409">The deployment clones the configured repository and later fetches its origin</a>.</p>
+<p><strong>Current limit:</strong> No source file declares a supported Git mirror service or mirror failover contract.</p>
+</blockquote>
+<h2 id="redis-transport-and-projection-not-lifecycle-authority">Redis: Transport and Projection, Not Lifecycle Authority</h2>
+<p>Redis is mandatory in the showcase deployment.
+It supports message, health, telemetry, and observer paths.
+The Nova role includes a bounded Redis transport adapter.
+The deployment health checks can verify Redis and a Redis stream.</p>
+<p>Redis does not own the canonical pipeline lifecycle.
+Nova stores canonical run events in its durable run store.
+This prevents a lost cache or stream from rewriting pipeline history.</p>
+<p>The Redis adapter publishes with a deduplication key.
+It also limits payload size and supports a bounded operation set.
+Authentication comes through the secret resolver instead of the authored pipeline.</p>
+<p><strong>Why this design exists:</strong> Redis gives fast shared transport without becoming a second state machine.
+The durable journal remains authoritative after a transport interruption.</p>
+<p><strong>Failure effect:</strong> Selected delivery, health, or status paths can stop.
+The failure does not mean that the canonical lifecycle record disappeared.</p>
+<p><strong>Recovery rule:</strong> Restore Redis, then identify the producer before recovery.
+Nova observer delivery can resume from durable records through its owned checkpoint and retry rules.
+The OpenClaw host extension has no durable queue or replay consumer; lost queued events and failed payload writes cannot be recovered through that extension.
+Follow the <a href="telemetry.html#failure-and-recovery-matrix">producer-specific recovery rules</a> before retrying delivery.
+Do not infer missing pipeline events from an empty Redis stream.</p>
+<blockquote>
+<p><strong>Source evidence — bounded Redis use</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L25-L40">The Nova role selects the Redis transport plugin</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugins/redis-transport/src/adapter.ts#L57-L84">The adapter accepts bounded publish operations and resolves its password through a secret capability</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43">Nova writes its canonical run journal before the runner controls stage progress</a>.</p>
+</blockquote>
+<h2 id="postgresql-two-different-data-owners">PostgreSQL: Two Different Data Owners</h2>
+<p>The selected deployment has two PostgreSQL uses.
+They do not share authority or recovery groups.</p>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Owner</th>
+<th>Stored data</th>
+<th>Pipeline impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LiteLLM PostgreSQL</td>
+<td>Model gateway operator</td>
+<td>Gateway configuration, accounting, and gateway state.</td>
+<td>Model-backed stages can fail when the selected gateway needs this database.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL</td>
+<td>Prism Control</td>
+<td>Projects, revisions, operations, approvals, and preferences.</td>
+<td>Prism design stages and Studio operations stop.</td>
+</tr>
+</tbody>
+</table>
+<p>Nova Core does not store its lifecycle journal in either database.
+Buster also keeps its job and evidence state outside these databases.</p>
+<p>The LiteLLM database belongs to the selected model-gateway deployment.
+Another supported gateway topology could use a different persistence design.</p>
+<p>The Prism database is a direct role dependency when Prism is active.
+Its backup must match the Prism artifact set from the same recovery point.</p>
+<p><strong>Why the stores stay separate:</strong> Each owner has different consistency and recovery rules.
+One shared database would couple unrelated recovery operations and credentials.</p>
+<p><strong>Failure effect:</strong> LiteLLM database loss blocks the selected model path.
+Prism database loss blocks Prism state work.
+Neither failure proves that Nova lost its run journal.</p>
+<blockquote>
+<p><strong>Source evidence — separate PostgreSQL owners</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/litellm-deployment.yaml#L34-L45">The LiteLLM deployment reads its database URL from a dedicated Secret</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/postgresql.yaml#L1-L52">The Prism chart creates a separate PostgreSQL workload and four database identities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/postgresql.yaml#L54-L73">The Prism chart gives that database its own persistent volume</a>.</p>
+</blockquote>
+<h2 id="buildkit-local-oci-registry-and-pull-through-mirror">BuildKit, Local OCI Registry, and Pull-Through Mirror</h2>
+<p>The container-build stage is one chain with three different responsibilities.</p>
+<ol>
+<li>Rootless BuildKit creates the image.</li>
+<li>The writable local OCI registry stores the produced image.</li>
+<li>The Docker Hub mirror caches public base-image pulls.</li>
+</ol>
+<p>The complete showcase baseline requires all three services.
+An individual run uses them when its graph contains an image build or an uncached pull.</p>
+<p>The mirror cannot replace the writable registry.
+The writable registry cannot silently act as the public mirror.
+Their trust, retention, and failure behavior differ.</p>
+<p>The checked-in <code>registry-local</code> service is an anonymous HTTP lab implementation.
+It proves storage and image-lifetime mechanics, but it is not an authenticated production registry.
+The complete secure path needs an authenticated HTTPS registry through the same client contract.
+The <a href="../status/roadmap.html#production-grade-local-oci-registry">roadmap</a> defines that replacement and its acceptance conditions.</p>
+<p>The checked-in Docker Hub mirror is a cache, not an offline source guarantee.
+A cache miss still needs its upstream unless the requested content already exists locally.
+Readiness must test a hit, a miss, and an upstream outage separately.</p>
+<p>Buster starts its colocated rootless BuildKit process before it accepts build work.
+The provider passes the selected Dockerfile and bounded build arguments to BuildKit.
+It pushes the result to the configured writable registry.</p>
+<p>Buster then reads the registry manifest.
+It verifies that the manifest digest equals the digest returned by BuildKit.
+Later deployment stages use the immutable digest, not a mutable tag.</p>
+<p><strong>Why this design exists:</strong> A successful build process does not prove that the registry stored the expected image.
+The second digest check closes that gap.</p>
+<p><strong>Failure effect:</strong> BuildKit loss blocks container-build stages.
+Registry loss also blocks publication and uncached test-workload pulls.
+Mirror loss can block uncached base-image pulls, while existing cache hits can still work.</p>
+<p><strong>Recovery rule:</strong> Reconcile by immutable digest.
+Do not claim success from a tag, a BuildKit exit code, or a registry health response alone.</p>
+<blockquote>
+<p><strong>Source evidence — image production chain</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/docker/buster-runtime-entrypoint.sh#L7-L35">The Buster entry point writes validated BuildKit configuration and starts rootless BuildKit</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/engine/test-gates/container-build-runtime.ts#L236-L270">The container runtime sends the build to BuildKit with its bounded environment</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/registry-client-config.mjs#L57-L104">One contract generates matching node, BuildKit, and runtime registry configuration</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/registry-local.yaml#L1-L45">The lab OCI registry uses retained storage and one writer during service replacement</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/registry-mirror.yaml#L14-L78">The separate mirror caches Docker Hub content and keeps its own cache volume</a>.</p>
+</blockquote>
+<h2 id="tailscale-required-platform-service-with-two-consumers">Tailscale: Required Platform Service With Two Consumers</h2>
+<p>Tailscale has two separate uses.</p>
+<p>The first use is a Buster test provider.
+A graph can expose a temporary Kubernetes fixture and return a typed HTTPS endpoint.
+An HTTP provider can then test that endpoint.</p>
+<p>The second use is private human or operator access.
+Prism Studio, Argo CD, and the Ops Pod can use private routes.
+Those routes do not own pipeline state.</p>
+<p>Tailscale is mandatory in the showcase deployment.
+It is still not part of Nova Core and does not own lifecycle state.</p>
+<p>A test plan consumes it when the plan selects the exposure provider.
+Humans consume it through the private access routes.
+The platform readiness check must prove both uses separately.</p>
+<p><strong>Why this design exists:</strong> Public exposure must remain explicit and temporary.
+The provider receives a bounded exposure capability instead of cluster credentials.</p>
+<p><strong>Failure effect:</strong> Exposure stages or private entry routes stop.
+Internal Nova state and unrelated test providers can remain available.</p>
+<p><strong>Recovery rule:</strong> Reconcile the exact exposure owner and lease generation.
+Do not create a second exposure for an uncertain attempt.</p>
+<blockquote>
+<p><strong>Source evidence — conditional exposure</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L25-L50">The Buster role includes the Tailscale exposure provider</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/plugins/tailscale-exposure/plugin.json#L1-L25">The provider requires only the bounded Kubernetes exposure capability</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/services.yaml#L38-L47">Prism Studio can select a private Tailscale ingress without changing internal worker routes</a>.</p>
+</blockquote>
+<h2 id="failure-and-recovery-summary">Failure and Recovery Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Dependency failure</th>
+<th>Run meaning</th>
+<th>Safe response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git origin unavailable</td>
+<td>Required source revision can be unavailable.</td>
+<td>Restore the same revision or use a verified existing snapshot.</td>
+</tr>
+<tr>
+<td>Nova run storage unavailable</td>
+<td>Canonical state cannot be proved.</td>
+<td>Stop mutation and restore the authoritative store.</td>
+</tr>
+<tr>
+<td>Redis unavailable</td>
+<td>Required transport and projection paths stop.</td>
+<td>Restore Redis, then follow each producer's recovery rules. Nova observer recovery uses durable records; the OpenClaw host extension cannot replay lost events.</td>
+</tr>
+<tr>
+<td>LiteLLM PostgreSQL unavailable</td>
+<td>Selected model gateway can fail.</td>
+<td>Restore its matched database before model-backed work.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL unavailable</td>
+<td>Prism state work stops.</td>
+<td>Restore the matched Prism database and artifacts.</td>
+</tr>
+<tr>
+<td>BuildKit unavailable</td>
+<td>Image-build stages stop.</td>
+<td>Restore the same configured builder and resume by attempt identity.</td>
+</tr>
+<tr>
+<td>Writable registry unavailable</td>
+<td>Push, verification, or uncached pulls stop.</td>
+<td>Restore retained digests and verify a real pull.</td>
+</tr>
+<tr>
+<td>Docker Hub mirror unavailable</td>
+<td>The showcase baseline is not ready; uncached public pulls can stop.</td>
+<td>Restore the mirror and verify cache misses and hits.</td>
+</tr>
+<tr>
+<td>Tailscale unavailable</td>
+<td>The showcase baseline is not ready; exposure and private access stop.</td>
+<td>Restore the route and reconcile its owner before retry.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="replacement-rules">Replacement Rules</h2>
+<p>A replacement is safe only when it preserves the contract at the boundary.</p>
+<ul>
+<li>A Git service must return the exact required revision and repository bytes.</li>
+<li>A Redis service must preserve authentication, stream identity, and deduplication behavior.</li>
+<li>A PostgreSQL replacement must preserve the data owner's supported backup and migration contract.</li>
+<li>A BuildKit replacement must return a verifiable immutable image result.</li>
+<li>A registry replacement must preserve digest reads, authentication, trust, and retained manifests.</li>
+<li>A Tailscale replacement must preserve explicit ownership, private routing, and bounded cleanup.</li>
+</ul>
+<p>Brand compatibility is not enough.
+The verification must cover the actual producer and consumer path.</p>
+<h2 id="related-operations">Related Operations</h2>
+<ul>
+<li><a href="../use/install.html">Install and bootstrap</a> gives the dependency order and readiness checks.</li>
+<li><a href="../use/operate.html">Operate KubeClaw</a> explains run inspection and controlled recovery.</li>
+<li><a href="../use/recovery.html">Recovery</a> separates each store and restore group.</li>
+<li><a href="../use/maintenance.html">Maintenance</a> covers upgrades, GitOps, registry, and BuildKit work.</li>
+<li><a href="platform-and-operations.html">Platform and operations architecture</a> explains the replaceable platform layer.</li>
+</ul>
+</main></body></html>

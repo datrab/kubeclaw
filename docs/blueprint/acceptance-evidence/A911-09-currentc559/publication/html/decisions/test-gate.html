@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/decisions/test-gate.html"></head><body><main>
+<h1 id="test-gate-decisions">Test-gate decisions</h1>
+<p>Status: current decision record; implementation and acceptance tracked separately
+Audience: maintainers, pipeline authors, provider authors
+Owner: KubeClaw maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-runtime.ts">skills/buster/engine/test-gates/remote-plan-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-test-gate/v1/src/index.ts">contracts/pipeline-test-gate/v1/src/index.ts</a>
+Applies to: pipeline test-gate architecture and provider contracts
+Last verified: 2026-09-15; no runtime or live test result is available</p>
+<p>The stable <strong>D-001–D-119</strong> identifiers name the test-gate decisions. This page contains the current rules, their reasons, and their recorded authority. Broader ownership and security reasoning is in <a href="core-and-plugins.html">Core and plugin decisions</a>.</p>
+<p>Each record below gives the source's actual approval state/date. No individual approver is named in the original. D-110–D-113 have no explicit acceptance label and remain <strong>unconfirmed</strong>, even though their connected implementation exists. D-109's historical label combines accepted and implemented; acceptance is retained while current implementation proof is assessed separately.</p>
+<p><strong>Implementation and verification for every record.</strong> Complete design implementation is <strong>partial</strong>; no blanket provider or cluster completion is asserted. ADR-001–ADR-014 identify the core, worker, registry, role, dispatch, and policy boundaries. Provider decisions define intended contracts. They do not certify that every provider implements each clause. No current test, browser, native-host, or cluster result is available for these decisions. Current gaps belong in the <a href="../status/open-issues.html">issue register</a>. Environment proof belongs in <a href="../status/acceptance.html">acceptance gates</a>, under the <a href="acceptance.html">evidence policy</a>.</p>
+<p><strong>Alternatives and supersession.</strong> Only alternatives actually described in the source are retained. Where a record states no competing design, none is invented. Later decisions narrow earlier choices. D-110 scopes the first transport without rejecting the D-098 distributed queue target. D-105 replaces the Common overlay. D-108/D-109 refine D-090. D-114–D-118 refine unit, report, and coverage behavior. D-083/D-095/D-112 permit a bounded unmigrated-suite bridge. They never permit dual authority for an already migrated successor. Unselected Testkube ideas are comparison material, not approvals. D-089, D-088, D-087, and D-094 reject or replace them. Future content stores, public catalog/approval platform, external visual baseline storage, stability gates, DeepSec and live attack testing remain deferred where stated.</p>
+<h2 id="d-001-base-system-structure">D-001: Base System Structure</h2>
+<p><strong>Decision.</strong> Providers execute; tests configure one provider use; fixtures prepare resources; suites group tests; gates apply blocking policy; agents reason only when declared. Nova owns lifecycle and Buster executes bounded tests.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Clear facts use deterministic rules; uncertain evidence or active QA can use a declared agent. Agent actions need grants and recorded evidence; an agent cannot manufacture its own objective proof. Provided and custom tests share contracts.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-001.</p>
+<h2 id="d-002-testkube-use">D-002: Testkube Use</h2>
+<p><strong>Decision.</strong> Use Testkube as a design source, not a runtime dependency or second general workflow engine.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Useful execution ideas do not justify a second lifecycle authority.</p>
+<p><strong>Approval/source.</strong> Accepted direction, 2026-08-04; original D-002.</p>
+<h2 id="d-003-test-activation-is-an-allowlist">D-003: Test Activation Is an Allowlist</h2>
+<p><strong>Decision.</strong> The project test list is a closed allowlist: declared tests run, absent tests do not. Installation never activates a test.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No enabled:true or disabled placeholders are needed; new packages cannot silently expand work.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-003.</p>
+<h2 id="d-004-provided-test-documentation">D-004: Provided Test Documentation</h2>
+<p><strong>Decision.</strong> Document every provided test's scope/non-scope, provider/version, inputs, capabilities, settings, results, artifacts, verdict, declaration example and common failures.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The provider schema remains the machine contract; explanatory documentation cannot grant provided tests a special runtime path.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-004.</p>
+<h2 id="d-005-pipeline-file-name">D-005: Pipeline File Name</h2>
+<p><strong>Decision.</strong> Use .swarm/pipeline.json for desired pipeline configuration. Runtime progress belongs in separate state/events.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The older .swarm/progress.json name and all reader/writer aliases must be removed atomically, including tools, tests, diagrams and docs.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-005.</p>
+<h2 id="d-006-blocking-and-advisory-tests">D-006: Blocking and Advisory Tests</h2>
+<p><strong>Decision.</strong> Declared tests are blocking by default. mode: advisory explicitly runs and reports a test without blocking progression.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The ordinary case stays small and weaker enforcement remains visible.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-006.</p>
+<h2 id="d-007-agent-activation">D-007: Agent Activation</h2>
+<p><strong>Decision.</strong> An agent is active only when pipeline.json declares its use. Clear results do not automatically start an evidence-review agent.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Active QA is itself a declared test with agent, instructions and grants; availability alone is not authorization.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-007.</p>
+<h2 id="d-008-retire-the-manifest-test">D-008: Retire the Manifest Test</h2>
+<p><strong>Decision.</strong> Retire manifest as a provided Buster test; static manifest validation belongs in lint.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preserve YAML and raw/rendered Kubernetes schema checks, custom policy packs and useful environment, Secret-reference, registry, probe and resource checks. Live cluster behavior remains a separate test; avoid duplicate static findings.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-008.</p>
+<h2 id="d-009-separate-container-build-from-deployment">D-009: Separate Container Build From Deployment</h2>
+<p><strong>Decision.</strong> Replace build with container-build, which runs BuildKit and returns immutable image identity, digest, duration, logs and metadata.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Building does not deploy, lease namespaces, forward ports or assert health. A separate deployment fixture consumes the digest.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-009.</p>
+<h2 id="d-010-container-build-definitions">D-010: Container Build Definitions</h2>
+<p><strong>Decision.</strong> Container build explicitly selects either a project Dockerfile or a versioned template.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No project-type guessing. Templates document commands, images, outputs and defaults; changed language/image defaults require an explicit choice or new immutable template version. Other build methods use provider contracts.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-010.</p>
+<h2 id="d-011-container-build-verdict-and-evidence">D-011: Container Build Verdict and Evidence</h2>
+<p><strong>Decision.</strong> Container build passes only after BuildKit succeeds, pushes to the operator local registry and returns a verified immutable registry digest.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Build, timeout, definition, push, missing-digest or verification errors fail. Preserve full logs, registry reference, duration, platform and definition identity; Dockerfile style stays in lint and no agent is required.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-011.</p>
+<h2 id="d-012-small-container-build-configuration">D-012: Small Container Build Configuration</h2>
+<p><strong>Decision.</strong> Normal build declarations contain context plus exactly one Dockerfile/template selection; advanced provider settings are optional.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Registry endpoint and credentials belong to platform infrastructure, not each project. Every successful build returns the verified digest from that registry.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-012.</p>
+<h2 id="d-013-retire-the-health-test-type">D-013: Retire the Health Test Type</h2>
+<p><strong>Decision.</strong> Retire health as a special test type. Deployment readiness belongs to its fixture; HTTP health/smoke assertions use a generic HTTP provider.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> A project may name a test health without selecting hidden runtime behavior. Failed required readiness prevents dependent tests.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-013.</p>
+<h2 id="d-014-fixture-is-a-base-system-part">D-014: Fixture Is a Base System Part</h2>
+<p><strong>Decision.</strong> Fixtures own bounded setup, readiness, typed outputs and cleanup, and run only when declared.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preparation is not product quality judgment. A failed required fixture prevents dependent tests and makes the gate report execution failure.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-014.</p>
+<h2 id="d-015-kubernetes-deployment-fixture-scope">D-015: Kubernetes Deployment Fixture Scope</h2>
+<p><strong>Decision.</strong> The old k8s suite becomes a deployment fixture. It consumes an immutable local image and leases an isolated namespace. It applies declared resources, waits for readiness, and returns internal endpoints.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No build, public exposure, application testing, Secret-value disclosure or quality judgment occurs inside the fixture. Cleanup follows the lease.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-015.</p>
+<h2 id="d-016-bounded-deployment-retention">D-016: Bounded Deployment Retention</h2>
+<p><strong>Decision.</strong> Delete fixture environments at run end by default. Explicit retain keeps a lease only until a bounded operator-approved expiry or earlier human release.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The result must expose namespace, creation/expiry, endpoints and release action. This is bounded inspection retention, not indefinite deployment.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-016.</p>
+<h2 id="d-017-deploy-the-checked-kubernetes-yaml">D-017: Deploy the Checked Kubernetes YAML</h2>
+<p><strong>Decision.</strong> Prepare final Kubernetes YAML before lint, then deploy precisely that checked YAML with digest evidence.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Helm, Kustomize and raw-file preparation are separate providers/actions; the fixture neither renders nor repeats lint.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-017.</p>
+<h2 id="d-018-test-deployment-secret-visibility">D-018: Test Deployment Secret Visibility</h2>
+<p><strong>Decision.</strong> Fixture Secrets are test-deployment Secrets. Copy only approved objects and expose references, never decoded values in logs, messages or provider output.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Production uses separately configured Secrets; test values are not promoted. This follows the capability/reference boundary.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-018.</p>
+<h2 id="d-019-tailscale-is-an-exposure-fixture">D-019: Tailscale Is an Exposure Fixture</h2>
+<p><strong>Decision.</strong> Replace tailscale-preview as a test with a Tailscale exposure fixture consuming a deployment endpoint and sharing its expiry/cleanup lifecycle.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The fixture waits for and returns the public URL; HTTP tests check content. Other exposure providers can use the same output contract.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-019.</p>
+<h2 id="d-020-accessibility-test-purpose-and-browser-execution">D-020: Accessibility Test Purpose and Browser Execution</h2>
+<p><strong>Decision.</strong> Keep axe-core for automated accessibility checks on rendered pages; use one pinned Playwright browser worker with fresh contexts per route/setting and bounded parallelism.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preserve full axe results and optional failed-element screenshots. Automated rules do not establish complete accessibility certification.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-020.</p>
+<h2 id="d-021-accessibility-browser-coverage">D-021: Accessibility Browser Coverage</h2>
+<p><strong>Decision.</strong> Accessibility supports pinned Chromium, Firefox and WebKit builds, with documented Chromium desktop/mobile defaults and explicit optional coverage.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Project browser settings hold locale, timezone, motion, color and device conditions. The resolved plan shows combination count and obeys operator expansion limits.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-021.</p>
+<h2 id="d-022-accessibility-verdict-policy">D-022: Accessibility Verdict Policy</h2>
+<p><strong>Decision.</strong> A blocking axe check fails for every violation not individually accepted with rule, route, selector, reason and expiry.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Numeric failure allowances could hide new problems and are excluded. Incomplete findings remain visible for declared review; browser/axe errors are execution errors. Truncated summaries never change actual counts.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-022.</p>
+<h2 id="d-023-separate-lighthouse-test-purposes">D-023: Separate Lighthouse Test Purposes</h2>
+<p><strong>Decision.</strong> Use one Lighthouse provider with separate web-performance, SEO and best-practices test definitions.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The provided defaults do not duplicate axe accessibility. Each declared purpose has its own routes and policy.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-023.</p>
+<h2 id="d-024-repeat-lighthouse-performance-runs">D-024: Repeat Lighthouse Performance Runs</h2>
+<p><strong>Decision.</strong> Run Lighthouse performance three times sequentially by default and evaluate medians; a final gate can explicitly request five.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Store every report and mark a representative run. Run SEO and best-practices once by default. Concurrent attempts on one worker would distort measurements.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-024.</p>
+<h2 id="d-025-named-lighthouse-profiles">D-025: Named Lighthouse Profiles</h2>
+<p><strong>Decision.</strong> Select named project Lighthouse profiles fixing device, network, CPU and screen conditions.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Freeze the profile per run and record profile/tool/browser identity, worker resources and Lighthouse CPU benchmark for comparable results.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-025.</p>
+<h2 id="d-026-combined-lighthouse-performance-budgets">D-026: Combined Lighthouse Performance Budgets</h2>
+<p><strong>Decision.</strong> Blocking Lighthouse performance uses a named budget combining minimum category score with maximum configured LCP, CLS and TBT measurements.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Every route must meet every configured limit using medians; score catches wider regressions and measurements identify specifics. Advisory measurement may omit a budget.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-026.</p>
+<h2 id="d-027-lighthouse-seo-and-best-practices-verdicts">D-027: Lighthouse SEO and Best-Practices Verdicts</h2>
+<p><strong>Decision.</strong> Blocking SEO and best-practices checks fail on any unaccepted audit; individual exceptions require audit, route, reason and expiry.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Always report category score and failed audits. Advisory mode preserves findings without blocking.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-027.</p>
+<h2 id="d-028-replace-bundle-with-size-budget">D-028: Replace Bundle With Size Budget</h2>
+<p><strong>Decision.</strong> Replace bundle with an optional size-budget check on an explicitly named build artifact.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> It supports assets, packages, binaries, or archives. It runs after build and before live tests. It does not guess directories or require a deployment, browser, or agent.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-028.</p>
+<h2 id="d-029-size-budget-limits">D-029: Size-Budget Limits</h2>
+<p><strong>Decision.</strong> The normal size budget has one total-size maximum; optional limits cover matching files or growth from a stored baseline.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Report compressed size where applicable, totals and largest files. Blocking needs a limit; advisory may measure without one.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-029.</p>
+<h2 id="d-030-deepsec-is-a-later-isolated-provider">D-030: DeepSec Is a Later Isolated Provider</h2>
+<p><strong>Decision.</strong> Defer DeepSec to a later low-priority isolated specialist provider; it is outside the first test-gate implementation.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Give it read-only source, private workdir, approved model network and bounded resources/time/cost, with no Kubernetes or registry credentials. Changed-file review is normal; full audits are separate declared work. It does not replace deterministic security.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-030.</p>
+<h2 id="d-031-security-suite-is-extensible-composition">D-031: Security Suite Is Extensible Composition</h2>
+<p><strong>Decision.</strong> Security is editable suite composition of independent HTTP-header, dependency, image, live-attack and Kubernetes checks, not a compiled Buster registry.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Projects can add/replace/remove tests with separate authority. The initial delivery scope is narrowed by D-035 to defer live attack testing.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-031.</p>
+<h2 id="d-032-versioned-security-header-profiles">D-032: Versioned Security-Header Profiles</h2>
+<p><strong>Decision.</strong> Security headers use versioned profiles per HTTP/HTTPS target type, with explicit additions, replacements, removals and expiring exceptions.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Record exact resolved rules; do not compile the policy list into Buster core.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-032.</p>
+<h2 id="d-033-replaceable-dependency-scan-providers">D-033: Replaceable Dependency-Scan Providers</h2>
+<p><strong>Decision.</strong> Use a common dependency-scan contract with replaceable package-system scanners.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Normalize package/version, vulnerability/severity, fix, file and available reachability. Move existing vulnerability checks out of general lint to avoid duplicate execution.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-033.</p>
+<h2 id="d-034-scan-the-final-container-image">D-034: Scan the Final Container Image</h2>
+<p><strong>Decision.</strong> Use an image-scan contract with Trivy as initial provider; scan the exact verified container-build digest.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Do not rebuild or select a mutable tag. Kubernetes deploys the same scanned digest. Image findings and verdict are separate from build success.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-034.</p>
+<h2 id="d-035-defer-live-attack-testing">D-035: Defer Live Attack Testing</h2>
+<p><strong>Decision.</strong> Defer live attack testing and DeepSec to a future security provider set with separate Pods.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The first security scope covers headers, dependencies, final images and Kubernetes security. Repository analysis and attacks on a running deployment have different authority.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-035.</p>
+<h2 id="d-036-static-and-live-kubernetes-security-checks">D-036: Static and Live Kubernetes Security Checks</h2>
+<p><strong>Decision.</strong> Separate kubernetes-policy on final YAML from kubernetes-runtime-security on actual leased test resources.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Avoid duplicate rules: declared configuration versus admission changes, identity/RBAC/exposure/control drift. The namespace controller alone grants read-only lease-scoped access; the checker cannot self-grant cluster access.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-036.</p>
+<h2 id="d-037-versioned-security-policies">D-037: Versioned Security Policies</h2>
+<p><strong>Decision.</strong> Security verdicts use a versioned resolved policy for severity, active threats, missing fixes, headers and scanner errors.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Exact expiring exceptions and nonblocking findings stay visible. Scanner failure is an execution error and cannot become pass; advisory only changes blocking effect.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-037.</p>
+<h2 id="d-038-deterministic-visual-comparison-with-optional-agent-review">D-038: Deterministic Visual Comparison With Optional Agent Review</h2>
+<p><strong>Decision.</strong> Visual regression uses fixed-condition screenshots and deterministic comparison against reviewed baselines before any optional agent judgment.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Keep baseline/current/difference artifacts and separate judgment. Discord consumes saved evidence and cannot change the verdict.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-038.</p>
+<h2 id="d-039-git-managed-visual-baselines">D-039: Git-Managed Visual Baselines</h2>
+<p><strong>Decision.</strong> Initially store baseline images and a digest/route/browser/viewport/settings manifest in Git.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Code review binds baseline changes to source. Missing bytes, digest or identity mismatches are contract errors. External stores are deferred, not a second current source.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-039.</p>
+<h2 id="d-040-conditional-approval-for-baseline-candidates">D-040: Conditional Approval for Baseline Candidates</h2>
+<p><strong>Decision.</strong> Configured candidate generation can publish approval_required; a conditional human approval uses durable request/wait/resume, then a separate apply stage updates baselines and reruns the check.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Approval itself cannot edit files. Without the declared flow execution never changes a baseline; an agent cannot provide human authorization.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-040.</p>
+<h2 id="d-041-shared-browser-profiles">D-041: Shared Browser Profiles</h2>
+<p><strong>Decision.</strong> Accessibility, visual, E2E and active QA reuse named browser profiles from project settings.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Provider versions pin browser builds. Each declared visual route/profile combination has its own baseline identity; no implicit coverage expansion.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-04; original D-041.</p>
+<h2 id="d-042-stable-visual-defaults-and-optional-masks">D-042: Stable Visual Defaults and Optional Masks</h2>
+<p><strong>Decision.</strong> Visual capture disables animations, uses the selected profile and waits for readiness by default.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Optional route masks handle known dynamic elements. The result records applied masks, and maintainers inspect changes. Masks are not mandatory configuration.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-042.</p>
+<h2 id="d-043-versioned-visual-comparison-with-explicit-overrides">D-043: Versioned Visual Comparison With Explicit Overrides</h2>
+<p><strong>Decision.</strong> Visual comparison has a versioned default profile with descriptive, supported explicit overrides.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Missing settings cannot turn a blocking difference into pass. Preserve every resolved override; uncertain output fails safely without a declared review agent. Advisory remains explicit.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-043.</p>
+<h2 id="d-044-api-suite-uses-separate-test-types">D-044: API Suite Uses Separate Test Types</h2>
+<p><strong>Decision.</strong> API is editable suite composition beginning with http assertions, api-flow and openapi runtime tests.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No monolithic fixed API runtime in Buster. Imported Postman or other tools extend provider contracts without core changes.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-044.</p>
+<h2 id="d-045-versioned-api-flow-files">D-045: Versioned API Flow Files</h2>
+<p><strong>Decision.</strong> API-flow selects a separate schema-versioned flow file containing bounded setup, auth, ordered requests, variables, assertions, WebSocket work and cleanup.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> This keeps pipeline.json small. Postman/external formats remain optional integrations rather than requirements of the provided format.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-045.</p>
+<h2 id="d-046-strict-api-assertions">D-046: Strict API Assertions</h2>
+<p><strong>Decision.</strong> Every declared API assertion must pass. Request errors/timeouts fail; invalid configuration is an execution error.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Continue independent paths after failure; skip only dependencies missing required output. Setup failure can block dependent main work but cleanup still runs. No numeric failure allowance or routine agent judgment.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-046.</p>
+<h2 id="d-047-explicit-openapi-runtime-operations">D-047: Explicit OpenAPI Runtime Operations</h2>
+<p><strong>Decision.</strong> OpenAPI syntax validation stays in lint; runtime checks call only explicitly selected operation IDs/tags with declared data/auth/cleanup.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Never invoke every operation automatically. Validate outgoing requests and returned status, type, schema, headers and undocumented responses to prevent undeclared state changes.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-047.</p>
+<h2 id="d-048-extensible-e2e-suite-and-common-result-contract">D-048: Extensible E2E Suite and Common Result Contract</h2>
+<p><strong>Decision.</strong> E2E is editable composition using a common result contract with Playwright first; Cypress, Selenium, Appium and custom tools can replace it.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preserve cases/counts/errors, browser identity and all produced screenshots, video, traces, reports and logs; tool replacement needs no Buster core change.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-048.</p>
+<h2 id="d-049-project-owned-playwright-with-a-kubeclaw-execution-overlay">D-049: Project-Owned Playwright With a KubeClaw Execution Overlay</h2>
+<p><strong>Decision.</strong> Project Playwright configuration owns selection, projects, retries, auth setup, captures and test-specific timeouts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> KubeClaw overlays endpoint, canonical reporting/artifact paths, cancellation and total/operator resource ceilings only. It cannot change assertions or silently select different tests; operator limits may reduce requests, never expand grants.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-049.</p>
+<h2 id="d-050-strict-e2e-verdict-with-full-evidence-collection">D-050: Strict E2E Verdict With Full Evidence Collection</h2>
+<p><strong>Decision.</strong> Any E2E case still failing after declared retries fails the result. Attempt all independent selected tests and preserve passed/failed/skipped/unexecuted counts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Only dependencies, failed required setup, cancellation or total limits justify unexecuted work. Zero executed tests is configuration error; skipped is visible but nonblocking by default. Structured reports replace console parsing.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-050.</p>
+<h2 id="d-051-extensible-unit-suite-and-multiple-test-instances">D-051: Extensible Unit Suite and Multiple Test Instances</h2>
+<p><strong>Decision.</strong> Unit suites are editable, tool-neutral composition with several independent instances per module.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Each has its own provider, settings, results/artifacts and mode. Framework providers share a contract; generic command execution uses executable/argument arrays, prefers structured reports and otherwise explicit exit/log evidence. Later D-114/D-115 narrow its exact authority.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-051.</p>
+<h2 id="d-052-run-all-independent-unit-test-instances">D-052: Run All Independent Unit-Test Instances</h2>
+<p><strong>Decision.</strong> Execute all independent unit instances, retaining separate results and bounded optional parallelism.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> One failure does not stop unrelated tests. Any failed blocking instance fails the suite; advisory remains visible. Summaries account for skipped and unexecuted instances.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-052.</p>
+<h2 id="d-053-optional-coverage-budget-check">D-053: Optional Coverage-Budget Check</h2>
+<p><strong>Decision.</strong> Coverage evaluation is a separately declared coverage-budget check consuming published artifacts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> A blocking budget needs a limit; advisory may report without one. Preserve source unit results and combine only compatible formats/measurement models. D-118 narrows the initial format to LCOV lines.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-053.</p>
+<h2 id="d-054-registration-is-the-activation-unit">D-054: Registration Is the Activation Unit</h2>
+<p><strong>Decision.</strong> A package can expose several registrations; each has its own schema, input/output, capabilities, version and entrypoint. Registration is the activation/selection unit.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Suites may mix packages. Package delivery and registration authority remain different; a future upload/catalog management platform is deferred.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-054.</p>
+<h2 id="d-055-common-load-test-contract">D-055: Common Load-Test Contract</h2>
+<p><strong>Decision.</strong> Load tests share a result contract, with k6 first and replaceable Artillery/other providers.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Report requests, errors, throughput, percentiles, virtual users, failed limits, full reports/logs. Optional load registrations can compose with Lighthouse in a performance suite.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-055.</p>
+<h2 id="d-056-composable-application-observation-checks">D-056: Composable Application-Observation Checks</h2>
+<p><strong>Decision.</strong> Use separate log-check, metric-check, trace-check and event-check registrations with one normalized observation-result contract.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> They can use different packages/backends; none receives all signal authority. Preserve expectation, evidence, checked interval/correlation, assertions and artifact references.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-056.</p>
+<h2 id="d-057-correlated-action-and-observation-execution">D-057: Correlated Action and Observation Execution</h2>
+<p><strong>Decision.</strong> Link separate live-action and observation tests through one correlation context; observable actions require a log observer to be ready before action starts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Metrics/traces/events are optional. Preserve separate authority, a bounded arrival window and deployment/time/correlation scope; ordinary tests without declared observable actions are unchanged.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-057.</p>
+<h2 id="d-058-central-test-deployment-log-collection">D-058: Central Test-Deployment Log Collection</h2>
+<p><strong>Decision.</strong> One platform collector selects test-deployment logs using namespace/workload pipeline, module, deployment and lease identity.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> stdout/stderr are defaults, structured JSON preferred. Before an action open a bounded observation session; Buster gets scoped query access, not cluster-wide logs. File/sidecar collection is deferred.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-058.</p>
+<h2 id="d-059-opentelemetry-is-the-common-observation-entry-point">D-059: OpenTelemetry Is the Common Observation Entry Point</h2>
+<p><strong>Decision.</strong> OpenTelemetry Collector is the common collection/routing entry for test logs, metrics and traces; prefer OTLP and retain Prometheus scraping.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The collector is neither verdict engine nor long-term query store. Backends are replaceable; application events may initially use logs/trace events. Buster receives scoped queries and is not a telemetry store.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-059.</p>
+<h2 id="d-060-versioned-observability-deployment-profile">D-060: Versioned Observability Deployment Profile</h2>
+<p><strong>Decision.</strong> A test deployment can select a versioned observability profile providing identities, collector address and required labels/settings before lint.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Deploy the same checked YAML. stdout/stderr needs no app library; instrumentation dependencies for metrics/traces must never be silently injected into a custom image.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-060.</p>
+<h2 id="d-061-full-clawdeck-evidence-view-and-separate-signal-streams">D-061: Full ClawDeck Evidence View and Separate Signal Streams</h2>
+<p><strong>Decision.</strong> ClawDeck provides correlated action, signal, result and evidence views for test deployments, including bounded live log streams.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Raw signals do not become one canonical pipeline event per record. Store references/history once through the observation service; pipeline events describe state changes and Discord receives summaries/links.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-061.</p>
+<h2 id="d-062-simple-log-expectations-with-optional-provider-queries">D-062: Simple Log Expectations With Optional Provider Queries</h2>
+<p><strong>Decision.</strong> Default log expectations are structured/text matches with exact/minimum/maximum counts in linked deployment/time/correlation scope.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Advanced backend queries such as Loki syntax are optional and do not change the normalized result.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-062.</p>
+<h2 id="d-063-metric-value-and-change-checks">D-063: Metric Value and Change Checks</h2>
+<p><strong>Decision.</strong> Metric checks support absolute values and before/after action changes with exact/minimum/maximum/increase/decrease expectations.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preserve before, after, calculated delta, interval and verdict; optional backend-specific queries do not change the common contract.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-063.</p>
+<h2 id="d-064-required-trace-operation-checks">D-064: Required Trace Operation Checks</h2>
+<p><strong>Decision.</strong> Trace checks can require an operation and child spans, reject error spans and limit duration.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Record matched trace, present/missing spans, errors, duration and verdict; optional backend queries remain provider-specific.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-064.</p>
+<h2 id="d-065-non-destructive-application-event-checks">D-065: Non-Destructive Application Event Checks</h2>
+<p><strong>Decision.</strong> Event checks observe copies of application events without consuming/changing production-used messages.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Match declared action/type/fields/count and retain evidence. Test listeners, separate consumers, audit stores or OTel events can provide a replaceable source.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-065.</p>
+<h2 id="d-066-one-event-check-with-replaceable-source-adapters">D-066: One Event Check With Replaceable Source Adapters</h2>
+<p><strong>Decision.</strong> Use one normalized event-check contract and common evidence store with replaceable copying source adapters; Redis and API are initial sources.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Bind adapters to stable workload and optional container identity, not transient Pod names. Multiple sources can coexist without changing expectations or result/view schemas.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-066.</p>
+<h2 id="d-067-shared-buster-worker-and-separate-specialist-workers">D-067: Shared Buster Worker and Separate Specialist Workers</h2>
+<p><strong>Decision.</strong> Trusted maintainer and approved third-party providers share a Buster worker by default. Operators can isolate a provider for trust, tools, resources, or authority needs.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Nova sends immutable work and owns progress; specialists do not move provider logic into Nova. Freeze provider/suite selection for active runs. Later security rules still require actual containment for restricted packages.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-067.</p>
+<h2 id="d-068-reusable-tool-packages-and-declarative-test-definitions">D-068: Reusable Tool Packages and Declarative Test Definitions</h2>
+<p><strong>Decision.</strong> Reusable tool behavior lives in installed provider packages; project tests and suite definitions are data selecting and composing those tools.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> This confirms existing provider/test/suite separation, not a new runtime component or an immediate upload platform.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-068.</p>
+<h2 id="d-069-stable-tool-contracts-and-locked-packages">D-069: Stable Tool Contracts and Locked Packages</h2>
+<p><strong>Decision.</strong> Tests select stable contract versions while platform locks exact package version and immutable image/content digest.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Breaking settings/results require a new contract; updates cannot alter active runs. The resolved plan records both contract and locked implementation identity.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-069.</p>
+<h2 id="d-070-fixed-suite-versions-are-explicit-activation">D-070: Fixed Suite Versions Are Explicit Activation</h2>
+<p><strong>Decision.</strong> Selecting a fixed suite version explicitly allowlists exactly the tests in that version.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No suite is default; install/update alone runs nothing. Adding a test needs a new suite version and every run stores its full expansion.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-070.</p>
+<h2 id="d-071-explicit-suite-exclusions-overrides-and-additions">D-071: Explicit Suite Exclusions, Overrides, and Additions</h2>
+<p><strong>Decision.</strong> A fixed suite may offer exclude, overrides and add sections keyed by stable test IDs.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Validate every reference and retain the complete expansion. Projects need not copy a suite merely for permitted local changes; an absent suite remains disabled.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-071.</p>
+<h2 id="d-072-explicit-test-and-fixture-links">D-072: Explicit Test and Fixture Links</h2>
+<p><strong>Decision.</strong> Tests/fixtures/suites explicitly link required producers by stable ID; validate the complete graph before Buster execution.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Do not infer names or silently add missing work. Missing links, bad outputs or excluded required items are plan errors.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-072.</p>
+<h2 id="d-073-optional-standard-conditions">D-073: Optional Standard Conditions</h2>
+<p><strong>Decision.</strong> Optional standard when conditions may skip declared tests using known changed paths, module type or pipeline stage facts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> A condition cannot enable undeclared work; no custom condition code is supported. Record why declared work was skipped before execution.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-073.</p>
+<h2 id="d-074-automatic-parallel-work-with-optional-group-limits">D-074: Automatic Parallel Work With Optional Group Limits</h2>
+<p><strong>Decision.</strong> Ready independent tests run automatically after declared dependencies, within operator concurrency ceilings; optional named group limits constrain shared resources.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> A group limit of one serializes only that group, avoiding manual execution groups. Projects can lower but never raise operator maxima.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-074.</p>
+<h2 id="d-075-one-default-retry-and-retry-safe-tests">D-075: One Default Retry and Retry-Safe Tests</h2>
+<p><strong>Decision.</strong> Tests have one retry by default, hence at most two attempts, adjustable within operator maxima. Unsafe-to-retry providers default to zero unless risk is explicitly accepted.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Use unique data/reset/cleanup where practical. Keep every attempt and mark fail-then-pass unstable. This test retry default is distinct from pipeline repair-cycle budgets.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-075.</p>
+<h2 id="d-076-optional-common-test-variations">D-076: Optional Common Test Variations</h2>
+<p><strong>Decision.</strong> Optional matrices expand only provider-supported typed values before execution and within an operator size limit.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Every variation has distinct identity/result; provider-aware shards preserve separate outcomes before parent aggregation. No unbounded dynamic expansion.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-076.</p>
+<h2 id="d-077-small-common-test-result-with-provider-details">D-077: Small Common Test Result With Provider Details</h2>
+<p><strong>Decision.</strong> Every provider returns a small common result with identity, outcome/execution state, times/attempt, counts/findings/metrics, evidence and summary.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Tool-specific typed detail reports supplement the common shape so general readers need not understand every provider.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-077.</p>
+<h2 id="d-078-providers-return-an-explicit-evidence-file-list">D-078: Providers Return an Explicit Evidence File List</h2>
+<p><strong>Decision.</strong> Providers explicitly list evidence files and types; KubeClaw validates, saves and links each to the attempt.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Do not search arbitrary directories or guess importance. Unlisted files are not published evidence.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-078.</p>
+<h2 id="d-079-provider-evidence-defaults-with-project-settings">D-079: Provider Evidence Defaults With Project Settings</h2>
+<p><strong>Decision.</strong> Providers declare supported evidence and safe success/failure defaults; projects may request supported variants.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Validate request, existence and file limits. Richer failure diagnostics are allowed without inferring importance from contents.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-079.</p>
+<h2 id="d-080-specialist-agent-results-and-nova-gate-ownership">D-080: Specialist Agent Results and Nova Gate Ownership</h2>
+<p><strong>Decision.</strong> Declared specialist agents return typed findings/evidence/reasons; blocking results follow ordinary blocking rules. Nova owns final policy and checks completeness.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Nova cannot silently rewrite facts. Keep deterministic evidence and linked agent judgment separate; configured agents may perform bounded active QA or review.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-080.</p>
+<h2 id="d-081-trust-installed-providers-in-the-first-version">D-081: Trust Installed Providers in the First Version</h2>
+<p><strong>Decision.</strong> Initially operator installation is the provider trust decision, without per-provider approval levels or a request approval workflow.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Selection is still explicit and active registries frozen. Review/signature/upload approval policy must precede an open public upload service; this does not relax runtime isolation requirements.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-081.</p>
+<h2 id="d-082-declared-provider-access-with-operator-limits">D-082: Declared Provider Access With Operator Limits</h2>
+<p><strong>Decision.</strong> Providers declare needed access and operator policy sets maximum authority; projects cannot grant new access.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Shared worker placement does not grant ambient permissions. First version avoids a separate approval ceremony for every request while maintaining declared runtime controls.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-082.</p>
+<h2 id="d-083-migrate-and-switch-one-old-suite-at-a-time">D-083: Migrate and Switch One Old Suite at a Time</h2>
+<p><strong>Decision.</strong> Migrate one old suite as a vertical slice: inventory old checks/data/permissions/evidence, preserve required value, prove improved behavior, switch and delete that old authority.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Do not preserve defects merely for parity. A temporary bridge is limited to not-yet-migrated suites, with no dual control and removal after the final suite.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-083.</p>
+<h2 id="d-084-build-the-minimum-provider-system-with-unit-first">D-084: Build the Minimum Provider System With Unit First</h2>
+<p><strong>Decision.</strong> Build the minimum shared provider system through the unit suite first, then add only functions required by later slices.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Unit proves registration/config/results/logs/reports/retry/parallelism/policy/replacement without requiring a browser, cluster, BuildKit or public network first.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-084.</p>
+<h2 id="d-085-layer-provider-schema-suite-template-and-project-override">D-085: Layer Provider Schema, Suite Template, and Project Override</h2>
+<p><strong>Decision.</strong> Resolve provider schema/defaults, suite-template values and permitted project overrides in order, then validate and store the full result.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> A single versioned schema owns fields/types/requirements/limits and can drive ClawDeck forms; no duplicate settings description is needed.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-085.</p>
+<h2 id="d-086-use-explicit-typed-links-between-tests-and-fixtures">D-086: Use Explicit Typed Links Between Tests and Fixtures</h2>
+<p><strong>Decision.</strong> Inputs select declared producer outputs through typed value or artifact links; validate and record transfers in the resolved plan.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No free-form expressions or implicit shared directories. Links imply dependency order; a transformation needs an explicit provider, not a general expression language.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-086.</p>
+<h2 id="d-087-use-fixtures-for-setup-and-buster-for-cleanup">D-087: Use Fixtures for Setup and Buster for Cleanup</h2>
+<p><strong>Decision.</strong> Each test has one provider execution; reusable setup is a declared fixture and private tool setup remains inside bounded execution.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Buster collects evidence and requests cleanup on success/failure/timeout/cancel, subject to explicit retention. Providers cannot invent nested pipeline steps or another workflow owner.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-087.</p>
+<h2 id="d-088-use-one-dependency-model-with-optional-result-filters">D-088: Use One Dependency Model With Optional Result Filters</h2>
+<p><strong>Decision.</strong> Use one dependency model, with optional terminal-result filters and normal success expectation.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Typed links create dependencies; a nonmatching result skips the consumer. Do not add after, whenResult or a general expression system.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-088.</p>
+<h2 id="d-089-do-not-add-a-gate-level-expected-failure-mode">D-089: Do Not Add a Gate-Level Expected-Failure Mode</h2>
+<p><strong>Decision.</strong> A test passes when observed behavior meets its expectation, including an expected rejection; do not add gate-level expectedFailure inversion.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preserve framework case details. Advisory is the explicit way for a whole failed test not to block.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-089.</p>
+<h2 id="d-090-normalize-standard-reports-through-replaceable-adapters">D-090: Normalize Standard Reports Through Replaceable Adapters</h2>
+<p><strong>Decision.</strong> Registered report adapters normalize explicitly declared standard formats, with JUnit first, while retaining original artifacts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Adding a format does not change Buster core. The adapter reports facts, not gate policy; D-108/D-109 refine error counts and exact adapter selection.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-090.</p>
+<h2 id="d-091-keep-one-nova-owned-execution-graph">D-091: Keep One Nova-Owned Execution Graph</h2>
+<p><strong>Decision.</strong> Nova stores one canonical graph with stable pipeline/test/fixture/dependency/attempt/matrix/shard/agent relation identities.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Buster returns facts against that graph rather than a second history; ClawDeck links the same nodes to results/evidence.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-091.</p>
+<h2 id="d-092-record-basic-resource-use-for-each-test-attempt">D-092: Record Basic Resource Use for Each Test Attempt</h2>
+<p><strong>Decision.</strong> Record reliably measured attempt duration, CPU time, maximum memory, log/artifact bytes and exit code/signal.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Missing optional values are explicitly absent, never zero. Network/storage can follow when reliable; measurement alone does not block without a declared budget.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-092.</p>
+<h2 id="d-093-calculate-stability-history-without-changing-current-results">D-093: Calculate Stability History Without Changing Current Results</h2>
+<p><strong>Decision.</strong> Preserve stable test IDs and every attempt for historical first/final pass rate, retry-pass count, failures and duration trends.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> History may label instability but never silently changes current result or blocking mode. A separate future stability gate is deferred; first migration retains needed data, not a complete UI.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-093.</p>
+<h2 id="d-094-limit-first-version-test-content-to-snapshots-and-packages">D-094: Limit First-Version Test Content to Snapshots and Packages</h2>
+<p><strong>Decision.</strong> Initially execute project test content from committed snapshots and reusable code from installed versioned packages.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No runtime fetching of unknown Git/URL/archive code and credentials. Future content/upload services must first turn content into verified packages or immutable artifacts.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-094.</p>
+<h2 id="d-095-decision-traceability-and-vertical-suite-migration">D-095: Decision Traceability and Vertical Suite Migration</h2>
+<p><strong>Decision.</strong> Use a machine-readable decision ledger that ties accepted IDs to disposition, code, proof, and completion. A suite resolver produces immutable input for a test-plan runner.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Each vertical migration inventories, proves, switches and deletes. The temporary bridge has an exact deletion ledger and only handles unmigrated suites; missing proof or active superseded code prevents completion.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-095.</p>
+<h2 id="d-096-neutral-worker-core-with-specialist-engines">D-096: Neutral Worker Core With Specialist Engines</h2>
+<p><strong>Decision.</strong> Nova owns pipeline graph/policy; all specialists share one neutral Worker Core for immutable-attempt identity, limits, logs, cancel, evidence, cleanup, health/capacity and typed result.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Test/design/security/prompt/gate semantics stay in engines above core. Images may differ. Extract this boundary before remote Buster integration so later distribution does not change provider contracts.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-096.</p>
+<h2 id="d-097-one-immutable-attempt-is-the-worker-unit">D-097: One Immutable Attempt Is the Worker Unit</h2>
+<p><strong>Decision.</strong> One immutable attempt is the Worker Core unit, selecting one specialist operation once with fixed identity, packages, grants, limits, inputs and cancellation identity.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Local Buster may coordinate several attempts; a later dispatcher may distribute the same units. Nova gate policy is not an attempt input.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-097.</p>
+<h2 id="d-098-shared-queue-with-time-limited-worker-claims">D-098: Shared Queue With Time-Limited Worker Claims</h2>
+<p><strong>Decision.</strong> The accepted distributed target uses a durable shared queue and bounded authenticated worker claims with generation fencing, not fixed Pod addresses.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Only the current authenticated owner may report progress/evidence/results; expired claims reject late completion and unmatched capabilities cannot claim. D-110 narrows the first transport to remote plan jobs; queue rollout is not implied by implementation of that first transport.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-098.</p>
+<h2 id="d-099-worker-registration-health-and-capacity">D-099: Worker Registration, Health, and Capacity</h2>
+<p><strong>Decision.</strong> Authenticated workers register version/type/capabilities, total/available capacity, current work and health; expired health stops assignment.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Kubernetes owns Pods; Nova owns assignment and claims. Queue/evidence authority is claim/type scoped; restarts get new identity and cannot reuse expired ownership.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-099.</p>
+<h2 id="d-100-global-work-control-with-local-worker-execution">D-100: Global Work Control With Local Worker Execution</h2>
+<p><strong>Decision.</strong> Nova owns global scheduling/concurrency/loss retry/cancel; workers own bounded local execution and renew claims independently of test timeout.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> A bounded loss grace permits recovery; interrupted attempts remain in history and late results are rejected. Cancellation stops new work, cooperates then forces termination, saves evidence and cleans up.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-100.</p>
+<h2 id="d-101-separate-result-log-and-evidence-paths">D-101: Separate Result, Log, and Evidence Paths</h2>
+<p><strong>Decision.</strong> Separate durable duplicate-safe terminal results, ordered replayable live logs and direct upload of large evidence.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> The terminal result binds attempt, claim, worker, digest, and time. Current ownership can accept it once. Full logs remain durable if streaming fails. Large bytes do not traverse Nova's ordinary result channel.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-101.</p>
+<h2 id="d-102-worker-lifecycle-fixed-profiles-and-protocol-versions">D-102: Worker Lifecycle, Fixed Profiles, and Protocol Versions</h2>
+<p><strong>Decision.</strong> Workers have starting/ready/draining/stopped/unhealthy states and bounded drain/cleanup. Attempts freeze compatible core/engine/capability profiles and negotiated protocol.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Do not route merely to a newer worker. Queue wait is bounded. Distributed draining/rolling update implementation remains deferred in the source even though compatible mixed versions are a design goal.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-102.</p>
+<h2 id="d-103-typescript-first-with-a-language-neutral-worker-protocol">D-103: TypeScript First With a Language-Neutral Worker Protocol</h2>
+<p><strong>Decision.</strong> Implement Worker Core first in TypeScript/Node but use versioned language-neutral JSON messages, not runtime objects/callbacks.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Avoid a second bridge during initial migration. Go is deferred until measurement shows a need; any later host must pass the same contracts/behavior and preserve provider/evidence semantics.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-103.</p>
+<h2 id="d-104-minimum-necessary-worker-contracts">D-104: Minimum Necessary Worker Contracts</h2>
+<p><strong>Decision.</strong> Add Worker Core fields only for an identified execution/recovery/proof consumer and a concrete failure without them.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Defer safely addable advanced queue controls, metrics, routing and authentication variants until actual distributed use needs them.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-05; original D-104.</p>
+<h2 id="d-105-role-specific-runtime-packages-from-one-shared-source">D-105: Role-Specific Runtime Packages From One Shared Source</h2>
+<p><strong>Decision.</strong> Replace the Common-directory overlay with explicitly versioned contracts/SDK, Nova core, Worker Core, specialist engine and selected-plugin packages resolved by role.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> One source may have immutable installs in several images. Reject missing/undeclared/cross-role packages and preserve version/digest manifests; Nova has no worker/engine authority. This supersedes the older overlay layout in Plugin System Vision.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-09; original D-105.</p>
+<h2 id="d-106-clawdeck-is-the-canonical-observability-system">D-106: ClawDeck Is the Canonical Observability System</h2>
+<p><strong>Decision.</strong> ClawDeck is the logical canonical observability system for durable action/attempt/agent/tool/signal/evidence records and verified content-addressed references; Nova retains scheduling/gate authority.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Raw bytes go directly to typed stores, not Nova memory. Stable identities, sequence/causation and canonical admission cursor order evidence. Bounded durable outboxes/acks and restart reconciliation preserve results; gaps are explicit and strict final gates require completeness.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-09; original D-106.</p>
+<h2 id="d-107-earlier-stages-can-continue-with-explicit-observability-degradation">D-107: Earlier Stages Can Continue with Explicit Observability Degradation</h2>
+<p><strong>Decision.</strong> Earlier nonauthoritative stages may continue with explicit partial/degraded/unknown observability only when remaining work is safe and declared policy permits.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Never relabel gaps complete. Safety-critical and authoritative final gates stop without required durable evidence, closures, and complete observability. Earlier sequential planning does not create an extra runtime gate.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-09; original D-107.</p>
+<h2 id="d-108-preserve-report-errors-without-adding-a-pipeline-outcome">D-108: Preserve Report Errors Without Adding a Pipeline Outcome</h2>
+<p><strong>Decision.</strong> Report adapters preserve passed, failed, errored and skipped case facts/counts, with suite/class identity and bounded detail lists pointing to the full original report.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Errored is a case fact, not a new pipeline outcome. Adapter does not apply policy; truncating detail cannot alter exact counts.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-09; original D-108.</p>
+<h2 id="d-109-freeze-and-run-exact-report-adapters">D-109: Freeze and Run Exact Report Adapters</h2>
+<p><strong>Decision.</strong> Providers declare report formats/evidence IDs with test-report type; Nova freezes one exact adapter per format, with explicit operator selection for ambiguity.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Buster saves originals and applies the exact pinned adapter, producing one normalization per artifact. Normalization never changes provider outcome; adapter failure is execution error and original evidence remains durable.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-09; original D-109.</p>
+<h2 id="d-110-remote-nova-to-buster-plan-job">D-110: Remote Nova-to-Buster Plan Job</h2>
+<p><strong>Decision.</strong> Nova durably records and submits one immutable resolved plan through an authenticated replaceable submit/status/cancel API. Buster durably retains/verifies its bounded source archive/reference and results/evidence.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Buster schedules attempts through Worker Core; Nova imports and owns judgment. A horizontal durable queue remains a later transport option without changing provider/plan/result contracts.</p>
+<p><strong>Approval/source.</strong> Unconfirmed; acceptance date unknown; original D-110.</p>
+<h2 id="d-111-nova-remote-gate-import">D-111: Nova Remote Gate Import</h2>
+<p><strong>Decision.</strong> Nova verifies remote job/plan/node/attempt/receipt/result/evidence identities, copies each object with size and SHA-256 verification and accepts authority once.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Apply blocking/advisory policy after import. Failed/errored normalized reports are deterministic failures, not agent requests; only frozen-plan review selection can authorize uncertain-evidence review.</p>
+<p><strong>Approval/source.</strong> Unconfirmed; acceptance date unknown; original D-111.</p>
+<h2 id="d-112-legacy-suite-bridge-containment">D-112: Legacy Suite Bridge Containment</h2>
+<p><strong>Decision.</strong> The temporary legacy runtime accepts only exact ledger names marked unmigrated through unmigratedSuites configuration; mark migrated before removing the old mapping.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Old bridge and resolved provider plan cannot both control one successor. This is migration containment, not permission for a permanent fallback.</p>
+<p><strong>Approval/source.</strong> Unconfirmed; acceptance date unknown; original D-112.</p>
+<h2 id="d-113-connected-gate-boundary">D-113: Connected Gate Boundary</h2>
+<p><strong>Decision.</strong> Production Nova gate entry must connect authority selection, durable dispatch/reconnect, complete verification, bounded transfer, idempotent import and Nova policy in one operation.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Reject old/new dual authority before either starts. Isolated helper tests alone do not establish this connected boundary.</p>
+<p><strong>Approval/source.</strong> Unconfirmed; acceptance date unknown; original D-113.</p>
+<h2 id="d-114-direct-commands-use-an-executable-and-literal-arguments">D-114: Direct Commands Use an Executable and Literal Arguments</h2>
+<p><strong>Decision.</strong> Direct-command selects one operator catalog executable and bounded literal argument array, never shell text or a project-selected arbitrary host path.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Shared command.execute and isolation enforce process/output/time/files/env/no-network limits. Use a contained private writable repo/workdir, CI=true and bounded env; reject credentials, loader/runtime-control variables. It is ecosystem-neutral.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-12; original D-114.</p>
+<h2 id="d-115-unit-result-authority-is-explicit-and-fail-closed">D-115: Unit Result Authority Is Explicit and Fail-Closed</h2>
+<p><strong>Decision.</strong> Direct-command offers junit-required (provided unit default) and explicit exit-code mode, where one command check is reported without invented framework counts.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Missing/invalid/oversize/zero-case required reports or start failure are execution errors. Nonzero exit or failed/errored JUnit fails; neither success overrides the other's failure. Logs never decide; timeout/cancel remain distinct.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-12; original D-115.</p>
+<h2 id="d-116-first-version-reports-use-exact-declarations">D-116: First-Version Reports Use Exact Declarations</h2>
+<p><strong>Decision.</strong> Reports have unique stable IDs and exact contained relative paths, registered formats and allowed media types; save originals before normalization.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> No first-version wildcards/globs. Several exact JUnit files normalize separately in declaration order; general collection is deferred until its ordering/duplication/path/size complexity is justified.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-12; original D-116.</p>
+<h2 id="d-117-unit-instances-reuse-normal-test-plan-nodes">D-117: Unit Instances Reuse Normal Test-Plan Nodes</h2>
+<p><strong>Decision.</strong> Every unit instance is an ordinary plan node with its own provider, config, mode, retries, attempts/results/evidence; suites stay data.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Reuse runner dependencies, parallelism, cancellation, summaries and instability. Independent instances continue after failures; Nova applies verified policy rather than a new unit scheduler/store.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-12; original D-117.</p>
+<h2 id="d-118-coverage-is-a-separate-lcov-first-linked-check">D-118: Coverage Is a Separate LCOV-First Linked Check</h2>
+<p><strong>Decision.</strong> A separately declared coverage-budget provider consumes immutable LCOV artifacts through typed links and evaluates compatible line measurements first.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Preserve original unit outcomes and per-input results; combine only compatible data. Blocking needs a minimum; advisory can report without it. Other formats require replaceable future adapters.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-12; original D-118.</p>
+<h2 id="d-119-every-suite-migration-uses-one-documented-workflow">D-119: Every Suite Migration Uses One Documented Workflow</h2>
+<p><strong>Decision.</strong> Every suite migration follows baseline, decision mapping, implementation, vertical/parity proof, comparison, cutover, deletion and closeout, with only one real gate authority.</p>
+<p><strong>Reason, consequences and actual alternatives.</strong> Documentation must explain every field/default/limit/result/error/evidence/security/tradeoff/migration/troubleshooting rule with tested examples. A normal user must not need repository access or maintainer help to understand use.</p>
+<p><strong>Approval/source.</strong> Accepted, 2026-08-12; original D-119.</p>
+</main></body></html>

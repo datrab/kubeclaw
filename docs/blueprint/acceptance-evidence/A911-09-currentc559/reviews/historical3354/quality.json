@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P1] Persist the required individual gate evidence before acceptance",
+      "body": "The package explicitly remains external evidence with intended repository paths, rather than the evidence-only successor commit required by section 4 of the acceptance contract. Consequently, its publication.output_root and artifact paths cannot yet be resolved through that contract's repository-based validation. The supplied artifact registry also does not replace the mandatory A911-09 record containing individual requirement findings, A911-09-PRIMARY execution, limits, and three distinct stored gate reviews. Preserve the demonstrated production results, assemble the complete individual gate record, and commit its evidence through the prescribed boundary before recording PASS. This requirement applies to this gate independently of the outstanding global 261/89 validation.",
+      "priority": "P1",
+      "confidence": 0.98,
+      "category": "test_gap",
+      "code_location": {
+        "file_path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/complete-production-dossier-v1/artifact-registry.json",
+        "line": 1
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "FAIL — A911-09 cannot receive terminal acceptance because its mandatory persisted gate record and evidence-only successor commit remain absent. The supplied sources support separate generated facts and authored guidance (GOV-005/MNT-001), preservation through regeneration (MNT-016), and explicit maintenance and owner routing (the applicable MNT-015/MNT-017 facets). The actual production Markdown build, qualified HTML stage, captured owner assets, hash reconciliation, exclusion probe, and provenance negatives materially address the earlier production-evidence deficiencies. They do not replace the individual acceptance record required by section 4. This decision does not inherit all 36 catalogue requirements, demand unrelated live runs, or treat the global 261/89 checker and whole-site link acceptance as automatic dependencies. No defect was identified in the 53 metadata corrections themselves; the reported blocker concerns the explicitly requested full-scope terminal gate decision.",
+  "overall_confidence": 0.94
+}

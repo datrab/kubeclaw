@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Assign separate owners to SDK facts and authored explanation",
+      "body": "The current owner map assigns both `reference/sdk-exports.md` (generated facts) and `reference/sdk.md` (authored explanation) to `documentation automation`. This leaves the SDK pair without the distinct ownership and review routing required by A911-09 and the applicable MNT-015 facet. Assign the authored explanation to its responsible SDK maintainer and retain a separate generated-output owner, then regenerate the map. Publishing the map and proving metadata preservation do not resolve this ownership collision.",
+      "priority": "P2",
+      "confidence": 0.91,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/reference/sdk.md",
+        "line": 5
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "FAIL for A911-09: the supplied full-scope evidence demonstrates separate input authorities, generated-map reconciliation, bounded authored-content preservation, and publication of the owner assets. However, the generated SDK reference and authored SDK explanation still share the same owner, leaving the required distinct-owner/review-routing facet unsatisfied. This verdict does not inherit unrelated AP09.12, global 261/89, or live-validation obligations. No commands or target runs were executed.",
+  "overall_confidence": 0.88
+}

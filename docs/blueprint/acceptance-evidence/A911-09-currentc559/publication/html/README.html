@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/README.html"></head><body><main>
+<h1 id="kubeclaw-documentation">KubeClaw Documentation</h1>
+<p>Status: implemented
+Audience: operator, plugin author, maintainer, architecture reader
+Owner: documentation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/package-ownership.json">packaging/runtime/package-ownership.json</a>
+Applies to: current supported release
+Last verified: c559e97960a89a0f80487483addb91d2e6e4527d</p>
+<h2 id="purpose">Purpose</h2>
+<p>Start with the task that you must complete. Each route has one primary reader and one clear result.</p>
+<h2 id="start-with-your-task">Start With Your Task</h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Shortest route</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Understand what KubeClaw controls</td>
+<td><a href="understand/README.html">Architecture entry</a></td>
+<td>System boundary, roles, authority, and request flow</td>
+</tr>
+<tr>
+<td>Understand or change Prism</td>
+<td><a href="understand/prism.html">Prism architecture</a></td>
+<td>Complete runtime, data, operator, and developer route</td>
+</tr>
+<tr>
+<td>Understand or change Buster</td>
+<td><a href="understand/buster.html">Buster architecture</a></td>
+<td>Plan resolution, remote execution, evidence, suites, and safe extension routes</td>
+</tr>
+<tr>
+<td>Check a local checkout</td>
+<td><a href="use/quickstart.html">Operator quickstart</a></td>
+<td>Verified source and documentation inputs without external effects</td>
+</tr>
+<tr>
+<td>Plan or install the platform</td>
+<td><a href="use/install.html">Plan and Install</a></td>
+<td>Verified deployment or an exact blocked prerequisite</td>
+</tr>
+<tr>
+<td>Configure, start, or inspect a run</td>
+<td><a href="use/operate.html">Configure and Operate</a></td>
+<td>Recorded command, run identity, and result boundary</td>
+</tr>
+<tr>
+<td>Run an approval or test workflow</td>
+<td><a href="use/workflows/README.html">Pipeline workflows</a></td>
+<td>Concrete inputs, ordered procedures, and explicit execution limits</td>
+</tr>
+<tr>
+<td>Diagnose an active problem</td>
+<td><a href="use/diagnose.html">Observe and Diagnose</a></td>
+<td>Cause class, retained evidence, and safe next action</td>
+</tr>
+<tr>
+<td>Recover durable state</td>
+<td><a href="use/recovery.html">Back Up and Recover</a></td>
+<td>Verified recovery or a declared missing prerequisite</td>
+</tr>
+<tr>
+<td>Plan capacity or retention</td>
+<td><a href="use/capacity.html">Capacity and Retention</a></td>
+<td>Measured limits, owned cleanup, and retained recovery evidence</td>
+</tr>
+<tr>
+<td>Activate or remove a plugin</td>
+<td><a href="use/plugins.html">Operate Plugins</a></td>
+<td>Verified package, registration, grant, activation, and removal boundaries</td>
+</tr>
+<tr>
+<td>Operate Prism and Studio</td>
+<td><a href="use/prism-studio.html">Prism and Studio</a></td>
+<td>Source-backed setup, health, recovery, and cleanup procedures</td>
+</tr>
+<tr>
+<td>Deliver a demo for human acceptance</td>
+<td><a href="use/demo-delivery.html">Demo Delivery</a></td>
+<td>Immutable technical handoff kept separate from human acceptance</td>
+</tr>
+<tr>
+<td>Create a first pipeline plugin</td>
+<td><a href="extend/first-plugin.html">First plugin</a></td>
+<td>Tested package, activation proof, and removal proof</td>
+</tr>
+<tr>
+<td>Select or change an extension type</td>
+<td><a href="extend/README.html">Extension decision guide</a></td>
+<td>Smallest supported change and its authority boundary</td>
+</tr>
+<tr>
+<td>Find an exact name or setting</td>
+<td><a href="reference/README.html">Reference</a></td>
+<td>Source-backed command, setting, registration, or limit</td>
+</tr>
+<tr>
+<td>Check current support and limits</td>
+<td><a href="status/current.html">Current Status</a></td>
+<td>Implemented, open, and live-acceptance states kept separate</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="product-surfaces.html">Product Surface Map</a> lists every public surface family.
+Use it when you do not know which track owns a component, interface, or configuration.</p>
+<h2 id="three-connected-first-journeys">Three Connected First Journeys</h2>
+<ul>
+<li>Architecture readers start with <a href="understand/README.html">Understand KubeClaw</a>.</li>
+<li>Operators start with the <a href="use/quickstart.html">Operator Quickstart</a>, then continue to <a href="use/operate.html">Configure and Operate</a>.</li>
+<li>Plugin developers start with <a href="extend/first-plugin.html">Create and Activate a First Pipeline Plugin</a>.</li>
+</ul>
+<p>The operator route does not yet supply a self-contained first pipeline input.
+It requires operator-owned platform and project files.
+The <a href="use/operate.html#understand-the-two-command-forms">Configure and Operate</a> page states their command boundary.</p>
+<h2 id="documentation-tracks">Documentation Tracks</h2>
+<ul>
+<li><a href="understand/README.html">Understand</a> explains architecture, authority, runtime flow, and system boundaries.</li>
+<li><a href="use/README.html">Operate</a> explains planning, installation, daily operation, diagnosis, recovery, maintenance, and retirement.</li>
+<li><a href="extend/README.html">Extend</a> explains plugin authoring, testing, packaging, and supported extension points.</li>
+<li><a href="reference/README.html">Reference</a> contains generated facts from current source, configuration references, and the glossary.</li>
+<li><a href="status/current.html">Current Status</a> links current work, local closure and separate live acceptance.</li>
+<li><a href="status/open-issues.html">Open issues</a> lists remaining implementation work and completion criteria.</li>
+<li><a href="status/roadmap.html">Roadmap</a> explains planned platform improvements and why they matter.</li>
+<li><a href="decisions/README.html">Decisions</a> records enduring constraints, their rationale and approval evidence.</li>
+</ul>
+</main></body></html>

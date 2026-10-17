@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/images-and-digests.html"></head><body><main>
+<h1 id="images-digests-and-release-selection">Images, Digests, and Release Selection</h1>
+<p>Status: bounded reference; source and running-state limits stated below
+Audience: release maintainer, platform operator, developer
+Owner: documentation; release owners select artifacts and workload owners verify deployment
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/versions.json">versions.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/.github/workflows/build-images.yaml">.github/workflows/build-images.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/.github/workflows/build-ops-mcp.yaml">.github/workflows/build-ops-mcp.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/updates/deployment-release.mjs">scripts/updates/deployment-release.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/updates/oci-image-identity.mjs">scripts/updates/oci-image-identity.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/updates/code-release.mjs">scripts/updates/code-release.mjs</a>
+Applies to: ten runtime and two Ops image slots, three separate role bundles, and named release/deployment readers
+Last verified: 2026-10-15; current source and local selection files checked; no registry, build, deployment or container observed</p>
+<h2 id="choose-the-task-and-authority">Choose the task and authority</h2>
+<p>Use this page to identify which image was selected, what produced it, which
+platform it can describe, and what still needs observation before rollout or
+rollback. A source recipe, a stored receipt and a running container answer
+different questions. Keep all applicable identities in the change record.</p>
+<p>A pull request (PR) proposes a Git change for review and merge. GitOps keeps
+the deployment's desired state in Git. Argo is the reconciler on the selected
+GitOps path: it brings the cluster toward that desired state. Merging a
+selection can authorize deployment when that path is enabled and bootstrapped.</p>
+<table>
+<thead>
+<tr>
+<th>Your question</th>
+<th>Start here</th>
+<th>Required boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Which image/bundle is selected?</td>
+<td>Local receipt and generated-value status below</td>
+<td>Do not substitute a development tag for an absent release selection</td>
+</tr>
+<tr>
+<td>Which source and platform produced it?</td>
+<td>Twelve-slot matrix, versions and descriptor identities</td>
+<td>Recipe or architecture branch alone is not publication evidence</td>
+</tr>
+<tr>
+<td>Will promotion deploy it?</td>
+<td>Promotion and GitOps paths</td>
+<td>PR creation, merge, automatic selection and cluster apply are separate transitions</td>
+</tr>
+<tr>
+<td>Why was an overlay or pull rejected?</td>
+<td>Failure and safe action table</td>
+<td>Preserve first error and actual desired/running state; do not swap an unselected image</td>
+</tr>
+<tr>
+<td>Can an earlier image be restored?</td>
+<td>Rollback and data compatibility</td>
+<td>Earlier selection is not known healthy, data rollback or a source revert</td>
+</tr>
+</tbody>
+</table>
+<p>For the actual procedures, use <a href="../use/maintenance.html">Maintenance</a>,
+<a href="../use/install.html">Installation</a>, <a href="../use/diagnose.html">Diagnosis</a> and
+<a href="../use/recovery.html">Recovery</a>. A reference table does not replace those
+procedures' identity, credential, tool, source and writer-fence prerequisites.</p>
+<h2 id="current-local-selection-runtime-missing-ops-present">Current local selection: runtime missing, Ops present</h2>
+<p>In the source state described here, <code>releases/runtime-images.json</code>,
+<code>releases/runtime-code.json</code>, and runtime values for <code>nova</code>, <code>buster</code>,
+<code>prism-agent</code> and <code>prism</code> are absent. Runtime installation must stop until the
+release owner accepts a genuine selection through the existing
+<a href="../use/maintenance.html#acquire-a-reviewed-runtime-selection">release acquisition procedure</a>.
+Do not invent digests, manufacture a receipt, use a private tag workaround or
+copy development <code>my-values</code> as if it were an accepted runtime release.</p>
+<p><a href="../../../releases/ops-images.json">Ops image receipt</a> and
+<a href="../../../releases/values/ops.yaml">Ops generated values</a> are present. These
+are local stored data. Their presence is not a current remote workflow-run,
+source-configuration, registry or live-Pod verification result.
+An image-only selection can be readable without a code receipt, but that does
+not create the missing runtime image selection in this checkout.</p>
+<p><strong>Source — complete family validation and fail-closed selection:</strong>
+<a href="../../../scripts/updates/deployment-release.mjs#L8-L43">validateReleaseReceipt / selectedRelease</a> (<code>scripts/updates/deployment-release.mjs:8-43</code>, current-checkout SHA-256 <code>87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3</code>).</p>
+<h2 id="do-not-equate-these-identities">Do not equate these identities</h2>
+<p>Open Container Initiative (OCI) formats describe image indexes, manifests and
+configuration. A descriptor identifies another object by media type, digest
+and size. A digest is a content hash; it does not authenticate the producer or
+prove that a container ran. A tag is a mutable name pointing to an object.</p>
+<p>Here <code>rootfs</code> means the image's root filesystem. Configuration metadata does
+not prove that layer bytes or a running container were inspected.</p>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Meaning</th>
+<th>Not equivalent to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source Git commit</td>
+<td>Source tree used by the named build or bundle producer</td>
+<td>Deployment-selection commit or every active bundle commit</td>
+</tr>
+<tr>
+<td>Recipe byte hash / managed version argument</td>
+<td>Exact Dockerfile text or selected input/default</td>
+<td>Actual base/context/build-argument closure, resulting image bytes or successful build</td>
+</tr>
+<tr>
+<td>Tag, including <code>candidate-&lt;full-source-SHA&gt;</code>, <code>:proof</code> or <code>:latest</code></td>
+<td>A naming pointer</td>
+<td>Immutable content identity; even a source-looking tag can be repointed</td>
+</tr>
+<tr>
+<td>Image reference <code>repository@sha256:...</code></td>
+<td>Selected immutable root object</td>
+<td>Necessarily one platform's runnable manifest</td>
+</tr>
+<tr>
+<td>Root index digest</td>
+<td>Multi-entry descriptor object, when the root is an index</td>
+<td>Selected platform manifest or configuration digest</td>
+</tr>
+<tr>
+<td>Platform manifest digest</td>
+<td>Runnable-image manifest selected for an explicit OS/architecture[/variant]</td>
+<td>Root index when different, configuration or downloaded layer bytes</td>
+</tr>
+<tr>
+<td>Configuration digest</td>
+<td>Image configuration object, including platform/rootfs metadata</td>
+<td>Layer digest, root index or a running Pod's universally normalized image ID</td>
+</tr>
+<tr>
+<td>Layer descriptor/digest</td>
+<td>Layer identity/size/media type in the manifest</td>
+<td>Proof that the layer bytes were downloaded or checked</td>
+</tr>
+<tr>
+<td>Bundle archive SHA-256 / role / code commit</td>
+<td>Independently published application archive and its source/role</td>
+<td>Container image digest, capability grant or active archive already loaded by an agent</td>
+</tr>
+<tr>
+<td>Selection commit</td>
+<td>Git state containing accepted receipt, generated values and optional GitOps selection</td>
+<td>The build's source commit or proof rollout completed</td>
+</tr>
+<tr>
+<td>Pod UID, selected container name and <code>containerID</code>, requested image and <code>imageID</code></td>
+<td>Actual workload instance, request and runtime-reported identity</td>
+<td>Universal string equality with an OCI root index or active bundle identity</td>
+</tr>
+</tbody>
+</table>
+<p>OS means operating system; architecture selects CPU instruction format.
+A variant can distinguish architecture subvariants. UID is the unique identity
+of a Kubernetes object; here it identifies the Pod. The selected container
+name chooses its status entry. <code>containerID</code> identifies its runtime instance;
+<code>imageID</code> is the runtime-reported image identity. A container can restart within
+the same Pod; retain both identities and the restart count.
+Container Runtime Interface (CRI) implementations can
+report different image-ID forms; this page defines no universal CRI normalizer.
+A reference that includes both a tag and <code>@digest</code> still selects by digest;
+the presence of the word <code>latest</code> in that name alone does not make it tag-only.</p>
+<p><strong>Source — actual Pod and selected container identity readers:</strong>
+<a href="../../../docs/site/use/diagnose.html#bind-the-fault-window-to-object-lifetimes">fault_consumer_identity</a> (<code>docs/site/use/diagnose.md:516-528</code>, current-checkout SHA-256 <code>5bc06556def06f1edb61193867ea499c9c407f092ffe7530e817d91d5e55853b</code>). <a href="../../../docs/site/use/diagnose.html#prepare-the-openclaw-memory-reader">memory_pod_identity</a> (<code>docs/site/use/diagnose.md:1755-1766</code>, current-checkout SHA-256 <code>5bc06556def06f1edb61193867ea499c9c407f092ffe7530e817d91d5e55853b</code>).</p>
+<h2 id="source-to-selection-paths">Source-to-selection paths</h2>
+<p>The following source-described paths are not an observed build or rollout.</p>
+<pre><code class="language-mermaid">flowchart LR
+  Source[Source commit] --&gt; Build[Image build and push]
+  Build --&gt; ImageReceipt[Image receipt and source run identity]
+  Source --&gt; Bundles[Separate role bundle publication]
+  Bundles --&gt; CodeReceipt[Code receipt and archive hashes]
+  ImageReceipt --&gt; Verify[Source run and receipt verification]
+  CodeReceipt --&gt; Compatible[Image-input compatibility]
+  Compatible --&gt; Verify
+  Verify --&gt; Select[Deployment selection]
+  Select --&gt; Values[Source-bound values and validated overlays]
+  Values --&gt; Deploy[Selected deployment path]
+  Deploy --&gt; Observe[Actual container and bundle observation]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source commit</td>
+<td>Directed connection</td>
+<td>Image build and push</td>
+</tr>
+<tr>
+<td>Image build and push</td>
+<td>Directed connection</td>
+<td>Image receipt and source run identity</td>
+</tr>
+<tr>
+<td>Source commit</td>
+<td>Directed connection</td>
+<td>Separate role bundle publication</td>
+</tr>
+<tr>
+<td>Separate role bundle publication</td>
+<td>Directed connection</td>
+<td>Code receipt and archive hashes</td>
+</tr>
+<tr>
+<td>Image receipt and source run identity</td>
+<td>Directed connection</td>
+<td>Source run and receipt verification</td>
+</tr>
+<tr>
+<td>Code receipt and archive hashes</td>
+<td>Directed connection</td>
+<td>Image-input compatibility</td>
+</tr>
+<tr>
+<td>Image-input compatibility</td>
+<td>Directed connection</td>
+<td>Source run and receipt verification</td>
+</tr>
+<tr>
+<td>Source run and receipt verification</td>
+<td>Directed connection</td>
+<td>Deployment selection</td>
+</tr>
+<tr>
+<td>Deployment selection</td>
+<td>Directed connection</td>
+<td>Source-bound values and validated overlays</td>
+</tr>
+<tr>
+<td>Source-bound values and validated overlays</td>
+<td>Directed connection</td>
+<td>Selected deployment path</td>
+</tr>
+<tr>
+<td>Selected deployment path</td>
+<td>Directed connection</td>
+<td>Actual container and bundle observation</td>
+</tr>
+</tbody>
+</table>
+<p>Text: the image producer and code-bundle producer can publish independently.
+Only compatible selected inputs proceed through receipt/source checks to a
+selection. Values/render validation precedes the selected deployment path.
+Actual container, active bundle and application observations remain separate.
+A graph edge is a source-described dependency, not a successful-run claim.</p>
+<h2 id="twelve-first-party-image-slots">Twelve first-party image slots</h2>
+<p>A build context is the file input boundary supplied to the image builder.
+Here <code>.</code> means repository root; the two Ops contexts are named below.</p>
+<p>The runtime workflow's finite matrix has ten slots and repository-root build
+context <code>.</code>. Ops has two separate contexts. The matrix below identifies
+recipe and consumer routes; central versions/receipts remain the authorities
+for changing values. It is not a manually copied digest/version inventory.</p>
+<table>
+<thead>
+<tr>
+<th>Slot / family</th>
+<th>Actual recipe</th>
+<th>Build context</th>
+<th>Selected consumer meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nova</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.nova"><code>docker/Dockerfile.nova</code></a></td>
+<td><code>.</code></td>
+<td>Nova-role gateway/main and shared init image; Nova bundle is separate</td>
+</tr>
+<tr>
+<td><code>prism-agent</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.prism-agent"><code>docker/Dockerfile.prism-agent</code></a></td>
+<td><code>.</code></td>
+<td>Prism-role gateway/bridge and init image; Prism bundle is separate</td>
+</tr>
+<tr>
+<td><code>buster-gateway</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.buster-gateway"><code>docker/Dockerfile.buster-gateway</code></a></td>
+<td><code>.</code></td>
+<td>Buster gateway and init image; Buster bundle is separate</td>
+</tr>
+<tr>
+<td><code>buster-runtime</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.buster-runtime"><code>docker/Dockerfile.buster-runtime</code></a></td>
+<td><code>.</code></td>
+<td><code>buster-v2-runtime</code> sidecar, not gateway or code bundle</td>
+</tr>
+<tr>
+<td><code>namespace-controller</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.namespace-controller"><code>docker/Dockerfile.namespace-controller</code></a></td>
+<td><code>.</code></td>
+<td>Buster namespace-broker controller binary</td>
+</tr>
+<tr>
+<td><code>archviewer</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.archviewer"><code>docker/Dockerfile.archviewer</code></a></td>
+<td><code>.</code></td>
+<td>Nova presentation sidecar, not Prism Studio</td>
+</tr>
+<tr>
+<td><code>prism-control</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.prism-control"><code>docker/Dockerfile.prism-control</code></a></td>
+<td><code>.</code></td>
+<td>Prism Control workload and database bootstrap/migration Jobs</td>
+</tr>
+<tr>
+<td><code>prism-studio</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.prism-studio"><code>docker/Dockerfile.prism-studio</code></a></td>
+<td><code>.</code></td>
+<td>Prism Studio workload</td>
+</tr>
+<tr>
+<td><code>prism-worker</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.prism-worker"><code>docker/Dockerfile.prism-worker</code></a></td>
+<td><code>.</code></td>
+<td>Prism Worker workload; native-host admission is separate</td>
+</tr>
+<tr>
+<td><code>prism-ingestion</code> / runtime</td>
+<td><a href="../../../docker/Dockerfile.prism-ingestion"><code>docker/Dockerfile.prism-ingestion</code></a></td>
+<td><code>.</code></td>
+<td>Independent Prism ingestion workload</td>
+</tr>
+<tr>
+<td><code>codex-ops</code> / ops</td>
+<td><a href="../../../ops/pod/Dockerfile"><code>ops/pod/Dockerfile</code></a></td>
+<td><code>ops/pod</code></td>
+<td>Ops workload <code>codex</code> container</td>
+</tr>
+<tr>
+<td><code>ops-mcp</code> / ops</td>
+<td><a href="../../../tools/ops-mcp/Dockerfile"><code>tools/ops-mcp/Dockerfile</code></a></td>
+<td><code>tools/ops-mcp</code></td>
+<td>Ops workload <code>ops-mcp</code> container</td>
+</tr>
+</tbody>
+</table>
+<p>The image repositories follow their family's source receipt. Placeholder
+owners or candidate tags are not deployable substitutes for those receipts.
+Role enablement and chart conditions still select which listed consumers exist.
+External Tailscale, Envoy, PostgreSQL, upstream-chart and other operator-produced
+images have different owners and are not automatically covered by these twelve slots.</p>
+<p><strong>Source — actual workflow matrices and consumer slots:</strong>
+<a href="../../../.github/workflows/build-images.yaml#L18-L49">runtime image matrix</a> (<code>.github/workflows/build-images.yaml:18-49</code>, current-checkout SHA-256 <code>8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d</code>). <a href="../../../.github/workflows/build-ops-mcp.yaml#L38-L63">Ops context and image selection</a> (<code>.github/workflows/build-ops-mcp.yaml:38-63</code>, current-checkout SHA-256 <code>79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba</code>). <a href="../../../charts/kubeclaw/templates/buster-namespace-controller.yaml#L180-L189">separate namespace controller consumer</a> (<code>charts/kubeclaw/templates/buster-namespace-controller.yaml:180-189</code>, current-checkout SHA-256 <code>760a82838ffce8fbf2a29f17914a1395b5dbaac61b71742155e378f962ccaee3</code>). <a href="../../../charts/prism/templates/workloads.yaml#L11-L20">Prism workload image iteration</a> (<code>charts/prism/templates/workloads.yaml:11-20</code>, current-checkout SHA-256 <code>9bb2865f5d232b2cc5fac39259c8957e573decc891d2c9b25d7554da01148739</code>). <a href="../../../charts/prism/templates/ingestion.yaml#L18-L24">Prism ingestion image</a> (<code>charts/prism/templates/ingestion.yaml:18-24</code>, current-checkout SHA-256 <code>73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98</code>). <a href="../../../charts/prism/templates/jobs.yaml#L25-L29">Control image for bootstrap Job</a> (<code>charts/prism/templates/jobs.yaml:25-29</code>, current-checkout SHA-256 <code>9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c</code>). <a href="../../../charts/prism/templates/jobs.yaml#L43-L47">Control image for migration Job</a> (<code>charts/prism/templates/jobs.yaml:43-47</code>, current-checkout SHA-256 <code>9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c</code>). <a href="../../../charts/ops-pod/templates/workload.yaml#L49-L54">Ops codex image</a> (<code>charts/ops-pod/templates/workload.yaml:49-54</code>, current-checkout SHA-256 <code>3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58</code>). <a href="../../../charts/ops-pod/templates/workload.yaml#L84-L90">Ops MCP image</a> (<code>charts/ops-pod/templates/workload.yaml:84-90</code>, current-checkout SHA-256 <code>3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58</code>).</p>
+<h3 id="three-code-bundle-roles-are-not-three-more-images">Three code-bundle roles are not three more images</h3>
+<p>Role archives are <code>nova</code>, <code>buster</code> and <code>prism</code>; their role manifests select
+packages, plugins and entrypoints. The bundle manifest binds role, commit,
+runtime surface, packages/plugins and dependencies. The code receipt binds
+URLs, archive SHA-256, contract <code>v2</code>, source run and attempt. A role archive
+is not a Nova caller grant, Buster service credential or native-host permission.
+Use <a href="roles-and-package-ownership.html">Roles and package ownership</a> for that boundary.</p>
+<p>The build workflow can package role archives after deployment-only changes
+without rebuilding compatible images. <code>selectedCode</code> compares image-input
+identity between the selected image commit and code commit; it does not require
+those commits to be identical. A difference in image inputs rejects with
+<code>CODE_RELEASE_REQUIRES_NEW_IMAGES</code>. Retaining an older compatible image does
+not prove the newer bundle is active in a running workload.</p>
+<p><strong>Source — separate bundle branch, manifest and image compatibility:</strong>
+<a href="../../../.github/workflows/build-images.yaml#L115-L157">conditional separate three-role bundle publication</a> (<code>.github/workflows/build-images.yaml:115-157</code>, current-checkout SHA-256 <code>8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d</code>). <a href="../../../scripts/build-runtime-role-bundle.mjs#L253-L267">role/commit/runtime surface bundle manifest</a> (<code>scripts/build-runtime-role-bundle.mjs:253-267</code>, current-checkout SHA-256 <code>0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9</code>). <a href="../../../scripts/updates/code-release.mjs#L6-L26">validateCodeReceipt / selectedCode</a> (<code>scripts/updates/code-release.mjs:6-26</code>, current-checkout SHA-256 <code>bedd4f2a8668a27b675e53aa415451a4b428543e6fc6a99bc88988355bff3259</code>).</p>
+<h2 id="versions-defaults-and-architecture-limits">Versions, defaults and architecture limits</h2>
+<p><code>ARG</code> declares a Dockerfile build-time parameter. <code>TARGETARCH</code> names the
+selected target architecture where a recipe uses it. A source branch does not
+prove that every named architecture was built or published.</p>
+<p><code>versions.json</code> owns central OpenClaw version/base digest and managed build
+arguments plus applicable per-image overrides. <code>versions.mjs</code> generates the
+recipe ARG defaults, rejects unmanaged/unused overrides and requires pinned
+base syntax. OpenClaw inputs have one authority; they cannot be overridden
+independently per role. The workflow separately supplies source revision and
+database-refresh controls. These declarations do not prove the final builder
+used every expected base, context byte, lock or tool result.</p>
+<p>Neither the runtime nor Ops build workflow declares an explicit <code>platforms</code>
+option. Recipes with <code>TARGETARCH</code> branches/checksums for amd64/arm64 do not prove
+both architectures were published. A runner label such as <code>ubuntu-latest</code> is
+not descriptor evidence for the resulting artifact. Select a concrete
+<code>os/architecture[/variant]</code> and verify the actual descriptor relation.</p>
+<p>The current checked-in recipe guard requires <strong>both</strong> complete exact recipe-byte
+hash equality and the retained selected-instruction hash equality. Its finite
+nine-recipe scope is not all twelve recipes or complete image provenance.
+The narrow source-guard witness does not build/run Docker, verify actual bases,
+context, registry publication or deployed contents. This page adds no recipe
+to that guard and changes no versions or pins.</p>
+<p><strong>Source — managed defaults and exact-byte AND guard:</strong>
+<a href="../../../scripts/versions.mjs#L7-L26">versionArguments / managed base validation</a> (<code>scripts/versions.mjs:7-26</code>, current-checkout SHA-256 <code>5f7b15d0a9a033083b4fd438b2869295987f73e2fc559eda56ccaf457991c48c</code>). <a href="../../../scripts/versions.mjs#L29-L62">dockerfileVersions / named overrides</a> (<code>scripts/versions.mjs:29-62</code>, current-checkout SHA-256 <code>5f7b15d0a9a033083b4fd438b2869295987f73e2fc559eda56ccaf457991c48c</code>). <a href="../../../scripts/docs-runtime-consumer-contracts.mjs#L1164-L1202">finite existing nine-recipe byte map</a> (<code>scripts/docs-runtime-consumer-contracts.mjs:1164-1202</code>, current-checkout SHA-256 <code>61e79704a061ac9e752b6c72e5f5332692062a16874be532f32cd2a962f6aba8</code>). <a href="../../../scripts/docs-runtime-consumer-contracts.mjs#L1214-L1227">assertImageAssembly complete-byte AND selected-instruction checks</a> (<code>scripts/docs-runtime-consumer-contracts.mjs:1214-1227</code>, current-checkout SHA-256 <code>61e79704a061ac9e752b6c72e5f5332692062a16874be532f32cd2a962f6aba8</code>).</p>
+<h2 id="promotion-materialization-and-deployment">Promotion, materialization and deployment</h2>
+<table>
+<thead>
+<tr>
+<th>Transition</th>
+<th>Source-defined checks / effects</th>
+<th>What remains separate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image build/push and receipt</td>
+<td>Runtime root context/recipe, source revision, pushed digest and receipt; workflow requests provenance and a software bill of materials (SBOM)</td>
+<td>Remote attestation/signature verification, full layer bytes and actual deployed identity are not established here</td>
+</tr>
+<tr>
+<td>Source verification</td>
+<td>Exact successful matching main run/attempt, expected workflow/event/commit, persistent release asset and receipt equality</td>
+<td>Merely collecting a receipt does not prove the producer run finished successfully</td>
+</tr>
+<tr>
+<td>Manual promotion</td>
+<td>Verify/materialize/scan, then propose selection PR; no rebuild</td>
+<td>When GitOps is enabled and bootstrapped, merging included production Argo selection can authorize deployment</td>
+</tr>
+<tr>
+<td>Automatic source-success path</td>
+<td>Separate enabled/same-repository/successful-source conditions; can materialize/export and push main</td>
+<td>It is not universally inert PR creation; deployment follows the actual selected GitOps/Argo path</td>
+</tr>
+<tr>
+<td>Materialize/check</td>
+<td>Selected source chart/value file set and Git bytes; bind image and optional bundle slots; compare or write generated values</td>
+<td>Even <code>--check</code> prepares the values directory and invokes source/Git-backed helpers; not a pure-memory or effect-free command</td>
+</tr>
+<tr>
+<td>Render / overlays</td>
+<td>Validate selected primary/sidecar/controller/service/Ops slots and bundle role/URL/hash/commit/enablement, including intermediate overlays</td>
+<td>Native Helm/temp inputs and all selected source/caller prerequisites need their own execution boundary</td>
+</tr>
+<tr>
+<td>Workload observation</td>
+<td>Exact Pod UID, selected container name/<code>containerID</code>, node platform, requested image and runtime-specific <code>imageID</code>, plus separately active bundle and application reader</td>
+<td>Desired values and descriptor success do not prove actual running bytes or application/data compatibility</td>
+</tr>
+</tbody>
+</table>
+<p>The kubeclaw image helper chooses a supplied digest before a development tag.
+That fallback does not bypass production receipt admission. Prism requires
+repository plus digest; Ops requires immutable image strings. An overlay must
+not remove/replace a selected slot, introduce another unselected first-party
+image, disable a required bundle or change its selected identity. This is not
+an approval of every external image or arbitrary private settings.</p>
+<p><strong>Source — source verification, promotion and selected-render boundary:</strong>
+<a href="../../../.github/workflows/build-images.yaml#L63-L105">runtime push, limited post-push checks and immutable receipt</a> (<code>.github/workflows/build-images.yaml:63-105</code>, current-checkout SHA-256 <code>8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d</code>). <a href="../../../scripts/updates/verify-release-source.mjs#L31-L48">successful source run/attempt and persistent receipt equality</a> (<code>scripts/updates/verify-release-source.mjs:31-48</code>, current-checkout SHA-256 <code>498f7e2d08546f1587d70c5e256ae17129dda1e10172abac5f949f2fc90e91b3</code>). <a href="../../../.github/workflows/promote-runtime.yaml#L84-L113">manual PR and conditional automatic deployment after merge</a> (<code>.github/workflows/promote-runtime.yaml:84-113</code>, current-checkout SHA-256 <code>22867f17cf940d7b1137068e308d3b8216714d8da37dff1fd257eb8664f69981</code>). <a href="../../../.github/workflows/auto-promote-runtime.yaml#L13-L41">enabled successful-source automatic path</a> (<code>.github/workflows/auto-promote-runtime.yaml:13-41</code>, current-checkout SHA-256 <code>e233296becb27f3da4f188298e397e487952f89f02639d04ef114e4968ced0e9</code>). <a href="../../../.github/workflows/auto-promote-runtime.yaml#L42-L61">automatic materialization/export/main push</a> (<code>.github/workflows/auto-promote-runtime.yaml:42-61</code>, current-checkout SHA-256 <code>e233296becb27f3da4f188298e397e487952f89f02639d04ef114e4968ced0e9</code>). <a href="../../../scripts/updates/materialize-release.mjs#L5-L42">materialize selected images/bundles and compare/write values</a> (<code>scripts/updates/materialize-release.mjs:5-42</code>, current-checkout SHA-256 <code>8d7fab9533226d6c5d568daaab2f16b60f6e72b185213a636609e9c530854f8b</code>). <a href="../../../scripts/updates/deployment-release.mjs#L89-L112">selected bundle controls</a> (<code>scripts/updates/deployment-release.mjs:89-112</code>, current-checkout SHA-256 <code>87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3</code>). <a href="../../../scripts/updates/deployment-release.mjs#L115-L132">selected images cannot change/disappear</a> (<code>scripts/updates/deployment-release.mjs:115-132</code>, current-checkout SHA-256 <code>87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3</code>). <a href="../../../scripts/updates/deployment-release.mjs#L157-L197">per-overlay validation and native render inputs</a> (<code>scripts/updates/deployment-release.mjs:157-197</code>, current-checkout SHA-256 <code>87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3</code>). <a href="../../../charts/kubeclaw/templates/_helpers.tpl#L131-L141">digest priority and development tag fallback</a> (<code>charts/kubeclaw/templates/_helpers.tpl:131-141</code>, current-checkout SHA-256 <code>69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103</code>).</p>
+<p>Runtime published-artifact checks are not uniform across all slots: the
+workflow invokes its exact published check for four selected runtime images.
+Other helper branches and Ops scan/smoke/publication have different scopes.
+Local PR proof images are loaded without push. None of those source-declared
+steps is reported as executed by this page.</p>
+<h2 id="descriptor-inspection-useful-bounded-not-a-running-container-verdict">Descriptor inspection: useful, bounded, not a running-container verdict</h2>
+<p>Only after the existing release/maintenance prerequisites are met may the
+source inspector be selected. It needs the repository working directory,
+accepted selection/source bytes, actual Node/dependency/tool/Git context,
+explicit platform, approved GHCR access and, when selected, a protected bearer
+token file. GHCR is GitHub Container Registry. Do not print or copy token contents.</p>
+<p><strong>CLI syntax only, not a ready-to-run example or an executed command:</strong></p>
+<pre><code class="language-text">node scripts/updates/inspect-release-image.mjs &lt;runtime|ops&gt; &lt;image-slot&gt; &lt;os/architecture[/variant]&gt; [registry-bearer-token-file]
+</code></pre>
+<p><code>selectedRelease</code> can launch materialization <code>--check</code>; the inspector can read
+the token file and make bounded registry requests. It is not a new offline,
+write-free inspection tool. Before use, follow the existing
+<a href="../use/maintenance.html#acquire-a-reviewed-runtime-selection">release acquisition procedure</a>
+with the accepted selection and original source checkout. Its required tools
+and dependencies, explicit platform, and approved registry/token-file access
+must be available; stop if a prerequisite is missing.</p>
+<p>The resolver hashes raw bytes and checks descriptor size/media type before
+interpreting the selected relationship. If the root is an index it requires
+exactly one matching platform child; missing/duplicate choices and nested
+indexes fail rather than selecting the first child. It then validates the
+manifest/config platform and rootfs/layer descriptor relations. It does <strong>not</strong>
+fetch or verify layer bytes, run a container, prove active code or authenticate
+signed build provenance. Signed-blob redirects are bounded and constrained;
+registry authorization is not forwarded to the signed blob host.</p>
+<p>Its output retains <code>scope: descriptor-relationships-only</code> and these distinct
+false flags: <code>layersVerified: false</code>, <code>runningContainerVerified: false</code>,
+<code>activeBundleVerified: false</code>. Do not turn a successful descriptor result into
+any of those claims. An index digest, selected platform manifest, configuration
+digest and runtime-specific Pod image ID require their actual relationship,
+not a universal string-equality test.</p>
+<p><strong>Source — actual inspector and descriptor/transport limits:</strong>
+<a href="../../../scripts/updates/inspect-release-image.mjs#L7-L20">inspector syntax, selected slot and three false flags</a> (<code>scripts/updates/inspect-release-image.mjs:7-20</code>, current-checkout SHA-256 <code>5bff13e7bb6dd44af029a80fa92ca3b46c0c35ff41f9ff3b8479f4d23b702a7c</code>). <a href="../../../scripts/updates/oci-image-identity.mjs#L19-L29">raw descriptor size/digest/JSON checks</a> (<code>scripts/updates/oci-image-identity.mjs:19-29</code>, current-checkout SHA-256 <code>779177e1dc60e1674c37a1ed06b595e46ff22fd81b1364354d4b5b4cf512b7f8</code>). <a href="../../../scripts/updates/oci-image-identity.mjs#L44-L54">unique platform manifest and nested-index denial</a> (<code>scripts/updates/oci-image-identity.mjs:44-54</code>, current-checkout SHA-256 <code>779177e1dc60e1674c37a1ed06b595e46ff22fd81b1364354d4b5b4cf512b7f8</code>). <a href="../../../scripts/updates/oci-image-identity.mjs#L57-L81">config/rootfs/layer descriptor shape</a> (<code>scripts/updates/oci-image-identity.mjs:57-81</code>, current-checkout SHA-256 <code>779177e1dc60e1674c37a1ed06b595e46ff22fd81b1364354d4b5b4cf512b7f8</code>). <a href="../../../scripts/updates/oci-image-identity.mjs#L84-L106">resolveOciImageIdentity result identities</a> (<code>scripts/updates/oci-image-identity.mjs:84-106</code>, current-checkout SHA-256 <code>779177e1dc60e1674c37a1ed06b595e46ff22fd81b1364354d4b5b4cf512b7f8</code>). <a href="../../../scripts/updates/ghcr-descriptor-reader.mjs#L29-L41">bounded signed-blob redirects without auth forwarding</a> (<code>scripts/updates/ghcr-descriptor-reader.mjs:29-41</code>, current-checkout SHA-256 <code>71b023232c2a995a64264bae1f48cfab03c4cea45b50acfce24e9c630c7ee1cd</code>). <a href="../../../scripts/updates/ghcr-descriptor-reader.mjs#L44-L88">GHCR token/scope/size/timeout and network effects</a> (<code>scripts/updates/ghcr-descriptor-reader.mjs:44-88</code>, current-checkout SHA-256 <code>71b023232c2a995a64264bae1f48cfab03c4cea45b50acfce24e9c630c7ee1cd</code>).</p>
+<h2 id="failure-change-and-safe-recovery">Failure, change and safe recovery</h2>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Meaning / impact</th>
+<th>First safe action and stop rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime receipt/values absent</td>
+<td>Selected-release/render/install route cannot establish authority</td>
+<td>Stop before mutation; release owner follows the existing maintenance acquisition path. No latest/private-tag/ad-hoc receipt workaround</td>
+</tr>
+<tr>
+<td>Wrong source/run/attempt/assets or incomplete family</td>
+<td>Verification rejects even if some build/published artifacts already exist</td>
+<td>Preserve first failed step and identities; release owner reconciles the original run instead of blindly rebuilding or redispatching</td>
+</tr>
+<tr>
+<td>Source chart/value bytes or generated values drift</td>
+<td>Accepted selection and checkout no longer agree</td>
+<td>Stop; use the documented disposable repair/current accepted checkout procedure. Do not silently regenerate installation inputs</td>
+</tr>
+<tr>
+<td>Overlay changes selected slot/bundle controls</td>
+<td>Rendered workload would differ from selection</td>
+<td>Correct only the owning source/selection; do not widen allowlists or disable required bundles</td>
+</tr>
+<tr>
+<td><code>OCI_*</code> digest/size/media/platform failure</td>
+<td>Requested descriptor relation is invalid or ambiguous</td>
+<td>Preserve exact reference/platform/status. Registry/release owner investigates; do not try another image/platform merely to pass</td>
+</tr>
+<tr>
+<td>Registry auth/HTTP/timeout/redirect failure</td>
+<td>Access or bounded acquisition failed, not proof the image is bad or running</td>
+<td>Correct the approved read identity/access path; retain non-secret status. Do not publish bearer tokens</td>
+</tr>
+<tr>
+<td><code>ImagePullBackOff</code></td>
+<td>Desired workload could not complete its pull/start path</td>
+<td>Use existing install/diagnosis for registry availability/credentials and node platform; retain Pod/container identity instead of swapping the digest</td>
+</tr>
+<tr>
+<td>Code source differs in image inputs</td>
+<td><code>CODE_RELEASE_REQUIRES_NEW_IMAGES</code> blocks mixing incompatible image/code</td>
+<td>Obtain a new qualified image selection; do not mislabel code or image source commit</td>
+</tr>
+<tr>
+<td>Rollback after data/schema writes</td>
+<td>Old selection can be unavailable or incompatible with new state</td>
+<td>Check retained image/bundle availability and original data/application compatibility before merge. Image rollback is not database restore</td>
+</tr>
+</tbody>
+</table>
+<p>The rollback source chooses an earlier <strong>different</strong> first-parent deployment
+selection or a guarded explicit ancestor. It does not call it known healthy.
+It checks scope and retained bundle bytes, then proposes selected receipts,
+values and GitOps changes; it is not a source revert, data restore or guarantee
+that resources retained with <code>prune=false</code> revert. Record selection, image and
+code source commits independently and follow the existing
+<a href="../use/recovery.html#rollback-boundary">rollback boundary</a>.</p>
+<p><strong>Source — retained-selection rollback limits:</strong>
+<a href="../../../scripts/gitops-rollback.mjs#L14-L28">earlier different selection, never known healthy</a> (<code>scripts/gitops-rollback.mjs:14-28</code>, current-checkout SHA-256 <code>cb99e161b264852a620710b73dbbc4f3162d1abb78e8ff36be741889e667b958</code>). <a href="../../../scripts/gitops-rollback.mjs#L31-L50">scope/history and retained bundle-byte checks</a> (<code>scripts/gitops-rollback.mjs:31-50</code>, current-checkout SHA-256 <code>cb99e161b264852a620710b73dbbc4f3162d1abb78e8ff36be741889e667b958</code>). <a href="../../../.github/workflows/rollback-runtime.yaml#L32-L64">rollback proposal and provenance, not rebuild or data restore</a> (<code>.github/workflows/rollback-runtime.yaml:32-64</code>, current-checkout SHA-256 <code>be392f5c8fbe2261c0273d6a88dd054e0a72b4cc61ecca39f6979f0c2428b0e8</code>). <a href="../../../docs/site/use/recovery.html#rollback-boundary">data-write rollback boundary</a> (<code>docs/site/use/recovery.md:1072-1082</code>, current-checkout SHA-256 <code>944988014bbfecd79138d2180f47631218ecea38efef9ae4bc3239e4e76a1a52</code>).</p>
+<h2 id="coverage-and-follow-up-evidence">Coverage and follow-up evidence</h2>
+<p>This reference covers the two named workflow families, twelve first-party
+slots, three bundle roles and their selected source/receipt/render/descriptor
+readers. It does not inventory every upstream chart, external image,
+extra-container override, pipeline/provider build, sandbox/native-host image,
+registry mirror or dynamically produced image. Conditional supported routes
+still need an owning source and operational evidence; absence here is not an
+exclusion or permission to substitute them.</p>
+<p>Actual builder platform, remote run/assets, provenance signatures, layer bytes,
+current cluster/Pod/CRI relations, active bundle and original application/data
+behavior were not observed. Current local Ops data is not remotely reverified;
+runtime selection remains absent. The new manuscript does not repair an older
+generic imageID comparison into a universal OCI normalization algorithm.</p>
+<p>Keep source changes connected to the existing maintenance and reader ownership
+routes. Slot/role/recipe removal or rename must update consumers and links;
+a stored hash or a complete-looking table is not add/change/remove drift proof.
+The current page generators do not make this authored reference an image
+inventory generator. No build, scan, OCI inspection, workflow, Helm render,
+registry/network call, container, deployment or rollback ran here.</p>
+</main></body></html>

@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/pipeline-platform.html"></head><body><main>
+<h1 id="pipeline-platform-configuration">Pipeline Platform Configuration</h1>
+<p>Status: current configuration reference
+Audience: platform operator, pipeline operator, plugin author
+Owner: plugin runtime and Nova Core
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.schema.json">skills/common/plugin-runtime/foundation/config/platform.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.ts">skills/common/plugin-runtime/foundation/config/platform.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-runtime.ts">skills/nova/core/execution/engine-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-admin.ts">skills/nova/core/execution/engine-admin.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-snapshots.ts">skills/nova/core/execution/engine-snapshots.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-run.ts">skills/nova/core/execution/engine-run.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/lifecycle/wait-request.ts">skills/nova/core/lifecycle/wait-request.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/capabilities.ts">skills/common/plugin-runtime/foundation/registry/capabilities.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/configuration.ts">skills/common/plugin-runtime/foundation/registry/configuration.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/activation.ts">skills/common/plugin-runtime/foundation/registry/activation.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/discovery.ts">skills/common/plugin-runtime/foundation/registry/discovery.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/digest.ts">skills/common/plugin-runtime/foundation/registry/digest.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts">skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/isolation/runner.ts">skills/common/plugin-runtime/foundation/isolation/runner.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/isolation/cgroup.ts">skills/common/plugin-runtime/foundation/isolation/cgroup.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/adapter-startup.ts">skills/nova/core/execution/adapter-startup.ts</a>
+Applies to: <code>pipeline-platform.v2</code>
+Last verified: 2026-10-10 at source revision <code>94fd165ae8177ec37bb16798bfed63cb8923f413</code></p>
+<h2 id="purpose-and-authority">Purpose and authority</h2>
+<p>The platform document is the operator-owned trust and runtime boundary for a
+pipeline process. It tells Nova where plugin packages may be discovered, which
+external bytes are trusted, which registrations receive capabilities, which
+adapters and observers start, and where durable run state is stored. A project
+or pipeline definition cannot add any of these authorities.</p>
+<p>Pass this file with <code>--platform</code>. The loader validates a closed JSON object,
+resolves its path fields, freezes the resulting object, and returns no
+partially valid configuration.</p>
+<h2 id="complete-field-reference">Complete field reference</h2>
+<p>All top-level fields are required except <code>isolation</code> and <code>effectLockTtlMs</code>.
+Unknown fields are invalid. An empty string is invalid wherever this table says
+“non-empty.” JSON has no comments, environment substitution, or secret
+interpolation at this boundary.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type and constraints</th>
+<th>Default or empty value</th>
+<th>Consumer and effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exact string <code>pipeline-platform.v2</code></td>
+<td>No default</td>
+<td>Platform loader selects this contract.</td>
+</tr>
+<tr>
+<td><code>installationRoots</code></td>
+<td>Array of at least one unique, non-empty path string</td>
+<td>No default; <code>[]</code> is invalid</td>
+<td>Discovery searches direct package children of each canonical root. Missing roots and canonical aliases stop discovery; see <a href="#path-resolution">Path resolution</a>.</td>
+</tr>
+<tr>
+<td><code>trustedBuiltinRoots</code></td>
+<td>Array of at least one unique, non-empty path string</td>
+<td>No default; <code>[]</code> is invalid</td>
+<td>Discovery gives packages below these canonical roots built-in trust before checking either external map. These roots grant host-process execution authority; see <a href="#external-trust-and-execution">External trust and execution</a>.</td>
+</tr>
+<tr>
+<td><code>externalTrust</code></td>
+<td>Closed object; see below</td>
+<td>No default</td>
+<td>Discovery admits approved external package bytes with <code>isolated_external</code> trust scope. Approval does not establish execution readiness; see <a href="#external-trust-and-execution">External trust and execution</a>.</td>
+</tr>
+<tr>
+<td><code>providers</code></td>
+<td>Object from capability name to non-empty adapter registration ID</td>
+<td><code>{}</code> is structurally valid; every required capability still needs an explicit selection</td>
+<td>Every entry must name a <a href="capabilities.html#nova-grant-vocabulary">known Nova capability</a> and an installed adapter that declares it, including unused entries. Only required capabilities select and enable their providers. A mapping alone does not start an adapter; see <a href="#adapter-selection-and-validation">Adapter selection and validation</a>.</td>
+</tr>
+<tr>
+<td><code>grants</code></td>
+<td>Three-level JSON object: registration ID → capability → resource policy object</td>
+<td><code>{}</code> is structurally valid</td>
+<td>The grant envelope is open; the consumer requires the exact closed constraints for each <a href="capabilities.html#nova-grant-vocabulary">Nova capability</a>. Missing, unrequested, disabled-registration, and invalid grants stop resolution. Follow the <a href="../understand/plugin-runtime.html#capabilities-and-grants">canonical grant validation rules</a> and <a href="#adapter-selection-and-validation">disablement conditions</a>.</td>
+</tr>
+<tr>
+<td><code>adapters</code></td>
+<td>Object from adapter registration ID to its JSON configuration object</td>
+<td><code>{}</code> is valid</td>
+<td>Every configured ID must exist. The runtime checks configuration against the installed schema for enabled adapters; invalid disabled configuration can remain undetected until activation.</td>
+</tr>
+<tr>
+<td><code>activeAdapters</code></td>
+<td>Unique array of non-empty registration IDs</td>
+<td><code>[]</code> is valid</td>
+<td>Lists adapters to enable directly. Required capability providers and their dependencies are also enabled. Supplying configuration in <code>adapters</code> alone does not enable one.</td>
+</tr>
+<tr>
+<td><code>observers</code></td>
+<td>Object from observer registration ID to its JSON configuration object</td>
+<td><code>{}</code> is valid</td>
+<td>Every keyed observer is enabled, schema-checked, and used for event delivery.</td>
+</tr>
+<tr>
+<td><code>isolation</code></td>
+<td>Optional closed object <code>{cgroupRoot}</code>; <code>cgroupRoot</code> is non-empty</td>
+<td>Omission is schema-valid; it supplies no cgroup root</td>
+<td>External stage and observer invocation requires a delegated cgroup-v2 subtree at this resolved root. Omission fails the cgroup consumer with <code>ISOLATION_CGROUP_REQUIRED</code>; see <a href="#external-trust-and-execution">External trust and execution</a>.</td>
+</tr>
+<tr>
+<td><code>storageRoot</code></td>
+<td>Non-empty path string</td>
+<td>No default</td>
+<td>Nova stores run snapshots, journals, effect locks, and observer records below this resolved root.</td>
+</tr>
+<tr>
+<td><code>shutdownTimeoutMs</code></td>
+<td>Schema: integer ≥ 1, without a maximum. Operational Node timer range: 1–2,147,483,647 ms.</td>
+<td>No default</td>
+<td>Adapter wait, shutdown, and cleanup paths capture this duration. Node converts larger values to a 1 ms delay. Stop before consumer recreation on overflow; see <a href="configuration-change-impact.html#timer-range-and-stop-condition">timer range and cleanup limits</a>. A deadline does not prove that adapter work stopped.</td>
+</tr>
+<tr>
+<td><code>effectLockTtlMs</code></td>
+<td>Optional integer from 60,000 through 86,400,000</td>
+<td>If absent, the effect coordinator uses 300,000 ms</td>
+<td>Controls expiry of resource-effect locks. A larger value reduces premature reuse but delays recovery from an abandoned lock.</td>
+</tr>
+<tr>
+<td><code>orchestratorIssuerId</code></td>
+<td>Non-empty string</td>
+<td>No default</td>
+<td>Sets the orchestrator identity in governed waits. Matching this identity does not authenticate the caller; see <a href="#issuer-policy-and-recorded-decisions">Issuer policy and recorded decisions</a>.</td>
+</tr>
+<tr>
+<td><code>administrativeDecisionIssuers</code></td>
+<td>Unique array of closed <code>{type,id}</code> objects; <code>type</code> is <code>operator</code> or <code>administrator</code>; <code>id</code> is non-empty</td>
+<td><code>[]</code> is structurally valid</td>
+<td>Core checks new administrative decisions against these identities after authenticating the actor. An exact recorded decision follows a separate replay path; see <a href="#issuer-policy-and-recorded-decisions">Issuer policy and recorded decisions</a>.</td>
+</tr>
+</tbody>
+</table>
+<p><code>externalTrust</code> has exactly these required fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type and constraints</th>
+<th>Empty meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowedSourceDigests</code></td>
+<td>Object keyed by <code>local:&lt;canonical package root&gt;</code> with a non-empty, unique array of package content digests; each digest is <code>sha256:</code> plus 64 lowercase hexadecimal characters</td>
+<td><code>{}</code> approves no source digest. Each array must contain at least one digest. The runtime requires the exact source key even though the schema accepts other key strings.</td>
+</tr>
+<tr>
+<td><code>verifiedAttestations</code></td>
+<td>Object from package content digest to approved attestation digest; each key and value is <code>sha256:</code> plus 64 lowercase hexadecimal characters</td>
+<td><code>{}</code> supplies no attestation mapping. Discovery looks up an operator-approved value; it does not verify a newly supplied attestation or publisher signature.</td>
+</tr>
+</tbody>
+</table>
+<p>The schema constrains the two digest maps but does not establish who approved a
+digest. The operator must obtain these values through the deployment's trust
+process.</p>
+<h2 id="external-trust-and-execution">External trust and execution</h2>
+<p>Discovery uses the exact source reference <code>local:&lt;canonical package root&gt;</code>.
+The root is the package directory after <code>realpath</code>, not its installation root,
+package ID, registration ID, or publisher name. For example, the canonical
+package root <code>/opt/nova/plugins/example</code> needs the key
+<code>local:/opt/nova/plugins/example</code>.
+Relocating it changes this key even if its bytes remain unchanged. Check and
+approve the new location before changing the policy.</p>
+<p>A package content digest covers every regular file in its tree, including
+<code>plugin.json</code>. The files are sorted by relative path. For each file, SHA-256
+receives the relative path's byte length, the relative path, and the file byte
+length, separated by colons with a final colon, followed by the file bytes.
+Package symlinks are rejected. A file rename or byte change therefore changes
+the digest; an unchanged tree at a different root retains its content digest.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/digest.ts#L6-L27"><code>computePackageDigest</code></a>
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/discovery.ts#L119-L136">canonical package root before trust lookup</a>.</p>
+<p>Discovery checks trust in this order:</p>
+<ol>
+<li>A package below a <code>trustedBuiltinRoots</code> root receives <code>trusted_first_party</code>
+scope. This decision bypasses both external maps.</li>
+<li>Otherwise, its content digest must occur in <code>allowedSourceDigests</code> under
+the exact <code>local:</code> source reference. A match receives <code>isolated_external</code>
+scope and <code>source_digest_allowlist</code> evidence.</li>
+<li>Otherwise, discovery looks up the content digest in <code>verifiedAttestations</code>.
+A match receives <code>isolated_external</code> scope and <code>publisher_attestation</code>
+evidence. This lookup does not perform cryptographic attestation verification.</li>
+<li>If neither external map matches, discovery stops with
+<code>REGISTRY_PACKAGE_UNTRUSTED</code>. Obtain approval for the exact source and bytes
+through the deployment's trust process before preparing the runtime again.</li>
+</ol>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/discovery.ts#L77-L103"><code>trustedProvenance</code> lookup order and scopes</a>.</p>
+<p>Trust admission permits the package to enter the registry. It does not make
+all its registrations executable. An enabled external adapter still fails
+activation with <code>REGISTRY_ACTIVATION_FAILED</code>: the persistent isolated adapter
+runtime is not available. Plugin-runtime maintainers own this limit. Support
+requires a persistent isolated host that implements and verifies adapter
+startup, readiness, dependency calls, cleanup, and shutdown under isolation.
+See the <a href="../understand/plugin-runtime.html#activation-is-fail-closed">canonical activation boundary</a>.</p>
+<p>For an external stage or observer, preparation creates an invocation wrapper.
+Actual invocation requires a bounded plugin context and a delegated cgroup-v2
+root supplied through <code>isolation.cgroupRoot</code>. A bounded context contains the
+host's invocation contract, resource limits, and capability-call interface.
+An absent root fails with <code>ISOLATION_CGROUP_REQUIRED</code> at cgroup creation even
+though the platform schema allows <code>isolation</code> to be omitted. Successful
+preparation does not prove that the host can invoke the wrapper. Check the
+<a href="../understand/plugin-runtime.html#isolation-for-external-stages-and-observers">native launcher and host-kernel prerequisites</a>
+before invocation.</p>
+<p>Stop if these execution conditions are unavailable. Do not add external code
+to <code>trustedBuiltinRoots</code> or import it directly to bypass isolation.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/activation.ts#L55-L86">external adapter rejection and bounded-context wrapper</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/isolation/runner.ts#L29-L40">invocation-time cgroup creation</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L18-L25">required root and delegation checks</a>.</p>
+<h2 id="adapter-selection-and-validation">Adapter selection and validation</h2>
+<p>Nova first enables the graph's stage owners, the configured observers, and
+the IDs in <code>activeAdapters</code>. It then selects the provider of each capability
+required by an enabled registration. Those providers can require other
+providers. Resolution continues until no further registration is added.
+Only required selections enter the effective provider set. The resolver also
+validates every entry in <code>providers</code>, including an unused entry: the capability
+must be known and the adapter must be installed and declare it. A valid unused
+mapping does not enable or start that adapter. For a required capability,
+selection is explicit even if only one installed adapter can provide it.</p>
+<p>Without a mapping, multiple candidates produce
+<code>REGISTRY_CAPABILITY_PROVIDER_AMBIGUOUS</code>; zero or one candidate produces
+<code>REGISTRY_CAPABILITY_PROVIDER_MISSING</code>. A mapping to a missing adapter or one
+that does not declare the capability produces
+<code>REGISTRY_CAPABILITY_PROVIDER_INVALID</code>. An unknown capability key produces
+<code>REGISTRY_CAPABILITY_UNKNOWN</code>. See <a href="../understand/plugin-runtime.html#selection-is-separate-from-installation">canonical provider selection</a>.</p>
+<p>The final enabled set determines which built-in adapters load and start.
+Enabled external adapters fail at the <a href="#external-trust-and-execution">external activation boundary</a>.
+An empty <code>activeAdapters</code> list therefore does not guarantee that no adapter
+will start: a stage or observer can require a provider adapter.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L94">all-entry provider validation</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L96-L118">missing, ambiguous, and invalid selection</a>.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-runtime.ts#L44-L50">initial enabled registrations</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L149-L159">recursive provider selection</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/activation.ts#L129-L136">loading enabled adapters</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/adapter-startup.ts#L25-L31">starting enabled adapters</a>.</p>
+<p>Configuration validation has two boundaries. Every key in <code>adapters</code> and
+<code>observers</code> must name a known registration. Schema validation then applies to
+enabled registrations, using their supplied configuration or <code>{}</code> when absent.
+These checks do not insert schema defaults. In the platform path, every
+configured observer is initially enabled. An
+adapter can remain disabled, so successful preparation does not prove that its
+stored configuration satisfies its schema. A later graph, provider, or
+<code>activeAdapters</code> change can enable it and expose that invalid value.</p>
+<p>Before changing adapter selection, validate the configuration for the resulting
+enabled set. Stop on <code>REGISTRY_RESULT_INVALID</code>; correct the rejected value
+against that adapter's installed schema before activation. Removing the ID
+from <code>activeAdapters</code> does not disable it if another enabled registration still
+requires it as a provider.</p>
+<p>Grant validation follows that final enabled set. Every required capability
+needs a grant. A grant for an unrequested capability fails with
+<code>REGISTRY_CAPABILITY_UNREQUESTED</code>. Any <code>grants</code> entry for a disabled registration
+fails with the same code, even if that entry is <code>{}</code>. The open grant policy
+object does not relax the capability's closed shape: the consumer requires
+exact constraint keys and non-empty, unique lists of non-empty strings, plus
+the applicable path, prefix, or origin rules. Invalid constraints fail with
+<code>REGISTRY_CAPABILITY_CONSTRAINT_INVALID</code>.</p>
+<p>Use the <a href="capabilities.html#nova-grant-vocabulary">capability catalogue</a> for the
+required lists and the <a href="../understand/plugin-runtime.html#capabilities-and-grants">canonical grant rules</a>
+for validation and resource matching. To disable an adapter, first remove every
+selection path through the graph, observers, <code>activeAdapters</code>, and required
+providers. Remove its grant entry when it is actually disabled. If another
+enabled registration still needs it, removing its grant can instead deny a
+required capability. Disablement does not remove package bytes or durable data;
+follow the <a href="../understand/plugin-runtime.html#replacement-disablement-and-removal">replacement, disablement, and removal boundary</a>.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L163-L201">required, unrequested, and disabled grant checks</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L128-L167">closed constraint lists and canonical value checks</a>.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/schema.ts#L95-L108">validation without defaults</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/configuration.ts#L51-L63">known registration IDs</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/configuration.ts#L65-L81">enabled configuration validation</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-runtime.ts#L34-L41">preparation with resolved providers</a>.</p>
+<h2 id="path-resolution">Path resolution</h2>
+<p>The loader obtains the real path of the platform file. It resolves every
+relative value in <code>installationRoots</code>, <code>trustedBuiltinRoots</code>, <code>storageRoot</code>,
+and <code>isolation.cgroupRoot</code> from that file's directory. It does not use the
+shell working directory. Absolute paths remain absolute. The loader resolves
+symbolic links in the platform filename before selecting the base directory.</p>
+<p>This rule makes a checked configuration portable as one directory, but it also
+means that moving the file can change every relative target. Record the
+canonical file path and its digest with the run.</p>
+<p>Discovery then resolves each installation and trusted built-in root with
+<code>realpath</code> and requires it to be a directory. A missing root or non-directory
+stops preparation with <code>REGISTRY_ROOT_INVALID</code>. Distinct strings in either
+root list that resolve to the same directory stop it with
+<code>REGISTRY_PACKAGE_DUPLICATE</code>. A repeated canonical package directory also
+fails with that code. Stop before activation; correct the missing target or
+remove the alias after checking the canonical directories. Do not retain both
+an original path and a symlink to the same root in one list.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/discovery.ts#L13-L23">root existence and directory checks</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/discovery.ts#L39-L55">canonical root alias rejection</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/registry/discovery.ts#L106-L125">canonical roots and repeated package checks</a>.</p>
+<h2 id="minimal-configuration">Minimal configuration</h2>
+<p>This example is syntactically complete. It assumes that the built-in packages
+do not require an adapter, observer, provider, or grant. A graph that uses
+capabilities or configured registrations requires entries in those maps.</p>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: &quot;pipeline-platform.v2&quot;,
+  &quot;installationRoots&quot;: [&quot;./packages&quot;],
+  &quot;trustedBuiltinRoots&quot;: [&quot;./packages&quot;],
+  &quot;externalTrust&quot;: {
+    &quot;allowedSourceDigests&quot;: {},
+    &quot;verifiedAttestations&quot;: {}
+  },
+  &quot;providers&quot;: {},
+  &quot;grants&quot;: {},
+  &quot;adapters&quot;: {},
+  &quot;activeAdapters&quot;: [],
+  &quot;observers&quot;: {},
+  &quot;storageRoot&quot;: &quot;./state&quot;,
+  &quot;shutdownTimeoutMs&quot;: 30000,
+  &quot;orchestratorIssuerId&quot;: &quot;nova:primary&quot;,
+  &quot;administrativeDecisionIssuers&quot;: [
+    { &quot;type&quot;: &quot;operator&quot;, &quot;id&quot;: &quot;operator:release&quot; }
+  ]
+}
+</code></pre>
+<h2 id="configuration-and-activation-sequence">Configuration and activation sequence</h2>
+<ol>
+<li>The CLI loads and schema-validates the platform file.</li>
+<li>The loader resolves paths and freezes the result.</li>
+<li>Core validates the pipeline definition.</li>
+<li>Discovery validates canonical roots, reads direct package children only
+from <code>installationRoots</code>, and applies the ordered trust checks above.</li>
+<li>The registry maps stage types, adapters, observers, providers, and package
+provenance.</li>
+<li>Core enables the owners of all graph stages, every key in <code>observers</code>, and
+every ID in <code>activeAdapters</code>.</li>
+<li>Capability resolution validates all provider policy entries, selects the
+providers required by enabled registrations, and repeats selection for their
+dependencies. It validates grants against the final enabled set.</li>
+<li>Each configured adapter and observer ID must exist. The runtime checks each
+graph stage and each enabled adapter and observer against its registration
+schema, using supplied configuration or <code>{}</code> for absent adapter/observer
+configuration. Disabled adapter configuration can remain unchecked.</li>
+<li>Activation loads enabled built-in registrations, rejects enabled external
+adapters, and creates wrappers for enabled external stages and observers.
+The wrappers require the execution conditions above when invoked.</li>
+</ol>
+<p>This ordering is intentional. Schema-valid JSON is not enough: the installed
+package set determines whether registration IDs, stage owners, configuration
+fields, providers, and grants are valid.</p>
+<h2 id="precedence-and-change-impact">Precedence and change impact</h2>
+<p>There is no merge between two platform files. The path passed to <code>--platform</code>
+is the authority. Within that file, registration-specific configuration is
+selected by exact key. Project configuration does not override it.</p>
+<p>New runs use the loaded values. The runtime records the configured <code>providers</code>,
+<code>grants</code>, <code>adapters</code>, <code>activeAdapters</code>, <code>observers</code>, and optional <code>isolation</code>
+object. This includes unused provider mappings and disabled adapter
+configuration. It is separate from providers selected for required capabilities.
+Recovery compares this recorded subset with the newly prepared runtime. A
+difference causes <code>RECOVERY_RUNTIME_CONFIGURATION_MISMATCH</code>. This comparison
+does not include storage, trust roots/maps, timeout, TTL, or issuer fields.
+Package identities and the graph are also pinned. Use the original platform
+inputs to continue a run; use a new run identity for a changed authority set.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-runtime.ts#L34-L41">recorded configuration subset</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-snapshots.ts#L28-L40">configuration and package comparison</a>.</p>
+<p>Changing <code>storageRoot</code> points the CLI at a different run store. It does not move
+existing state. Changing package roots, trust maps, providers, grants, adapter
+configuration, observer configuration, or isolation can change executable
+authority and therefore requires a new run unless an explicit supported
+administrative package transition applies. Changing timeouts affects newly
+created runtime objects; it does not rewrite persisted events.
+Nova supplies <code>effectLockTtlMs</code> when it creates the effect coordinator.
+If the field is absent, Nova supplies the 300,000 ms default.
+The coordinator retains this duration. Editing the file does not change
+the duration in an existing coordinator.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-runtime.ts#L77-L86">platform TTL passed at coordinator creation</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/effects/coordinator.ts#L11-L31">captured TTL used for effects</a>.</p>
+<p>See <a href="configuration-precedence.html">Configuration precedence</a> and
+<a href="configuration-change-impact.html">Configuration change impact</a> for the
+cross-family rules.</p>
+<h2 id="issuer-policy-and-recorded-decisions">Issuer policy and recorded decisions</h2>
+<p><code>orchestratorIssuerId</code> supplies the ID in a governed wait's
+<code>authorizedIssuer</code>, with type <code>orchestrator</code>. Nova checks the resume signal's
+wait ID, signal type, issuer type and ID, expiry, and issue time. The issuer
+fields in that signal are unsigned and supplied by the caller. Matching them
+is not proof of identity. Protect access to signal creation and the CLI as
+explained in <a href="../use/operate.html#approve-or-resume-a-wait">Approve or resume a wait</a>.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/lifecycle/wait-request.ts#L5-L18">governed wait identity</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-snapshots.ts#L137-L144">signal validation</a>.</p>
+<p>For a new administrative decision, Core calls its authentication callback,
+requires the returned principal to equal the decision's actor, and checks that
+principal against the current <code>administrativeDecisionIssuers</code> list. A decision
+already recorded with the same decision ID or idempotency key must have the
+same canonical JSON content. Different content fails with
+<code>ADMIN_REOPEN_IDEMPOTENCY_CONFLICT</code>. An exact recorded decision skips the
+new-decision authentication and issuer-list check; other runtime, package,
+graph, and state checks still apply. Removing an issuer from the current list
+does not revoke this recorded replay path.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-admin.ts#L57-L67">recorded decision comparison and authorization</a>.</p>
+<p>Neither issuer field is included in the recorded runtime-configuration
+comparison. A successful comparison therefore does not establish that issuer
+policy is unchanged. Resume reconstructs governed waits with the supplied
+orchestrator ID. Preserve the original inputs when continuing a run; do not
+change an actor, issuer, or idempotency key to clear a denial. Stop on
+<code>WAIT_ISSUER_DENIED</code>, <code>ADMIN_REOPEN_ACTOR_MISMATCH</code>,
+<code>ADMIN_REOPEN_ISSUER_DENIED</code>, or an idempotency conflict. Have the operator
+check the original wait or recorded decision and the caller's authority before
+retrying the supported operation.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-runtime.ts#L34-L41">recorded configuration subset</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-snapshots.ts#L28-L40">configuration comparison</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-run.ts#L85-L93">wait reconstruction during resume</a>.</p>
+<h2 id="sensitive-values">Sensitive values</h2>
+<p>Do not place raw credentials in the platform file. The recorded runtime
+configuration is stored with run state without redacting its values.
+Adapter and observer configuration is part of the recovery comparison. Use the
+secret-reference field defined by the selected registration and grant only
+that registration access to the referenced secret. The platform schema cannot
+detect a credential hidden in a free-form resource policy.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-snapshots.ts#L123-L137">runtime configuration and selected providers recorded separately</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-snapshots.ts#L105-L112">snapshot serialization</a>.</p>
+<h2 id="errors-and-recovery">Errors and recovery</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Meaning</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PLATFORM_CONFIG_INVALID:&lt;path&gt;:&lt;details&gt;</code></td>
+<td>JSON did not satisfy the closed schema.</td>
+<td>Read the field path in the validation details; correct the operator-owned file before starting a run.</td>
+</tr>
+<tr>
+<td><code>PIPELINE_STAGE_OWNER_MISSING:&lt;type&gt;</code></td>
+<td>No trusted installed package owns a graph stage type.</td>
+<td>Check installation roots, trust, and the exact stage type. Do not add an arbitrary grant.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_ROOT_INVALID</code></td>
+<td>An installation or trusted root is missing or is not a directory.</td>
+<td>Stop preparation. Correct the canonical target before starting a run.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_PACKAGE_DUPLICATE</code></td>
+<td>Root aliases or repeated package discovery resolve to one canonical directory.</td>
+<td>Check real paths and remove the duplicate alias or discovery path.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_PACKAGE_UNTRUSTED</code></td>
+<td>Neither built-in membership nor an external map admits the package bytes.</td>
+<td>Obtain approval for the exact digest and <code>local:</code> source key. Do not widen built-in roots to bypass isolation.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_PROVIDER_MISSING</code>, <code>REGISTRY_CAPABILITY_PROVIDER_AMBIGUOUS</code></td>
+<td>A required capability has no explicit selection; multiple candidates produce ambiguity.</td>
+<td>Select the intended installed declaring adapter by exact ID in <code>providers</code>.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_PROVIDER_INVALID</code>, <code>REGISTRY_CAPABILITY_UNKNOWN</code></td>
+<td>A policy entry has an unknown capability, missing adapter, or adapter that does not declare it, including unused entries.</td>
+<td>Correct the entry against the capability catalogue and installed adapter declaration.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_DENIED</code></td>
+<td>An enabled registration lacks a grant for a declared requirement.</td>
+<td>Compare its declaration with the final enabled set and supply only the required bounded grant.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_UNREQUESTED</code></td>
+<td>A grant names an unrequested capability or a disabled registration, including an empty registration entry.</td>
+<td>Remove the unrequested grant; remove a registration entry only after checking actual disablement.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_CONSTRAINT_INVALID</code></td>
+<td>Capability constraints have incorrect keys, lists, or canonical values.</td>
+<td>Correct the exact shape using the <a href="capabilities.html#nova-grant-vocabulary">catalogue</a> and <a href="../understand/plugin-runtime.html#capabilities-and-grants">grant rules</a>.</td>
+</tr>
+<tr>
+<td><code>REGISTRY_ACTIVATION_FAILED</code> for external execution</td>
+<td>An enabled external adapter requires the unavailable persistent runtime, or an external wrapper lacks a bounded context.</td>
+<td>Stop at the <a href="#external-trust-and-execution">external execution boundary</a>; do not bypass isolation.</td>
+</tr>
+<tr>
+<td><code>ISOLATION_CGROUP_REQUIRED</code>, <code>ISOLATION_CGROUP_ROOT_INVALID</code>, <code>ISOLATION_CGROUP_NOT_DELEGATED</code></td>
+<td>External invocation has no root, an invalid cgroup-v2 root, or a subtree without the required delegation.</td>
+<td>Stop invocation. Have the host operator establish the <a href="../understand/plugin-runtime.html#isolation-for-external-stages-and-observers">isolation prerequisites</a>.</td>
+</tr>
+<tr>
+<td>Registration configuration error</td>
+<td>A stage, adapter, or observer value violates its own package schema.</td>
+<td>Use that registration's configuration reference. The platform envelope cannot supply registration defaults itself.</td>
+</tr>
+<tr>
+<td><code>RECOVERY_RUNTIME_CONFIGURATION_MISMATCH</code></td>
+<td>Recovery prepared a different recorded configuration subset.</td>
+<td>Restore the recorded configuration and package set. Start a new run for intentional changes.</td>
+</tr>
+</tbody>
+</table>
+<p>JSON validation does not prove that paths exist, storage is durable, endpoints
+are reachable, credentials resolve, cgroups are writable, or shutdown finishes
+within its deadline. Check these dependencies before dispatch.</p>
+<blockquote>
+<p><strong>Source evidence — schema and consumer boundary</strong></p>
+<p><strong>Claim:</strong> The platform object is closed, requires its authority fields, and resolves paths from the canonical file directory.</p>
+<p>Runtime preparation enables graph owners, configured observers, and active adapters.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69">loader and path resolution</a>; <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-runtime.ts#L29-L50">runtime preparation</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/config/platform.schema.json#L1-L53">root, installation, and trust fields</a>; <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/config/platform.schema.json#L55-L87">provider, grant, adapter, and observer fields</a></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/common/plugin-runtime/foundation/config/platform.schema.json#L88-L110">Isolation, storage, timeout, and issuer fields</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L12-L63">platform paths, TTL bound, and authority rejection</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs</code> against implementation revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code>: exit zero and <code>ok: true</code>. This is a local configuration contract check; it does not establish deployment readiness.</p>
+<p><strong>Revision:</strong> <code>94fd165ae8177ec37bb16798bfed63cb8923f413</code></p>
+<p><strong>Limit:</strong> These sources validate local configuration and package authority. They do not prove the availability of an external service.</p>
+</blockquote>
+</main></body></html>

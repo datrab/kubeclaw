@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/product-surfaces.html"></head><body><main>
+<h1 id="product-surface-map">Product Surface Map</h1>
+<p>Status: implemented inventory with stated depth limits
+Audience: reader, operator, plugin author, maintainer, documentation owner
+Owner: documentation architecture
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/package.json">package.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/package-ownership.json">packaging/runtime/package-ownership.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime">skills/common/plugin-runtime</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova">skills/nova</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker">skills/worker</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster">skills/buster</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism">skills/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts">contracts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts">charts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts">scripts</a>
+Applies to: current repository product and platform surfaces
+Last verified: source and contract inspection on 2026-09-19</p>
+<h2 id="purpose">Purpose</h2>
+<p>This map lists every public surface family that needs documentation.
+It gives each family one reading destination and one source authority.</p>
+<p>This page is a coverage map, not a replacement for the linked guides.
+A detailed page explains behavior and procedures.
+An indexed page identifies the authority while its complete reference remains unavailable.</p>
+<h2 id="coverage-labels">Coverage Labels</h2>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detailed</td>
+<td>The linked site explains the main behavior, boundary, and reader action.</td>
+</tr>
+<tr>
+<td>Partial</td>
+<td>The linked site explains useful parts, but it does not cover every field or path.</td>
+</tr>
+<tr>
+<td>Indexed</td>
+<td>This map identifies the surface and source authority. A complete reader reference is not available.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="control-and-execution">Control And Execution</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-CTL-01</td>
+<td>Product purpose and system boundary</td>
+<td><a href="understand/README.html">Architecture entry</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles">Runtime roles</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CTL-02</td>
+<td>Project compiler and project input</td>
+<td><a href="understand/nova-core.html#1-project-admission-and-compilation">Nova Core</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/compiler.ts">Project compiler</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CTL-03</td>
+<td>Nova Core lifecycle and scheduling</td>
+<td><a href="understand/nova-core.html">Nova Core</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core">Nova Core</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CTL-04</td>
+<td>Plugin discovery, grants, activation, and isolation</td>
+<td><a href="understand/plugin-runtime.html">Plugin Runtime</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime">Plugin runtime</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CTL-05</td>
+<td>Worker Core admission and attempt execution</td>
+<td><a href="understand/worker-core.html">Worker Core</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core">Worker Core</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CTL-06</td>
+<td>Runtime roles and package ownership</td>
+<td><a href="understand/deployment-and-trust.html">Deployment and trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json">Package ownership</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-CTL-07</td>
+<td>Request, state, retry, wait, and recovery</td>
+<td><a href="understand/request-state-recovery.html">Request, state, and recovery</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/execution">Nova execution</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="specialists-and-quality-gates">Specialists And Quality Gates</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-SPC-01</td>
+<td>Forge implementation work</td>
+<td><a href="understand/forge.html">Forge</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent">Implementation agent</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SPC-02</td>
+<td>Echo analysis and findings</td>
+<td><a href="understand/echo.html">Echo</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/review">Review plugin</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SPC-03</td>
+<td>Prism design, approval, and publication</td>
+<td><a href="understand/prism.html">Prism</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism">Prism</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SPC-04</td>
+<td>Buster test-plan execution and result import</td>
+<td><a href="understand/buster.html">Buster architecture</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine">Buster Engine</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SPC-05</td>
+<td>Twelve Buster suite definitions</td>
+<td><a href="reference/buster-suites.html">Buster suite reference</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites">Suite contracts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SPC-06</td>
+<td>Lint policy, tools, rules, baselines, and waivers</td>
+<td><a href="reference/lint-policy.html">Lint policy</a> and <a href="extend/lint.html">extension guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint">Lint plugin</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration-and-policy">Configuration And Policy</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-CFG-01</td>
+<td>Project input and compiled graph</td>
+<td><a href="reference/nova-project.html">Nova project</a> and <a href="reference/pipeline-json.html">project test pipeline</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/compiler.ts">Project compiler</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CFG-02</td>
+<td>Explicit pipeline graph</td>
+<td><a href="reference/pipeline-definition.html">Pipeline definition</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">Pipeline schema</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CFG-03</td>
+<td>Platform installation, trust, grants, and adapters</td>
+<td><a href="reference/pipeline-platform.html">Pipeline platform</a> and <a href="use/operate.html#configure-the-platform">operation procedure</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/config/platform.schema.json">Platform schema</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CFG-04</td>
+<td>Plugin and host configuration</td>
+<td><a href="reference/host-and-prism-configuration.html">Host and Prism configuration</a>, <a href="use/plugins.html">plugin operation</a>, and <a href="extend/plugin-catalogue/README.html">plugin catalogue</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills">Installed manifests</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CFG-05</td>
+<td>Worker profiles and runtime role membership</td>
+<td><a href="reference/worker-profiles-and-roles.html">Worker profiles and roles</a> and <a href="understand/deployment-and-trust.html">deployment trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles">Role manifests</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CFG-06</td>
+<td>Helm, GitOps, and deployment values</td>
+<td><a href="reference/helm-values.html">Helm values</a>, <a href="reference/configuration-precedence.html">precedence</a>, and <a href="reference/configuration-change-impact.html">change impact</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/charts">Charts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-CFG-07</td>
+<td>Environment variables and secret references</td>
+<td><a href="reference/environment-variables.html">Environment variables</a> and <a href="reference/secrets.html">Secrets</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts">Deployment scripts</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-CFG-08</td>
+<td>Quality, security, approval, and retention policy</td>
+<td><a href="decisions/README.html">Decisions</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts">Contracts and configuration</a></td>
+<td>Indexed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-interfaces-and-records">Public Interfaces And Records</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-API-01</td>
+<td>Command-line entry points and flags</td>
+<td><a href="reference/cli.html">CLI commands</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/package.json">Package commands</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-API-02</td>
+<td>Public plugin SDK types and helpers</td>
+<td><a href="extend/contracts.html">Extension contracts</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/sdk">Plugin SDK</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-API-03</td>
+<td>Schemas, constraints, defaults, and versions</td>
+<td><a href="reference/README.html">Reference</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts">Contract schemas</a></td>
+<td>Indexed</td>
+</tr>
+<tr>
+<td>SUR-API-04</td>
+<td>Events, payloads, ordering, and correlation</td>
+<td><a href="understand/telemetry.html">Telemetry</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672">Active v2 event contract</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-API-05</td>
+<td>Error codes, effects, and recovery actions</td>
+<td><a href="use/diagnose.html">Observe and Diagnose</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/errors.ts">Runtime error types</a></td>
+<td>Indexed</td>
+</tr>
+<tr>
+<td>SUR-API-06</td>
+<td>Nova grants and Buster runtime capabilities</td>
+<td><a href="reference/capabilities.html">Capability catalogue</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts">Capability vocabulary</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-API-07</td>
+<td>Internal and external communication protocols</td>
+<td><a href="understand/communication.html">Communication</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts">Runtime contracts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-API-08</td>
+<td>Durable stores, paths, retention, and cleanup</td>
+<td><a href="understand/data-and-state.html">Data and state</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins">State adapters</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-API-09</td>
+<td>Ports, endpoints, callers, and network exposure</td>
+<td><a href="understand/communication.html#endpoint-catalogue">Communication endpoint catalogue</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts">Deployment charts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-API-10</td>
+<td>Images, versions, digests, and promotion</td>
+<td><a href="use/install.html">Plan and Install</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/.github/workflows/build-images.yaml">Image build workflow</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-API-11</td>
+<td>Verification commands and automation workflows</td>
+<td><a href="reference/verification-commands.html">Verification commands</a> and <a href="reference/workflows.html">Workflow inventory</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/tests/verification">Verification scripts</a></td>
+<td>Partial</td>
+</tr>
+</tbody>
+</table>
+<h2 id="communication-data-and-telemetry">Communication, Data, And Telemetry</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-COM-01</td>
+<td>Nova dispatch to Buster, Prism, Forge, and Echo</td>
+<td><a href="understand/communication.html#complete-connection-matrix">Communication</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins">Nova plugins</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-COM-02</td>
+<td>Core calls to stages, adapters, and observers</td>
+<td><a href="understand/plugin-runtime.html">Plugin Runtime</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime">Plugin runtime</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-COM-03</td>
+<td>Worker control channel and native process communication</td>
+<td><a href="understand/worker-core.html#native-control-channel">Worker Core</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core">Worker Core</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-COM-04</td>
+<td>Redis streams, service HTTP, private routes, Git, OCI, and BuildKit paths</td>
+<td><a href="understand/communication.html">Communication</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts">Deployment charts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DAT-01</td>
+<td>Nova journals, snapshots, effects, and run roots</td>
+<td><a href="understand/data-and-state.html#nova-run-state">Data and state</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/state">Nova state</a> and <a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/effects">effects</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DAT-02</td>
+<td>Worker journals, ownership, output spools, and result seals</td>
+<td><a href="understand/data-and-state.html#worker-state">Data and state</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core">Worker Core</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DAT-03</td>
+<td>Buster plans, attempts, evidence, and reports</td>
+<td><a href="understand/data-and-state.html#buster-state">Data and state</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine">Buster Engine</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DAT-04</td>
+<td>Prism revisions, approvals, artifacts, corpus, preferences, and PostgreSQL data</td>
+<td><a href="understand/data-and-state.html#postgresql-owners">Data and state</a> and <a href="understand/prism-data.html">Prism data architecture</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/storage">Prism storage</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DAT-05</td>
+<td>LiteLLM PostgreSQL data</td>
+<td><a href="understand/data-and-state.html#litellm-postgresql">Data and state</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-deployment.yaml">LiteLLM deployment</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DAT-06</td>
+<td>Artifact identities, digests, encoding, retention, and backup groups</td>
+<td><a href="understand/data-and-state.html#artifact-lifecycle">Data and state</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/artifact-store">Artifact store</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-TEL-01</td>
+<td>Telemetry envelope, event catalogue, and correlation identity</td>
+<td><a href="understand/telemetry.html#active-event-catalog">Telemetry</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672">Active v2 SDK contract</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-TEL-02</td>
+<td>Event producers, consumers, redaction, and evidence boundary</td>
+<td><a href="understand/telemetry.html#producer-and-consumer-matrix">Telemetry</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry">Nova telemetry runtime</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-TEL-03</td>
+<td>Observer checkpoints, retries, retention, and backpressure</td>
+<td><a href="understand/telemetry.html#observer-delivery-checkpoints-and-recovery">Telemetry</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observers.ts">Observer runtime</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="security-and-trust">Security And Trust</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-SEC-01</td>
+<td>Threat model and trust boundaries</td>
+<td><a href="understand/security-and-trust.html">Security and trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/isolation">Plugin isolation</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SEC-02</td>
+<td>Human, administrative, and workload identities</td>
+<td><a href="understand/security-and-trust.html#identity-types-must-not-be-confused">Security and trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/control/session.ts">Prism session identity</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SEC-03</td>
+<td>SPIFFE attestation and mTLS</td>
+<td><a href="understand/security-and-trust.html#spiffe-spire-envoy-and-worker-core">Security and trust</a> and <a href="understand/worker-trust.html">Worker Trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml">Worker trust chart</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SEC-04</td>
+<td>Secret resolution, rotation, and recovery</td>
+<td><a href="understand/security-and-trust.html#secrets-ownership-resolution-and-recovery">Security and trust</a> and <a href="reference/secrets.html">Secrets</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/secret-resolver">Secret resolver</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SEC-05</td>
+<td>Network policy, private exposure, and denied paths</td>
+<td><a href="understand/security-and-trust.html#network-segmentation-and-negative-paths">Security and trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts">Deployment charts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SEC-06</td>
+<td>Package, image, digest, and attestation supply chain</td>
+<td><a href="understand/security-and-trust.html#source-package-image-and-artifact-integrity">Security and trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/packages">Plugin installer</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-SEC-07</td>
+<td>Capability grants and least privilege</td>
+<td><a href="understand/security-and-trust.html#least-authority-by-layer">Security and trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/registry">Capability registry</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="required-platform-dependencies">Required Platform Dependencies</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-DEP-01</td>
+<td>Git source and workspace isolation</td>
+<td><a href="understand/pipeline-dependencies.html">Pipeline dependencies</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugins/git-workspace">Git workspace adapter</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-02</td>
+<td>Local Git mirror</td>
+<td><a href="understand/platform-and-operations.html#git-source-and-the-absent-git-mirror">Absent Git mirror boundary</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/test-gates/source-git.ts">Current Git source path</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-03</td>
+<td>BuildKit</td>
+<td><a href="understand/platform-and-operations.html#rootless-buildkit">Rootless BuildKit</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/buster-runtime-entrypoint.sh">Buster runtime entrypoint</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-04</td>
+<td>Local OCI registry and upstream mirror</td>
+<td><a href="understand/platform-and-operations.html#writable-local-oci-registry">Registry and mirror architecture</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/registry-client-config.mjs">Registry client setup</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-05</td>
+<td>Redis transport and coordination</td>
+<td><a href="understand/data-and-state.html#redis-durable-delivery-not-product-authority">Redis data boundary</a> and <a href="understand/communication.html#redis">communication</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport">Redis transport</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-06</td>
+<td>PostgreSQL durable product data</td>
+<td><a href="understand/pipeline-dependencies.html">Pipeline dependencies</a> and <a href="understand/prism-data.html">Prism data architecture</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/config">Prism database configuration</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-07</td>
+<td>Tailscale exposure</td>
+<td><a href="understand/platform-and-operations.html#redis-postgresql-and-tailscale">Platform and operations</a> and <a href="understand/communication.html#complete-connection-matrix">communication</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/plugins/tailscale-exposure">Tailscale provider</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-08</td>
+<td>Kubernetes, storage, DNS, and service discovery</td>
+<td><a href="understand/platform-and-operations.html">Platform and operations</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra">Deployment configuration</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-09</td>
+<td>SPIFFE identity and Envoy transport trust</td>
+<td><a href="understand/worker-trust.html">Worker Trust</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/charts/kubeclaw/templates/configmap-worker-trust.yaml">Worker trust chart</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-DEP-10</td>
+<td>LiteLLM model gateway</td>
+<td><a href="understand/platform-and-operations.html#litellm-model-gateway">Platform and operations</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-config.yaml">LiteLLM configuration</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="optional-platform-extensions">Optional Platform Extensions</h2>
+<p>These components can improve platform operation.
+The pipeline does not require them when another supported component supplies the same infrastructure function.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-OPT-01</td>
+<td>Argo CD deployment reconciliation</td>
+<td><a href="understand/platform-and-operations.html#argo-cd-and-exclusive-resource-ownership">Platform and operations</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/gitops">GitOps chart</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPT-02</td>
+<td>Cilium networking and policy</td>
+<td><a href="understand/platform-and-operations.html#one-network-owner-flannel-or-cilium">Platform and operations</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values">Deployment configuration</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPT-03</td>
+<td>Monitoring and dashboards</td>
+<td><a href="understand/platform-and-operations.html#monitoring-is-optional-and-non-authoritative">Platform and operations</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values">Monitoring configuration</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPT-04</td>
+<td>Ops Pod, analysis tools, and Ops MCP</td>
+<td><a href="understand/ops-mcp.html">Ops MCP</a> and <a href="understand/platform-and-operations.html#ops-pod-tool-policy-is-not-kubernetes-authority">platform architecture</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod">Ops chart</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPT-05</td>
+<td>Architecture viewer</td>
+<td><a href="understand/archviewer.html">Archviewer</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/archviewer.yaml">Architecture viewer chart</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-lifecycle">Operator Lifecycle</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-OPS-01</td>
+<td>Prerequisites, sizing, versions, and installation</td>
+<td><a href="use/install.html">Plan and Install</a> and <a href="use/capacity.html">capacity</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/deploy.sh">Deployment entry</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPS-02</td>
+<td>Configuration, start, audit, signal, and result inspection</td>
+<td><a href="use/operate.html">Configure and Operate</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/cli.ts">Nova project CLI</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPS-03</td>
+<td>Health, telemetry, diagnosis, and incident evidence</td>
+<td><a href="use/diagnose.html">Observe and Diagnose</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts/telemetry/v1">Telemetry contracts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPS-04</td>
+<td>Backup, restore, failover, and state reconciliation</td>
+<td><a href="use/recovery.html">Back Up and Recover</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/state">Nova state implementation</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPS-05</td>
+<td>Upgrade, credential rotation, retention, rollback, and retirement</td>
+<td><a href="use/maintenance.html">Maintain and Retire</a> and <a href="use/capacity.html">capacity</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts">Deployment and maintenance scripts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-OPS-06</td>
+<td>Current implementation and live acceptance</td>
+<td><a href="status/current.html">Current Status</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/docs-status.mjs">Status publication generator</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="extension-surfaces">Extension Surfaces</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Surface</th>
+<th>Primary reading</th>
+<th>Source authority</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUR-EXT-01</td>
+<td>Pipeline stages</td>
+<td><a href="extend/README.html#stage">Extension decision guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/build.ts">Registry builder</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-02</td>
+<td>Event observers</td>
+<td><a href="extend/README.html#observer">Extension decision guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/build.ts">Registry builder</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-03</td>
+<td>Capability adapters</td>
+<td><a href="extend/README.html#capability-adapter">Extension decision guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/build.ts">Registry builder</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-04</td>
+<td>Buster test providers</td>
+<td><a href="extend/buster.html">Buster extension guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/buster/plugin-sdk">Buster plugin SDK</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-05</td>
+<td>Buster report adapters</td>
+<td><a href="extend/buster.html">Buster extension guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/buster/plugin-sdk">Buster report adapter contracts</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-06</td>
+<td>OpenClaw extensions</td>
+<td><a href="extend/host-and-engine.html">Host and engine boundaries</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills">Installed OpenClaw manifests</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-07</td>
+<td>Codex plugins and skills</td>
+<td><a href="extend/host-and-engine.html">Host and engine boundaries</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/plugins">Installed Codex plugins</a></td>
+<td>Detailed</td>
+</tr>
+<tr>
+<td>SUR-EXT-08</td>
+<td>Specialist engines</td>
+<td><a href="extend/host-and-engine.html">Host and engine boundaries</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts/pipeline-worker-core">Worker attempt contract</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-EXT-09</td>
+<td>Runtime roles and deployable package sets</td>
+<td><a href="extend/host-and-engine.html">Host and engine boundaries</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles">Runtime role manifests</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-EXT-10</td>
+<td>Core and Foundation changes</td>
+<td><a href="extend/README.html">Extension decision guide</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation">Plugin foundation</a></td>
+<td>Partial</td>
+</tr>
+<tr>
+<td>SUR-EXT-11</td>
+<td>Installed extension packages and registrations</td>
+<td><a href="extend/plugin-catalogue/README.html">Plugin catalogue</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills">Installed package manifests</a></td>
+<td>Detailed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-depth-limits">Known Depth Limits</h2>
+<p>An indexed row is a known documentation obligation.
+It must not disappear because a detailed page is absent.</p>
+<p>The reference does not yet enumerate every schema, error code, event, protocol, store, endpoint, SDK export, or command flag.
+The operator journey does not yet include a maintained first pipeline input.
+Use the <a href="status/current.html">Current Status</a> page before you make a support or readiness claim.</p>
+</main></body></html>

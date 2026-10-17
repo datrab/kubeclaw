@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/README.html"></head><body><main>
+<h1 id="understand-kubeclaw">Understand KubeClaw</h1>
+<p>Status: implemented with stated limits
+Audience: new reader, operator, maintainer, security reviewer, plugin author
+Owner: platform architecture
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles">packaging/runtime/roles</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core">skills/nova/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core">skills/worker/core</a>
+Evidence revision: <code>85e73b1885f04a9494f388cf6622ad0bde2db447</code>
+Applies to: current source and declared runtime roles
+Last verified: source and contract inspection on 2026-09-19</p>
+<h2 id="what-kubeclaw-does">What KubeClaw Does</h2>
+<p>KubeClaw turns a declared software task into a controlled sequence of work.
+It records each important decision before it moves to the next step.</p>
+<p>A specialist can write code, review code, design an experience, or run tests.
+The specialist does not control the full delivery process.
+Nova keeps that control.</p>
+<p>This separation answers a difficult question after a failure:
+what happened, who decided it, and what can safely happen next?</p>
+<h2 id="who-should-read-this-track">Who Should Read This Track</h2>
+<p>Read this track when you need to understand the system before you operate or extend it.
+You do not need academic or distributed-systems knowledge.</p>
+<p>You should know these basic ideas:</p>
+<ul>
+<li>A repository contains the product source.</li>
+<li>A task states the required change.</li>
+<li>A test checks a stated condition.</li>
+<li>A process can fail after it starts external work.</li>
+<li>A durable record remains available after a process restarts.</li>
+</ul>
+<p>The <a href="../reference/glossary.html">glossary</a> defines all KubeClaw terms used in this track.</p>
+<h2 id="start-with-your-question">Start With Your Question</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Read this page first</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What does KubeClaw control, and what stays outside it?</td>
+<td>This page, then <a href="components-and-authority.html">Components and authority</a></td>
+</tr>
+<tr>
+<td>How does one request become a result?</td>
+<td><a href="request-state-recovery.html">Request, state, and recovery</a></td>
+</tr>
+<tr>
+<td>How does Nova compile, schedule, recover, and finish a run?</td>
+<td><a href="nova-core.html">Nova Core</a></td>
+</tr>
+<tr>
+<td>How does a plugin move from package bytes to bounded execution?</td>
+<td><a href="plugin-runtime.html">Plugin Runtime</a></td>
+</tr>
+<tr>
+<td>How does Worker Core run and recover one bounded attempt?</td>
+<td><a href="worker-core.html">Worker Core</a></td>
+</tr>
+<tr>
+<td>How does Prism turn design intent into an approved baseline?</td>
+<td><a href="prism.html">Prism</a></td>
+</tr>
+<tr>
+<td>How does Buster resolve, execute, store, and return a test plan?</td>
+<td><a href="buster.html">Buster</a></td>
+</tr>
+<tr>
+<td>How does Buster lease and safely remove Kubernetes namespaces?</td>
+<td><a href="buster-namespace-controller.html">Buster namespace controller</a></td>
+</tr>
+<tr>
+<td>How does Forge change and merge one bounded workspace?</td>
+<td><a href="forge.html">Forge</a></td>
+</tr>
+<tr>
+<td>How does Echo turn evidence into a review decision?</td>
+<td><a href="echo.html">Echo</a></td>
+</tr>
+<tr>
+<td>How do OpenClaw host plugins and agent dispatch differ?</td>
+<td><a href="openclaw.html">OpenClaw integration</a></td>
+</tr>
+<tr>
+<td>How does the Codex Ops plugin reach bounded cluster evidence?</td>
+<td><a href="codex-integration.html">Codex integration</a> and <a href="ops-mcp.html">Ops MCP</a></td>
+</tr>
+<tr>
+<td>How are static architecture presentations published privately?</td>
+<td><a href="archviewer.html">Archviewer</a></td>
+</tr>
+<tr>
+<td>What are the schema, identity, timeout, retry, and failure rules for each connection?</td>
+<td><a href="communication.html">Communication</a></td>
+</tr>
+<tr>
+<td>Which store owns each record, and how do backup and restore work?</td>
+<td><a href="data-and-state.html">Data and state</a></td>
+</tr>
+<tr>
+<td>How do events reach observers and telemetry sinks without becoming pipeline truth?</td>
+<td><a href="telemetry.html">Telemetry</a></td>
+</tr>
+<tr>
+<td>How do identities, secrets, network policy, and supply-chain checks work together?</td>
+<td><a href="security-and-trust.html">Security and trust</a></td>
+</tr>
+<tr>
+<td>Why does a retry differ from recovery?</td>
+<td><a href="request-state-recovery.html#failure-paths">Request, state, and recovery</a></td>
+</tr>
+<tr>
+<td>Which required services support the pipeline?</td>
+<td><a href="pipeline-dependencies.html">Pipeline dependencies</a></td>
+</tr>
+<tr>
+<td>Where do identities, processes, and trust boundaries sit?</td>
+<td><a href="deployment-and-trust.html">Deployment and trust</a></td>
+</tr>
+<tr>
+<td>Which infrastructure is optional?</td>
+<td><a href="platform-and-operations.html">Platform and operations architecture</a></td>
+</tr>
+<tr>
+<td>How do I operate or extend the system?</td>
+<td><a href="../README.html#start-with-your-task">Documentation entry</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-short-architecture-story">The Short Architecture Story</h2>
+<p>The Nova runtime role contains the project compiler, Nova Core, and selected plugins.
+The project compiler turns the declared project into a fixed graph.
+Each graph stage names its owner, inputs, limits, and permitted actions.
+Nova Core then selects ready stages and gives each stage a short-lived lease.</p>
+<p>Forge can implement the requested change.
+Echo can review the result and propose findings.
+Prism can prepare and publish an approved design baseline.
+Buster can execute a fixed test plan and return evidence.</p>
+<p>Worker Core supplies common worker controls below Buster and Prism.
+It checks attempt identity, capacity, deadlines, cancellation, resources, and result binding.</p>
+<p>The plugin runtime connects these parts.
+It discovers packages, validates declarations, activates selected registrations, and checks capability grants.</p>
+<p>Nova Core alone changes the canonical pipeline state.
+A specialist returns a typed result, but cannot declare the full run successful.</p>
+<blockquote>
+<p><strong>Source evidence — one lifecycle authority</strong></p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/pipeline-loop.ts#L20-L37"><code>PipelineLoop.run()</code> records stage decisions and finalizes the run</a>.</p>
+<p><strong>Result rules:</strong> <a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L106-L135"><code>applyStageResult()</code> maps each typed result to one lifecycle action</a>.</p>
+<p><strong>Decision record:</strong> <a href="../decisions/core-and-plugins.html#adr-001-core-owns-canonical-lifecycle-authority">ADR-001 explains why Core owns lifecycle state</a>.</p>
+<p><strong>Revision:</strong> <code>85e73b1885f04a9494f388cf6622ad0bde2db447</code>.</p>
+</blockquote>
+<h2 id="one-representative-request">One Representative Request</h2>
+<p>Assume that a team requests a new account page.
+The project declares one module, its owned paths, its requirements, and its test plan.</p>
+<p>The normal path is:</p>
+<ol>
+<li>Nova checks the project and the unchanged source revision.</li>
+<li>Nova compiles a fixed graph for the module and final checks.</li>
+<li>Forge receives one bounded implementation task and a separate workspace.</li>
+<li>Forge returns commits and artifacts. Nova records the stage result.</li>
+<li>The lint stage checks the complete module change.</li>
+<li>Echo reviews the fixed revision and returns evidence-backed findings.</li>
+<li>Nova applies review policy. Echo does not apply the lifecycle verdict.</li>
+<li>Nova sends an immutable test plan and source identity to Buster.</li>
+<li>Buster runs declared providers through Worker Core and stores evidence.</li>
+<li>Nova verifies the returned identity and imports the result once.</li>
+<li>Final checks cover the integrated project, not only one module.</li>
+<li>Nova writes the terminal run state and the project summary.</li>
+</ol>
+<p>The path can include Prism before implementation.
+Prism produces an approved design baseline.
+Forge then implements against that fixed baseline.</p>
+<p>The detailed <a href="request-state-recovery.html">request, state, and recovery guide</a> follows this example through normal and failed paths.</p>
+<h2 id="architecture-scope">Architecture Scope</h2>
+<p>The architecture covers the complete learning-lab platform, not only the stage graph.
+It uses three scopes so that infrastructure does not look like pipeline authority.</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Included systems</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline control and work</td>
+<td>Nova, Nova Core, plugins, Forge, Echo, Buster, Prism, and Worker Core.</td>
+<td>Required for their declared roles and stages.</td>
+</tr>
+<tr>
+<td>Showcase baseline</td>
+<td>Kubernetes, storage, DNS, SPIRE, Git, Redis, PostgreSQL, BuildKit, both registries, and Tailscale.</td>
+<td>Required before the complete lab claims readiness.</td>
+</tr>
+<tr>
+<td>Optional platform extensions</td>
+<td>Argo CD, monitoring, and the Ops Pod.</td>
+<td>Valuable platform capabilities, but not pipeline prerequisites.</td>
+</tr>
+</tbody>
+</table>
+<p>Kubernetes networking remains required.
+The current secured deployment requires Cilium. A Flannel fallback is planned, but is not implemented or proved; see <a href="platform-and-operations.html#one-network-owner-flannel-or-cilium">the CNI support boundary</a>.
+Direct Helm deployment can replace Argo CD when one controller retains exclusive ownership.</p>
+<h2 id="role-words-have-exact-meanings">Role Words Have Exact Meanings</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning in this documentation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline</td>
+<td>One declared graph and its durable execution state</td>
+<td>A compiled project run</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Services, configuration, trust, and deployment around the pipeline</td>
+<td>Kubernetes, Redis, PostgreSQL, registries, and Tailscale</td>
+</tr>
+<tr>
+<td>Runtime role</td>
+<td>One deployable package set with one operational identity</td>
+<td>Nova, Buster, or Prism</td>
+</tr>
+<tr>
+<td>Core</td>
+<td>Code that owns shared control rules inside a runtime</td>
+<td>Nova Core or Worker Core</td>
+</tr>
+<tr>
+<td>Engine</td>
+<td>Code that interprets one specialist attempt type</td>
+<td>Buster Engine or Prism Engine</td>
+</tr>
+<tr>
+<td>Specialist</td>
+<td>A bounded worker that performs one kind of work</td>
+<td>Forge, Echo, Buster, or Prism</td>
+</tr>
+<tr>
+<td>Plugin</td>
+<td>An installed extension selected through a public host contract</td>
+<td>A stage, observer, adapter, provider, or host extension</td>
+</tr>
+</tbody>
+</table>
+<p>Forge and Echo are specialists that run through Nova plugins.
+They are not separate runtime roles in the current package inventory.</p>
+<blockquote>
+<p><strong>Source evidence — role and package boundary</strong></p>
+<p><strong>Role declarations:</strong> <a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/nova.json">Nova</a>, <a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/buster.json">Buster</a>, and <a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/prism.json">Prism</a> define the deployable identities.</p>
+<p><strong>Package ownership:</strong> <a href="https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json">The ownership file assigns packages to their runtime roles</a>.</p>
+<p><strong>Limit:</strong> A role declaration proves intended package assembly. It does not prove deployment or reachability.</p>
+</blockquote>
+<h2 id="three-questions-that-prevent-false-claims">Three Questions That Prevent False Claims</h2>
+<p>KubeClaw uses three separate status questions.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Meaning</th>
+<th>Proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Is it present?</td>
+<td>Source, a package, or a role declaration exists.</td>
+<td>Repository inventory and package manifest.</td>
+</tr>
+<tr>
+<td>Is it activated?</td>
+<td>Current configuration selected the registration and granted its needs.</td>
+<td>Resolved platform configuration and activation snapshot.</td>
+</tr>
+<tr>
+<td>Is it reachable?</td>
+<td>A caller can use the running path in the target environment.</td>
+<td>Environment-specific connection and acceptance checks.</td>
+</tr>
+</tbody>
+</table>
+<p>Presence does not prove activation.
+Activation does not prove network reachability.
+A local test does not prove a live cluster.</p>
+<p>For example, Prism has source and a runtime-role manifest.
+This fact does not prove that every Prism workflow is deployed in a given cluster.</p>
+<p>Forge and Echo have registered Nova stage plugins.
+They are not separate runtime roles in the current role inventory.</p>
+<blockquote>
+<p><strong>Source evidence — declared roles</strong></p>
+<p><strong>Nova:</strong> <a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61">role manifest and selected plugins</a>.</p>
+<p><strong>Buster:</strong> <a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L1-L60">role manifest, Worker Core dependency, and external capabilities</a>.</p>
+<p><strong>Prism:</strong> <a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28">role manifest, Worker Core dependency, and source access</a>.</p>
+<p><strong>Current limit:</strong> Role membership proves packaging intent. It does not prove live deployment or acceptance.</p>
+</blockquote>
+<h2 id="what-this-documentation-claims">What This Documentation Claims</h2>
+<p>This track describes the inspected implementation at the stated revision.
+It explains current code, current declarations, known limits, and preserved design decisions.</p>
+<p>It does not claim that all configured paths passed a live-cluster test.
+It does not turn a package manifest into evidence of use.
+It does not turn a test result into operator acceptance.</p>
+<p>The writing follows ASD-STE100 Issue 9 principles.
+It uses short sentences, active voice, defined technical nouns, and one meaning per sentence.
+The project does not require or claim formal ASD-STE100 certification.
+Human-reader acceptance remains a publication check.</p>
+<h2 id="choose-your-next-page">Choose Your Next Page</h2>
+<ul>
+<li><a href="components-and-authority.html">Components and authority</a> explains each part and each decision boundary.</li>
+<li><a href="request-state-recovery.html">Request, state, and recovery</a> follows success, retry, repair, wait, cancellation, and uncertain effects.</li>
+<li><a href="nova-core.html">Nova Core</a> follows compilation, scheduling, effects, recovery, audit, and terminal decisions in detail.</li>
+<li><a href="plugin-runtime.html">Plugin Runtime</a> follows discovery, admission, grants, activation, isolation, state, replacement, and removal.</li>
+<li><a href="worker-core.html">Worker Core</a> follows a claim through admission, native execution, durable recovery, and a sealed result.</li>
+<li><a href="prism.html">Prism</a> maps the complete design, data, approval, Studio, and pipeline-handoff system.</li>
+<li><a href="buster.html">Buster</a> follows an immutable test plan from Nova resolution through remote result import.</li>
+<li><a href="buster-namespace-controller.html">Buster namespace controller</a> explains leases, fencing, credentials, exposure, retention, and cleanup.</li>
+<li><a href="data-and-state.html">Data and state</a> maps every authoritative store, projection, artifact, backup group, and restore order.</li>
+<li><a href="telemetry.html">Telemetry</a> explains active v2 events, observer delivery, redaction, checkpoints, sink pressure, and the retained v1 boundary.</li>
+<li><a href="pipeline-dependencies.html">Pipeline dependencies</a> explains Git, Redis, PostgreSQL, BuildKit, registries, mirrors, and Tailscale.</li>
+<li><a href="deployment-and-trust.html">Deployment and trust</a> maps processes, identities, storage, grants, networks, and failure domains.</li>
+<li><a href="security-and-trust.html">Security and trust</a> explains the threat model, human and workload identity, secrets, mTLS, network policy, provenance, and least authority.</li>
+<li><a href="platform-and-operations.html">Platform and operations architecture</a> explains K3s, Cilium, Argo CD, and the optional Ops Pod.</li>
+<li><a href="worker-trust.html">Worker Trust</a> gives the detailed SPIFFE and Envoy trust path.</li>
+<li><a href="../use/README.html">Operate KubeClaw</a> contains the complete operator procedure track and its stated limits.</li>
+<li><a href="../extend/README.html">Extend KubeClaw</a> contains the supported plugin and extension guidance.</li>
+<li><a href="../status/current.html">Current status</a> separates implemented work from open and live acceptance work.</li>
+</ul>
+</main></body></html>

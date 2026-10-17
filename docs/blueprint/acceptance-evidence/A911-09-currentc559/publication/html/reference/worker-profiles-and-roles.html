@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/worker-profiles-and-roles.html"></head><body><main>
+<h1 id="worker-profiles-engines-and-roles">Worker Profiles, Engines, and Roles</h1>
+<p>Status: current configuration and contract reference
+Audience: platform operator, worker implementer, pipeline author
+Owner: worker core and Prism
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json">contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/local-runtime.ts">skills/worker/core/worker/local-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-pool-policy.ts">skills/worker/core/worker/native-pool-policy.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/engine/worker-envelope.ts">skills/prism/engine/worker-envelope.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/agent-attempt.ts">skills/prism/server/agent-attempt.ts</a>
+Applies to: worker protocol v1, profile v2/v3, and current Prism workers
+Last verified: 2026-09-21 at source revision <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<h2 id="use-the-correct-identity-concept">Use the correct identity concept</h2>
+<p>KubeClaw uses “profile” and “role” for different boundaries. Do not substitute
+one for another.</p>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Owner</th>
+<th>What it controls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Worker profile</td>
+<td>Worker producer plus worker contract</td>
+<td>Exact engine bytes, worker kind, capabilities, and measurable resource semantics accepted for an attempt.</td>
+</tr>
+<tr>
+<td>Worker type</td>
+<td>Worker profile</td>
+<td>Scheduling/implementation class such as <code>prism</code> or <code>prism-agent</code>; it is not authorization by itself.</td>
+</tr>
+<tr>
+<td>Engine reference</td>
+<td>Worker profile</td>
+<td>Versioned operation contract and content digest for executable behavior.</td>
+</tr>
+<tr>
+<td>Agent role</td>
+<td>Pipeline stage configuration</td>
+<td>Dispatch hint such as a specialist role. It does not grant a worker capability or select a Linux identity.</td>
+</tr>
+<tr>
+<td>Native pool role</td>
+<td>Host-generated pool policy</td>
+<td>Binds a worker process to one host cgroup pool, node identity, capacity, and ownership store.</td>
+</tr>
+<tr>
+<td>Database role</td>
+<td>Prism database bootstrap</td>
+<td>Separates schema changes, application access, and read-only access. It is unrelated to worker profiles.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="current-worker-profile-worker-profilev3">Current worker profile (<code>worker-profile.v3</code>)</h2>
+<p>The profile is a closed object. Every field is required. A producer computes
+<code>profileDigest</code> over the profile without the digest field. An attempt carries
+the whole profile, and the runtime accepts it only when the digest is one of
+the profiles advertised by the worker registration.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type and constraints</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exact <code>worker-profile.v3</code></td>
+<td>Current native-attempt-tree resource contract.</td>
+</tr>
+<tr>
+<td><code>profileId</code></td>
+<td>Stable ID, maximum 256</td>
+<td>Human-meaningful profile identity. Changing behavior or resource semantics needs a new identity/digest.</td>
+</tr>
+<tr>
+<td><code>profileDigest</code></td>
+<td>Lowercase <code>sha256:</code> digest</td>
+<td>Integrity binding for all other profile fields.</td>
+</tr>
+<tr>
+<td><code>workerType</code></td>
+<td>Stable ID, maximum 256</td>
+<td>Worker implementation family.</td>
+</tr>
+<tr>
+<td><code>coreContractId</code></td>
+<td>Versioned contract ID matching <code>name@positive-version</code>, maximum 256</td>
+<td>Worker-core contract implemented by this profile.</td>
+</tr>
+<tr>
+<td><code>engine</code></td>
+<td>Closed engine object</td>
+<td>Exact operation implementation identity.</td>
+</tr>
+<tr>
+<td><code>capabilities</code></td>
+<td>Unique array, at most 128 stable IDs</td>
+<td>Maximum capabilities the profile can use. Attempt <code>grantedCapabilities</code> must be no broader.</td>
+</tr>
+<tr>
+<td><code>resourceCapabilities</code></td>
+<td>Closed v2 capability object</td>
+<td>States what resource quantities the host can measure for this profile.</td>
+</tr>
+</tbody>
+</table>
+<p><code>engine</code> contains four required fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>engineId</code></td>
+<td>Stable ID, maximum 256.</td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td>Versioned contract ID, maximum 256.</td>
+</tr>
+<tr>
+<td><code>engineVersion</code></td>
+<td>Non-empty string, maximum 4,096.</td>
+</tr>
+<tr>
+<td><code>contentDigest</code></td>
+<td>Lowercase <code>sha256:</code> digest of the selected engine content identity.</td>
+</tr>
+</tbody>
+</table>
+<p>The current v3 <code>resourceCapabilities</code> object is exact:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Required value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td><code>worker-resource-capabilities.v2</code></td>
+</tr>
+<tr>
+<td><code>cpuTimeMs</code></td>
+<td><code>{scope:&quot;native-attempt-tree&quot;, unit:&quot;milliseconds&quot;, measurement:&quot;measured&quot;}</code></td>
+</tr>
+<tr>
+<td><code>maximumMemoryBytes</code></td>
+<td><code>{scope:&quot;native-attempt-tree&quot;, unit:&quot;bytes&quot;, measurement:&quot;measured&quot;}</code></td>
+</tr>
+<tr>
+<td><code>maximumTasks</code></td>
+<td><code>{scope:&quot;native-attempt-tree&quot;, unit:&quot;linux-tasks&quot;, measurement:&quot;measured&quot;}</code></td>
+</tr>
+</tbody>
+</table>
+<p>This exactness is a safety property. A generic “process count” does not describe
+Linux cgroup tasks, and process-local sampling does not prove a complete native
+attempt tree.</p>
+<h2 id="resource-requests-and-host-acceptance">Resource requests and host acceptance</h2>
+<p>A v3 attempt supplies closed <code>worker-resource-budgets.v2</code> fields
+<code>cpuTimeMs</code>, <code>maximumMemoryBytes</code>, and <code>maximumTasks</code>. Each is either
+<code>{state:&quot;requested&quot;,limit:&lt;positive integer&gt;}</code> or
+<code>{state:&quot;unrequested&quot;}</code>. The Prism native engine requires all three to be
+requested and refuses a fresh attempt whose limit exceeds host policy.</p>
+<p>The worker result reports resource accounting separately. A profile saying
+<code>measurement: &quot;measured&quot;</code> is not itself an observation. The native worker must
+return observed counters under the matching scope and unit.</p>
+<h2 id="current-shipped-prism-profiles">Current shipped Prism profiles</h2>
+<h3 id="deterministicnative-prism-engine">Deterministic/native Prism engine</h3>
+<p>The native profile is <code>worker-profile.v3</code> with:</p>
+<ul>
+<li><code>profileId</code>: <code>prism-design-engine-v3</code></li>
+<li><code>workerType</code>: <code>prism</code></li>
+<li>engine <code>prism-design-engine</code>, contract <code>kubeclaw.prism-design-engine@1</code>,
+version <code>1.0.0</code></li>
+<li>v3 native-attempt-tree measured resource capabilities</li>
+<li>capabilities <code>artifacts.read</code>, <code>artifacts.write</code>, <code>network.http</code>,
+<code>secrets.read</code>, and <code>telemetry.emit</code></li>
+</ul>
+<p>In production, <code>PRISM_ENGINE_CONTENT_DIGEST</code> must be a lowercase <code>sha256:</code>
+digest. Development can derive a local identity, but that fallback is not a
+production trust proof.</p>
+<h3 id="openclaw-agent-launcher">OpenClaw agent launcher</h3>
+<p>The agent launcher remains <code>worker-profile.v2</code>:</p>
+<ul>
+<li><code>profileId</code>: <code>prism-openclaw-launcher-v2</code></li>
+<li><code>workerType</code>: <code>prism-agent</code></li>
+<li>engine contract <code>kubeclaw.prism-agent-launcher@1</code>, version <code>2.0.0</code></li>
+<li>capabilities <code>openclaw.agent</code> and <code>artifacts.write</code></li>
+<li>resource capability schema v1 with CPU time, maximum memory, and maximum
+processes marked <code>unavailable</code> for the <code>local-cli-process-tree</code></li>
+</ul>
+<p>This profile is honest about the boundary: Node child-process launch does not
+produce trustworthy complete child-tree resource accounting in this
+deployment. Do not interpret unrequested budgets or unavailable measurement as
+zero use.</p>
+<h2 id="profile-v2-compatibility">Profile v2 compatibility</h2>
+<p>Profile v2 has the same top-level and engine fields as v3. Its
+<code>worker-resource-capabilities.v1</code> uses <code>cpuTimeMs</code>, <code>maximumMemoryBytes</code>, and
+<code>maximumProcesses</code>. Each metric declares:</p>
+<ul>
+<li><code>scope</code> (non-empty string),</li>
+<li>its fixed unit (<code>milliseconds</code>, <code>bytes</code>, or <code>processes</code>), and</li>
+<li><code>measurement</code>: <code>measured</code>, <code>sampled</code> with positive <code>sampleIntervalMs</code>, or
+<code>unavailable</code> with a non-empty reason.</li>
+</ul>
+<p>Use v2 only with a v2 attempt/result contract. Do not rename
+<code>maximumProcesses</code> to <code>maximumTasks</code> without moving to the v3 contract and a
+native attempt-tree enforcement boundary.</p>
+<h2 id="worker-registration-and-capacity">Worker registration and capacity</h2>
+<p><code>LocalWorkerRuntime</code> receives operator/composition inputs:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Requirement or default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workerId</code>, <code>workerType</code>, <code>coreVersion</code></td>
+<td>Required strings; the registration contract validates their final form.</td>
+</tr>
+<tr>
+<td><code>protocolVersions</code></td>
+<td>Required list; duplicates are removed and values sorted.</td>
+</tr>
+<tr>
+<td><code>profiles</code></td>
+<td>Required profile list; each digest becomes an admission allowlist entry.</td>
+</tr>
+<tr>
+<td><code>capacity</code></td>
+<td>Required integer 1–4,096.</td>
+</tr>
+<tr>
+<td><code>drainTimeoutMs</code></td>
+<td>Optional positive timer-safe integer; default 300,000.</td>
+</tr>
+<tr>
+<td><code>cancellationTimeoutMs</code></td>
+<td>Optional positive timer-safe integer; default 30,000.</td>
+</tr>
+<tr>
+<td><code>replayLimit</code></td>
+<td>Optional integer 1–1,000,000; default 65,536 accepted attempt IDs.</td>
+</tr>
+</tbody>
+</table>
+<p>Registration publishes total, available, and active capacity. Admission also
+checks lifecycle state, worker binding in the claim, queue/claim deadlines,
+protocol, profile digest, replay, and active capacity. Capacity is an admission
+count, not CPU or memory capacity.</p>
+<h2 id="native-pool-policy">Native pool policy</h2>
+<p>Host preparation, not an attempt envelope or mutable worker environment,
+creates the native aggregate policy. The file must use an absolute path, be a
+regular root-owned file, not be group/world writable, and be at most 65,536
+bytes.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Integer <code>1</code>.</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td>Exact role requested by the worker, currently <code>prism</code> for the native Prism supervisor.</td>
+</tr>
+<tr>
+<td><code>nodeName</code></td>
+<td>Non-empty host node identity.</td>
+</tr>
+<tr>
+<td><code>policyDigest</code></td>
+<td>64 lowercase hexadecimal characters.</td>
+</tr>
+<tr>
+<td><code>cgroupRoot</code>, <code>ownershipRoot</code>, <code>nodeIdentityFile</code>, <code>runtimeIdentityFile</code></td>
+<td>Normalized absolute paths other than <code>/</code>.</td>
+</tr>
+<tr>
+<td><code>maximumActiveScopes</code></td>
+<td>Positive safe integer.</td>
+</tr>
+<tr>
+<td><code>limits.memoryBytes</code>, <code>limits.tasks</code></td>
+<td>Positive safe integers for aggregate memory and Linux tasks.</td>
+</tr>
+<tr>
+<td><code>limits.cpuQuotaMicroseconds</code>, <code>limits.cpuPeriodMicroseconds</code></td>
+<td>Positive safe integers; runtime additionally requires both at least 1,000 and CPU period at most 1,000,000.</td>
+</tr>
+</tbody>
+</table>
+<p>The native worker verifies the actual cgroup v2 filesystem, aggregate
+<code>memory.max</code>, disabled swap, <code>pids.max</code>, <code>cpu.max</code>, domain type, peak counters,
+and writable kill boundary before it claims readiness. A policy file alone is
+not capacity proof.</p>
+<h2 id="selection-and-precedence">Selection and precedence</h2>
+<ol>
+<li>Host deployment selects the pool role and aggregate capacity.</li>
+<li>Worker composition advertises exact profiles and count capacity.</li>
+<li>The attempt selects one advertised profile by its complete digest and asks
+for a subset of its capabilities plus resource budgets.</li>
+<li>Worker admission checks the attempt, then native admission compares budgets
+with host policy.</li>
+<li>Stage <code>agentRole</code> can influence dispatch routing inside an adapter, but it
+cannot bypass any of these checks.</li>
+</ol>
+<p>Do not add a profile by changing only a pipeline document. The worker producer,
+worker registration, host capacity, engine bytes, and dispatcher must agree.</p>
+<h2 id="change-impact-and-errors">Change impact and errors</h2>
+<p>A content digest, engine contract/version, capability, resource semantic, or
+profile field change produces a different profile digest. Existing stored
+attempts retain their original profile. A fresh worker can accept them only if
+it still advertises that digest and implements the matching contract. Native
+pool policy changes require host preparation and worker restart/readiness; an
+attempt cannot raise aggregate limits.</p>
+<p>Common signals are <code>WORKER_LOCAL_PROFILE_UNSUPPORTED</code>,
+<code>WORKER_LOCAL_PROTOCOL_UNSUPPORTED</code>, <code>WORKER_LOCAL_CAPACITY_EXHAUSTED</code>,
+<code>WORKER_LOCAL_ATTEMPT_DUPLICATE</code>, <code>WORKER_NATIVE_POOL_POLICY_*</code>,
+<code>WORKER_NATIVE_POOL_LIMIT_MISMATCH</code>, <code>PRISM_NATIVE_PROFILE_NOT_ACCEPTED</code>, and
+<code>PRISM_NATIVE_BUDGET_NOT_ACCEPTED:&lt;metric&gt;</code>. Correct the producer/worker/host
+agreement; do not rewrite a persisted attempt or digest.</p>
+<blockquote>
+<p><strong>Source evidence — profile and host boundaries</strong></p>
+<p><strong>Claim:</strong> A worker profile binds engine content and capabilities, local admission matches its digest, and native aggregate capacity comes only from a trusted host policy.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/worker/core/worker/local-runtime.ts#L89-L107">profile-based local admission</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/worker/core/worker/local-runtime.ts#L155-L173">attempt checks</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/worker/core/worker/native-pool-policy.ts#L18-L52">trusted pool policy loader</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json#L98-L120">engine identity fields</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json#L122-L165">v3 profile fields</a></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json#L882-L934">CPU and memory capability semantics</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json#L935-L955">task capability semantics</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-pipeline-worker-core-contracts.mts#L1-L45">worker contract check</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node tests/verification/contracts/check-pipeline-worker-core-contracts.mts</code> against implementation revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code>: exit zero and <code>ok: true</code> for twelve contracts. This is contract evidence; it does not establish a deployed worker or host isolation.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<p><strong>Limit:</strong> Contract validation and local cgroup checks do not establish cluster scheduling capacity or external service availability.</p>
+</blockquote>
+</main></body></html>

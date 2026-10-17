@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/contracts.html"></head><body><main>
+<h1 id="understand-the-five-pipeline-extension-contracts">Understand The Five Pipeline Extension Contracts</h1>
+<p>Status: implemented with stated local verification limits
+Audience: plugin author, runtime maintainer, reviewer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/build.ts">skills/common/plugin-runtime/foundation/registry/build.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/stage-executor.ts">skills/nova/core/execution/stage-executor.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/telemetry/observers.ts">skills/nova/core/telemetry/observers.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/provider-loader.ts">skills/buster/engine/test-gates/provider-loader.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/report-adapter-runtime.ts">skills/buster/engine/test-gates/report-adapter-runtime.ts</a>
+Evidence revision: <code>bcf032f241b432bf920baa9ee5f727947921447d</code>
+Applies to: <code>pipeline-plugin-v2</code>
+Last verified: source and contract checks on 2026-09-16</p>
+<h2 id="objective">Objective</h2>
+<p>Select and implement the correct registration inside a pipeline plugin package.
+KubeClaw supports five registration contracts:</p>
+<ol>
+<li>stage;</li>
+<li>observer;</li>
+<li>capability adapter;</li>
+<li>test provider;</li>
+<li>report adapter.</li>
+</ol>
+<p>They share package discovery and immutable package identity. They do not share the
+same caller, data, authority, retry rules, or failure meaning. A package can contain
+more than one registration and more than one registration type.</p>
+<p>This page explains contracts. It does not explain <code>.swarm/pipeline.json</code>, pipeline
+submission, or an end-to-end pipeline run.</p>
+<h2 id="terms-used-in-this-guide">Terms Used In This Guide</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registration</td>
+<td>One manifest entry that connects an identity to a schema and executable export</td>
+</tr>
+<tr>
+<td>Canonical state</td>
+<td>The authoritative run and stage state that Core records</td>
+</tr>
+<tr>
+<td>Capability</td>
+<td>One named type of bounded external authority</td>
+</tr>
+<tr>
+<td>Grant</td>
+<td>An operator rule that permits one registration to use one capability within constraints</td>
+</tr>
+<tr>
+<td>Receipt</td>
+<td>A durable record of an adapter result for one effect identity</td>
+</tr>
+<tr>
+<td>Checkpoint</td>
+<td>The last observer delivery state that Nova can resume</td>
+</tr>
+<tr>
+<td>Port</td>
+<td>A typed value or artifact connection between Buster nodes</td>
+</tr>
+<tr>
+<td>Immutable identity</td>
+<td>Package or plan identity that changes when its bound content changes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="why-kubeclaw-uses-five-contracts">Why KubeClaw Uses Five Contracts</h2>
+<p>One generic plugin hook would make the package format smaller. It would also hide
+who can change state, who can use external authority, and who owns retry behavior.</p>
+<p>KubeClaw therefore selects five narrow contracts. Each contract gives one host a
+clear responsibility. Core can then validate data and authority before code runs.</p>
+<p><strong>Benefit:</strong> A reviewer can identify the caller, allowed effects, result owner, and
+recovery rule from the registration type.</p>
+<p><strong>Cost:</strong> Authors must learn several contracts. A package that has two
+responsibilities can need two registrations.</p>
+<p><strong>Rejected alternative:</strong> One callback with optional fields would permit invalid
+combinations. For example, an observer could appear to return a stage result.</p>
+<p><strong>Reconsider when:</strong> A repeated responsibility cannot fit one existing contract and
+has a stable authority model of its own.</p>
+<h2 id="start-with-the-owner-of-the-decision">Start With The Owner Of The Decision</h2>
+<table>
+<thead>
+<tr>
+<th>Registration</th>
+<th>Use it when</th>
+<th>Caller</th>
+<th>Can return a result that Core maps to stage state?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage</td>
+<td>Ordered project work must return a typed result</td>
+<td>Nova stage executor</td>
+<td>Yes, through <code>stage-result.v2</code>; Core still owns the transition</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>Committed events need a side effect or projection</td>
+<td>Nova observer runtime</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>A stage or observer needs controlled external authority</td>
+<td>Nova adapter runtime</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Test provider</td>
+<td>Buster must execute one test or fixture contract</td>
+<td>Buster test-plan runner</td>
+<td>No; Buster imports its result</td>
+</tr>
+<tr>
+<td>Report adapter</td>
+<td>Buster must normalize an existing report artifact</td>
+<td>Buster report runtime</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>Choose the contract from the owner of the result, not from the programming language
+or process that performs the work. A command can belong behind an adapter, a test
+provider, or a stage. The deciding question is which host owns its meaning.</p>
+<h2 id="shared-package-envelope">Shared Package Envelope</h2>
+<p>Every package has one inert <code>plugin.json</code>. Discovery reads this file before it
+imports executable code. The manifest supplies a package ID, API version, semantic
+package version, and registration arrays. At least one registration array must be
+non-empty.</p>
+<p>Foundation calculates a content digest over the selected package files. Registry
+identity therefore contains four different values:</p>
+<ul>
+<li>package ID identifies the product-owned package name;</li>
+<li>package version communicates author compatibility intent;</li>
+<li>content digest identifies the exact bytes;</li>
+<li>registration ID identifies one contract inside the package.</li>
+</ul>
+<p>The runtime does not treat a matching version string as proof of matching bytes.
+This decision makes recovery and audit records precise. Its cost is that every byte
+change creates a new immutable package identity.</p>
+<p>Registration modules and schemas use package-relative paths. They cannot use an
+absolute path or escape through <code>..</code>. Registry construction checks referenced files,
+schema validity, registration conflicts, and global ownership before activation.</p>
+<blockquote>
+<p><strong>Manifest shape:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L455">The schema defines all five registrations and requires at least one non-empty registration array</a>.</p>
+<p><strong>Discovery:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/discovery.ts#L105-L137">Foundation reads manifests, establishes trust, and calculates package provenance</a>.</p>
+<p><strong>Registry:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317">Registry construction assigns stages, observers, adapters, test providers, and report adapters to immutable maps</a>.</p>
+</blockquote>
+<h2 id="stage-contract">Stage Contract</h2>
+<p>A stage is an ordered unit in a Nova execution graph. Its manifest names a stage
+type, executable export, required capabilities, and three schemas:</p>
+<ul>
+<li>configuration describes operator- or graph-selected behavior;</li>
+<li>input describes data supplied to this stage instance;</li>
+<li>result constrains the returned <code>stage-result.v2</code> value.</li>
+</ul>
+<p>Nova validates configuration and input before it invokes the export. The stage
+receives the validated input, a bounded invocation context, and an abort signal.
+The context contains immutable attempt identity, configuration, prior artifacts,
+grants, and lifecycle budgets. The stage can request only declared and granted
+capabilities.</p>
+<p>The result does not mutate Core state directly. Core validates it and maps its
+outcome to lifecycle state. <code>passed</code>, <code>retry</code>, <code>request_fix</code>, <code>wait</code>, <code>blocked</code>,
+<code>failed</code>, <code>timed_out</code>, <code>rate_limited</code>, <code>cancelled</code>, and
+<code>orchestrator_required</code> have different stop and recovery meanings. A plugin must not
+invent a new outcome or a private lifecycle transition.</p>
+<p>Use a stage when graph order and canonical state are part of the feature. Do not use
+a stage only to mirror events or to gain direct network, filesystem, Git, secret, or
+process access.</p>
+<blockquote>
+<p><strong>Stage registration:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L221-L248">The manifest requires type, module, export, capabilities, and three schemas</a>.</p>
+<p><strong>Pre-invocation validation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/runner.ts#L39-L53">Nova resolves ownership and validates stage configuration and input</a>.</p>
+<p><strong>Invocation boundary:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/stage-executor.ts#L33-L74">The executor creates a lease, invokes the activated export, validates the result, and records it</a>.</p>
+</blockquote>
+<h3 id="stage-failure-and-recovery">Stage failure and recovery</h3>
+<p>Schema rejection means the call did not start or its returned value was not accepted.
+A thrown exception becomes a runtime-controlled result. Timeout and cancellation
+revoke the lease and abort the signal. The plugin must stop its own asynchronous work
+and must not retain the invocation context after completion.</p>
+<p><code>retry</code> requests another attempt within the declared attempt budget.
+<code>request_fix</code> uses a remediation edge and its separate budget. A retry does not prove
+that an earlier external effect did not occur. An effectful stage must reconcile that
+uncertainty before it repeats the mutation.</p>
+<h2 id="observer-contract">Observer Contract</h2>
+<p>An observer consumes committed lifecycle or plugin-domain events after their source
+operation. Its manifest declares subscriptions, configuration, checkpoint schema,
+capabilities, delivery mode, ordering, and failure policy.</p>
+<p>Current contracts fix delivery to <code>at_least_once</code> and ordering to <code>per_run</code>.
+Therefore, an observer handler must accept duplicate delivery. It must use the
+delivery identity or an idempotent target operation. It cannot assume global ordering
+between different runs.</p>
+<p>The observer runtime records every started, completed, or failed delivery. It commits
+a checkpoint only after successful handling. On restart, recovery reconstructs prior
+attempts and completed deliveries. A <code>required</code> observer stops draining on exhausted
+delivery. A <code>best_effort</code> observer records the failure and blocks later events for
+that run during the current drain, but it does not change the pipeline result.</p>
+<p>Observers cannot edit canonical lifecycle state. Use them for telemetry, notification,
+evidence projection, and other reactions to committed facts.</p>
+<blockquote>
+<p><strong>Observer registration:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L249-L294">The contract fixes at-least-once delivery, per-run ordering, retry fields, and checkpoint schema</a>.</p>
+<p><strong>Drain behavior:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/telemetry/observers.ts#L48-L104">The runtime filters subscriptions, resumes checkpoints, retries delivery, and applies required or best-effort policy</a>.</p>
+</blockquote>
+<h2 id="capability-adapter-contract">Capability Adapter Contract</h2>
+<p>An adapter owns external authority. Its manifest lists capabilities that it provides,
+capabilities that it needs from other adapters, a configuration schema, and an
+activation factory.</p>
+<p>Operator configuration selects one provider for each requested capability and gives
+each caller a bounded grant. Declaration, provider selection, and caller grant are
+three separate controls. A package cannot grant itself authority by adding a string
+to <code>requiredCapabilities</code>.</p>
+<p>Activation creates a long-lived instance with <code>ready</code>, <code>invoke</code>, and <code>shutdown</code>
+operations. Ordinary effect calls carry a resource lock and fence. The adapter must
+check the fence before a mutation and again where a long operation can outlive its
+authority. Confidential operations omit the durable payload and resource identity;
+only capabilities explicitly classified as confidential can use that path.</p>
+<p>The effect coordinator records request, acceptance, and receipt around ordinary
+mutations. A durable receipt prevents the same effect key from invoking the adapter
+again. An accepted request without a receipt has an uncertain outcome. Core must not
+guess whether the external system changed.</p>
+<blockquote>
+<p><strong>Adapter registration:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L295-L320">The manifest distinguishes provided capabilities from adapter dependencies</a>.</p>
+<p><strong>Grant resolution:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L176-L212">Foundation verifies enabled registrations, provider choice, constraints, and exact grants</a>.</p>
+<p><strong>Runtime invocation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/adapters.ts#L53-L68">Nova selects the configured adapter, requires readiness, and sends ordinary calls through the effect coordinator</a>.</p>
+</blockquote>
+<h3 id="adapter-failure-and-recovery">Adapter failure and recovery</h3>
+<p>Startup is all-or-nothing. If one selected adapter cannot activate or become ready,
+the runtime tears down started and pending instances. Shutdown has a bounded timeout
+and aborts active work.</p>
+<p>The adapter can implement <code>receipt()</code> when the external system can answer whether a
+previous operation completed. Reconciliation must compare stable external identity,
+not only a transient process result. Cleanup authority is bounded and does not add
+new capabilities.</p>
+<h2 id="test-provider-contract">Test Provider Contract</h2>
+<p>A test provider implements one stable Buster contract such as a command test, HTTP
+test, browser test, build fixture, or deployment fixture. Buster, not Nova's stage
+executor, loads and calls it.</p>
+<p>Its registration declares:</p>
+<ul>
+<li>a versioned <code>contractId</code> used by suites and direct test declarations;</li>
+<li><code>test</code> or <code>fixture</code> meaning;</li>
+<li>configuration schema;</li>
+<li>typed value and artifact input/output ports;</li>
+<li>required capabilities;</li>
+<li>whether a retry is safe;</li>
+<li>allowed matrix fields and report formats;</li>
+<li>evidence types and default evidence policy.</li>
+</ul>
+<p>The resolver binds the exact package version and digest into an immutable test plan.
+It validates configuration, connects compatible ports, expands bounded matrices,
+applies conditions, and gives retries only to providers that declare <code>retrySafe</code>.
+The declaration is not a promise that arbitrary retry is safe. The provider author
+must make that statement true for the provider's external effects.</p>
+<p>Buster snapshots the package before execution and loads it in the plugin sandbox.
+The provider receives a bounded workspace, abort signal, log sink, and only its
+allowed capability invoker. It does not receive Nova's <code>PluginInvocationContext</code>.
+Cleanup is optional in the SDK, but a fixture or provider that creates temporary
+state must implement and test it.</p>
+<blockquote>
+<p><strong>Provider registration:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L338-L390">The contract defines ports, retry safety, matrices, reports, and evidence policy</a>.</p>
+<p><strong>Provider isolation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/provider-loader.ts#L37-L86">Buster verifies the package digest, creates an immutable snapshot, and starts the sandboxed provider session</a>.</p>
+<p><strong>Plan resolution:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/test-gates/resolver.ts#L720-L754">Nova resolves suites and direct declarations into a deterministic immutable plan</a>.</p>
+</blockquote>
+<h2 id="report-adapter-contract">Report Adapter Contract</h2>
+<p>A report adapter parses an artifact that a provider already produced. It does not run
+the test and does not decide whether the provider process succeeded. Its registration
+declares a format, contract version, supported media types, module, and export.</p>
+<p>Buster selects an adapter during plan and report resolution. More than one installed
+adapter can support the same format, so configuration must resolve ambiguity. The
+runtime accepts only <code>test-report</code> artifacts with a declared media type. It bounds
+source bytes, execution time, cases, findings, and findings per case.</p>
+<p>The adapter returns normalized counts, cases, findings, duration, and explicit
+truncation facts. It cannot hide omitted data. Finalization combines provider outcome
+and normalized report outcome. A command failure remains a failure even when its
+report contains no failed case. A required-execution policy rejects an all-skipped
+report without inventing a fake test case.</p>
+<blockquote>
+<p><strong>Report registration:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L391-L409">The manifest binds format, contract version, export, and accepted media types</a>.</p>
+<p><strong>Runtime limits:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/report-adapter-runtime.ts#L118-L153">Buster validates the artifact type and media type before it reads and isolates the adapter</a>.</p>
+<p><strong>Final decision:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/report-finalizer.ts#L3-L39">Report finalization preserves command failure and rejects a required all-skipped result</a>.</p>
+</blockquote>
+<h2 id="data-and-authority-comparison">Data And Authority Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Contract</th>
+<th>Input</th>
+<th>Output</th>
+<th>Persistent evidence</th>
+<th>Authority source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage</td>
+<td>Validated graph input and invocation context</td>
+<td><code>stage-result.v2</code></td>
+<td>Lifecycle events, artifacts, facts</td>
+<td>Operator grants selected for registration</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>One committed event delivery</td>
+<td>No canonical stage result</td>
+<td>Delivery journal and checkpoint</td>
+<td>Observer grant set</td>
+</tr>
+<tr>
+<td>Adapter</td>
+<td>Effect request and bounded activation config</td>
+<td>Result or durable receipt</td>
+<td>Effect journal and external receipt</td>
+<td>Provider selection, caller grant, lock fence</td>
+</tr>
+<tr>
+<td>Test provider</td>
+<td>Resolved provider invocation and workspace</td>
+<td><code>provider-result.v1</code></td>
+<td>Attempt records, logs, artifacts, reports</td>
+<td>Buster policy and allowed capability invoker</td>
+</tr>
+<tr>
+<td>Report adapter</td>
+<td>Bounded report bytes and limits</td>
+<td>Normalized report result</td>
+<td>Imported report evidence</td>
+<td>Selected format adapter; no external capability context</td>
+</tr>
+</tbody>
+</table>
+<h2 id="move-from-a-need-to-an-implemented-registration">Move From A Need To An Implemented Registration</h2>
+<p>Use this sequence before you write the executable module:</p>
+<ol>
+<li>State the result that the new code must own.</li>
+<li>Select the caller from the comparison table.</li>
+<li>List every input, output, durable record, and external mutation.</li>
+<li>Select one registration type. Split unrelated responsibilities.</li>
+<li>Define strict schemas before implementation code.</li>
+<li>Declare each required capability and its resource type.</li>
+<li>Define duplicate, retry, cancellation, recovery, and cleanup behavior.</li>
+<li>Add the package manifest and test inert discovery first.</li>
+<li>Test activation or Buster binding through the real registry path.</li>
+<li>Test one success, one validation rejection, and each recovery class.</li>
+<li>Add explicit role ownership and inspect the built bundle.</li>
+</ol>
+<p>Do not start implementation if step 4 or step 6 has no supported answer. That gap
+means the work needs a different contract, an engine change, or a Core review.</p>
+<p>The <a href="first-plugin.html">minimal stage journey</a> supplies the package and activation
+procedure. The effect, Buster, and Nova guides apply the remaining steps to their
+specific contracts.</p>
+<h2 id="compatibility-rules">Compatibility Rules</h2>
+<p><code>apiVersion</code> selects the package contract and currently equals
+<code>pipeline-plugin-v2</code>. Package semantic version and content digest describe the
+implementation. A stage type, provider contract ID, and report format are consumer
+selection keys; changing them can break existing definitions or suites.</p>
+<p>Adding an optional registration can remain compatible for existing consumers, but
+it changes the package digest. Removing or renaming a selected registration is
+breaking. Tightening a schema can reject stored configuration. Changing artifact
+media type, value schema ID, evidence name, capability, retry safety, or result
+meaning also requires consumer review.</p>
+<p>Active runs retain exact package provenance in their snapshots and events. Do not
+replace package bytes underneath a recoverable run. Install a new version, direct new
+work to it, drain old work, and remove old bytes only after recovery no longer needs
+them.</p>
+<h2 id="unsupported-shortcuts">Unsupported Shortcuts</h2>
+<ul>
+<li>A stage cannot call the network or process API merely because Node exposes it.</li>
+<li>An observer cannot change a failed stage to passed.</li>
+<li>An adapter cannot create a capability outside the closed vocabulary without Core
+and policy work.</li>
+<li>A test provider cannot bypass Buster evidence normalization.</li>
+<li>A report adapter cannot execute a test or manufacture missing execution evidence.</li>
+<li>A manifest does not load a Worker Core engine.</li>
+<li>Project input cannot install package code or create a runtime role.</li>
+</ul>
+<h2 id="verification">Verification</h2>
+<p>Run the focused checks that match the contract you changed:</p>
+<pre><code class="language-bash">node tests/verification/contracts/check-plugin-system-v2-contracts.mjs
+node tests/verification/contracts/check-plugin-system-v2-registry.mjs
+node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
+npm run docs:extensions:observers:check
+node tests/verification/contracts/check-pipeline-test-provider-registry.mts
+node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
+</code></pre>
+<p>These are local contract checks. They do not deploy a role or perform an end-to-end
+pipeline run. Package-specific behavior needs its own test and boundary check.</p>
+<p>The observer command checks registry identities, role inclusion, and activation.
+Run observer recovery separately to test delivery behavior.
+The other recorded checks cover contract and registry behavior.
+They do not prove package-specific effects, persistent recovery, or deployment.</p>
+<h2 id="continue">Continue</h2>
+<ul>
+<li><a href="effectful-plugin.html">Build an effectful plugin</a></li>
+<li><a href="buster.html">Extend Buster</a></li>
+<li><a href="nova.html">Extend Nova</a></li>
+<li><a href="testing.html">Test a plugin</a></li>
+</ul>
+</main></body></html>

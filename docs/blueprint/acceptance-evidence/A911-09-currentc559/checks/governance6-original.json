@@ -1,0 +1,56 @@
+{
+  "utc": "2026-10-17T09:40:44.847240+00:00",
+  "revision": "3354d2d1e641e8332326d0a1641f459b2d494c62",
+  "state": "CURRENT_EXACT_GOVERNANCE_PRIMARY_PRESERVATION_NEGATIVES_PASS",
+  "cases": [
+    {
+      "name": "current-primary",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "stdoutSha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "manual-owner-rejected",
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3"
+    },
+    {
+      "name": "authored-preservation-regenerate",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "stdoutSha256": "e3ad3ed194ee7ef06f66373b48e9f0b611a0c2d3055a20dade2ca83656302623",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "authored-preservation-check",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "stdoutSha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "wrong-generated-class-rejected",
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3"
+    },
+    {
+      "name": "restored-current-primary",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "stdoutSha256": "934c80b2c1459fb03fac2774c0132454dcf09f33eedf93d8ac9ba3cded9bf551",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "cleanBeforeAndAfter": true,
+  "exactInputsRestored": true,
+  "actualSourceImpact": "Preceding current run failed stale metadata; actual generated53-field correction independently reviewed and committed. This is materially changed current-scope execution, not an unchanged successful replay.",
+  "canonicalWrites": false,
+  "ciCheckoutWrites": false,
+  "formalAcceptance": false,
+  "limits": "Only owner-map tamper and authored preservation boundary; not proof arbitrary duplicate prose is detected everywhere."
+}

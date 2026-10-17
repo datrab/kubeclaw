@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/contracts.html"></head><body><main>
+<h1 id="contracts-versions-and-compatibility">Contracts, Versions, and Compatibility</h1>
+<p>Status: bounded reference; discovery and recovery limits stated below
+Audience: operator, developer, plugin author, maintainer
+Owner: documentation; named contract and store components own behavior
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-snapshots.ts">skills/nova/core/execution/engine-snapshots.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/prism/v1/src/index.ts">contracts/prism/v1/src/index.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/delivery-manifest/v3/src/index.ts">contracts/delivery-manifest/v3/src/index.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/observability/record-retirement.ts">skills/common/plugin-runtime/foundation/observability/record-retirement.ts</a>
+Applies to: the eight named contract families and actual selected reader boundaries below
+Last verified: 2026-10-15; current source behavior checked; no migration, backup or recovery executed</p>
+<h2 id="identify-the-contract-before-changing-a-version">Identify the contract before changing a version</h2>
+<p>A contract is the agreement between a producer and its consumer about data and
+behavior. A producer writes or returns a value. A validator checks the selected
+shape and semantic rules. A consumer acts on it. These can be three different
+components; passing one validator does not prove that every consumer accepts it.</p>
+<ol>
+<li>Identify the logical contract, record marker, producer and actual reader.</li>
+<li>Match the direction in the matrix below: new write, read, recovery or rejection.</li>
+<li>Retain original bytes, package/content identities and affected durable state
+before considering an upgrade, migration or removal.</li>
+</ol>
+<p>For exact recursive fields use <a href="schemas.html">Schema authorities</a>. For package
+owners versus grants use <a href="roles-and-package-ownership.html">Roles and package ownership</a>.
+For retained data use <a href="stores-and-retention.html">Stores and retention</a>. This
+page routes contract changes; it is not a migration command or an all-contract
+compatibility guarantee.</p>
+<h2 id="keep-identity-layers-separate">Keep identity layers separate</h2>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>What it selects</th>
+<th>What it does not prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logical contract ID, for example <code>kubeclaw.prism-design-engine@1</code></td>
+<td>A named interface agreed by its selected producer/consumer</td>
+<td>Every document, database or package uses record version 1</td>
+</tr>
+<tr>
+<td>Plugin API <code>pipeline-plugin-v2</code></td>
+<td>The extension API/envelope generation</td>
+<td>A package's semantic version or permission to activate it</td>
+</tr>
+<tr>
+<td><code>packageVersion</code>, plugin ID, registration ID</td>
+<td>Installed package version and exact stage/observer/adapter/provider/report owner</td>
+<td>Equal registration labels across packages grant the same authority</td>
+</tr>
+<tr>
+<td>Content digest</td>
+<td>Exact selected bytes under their defined digest algorithm</td>
+<td>Compatible behavior, an authorized caller or a migration</td>
+</tr>
+<tr>
+<td>JSON <code>$id</code>, schema path, embedded pointer</td>
+<td>A validator document/definition namespace</td>
+<td>The source filename alone is the runtime-selected authority</td>
+</tr>
+<tr>
+<td>Record <code>schemaVersion</code> or <code>schema</code> marker</td>
+<td>The exact record/document variant dispatched by the reader</td>
+<td>A newer writer is readable by an older reader</td>
+</tr>
+<tr>
+<td>Semantic/artifact encoding</td>
+<td>Rules for meaning, ordering and serialized-byte identity</td>
+<td>A different encoding preserves the same digest by renaming its label</td>
+</tr>
+<tr>
+<td>SQL migration name</td>
+<td>A selected database change recorded by the migration runner</td>
+<td>Contract ID/version or a checksum of previously applied SQL bytes</td>
+</tr>
+<tr>
+<td>Deployed image or source revision</td>
+<td>Executable/source identity for a component</td>
+<td>All its external reader/writer pairs or stored records are compatible</td>
+</tr>
+</tbody>
+</table>
+<p>Semantic version numbers describe package releases. They do not replace exact
+content and registration identity. A digest is a hash binding to selected bytes;
+retain its encoding and source, not only the hexadecimal text.</p>
+<p><strong>Source — package/API/content/registration identity:</strong>
+<a href="../../../skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L162-L188">packageIdentity / packageResolution</a> (<code>skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json:162-188</code>, current-checkout SHA-256 <code>837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db</code>). <a href="../../../skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L413-L455">manifest API and distinct registration arrays</a> (<code>skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json:413-455</code>, current-checkout SHA-256 <code>837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db</code>).</p>
+<h2 id="read-the-direction-not-just-the-version-number">Read the direction, not just the version number</h2>
+<ul>
+<li><strong>Write:</strong> a named current producer creates this format for new work.</li>
+<li><strong>Read:</strong> a named reader validates and consumes this format in a selected route.</li>
+<li><strong>Recover:</strong> a reader can continue retained state with the required original
+graph, package, configuration and semantic identities. Readability alone is insufficient.</li>
+<li><strong>Reject:</strong> the boundary stops rather than guessing a conversion.</li>
+<li><strong>Unestablished direction:</strong> this finite source set does not prove the writer,
+reader, downgrade, conversion or retirement route. Do not infer support.</li>
+</ul>
+<p><a href="configuration-compatibility.html">Configuration compatibility</a> gives the detailed
+artifact-specific vocabulary. No row below promises universal migration or
+rollback between arbitrary versions.</p>
+<h2 id="current-finite-producer-to-consumer-matrix">Current finite producer-to-consumer matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Family / identity</th>
+<th>Producer and selected validator/consumer</th>
+<th>Supported direction and explicit boundary</th>
+<th>Detailed route</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plugin extension: <code>pipeline-plugin-v2</code>, <code>pipeline-definition.v2</code>, <code>stage-result.v2</code></td>
+<td>Installed manifest owns package-local modules/schemas; Nova validates stage config/input, then stage result; observer checkpoint validation has its own value subset</td>
+<td>Current selected v2 shapes, exact installed registration and grants. Stage, observer, adapter, test-provider and report-adapter interfaces are not interchangeable. No blanket package transition follows</td>
+<td><a href="../extend/contracts.html">Extension contracts</a>, <a href="pipeline-definition.html">pipeline definition</a>, <a href="plugin-configuration.html">plugin fields</a></td>
+</tr>
+<tr>
+<td>Nova snapshots: <code>run-snapshot.v1</code>–<code>v4</code>, <code>execution-graph-snapshot.v2</code>/<code>v3</code></td>
+<td>Current snapshot writer creates v4; reader validates the retained version and rebuilds graph with the stored graph version before digest comparison</td>
+<td>v1/v2 reject newer profile fields; v3 requires runtime dispatch profile and rejects review cache profile; v4 requires both. Recovery also checks exact package set/content/runtime configuration. No automatic migration or universal downgrade</td>
+<td><a href="../understand/nova-core.html">Nova Core</a>, <a href="configuration-compatibility.html">compatibility</a></td>
+</tr>
+<tr>
+<td>Buster provider/report and remote plan</td>
+<td>Selected provider executes invocation; report adapter separately normalizes artifacts; test-gate validator adds per-definition semantic relations</td>
+<td>Logical provider/report IDs come from installed registrations/plans. Durable <code>buster-plan-status.v1</code>, job-record/header/compacted-record and compaction-receipt formats do not enumerate all provider contracts. Compaction is a guarded retained-data change, not wire compatibility</td>
+<td><a href="../understand/buster.html">Buster</a>, <a href="buster-suites.html">suites</a>, <a href="buster-provider-configuration.html">provider configuration</a></td>
+</tr>
+<tr>
+<td>Worker resource protocol</td>
+<td>Executor dispatches envelope v3, then v2, otherwise the base validator; Prism worker service admits v3</td>
+<td>Actual validator rejects unsupported shapes; do not interpret the fallback as every version being accepted. v3 task accounting differs from v2 process accounting; absence is not zero. Complete producer/result upgrade pairs remain to be traced</td>
+<td><a href="../understand/worker-core.html">Worker Core</a>, <a href="worker-profiles-and-roles.html">worker profiles</a></td>
+</tr>
+<tr>
+<td>Prism design engine and baseline</td>
+<td><code>kubeclaw.prism-design-engine@1</code>; <code>validatePrism</code> selects baseline v2 only when the actual marker is <code>prism.baseline-bundle.v2</code>; operation application validates input and resulting document</td>
+<td>Logical ID, generated document validator, operation revision and SQL migration history are distinct. Other engine/control/publication compatibility directions are not all established here</td>
+<td><a href="../understand/prism-runtime.html">Prism runtime</a>, <a href="schemas.html">schemas</a></td>
+</tr>
+<tr>
+<td>Delivery manifest v2/v3</td>
+<td>Project-summary producer returns v2 when delivery encoding is absent; otherwise calls v3 creator</td>
+<td><code>delivery-manifest.v3</code>, semantic <code>delivery-manifest.utf16-v1</code> and artifact encoding are distinct. Closed v3 keys and recursive relations apply. This producer branch does not prove every downstream reader, converter or safe removal direction</td>
+<td><a href="nova-project.html">Nova project</a>, <a href="configuration-compatibility.html">compatibility</a></td>
+</tr>
+<tr>
+<td>Durable adapter records/stores v1/v2</td>
+<td>Record replay checks version/owner; explicit retirement selects current v2 records under domain and store fences</td>
+<td>v1 header has no owner; v2 requires a valid owner. Supported read/replay does not authorize retirement. Tombstones retain replay identity without payload; no general age-based garbage collection or blob deletion follows</td>
+<td><a href="stores-and-retention.html">Stores and retention</a>, <a href="../use/recovery.html">recovery</a></td>
+</tr>
+<tr>
+<td>Telemetry/agent envelopes</td>
+<td>Active lifecycle/domain v2 and separate host schema 1; delivered flat telemetry v1 remains a distinct asset</td>
+<td>An equal version number does not join these envelopes. Retained flat assets do not implement ingestion, ordering, retention or authentication; external reader applicability must be assessed before removal</td>
+<td><a href="../understand/telemetry.html">Telemetry</a>, <a href="../../../contracts/telemetry/v1/README.html">retained contract source</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — actual extension callers:</strong>
+<a href="../../../skills/common/plugin-runtime/foundation/registry/build.ts#L32-L70">package-local registration module/schema acquisition</a> (<code>skills/common/plugin-runtime/foundation/registry/build.ts:32-70</code>, current-checkout SHA-256 <code>c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867</code>). <a href="../../../skills/nova/core/execution/runner.ts#L40-L46">stage config/input validation</a> (<code>skills/nova/core/execution/runner.ts:40-46</code>, current-checkout SHA-256 <code>9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6</code>). <a href="../../../skills/nova/core/execution/stage-executor.ts#L35-L48">returned stage result validation</a> (<code>skills/nova/core/execution/stage-executor.ts:35-48</code>, current-checkout SHA-256 <code>4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb</code>). <a href="../../../skills/nova/core/telemetry/observers.ts#L51-L58">checkpoint sequence/eventId validation</a> (<code>skills/nova/core/telemetry/observers.ts:51-58</code>, current-checkout SHA-256 <code>b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd</code>).</p>
+<h3 id="a-readable-snapshot-can-still-be-unrecoverable-with-changed-inputs">A readable snapshot can still be unrecoverable with changed inputs</h3>
+<p>The current writer creates <code>run-snapshot.v4</code>. The reader accepts explicitly
+listed retained snapshot versions and validates their profile fields. It does
+not add newer profile fields to old bytes to make them current. Snapshot
+version 1 also uses its version-specific digest serialization; retained graph
+v2/v3 is rebuilt using the stored graph marker before digest comparison.</p>
+<p>Recovery then checks the registry dependency-identity format, original package
+set and content, effective runtime configuration and supported explicit package
+upgrade evidence. A schema-valid snapshot with changed runtime authority can
+therefore reject. Use original pinned runtime where required; do not edit the
+stored digest or start a new identity and call it recovery.</p>
+<p><strong>Source — exact snapshot read/write and recovery pins:</strong>
+<a href="../../../skills/nova/core/execution/engine-snapshots.ts#L68-L118">retained versions, profile checks and v4 writer</a> (<code>skills/nova/core/execution/engine-snapshots.ts:68-118</code>, current-checkout SHA-256 <code>50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd</code>). <a href="../../../skills/nova/core/execution/engine-snapshots.ts#L28-L41">package/runtime recovery checks</a> (<code>skills/nova/core/execution/engine-snapshots.ts:28-41</code>, current-checkout SHA-256 <code>50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd</code>).</p>
+<h3 id="shape-validation-and-semantic-checks-are-separate">Shape validation and semantic checks are separate</h3>
+<p>Buster's contract checker first applies its selected schema, then the
+per-definition relations for plans, reports, attempts, results, coverage and
+status. The provider execution interface owns cleanup/termination/resources;
+report reading and normalization has separate limits. Neither can be replaced
+with a stage-result schema because both return JSON.</p>
+<p><strong>Source — Buster validator and caller boundaries:</strong>
+<a href="../../../contracts/pipeline-test-gate/v1/src/validation.ts#L250-L277">checkPipelineTestGateContract semantic dispatch</a> (<code>contracts/pipeline-test-gate/v1/src/validation.ts:250-277</code>, current-checkout SHA-256 <code>0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a</code>). <a href="../../../skills/buster/engine/test-gates/provider-loader.ts#L14-L39">LoadedTestProvider / TestProviderLoader</a> (<code>skills/buster/engine/test-gates/provider-loader.ts:14-39</code>, current-checkout SHA-256 <code>8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85</code>). <a href="../../../skills/buster/engine/test-gates/report-adapter-runtime.ts#L1-L32">ReportArtifactReader and runtime limit interface</a> (<code>skills/buster/engine/test-gates/report-adapter-runtime.ts:1-32</code>, current-checkout SHA-256 <code>0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9</code>).</p>
+<p><strong>Source — version-specific Worker, Prism and delivery consumers:</strong>
+<a href="../../../skills/worker/core/worker/attempt-executor.ts#L188-L203">Worker envelope validator dispatch</a> (<code>skills/worker/core/worker/attempt-executor.ts:188-203</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>). <a href="../../../skills/prism/server/worker-service.ts#L89-L94">Prism v3 attempt admission</a> (<code>skills/prism/server/worker-service.ts:89-94</code>, current-checkout SHA-256 <code>90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4</code>). <a href="../../../contracts/prism/v1/src/index.ts#L34-L65">Prism contract ID and baseline marker dispatch</a> (<code>contracts/prism/v1/src/index.ts:34-65</code>, current-checkout SHA-256 <code>441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18</code>). <a href="../../../skills/prism/domain/index.ts#L103-L113">applyOperation input/revision/result validation</a> (<code>skills/prism/domain/index.ts:103-113</code>, current-checkout SHA-256 <code>710ff6fd047d301aef22477cb8cdecfd1fe1c9bd224c069abc6af9d805462838</code>). <a href="../../../skills/nova/plugins/project-summary/src/summary.ts#L155-L164">conditional v2/v3 delivery producer</a> (<code>skills/nova/plugins/project-summary/src/summary.ts:155-164</code>, current-checkout SHA-256 <code>bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5</code>). <a href="../../../contracts/delivery-manifest/v3/src/index.ts#L14-L17">delivery version and semantic/artifact encoding</a> (<code>contracts/delivery-manifest/v3/src/index.ts:14-17</code>, current-checkout SHA-256 <code>5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294</code>). <a href="../../../contracts/delivery-manifest/v3/src/index.ts#L208-L224">closed v3 manifest validation</a> (<code>contracts/delivery-manifest/v3/src/index.ts:208-224</code>, current-checkout SHA-256 <code>5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294</code>).</p>
+<h2 id="plan-a-change-or-retirement">Plan a change or retirement</h2>
+<p>Retirement removes old data or an interface only after its readers and retained
+work no longer require it. Migration is a defined transformation with its own
+writer, destination, validation and recovery procedure. Neither follows solely
+from publishing a newer schema or package.</p>
+<ol>
+<li>Record the exact current writer, logical ID, record version, encoding,
+content digest, installed registration and known internal/external readers.</li>
+<li>Identify active and retained runs/records that pin the old authority. Keep
+original package bytes and required credentials, keys, profiles and readers.</li>
+<li>Establish the supported direction with the actual consuming validator and
+semantic rules. Stop if conversion, downgrade, external reader or recovery
+applicability is unknown; do not relabel bytes as a newer version.</li>
+<li>Preserve a consistent data group and writer fence using
+<a href="../use/recovery.html">Recovery</a>. A fence prevents conflicting owners from
+writing; a lock-file name alone does not establish that work stopped.</li>
+<li>Use only the component's supported migration or drain procedure. Retain
+original input/output identities, first diagnostic and partial failures.</li>
+<li>Before removal, verify recovery through the original application readers
+and required external consumers. Schema syntax or a native database check
+alone is not that proof. Keep unresolved readers and cleanup ownership visible.</li>
+</ol>
+<p>One narrow example: the notification observer README directs retained runs
+that enabled its retired audit registration to drain with their pinned runtime.
+The current registrations are <code>notifications</code> and <code>preview-delivery</code>, with
+separate grants/attempts/checkpoints. That does not establish historical
+consumer absence, a universal retirement date or permission to delete journals.
+Audit also has the physical acquisition effects described in
+<a href="stores-and-retention.html#audit-and-inspection-are-not-universally-write-free">Stores and retention</a>.</p>
+<p><strong>Source — explicit durable version/retirement boundary and pinned-run example:</strong>
+<a href="../../../skills/common/plugin-runtime/foundation/observability/record-retirement.ts#L1-L54">record/store versions, owner and retirement identity</a> (<code>skills/common/plugin-runtime/foundation/observability/record-retirement.ts:1-54</code>, current-checkout SHA-256 <code>00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681</code>). <a href="../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts#L134-L174">retire exact records with reauthorization and tombstones</a> (<code>skills/common/plugin-runtime/foundation/observability/durable-records.ts:134-174</code>, current-checkout SHA-256 <code>c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd</code>). <a href="../../../skills/common/plugins/notification-observer/README.html#notification-observer">current registrations and pinned-runtime drain guidance</a> (<code>skills/common/plugins/notification-observer/README.md:1-15</code>, current-checkout SHA-256 <code>64235a03c137827e4ef3db5cfa0313374a46f470bf91a86fbb7335fd8d99d52f</code>).</p>
+<h2 id="failure-and-coverage-limits">Failure and coverage limits</h2>
+<p>If a consumer rejects a marker, digest, profile, package set or relation,
+retain that original diagnostic and exact bytes. Correct the intended producer
+or use the supported original runtime; do not weaken validation, fabricate an
+empty accounting field or rewrite retained state to make it load.
+A partial migration needs its domain owner and supported recovery route before
+writers resume. Unknown external consumers are a stop condition for removal.</p>
+<p>The eight families above are source-bounded examples with concrete selected
+callers, not an exhaustive inventory of logical IDs, schemas, embedded
+validators, all engine operations or every writer/reader pair. Other host,
+OpenClaw/Codex, operations and external contract roots remain to be reconciled.
+Current generated inventories do not generate this authored central hub.
+Use <a href="../extend/documentation-maintenance.html">Documentation maintenance</a> when a
+contract, reader, version or removal route changes. We ran no validator, upgrade,
+retirement, migration or recovery for this page.</p>
+</main></body></html>

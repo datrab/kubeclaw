@@ -1,0 +1,1524 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/lint-policy.html"></head><body><main>
+<h1 id="lint-policy-reference">Lint Policy Reference</h1>
+<p>Status: implemented
+Audience: lint-policy maintainer, operator, Nova maintainer
+Owner: lint
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/lint-policy.json">charts/kubeclaw/files/config/lint-policy.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/lint-baseline.json">charts/kubeclaw/files/config/lint-baseline.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json">charts/kubeclaw/files/config/kubernetes-policy-pack-default.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/lint/src/engine">skills/nova/plugins/lint/src/engine</a>
+Evidence revision: <code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code>
+Applies to: <code>pipeline_lint_policy.v7</code>, <code>pipeline_lint_baseline.v2</code>, <code>kubernetes_lint_policy_pack.v1</code>, <code>pipeline_lint_report.v7</code>
+Last verified: source, configuration, and focused package checks on 2026-09-20; live fixture blocked before lint by BusyBox flock</p>
+<h2 id="purpose">Purpose</h2>
+<p>This page defines the complete shipped lint-policy surface. The policy binds
+project discovery, targets, tool settings, governance records, and immutable
+Kubernetes rule packs. The engine rejects an invalid policy before it runs a
+tool. A partly valid policy cannot produce an authoritative-looking report.</p>
+<p>Use the <a href="lint-policy-generated.html">generated policy facts</a> for every exact
+shipped value. Use the <a href="lint-rules.html">rule and finding reference</a> for triggers,
+exceptions, remediation, and error codes. Use <a href="../extend/lint.html">Extend Lint</a>
+for change procedures.</p>
+<blockquote>
+<p><strong>Canonical evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L1-L1070">The shipped policy contains the project, 31 tools,
+exclusions, architecture, admission, baseline, and pack selection</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L234-L273">The loader validates all parts and calculates policy, config, and pack digests</a>.</p>
+</blockquote>
+<h2 id="contracts-and-versions">Contracts And Versions</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Required version</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policy</td>
+<td><code>pipeline_lint_policy.v7</code></td>
+<td>Select the project, tools, scopes, paths, governance, and packs.</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td><code>pipeline_lint_baseline.v2</code></td>
+<td>Record approved, time-bounded existing findings.</td>
+</tr>
+<tr>
+<td>Kubernetes pack</td>
+<td><code>kubernetes_lint_policy_pack.v1</code></td>
+<td>Supply declarative rules with immutable identity.</td>
+</tr>
+<tr>
+<td>Report</td>
+<td><code>pipeline_lint_report.v7</code></td>
+<td>Preserve results and the identity of policy inputs.</td>
+</tr>
+</tbody>
+</table>
+<p>The engine accepts only the current policy version. It does not upgrade an old
+document. A version can change gate meaning, so an implicit conversion would be
+unsafe.</p>
+<blockquote>
+<p><strong>Version evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy-version.ts#L1">The policy version is fixed here</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L3-L8">the report version and vocabularies are fixed here</a>.</p>
+</blockquote>
+<h2 id="loading-precedence-and-authority">Loading, Precedence, And Authority</h2>
+<p>Lint has no policy merge chain. The stage supplies one <code>policyPath</code> and one
+<code>policyProject</code>. The adapter admits the repository and policy through separate
+operator-owned root lists. The engine loads exactly that policy and selects the
+named project.</p>
+<p>The effective order is:</p>
+<ol>
+<li>Stage configuration supplies the policy path, project ID, and visibility flags.</li>
+<li>Adapter configuration admits canonical repository and policy roots.</li>
+<li>The engine loads the policy, referenced baseline, native configs, and packs.</li>
+<li>Invocation input can replace only Kubernetes raw-manifest and chart lists.</li>
+<li><code>changedFiles</code> and <code>modulePath</code> narrow work according to each tool's scope.</li>
+</ol>
+<p>An invocation cannot replace packs, limits, schema location, tools, severity, or
+policy. This prevents repository input from granting itself new checks or authority.</p>
+<blockquote>
+<p><strong>Flow evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L56-L81">The stage builds the request</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/adapter.ts#L10-L50">the adapter enforces both roots</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/index.ts#L34-L57">the engine applies only the bounded Kubernetes override</a>.</p>
+</blockquote>
+<h3 id="deployment-and-persistent-config-precedence">Deployment And Persistent-Config Precedence</h3>
+<p>The runtime has a delivery chain before policy loading. Helm builds a ConfigMap.
+An init container copies files through a persistent config volume. The runtime
+then reads its copies from the runtime-config directory.</p>
+<p><code>semgrepConfigYaml</code> and <code>eslintConfigMjs</code> can replace the chart defaults. With
+<code>swarmConfig.overrideOnRestart=false</code>, an existing persistent Semgrep or ESLint
+file wins over a later chart value. This default preserves runtime-owned edits.
+It also means that a chart upgrade does not prove those two files changed.</p>
+<p>The init container overwrites the other lint configs, baseline, and policy from
+the chart source on each restart. <code>jscpd-tests.json</code> follows this overwrite path
+even though it is an implicit JSCPD companion.</p>
+<p>The chart does not currently deliver <code>kubernetes-policy-pack-default.json</code> to
+the persistent or runtime config directory. The shipped policy references that
+relative file. Therefore, the deployed policy loader stops with
+<code>LINT_POLICY_INVALID</code> before it runs a tool unless an operator supplies the pack
+beside <code>lint-policy.json</code>. The repository fixture copies the pack explicitly,
+but the live-function fixture removes all pack references. Neither test proves
+the current chart delivery path.</p>
+<p>Treat this as an implementation gap, not an operator workaround. Do not claim a
+successful deployed full run until the ConfigMap and both copy stages deliver
+the pack and a chart-level test proves the final runtime path.</p>
+<p>Use the report's policy and explicit config digests to identify most effective
+runtime inputs. Inspect persistent <code>jscpd-tests.json</code> and the installed
+type-evidence plugin separately. Their digests are not in <code>config_digests</code>.</p>
+<p>To adopt a new Semgrep or ESLint chart value, set
+<code>swarmConfig.overrideOnRestart=true</code> for the controlled restart. Verify the
+effective digest and findings. Return the value to <code>false</code> when later runtime
+preservation remains required.</p>
+<p>For rollback, restore the earlier reviewed chart value or persistent file. Then
+restart with the matching overwrite choice. A previous report identifies the
+old digest, but it is not proof that rollback completed.</p>
+<blockquote>
+<p><strong>Delivery evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/values.yaml#L469-L498">Helm values define both overrides and restart behavior</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-swarm-config.yaml#L10-L49">The ConfigMap selects override or packaged content</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L622-L696">The init container preserves only existing Semgrep and ESLint files when overwrite is false</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/live-function.test.ts#L15-L22">The live fixture removes pack references</a>,
+while <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/contracts/support/manifest-lint-parity-fixture.mts#L122-L128">the manifest fixture copies pack bytes explicitly</a>.</p>
+</blockquote>
+<h2 id="stage-and-adapter-configuration">Stage And Adapter Configuration</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Exact meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policyPath</code></td>
+<td>Yes</td>
+<td>Canonical policy path; the adapter must admit it.</td>
+</tr>
+<tr>
+<td><code>policyProject</code></td>
+<td>Yes</td>
+<td>Exact <code>projects[].id</code>; an unknown ID fails.</td>
+</tr>
+<tr>
+<td><code>includeDebt</code></td>
+<td>No; effective default <code>false</code></td>
+<td>Disclose baselined finding bodies. Debt counts remain present.</td>
+</tr>
+<tr>
+<td><code>includeExperimental</code></td>
+<td>No; effective default <code>false</code></td>
+<td>Run and disclose experimental tools. They remain nonblocking.</td>
+</tr>
+<tr>
+<td><code>allowedRepositoryRoots</code></td>
+<td>Adapter: yes, non-empty and unique</td>
+<td>Canonical trees that lint may inspect.</td>
+</tr>
+<tr>
+<td><code>allowedPolicyRoots</code></td>
+<td>Adapter: yes, non-empty and unique</td>
+<td>Canonical trees from which lint may load policy.</td>
+</tr>
+</tbody>
+</table>
+<p>Schema defaults are annotations. The stage also uses <code>=== true</code>, so absent
+visibility flags are false even if the host does not insert defaults.</p>
+<blockquote>
+<p><strong>Schema evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/schemas/config.schema.json">Stage configuration</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/schemas/adapter-config.schema.json">adapter configuration</a> are closed objects.</p>
+</blockquote>
+<h2 id="invocation-input">Invocation Input</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Rule and effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workingDirectory</code></td>
+<td>Required non-empty repository path under an admitted root.</td>
+</tr>
+<tr>
+<td><code>project</code></td>
+<td>Optional report label. It does not select policy.</td>
+</tr>
+<tr>
+<td><code>modulePath</code></td>
+<td>Optional relative scope. Absolute and escaping paths fail.</td>
+</tr>
+<tr>
+<td><code>changedFiles</code></td>
+<td>Optional unique relative paths. Valid deleted leaves are ignored during scope resolution.</td>
+</tr>
+<tr>
+<td><code>sourceStageId</code></td>
+<td>Optional runtime source selector; mutually exclusive with <code>revision</code>.</td>
+</tr>
+<tr>
+<td><code>revision</code></td>
+<td>Optional full lowercase 40-character SHA; runs in a detached temporary checkout.</td>
+</tr>
+<tr>
+<td><code>kubernetes</code></td>
+<td>Optional override object. When present, it must contain both arrays below. Their combined content must not be empty.</td>
+</tr>
+<tr>
+<td><code>kubernetes.rawManifests</code></td>
+<td>Required inside <code>kubernetes</code>; at most 256 paths; replaces the project list for this call.</td>
+</tr>
+<tr>
+<td><code>kubernetes.helmCharts</code></td>
+<td>Required inside <code>kubernetes</code>; at most 256 paths; replaces the project list for this call.</td>
+</tr>
+</tbody>
+</table>
+<p>The candidate runner disables Git hooks, verifies detached <code>HEAD</code>, and removes
+the temporary checkout. The stage rejects a response bound to another revision.</p>
+<blockquote>
+<p><strong>Input evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/schemas/input.schema.json">The input schema closes the shape</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/candidate.ts#L6-L26">candidate execution verifies source identity</a>.</p>
+</blockquote>
+<h2 id="project-fields">Project Fields</h2>
+<p>The contract currently requires exactly one project. The validator contains no
+recorded reason for this limit. Treat the historical reason as unknown, not as
+an established architecture decision. The limit gives the current deployment
+one unambiguous project inventory, but it also prevents one policy file from
+serving multiple repository roots. This benefit-and-cost statement is an
+inference from current behavior.</p>
+<p>The execution request already selects a project by ID. Therefore, a future
+multi-project change must first define why one shared policy is preferable to
+separate policy files. It must then change validation, schema and negative tests,
+generated facts, deployment configuration, and cross-project scope tests. It
+must also define whether baseline, rule admission, architecture layers, and
+policy packs remain policy-wide. Until lint maintainers accept that contract and
+tests prove it, the runtime rejects additional projects instead of silently
+ignoring them.</p>
+<blockquote>
+<p><strong>Project-count evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L234-L240">Policy validation rejects every project count
+other than one</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L276-L279">Project selection still uses the requested ID</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L64-L72">the stage supplies that ID</a>.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Validation and meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Non-empty selection identity.</td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>Repository-relative project root.</td>
+</tr>
+<tr>
+<td><code>languages</code></td>
+<td>Values from <code>javascript</code>, <code>typescript</code>, <code>python</code>, <code>shell</code>, <code>docker</code>, <code>helm</code>, <code>yaml</code>, <code>go</code>, <code>terraform</code>.</td>
+</tr>
+<tr>
+<td><code>language_evidence</code></td>
+<td>Non-empty marker list for each enabled language; no entry for a disabled language.</td>
+</tr>
+<tr>
+<td><code>discovery_max_depth</code></td>
+<td>Non-negative marker-search depth.</td>
+</tr>
+<tr>
+<td><code>go.modules</code></td>
+<td>Module file, packages, build tags, and allowed imports; non-empty when Go is enabled.</td>
+</tr>
+<tr>
+<td><code>terraform.roots</code></td>
+<td>Canonical roots; non-empty when Terraform is enabled.</td>
+</tr>
+<tr>
+<td><code>terraform.provider_mirror</code></td>
+<td>Absolute local path; required for Terraform.</td>
+</tr>
+<tr>
+<td><code>kubernetes.raw_manifests</code></td>
+<td>Unique project-relative manifest files.</td>
+</tr>
+<tr>
+<td><code>kubernetes.helm_charts</code></td>
+<td>Unique project-relative chart directories.</td>
+</tr>
+<tr>
+<td><code>kubernetes.policy_packs</code></td>
+<td>Unique IDs from loaded operator-approved packs.</td>
+</tr>
+<tr>
+<td><code>kubernetes.kubernetes_version</code></td>
+<td>Full <code>major.minor.patch</code>.</td>
+</tr>
+<tr>
+<td><code>kubernetes.schema_location</code></td>
+<td>Absolute local schema template; network locations are forbidden.</td>
+</tr>
+<tr>
+<td><code>kubernetes.limits</code></td>
+<td>Positive bounds for files, file bytes, rendered bytes, and documents.</td>
+</tr>
+</tbody>
+</table>
+<p>When the whole Kubernetes object is absent, defaults are 128 files, 1 MiB per
+file, 10 MiB rendered content, and 2,048 documents. Configured hard maxima are
+128 files, 16 MiB per file, 64 MiB rendered content, and 100,000 documents.</p>
+<p>The shipped workspace project names
+<code>Projects/buster-infra-smoke/src/deployment.yaml</code>. The deployed workspace creates
+that input; a clean source checkout does not contain it. A source-only engine run
+must pass an explicit Kubernetes input override, such as the source-owned
+<code>charts/kubeclaw</code> chart, and must use the Nova image for its pinned schema tree.
+That override proves the selected source input only. Deployment acceptance must
+run with the generated manifest and the canonical input list.</p>
+<blockquote>
+<p><strong>Project evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L29-L123">Project validation defines vocabulary, defaults,
+authorities, and bounds</a>.</p>
+</blockquote>
+<h2 id="discovery-targets-and-scopes">Discovery, Targets, And Scopes</h2>
+<p>Discovery scans only to <code>discovery_max_depth</code>, skips hidden directories and
+<code>node_modules</code>, applies global exclusions, and matches language evidence. It can
+detect several languages. Discovery does not grant filesystem access.</p>
+<p>Policy-selected files combine <code>targets</code>, <code>include</code>, tool <code>exclude</code>, and
+<code>global_exclusions</code>. Type-evidence classification intentionally uses only Git,
+Swarm, and dependency-tree exclusions. It must still see generated or untracked
+files. Native recursive tools also apply their own configuration exclusions.</p>
+<p>Target trees are checked for repository escape and symlinks. <code>.git</code> is excluded
+from this security walk. This separate check is necessary because a native tool
+can traverse files that normal discovery excludes.</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Effective behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>changed-files</code></td>
+<td>Use matching requested changes. No match gives <code>not_applicable</code>. A changed policy, baseline, or native config expands to project scope.</td>
+</tr>
+<tr>
+<td><code>affected-projects</code></td>
+<td>Use changes for relevance, then run at project scope.</td>
+</tr>
+<tr>
+<td><code>project</code></td>
+<td>Ignore the requested file subset and run at the selected project root.</td>
+</tr>
+<tr>
+<td><code>repository</code></td>
+<td>Ignore module and changed-file narrowing and use repository targets.</td>
+</tr>
+</tbody>
+</table>
+<p>Input priority is changed files, then module, then full repository. Tool scope can
+intentionally widen the actual execution.</p>
+<blockquote>
+<p><strong>Scope evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/discovery.ts#L138-L220">Discovery and input priority</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L67-L102">tool-scope application</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy-paths.ts#L43-L74">native target validation</a> implement these rules.</p>
+</blockquote>
+<h2 id="tool-fields">Tool Fields</h2>
+<p>Every tool has a unique <code>id</code>, Boolean <code>required</code>, positive <code>timeout_ms</code>, and these
+closed vocabularies:</p>
+<ul>
+<li>category: <code>format</code>, <code>lint</code>, <code>types</code>, <code>architecture</code>, <code>duplication</code>, <code>security</code>,
+<code>dependencies</code>, or <code>manifests</code>;</li>
+<li>scope: <code>changed-files</code>, <code>affected-projects</code>, <code>project</code>, or <code>repository</code>;</li>
+<li>tier: <code>pre-check</code> or <code>full</code>;</li>
+<li>blocking severity: <code>warning</code> or <code>error</code>;</li>
+<li>languages: zero or more supported language IDs.</li>
+</ul>
+<p>It can also define <code>config_path</code>, <code>arguments</code>, <code>targets</code>, <code>include</code>, and <code>exclude</code>.
+Config paths resolve relative to the policy directory. A required tool's native
+config must exist. Semgrep alone receives target <code>.</code> when its list is empty.</p>
+<p>The registry is closed in both directions. Each policy ID needs an adapter, and
+each installed adapter needs a policy entry.</p>
+<blockquote>
+<p><strong>Registry evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L105-L129">The registry rejects both mismatch directions</a>.</p>
+</blockquote>
+<h2 id="complete-tool-inventory">Complete Tool Inventory</h2>
+<p>“Pre” runs in pre-check and full. “Full” runs only in full.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Tier</th>
+<th>Scope</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tsc</code></td>
+<td>Pre</td>
+<td>affected projects</td>
+<td>TypeScript compiler diagnostics.</td>
+</tr>
+<tr>
+<td><code>gofmt</code></td>
+<td>Pre</td>
+<td>changed files</td>
+<td>Go formatting.</td>
+</tr>
+<tr>
+<td><code>go-vet</code></td>
+<td>Pre</td>
+<td>affected projects</td>
+<td>Go vet diagnostics.</td>
+</tr>
+<tr>
+<td><code>shellcheck</code></td>
+<td>Pre</td>
+<td>changed files</td>
+<td>Shell correctness and safety.</td>
+</tr>
+<tr>
+<td><code>shfmt</code></td>
+<td>Pre</td>
+<td>changed files</td>
+<td>Shell formatting.</td>
+</tr>
+<tr>
+<td><code>ruff</code></td>
+<td>Pre</td>
+<td>changed files</td>
+<td>Python lint.</td>
+</tr>
+<tr>
+<td><code>terraform-fmt</code></td>
+<td>Pre</td>
+<td>changed files</td>
+<td>Terraform formatting.</td>
+</tr>
+<tr>
+<td><code>gocyclo</code></td>
+<td>Full</td>
+<td>affected projects</td>
+<td>Go function complexity.</td>
+</tr>
+<tr>
+<td><code>eslint</code></td>
+<td>Full</td>
+<td>changed files</td>
+<td>Blocking JavaScript and TypeScript rules.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-production</code></td>
+<td>Full</td>
+<td>repository</td>
+<td>Nonblocking production type-evidence audit.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-tests</code></td>
+<td>Full</td>
+<td>repository</td>
+<td>Nonblocking test and fixture audit.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-generated</code></td>
+<td>Full</td>
+<td>repository</td>
+<td>Nonblocking generated/untracked audit.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td>Full</td>
+<td>repository</td>
+<td>Unused files, dependencies, and exports.</td>
+</tr>
+<tr>
+<td><code>dependency-cruiser</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Forbidden and circular dependencies.</td>
+</tr>
+<tr>
+<td><code>jscpd</code></td>
+<td>Full</td>
+<td>repository</td>
+<td>Structural duplication.</td>
+</tr>
+<tr>
+<td><code>mypy</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Python types.</td>
+</tr>
+<tr>
+<td><code>go-imports</code></td>
+<td>Full</td>
+<td>affected projects</td>
+<td>Go import boundaries.</td>
+</tr>
+<tr>
+<td><code>staticcheck</code></td>
+<td>Full</td>
+<td>affected projects</td>
+<td>Go static analysis.</td>
+</tr>
+<tr>
+<td><code>govulncheck</code></td>
+<td>Full</td>
+<td>affected projects</td>
+<td>Reachable Go vulnerabilities.</td>
+</tr>
+<tr>
+<td><code>terraform-validate</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Terraform initialization and validation.</td>
+</tr>
+<tr>
+<td><code>tflint</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Terraform lint rules.</td>
+</tr>
+<tr>
+<td><code>trivy-terraform</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Terraform security.</td>
+</tr>
+<tr>
+<td><code>semgrep</code></td>
+<td>Full</td>
+<td>changed files</td>
+<td>Curated security and correctness patterns.</td>
+</tr>
+<tr>
+<td><code>hadolint</code></td>
+<td>Full</td>
+<td>changed files</td>
+<td>Dockerfile checks.</td>
+</tr>
+<tr>
+<td><code>helm-lint</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Helm chart lint.</td>
+</tr>
+<tr>
+<td><code>kubeconform</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Kubernetes schema validation.</td>
+</tr>
+<tr>
+<td><code>kubernetes-policy</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Selected immutable policy-pack rules.</td>
+</tr>
+<tr>
+<td><code>kubernetes-schema</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Explicit-input validation against the configured offline Kubernetes schema.</td>
+</tr>
+<tr>
+<td><code>trivy-kubernetes</code></td>
+<td>Full</td>
+<td>project</td>
+<td>Rendered Kubernetes security.</td>
+</tr>
+<tr>
+<td><code>yamllint</code></td>
+<td>Full</td>
+<td>changed files</td>
+<td>YAML checks outside Helm templates.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td>Full</td>
+<td>project</td>
+<td>OpenAPI shape and reference checks.</td>
+</tr>
+</tbody>
+</table>
+<p>External tools can produce version-specific codes. The engine preserves them.
+The next sections summarize the repository-owned rule groups. The
+<a href="lint-rules.html">rule and finding reference</a> is the canonical detailed catalogue.</p>
+<p>The inventory above identifies every tool. It is not the exact configuration
+table. The <a href="lint-policy-generated.html#tool-execution-settings">generated tool settings</a>
+record every required flag, timeout, threshold, language, native config,
+argument, target, include pattern, and exclusion directly from policy.</p>
+<blockquote>
+<p><strong>Inventory evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L131-L1070">The policy holds all 31 exact settings</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry.ts#L1-L18">the registry imports all implementation families</a>.</p>
+</blockquote>
+<h3 id="why-the-tool-settings-differ">Why The Tool Settings Differ</h3>
+<p>The repository has no decision record for each tier, scope, timeout, or target.
+The explanations below are current inferences from the implementation. They are
+not claims about the original design discussion.</p>
+<table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>Current inferred reason</th>
+<th>Cost and reconsideration condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All shipped tools are required.</td>
+<td>A missing analyser removes promised coverage, so absence must not look clean.</td>
+<td>One missing binary blocks the stage. Reconsider only when the tool is explicitly optional and the report exposes that reduced assurance.</td>
+</tr>
+<tr>
+<td>Pre-check contains the faster format, type, and basic lint tools.</td>
+<td>Early feedback should reject cheap defects before the larger repository checks run.</td>
+<td>A slow pre-check delays every cycle. Move a tool only after measured runtime and coverage analysis.</td>
+</tr>
+<tr>
+<td>Full includes pre-check and adds expensive checks.</td>
+<td>Final acceptance must retain early checks and add repository-wide evidence.</td>
+<td>Work repeats across tiers. Reconsider when shared, revision-bound results can be reused without weakening identity.</td>
+</tr>
+<tr>
+<td>Changed-file scope is used for file analysers.</td>
+<td>The tool can produce a trustworthy result from the selected files.</td>
+<td>It can miss cross-file effects. Use project or repository scope when analyser meaning depends on other files.</td>
+</tr>
+<tr>
+<td>Affected-project scope is used for TypeScript and Go.</td>
+<td>Their compilers and package tools need a complete owned project or module.</td>
+<td>More work runs than a file-only check. Narrow it only when dependency-aware selection remains complete.</td>
+</tr>
+<tr>
+<td>Project or repository scope is used for graphs, duplication, manifests, and contracts.</td>
+<td>These checks compare relationships or discover inputs across a declared boundary.</td>
+<td>They cost more and can produce broad findings. Narrow them only with a tested completeness rule.</td>
+</tr>
+<tr>
+<td>Timeouts are 30, 60, or 120 seconds.</td>
+<td>The bands separate file tools, project tools, and repository or security tools.</td>
+<td>A fixed timeout can fail on a larger valid project. Change it only with retained duration evidence and cleanup tests.</td>
+</tr>
+<tr>
+<td>Targets and exclusions are explicit.</td>
+<td>Native tools can traverse beyond ordinary discovery, so policy must bound their input independently.</td>
+<td>Every exclusion can hide debt. Add one only with a named ownership reason and a negative test.</td>
+</tr>
+</tbody>
+</table>
+<p>These choices should change when measured cost, project size, or analyser
+semantics invalidate the current boundary. A settings change must preserve the
+failure, report, and authority contracts described on this page.</p>
+<h2 id="native-configuration-decisions">Native Configuration Decisions</h2>
+<p>The policy selects a native configuration path. The native file owns detailed
+rules that belong to that analyser. The report records explicit config-path
+digests, so a changed explicit config changes report identity.</p>
+<p>The repository has no decision record for each native threshold and exclusion.
+The rationale below is an inference from current behavior and maintenance cost.
+The lint owner must review it when a value changes.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Effective choice</th>
+<th>Inferred current rationale and consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eslint.config.mjs</code></td>
+<td>Production limits, typed rules, seven local discipline rules, and named boundary exemptions.</td>
+<td>One file keeps a rule beside its legitimate boundaries. An exemption is visible and reviewable instead of hidden in source comments.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-config.mjs</code></td>
+<td>Seven syntax rules cover production TypeScript. One typed rule covers project-owned files and 12 declared default-project files.</td>
+<td>Syntax rules retain broad coverage. The expensive typed rule runs only where TypeScript project ownership is known.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-tests-config.mjs</code></td>
+<td>Seven experimental rules inspect tests and fixtures without the typed assertion rule.</td>
+<td>Tests remain visible without pretending that each test file has production project ownership.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-generated-config.mjs</code></td>
+<td>Seven syntax rules inspect generated or otherwise untracked files.</td>
+<td>This partition exposes weak type evidence without loading untrusted project metadata.</td>
+</tr>
+<tr>
+<td><code>type-evidence-eslint-plugin.mjs</code></td>
+<td>Seven local rule implementations are imported by all three type-evidence configs.</td>
+<td>One implementation keeps their meaning consistent across partitions. It is an implicit behavior source, not a policy <code>config_path</code>.</td>
+</tr>
+<tr>
+<td><code>.semgrep.yml</code></td>
+<td>Twenty-five warning rules cover JavaScript, TypeScript, and Python security boundaries. Individual rules own narrow path exclusions.</td>
+<td>Curated local patterns make the accepted security boundary reviewable. The blocking threshold makes every emitted warning actionable.</td>
+</tr>
+<tr>
+<td><code>knip.json</code></td>
+<td>Declared workspaces, entry points, project files, ignored generated paths, tool binaries, and known runtime-only dependencies.</td>
+<td>Knip needs real entry points to distinguish dead code from convention-based loading. Every ignore can hide debt, so changes require consumer evidence.</td>
+</tr>
+<tr>
+<td><code>jscpd.json</code></td>
+<td>Production clones need at least 70 tokens and 10 lines. Generated, dependency, coverage, vendor, and test trees are excluded.</td>
+<td>The production threshold finds structural duplication while avoiding generated copies and small incidental phrases.</td>
+</tr>
+<tr>
+<td><code>jscpd-tests.json</code></td>
+<td>Test clones need at least 100 tokens and 18 lines. Generated, dependency, coverage, and build trees are excluded.</td>
+<td>Repeated test setup is often useful. The higher threshold reports only larger copied test structures.</td>
+</tr>
+<tr>
+<td><code>.tflint.hcl</code></td>
+<td>The Terraform plugin uses its recommended preset.</td>
+<td>The project delegates general Terraform rule selection to the pinned analyser instead of maintaining a partial local copy.</td>
+</tr>
+<tr>
+<td><code>.yamllint.yml</code></td>
+<td>The default profile remains active, but document start, braces, colons, comment indentation, and line length are disabled. Truthy values accept only <code>true</code> and <code>false</code>.</td>
+<td>YAML structure remains checked while Helm-style and compact configuration syntax avoid formatting-only noise. Boolean spelling stays unambiguous.</td>
+</tr>
+</tbody>
+</table>
+<p>JSCPD always runs twice. It applies production calibration to normal configured
+targets and test calibration to <code>tests</code>. A missing calibration file is an
+execution error, not an empty result.</p>
+<p>The shipped project has no Terraform roots. Its Terraform tools are therefore
+not applicable today. Their configuration remains a supported contract for a
+project that declares a root and an offline provider mirror.</p>
+<blockquote>
+<p><strong>Native-config evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L242-L276">JSCPD requires and runs both calibrations</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L234-L273">Policy loading digests each explicit <code>config_path</code></a>.
+Exact settings remain in <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/knip.json">Knip</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/jscpd.json">production JSCPD</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/jscpd-tests.json">test JSCPD</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.tflint.hcl">TFLint</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.yamllint.yml">yamllint</a>.</p>
+</blockquote>
+<p><code>jscpd-tests.json</code> and <code>type-evidence-eslint-plugin.mjs</code> are implicit behavior
+sources. The engine requires or imports them, but the report does not include
+their digests in <code>config_digests</code>. Treat this as an evidence limit when a
+duplication or type-evidence result changes.</p>
+<h3 id="runtime-binary-and-version-authority">Runtime Binary And Version Authority</h3>
+<p>Policy selects behavior, but the Nova image supplies the executable versions.
+<code>versions.json</code> is the reviewed root for pinned build arguments. Python wheel
+locks, Go module locks, the Nova npm lock, and checksum-verified downloads bind
+the resolved tools. <code>npm run versions:check</code> verifies these authorities.</p>
+<p>Node-based tools such as ESLint, Knip, JSCPD, TypeScript, and Dependency
+Cruiser come from <code>docker/nova-tools/package-lock.json</code>. Ruff, Mypy, and Semgrep
+come from hashed Python locks. Staticcheck, Govulncheck, and Gocyclo come from
+the Go lock. Hadolint, shfmt, Terraform, TFLint, Trivy, Helm, and Kubeconform use
+versioned and checksum-verified downloads.</p>
+<p>ShellCheck and yamllint come from the dated Debian snapshot. Their package
+versions are not separate policy fields. The immutable image digest is the
+effective deployed identity for those packages.</p>
+<blockquote>
+<p><strong>Version evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/versions.json#L7-L51">The canonical build arguments name the current tool versions</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.nova#L72-L216">The Nova image verifies Python, Go, and downloaded analyser versions</a>.</p>
+</blockquote>
+<h2 id="tool-execution-contracts">Tool Execution Contracts</h2>
+<p>The <a href="lint-policy-generated.html#shipped-full-run-applicability">generated applicability table</a>
+separates eligible, dormant, opt-in, and replaced paths. The table below explains
+what each adapter does after selection.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Execution and result contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tsc</code></td>
+<td>Finds affected TypeScript configurations and runs <code>tsc --noEmit</code>. It preserves <code>TS</code> diagnostics and rejects an unstructured failing result.</td>
+</tr>
+<tr>
+<td><code>gofmt</code></td>
+<td>Runs <code>gofmt -l</code> on selected Go files. Each returned filename becomes <code>go-format</code>. No matching Go file is not applicable.</td>
+</tr>
+<tr>
+<td><code>go-vet</code></td>
+<td>Runs configured packages in each affected Go module. It normalizes parsed file diagnostics to <code>go-vet</code>.</td>
+</tr>
+<tr>
+<td><code>gocyclo</code></td>
+<td>Checks affected Go modules with maximum complexity 10. It creates a stable seed from package, function, and file identity.</td>
+</tr>
+<tr>
+<td><code>shellcheck</code></td>
+<td>Runs selected shell files in JSON mode at warning severity. It preserves <code>SC</code> codes and rejects an unexplained nonzero exit.</td>
+</tr>
+<tr>
+<td><code>shfmt</code></td>
+<td>Runs one format diff per selected shell file. Exit one with a diff is a finding; another nonzero exit is a parse failure.</td>
+</tr>
+<tr>
+<td><code>ruff</code></td>
+<td>Runs JSON lint on changed Python files or selected scope. Fixable findings become warnings; other findings become errors.</td>
+</tr>
+<tr>
+<td><code>eslint</code></td>
+<td>Runs the blocking flat config on changed matching files or configured targets. It preserves rule IDs and stable occurrence seeds.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-production</code></td>
+<td>Classifies tracked production files and runs the production audit config. It is experimental and repository-scoped.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-tests</code></td>
+<td>Classifies tests and fixtures, then runs their syntax-only audit config. It is experimental and repository-scoped.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-generated</code></td>
+<td>Classifies generated or untracked files, then runs syntax-only audit rules. It is experimental and repository-scoped.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td>Runs the declared workspace model and requests six active issue categories. It converts each issue to a <code>knip:&lt;category&gt;</code> finding.</td>
+</tr>
+<tr>
+<td><code>dependency-cruiser</code></td>
+<td>Builds the configured module graph without following dependencies. It reports forbidden layer edges and strongly connected cycles.</td>
+</tr>
+<tr>
+<td><code>jscpd</code></td>
+<td>Runs production and test calibrations into temporary reports. It joins both duplicate lists and removes the temporary directories.</td>
+</tr>
+<tr>
+<td><code>mypy</code></td>
+<td>Runs JSON output on the selected Python scope. It preserves the error code and treats output without valid findings as a parse failure.</td>
+</tr>
+<tr>
+<td><code>go-imports</code></td>
+<td>Uses <code>go list -json</code> for each affected module. It rejects external imports outside the module's approved prefixes.</td>
+</tr>
+<tr>
+<td><code>staticcheck</code></td>
+<td>Reads a JSON stream for configured Go packages. It preserves Staticcheck codes, locations, severity, and messages.</td>
+</tr>
+<tr>
+<td><code>govulncheck</code></td>
+<td>Reads pinned JSON-stream output and reports reachable OSV findings. Any nonzero exit is operational failure in this mode.</td>
+</tr>
+<tr>
+<td><code>terraform-fmt</code></td>
+<td>Runs recursive format checks for affected declared roots. It is dormant while the shipped project has no Terraform root.</td>
+</tr>
+<tr>
+<td><code>terraform-validate</code></td>
+<td>Requires the offline mirror and committed lock file. It initializes without backend or downloads, then validates JSON output.</td>
+</tr>
+<tr>
+<td><code>tflint</code></td>
+<td>Runs the recommended native config in every declared Terraform root. It preserves rule name and severity.</td>
+</tr>
+<tr>
+<td><code>trivy-terraform</code></td>
+<td>Requests high and critical Terraform misconfigurations without online updates. It rejects nonzero output without parsed issues.</td>
+</tr>
+<tr>
+<td><code>semgrep</code></td>
+<td>Runs the curated config without metrics or version checks. Execution errors are not findings and block as tool failure.</td>
+</tr>
+<tr>
+<td><code>hadolint</code></td>
+<td>Runs JSON output once per selected Dockerfile. It preserves Hadolint codes and source-line identity for stable fingerprints.</td>
+</tr>
+<tr>
+<td><code>helm-lint</code></td>
+<td>Runs strict Helm lint for every discovered chart. It normalizes only explicit error and warning lines.</td>
+</tr>
+<tr>
+<td><code>kubeconform</code></td>
+<td>Validates discovered Helm charts only when no explicit Kubernetes input exists. It uses the generic compatible schema path.</td>
+</tr>
+<tr>
+<td><code>kubernetes-policy</code></td>
+<td>Loads bounded raw and rendered resources. It applies selected immutable packs with namespace and service-account lookup.</td>
+</tr>
+<tr>
+<td><code>kubernetes-schema</code></td>
+<td>Validates configured raw manifests and charts against the pinned offline Kubernetes version and schema location.</td>
+</tr>
+<tr>
+<td><code>trivy-kubernetes</code></td>
+<td>Renders configured charts and scans Kubernetes misconfigurations. It preserves Trivy IDs and stable resource identity.</td>
+</tr>
+<tr>
+<td><code>yamllint</code></td>
+<td>Runs strict parsable output on selected YAML outside Helm templates. It normalizes diagnostics to <code>yamllint</code>.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td>Inspects matching OpenAPI filenames internally. It checks syntax, version, paths, local references, operations, IDs, and responses.</td>
+</tr>
+</tbody>
+</table>
+<p>The engine runs selected tools sequentially in registry order. A failed tool
+does not masquerade as a clean result. The engine continues to assemble tool
+results unless cancellation rejects the invocation.</p>
+<p>This sequential order applies inside one report only. The adapter has no mutex
+that serializes separate invocations. Concurrent reports in one Nova process
+share the module-level discovery-diagnostic queue, and each report drains that
+queue. They also share native tool cache directories. As a result, concurrent
+runs can attach a discovery diagnostic to the wrong report, and this repository
+does not prove that every native cache supports concurrent writers.</p>
+<p>Serialize lint stage invocations in one Nova process when report provenance is
+acceptance evidence. Start the next run only after the first stage has stored its
+artifact or returned its failure and process cleanup has completed. Separate CLI
+runner processes do not share the in-memory diagnostic queue, but they can still
+share the fixed cache root on one host. The
+<a href="../status/roadmap.html#lint-concurrency-and-deployed-extension-acceptance">roadmap</a>
+defines the required isolation and concurrency proof. Until that work exists,
+do not describe concurrent lint reports as isolated.</p>
+<blockquote>
+<p><strong>Concurrency evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/adapter.ts#L28-L63">The adapter tracks active promises without a
+serialization lock</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/discovery.ts#L8-L40">Discovery uses one module-level queue</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/execution.ts#L45-L71">native tools use one fixed cache root</a>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Execution evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts#L20-L263">Language adapters define TypeScript, Python, shell,
+and ESLint behavior</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L96-L284">Architecture adapters define graph, dead-code, and duplication behavior</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/go-tools.ts#L128-L312">Go</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/terraform-tools.ts#L64-L187">Terraform</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/container-yaml-tools.ts#L22-L177">container and YAML adapters</a> own their command contracts.</p>
+</blockquote>
+<h2 id="blocking-eslint-rules">Blocking ESLint Rules</h2>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Production behavior</th>
+<th>Test behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>complexity</code></td>
+<td>Maximum 15</td>
+<td>Maximum 70</td>
+</tr>
+<tr>
+<td><code>max-depth</code></td>
+<td>Maximum 3</td>
+<td>Maximum 6</td>
+</tr>
+<tr>
+<td><code>max-lines</code></td>
+<td>Maximum 300 nonblank/noncomment lines</td>
+<td>Maximum 2,000</td>
+</tr>
+<tr>
+<td><code>max-lines-per-function</code></td>
+<td>Maximum 60 nonblank/noncomment lines</td>
+<td>Maximum 650</td>
+</tr>
+<tr>
+<td><code>max-params</code></td>
+<td>Maximum 7</td>
+<td>Maximum 12</td>
+</tr>
+<tr>
+<td><code>no-async-promise-executor</code></td>
+<td>Not enabled</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td><code>no-global-assign</code></td>
+<td>Enabled</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td><code>no-useless-catch</code></td>
+<td>Enabled</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td><code>no-var</code></td>
+<td>Enabled</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td><code>no-console</code></td>
+<td>Require structured boundary</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/await-thenable</code></td>
+<td>Typed production sources</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/consistent-type-imports</code></td>
+<td>Prefer type imports</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/no-floating-promises</code></td>
+<td>Handle every promise</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/no-misused-promises</code></td>
+<td>Keep promises out of synchronous positions</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/switch-exhaustiveness-check</code></td>
+<td>Handle every union member</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>discipline/filename-case</code></td>
+<td>Lowercase kebab-case</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td><code>discipline/no-direct-env-access</code></td>
+<td>Environment reads only at named boundaries</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>discipline/no-dynamic-module-loading</code></td>
+<td>Dynamic loading only at named loader boundaries</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>discipline/no-env-default</code></td>
+<td>No hardcoded application fallback for environment values</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>discipline/no-fallback-chain</code></td>
+<td>At most one nonboolean fallback</td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>discipline/no-swallowed-error</code></td>
+<td>Handle, rethrow, or document <code>INTENTIONAL_NONCRITICAL(...)</code></td>
+<td>Not enabled</td>
+</tr>
+<tr>
+<td><code>discipline/no-top-level-mutable-state</code></td>
+<td>Mutable state needs a lifecycle owner</td>
+<td>Not enabled</td>
+</tr>
+</tbody>
+</table>
+<p>Named environment, dynamic-loader, and console exemptions are centralized in the
+configuration. They identify authority boundaries instead of hiding exceptions
+in source comments.</p>
+<blockquote>
+<p><strong>ESLint evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L255-L338">The configuration defines all rules, limits, file groups,
+and exemptions</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L175-L253">the seven discipline rules are implemented here</a>.</p>
+</blockquote>
+<h2 id="experimental-type-evidence-rules">Experimental Type-Evidence Rules</h2>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Detects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type-evidence/no-chained-type-assertions</code></td>
+<td>Certainty fabricated through a second assertion.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-known-value-widening</code></td>
+<td>Known object keys replaced with a broad dictionary.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-module-mocking</code></td>
+<td>Whole-module mocking instead of a dependency seam.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-object-parameters</code></td>
+<td>Broad <code>object</code> parameters.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-unknown-returns</code></td>
+<td>Unparsed <code>unknown</code> output contracts.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-unknown-type-aliases</code></td>
+<td><code>unknown</code> concealed behind an alias.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-widen-then-assert</code></td>
+<td>A value widened and later asserted back.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/no-unsafe-type-assertion</code></td>
+<td>Unsafe narrowing with project type information.</td>
+</tr>
+</tbody>
+</table>
+<p>Production, test/fixture, and generated/untracked tools partition eligible code.
+Syntax rules need no TypeScript project. The official assertion rule runs only
+where project type information exists. Experimental findings cannot block or
+become debt.</p>
+<blockquote>
+<p><strong>Type-evidence evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L42-L84">The production configuration selects all eight
+rules and its typed file set</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L226-L307">the local plugin implements seven rules</a>.</p>
+</blockquote>
+<h2 id="curated-semgrep-rules">Curated Semgrep Rules</h2>
+<table>
+<thead>
+<tr>
+<th>IDs</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>no-eval</code>, <code>no-string-timer-code</code></td>
+<td>Dynamic code execution.</td>
+</tr>
+<tr>
+<td><code>no-shell-interpolation</code>, <code>no-subprocess-shell</code></td>
+<td>Shell injection surfaces.</td>
+</tr>
+<tr>
+<td><code>no-hardcoded-secrets</code></td>
+<td>Embedded credentials outside test data.</td>
+</tr>
+<tr>
+<td><code>no-raw-sql-outside-data-layer-js</code>, <code>no-raw-sql-outside-data-layer-py</code>, <code>no-sql-string-format</code></td>
+<td>SQL outside controlled data boundaries or built by interpolation.</td>
+</tr>
+<tr>
+<td><code>no-math-random-security</code>, <code>use-compare-digest</code></td>
+<td>Unsafe random values or secret comparisons.</td>
+</tr>
+<tr>
+<td><code>no-prototype-pollution</code>, <code>no-open-redirect</code></td>
+<td>Node object and redirect attacks.</td>
+</tr>
+<tr>
+<td><code>no-bare-except</code>, <code>no-swallowed-exception-py</code></td>
+<td>Hidden Python failures.</td>
+</tr>
+<tr>
+<td><code>requests-no-timeout</code>, <code>requests-no-verify</code></td>
+<td>Unsafe Python HTTP behavior.</td>
+</tr>
+<tr>
+<td><code>no-pickle-load</code>, <code>no-unsafe-yaml-load</code></td>
+<td>Unsafe deserialization.</td>
+</tr>
+<tr>
+<td><code>jinja2-no-autoescape</code></td>
+<td>Template output without autoescape.</td>
+</tr>
+<tr>
+<td><code>no-dynamic-module-load-py</code></td>
+<td>Hidden dynamic Python dependencies.</td>
+</tr>
+<tr>
+<td><code>react-no-dangerously-set-html</code>, <code>no-innerhtml</code>, <code>react-no-unsanitized-href</code></td>
+<td>Browser injection surfaces.</td>
+</tr>
+<tr>
+<td><code>no-weak-crypto-js</code>, <code>no-weak-crypto-py</code></td>
+<td>MD5 and SHA-1 use.</td>
+</tr>
+</tbody>
+</table>
+<p>These are all 25 shipped IDs. They emit Semgrep <code>WARNING</code>, but the tool's policy
+blocks warnings. Therefore, they are not advisory.</p>
+<blockquote>
+<p><strong>Semgrep evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.semgrep.yml#L21-L445">The canonical config defines every pattern, language,
+exclusion, message, and severity</a>.</p>
+</blockquote>
+<h2 id="kubernetes-policy-packs">Kubernetes Policy Packs</h2>
+<p>Source code implements pack admission. Current Helm delivery does not. The
+chart does not place the referenced default pack beside the runtime policy.
+Thus, the shipped deployment cannot complete policy loading without an external
+file injection. The deployment section gives the exact boundary and stop
+condition.</p>
+<p>A reference contains <code>id</code>, semantic <code>version</code>, relative <code>path</code>, and lowercase
+SHA-256. Admission keeps the real path inside the policy directory, limits a file
+to 1 MiB, verifies the digest before parsing, matches document ID and version,
+rejects unknown fields and duplicate IDs, and permits at most 256 packs and 256
+rules per pack. Loaded packs and rule lists are frozen.</p>
+<table>
+<thead>
+<tr>
+<th>Rule type</th>
+<th>Parameters</th>
+<th>Evaluation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>required-env</code></td>
+<td>Unique non-empty <code>names</code></td>
+<td>Normal and init containers need each variable, directly or through resolvable <code>envFrom</code>.</td>
+</tr>
+<tr>
+<td><code>secret-ref</code></td>
+<td>None</td>
+<td>Non-optional container <code>env</code> secret keys and <code>envFrom</code> secret sources must resolve in the namespace. It does not inspect volumes or image-pull references.</td>
+</tr>
+<tr>
+<td><code>private-registry-pull-secret</code></td>
+<td>Unique non-empty <code>registries</code></td>
+<td>Matching images need pod or service-account pull secrets.</td>
+</tr>
+<tr>
+<td><code>readiness-probe</code></td>
+<td>None</td>
+<td>Normal containers need readiness probes.</td>
+</tr>
+<tr>
+<td><code>liveness-probe</code></td>
+<td>None</td>
+<td>Normal containers need liveness probes.</td>
+</tr>
+<tr>
+<td><code>resource-limits</code></td>
+<td><code>cpu</code> and <code>memory</code>, default true</td>
+<td>Require selected limits; at least one must be true.</td>
+</tr>
+</tbody>
+</table>
+<p>Evaluation supports Pod, Deployment, StatefulSet, DaemonSet, ReplicaSet, Job, and
+CronJob. Probe rules exclude init containers. Findings use
+<code>kubernetes-policy/&lt;rule-id&gt;</code>.</p>
+<p>The default pack has these six concrete error-severity rules:</p>
+<table>
+<thead>
+<tr>
+<th>Rule ID</th>
+<th>Type</th>
+<th>Exact parameter and effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>required-runtime-env</code></td>
+<td><code>required-env</code></td>
+<td>Requires <code>REDIS_HOST</code> in each normal and init container. Resolvable <code>envFrom</code> entries count.</td>
+</tr>
+<tr>
+<td><code>valid-secret-refs</code></td>
+<td><code>secret-ref</code></td>
+<td>Requires each non-optional container <code>env</code> secret key and <code>envFrom</code> secret source to exist in the workload namespace.</td>
+</tr>
+<tr>
+<td><code>private-registry-auth</code></td>
+<td><code>private-registry-pull-secret</code></td>
+<td>Requires a pod or service-account pull secret for images under <code>registry.example.invalid</code>.</td>
+</tr>
+<tr>
+<td><code>readiness-probe</code></td>
+<td><code>readiness-probe</code></td>
+<td>Requires a readiness probe on each normal container.</td>
+</tr>
+<tr>
+<td><code>liveness-probe</code></td>
+<td><code>liveness-probe</code></td>
+<td>Requires a liveness probe on each normal container.</td>
+</tr>
+<tr>
+<td><code>resource-limits</code></td>
+<td><code>resource-limits</code></td>
+<td>Requires both CPU and memory limits on normal and init containers.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Pack evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L7-L118">Pack admission defines identity and bounds</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L6-L159">the evaluator implements all six types</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L50">the default pack supplies six instances</a>.</p>
+</blockquote>
+<h2 id="severity-and-stage-outcome">Severity And Stage Outcome</h2>
+<p>Findings can be <code>info</code>, <code>warning</code>, or <code>error</code>. A tool threshold of <code>warning</code>
+blocks warnings and errors. A threshold of <code>error</code> blocks errors only. All
+current blocking tools use <code>warning</code>.</p>
+<p>Experimental results must have zero error, warning, blocking, and debt counts.
+Their disclosed findings count only as <code>experimental_findings</code>.</p>
+<p>The stage decision order is:</p>
+<ol>
+<li>Failed tool: <code>blocked</code>, reason <code>lint.tool_execution_failed</code>.</li>
+<li>Otherwise, blocking finding: <code>request_fix</code>, reason <code>lint.blocking_findings</code>.</li>
+<li>Otherwise: <code>passed</code>.</li>
+</ol>
+<p>Tool health therefore has priority over severity. Lowering severity cannot hide
+a missing binary, timeout, parser failure, or cleanup failure.</p>
+<blockquote>
+<p><strong>Outcome evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L24-L53">The stage uses this exact order</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L76-L119">the report validator checks blocking and experimental counts</a>.</p>
+</blockquote>
+<h2 id="baselines-waivers-and-debt">Baselines, Waivers, And Debt</h2>
+<p>The baseline is the implemented waiver mechanism. Each group records tool,
+owner, reason, creation, later expiry, tracking ID, approver, approval date, and
+lowercase SHA-256 fingerprints. Approval cannot precede creation. Expired and
+duplicate tool/fingerprint entries are invalid. Only known blocking tools can
+own debt.</p>
+<p>A fingerprint hashes the tool ID with a tool-supplied stable seed, or with
+normalized code, repository-relative file, and message. A match adds baseline
+metadata and removes that finding from active blocking counts. <code>includeDebt</code>
+controls body visibility, not the debt count.</p>
+<p>An unscoped full run rejects unmatched baseline entries for tools that completed
+successfully. A narrow run cannot prove an entry stale, so it does not perform
+this check. Thus, a waiver is visible temporary debt, not rule deletion.</p>
+<blockquote>
+<p><strong>Debt evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/lint-governance.ts#L7-L43">Baseline validation</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts#L18-L53">fingerprint matching</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/index.ts#L119-L132">stale-debt rejection</a> implement the lifecycle.</p>
+</blockquote>
+<h2 id="rule-admission">Rule Admission</h2>
+<p>Admission records non-empty historical full commit SHAs and a non-empty rule
+list. Each rule has a known tool, code, principle, remediation, positive number
+of historical changed sets, non-negative false-positive count, approver, and
+approval date. Tool/code pairs are unique.</p>
+<p>The record is governance evidence. It does not execute a rule, suppress a
+finding, or require every external tool code to be listed. Add it when a new
+repository-owned blocking rule changes acceptance. Use the baseline for temporary
+debt.</p>
+<blockquote>
+<p><strong>Admission evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/lint-governance.ts#L45-L65">The validator checks every admission field and
+identity</a>.</p>
+</blockquote>
+<h2 id="invalid-policy-and-runtime-failures">Invalid Policy And Runtime Failures</h2>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Invalid JSON, version, vocabulary, duplicate ID, path, limit, file, expiry, digest, or pack</td>
+<td><code>LINT_POLICY_INVALID</code> before tools run.</td>
+</tr>
+<tr>
+<td>Policy ID without adapter</td>
+<td><code>LINT_POLICY_ADAPTER_MISSING</code>.</td>
+</tr>
+<tr>
+<td>Adapter without policy ID</td>
+<td><code>LINT_POLICY_TOOL_MISSING</code>.</td>
+</tr>
+<tr>
+<td>Missing required binary</td>
+<td>Tool <code>error</code>, <code>lint-tool-binary-missing</code>; stage blocks.</td>
+</tr>
+<tr>
+<td>Missing optional binary</td>
+<td><code>not_applicable</code>; does not block.</td>
+</tr>
+<tr>
+<td>Timeout or failed start</td>
+<td>Tool-specific <code>*-timeout</code> or <code>*-execution-failed</code>; stage blocks.</td>
+</tr>
+<tr>
+<td>Malformed output</td>
+<td>Tool-specific <code>*-parse-failed</code>; stage blocks.</td>
+</tr>
+<tr>
+<td>Cancellation</td>
+<td>Invocation rejects as <code>LINT_CANCELLED</code>; not a normal tool result.</td>
+</tr>
+<tr>
+<td>Unconfirmed descendant cleanup</td>
+<td><code>LINT_PROCESS_CLEANUP_FAILED</code>.</td>
+</tr>
+<tr>
+<td>Invalid report shape, SHA-256 syntax, target path, evidence, totals, or request-bound project/tier/scope/visibility</td>
+<td><code>LINT_REPORT_CONTRACT_INVALID</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Native commands get an allowlisted environment and private cache directories.
+Termination sends TERM to the Linux process group, then KILL after 250 ms, and
+requires exit confirmation within 1,500 ms. This is lifecycle control, not a
+general sandbox.</p>
+<blockquote>
+<p><strong>Failure evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L109-L163">Tool result classification</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/execution.ts#L8-L95">bounded native execution</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/process-termination.ts">process cleanup</a> preserve the failure boundary.</p>
+</blockquote>
+<h2 id="report-evidence">Report Evidence</h2>
+<p>Every accepted report contains policy version and digest, project, explicit
+native-config digests, pack digests, effective targets, baseline digest, report scope, tier,
+visibility, changed files, detected types, discovery diagnostics, tool results,
+and a summary recomputed from those results.</p>
+<p>The explicit config digests cover each policy <code>config_path</code>. They do not cover
+the implicit JSCPD test calibration or local type-evidence plugin implementation.
+Reports also omit executable versions, Nova image identity, and the offline
+Kubernetes schema-tree bytes and source commit. The generated runtime-authority
+table records their build inputs, but only the deployed image identity proves
+which inputs a run used. The pinned implementation links and target image remain
+necessary evidence for all of these inputs.</p>
+<p>The engine creates the policy, baseline, config, pack, and target identity maps
+from files that it loaded. The stage binds the report to the configured policy
+project and to the request's tier, module scope, optional project name, and
+visibility. It does not reload every policy input and compare all identity maps
+independently. The validator can compare expected policy, baseline, config, pack,
+target, and tool inventories when a caller supplies them. The executor is the
+trusted producer for the remaining maps in the current stage path. This boundary
+is important when a new adapter or remote producer is considered.</p>
+<p>Each successful tool result has at most 256 evidence entries. Each entry has
+kind, source, SHA-256, and byte count. The 64 MiB referenced-evidence limit and
+the 256 KiB inline-content limit apply to each entry, not to the complete report.
+Inline content must match its count and digest. The contract does not define one
+aggregate evidence-byte limit across all tools. The stage validates the report,
+writes it as an immutable JSON artifact, and only then returns the stage decision.</p>
+<blockquote>
+<p><strong>Report evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L205-L241">The builder records policy and scope identity</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L59-L73">the contract validates evidence and recomputes totals</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L83-L91">the stage stores the artifact</a>.</p>
+</blockquote>
+<h2 id="verification-record">Verification Record</h2>
+<p>This record separates source evidence from checks that ran in the local
+verification environment. A passed local check does not replace target-image acceptance.</p>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Implementation</th>
+<th>Contract or setting</th>
+<th>Test evidence and status on 2026-09-20</th>
+<th>Revision</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage, adapter, and engine keep lifecycle, authority, and analysis responsibilities separate.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L24-L100">Stage request and decision</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/adapter.ts#L28-L63">Adapter root admission</a></td>
+<td>Stage, package-boundary, and adapter-boundary suites passed.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>Source and focused tests do not prove deployed capability grants.</td>
+</tr>
+<tr>
+<td>The policy loader validates the complete policy and binds its direct configuration files.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L234-L273">Policy loader</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L1-L1070">Shipped policy</a></td>
+<td><code>docs:lint-policy:check</code> passed. It compared the generated page with policy, baseline, pack, native configuration, and implemented identifiers.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>Report digests do not include the implicit JSCPD test config or the local type-evidence plugin.</td>
+</tr>
+<tr>
+<td>Project discovery and target validation cannot grant paths outside repository authority.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/discovery.ts#L138-L220">Discovery</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy-paths.ts#L43-L74">Native target path validation</a></td>
+<td>Discovery and remediation suites passed, including escape and excluded-source cases.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>A newly added native analyser needs its own traversal tests.</td>
+</tr>
+<tr>
+<td>Policy and registry must contain the same tool IDs.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L105-L129">Closed registry check</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L280-L1070">All policy tools</a></td>
+<td>Package-boundary and generated-parity checks passed for all 31 tools.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>Matching IDs do not prove that each external binary runs in the deployed image.</td>
+</tr>
+<tr>
+<td>Pack admission binds path, bytes, digest, ID, version, and closed rule data.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L118">Pack loader</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L9-L15">Default pack reference</a></td>
+<td>Source-level pack and generated digest checks passed.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>Helm does not deliver the pack today. Deployed loading remains blocked until chart delivery is fixed and tested.</td>
+</tr>
+<tr>
+<td>Baselines suppress only approved, unexpired fingerprint debt and expose stale entries in a complete full run.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/lint-governance.ts#L7-L43">Baseline governance</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/index.ts#L119-L132">Stale baseline check</a></td>
+<td>Generated baseline parity and remediation checks passed.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>A scoped or failed run cannot prove that every waiver is stale.</td>
+</tr>
+<tr>
+<td>Tool failures cannot become clean tool results.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L104-L163">Result normalization</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L38-L231">Report contract</a></td>
+<td>The remediation suite passed all eight tests, including start failure, timeout, output overflow, abort, shutdown, and descendant cleanup.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>The suite uses selected real tools and controlled fixtures. It does not execute every external analyser.</td>
+</tr>
+<tr>
+<td>Runtime versions come from reviewed locks and image build inputs, not lint policy.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.nova#L72-L216">Nova analyser installation</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/versions.json#L7-L51">Version authorities</a></td>
+<td><code>npm run versions:check</code> passed for 42 inputs and the runtime lock receipt.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>A source lock check does not prove the identity of a running Pod image.</td>
+</tr>
+<tr>
+<td>The published pages contain the current generated facts and valid pinned links.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L1-L1070">Policy source used by the generated reference</a></td>
+<td><a href="lint-policy-generated.html">Generated policy facts</a></td>
+<td>Generated-reference, specialist-guide, link, coverage, and publication checks passed.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>These checks prove parity and publication structure. They do not replace a reader exercise.</td>
+</tr>
+<tr>
+<td>The complete plugin function can run both tiers in the target tool environment.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230">Live-function test</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/plugin.json#L1-L48">Plugin registrations</a></td>
+<td>Not reached in this environment. The fixture stopped while it acquired its first journal lock because BusyBox <code>flock</code> has no timeout option.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>Run this check in the target image with <code>shellcheck</code>, <code>shfmt</code>, and GNU <code>flock</code>.</td>
+</tr>
+</tbody>
+</table>
+</main></body></html>

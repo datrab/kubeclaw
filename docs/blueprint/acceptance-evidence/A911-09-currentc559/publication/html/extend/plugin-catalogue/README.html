@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/plugin-catalogue/README.html"></head><body><main>
+<h1 id="plugin-catalogue">Plugin Catalogue</h1>
+<p>Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs">scripts/docs-publication.mjs</a>
+Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins
+Last verified: generated source listing only; package checks and their limits are recorded on each package page</p>
+<h2 id="purpose">Purpose</h2>
+<p>Use this catalogue to find every installable extension package and its declared surfaces.</p>
+<p>The catalogue contains 51 packages.</p>
+<p>Each package page combines two separate authorities. Maintainers write the practical
+guidance separately from generated facts. The publication generator
+reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated
+refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.</p>
+<p>The plugin-foundation owner maintains purpose, use, exclusion, and limit text in
+<code>docs/blueprint/AP08-catalogue-guidance.json</code>. The source component owner maintains
+the manifest and schema facts. Do not edit generated catalogue pages as a second
+authority. Change the owning input, then regenerate and run the declared checks.</p>
+<h2 id="stage-packages">Stage Packages</h2>
+<ul>
+<li><a href="kubeclaw.architecture-validator.html">kubeclaw.architecture-validator</a></li>
+<li><a href="kubeclaw.blueprint-sync.html">kubeclaw.blueprint-sync</a></li>
+<li><a href="kubeclaw.buster-quality-gate.html">kubeclaw.buster-quality-gate</a></li>
+<li><a href="kubeclaw.case-study.html">kubeclaw.case-study</a></li>
+<li><a href="kubeclaw.delivery-lint.html">kubeclaw.delivery-lint</a></li>
+<li><a href="kubeclaw.demo-handoff.html">kubeclaw.demo-handoff</a></li>
+<li><a href="kubeclaw.human-approval.html">kubeclaw.human-approval</a></li>
+<li><a href="kubeclaw.implementation-agent.html">kubeclaw.implementation-agent</a></li>
+<li><a href="kubeclaw.lint.html">kubeclaw.lint</a></li>
+<li><a href="kubeclaw.pipeline-review.html">kubeclaw.pipeline-review</a></li>
+<li><a href="kubeclaw.preflight-contract.html">kubeclaw.preflight-contract</a></li>
+<li><a href="kubeclaw.prism-design.html">kubeclaw.prism-design</a></li>
+<li><a href="kubeclaw.project-summary.html">kubeclaw.project-summary</a></li>
+<li><a href="kubeclaw.review.html">kubeclaw.review</a></li>
+</ul>
+<h2 id="observer-packages">Observer Packages</h2>
+<ul>
+<li><a href="kubeclaw.agent-observability.html">kubeclaw.agent-observability</a></li>
+<li><a href="kubeclaw.notification-observer.html">kubeclaw.notification-observer</a></li>
+<li><a href="kubeclaw.telemetry-observer.html">kubeclaw.telemetry-observer</a></li>
+</ul>
+<h2 id="capability-adapter-packages">Capability adapter Packages</h2>
+<ul>
+<li><a href="kubeclaw.artifact-store.html">kubeclaw.artifact-store</a></li>
+<li><a href="kubeclaw.command-runner.html">kubeclaw.command-runner</a></li>
+<li><a href="kubeclaw.demo-handoff.html">kubeclaw.demo-handoff</a></li>
+<li><a href="kubeclaw.git-workspace.html">kubeclaw.git-workspace</a></li>
+<li><a href="kubeclaw.lint.html">kubeclaw.lint</a></li>
+<li><a href="kubeclaw.network-http.html">kubeclaw.network-http</a></li>
+<li><a href="kubeclaw.openclaw-agent-events.html">kubeclaw.openclaw-agent-events</a></li>
+<li><a href="kubeclaw.operator-messaging.html">kubeclaw.operator-messaging</a></li>
+<li><a href="kubeclaw.pipeline-review.html">kubeclaw.pipeline-review</a></li>
+<li><a href="kubeclaw.redis-transport.html">kubeclaw.redis-transport</a></li>
+<li><a href="kubeclaw.remote-test-gate.html">kubeclaw.remote-test-gate</a></li>
+<li><a href="kubeclaw.repository-adapter.html">kubeclaw.repository-adapter</a></li>
+<li><a href="kubeclaw.runtime-dispatch.html">kubeclaw.runtime-dispatch</a></li>
+<li><a href="kubeclaw.secret-resolver.html">kubeclaw.secret-resolver</a></li>
+<li><a href="kubeclaw.state-store.html">kubeclaw.state-store</a></li>
+<li><a href="kubeclaw.telemetry-store.html">kubeclaw.telemetry-store</a></li>
+<li><a href="kubeclaw.transport-publisher.html">kubeclaw.transport-publisher</a></li>
+<li><a href="kubeclaw.wait-store.html">kubeclaw.wait-store</a></li>
+</ul>
+<h2 id="test-provider-packages">Test provider Packages</h2>
+<ul>
+<li><a href="kubeclaw.api-flow.html">kubeclaw.api-flow</a></li>
+<li><a href="kubeclaw.axe.html">kubeclaw.axe</a></li>
+<li><a href="kubeclaw.container-build.html">kubeclaw.container-build</a></li>
+<li><a href="kubeclaw.coverage-budget.html">kubeclaw.coverage-budget</a></li>
+<li><a href="kubeclaw.demo-auth-smoke.html">kubeclaw.demo-auth-smoke</a></li>
+<li><a href="kubeclaw.direct-command.html">kubeclaw.direct-command</a></li>
+<li><a href="kubeclaw.http.html">kubeclaw.http</a></li>
+<li><a href="kubeclaw.kubernetes-fixture.html">kubeclaw.kubernetes-fixture</a></li>
+<li><a href="kubeclaw.lighthouse.html">kubeclaw.lighthouse</a></li>
+<li><a href="kubeclaw.openapi.html">kubeclaw.openapi</a></li>
+<li><a href="kubeclaw.playwright.html">kubeclaw.playwright</a></li>
+<li><a href="kubeclaw.security-providers.html">kubeclaw.security-providers</a></li>
+<li><a href="kubeclaw.size-budget.html">kubeclaw.size-budget</a></li>
+<li><a href="kubeclaw.tailscale-exposure.html">kubeclaw.tailscale-exposure</a></li>
+<li><a href="kubeclaw.visual.html">kubeclaw.visual</a></li>
+</ul>
+<h2 id="report-adapter-packages">Report adapter Packages</h2>
+<ul>
+<li><a href="kubeclaw.junit-report.html">kubeclaw.junit-report</a></li>
+</ul>
+<h2 id="openclaw-extension-packages">OpenClaw extension Packages</h2>
+<ul>
+<li><a href="kubeclaw-agent-observer.html">kubeclaw-agent-observer</a></li>
+<li><a href="kubeclaw-prism.html">kubeclaw-prism</a></li>
+</ul>
+<h2 id="codex-plugin-packages">Codex plugin Packages</h2>
+<ul>
+<li><a href="kubeclaw-ops.html">kubeclaw-ops</a></li>
+</ul>
+</main></body></html>

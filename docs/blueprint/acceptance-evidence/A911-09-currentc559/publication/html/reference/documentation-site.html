@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/documentation-site.html"></head><body><main>
+<h1 id="documentation-site-and-publication">Documentation site and publication</h1>
+<p>Status: source-described publication workflow; rendered-site behavior requires separate verification
+Audience: operator, plugin author, developer, documentation maintainer
+Owner: documentation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-publication.mjs">scripts/docs-publication.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/lib/docs-publication-assets.mjs">scripts/lib/docs-publication-assets.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/lib/docs-publication-links.mjs">scripts/lib/docs-publication-links.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-governance.mjs">scripts/docs-governance.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-check-refs.mjs">scripts/docs-check-refs.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/check-site-reader-boundary.mjs">scripts/check-site-reader-boundary.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/config/documentation-tree-classification.json">docs/config/documentation-tree-classification.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/site/reference/documentation-route-registry.json">docs/site/reference/documentation-route-registry.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/package.json">package.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/.github/workflows/docs-checks.yaml">.github/workflows/docs-checks.yaml</a>
+Applies to: repository reader pages under docs/site and the Markdown publication staging command
+Last verified: implementation behavior checked on 2026-10-15; no build, browser, search, or accessibility execution asserted</p>
+<h2 id="find-the-explanation-before-the-source">Find the explanation before the source</h2>
+<p>You have a technical name, but need to know what it does and what to do next.
+Start at the <a href="../README.html">documentation home</a>, not an internal report or an old source directory.</p>
+<table>
+<thead>
+<tr>
+<th>Your question</th>
+<th>Start here</th>
+<th>Continue with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Why does a component behave this way?</td>
+<td><a href="../understand/README.html">Understand</a></td>
+<td>The component's explanation, its contracts, then its evidence links</td>
+</tr>
+<tr>
+<td>How do I install, operate, diagnose, or recover?</td>
+<td><a href="../use/README.html">Use</a></td>
+<td>The named procedure's prerequisites, stop conditions, and remaining-data rules</td>
+</tr>
+<tr>
+<td>What exact field, option, identity, or limit applies?</td>
+<td><a href="README.html">Reference</a></td>
+<td>The owning configuration, SDK, endpoint, error, or workflow reference</td>
+</tr>
+<tr>
+<td>How do I change an extension or Core?</td>
+<td><a href="../extend/README.html">Extend</a></td>
+<td>Its behavior-owner decision and the <a href="../extend/developer-handbook.html">Developer handbook</a></td>
+</tr>
+<tr>
+<td>How do I update these pages after a source change?</td>
+<td><a href="../extend/documentation-maintenance.html">Maintain documentation</a></td>
+<td>Source ownership, generation, checks, and a reader task</td>
+</tr>
+</tbody>
+</table>
+<p>For example, to distinguish a runtime bundle from a permission, open Reference,
+then <a href="roles-and-package-ownership.html">Roles and package ownership</a>. That page
+separates bundle selection, caller grants, Buster configuration, and Prism host
+policy. Do not infer a grant from a package name.</p>
+<p>Use section indexes and your Markdown viewer's find function for an exact ID.
+The publication command does not create a full-text search index or search UI.
+A viewer's text search is not a ranked search over all canonical pages. If a
+name is not found, follow the component's reference or implementation evidence;
+absence from search results does not prove absence from the product.</p>
+<h2 id="read-source-evidence-with-its-limits">Read source evidence with its limits</h2>
+<p>Each reader page declares Status, Audience, Owner, Evidence, Applies to, and
+Last verified. These fields identify its scope and responsibility; they are not
+an assertion that every procedure or deployment passed.</p>
+<table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>What you can conclude</th>
+<th>What you still need</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schema or manifest</td>
+<td>The declared contract, identity, or constraint</td>
+<td>The actual consumer's defaults, validation, precedence, and effects</td>
+</tr>
+<tr>
+<td>Implementation link with full commit and line range</td>
+<td>Those exact committed bytes contain the cited implementation</td>
+<td>Agreement with the current source and the stated claim</td>
+</tr>
+<tr>
+<td>Test or command result</td>
+<td>The named cases ran under the recorded conditions</td>
+<td>Coverage of your route, version, and failure conditions</td>
+</tr>
+<tr>
+<td>Live observation</td>
+<td>The recorded environment behaved that way at that time</td>
+<td>Compatibility with your environment and durable recovery rules</td>
+</tr>
+</tbody>
+</table>
+<p>A source link must remain useful without JavaScript. The current staging build
+turns plain Evidence paths into GitHub links at the checkout's HEAD. Existing
+explicit links in prose retain their written revisions. The plugin catalogue
+also checks selected source snippets against the separate documentation source
+revision before it creates pinned links. These are different revision paths.
+A dirty checkout can therefore make a new HEAD link describe older bytes than
+the local page. Reconcile source changes and their revision before publication;
+do not repair a mismatch by weakening its source guard.</p>
+<blockquote>
+<p><strong>Source — evidence revisions</strong></p>
+<p>Claim: selected catalogue evidence uses the documentation source revision; plain Evidence links in staged pages use HEAD.
+Implementation: <code>scripts/docs-publication.mjs</code>, <code>sourceEvidenceLink</code>, lines 147–164; <code>build</code> Evidence conversion, lines 993–1013.
+Contract: the catalogue checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.
+Validation: no build or test execution for this statement.
+Checkout identity: publisher SHA-256 <code>c5eeab7ccabf48343ff7a118c8d74da2dd3300dfbe57271008f5248bbc2ecd70</code>. This identifies the current file bytes, not a claimed committed revision.
+Limit: these locators do not provide a rendered snippet or prove that HEAD contains local changes. Reconcile the source bytes before creating a commit permalink.</p>
+</blockquote>
+<p>The build does not render an inline code-evidence box or retrieve a displayed
+snippet from the linked commit for every authored claim. Open the cited source
+and check the claim, contract, validation, revision, and limitation explicitly.
+An old permalink remains readable but may no longer describe current behavior.</p>
+<h2 id="what-enters-publication">What enters publication</h2>
+<p>The page selector reads <code>docs/config/documentation-tree-classification.json</code>.
+A Markdown page under <code>docs/site</code> needs an explicit record whose class is
+<code>canonical-reader-documentation</code> and whose expected path equals its actual
+path. An unregistered Markdown file fails selection; its extension alone does
+not admit it. A registered but missing page also fails.</p>
+<p>Non-Markdown assets use a separate finite allowlist in
+<code>scripts/lib/docs-publication-assets.mjs</code>. This includes selected executable
+examples, the documentation map, and the route registry, not arbitrary files.
+Both selectors reject symlinks and non-regular file inputs. Internal plans,
+local evidence, prompts, temporary files, and working reports do not
+belong in the reader tree or its output. Do not move such material into
+<code>docs/site</code> to make it visible.</p>
+<p>The <a href="generated-documentation-map.json">generated page map</a> records page owners,
+source dependencies, declared checks, and route identities. It derives records
+from metadata; it does not independently discover every public product surface.
+New pages need their classification and metadata before a publication check.
+Use the <a href="../extend/documentation-maintenance.html">maintenance workflow</a> rather
+than editing the generated map by hand.</p>
+<h2 id="routes-links-and-static-use">Routes, links, and static use</h2>
+<p>The ownership map represents the root README as <code>/</code>, a section README as its
+section route, and another Markdown page as a trailing-slash route. For example,
+this page maps to <code>/reference/documentation-site/</code>. The staging build preserves
+Markdown relative paths; it does not implement those routes in an HTTP server.
+A renderer or hosting system must supply and test the actual routes.</p>
+<p>The <a href="documentation-route-registry.json">route registry</a> records redirect intent.
+The governance checker rejects duplicate redirect origins, an origin that is
+still an active page, a missing active target, and a self-redirect. A valid
+registry alone does not prove HTTP redirects, static redirects, query/fragment
+preservation, or a successful request through a hosting layer.</p>
+<p>Keep a single canonical explanation for each fact. Before a rename or removal,
+move still-valid information, update incoming links and ownership, and declare
+the successor according to <a href="documentation-governance.html">governance</a>. Test the
+old route and its anchors in the actual output before retiring it. Do not
+invent historical redirects for paths that were never public.</p>
+<p>The staging artifact is Markdown plus approved assets. Read it in a Markdown
+viewer using relative page links. Tables and written procedures remain the
+primary explanation. A Mermaid diagram needs an adjacent text explanation for
+a viewer that cannot render it. This publisher does not provide an interactive
+architecture viewer or an automatic static export of one. Any future optional
+interaction must preserve its essential explanation without scripts, hover,
+color, or a network fetch. External source links require network access; the
+local explanation must still state the safe action when those links are offline.</p>
+<h2 id="check-and-stage-a-local-copy">Check and stage a local copy</h2>
+<p>Use the repository root with Node.js 24 and its locked root dependencies.
+Prepare the selected route's additional tools and source revision through the
+<a href="../extend/developer-handbook.html#add-tools-and-credentials-only-for-the-selected-route">handbook prerequisites</a>.
+The publisher reads plugin manifests, dependency contracts, catalogue guidance,
+local-verification records, and source-revision data before it selects a mode.
+It invokes Git even for <code>check</code>. A readable checkout with its required commit
+objects and a supported GitHub origin is therefore required, not only Markdown.
+It accepts <code>git@github.com:owner/repository.git</code> or an HTTPS GitHub origin.
+Missing tools, dependencies, source objects, or divergent pinned source stop the
+run; retain the first diagnostic and repair that input rather than bypass it.</p>
+<p>Follow the <a href="../extend/developer-handbook.html#documentation-change-chain">common documentation-change chain</a>
+after updating the owning inputs. Its stable checks precede staging:</p>
+<pre><code class="language-sh">set -eu
+npm run docs:governance:check
+npm run docs:generate:check
+npm run docs:check:refs
+npm run docs:site-boundary:check
+npm run docs:publication:check
+npm run docs:publication:build
+</code></pre>
+<p>These are instructions, not a record of successful execution for this page.
+Some selected generators and checks have additional child-process or tool
+requirements. Do not treat a command's name as permission to run it in an
+unprepared or restricted environment.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Reads and result</th>
+<th>Writes and failure boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs:publication:generate</code></td>
+<td>Builds plugin catalogue/capability content and the operator plugin matrix from their inputs</td>
+<td>Writes those owned pages/sections sequentially. A failure can leave earlier writes; inspect the diff and first error. It is not the prose-page generator.</td>
+</tr>
+<tr>
+<td><code>docs:publication:check</code></td>
+<td>Runs the two publication helper test files, then compares generated content and checks selected pages, assets, metadata, language, links, and bounded examples</td>
+<td>Does not invoke publication <code>generate</code> or <code>build</code>. A nonzero helper or publisher result stops the chain. It does not render a website.</td>
+</tr>
+<tr>
+<td><code>docs:publication:build</code></td>
+<td>Runs publication input checks, then stages Markdown and assets with a report</td>
+<td>After successful input checks, removes and recreates <code>.tmp/docs-publication</code>. A later copy/write failure can leave partial output. Exit zero and the fresh report are required.</td>
+</tr>
+<tr>
+<td><code>docs:publish-check</code></td>
+<td>Runs the broader <code>docs:check</code> chain, then the staging build</td>
+<td>Includes mutation tests and the staging replacement. It is not a lightweight link check or a hosting deployment.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source — publication modes and owned output</strong></p>
+<p>Claim: generation writes its owned pages/section; checking compares inputs; staging removes its output only after input checks and then writes sequentially.
+Implementation: <code>scripts/docs-publication.mjs</code>, <code>generate</code>, lines 713–721; <code>compareGenerated</code>, lines 723–735; <code>checkSite</code> input selection, lines 831–854; <code>build</code> and report, lines 993–1027.
+Contract: <code>package.json</code> selects the explicit generate/check/build modes. The report lists declared checks and input identity, not browser results.
+Validation: no mode or helper test execution for this statement.
+Checkout identity: publisher SHA-256 <code>c5eeab7ccabf48343ff7a118c8d74da2dd3300dfbe57271008f5248bbc2ecd70</code>; no committed revision asserted for these file bytes.
+Limit: initialization, source/Git prerequisites and selected helper effects still apply. The staging directory is not an atomic publication transaction or rendered site.</p>
+</blockquote>
+<p>Inspect <code>.tmp/docs-publication/build-report.json</code> and its sibling pages/assets.
+The report contains the Git revision, page count, asset paths, plugin count,
+a digest of concatenated input page contents, and declared check labels.
+Those labels are not browser observations or individual coverage results.
+The report is not a complete per-route canonical URL, redirect, source, and
+rendered-content digest manifest. Reproducing the same output requires the same
+inputs, source revisions, dependencies, and tools; two clean builds must still
+be compared before claiming reproducibility.</p>
+<p>If input checks fail before output replacement, an old staging directory may
+remain. Its existence does not mean the new build passed. If staging fails
+after replacement, preserve the diagnostic and partial output for diagnosis;
+remove only the owned <code>.tmp/docs-publication</code> tree when no inspection uses it.
+Never reset unrelated generated files or another author's changes.</p>
+<h2 id="what-ci-does-and-what-still-needs-a-renderer">What CI does, and what still needs a renderer</h2>
+<p>The documentation workflow validates pull requests and applicable manual runs.
+It installs the declared Node, Go, and Helm tools and locked dependencies,
+regenerates selected inventories/reference output, and rejects resulting drift.
+Its <code>docs:check:generated</code> chain also includes multiple inventory and parity
+checks. The workflow's validation job does not
+invoke the full <code>docs:publish-check</code> chain or a rendered-site deployment.
+On main, its update job can regenerate files, commit allowed generated changes,
+and push them. This is a write workflow, not evidence of external hosting.
+Consult <a href="workflows.html">Workflow inventory</a> and the workflow source before
+changing triggers, permissions, or owned outputs.</p>
+<blockquote>
+<p><strong>Source — CI drift and update boundaries</strong></p>
+<p>Claim: validation can regenerate transient files before rejecting drift; the main update job can commit and push allowed generated paths, without deploying a rendered site.
+Implementation: <code>.github/workflows/docs-checks.yaml</code>, <code>jobs.validate</code> drift/check steps, lines 39–71; <code>jobs.update</code> commit/push and event condition, lines 140–166.
+Contract: pull-request or non-main manual validation has read contents permission; the main update route has write contents permission and checks its allowed outputs.
+Validation: no workflow execution for this statement.
+Checkout identity: workflow SHA-256 <code>5349499f1936d361a0d269bc45664550580fb8b1af5773391fbdd30dd08a35d7</code>; no committed revision asserted for these file bytes.
+Limit: a workflow declaration is not evidence of a successful job, external hosting, redirects, search, or browser behavior.</p>
+</blockquote>
+<p>A complete reader release also needs checks of the actual renderer: local and
+built links, anchors, assets, routes and redirects; defined search questions;
+narrow and wide screens; keyboard focus and screen-reader reading; diagrams'
+text alternatives; and no-script/offline critical instructions. Capture failures
+and their affected pages. Markdown lint, a route JSON file, or a staging report
+cannot substitute for those observations. This page describes the source
+workflow; it does not assert that those rendered-reader checks have passed.</p>
+</main></body></html>

@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/events.html"></head><body><main>
+<h1 id="events-payloads-and-delivery-boundaries">Events, Payloads, and Delivery Boundaries</h1>
+<p>Status: bounded reference; discovery limitations stated below
+Audience: operator, developer, plugin author, maintainer
+Owner: documentation; named components own diagnostic and delivery semantics
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/runner.ts">skills/nova/core/execution/runner.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/telemetry/observers.ts">skills/nova/core/telemetry/observers.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/telemetry/observer-delivery.ts">skills/nova/core/telemetry/observer-delivery.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/state/journal.ts">skills/nova/core/state/journal.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/telemetry/audit.ts">skills/nova/core/telemetry/audit.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/agent-observability/v1/src/constants.ts">contracts/agent-observability/v1/src/constants.ts</a>
+Applies to: the named event, delivery, projection and retained-contract boundaries below
+Last verified: 2026-10-15; current source behavior checked; no live diagnostic or recovery executed</p>
+<h2 id="find-the-authoritative-record">Find the authoritative record</h2>
+<p>An event is a record that something happened. An envelope identifies that
+record and its version; the payload carries its type-specific data. A
+projection is a derived view for a sink or diagnosis. It does not replace the
+original authority merely because it has a timestamp, sequence or digest.</p>
+<ol>
+<li>Identify the envelope's exact <code>schemaVersion</code>, producer and record family.</li>
+<li>Match its run/attempt/effect/delivery identity and order scope below.</li>
+<li>Find the actual consumer and its delivery, retention and replay rules before
+repeating an action or interpreting a missing sink record as lost execution.</li>
+</ol>
+<p>For a failed operation or uncertain retry, use <a href="errors.html">Errors</a>. For
+recursive field constraints and versions, use <a href="schemas.html">Schema authorities</a>
+and the exact consuming definition. For delivery architecture, use
+<a href="../understand/telemetry.html">Telemetry</a>; the audit safety conditions on this
+page apply before any audit command linked elsewhere.</p>
+<h2 id="select-the-family-and-consumer">Select the family and consumer</h2>
+<p>These named routes are a bounded index, not a claim that every product event
+and payload producer has been catalogued. A consumer is the component that
+actually reads or subscribes to the record, not a guessed owner from its name.</p>
+<table>
+<thead>
+<tr>
+<th>Family / exact version</th>
+<th>Producer and payload authority</th>
+<th>Consumer / transport</th>
+<th>Persistence and repeat boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lifecycle-event.v2</code></td>
+<td>Nova runner/executor and effect bridge; exact lifecycle enum and event-specific producer payload</td>
+<td>Nova event journal, recovery readers and subscribed observers</td>
+<td>Canonical journal order; each append has its own event ID. No global sink or host order follows</td>
+</tr>
+<tr>
+<td><code>plugin-domain-event.v2</code></td>
+<td>Granted plugin context; registration provenance, namespaced type, owned payload meaning</td>
+<td>Same event journal and exact subscribed observers/domain readers</td>
+<td>Extension names are constrained; envelope validity alone does not define each payload's meaning</td>
+</tr>
+<tr>
+<td><code>observer-delivery.v2</code></td>
+<td>Observer invocation wraps one canonical lifecycle/domain event</td>
+<td>Activated observer under its lease/grants and configured policy</td>
+<td>Stable delivery identity, changing delivery attempt; not a new canonical lifecycle event</td>
+</tr>
+<tr>
+<td><code>observer-checkpoint.v2</code></td>
+<td>Observer runtime after successful handling</td>
+<td>Checkpoint journal and recovery/drain logic</td>
+<td>Per observer/run sequence and event identity; no manual advancement to hide a failed sink</td>
+</tr>
+<tr>
+<td>Observer delivery history</td>
+<td>Runtime records started/completed/failed attempts</td>
+<td>Delivery journal/recovery logic</td>
+<td>Attempt history and checkpoint are distinct; a completed call followed by checkpoint failure must retain both facts</td>
+</tr>
+<tr>
+<td>File / Redis telemetry projection</td>
+<td>Selected telemetry or Redis adapter from its request payload</td>
+<td>Bounded file store or Redis stream; downstream readers depend on deployment</td>
+<td>Store capacity, stream trimming and dedup expiry are different from canonical event retention</td>
+</tr>
+<tr>
+<td><code>pipeline-audit.v1</code></td>
+<td><code>readPipelineAudit</code>, from verified event records filtered by run</td>
+<td>Caller-returned redacted JSON with journal head/digest</td>
+<td>No new lifecycle/audit entry, but acquisition can change journal bytes; see the caveat below</td>
+</tr>
+<tr>
+<td><code>attempt-progress-event.v1</code>, <code>worker-log-part.v1</code>, selected Worker result version</td>
+<td>Worker executor and selected resource/result contract</td>
+<td>Configured progress/log callbacks and caller/result adapter</td>
+<td>Progress is best effort; terminal result/cleanup authority is separate from the last message</td>
+</tr>
+<tr>
+<td>Prism operation / Buster job and result records</td>
+<td>Exact engine/remote dispatch and durable operation contract</td>
+<td>Service/controller/import consumers; see their detailed guides</td>
+<td>Bound job/operation/attempt/result and import identities, not automatically a Nova event envelope</td>
+</tr>
+<tr>
+<td>OpenClaw agent-observability schema <code>1</code></td>
+<td>Host observer source <code>openclaw.plugin.agent-observer</code> and declared ingress types</td>
+<td>Control/payload/dead-letter Redis streams</td>
+<td>Distinct host envelope and loss/retry rules; not the retained flat telemetry v1 contract</td>
+</tr>
+<tr>
+<td>Retained flat telemetry v1 assets</td>
+<td>Delivered schemas/catalogue/types, as declared by their README</td>
+<td>No active flat-envelope runtime producer/consumer found in that source declaration; external readers unresolved</td>
+<td>Assets do not implement ingestion, authentication, ordering or retention; version label alone gives no compatibility</td>
+</tr>
+</tbody>
+</table>
+<p>For the complete Worker record fields and resource-version distinction, use
+<a href="../understand/worker-core.html">Worker Core</a> and <a href="worker-profiles-and-roles.html">worker profiles</a>.
+For operation/result/evidence import, use <a href="../understand/prism-runtime.html">Prism runtime</a>
+and <a href="../understand/buster.html">Buster</a>. Their records cannot be converted into
+canonical lifecycle events merely by renaming a version field.</p>
+<p><strong>Source — separate canonical and delivery definitions:</strong>
+<a href="../../../skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1026-L1058">lifecycleEvent envelope and closed type enum</a> (<code>skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json:1026-1058</code>, current-checkout SHA-256 <code>837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db</code>). <a href="../../../skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1059-L1080">pluginDomainEvent envelope and type constraint</a> (<code>skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json:1059-1080</code>, current-checkout SHA-256 <code>837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db</code>). <a href="../../../skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1081-L1117">observerDelivery / observerCheckpoint</a> (<code>skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json:1081-1117</code>, current-checkout SHA-256 <code>837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db</code>).</p>
+<h2 id="payload-meaning-and-actual-production">Payload meaning and actual production</h2>
+<p>Both canonical v2 envelopes require <code>schemaVersion</code>, <code>eventId</code>, positive
+<code>sequence</code>, <code>type</code>, <code>identity</code>, <code>occurredAt</code>, nullable <code>causationId</code> and JSON-object
+<code>payload</code>. Domain events additionally require <code>producer</code> registration provenance.
+The closed lifecycle <code>type</code> enum includes run, stage, attempt, effect, artifact,
+wait and orchestrator records. Read the exact enum and producer, not a
+wildcard as permission to invent another lifecycle name.</p>
+<p>Domain types are extensible but not unconstrained. The exact schema pattern is:</p>
+<p><code>^plugin\.[a-z0-9]+(?:[._-][a-z0-9]+)+\.[a-z0-9]+(?:[._-][a-z0-9]+)*$</code></p>
+<p>A matching name still needs an owning producer, payload definition and actual
+consumer/subscription. A generated TypeScript <code>string</code> does not remove this
+wire constraint or establish every payload's recursive semantics.</p>
+<table>
+<thead>
+<tr>
+<th>Actual production path</th>
+<th>What enters the journal</th>
+<th>Consumer / limit to retain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PipelineRunner.run</code> append</td>
+<td>New lifecycle envelope; sequence from <code>appendSequenced</code>, fresh event ID, supplied identity/payload and causation</td>
+<td>Recovery and event consumers need the original run/graph identity and event type</td>
+</tr>
+<tr>
+<td><code>StageExecutor</code> plugin-context append</td>
+<td>Domain envelope with owner provenance and attempt ID as causation</td>
+<td>Registration authority and actual payload meaning remain distinct from the generic JSON-object shape</td>
+</tr>
+<tr>
+<td><code>effectAppender</code></td>
+<td><code>effect.requested</code>, <code>effect.accepted</code>, <code>effect.completed</code> or <code>effect.failed</code> with effect/attempt identity</td>
+<td>Attempts whose ID starts <code>observer:</code> are excluded from this bridge to prevent observer-effect feedback</td>
+</tr>
+<tr>
+<td>OpenClaw agent-events adapter</td>
+<td><code>plugin.kubeclaw.openclaw-agent-events.&lt;hook-with-hyphens&gt;</code> from its supported hook and normalized identity/payload</td>
+<td>This granted domain adapter is not the separate host Redis observer or an unconstrained hook registry</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — actual appenders and selected hook mapping:</strong>
+<a href="../../../skills/nova/core/execution/runner.ts#L60-L77">PipelineRunner.run lifecycle append</a> (<code>skills/nova/core/execution/runner.ts:60-77</code>, current-checkout SHA-256 <code>9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6</code>). <a href="../../../skills/nova/core/execution/stage-executor.ts#L82-L97">StageExecutor plugin-context domain append</a> (<code>skills/nova/core/execution/stage-executor.ts:82-97</code>, current-checkout SHA-256 <code>4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb</code>). <a href="../../../skills/nova/core/execution/engine-runtime.ts#L53-L61">effectAppender observer feedback exclusion</a> (<code>skills/nova/core/execution/engine-runtime.ts:53-61</code>, current-checkout SHA-256 <code>de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec</code>). <a href="../../../skills/common/plugins/openclaw-agent-events/src/adapter.ts#L5-L10">SUPPORTED_HOOKS</a> (<code>skills/common/plugins/openclaw-agent-events/src/adapter.ts:5-10</code>, current-checkout SHA-256 <code>665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7</code>). <a href="../../../skills/common/plugins/openclaw-agent-events/src/adapter.ts#L70-L80">normalized hook domain emit</a> (<code>skills/common/plugins/openclaw-agent-events/src/adapter.ts:70-80</code>, current-checkout SHA-256 <code>665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7</code>).</p>
+<p>The platform surface inventory extracts selected lifecycle names, the shipped
+OpenClaw domain adapter's hooks and agent-observability ingress names. It does
+not discover every dynamic producer, payload builder, subscriber or retention
+policy. Keep its generated names linked to the authored owner and task; do not
+manually duplicate the list here as another authority.</p>
+<p><strong>Source — existing inventory's finite name extraction:</strong>
+<a href="../../../scripts/docs-platform-surface-inventory.mjs#L882-L904">lifecycle/domain/ingress name acquisition</a> (<code>scripts/docs-platform-surface-inventory.mjs:882-904</code>, current-checkout SHA-256 <code>0a351f643d93c20518b0dd54443a227ffc2f40194c7a35cd7ec55025b5b6bda0</code>).</p>
+<h2 id="identity-and-order-are-scoped">Identity and order are scoped</h2>
+<table>
+<thead>
+<tr>
+<th>Field / identity</th>
+<th>Meaning</th>
+<th>What it does not prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eventId</code></td>
+<td>One canonical event's identity</td>
+<td>A different delivery or stream ID is the same field</td>
+</tr>
+<tr>
+<td>Run / stage / attempt identity</td>
+<td>Which execution location produced or consumed the record</td>
+<td>Two records from different runs can be merged because timestamps look similar</td>
+</tr>
+<tr>
+<td><code>effectId</code></td>
+<td>Correlates an external-effect lifecycle record</td>
+<td>The payload alone proves the external action's terminal receipt</td>
+</tr>
+<tr>
+<td><code>causationId</code></td>
+<td>Links a producing attempt, delivery or continuation</td>
+<td>A globally sorted or complete causal graph exists</td>
+</tr>
+<tr>
+<td>Journal <code>sequence</code> / hash chain</td>
+<td>Order and integrity within the actual journal; producers obtain sequence at append</td>
+<td>Global order across hosts, roots, Redis streams or databases</td>
+</tr>
+<tr>
+<td><code>occurredAt</code> / <code>deliveredAt</code> / <code>sentAt</code></td>
+<td>Timestamp for the named producer/delivery/progress step</td>
+<td>Timestamp order equals commit order or proves an acknowledgement</td>
+</tr>
+<tr>
+<td><code>delivery:&lt;observerId&gt;:&lt;eventId&gt;</code></td>
+<td>Stable observer delivery identity</td>
+<td>Delivery attempt number, invocation lease and idempotency key are all interchangeable</td>
+</tr>
+<tr>
+<td>Redis stream ID / dedup key</td>
+<td>The sink's stream position / repeat-suppression key</td>
+<td>Unlimited retention or permanent exactly-once event delivery</td>
+</tr>
+</tbody>
+</table>
+<p>The Worker progress producer uses its own local sequence and catches callback
+failure; the terminal result is authoritative, not the last progress state.
+Its result preserves the selected protocol, attempt and claim generation,
+worker, fault, evidence, resource and cleanup fields. Read the matching version
+before comparing records from different execution routes.</p>
+<p><strong>Source — actual Worker progress and result construction:</strong>
+<a href="../../../skills/worker/core/worker/attempt-executor.ts#L590-L611">best-effort progress record</a> (<code>skills/worker/core/worker/attempt-executor.ts:590-611</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>). <a href="../../../skills/worker/core/worker/attempt-executor.ts#L629-L650">terminal result identity and fault fields</a> (<code>skills/worker/core/worker/attempt-executor.ts:629-650</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>).</p>
+<h2 id="delivery-acknowledgement-and-replay">Delivery, acknowledgement, and replay</h2>
+<p>An observer is a registered consumer that receives subscribed event types.
+Its checkpoint records how far it advanced for one run. An acknowledgement
+means the called receiver reported success; it does not make an unbounded
+exactly-once guarantee across a lost connection and later retry.</p>
+<ol>
+<li>Drain reads canonical events and selects observers with grants and an exact
+subscription to the type. It skips events already covered by that observer/run checkpoint.</li>
+<li>Delivery uses configured <code>maxAttempts</code>, <code>backoffMs</code> and <code>timeoutMs</code>; retained
+prior attempts count toward the maximum rather than resetting on every drain.</li>
+<li>Each invocation gets an observer-delivery wrapper and a revocable lease.
+The delivery path records success before checkpoint advance. Conflicting checkpoint event
+IDs at the same sequence fail; regression also fails.</li>
+<li>A required observer failure throws. Best-effort failure records the failure
+and blocks later events for that observer/run in this drain; it is not a
+universal promise to ignore sink failure and continue that run's delivery.</li>
+<li>If the receiver accepted data but its acknowledgement was lost, another
+delivery can repeat. Reconcile sink evidence and stable identities before
+any manual replay. Do not edit a checkpoint to manufacture success.</li>
+</ol>
+<p>Ordinary adapter calls derive an idempotency key from stable delivery ID and
+invocation sequence. The supported <code>operator.request</code> route to
+<code>kubeclaw.operator-messaging</code> deliberately has per-execution identity plus a
+stable key passed separately. Do not apply one key rule to every capability.
+The lease's declared memory/time values do not prove an external process was
+killed when its callback timed out.</p>
+<p><strong>Source — policy, checkpoint and genuine delivery keys:</strong>
+<a href="../../../skills/nova/core/telemetry/observers.ts#L51-L91">checkpoint consistency and subscribed drain</a> (<code>skills/nova/core/telemetry/observers.ts:51-91</code>, current-checkout SHA-256 <code>b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd</code>). <a href="../../../skills/nova/core/telemetry/observers.ts#L96-L108">retained delivery attempts and backoff</a> (<code>skills/nova/core/telemetry/observers.ts:96-108</code>, current-checkout SHA-256 <code>b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd</code>). <a href="../../../skills/nova/core/telemetry/observer-delivery.ts#L8-L44">delivery timeout, lease, wrapper and capability key selection</a> (<code>skills/nova/core/telemetry/observer-delivery.ts:8-44</code>, current-checkout SHA-256 <code>d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc</code>).</p>
+<h2 id="persistence-retention-and-loss">Persistence, retention, and loss</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Actual policy / source boundary</th>
+<th>Safe interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova event journal</td>
+<td>Hash-chained append/load under a stable lock; no automatic retirement route in this class</td>
+<td>Retain canonical records needed by recovery/effects/artifacts/waits; a sink trim does not retire them</td>
+</tr>
+<tr>
+<td>Observer attempts / checkpoints</td>
+<td>Separate durable records of attempts and progress</td>
+<td>Checkpoint state is not a full copy of sink contents or a deletion policy</td>
+</tr>
+<tr>
+<td>File telemetry projection</td>
+<td>Adapter passes per-record, record-count and store-byte bounds to its durable store</td>
+<td>Capacity and the downstream store's retention are not canonical event retention; this adapter is not a global retirement procedure</td>
+</tr>
+<tr>
+<td>Redis telemetry adapter</td>
+<td>Lua checks dedup key, appends with approximate <code>MAXLEN</code>, then stores dedup entry with TTL</td>
+<td>Expired key permits a later repeat; old stream entries can trim; neither policy is unlimited history</td>
+</tr>
+<tr>
+<td>OpenClaw host writer</td>
+<td>Control retries up to configured limit; payload gets one attempt; final control failure gets one dead-letter attempt</td>
+<td>A dead-letter queue is a failure-copy stream, not proof a consumer recovered it; failed payload is not Nova-replayable</td>
+</tr>
+<tr>
+<td>Host queues and external readers</td>
+<td>Host-local memory and selected deployment receivers have separate ownership</td>
+<td>No durable replay or downstream consumer is inferred where this finite source set has not established one</td>
+</tr>
+<tr>
+<td>Retained flat telemetry assets</td>
+<td>README declares compatibility data, not ingestion/retention/auth implementation</td>
+<td>Assess external readers before removing assets; a retained schema is not an active delivery pipeline</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — projection capacity and finite Redis behavior:</strong>
+<a href="../../../skills/common/plugins/telemetry-store/src/adapter.ts#L5-L37">bounded telemetry projection store and append</a> (<code>skills/common/plugins/telemetry-store/src/adapter.ts:5-37</code>, current-checkout SHA-256 <code>f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13</code>). <a href="../../../skills/common/plugins/redis-transport/src/adapter.ts#L14-L21">REDIS_PUBLISH_LUA dedup, append, trim and expiry</a> (<code>skills/common/plugins/redis-transport/src/adapter.ts:14-21</code>, current-checkout SHA-256 <code>15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01</code>). <a href="../../../skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L202-L253">control/payload retry and dead-letter write</a> (<code>skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:202-253</code>, current-checkout SHA-256 <code>8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d</code>).</p>
+<p>The host observer's source is <code>openclaw.plugin.agent-observer</code>, with separate
+<code>pipeline:agent-observability:control:v1</code>, <code>:payload:v1</code> and <code>:deadletter:v1</code>
+stream names. These constants identify a different schema/source from both
+the granted domain adapter and the flat retained telemetry-v1 assets.
+A source string is not sender authentication or proof of a live consumer.</p>
+<p><strong>Source — separate host identity and retained contract scope:</strong>
+<a href="../../../contracts/agent-observability/v1/src/constants.ts#L1-L47">host schema, streams and ingress types</a> (<code>contracts/agent-observability/v1/src/constants.ts:1-47</code>, current-checkout SHA-256 <code>7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924</code>). <a href="../../../contracts/telemetry/v1/README.html#telemetry-contract-v1">retained flat contract and unimplemented consumer obligations</a> (<code>contracts/telemetry/v1/README.md:1-35</code>, current-checkout SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>).</p>
+<h2 id="audit-acquisition-can-change-the-journal">Audit acquisition can change the journal</h2>
+<p><code>readPipelineAudit</code> returns a redacted <code>pipeline-audit.v1</code> projection for one
+run with source record hashes, journal head and digest. It adds no new
+canonical lifecycle/audit entry. It is not a replacement for effect receipts,
+artifacts, snapshots, observer delivery history or other stores.</p>
+<p><strong>No new entry does not mean no write.</strong> Before filtering the selected run,
+audit constructs <code>FileJournal</code>: parent-directory preparation, stable append-lock
+open/create and genuine <code>/usr/bin/flock</code> precede journal loading. If existing
+bytes are nonempty and do not end with a line feed (LF), loading truncates to
+the last LF, possibly zero bytes, and synchronizes the file before parsing
+committed chain/hash records. Empty or LF-terminated bytes need no tail
+truncation; lock metadata effects remain. Invalid committed data can still
+fail. This is not general corrupt-journal recovery.</p>
+<ul>
+<li><code>AUDIT_JOURNAL_MISSING</code> is checked before construction when the file is absent;
+audit does not create the missing event journal.</li>
+<li><code>AUDIT_RUN_MISSING</code> is checked after construction and filtering; even this
+failure can already have lock/tail effects.</li>
+<li>Before audit or a retry, retain the first diagnostic, partial output and
+original evidence. Do not assume that interruption left bytes unchanged.</li>
+<li>If original bytes must be retained, inspect or retry only against a correctly
+bound inactive copy of the run root, not the sole retained original. Audit
+can modify that copy too. Keep the original run identity/journal binding;
+do not redirect an active run or merge output from different runs/heads.</li>
+<li>There is no read-only/no-record flag in this audit route that bypasses
+construction, and no alternate parser or command is asserted equivalent here.</li>
+</ul>
+<p><strong>Source — actual audit acquisition, lock and tail effects:</strong>
+<a href="../../../skills/nova/core/telemetry/audit.ts#L15-L27">readPipelineAudit missing-file/run order and projection</a> (<code>skills/nova/core/telemetry/audit.ts:15-27</code>, current-checkout SHA-256 <code>59eb49b7c0e2e430b38c53572edb5d7563724957996bd2dfda261fe1a1569bfd</code>). <a href="../../../skills/nova/core/state/journal.ts#L30-L42">FileJournal constructor</a> (<code>skills/nova/core/state/journal.ts:30-42</code>, current-checkout SHA-256 <code>25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf</code>). <a href="../../../skills/nova/core/state/journal.ts#L59-L81">incomplete-tail recovery and subsequent load/parse</a> (<code>skills/nova/core/state/journal.ts:59-81</code>, current-checkout SHA-256 <code>25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf</code>). <a href="../../../skills/nova/core/state/file-mutex.ts#L8-L24">FileMutex.withLock and real flock child</a> (<code>skills/nova/core/state/file-mutex.ts:8-24</code>, current-checkout SHA-256 <code>d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c</code>).</p>
+<h2 id="diagnose-one-missing-or-repeated-event">Diagnose one missing or repeated event</h2>
+<ol>
+<li>Retain the original event/run identity, journal head/sequence, observer
+identity, attempt numbers and non-secret sink response. Do not delete or
+rewrite the source to make the projection look complete.</li>
+<li>Distinguish missing production from failed delivery, expired deduplication,
+trimmed projection, unsupported subscription or an unknown downstream reader.</li>
+<li>Read the owning policy and first failure. A required observer failure,
+exhausted delivery attempts and a lost acknowledgement need different actions.</li>
+<li>Establish the original authority and cleanup before replay. Repair the sink
+and use its supported bounded recovery path; do not re-execute the original
+business action solely to repopulate a telemetry projection.</li>
+<li>Retain restored delivery/result evidence and unresolved gaps separately.
+A dashboard becoming green does not prove the missing source or sink history
+was recovered. Use <a href="../use/diagnose.html">Diagnosis</a> and <a href="../use/recovery.html">Recovery</a>
+with their explicit target/access prerequisites, not as a blanket replay instruction.</li>
+</ol>
+<h2 id="coverage-and-change-impact">Coverage and change impact</h2>
+<p>This catalogue binds selected canonical v2 definitions and producers, observer
+policy, Worker executor records, selected adapters, host constants and retained
+assets. It is not a complete census of all dynamic event builders, payload
+versions, consumers, native/service/operations paths or external sinks.
+A generic JSON-object payload does not establish each event type's full
+recursive constraints. Unknown consumers remain unknown; no retention window,
+end-to-end availability or replay success is inferred from source presence.</p>
+<p>When a type, payload, identity, subscription, retry or retention rule changes,
+update its exact authority and consumer explanation together. Use
+<a href="../extend/documentation-maintenance.html">Documentation maintenance</a>; existing
+name extraction does not generate this authored hub or prove every producer
+has an owner. We ran no extractor, parser, audit, replay, live delivery or recovery
+command for this page.</p>
+</main></body></html>

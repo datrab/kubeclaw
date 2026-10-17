@@ -1,0 +1,1218 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/lint-rules.html"></head><body><main>
+<h1 id="lint-rule-and-finding-reference">Lint Rule And Finding Reference</h1>
+<p>Status: implemented
+Audience: developer, lint-policy maintainer, operator
+Owner: lint
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/eslint.config.mjs">charts/kubeclaw/files/config/eslint.config.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs">charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/.semgrep.yml">charts/kubeclaw/files/config/.semgrep.yml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json">charts/kubeclaw/files/config/kubernetes-policy-pack-default.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/lint/src/engine">skills/nova/plugins/lint/src/engine</a>
+Evidence revision: <code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code>
+Applies to: the repository-owned rules and normalized findings in <code>pipeline_lint_policy.v7</code>
+Last verified: source, configuration, and focused lint tests on 2026-09-20; no target-image execution</p>
+<h2 id="purpose-and-reading-order">Purpose And Reading Order</h2>
+<p>This page explains each rule that KubeClaw owns. It also explains each stable
+finding family that the lint engine creates. Use it when a report contains a
+code that is not self-explanatory.</p>
+<p>The <a href="lint-policy.html">policy guide</a> explains selection, severity, debt, and
+failure behavior. The <a href="lint-policy-generated.html">generated facts</a> give the exact
+shipped settings. The <a href="../extend/lint.html">extension guide</a> explains safe changes.</p>
+<p>KubeClaw does not copy the complete rule manuals of external analysers. Those
+rules can change with the installed analyser version. This page states the
+boundary and explains how KubeClaw normalizes their results.</p>
+<h2 id="how-to-interpret-a-finding">How To Interpret A Finding</h2>
+<p>A finding has a tool, code, severity, message, file, optional coordinates, and
+fingerprint. The tool identifies the analyser. The code identifies the rule or
+normalized condition. The policy threshold decides whether the severity blocks.</p>
+<p>First correct the reported condition. Use a waiver only when correction is
+unsafe now and an owner accepts expiring debt. Do not change a message only to
+change its fingerprint.</p>
+<blockquote>
+<p><strong>Finding evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts#L4-L53">The engine normalizes and fingerprints findings</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L76-L119">The report contract validates their shape and counts</a>.</p>
+</blockquote>
+<h2 id="blocking-eslint-rules">Blocking ESLint Rules</h2>
+<p>The blocking ESLint configuration has two groups. Standard rules protect common
+language behavior. Local <code>discipline</code> rules protect KubeClaw boundaries that a
+general-purpose rule cannot express accurately.</p>
+<p>Rules enabled in production are errors. Test files use larger size limits and
+only the rules marked for tests. The configuration owns the exact file groups
+and boundary exemptions.</p>
+<h3 id="standard-rules">Standard Rules</h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Trigger</th>
+<th>Intent and remediation</th>
+<th>Test behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>complexity</code></td>
+<td>A function has more than 15 decision paths.</td>
+<td>Keep decisions reviewable. Extract one coherent decision with a clear input and result.</td>
+<td>Maximum 70.</td>
+</tr>
+<tr>
+<td><code>max-depth</code></td>
+<td>Control flow nests beyond three levels.</td>
+<td>Keep the main path visible. Use a guard clause or extract one complete operation.</td>
+<td>Maximum six.</td>
+</tr>
+<tr>
+<td><code>max-lines</code></td>
+<td>A source file exceeds 300 nonblank, noncomment lines.</td>
+<td>Keep one cohesive concern per file. Move a complete concern behind an explicit interface.</td>
+<td>Maximum 2,000.</td>
+</tr>
+<tr>
+<td><code>max-lines-per-function</code></td>
+<td>A function exceeds 60 nonblank, noncomment lines.</td>
+<td>Keep one responsibility per function. Extract complete operations, not arbitrary line ranges.</td>
+<td>Maximum 650.</td>
+</tr>
+<tr>
+<td><code>max-params</code></td>
+<td>A function accepts more than seven parameters.</td>
+<td>Keep interfaces cohesive. Use one typed request object when the values belong together.</td>
+<td>Maximum 12.</td>
+</tr>
+<tr>
+<td><code>no-async-promise-executor</code></td>
+<td>A Promise constructor receives an asynchronous executor.</td>
+<td>Avoid lost asynchronous errors. Create work before the constructor or use an async function directly.</td>
+<td>Enabled only for tests; production does not enable this rule.</td>
+</tr>
+<tr>
+<td><code>no-global-assign</code></td>
+<td>Code assigns to a read-only global.</td>
+<td>Prevent hidden global mutation. Store state in an explicit lifecycle owner.</td>
+<td>Enabled.</td>
+</tr>
+<tr>
+<td><code>no-useless-catch</code></td>
+<td>A catch block only throws the same error.</td>
+<td>Remove the block, or add useful context while preserving the cause.</td>
+<td>Enabled.</td>
+</tr>
+<tr>
+<td><code>no-var</code></td>
+<td>Code declares a variable with <code>var</code>.</td>
+<td>Use block-scoped bindings. Select <code>const</code>, or use <code>let</code> when reassignment is required.</td>
+<td>Enabled.</td>
+</tr>
+<tr>
+<td><code>no-console</code></td>
+<td>Production code calls <code>console</code> outside an approved boundary.</td>
+<td>Preserve structured logs. Use the canonical logger with level and context.</td>
+<td>Disabled.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/await-thenable</code></td>
+<td>Code awaits a value that is not promise-like.</td>
+<td>Expose incorrect asynchronous assumptions. Remove <code>await</code> or return a real promise.</td>
+<td>Disabled.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/consistent-type-imports</code></td>
+<td>A type-only dependency uses a value import.</td>
+<td>Keep runtime dependencies visible. Use <code>import type</code> for type-only imports.</td>
+<td>Disabled.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/no-floating-promises</code></td>
+<td>Code creates a promise without awaiting, returning, or explicitly discarding it.</td>
+<td>Prevent unobserved failure. Await, return, or intentionally mark the promise with <code>void</code>.</td>
+<td>Disabled.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/no-misused-promises</code></td>
+<td>A promise is used where synchronous behavior is required.</td>
+<td>Prevent callbacks from hiding asynchronous failure. Introduce an explicit asynchronous boundary.</td>
+<td>Disabled.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/switch-exhaustiveness-check</code></td>
+<td>A switch omits a member of a typed union.</td>
+<td>Make new states visible during compilation. Handle every member or use an explicit unreachable assertion.</td>
+<td>Disabled.</td>
+</tr>
+</tbody>
+</table>
+<p>The limits are policy choices, not universal measures of quality. The admission
+record preserves the approved principle and remediation for each blocking local
+choice. The <a href="lint-policy-generated.html#blocking-rule-admission">generated admission table</a>
+keeps those facts synchronized with policy.</p>
+<h3 id="local-discipline-rules">Local Discipline Rules</h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Exact trigger</th>
+<th>Intentional non-trigger or exemption</th>
+<th>Corrective action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>discipline/filename-case</code></td>
+<td>A JavaScript or TypeScript source filename is not lowercase kebab-case.</td>
+<td>The configured non-source and special filenames remain outside its file group.</td>
+<td>Rename the file and update all imports.</td>
+</tr>
+<tr>
+<td><code>discipline/no-direct-env-access</code></td>
+<td>Production code reads <code>process.env</code> outside an approved environment boundary.</td>
+<td>Named configuration, adapter, and process-boundary files can read the environment.</td>
+<td>Parse and validate the value at an approved boundary. Pass typed configuration inward.</td>
+</tr>
+<tr>
+<td><code>discipline/no-dynamic-module-loading</code></td>
+<td>Production code uses dynamic <code>import()</code>, <code>require()</code>, or equivalent loading outside an approved loader.</td>
+<td>Named plugin loader, registry, migration, and controlled discovery boundaries are exempt.</td>
+<td>Use a static import or register the dependency through the approved loader boundary.</td>
+</tr>
+<tr>
+<td><code>discipline/no-env-default</code></td>
+<td>An environment read uses a hardcoded application fallback.</td>
+<td>Boolean control flow and validation after an environment read are not default values.</td>
+<td>Put the default in canonical configuration. Require the validated value in application code.</td>
+</tr>
+<tr>
+<td><code>discipline/no-fallback-chain</code></td>
+<td>A production expression chains more than one nonboolean fallback.</td>
+<td>Boolean expressions and one explicit fallback remain valid. Named compatibility boundaries are exempt.</td>
+<td>Select one authority and, at most, one documented fallback. Remove guessed candidates.</td>
+</tr>
+<tr>
+<td><code>discipline/no-swallowed-error</code></td>
+<td>A catch block hides failure through an empty block, <code>return</code>, or no actionable handling.</td>
+<td>Rethrow, typed failure, explicit handling, or the reviewed <code>INTENTIONAL_NONCRITICAL(...)</code> marker is accepted.</td>
+<td>Return a typed failure, rethrow with context, or document the bounded noncritical case.</td>
+</tr>
+<tr>
+<td><code>discipline/no-top-level-mutable-state</code></td>
+<td>A module owns mutable top-level state without an approved lifecycle boundary.</td>
+<td>Immutable bindings and named lifecycle owners are accepted.</td>
+<td>Move the state into an object or service with explicit construction and shutdown.</td>
+</tr>
+</tbody>
+</table>
+<p>The exemptions prevent broad rules from rejecting the components that own the
+controlled boundary. Add an exemption only when the file owns that boundary.
+Do not add an exemption only because a finding is inconvenient.</p>
+<blockquote>
+<p><strong>ESLint evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L65-L253">The local implementations define their exact syntax checks</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L255-L338">The configuration defines limits, file groups, and exemptions</a>.</p>
+</blockquote>
+<h2 id="experimental-type-evidence-rules">Experimental Type-Evidence Rules</h2>
+<p>These rules find places where source code claims more type certainty than its
+evidence supports. They are experimental because repository-wide calibration is
+still visible separately from the blocking gate.</p>
+<p>Experimental findings never block and cannot enter the baseline. Set
+<code>includeExperimental=true</code> to disclose them.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Trigger</th>
+<th>Intentional boundary</th>
+<th>Corrective action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type-evidence/no-chained-type-assertions</code></td>
+<td>A value passes through a second type assertion.</td>
+<td>A single assertion remains outside this rule.</td>
+<td>Validate the value once, then keep the validated type.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-known-value-widening</code></td>
+<td>A known object is widened to a general string-keyed dictionary.</td>
+<td>A value already typed as a dictionary is not widened.</td>
+<td>Preserve its known keys or parse external input into a declared shape.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-module-mocking</code></td>
+<td>Test code replaces an entire module.</td>
+<td>Injected dependencies and narrow test seams remain valid.</td>
+<td>Pass the dependency through a constructor, parameter, or registered adapter.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-object-parameters</code></td>
+<td>A parameter uses the broad <code>object</code> type.</td>
+<td>A specific interface, record, or schema-derived type remains valid.</td>
+<td>Define the fields that the function requires.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-unknown-returns</code></td>
+<td>A function exposes <code>unknown</code> as its return contract.</td>
+<td>Local <code>unknown</code> input before parsing remains valid.</td>
+<td>Parse the value at the boundary and return a named result type.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-unknown-type-aliases</code></td>
+<td>A type alias conceals <code>unknown</code>.</td>
+<td>Direct boundary use stays visible and is not concealed by an alias.</td>
+<td>Replace the alias with a schema-derived or explicit type.</td>
+</tr>
+<tr>
+<td><code>type-evidence/no-widen-then-assert</code></td>
+<td>Code widens a known value and later asserts it back.</td>
+<td>Validation that produces a new typed value remains valid.</td>
+<td>Preserve the original type or validate at the actual trust boundary.</td>
+</tr>
+<tr>
+<td><code>@typescript-eslint/no-unsafe-type-assertion</code></td>
+<td>A typed assertion narrows without compiler proof.</td>
+<td>Safe widening and checked narrowing remain valid.</td>
+<td>Use a type guard, schema parser, or a more accurate source type.</td>
+</tr>
+</tbody>
+</table>
+<p>The local rules are intentionally narrow. Known-value widening skips exported
+variables and values that later need dynamic keys. Module mocking recognizes
+Jest and Vitest namespaces. Widen-then-assert follows one declared variable
+through one broad intermediate variable and requires the original type text.
+These limits reduce false positives, but they also limit what the audit proves.</p>
+<p>Production, tests, and generated or untracked files use separate adapters. This
+partition prevents one file from appearing in several experimental result sets.
+A Git enumeration failure stops classification instead of silently omitting files.</p>
+<blockquote>
+<p><strong>Type-evidence evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L226-L307">The local plugin implements seven syntax rules</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L42-L84">The production configuration adds the typed assertion rule</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts#L8-L57">The engine creates disjoint evidence partitions</a>.</p>
+</blockquote>
+<h2 id="curated-semgrep-rules">Curated Semgrep Rules</h2>
+<p>All 25 rules emit Semgrep <code>WARNING</code>. The shipped tool blocks at <code>warning</code>, so
+every disclosed Semgrep finding blocks. Patterns inspect changed matching files.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Languages</th>
+<th>Trigger</th>
+<th>Exclusion or safe form</th>
+<th>Corrective action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>no-eval</code></td>
+<td>JavaScript, TypeScript</td>
+<td><code>eval</code> or the <code>Function</code> constructor executes text.</td>
+<td>No configured exclusion.</td>
+<td>Replace text execution with a fixed parser or explicit dispatch table.</td>
+</tr>
+<tr>
+<td><code>no-string-timer-code</code></td>
+<td>JavaScript, TypeScript</td>
+<td>A timer receives a string literal.</td>
+<td>A function callback is accepted.</td>
+<td>Pass a function to the timer.</td>
+</tr>
+<tr>
+<td><code>no-shell-interpolation</code></td>
+<td>JavaScript, TypeScript</td>
+<td>A child-process shell command contains template interpolation.</td>
+<td>Argument-array process APIs are accepted.</td>
+<td>Use <code>execFile</code> or <code>spawn</code> with a fixed executable and separate arguments.</td>
+</tr>
+<tr>
+<td><code>no-hardcoded-secrets</code></td>
+<td>JavaScript, TypeScript, Python</td>
+<td>An assignment resembles a token, password, key, bearer value, or known credential prefix.</td>
+<td>Tests, specifications, and fixtures are excluded.</td>
+<td>Load the secret through the approved secret boundary. Rotate an exposed credential.</td>
+</tr>
+<tr>
+<td><code>no-raw-sql-outside-data-layer-js</code></td>
+<td>JavaScript, TypeScript</td>
+<td>A common database API receives SQL text outside a data layer.</td>
+<td>Named database, query, repository, storage, persistence, migration, and test paths are excluded.</td>
+<td>Move the query into the controlled data-access layer and parameterize values.</td>
+</tr>
+<tr>
+<td><code>no-raw-sql-outside-data-layer-py</code></td>
+<td>Python</td>
+<td>A common session, engine, or database API receives SQL text outside a data layer.</td>
+<td>The same data-layer and test path families are excluded.</td>
+<td>Move the query into the controlled data-access layer and parameterize values.</td>
+</tr>
+<tr>
+<td><code>no-sql-string-format</code></td>
+<td>Python</td>
+<td>SQL uses an f-string, percent formatting, or <code>format()</code>.</td>
+<td>Parameterized driver calls do not match.</td>
+<td>Pass the statement and values separately through the driver API.</td>
+</tr>
+<tr>
+<td><code>no-math-random-security</code></td>
+<td>JavaScript, TypeScript</td>
+<td><code>Math.random()</code> initializes a security-named value.</td>
+<td>Non-security names do not match this heuristic.</td>
+<td>Use <code>crypto.randomUUID()</code> or <code>crypto.randomBytes()</code>.</td>
+</tr>
+<tr>
+<td><code>use-compare-digest</code></td>
+<td>Python</td>
+<td>A security-named value is compared with <code>==</code>.</td>
+<td>Constant-time comparison APIs do not match.</td>
+<td>Use <code>hmac.compare_digest()</code> or <code>secrets.compare_digest()</code>.</td>
+</tr>
+<tr>
+<td><code>no-prototype-pollution</code></td>
+<td>JavaScript, TypeScript</td>
+<td>Code accesses <code>__proto__</code> or <code>constructor.prototype</code>.</td>
+<td>No configured exclusion.</td>
+<td>Validate keys and use <code>Map</code> or a null-prototype object for untrusted keys.</td>
+</tr>
+<tr>
+<td><code>no-open-redirect</code></td>
+<td>JavaScript, TypeScript</td>
+<td>A response redirect receives a variable target.</td>
+<td>This pattern does not prove allowlist validation.</td>
+<td>Resolve the destination through a strict allowlist before redirecting.</td>
+</tr>
+<tr>
+<td><code>no-bare-except</code></td>
+<td>Python</td>
+<td>An exception handler omits the exception type.</td>
+<td><code>except Exception</code> does not match.</td>
+<td>Catch the narrow expected exception, or use <code>Exception</code> when the boundary requires it.</td>
+</tr>
+<tr>
+<td><code>no-swallowed-exception-py</code></td>
+<td>Python</td>
+<td>A caught exception ends with <code>pass</code>, empty <code>return</code>, or <code>return None</code>.</td>
+<td>Tests and specifications are excluded.</td>
+<td>Handle the failure or rethrow it with context.</td>
+</tr>
+<tr>
+<td><code>requests-no-timeout</code></td>
+<td>Python</td>
+<td>A common <code>requests</code> call omits <code>timeout</code>.</td>
+<td>A call with an explicit timeout is accepted.</td>
+<td>Set a bounded connect and read timeout.</td>
+</tr>
+<tr>
+<td><code>requests-no-verify</code></td>
+<td>Python</td>
+<td>A request sets <code>verify=False</code>.</td>
+<td>Verified TLS is accepted.</td>
+<td>Restore verification and configure the required trust root.</td>
+</tr>
+<tr>
+<td><code>no-pickle-load</code></td>
+<td>Python</td>
+<td>Code loads Python pickle data.</td>
+<td>No configured trusted-data exemption exists.</td>
+<td>Use JSON or another non-executable format for untrusted data.</td>
+</tr>
+<tr>
+<td><code>no-unsafe-yaml-load</code></td>
+<td>Python</td>
+<td><code>yaml.load()</code> omits a loader.</td>
+<td>An explicit loader does not match; prefer <code>safe_load</code>.</td>
+<td>Use <code>yaml.safe_load()</code> or an approved safe loader.</td>
+</tr>
+<tr>
+<td><code>jinja2-no-autoescape</code></td>
+<td>Python</td>
+<td>A Jinja environment omits approved autoescape configuration.</td>
+<td><code>autoescape=True</code> and <code>select_autoescape(...)</code> are accepted.</td>
+<td>Enable contextual autoescaping.</td>
+</tr>
+<tr>
+<td><code>no-dynamic-module-load-py</code></td>
+<td>Python</td>
+<td>Code uses <code>importlib.import_module</code> or <code>__import__</code>.</td>
+<td>Named plugin, registry, loader, migration, and test paths are excluded.</td>
+<td>Use a static import or an explicit registered loader boundary.</td>
+</tr>
+<tr>
+<td><code>react-no-dangerously-set-html</code></td>
+<td>JavaScript, TypeScript</td>
+<td>JSX uses <code>dangerouslySetInnerHTML</code>.</td>
+<td>No configured sanitizer recognition exists.</td>
+<td>Prefer normal rendering. Sanitize unavoidable HTML at a reviewed boundary.</td>
+</tr>
+<tr>
+<td><code>no-innerhtml</code></td>
+<td>JavaScript, TypeScript</td>
+<td>Code assigns <code>innerHTML</code> or <code>outerHTML</code>.</td>
+<td><code>textContent</code> does not match.</td>
+<td>Use text APIs or a reviewed sanitizer.</td>
+</tr>
+<tr>
+<td><code>react-no-unsanitized-href</code></td>
+<td>JavaScript, TypeScript</td>
+<td>A link or browser location receives a variable URL.</td>
+<td>This pattern does not prove protocol validation.</td>
+<td>Parse the URL and allow only approved schemes and destinations.</td>
+</tr>
+<tr>
+<td><code>no-weak-crypto-js</code></td>
+<td>JavaScript, TypeScript</td>
+<td>Code selects MD5 or SHA-1.</td>
+<td>Stronger algorithms do not match.</td>
+<td>Use SHA-256 or stronger; use a password-hashing function for passwords.</td>
+</tr>
+<tr>
+<td><code>no-weak-crypto-py</code></td>
+<td>Python</td>
+<td>Code selects MD5 or SHA-1 through <code>hashlib</code>.</td>
+<td>Stronger algorithms do not match.</td>
+<td>Use SHA-256 or stronger; use a password-hashing function for passwords.</td>
+</tr>
+<tr>
+<td><code>no-subprocess-shell</code></td>
+<td>Python</td>
+<td>A subprocess API sets <code>shell=True</code>.</td>
+<td>An argument list with <code>shell=False</code> does not match.</td>
+<td>Pass a fixed executable and a separate argument list.</td>
+</tr>
+</tbody>
+</table>
+<p>Semgrep patterns are intentionally narrow and can be heuristic. A safe use can
+still match when the pattern cannot observe validation elsewhere. Prefer a
+clear local safe form. Propose an exclusion only for a stable owned boundary.</p>
+<blockquote>
+<p><strong>Semgrep evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.semgrep.yml#L21-L445">The configuration owns all patterns, messages,
+languages, severities, and path exclusions</a>.</p>
+</blockquote>
+<h2 id="engine-owned-finding-codes">Engine-Owned Finding Codes</h2>
+<p>These codes are stable KubeClaw findings. They describe source quality, not an
+execution failure.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Code or family</th>
+<th>Trigger</th>
+<th>Corrective action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gofmt</code></td>
+<td><code>go-format</code></td>
+<td><code>gofmt -l</code> reports a Go file.</td>
+<td>Run <code>gofmt -w</code> on the file and review the change.</td>
+</tr>
+<tr>
+<td><code>gocyclo</code></td>
+<td><code>go-complexity</code></td>
+<td>A Go function exceeds complexity 10.</td>
+<td>Extract a cohesive decision or reduce branching.</td>
+</tr>
+<tr>
+<td><code>go-imports</code></td>
+<td><code>go-import-boundary</code></td>
+<td>A Go package imports an external prefix not allowed by its module policy.</td>
+<td>Use an allowed internal abstraction, or review the module allowlist.</td>
+</tr>
+<tr>
+<td><code>shfmt</code></td>
+<td><code>shell-format</code></td>
+<td><code>shfmt -d</code> produces a format difference.</td>
+<td>Run <code>shfmt -w -s -i 2 -ci</code> on the file.</td>
+</tr>
+<tr>
+<td><code>dependency-cruiser</code></td>
+<td><code>architecture:forbidden-dependency</code></td>
+<td>A source layer depends on a layer absent from <code>may_depend_on</code>.</td>
+<td>Move the dependency behind an allowed boundary, or review the layer policy.</td>
+</tr>
+<tr>
+<td><code>dependency-cruiser</code></td>
+<td><code>architecture:circular-dependency</code></td>
+<td>The module graph contains a cycle, including a self-cycle.</td>
+<td>Break the cycle by moving shared behavior behind one directed interface.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td><code>knip:files</code></td>
+<td>Knip reports a dead file.</td>
+<td>Remove it or register its real entry point.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td><code>knip:exports</code></td>
+<td>Knip reports an unused export.</td>
+<td>Remove the export or connect its supported consumer.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td><code>knip:types</code></td>
+<td>Knip reports an unused exported type.</td>
+<td>Remove the export or connect its supported consumer.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td><code>knip:dependencies</code></td>
+<td>Knip reports an unused dependency.</td>
+<td>Remove it from the owning package.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td><code>knip:unlisted</code></td>
+<td>Source imports an undeclared dependency.</td>
+<td>Declare it in the owning package.</td>
+</tr>
+<tr>
+<td><code>knip</code></td>
+<td><code>knip:unresolved</code></td>
+<td>Knip cannot resolve an import.</td>
+<td>Correct the path, package declaration, or generated-source boundary.</td>
+</tr>
+<tr>
+<td><code>jscpd</code></td>
+<td><code>duplication:structural-clone</code></td>
+<td>Production or calibrated test content crosses the active token and line limits.</td>
+<td>Extract the shared behavior when it represents one concept. Keep intentional independent cases separate.</td>
+</tr>
+<tr>
+<td><code>terraform-fmt</code></td>
+<td><code>terraform-format</code></td>
+<td><code>terraform fmt -check</code> reports a file.</td>
+<td>Run <code>terraform fmt</code> in the affected root.</td>
+</tr>
+<tr>
+<td><code>terraform-validate</code></td>
+<td><code>terraform-validate</code></td>
+<td>Terraform returns a structured validation diagnostic.</td>
+<td>Correct the configuration described by the diagnostic.</td>
+</tr>
+<tr>
+<td><code>helm-lint</code></td>
+<td><code>helm-lint</code></td>
+<td>Strict Helm lint emits an error or warning.</td>
+<td>Correct the chart at the reported template or metadata boundary.</td>
+</tr>
+<tr>
+<td><code>yamllint</code></td>
+<td><code>yamllint</code></td>
+<td>Strict yamllint emits a parsable diagnostic.</td>
+<td>Apply the named YAML rule. Helm templates remain excluded.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-syntax</code></td>
+<td>JSON or YAML parsing fails, including unsupported aliases.</td>
+<td>Correct the document syntax and remove unsupported aliases.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-version</code></td>
+<td>The contract does not declare OpenAPI 3.x.</td>
+<td>Set a supported OpenAPI 3 version.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-paths</code></td>
+<td>The contract lacks an object-valued <code>paths</code>.</td>
+<td>Add the paths object.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-path-item</code></td>
+<td>A path item is neither an object nor a resolvable local reference.</td>
+<td>Correct the object or its local JSON Pointer.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-operation</code></td>
+<td>An HTTP operation is not an object.</td>
+<td>Replace it with a valid operation object.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-operation-id</code></td>
+<td>An operation ID is absent, invalid, or duplicated.</td>
+<td>Give every operation one unique string ID.</td>
+</tr>
+<tr>
+<td><code>openapi-contract</code></td>
+<td><code>openapi-responses</code></td>
+<td>An operation has no response object.</td>
+<td>Declare its response contract.</td>
+</tr>
+<tr>
+<td><code>kubernetes-policy</code></td>
+<td><code>kubernetes-policy/&lt;rule-id&gt;</code></td>
+<td>One admitted pack rule rejects a manifest object.</td>
+<td>Use the reported rule ID and the Kubernetes section below.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Internal finding evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L96-L189">Architecture, Knip, and duplication normalization</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/go-tools.ts#L128-L216">Go normalization</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/openapi-tool.ts#L6-L76">OpenAPI checks</a> define these codes.</p>
+</blockquote>
+<h2 id="kubernetes-policy-rules">Kubernetes Policy Rules</h2>
+<p>The default pack has six rules. Pack admission binds their bytes, version, ID,
+and digest before evaluation. Rules apply to Pod, Deployment, StatefulSet,
+DaemonSet, ReplicaSet, Job, and CronJob workload shapes.</p>
+<table>
+<thead>
+<tr>
+<th>Rule ID</th>
+<th>Trigger</th>
+<th>Important boundary</th>
+<th>Corrective action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>required-runtime-env</code></td>
+<td>A normal or init container lacks <code>REDIS_HOST</code>.</td>
+<td>A resolvable <code>envFrom</code> ConfigMap or Secret key counts. An optional or missing source does not prove the value.</td>
+<td>Add the variable directly or through a resolvable nonoptional source.</td>
+</tr>
+<tr>
+<td><code>valid-secret-refs</code></td>
+<td>A nonoptional container <code>env</code> secret key or <code>envFrom</code> secret source cannot resolve in the namespace.</td>
+<td>Optional references are allowed. Volumes, projected volumes, and image-pull references are outside this rule.</td>
+<td>Create the named Secret and key, or correct the reference.</td>
+</tr>
+<tr>
+<td><code>private-registry-auth</code></td>
+<td>An image below <code>registry.example.invalid</code> lacks a pod or service-account pull secret.</td>
+<td>Public images do not need this rule's credential.</td>
+<td>Add an image pull secret to the pod or selected service account.</td>
+</tr>
+<tr>
+<td><code>readiness-probe</code></td>
+<td>A normal container lacks a readiness probe.</td>
+<td>Init containers do not receive this check.</td>
+<td>Add a probe that proves the container can receive traffic.</td>
+</tr>
+<tr>
+<td><code>liveness-probe</code></td>
+<td>A normal container lacks a liveness probe.</td>
+<td>Init containers do not receive this check.</td>
+<td>Add a probe that detects a process which cannot recover by itself.</td>
+</tr>
+<tr>
+<td><code>resource-limits</code></td>
+<td>A normal or init container lacks CPU or memory limits.</td>
+<td>The shipped rule requires both resources.</td>
+<td>Set explicit CPU and memory limits for every applicable container.</td>
+</tr>
+</tbody>
+</table>
+<p>The pack describes values. Engine code owns rule meaning. This separation lets
+an operator select approved values without allowing a policy file to execute code.</p>
+<blockquote>
+<p><strong>Kubernetes evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L115">Pack admission verifies immutable identity</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L45-L159">The evaluator implements workload and lookup behavior</a>.</p>
+</blockquote>
+<h2 id="external-rule-families">External Rule Families</h2>
+<p>The following tools preserve analyser-owned codes. Their installed version and
+native configuration determine the complete external vocabulary.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Preserved code</th>
+<th>KubeClaw normalization</th>
+<th>Where to correct the issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tsc</code></td>
+<td><code>TS&lt;number&gt;</code></td>
+<td>Preserves file, line, column, severity, and message.</td>
+<td>Correct the TypeScript diagnostic in the affected project.</td>
+</tr>
+<tr>
+<td><code>ruff</code></td>
+<td>Ruff rule code</td>
+<td>A finding with an automatic fix becomes a warning; another finding becomes an error.</td>
+<td>Apply the Ruff fix or correct the named Python rule.</td>
+</tr>
+<tr>
+<td><code>shellcheck</code></td>
+<td><code>SC&lt;number&gt;</code></td>
+<td>ShellCheck errors stay errors; other levels become warnings.</td>
+<td>Correct the named ShellCheck condition.</td>
+</tr>
+<tr>
+<td><code>eslint</code> and type evidence</td>
+<td>ESLint rule ID</td>
+<td>Preserves ESLint severity and creates a stable occurrence seed.</td>
+<td>Use the matching rule section on this page or the linked upstream rule manual.</td>
+</tr>
+<tr>
+<td><code>mypy</code></td>
+<td>Mypy error code, or <code>mypy</code></td>
+<td>Preserves JSON severity, location, and message.</td>
+<td>Correct the typed Python contract.</td>
+</tr>
+<tr>
+<td><code>go-vet</code></td>
+<td><code>go-vet</code></td>
+<td>Normalizes text diagnostics to one KubeClaw code.</td>
+<td>Correct the reported Go misuse.</td>
+</tr>
+<tr>
+<td><code>staticcheck</code></td>
+<td>Staticcheck code</td>
+<td>Preserves the analyser code and message.</td>
+<td>Correct the named Staticcheck rule.</td>
+</tr>
+<tr>
+<td><code>govulncheck</code></td>
+<td>OSV identifier</td>
+<td>Reports only reachable vulnerability findings.</td>
+<td>Upgrade or replace the dependency and verify the reachable call path.</td>
+</tr>
+<tr>
+<td><code>tflint</code></td>
+<td>TFLint rule name</td>
+<td>Preserves warning or error severity.</td>
+<td>Correct the named Terraform rule.</td>
+</tr>
+<tr>
+<td><code>trivy-terraform</code></td>
+<td>Trivy issue ID</td>
+<td>Only high and critical Terraform misconfigurations are requested.</td>
+<td>Correct the resource configuration described by Trivy.</td>
+</tr>
+<tr>
+<td><code>hadolint</code></td>
+<td>Hadolint code</td>
+<td>Preserves error; other levels become warnings.</td>
+<td>Correct the named Dockerfile rule.</td>
+</tr>
+<tr>
+<td><code>kubeconform</code> and <code>kubernetes-schema</code></td>
+<td>Adapter ID: <code>kubeconform</code> or <code>kubernetes-schema</code></td>
+<td>Normalizes schema status and message for raw and rendered resources.</td>
+<td>Correct the resource against the configured offline Kubernetes schema.</td>
+</tr>
+<tr>
+<td><code>trivy-kubernetes</code></td>
+<td>Trivy issue ID</td>
+<td>Reports rendered-chart misconfigurations.</td>
+<td>Correct the rendered Kubernetes resource.</td>
+</tr>
+</tbody>
+</table>
+<p>Do not copy every upstream rule into KubeClaw documentation. Pin the runtime
+tool version, preserve its code, and link its versioned manual when investigating
+a finding. Repository-owned selections and exceptions remain documented here.</p>
+<h2 id="operational-error-codes">Operational Error Codes</h2>
+<p>An operational error means that lint could not prove a trustworthy result. It
+is not source debt and cannot be waived through the baseline.</p>
+<table>
+<thead>
+<tr>
+<th>Code or family</th>
+<th>Meaning</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LINT_REPORT_RUN_FAILED</code></td>
+<td>The maintained report runner failed outside a more specific engine error, including report-output directory creation or atomic write failure.</td>
+<td>Read the emitted error, correct output-path access or the reported runtime fault, and rerun. Absence of the output file does not prove that engine validation failed.</td>
+</tr>
+<tr>
+<td><code>LINT_TIER_INVALID</code></td>
+<td>The adapter request selects neither <code>pre-check</code> nor <code>full</code>.</td>
+<td>Correct the stage or caller. These are the only accepted tiers.</td>
+</tr>
+<tr>
+<td><code>LINT_CHANGED_FILES_INVALID</code></td>
+<td>The adapter payload does not contain an array of strings.</td>
+<td>Send a string array or omit the field.</td>
+</tr>
+<tr>
+<td><code>LINT_WORKING_DIRECTORY_INVALID</code></td>
+<td>The payload lacks a string working directory.</td>
+<td>Supply a canonical repository path.</td>
+</tr>
+<tr>
+<td><code>LINT_POLICY_PATH_INVALID</code></td>
+<td>The payload lacks a string policy path.</td>
+<td>Supply the operator-selected policy file.</td>
+</tr>
+<tr>
+<td><code>LINT_POLICY_PROJECT_INVALID</code></td>
+<td>The payload lacks a string policy-project ID.</td>
+<td>Supply an ID declared in the selected policy.</td>
+</tr>
+<tr>
+<td><code>LINT_KUBERNETES_INPUT_INVALID</code></td>
+<td>The Kubernetes override has the wrong shape, empty path, or nonstring item.</td>
+<td>Supply both string arrays and valid nonempty relative paths.</td>
+</tr>
+<tr>
+<td><code>LINT_KUBERNETES_INPUT_LIMIT</code></td>
+<td>One Kubernetes override array has more than 256 entries.</td>
+<td>Split the request or select bounded project configuration.</td>
+</tr>
+<tr>
+<td><code>LINT_KUBERNETES_INPUT_ESCAPE</code></td>
+<td>A Kubernetes override is absolute or escapes the project.</td>
+<td>Use a project-relative path without parent traversal.</td>
+</tr>
+<tr>
+<td><code>LINT_KUBERNETES_INPUT_DUPLICATE</code></td>
+<td>A normalized Kubernetes override contains a duplicate.</td>
+<td>Send each manifest or chart once.</td>
+</tr>
+<tr>
+<td><code>LINT_KUBERNETES_INPUT_EMPTY</code></td>
+<td>Both bounded Kubernetes override arrays are empty.</td>
+<td>Omit the override or supply at least one manifest or chart.</td>
+</tr>
+<tr>
+<td><code>LINT_MODULE_PATH_ABSOLUTE</code></td>
+<td>Module scope uses an absolute path.</td>
+<td>Use a repository-relative module path.</td>
+</tr>
+<tr>
+<td><code>LINT_MODULE_PATH_ESCAPE</code></td>
+<td>Module scope resolves outside the repository.</td>
+<td>Remove parent traversal and select an in-repository module.</td>
+</tr>
+<tr>
+<td><code>LINT_CHANGED_FILE_INVALID</code></td>
+<td>One changed-file entry is empty or not a string.</td>
+<td>Send nonempty repository-relative strings.</td>
+</tr>
+<tr>
+<td><code>LINT_CHANGED_FILE_ABSOLUTE</code></td>
+<td>One changed-file entry is absolute.</td>
+<td>Convert it to a repository-relative path.</td>
+</tr>
+<tr>
+<td><code>LINT_CHANGED_FILE_ESCAPE</code></td>
+<td>One changed-file entry traverses above the repository.</td>
+<td>Remove parent traversal.</td>
+</tr>
+<tr>
+<td><code>LINT_WORKING_DIRECTORY_DENIED</code></td>
+<td>The canonical repository is outside adapter-owned roots.</td>
+<td>Correct the invocation or obtain a reviewed adapter-root change.</td>
+</tr>
+<tr>
+<td><code>LINT_POLICY_PATH_DENIED</code></td>
+<td>The canonical policy is outside adapter-owned policy roots.</td>
+<td>Select an admitted operator policy. Do not use repository input to grant policy authority.</td>
+</tr>
+<tr>
+<td><code>LINT_OPERATION_UNSUPPORTED</code></td>
+<td>The request does not use capability <code>lint.execute</code> with operation <code>run_report</code>.</td>
+<td>Correct the caller registration and operation.</td>
+</tr>
+<tr>
+<td><code>ADAPTER_CANCELLED</code></td>
+<td>The caller or adapter shutdown aborted work before execution.</td>
+<td>Confirm cleanup. Start a new request only when the result is still required.</td>
+</tr>
+<tr>
+<td><code>LINT_ADAPTER_SHUTDOWN</code></td>
+<td>Adapter shutdown cancelled active invocations.</td>
+<td>Wait for a new adapter instance before retrying.</td>
+</tr>
+<tr>
+<td><code>LINT_SOURCE_REVISION_INVALID</code></td>
+<td>Candidate execution received a revision that is not a full lowercase SHA.</td>
+<td>Resolve and send one full commit ID.</td>
+</tr>
+<tr>
+<td><code>LINT_CANDIDATE_TIMEOUT</code></td>
+<td>Candidate Git preparation exceeded 60 seconds.</td>
+<td>Inspect repository size, storage, and Git health before retrying.</td>
+</tr>
+<tr>
+<td><code>LINT_CANDIDATE_GIT_FAILED</code></td>
+<td>Clone, detached checkout, or revision inspection failed.</td>
+<td>Correct repository or revision access. Retain the Git failure text.</td>
+</tr>
+<tr>
+<td><code>LINT_SOURCE_REVISION_MISMATCH</code></td>
+<td>Detached candidate <code>HEAD</code> differs from the requested revision.</td>
+<td>Stop. Investigate Git storage and candidate preparation before reuse.</td>
+</tr>
+<tr>
+<td><code>LINT_POLICY_INVALID</code></td>
+<td>Policy, baseline, native config, pack, path, digest, vocabulary, or limit validation failed.</td>
+<td>Correct the first validation message. Do not run tools with a partly accepted policy.</td>
+</tr>
+<tr>
+<td><code>LINT_POLICY_ADAPTER_MISSING</code></td>
+<td>Policy names a tool without a registered adapter.</td>
+<td>Add and test the adapter, or remove the unimplemented policy entry.</td>
+</tr>
+<tr>
+<td><code>LINT_POLICY_TOOL_MISSING</code></td>
+<td>The registry contains an adapter absent from policy.</td>
+<td>Add its complete policy entry, or remove the dormant adapter.</td>
+</tr>
+<tr>
+<td><code>lint-tool-binary-missing</code></td>
+<td>A required executable is absent from <code>PATH</code>.</td>
+<td>Install the pinned runtime image or restore its tool installation.</td>
+</tr>
+<tr>
+<td><code>&lt;tool&gt;-timeout</code></td>
+<td>A tool exceeded its configured timeout.</td>
+<td>Inspect workload size and process evidence. Increase the timeout only with measured evidence.</td>
+</tr>
+<tr>
+<td><code>&lt;tool&gt;-execution-failed</code></td>
+<td>A process did not start or failed outside its documented finding exit.</td>
+<td>Inspect the retained error and runtime installation. Correct the process failure before retrying.</td>
+</tr>
+<tr>
+<td><code>&lt;tool&gt;-parse-failed</code></td>
+<td>Output could not prove a complete result.</td>
+<td>Check tool version and output format. Do not treat malformed output as clean.</td>
+</tr>
+<tr>
+<td><code>tsc-output-invalid</code></td>
+<td>TypeScript failed without a file-scoped diagnostic.</td>
+<td>Inspect the preview and project configuration. Restore structured compiler output.</td>
+</tr>
+<tr>
+<td><code>semgrep-execution-failed</code></td>
+<td>Semgrep returned an execution failure rather than findings.</td>
+<td>Inspect its fatal output, binary, and configuration.</td>
+</tr>
+<tr>
+<td><code>go-imports-execution-failed</code></td>
+<td><code>go list</code> failed before import evaluation.</td>
+<td>Correct module loading or package arguments.</td>
+</tr>
+<tr>
+<td><code>govulncheck-execution-failed</code></td>
+<td>Govulncheck returned a nonzero operational result.</td>
+<td>Correct module or analyser execution. Findings alone use exit zero in the pinned mode.</td>
+</tr>
+<tr>
+<td><code>eslint-type-evidence-source-classification-failed</code></td>
+<td>Git could not classify tracked and untracked evidence files.</td>
+<td>Restore repository access and a valid Git worktree.</td>
+</tr>
+<tr>
+<td><code>eslint-config-missing</code></td>
+<td>The selected ESLint config path is absent.</td>
+<td>Restore the exact configured file and verify its digest.</td>
+</tr>
+<tr>
+<td><code>semgrep-config-missing</code></td>
+<td>The selected Semgrep config path is absent.</td>
+<td>Restore the exact configured file and verify its digest.</td>
+</tr>
+<tr>
+<td><code>knip-config-missing</code></td>
+<td>The selected Knip config path is absent.</td>
+<td>Restore <code>knip.json</code> at the policy-owned path.</td>
+</tr>
+<tr>
+<td><code>jscpd-config-missing</code></td>
+<td>The selected production JSCPD config is absent.</td>
+<td>Restore <code>jscpd.json</code> at the policy-owned path.</td>
+</tr>
+<tr>
+<td><code>jscpd-test-config-missing</code></td>
+<td>The implicit test calibration beside the production config is absent.</td>
+<td>Restore <code>jscpd-tests.json</code>; policy validation cannot detect this companion early.</td>
+</tr>
+<tr>
+<td><code>LINT_BASELINE_STALE</code></td>
+<td>An unscoped full run found an unmatched waiver for a successful tool.</td>
+<td>Remove the resolved baseline entry through the prune workflow.</td>
+</tr>
+<tr>
+<td><code>LINT_REPOSITORY_PATH_DENIED</code></td>
+<td>A requested path is outside an admitted repository root.</td>
+<td>Correct the invocation or adapter root. Do not broaden authority without review.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-path-invalid</code></td>
+<td>A Kubernetes input escapes its project or has the wrong path type.</td>
+<td>Use an admitted regular file or directory inside the project.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-symlink-invalid</code></td>
+<td>A Kubernetes input is a symbolic link.</td>
+<td>Use the canonical in-project file or directory.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-file-limit</code></td>
+<td>The combined input exceeds the file-count limit.</td>
+<td>Narrow the input or review the project limit with measured evidence.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-size-limit</code></td>
+<td>A file or rendered result exceeds its byte limit.</td>
+<td>Split or reduce the input. Change the bound only after resource review.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-document-limit</code></td>
+<td>Parsed or rendered input exceeds the document limit.</td>
+<td>Narrow the input or split the chart.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-yaml-invalid</code></td>
+<td>YAML parsing failed.</td>
+<td>Correct the source or rendered YAML.</td>
+</tr>
+<tr>
+<td><code>kubernetes-manifest-object-invalid</code></td>
+<td>A YAML document is not a Kubernetes object.</td>
+<td>Remove the document or add the required object fields.</td>
+</tr>
+<tr>
+<td><code>kubeconform-render-size-limit</code></td>
+<td>Rendered Helm content exceeds the schema-check limit.</td>
+<td>Reduce the rendered set or review the bound with evidence.</td>
+</tr>
+<tr>
+<td><code>terraform-provider-mirror-invalid</code></td>
+<td>The provider mirror path is not absolute.</td>
+<td>Configure one absolute offline mirror path.</td>
+</tr>
+<tr>
+<td><code>terraform-provider-mirror-missing</code></td>
+<td>The configured provider mirror directory is absent.</td>
+<td>Restore the offline mirror before validation.</td>
+</tr>
+<tr>
+<td><code>terraform-lockfile-missing</code></td>
+<td>A Terraform root lacks its committed provider lock file.</td>
+<td>Initialize with the approved mirror and commit the reviewed lock file.</td>
+</tr>
+<tr>
+<td><code>terraform-init-failed</code></td>
+<td>Offline, backend-disabled Terraform initialization failed.</td>
+<td>Correct the mirror, lock file, or module inputs.</td>
+</tr>
+<tr>
+<td><code>LINT_CANCELLED</code></td>
+<td>The caller aborted the invocation.</td>
+<td>Confirm cleanup, then start a new invocation when the caller still needs the result.</td>
+</tr>
+<tr>
+<td><code>LINT_PROCESS_CLEANUP_FAILED</code></td>
+<td>Descendant termination could not be confirmed.</td>
+<td>Treat the worker as uncertain. Inspect and isolate remaining processes before reuse.</td>
+</tr>
+<tr>
+<td><code>LINT_PROCESS_GROUP_STATUS_INVALID</code></td>
+<td>Linux process status lacks a required namespace process-group field.</td>
+<td>Treat cleanup state as uncertain. Verify the proc mount and runtime kernel interface.</td>
+</tr>
+<tr>
+<td><code>LINT_PROCESS_GROUP_UNVERIFIABLE</code></td>
+<td>The runner cannot prove the spawned process group identity.</td>
+<td>Stop worker reuse. Inspect PID namespaces and process ownership.</td>
+</tr>
+<tr>
+<td><code>LINT_PROCESS_GROUP_STATE_INVALID</code></td>
+<td>A process status lacks a usable state.</td>
+<td>Treat group liveness as unknown and isolate the worker.</td>
+</tr>
+<tr>
+<td><code>LINT_PROCESS_GROUP_EXIT_TIMEOUT</code></td>
+<td>A process group remains live past its cleanup deadline.</td>
+<td>Isolate the worker and terminate remaining descendants through the runtime owner.</td>
+</tr>
+<tr>
+<td><code>LINT_REPORT_CONTRACT_INVALID</code></td>
+<td>The completed report conflicts with its contract or evidence.</td>
+<td>Correct the producer or policy identity. Do not interpret the rejected report.</td>
+</tr>
+<tr>
+<td><code>lint.tool_execution_failed</code></td>
+<td>The stage maps any tool error to <code>blocked</code>.</td>
+<td>Resolve the underlying operational code.</td>
+</tr>
+<tr>
+<td><code>lint.blocking_findings</code></td>
+<td>The stage maps active blocking findings to <code>request_fix</code>.</td>
+<td>Correct the findings or use an approved expiring waiver.</td>
+</tr>
+</tbody>
+</table>
+<p>Configuration-specific errors such as <code>eslint-config-missing</code>,
+<code>knip-config-missing</code>, <code>jscpd-config-missing</code>, and
+<code>jscpd-test-config-missing</code> identify the missing native file directly.</p>
+<p>The four <code>LINT_PROCESS_GROUP_*</code> strings originate in process inspection. They
+do not always survive as the final tool-result code. The normalizer can expose
+<code>lint-tool-execution-failed</code> while retaining the process message as error text.</p>
+<blockquote>
+<p><strong>Failure evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L104-L163">Tool errors are normalized without turning failure into success</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/execution.ts#L8-L95">Process execution distinguishes timeout, start failure, and cleanup failure</a>.</p>
+</blockquote>
+<h2 id="verification-boundary">Verification Boundary</h2>
+<p>Focused tests cover local ESLint rules, type-evidence rules, discovery, adapter
+authority, remediation behavior, cancellation, cleanup, and the live plugin
+function. The live function also requires <code>shellcheck</code>, <code>shfmt</code>, and GNU
+<code>flock</code> in its execution environment. BusyBox <code>flock</code> lacks the required
+timeout behavior.</p>
+<p>The tests prove the cases they execute. They do not prove every future finding
+from an external analyser. Preserve external codes and investigate them against
+the installed version.</p>
+<blockquote>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/package.json">The package test script lists the focused suites</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs">The remediation suite covers process and policy boundaries</a>.</p>
+</blockquote>
+<h2 id="rule-verification-record">Rule Verification Record</h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Implementation</th>
+<th>Contract or setting</th>
+<th>Test evidence and status on 2026-09-20</th>
+<th>Revision</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The blocking ESLint groups and local discipline rules use the documented thresholds and exceptions.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L65-L337">ESLint configuration</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L457-L484">ESLint policy entry</a></td>
+<td>The discipline-rule suite passed. The generated-reference check also matched every configured rule ID.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>The focused suite tests repository-owned rules. It does not exhaust every upstream ESLint rule case.</td>
+</tr>
+<tr>
+<td>The three type-evidence partitions use the documented local rules and production-only typed assertion rule.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L1-L307">Local type-evidence plugin</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L18-L84">Production configuration</a></td>
+<td>The type-evidence suite passed for production, test, and generated partitions.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>These tools remain experimental and do not block the shipped run.</td>
+</tr>
+<tr>
+<td>The Semgrep inventory contains all 25 shipped repository rules.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.semgrep.yml#L1-L445">Semgrep configuration</a></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L878-L901">Semgrep policy entry</a></td>
+<td>The generated-reference and specialist-guide checks matched all 25 IDs.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>The recorded local checks did not execute Semgrep.</td>
+</tr>
+<tr>
+<td>Engine-owned finding and operational code inventories match the scanned implementation families.</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/request.ts#L1-L28">Request errors</a>, <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/candidate.ts#L1-L27">candidate errors</a>, and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L104-L163">tool normalization</a></td>
+<td><a href="lint-policy-generated.html#generated-rule-and-code-inventory">Generated code inventory</a></td>
+<td>The generator and specialist-guide checks passed. The remediation suite passed all eight selected failure tests.</td>
+<td><code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code></td>
+<td>External analyser codes are open sets. Some process errors become normalized tool errors while the original text remains evidence.</td>
+</tr>
+</tbody>
+</table>
+</main></body></html>

@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/request-state-recovery.html"></head><body><main>
+<h1 id="request-state-and-recovery">Request, State, and Recovery</h1>
+<p>Status: implemented with stated limits
+Audience: new reader, operator, maintainer, incident responder
+Owner: Nova Core
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/compiler.ts">skills/nova/project/compiler.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution">skills/nova/core/execution</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/lifecycle">skills/nova/core/lifecycle</a>
+Evidence revision: <code>85e73b1885f04a9494f388cf6622ad0bde2db447</code>
+Applies to: <code>nova-project.v2</code> and pipeline-plugin-v2
+Last verified: 2026-09-15</p>
+<h2 id="purpose">Purpose</h2>
+<p>This page follows one software request from input to closure.
+It explains the normal path first.
+It then explains retry, repair, approval, restart, cancellation, and uncertain effects.</p>
+<p>The example uses one account-page module.
+The same lifecycle rules apply to a larger project graph.</p>
+<h2 id="the-records-that-give-the-run-its-memory">The Records That Give the Run Its Memory</h2>
+<p>KubeClaw does not treat process memory as the truth.
+It writes ordered records under the run storage root.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>What it preserves</th>
+<th>Main identity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run snapshot</td>
+<td>Fixed graph, registry, packages, and runtime profiles.</td>
+<td>Run ID and content digests.</td>
+</tr>
+<tr>
+<td>Lifecycle journal</td>
+<td>Created, started, completed, waiting, resumed, and terminal events.</td>
+<td>Run, stage, attempt, event sequence.</td>
+</tr>
+<tr>
+<td>Effect journal</td>
+<td>External-effect request, acceptance, and receipt.</td>
+<td>Idempotency key and effect ID.</td>
+</tr>
+<tr>
+<td>Signal journal</td>
+<td>Human or orchestrator answers to a wait.</td>
+<td>Wait ID, signal ID, idempotency key.</td>
+</tr>
+<tr>
+<td>Artifact store</td>
+<td>Reports, source archives, review material, and result evidence.</td>
+<td>Artifact ID, namespace, digest, and size.</td>
+</tr>
+<tr>
+<td>Remote job store</td>
+<td>Buster plan request, status, result, and retained evidence.</td>
+<td>Job, plan, run, request, and result digests.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why this design exists:</strong> A restart must not erase the difference between “not started” and “started without a known result.”
+That difference controls whether a retry is safe.</p>
+<blockquote>
+<p><strong>Source evidence — durable run creation</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43"><code>runNewPipeline()</code> writes graph and registry snapshots before execution</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/state/journal.ts#L21-L94"><code>FileJournal</code> appends sequenced JSON records and uses a file mutex for transactions</a>.</p>
+<p><strong>Limit:</strong> A durable local file still depends on the durability and protection of its mounted storage.</p>
+</blockquote>
+<h2 id="normal-path">Normal Path</h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant H as Human or caller
+    participant N as Nova
+    participant F as Forge
+    participant E as Echo
+    participant B as Buster
+    participant W as Worker Core
+    H-&gt;&gt;N: Project and fixed source revision
+    N-&gt;&gt;N: Validate and compile graph
+    N-&gt;&gt;F: Bounded implementation attempt
+    F--&gt;&gt;N: Commits and artifacts
+    N-&gt;&gt;N: Lint fixed revision
+    N-&gt;&gt;E: Fixed review subject
+    E--&gt;&gt;N: Findings and evidence
+    N-&gt;&gt;N: Apply review policy
+    N-&gt;&gt;B: Immutable plan and source identity
+    B-&gt;&gt;W: Claimed bounded attempts
+    W--&gt;&gt;B: Bound results and resource facts
+    B--&gt;&gt;N: Stored result and evidence references
+    N-&gt;&gt;N: Verify, import once, and decide
+    N--&gt;&gt;H: Terminal state and project summary
+</code></pre>
+<p>Text version: Nova validates and compiles the project.
+Forge implements it, and Echo reviews a fixed revision.
+Nova then sends a fixed test plan to Buster.
+Worker Core controls each Buster attempt.
+Nova verifies the returned evidence and closes the run.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.</p>
+<p>Participants: Human or caller, Nova, Forge, Echo, Buster, Worker Core.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Human or caller</td>
+<td>Message — Project and fixed source revision</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Nova</td>
+<td>Self-action — Validate and compile graph</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Nova</td>
+<td>Message — Bounded implementation attempt</td>
+<td>Forge</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Forge</td>
+<td>Dashed reply — Commits and artifacts</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Nova</td>
+<td>Self-action — Lint fixed revision</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Nova</td>
+<td>Message — Fixed review subject</td>
+<td>Echo</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Echo</td>
+<td>Dashed reply — Findings and evidence</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Nova</td>
+<td>Self-action — Apply review policy</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Nova</td>
+<td>Message — Immutable plan and source identity</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Buster</td>
+<td>Message — Claimed bounded attempts</td>
+<td>Worker Core</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Worker Core</td>
+<td>Dashed reply — Bound results and resource facts</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Buster</td>
+<td>Dashed reply — Stored result and evidence references</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Nova</td>
+<td>Self-action — Verify, import once, and decide</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Nova</td>
+<td>Dashed reply — Terminal state and project summary</td>
+<td>Human or caller</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-admit-the-project">1. Admit the Project</h3>
+<p>The input declares the project ID, run ID, repository roots, source revision, modules, and final checks.
+The compiler rejects version 1 input.
+It also rejects an invalid revision and a workspace inside the repository.</p>
+<p>The source revision is important.
+Without it, two attempts could claim to test the same task while reading different source.</p>
+<blockquote>
+<p><strong>Source evidence — project admission</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/project/compiler.ts#L153-L192"><code>compileProject()</code> validates the project shape, paths, revision, modules, and final policy</a>.</p>
+</blockquote>
+<h3 id="2-compile-a-fixed-graph">2. Compile a Fixed Graph</h3>
+<p>For each module, the compiler creates implementation, lint, optional review, and quality stages.
+It adds final checks after all modules.
+The project lane uses one-at-a-time execution to protect the shared repository revision.</p>
+<p>The graph builder then checks every stage ID and dependency.
+It rejects cycles, missing dependencies, invalid limits, and unsafe repair edges.
+It freezes each stage definition.</p>
+<p><strong>Why this design exists:</strong> The full route must be known before any stage changes the repository.
+This rule prevents a plugin from inventing later work during execution.</p>
+<blockquote>
+<p><strong>Source evidence — real module chain</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/project/compiler.ts#L60-L86">The compiler emits implementation, lint, review, and quality stages with repair routes</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/graph-build.ts#L8-L96"><code>buildGraph()</code> validates limits, dependencies, cycles, activation, and remediation</a>.</p>
+</blockquote>
+<h3 id="3-select-and-start-a-stage">3. Select and Start a Stage</h3>
+<p>Nova finds stages whose dependencies succeeded or were safely skipped.
+It starts no more than the graph concurrency limit.</p>
+<p>Before invocation, Nova resolves one registered stage owner.
+It requires that owner to be active.
+It creates an attempt, a deadline, a revocable lease, and a capability-limited context.</p>
+<p>The context exposes only declared artifacts and granted capabilities.
+Every effect request passes a second resource check.</p>
+<blockquote>
+<p><strong>Source evidence — bounded invocation</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/stage-executor.ts#L31-L52"><code>StageExecutor.execute()</code> requires an active owner, records the attempt, validates the result, and cleans up</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/context.ts#L34-L79"><code>createPluginInvocationContext()</code> checks the lease, capability grant, resource constraint, event namespace, and run ID</a>.</p>
+</blockquote>
+<h3 id="4-perform-external-effects">4. Perform External Effects</h3>
+<p>A stage often needs an external effect.
+Examples include creating a workspace, writing an artifact, calling a runtime, or reading a secret.</p>
+<p>The stage does not call the external system directly.
+It requests a named capability through its context.
+The selected adapter performs the effect.</p>
+<p>Nova gives the effect a stable identity and an idempotency key.
+It stores the request before it trusts the response.
+It locks the target resource while the adapter works.
+It stores a receipt when the result becomes known.</p>
+<p><strong>Why this design exists:</strong> A network timeout does not prove that the remote system did nothing.
+A durable receipt prevents an automatic duplicate when the first call already succeeded.</p>
+<blockquote>
+<p><strong>Source evidence — effect ordering</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L39-L67"><code>DurableInvocation.execute()</code> checks prior state, acquires a resource lock, and rechecks under that lock</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L88-L100"><code>DurableInvocation.#executeLocked()</code> stores the request before adapter invocation or receipt recovery</a>.</p>
+</blockquote>
+<h3 id="5-return-a-typed-result">5. Return a Typed Result</h3>
+<p>The stage returns one result outcome.
+The result can pass, request retry, request repair, wait, require the orchestrator, report a rate limit, block, fail, time out, or cancel.</p>
+<p>Nova validates the result against the owning plugin schema.
+Nova then maps the result to one allowed lifecycle action.
+The plugin cannot supply a direct state change.</p>
+<blockquote>
+<p><strong>Source evidence — state machine</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L9-L36">The state type lists all stage states</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L38-L52">The action type lists every lifecycle action that Core can take</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/reducer.ts#L111-L135"><code>applyStageResult()</code> rejects illegal state and applies attempt limits</a>.</p>
+</blockquote>
+<h3 id="6-dispatch-and-import-buster-work">6. Dispatch and Import Buster Work</h3>
+<p>Nova resolves the test plan before dispatch.
+The remote job binds the plan, run, source, and request identities.
+Buster stores admission and moves the job through explicit states.</p>
+<p>Buster uses Worker Core to enforce attempt claims and host limits.
+It stores the complete result before it reports completion.
+Evidence remains available through content digests and size limits.</p>
+<p>Nova accepts only a terminal remote status.
+It verifies the completed result and each evidence object.
+It records the import so that the same result cannot gain authority twice.</p>
+<p><strong>Why this design exists:</strong> Transport success and quality success are different facts.
+Buster proves what executed.
+Nova applies the project policy to verified facts.</p>
+<blockquote>
+<p><strong>Source evidence — remote result boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/engine/test-gates/remote-plan-service.ts#L217-L258">Buster checks result identity and stores result bytes before terminal status</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/test-gates/remote-result-import.ts#L213-L247"><code>NovaRemoteGateImporter.import()</code> accepts terminal status, verifies a completed result, fetches evidence, and records the import</a>.</p>
+<p><a href="../decisions/core-and-plugins.html#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs">ADR-013 explains durable Nova-to-Buster jobs</a>.</p>
+</blockquote>
+<h3 id="7-close-the-run">7. Close the Run</h3>
+<p>Nova succeeds the run only when all required stages succeeded or were safely skipped.
+An unused repair-only stage can remain pending.</p>
+<p>Nova writes one terminal event for success, failure, blockage, or cancellation.
+A terminal run rejects normal recovery and stale wait signals.</p>
+<h2 id="failure-paths">Failure Paths</h2>
+<p>Failure handling is not one generic retry.
+KubeClaw separates technical failure, product repair, human decision, interruption, and uncertain external state.</p>
+<pre><code class="language-mermaid">flowchart TD
+    Pending[Pending] --&gt;|dependencies complete and capacity available| Scheduled[Scheduled]
+    Scheduled --&gt;|attempt recorded and invocation starts| Running[Running]
+    Running --&gt;|passed| Succeeded[Succeeded]
+    Running --&gt;|retry within limits| Retrying[Retrying]
+    Retrying --&gt;|new bounded attempt| Scheduled
+    Running --&gt;|rate limit, signal, approval, or orchestrator decision| Waiting[Waiting]
+    Waiting --&gt;|valid matching signal or expired cooldown| Pending
+    Running --&gt;|declared product defect| Repair{Repair budget}
+    Repair --&gt;|order allowed| RepairStage[Declared repair stage]
+    RepairStage --&gt;|repair completes| Pending
+    Repair --&gt;|extra order needs approval| Waiting
+    Repair --&gt;|budget exhausted| Blocked[Blocked]
+    Running --&gt;|known terminal failure or timeout| Failed[Failed]
+    Running --&gt;|cancellation| Cancelled[Cancelled]
+    Running --&gt;|external outcome cannot be reconciled| Blocked
+</code></pre>
+<p>Text version: Nova moves a ready stage from pending to scheduled.
+Nova records the attempt and moves the stage to running when invocation starts.
+A passing result succeeds the stage.
+A permitted technical retry creates another bounded attempt.
+A cooldown, approval, or external signal puts the stage in waiting.
+A declared product defect uses a separate repair budget and repair stage.
+Nova blocks progress when a repair budget is exhausted or an external result remains uncertain.
+A known terminal error fails the stage, and cancellation moves it to cancelled.</p>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pending</td>
+<td>Directed connection — dependencies complete and capacity available</td>
+<td>Scheduled</td>
+</tr>
+<tr>
+<td>Scheduled</td>
+<td>Directed connection — attempt recorded and invocation starts</td>
+<td>Running</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — passed</td>
+<td>Succeeded</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — retry within limits</td>
+<td>Retrying</td>
+</tr>
+<tr>
+<td>Retrying</td>
+<td>Directed connection — new bounded attempt</td>
+<td>Scheduled</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — rate limit, signal, approval, or orchestrator decision</td>
+<td>Waiting</td>
+</tr>
+<tr>
+<td>Waiting</td>
+<td>Directed connection — valid matching signal or expired cooldown</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — declared product defect</td>
+<td>Repair budget</td>
+</tr>
+<tr>
+<td>Repair budget</td>
+<td>Directed connection — order allowed</td>
+<td>Declared repair stage</td>
+</tr>
+<tr>
+<td>Declared repair stage</td>
+<td>Directed connection — repair completes</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Repair budget</td>
+<td>Directed connection — extra order needs approval</td>
+<td>Waiting</td>
+</tr>
+<tr>
+<td>Repair budget</td>
+<td>Directed connection — budget exhausted</td>
+<td>Blocked</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — known terminal failure or timeout</td>
+<td>Failed</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — cancellation</td>
+<td>Cancelled</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Directed connection — external outcome cannot be reconciled</td>
+<td>Blocked</td>
+</tr>
+</tbody>
+</table>
+<p>The diagram shows control decisions, not every journal event.
+Recovery reconstructs these decisions from the journal before it permits the next transition.</p>
+<h3 id="technical-retry">Technical Retry</h3>
+<p>A technical retry repeats the same class of work after a retryable failure.
+Examples include temporary transport failure and rate limiting.</p>
+<p>Each stage has <code>maxAttempts</code>.
+A stage can also have <code>maxTechnicalRetries</code>.
+Nova stops when a limit is exhausted.</p>
+<p>The graph can require an orchestrator after a stated attempt number.
+This rule prevents endless automatic work when repeated attempts do not help.</p>
+<p>For a rate limit, Nova stores <code>retryAt</code>.
+Recovery refuses to continue before that time.</p>
+<h3 id="product-repair">Product Repair</h3>
+<p>A product repair is not a technical retry.
+A checker found a product defect and requests a change from a declared repair stage.</p>
+<p>In the example, lint, Echo review, or Buster quality can send work back to Forge.
+The graph declares this edge before execution.</p>
+<p>Repair budgets use named categories, such as lint, review, and test.
+The first configured orders can proceed automatically.
+An additional order can require explicit authorization.
+Later orders block after that exceptional authorization was used.</p>
+<p><strong>Why this design exists:</strong> An agent must not enter an unlimited fix-and-review loop.
+Named budgets show which checker consumed the repair allowance.</p>
+<blockquote>
+<p><strong>Source evidence — repair limits</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/repair-budget.ts#L48-L56"><code>repairDisposition()</code> returns only allowed, authorize, or blocked</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/lifecycle/repair-budget.ts#L64-L84"><code>budgetedRepairDecision()</code> records a repair order, creates a wait, or stops</a>.</p>
+</blockquote>
+<h3 id="wait-and-approval">Wait and Approval</h3>
+<p>A wait means that the run needs an external fact before it can continue.
+An approval is one kind of wait.</p>
+<p>Nova stores a wait ID and its expected signal contract.
+The run returns the <code>waiting</code> state.
+It does not keep a process open and hope that the answer arrives.</p>
+<p>A resume signal must match the run, wait, issuer, time window, and expected payload.
+Nova stores the signal with an idempotency key.
+A different signal with the same key causes a conflict.
+A second answer for the same wait is rejected.</p>
+<p><strong>Why this design exists:</strong> A human decision can arrive after a restart.
+The durable signal makes the decision attributable and safe to replay.</p>
+<blockquote>
+<p><strong>Source evidence — safe resume</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L82-L96"><code>resumePipeline()</code> verifies pinned inputs, validates the signal, records it, and rebuilds state</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L109-L114"><code>recordSignal()</code> rejects changed duplicates and already-resolved waits</a>.</p>
+</blockquote>
+<h3 id="restart-and-recovery">Restart and Recovery</h3>
+<p>Recovery reloads the fixed graph, package identities, and lifecycle journal.
+It does not compile a new graph for the old run.</p>
+<p>Nova verifies that package changes have an authorized upgrade record.
+It reconstructs every stage state from ordered events.
+It reconciles applicable remote work and effects before new execution.</p>
+<p>Recovery stops when a wait still needs a signal.
+It also stops before a rate-limit cooldown expires.
+A terminal run cannot enter ordinary recovery.</p>
+<p><strong>Why this design exists:</strong> Recovery must continue the same run, not create a similar replacement run.</p>
+<blockquote>
+<p><strong>Source evidence — recovery boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L56-L69"><code>recoverPipeline()</code> verifies pinned packages and graph, reconciles, replays state, and rejects unresolved waits</a>.</p>
+</blockquote>
+<h3 id="cancellation">Cancellation</h3>
+<p>Cancellation first stops new pipeline progress.
+Nova marks each unfinished stage as cancelled and writes the run cancellation event.</p>
+<p>A remote worker has its own cancellation boundary.
+Buster changes a job to <code>cancelling</code> before it reports <code>cancelled</code>.
+Worker Core aborts active work during bounded drain when normal completion takes too long.</p>
+<p>Cancellation is a request for controlled stop.
+It is not proof that every external effect was reversed.
+Cleanup state and effect receipts remain part of the evidence.</p>
+<blockquote>
+<p><strong>Source evidence — cancellation</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/pipeline-loop.ts#L75-L84"><code>PipelineLoop.#cancelled()</code> marks unfinished stages and the run</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/local-runtime.ts#L223-L235"><code>LocalWorkerRuntime.#drainOnce()</code> waits, aborts, and becomes unhealthy after a second timeout</a>.</p>
+</blockquote>
+<h3 id="uncertain-external-result">Uncertain External Result</h3>
+<p>The hardest case occurs when an adapter accepted work but Nova did not receive the result.
+Automatic repetition could create two workspaces, two jobs, or two publications.</p>
+<p>Nova checks the effect journal before it invokes the adapter again.
+If the adapter supports receipt lookup, Nova asks for the prior outcome.
+If no reliable receipt exists, Nova blocks the stage for reconciliation.</p>
+<p>It does not convert uncertainty into failure.
+Failure says that the effect failed.
+Uncertainty says that the effect outcome is not known.</p>
+<p><strong>Why this design exists:</strong> A visible stop is safer than an invisible duplicate side effect.</p>
+<blockquote>
+<p><strong>Source evidence — unknown outcome</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L112-L117"><code>DurableInvocation.#recover()</code> requires an adapter receipt for an accepted request</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/stage-executor.ts#L125-L137"><code>StageExecutor.#failure()</code> converts unresolved effect recovery into a blocked stage</a>.</p>
+</blockquote>
+<h3 id="escalation-and-administrative-repair">Escalation and Administrative Repair</h3>
+<p>An orchestrator wait is a normal, declared escalation.
+It asks an authorized actor for a bounded decision.</p>
+<p>Administrative reopen or repair is exceptional.
+It needs a separate signed decision record and strict replay checks.
+It must not edit the old lifecycle journal.</p>
+<p>Use the operator procedure for any administrative action.
+The architecture only defines why the control exists.</p>
+<h2 id="state-summary">State Summary</h2>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Plain meaning</th>
+<th>Normal next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pending</code></td>
+<td>Dependencies or scheduling still prevent a start.</td>
+<td>Nova selects it when ready.</td>
+</tr>
+<tr>
+<td><code>scheduled</code></td>
+<td>Nova selected the stage but has not recorded a running result.</td>
+<td>Start the bounded attempt.</td>
+</tr>
+<tr>
+<td><code>running</code></td>
+<td>One recorded attempt is active.</td>
+<td>Accept one validated result.</td>
+</tr>
+<tr>
+<td><code>retrying</code></td>
+<td>A retryable result remains within budget.</td>
+<td>Schedule another attempt.</td>
+</tr>
+<tr>
+<td><code>waiting</code></td>
+<td>A repair, signal, approval, or cooldown must complete.</td>
+<td>Resume only through the matching route.</td>
+</tr>
+<tr>
+<td><code>skipped</code></td>
+<td>A declared activation condition was false.</td>
+<td>Treat as complete for dependency selection.</td>
+</tr>
+<tr>
+<td><code>succeeded</code></td>
+<td>The stage returned an accepted pass.</td>
+<td>Release dependent stages.</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>The stage produced a terminal failure.</td>
+<td>Fail the run.</td>
+</tr>
+<tr>
+<td><code>blocked</code></td>
+<td>Policy, budget, or uncertainty forbids automatic progress.</td>
+<td>Diagnose and use an authorized procedure.</td>
+</tr>
+<tr>
+<td><code>cancelled</code></td>
+<td>Cancellation stopped the stage.</td>
+<td>Reconcile cleanup and close the run.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-the-final-result-proves">What the Final Result Proves</h2>
+<p>A succeeded run proves that the fixed graph reached its success rules.
+It proves this for the recorded source, packages, configuration, and evidence.</p>
+<p>It does not prove deployment acceptance unless the graph contains that scope.
+It does not prove a live cluster path unless live acceptance tested that path.
+It does not prove that an optional or disabled stage ran.</p>
+<h2 id="continue-with-operations-or-extension">Continue With Operations or Extension</h2>
+<ul>
+<li><a href="../use/README.html">Operate KubeClaw</a> explains commands, diagnosis, backup, recovery, maintenance, and stated implementation limits.</li>
+<li><a href="../use/worker-trust.html">Worker Trust operations</a> explains live identity checks.</li>
+<li><a href="../extend/README.html">Extend KubeClaw</a> explains the supported extension points.</li>
+<li><a href="deployment-and-trust.html">Deployment and Trust</a> explains the process and network boundaries behind this flow.</li>
+<li><a href="../status/current.html">Current status</a> identifies remaining implementation and live acceptance work.</li>
+</ul>
+</main></body></html>

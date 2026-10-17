@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/worker-trust.html"></head><body><main>
+<h1 id="operate-worker-trust">Operate Worker Trust</h1>
+<p>Status: source-backed procedure; live execution needs independently owned request and cleanup evidence; live trust remains unproved
+Audience: Kubernetes operator, security operator
+Owner: platform operations and workload-identity owner
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/deploy.sh">scripts/deploy.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/live/worker-trust-cluster-e2e.sh">tests/verification/live/worker-trust-cluster-e2e.sh</a>
+Applies to: the exact selected release, SPIRE trust domain, and recorded cluster
+Last verified: 2026-10-12; local command and receipt-contract checks only; no live trust result is available</p>
+<h2 id="purpose">Purpose</h2>
+<p>Prove that intended workload identities can use protected paths and unintended
+identities cannot. This page is the only canonical Worker Trust procedure.</p>
+<h2 id="canonical-worker-trust-procedure">Canonical Worker Trust Procedure</h2>
+<!-- operator-task: worker-trust -->
+<h3 id="supported-start-state-version-location-and-authority">Supported start state, version, location, and authority</h3>
+<p>Start after the <a href="install.html#canonical-install-and-preflight-procedure">canonical installation</a>
+has created the application, <code>spire-server</code>, and <code>spire-system</code> namespaces and
+deployed the exact selected Nova, Buster, and Prism workloads. Run commands from
+<code>&lt;repository-root&gt;</code> on the independent administration machine. An
+<a href="../reference/glossary.html#svid">SVID (SPIFFE Verifiable Identity Document)</a> is a
+workload credential. These deployed paths use a short-lived X.509 certificate
+that contains the workload's SPIFFE identity. SPIRE owns SVID issuance,
+the CSI driver owns socket delivery, Envoy owns peer authentication,
+application allowlists own authorization, and the selected source owns the
+expected identities and test path.
+Successful identity verification does not grant application permission. The
+receiving application's allowlist must also permit that identity.</p>
+<p>Before any cluster command on this page, complete
+<a href="install.html#bind-cluster-authority">Bind Cluster Authority</a>. Keep the same bound
+shell for the whole trust exercise. Every raw <code>kubectl</code>, Helm, or
+<code>scripts/deploy.sh</code> command below must inherit its exported read-only
+<code>KUBECONFIG</code>; every shown <code>&lt;context&gt;</code> must equal <code>EXPECTED_CONTEXT</code>. Run
+<code>assert_cluster_binding</code> immediately before each command block. Stop on any
+mismatch and follow the binding section's recovery; never fall back to the
+default kubeconfig.</p>
+<p>No broad Kubernetes/SPIRE compatibility range is established. Record actual
+cluster, SPIRE chart, Envoy image, workload image, code-bundle, and trust-domain
+identities.</p>
+<p>Preparation starts earlier: complete the local receipt-authority check and the
+live-execution boundary check below before the installation's first disposable
+probe or workload mutation. Readiness of existing workloads does not resolve
+missing signing authority or the verifier's request, denial and cleanup evidence gaps.</p>
+<h3 id="preconditions">Preconditions</h3>
+<ul>
+<li>The explicit context and namespaces match the install record.</li>
+<li>Independent cluster access works without the protected workloads.</li>
+<li>SPIRE server persistence, agents, CSI driver, workload ServiceAccounts,
+Envoy sidecars, and NetworkPolicies are present.</li>
+<li>The operator can inspect Pods and execute the registered live test's temporary
+Jobs and ServiceAccounts.</li>
+<li>A cleanup owner and deadline exist for every temporary live-test resource.</li>
+<li>The production-operator receipt authority is qualified on this administration
+machine, separately from the pipeline source-attestation Secret.</li>
+<li>The target is an approved isolated environment. The Prism data/agent owner
+accepts the retained design request and possible agent/provider work.</li>
+<li>A maintained owner procedure supplies the missing original request and
+creating-resource identities, reconciliation, and independent cleanup
+observations described in <a href="#3-check-the-live-execution-boundary">the live-execution boundary</a>.</li>
+<li>The workload-identity owner qualifies a maintained denial-observation procedure
+for each negative route, with a reachable positive control and the actual peer
+or authorization rejection described below.</li>
+<li>The selected Nova runtime receives <code>BUSTER_V2_TOKEN</code> and
+<code>BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY</code>, and its <code>buster</code> / <code>test.plan.execute</code>
+provider selects <code>buster-plan-v1</code>. The unit preflight rejects missing inputs
+or another adapter. Verify selected configuration, Secret names/key references
+and the owning injection procedure without printing values. The Buster owner
+must confirm the corresponding authentication and source-verification inputs.</li>
+</ul>
+<p>Stop if the trust domain, ServiceAccount, selected image, registration, or
+allowlist differs from the recorded release. Do not disable mTLS or broaden an
+allowlist to make a check pass.</p>
+<h3 id="prepare-the-production-receipt-authority">Prepare the production-receipt authority</h3>
+<p>The registered live command ends with a separate Nova-to-Buster unit
+transaction and an operator-signed production receipt. Its signer requires
+<code>KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE</code> and the trusted public key at
+the fixed path <code>/etc/kubeclaw/production-receipt-authority.pub</code>. Both resolved
+files must be outside the repository. The public-key path is fixed by the
+deploy script; setting an environment variable does not replace it.</p>
+<p>The production-operator signing owner must supply a maintained provisioning
+procedure: approve the key and fingerprint, install the trust anchor on this
+machine, protect private-key access, and define rotation, revocation, recovery,
+and disposal. This repository does not install that authority. Stop before the
+first probe or workload mutation if its procedure or qualified files are
+missing. Do not generate an ad hoc key to make the command pass. The
+<code>pipeline-test-gate-source-attestation</code> Secret signs Nova's source snapshots
+for Buster; it does not provide this operator receipt authority.</p>
+<p>Run this local check from <code>&lt;repository-root&gt;</code> after the signing owner installs
+the files. <code>&lt;production-receipt-private-key-path&gt;</code> is the owner's absolute
+private-key path. <code>&lt;production-receipt-key-fingerprint&gt;</code> is the independently
+approved <code>sha256:</code> fingerprint of the public key's SPKI DER bytes, the binary
+public-key representation used by the receipt verifier. The command reads
+local keys and signs a local test message; it does not contact a cluster, print
+key material, or create a production receipt:</p>
+<pre><code class="language-bash">export KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE=&quot;&lt;production-receipt-private-key-path&gt;&quot;
+export EXPECTED_PRODUCTION_RECEIPT_KEY_FINGERPRINT=&quot;&lt;production-receipt-key-fingerprint&gt;&quot;
+node --input-type=module - &quot;$KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE&quot; \
+  /etc/kubeclaw/production-receipt-authority.pub \
+  &quot;$EXPECTED_PRODUCTION_RECEIPT_KEY_FINGERPRINT&quot; &lt;&lt;'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+try {
+  const [privateFile, publicFile, expectedFingerprint] = process.argv.slice(2);
+  if (!/^sha256:[a-f0-9]{64}$/.test(expectedFingerprint)) throw new Error();
+  const root = fs.realpathSync(process.cwd());
+  for (const file of [privateFile, publicFile]) {
+    if (!path.isAbsolute(file)) throw new Error();
+    const resolved = fs.realpathSync(file);
+    if (!fs.statSync(resolved).isFile()) throw new Error();
+    const relative = path.relative(root, resolved);
+    if (relative === '' || (!relative.startsWith(`..${path.sep}`) &amp;&amp; relative !== '..' &amp;&amp; !path.isAbsolute(relative))) throw new Error();
+    fs.accessSync(resolved, fs.constants.R_OK);
+  }
+  const privateKey = crypto.createPrivateKey(fs.readFileSync(privateFile));
+  const publicKey = crypto.createPublicKey(fs.readFileSync(publicFile));
+  if (privateKey.asymmetricKeyType !== 'ed25519' || publicKey.asymmetricKeyType !== 'ed25519') throw new Error();
+  const fingerprint = 'sha256:' + crypto.createHash('sha256')
+    .update(publicKey.export({ type: 'spki', format: 'der' })).digest('hex');
+  const message = Buffer.from('KubeClaw operator receipt key qualification');
+  if (fingerprint !== expectedFingerprint ||
+      !crypto.verify(null, message, publicKey, crypto.sign(null, message, privateKey))) throw new Error();
+  console.log(JSON.stringify({ authority: 'kubeclaw:production-operator',
+    publicKeyFingerprint: fingerprint, localKeyPairVerified: true }));
+} catch {
+  console.error('PRODUCTION_RECEIPT_AUTHORITY_UNQUALIFIED');
+  process.exit(1);
+}
+NODE
+</code></pre>
+<p>Expected observation: exit zero and only the authority, approved fingerprint,
+and local keypair result. Retain this non-secret output, command exit, tool
+version, signing-owner approval and provisioning reference. Missing files,
+repository-local resolved paths, unreadable keys, a non-Ed25519 key, mismatched
+keys or a different fingerprint must stop the route. Ask the signing owner to
+repair the first failed prerequisite, then repeat the check. A matching pair
+does not establish owner approval, live trust, or receipt success.</p>
+<blockquote>
+<p><strong>Source evidence — separate receipt authority</strong></p>
+<p><strong>Claim:</strong> The wrapper performs the live identity exercise before a Nova unit transaction and receipt signing; keys are otherwise checked only after those effects.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L2672-L2680">The wrapper sequence</a>, <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L79-L79">fixed public-key path</a> define the sequence and key location.
+The <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L1970-L2008">signer's external-key and worker-revision checks</a> define this boundary.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/production-receipt-attestation.mjs#L66-L85">The attestation module requires Ed25519 and records the public-key fingerprint</a>. <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/my-values/setup-secrets.sh#L610-L638">Secret setup owns a different source-attestation keypair</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/contracts/check-production-receipt-attestation.mjs#L30-L55">The receipt contract tests matching keys, wrong keys, tampering, and revision mismatch</a>. Local key and receipt checks do not prove a live transaction.</p>
+<p><strong>Revision:</strong> <code>8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32</code>.</p>
+<p><strong>Limit:</strong> No signing-authority provisioning or live receipt result is established here.</p>
+</blockquote>
+<h3 id="1-verify-source-before-cluster-execution">1. Verify source before cluster execution</h3>
+<p>First complete the canonical
+<a href="quickstart.html#locked-dependency-installation">Locked Dependency Installation</a>
+in the disposable checkout and retain its sanitized evidence.</p>
+<pre><code class="language-bash">npm run verify:worker-core:trust
+npm run verify:prism:deploy-script
+node tests/verification/deployment/check-deployment-truth.mjs --source-root &quot;$PWD&quot;
+</code></pre>
+<p>Expected observation is zero from each command. On 2026-10-09, the Prism
+deployment source check passed at <code>e3fa70c3fe3a1a4a32af503201a19e0b5df14c61</code>
+with Node.js <code>v24.21.0</code>. <code>verify:worker-core:trust</code> also passed locally on 2026-10-12.
+No new deployment-truth or live Worker Trust result is available.
+Run all three checks for your selected checkout.
+Stop on any nonzero exit; a local source check does not prove live peer authorization.</p>
+<h3 id="2-observe-the-installed-identity-chain">2. Observe the installed identity chain</h3>
+<p>After all source checks pass for the selected source, capture the chain:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n spire-server get pods -o wide
+kubectl --context &quot;&lt;context&gt;&quot; -n spire-system get pods,daemonset -o wide
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get \
+  deploy,pods,svc,serviceaccount,networkpolicy -o wide
+./scripts/deploy.sh smoke-agent nova
+./scripts/deploy.sh smoke-agent buster
+./scripts/deploy.sh prism-smoke
+</code></pre>
+<p>Expected observation: SPIRE server and agents are ready, CSI-backed workloads
+are ready, protected Services have endpoints, and component smoke exits zero.
+These observations prove dependencies, not peer authorization.</p>
+<h3 id="3-check-the-live-execution-boundary">3. Check the live-execution boundary</h3>
+<p>The implemented command is <code>npm run verify:worker-core:trust:live</code>. It runs
+<code>deploy.sh worker-trust-e2e</code> in this checkout.</p>
+<p>After the owners qualify the signing, lifecycle and denial-observation
+prerequisites below, this implemented live command uses deployed workloads and
+a real unit process. It does not use a test-double server or fabricated completion
+result. Local synthetic checks remain separate from this live execution. This
+implementation fact does not establish a live result here or make ambiguous
+negative-probe JSON sufficient denial proof.</p>
+<p>Its effects occur in this order:</p>
+<ol>
+<li>The live script waits for Nova, Buster, Prism Control, and Prism Worker,
+inspects loaded SVIDs, and checks protected proxy paths.</li>
+<li>Nova sends a Prism design request through its loopback proxy. The script
+generates a project key internally and uses it as the idempotency key. A
+<code>202</code> response admits durable work: Control persists the project and active
+design request, starts a design round, and admits a design-agent job. Agent
+execution can invoke its configured provider. This is not only a health
+request, and deleting test Jobs does not remove that work.</li>
+<li>The script checks plaintext rejection and creates two Jobs and two
+ServiceAccounts for wrong-identity tests, in the recorded application and
+Prism namespaces. It waits for the Jobs and emits live trust JSON.</li>
+<li>On exit, its trap attempts asynchronous Job and ServiceAccount deletion.
+The wrapper then runs the Nova unit production preflight. This submits a
+signed source snapshot to Buster, runs a real unit process, and imports its
+evidence. The operator signer checks the deployed Buster revision, signs
+the unit result, verifies it with the installed trust anchor, and writes
+<code>dist/verification/unit-production-receipt.json</code> in this checkout.</li>
+</ol>
+<p>The current live script does not retain the design request's original key,
+architecture digest, project response, round, or agent-job response. It discards
+an accepted dispatch response. It also does not emit creating object UIDs or a
+cleanup receipt. Its internal <code>RUN_ID</code> is not an operator input or a guaranteed
+retained receipt. Raw kubectl output can incidentally expose resource names;
+that does not prove their creating identities or durable-request identity.
+The deletion trap uses <code>--wait=false</code>, suppresses output, and ignores errors.
+Exit zero and final live JSON therefore do not prove cleanup.</p>
+<p>Before execution, the platform and workload-identity owners must approve an
+isolated target and a maintained independent evidence and reconciliation
+procedure. The Prism data/agent owner must approve retained design history,
+provider effects, retention and eventual retirement. The procedure must capture:</p>
+<ul>
+<li>The original submitted project key, idempotency key, architecture content,
+digest and revision, and the accepted project, round and agent-job identities.</li>
+<li>Each actual test resource name, namespace and creating UID, including partial
+creation or a lost response. Its resource cleanup must check those identities
+and independently observe completion with recorded API exit statuses.</li>
+<li>For each negative route, the tested caller identity, destination, port, path,
+time and actual rejection observation from the receiving proxy or application.
+Pair it with a reachable authorized request to that destination through the
+same relevant network and proxy path. A positive control is this comparison
+request; it must establish reachability during the negative test. The owner
+must name the observation source, access rights and evidence that distinguish
+peer authentication rejection from application authorization rejection.</li>
+<li>The original Nova unit run/job identities and immutable source/worker
+revisions, evidence digests, and separate operator-signed receipt.</li>
+<li>A recovery route for denied reads, interruption, replaced objects, a lost
+dispatch response, and possibly completed provider or unit work.</li>
+</ul>
+<p>This repository does not supply that complete independent capture and
+reconciliation procedure. If the owners have not supplied and qualified it,
+stop before running the live command. For a new installation that requires
+complete verification or operational approval, stop before its first probe or
+workload mutation. Local key qualification, source checks and component smoke
+cannot remove this boundary. Do not waive mandatory positive, negative or
+source-signing proof, invent an input flag, or assume broad logging captures
+identities that the current command discards. An independently maintained
+owner procedure can resolve the prerequisite; it must identify its actual
+capture sources, exact observations, rights and protected evidence location.
+Its qualification must cover successful, partial and interrupted execution
+without modifying production state or treating ambiguous effects as absent.
+The workload-identity owner must also qualify the denial observations against
+actual peer or allowlist rejection, unavailable endpoints, timeouts and server
+errors. If lifecycle capture is qualified but denial observation is not, the
+same stop remains in force before the live command and before the first probe
+or workload mutation for a complete installation. This repository supplies no
+complete independent denial-observation procedure.</p>
+<h3 id="required-results-and-cleanup-observations">Required results and cleanup observations</h3>
+<p>After the owners resolve that prerequisite, retain the complete command output
+and exit status separately from each result. Live JSON with
+<code>schemaVersion=worker-trust-cluster-e2e.v1</code> declares successful Nova-to-Buster,
+Nova-to-Prism, Prism-Control-to-Worker and Prism-Worker-to-Control paths. Its
+negative paths cover plaintext, wrong SVID and forged forwarded identity.
+A positive result without its paired denial is incomplete. This JSON does not
+contain source-signing proof or a cleanup result. It also does not establish
+why a negative request failed.</p>
+<p>The wrong-SVID probes first check that the unintended SVID was loaded. They
+then accept any non-2xx response (a status outside 200–299), and also accept a
+fetch exception, as denial. TLS (Transport Layer Security) authenticates peers
+and encrypts the connection. The direct TLS probes accept any network error or timeout as rejection. Thus an
+unreachable proxy, connection refusal or HTTP 503 can still lead to success
+JSON. These outcomes do not prove that a peer or allowlist rejected the caller.
+Earlier positive requests use different callers or endpoints and occur at a
+different time; they do not establish the cause of a later failure.</p>
+<p>Classify unavailable endpoints, timeouts and HTTP 5xx server-error responses as
+inconclusive.
+Stop approval, preserve the failed observation and repair reachability or the
+server through its owner. Even a non-2xx response such as HTTP 403 needs the
+owner's correlated identity and rejection evidence. Retain the actual peer or
+authorization rejection and its reachable positive control for each negative
+route before accepting the paired result. The plaintext, wrong-SVID and forged
+forwarded-identity paths remain mandatory. Do not replace them with smoke checks
+or treat the live command's exit zero as independent denial proof.</p>
+<blockquote>
+<p><strong>Source evidence — negative probe limits</strong></p>
+<p><strong>Claim:</strong> The wrong-SVID probes accept fetch errors and any non-2xx status; direct TLS probes accept network errors and timeouts. The final JSON does not distinguish these causes.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L43-L55">Direct TLS error and timeout handling</a> and <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L146-L146">Prism</a> / <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L182-L182">Buster wrong-SVID commands</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L190-L199">The final JSON names required positive and negative routes</a>.</p>
+<p><strong>Test evidence:</strong> Local synthetic execution of the exact extracted probes confirmed acceptance of connection refusal, timeout and HTTP 503 in the applicable probes. No cluster authorization result was obtained.</p>
+<p><strong>Revision:</strong> <code>430633accc4a374a740b5f12f384eeeb9dce228d</code>.</p>
+<p><strong>Limit:</strong> The live verifier alone cannot distinguish authorization denial from failure to reach a working destination.</p>
+</blockquote>
+<p>The separate unit receipt has <code>schemaVersion=nova-unit-production-preflight.v2</code>.
+It contains the Nova run and Buster job identities, source and worker revisions,
+plan/result/decision and imported-evidence digests, process/JUnit/resource
+checks, and an operator attestation. <code>runnerCleanupVerified=true</code> and
+<code>clusterCleanupNotApplicable=true</code> describe the unit runner. They do not prove
+removal of the live script's Jobs, ServiceAccounts or Prism design state.
+The wrapper overwrites the fixed receipt path on success. Retain each original
+receipt and command record in protected evidence before any authorized repeat;
+an existing receipt or earlier live JSON cannot prove the current invocation.</p>
+<p>For a retained signed unit receipt, the following local verification uses the
+same installed public key. <code>&lt;nova-runtime-revision&gt;</code> and
+<code>&lt;buster-runtime-revision&gt;</code> are the exact revisions independently observed for
+that invocation, not values copied from an unchecked receipt. Complete the
+key qualification above immediately before verification:</p>
+<pre><code class="language-bash">node scripts/production-receipt-attestation.mjs verify \
+  dist/verification/unit-production-receipt.json \
+  /etc/kubeclaw/production-receipt-authority.pub \
+  &quot;&lt;nova-runtime-revision&gt;&quot; &quot;&lt;buster-runtime-revision&gt;&quot;
+</code></pre>
+<p>Expected observation: exit zero and <code>production receipt attestation verified</code>.
+Retain the signed file, its digest, qualified public-key fingerprint and
+verification exit. A missing, stale, mismatched or invalid receipt is a failed
+verification, even if earlier live paths passed. Do not rerun the wrapper to
+repair signing: first reconcile its already admitted requests and jobs.</p>
+<p>For test-resource cleanup, only successful independent named read-back can
+establish API absence. The owner procedure must retain reads and exits for
+each exact Job and ServiceAccount and any dependent test Pods. A denied read,
+timeout or replaced UID is an unresolved result; stop and escalate to the
+resource owner. If creating UID or ownership cannot be established, preserve
+the objects and evidence. Do not infer ownership from the <code>worker-trust-</code>
+prefix, delete a replacement object, or use production labels for cleanup.
+This page supplies no universal deletion command because the current verifier
+does not retain the identities required for one.</p>
+<p>Prism design state requires separate reconciliation. Use the original request
+and job identities with the Prism owner's authenticated observation procedure.
+If those identities were lost, stop new test admission and have the owner
+reconcile audit, project and agent/provider records; do not guess a project or
+send a new key. Follow <a href="prism-studio.html#stop-or-abandon-the-journey">Prism's stop and retention boundary</a>.
+Project deletion and whole-journey cancellation are not supplied. Preserve
+accepted history and effects under the owner's retention decision; eventual
+retirement uses the governed data/access procedure. Removing test Jobs or
+closing Studio does not undo admitted design work.</p>
+<p>To remove this execution boundary, platform operations, the workload-identity
+owner, production-operator signing owner and Prism data/agent owner must retain
+a qualified procedure and actual exact-cluster results: all required trust
+paths and observed peer or authorization denials paired with reachable positive
+controls, the verified unit receipt, original durable-request/job
+identities, resolved external effects, and UID-safe cleanup with independent
+read-back. Live success is still unproved here.</p>
+<blockquote>
+<p><strong>Source evidence — live effects and separate receipts</strong></p>
+<p><strong>Claim:</strong> The live verifier admits durable Prism work and suppresses cleanup outcomes; the wrapper separately persists a signed unit receipt.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L12-L23">Internal test identity and suppressed asynchronous cleanup</a>, <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L91-L105">design dispatch with discarded accepted response</a> establish the script effects.
+The <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/skills/prism/server/control-server.ts#L214-L229">Control's persisted request, round and agent admission</a> establish the lifecycle effects.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L2011-L2052">The unit wrapper executes remotely before signing and stores the fixed unit receipt</a>. <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/e2e/nova-unit-production-preflight.mts#L101-L131">The unit transaction checks imported evidence and emits its own receipt</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/e2e/nova-unit-production-preflight.mts#L20-L43">The unit preflight requires its token, source key and provider adapter</a>; <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/my-values/nova-values.yaml#L120-L129">Nova's selected values provide the Secret references</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L190-L199">The live JSON lists trust paths only</a>; <a href="https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/production-receipt-attestation.mjs#L99-L125">receipt validation keeps unit cleanup separate from cluster cleanup</a>. No live result is established.</p>
+<p><strong>Revision:</strong> <code>8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32</code>.</p>
+<p><strong>Limit:</strong> Source evidence does not recover an already lost request identity or establish successful resource/provider cleanup.</p>
+</blockquote>
+<h3 id="failure-distinction">Failure distinction</h3>
+<p>Check in this order:</p>
+<ol>
+<li>context and namespace;</li>
+<li>SPIRE server persistence and agents;</li>
+<li>CSI socket mount;</li>
+<li>Envoy bootstrap, readiness, and loaded SVID;</li>
+<li>Service endpoint and target port;</li>
+<li>NetworkPolicy in both directions;</li>
+<li>application identity allowlist;</li>
+<li>source-signing key configuration;</li>
+<li>separate operator receipt signing and verification;</li>
+<li>durable request reconciliation and test cleanup.</li>
+</ol>
+<p>A timeout, unreachable endpoint or HTTP 5xx response is inconclusive denial
+evidence. Diagnose reachability and server health first. An observed TLS/SVID
+rejection concerns identity issuance or peer verification. A correlated
+authenticated denial concerns the application allowlist. A
+successful wrong-identity request is a security incident: restrict the owning
+Service, retain evidence, and stop admission.</p>
+<p>Use the exact error code to select the first repair. Do not weaken a trust rule
+to remove an error.</p>
+<table>
+<thead>
+<tr>
+<th>Error code</th>
+<th>Meaning</th>
+<th>First repair</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WORKER_TRUST_PEER_MISSING</code></td>
+<td>The verified forwarded-certificate header is absent or contains more than one certificate entry.</td>
+<td>Inspect the destination Envoy ingress and confirm that traffic enters through it.</td>
+</tr>
+<tr>
+<td><code>WORKER_TRUST_PEER_INVALID</code></td>
+<td>The header does not contain exactly one valid SPIFFE URI.</td>
+<td>Inspect the verified certificate URI SAN and Envoy <code>SANITIZE_SET</code> output.</td>
+</tr>
+<tr>
+<td><code>WORKER_TRUST_POLICY_INVALID</code></td>
+<td>The application allowlist is empty or contains an invalid SPIFFE ID.</td>
+<td>Restore the exact expected identities before restarting the workload.</td>
+</tr>
+<tr>
+<td><code>WORKER_TRUST_PEER_FORBIDDEN</code></td>
+<td>The authenticated SPIFFE ID is not in the application allowlist.</td>
+<td>Compare the caller namespace and ServiceAccount with the configured identity.</td>
+</tr>
+<tr>
+<td><code>WORKER_TRUST_PROXY_REQUIRED</code></td>
+<td>Worker Core received forwarded identity from a non-loopback address.</td>
+<td>Route the request through the colocated Envoy listener.</td>
+</tr>
+<tr>
+<td><code>REMOTE_TEST_GATE_SPIFFE_PROXY_NOT_LOOPBACK</code></td>
+<td>A remote-suite provider selected SPIFFE proxy authentication with a non-loopback endpoint.</td>
+<td>Set that provider endpoint to its Nova loopback Envoy listener.</td>
+</tr>
+<tr>
+<td><code>NOVA_REMOTE_PLAN_SPIFFE_PROXY_NOT_LOOPBACK</code></td>
+<td>The Nova remote-plan transport selected SPIFFE proxy authentication with a non-loopback endpoint.</td>
+<td>Use <code>http://127.0.0.1:28891</code> for the Buster plan route.</td>
+</tr>
+<tr>
+<td><code>BUSTER_REMOTE_SPIFFE_POLICY_INVALID</code></td>
+<td>Buster has no valid trusted Nova SPIFFE ID.</td>
+<td>Restore the exact Nova identity in the Buster policy.</td>
+</tr>
+<tr>
+<td><code>NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_MISSING</code></td>
+<td>Nova did not receive the source-attestation private key.</td>
+<td>Inspect the <code>pipeline-test-gate-source-attestation</code> Secret reference and its <code>privateKey</code> key.</td>
+</tr>
+<tr>
+<td><code>NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID</code></td>
+<td>Nova cannot parse the private key or the key is not Ed25519.</td>
+<td>Replace the complete Ed25519 keypair and restart both key consumers in the maintenance window.</td>
+</tr>
+<tr>
+<td><code>BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING</code></td>
+<td>Buster did not receive the source-attestation public key.</td>
+<td>Inspect the same Secret reference and its <code>publicKey</code> key.</td>
+</tr>
+<tr>
+<td><code>BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID</code></td>
+<td>Buster cannot parse an Ed25519 public key, or its trusted source authority is invalid.</td>
+<td>Compare the public key and authority with Nova's active signer configuration.</td>
+</tr>
+<tr>
+<td><code>BUSTER_SOURCE_ATTESTATION_INVALID</code></td>
+<td>The received source snapshot does not pass signature, authority, or content verification.</td>
+<td>Stop execution. Compare the selected revisions, authority, archive digest, and active keypair before retrying.</td>
+</tr>
+</tbody>
+</table>
+<p>The two loopback errors are separate because the plugin adapter and the Nova
+transport validate different configuration boundaries. Both reject a remote
+URL before any request can claim SPIFFE proxy authentication.</p>
+<blockquote>
+<p><strong>Source evidence — failures are deliberate admission stops</strong></p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/worker/core/worker/trust.ts#L17-L51">Worker Core identity failures</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/plugins/remote-test-gate/src/adapter.ts#L46-L61">remote-suite endpoint check</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/core/test-gates/remote-dispatch.ts#L109-L132">Nova transport endpoint check</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/core/test-gates/runtime-config.ts#L51-L68">Nova private-key checks</a>.</p>
+</blockquote>
+<h3 id="recovery-rotation-boundary-and-evidence">Recovery, rotation boundary, and evidence</h3>
+<p>Repair only the first failed layer. Rerun component readiness, then reconcile
+every previously admitted design request, provider effect and unit job before
+authorizing another live test. Each new invocation generates new identities;
+it does not resume the previous request. If original identities or cleanup are
+unresolved, stop and use the owning procedure above. Once reconciliation and
+the live prerequisites pass, repeat both positive and negative paths. Restore the previous exact trust configuration
+before revocation when a planned change fails. Complete timed SVID/CA expiry and
+independent SPIRE restore are not established, and the source-attestation
+Secret supports one active keypair; its rotation requires a maintenance window.
+Use the <a href="maintenance.html#canonical-rotation-procedure">canonical rotation procedure</a>
+and stop if an authority-specific issuance, overlap, revocation, or restore
+step is absent.</p>
+<p>Retain source and release identities, context, trust domain, ServiceAccounts and
+expected SPIFFE IDs, non-secret Secret metadata, source-check output, component
+readiness, positive and negative live JSON, actual peer or authorization
+rejections and their reachable positive controls, failure-layer diagnosis, recovery,
+the separate signed unit receipt and its verification, original request/round/job
+identities, resource names/creating UIDs, independent cleanup observations,
+retained-state decisions, and any open boundary. After evidence is retained,
+unset <code>KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE</code> in the administration shell.
+Dispose of temporary signing access only through its owner; do not remove the
+installed trust anchor or retained receipts as test cleanup. Never retain
+private keys, SVID key material, or Secret values.</p>
+<h2 id="source-authority">Source Authority</h2>
+<p>The live command is dispatched by
+<a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2672-L2687"><code>cmd_worker_trust_e2e</code></a>.
+The deployment health program checks the mounted code bundle, gateway, Redis,
+and drain/startup state
+(<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/templates/deployment.yaml#L880-L915">implementation</a>),
+while the workload defines separate startup, readiness, and liveness probes
+(<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/templates/deployment.yaml#L1479-L1513">probe wiring</a>).</p>
+</main></body></html>

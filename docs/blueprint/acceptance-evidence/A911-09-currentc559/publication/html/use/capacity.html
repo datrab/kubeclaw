@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/capacity.html"></head><body><main>
+<h1 id="capacity-and-retention">Capacity and Retention</h1>
+<p>Status: supported observation procedure; cleanup is limited to explicitly owned component controls
+Audience: platform operator, data owner, incident responder
+Owner: platform operations and each named data owner
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/files/prism-backup.sh">charts/prism/files/prism-backup.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/backup.yaml">charts/prism/templates/backup.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/ingestion.yaml">charts/prism/templates/ingestion.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/jobs.yaml">charts/prism/templates/jobs.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/values.yaml">charts/prism/values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/gitops/platform/values/loki.yaml">gitops/platform/values/loki.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/gitops/platform/values/prometheus.yaml">gitops/platform/values/prometheus.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/gitops/platform/values/redis.yaml">gitops/platform/values/redis.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/my-values/infra/postgresql-recovery.yaml">my-values/infra/postgresql-recovery.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/my-values/infra/redis-values.yaml">my-values/infra/redis-values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/compact-buster-job.mjs">scripts/compact-buster-job.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/native-worker-node-capacity.mjs">scripts/native-worker-node-capacity.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/observability-retirement-plan.mjs">scripts/observability-retirement-plan.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/observability-retirement/dispatch.mjs">scripts/observability-retirement/dispatch.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/observability-retirement/operator-authority.mjs">scripts/observability-retirement/operator-authority.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/postgresql-recovery.sh">scripts/postgresql-recovery.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/retire-admission.mjs">scripts/retire-admission.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/retire-attempt-result.mjs">scripts/retire-attempt-result.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/retire-nova-dispatch.mjs">scripts/retire-nova-dispatch.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/retire-operator-request.mjs">scripts/retire-operator-request.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/retire-telemetry.mjs">scripts/retire-telemetry.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-compaction.ts">skills/buster/engine/test-gates/remote-plan-compaction.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-service.ts">skills/buster/engine/test-gates/remote-plan-service.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts">skills/common/plugin-runtime/foundation/observability/attempt-projection.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts">skills/common/plugin-runtime/foundation/observability/durable-attempts.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/observability/durable-records.ts">skills/common/plugin-runtime/foundation/observability/durable-records.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/operator-messaging/src/delivery-projection.ts">skills/common/plugins/operator-messaging/src/delivery-projection.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/state/read-run-evidence.ts">skills/nova/core/state/read-run-evidence.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/config/native-worker.ts">skills/prism/config/native-worker.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/engine/execution-cache.ts">skills/prism/engine/execution-cache.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/control-server.ts">skills/prism/server/control-server.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/ingestion.ts">skills/prism/server/ingestion.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/native-worker-execution.ts">skills/prism/server/native-worker-execution.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/worker-config.ts">skills/prism/server/worker-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/worker-lifecycle.ts">skills/prism/server/worker-lifecycle.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/tests/engine-cache.test.mts">skills/prism/tests/engine-cache.test.mts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/tests/worker-ingress-capacity.test.mts">skills/prism/tests/worker-ingress-capacity.test.mts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-pool-policy.ts">skills/worker/core/worker/native-pool-policy.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/deployment/prism-ingestion-resources.test.mjs">tests/verification/deployment/prism-ingestion-resources.test.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/versions.json">versions.json</a>
+Evidence revision: <code>ad312e3e4f15223809fadef90bd90e1f689ce941</code>
+Applies to: the recorded cluster, namespace, source revision, and storage products
+Last verified: 2026-10-12; deployment measurements and cleanup require the procedures below</p>
+<h2 id="purpose">Purpose</h2>
+<p>Measure pressure before it becomes data loss and apply retention only where an
+authority defines eligible data and a safe deletion mechanism. This page is the
+only canonical capacity and retention procedure.</p>
+<h2 id="canonical-capacity-and-retention-procedure">Canonical Capacity and Retention Procedure</h2>
+<!-- operator-task: capacity-retention -->
+<h3 id="supported-start-state-version-location-and-authority">Supported start state, version, location, and authority</h3>
+<p>Start with an existing reachable cluster, an explicit context and namespace,
+and independent access that does not depend on the workload being measured.
+Apply the <a href="README.html#version-and-tool-boundary">shared version and tool boundary</a>
+before measuring. Record the actual <code>kubectl</code> client and Kubernetes server
+versions, selected Helm version when used, and each storage or product query
+tool/server pair. Record the installed release, immutable images, data formats,
+and the platform and component owners' acceptance of these actual combinations.
+Stop until they accept the combination. Build inputs in <code>versions.json</code> do not
+establish compatibility: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/versions.json#L19-L23">general build tools</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/versions.json#L65-L72">Ops image overrides</a>
+select different clients. KubeClaw does not define a Kubernetes, CSI (storage
+driver), registry, Redis, PostgreSQL, or filesystem compatibility range.</p>
+<p>Run cluster commands from the administration machine. Run product-specific
+queries only through the owning product's documented administration surface.
+The Kubernetes API is authoritative for requested PVC size and object state;
+the CSI/storage product is authoritative for free bytes and expansion; each
+application is authoritative for whether records are disposable.</p>
+<p>Before any cluster command on this page, complete
+<a href="install.html#bind-cluster-authority">Bind Cluster Authority</a>. Keep the same bound
+shell for the whole measurement or retention task. Every raw <code>kubectl</code>, Helm,
+or <code>scripts/deploy.sh</code> command below must inherit its exported read-only
+<code>KUBECONFIG</code>; every shown <code>&lt;context&gt;</code> must equal <code>EXPECTED_CONTEXT</code>. Run
+<code>assert_cluster_binding</code> immediately before each command block. Stop on any
+mismatch and follow the binding section's recovery; never fall back to the
+default kubeconfig.</p>
+<h3 id="preconditions">Preconditions</h3>
+<p>Use Bash for the command blocks. Replace every placeholder before execution.
+Freeze the recorded context, namespace list, evidence directory and observation
+window for this task; a changed target requires a new binding and inventory.
+Keep credentials outside both the evidence directory and the command output.</p>
+<p>Kubernetes RBAC (API authorization) must permit <code>get</code> on the named
+<code>kube-system</code> namespace for its UID, and <code>get</code> on each independently supplied
+service namespace for its UID. Record those namespace UIDs before inventory.
+The inventory requires <code>list</code> on core <code>persistentvolumeclaims</code>, <code>pods</code>, and
+<code>events</code>, and on <code>batch</code> <code>cronjobs</code> and <code>jobs</code> in each exact namespace.
+Metrics capture additionally requires <code>list</code> on <code>pods.metrics.k8s.io</code> there.
+Client discovery/version requests need the applicable non-resource <code>get</code>
+permissions on <code>/version</code>, <code>/api</code>, <code>/api/*</code>, <code>/apis</code>, and <code>/apis/*</code>.
+If a selected owner method reads a named StorageClass, PV, Node, or kubelet
+configuration, include its exact <code>get</code> permission separately. The
+<a href="install.html#check-authority-for-the-selected-scope">installation access inventory</a>
+explains cluster versus namespace and native-node access; its installation
+write grants are not measurement prerequisites.</p>
+<p>Before a product query, its owner must supply the exact read-only method,
+identity, tool/version, endpoint or filesystem, selector, and permissions.
+Examples are a database role's approved read queries, Redis ACL commands, or
+host-file read access; Kubernetes access does not grant them. Record only
+non-secret identity and permission evidence. Permission denial stops the
+affected measurement. Ask that owner to correct access or supply an authorized
+read-only observation; do not select a more privileged credential.</p>
+<ul>
+<li><code>&lt;context&gt;</code>, <code>&lt;namespace&gt;</code>, <code>&lt;evidence-dir&gt;</code>, and the observation window are
+recorded.</li>
+<li><code>&lt;evidence-dir&gt;</code> is new, mode <code>0700</code>, and outside workload PVCs.</li>
+<li>Data owners are named for Nova runs, Buster jobs, Prism data and backups,
+Redis, LiteLLM, registry data, BuildKit cache, Ops data, and telemetry.</li>
+<li>No deletion, compaction, backup, restore, rotation, or release change is in
+progress.</li>
+<li>The storage owner has supplied a real free-space measurement method. PVC
+capacity alone is not free space.</li>
+</ul>
+<p>Stop if any store has no owner, the context is unexpected, the evidence path is
+inside disposable storage, or measuring a store would require an unapproved
+credential.</p>
+<h3 id="1-capture-the-cluster-side-inventory">1. Capture the cluster-side inventory</h3>
+<p>Record every namespace that the selected services use. Include the bound
+application and Prism namespaces, and each infrastructure namespace supplied
+by its owner. Run the block below once per recorded namespace. Replace
+<code>&lt;namespace&gt;</code> with that namespace; keep the bound cluster context unchanged.
+Use a separate output prefix for each namespace. An access failure leaves that
+service's budget incomplete and requires its owner to supply the measurement.</p>
+<p>Create the evidence directory once before the first capture:</p>
+<pre><code class="language-bash">umask 077
+mkdir &quot;&lt;evidence-dir&gt;&quot;
+</code></pre>
+<p>For each namespace, first read its UID and compare it with the identity
+independently supplied by the platform owner. Stop on a missing or different
+UID; a recreated namespace is a new target even when its name is unchanged.</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; get namespace &quot;&lt;namespace&gt;&quot; \
+  -o jsonpath='{.metadata.uid}{&quot;\n&quot;}' &gt; &quot;&lt;evidence-dir&gt;/&lt;namespace&gt;-uid.txt&quot;
+</code></pre>
+<p>For each recorded namespace whose UID matches, capture its inventory:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get pvc \
+  -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,CLASS:.spec.storageClassName,REQUEST:.spec.resources.requests.storage,CAPACITY:.status.capacity.storage' \
+  &gt; &quot;&lt;evidence-dir&gt;/&lt;namespace&gt;-pvc.txt&quot;
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get pods -o wide \
+  &gt; &quot;&lt;evidence-dir&gt;/&lt;namespace&gt;-pods.txt&quot;
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get events \
+  --sort-by=.metadata.creationTimestamp &gt; &quot;&lt;evidence-dir&gt;/&lt;namespace&gt;-events.txt&quot;
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; get cronjob,job \
+  &gt; &quot;&lt;evidence-dir&gt;/&lt;namespace&gt;-jobs.txt&quot;
+</code></pre>
+<p>Expected observation: every selected PVC is <code>Bound</code>; its class, request, and
+capacity match the intended store; events contain no recurring mount,
+provisioning, eviction, inode, or space failure. A successful command does not
+prove free bytes inside the volume.</p>
+<p>If Metrics Server is installed, capture workload usage separately:</p>
+<pre><code class="language-bash">assert_cluster_binding
+kubectl --context &quot;&lt;context&gt;&quot; -n &quot;&lt;namespace&gt;&quot; top pods \
+  &gt; &quot;&lt;evidence-dir&gt;/&lt;namespace&gt;-pod-usage.txt&quot;
+</code></pre>
+<p>If this command reports that metrics are unavailable, record that observation.
+Do not install Metrics Server as part of this task.</p>
+<h3 id="2-measure-each-authority-and-calculate-growth">2. Measure each authority and calculate growth</h3>
+<p>For every store, record current bytes, free bytes, inode use where applicable,
+oldest and newest retained item, and the same measurements from at least one
+earlier point. Calculate the observed growth rate and exhaustion time outside
+the target workload. Do not infer free space from a PVC request.</p>
+<h3 id="complete-the-service-budget-record">Complete the service-budget record</h3>
+<p>Create <code>&lt;evidence-dir&gt;/service-budgets.md</code> outside workload storage. Inventory every
+selected workload and store, including optional services that this release enables.
+Add a row for every discovered service. A fixed list does not prove completeness.
+Mark an absent service <code>not deployed</code>, with its release or inventory evidence.
+Do not omit a service because its measurements are unavailable.</p>
+<p>For each active service, create one record per limiting resource. Storage bytes,
+inodes, memory, CPU, queue length, and request rate have different units and limits.
+Use the same unit and observation window for a metric's readings and thresholds.
+The following record is a template, not a measured result:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service and resource</td>
+<td>Exact workload or store identity, namespace, release, and metric.</td>
+</tr>
+<tr>
+<td>Measurement method</td>
+<td>Owning tool or query, its version, execution location, permissions, and concrete selector.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Output path and collection time for each reading. Exclude credentials.</td>
+</tr>
+<tr>
+<td>Unit and window</td>
+<td>Bytes, inodes, cores, requests/second, or the owner's defined unit; record the sampling window.</td>
+</tr>
+<tr>
+<td>Previous reading</td>
+<td>Measured value and time <code>t0</code>.</td>
+</tr>
+<tr>
+<td>Current reading</td>
+<td>Measured value and later time <code>t1</code>.</td>
+</tr>
+<tr>
+<td>Effective capacity</td>
+<td>Real usable capacity or configured limit, with its authority. A PVC request is insufficient.</td>
+</tr>
+<tr>
+<td>Growth</td>
+<td><code>(current - previous) / (t1 - t0)</code>, in resource units per second.</td>
+</tr>
+<tr>
+<td>Warning boundary</td>
+<td>Owner-approved value, comparison direction, reason, and approval date.</td>
+</tr>
+<tr>
+<td>Stop boundary</td>
+<td>Owner-approved value, comparison direction, reason, and approval date.</td>
+</tr>
+<tr>
+<td>Response lead time</td>
+<td>Measured or owner-approved time to finish the selected response, including a safety margin.</td>
+</tr>
+<tr>
+<td>Forecast</td>
+<td>Time until warning and stop at the observed positive growth rate; otherwise state that no positive growth was observed.</td>
+</tr>
+<tr>
+<td>Owner and responder</td>
+<td>Named data or service owner, on-call contact, and person authorized to execute the response.</td>
+</tr>
+<tr>
+<td>Warning action</td>
+<td>Exact owned observation or expansion procedure and expected result.</td>
+</tr>
+<tr>
+<td>Stop action</td>
+<td>Exact admission-stop or escalation procedure, affected work, and safe recovery condition.</td>
+</tr>
+<tr>
+<td>Retention boundary</td>
+<td>Disposable object criteria, reference protection, receipt, and recovery authority; otherwise record that deletion is unsupported.</td>
+</tr>
+</tbody>
+</table>
+<p>The required service coverage starts with the selected release's inventory:</p>
+<table>
+<thead>
+<tr>
+<th>Service or store</th>
+<th>Measurement authority and response boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node filesystems and image store</td>
+<td>Node/container-runtime owner measures usable bytes and inodes; KubeClaw supplies no node cleanup command.</td>
+</tr>
+<tr>
+<td>Registry storage</td>
+<td>Registry owner measures stored data and capacity; stop writers before owned garbage collection.</td>
+</tr>
+<tr>
+<td>BuildKit cache and worker</td>
+<td>BuildKit owner measures cache, worker resources, and backlog; use its supported cache controls after draining builds.</td>
+</tr>
+<tr>
+<td>Nova process and durable root</td>
+<td>Measure workload resources plus filesystem usage; protect run journals, effects, and audit evidence. No run-deletion CLI exists.</td>
+</tr>
+<tr>
+<td>Buster process, jobs, and evidence</td>
+<td>Measure workload resources, jobs, and stored bytes; retain accepted jobs, receipts, and uncertain cleanup evidence.</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>Redis owner measures memory, persistence storage, and client pressure; no repository-wide cleanup rule exists.</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td>Service owner measures request rate, concurrency, failures, and process resources; record the configured provider limits separately.</td>
+</tr>
+<tr>
+<td>LiteLLM PostgreSQL</td>
+<td>Database owner measures database growth and usable storage; no repository-wide row-retention rule exists.</td>
+</tr>
+<tr>
+<td>Prism Control, Studio, and ingestion</td>
+<td>Record each active workload separately, including process resources, request rate, and any bounded queue.</td>
+</tr>
+<tr>
+<td>Prism Worker and native host</td>
+<td>Record worker/native-host resources and admission limits separately; use the native-pool owner for host measurements.</td>
+</tr>
+<tr>
+<td>Prism agent</td>
+<td>Record process resources and external model-route limits; the model-route owner supplies those limits.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL and artifacts</td>
+<td>Database/artifact owners measure separate stores; authoritative revisions and baselines are not age-only cleanup candidates.</td>
+</tr>
+<tr>
+<td>Prism backups</td>
+<td>Measure the backup PVC and retained groups; read configured limits from the generated reference. No automatic group expiry exists.</td>
+</tr>
+<tr>
+<td>SPIRE, Cilium/Hubble, and Tailscale</td>
+<td>Record each selected workload and its owned stores; their operators supply resource, request, and retention limits.</td>
+</tr>
+<tr>
+<td>Ops and other telemetry</td>
+<td>Record each active service and store separately; retain incident/access evidence according to its owner's policy.</td>
+</tr>
+</tbody>
+</table>
+<p>For a growing usage metric, use <code>warning &lt; stop &lt;= effective capacity</code>.
+Compute <code>seconds to stop = (stop - current) / growth</code> only when growth is positive.
+A zero or negative growth observation does not guarantee future capacity.
+For free-space metrics, the comparison direction reverses; record that direction explicitly.</p>
+<p>Choose boundaries that leave enough time for the approved response before the
+stop limit. Use the shortest applicable forecast when bytes, inodes, or another
+resource can exhaust first. Explain any owner-defined relation that differs
+from the usage formula above.</p>
+<p><strong>Stop conditions:</strong> An active service with a missing reading, owner, method,
+warning value, stop value, or response has no complete budget. Stop this procedure
+before retention mutation and do not enable unattended cleanup or new admission.
+If the stop boundary is already crossed, invoke the recorded owning-layer stop
+or escalation action. An undefined forecast or an unavailable metric requires
+owner review; it is not a zero-use result.</p>
+<p>Retain the completed records and owner approval with both measurement outputs.
+The repository defines no universal production thresholds. Do not substitute
+invented values for measured budgets or owner-approved limits.</p>
+<h3 id="connect-each-budget-to-its-selected-controls">Connect each budget to its selected controls</h3>
+<p>For the Prism backup row, the generated reference is <a href="../reference/helm-values.html">Helm values</a>:
+select <code>charts/prism</code> and the <code>backup</code> and <code>artifactStorage</code> field families.
+Check those settings against the pinned consumers in <a href="#backup-headroom">Backup headroom</a>
+and the applied release. A generated row alone does not prove a loaded limit.</p>
+<p>For each budget row above, retain a non-secret effective-configuration record.
+Identify direct deployment or GitOps ownership, the applied values and overrides,
+rendered resource limits, image/version, storage class and mounted configuration.
+A checked-in default is a starting point, not evidence of a running value.
+Use <a href="../reference/configuration-precedence.html">configuration precedence</a> and
+<a href="../reference/host-and-prism-configuration.html">host and Prism configuration</a>.
+A process can retain startup configuration after its producer changes.
+Resolve that difference before treating a current ConfigMap as a loaded limit.</p>
+<p>A projection is a copy made for delivery or diagnosis. It does not replace the
+original journal, result or evidence. Admission is the decision to accept new
+work and its resource liability. A fence prevents a competing writer from
+changing the authority while a control checks or mutates it.</p>
+<p>The following map selects the controls to connect to each active budget. Add
+other discovered services to the same record. For an absent service, keep the
+<code>not deployed</code> evidence. The pressure column names observations to obtain
+through the recorded owner method; it does not claim built-in alerts or expose
+a new query command.</p>
+<table>
+<thead>
+<tr>
+<th>Service or store</th>
+<th>Effective control and canonical authority</th>
+<th>Pressure and consequence</th>
+<th>Owner response, retry and cleanup boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node filesystems and image store</td>
+<td><a href="../understand/data-and-state.html#deployment-and-operations-stores">Deployment and operations stores</a>; actual node/runtime configuration</td>
+<td>Free bytes, inodes, image growth and eviction events; exhaustion can stop Pods or discard unread source logs</td>
+<td>Node/runtime owner stops affected writers and supplies expansion or exact collection procedure. No KubeClaw node-cleanup command; retain media and logs until ownership and exclusions are proved.</td>
+</tr>
+<tr>
+<td>Registry</td>
+<td><a href="maintenance.html#registry-and-buildkit-maintenance">Registry and BuildKit maintenance</a>, deployed registry storage and clients</td>
+<td>Native storage usage, push errors, missing digest/layer; a healthy mirror does not prove a published image is complete</td>
+<td>Registry owner fences writers and active consumers, then uses the canonical maintenance boundary. Stop release use of an incomplete digest; never substitute a mutable tag.</td>
+</tr>
+<tr>
+<td>BuildKit cache and worker</td>
+<td><a href="maintenance.html#preserve-image-lifetime-during-collection">Client and image-lifetime controls</a>, actual worker/cache configuration</td>
+<td>Native cache bytes, worker resources and build backlog; collection can remove inputs still needed by builds</td>
+<td>Build owner drains work and qualifies the exact native collection method. Retain referenced images and source; no broad filesystem deletion.</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td><a href="../understand/data-and-state.html#nova-run-state">Nova run state</a> and selected remote-gate configuration</td>
+<td>Run-root bytes/inodes, record/blob limits, append/import errors; canonical append failure blocks progress</td>
+<td>Nova owner stops new admission, retains journals, effects and referenced results, and adds capacity. Only the local copies listed below have narrow controls; no complete run deletion.</td>
+</tr>
+<tr>
+<td>Buster</td>
+<td><a href="../understand/data-and-state.html#buster-state">Buster state</a> and <a href="../reference/buster-runtime-configuration.html">runtime limits</a></td>
+<td>Job/result/evidence bytes, reserved result liability, admission errors and cleanup uncertainty</td>
+<td>Buster owner rejects new jobs that cannot retain results. Completed-job archive compaction keeps result/source/evidence authority; uncertain execution blocks it. Full job/evidence deletion is unavailable here.</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td><a href="../understand/data-and-state.html#deployment-profiles-are-not-the-same-capacity-contract">Profile and persistence distinction</a> and <a href="../understand/data-and-state.html#redis-durable-delivery-not-product-authority">Redis authority</a></td>
+<td>Native memory, persistence bytes, stream/key growth and write errors; no-eviction pressure rejects writes</td>
+<td>Redis owner records actual memory/persistence policy and stream/dedup settings. Restore connectivity or capacity before bounded consumer recovery; do not clear keys or streams to release authority.</td>
+</tr>
+<tr>
+<td>LiteLLM gateway</td>
+<td><a href="../understand/data-and-state.html#selected-litellm-source-and-image-boundary">Selected source/image boundary</a> and <a href="../understand/data-and-state.html#read-retention-inputs-without-changing-the-service">retention input acquisition</a></td>
+<td>Request rate, concurrency, route failures and process resources; provider limits differ from local limits</td>
+<td>Gateway/model-route owner supplies actual loaded limits and bounded consumer policy. Do not restart or change retention to make conflicting observations agree.</td>
+</tr>
+<tr>
+<td>LiteLLM PostgreSQL</td>
+<td><a href="../understand/data-and-state.html#litellm-postgresql">Database and row retention</a> and <a href="recovery.html#litellm-postgresql-backup-and-restore-boundary">recovery boundary</a></td>
+<td>Database bytes/inodes, row growth and native query errors; scheduled row deletion can change present diagnostics while an old dump retains them</td>
+<td>Database and gateway owners identify policy with the canonical read procedure. Unknown effective policy blocks retention changes; preserve dumps and keys through their separate authority.</td>
+</tr>
+<tr>
+<td>Prism Control and Studio</td>
+<td><a href="../understand/prism-runtime.html#1-control-the-durable-authority">Control and request flow</a>, <a href="../reference/host-and-prism-configuration.html#prism-control-process">configuration</a></td>
+<td>Process usage, requests and durable operation/replay growth; HTTP readiness does not prove retained operation readers</td>
+<td>Prism owner records each workload separately, stops new work at its approved limit and checks durable readers before resuming. Do not use RAM-cache eviction as Control retention.</td>
+</tr>
+<tr>
+<td>Prism ingestion</td>
+<td><a href="../understand/data-and-state.html#prism-acquisition-quarantine">Quarantine contract</a> and the bounds below</td>
+<td>Quarantine bytes/inodes/age, acquisition size and I/O failures; loss or expiry requires reacquisition</td>
+<td>Ingestion owner uses publication-triggered exact-digest cleanup or the TTL reaper. An independent manual DELETE procedure is not supplied here; retain the error and stop before guessing a request or credential.</td>
+</tr>
+<tr>
+<td>Prism Worker and native host</td>
+<td><a href="../understand/prism-runtime.html#4-native-worker-and-engine-execution">Native execution</a>, <a href="../reference/host-and-prism-configuration.html#prism-worker-and-native-supervisor">supervisor configuration</a>, <a href="install.html#check-authority-for-the-selected-scope">host preparation</a></td>
+<td>HTTP admission, connection/body limits, native CPU/memory/tasks, scope reservations, ownership/journal bytes and <code>503</code>; Pod usage omits host liability</td>
+<td>Native-pool owner keeps admission closed on failed identity, recovery or capacity fences. Do not kill scopes or delete journal files to create headroom; recover within the original attempt authority before retry.</td>
+</tr>
+<tr>
+<td>Prism agent</td>
+<td><a href="../understand/prism-runtime.html#agent-bridge-admission-and-probes">Agent admission and probes</a></td>
+<td>Process usage, active jobs, bounded ingress and model-route limits; probe capacity differs from work capacity</td>
+<td>Prism/model-route owners distinguish rejection from uncertain accepted work. Resume only through the durable operation and recorded route policy.</td>
+</tr>
+<tr>
+<td>Prism PostgreSQL and artifacts</td>
+<td><a href="../understand/data-and-state.html#prism-postgresql">Prism database</a>, <a href="../understand/data-and-state.html#prism-artifacts">artifacts</a> and <a href="../understand/prism-data.html">Prism data architecture</a></td>
+<td>Separate database/artifact bytes, inodes and reference failures; artifact publication precedes database reference</td>
+<td>Database/artifact owners fence administrative changes and retain matched groups. Revisions, baselines, logs and published artifacts are not quarantine or cache deletion candidates.</td>
+</tr>
+<tr>
+<td>Prism and LiteLLM backups</td>
+<td><a href="#backup-headroom">Backup headroom</a> and <a href="recovery.html#canonical-backup-and-restore-procedure">canonical recovery</a></td>
+<td>Retained groups, incomplete attempts, free bytes/inodes and last verified group; a ceiling can reject backup before physical exhaustion</td>
+<td>Each backup owner records a separate budget. Verify and copy a complete group through the canonical procedure; no automatic group expiry or guessed failed-stage deletion.</td>
+</tr>
+<tr>
+<td>SPIRE, Cilium/Hubble and Tailscale</td>
+<td><a href="../understand/data-and-state.html#deployment-and-operations-stores">Deployment and operations stores</a>, effective selected manifests and owner-native methods</td>
+<td>Per-service resources, retained state, identity/route failures; one service's readiness does not establish another's budget</td>
+<td>Each selected operator supplies its exact observation and stop/recovery method. Missing method blocks that row and retention mutation.</td>
+</tr>
+<tr>
+<td>Ops and telemetry</td>
+<td><a href="../understand/telemetry.html#retention-capacity-and-backpressure">Telemetry pressure</a>, <a href="../understand/telemetry.html#retention-backpressure-and-failure">monitoring retention</a>, and owned workspace stores</td>
+<td>File/stream limits, checkpoint age, queue drops, scrape/log gaps and disk growth; diagnostic retention can discard projections</td>
+<td>Observability/Ops owners preserve incident and access evidence. Add capacity or use an explicitly qualified local projection control; monitoring horizon is not a capacity guarantee.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="prism-temporary-and-native-limits">Prism temporary and native limits</h4>
+<p>Ingestion uses a quarantine-only <code>emptyDir</code> (Pod-local temporary volume) limited to 4 GiB. Its TTL (time to
+live) defaults to one hour and clamps to one minute–one day; reaping runs at
+startup and at intervals of at most one minute. Requests are limited to
+2,000,000 bytes and acquired content to 6,000,000 bytes. The authenticated
+<code>DELETE /v1/acquisitions/&lt;digest&gt;</code> accepts one exact 64-character lowercase
+hexadecimal digest and returns <code>204</code>, including when already absent.
+Control attempts exact-digest deletion after acquisition processing, including
+when publication failed. It reports publication and cleanup failures rather
+than treating a probe as evidence of cleanup. These controls expire
+acquisition bytes, not durable logs, reports, artifacts or Control replay.
+A Pod loss or expiry requires a new bounded acquisition.</p>
+<blockquote>
+<p><strong>Source evidence — quarantine</strong></p>
+<p>Claim: only temporary digest-named acquisitions have these size, TTL and DELETE controls.
+Implementation: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/control-server.ts#L810-L842">Control publication/cleanup ordering</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/ingestion.ts#L12-L20">TTL and reaper</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/ingestion.ts#L36-L79">size and exact DELETE handling</a>.
+Contract or setting: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/templates/ingestion.yaml#L23-L40">selected quarantine volume and required sizing</a>.
+Test evidence: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/tests/verification/deployment/prism-ingestion-resources.test.mjs#L31-L64">rendered quarantine and size prerequisites</a>; inspected, not executed for this page.
+Revision: <code>ad312e3e4f15223809fadef90bd90e1f689ce941</code>.
+Limit: no manual API execution, credential qualification or live loss/reacquisition proof is established here.</p>
+</blockquote>
+<p>The engine's RAM (process-memory) capture cache defaults to four in-flight executions, 32
+completed entries and 16 MiB of completed bytes. It rejects excess in-flight
+work and evicts only completed reconstructible cache entries. Durable replay
+belongs to Control; clearing this cache releases no authoritative artifact.
+The <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/engine/execution-cache.ts#L1-L15">cache contract and defaults</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/engine/execution-cache.ts#L33-L79">admission and completed-entry eviction</a>
+define that distinction. The <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/tests/engine-cache.test.mts#L41-L99">cache pressure and retained-artifact tests</a>
+were inspected, not executed for this page.</p>
+<p>Worker ingress defaults to 16 active requests, four extra probe requests,
+128 connections, 16 MiB input and a 120-second body timeout. The separate probe
+reserve applies only to bodyless GET probes. Capacity rejection returns <code>503</code>
+with <code>PRISM_WORKER_CAPACITY_EXCEEDED</code>; stopping or unsafe work can also return
+<code>503</code>, so inspect the code and retained attempt state before choosing retry.
+Native defaults include 60,000 ms CPU time, 8 GiB memory and 2,048 Linux tasks (processes and threads). CPU time measures
+processor use; it is separate from the request and operation deadlines.
+They do not enlarge the <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/worker/core/worker/native-pool-policy.ts#L17-L30">root-owned native-pool policy</a>. Budget ownership records,
+input/output/result liability, total journal bytes and active scopes separately.
+The host owner must confirm current node/boot/runtime identity and CPU, memory
+and task reservations. Pod CPU and memory measurements alone cannot establish
+those reservations. The <a href="../understand/worker-core.html">native host authority</a>
+and canonical installation access/preparation boundaries remain prerequisites;
+this measurement task does not install or repair a host.</p>
+<blockquote>
+<p><strong>Source evidence — Worker admission</strong></p>
+<p>Claim: HTTP capacity and native attempt/storage capacity are separate fences.
+Implementation: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/worker-lifecycle.ts#L41-L69">request/probe rejection</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/native-worker-execution.ts#L12-L46">native journal and accepted budgets</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/native-worker-node-capacity.mjs#L54-L72">node reservation validation</a>.
+Contract or setting: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/server/worker-config.ts#L17-L29">ingress settings</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/config/native-worker.ts#L25-L35">native policy</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/config/native-worker.ts#L50-L84">supervisor/store limits</a>.
+Test evidence: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/prism/tests/worker-ingress-capacity.test.mts#L21-L55">reserved-probe HTTP test</a> inspected, not executed; we ran no native-host or live admission check for this page.
+Revision: <code>ad312e3e4f15223809fadef90bd90e1f689ce941</code>.
+Limit: source defaults and an HTTP probe do not prove accepted host reservations or successful attempt recovery.</p>
+</blockquote>
+<h4 id="redis-profile-and-diagnostic-horizons">Redis profile and diagnostic horizons</h4>
+<p>The direct Redis values select AOF (append-only persistence), <code>appendfsync always</code>, 1 GiB <code>maxmemory</code>, <code>noeviction</code>, and a 20 GiB PVC. The GitOps values
+select a 2 GiB PVC and 256 MiB Pod memory limit; they do not themselves select
+that direct-profile memory/persistence policy. Record actual applied policy
+instead of assigning the direct default to both profiles. Stream approximate
+<code>MAXLEN</code> and deduplication TTL are separate from server memory and AOF space.
+Expiry or trimming can remove projections even while memory remains available;
+<code>noeviction</code> instead rejects new writes at its memory boundary.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/my-values/infra/redis-values.yaml#L7-L29">Direct Redis selection</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/gitops/platform/values/redis.yaml#L7-L21">GitOps selection</a>
+are the profile authorities. Read the <a href="../understand/telemetry.html#redis-telemetry-adapter">canonical telemetry sink contract</a>
+for stream and deduplication consequences.</p>
+<p>The selected monitoring values request Prometheus retention of 15 days on
+20 GiB and Loki retention of 720 hours on 20 GiB, with a 721-hour query-length
+limit. These requested horizons do not prove that live traffic fits, that all
+logs were collected, or that the oldest required evidence remains queryable.
+Record measured growth and actual oldest/newest results separately.
+<a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/gitops/platform/values/prometheus.yaml#L39-L50">Prometheus settings</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/gitops/platform/values/loki.yaml#L5-L30">Loki settings</a>
+do not govern Nova journals or product-required evidence.</p>
+<h4 id="backup-headroom">Backup headroom</h4>
+<p>Keep separate budgets for live data, completed backup groups, incomplete
+attempts, and an independent destination. Headroom is unused capacity reserved
+for the next operation. Measure both free bytes and inodes; configured byte
+ceilings do not prove actual filesystem space.</p>
+<p>Prism defaults to 80 GiB per group, 90 GiB retained bytes and a one-hour
+operation ceiling. Its allowance is the lesser of the per-group ceiling and
+<code>retained ceiling - current backup-root bytes - 1 MiB</code>. Copy accounting also
+reserves per-object overhead and final metadata. The backup PVC requests
+100 GiB; its storage class follows <code>artifactStorage.storageClass</code> when set,
+otherwise the cluster default. Verify the resulting bound class and usable
+capacity. No complete or incomplete group expires automatically.</p>
+<p>LiteLLM recovery selects a separate 64 GiB dump ceiling, 90 GiB retained ceiling,
+100 GiB PVC and 1,800-second dump timeout. Its allowance subtracts 64 MiB from
+<code>retained ceiling - current backup-root bytes</code> before applying the dump ceiling.
+An interrupted dump remains <code>.incomplete-*</code> and consumes capacity. Neither
+script removes the last completed group to admit the next attempt. Preserve
+failed staging and its error until the owning backup procedure qualifies exact
+cleanup; this page supplies no stage-deletion command.</p>
+<blockquote>
+<p><strong>Source evidence — separate backup liabilities</strong></p>
+<p>Claim: both components retain failed staging and enforce different allowances; neither expires groups automatically.
+Implementation: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/files/prism-backup.sh#L66-L117">Prism allowance and staging</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/postgresql-recovery.sh#L56-L95">LiteLLM allowance and staging</a>.
+Contract or setting: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/values.yaml#L62-L74">Prism ceilings</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/templates/jobs.yaml#L61-L74">Prism claim/class</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/my-values/infra/postgresql-recovery.yaml#L1-L15">LiteLLM policy</a>.
+Test evidence: we ran no backup, restore, copy or cleanup for this page.
+Revision: <code>ad312e3e4f15223809fadef90bd90e1f689ce941</code>.
+Limit: scheduled resources and ceilings do not establish off-node recovery, a measured budget, or an isolated application restore. Use <a href="recovery.html#canonical-backup-and-restore-procedure">canonical recovery</a> for integrity, encryption, credential and original-reader boundaries.</p>
+</blockquote>
+<h4 id="narrow-local-projection-controls">Narrow local projection controls</h4>
+<p>The implementation has the local controls below. They do not implement full
+history or evidence deletion. Their caller is a local operator with filesystem
+access, not an authenticated remote user. An <code>actor</code> or <code>owner</code> field in JSON
+is audit data; it does not grant permission. Before any mutation, the named
+component owner must approve the operator and exact protected roots, and provide
+a versioned procedure that derives real identities and digests from the
+original authorities, holds the listed fences, reads back the retained readers
+and receipt, and distinguishes a committed effect from a pre-mutation failure.
+The CLI source alone does not qualify that procedure. No such complete mutation
+procedure is published on this page. Stop before constructing or applying a
+scope file; keep all data, add capacity or stop admission through the recorded
+owner procedure. Do not infer safe cleanup from age, a glob or terminal status.</p>
+<table>
+<thead>
+<tr>
+<th>Local control and responsible owner</th>
+<th>Eligible copy and actual authority/fences</th>
+<th>Retained readers and limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/retire-telemetry.mjs#L24-L60">Telemetry retirement</a>; observability and Nova owners</td>
+<td>Exact <code>telemetry/plugin-events</code> records for one run; run mutation lock, snapshot/journal heads and inventory checked again inside the durable store writer fence</td>
+<td>Original run logs, effects, decisions, results and continuation remain; store retains tombstones and retirement receipt. No canonical history deletion.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/retire-admission.mjs#L26-L64">Admission completion compaction</a>; observability and Nova owners</td>
+<td>Duplicate completion in the run's admission root; run and attempt-store fence, complete evidence/closure, no missing ranges or unresolved admission, exact record digest</td>
+<td>Original attempt completion/evidence and run readers remain. No raw-ingress or evidence-tree deletion permission.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/retire-attempt-result.mjs#L25-L58">Imported attempt-result compaction</a>; observability and Nova owners</td>
+<td>Duplicate result already durably imported; full current import journal, exact store/result digest, run mutation and import-journal append fences</td>
+<td>Import-backed result reader, full completion/evidence/closure authority and run remain. Corrupt or incomplete later journal tail blocks mutation.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/retire-nova-dispatch.mjs#L75-L94">Nova dispatch projection</a>; Nova/remote-gate owner</td>
+<td>Inline archive copy after original completed import and causal Core decision proof; canonical run, import writer and distinct dispatch writer fences in that order</td>
+<td>Original archive blob, retained source, verified import/result/evidence, decision artifact and dispatch header/receipt remain. No archive-blob deletion.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/retire-operator-request.mjs#L58-L77">Operator request projection</a>; operator-messaging and Nova owners</td>
+<td>Completed JSON human-approval outbound request; canonical run and original wait store, exact effect/receipt and delivery writer checks; original approval/resume/terminal causal sequence required</td>
+<td>Original waits, signals, effects, terminal delivery receipt and projected replay remain. It performs no network lookup and cannot resolve a lost acknowledgement.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/compact-buster-job.mjs#L28-L46">Buster completed-job compaction</a>; Buster and source-repository owners</td>
+<td>Inline source archive only; admission lock, exact payload, completed result with no uncertain cleanup, verified result artifacts and explicitly retained Git tag whose revision/tree/archive bytes match</td>
+<td>Job/status/result/evidence, source attestation, retained Git source and compaction receipt remain. It does not remove a job or its evidence.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — retained authority</strong></p>
+<p>Claim: mutation callbacks check original authorities under writer fences; projection reduces only redundant bytes.
+Implementation: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L137-L176">durable retirement and receipt</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts#L531-L584">attempt/admission source checks</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/buster/engine/test-gates/remote-plan-service.ts#L262-L289">Buster completed result/evidence/source checks</a>.
+Contract or setting: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/buster/engine/test-gates/remote-plan-compaction.ts#L28-L66">Buster retained-source intent</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/common/plugins/operator-messaging/src/delivery-projection.ts#L96-L151">operator projection and receipt binding</a>.
+Original authority: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/observability-retirement/dispatch.mjs#L191-L203">Core dispatch causal proof</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/observability-retirement/operator-authority.mjs#L131-L153">approval/effect/wait causal proof</a>, <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts#L89-L104">import-backed attempt reader</a>.
+Required observations: qualify the selected local projection against its retained readers and reconciled receipts before permitting cleanup.
+Test evidence: no focused test is identified for this claim. Status: source-only; no execution result is asserted.
+Revision: <code>ad312e3e4f15223809fadef90bd90e1f689ce941</code>.
+Limit: closure requires each owner to publish and qualify the exact scope acquisition, operator access, fenced mutation, retained-reader, receipt reconciliation and retry procedure. Keep <a href="../understand/data-and-state.html#deletion-and-retention-rules">data retention rules</a> and <a href="../understand/telemetry.html#retirement">telemetry retirement</a> as the protection boundary until then.</p>
+</blockquote>
+<p>The connected retirement planner explicitly returns <code>executable: false</code> and
+zero released bytes. It reports unproved scope completeness, consumer
+checkpoints, retained archives and an unimplemented safe release operation.
+Its report is inventory evidence, never deletion authorization
+(<a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/scripts/observability-retirement-plan.mjs#L83-L125">planner state and blockers</a>).
+Nova, Buster and observability maintainers own closure: implement the missing
+release authority, prove every retained consumer/reference and execute isolated
+success, rejection, interruption and replay checks before publishing a full
+history/evidence-deletion procedure. Until then retain all connected state.</p>
+<p>The historical reason for these particular capacity defaults is unknown.
+Inference: rejecting admission before resource liability exceeds a limit and
+retaining uncertain attempts preserve the evidence needed for recovery. The
+cost is reserved headroom, growing retained state and operator work when a
+limit is reached. Component owners must reassess sizing when traffic, payloads,
+retention obligations or recovery requirements change; they must qualify new
+limits before enabling more work.</p>
+<h4 id="distinguish-pressure-from-missing-authority">Distinguish pressure from missing authority</h4>
+<p>Use the <a href="diagnose.html#canonical-symptom-diagnosis-procedure">canonical symptom diagnosis</a>
+for the affected service after recording these distinctions:</p>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Distinguishing read-only check</th>
+<th>Safe stop and recovery boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inventory or owner query returns permission denied</td>
+<td>Compare the rejected resource/query and exact scope with the accepted access record</td>
+<td>Stop that measurement. Correct access with its owner; do not label usage zero or switch credentials.</td>
+</tr>
+<tr>
+<td><code>top</code> has no metrics</td>
+<td>Record API/metrics availability separately from Pod state; use the owner's recorded resource method if available</td>
+<td>Leave the reading unavailable until an authorized method exists. Do not install monitoring during this task.</td>
+</tr>
+<tr>
+<td>Prism Worker returns <code>503</code></td>
+<td>Read the error code, current ingress limits and retained attempt/ownership state; distinguish capacity rejection from stopping or unresolved execution</td>
+<td>Keep admission closed for unsafe or uncertain work. Retry a read after capacity recovers; retry work only within its original owner and durable replay policy.</td>
+</tr>
+<tr>
+<td>Backup reports retained-capacity or incomplete-stage failure</td>
+<td>Compare backup-root usage and component allowance with real free bytes/inodes and retained group identity</td>
+<td>Preserve both complete groups and failed staging. Do not repeat a backup until its owner proves capacity, no overlapping operation and the original backup fence.</td>
+</tr>
+<tr>
+<td>Redis write fails</td>
+<td>Owner distinguishes memory/no-eviction rejection, persistence failure, authentication and connectivity through its recorded native read method</td>
+<td>Stop the affected consumer according to observer policy. Fix the observed layer; never flush state or infer a safe replay from Redis readiness.</td>
+</tr>
+<tr>
+<td>Quarantine acquisition is missing or cleanup failed</td>
+<td>Compare exact digest and publication result; keep acquisition I/O error separate from durable publication/activation state</td>
+<td>Reacquire missing temporary bytes only through the bounded product path. Uncertain publication needs original-reader reconciliation before another request; no guessed manual DELETE retry.</td>
+</tr>
+<tr>
+<td>Metrics/log horizon is shorter than required, or sink has gaps</td>
+<td>Compare measured oldest/newest data, collector/checkpoint observations and actual store growth with configured retention</td>
+<td>Preserve canonical events and incident evidence. Owner decides capacity or collection recovery; a longer configured window cannot recreate lost samples.</td>
+</tr>
+<tr>
+<td>Projection control rejects stale digest, reference, fence or receipt</td>
+<td>Compare original authorities and retained readers without changing files</td>
+<td>Retain all copies and the rejection. Stop mutation until the component owner qualifies the missing authority; a terminal run or actor string is insufficient.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-select-a-supported-response">3. Select a supported response</h3>
+<p>Use exactly one response owned by the affected layer:</p>
+<ol>
+<li>Expand the storage through the storage product's procedure, if its class and
+workload support online expansion.</li>
+<li>Move an already verified backup group to an independent destination.</li>
+<li>Stop new admission and drain work before product-native compaction or garbage
+collection.</li>
+<li>Remove a specifically identified temporary object only when its owning
+procedure provides a selector, receipt, and recovery boundary.</li>
+</ol>
+<p>KubeClaw currently provides no general command to delete old Nova runs, Buster
+evidence, Prism revisions, registry layers, Redis data, LiteLLM rows, or
+telemetry history. The narrow local projection controls above do not provide
+that general deletion capability. Age, a filename pattern, and low free space
+are not deletion authority. Stop and escalate when the selected store has no
+qualified cleanup procedure.</p>
+<p>For complete environment removal, use the
+<a href="maintenance.html#canonical-decommission-procedure">canonical decommission procedure</a>,
+not retention cleanup.</p>
+<h3 id="4-verify-and-close">4. Verify and close</h3>
+<p>Repeat read-only measurements only against the unchanged recorded identities,
+selectors, units and windows. If the target changed, restart binding and inventory.
+Repeat the same measurements after the owned response. Expected observation:
+free capacity or forecast time increases, application readers still resolve
+retained data, scheduled backups still complete, and no selected object loses
+its authority or reference.</p>
+<p>Stop admission and use the <a href="diagnose.html#canonical-symptom-diagnosis-procedure">symptom diagnosis procedure</a>
+if usage continues to grow unexpectedly, a reader fails, or deletion effect is
+uncertain. Do not repeat a deletion. Reconcile the product receipt and storage
+state first.</p>
+<h3 id="recovery-cleanup-and-evidence">Recovery, cleanup, and evidence</h3>
+<p>If an expansion or cleanup fails before mutation, retain its error and leave the
+store unchanged. After a confirmed mutation, restore only through the
+<a href="recovery.html#canonical-backup-and-restore-procedure">canonical backup and restore procedure</a>;
+do not copy individual database files back into place.</p>
+<p>Release temporary measurement access through its issuing authority. Remove
+only explicitly identified disposable local files after their evidence is
+retained. Do not remove workload files or a backup staging directory as evidence
+cleanup. Retain the before/after inventory, native measurements, calculation,
+threshold and owner, command output, deletion or expansion receipt, application
+reader result, and any blocked unsupported action. Never retain secret values.</p>
+<h2 id="source-authority">Source Authority</h2>
+<p>Prism's chart bounds one backup and total retained bytes but does not expire old
+groups automatically: <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/templates/backup.yaml#L12-L58">backup job settings</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/charts/prism/files/prism-backup.sh#L66-L84">retained-capacity enforcement</a>.
+Nova's evidence reader rejects an unresolved effect rather than treating it as
+cache (<a href="https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/skills/nova/core/state/read-run-evidence.ts#L68-L95">implementation</a>).</p>
+</main></body></html>

@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/plugin-catalogue/kubeclaw.security-providers.html"></head><body><main>
+<h1 id="kubeclawsecurity-providers">kubeclaw.security-providers</h1>
+<p>Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/plugin.json">skills/buster/plugins/security-providers/plugin.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/README.md">skills/buster/plugins/security-providers/README.md</a>
+Applies to: pipeline-plugin-v2; package 1.0.0
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.</p>
+<h2 id="purpose">Purpose</h2>
+<p>Run HTTP, dependency, image, policy, and runtime security checks in Buster.</p>
+<h2 id="when-to-use-it">When To Use It</h2>
+<p>Use it when a test plan needs one of the five declared security contracts.</p>
+<h2 id="when-not-to-use-it">When Not To Use It</h2>
+<p>Do not treat one provider result as a complete security assessment.</p>
+<h2 id="most-important-limit">Most Important Limit</h2>
+<p>Each provider covers a separate evidence source and execution environment.</p>
+<p>The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/README.md">Package guide</a></li>
+<li><a href="../contracts.html">Shared extension contracts</a></li>
+<li><a href="../testing.html#use-a-proof-ladder">Proof and failure exercises</a></li>
+<li><a href="../testing.html#install-and-activate-by-surface">Install and activate</a></li>
+<li><a href="../testing.html#update-or-replace">Update or replace</a></li>
+<li><a href="../testing.html#disable-safely">Disable safely</a></li>
+<li><a href="../testing.html#remove-and-inspect-remaining-state">Remove and inspect remaining state</a></li>
+<li><a href="../host-and-engine.html">Host and engine boundaries</a></li>
+</ul>
+<h2 id="package-reference">Package Reference</h2>
+<ul>
+<li>Host: <code>pipeline-runtime</code>.</li>
+<li>Package identity: <code>kubeclaw.security-providers@1.0.0</code>.</li>
+<li>Runtime-role manifest inclusion: <code>buster</code></li>
+<li>Manifest: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json">skills/buster/plugins/security-providers/plugin.json</a></li>
+</ul>
+<h2 id="boundaries">Boundaries</h2>
+<ul>
+<li>The manifest declares extension identity and requested authority.</li>
+<li>Nova and Buster apply the selection rules for each declared surface.</li>
+<li>Platform grants or resolved plans supply authority separately from package code.</li>
+<li>Pipeline Core keeps canonical lifecycle authority.</li>
+<li>The package cannot use undeclared capabilities.</li>
+</ul>
+<h2 id="registration-summary">Registration Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>ID</th>
+<th>Public contract or type</th>
+<th>Module</th>
+<th>Export</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test provider</td>
+<td><code>headers</code></td>
+<td><code>kubeclaw.security-headers@1</code></td>
+<td><code>src/headers.js</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td>test provider</td>
+<td><code>dependency-trivy</code></td>
+<td><code>kubeclaw.dependency-scan-trivy@1</code></td>
+<td><code>src/dependency.js</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td>test provider</td>
+<td><code>image-trivy</code></td>
+<td><code>kubeclaw.image-scan-trivy@1</code></td>
+<td><code>src/image.js</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td>test provider</td>
+<td><code>kubernetes-policy</code></td>
+<td><code>kubeclaw.kubernetes-policy-security@1</code></td>
+<td><code>src/kubernetes-policy.js</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td>test provider</td>
+<td><code>kubernetes-runtime</code></td>
+<td><code>kubeclaw.kubernetes-runtime-security@1</code></td>
+<td><code>src/kubernetes-runtime.js</code></td>
+<td><code>provider</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="test-provider-headers">test provider: headers</h2>
+<p>Public identifier: <code>kubeclaw.security-headers@1</code>.
+Global registration ID: <code>kubeclaw.security-providers:headers</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>network.http</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/schemas/headers.schema.json">schemas/headers.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>profile</code> (enumeration; required; allowed <code>[&quot;web-https-v1&quot;,&quot;api-http-v1&quot;]</code>)</li>
+<li><code>paths</code> (array; required; minItems <code>1</code>; maxItems <code>32</code>)</li>
+<li><code>requestTimeoutMs</code> (integer; optional; minimum <code>1</code>; maximum <code>300000</code>)</li>
+<li><code>rules</code> (object; optional)</li>
+<li><code>policy</code> (referenced schema; required; reference <code>#/$defs/policy</code>)</li>
+</ul>
+<p>Input schema: No package-specific inputSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Result schema: No package-specific resultSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>headers</code></td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td><code>kubeclaw.security-headers@1</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/headers.js</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/headers.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputs</code></td>
+<td><code>[{&quot;name&quot;:&quot;deployment&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;required&quot;:true,&quot;schemaId&quot;:&quot;kubeclaw.kubernetes-deployment-fixture@1&quot;}]</code></td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;network.http&quot;]</code></td>
+</tr>
+<tr>
+<td><code>retrySafe</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>matrixFields</code></td>
+<td><code>[&quot;path&quot;]</code></td>
+</tr>
+<tr>
+<td><code>reportFormats</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>evidenceTypes</code></td>
+<td><code>[&quot;log&quot;]</code></td>
+</tr>
+<tr>
+<td><code>evidenceDefaults</code></td>
+<td><code>{&quot;onPass&quot;:[&quot;log&quot;],&quot;onFail&quot;:[&quot;log&quot;],&quot;onError&quot;:[&quot;log&quot;]}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inputs:</p>
+<ul>
+<li><code>deployment</code>: value; required.</li>
+</ul>
+<h2 id="test-provider-dependency-trivy">test provider: dependency-trivy</h2>
+<p>Public identifier: <code>kubeclaw.dependency-scan-trivy@1</code>.
+Global registration ID: <code>kubeclaw.security-providers:dependency-trivy</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>security.scan</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/schemas/dependency.schema.json">schemas/dependency.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>projectDirectory</code> (string; required; minLength <code>1</code>; maxLength <code>4096</code>)</li>
+<li><code>timeoutMs</code> (integer; optional; minimum <code>1000</code>; maximum <code>900000</code>)</li>
+<li><code>policy</code> (referenced schema; required; reference <code>#/$defs/policy</code>)</li>
+</ul>
+<p>Input schema: No package-specific inputSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Result schema: No package-specific resultSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>dependency-trivy</code></td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td><code>kubeclaw.dependency-scan-trivy@1</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/dependency.js</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/dependency.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputs</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;security.scan&quot;]</code></td>
+</tr>
+<tr>
+<td><code>retrySafe</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>matrixFields</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>reportFormats</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>evidenceTypes</code></td>
+<td><code>[&quot;log&quot;]</code></td>
+</tr>
+<tr>
+<td><code>evidenceDefaults</code></td>
+<td><code>{&quot;onPass&quot;:[&quot;log&quot;],&quot;onFail&quot;:[&quot;log&quot;],&quot;onError&quot;:[&quot;log&quot;]}</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="test-provider-image-trivy">test provider: image-trivy</h2>
+<p>Public identifier: <code>kubeclaw.image-scan-trivy@1</code>.
+Global registration ID: <code>kubeclaw.security-providers:image-trivy</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>security.scan</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/schemas/image.schema.json">schemas/image.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>timeoutMs</code> (integer; optional; minimum <code>1000</code>; maximum <code>900000</code>)</li>
+<li><code>policy</code> (referenced schema; required; reference <code>#/$defs/policy</code>)</li>
+</ul>
+<p>Input schema: No package-specific inputSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Result schema: No package-specific resultSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>image-trivy</code></td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td><code>kubeclaw.image-scan-trivy@1</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/image.js</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/image.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputs</code></td>
+<td><code>[{&quot;name&quot;:&quot;image&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;required&quot;:true,&quot;schemaId&quot;:&quot;kubeclaw.container-image@1&quot;}]</code></td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;security.scan&quot;]</code></td>
+</tr>
+<tr>
+<td><code>retrySafe</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>matrixFields</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>reportFormats</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>evidenceTypes</code></td>
+<td><code>[&quot;log&quot;]</code></td>
+</tr>
+<tr>
+<td><code>evidenceDefaults</code></td>
+<td><code>{&quot;onPass&quot;:[&quot;log&quot;],&quot;onFail&quot;:[&quot;log&quot;],&quot;onError&quot;:[&quot;log&quot;]}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inputs:</p>
+<ul>
+<li><code>image</code>: value; required.</li>
+</ul>
+<h2 id="test-provider-kubernetes-policy">test provider: kubernetes-policy</h2>
+<p>Public identifier: <code>kubeclaw.kubernetes-policy-security@1</code>.
+Global registration ID: <code>kubeclaw.security-providers:kubernetes-policy</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>security.scan</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json">schemas/kubernetes-policy.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>timeoutMs</code> (integer; optional; minimum <code>1000</code>; maximum <code>300000</code>)</li>
+<li><code>policy</code> (referenced schema; required; reference <code>#/$defs/policy</code>)</li>
+</ul>
+<p>Input schema: No package-specific inputSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Result schema: No package-specific resultSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>kubernetes-policy</code></td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td><code>kubeclaw.kubernetes-policy-security@1</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/kubernetes-policy.js</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/kubernetes-policy.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputs</code></td>
+<td><code>[{&quot;name&quot;:&quot;checked-manifest&quot;,&quot;kind&quot;:&quot;artifact&quot;,&quot;required&quot;:true,&quot;mediaTypes&quot;:[&quot;application/vnd.kubeclaw.checked-kubernetes-yaml&quot;]}]</code></td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;security.scan&quot;]</code></td>
+</tr>
+<tr>
+<td><code>retrySafe</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>matrixFields</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>reportFormats</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>evidenceTypes</code></td>
+<td><code>[&quot;log&quot;]</code></td>
+</tr>
+<tr>
+<td><code>evidenceDefaults</code></td>
+<td><code>{&quot;onPass&quot;:[&quot;log&quot;],&quot;onFail&quot;:[&quot;log&quot;],&quot;onError&quot;:[&quot;log&quot;]}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inputs:</p>
+<ul>
+<li><code>checked-manifest</code>: artifact; required.</li>
+</ul>
+<h2 id="test-provider-kubernetes-runtime">test provider: kubernetes-runtime</h2>
+<p>Public identifier: <code>kubeclaw.kubernetes-runtime-security@1</code>.
+Global registration ID: <code>kubeclaw.security-providers:kubernetes-runtime</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>kubernetes.runtime-security</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json">schemas/kubernetes-runtime.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>timeoutMs</code> (integer; optional; minimum <code>1000</code>; maximum <code>300000</code>)</li>
+<li><code>policy</code> (referenced schema; required; reference <code>#/$defs/policy</code>)</li>
+</ul>
+<p>Input schema: No package-specific inputSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Result schema: No package-specific resultSchema field. Use the <a href="../contracts.html#data-and-authority-comparison">shared runtime data contract</a>.</p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>kubernetes-runtime</code></td>
+</tr>
+<tr>
+<td><code>contractId</code></td>
+<td><code>kubeclaw.kubernetes-runtime-security@1</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/kubernetes-runtime.js</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>provider</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/kubernetes-runtime.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputs</code></td>
+<td><code>[{&quot;name&quot;:&quot;deployment&quot;,&quot;kind&quot;:&quot;value&quot;,&quot;required&quot;:true,&quot;schemaId&quot;:&quot;kubeclaw.kubernetes-deployment-fixture@1&quot;},{&quot;name&quot;:&quot;checked-manifest&quot;,&quot;kind&quot;:&quot;artifact&quot;,&quot;required&quot;:true,&quot;mediaTypes&quot;:[&quot;application/vnd.kubeclaw.checked-kubernetes-yaml&quot;]}]</code></td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;kubernetes.runtime-security&quot;]</code></td>
+</tr>
+<tr>
+<td><code>retrySafe</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>matrixFields</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>reportFormats</code></td>
+<td>Empty list.</td>
+</tr>
+<tr>
+<td><code>evidenceTypes</code></td>
+<td><code>[&quot;log&quot;]</code></td>
+</tr>
+<tr>
+<td><code>evidenceDefaults</code></td>
+<td><code>{&quot;onPass&quot;:[&quot;log&quot;],&quot;onFail&quot;:[&quot;log&quot;],&quot;onError&quot;:[&quot;log&quot;]}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inputs:</p>
+<ul>
+<li><code>deployment</code>: value; required.</li>
+<li><code>checked-manifest</code>: artifact; required.</li>
+</ul>
+<h2 id="failure-behavior">Failure Behavior</h2>
+<p>Each security registration has its own inputs and capability. Unknown rules and malformed capability results fail validation. Trivy tests require a usable local vulnerability database; no database means no vulnerability verdict.</p>
+<p>Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the <a href="../../use/plugins.html#3-activate-and-prove-health">startup stop rules</a>.</p>
+<h2 id="package-checks">Package Checks</h2>
+<p>Recorded local command result on 2026-09-16: <code>unavailable</code>.</p>
+<p>The command requires a real Trivy cache and executable, which are absent on this host.</p>
+<p>Run the package command:</p>
+<pre><code class="language-bash">npm test --prefix skills/buster/plugins/security-providers
+</code></pre>
+<p>Package test files found: 2. This is file discovery, not an executed test count.</p>
+<p>Exact package test script (run from the package directory):</p>
+<pre><code class="language-text">node --test tests/live-function.test.ts tests/database-freshness.test.mts
+</code></pre>
+<p>Local package checks do not prove live host or cluster readiness.
+The result above states the exact local limit. Run the package command in the target environment before activation.</p>
+<h2 id="source-evidence">Source Evidence</h2>
+<ul>
+<li>Manifest: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json">skills/buster/plugins/security-providers/plugin.json</a></li>
+<li>Package implementation guide: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/README.md">skills/buster/plugins/security-providers/README.md</a></li>
+<li>Module for <code>headers</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/src/headers.js">src/headers.js</a></li>
+<li>Module for <code>dependency-trivy</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/src/dependency.js">src/dependency.js</a></li>
+<li>Module for <code>image-trivy</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/src/image.js">src/image.js</a></li>
+<li>Module for <code>kubernetes-policy</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/src/kubernetes-policy.js">src/kubernetes-policy.js</a></li>
+<li>Module for <code>kubernetes-runtime</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/src/kubernetes-runtime.js">src/kubernetes-runtime.js</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/tests/database-freshness.test.mts">skills/buster/plugins/security-providers/tests/database-freshness.test.mts</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/tests/live-function.test.ts">skills/buster/plugins/security-providers/tests/live-function.test.ts</a></li>
+</ul>
+</main></body></html>

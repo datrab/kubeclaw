@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/security-and-trust.html"></head><body><main>
+<h1 id="security-and-trust">Security and Trust</h1>
+<p>Status: implemented in parts; live enforcement and acceptance remain environment-specific
+Audience: operator, security reviewer, architecture reader, maintainer
+Owner: platform security and runtime maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/my-values/infra/spire-values.yaml">my-values/infra/spire-values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/configmap-worker-trust.yaml">charts/kubeclaw/templates/configmap-worker-trust.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/networkpolicy.yaml">charts/prism/templates/networkpolicy.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/authorization.ts">skills/nova/core/execution/authorization.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/my-values/setup-secrets.sh">my-values/setup-secrets.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/source-snapshot.ts">skills/nova/core/test-gates/source-snapshot.ts</a>
+Evidence revision: <code>13bff0a18a64e74f2cbbaa1978e746fcdeff0c10</code>
+Applies to: the current supported release and its documented lab deployment
+Last verified: 2026-09-20</p>
+<h2 id="purpose">Purpose</h2>
+<p>KubeClaw runs code, reads repositories, starts test workloads, and stores evidence.
+These actions cross several trust boundaries.
+This page explains how the system identifies callers, limits authority, protects traffic, handles secrets, and verifies software inputs.</p>
+<p>The design does not depend on one security control.
+It uses several smaller controls because each control answers a different question.
+A network rule answers where a packet can travel.
+A workload certificate answers which workload connected.
+A capability grant answers which operation a plugin can request.
+A digest answers whether bytes changed.
+None of these answers all four questions.</p>
+<p>This page describes the implemented controls and their limits.
+It does not claim that a rendered manifest proves enforcement in a live cluster.</p>
+<h2 id="evidence-classes">Evidence Classes</h2>
+<p>Use the evidence class before you make a security claim.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>What it establishes</th>
+<th>What it does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source</td>
+<td>A checked function, schema, template, or values file contains a rule at the pinned revision</td>
+<td>That Helm selected the rule or that a cluster enforces it</td>
+</tr>
+<tr>
+<td>Render</td>
+<td>The supported renderer produced a Kubernetes object and effective field values for one input set</td>
+<td>That the API server admitted it, the CNI enforces it, or a Pod uses it</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>A named cluster, namespace, workload identity, request, and negative request produced retained observations</td>
+<td>Enforcement in another cluster, after configuration drift, or beyond the tested path</td>
+</tr>
+</tbody>
+</table>
+<p>Unit and contract tests are source-level execution evidence. Image inspection is
+target-image evidence. Neither is live cluster evidence. A live positive request
+alone is also insufficient: the corresponding wrong identity, missing grant, or
+denied network path must fail at the intended boundary.</p>
+<p>The source links on this page establish source behavior only. Repository render
+checks establish selected object structure. This page has no stored live result
+for SPIFFE issuance, CNI enforcement, Tailscale ACLs, Secret rotation, registry
+authentication, or an adversarial supply-chain path.</p>
+<h2 id="security-goals-and-assumptions">Security Goals and Assumptions</h2>
+<p>The current design has these goals:</p>
+<ul>
+<li>A worker accepts requests only from an explicitly allowed workload identity.</li>
+<li>A plugin receives only the capabilities and resource ranges that its stage lease grants.</li>
+<li>A network path stays closed unless a policy names its caller, destination, and port.</li>
+<li>Buster executes the exact committed source archive that Nova signed.</li>
+<li>Stored records and artifacts keep stable identities so that recovery does not depend on a mutable name.</li>
+<li>Secret values do not enter the repository or ordinary documentation.</li>
+<li>An optional operations tool does not silently become pipeline authority.</li>
+</ul>
+<p>The design assumes that the Kubernetes control plane, the node operating system, and the SPIRE server are trusted administrative systems.
+An administrator who controls these systems can replace workloads, policies, or identity material.
+KubeClaw reduces application-level authority; it does not protect a cluster from its own administrator.</p>
+<p>The design also assumes that operators protect signing keys, backup media, registry credentials, and external provider credentials.
+Kubernetes Secrets are an access boundary, but they are not a hardware security module.</p>
+<h2 id="trust-boundary-map">Trust Boundary Map</h2>
+<pre><code class="language-mermaid">flowchart LR
+    Human[Human operator or user] --&gt;|application identity or kubectl authority| Entry[Operator or application entry]
+    Entry --&gt;|bounded request| Nova[Nova]
+    Nova --&gt;|SPIFFE mTLS and signed source| Buster[Buster]
+    Nova --&gt;|SPIFFE mTLS| Prism[Prism]
+    Control[Prism Control] --&gt;|SPIFFE mTLS| Worker[Prism Worker]
+    Nova --&gt;|leased capability| Adapter[Capability adapter]
+    Adapter --&gt;|named secret only| Secret[(Kubernetes Secret)]
+    Adapter --&gt;|allowed namespace| Store[(Durable store)]
+    Build[BuildKit] --&gt;|content digest| Registry[(OCI registry)]
+    Registry --&gt;|pinned image| Workload[Runtime workload]
+    SPIRE[SPIRE] --&gt;|short-lived X.509-SVID| Nova
+    SPIRE --&gt;|short-lived X.509-SVID| Buster
+    SPIRE --&gt;|short-lived X.509-SVID| Prism
+    Policy[Network policy] -. limits packet paths .-&gt; Nova
+    Policy -. limits packet paths .-&gt; Buster
+    Policy -. limits packet paths .-&gt; Prism
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human operator or user</td>
+<td>Directed connection — application identity or kubectl authority</td>
+<td>Operator or application entry</td>
+</tr>
+<tr>
+<td>Operator or application entry</td>
+<td>Directed connection — bounded request</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — SPIFFE mTLS and signed source</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — SPIFFE mTLS</td>
+<td>Prism</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — SPIFFE mTLS</td>
+<td>Prism Worker</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Directed connection — leased capability</td>
+<td>Capability adapter</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>Directed connection — named secret only</td>
+<td>Kubernetes Secret</td>
+</tr>
+<tr>
+<td>Capability adapter</td>
+<td>Directed connection — allowed namespace</td>
+<td>Durable store</td>
+</tr>
+<tr>
+<td>BuildKit</td>
+<td>Directed connection — content digest</td>
+<td>OCI registry</td>
+</tr>
+<tr>
+<td>OCI registry</td>
+<td>Directed connection — pinned image</td>
+<td>Runtime workload</td>
+</tr>
+<tr>
+<td>SPIRE</td>
+<td>Directed connection — short-lived X.509-SVID</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>SPIRE</td>
+<td>Directed connection — short-lived X.509-SVID</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>SPIRE</td>
+<td>Directed connection — short-lived X.509-SVID</td>
+<td>Prism</td>
+</tr>
+<tr>
+<td>Network policy</td>
+<td>Dotted relationship — limits packet paths</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>Network policy</td>
+<td>Dotted relationship — limits packet paths</td>
+<td>Buster</td>
+</tr>
+<tr>
+<td>Network policy</td>
+<td>Dotted relationship — limits packet paths</td>
+<td>Prism</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: humans enter through an operator or application boundary. Nova delegates work through explicit leases. Protected worker calls use SPIFFE mutual TLS. The Nova-to-Buster path also carries a signed, immutable source snapshot. Capability adapters mediate access to secrets and durable stores. BuildKit sends content to a registry, and deployments select immutable image identities. Network policy limits which of these paths packets can use.</p>
+<h2 id="one-request-passes-several-independent-checks">One Request Passes Several Independent Checks</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Control</th>
+<th>Rejected condition</th>
+<th>Why the control is separate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Which workload connected?</td>
+<td>SPIRE X.509-SVID and Envoy mutual TLS</td>
+<td>Missing certificate, untrusted trust domain, or wrong URI SAN</td>
+<td>An IP address is not a stable identity.</td>
+</tr>
+<tr>
+<td>Did the request come through the trusted proxy?</td>
+<td>Worker Core loopback check</td>
+<td>The identity header comes from a non-loopback peer</td>
+<td>An application header alone is easy to forge.</td>
+</tr>
+<tr>
+<td>May this workload call this worker?</td>
+<td>Exact SPIFFE-ID allowlist</td>
+<td>The verified identity is not an allowed peer</td>
+<td>A valid platform identity does not grant access to every service.</td>
+</tr>
+<tr>
+<td>May this plugin request this operation?</td>
+<td>Revocable lease and capability constraints</td>
+<td>The capability, path, namespace, name, origin, or executable is outside the grant</td>
+<td>Workload identity is broader than one plugin attempt.</td>
+</tr>
+<tr>
+<td>Can the packet reach the port?</td>
+<td>Default-deny and allow policies</td>
+<td>No policy selects the path</td>
+<td>Authentication should not make every service reachable.</td>
+</tr>
+<tr>
+<td>Are these the intended bytes?</td>
+<td>Git identity, signature, and content digest</td>
+<td>Revision, signature, archive digest, plan digest, or request digest differs</td>
+<td>Caller identity does not prove content identity.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — application authorization</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/trust.ts#L17-L52">Worker Core requires a loopback proxy, parses one SPIFFE URI, and checks an exact allowlist</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79">Nova denies missing capabilities and checks every invocation against its lease</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/authorization.ts#L39-L98">Capability authorization limits paths, namespaces, secret names, agents, and
+network origins</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/authorization.ts#L99-L130">It also constrains executable, telemetry, wait, and operator resources</a>.</p>
+</blockquote>
+<h2 id="identity-types-must-not-be-confused">Identity Types Must Not Be Confused</h2>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Subject</th>
+<th>Used for</th>
+<th>Not used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human application identity</td>
+<td>A person or external client</td>
+<td>Sign-in, application roles, and product actions when that integration is enabled</td>
+<td>Workload-to-workload authentication</td>
+</tr>
+<tr>
+<td>Tailscale identity headers</td>
+<td>A tailnet user/device presented by the owning ingress proxy</td>
+<td>Prism Studio ingress exchange after source-proxy and shared-secret checks</td>
+<td>Kubernetes API identity, SPIFFE identity, or independent proof without the trusted ingress</td>
+</tr>
+<tr>
+<td>Kubernetes ServiceAccount</td>
+<td>A pod workload</td>
+<td>Kubernetes API authorization and the input to SPIRE workload selection</td>
+<td>Human sign-in or source integrity</td>
+</tr>
+<tr>
+<td>Projected ServiceAccount token</td>
+<td>One Pod and audience for a bounded period</td>
+<td>Kubernetes API or product-decision controller calls that explicitly mount it</td>
+<td>General Pod identity on services that do not validate that token</td>
+</tr>
+<tr>
+<td>SPIFFE ID</td>
+<td>A running workload</td>
+<td>Mutual TLS peer identity on protected internal routes</td>
+<td>Long-term artifact signing</td>
+</tr>
+<tr>
+<td>Gateway bearer token</td>
+<td>One OpenClaw gateway client path</td>
+<td>HTTP/WebSocket gateway authentication for the configured agent</td>
+<td>Plugin capability, Kubernetes access, or source approval</td>
+</tr>
+<tr>
+<td>Buster plan bearer token</td>
+<td>Nova remote-plan client</td>
+<td>Buster plan HTTP authentication when SPIFFE-proxy mode is not selected</td>
+<td>Signed source provenance or permission to execute arbitrary plans</td>
+</tr>
+<tr>
+<td>Prism shared HMAC secrets</td>
+<td>Studio, Control, Worker, or ingestion caller on the configured fallback path</td>
+<td>Body/session/ingress/dispatch authentication where the chart enables it</td>
+<td>SPIFFE peer identity; production values can select SPIFFE instead</td>
+</tr>
+<tr>
+<td>Stage lease</td>
+<td>One plugin attempt</td>
+<td>Capability names and resource constraints</td>
+<td>Network encryption or Kubernetes RBAC</td>
+</tr>
+<tr>
+<td>Ed25519 source authority</td>
+<td>Nova source-snapshot signer</td>
+<td>Nova-to-Buster committed-source provenance</td>
+<td>General image signing or human identity</td>
+</tr>
+<tr>
+<td>Ed25519 product-decision authority</td>
+<td>Configured Prism Control signer</td>
+<td>Short-lived accepted product-decision envelope</td>
+<td>Source, image, or transport identity</td>
+</tr>
+<tr>
+<td>Registry credential</td>
+<td>BuildKit, runtime, or node client</td>
+<td>OCI push/pull at one configured HTTPS registry</td>
+<td>Authorization for an anonymous HTTP lab registry or image safety</td>
+</tr>
+<tr>
+<td>Git revision and tree</td>
+<td>A committed source state</td>
+<td>Selecting exact source bytes</td>
+<td>Proving who approved or deployed those bytes</td>
+</tr>
+<tr>
+<td>SHA-256 digest</td>
+<td>An archive, request, plan, artifact, package, or image</td>
+<td>Change detection and immutable references</td>
+<td>Proving that the content is safe</td>
+</tr>
+</tbody>
+</table>
+<p>Human identity is intentionally separate from workload identity.
+An application identity provider can authenticate a person, but it does not issue the SPIFFE certificate used by a worker route.
+The current repository contains integration settings for application identity where a component uses them.
+This page does not claim that one identity provider is required for every deployment.</p>
+<p>The implemented Prism Studio path uses Tailscale identity headers at its trusted ingress boundary.
+Studio adds a shared ingress secret when it forwards the request to Control.
+Control requires both that secret and a non-empty Tailscale login before it creates a local Prism session.
+The session contains the user, the <code>prism</code> audience, roles, and a 15-minute expiry, and an HMAC protects its payload.
+The browser receives the session in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Strict</code> cookie.
+A second cookie and request header implement the CSRF check for state-changing requests.</p>
+<p>Product acceptance adds another authorization check.
+The session user must appear in the explicit product-operator allowlist.
+The request origin and CSRF value must match, and a dedicated Ed25519 key signs the short-lived decision envelope.
+Thus, sign-in does not by itself grant product-acceptance authority.
+Changing the allowlist, ingress secret, session secret, or decision key needs a coordinated restart and a new positive and negative acceptance check.
+The current session format does not include an automatic multi-key overlap mechanism.</p>
+<blockquote>
+<p><strong>Source evidence — current human session path</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/session.ts#L1-L20">Prism exchanges a trusted Tailscale ingress identity for a 15-minute HMAC session</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L108-L122">Control checks the session and CSRF value</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L152-L172">It creates protected cookies only through the ingress exchange</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/product-decisions.ts#L20-L43">Product decisions require an explicit operator, origin and CSRF checks, and a dedicated Ed25519 signing key</a>.</p>
+</blockquote>
+<p>The KubeClaw chart disables automatic ServiceAccount token mounting by default.
+The selected Nova values enable token mounting, the namespace lease client, and verification reads.
+Nova can request namespace leases and read the configured verification resources.
+These permissions do not grant the namespace controller's workload-management authority.
+SPIRE uses the namespace and ServiceAccount name to derive the workload identity.</p>
+<blockquote>
+<p><strong>Source evidence — workload identity</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/spire-values.yaml#L25-L40">SPIRE selects labeled workloads and derives the SPIFFE ID from namespace and ServiceAccount</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/serviceaccount.yaml#L1-L10">The KubeClaw ServiceAccount disables automatic token mounting by default</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L76-L85">The selected Nova values enable token mounting and verification reads</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L16-L29">The lease-client Role permits lease operations and Deployment and Service reads</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L57-L65">Verification adds Pod reads and access to the named Tailscale IngressClass</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L80-L96">A separate Role permits GET for only the configured OAuth Secret in the configured operator namespace</a>.</p>
+</blockquote>
+<p>Treat code that can read the mounted token as holding these Kubernetes rights.
+A plugin capability grant limits its configured adapter; it does not remove rights from the ServiceAccount token.</p>
+<h2 id="spiffe-spire-envoy-and-worker-core">SPIFFE, SPIRE, Envoy, and Worker Core</h2>
+<p>The trust domain is <code>kubeclaw.internal</code>.
+An identity has this form: <code>spiffe://kubeclaw.internal/ns/&lt;namespace&gt;/sa/&lt;service-account&gt;</code>.
+SPIRE attests the Kubernetes workload and supplies a short-lived X.509-SVID through the CSI and Workload API path.
+The application does not read a long-lived private key from a configuration value.</p>
+<p>Envoy is the transport boundary.
+The calling application sends plain HTTP to a loopback listener.
+The caller-side Envoy obtains its certificate through SDS and opens a mutual TLS connection.
+The destination Envoy requires a client certificate, checks the exact URI SAN, replaces untrusted forwarded-certificate data, and sends verified identity data to the local application.
+Worker Core then accepts that identity header only from loopback and checks its own allowlist.</p>
+<p>This duplication is intentional.
+Envoy rejects an invalid certificate before the request reaches the application.
+Worker Core prevents a direct pod-network caller from supplying a forged identity header.</p>
+<p>The configured peer relationships include these paths:</p>
+<table>
+<thead>
+<tr>
+<th>Caller</th>
+<th>Destination</th>
+<th>Transport identity result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova</td>
+<td>Buster plan service</td>
+<td>Buster accepts only the configured Nova ServiceAccount identity.</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Prism agent</td>
+<td>Prism accepts the configured Nova identity.</td>
+</tr>
+<tr>
+<td>Prism Control and test runner</td>
+<td>Prism agent</td>
+<td>Prism accepts only the named Control and test-runner identities.</td>
+</tr>
+<tr>
+<td>Prism agent</td>
+<td>Prism Control</td>
+<td>The agent verifies the Control identity.</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Prism Worker</td>
+<td>The Worker verifies the Control identity.</td>
+</tr>
+<tr>
+<td>Prism Worker</td>
+<td>Prism Control</td>
+<td>Control verifies the Worker identity.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — proxy peer policy</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L14-L73">The shared worker-trust template defines protected listeners and exact URI SAN
+matching</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L138-L197">Its downstream transport uses SDS and replaces forwarded certificate identity</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L24-L59">The Prism policies select the same application callers and protected ports</a>.</p>
+</blockquote>
+<h3 id="rotation-and-failure-behavior">Rotation and failure behavior</h3>
+<p>SPIRE controls SVID issuance and rotation.
+Envoy receives updates through SDS, so applications do not need a restart for each normal certificate rotation.
+If SPIRE, its CSI path, the Workload API socket, SDS, or peer validation is unavailable, the protected route fails closed.
+The correct recovery action is to restore the identity path and verify the expected peer identity.
+It is not to disable certificate validation or accept a wider identity.</p>
+<p>A Helm render proves that the listener and peer policy are syntactically present.
+Unit tests prove parser and authorization behavior.
+Only a live negative-path test proves that the cluster rejects a missing certificate, a wrong SVID, and a forged forwarded-certificate header.</p>
+<h2 id="secrets-ownership-resolution-and-recovery">Secrets: Ownership, Resolution, and Recovery</h2>
+<p>The operator owns secret creation, copying, rotation, and revocation.
+The application owns only the use of a secret key that its workload or capability grant names.
+This split prevents a plugin from turning a general secret store into an unbounded lookup service.</p>
+<p>The generated <a href="../reference/secrets.html">Secret Inventory</a> is the authoritative
+list for the shared setup helper. It is not the complete deployment Secret
+inventory. Prism, Grafana, Archviewer, code-bundle, product-decision, registry,
+and Ops inputs have separate owners and are included below.
+Do not duplicate secret values in documentation, values files, logs, test fixtures, or support bundles.</p>
+<table>
+<thead>
+<tr>
+<th>Secret or reference</th>
+<th>Keys or material</th>
+<th>Producer and consumers</th>
+<th>Rotation, loss, and least authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openclaw-shared-secrets</code></td>
+<td>Per-role gateway tokens, Buster v2 token, Stitch, Discord, webhook, and LiteLLM client keys</td>
+<td>Setup helper creates or copies it; selected agent gateways and adapters read named keys</td>
+<td>Rotate by key and restart each consumer. Sharing one Secret object increases blast radius. A consumer must mount/reference only its named key.</td>
+</tr>
+<tr>
+<td><code>pipeline-test-gate-source-attestation</code></td>
+<td>Ed25519 private and public keys</td>
+<td>Setup helper creates/copies; Nova reads private, Buster reads public</td>
+<td>Coordinate public trust before private signing. Retained jobs can require the old public key. Loss of private key prevents new dispatch; loss of retained public key can block verification.</td>
+</tr>
+<tr>
+<td><code>redis-secrets</code></td>
+<td><code>redis-password</code></td>
+<td>Setup helper and Redis chart; configured publishers/consumers read it</td>
+<td>Rotate Redis and every client together. The password does not authorize Nova lifecycle state.</td>
+</tr>
+<tr>
+<td><code>postgresql-secrets</code> and <code>litellm-secrets</code></td>
+<td>PostgreSQL administrator/application passwords and URL; LiteLLM master key and <code>DATABASE_URL</code></td>
+<td>Setup helper creates/copies; PostgreSQL and LiteLLM consume</td>
+<td>Database dump does not contain these usable credentials. Retain the LiteLLM master/salt authority needed for encrypted fields. Rotation needs database-side change plus Pod restart.</td>
+</tr>
+<tr>
+<td><code>google-sa-key</code></td>
+<td><code>credentials.json</code></td>
+<td>Operator/setup helper supplies; LiteLLM mounts read-only</td>
+<td>Revoke in Google, replace the Secret, and restart LiteLLM. Deleting only the Secret does not revoke the upstream account.</td>
+</tr>
+<tr>
+<td><code>ghcr-secret</code></td>
+<td>Docker config JSON</td>
+<td>Operator/setup helper supplies; image pullers use it</td>
+<td>Scope to read-only repositories where possible. Rotate/revoke at GHCR and replace every namespace copy. It is not an application credential.</td>
+</tr>
+<tr>
+<td><code>git-deploy-key-nova</code>, <code>git-deploy-key-buster</code></td>
+<td><code>id_rsa</code></td>
+<td>Operator/setup helper supplies; each role's Git init uses its own key</td>
+<td>Prefer repository-scoped read-only keys. Revoke upstream and replace one role at a time. Git history remains separate authority.</td>
+</tr>
+<tr>
+<td><code>operator-oauth</code></td>
+<td>Tailscale OAuth <code>client_id</code>, <code>client_secret</code></td>
+<td>Operator supplies in the Tailscale namespace; official operator consumes</td>
+<td>Use tag-scoped OAuth authority. Rotate in Tailscale and restart/reconcile the operator. Existing devices/routes can remain and need separate revocation.</td>
+</tr>
+<tr>
+<td><code>github-bundle-reader</code></td>
+<td><code>token</code></td>
+<td>External operator supplies; enabled role code-bundle init reads it</td>
+<td>Scope to the one release archive source. Revoke upstream after compromise. It is absent from the shared setup helper and required only when private bundle download is enabled.</td>
+</tr>
+<tr>
+<td><code>nova-archviewer-auth</code></td>
+<td><code>htpasswd</code></td>
+<td>External operator supplies; Nova Archviewer sidecar mounts read-only</td>
+<td>Rotate the htpasswd file and roll Nova. Tailnet access and Basic auth are both required. Loss blocks document access, not pipeline authority.</td>
+</tr>
+<tr>
+<td><code>prism-postgresql-auth</code></td>
+<td><code>password</code>, three role passwords, and four matching URLs</td>
+<td>Prism deploy helper creates if absent; PostgreSQL bootstrap, migrator, Control, Worker, and backup consume distinct fields</td>
+<td>Rotate each database role with its matching URL. The runtime must not receive administrator or migrator authority. Restore needs the matching current or retained credential set.</td>
+</tr>
+<tr>
+<td><code>prism-runtime</code></td>
+<td>Session, ingress, dispatch, worker, and ingestion shared secrets</td>
+<td>Prism deploy helper creates if absent; only the corresponding Prism services consume</td>
+<td>Rotate by relationship and restart both ends. SPIFFE-enabled Control/Worker transport omits the dispatch/worker fallback, but session, ingress, and ingestion secrets still have their own uses.</td>
+</tr>
+<tr>
+<td>Prism product signing Secret and controller CA/token projection</td>
+<td>Configured Ed25519 private key, configured CA, and short-lived audience-bound ServiceAccount token</td>
+<td>External product-authority owner supplies signing/CA Secrets; Kubernetes projects the token to Control</td>
+<td>The chart requires a signing Secret distinct from <code>prism-runtime</code>. Rotate signer with verifier trust and retained decisions. Token rotation is automatic; CA rotation needs overlap or coordinated restart.</td>
+</tr>
+<tr>
+<td><code>prometheus-grafana</code></td>
+<td><code>admin-user</code>, <code>admin-password</code></td>
+<td>External monitoring operator supplies; Grafana reads</td>
+<td>Rotate and restart/reload Grafana. It grants UI administration, not Prometheus or Kubernetes authority. The chart does not create it.</td>
+</tr>
+<tr>
+<td><code>codex-ops-bearer</code> and optional <code>codex-ops-github</code></td>
+<td>MCP bearer <code>token</code>; optional GitHub <code>token</code></td>
+<td>Ops bootstrap creates a missing bearer and retains an existing one. It applies the operator's GitHub token from <code>OPS_GITHUB_TOKEN_FILE</code> when set. Codex and loopback MCP share the bearer; Codex alone receives the GitHub token</td>
+<td>Bind MCP to loopback and rotate both clients together. Scope the GitHub token separately. Neither belongs in the Ops PVC.</td>
+</tr>
+<tr>
+<td><code>codex-ops-tailscale</code></td>
+<td><code>authkey</code></td>
+<td>Ops bootstrap applies the operator's authkey from <code>OPS_TAILSCALE_AUTHKEY_FILE</code> when set; optional userspace Tailscale sidecar reads</td>
+<td>Prefer reusable/ephemeral policy appropriate to recovery, revoke after use, and never treat the persisted device state as a second authkey.</td>
+</tr>
+<tr>
+<td>Registry client Secret and CA Secret</td>
+<td>Configured username/password and CA certificate keys</td>
+<td>External registry operator supplies; BuildKit/runtime/node configuration selects them</td>
+<td>Credentials are allowed only with HTTPS in the generator. Rotate at registry and all clients. A CA bundle is trust material, not a bearer secret, but replacement still needs coordinated client rollout.</td>
+</tr>
+</tbody>
+</table>
+<p>No repository path generates <code>github-bundle-reader</code>, <code>nova-archviewer-auth</code>,
+<code>prometheus-grafana</code>, registry credentials, or a production
+Prism product-decision signer. Their absence must stop the dependent feature;
+the operator must not substitute a value from another Secret because its name
+looks similar.</p>
+<p>The Ops bootstrap helper creates Kubernetes Secrets but does not create upstream
+GitHub or Tailscale credentials. It reads these credentials from the selected
+files, rejects empty input, and applies the supplied value even if the target
+Secret already exists. When pull-secret copying is enabled, it retains an
+existing Ops <code>ghcr-secret</code>; otherwise, it copies the configured source Secret
+and stops if that source is absent.</p>
+<blockquote>
+<p><strong>Source evidence — Ops credential preparation</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/ops/pod/bootstrap.py#L56-L64">The bootstrap helper creates only a missing bearer and copies only a missing
+pull Secret</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/ops/pod/bootstrap.py#L65-L71">Optional GitHub and Tailscale file inputs are checked and applied to their
+named Secrets</a>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Source evidence — Secret consumers outside the shared helper</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/deploy.sh#L1639-L1681">Prism creates separate database-role and runtime relationship secrets and
+verifies every required key without printing values</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/workloads.yaml#L86-L125">Prism workloads select role-specific database and runtime keys</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/_product-decisions.tpl#L1-L49">Product-decision configuration requires a separate signer, CA, explicit
+audience, and short-lived projected token</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L31-L89">Nova values select separate bundle, gateway, provider, Discord, Git,
+Archviewer, Buster, and source-attestation Secret keys</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L49-L76">The Ops Pod mounts the bearer separately, gives the optional GitHub token only
+to Codex</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L113-L135">gives the Tailscale authkey only to its sidecar</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L3-L23">Grafana reads an externally managed administrator Secret</a>.</p>
+</blockquote>
+<p>The shared-Secret setup path uses this precedence. Other Secrets have their own
+setup paths; do not assume that they use the same order.</p>
+<ol>
+<li>If the target Secret exists and <code>KUBECLAW_SECRETS_OVERWRITE</code> is not true,
+retain it. Interactive setup can repair missing required keys. Non-interactive
+setup warns about missing keys and returns without trying SOPS or a source
+namespace. A warning does not prove that the Secret is ready for use.</li>
+<li>Otherwise, if <code>SOPS_FILE</code> exists, create or update the shared Secret from that
+encrypted file. This path takes precedence over a source-namespace copy.
+SOPS and access to its decryption keys are required.</li>
+<li>If no SOPS file exists, try the configured source namespace.</li>
+<li>If no copy is available and interactive setup is enabled, read protected
+operator input or generate values only for the fields that support generation.</li>
+<li>Otherwise, warn that the required Secret is missing. Supply the required
+values before starting dependent workloads; the warning alone is not a
+successful setup result.</li>
+</ol>
+<blockquote>
+<p><strong>Source evidence — shared-Secret precedence</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L567-L581">An existing target is retained or repaired, then this setup path returns</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L583-L609">A present SOPS file precedes namespace copying, interactive input, and the
+missing-Secret warning</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L438-L469">The SOPS path selects named fields and applies the shared Secret</a>.</p>
+</blockquote>
+<p>The source-attestation Secret is a useful example.
+Setup reuses a complete key pair or copies it from the configured source.
+Otherwise, it generates an Ed25519 pair and restricts the temporary-file permissions.
+Nova mounts the private key, while Buster mounts the public key.
+This is deliberate asymmetry: Buster can verify source identity but cannot create a valid Nova source signature.</p>
+<p>The secret-resolver adapter adds a second application boundary.
+Its configuration maps a public logical name to one environment-variable name.
+The stage lease must grant the logical name first.
+The adapter then rejects an unmapped name, an unsupported operation, an empty value, and an already cancelled request.
+It returns the value as confidential capability output.
+It does not enumerate the environment and it does not accept an environment-variable name from the caller.</p>
+<blockquote>
+<p><strong>Source evidence — secret lifecycle</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L610-L646">Secret setup creates or repairs the source-attestation key pair and applies it as one Kubernetes Secret</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L125-L130">Nova receives the private key from the source-attestation Secret</a>, while <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L96-L101">Buster receives its public key</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/src/adapter.ts#L3-L22">The secret resolver maps bounded logical names to environment values and fails closed for all other requests</a>.</p>
+</blockquote>
+<h3 id="rotation-procedure-and-compromise-response">Rotation procedure and compromise response</h3>
+<p>Plan rotation by consumer, not only by Secret name.
+List every mount, environment reference, external client, and stored object that depends on the old value.
+Create the replacement through the supported setup path.
+Restart or reload consumers that do not watch changes, and run a positive and a negative check.
+Revoke the old external credential after the new path works.</p>
+<p>For the Nova-to-Buster signing key, coordinate both sides.
+Buster must trust the matching public key before Nova sends snapshots signed by the new private key.
+Existing retained jobs can still require the old verification key during their retention period.
+The current single-key configuration does not provide an automatic overlapping-key rotation window.
+Treat that limit as an operator-controlled maintenance boundary.</p>
+<p>If a secret leaks, stop the affected entry path and revoke or replace the upstream credential.
+Rotate the Kubernetes Secret, restart consumers, and inspect retained audit and request records.
+Deleting only the Kubernetes Secret is not sufficient when the external credential remains valid.</p>
+<h2 id="network-segmentation-and-negative-paths">Network Segmentation and Negative Paths</h2>
+<p>KubeClaw treats a connection as an allowlist entry, not as an assumed property of one namespace.
+Policies use default deny and add DNS, database, worker, ingestion, telemetry, registry, and external paths only where required.</p>
+<p>The portable security contract is the permitted caller, destination, protocol, and port.
+The current secured deployment uses Cilium for its policy and flow-evidence paths.
+A different CNI needs equivalent policy enforcement and positive and negative test evidence before it can support that deployment.
+The <a href="platform-and-operations.html#one-network-owner-flannel-or-cilium">current deployment boundary</a> explains why a Flannel fallback is planned but not supported now.</p>
+<h3 id="service-policy-identity-and-authority-matrix">Service, policy, identity, and authority matrix</h3>
+<p>A Kubernetes Service only selects Pods and ports. It does not grant access.
+Each protected path below needs the matching network allow, application or
+transport identity, and operation authority.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Service and network boundary</th>
+<th>Identity and application check</th>
+<th>RBAC or capability check</th>
+<th>Required negative result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova → Buster plan</td>
+<td>Buster plan Service, protected port 18891; Nova egress and Buster ingress select exact component labels</td>
+<td>Envoy mTLS requires Nova SPIFFE ID, then Worker trust accepts only the configured peer; bearer mode is a separate configured alternative</td>
+<td><code>test.plan.execute</code> grant plus fixed repository/source/plan constraints</td>
+<td>Unrelated Pod, wrong SVID, forged forwarded identity, wrong token, or changed request digest fails</td>
+</tr>
+<tr>
+<td>Nova → Prism agent</td>
+<td>Prism agent Service on protected port 18082; policy selects Nova and the Prism agent</td>
+<td>Exact Nova SVID at Envoy and application allowlist</td>
+<td><code>runtime.dispatch</code> target and lease constraints</td>
+<td>Same-namespace non-Nova Pod and valid but unlisted SVID fail</td>
+</tr>
+<tr>
+<td>Prism Control → Worker</td>
+<td>Internal Worker Service uses 8443 with SPIFFE, otherwise 8080; Worker ingress permits Control</td>
+<td>Exact configured Control SVID; fallback uses body-bound worker secret when SPIFFE is disabled</td>
+<td>Worker envelope, profile, claim, package, capability, and attempt digests</td>
+<td>Direct test-runner, Studio, ingestion, unrelated Prism Pod, stale claim, or forged identity fails</td>
+</tr>
+<tr>
+<td>Prism Worker/agent → Control</td>
+<td>Internal Control route; policy names Worker and agent sources</td>
+<td>Exact Worker/agent SVID; fallback HMAC only on the configured route</td>
+<td>Control operation and product rules still apply</td>
+<td>Valid SVID for another ServiceAccount and direct untrusted header fail</td>
+</tr>
+<tr>
+<td>Tailscale proxy → Prism Studio</td>
+<td>Studio Service 8080; ingress policy selects the proxy Pod by owning parent resource and namespace</td>
+<td>Trusted Tailscale headers plus Prism ingress secret become a short-lived local session</td>
+<td>Product mutation also requires role, origin, CSRF, and for acceptance a signed decision</td>
+<td>Direct Pod connection, wrong parent proxy, absent login, wrong ingress secret, origin, or CSRF fails</td>
+</tr>
+<tr>
+<td>Agents/Clawdeck → Redis</td>
+<td>Redis Service 6379; ingress allow selects KubeClaw or Clawdeck; client egress selects Redis labels</td>
+<td>Redis password; <code>rediss:</code> also authenticates server certificate</td>
+<td>Plugin needs the selected publish/telemetry capability and target</td>
+<td>Other Pods, absent password, changed target, or missing capability fail</td>
+</tr>
+<tr>
+<td>Agents → LiteLLM → PostgreSQL/provider</td>
+<td>LiteLLM 4000 and PostgreSQL 5432 have explicit ingress/egress; provider traffic is HTTPS world egress from LiteLLM</td>
+<td>LiteLLM API/master key and provider credentials; database has its own credential</td>
+<td>Caller route/model budget plus application configuration; Kubernetes RBAC grants none of this</td>
+<td>Direct PostgreSQL access from an agent, absent LiteLLM key, or undeclared provider route fails</td>
+</tr>
+<tr>
+<td>Buster/agents → local registry or mirror</td>
+<td>Explicit registry ports; local registry 5000/5001 and mirror 5000</td>
+<td>Production registry can use HTTPS credentials/CA; checked lab local registry is anonymous HTTP</td>
+<td>Build/runtime capability constrains registry prefix and immutable result</td>
+<td>Credential on HTTP is rejected by config generator; undeclared registry prefix or changed digest fails</td>
+</tr>
+<tr>
+<td>Namespace controller → Kubernetes API</td>
+<td>Controller policy permits API egress</td>
+<td>Projected ServiceAccount token</td>
+<td>Controller ClusterRole/RoleBindings and admission policy limit lease-owned namespaces/resources</td>
+<td>An identity without the controller grants, existing unowned namespace, or reserved-label mutation fails</td>
+</tr>
+<tr>
+<td>Nova/Buster lease client → Kubernetes API</td>
+<td>Selected lease-client policy permits API egress on 443/6443</td>
+<td>Mounted ServiceAccount token when enabled</td>
+<td>Namespaced lease operations and Deployment/Service reads; optional verification grants Pod reads, the named IngressClass read, and one named OAuth Secret GET</td>
+<td>Direct namespace creation, ungranted workload mutation, or an unrelated Secret read fails</td>
+</tr>
+<tr>
+<td>Ops MCP/Codex → Kubernetes API</td>
+<td>Ops policy allows API; MCP listens only on loopback inside Pod</td>
+<td>Short-lived projected token is mounted into MCP; Codex receives it only when exec namespaces are enabled</td>
+<td>Read bindings cover named namespaces; cluster reads are limited; pod exec exists only in <code>rbac.execNamespaces</code></td>
+<td>MCP remote peer, Secret read, resource mutation, or exec outside the list fails</td>
+</tr>
+</tbody>
+</table>
+<p>Network reachability does not override a missing lease capability. Kubernetes
+RBAC does not authorize an HTTP API operation. A valid SPIFFE certificate does
+not grant every route. These controls overlap by design so that bypass of one
+boundary does not silently expand another.</p>
+<blockquote>
+<p><strong>Source evidence — route relations</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L15-L74">Project policy defines agent-to-Redis, LiteLLM, registry, mirror, gateway, and
+bounded world egress</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L121-L157">It separately selects Nova-to-Buster egress and Buster-from-Nova ingress</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L24-L59">Prism policy ties Control, Worker, test runner, Nova, agent, database, and
+ingestion callers to exact ports</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L73-L81">Worker ingress selects Control alone</a>, and
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/worker-service.ts#L56-L58">Worker application authorization accepts only the configured Control SVID</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L366-L380">The selected policy also permits Nova and Buster lease-client API egress</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L123-L133">The Studio ingress allow selects only the Tailscale proxy that owns the Prism
+parent resource</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L1-L45">The lease-client role grants lease operations and read-only Deployment and
+Service visibility, not general workload creation</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L6-L63">The Ops chart separates namespaced reads, cluster reads, and namespace-scoped
+pod exec</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L63-L92">Pod exec is a distinct Role created only for each configured exec namespace</a>.</p>
+</blockquote>
+<p>Important negative checks are:</p>
+<ul>
+<li>An unrelated pod cannot reach a protected worker port.</li>
+<li>A valid but unlisted SPIFFE identity fails the TLS handshake or application allowlist.</li>
+<li>A direct caller cannot make Worker Core trust <code>x-forwarded-client-cert</code> from the pod network.</li>
+<li>A Prism workload cannot make an unlisted egress connection after default deny.</li>
+<li>A plugin cannot use network reachability to bypass a missing <code>network.http</code> grant.</li>
+<li>An operations Pod cannot execute in a namespace outside <code>rbac.execNamespaces</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Source evidence — policy boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L1-L59">Prism applies default deny, DNS, and explicit Control application paths</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L61-L110">Separate policies restrict Studio, Worker, and the OpenClaw agent</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/cilium-cluster-policies.yaml#L31-L90">The platform policy separates cluster-wide default deny and DNS from namespace-specific routes</a>.</p>
+</blockquote>
+<h2 id="source-package-image-and-artifact-integrity">Source, Package, Image, and Artifact Integrity</h2>
+<p>Integrity controls protect different objects at different times.</p>
+<h3 id="nova-to-buster-source">Nova-to-Buster source</h3>
+<p>Nova resolves a commit and its tree and creates an archive from that commit.
+It calculates the archive digest and size, and it signs canonical snapshot metadata with Ed25519.
+Working-tree bytes are not included.
+Buster verifies the source authority, signature, archive limit, archive digest, derived job ID, plan digest, and request digest before admission.</p>
+<p>This design prevents a mutable checkout or changed archive from silently replacing the approved input.
+It does not publish general public provenance and does not prove that the selected source is free from vulnerabilities.</p>
+<blockquote>
+<p><strong>Source evidence — committed source</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/source-snapshot.ts#L16-L60">Nova builds and signs one archive from a verified Git commit</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L84-L123">Buster verifies the source signature and all request identities before admission</a>.</p>
+</blockquote>
+<h3 id="plugin-packages-and-isolated-execution">Plugin packages and isolated execution</h3>
+<p>A plugin declaration is not authority by itself.
+Installation validates the package and its content identity.
+Activation selects registrations for one runtime role.
+The stage lease then grants a smaller set of capabilities.
+Trusted first-party code can load in process; external code uses the isolation path and reaches host functions only through the bounded protocol.</p>
+<p>This layered design makes a package manifest review useful without pretending that a manifest is a sandbox.
+The <a href="plugin-runtime.html">Plugin Runtime</a> explains package trust, activation, isolation, and removal in full.</p>
+<h3 id="container-images-and-registry-transport">Container images and registry transport</h3>
+<p>The build path uses BuildKit and an operator-owned registry contract.
+An immutable digest identifies the resulting image bytes.
+Deployment configuration must preserve that digest identity instead of relying only on a mutable tag.</p>
+<p>The current local registry is an anonymous HTTP lab service.
+It does not provide production transport or authentication.
+The client generator requires an explicit <code>http-lab</code> transport choice for that path and permits credentials only with HTTPS.
+This prevents a lab exception from looking like a secure default.</p>
+<p>Image digest pinning proves byte identity, not vulnerability status.
+Scanning and SBOM evidence are separate release checks.
+The Buster runtime includes a pinned Trivy database for repeatable offline checks; operators must understand that frozen vulnerability data becomes stale.</p>
+<p>The implemented chain has distinct identities:</p>
+<ol>
+<li>Git selects one commit and tree.</li>
+<li>The release build uses declared role inputs and produces image digests and
+receipts.</li>
+<li>Release configuration selects those immutable digests.</li>
+<li>BuildKit can create workload images and returns an OCI digest.</li>
+<li>The registry stores manifests and layers under content digests.</li>
+<li>Buster verifies the selected image and checked manifest before a temporary
+workload is admitted.</li>
+</ol>
+<p>Do not replace one identity with another. A Git commit does not identify a
+container filesystem. An image digest does not prove which source produced it.
+A Trivy result is time- and database-dependent. An SBOM inventories content but
+does not approve it. The repository has no general signature-verification path
+for every OCI image; digest pinning and release receipts are the current
+implemented boundary.</p>
+<p>There is one explicit mutable-image exception in the checked Ops chart. The
+Codex and Ops MCP images must match <code>image@sha256:&lt;digest&gt;</code>, but the optional
+userspace Tailscale sidecar defaults to
+<code>ghcr.io/tailscale/tailscale:v1.102.3</code>. The template does not require a digest
+for that sidecar. By contrast, the separately installed Tailscale Kubernetes
+Operator and its proxy image use digests. Treat the Ops sidecar tag as a known
+supply-chain limit: resolve and pin its digest in deployment input before a
+production use, then add a render rejection for tag-only values. Until that is
+implemented and checked, do not state that every running image is immutable.</p>
+<blockquote>
+<p><strong>Source evidence — registry and scanner limits</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L59-L118">The registry client contract separates HTTPS from explicit HTTP lab transport and rejects authentication on HTTP</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/Dockerfile.buster-runtime#L115-L124">The Buster runtime copies a versioned Trivy database into the immutable image</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L1-L7">The Ops workload rejects mutable Codex and MCP images but passes the optional
+Tailscale image without a digest check</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L113-L135">The Tailscale sidecar uses that configured image directly</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L37-L46">Its default is a version tag, while the Operator and proxy values use
+digests</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/tailscale-operator-values.yaml#L20-L34">The separate Tailscale Operator values select digest-pinned operator and proxy
+images</a>.</p>
+</blockquote>
+<h3 id="supply-chain-decision-record">Supply-chain decision record</h3>
+<p><strong>Accepted approach:</strong> use content digests at package, archive, artifact, and
+image boundaries, and keep approval and vulnerability evidence separate. The
+benefit is deterministic identity and corruption detection. The cost is receipt
+management, explicit promotion, stale-scanner risk, and no single signature
+that proves the whole chain. The source records the implemented checks but not
+one complete historical rationale; the explanation above is an inference from
+those boundaries.</p>
+<p>Reconsider the approach when the platform can verify signed OCI provenance and
+SBOM attestations against a managed trust root at admission. Keep digest checks
+even then. Reconsider the anonymous HTTP registry before any environment where
+the network is not an accepted lab boundary, and close the mutable Ops
+Tailscale-image exception before claiming complete image immutability.</p>
+<h3 id="durable-artifacts-and-receipts">Durable artifacts and receipts</h3>
+<p>Content digests detect a changed artifact.
+They do not decide whether an artifact is approved.
+Approval, lifecycle state, producer identity, and content identity remain separate fields and records.
+This separation lets recovery detect a missing or changed blob without inventing a new lifecycle decision.</p>
+<p>Prism results currently use authenticated transport and contract identities.
+Do not describe every Prism result as a signed artifact attestation.
+The Nova-to-Buster source signature is the specific implemented signed provenance path described above.</p>
+<h2 id="security-decisions-and-reconsideration">Security Decisions and Reconsideration</h2>
+<table>
+<thead>
+<tr>
+<th>Status and selected approach</th>
+<th>Reason and benefit</th>
+<th>Cost and current limit</th>
+<th>Reconsider when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accepted and implemented for selected routes: SPIFFE mTLS at Envoy plus a loopback application allowlist</td>
+<td>A certificate authenticates the workload before HTTP, while Worker Core rejects a forged forwarded identity from the Pod network</td>
+<td>SPIRE, CSI, SDS, proxies, ports, ServiceAccounts, and application allowlists must agree; loss of identity service closes the route</td>
+<td>The platform adopts another workload-identity system that provides exact peer policy, rotation, application binding, and equivalent negative tests</td>
+</tr>
+<tr>
+<td>Accepted and implemented: revocable per-attempt capability leases</td>
+<td>A valid workload still needs only the operation and resource range of one stage</td>
+<td>Grants and adapters must remain synchronized; trusted in-process code shares the host process</td>
+<td>Stronger process isolation can retain the same capability contract with lower shared-process risk</td>
+</tr>
+<tr>
+<td>Accepted and implemented: external Secrets with named-key consumption</td>
+<td>Source control contains references, not values, and consumers receive only configured material</td>
+<td>Rotation is component-specific; Kubernetes Secret storage and Pod mounts remain cluster-admin trust boundaries</td>
+<td>A managed secret service provides audited issuance, overlap rotation, revocation, and bounded workload access without broadening plugin lookup</td>
+</tr>
+<tr>
+<td>Accepted and implemented in manifests: default deny plus explicit routes</td>
+<td>Reachability follows the intended communication graph and reduces accidental service exposure</td>
+<td>Enforcement depends on the selected CNI; policy maintenance can drift from Services and identities</td>
+<td>A portable higher-level policy compiler can generate and prove equivalent Cilium and standard NetworkPolicy paths</td>
+</tr>
+<tr>
+<td>Accepted with a lab-only exception: digest-pinned artifacts and images, anonymous HTTP local registry</td>
+<td>Digests detect changed bytes; the lab registry permits local development without a credential service</td>
+<td>Digest is not approval or provenance; HTTP permits network tampering; the Ops Tailscale sidecar remains tag-only</td>
+<td>Production registry transport/authentication or signed-provenance admission is required, or before claiming all images are immutable</td>
+</tr>
+</tbody>
+</table>
+<p>The repository records these approaches in code, values, and enduring decision
+pages. It does not record the complete historical alternatives for every local
+rule. Do not infer that a present control was the only alternative considered.</p>
+<h2 id="least-authority-by-layer">Least Authority by Layer</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Normal authority</th>
+<th>Important exception or limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes ServiceAccount</td>
+<td>Automatic token mounting is disabled by chart default</td>
+<td>The namespace controller requires a token. Selected Nova values also enable a token for lease and verification operations.</td>
+</tr>
+<tr>
+<td>Kubernetes RBAC</td>
+<td>Explicit verbs and resource scopes for each workload</td>
+<td>Lease clients can request leases; optional verification includes one named OAuth Secret read. The optional Ops Pod has broad read access and optional namespace-scoped exec.</td>
+</tr>
+<tr>
+<td>SPIFFE peer policy</td>
+<td>Exact ServiceAccount identities for one protected route</td>
+<td>A valid SVID still needs application authorization.</td>
+</tr>
+<tr>
+<td>Network policy</td>
+<td>Named pod, namespace, port, and external paths</td>
+<td>Enforcement depends on the live CNI.</td>
+</tr>
+<tr>
+<td>Plugin lease</td>
+<td>Named capabilities with resource constraints</td>
+<td>A grant must still have a configured adapter.</td>
+</tr>
+<tr>
+<td>Secret access</td>
+<td>Named Secret or resolver name for a declared consumer</td>
+<td>A pod-level mount exposes that value to the selected container process.</td>
+</tr>
+<tr>
+<td>File and process access</td>
+<td>Canonical roots, allowed commands, isolated runners, and Worker Core limits</td>
+<td>Trusted in-process plugins share the host process boundary.</td>
+</tr>
+<tr>
+<td>OCI access</td>
+<td>Configured endpoint, transport, and optional credential</td>
+<td>The local HTTP lab registry is intentionally not production-grade.</td>
+</tr>
+</tbody>
+</table>
+<p>The Ops Pod deserves explicit attention.
+It is an optional analysis and recovery tool, not a pipeline dependency.
+Its ClusterRoles can read selected cluster resources, and <code>rbac.execNamespaces</code> creates pod-exec authority in each named namespace.
+The default value contains <code>kubeclaw</code>.
+An operator must review that list as privileged access and keep it as small as possible.</p>
+<blockquote>
+<p><strong>Source evidence — Ops authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L1-L60">The Ops chart defines namespaced and cluster read authority</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/rbac.yaml#L63-L92">It defines pod exec separately for each selected namespace</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/values.yaml#L20-L29">The default exec namespace list contains only <code>kubeclaw</code></a>.</p>
+</blockquote>
+<h2 id="threats-controls-and-residual-risk">Threats, Controls, and Residual Risk</h2>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Primary controls</th>
+<th>Residual risk or required operator proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A pod impersonates Nova</td>
+<td>SPIRE attestation, exact URI SAN, loopback proxy check</td>
+<td>A compromised cluster administrator or SPIRE authority can issue or redirect identity.</td>
+</tr>
+<tr>
+<td>A plugin reads an unrelated secret</td>
+<td>Lease grant, allowed secret names, resolver contract</td>
+<td>Trusted in-process code still shares the process; package trust and activation must be correct.</td>
+</tr>
+<tr>
+<td>Source changes between approval and test</td>
+<td>Commit archive, tree identity, Ed25519 signature, archive digest</td>
+<td>The signing private key and Nova runtime must remain trusted.</td>
+</tr>
+<tr>
+<td>A mutable image tag changes</td>
+<td>Digest selection and registry contract for release, Codex, MCP, Prism, and workload images</td>
+<td>The optional Ops Tailscale sidecar is a documented tag-only exception; digest identity also does not prove safety.</td>
+</tr>
+<tr>
+<td>A workload reaches an undeclared service</td>
+<td>Default deny and explicit paths</td>
+<td>The operator must prove that the chosen CNI enforces policy.</td>
+</tr>
+<tr>
+<td>A secret remains valid after deletion</td>
+<td>Rotation and upstream revocation procedure</td>
+<td>External systems control final revocation.</td>
+</tr>
+<tr>
+<td>An observer or specialist changes lifecycle truth</td>
+<td>Nova-owned journal and bounded plugin contract</td>
+<td>A privileged operator can still modify storage or deployment configuration.</td>
+</tr>
+<tr>
+<td>The Ops Pod becomes a general shell</td>
+<td>Optional deployment and bounded exec namespace list</td>
+<td>Any granted pod exec is high authority inside that namespace.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verification-and-recovery-order">Verification and Recovery Order</h2>
+<p>Use this order when a protected path fails:</p>
+<ol>
+<li>Confirm the expected source revision and rendered configuration.</li>
+<li>Confirm that the source and destination use the intended ServiceAccounts.</li>
+<li>Confirm SPIRE server, agent, CSI, and Workload API readiness.</li>
+<li>Confirm that Envoy received an SVID and the trust bundle through SDS.</li>
+<li>Confirm the exact caller URI SAN and destination peer allowlist.</li>
+<li>Confirm the network policy allows only the expected caller and port.</li>
+<li>Confirm Worker Core receives the request from loopback and accepts the verified identity.</li>
+<li>Confirm the stage lease contains the required capability and exact resource range.</li>
+<li>Confirm content signatures and digests before replay or re-admission.</li>
+<li>Run one valid request and the relevant negative requests.</li>
+</ol>
+<p>Do not recover by making the identity wildcard, disabling mutual TLS, opening all egress, or adding an unbounded capability.
+Those changes hide the failed boundary and create a second incident.</p>
+<h2 id="current-limits">Current Limits</h2>
+<ul>
+<li>Live SPIFFE, mutual TLS, and network-policy enforcement need environment-specific acceptance evidence.</li>
+<li>Source and render checks do not establish Tailscale ACL, OAuth, CNI, Secret-rotation, or registry behavior in a live environment.</li>
+<li>The local writable registry is an anonymous HTTP lab service.</li>
+<li>The optional Ops Tailscale sidecar accepts a mutable tag; do not claim complete image immutability until it is digest-pinned and render-enforced.</li>
+<li>The single Nova-to-Buster signing-key configuration needs coordinated rotation.</li>
+<li>Several required Secrets are external to the shared setup helper: Prism, Grafana, Archviewer, code-bundle, Ops, registry, and product-decision authorities need separate inventory and rotation ownership.</li>
+<li>A trusted in-process plugin shares more authority than an isolated external plugin.</li>
+<li>Image digests and source signatures prove identity, not vulnerability status or business approval.</li>
+<li>Prism transport identity must not be described as general signed artifact provenance.</li>
+<li>The Ops Pod remains a privileged optional component when namespace exec is enabled.</li>
+</ul>
+<p>These limits are not reasons to remove the existing controls.
+They define where operators need additional production controls or live proof.</p>
+<h2 id="related-guides">Related Guides</h2>
+<ul>
+<li><a href="deployment-and-trust.html">Deployment and Trust</a> maps these controls to workloads and storage.</li>
+<li><a href="worker-trust.html">Worker Trust</a> gives the route-level proxy and identity details.</li>
+<li><a href="communication.html">Communication</a> explains request, response, retry, and failure semantics.</li>
+<li><a href="data-and-state.html">Data and State</a> explains durable ownership and recovery boundaries.</li>
+<li><a href="platform-and-operations.html">Platform and Operations Architecture</a> explains the infrastructure that supplies these controls.</li>
+<li><a href="plugin-runtime.html">Plugin Runtime</a> explains package trust, activation, grants, and isolation.</li>
+<li><a href="../reference/secrets.html">Secret Inventory</a> lists exact secret producers and consumers without secret values.</li>
+<li><a href="../decisions/core-and-plugins.html">Core and plugin decisions</a> and <a href="../decisions/runtime-and-operations.html">runtime and operations decisions</a> record the enduring trust choices and their trade-offs.</li>
+</ul>
+</main></body></html>

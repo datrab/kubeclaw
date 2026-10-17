@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/capabilities.html"></head><body><main>
+<h1 id="capability-catalogue">Capability Catalogue</h1>
+<p>Status: implemented
+Audience: plugin author, operator, security reviewer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts">skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-service.ts">skills/buster/engine/test-gates/remote-plan-service.ts</a>
+Applies to: Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities
+Last verified: generated source listing only; package checks and their limits are recorded on each package page</p>
+<h2 id="purpose">Purpose</h2>
+<p>Use this catalogue to identify the authority system that interprets a capability name.
+Nova grants and Buster runtime capabilities are separate allowlists.
+A shared name does not transfer a Nova grant into Buster or a Buster route into Nova.</p>
+<blockquote>
+<p><strong>Source evidence — separate authority systems</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts">Nova defines operations, resource types, and grant constraints</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/remote-plan-service.ts">Buster builds explicit runtime routes for allowed test-provider capabilities</a>.</p>
+</blockquote>
+<h2 id="nova-grant-vocabulary">Nova Grant Vocabulary</h2>
+<p>Nova validates these names when it compiles platform grants and dispatches capability calls.
+The operation, resource, and constraint columns are part of that Nova contract.</p>
+<table>
+<thead>
+<tr>
+<th>Nova capability</th>
+<th>Operations</th>
+<th>Resource types</th>
+<th>Required constraint lists</th>
+<th>Declared by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agent.events.subscribe</code></td>
+<td><code>status</code></td>
+<td><code>agent.events</code></td>
+<td><code>allowedSources</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/openclaw-agent-events/plugin.json"><code>kubeclaw.openclaw-agent-events:source</code></a></td>
+</tr>
+<tr>
+<td><code>artifacts.read</code></td>
+<td><code>get_json</code>, <code>get_latest_json</code>, <code>get_json_bytes</code>, <code>get_latest_json_bytes</code></td>
+<td><code>artifact.object</code></td>
+<td><code>allowedNamespaces</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/artifact-store/plugin.json"><code>kubeclaw.artifact-store:artifact-store</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/architecture-validator/plugin.json"><code>kubeclaw.architecture-validator:architecture</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/blueprint-sync/plugin.json"><code>kubeclaw.blueprint-sync:sync</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/buster-quality-gate/plugin.json"><code>kubeclaw.buster-quality-gate:quality</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:handoff</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:architecture-approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:pre-check</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:full</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/pipeline-review/plugin.json"><code>kubeclaw.pipeline-review:evidence</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json"><code>kubeclaw.prism-design:design</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/project-summary/plugin.json"><code>kubeclaw.project-summary:summary</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/remote-test-gate/plugin.json"><code>kubeclaw.remote-test-gate:evidence</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-audit</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-revalidation</code></a></td>
+</tr>
+<tr>
+<td><code>artifacts.write</code></td>
+<td><code>put_json</code></td>
+<td><code>artifact.object</code></td>
+<td><code>allowedNamespaces</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/agent-observability/plugin.json"><code>kubeclaw.agent-observability:evidence</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/artifact-store/plugin.json"><code>kubeclaw.artifact-store:artifact-store</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/architecture-validator/plugin.json"><code>kubeclaw.architecture-validator:architecture</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/blueprint-sync/plugin.json"><code>kubeclaw.blueprint-sync:sync</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/buster-quality-gate/plugin.json"><code>kubeclaw.buster-quality-gate:quality</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/case-study/plugin.json"><code>kubeclaw.case-study:case-study</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/delivery-lint/plugin.json"><code>kubeclaw.delivery-lint:delivery-lint</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:candidate</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:delivery</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:ready</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:architecture-approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:pre-check</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:full</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/pipeline-review/plugin.json"><code>kubeclaw.pipeline-review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/preflight-contract/plugin.json"><code>kubeclaw.preflight-contract:validate</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/preflight-contract/plugin.json"><code>kubeclaw.preflight-contract:source</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json"><code>kubeclaw.prism-design:design</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/project-summary/plugin.json"><code>kubeclaw.project-summary:summary</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-audit</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-revalidation</code></a></td>
+</tr>
+<tr>
+<td><code>command.execute</code></td>
+<td><code>run</code></td>
+<td><code>command.executable</code></td>
+<td><code>allowedExecutables</code>, <code>allowedWorkingRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/command-runner/plugin.json"><code>kubeclaw.command-runner:command</code></a></td>
+</tr>
+<tr>
+<td><code>container.build</code></td>
+<td><code>build_push_verify</code></td>
+<td><code>container.build-definition</code></td>
+<td><code>allowedPlatforms</code>, <code>allowedWorkspaceRoots</code></td>
+<td>No installed Nova registration.</td>
+</tr>
+<tr>
+<td><code>demo.handoff</code></td>
+<td><code>deliver</code>, <code>commit</code></td>
+<td><code>demo.candidate</code></td>
+<td><code>allowedNamespaces</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:delivery</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:ready</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:handoff</code></a></td>
+</tr>
+<tr>
+<td><code>git.commit</code></td>
+<td><code>commit</code></td>
+<td><code>git.repository</code>, <code>git.workspace</code></td>
+<td><code>allowedRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/git-workspace/plugin.json"><code>kubeclaw.git-workspace:git</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/blueprint-sync/plugin.json"><code>kubeclaw.blueprint-sync:sync</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a></td>
+</tr>
+<tr>
+<td><code>git.merge</code></td>
+<td><code>merge</code></td>
+<td><code>git.repository</code>, <code>git.workspace</code></td>
+<td><code>allowedRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/git-workspace/plugin.json"><code>kubeclaw.git-workspace:git</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a></td>
+</tr>
+<tr>
+<td><code>git.repository.read</code></td>
+<td><code>read_text</code>, <code>freeze_head</code>, <code>verify_ancestry</code>, <code>changed_manifest</code>, <code>read_revision_text</code>, <code>changed_line_ranges</code>, <code>list_revision_paths</code>, <code>inventory_revision</code>, <code>find_revision_references</code></td>
+<td><code>git.repository.path</code></td>
+<td><code>allowedPrefixes</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:openclaw</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/architecture-validator/plugin.json"><code>kubeclaw.architecture-validator:architecture</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/delivery-lint/plugin.json"><code>kubeclaw.delivery-lint:delivery-lint</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:architecture-approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/preflight-contract/plugin.json"><code>kubeclaw.preflight-contract:validate</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/preflight-contract/plugin.json"><code>kubeclaw.preflight-contract:source</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/repository-adapter/plugin.json"><code>kubeclaw.repository-adapter:repository</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-audit</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-revalidation</code></a></td>
+</tr>
+<tr>
+<td><code>git.sync</code></td>
+<td><code>sync_paths</code>, <code>fetch</code>, <code>rebase</code>, <code>push</code></td>
+<td><code>git.repository</code>, <code>git.workspace</code></td>
+<td><code>allowedRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/git-workspace/plugin.json"><code>kubeclaw.git-workspace:git</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/blueprint-sync/plugin.json"><code>kubeclaw.blueprint-sync:sync</code></a></td>
+</tr>
+<tr>
+<td><code>git.workspace.create</code></td>
+<td><code>create</code></td>
+<td><code>git.repository</code></td>
+<td><code>allowedRoots</code>, <code>allowedWorkspaceRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/git-workspace/plugin.json"><code>kubeclaw.git-workspace:git</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a></td>
+</tr>
+<tr>
+<td><code>git.workspace.remove</code></td>
+<td><code>remove</code></td>
+<td><code>git.repository</code></td>
+<td><code>allowedRoots</code>, <code>allowedWorkspaceRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/git-workspace/plugin.json"><code>kubeclaw.git-workspace:git</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a></td>
+</tr>
+<tr>
+<td><code>kubernetes.exposure</code></td>
+<td><code>prepare</code>, <code>release</code></td>
+<td><code>kubernetes.exposure</code></td>
+<td><code>allowedNamespacePrefixes</code></td>
+<td>No installed Nova registration.</td>
+</tr>
+<tr>
+<td><code>kubernetes.fixture</code></td>
+<td><code>prepare</code>, <code>release</code></td>
+<td><code>kubernetes.fixture</code></td>
+<td><code>allowedNamespacePrefixes</code>, <code>allowedWorkspaceRoots</code></td>
+<td>No installed Nova registration.</td>
+</tr>
+<tr>
+<td><code>lint.execute</code></td>
+<td><code>run_report</code></td>
+<td><code>lint.project</code></td>
+<td><code>allowedProjects</code>, <code>allowedRoots</code>, <code>allowedPolicyRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:pre-check</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:full</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/lint/plugin.json"><code>kubeclaw.lint:executor</code></a></td>
+</tr>
+<tr>
+<td><code>network.http</code></td>
+<td><code>request</code></td>
+<td><code>network.url</code></td>
+<td><code>allowedOrigins</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/plugin.json"><code>kubeclaw.network-http:http</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/operator-messaging/plugin.json"><code>kubeclaw.operator-messaging:operator</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:runtime</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:openclaw</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/transport-publisher/plugin.json"><code>kubeclaw.transport-publisher:publisher</code></a></td>
+</tr>
+<tr>
+<td><code>operator.receipt</code></td>
+<td><code>lookup</code></td>
+<td><code>operator.target</code></td>
+<td><code>allowedTargets</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/operator-messaging/plugin.json"><code>kubeclaw.operator-messaging:operator</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:handoff</code></a></td>
+</tr>
+<tr>
+<td><code>operator.request</code></td>
+<td><code>publish</code></td>
+<td><code>operator.target</code></td>
+<td><code>allowedTargets</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/notification-observer/plugin.json"><code>kubeclaw.notification-observer:notifications</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/notification-observer/plugin.json"><code>kubeclaw.notification-observer:preview-delivery</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/operator-messaging/plugin.json"><code>kubeclaw.operator-messaging:operator</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:handoff</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:architecture-approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json"><code>kubeclaw.prism-design:design</code></a></td>
+</tr>
+<tr>
+<td><code>report.evidence.read</code></td>
+<td><code>snapshot</code></td>
+<td><code>pipeline.run</code></td>
+<td><code>allowedRunIds</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/case-study/plugin.json"><code>kubeclaw.case-study:case-study</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/pipeline-review/plugin.json"><code>kubeclaw.pipeline-review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/pipeline-review/plugin.json"><code>kubeclaw.pipeline-review:evidence</code></a></td>
+</tr>
+<tr>
+<td><code>runtime.dispatch</code></td>
+<td><code>dispatch</code></td>
+<td><code>runtime.agent</code></td>
+<td><code>allowedAgents</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:runtime</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:openclaw</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/architecture-validator/plugin.json"><code>kubeclaw.architecture-validator:architecture</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/buster-quality-gate/plugin.json"><code>kubeclaw.buster-quality-gate:quality</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/case-study/plugin.json"><code>kubeclaw.case-study:case-study</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/implementation-agent/plugin.json"><code>kubeclaw.implementation-agent:implementation</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/pipeline-review/plugin.json"><code>kubeclaw.pipeline-review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json"><code>kubeclaw.prism-design:design</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:review</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-audit</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json"><code>kubeclaw.review:repository-revalidation</code></a></td>
+</tr>
+<tr>
+<td><code>secrets.read</code></td>
+<td><code>resolve</code></td>
+<td><code>secret.name</code></td>
+<td><code>allowedNames</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/operator-messaging/plugin.json"><code>kubeclaw.operator-messaging:operator</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/redis-transport/plugin.json"><code>kubeclaw.redis-transport:publisher</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/redis-transport/plugin.json"><code>kubeclaw.redis-transport:telemetry</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:runtime</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/runtime-dispatch/plugin.json"><code>kubeclaw.runtime-dispatch:openclaw</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/secret-resolver/plugin.json"><code>kubeclaw.secret-resolver:secrets</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/transport-publisher/plugin.json"><code>kubeclaw.transport-publisher:publisher</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/remote-test-gate/plugin.json"><code>kubeclaw.remote-test-gate:plan</code></a></td>
+</tr>
+<tr>
+<td><code>signal.wait</code></td>
+<td><code>create</code>, <code>read</code></td>
+<td><code>signal.wait</code></td>
+<td><code>allowedSignalTypes</code>, <code>allowedIssuerIds</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/plugin.json"><code>kubeclaw.wait-store:waits</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/human-approval/plugin.json"><code>kubeclaw.human-approval:architecture-approval</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json"><code>kubeclaw.prism-design:design</code></a></td>
+</tr>
+<tr>
+<td><code>state.append</code></td>
+<td><code>append</code></td>
+<td><code>state.namespace</code></td>
+<td><code>allowedNamespaces</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/plugin.json"><code>kubeclaw.state-store:state</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/blueprint-sync/plugin.json"><code>kubeclaw.blueprint-sync:sync</code></a></td>
+</tr>
+<tr>
+<td><code>state.read</code></td>
+<td><code>read</code></td>
+<td><code>state.namespace</code></td>
+<td><code>allowedNamespaces</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/plugin.json"><code>kubeclaw.state-store:state</code></a></td>
+</tr>
+<tr>
+<td><code>telemetry.emit</code></td>
+<td><code>append</code></td>
+<td><code>telemetry.event</code></td>
+<td><code>allowedEventPrefixes</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/agent-observability/plugin.json"><code>kubeclaw.agent-observability:ingester</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/redis-transport/plugin.json"><code>kubeclaw.redis-transport:telemetry</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/telemetry-observer/plugin.json"><code>kubeclaw.telemetry-observer:telemetry</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/telemetry-store/plugin.json"><code>kubeclaw.telemetry-store:telemetry</code></a></td>
+</tr>
+<tr>
+<td><code>test.plan.evidence</code></td>
+<td><code>demo</code></td>
+<td><code>test.plan.evidence</code></td>
+<td><code>allowedNamespaces</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:candidate</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/demo-handoff/plugin.json"><code>kubeclaw.demo-handoff:handoff</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/remote-test-gate/plugin.json"><code>kubeclaw.remote-test-gate:evidence</code></a></td>
+</tr>
+<tr>
+<td><code>test.plan.execute</code></td>
+<td><code>run</code></td>
+<td><code>test.resolved-plan</code></td>
+<td><code>allowedRoots</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/buster-quality-gate/plugin.json"><code>kubeclaw.buster-quality-gate:quality</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/remote-test-gate/plugin.json"><code>kubeclaw.remote-test-gate:plan</code></a></td>
+</tr>
+<tr>
+<td><code>transport.publish</code></td>
+<td><code>publish</code></td>
+<td><code>transport.target</code></td>
+<td><code>allowedTargets</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/redis-transport/plugin.json"><code>kubeclaw.redis-transport:publisher</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/transport-publisher/plugin.json"><code>kubeclaw.transport-publisher:publisher</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="buster-test-provider-runtime-capabilities">Buster Test-Provider Runtime Capabilities</h2>
+<p>Buster checks these names when it resolves and runs a test-provider node.
+The production runtime must also configure a concrete route for each allowed name.
+The test-provider contract owns request details; this table does not define Nova grant constraints.</p>
+<table>
+<thead>
+<tr>
+<th>Buster runtime capability</th>
+<th>Requested by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>browser.axe</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/axe/plugin.json"><code>kubeclaw.axe:axe</code></a></td>
+</tr>
+<tr>
+<td><code>browser.lighthouse</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/lighthouse/plugin.json"><code>kubeclaw.lighthouse:lighthouse</code></a></td>
+</tr>
+<tr>
+<td><code>browser.playwright</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/playwright/plugin.json"><code>kubeclaw.playwright:playwright</code></a></td>
+</tr>
+<tr>
+<td><code>browser.visual</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/visual/plugin.json"><code>kubeclaw.visual:visual</code></a></td>
+</tr>
+<tr>
+<td><code>command.execute</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/direct-command/plugin.json"><code>kubeclaw.direct-command:command</code></a></td>
+</tr>
+<tr>
+<td><code>container.build</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/container-build/plugin.json"><code>kubeclaw.container-build:buildkit</code></a></td>
+</tr>
+<tr>
+<td><code>kubernetes.exposure</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/tailscale-exposure/plugin.json"><code>kubeclaw.tailscale-exposure:exposure</code></a></td>
+</tr>
+<tr>
+<td><code>kubernetes.fixture</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/kubernetes-fixture/plugin.json"><code>kubeclaw.kubernetes-fixture:deployment</code></a></td>
+</tr>
+<tr>
+<td><code>kubernetes.runtime-security</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json"><code>kubeclaw.security-providers:kubernetes-runtime</code></a></td>
+</tr>
+<tr>
+<td><code>network.http</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/api-flow/plugin.json"><code>kubeclaw.api-flow:flow</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/plugin.json"><code>kubeclaw.demo-auth-smoke:session</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/plugin.json"><code>kubeclaw.http:request</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/openapi/plugin.json"><code>kubeclaw.openapi:operations</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json"><code>kubeclaw.security-providers:headers</code></a></td>
+</tr>
+<tr>
+<td><code>security.scan</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json"><code>kubeclaw.security-providers:dependency-trivy</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json"><code>kubeclaw.security-providers:image-trivy</code></a><br><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json"><code>kubeclaw.security-providers:kubernetes-policy</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="names-used-by-both-systems">Names Used By Both Systems</h2>
+<p>Some names occur in both tables because both systems describe the same external action.
+Each system still performs its own admission check and uses its own request contract.
+Configure and verify both boundaries when Nova submits work that Buster later executes.</p>
+</main></body></html>

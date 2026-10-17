@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/buster.html"></head><body><main>
+<h1 id="buster-from-test-intent-to-verified-result">Buster: From Test Intent to Verified Result</h1>
+<p>Status: implemented with stated environment limits
+Audience: technical reader, operator, test author, Buster maintainer
+Owner: buster
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates">skills/nova/core/test-gates</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates">skills/buster/engine/test-gates</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-test-gate/v1">contracts/pipeline-test-gate/v1</a>
+Evidence revision: <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>
+Applies to: the current Nova-to-Buster remote test-gate path
+Last verified: source and contract inspection on 2026-09-19</p>
+<h2 id="product-boundary">Product Boundary</h2>
+<p>Buster executes a test plan. It does not decide which product work Nova must do.
+Nova selects the test scope, resolves suites, and freezes the plan. Buster admits
+that plan, executes its nodes, retains evidence, and returns a digest-bound
+result identity. Nova verifies and imports the result. Nova then applies the
+gate policy.</p>
+<p>This separation prevents a test provider from changing the pipeline. A provider
+can report facts about one attempt. It cannot add a test, change a blocking node
+to advisory, or declare the complete pipeline successful.</p>
+<h3 id="decision-record-freeze-the-plan-before-remote-execution">Decision record: freeze the plan before remote execution</h3>
+<ul>
+<li><strong>Problem and constraints:</strong> Nova can restart and Buster can execute on a
+different host. Both sides must still agree on the nodes, package bytes,
+configuration, limits, links, and source revision.</li>
+<li><strong>Decision:</strong> Nova resolves the complete test plan and its
+digest before it submits a remote Buster job. Buster executes that fixed plan.</li>
+<li><strong>Rejected alternative:</strong> Let Buster discover or select tests from the project
+at execution time. <a href="../decisions/core-and-plugins.html#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs">ADR-013</a>
+and <a href="../decisions/test-gate.html#d-110-remote-nova-to-buster-plan-job">D-110</a>
+retain the actual transport decision and its alternatives.</li>
+<li><strong>Reason:</strong> A later discovery step would let caller and executor use different
+meanings for the same job identity.</li>
+<li><strong>Cost:</strong> The plan is traceable and repeatable, but it cannot absorb a
+later provider or configuration change; Nova must resolve a new plan and digest.</li>
+<li><strong>Reconsider when:</strong> Reconsider the transport when the accepted queue target in
+D-098 replaces the first authenticated service transport. Do not reconsider the
+fixed-plan identity rule unless a replacement preserves the same authority.</li>
+<li><strong>Decision status:</strong> <a href="../decisions/test-gate.html#d-097-one-immutable-attempt-is-the-worker-unit">D-097</a>
+accepts the immutable-attempt rule. D-110 records the remote fixed-plan job,
+but its individual approval and date remain unconfirmed. The implementation
+does not change that historical status.</li>
+<li><strong>Implementation status:</strong> Implemented for the inspected Nova resolver, Buster
+runner, and remote result path. Live multi-host acceptance is separate.</li>
+<li><strong>Supersession:</strong> No successor replaces the fixed-plan rule. D-110 narrows the
+initial transport relative to D-098; it does not replace plan immutability.</li>
+</ul>
+<blockquote>
+<p><strong>Source evidence — authority split</strong></p>
+<p><strong>Claim:</strong> Nova fixes the plan identity; Buster validates that identity; Nova
+owns the final gate decision after result verification.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L720-L754">Nova resolver, <code>resolveTestPlan</code></a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts#L234-L265">Buster runner admission</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-authority.ts#L109-L190">Nova result authority</a></p>
+<p><strong>Contract or setting:</strong> <a href="../decisions/core-and-plugins.html#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs">ADR-013</a> ·
+<a href="../decisions/core-and-plugins.html#adr-014-separate-buster-execution-evidence-from-nova-quality-judgment">ADR-014</a></p>
+<p><strong>Test evidence:</strong> <code>npm run verify:test-gate:suite-resolver</code> passed on
+2026-09-19. <code>npm run verify:test-gate:remote-plan</code> stopped at the durable-store
+lock because this host has BusyBox <code>flock</code>, which does not support the required
+timeout option. No live multi-host job ran.</p>
+<p><strong>Revision:</strong> <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code></p>
+<p><strong>Limit:</strong> These sources prove code and contract behavior. They do not prove
+live dependency readiness or the original reason beyond the decision records.</p>
+</blockquote>
+<h2 id="why-each-boundary-exists">Why Each Boundary Exists</h2>
+<p>The canonical decision records are <a href="../decisions/core-and-plugins.html">ADR-003, ADR-013, and ADR-014</a>
+and <a href="../decisions/test-gate.html">D-001 through D-119</a>. The table below is a
+mechanism map. It explains the consequence of current behavior. Its contrast
+column identifies the failure that the mechanism prevents; it does not claim
+that every contrast was a historically considered alternative.</p>
+<table>
+<thead>
+<tr>
+<th>Current mechanism</th>
+<th>Why the flow needs it</th>
+<th>Failure it prevents</th>
+<th>Cost and consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Send one committed Git archive.</td>
+<td>Buster must execute the same bytes that Nova identified.</td>
+<td>Send the mutable working tree or let Buster clone a moving branch.</td>
+<td>The author must commit every required file before execution.</td>
+</tr>
+<tr>
+<td>Sign the source statement with Nova's Ed25519 key.</td>
+<td>Buster must know which trusted source authority created the archive identity.</td>
+<td>Trust a repository name, transport token, or archive digest alone.</td>
+<td>Operators must provision, protect, and rotate an asymmetric key pair.</td>
+</tr>
+<tr>
+<td>Keep Buster result receipts hash-bound instead of signing them.</td>
+<td>The authenticated service boundary and exact digests provide the implemented result authority.</td>
+<td>Describe deterministic receipt hashes as cryptographic signatures.</td>
+<td>A receipt proves internal identity binding, not independent non-repudiation.</td>
+</tr>
+<tr>
+<td>Store status, result, and evidence as separate objects.</td>
+<td>Polling must stay small while result and evidence bytes retain exact identities.</td>
+<td>Put all bytes into every status response.</td>
+<td>Operators must preserve and recover several related durable objects.</td>
+</tr>
+<tr>
+<td>Reserve result capacity during admission.</td>
+<td>An accepted job must not create storage debt that can fail only after execution.</td>
+<td>Admit work until the result store becomes full.</td>
+<td>Conservative reservations can reject work before the store is physically full.</td>
+</tr>
+<tr>
+<td>Run providers through Worker Core capabilities.</td>
+<td>A package receives only declared, bounded authority for one attempt.</td>
+<td>Let provider code open host processes, sockets, cluster clients, or scanners directly.</td>
+<td>Each new authority needs a policy, adapter, limits, tests, and operator configuration.</td>
+</tr>
+<tr>
+<td>Keep original evidence and normalized report facts.</td>
+<td>Normalization supports common decisions, while original bytes preserve diagnostic detail.</td>
+<td>Keep only parsed counts or only raw files.</td>
+<td>Evidence storage must account for both forms and their separate limits.</td>
+</tr>
+<tr>
+<td>Import a verified result once in Nova.</td>
+<td>A retry must continue the same durable import instead of duplicating evidence or changing identity.</td>
+<td>Mark the gate complete before every evidence object is present.</td>
+<td>Nova needs pending and complete import records plus conflict handling.</td>
+</tr>
+</tbody>
+</table>
+<p>This table is not a decision register. Decision status, implementation status,
+reconsideration conditions, evidence, and supersession remain in the canonical
+records. In particular,
+<a href="../decisions/core-and-plugins.html#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core">ADR-003</a>
+owns the component split, <a href="../decisions/core-and-plugins.html#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs">ADR-013</a>
+owns durable remote work, and <a href="../decisions/core-and-plugins.html#adr-014-separate-buster-execution-evidence-from-nova-quality-judgment">ADR-014</a>
+owns the separation between execution facts and pipeline judgment.</p>
+<h2 id="complete-request-path">Complete Request Path</h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant P as Pipeline declaration
+    participant N as Nova
+    participant NS as Nova durable stores
+    participant B as Buster plan service
+    participant R as Buster runner
+    participant W as Worker Core
+    participant X as Provider sandbox
+    P-&gt;&gt;N: Tests, fixtures, suites, coverage, limits
+    N-&gt;&gt;N: Resolve and digest immutable plan
+    N-&gt;&gt;N: Archive committed Git revision
+    N-&gt;&gt;NS: Store dispatch intent and source archive
+    N-&gt;&gt;B: POST digest-bound plan job
+    B-&gt;&gt;B: Verify source signature, plan, request, capacity
+    B-&gt;&gt;B: Persist accepted job
+    B-&gt;&gt;R: Execute fixed plan
+    R-&gt;&gt;W: Run bounded attempt envelope
+    W-&gt;&gt;X: Load exact provider snapshot
+    X--&gt;&gt;R: Facts, outputs, reports, evidence declarations
+    R-&gt;&gt;B: Attempts, node results, cleanup facts
+    B-&gt;&gt;B: Store result and evidence
+    N-&gt;&gt;B: Poll status and fetch exact result/evidence digests
+    N-&gt;&gt;N: Verify identities, receipts, counts, and policy
+    N-&gt;&gt;NS: Import once, then mark complete
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.</p>
+<p>Participants: Pipeline declaration, Nova, Nova durable stores, Buster plan service, Buster runner, Worker Core, Provider sandbox.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Pipeline declaration</td>
+<td>Message — Tests, fixtures, suites, coverage, limits</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Nova</td>
+<td>Self-action — Resolve and digest immutable plan</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Nova</td>
+<td>Self-action — Archive committed Git revision</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Nova</td>
+<td>Message — Store dispatch intent and source archive</td>
+<td>Nova durable stores</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Nova</td>
+<td>Message — POST digest-bound plan job</td>
+<td>Buster plan service</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Buster plan service</td>
+<td>Self-action — Verify source signature, plan, request, capacity</td>
+<td>Buster plan service</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Buster plan service</td>
+<td>Self-action — Persist accepted job</td>
+<td>Buster plan service</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Buster plan service</td>
+<td>Message — Execute fixed plan</td>
+<td>Buster runner</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Buster runner</td>
+<td>Message — Run bounded attempt envelope</td>
+<td>Worker Core</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Worker Core</td>
+<td>Message — Load exact provider snapshot</td>
+<td>Provider sandbox</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Provider sandbox</td>
+<td>Dashed reply — Facts, outputs, reports, evidence declarations</td>
+<td>Buster runner</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Buster runner</td>
+<td>Message — Attempts, node results, cleanup facts</td>
+<td>Buster plan service</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Buster plan service</td>
+<td>Self-action — Store result and evidence</td>
+<td>Buster plan service</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Nova</td>
+<td>Message — Poll status and fetch exact result/evidence digests</td>
+<td>Buster plan service</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Nova</td>
+<td>Self-action — Verify identities, receipts, counts, and policy</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Nova</td>
+<td>Message — Import once, then mark complete</td>
+<td>Nova durable stores</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: Nova reads the selected test scope and creates a deterministic
+plan. It archives only one committed Git tree and signs that source identity.
+Nova stores the job before network dispatch. Buster verifies the job before it
+stores an <code>accepted</code> status. The runner executes each ready node through Worker
+Core and a package snapshot. Buster stores the terminal result and evidence.
+Nova fetches those bytes by digest, verifies them, and records the import before
+it returns the decision to the pipeline.</p>
+<h2 id="1-plan-resolution">1. Plan Resolution</h2>
+<p>The input scope contains direct tests, fixtures, selected suites, coverage, and
+concurrency limits. Suite templates are composition data. They can contribute
+nodes, defaults, links, conditions, and concurrency groups. They cannot install
+code or grant authority.</p>
+<p>The resolver performs these operations:</p>
+<ol>
+<li>Validate every suite contract and build a unique catalogue.</li>
+<li>Apply exclusions and permitted overrides.</li>
+<li>combine suite nodes with project-local nodes;</li>
+<li>validate provider configuration against the selected package schema;</li>
+<li>expand permitted matrix fields within the policy limit;</li>
+<li>bind input ports to exact upstream output ports;</li>
+<li>reject cycles, missing dependencies, and incompatible ports;</li>
+<li>bind provider and report-adapter package digests;</li>
+<li>calculate stable execution and test identities; and</li>
+<li>calculate the final plan digest.</li>
+</ol>
+<p>The resolved plan records what will run. It does not prove that a provider,
+cluster, browser, scanner, or network target is available.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L279-L409">Suite admission, exclusions, overrides, and template digests are resolved before node expansion</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L624-L754">The resolver validates links, graph order, concurrency, coverage, and the final plan digest</a>.</p>
+</blockquote>
+<h2 id="2-committed-source-snapshot">2. Committed Source Snapshot</h2>
+<p>Nova never sends the mutable working tree to Buster. It resolves a commit and
+its tree, creates a compressed Git archive, and binds repository, stage,
+revision, tree, archive digest, size, and creator authority. An Ed25519
+signature protects this source statement.</p>
+<p>Buster verifies the configured authority and public key before admission. The
+signature proves which authority created the snapshot statement. The archive
+digest proves byte identity. Neither fact proves that the source is safe.</p>
+<p>The archive limit is at most 128 MiB. Nova rejects a non-root repository path,
+an invalid Git object identity, an empty archive, or a changed digest.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/source-snapshot.ts#L17-L64">Nova archives one committed Git tree and signs its exact identity</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/remote.ts#L61-L104">The shared contract signs and verifies the source statement with Ed25519</a>.</p>
+</blockquote>
+<h2 id="3-dispatch-and-http-api">3. Dispatch and HTTP API</h2>
+<p>Nova calculates the job ID from the idempotency key. The request contains the
+resolved plan, source snapshot, encoded archive, node grants, concurrency
+limit, stage identity, and submission time. Its request digest covers the
+complete job.</p>
+<p>The Buster API has these routes:</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code></td>
+<td>HTTP process liveness.</td>
+</tr>
+<tr>
+<td><code>GET /ready</code></td>
+<td>Recovery completed and the service can admit work.</td>
+</tr>
+<tr>
+<td><code>POST /v1/plan-jobs</code></td>
+<td>Validate and durably admit one exact job.</td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/:jobId</code></td>
+<td>Read current durable status.</td>
+</tr>
+<tr>
+<td><code>DELETE /v1/plan-jobs/:jobId</code></td>
+<td>Request cancellation for the same job.</td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/:jobId/results/:digest</code></td>
+<td>Read one terminal result by content digest.</td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/:jobId/evidence/:digest</code></td>
+<td>Read one retained evidence object by digest.</td>
+</tr>
+</tbody>
+</table>
+<p>The transport permits HTTPS or loopback HTTP. Bearer mode requires a token of
+at least 32 characters. SPIFFE-proxy mode requires a loopback endpoint because
+the local proxy owns peer authentication. Redirects are rejected. Request,
+response, result, archive, evidence, and store limits remain separate.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-dispatch.ts#L94-L197">The Nova transport defines job, status, cancellation, result, and evidence calls</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/secure-endpoint.ts#L7-L15">Remote non-loopback plaintext endpoints fail before transport creation</a>.</p>
+</blockquote>
+<h2 id="4-durable-admission-and-state">4. Durable Admission and State</h2>
+<p>Buster verifies the source signature, archive encoding and digest, derived job
+ID, plan digest, request digest, and wire contract. It also reserves the maximum
+result capacity before it accepts a job. This conservative reservation prevents
+several admitted jobs from exhausting the result store after they finish.</p>
+<p>The status states are <code>accepted</code>, <code>running</code>, <code>completed</code>, <code>failed</code>, and
+<code>cancelled</code>. A compare-and-transition record protects each state change. A
+repeated idempotency key returns the prior status only when job and request
+identities match. A different request under the same key fails.</p>
+<p>The stores are local durable record and blob stores under the configured state
+root. They are not a replicated database. Backup, filesystem durability,
+capacity monitoring, and off-host recovery remain operator responsibilities.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-service.ts#L94-L165">Admission verifies identities, reserves result capacity, and stores one accepted job under a lock</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-service.ts#L180-L258">State transition rejects an unexpected predecessor and preserves an existing terminal result</a>.</p>
+</blockquote>
+<h2 id="5-execution-providers-and-worker-core">5. Execution, Providers, and Worker Core</h2>
+<p>The runner validates the plan against the installed registry snapshot. It
+creates a secure workspace, extracts the verified repository archive, and
+schedules nodes only after their dependencies permit execution. Concurrency
+groups and the job-wide limit bound parallel work.</p>
+<p>For each attempt, Buster loads the exact provider package snapshot. Worker Core
+binds attempt identity, limits, deadline, cancellation, resource accounting,
+cleanup, and the sealed result. The provider receives only its declared
+configuration, inputs, workspace, log function, signal, and capability calls.</p>
+<p>Fixtures can retain a live resource for dependent tests. Their cleanup runs
+after consumers finish. Tests return facts and evidence, not fixture lifecycle
+authority. A non-retry-safe provider cannot gain retries from a suite override.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/provider-loader.ts#L37-L86">Provider loading verifies the package digest and imports an attempt-owned snapshot</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts#L325-L390">The runner validates result counts, evidence, reports, and output contracts</a>.</p>
+</blockquote>
+<h2 id="6-evidence-reports-and-result-authority">6. Evidence, Reports, and Result Authority</h2>
+<p>A provider declares evidence files. Buster opens and stores them under bounded
+rules, calculates content digests, and creates immutable references. The runner
+adds its own log evidence. It rejects duplicate IDs or paths, undeclared types,
+missing report files, unknown report formats, invalid counts, and incompatible
+outputs.</p>
+<p>A report adapter parses one declared report artifact. It receives bytes and
+limits, but no host capability. The current installed adapter handles JUnit XML.
+The original report remains evidence when normalized case or finding lists are
+truncated.</p>
+<p>Buster creates attempt receipts, node receipts, and one remote result receipt.
+These receipts bind authority, identity, and result digest. They do not sign
+with a private key. The remote result receipt uses deterministic hashes under
+the named <code>buster-plan-service.v1</code> authority. Source authentication uses the
+separate Ed25519 signature described above.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/remote.ts#L106-L137">The result contract derives the Buster receipt from job and result identity</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/report-adapter-runtime.ts#L118-L153">Report admission checks format, media type, size, cancellation, and runtime-root integrity</a>.</p>
+</blockquote>
+<h2 id="7-nova-verification-and-one-time-import">7. Nova Verification and One-Time Import</h2>
+<p>Nova accepts only a terminal status that belongs to the submitted job and
+request. For a completed job, it downloads the exact result object, validates
+the content and result digests, checks all job, run, plan, node, attempt,
+receipt, and source identities, and derives the gate decision.</p>
+<p>Nova then stores a pending import record, imports every referenced evidence
+blob by digest, and changes the record to <code>complete</code>. A retry with the same
+identity continues or returns that import. A conflicting result fails. Nova
+does not use the Buster status alone as the pipeline verdict.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-import.ts#L156-L207">The importer validates terminal status, result identity, total evidence size, and every evidence digest</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-import.ts#L82-L154">The import store writes pending intent before blobs and completes with a guarded transition</a>.</p>
+</blockquote>
+<h2 id="8-failure-cancellation-restart-and-recovery">8. Failure, Cancellation, Restart, and Recovery</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Current behavior</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dispatch response lost</td>
+<td>Nova keeps the stored job and polls the derived job ID.</td>
+<td>Reuse the same idempotency key and inspect durable status.</td>
+</tr>
+<tr>
+<td>Retryable HTTP failure</td>
+<td>Dispatcher retries within the one gate deadline.</td>
+<td>Restore transport; do not create a different job.</td>
+</tr>
+<tr>
+<td>Job deadline</td>
+<td>Nova requests cancellation and records interruption facts.</td>
+<td>Inspect both Nova and Buster records before another run.</td>
+</tr>
+<tr>
+<td>Buster restart</td>
+<td>Runtime calls recovery before it listens.</td>
+<td>Keep readiness closed until recovery finishes.</td>
+</tr>
+<tr>
+<td>Running work after restart</td>
+<td>Service reconciles durable jobs and terminal workspaces.</td>
+<td>Preserve workspaces that cannot prove cleanup.</td>
+</tr>
+<tr>
+<td>Provider crash</td>
+<td>Attempt becomes errored or unresolved according to Worker proof.</td>
+<td>Read attempt, cleanup, and process evidence.</td>
+</tr>
+<tr>
+<td>Fixture cleanup failure</td>
+<td>Cleanup error remains in the remote result.</td>
+<td>Do not treat a passed test as complete cleanup.</td>
+</tr>
+<tr>
+<td>Evidence import interruption</td>
+<td>Nova retains <code>pending_evidence</code> and retries the same import.</td>
+<td>Restore the missing blob path; do not re-execute tests.</td>
+</tr>
+<tr>
+<td>Store capacity exhausted</td>
+<td>Admission fails before accepting more result liability.</td>
+<td>Free only verified retained data or add capacity.</td>
+</tr>
+<tr>
+<td>Completed archive pressure</td>
+<td>Manual compaction can remove inline archive bytes after full proof.</td>
+<td>Use an exact compaction intent; retain source, result, and evidence authority.</td>
+</tr>
+</tbody>
+</table>
+<p>Cancellation is cooperative across boundaries. Nova aborts transport and asks
+Buster to cancel. Buster aborts the running job. Worker Core and capability
+implementations must propagate their signals to owned processes. A closed HTTP
+connection alone does not prove that every descendant stopped.</p>
+<h2 id="9-configuration-and-environment-boundary">9. Configuration and Environment Boundary</h2>
+<p>The production path depends on a selected Buster runtime role, Worker Core,
+the local durable state volume, exact provider packages, and capability
+implementations. Individual suites add BuildKit, Kubernetes, Tailscale,
+browsers, network targets, Trivy databases, or report tools.</p>
+<p>The <a href="../reference/buster-suites.html">suite reference</a> gives all shipped suite
+fields and prerequisites. The <a href="buster-namespace-controller.html">namespace controller</a>
+explains Kubernetes fixture ownership. The <a href="../use/workflows/buster-suite.html">workflow</a>
+shows one complete suite, fixture, matrix, report, and decision path.</p>
+<h2 id="10-implemented-limits">10. Implemented Limits</h2>
+<ul>
+<li>The durable stores use one local filesystem. They do not provide replication.</li>
+<li>Result receipts are deterministic integrity bindings, not asymmetric Buster signatures.</li>
+<li>Suite templates can be empty and require project nodes or overrides.</li>
+<li>A role manifest proves package selection, not live capability readiness.</li>
+<li>Local contract tests do not prove BuildKit, Kubernetes, Tailscale, browsers,
+scanners, SPIFFE, or remote network behavior.</li>
+<li>Compaction is a manual local operation. It does not define general retention
+or garbage collection.</li>
+<li>Buster cannot turn missing mandatory coverage, an excluded node, or a skipped
+node into a pass.</li>
+</ul>
+<p>These limits are part of the architecture. They prevent a reader from treating
+one green provider result as complete pipeline or platform evidence.</p>
+</main></body></html>

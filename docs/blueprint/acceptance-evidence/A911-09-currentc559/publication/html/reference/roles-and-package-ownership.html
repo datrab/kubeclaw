@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/roles-and-package-ownership.html"></head><body><main>
+<h1 id="roles-and-package-ownership">Roles and package ownership</h1>
+<p>Status: current source reference
+Audience: operator, package maintainer, plugin author, developer
+Owner: runtime packaging, Nova, Buster, Prism, and Worker Core maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/deployment.yaml">charts/kubeclaw/templates/deployment.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/values.yaml">charts/kubeclaw/values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/external-capabilities.json">packaging/runtime/external-capabilities.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/package-ownership.json">packaging/runtime/package-ownership.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles/buster.json">packaging/runtime/roles/buster.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles/nova.json">packaging/runtime/roles/nova.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles/prism.json">packaging/runtime/roles/prism.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/build-runtime-role-bundle.mjs">scripts/build-runtime-role-bundle.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/check-runtime-role-manifests.mjs">scripts/check-runtime-role-manifests.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/remote-plan-cli.ts">skills/buster/engine/remote-plan-cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/production.ts">skills/buster/engine/test-gates/production.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-http.ts">skills/buster/engine/test-gates/remote-plan-http.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-runtime.ts">skills/buster/engine/test-gates/remote-plan-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/remote-plan-service.ts">skills/buster/engine/test-gates/remote-plan-service.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.schema.json">skills/common/plugin-runtime/foundation/config/platform.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.ts">skills/common/plugin-runtime/foundation/config/platform.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/capabilities.ts">skills/common/plugin-runtime/foundation/registry/capabilities.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/configuration.ts">skills/common/plugin-runtime/foundation/registry/configuration.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/discovery.ts">skills/common/plugin-runtime/foundation/registry/discovery.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/cli.ts">skills/nova/core/cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-runtime.ts">skills/nova/core/execution/engine-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/cli.ts">skills/nova/project/cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/legacy-import-cli.ts">skills/nova/project/legacy-import-cli.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/recovery.ts">skills/nova/project/recovery.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/config/native-worker.ts">skills/prism/config/native-worker.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/engine/index.ts">skills/prism/engine/index.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/engine/worker-binding.ts">skills/prism/engine/worker-binding.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/runtime.ts">skills/prism/runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/internal-auth.ts">skills/prism/server/internal-auth.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/native-worker-execution.ts">skills/prism/server/native-worker-execution.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/native-worker-host.ts">skills/prism/server/native-worker-host.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/worker-config.ts">skills/prism/server/worker-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/worker.ts">skills/prism/server/worker.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-attempt-executor.ts">skills/worker/core/worker/native-attempt-executor.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-attempt-journal.ts">skills/worker/core/worker/native-attempt-journal.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-pool-policy.ts">skills/worker/core/worker/native-pool-policy.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-result.ts">skills/worker/core/worker/native-result.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-runtime-identity.ts">skills/worker/core/worker/native-runtime-identity.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-supervisor-authority.ts">skills/worker/core/worker/native-supervisor-authority.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-worker-launcher.c">skills/worker/core/worker/native-worker-launcher.c</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/native-worker-process.ts">skills/worker/core/worker/native-worker-process.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/trust.ts">skills/worker/core/worker/trust.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs">tests/verification/contracts/check-plugin-system-v2-platform-config.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts/check-prism-runtime-role.mts">tests/verification/contracts/check-prism-runtime-role.mts</a>
+Applies to: pipeline-runtime-role.v1, pipeline-runtime-bundle.v1, pipeline-platform.v2, buster-remote-plan-runtime.v1, and current Prism native workers
+Last verified: 2026-10-14 at source revision <code>eb51092b825c9501c53e486517ae3739411f60b3</code>; source and reader-reference facts only</p>
+<p>Use this reference when a package is missing from a bundle, a registration is denied, or a worker starts with the wrong configuration. A <strong>role</strong> selects bundle contents. A <strong>package owner</strong> identifies the subsystem responsible for source changes. Neither selection nor ownership grants a runtime permission.</p>
+<p>Source revision: <code>eb51092b825c9501c53e486517ae3739411f60b3</code>. The links below identify the exact checked-in sources. A bundle manifest, a configured process, and a successful deployed operation are different results.</p>
+<h2 id="choose-the-boundary-first">Choose the boundary first</h2>
+<table>
+<thead>
+<tr>
+<th>Your question</th>
+<th>Authority to inspect</th>
+<th>What it does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Which code travels in Nova, Buster, or Prism?</td>
+<td><code>packaging/runtime/roles/&lt;role&gt;.json</code> plus <code>package-ownership.json</code></td>
+<td>Activation, credentials, selected providers, or host readiness</td>
+</tr>
+<tr>
+<td>Which installed plugin may Nova activate and call?</td>
+<td><code>pipeline-platform.v2</code>, pipeline stages, plugin registrations, explicit providers and grants</td>
+<td>Buster executor admission or Linux privilege</td>
+</tr>
+<tr>
+<td>Which executor may the Buster service run?</td>
+<td><code>buster-remote-plan-runtime.v1</code>, its selected environment secrets, and the admitted plan</td>
+<td>A Nova grant or a role-manifest permission</td>
+</tr>
+<tr>
+<td>Which Prism implementation handles a worker operation?</td>
+<td>The supplied <code>PrismEngine</code>, installed operation schemas, and worker binding</td>
+<td>A universal Prism platform CLI or an externally selected design provider</td>
+</tr>
+<tr>
+<td>May a Prism native attempt start on this host?</td>
+<td>Listener config, root-managed pool and runtime identity, launcher, and supervisor limits</td>
+<td>Readiness from package presence or a copied identity file</td>
+</tr>
+</tbody>
+</table>
+<p>Follow the runtime consumer, not a familiar capability name. In particular, Buster runtime capability strings, Nova capability grants, and Linux process capabilities are separate namespaces.</p>
+<h2 id="inspect-bundle-selection-without-starting-a-runtime">Inspect bundle selection without starting a runtime</h2>
+<p>Run these steps at the repository root on a development machine with Node.js 24. They need read access to checked-in manifests. They do not need cluster access, credentials, installed plugin activation, or a bundle output directory. See <a href="../extend/developer-handbook.html#prepare-a-clean-checkout">developer setup</a> for the supported development environment.</p>
+<ol>
+<li>Check <code>node --version</code>. Stop if this is not the selected Node.js 24 development environment.</li>
+<li>Print the authoritative role selections:</li>
+</ol>
+<pre><code class="language-bash">node --input-type=module &lt;&lt;'NODE'
+import fs from 'node:fs';
+for (const role of ['nova', 'buster', 'prism']) {
+  const file = `packaging/runtime/roles/${role}.json`;
+  const manifest = JSON.parse(fs.readFileSync(file, 'utf8'));
+  console.log(JSON.stringify({
+    role: manifest.role, entrypoint: manifest.entrypoint,
+    packages: manifest.packages, plugins: manifest.plugins,
+    extensions: manifest.extensions,
+    externalCapabilities: manifest.externalCapabilities,
+  }, null, 2));
+}
+NODE
+</code></pre>
+<ol start="3">
+<li>Check declared selection and dependency closure:</li>
+</ol>
+<pre><code class="language-bash">node scripts/check-runtime-role-manifests.mjs
+</code></pre>
+<p>The first command prints declarations, not activated registrations. The checker reads manifests and package metadata. A successful check exits zero and prints JSON with <code>ok: true</code>. An assertion stops it when selection, ownership, package closure, or declared capability supply is inconsistent. Keep the command, source revision, exit code, and non-secret output with the change. No persistent state needs cleanup. Do not turn this check into an application launch to diagnose a packaging error. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/check-runtime-role-manifests.mjs#L84-L143">role and capability checks</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/check-runtime-role-manifests.mjs#L146-L169">external capability checks</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/check-runtime-role-manifests.mjs#L185-L192">checker success record</a>.</p>
+<h2 id="what-each-bundle-selects">What each bundle selects</h2>
+<p>These package sets share <code>plugin-sdk</code>, <code>plugin-foundation</code>, <code>plugin-system-contract</code>, <code>agent-observability-contract</code>, <code>pipeline-test-gate-contract</code>, <code>pipeline-worker-core-contract</code>, <code>pipeline-observability-contract</code>. The table shows the additional selected packages. Pipeline-plugin IDs, OpenClaw extensions, and package IDs are different fields; use the inspection command for every selected plugin ID.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Declared selection</th>
+<th>Additional packages</th>
+<th>Assembled facade</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova</td>
+<td>12 packages; 31 pipeline plugins</td>
+<td><code>nova-core</code>, <code>nova-runtime</code>, <code>delivery-manifest-contract</code>, <code>telemetry-contract</code>, <code>nova-project</code></td>
+<td><code>/app/skills/pipeline.ts</code> exports <code>@kubeclaw/nova-core</code>; direct invocation loads <code>@kubeclaw/nova-project/cli</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/packaging/runtime/roles/nova.json#L1-L45">Nova role manifest</a></td>
+</tr>
+<tr>
+<td>Buster</td>
+<td>11 packages; 23 pipeline plugins</td>
+<td><code>worker-core</code>, <code>buster-engine</code>, <code>buster-runtime</code>, <code>telemetry-contract</code></td>
+<td><code>/app/skills/runtime.ts</code> exports <code>@kubeclaw/buster-engine</code>; no server launch inferred from the facade</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/packaging/runtime/roles/buster.json#L1-L55">Buster role manifest</a></td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>11 packages; 6 pipeline plugins</td>
+<td><code>worker-core</code>, <code>prism-engine</code>, <code>prism-runtime</code>, <code>prism-contract</code></td>
+<td><code>/app/skills/runtime.ts</code> exports <code>@kubeclaw/prism</code>; no server launch inferred from the facade</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/packaging/runtime/roles/prism.json#L1-L29">Prism role manifest</a></td>
+</tr>
+</tbody>
+</table>
+<p>Each role also selects the <code>kubeclaw-agent-observer</code> OpenClaw extension. Its extension manifest is not a pipeline-plugin registration. <code>node-package</code> entries supply packages; <code>assets</code> entries supply contract files at their declared targets; <code>entrypoint</code> entries select the source used to check the facade. The assembler writes a facade from the role's <code>import</code> and optional <code>execute</code> fields; it does not copy the original entrypoint verbatim. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/packaging/runtime/package-ownership.json#L7-L30">package ownership and bundle kinds</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/build-runtime-role-bundle.mjs#L232-L270">facade construction and bundle manifest</a>.</p>
+<p>A Buster or Prism <code>/app/skills/runtime.ts</code> facade exports its package. That fact alone does not start the remote-plan listener or native worker server. Use the actual consumer entrypoints below, not an invented <code>runtime.ts --platform</code> interface.</p>
+<h3 id="ownership-and-dependency-direction">Ownership and dependency direction</h3>
+<table>
+<thead>
+<tr>
+<th>Package owner</th>
+<th>Declared allowed dependency owners</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shared</code></td>
+<td><code>shared</code></td>
+</tr>
+<tr>
+<td><code>nova</code></td>
+<td><code>shared</code>, <code>nova</code></td>
+</tr>
+<tr>
+<td><code>worker</code></td>
+<td><code>shared</code>, <code>worker</code></td>
+</tr>
+<tr>
+<td><code>buster</code></td>
+<td><code>shared</code>, <code>worker</code>, <code>buster</code></td>
+</tr>
+<tr>
+<td><code>prism</code></td>
+<td><code>shared</code>, <code>worker</code>, <code>prism</code></td>
+</tr>
+</tbody>
+</table>
+<p>These are declared architectural directions, not a claim that the runtime enforces every owner-to-owner edge. The role checker verifies selected package eligibility and internal closure; runtime package trust and caller grants are separate checks. The current split permits Buster and Prism to reuse Worker Core without making Nova packages part of their selected sets. The ownership file does not record a historical reason for every original split. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/packaging/runtime/package-ownership.json#L74-L81">declared dependency directions</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/check-runtime-role-manifests.mjs#L84-L143">role and capability checks</a>.</p>
+<h3 id="external-supply-is-not-a-mount-or-a-grant">External supply is not a mount or a grant</h3>
+<p>Buster and Prism declare <code>git.repository.read</code> from <code>worker-workspace</code>, whose catalog kind is <code>read-only-mount</code>. Buster also declares <code>test.plan.execute</code> from <code>nova-orchestrator</code>, whose kind is <code>orchestrator-routed-capability</code>. These declarations name expected suppliers. They do not prove that a workspace was mounted, a plan was admitted, or a particular caller may execute it. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/packaging/runtime/external-capabilities.json#L1-L19">external capability sources</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/check-runtime-role-manifests.mjs#L146-L169">external capability checks</a>.</p>
+<h2 id="follow-the-bundle-into-its-consumer">Follow the bundle into its consumer</h2>
+<p>The assembler records selected source digests and rejects a changed file set or changed bytes during assembly. It requires a built executable plugin sandbox and installed runtime dependencies. It writes a fresh output tree and can run the extension contract synchronizer. Building a bundle is therefore not the read-only inspection above. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/build-runtime-role-bundle.mjs#L8-L25">assembler prerequisites</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/scripts/build-runtime-role-bundle.mjs#L45-L62">source-selection consistency checks</a>.</p>
+<p>The chart's bundle intake requires exactly one archive root with <code>manifest.json</code> and a top-level <code>skills/</code> directory. The manifest must have <code>schemaVersion: pipeline-runtime-bundle.v1</code>, <code>bundleKind: app-skills-package-set</code>, and the expected agent role. A configured nonempty expected commit or contract version must match. Passing intake allows the selected skills to be copied; it does not establish a functioning plugin or worker. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/charts/kubeclaw/templates/deployment.yaml#L1042-L1084">bundle intake</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Deployment input</th>
+<th>Default and precedence at this boundary</th>
+<th>Failure or consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codeBundle.enabled</code></td>
+<td>Chart default <code>false</code></td>
+<td>With bundle loading disabled, manifest presence alone does not select its code</td>
+</tr>
+<tr>
+<td><code>codeBundle.archiveUrl</code></td>
+<td>Default empty; required by the enabled intake path</td>
+<td>Enabled intake stops when the archive URL is empty</td>
+</tr>
+<tr>
+<td><code>codeBundle.expectedCommit</code></td>
+<td>Default empty; init trims the mapped string and checks it only when nonempty</td>
+<td>A configured mismatch stops bundle acceptance; omission is not commit verification</td>
+</tr>
+<tr>
+<td><code>codeBundle.contractVersion</code></td>
+<td>Chart default <code>v2</code>; nonempty mapped value is compared with manifest <code>contractVersion</code></td>
+<td>A mismatch stops acceptance; <code>v2</code> here is distinct from manifest <code>schemaVersion</code></td>
+</tr>
+<tr>
+<td><code>customSkills</code> overlay</td>
+<td>Cannot override protected runtime paths</td>
+<td><code>pipeline.ts</code>, <code>runtime.ts</code>, <code>contracts</code>, <code>packages</code>, <code>node_modules</code>, and <code>plugins</code> are protected, including their descendants</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/charts/kubeclaw/values.yaml#L34-L45">codeBundle chart defaults</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/charts/kubeclaw/templates/deployment.yaml#L1158-L1170">chart-to-init environment mapping</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/charts/kubeclaw/templates/deployment.yaml#L1042-L1084">bundle intake</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/charts/kubeclaw/templates/deployment.yaml#L1088-L1107">protected custom-skill paths</a>. Preserve the rejected archive's public identity and the selected expected values. Correct the artifact or selection; do not remove the expected-commit check or use a custom-skill overlay to bypass rejection.</p>
+<h2 id="nova-configure-installed-code-providers-and-callers">Nova: configure installed code, providers, and callers</h2>
+<p>The assembled Nova facade executes <code>@kubeclaw/nova-project/cli</code>, owned by <code>skills/nova/project/cli.ts</code>. It chooses an interface before it reads a project configuration. <code>--import-legacy</code> selects import first; otherwise <code>--project</code> selects project operation. Without either it delegates to the Core CLI. Do not apply the Core CLI's <code>--pipeline</code> requirement to project or import mode. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/project/cli.ts#L13-L38">actual facade dispatcher</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Selected interface</th>
+<th>Inputs and behavior</th>
+<th>Reader procedure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project compile</td>
+<td><code>--project &lt;file&gt;</code> and <code>--platform &lt;file&gt;</code>, with <code>--compile &lt;new-file&gt;</code>; compiles and validates stages, registrations, and grants against the installed runtime, then writes canonical graph JSON using create-only <code>wx</code> mode. An existing output is not overwritten; the success record contains <code>status: compiled</code>, run identity, stage count, and definition digest</td>
+<td><a href="../use/operate.html#validate-before-starting">validate before starting</a></td>
+</tr>
+<tr>
+<td>Project start</td>
+<td><code>--project &lt;file&gt;</code> and <code>--platform &lt;file&gt;</code> without compile/recover/signal; checks the project repository's current <code>HEAD</code> against <code>baseRevision</code> and rejects uncommitted changes before calling the pipeline runner</td>
+<td><a href="../use/operate.html#start-a-project-run">start a project run</a></td>
+</tr>
+<tr>
+<td>Project recovery</td>
+<td>Same project/platform plus <code>--recover &lt;run-id&gt;</code>; reconstructs and verifies the stored pinned graph, rejects a different derived run ID, and recovers the existing run</td>
+<td><a href="../use/operate.html#recover-after-interruption">recover after interruption</a></td>
+</tr>
+<tr>
+<td>Project signal</td>
+<td>Same project/platform plus <code>--signal &lt;file&gt;</code>; reconstructs the stored pinned graph, reads the signal JSON, and resumes that run rather than allocating a replacement run</td>
+<td><a href="../use/operate.html#approve-or-resume-a-wait">approve or resume a wait</a></td>
+</tr>
+<tr>
+<td>Legacy import</td>
+<td><code>--import-legacy &lt;file&gt;</code>, <code>--authoring &lt;file&gt;</code>, <code>--platform &lt;file&gt;</code>, and <code>--output &lt;new-file&gt;</code>; all four pairs are required. Resolves the legacy file's real path, requires a canonical authoring repository root, validates the imported graph, and creates a new project file without replacing an existing output</td>
+<td><a href="nova-project.html#import-a-legacy-project-file">import a legacy project file</a></td>
+</tr>
+<tr>
+<td>Explicit graph or audit</td>
+<td>Delegates to <code>@kubeclaw/nova-core/cli</code>, not the project compiler; uses the separate graph/run/audit argument rules below</td>
+<td><a href="../use/operate.html#understand-the-two-command-forms">understand the two command forms</a></td>
+</tr>
+</tbody>
+</table>
+<p>Project mode accepts only <code>--project</code>, <code>--platform</code>, <code>--compile</code>, <code>--recover</code>, and <code>--signal</code>, each with one value. It rejects unknown or repeated options, absent or option-shaped values, a missing project/platform pair, and more than one compile/recover/signal mode. Project and platform file arguments, compile output, and signal file arguments resolve from the invocation directory. The platform loader then canonicalizes its file and resolves that file's internal paths as described below. Project mode loads JSON project input; import mode instead requires explicit authoring policy and has its own four-option parser. These branches are not interchangeable configuration sources. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/project/cli.ts#L19-L42">project parsing, validation and output</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/project/cli.ts#L43-L62">project start, recovery and signal</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/project/recovery.ts#L40-L52">pinned project recovery</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/project/legacy-import-cli.ts#L8-L30">legacy import parsing and create-only output</a>.</p>
+<p>Project errors include <code>PROJECT_ARGUMENT_INVALID</code>, <code>PROJECT_AND_PLATFORM_REQUIRED</code>, <code>PROJECT_COMMAND_CONFLICT</code>, <code>PROJECT_RECOVERY_RUN_MISMATCH</code>, <code>PROJECT_BASELINE_CHANGED</code>, and <code>PROJECT_REPOSITORY_DIRTY</code>. Keep the original project, platform path, run identity, and durable state when a branch rejects the operation. Use the linked procedure's ownership and evidence prerequisites before recovery or signal. A compiled graph or a returned <code>succeeded</code> status is not proof of live reachability or human acceptance. No project, import, recovery, or signal command is part of the read-only bundle inspection above.</p>
+<p>For the delegated explicit-graph interface, <code>skills/nova/core/cli.ts</code> requires <code>--platform</code> and either <code>--pipeline</code> or <code>--audit</code>. <code>--audit</code> cannot be combined with pipeline/run/recover/signal inputs. Run, recover, and signal dispatch are distinct branches; this reference does not turn an audit into a retry instruction. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/core/cli.ts#L17-L76">Nova CLI arguments and dispatch</a>.</p>
+<p>The platform file must use <code>pipeline-platform.v2</code>. Its loader resolves the file with <code>fs.realpathSync</code>, validates JSON, then freezes the resulting configuration. The loader resolves relative installation, trust, storage, and isolation paths against the directory of that <strong>canonical file</strong>. It uses neither the shell's working directory nor a symlink's parent. This loader does not merge role-manifest or environment defaults into required fields. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/config/platform.ts#L52-L70">loadPlatformConfig and path resolution</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Platform key</th>
+<th>Required relationship, omission, and effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Required; exactly <code>pipeline-platform.v2</code></td>
+</tr>
+<tr>
+<td><code>installationRoots</code></td>
+<td>Required, nonempty unique string array; identifies installed plugin roots</td>
+</tr>
+<tr>
+<td><code>trustedBuiltinRoots</code></td>
+<td>Required, nonempty unique string array; identifies first-party trust roots, not arbitrary project code</td>
+</tr>
+<tr>
+<td><code>externalTrust.allowedSourceDigests</code></td>
+<td>Required map: canonical <code>local:&lt;package-root&gt;</code> references select nonempty arrays of <code>sha256:&lt;64 lowercase hex&gt;</code> package digests</td>
+</tr>
+<tr>
+<td><code>externalTrust.verifiedAttestations</code></td>
+<td>Required map: a package digest maps to an attestation digest; both use <code>sha256:&lt;64 lowercase hex&gt;</code></td>
+</tr>
+<tr>
+<td><code>providers</code></td>
+<td>Required map from capability to globally qualified adapter registration; selection is explicit even with one available provider</td>
+</tr>
+<tr>
+<td><code>grants</code></td>
+<td>Required nested map: registration ID → requested capability → constraint object. Missing required, extra, or disabled-registration grants are rejected</td>
+</tr>
+<tr>
+<td><code>adapters</code></td>
+<td>Required registration-ID → configuration-object map; it does not itself enable every adapter</td>
+</tr>
+<tr>
+<td><code>activeAdapters</code></td>
+<td>Required unique string array; initial explicitly enabled adapters. Provider dependency resolution can enable more adapters</td>
+</tr>
+<tr>
+<td><code>observers</code></td>
+<td>Required registration-ID → configuration-object map; its keys select enabled observers</td>
+</tr>
+<tr>
+<td><code>storageRoot</code></td>
+<td>Required nonempty path; anchors durable run and resource-lock storage after path resolution</td>
+</tr>
+<tr>
+<td><code>shutdownTimeoutMs</code></td>
+<td>Required integer ≥ 1; no loader default</td>
+</tr>
+<tr>
+<td><code>effectLockTtlMs</code></td>
+<td>Optional integer, 60,000–86,400,000 ms. Adapter runtime uses 300,000 ms when absent; this is a consumer default, not schema insertion</td>
+</tr>
+<tr>
+<td><code>isolation.cgroupRoot</code></td>
+<td><code>isolation</code> is optional; when supplied its nonempty path is required and resolved from the platform file</td>
+</tr>
+<tr>
+<td><code>orchestratorIssuerId</code></td>
+<td>Required nonempty string naming the orchestrator issuer</td>
+</tr>
+<tr>
+<td><code>administrativeDecisionIssuers</code></td>
+<td>Required unique array of objects with <code>type</code> (<code>operator</code> or <code>administrator</code>) and nonempty <code>id</code>; an empty array is allowed</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/config/platform.schema.json#L4-L62">required platform fields and trust shape</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/config/platform.schema.json#L64-L112">registration, storage and issuer fields</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/core/execution/engine-runtime.ts#L82-L87">effect lock default</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/discovery.ts#L78-L102">package trust choices</a>. Schema validation does not turn a missing required property into an empty map. Package discovery canonicalizes installation roots and rejects duplicate canonical roots. Trust selection checks builtin roots, then a matching source digest, then a verified attestation; otherwise it raises <code>REGISTRY_PACKAGE_UNTRUSTED</code>. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/discovery.ts#L13-L57">canonical installation roots and package trust</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/discovery.ts#L78-L102">package trust choices</a>.</p>
+<p>Runtime preparation first discovers packages and builds a registry. It enables pipeline stage owners, observer keys, and <code>activeAdapters</code>. It then resolves providers and per-registration grants, validates configuration against owning registration schemas, and activates the resolved registry. A provider selected for a required capability is enabled with its dependency chain. For example, <code>kubeclaw.artifact-store:artifact-store</code> identifies an adapter registration, not a grant to every package. A stage or observer still needs its own requested-capability constraints. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/nova/core/execution/engine-runtime.ts#L27-L56">Nova runtime preparation</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L85-L132">explicit provider selection</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L151-L209">grant and dependency resolution</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/configuration.ts#L28-L83">registration-specific configuration</a>.</p>
+<p>Configuration is captured in the loaded runtime. Editing a JSON file does not revise an already constructed frozen object. Before a controlled restart, preserve the run identity and audit; do not create a second run to hide an uncertain effect. Use the <a href="../understand/plugin-runtime.html">plugin runtime explanation</a> and <a href="../extend/developer-handbook.html#change-nova-lifecycle-scheduling-or-run-authority">Nova lifecycle change guide</a> for the owning mechanisms.</p>
+<h2 id="buster-configure-the-separate-remote-plan-service">Buster: configure the separate remote-plan service</h2>
+<p>The actual CLI <code>skills/buster/engine/remote-plan-cli.ts</code> accepts exactly <code>--config &lt;buster-runtime.json&gt;</code>. The CLI resolves its file path from the invocation directory. The CLI loads the production runtime, starts it, prints a <code>buster-remote-runtime-ready.v1</code> record, and waits for SIGINT or SIGTERM before stopping. The runtime recovers its service state <strong>before</strong> listening. This identifies the interface; it is not a claim that a service has been started here. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/remote-plan-cli.ts#L1-L27">Buster remote-plan CLI</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-runtime.ts#L24-L52">Buster recovery-before-listen sequence</a>.</p>
+<p>The loader canonicalizes the selected config file. Referenced <code>platformConfig</code>, <code>stateRoot</code>, <code>runtimeRoot</code>, and <code>tarExecutable</code> paths are then resolved from that canonical config directory. <code>path.resolve</code> is lexical resolution; it is not a promise that every referenced path is already a canonical regular file. Browser executable overrides have separate realpath and executable-access checks. The environment supplies only the explicitly selected revision or secret inputs at this boundary; a role manifest does not override them. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L116-L162">Buster config, revision and secret selection</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L212-L239">durable storage and concurrency inputs</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L239-L277">command and build configuration</a>.</p>
+<p><strong>SPIFFE</strong> (Secure Production Identity Framework for Everyone) names workload identities with SPIFFE IDs. On Buster's trusted-peer path, the server compares the peer ID in a forwarded client-certificate header with the configured allowed IDs. It requires the request to arrive from a loopback proxy. Selecting this path does not configure that proxy or establish transport trust. The alternative bearer path compares the supplied HTTP token with the configured secret; it is separate from source-attestation verification. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/trust.ts#L17-L52">peer identity and loopback proxy checks</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-http.ts#L8-L31">Buster peer or bearer request authorization</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Buster startup input</th>
+<th>Required value, default, or precedence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exactly <code>buster-remote-plan-runtime.v1</code></td>
+</tr>
+<tr>
+<td>Environment <code>KUBECLAW_BUILD_REVISION</code></td>
+<td>Required, 40–64 lowercase hex characters; checked before configuration construction</td>
+</tr>
+<tr>
+<td><code>platformConfig</code></td>
+<td>Required nonempty path to the separate platform policy; its own path fields use that file's canonical directory</td>
+</tr>
+<tr>
+<td><code>host</code>, <code>port</code></td>
+<td>Required listener values; port must be an integer 0–65,535. Port 0 asks the OS for an assigned port; the ready record reports it</td>
+</tr>
+<tr>
+<td><code>trustedPeerSpiffeIds</code></td>
+<td>Optional nonempty array of 1–32 nonempty strings; if supplied, selects the trusted-peer authentication path instead of the token path</td>
+</tr>
+<tr>
+<td><code>tokenEnvironmentVariable</code></td>
+<td>Required on the token path; uppercase environment name. The selected value must be nonempty, and its JavaScript string length must be at least 32; a shorter value is rejected by the HTTP server constructor before listening</td>
+</tr>
+<tr>
+<td><code>sourceAttestationPublicKeyEnvironmentVariable</code></td>
+<td>Required uppercase environment name, distinct from the token selector when used. Its selected value must be nonempty and parse with <code>crypto.createPublicKey</code> as an Ed25519 key; the store normalizes the accepted public key to SPKI PEM format</td>
+</tr>
+<tr>
+<td><code>trustedSourceAuthority</code></td>
+<td>Required nonempty source authority identifier; distinct from worker revision and HTTP authentication</td>
+</tr>
+<tr>
+<td><code>stateRoot</code>, <code>runtimeRoot</code>, <code>tarExecutable</code></td>
+<td>Required nonempty paths; source authority, store, extraction, and executable choices must not be inferred from a bundle name</td>
+</tr>
+<tr>
+<td><code>recordLimits</code></td>
+<td>Required object with positive safe integers <code>maximumRecords</code>, <code>maximumBytes</code>, and <code>maximumRecordBytes</code></td>
+</tr>
+<tr>
+<td><code>maximumArchiveBytes</code>, <code>maximumExtractedBytes</code>, <code>maximumResultBytes</code>, <code>maximumResultStoreBytes</code></td>
+<td>Required positive safe integers; admission and retained result/storage limits</td>
+</tr>
+<tr>
+<td><code>maximumRequestBytes</code>, <code>maximumResponseBytes</code>, <code>shutdownTimeoutMs</code></td>
+<td>Required positive safe integers; listener and shutdown limits</td>
+</tr>
+<tr>
+<td><code>maximumActiveJobs</code>, <code>maximumQueuedJobs</code>, <code>maximumConcurrentAttempts</code></td>
+<td>Missing or JSON <code>null</code> selects 2, 16, and 64 respectively; explicit zero is invalid</td>
+</tr>
+<tr>
+<td><code>allowedCapabilities</code></td>
+<td>Required string array; does not mean the same thing as Nova registration grants</td>
+</tr>
+<tr>
+<td><code>tls.keyPath</code>, <code>tls.certificatePath</code></td>
+<td>When <code>tls</code> is supplied, the loader resolves and reads the two real files. No credentials are taken from a project plan</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L116-L162">Buster config, revision and secret selection</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L212-L239">durable storage and concurrency inputs</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L405-L422">TLS files and listener inputs</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-runtime.ts#L24-L52">Buster recovery-before-listen sequence</a>. Trusted-peer authorization and bearer verification have separate request paths; presence of a peer list is not proof of correctly configured proxies or transport. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-http.ts#L8-L31">Buster peer or bearer authentication</a>.</p>
+<p>A missing or empty selected token fails in the loader; a nonempty token shorter than 32 fails later with <code>BUSTER_REMOTE_TOKEN_INVALID</code>. A missing source-key value fails in the loader. An unparseable nonempty value or a key type other than Ed25519 fails during store construction with <code>BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID</code>. Both invalid-value checks occur before listening, but store construction can already create or open durable storage. Preserve existing state; neither failure proves that service recovery completed or that storage remained unchanged. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L135-L155">selected secret names and missing values</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L212-L239">store construction before runtime construction</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-service.ts#L71-L92">Ed25519 parsing and normalization</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-http.ts#L105-L120">token minimum and authentication-mode construction</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-runtime.ts#L24-L52">runtime construction before recovery and listen</a>.</p>
+<h3 id="an-admitted-executor-needs-its-own-configuration">An admitted executor needs its own configuration</h3>
+<table>
+<thead>
+<tr>
+<th><code>allowedCapabilities</code> member</th>
+<th>Owning configuration section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command.execute</code></td>
+<td><code>directCommand</code>; requires <code>cgroupRoot</code> unless <code>allowSampledProcessLimit</code> is explicitly <code>true</code></td>
+</tr>
+<tr>
+<td><code>container.build</code></td>
+<td><code>containerBuild</code>; selected registry username/password selectors must be supplied together</td>
+</tr>
+<tr>
+<td><code>kubernetes.fixture</code></td>
+<td><code>kubernetesFixture</code></td>
+</tr>
+<tr>
+<td><code>kubernetes.exposure</code></td>
+<td><code>tailscaleExposure</code></td>
+</tr>
+<tr>
+<td><code>network.http</code></td>
+<td><code>networkHttp</code></td>
+</tr>
+<tr>
+<td><code>browser.axe</code></td>
+<td><code>browserAxe</code></td>
+</tr>
+<tr>
+<td><code>browser.lighthouse</code></td>
+<td><code>browserLighthouse</code></td>
+</tr>
+<tr>
+<td><code>browser.visual</code></td>
+<td><code>browserVisual</code></td>
+</tr>
+<tr>
+<td><code>browser.playwright</code></td>
+<td><code>browserPlaywright</code>, including its required <code>cgroupRoot</code></td>
+</tr>
+<tr>
+<td><code>security.scan</code></td>
+<td><code>securityScan</code></td>
+</tr>
+<tr>
+<td><code>kubernetes.runtime-security</code></td>
+<td><code>kubernetesRuntimeSecurity</code></td>
+</tr>
+</tbody>
+</table>
+<p>The loader rejects an allowed executor whose required section is missing. Supplied sections also undergo their own value checks; they are not free-form permission grants. Limits, read roots, executable catalogs, target allowlists, and required credentials belong to the corresponding executor section. An included package cannot substitute for these controls. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L163-L211">conditional executor configuration</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/production.ts#L239-L277">command and build configuration</a>. Use the <a href="../understand/buster.html">Buster flow</a> for plan/result ownership and the <a href="../extend/developer-handbook.html#change-buster-plans-providers-or-result-import">Buster change guide</a> for scoped development work.</p>
+<h2 id="prism-exported-engine-is-not-the-native-host">Prism: exported engine is not the native host</h2>
+<p>The Prism facade exports its engine, worker binding, and domain. An embedding caller constructs <code>PrismEngine</code> with a <code>DesignProvider</code>. The worker binding accepts only contract <code>kubeclaw.prism-design-engine@1</code>, supported operations <code>generate</code>, <code>render</code>, <code>evaluate</code>, <code>ingest</code>, and <code>publish</code>, and the installed request schema ID and digest. It validates the request and result around the supplied engine call. Schema rejection is not authorization to retry with another contract. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/runtime.ts#L1-L3">Prism runtime exports</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/engine/index.ts#L22-L41">Prism engine caller/provider boundary</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/engine/worker-binding.ts#L18-L50">Prism worker operation binding</a>.</p>
+<p>The native per-attempt host is a different consumer. It constructs <code>PrismEngine(new DeterministicDesignProvider())</code>; it does <strong>not</strong> read a role field to select an external design provider. It reads a bounded worker envelope from stdin, validates it, runs <code>WorkerAttemptExecutor</code>, and emits its provisional result. Closing stdout does not make this result final. The supervisor first drains the owned process tree, then checks the provisional result against the accepted attempt. It applies the final observed resource use and host timestamps; a host fault or expired claim can turn a reported completion into an error. It calculates a new result digest and receipt identity and checks the final attempt binding. The journal then stores the canonical result bytes before delivery. This makes the final record distinct from the child's earlier stdout; it does not prove that external cleanup succeeded. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-worker-process.ts#L127-L145">process-tree drain and final observation</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-result.ts#L7-L51">result finalization and identity</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-attempt-journal.ts#L117-L131">journal result-byte boundary</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-attempt-executor.ts#L37-L56">finalize and persist before returning</a>. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/native-worker-host.ts#L11-L36">native host engine and envelope</a>.</p>
+<h3 id="worker-listener-supervisor-and-child-have-different-inputs">Worker listener, supervisor, and child have different inputs</h3>
+<p>The Prism listener selects either SPIFFE peer identity, as defined above, or <strong>HMAC</strong> (hash-based message authentication code). HMAC uses a shared secret to check a code calculated from the request's timestamp, nonce, and body digest. A nonce is a per-request value whose reuse the nonce store rejects; this path needs the database as well as the secret. It is not the Buster bearer-token comparison and does not select a design provider. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/internal-auth.ts#L5-L16">Prism HMAC calculation</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/internal-auth.ts#L52-L87">Prism time, signature and nonce checks</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/worker.ts#L12-L27">listener authentication selection</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Consumer</th>
+<th>Configuration and defaults</th>
+<th>Required relationship</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Worker listener</td>
+<td><code>WORKER_TRUST_SPIFFE_ENABLED</code> enables SPIFFE only for exact <code>true</code>; otherwise HMAC. <code>PRISM_WORKER_SECRET</code> defaults empty</td>
+<td>HMAC requires a nonempty secret <strong>and</strong> <code>DATABASE_URL</code>; SPIFFE requires nonempty <code>PRISM_TRUSTED_CONTROL_SPIFFE_ID</code></td>
+</tr>
+<tr>
+<td>Worker listener</td>
+<td><code>PRISM_CONTROL_INTERNAL_URL</code> defaults <code>http://prism-control:8080</code>; <code>PORT</code> defaults 8080</td>
+<td>The URL is parsed. This loader converts the port with <code>Number</code>; do not treat the default as deployed reachability or as an exhaustive port validator</td>
+</tr>
+<tr>
+<td>Worker ingress</td>
+<td>Active requests 16, probes 4, connections 128; <code>PRISM_NATIVE_MAXIMUM_INPUT_BYTES</code> 16,777,216; body timeout 120,000 ms</td>
+<td>Names: <code>PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS</code>, <code>PRISM_WORKER_MAXIMUM_PROBE_REQUESTS</code>, <code>PRISM_WORKER_MAXIMUM_CONNECTIONS</code>, <code>PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS</code>; values must be integers 1–2,147,483,647</td>
+</tr>
+<tr>
+<td>Worker shutdown</td>
+<td><code>PRISM_WORKER_SHUTDOWN_TIMEOUT_MS</code> defaults 120,000 ms</td>
+<td>Same positive timer-safe integer range</td>
+</tr>
+<tr>
+<td>Native child</td>
+<td><code>KUBECLAW_NATIVE_SCOPE</code>, explicit positive integer <code>PRISM_NATIVE_MAXIMUM_INPUT_BYTES</code>, parseable <code>PRISM_CONTROL_INTERNAL_URL</code></td>
+<td>These have <strong>no standalone host-loader default</strong>. Non-SPIFFE artifact access requires <code>PRISM_WORKER_SECRET</code></td>
+</tr>
+<tr>
+<td>Native supervisor</td>
+<td><code>PRISM_NATIVE_POOL_POLICY_FILE</code>, <code>PRISM_NATIVE_LAUNCHER</code></td>
+<td>Required absolute, normalized paths other than <code>/</code>; pool policy supplies cgroup/ownership/identity paths and aggregate capacity</td>
+</tr>
+<tr>
+<td>Native supervisor</td>
+<td><code>PRISM_ENGINE_CONTENT_DIGEST</code></td>
+<td>Required <code>sha256:&lt;64 lowercase hex&gt;</code> even outside production, because this supervisor checks it unconditionally</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/worker-config.ts#L1-L18">worker listener authentication and defaults</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/worker-config.ts#L19-L38">worker ingress and shutdown limits</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/config/native-worker.ts#L38-L50">nativePrismHostConfig</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/config/native-worker.ts#L50-L84">nativePrismSupervisorConfig</a>.</p>
+<p>The supervisor-to-host caller writes the child's selected URL, secret/trust flag, input limit, engine digest, browser path, and a finite base environment. The original launcher sets <code>KUBECLAW_NATIVE_SCOPE</code> from the owned scope. Do not emulate that authority by exporting the name yourself. The listener's fallback values do not remove the child loader's explicit input checks. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/native-worker-execution.ts#L9-L41">supervisor-to-host environment and journal recovery</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-worker-launcher.c#L61-L78">launcher-owned scope assignment</a>.</p>
+<h3 id="native-supervisor-limits-and-host-evidence">Native supervisor limits and host evidence</h3>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Fallback or authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PRISM_NATIVE_CPU_TIME_MS</code>, <code>PRISM_NATIVE_MEMORY_BYTES</code>, <code>PRISM_NATIVE_TASKS</code></td>
+<td>60,000 ms, 8,589,934,592 bytes, 2,048 tasks; positive safe integers</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_UID</code>, <code>PRISM_NATIVE_GID</code></td>
+<td>1,000 each; positive timer-range integers</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS</code>, <code>PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES</code></td>
+<td>65,536 records; 67,108,864 bytes</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_MAXIMUM_INPUT_BYTES</code>, <code>PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES</code>, <code>PRISM_NATIVE_MAXIMUM_RESULT_BYTES</code></td>
+<td>16,777,216; 33,554,432; 67,108,864 bytes</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES</code></td>
+<td>68,719,476,736 bytes; positive safe integer up to <code>Number.MAX_SAFE_INTEGER</code></td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_POLL_INTERVAL_MS</code>, <code>PRISM_NATIVE_DRAIN_TIMEOUT_MS</code>, <code>PRISM_NATIVE_CLOSE_TIMEOUT_MS</code></td>
+<td>20; 10,000; 105,000 ms</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_DISPATCH_TIMEOUT_MS</code></td>
+<td>Shared dispatch helper default 900,000 ms; this is not one of the supervisor object's own timeout fields</td>
+</tr>
+<tr>
+<td><code>PLAYWRIGHT_BROWSERS_PATH</code></td>
+<td><code>/ms-playwright</code> when absent</td>
+</tr>
+<tr>
+<td>Aggregate pool capacity</td>
+<td><code>maximumActiveScopes</code> and <code>limits.memoryBytes/tasks/cpuQuotaMicroseconds/cpuPeriodMicroseconds</code> come from the root-managed policy, not an attempt's environment</td>
+</tr>
+</tbody>
+</table>
+<p>Except for the explicit journal and per-attempt resource rules above, the supervisor's numeric reader requires integers 1–2,147,483,647. Empty numeric environment strings become zero and fail; fallback applies on absence, not on empty text. The engine digest is trimmed before checking. These per-attempt ceilings and aggregate pool capacity are separate restrictions. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/config/native-worker.ts#L1-L37">Prism result/deadline/resource defaults</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/config/native-worker.ts#L50-L84">nativePrismSupervisorConfig</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-pool-policy.ts#L18-L53">native pool policy authority</a>.</p>
+<p>Pool policy and runtime-identity files are bounded regular root-owned files with no group/world write permission; the reader opens the final path with no-follow. The runtime-identity file must match the current boot ID and cgroup namespace device/inode. The launcher must be a canonical root-owned ordinary executable, without setuid/setgid or group/world write permission. The supervisor must have root identity and effective KILL, SETGID, and SETUID capabilities. These checks do not create a host or grant themselves the required privilege. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-pool-policy.ts#L18-L53">native pool policy authority</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-runtime-identity.ts#L10-L28">boot and cgroup namespace verification</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/worker/core/worker/native-supervisor-authority.ts#L4-L22">supervisor and launcher authority checks</a>.</p>
+<p>Startup establishes listener config, supervisor policy and privileges, durable ownership, and journal recovery before HTTP admission. Shutdown fences new admission before draining and closing. Keep ownership and attempt-journal evidence when a host is interrupted; do not delete it merely to make a new process start. For an unavailable worker, follow <a href="../use/prism-studio.html#worker-not-ready">worker-not-ready diagnosis</a>. A disposable native development host has its own <a href="../extend/developer-handbook.html#prepare-a-native-worker-fixture-host">fixture-host preparation procedure</a>; that procedure is not proof that a deployment or native exercise passed. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/worker.ts#L11-L60">native worker startup and shutdown</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/native-worker-execution.ts#L9-L41">supervisor-to-host environment and journal recovery</a>.</p>
+<h2 id="diagnose-the-boundary-that-rejected-the-change">Diagnose the boundary that rejected the change</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom or exact error family</th>
+<th>What to distinguish</th>
+<th>Safe next action and stop rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Role checker reports missing package/plugin/provider</td>
+<td>Manifest selection or internal package closure, not a live dependency outage</td>
+<td>Identify the owning role and package source; correct that selection and repeat the read-only checker. Do not start workers to conceal a failed package check</td>
+</tr>
+<tr>
+<td><code>bundle role … does not match</code>, commit/contract mismatch</td>
+<td>Wrong selected artifact versus wrong expected values</td>
+<td>Retain both public identities; select the intended matching artifact. Do not weaken the expected values or overwrite protected runtime paths</td>
+</tr>
+<tr>
+<td><code>PLATFORM_CONFIG_INVALID</code></td>
+<td>Wrong schema, missing required field, or invalid shape at the canonical file</td>
+<td>Use the printed canonical path and schema detail; correct that file, retaining the rejected non-secret config. No default policy is synthesized</td>
+</tr>
+<tr>
+<td><code>REGISTRY_ROOT_INVALID</code>, <code>REGISTRY_PACKAGE_UNTRUSTED</code></td>
+<td>Missing canonical installation versus code not admitted by trust policy</td>
+<td>Check actual resolved roots and intended source identity. Obtain the correct package or approved trust decision; do not broaden builtin roots to include arbitrary project code</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_PROVIDER_MISSING</code> / <code>…AMBIGUOUS</code> / <code>…INVALID</code></td>
+<td>No explicit selection, multiple candidates, or a selected adapter that does not supply the capability</td>
+<td>Select one installed qualified adapter ID for the requested capability. A single candidate still needs explicit selection</td>
+</tr>
+<tr>
+<td><code>REGISTRY_CAPABILITY_DENIED</code> / <code>…UNREQUESTED</code></td>
+<td>Required caller grant absent versus extra grant or disabled registration</td>
+<td>Match the exact enabled registration, its declared requirements, and constraint schema; do not grant everything to a package owner</td>
+</tr>
+<tr>
+<td><code>REGISTRY_ADAPTER_CYCLE</code></td>
+<td>Selected adapters recursively depend on one another</td>
+<td>Correct the provider graph. Restarting with the same graph cannot resolve the cycle</td>
+</tr>
+<tr>
+<td><code>BUSTER_REMOTE_WORKER_REVISION_INVALID</code>, <code>BUSTER_REMOTE_CONFIG_VERSION_INVALID</code></td>
+<td>Wrong environment revision or wrong config schema, before service startup</td>
+<td>Select matching worker/config identities. Do not replace source attestation with a build revision</td>
+</tr>
+<tr>
+<td><code>BUSTER_REMOTE_CONFIG_TOKEN_MISSING</code>, <code>BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING</code></td>
+<td>Missing selected HTTP secret versus missing source-verification key</td>
+<td>Check the configured environment variable <strong>name</strong> and authorized secret delivery without printing its value. Fix the owning secret source before startup</td>
+</tr>
+<tr>
+<td><code>BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID</code>, <code>BUSTER_SOURCE_ATTESTATION_ENV_INVALID</code></td>
+<td>The token selector is not an uppercase environment name, or the source-key selector is invalid or duplicates the selected token name</td>
+<td>Correct the configured selector names and their separate intended secret sources. Do not print credential values or replace the key with the token</td>
+</tr>
+<tr>
+<td><code>BUSTER_REMOTE_TOKEN_INVALID</code></td>
+<td>The token was supplied but its JavaScript string length is below 32; HTTP server construction rejects it before listening</td>
+<td>Preserve existing job/storage evidence. Arrange an authorized replacement of sufficient length at the configured secret source, then follow the <a href="buster-runtime-configuration.html#safe-configuration-procedure">safe configuration procedure</a>; do not weaken the minimum</td>
+</tr>
+<tr>
+<td><code>BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID</code></td>
+<td>The selected source key cannot be parsed by <code>crypto.createPublicKey</code>, is not Ed25519, or the source authority is empty at store construction; storage may already have been opened</td>
+<td>Preserve existing job/result storage and the non-secret error. Supply the intended source-verification key and authority; do not substitute build revision, HTTP token, or an arbitrary signing identity. Keep admission stopped until the input is corrected</td>
+</tr>
+<tr>
+<td><code>BUSTER_*_CONFIG_REQUIRED</code> or isolation-required error</td>
+<td>An allowed executor lacks its owning section or required isolation</td>
+<td>Correct that executor configuration, or remove an unneeded capability through the owner's approved policy change. Do not silently switch to a weaker execution mode</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_*_REQUIRED</code>, <code>WORKER_NATIVE_*_NOT_TRUSTED</code>, host-cgroup mismatch</td>
+<td>Listener credentials, native pool files, launcher trust, or boot/namespace evidence</td>
+<td>Keep admission closed. The native-host owner checks current policy, real host identity, permissions, and selected launcher. Never copy a different host's identity file or relax no-follow/trust checks</td>
+</tr>
+<tr>
+<td><code>Prism request schema does not match the installed contract</code></td>
+<td>Caller contract identity differs from the installed Prism request schema</td>
+<td>Align caller and installed contract versions. Do not retry by editing only the declared schema digest</td>
+</tr>
+</tbody>
+</table>
+<p>The error sites and rejection order are in the linked loaders and resolvers above. For a Buster startup failure, retain existing job state: <code>start()</code> recovers the service before listening. For a native failure, preserve ownership and journal records and let the owning recovery procedure decide whether work can resume. A repeated launch is not proof of a recovered external effect. <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L85-L132">explicit provider selection</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L151-L209">grant and dependency resolution</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L132-L153">adapter dependency-cycle check</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/buster/engine/test-gates/remote-plan-runtime.ts#L24-L52">Buster recovery-before-listen sequence</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/skills/prism/server/native-worker-execution.ts#L9-L41">supervisor-to-host environment and journal recovery</a>.</p>
+<h2 id="change-impact-and-verification-limits">Change impact and verification limits</h2>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>What must remain consistent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shared package or contract</td>
+<td>Every role that selects it, internal dependencies, plugin contract versions, and the facade's installed exports</td>
+</tr>
+<tr>
+<td>Role package/plugin/extension list</td>
+<td>Ownership eligibility, closure, expected external supplier, generated bundle contents, and deployment role</td>
+</tr>
+<tr>
+<td>Entrypoint import or execute module</td>
+<td>The assembler's facade and the actual CLI/library consumer; an export is not a listener</td>
+</tr>
+<tr>
+<td>Platform providers, grants, or registration configuration</td>
+<td>Enabled callers, supplied capabilities, dependency acyclicity, trust, and registration schemas</td>
+</tr>
+<tr>
+<td>Buster executor policy or secret selector</td>
+<td>Runtime file, intended environment delivery, required executor section, isolation, and admitted plan/result ownership</td>
+</tr>
+<tr>
+<td>Prism host or pool policy</td>
+<td>Per-attempt limits, aggregate capacity, launcher, current boot/namespace identity, engine digest, durable ownership, and caller contract</td>
+</tr>
+</tbody>
+</table>
+<p>Start with the manifest-inspection procedure for a packaging change. Use the <a href="../extend/developer-handbook.html#select-the-smallest-complete-check-chain">developer change-to-check routing</a> for the relevant subsystem; do not run unrelated product or native suites merely because package counts changed.</p>
+<p><strong>Source evidence boundary.</strong> Claim: bundle selection, canonical configuration, caller permission, and native host authority are separate mechanisms. Implementation: role manifests, assembler, loaders, resolvers, and host checks linked beside each mechanism. Contract: <code>pipeline-runtime-role.v1</code>, <code>pipeline-runtime-bundle.v1</code>, <code>pipeline-platform.v2</code>, <code>buster-remote-plan-runtime.v1</code>, and installed Prism/worker contracts. Test sources: <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L12-L55">platform configuration test cases</a>; <a href="https://github.com/datrab/kubeclaw/blob/eb51092b825c9501c53e486517ae3739411f60b3/tests/verification/contracts/check-prism-runtime-role.mts#L1-L6">Prism role selection test cases</a>. Revision: <code>eb51092b825c9501c53e486517ae3739411f60b3</code>. Limit: test source is not a recorded successful run. This reference does not assert a bundle build, service start, live deployment, native-host acceptance, or end-to-end delivery.</p>
+</main></body></html>

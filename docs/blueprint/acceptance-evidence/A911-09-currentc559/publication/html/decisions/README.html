@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/decisions/README.html"></head><body><main>
+<h1 id="decisions-and-their-authority">Decisions and Their Authority</h1>
+<p>Status: current
+Audience: maintainer, architecture reader, operator
+Owner: platform-architecture
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/package-ownership.json">packaging/runtime/package-ownership.json</a>
+Applies to: current architecture and product policy
+Last verified: 2026-09-17</p>
+<p>Use these records to understand why a constraint exists and whether its approval is established.
+An accepted decision can still have incomplete implementation.
+Code that matches a proposal does not prove that someone approved it.
+A local finding closure does not prove deployment or human product acceptance.</p>
+<h2 id="record-contract">Record Contract</h2>
+<p>Each stable identifier keeps one meaning. A complete record states the context,
+decision, recorded alternatives, reason, consequences, approval, implementation,
+verification, and supersession state. A field can state that the source is silent.
+It must not fill an evidence gap with an invented explanation.</p>
+<p>Decision status and implementation status are independent. <code>Accepted</code> means that
+the selected constraint has approval evidence. It does not mean that all code,
+operations, or live acceptance for that constraint are complete.</p>
+<p>When a decision changes, keep the old identifier. Mark its exact replaced scope
+and link to the successor identifier. The successor must state which earlier
+guarantees remain valid. Do not reuse an old identifier for the new choice.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Questions it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="core-and-plugins.html">Core and plugins</a></td>
+<td>Who owns lifecycle authority, extension contracts, isolation, durable effects and specialist execution?</td>
+</tr>
+<tr>
+<td><a href="test-gate.html">Test-gate decisions</a></td>
+<td>Which original test-gate decisions govern providers, evidence, remote jobs and Worker Core?</td>
+</tr>
+<tr>
+<td><a href="runtime-and-operations.html">Runtime and operations</a></td>
+<td>Which runtime, observability, operator, retention, configuration and recovery constraints apply?</td>
+</tr>
+<tr>
+<td><a href="echo.html">Echo decisions</a></td>
+<td>Which original Echo decisions govern proposals, deterministic evidence, reduction and policy?</td>
+</tr>
+<tr>
+<td><a href="prism.html">Prism decisions</a></td>
+<td>How do product, editor, retrieval, preference, publication and recovery choices fit together?</td>
+</tr>
+<tr>
+<td><a href="implementation.html">Implementation decisions</a></td>
+<td>How do native ownership, signed human decisions, versioned data and integration history refine the core rules?</td>
+</tr>
+</tbody>
+</table>
+<p>Original identifiers remain attached to their decisions.
+Repeated explanations share a record; distinct approval or supersession boundaries remain explicit.
+Where the source does not establish approval, the record says so.
+Historical scope instructions are not new product requirements.
+Sources are pinned to Git revisions so later document maintenance does not remove the evidence.</p>
+<p>Maintain unfinished work in <a href="../status/open-issues.html">open issues</a>, not a second task list inside each record.
+Maintain environmental proof in <a href="../status/acceptance.html">live acceptance</a>.
+When a decision changes, record the new authority, rationale and successor.
+Do not rewrite old approval evidence or silently turn an implementation workaround into an accepted rule.</p>
+<p>The <a href="../reference/documentation-governance.html#decision-records">documentation governance rules</a>
+define the required record fields and maintenance procedure.</p>
+<p>These pages explain current architectural and product decisions. They do not expose
+the documentation process that produced them. Use <a href="../status/current.html">current status</a>
+for implemented boundaries, <a href="../status/open-issues.html">open work</a> for known gaps,
+and <a href="../status/acceptance.html">acceptance</a> for evidence that still needs a live environment.</p>
+</main></body></html>

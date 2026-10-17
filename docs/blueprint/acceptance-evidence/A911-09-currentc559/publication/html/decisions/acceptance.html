@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/decisions/acceptance.html"></head><body><main>
+<h1 id="evidence-and-acceptance-policy">Evidence and Acceptance Policy</h1>
+<p>Status: current decision
+Audience: operator, maintainer, architecture reader
+Owner: platform-maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-status.mjs">scripts/docs-status.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts/check-production-receipt-attestation.mjs">tests/verification/contracts/check-production-receipt-attestation.mjs</a>
+Applies to: implementation status and operational acceptance
+Last verified: 2026-09-17</p>
+<h2 id="purpose">Purpose</h2>
+<p>KubeClaw uses different evidence for different claims. Static implementation evidence can
+confirm that code exists. A local test can confirm behavior in its test scope.
+Only a live exercise can confirm behavior in the selected running environment.</p>
+<p>This separation prevents a passing unit test from becoming an unsupported claim
+about Kubernetes, storage, networking, credentials, or a human workflow.</p>
+<h2 id="d12--accepted-local-completion-policy">D12 — Accepted Local Completion Policy</h2>
+<p>A technical finding can reach local completion when all of these conditions hold:</p>
+<ol>
+<li>The implemented change addresses the complete stated scope.</li>
+<li>The relevant source and contract checks pass.</li>
+<li>A focused regression test proves the corrected behavior.</li>
+<li>Negative cases prove that the previous unsafe behavior cannot return silently.</li>
+<li>The evidence identifies the exact source revision and test environment.</li>
+<li>Remaining environment proof moves to an explicit live-acceptance gate.</li>
+</ol>
+<p>Local completion does not assert that a cluster, external service, browser,
+registry, Tailnet route, or human delivery path works in production.</p>
+<h2 id="evidence-levels">Evidence Levels</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>What it proves</th>
+<th>What it does not prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source-backed</td>
+<td>The named implementation or configuration exists at the cited revision</td>
+<td>That the path executed successfully</td>
+</tr>
+<tr>
+<td>Locally verified</td>
+<td>The stated command passed in the recorded local environment</td>
+<td>Behavior that needs unavailable external systems</td>
+</tr>
+<tr>
+<td>Integration verified</td>
+<td>Connected components passed with the stated real dependencies</td>
+<td>Production deployment or human acceptance</td>
+</tr>
+<tr>
+<td>Live accepted</td>
+<td>The complete procedure passed in the selected target environment</td>
+<td>Future revisions or other environments</td>
+</tr>
+<tr>
+<td>Human accepted</td>
+<td>An authorized person accepted the exact delivered result</td>
+<td>Technical correctness of a different result</td>
+</tr>
+</tbody>
+</table>
+<h2 id="required-record">Required Record</h2>
+<p>Every verification record must identify:</p>
+<ul>
+<li>the claim and its scope;</li>
+<li>the exact source revision;</li>
+<li>the command or procedure;</li>
+<li>the environment and required external systems;</li>
+<li>executed, skipped, failed, and blocked cases;</li>
+<li>unchanged result artifacts and their digests;</li>
+<li>the person or system that made the decision; and</li>
+<li>cleanup and retained state after mutating work.</li>
+</ul>
+<p>Do not convert a blocked or skipped test into a pass. Preserve failed attempts
+beside later successful runs. A retry proves only the later execution.</p>
+<h2 id="current-status-and-live-gates">Current Status and Live Gates</h2>
+<p>Use <a href="../status/current.html">Current Platform Status</a> for the implemented boundary.
+Use <a href="../status/open-issues.html">Open Implementation Work</a> for known technical gaps.
+Use <a href="../status/acceptance.html">Operational and Live Acceptance</a> for environment
+procedures that remain unexecuted.</p>
+</main></body></html>

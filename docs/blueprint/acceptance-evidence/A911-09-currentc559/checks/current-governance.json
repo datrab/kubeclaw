@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-17T10:02:36.893909+00:00",
+  "revision": "c57587b895fd21503334e422270b478200783b6c",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "scripts/docs-governance.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "generated docs/site/reference/generated-documentation-map.json (166 pages)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "scripts/docs-governance.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "documentation governance passed (166 pages mapped)\n",
+      "stderr": ""
+    }
+  ],
+  "exactDelta": [
+    {
+      "page": "docs/site/reference/sdk.md",
+      "delta": {
+        "owner": {
+          "before": "documentation automation",
+          "after": "SDK maintainers (plugin-foundation)"
+        }
+      }
+    }
+  ],
+  "outputSha256": "b1cb93f01751080c9f34672a20117698b974f3430a24e41b6102f47fd18377ac",
+  "cleanBeforeAndAfter": true,
+  "formalAcceptance": false
+}
