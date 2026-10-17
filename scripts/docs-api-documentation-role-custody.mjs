@@ -5259,7 +5259,7 @@ export function rootSelectedCompilerTarget(root,capability,recordDependency=()=>
  if(!isRootSelectedCompilerCapability(capability)||capability.source!==recipe.source||capability.sourceSha256!==recipe.sourceSha256||capability.baseRelative!=='package.json'||capability.specifier!=='typescript'||capability.targetRelative!==recipe.foundation.target||capability.version!=='5.9.3'||capability.runtimeAcquisitionAuthorized!==false||JSON.stringify(capability.nativeFoundationIdentity)!==JSON.stringify(recipe.foundation.nativeFoundationIdentity))fail('capability identity/base/target');
  const selected=recipe.owners[capability.owner];
  if(!selected||selected.ownerSyntaxSha256!==capability.ownerSyntaxSha256||selected.factorySha256!==capability.factorySha256||selected.consumerSha256!==capability.consumerSha256||selected.profile!==capability.profile||JSON.stringify(recipe.profiles[selected.profile])!==JSON.stringify(capability.profileIdentity)||capability.rootInput?.kind!=='symbolic-caller-selected-root'||capability.rootInput.requiresCanonicalDynamicInput!==true)fail('owner/profile');
- if(typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||root!==recipe.canonicalDependencyRoot||fs.realpathSync(root)!==root)fail('canonical dependency root');
+ if(typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root].includes(root))||fs.realpathSync(root)!==root)fail('canonical dependency root');
  const foundationInputFacts=new Map();
  const recordFact=fact=>{recordDependency(fact.path);foundationInputFacts.set(fact.path,fact);};
  const fileFact=selected=>{
@@ -5268,7 +5268,7 @@ export function rootSelectedCompilerTarget(root,capability,recordDependency=()=>
   const sha256=syntaxSha256(fs.readFileSync(file));
   recordFact({path:selected,kind:'file',canonical:file,sha256});return sha256;
  };
- for(const pin of recipe.foundation.pins)if(fileFact(pin.path)!==pin.sha256)fail(`foundation bytes ${pin.path}`);
+ for(const pin of (root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput.pins:recipe.foundation.pins))if(fileFact(pin.path)!==pin.sha256)fail(`foundation bytes ${pin.path}`);
  const members=[],directories=[];
  function walk(selected){
   const file=path.join(root,selected);
@@ -5307,6 +5307,33 @@ export function reviewedSdkGeneratorImport(source,bytes,tree) {
  return frozenRecipes({...recipe,sourcePurposeOnly:true,runtimeExecutionAuthorized:false,existingSelectorRenewalAuthorized:false});
 }
 
+// Exact isolated CI input successor; compiler source/profile and finite physical membership unchanged.
+const reviewedIsolatedCompilerInput=frozenRecipes({
+  "root": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo",
+  "pins": [
+    {
+      "path": "package.json",
+      "sha256": "d19ba8b9082ebaab00ee2008e688dd4808cc3882141b10bbdda8cce8b50c3d6a"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
+    },
+    {
+      "path": "node_modules/.package-lock.json",
+      "sha256": "af11452a0def5f37ffcd780698f0184ca7e0ddc5bc439b35857df326c4a1c63a"
+    },
+    {
+      "path": "node_modules/typescript/package.json",
+      "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    {
+      "path": "node_modules/typescript/lib/typescript.js",
+      "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    }
+  ],
+  "scope": "isolated CI scanner metadata only; no runtime acquisition or source/AP acceptance"
+});
 const reviewedRootSelectedCompilerRecipe=frozenRecipes({
   "source": "scripts/docs-sdk-reference.mjs",
   "sourceSha256": "0c5f092cd210dc8d3832343614aa1a6861f31a6c1d60142f925b974342854657",
@@ -8894,7 +8921,7 @@ export const reviewedRootNodeEntryRecipes = {
       "callers": [
         {
           "name": "docs:tree:mutations",
-          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs"
+          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs"
         }
       ],
       "declarations": [
@@ -9294,7 +9321,7 @@ export const reviewedRootNodeEntryRecipes = {
       "callers": [
         {
           "name": "docs:tree:mutations",
-          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs"
+          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs"
         }
       ],
       "declarations": [
@@ -9372,12 +9399,12 @@ export const reviewedRootNodeEntryRecipes = {
     },
     "scripts/tests/docs-check-refs.test.mjs": {
       "purpose": "Reference-check parser and copied-CLI temporary Git/site consumer",
-      "terminalPurpose": "12–23 write/run bound to temporary root; 26–92 pure link extraction assertions; 94–187 copy exact CLI/anchor helper, symlink maintained node_modules only for packages, create fixture Git/site and inspect terminal CLI stdout.",
-      "limits": "outside-link deliberately points to /etc/passwd but actual reference-check path rejects absolute/escaping/symlink inputs before file read; temporary output only. The node_modules link is external code authority, not a license to classify every dependency as test-only. CLI has top-level Git/probe/read execution and is not passive on import.",
+      "terminalPurpose": "12–29 finite write helper copies the exact upstream resolver only when preparing the reference-check CLI in its owned temporary Git/site root; 31–37 run invokes the copied CLI there. Pure parser checks and missing-link/path/symlink/SHA256 assertions remain fixture-local.",
+      "limits": "outside-link deliberately points to /etc/passwd but actual reference-check path rejects absolute/escaping/symlink inputs before file read; temporary output only. The node_modules link is external code authority, not a license to classify every dependency as test-only. CLI has top-level Git/probe/read execution and is not passive on import. The copied upstream resolver is passive at import apart from imported dependencies; on fixture invocation the absent provenance manifest returns a false-only resolver before any upstream Git/read loop. A present manifest takes the real byte/commit/path/anchor validation branch; no link exemptions, package export or product authority is granted. The resolver and its original caller are exact closure-bound; maintained markdown helper import authority remains independent.",
       "callers": [
         {
           "name": "docs:tree:mutations",
-          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs"
+          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs"
         }
       ],
       "declarations": [
@@ -9415,7 +9442,7 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "kind": "FunctionDeclaration",
-          "syntaxSha256": "d449e7b79c0e90c484a99d1b69d42f0b718b817411e182e49b0c51dd90a66ca2"
+          "syntaxSha256": "15655da5748d943e3780f0f5dfd72ccdf674a0c93a6da0ef47916722b727a7cf"
         },
         {
           "kind": "FunctionDeclaration",
@@ -9516,6 +9543,57 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "expressionSha256": "f5f5cbf21cb70de2149b091d8ab0daa2d2d272a63b6c52cdd2fc05393b6978c7"
+        }
+      ],
+      "exports": []
+    },
+    "scripts/tests/docs-check-links.test.mjs": {
+      "purpose": "Markdown local-link pure parser assertion consumer",
+      "terminalPurpose": "Exact two node:test registrations evaluate only in-memory strings through markdownLinkTargets; real links retained and fenced/comment/inline/escaped syntax excluded.",
+      "limits": "Exact docs:tree:mutations caller only. No exports, filesystem actions, child launch or product handler in harness. Imported checker is NOT passive as a whole: module initialization evaluates path/array/parser sanity assertion; exact direct-CLI main guard is false during this native --test import, so full document reads/Git calls/diagnostics/process.exit remain separate CLI authority, not licensed by this harness. Changed transitive imports or main guard must fail closure.",
+      "callers": [
+        {
+          "name": "docs:tree:mutations",
+          "command": "node --test scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-refs.test.mjs scripts/tests/docs-check-links.test.mjs"
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "8c7b3c4dcccf41d4eb84f803e492267eff8f9369b307e21e2ecb1e039499f84d"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "c1bbbb96250f6cbcf4780b12a26a3dd06f35cdaa6342ded32b5aa23c8bae361f"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "3479ec7e1bd823dfaaa3fcc36e313622a2a62496c2e93ec45cfbf1ea23e4fd04"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "3f6dc93f7121d58c7a43bcac556e87f2616e346e8a687dde61788c9d189935e9"
+        }
+      ],
+      "selectors": [
+        {
+          "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+        },
+        {
+          "expressionSha256": "c1bbbb96250f6cbcf4780b12a26a3dd06f35cdaa6342ded32b5aa23c8bae361f"
+        },
+        {
+          "expressionSha256": "8c7b3c4dcccf41d4eb84f803e492267eff8f9369b307e21e2ecb1e039499f84d"
+        },
+        {
+          "expressionSha256": "3f6dc93f7121d58c7a43bcac556e87f2616e346e8a687dde61788c9d189935e9"
+        },
+        {
+          "expressionSha256": "3479ec7e1bd823dfaaa3fcc36e313622a2a62496c2e93ec45cfbf1ea23e4fd04"
         }
       ],
       "exports": []
@@ -14303,7 +14381,7 @@ export const reviewedRootNodeEntryRecipes = {
     {
       "source": "scripts/lib/docs-markdown-anchors.mjs",
       "kind": "selected-operative-definition",
-      "purpose": "Ranges reviewed for operative purpose/import/CLI/fixture custody; omitted source is NOT independently qualified.",
+      "purpose": "Full exact import/initialization closure of fourth pure parser harness; CLI runtime effects remain separate authority.",
       "units": [
         {
           "symbol": "ImportDeclaration",
@@ -14477,18 +14555,8 @@ export const reviewedRootNodeEntryRecipes = {
       "ranges": [
         {
           "startLine": 1,
-          "endLine": 150,
-          "sha256": "6b2650e92e7798e8e35f34ee49e12169f078c89d5089ccef0cc1f587342a299d"
-        },
-        {
-          "startLine": 151,
-          "endLine": 300,
-          "sha256": "4086e31c755ea99a5f0e02e65725586887d9a591eca0d584de3404ade7bb56c7"
-        },
-        {
-          "startLine": 301,
-          "endLine": 430,
-          "sha256": "b3f3cec96d79e1f511b8309220b05c8c8194177382001d710d2bcec42d434964"
+          "endLine": 431,
+          "sha256": "b0358c0f628781c5056376f673ca23465b7b8cc54a722c1e0892f0268c42c652"
         }
       ],
       "initialization": [
@@ -15360,7 +15428,7 @@ export const reviewedRootNodeEntryRecipes = {
     {
       "source": "scripts/docs-check-refs.mjs",
       "kind": "selected-operative-definition",
-      "purpose": "Ranges reviewed for operative purpose/import/CLI/fixture custody; omitted source is NOT independently qualified.",
+      "purpose": "PROPOSED full actual source effect/closure qualification for exact copied CLI and upstream resolver; independent review required, no runtime/public product exemption.",
       "units": [
         {
           "symbol": "ImportDeclaration",
@@ -15374,360 +15442,364 @@ export const reviewedRootNodeEntryRecipes = {
           "kind": "ImportDeclaration",
           "startLine": 3,
           "endLine": 3,
-          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          "syntaxSha256": "080d31f6cf476116b931c1dcd9019983598c482b737296dc01ba7663e92d4e02"
         },
         {
           "symbol": "ImportDeclaration",
           "kind": "ImportDeclaration",
           "startLine": 4,
           "endLine": 4,
-          "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
         },
         {
           "symbol": "ImportDeclaration",
           "kind": "ImportDeclaration",
           "startLine": 5,
           "endLine": 5,
+          "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 6,
+          "endLine": 6,
           "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
         },
         {
           "symbol": "ImportDeclaration",
           "kind": "ImportDeclaration",
-          "startLine": 7,
-          "endLine": 13,
+          "startLine": 8,
+          "endLine": 14,
           "syntaxSha256": "48d70fe4ee921845af3fd30818353c00602b670408c6fc0647a8e3bc37300ba5"
         },
         {
-          "symbol": "root",
-          "kind": "FirstStatement",
-          "startLine": 15,
-          "endLine": 15,
-          "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
-        },
-        {
-          "symbol": "docsRoot",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
           "startLine": 16,
           "endLine": 16,
+          "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 17,
+          "endLine": 17,
           "syntaxSha256": "1911678d1717fce4506ae9e22816d72d7700382e250c9ed7a1190a816204c34c"
         },
         {
-          "symbol": "gitObjectFormat",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 17,
-          "endLine": 19,
+          "startLine": 18,
+          "endLine": 18,
+          "syntaxSha256": "4fd5d1ef2b78b5ef134ddfad1cdb0888eff3a468482595f0e76fed794c5aa608"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 19,
+          "endLine": 21,
           "syntaxSha256": "b3ded15078946186cc88eb27baabecfd2fa4b467386ded8d8e98a4b35d62468d"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 20,
-          "endLine": 20,
+          "startLine": 22,
+          "endLine": 22,
           "syntaxSha256": "82e3ab970af3418d1d534691eb07965f7ca26e90632872f3f66948563ae1e93a"
         },
         {
-          "symbol": "gitObjectLength",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 21,
-          "endLine": 21,
+          "startLine": 23,
+          "endLine": 23,
           "syntaxSha256": "d09838829aa8d978d592cf0489ad0b78ab93c5574009c93b174c5affab628750"
         },
         {
-          "symbol": "gitObjectCapture",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 22,
-          "endLine": 22,
+          "startLine": 24,
+          "endLine": 24,
           "syntaxSha256": "5632d97aa28532fdf01728726391c2d06930a6c2443ea77f729199a3c430141e"
         },
         {
-          "symbol": "repoPathPrefixes",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 24,
-          "endLine": 35,
+          "startLine": 26,
+          "endLine": 37,
           "syntaxSha256": "e9059f640cbe9114521822f7d3cec4803a032632e74e32aa123c9f2ae0e1cbb9"
         },
         {
-          "symbol": "repoPathFiles",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 37,
-          "endLine": 41,
+          "startLine": 39,
+          "endLine": 43,
           "syntaxSha256": "41fdf5340e3267fc0fa8d391ba17ce7e7723a6f58173ab0a743e5069ccccb084"
         },
         {
-          "symbol": "optionalRefs",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 43,
-          "endLine": 45,
+          "startLine": 45,
+          "endLine": 47,
           "syntaxSha256": "0086866050ae5cf0a7d57a25f0c6f80bcce9eae569a2ce01d87bd01015bedc06"
         },
         {
-          "symbol": "historicalRepoRefDocs",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 47,
-          "endLine": 56,
+          "startLine": 49,
+          "endLine": 58,
           "syntaxSha256": "f4eee836ad2a7df21ae2257ae2b6c577913ddafbb9c8dfd0d818f82d6473af1b"
         },
         {
-          "symbol": "plannedRepoRefs",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 58,
-          "endLine": 61,
+          "startLine": 60,
+          "endLine": 63,
           "syntaxSha256": "20d6d755421bb9981fccc611c843b355a6412525156a3f8c04d236a536b9171a"
         },
         {
-          "symbol": "errors",
-          "kind": "FirstStatement",
-          "startLine": 63,
-          "endLine": 63,
-          "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
-        },
-        {
-          "symbol": "scanCounts",
-          "kind": "FirstStatement",
-          "startLine": 64,
-          "endLine": 64,
-          "syntaxSha256": "ac228d66c71157c513d7062053ab88caad54d6c9aaaa980fadc6adc971b5bcfa"
-        },
-        {
-          "symbol": "anchorCache",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
           "startLine": 65,
           "endLine": 65,
-          "syntaxSha256": "4506df4d7f4afcf3f31c161d3d9c4b55af71caaaec5f08ef862f63babf3b838f"
+          "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
         },
         {
-          "symbol": "pinnedObjectCache",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
           "startLine": 66,
           "endLine": 66,
+          "syntaxSha256": "ac228d66c71157c513d7062053ab88caad54d6c9aaaa980fadc6adc971b5bcfa"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 67,
+          "endLine": 67,
+          "syntaxSha256": "4506df4d7f4afcf3f31c161d3d9c4b55af71caaaec5f08ef862f63babf3b838f"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 68,
+          "endLine": 68,
           "syntaxSha256": "e62cff4620b97c827e92db94fab92a1d8bcbc297a8f397af1c37d4858630f170"
         },
         {
           "symbol": "rel",
           "kind": "FunctionDeclaration",
-          "startLine": 68,
-          "endLine": 70,
+          "startLine": 70,
+          "endLine": 72,
           "syntaxSha256": "24afe72d75b5729c78d7a08deaeb99484c04e268b8d4dcb34053ac627088474a"
         },
         {
           "symbol": "walk",
           "kind": "FunctionDeclaration",
-          "startLine": 72,
-          "endLine": 81,
+          "startLine": 74,
+          "endLine": 83,
           "syntaxSha256": "0e8bc9fc3b5b7d4dc5f559cc383e54325648c067f5e518f3f3bbac57d4b9ee1e"
         },
         {
           "symbol": "docsToScan",
           "kind": "FunctionDeclaration",
-          "startLine": 83,
-          "endLine": 88,
+          "startLine": 85,
+          "endLine": 90,
           "syntaxSha256": "f0070caf7e9e213165d7d398317cc2e4a0e9b955b49507586cfe876e1dd6de83"
         },
         {
           "symbol": "markdownDestination",
           "kind": "FunctionDeclaration",
-          "startLine": 90,
-          "endLine": 97,
+          "startLine": 92,
+          "endLine": 99,
           "syntaxSha256": "b00c674a39daff22d6f5050735d445101330f449c31ed8f94c6eba654f637576"
         },
         {
           "symbol": "markdownAnchors",
           "kind": "FunctionDeclaration",
-          "startLine": 99,
-          "endLine": 101,
+          "startLine": 101,
+          "endLine": 103,
           "syntaxSha256": "fa89ba0371b00f23779f313a9cd1a4334d591b3141e8d00f011d0e51d4ec9e3d"
         },
         {
           "symbol": "normalizeReference",
           "kind": "FunctionDeclaration",
-          "startLine": 103,
-          "endLine": 116,
+          "startLine": 105,
+          "endLine": 118,
           "syntaxSha256": "3fdb9e031df084ce972b9b0e93e722cea1802fec8c6c588cbf826d5011065ec2"
         },
         {
           "symbol": "isRepoReference",
           "kind": "FunctionDeclaration",
-          "startLine": 118,
-          "endLine": 122,
+          "startLine": 120,
+          "endLine": 124,
           "syntaxSha256": "90efe55ffdcf98e57b025bf66b0f377d015c0eb5aef28b3c966528cd731438f2"
         },
         {
           "symbol": "shouldSkipRepoReference",
           "kind": "FunctionDeclaration",
-          "startLine": 124,
-          "endLine": 138,
+          "startLine": 126,
+          "endLine": 140,
           "syntaxSha256": "10c30c4e817d0e7b5e3ba1d182bddae21198dc507ac48a7080d1e5f03f025130"
         },
         {
           "symbol": "existsRepoReference",
           "kind": "FunctionDeclaration",
-          "startLine": 140,
-          "endLine": 143,
+          "startLine": 142,
+          "endLine": 145,
           "syntaxSha256": "3500f6a6ca67de0e0b80b73415547660c1b9d4d85db4857f348d0c7f4e8c025f"
         },
         {
           "symbol": "checkMarkdownLinks",
           "kind": "FunctionDeclaration",
-          "startLine": 145,
-          "endLine": 204,
-          "syntaxSha256": "11b87281797463b0aa6ed936cb968f44019cb2fd1e181685d582595fb2fca496"
+          "startLine": 147,
+          "endLine": 216,
+          "syntaxSha256": "6a524e23f5f3ccaa895e4e4b6308bc7fbbd7b63046c8c0b329b3cfc2a5d1bdc5"
         },
         {
           "symbol": "candidateRefs",
           "kind": "FunctionDeclaration",
-          "startLine": 206,
-          "endLine": 216,
+          "startLine": 218,
+          "endLine": 228,
           "syntaxSha256": "3e2cb1f669304748e1ec8e43a9cec660e308f73308f0b7ccc0c1d8cdbb4d9b84"
         },
         {
           "symbol": "checkRepoRefs",
           "kind": "FunctionDeclaration",
-          "startLine": 218,
-          "endLine": 231,
+          "startLine": 230,
+          "endLine": 243,
           "syntaxSha256": "b0296b2a222f7dbe8020c2188a9386dfcca790f191e3cd0337d28f01c8c6f69d"
         },
         {
-          "symbol": "linkParserProbe",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 233,
-          "endLine": 233,
+          "startLine": 245,
+          "endLine": 245,
           "syntaxSha256": "b0d617c453bd352192807e44cca325c5acd2dfebf8ed29454b5750a21993f868"
         },
         {
-          "symbol": "linkParserMatches",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 234,
-          "endLine": 234,
+          "startLine": 246,
+          "endLine": 246,
           "syntaxSha256": "84e75ba3439b7b07335b10a76b72491635c81c55a217e33dafe9427dc21a8485"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 235,
-          "endLine": 237,
+          "startLine": 247,
+          "endLine": 249,
           "syntaxSha256": "f41193233bd1b6290021995287a4fb46febd3e33a20f4b84cdd160af3c7d30af"
         },
         {
           "symbol": "ForOfStatement",
           "kind": "ForOfStatement",
-          "startLine": 239,
-          "endLine": 247,
+          "startLine": 251,
+          "endLine": 259,
           "syntaxSha256": "466b6e449fb4c092bf34b29358cc7ccf33fab10ac253ac5e8dd78933eddb269e"
         },
         {
           "symbol": "checkSourceCalloutRevisions",
           "kind": "FunctionDeclaration",
-          "startLine": 249,
-          "endLine": 271,
+          "startLine": 261,
+          "endLine": 283,
           "syntaxSha256": "b1084a4228443fc3ab0b1012db143e9435fede06aff10ff6a17688f8c865d213"
         },
         {
           "symbol": "physicalLineCount",
           "kind": "FunctionDeclaration",
-          "startLine": 273,
-          "endLine": 277,
+          "startLine": 285,
+          "endLine": 289,
           "syntaxSha256": "4faa5e45675b058b637508897c6d151be9775aae728cf947c9355a92bc5b3baa"
         },
         {
           "symbol": "pinnedObject",
           "kind": "FunctionDeclaration",
-          "startLine": 279,
-          "endLine": 297,
+          "startLine": 291,
+          "endLine": 309,
           "syntaxSha256": "861665318a633bda21b283ab81de5ea216ab31862bd799dbdcfadd829c2ec931"
         },
         {
           "symbol": "pinnedLinkErrors",
           "kind": "FunctionDeclaration",
-          "startLine": 299,
-          "endLine": 321,
+          "startLine": 311,
+          "endLine": 333,
           "syntaxSha256": "48606ca28216f36ced581bd38d3d8cd1ac0e007b96db965dc346317da6eef893"
         },
         {
-          "symbol": "fixtureRevision",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 323,
-          "endLine": 323,
+          "startLine": 335,
+          "endLine": 335,
           "syntaxSha256": "5014a2e044deae5ce3a4c21ad587fbb0becdc9eb9d2ce4d081126daa02f6b6b0"
         },
         {
-          "symbol": "fixtureLineCount",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 324,
-          "endLine": 324,
+          "startLine": 336,
+          "endLine": 336,
           "syntaxSha256": "dd75a83493d3e93481eb48c200017b26e382b59850fa6bddf3870ca0195af530"
         },
         {
-          "symbol": "missingFixture",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 325,
-          "endLine": 325,
+          "startLine": 337,
+          "endLine": 337,
           "syntaxSha256": "2c4ae88a6422c2b4e14eb657b3402f5e7ee9a13704c66c53e0290257819f48cc"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 326,
-          "endLine": 328,
+          "startLine": 338,
+          "endLine": 340,
           "syntaxSha256": "b845cd955b64a1ce44fd3ac4a9bf5e0cc9979a48ed2dab976babbfa33e9d8d74"
         },
         {
-          "symbol": "rangeFixture",
+          "symbol": "FirstStatement",
           "kind": "FirstStatement",
-          "startLine": 329,
-          "endLine": 329,
+          "startLine": 341,
+          "endLine": 341,
           "syntaxSha256": "293d8744faa3d03753bd00cdc85f6db412a270b92dadfd34817a04673422b4c8"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 330,
-          "endLine": 332,
+          "startLine": 342,
+          "endLine": 344,
           "syntaxSha256": "cb336c962a7bd73582cffb862c938db25ff4d57ceb0840a555dd196e5da0af41"
         },
         {
           "symbol": "ExpressionStatement",
           "kind": "ExpressionStatement",
-          "startLine": 333,
-          "endLine": 333,
+          "startLine": 345,
+          "endLine": 345,
           "syntaxSha256": "056d51dbc5115ced9ce93b9a4e6a1ecf293eb02581b28a9747fe4006cfd00d09"
         },
         {
           "symbol": "ForOfStatement",
           "kind": "ForOfStatement",
-          "startLine": 335,
-          "endLine": 344,
+          "startLine": 347,
+          "endLine": 356,
           "syntaxSha256": "a2472854ffb4d124729f02334f4d57bece74899b48638abc24350ea35f445ca8"
         },
         {
           "symbol": "IfStatement",
           "kind": "IfStatement",
-          "startLine": 346,
-          "endLine": 352,
+          "startLine": 358,
+          "endLine": 364,
           "syntaxSha256": "76ff0bfbba43052e75e1d4ef9168c90ffb10ff026f71452a16d1c398a6462fdd"
         },
         {
           "symbol": "ExpressionStatement",
           "kind": "ExpressionStatement",
-          "startLine": 354,
-          "endLine": 354,
+          "startLine": 366,
+          "endLine": 366,
           "syntaxSha256": "9ed37504d27f144d42f5178c398e6bf712101ec1da9b50957e20138017061002"
         }
       ],
       "ranges": [
         {
           "startLine": 1,
-          "endLine": 150,
-          "sha256": "86c3dc78043a6d32d05c1994ac7af19e399f35a34f924c6d5afc73b17dd60af1"
-        },
-        {
-          "startLine": 151,
-          "endLine": 300,
-          "sha256": "51d23e97a4eb8c610fc327967ebc45e881b602b4f41d914661f9105e4c99a424"
-        },
-        {
-          "startLine": 301,
-          "endLine": 354,
-          "sha256": "62ba550ffcfbb91ccd3f78dde5c2e1d6566f2c4d2a0fdfdf3b555fbfed9d848a"
+          "endLine": 366,
+          "sha256": "065f77f316f8c306afd8aba56943093351352369bce210c70504b2317dddfb38"
         }
       ],
       "initialization": [
@@ -15737,6 +15809,10 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "kind": "ImportDeclaration",
+          "syntaxSha256": "080d31f6cf476116b931c1dcd9019983598c482b737296dc01ba7663e92d4e02"
+        },
+        {
+          "kind": "ImportDeclaration",
           "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
         },
         {
@@ -15758,6 +15834,10 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "kind": "FirstStatement",
           "syntaxSha256": "1911678d1717fce4506ae9e22816d72d7700382e250c9ed7a1190a816204c34c"
+        },
+        {
+          "kind": "FirstStatement",
+          "syntaxSha256": "4fd5d1ef2b78b5ef134ddfad1cdb0888eff3a468482595f0e76fed794c5aa608"
         },
         {
           "kind": "FirstStatement",
@@ -25117,6 +25197,287 @@ export const reviewedRootNodeEntryRecipes = {
           "syntaxSha256": "6ee72fd5a50263008b6d06bbdd9d312ec0d9ebbb2f3ea26c7c2b210663b8eadc"
         }
       ]
+    },
+    {
+      "source": "scripts/lib/docs-upstream-reference.mjs",
+      "kind": "selected-operative-definition",
+      "purpose": "PROPOSED full actual source effect/closure qualification for exact copied CLI and upstream resolver; independent review required, no runtime/public product exemption.",
+      "units": [
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 1,
+          "endLine": 1,
+          "syntaxSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 2,
+          "endLine": 2,
+          "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 3,
+          "endLine": 3,
+          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 4,
+          "endLine": 4,
+          "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 5,
+          "endLine": 5,
+          "syntaxSha256": "1125a12b53198406d615e3602d8a30644b2eb209b3bae5f215b7fb3842701dae"
+        },
+        {
+          "symbol": "upstreamReferenceResolver",
+          "kind": "FunctionDeclaration",
+          "startLine": 9,
+          "endLine": 68,
+          "syntaxSha256": "d2e9468133b68aea9173268e4147a852a7959eccc2b0818905167f4781d1dfbb"
+        }
+      ],
+      "ranges": [
+        {
+          "startLine": 1,
+          "endLine": 68,
+          "sha256": "1741bd5738fda0c2ed3954ad074a91ca0045479beb6484b61eb446eaf74296c2"
+        }
+      ],
+      "initialization": [
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "1125a12b53198406d615e3602d8a30644b2eb209b3bae5f215b7fb3842701dae"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-check.mjs",
+      "kind": "selected-operative-definition",
+      "purpose": "Full exact import/initialization closure of fourth pure parser harness; CLI runtime effects remain separate authority.",
+      "units": [
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 3,
+          "endLine": 3,
+          "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 4,
+          "endLine": 4,
+          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 5,
+          "endLine": 5,
+          "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 6,
+          "endLine": 6,
+          "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "symbol": "ImportDeclaration",
+          "kind": "ImportDeclaration",
+          "startLine": 7,
+          "endLine": 7,
+          "syntaxSha256": "21db498a2b5ab57d6b737222565ba53c1e2354c92deadd0b0e53e78f2e94ae16"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 9,
+          "endLine": 9,
+          "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 10,
+          "endLine": 10,
+          "syntaxSha256": "3e29ee7d0fd0e7e4f88ab071abb32f1a23e935432e6d13d3201ea29ecb95115f"
+        },
+        {
+          "symbol": "FirstStatement",
+          "kind": "FirstStatement",
+          "startLine": 12,
+          "endLine": 12,
+          "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+        },
+        {
+          "symbol": "rel",
+          "kind": "FunctionDeclaration",
+          "startLine": 14,
+          "endLine": 16,
+          "syntaxSha256": "24afe72d75b5729c78d7a08deaeb99484c04e268b8d4dcb34053ac627088474a"
+        },
+        {
+          "symbol": "walk",
+          "kind": "FunctionDeclaration",
+          "startLine": 18,
+          "endLine": 26,
+          "syntaxSha256": "0bb13d96779e0d98b4d2d5dbe98b2e8f0d243c07f107e1f0c1d85bdf779c84d6"
+        },
+        {
+          "symbol": "activeMarkdownFiles",
+          "kind": "FunctionDeclaration",
+          "startLine": 28,
+          "endLine": 30,
+          "syntaxSha256": "701d7c38ade5fedf1423a0a3928e5de225d93d0e10b715518469bbb88d25a25d"
+        },
+        {
+          "symbol": "markdownLinkTargets",
+          "kind": "FunctionDeclaration",
+          "startLine": 32,
+          "endLine": 38,
+          "syntaxSha256": "86c57555e18d652e8d9a2e9bd138e747b1721348fa46a6a1ea8a04d738b895fc"
+        },
+        {
+          "symbol": "checkLocalLinks",
+          "kind": "FunctionDeclaration",
+          "startLine": 40,
+          "endLine": 60,
+          "syntaxSha256": "ac001bf58c8e7949c50d187b9d9105e4529c19956bd02d6adadc8f0390fc09df"
+        },
+        {
+          "symbol": "IfStatement",
+          "kind": "IfStatement",
+          "startLine": 62,
+          "endLine": 65,
+          "syntaxSha256": "d838212d75cfa62f4147597e9e4221d99a48027fda23601ac1d90941eb235ab0"
+        },
+        {
+          "symbol": "checkGeneratedMarkers",
+          "kind": "FunctionDeclaration",
+          "startLine": 67,
+          "endLine": 87,
+          "syntaxSha256": "9555addda2f83d98c3f643fa66ed6d125ff3573f493d2513b95c9dca36a1298e"
+        },
+        {
+          "symbol": "checkCurrentPagesDoNotContainTargetStateSections",
+          "kind": "FunctionDeclaration",
+          "startLine": 89,
+          "endLine": 102,
+          "syntaxSha256": "e171459ad59c45cc702ef3ed913a53cb8d068bd89bd16d82b45dc0fac712ed1e"
+        },
+        {
+          "symbol": "sourceLineCount",
+          "kind": "FunctionDeclaration",
+          "startLine": 104,
+          "endLine": 110,
+          "syntaxSha256": "2cd0c9b3b970a1c7e97df284c46a93d78b77ed0d256e89103adcf1f82d69bca4"
+        },
+        {
+          "symbol": "checkArchitecturePresentation",
+          "kind": "FunctionDeclaration",
+          "startLine": 112,
+          "endLine": 166,
+          "syntaxSha256": "0a1ce5df981af6174db8d555fee737cef49b4910a53db0b458a466f1d521941e"
+        },
+        {
+          "symbol": "checkOperationsEvidence",
+          "kind": "FunctionDeclaration",
+          "startLine": 168,
+          "endLine": 240,
+          "syntaxSha256": "7905d09820540065fd4c7bf2d36c2e5b24a2bc9892485074ab345ca000998c9d"
+        },
+        {
+          "symbol": "main",
+          "kind": "FunctionDeclaration",
+          "startLine": 242,
+          "endLine": 258,
+          "syntaxSha256": "1998f21150e75342ea74a5873e751379d8f4723fb5394a72e98a161b38761d75"
+        },
+        {
+          "symbol": "IfStatement",
+          "kind": "IfStatement",
+          "startLine": 260,
+          "endLine": 260,
+          "syntaxSha256": "21f7f774795625fb0fa115f2a199d230c042b36d60f2e941db2345a3592fcbe3"
+        }
+      ],
+      "ranges": [
+        {
+          "startLine": 1,
+          "endLine": 261,
+          "sha256": "001fc01e93fd8975377120d9da86315461117908b83dffc40363637fc7f39027"
+        }
+      ],
+      "initialization": [
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "kind": "ImportDeclaration",
+          "syntaxSha256": "21db498a2b5ab57d6b737222565ba53c1e2354c92deadd0b0e53e78f2e94ae16"
+        },
+        {
+          "kind": "FirstStatement",
+          "syntaxSha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+        },
+        {
+          "kind": "FirstStatement",
+          "syntaxSha256": "3e29ee7d0fd0e7e4f88ab071abb32f1a23e935432e6d13d3201ea29ecb95115f"
+        },
+        {
+          "kind": "FirstStatement",
+          "syntaxSha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+        },
+        {
+          "kind": "IfStatement",
+          "syntaxSha256": "d838212d75cfa62f4147597e9e4221d99a48027fda23601ac1d90941eb235ab0"
+        },
+        {
+          "kind": "IfStatement",
+          "syntaxSha256": "21f7f774795625fb0fa115f2a199d230c042b36d60f2e941db2345a3592fcbe3"
+        }
+      ]
     }
   ],
   "wildcards": [
@@ -25848,4 +26209,155 @@ export function expandReviewedNodePackageGlob(root,{name,command,word,nativeTest
  assert.deepEqual([...selected].sort(),[...expected].sort(),`DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED: ${directory}; actual selected source-set changed; every new/removed/renamed source requires admission`);
  for(const source of selected){entrySourceBytes(root,source);assert(recipe.selectedSources.find(item=>item.source===source)?.role==='product-executable',`DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED: ${source}; native glob source must retain product admission`);}
  return selected;
+}
+
+// Finite resolution-only metadata; no target resolve/load authority.
+const reviewedImporterResolutionRecipe={
+  "version": 1,
+  "scope": "resolution-only source metadata proposal; no scanner admission or actual resolve/load authority",
+  "pins": [
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+      "sha256": "1f260d6fba7913e7939c025277acb2bd4ca11f2626f0ee37ccc03580c5f88ddb"
+    },
+    {
+      "source": "tests/verification/lib/module-graph.mjs",
+      "sha256": "00036fa99dd7400998d583771d67278b626dda02d14f7c6b4be85137fcf8ae86"
+    },
+    {
+      "source": "package.json",
+      "sha256": "d19ba8b9082ebaab00ee2008e688dd4808cc3882141b10bbdda8cce8b50c3d6a"
+    }
+  ],
+  "operations": [
+    {
+      "owner": "resolveRuntimeHelper",
+      "ownerSyntax": "function resolveRuntimeHelper(specifier, importer, helperEntries) {\n  const expected = helperEntries.get(specifier);\n  if (!expected) return null;\n  const file = fs.realpathSync(createRequire(pathToFileURL(importer)).resolve(specifier));\n  assert.equal(file, fs.realpathSync(expected), 'approved runtime helper resolves to a different file');\n  return { file, root: path.dirname(file), contract: true, helpers: true, helper: true };\n}",
+      "ownerSyntaxSHA256": "fce349aa32ed2ca49ba0cb592fef14a3957567addb6f78798ccfdd6910af6eb5",
+      "startLine": 101,
+      "endLine": 107,
+      "factory": "createRequire(pathToFileURL(importer))",
+      "terminal": "resolve(specifier)",
+      "loadsModule": false
+    },
+    {
+      "owner": "resolveSafeContract",
+      "ownerSyntax": "function resolveSafeContract(specifier, entries, importer) {\n  const entry = entries.get(specifier);\n  if (!entry) return null;\n  const manifest = JSON.parse(fs.readFileSync(path.join(entry.root, 'package.json'), 'utf8'));\n  assert.equal(manifest.name, packageName(specifier), 'approved contract package identity changed');\n  assert.equal(manifest.exports?.[entry.export], entry.file, 'approved contract export target changed');\n  const file = fs.realpathSync(path.resolve(entry.root, entry.file));\n  assert(inside(file, fs.realpathSync(entry.root)), 'approved contract export escapes its package');\n  assert.equal(fs.realpathSync(createRequire(pathToFileURL(importer)).resolve(specifier)), file,\n    'approved contract import resolves to a different package');\n  return { file, root: fs.realpathSync(entry.root), contract: true, helpers: entry.helpers === true };\n}",
+      "ownerSyntaxSHA256": "dce6a986757c504d286693f06c78f00db4b841d8e9f3f20c1829435c4755a3be",
+      "startLine": 109,
+      "endLine": 120,
+      "factory": "createRequire(pathToFileURL(importer))",
+      "terminal": "resolve(specifier)",
+      "loadsModule": false
+    }
+  ],
+  "callerContext": {
+    "utc": "2026-10-17T08:35:21.570322+00:00",
+    "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+    "directCallers": [
+      {
+        "name": "verify:migration:package-boundaries",
+        "command": "npm run verify:runtime-packaging:ownership && node tests/verification/contracts/check-plugin-system-v2-boundaries.mjs"
+      },
+      {
+        "name": "verify:plugin-system-v2",
+        "command": "npm run build --workspace @kubeclaw/openclaw-agent-observer && npm run plugin-system:sdk:check && npm run plugin-system:plugins:build && npm run plugin-system:sandbox:build && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node tests/verification/contracts/check-plugin-system-v2-contracts.mjs && node tests/verification/contracts/check-plugin-agent-output-contracts.mts && node tests/verification/contracts/check-plugin-system-v2-boundaries.mjs && node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs && node tests/verification/contracts/check-plugin-system-v2-registry.mjs && node tests/verification/contracts/check-plugin-system-v2-import-safety.mjs && node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-phase7.mjs && node tests/verification/contracts/check-plugin-system-v2-phase11.mts \"${KUBECLAW_TEST_CGROUP_ROOT:?Set KUBECLAW_TEST_CGROUP_ROOT to a delegated cgroup-v2 subtree}\" && node tests/verification/contracts/check-plugin-system-v2-phase12.mts && node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs && node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs && node tests/verification/e2e/provider-catalog.test.mjs && npm run verify:plugin-live-capabilities && node tests/verification/contracts/check-plugin-system-v2-e2e.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs && node tests/verification/contracts/check-plugin-system-v2-isolation.mjs \"${KUBECLAW_TEST_CGROUP_ROOT:?Set KUBECLAW_TEST_CGROUP_ROOT to a delegated cgroup-v2 subtree}\" && node tests/verification/contracts/check-plugin-system-v2-installation.mjs && node tests/verification/contracts/check-plugin-system-v2-external-engine.mjs \"${KUBECLAW_TEST_CGROUP_ROOT:?Set KUBECLAW_TEST_CGROUP_ROOT to a delegated cgroup-v2 subtree}\""
+      }
+    ],
+    "transitiveRootToDirectChains": [
+      [
+        "docs:publish-check",
+        "docs:check",
+        "verify:migration:workflow",
+        "verify:migration:package-boundaries"
+      ],
+      [
+        "verify:product",
+        "docs:check",
+        "verify:migration:workflow",
+        "verify:migration:package-boundaries"
+      ],
+      [
+        "verify:product",
+        "verify:contracts",
+        "verify:plugin-system-v2"
+      ],
+      [
+        "verify:product",
+        "verify:pipeline",
+        "verify:plugin-system-v2"
+      ]
+    ],
+    "allInvolvedCommands": {
+      "docs:check": "npm run docs:parity:transition:check && npm run docs:status:check && npm run docs:check:generated && npm run docs:blueprint:check && npm run docs:tree:check && npm run docs:tree:mutations && node scripts/docs-check.mjs && npm run docs:check:refs && npm run docs:site-boundary:check && npm run docs:check:coverage && npm run docs:publication:check && npm run verify:migration:workflow",
+      "docs:publish-check": "npm run docs:check && npm run docs:publication:build",
+      "verify:contracts": "npm run typecheck:integration && npm run knip:check && node tests/verification/contracts/check-checkpoint-hook-contracts.mjs --source-root \"$PWD\" && npm run verify:test-gate:traceability && npm run verify:test-gate:contracts && npm run verify:test-gate:provider-registry && npm run verify:test-gate:report-adapter-registry && npm run verify:test-gate:report-adapter-runtime && npm run verify:test-gate:junit-report-adapter && npm run verify:test-gate:suite-resolver && npm run verify:test-gate:plan-runner && npm run verify:test-gate:remote-plan && npm run verify:test-gate:remote-runtime && npm run verify:test-gate:remote-import && npm run verify:test-gate:legacy-retirement && npm run verify:worker-core:contracts && npm run verify:worker-core:attempt-executor && npm run verify:worker-core:local-runtime && npm run verify:worker-core:role-surfaces && npm run verify:observability:legacy-cutover && npm run plugin-system:inventory:check && npm run verify:plugin-system-v2",
+      "verify:migration:package-boundaries": "npm run verify:runtime-packaging:ownership && node tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+      "verify:migration:workflow": "node scripts/check-suite-migration-workflow.mjs all && node scripts/generate-suite-migration-status.mjs --check && npm run verify:migration:package-boundaries",
+      "verify:pipeline": "npm run verify:plugin-system-v2",
+      "verify:plugin-system-v2": "npm run build --workspace @kubeclaw/openclaw-agent-observer && npm run plugin-system:sdk:check && npm run plugin-system:plugins:build && npm run plugin-system:sandbox:build && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node tests/verification/contracts/check-plugin-system-v2-contracts.mjs && node tests/verification/contracts/check-plugin-agent-output-contracts.mts && node tests/verification/contracts/check-plugin-system-v2-boundaries.mjs && node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs && node tests/verification/contracts/check-plugin-system-v2-registry.mjs && node tests/verification/contracts/check-plugin-system-v2-import-safety.mjs && node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-phase7.mjs && node tests/verification/contracts/check-plugin-system-v2-phase11.mts \"${KUBECLAW_TEST_CGROUP_ROOT:?Set KUBECLAW_TEST_CGROUP_ROOT to a delegated cgroup-v2 subtree}\" && node tests/verification/contracts/check-plugin-system-v2-phase12.mts && node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs && node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs && node tests/verification/e2e/provider-catalog.test.mjs && npm run verify:plugin-live-capabilities && node tests/verification/contracts/check-plugin-system-v2-e2e.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs && node tests/verification/contracts/check-plugin-system-v2-isolation.mjs \"${KUBECLAW_TEST_CGROUP_ROOT:?Set KUBECLAW_TEST_CGROUP_ROOT to a delegated cgroup-v2 subtree}\" && node tests/verification/contracts/check-plugin-system-v2-installation.mjs && node tests/verification/contracts/check-plugin-system-v2-external-engine.mjs \"${KUBECLAW_TEST_CGROUP_ROOT:?Set KUBECLAW_TEST_CGROUP_ROOT to a delegated cgroup-v2 subtree}\"",
+      "verify:product": "npm run typecheck:skills && npm run progress:scaffold:typecheck && npm run verify:contracts && npm run verify:pipeline && npm run docs:check"
+    },
+    "package": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo/package.json",
+      "sha256": "d19ba8b9082ebaab00ee2008e688dd4808cc3882141b10bbdda8cce8b50c3d6a"
+    },
+    "method": "Exact literal native source caller search plus npm run literal edge inventory; no claim to parse dynamic shell commands or authorize execution",
+    "independentBoundaryDecision": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/coordinator-recovery-v11/resolver-review.json",
+      "sha256": "8946c7d7e442e2953528cb3e18c71f67c84da0e874cb7cffe801ad458f024cd3"
+    },
+    "implementationNotAuthored": true,
+    "formalAcceptance": false
+  },
+  "effectsNotQualified": [
+    "test fixture writes/symlinks/cleanup",
+    "test repository traversal and manifest reads",
+    "module-graph TypeScript dependency/import initialization",
+    "separate dynamic core import and kernel construction",
+    "actual importer-relative Node package/exports/filesystem resolution"
+  ],
+  "runtimeAcquisitionAuthorized": false,
+  "scannerAdmissionAuthorized": false
+};
+frozenRecipes(reviewedImporterResolutionRecipe);
+function qualifyImporterResolutionBytes(source,inputs){
+ const fail=detail=>assert.fail('RESOLUTION_METADATA_UNQUALIFIED: '+detail);
+ if(source!==reviewedImporterResolutionRecipe.pins[0].source)fail('source identity');
+ for(const pin of reviewedImporterResolutionRecipe.pins)if(typeof inputs[pin.source]!=='string'||syntaxSha256(inputs[pin.source])!==pin.sha256)fail('bound bytes '+pin.source);
+ const bytes=inputs[source],tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);
+ if(tree.parseDiagnostics.length)fail('syntax');
+ const packageDefinition=JSON.parse(inputs['package.json']);
+ for(const [name,command] of Object.entries(reviewedImporterResolutionRecipe.callerContext.allInvolvedCommands))if(packageDefinition.scripts[name]!==command)fail('caller command '+name);
+ const imports=tree.statements.filter(ts.isImportDeclaration).map(node=>node.getText(tree));
+ if(!imports.some(text=>text.includes("'node:module'")&&text.includes('createRequire'))||!imports.some(text=>text.includes("'node:url'")&&text.includes('pathToFileURL')))fail('factory/url imports');
+ const factories=[];function visit(node){if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='createRequire')factories.push(node);ts.forEachChild(node,visit);}visit(tree);
+ if(factories.length!==2)fail('factory inventory');
+ const records=factories.map(factory=>{
+  let owner=factory.parent;while(owner&&!ts.isFunctionDeclaration(owner))owner=owner.parent;
+  const operation=reviewedImporterResolutionRecipe.operations.find(item=>item.owner===owner?.name?.text);
+  if(!operation||owner.getText(tree)!==operation.ownerSyntax||syntaxSha256(owner.getText(tree))!==operation.ownerSyntaxSHA256)fail('owner body');
+  if(factory.getText(tree)!=='createRequire(pathToFileURL(importer))')fail('importer flow');
+  const member=factory.parent,terminal=member?.parent;
+  if(!ts.isPropertyAccessExpression(member)||member.expression!==factory||member.name.text!=='resolve'||!ts.isCallExpression(terminal)||terminal.expression!==member||terminal.arguments.length!==1||!ts.isIdentifier(terminal.arguments[0])||terminal.arguments[0].text!=='specifier')fail('immediate resolve-only terminal');
+  return {kind:'importer-relative-resolution-only-metadata',source,sourceSha256:reviewedImporterResolutionRecipe.pins[0].sha256,owner:operation.owner,ownerSyntaxSHA256:operation.ownerSyntaxSHA256,factorySyntax:factory.getText(tree),terminalSyntax:terminal.getText(tree),importer:{kind:'symbolic-pending-graph-source',runtimeBound:false},specifier:{kind:'symbolic-literal-reference-selected-map-key',runtimeBound:false},runtimeAcquisitionAuthorized:false,scannerAdmissionAuthorized:false};
+ });
+ if(new Set(records.map(record=>record.owner)).size!==2)fail('unique owners');
+ return Object.freeze({records:Object.freeze(records.map(Object.freeze)),effectsNotQualified:Object.freeze([...reviewedImporterResolutionRecipe.effectsNotQualified]),runtimeAcquisitionAuthorized:false,scannerAdmissionAuthorized:false});
+}
+
+export function reviewedImporterRelativeResolutionMetadata(root,source,bytes,tree,factory,recordDependency=()=>{}) {
+ const fail=detail=>assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; resolution-only metadata: ${detail}`);
+ if(source!==reviewedImporterResolutionRecipe.pins[0].source)fail('source identity');
+ const inputs={};
+ for(const pin of reviewedImporterResolutionRecipe.pins){
+  const file=path.join(root,pin.source);recordDependency(pin.source);
+  if(fs.realpathSync(file)!==file||!fs.lstatSync(file).isFile())fail('physical source/helper/package');
+  inputs[pin.source]=pin.source===source?(Buffer.isBuffer(bytes)?bytes.toString('utf8'):bytes):fs.readFileSync(file,'utf8');
+ }
+ const metadata=qualifyImporterResolutionBytes(source,inputs);
+ let owner=factory.parent;while(owner&&!ts.isFunctionDeclaration(owner))owner=owner.parent;
+ const record=metadata.records.find(item=>item.owner===owner?.name?.text);
+ if(!record||factory.getText(tree)!==record.factorySyntax||factory.parent?.parent?.getText(tree)!==record.terminalSyntax)fail('factory owner/terminal');
+ return frozenRecipes({...record,terminalSha256:syntaxSha256(record.terminalSyntax)});
 }

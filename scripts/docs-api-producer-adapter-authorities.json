@@ -136,7 +136,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[✓]${NC} $1",
+          "${GREEN}[\u2713]${NC} $1",
           ";",
           "}",
           "warn",
@@ -152,7 +152,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[✗]${NC} $1",
+          "${RED}[\u2717]${NC} $1",
           ">&",
           "2",
           ";",
@@ -170,13 +170,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}═══════════════════════════════════════${NC}",
+          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}═══════════════════════════════════════${NC}",
+          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
           "}",
           "require_command",
           "()",
@@ -2887,7 +2887,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" → \" $3}",
+          "{print \"  \" $1 \" \u2192 \" $3}",
           "}",
           "reconcile_nova_retired_trust_mount",
           "()",
@@ -3605,7 +3605,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" → \" $3}",
+          "{print \"  \" $1 \" \u2192 \" $3}",
           "}",
           "cmd_image",
           "()",
@@ -5984,7 +5984,7 @@
           "()",
           "{",
           "header",
-          "Nova → Buster BuildKit Production Preflight",
+          "Nova \u2192 Buster BuildKit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -5993,13 +5993,13 @@
           "\n",
           "$REPO_DIR/dist/verification/container-build-production-receipt.json",
           "log",
-          "Nova → Buster BuildKit production preflight passed",
+          "Nova \u2192 Buster BuildKit production preflight passed",
           "}",
           "cmd_nova_unit_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Unit Production Preflight",
+          "Nova \u2192 Buster Unit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -6008,13 +6008,13 @@
           "\n",
           "$REPO_DIR/dist/verification/unit-production-receipt.json",
           "log",
-          "Nova → Buster unit production preflight passed",
+          "Nova \u2192 Buster unit production preflight passed",
           "}",
           "cmd_nova_kubernetes_fixture_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Kubernetes Fixture Production Preflight",
+          "Nova \u2192 Buster Kubernetes Fixture Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -6439,13 +6439,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster Kubernetes fixture production preflight passed",
+          "Nova \u2192 Buster Kubernetes fixture production preflight passed",
           "}",
           "cmd_nova_http_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster HTTP Production Preflight",
+          "Nova \u2192 Buster HTTP Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -6860,13 +6860,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova → Buster HTTP production preflight passed",
+          "Nova \u2192 Buster HTTP production preflight passed",
           "}",
           "cmd_nova_api_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster API Production Preflight",
+          "Nova \u2192 Buster API Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7165,13 +7165,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster API production preflight passed",
+          "Nova \u2192 Buster API production preflight passed",
           "}",
           "cmd_nova_a11y_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Accessibility Production Preflight",
+          "Nova \u2192 Buster Accessibility Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7470,13 +7470,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster accessibility production preflight passed",
+          "Nova \u2192 Buster accessibility production preflight passed",
           "}",
           "cmd_nova_lighthouse_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Lighthouse Production Preflight",
+          "Nova \u2192 Buster Lighthouse Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7775,13 +7775,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster Lighthouse production preflight passed",
+          "Nova \u2192 Buster Lighthouse production preflight passed",
           "}",
           "cmd_nova_visual_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Visual Regression Production Preflight",
+          "Nova \u2192 Buster Visual Regression Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8057,13 +8057,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova → Buster visual production preflight passed",
+          "Nova \u2192 Buster visual production preflight passed",
           "}",
           "cmd_nova_e2e_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster End-to-End Production Preflight",
+          "Nova \u2192 Buster End-to-End Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8339,13 +8339,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova → Buster end-to-end production preflight passed",
+          "Nova \u2192 Buster end-to-end production preflight passed",
           "}",
           "cmd_nova_security_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Security Production Preflight",
+          "Nova \u2192 Buster Security Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8621,13 +8621,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova → Buster security production preflight passed",
+          "Nova \u2192 Buster security production preflight passed",
           "}",
           "cmd_nova_tailscale_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Tailscale Production Preflight",
+          "Nova \u2192 Buster Tailscale Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -9025,13 +9025,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova → Buster Tailscale production preflight passed",
+          "Nova \u2192 Buster Tailscale production preflight passed",
           "}",
           "cmd_nova_production_preflights",
           "()",
           "{",
           "header",
-          "Nova → Buster Production Suite Preflights",
+          "Nova \u2192 Buster Production Suite Preflights",
           "require_command",
           "node",
           "local",
@@ -10123,7 +10123,7 @@
           "Unknown deployment command: $1",
           "fi",
           "echo",
-          "KubeClaw — Deployment CLI",
+          "KubeClaw \u2014 Deployment CLI",
           "echo",
           "",
           "echo",
@@ -10197,7 +10197,7 @@
           "echo",
           "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight",
           "echo",
-          "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion",
+          "  buster-infra-smoke  Test Redis \u2192 deployed Buster \u2192 BuildKit \u2192 deploy \u2192 completion",
           "echo",
           "  agents             Deploy agents (Nova + Buster) using image/runtime values",
           "echo",
@@ -12356,16 +12356,16 @@
       }
     },
     "scripts/gitops-continuous.mjs": {
-      "sha256": "0373537e9e00e8d9f41fa64760e6ef9ed848fe7ffb00d5752413f0861e9d40fd",
-      "operation": "Public continuous GitOps caller serializes bootstrap source objects and local gitops chart Applications; its local chart is subject to recursive branch discovery.",
-      "operationDigest": "0373537e9e00e8d9f41fa64760e6ef9ed848fe7ffb00d5752413f0861e9d40fd",
+      "sha256": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
+      "operation": "Public continuous GitOps original caller renders bootstrap root and genuine child Applications/AppProject; exact default/manual sync and default/custom naming profiles plus qualifying/nonqualifying immutable path annotation branches. Controlled committed-bundle input is not real bundle/adoption/live acceptance.",
+      "operationDigest": "f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734",
       "invocations": [
         "import { bootstrapDocuments, preflightGitOps } from './gitops.mjs';",
-        "export function continuousDocuments(result, namespace) {",
-        "const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace);",
+        "export function continuousDocuments(result, namespace, config = {}) {",
+        "const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);",
         "const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),",
-        "return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace) },",
-        "'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace)),"
+        "return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },",
+        "'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),"
       ],
       "operationRecipe": {
         "language": "TypeScript",
@@ -12416,11 +12416,11 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "export function continuousDocuments(result, namespace) {\n  const documents = structuredClone(result.documents);\n  const application = documents.find(document => document.kind === 'Application');\n  application.spec.source = { repoURL: result.values.repository, targetRevision: 'main',\n    path: `${environment}/apps`, directory: { include: 'applications.yaml' } };\n  if (application.metadata.namespace !== namespace) throw new Error('GITOPS_ARGO_NAMESPACE_MISMATCH');\n  return documents;\n}"
+            "syntax": "export function continuousDocuments(result, namespace, config = {}) {\n  const documents = structuredClone(result.documents);\n  const application = documents.find(document => document.kind === 'Application');\n  application.spec.source = { repoURL: result.values.repository, targetRevision: 'main',\n    path: `${environment}/apps`, directory: { include: 'applications.yaml' } };\n  if (application.metadata.namespace !== namespace) throw new Error('GITOPS_ARGO_NAMESPACE_MISMATCH');\n  // During registration, apply definitions together without starting a root\n  // sync operation that would wait indefinitely on unsynced manual children.\n  if (config.runtimeAutoSync === false) delete application.spec.syncPolicy.automated;\n  return documents;\n}"
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "export function continuousApplications(manifest) {\n  const documents = yaml.loadAll(manifest).filter(Boolean);\n  for (const document of documents) {\n    if (document.kind === 'Application') {\n      // Unique bundle directories survive later promotions. Tracking main also\n      // survives squash merges; no transient PR commit needs to stay reachable.\n      document.spec.source.targetRevision = 'main';\n    }\n  }\n  return documents;\n}"
+            "syntax": "export function continuousApplications(manifest, config = {}) {\n  if (config.runtimeAutoSync !== undefined && typeof config.runtimeAutoSync !== 'boolean') throw new Error('GITOPS_AUTOSYNC_CONFIG_INVALID');\n  const documents = yaml.loadAll(manifest).filter(Boolean);\n  for (const document of documents) {\n    if (document.kind === 'Application') {\n      // Unique bundle directories survive later promotions. Tracking main also\n      // survives squash merges; no transient PR commit needs to stay reachable.\n      document.spec.source.targetRevision = 'main';\n      // Health can reuse a successful sync after unrelated main commits only\n      // for the unique release paths produced by the immutable bundle exporter.\n      const annotations = document.metadata.annotations ??= {};\n      delete annotations['kubeclaw.dev/immutable-bundle-path'];\n      if (/^releases\\/gitops\\/[a-z0-9][a-z0-9-]{0,50}\\/(buster|nova|prism)$/u.test(document.spec.source.path ?? '')\n        && document.spec.source.directory?.include === 'resources.yaml') {\n        annotations['kubeclaw.dev/immutable-bundle-path'] = document.spec.source.path;\n      }\n      if (config.runtimeAutoSync === false) {\n        delete document.spec.syncPolicy.automated;\n        // Register all children together, even before any workload is healthy.\n        document.metadata.annotations['argocd.argoproj.io/sync-wave'] = '0';\n      }\n    }\n  }\n  return documents;\n}"
           },
           {
             "kind": "FunctionDeclaration",
@@ -12428,7 +12428,7 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "export function renderContinuousEnvironment(repository, directory, url, revision, config) {\n  const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace);\n  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));\n  try {\n    const values = path.join(temporary, 'values.yaml');\n    fs.writeFileSync(values, yaml.dump(result.values));\n    const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),\n      '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });\n    return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace) },\n      files: { 'apps/applications.yaml': dump(continuousApplications(rendered)),\n        'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace)),\n        'selection.json': JSON.stringify({ directory }, null, 2) + '\\n' } };\n  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }\n}"
+            "syntax": "export function renderContinuousEnvironment(repository, directory, url, revision, config) {\n  const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);\n  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));\n  try {\n    const values = path.join(temporary, 'values.yaml');\n    fs.writeFileSync(values, yaml.dump(result.values));\n    const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),\n      '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });\n    return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },\n      files: { 'apps/applications.yaml': dump(continuousApplications(rendered, config)),\n        'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),\n        'selection.json': JSON.stringify({ directory }, null, 2) + '\\n' } };\n  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }\n}"
           },
           {
             "kind": "FunctionDeclaration",
@@ -12730,7 +12730,7 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "function conciseSignalValue(value, maximum = 180) {\n  const original = String(value ?? '');\n  const oneLine = original.replaceAll(/\\s+/gu, ' ').trim();\n  if (oneLine.length <= maximum) return oneLine;\n  const digest = createHash('sha256').update(original).digest('hex').slice(0, 12);\n  return `${oneLine.slice(0, maximum - 35).trimEnd()}… [${original.length} chars sha256:${digest}]`;\n}"
+            "syntax": "function conciseSignalValue(value, maximum = 180) {\n  const original = String(value ?? '');\n  const oneLine = original.replaceAll(/\\s+/gu, ' ').trim();\n  if (oneLine.length <= maximum) return oneLine;\n  const digest = createHash('sha256').update(original).digest('hex').slice(0, 12);\n  return `${oneLine.slice(0, maximum - 35).trimEnd()}\u2026 [${original.length} chars sha256:${digest}]`;\n}"
           },
           {
             "kind": "FunctionDeclaration",
@@ -35872,7 +35872,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[✓]${NC} $1"
+            "${GREEN}[\u2713]${NC} $1"
           ]
         },
         {
@@ -35888,7 +35888,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[✗]${NC} $1"
+            "${RED}[\u2717]${NC} $1"
           ]
         },
         {
@@ -35904,7 +35904,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "n${BLUE}═══════════════════════════════════════${NC}"
+            "n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
           ]
         },
         {
@@ -35920,7 +35920,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${BLUE}═══════════════════════════════════════${NC}"
+            "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
           ]
         },
         {
@@ -36343,14 +36343,14 @@
           "line": 1232,
           "command": "awk",
           "args": [
-            "{print \"  \" $1 \" → \" $3}"
+            "{print \"  \" $1 \" \u2192 \" $3}"
           ]
         },
         {
           "line": 1469,
           "command": "awk",
           "args": [
-            "{print \"  \" $1 \" → \" $3}"
+            "{print \"  \" $1 \" \u2192 \" $3}"
           ]
         },
         {
@@ -38489,7 +38489,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 140,
@@ -38499,7 +38499,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
         },
         {
           "line": 141,
@@ -38509,7 +38509,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
         },
         {
           "line": 142,
@@ -38519,7 +38519,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "err() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
+          "sourceEvidence": "err() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
         },
         {
           "line": 144,
@@ -38529,7 +38529,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
+          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
         },
         {
           "line": 145,
@@ -38539,7 +38539,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\""
+          "sourceEvidence": "  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\""
         },
         {
           "line": 146,
@@ -38549,7 +38549,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\"\n}"
+          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n}"
         },
         {
           "line": 166,
@@ -39079,7 +39079,7 @@
           "source": "scripts/deploy.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  log \"Infrastructure deployed. Pods:\"\n  kubectl get pods -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1 \" → \" $3}'\n}"
+          "sourceEvidence": "  log \"Infrastructure deployed. Pods:\"\n  kubectl get pods -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1 \" \u2192 \" $3}'\n}"
         },
         {
           "line": 1469,
@@ -39089,7 +39089,7 @@
           "source": "scripts/deploy.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  kubectl get pods -n \"$NAMESPACE\" -l app.kubernetes.io/name=kubeclaw --no-headers |\n    awk '{print \"  \" $1 \" → \" $3}'\n}"
+          "sourceEvidence": "  kubectl get pods -n \"$NAMESPACE\" -l app.kubernetes.io/name=kubeclaw --no-headers |\n    awk '{print \"  \" $1 \" \u2192 \" $3}'\n}"
         },
         {
           "line": 1599,
@@ -39944,7 +39944,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[✓]${NC} $1",
+          "${GREEN}[\u2713]${NC} $1",
           ";",
           "}",
           "warn",
@@ -39960,7 +39960,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[✗]${NC} $1",
+          "${RED}[\u2717]${NC} $1",
           ">&",
           "2",
           ";",
@@ -39978,13 +39978,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}═══════════════════════════════════════${NC}",
+          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}═══════════════════════════════════════${NC}",
+          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
           "}",
           "require_command",
           "()",
@@ -42552,7 +42552,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" → \" $3}",
+          "{print \"  \" $1 \" \u2192 \" $3}",
           "}",
           "reconcile_nova_retired_trust_mount",
           "()",
@@ -43270,7 +43270,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" → \" $3}",
+          "{print \"  \" $1 \" \u2192 \" $3}",
           "}",
           "cmd_image",
           "()",
@@ -45348,7 +45348,7 @@
           "()",
           "{",
           "header",
-          "Nova → Buster BuildKit Production Preflight",
+          "Nova \u2192 Buster BuildKit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -45357,13 +45357,13 @@
           "\n",
           "$REPO_DIR/dist/verification/container-build-production-receipt.json",
           "log",
-          "Nova → Buster BuildKit production preflight passed",
+          "Nova \u2192 Buster BuildKit production preflight passed",
           "}",
           "cmd_nova_unit_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Unit Production Preflight",
+          "Nova \u2192 Buster Unit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -45372,13 +45372,13 @@
           "\n",
           "$REPO_DIR/dist/verification/unit-production-receipt.json",
           "log",
-          "Nova → Buster unit production preflight passed",
+          "Nova \u2192 Buster unit production preflight passed",
           "}",
           "cmd_nova_kubernetes_fixture_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Kubernetes Fixture Production Preflight",
+          "Nova \u2192 Buster Kubernetes Fixture Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -45803,13 +45803,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster Kubernetes fixture production preflight passed",
+          "Nova \u2192 Buster Kubernetes fixture production preflight passed",
           "}",
           "cmd_nova_http_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster HTTP Production Preflight",
+          "Nova \u2192 Buster HTTP Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -46224,13 +46224,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova → Buster HTTP production preflight passed",
+          "Nova \u2192 Buster HTTP production preflight passed",
           "}",
           "cmd_nova_api_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster API Production Preflight",
+          "Nova \u2192 Buster API Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -46529,13 +46529,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster API production preflight passed",
+          "Nova \u2192 Buster API production preflight passed",
           "}",
           "cmd_nova_a11y_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Accessibility Production Preflight",
+          "Nova \u2192 Buster Accessibility Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -46834,13 +46834,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster accessibility production preflight passed",
+          "Nova \u2192 Buster accessibility production preflight passed",
           "}",
           "cmd_nova_lighthouse_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Lighthouse Production Preflight",
+          "Nova \u2192 Buster Lighthouse Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -47139,13 +47139,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova → Buster Lighthouse production preflight passed",
+          "Nova \u2192 Buster Lighthouse production preflight passed",
           "}",
           "cmd_nova_visual_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Visual Regression Production Preflight",
+          "Nova \u2192 Buster Visual Regression Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -47421,13 +47421,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova → Buster visual production preflight passed",
+          "Nova \u2192 Buster visual production preflight passed",
           "}",
           "cmd_nova_e2e_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster End-to-End Production Preflight",
+          "Nova \u2192 Buster End-to-End Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -47703,13 +47703,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova → Buster end-to-end production preflight passed",
+          "Nova \u2192 Buster end-to-end production preflight passed",
           "}",
           "cmd_nova_security_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Security Production Preflight",
+          "Nova \u2192 Buster Security Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -47985,13 +47985,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova → Buster security production preflight passed",
+          "Nova \u2192 Buster security production preflight passed",
           "}",
           "cmd_nova_tailscale_preflight",
           "()",
           "{",
           "header",
-          "Nova → Buster Tailscale Production Preflight",
+          "Nova \u2192 Buster Tailscale Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -48389,13 +48389,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova → Buster Tailscale production preflight passed",
+          "Nova \u2192 Buster Tailscale production preflight passed",
           "}",
           "cmd_nova_production_preflights",
           "()",
           "{",
           "header",
-          "Nova → Buster Production Suite Preflights",
+          "Nova \u2192 Buster Production Suite Preflights",
           "require_command",
           "node",
           "local",
@@ -49278,7 +49278,7 @@
           "Unknown deployment command: $1",
           "fi",
           "echo",
-          "KubeClaw — Deployment CLI",
+          "KubeClaw \u2014 Deployment CLI",
           "echo",
           "",
           "echo",
@@ -49352,7 +49352,7 @@
           "echo",
           "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight",
           "echo",
-          "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion",
+          "  buster-infra-smoke  Test Redis \u2192 deployed Buster \u2192 BuildKit \u2192 deploy \u2192 completion",
           "echo",
           "  agents             Deploy agents (Nova + Buster) using image/runtime values",
           "echo",
@@ -59862,7 +59862,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[✓]${NC} $1"
+            "${GREEN}[\u2713]${NC} $1"
           ]
         },
         {
@@ -59878,7 +59878,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[✗]${NC} $1"
+            "${RED}[\u2717]${NC} $1"
           ]
         },
         {
@@ -60078,7 +60078,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 26,
@@ -60088,7 +60088,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
         },
         {
           "line": 27,
@@ -60098,7 +60098,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\n"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\n"
         },
         {
           "line": 30,
@@ -60138,7 +60138,7 @@
           "source": "scripts/setup.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "# ─── Step 2: Verify repository hygiene ───────────────────────────────────\nif [[ -f .dockerignore ]] && grep -qxF \"my-values/\" .dockerignore; then\n  log \".dockerignore excludes my-values/ from runtime image build contexts\""
+          "sourceEvidence": "# \u2500\u2500\u2500 Step 2: Verify repository hygiene \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nif [[ -f .dockerignore ]] && grep -qxF \"my-values/\" .dockerignore; then\n  log \".dockerignore excludes my-values/ from runtime image build contexts\""
         },
         {
           "line": 60,
@@ -60294,7 +60294,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[✓]${NC} $1",
+          "${GREEN}[\u2713]${NC} $1",
           ";",
           "}",
           "warn",
@@ -60310,7 +60310,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[✗]${NC} $1",
+          "${RED}[\u2717]${NC} $1",
           ">&",
           "2",
           ";",
@@ -60356,7 +60356,7 @@
           ";",
           "then",
           "warn",
-          "Git already initialized — skipping init",
+          "Git already initialized \u2014 skipping init",
           "else",
           "git",
           "init",
@@ -62877,7 +62877,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[✓]${NC} $1"
+            "${GREEN}[\u2713]${NC} $1"
           ]
         },
         {
@@ -62893,7 +62893,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[✗]${NC} $1"
+            "${RED}[\u2717]${NC} $1"
           ]
         },
         {
@@ -62909,7 +62909,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "n${BLUE}═══════════════════════════════════════${NC}"
+            "n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
           ]
         },
         {
@@ -62925,7 +62925,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${BLUE}═══════════════════════════════════════${NC}"
+            "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
           ]
         },
         {
@@ -63813,7 +63813,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 48,
@@ -63823,7 +63823,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
         },
         {
           "line": 49,
@@ -63833,7 +63833,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
         },
         {
           "line": 50,
@@ -63843,7 +63843,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "err() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
+          "sourceEvidence": "err() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
         },
         {
           "line": 52,
@@ -63853,7 +63853,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
+          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
         },
         {
           "line": 53,
@@ -63863,7 +63863,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\""
+          "sourceEvidence": "  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\""
         },
         {
           "line": 54,
@@ -63873,7 +63873,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\"\n}"
+          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n}"
         },
         {
           "line": 79,
@@ -64185,7 +64185,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[✓]${NC} $1",
+          "${GREEN}[\u2713]${NC} $1",
           ";",
           "}",
           "warn",
@@ -64201,7 +64201,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[✗]${NC} $1",
+          "${RED}[\u2717]${NC} $1",
           ">&",
           "2",
           ";",
@@ -64219,13 +64219,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}═══════════════════════════════════════${NC}",
+          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}═══════════════════════════════════════${NC}",
+          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
           "}",
           "TMP_FILES=",
           "()",
@@ -66381,7 +66381,7 @@
           ">",
           "/dev/null",
           "log",
-          "Fixed DATABASE_URL: ${SRC_NS} → ${NAMESPACE}",
+          "Fixed DATABASE_URL: ${SRC_NS} \u2192 ${NAMESPACE}",
           "else",
           "log",
           "DATABASE_URL already correct (no ${SRC_NS} reference)",
@@ -68300,7 +68300,7 @@
       {
         "source": "scripts/docs-configuration-inventory.mjs",
         "semanticClass": "finite-documentation-runtime-semantics",
-        "sourceSha256": "dc2d673c5973a047ce6e3094312fce70e10489d9e15bf321ed62ac024e180af3",
+        "sourceSha256": "da12854783f312aeac62ea90f6a69a35b8f8444c50b11ac53706214ffc346348",
         "operations": [
           {
             "expression": "import(pathToFileURL(path.join(root, file)).href)",
@@ -68345,6 +68345,44 @@
             "skills/nova/plugins/human-approval/src/approval.ts",
             "skills/buster/plugins/direct-command/src/provider.js",
             "skills/common/plugins/command-runner/src/adapter.ts"
+          ],
+          "qualificationScope": "Passive selected-source operation/caller/input metadata only; not execution, whole-module initialization, dependency or effect qualification",
+          "runtimeAcquisitionAuthorized": false,
+          "selectedCheckoutBinding": "Source and authorityInputs are bound by exact bytes at the scanner-selected graph root; generator/checker execution root is separately unqualified",
+          "rootSelection": {
+            "expression": "path.resolve(option('--root', process.cwd()))",
+            "optionSemantics": "First --root occurrence: when absent use process.cwd(); when present take argv[index + 1] exactly. Trailing --root yields undefined and path.resolve(undefined) throws; relative values resolve against cwd",
+            "executionCheckoutQualified": false
+          },
+          "callerBranches": [
+            {
+              "function": "verifyRuntimeConsumerSemantics",
+              "selector": "--check-runtime-consumer-semantics-only",
+              "completion": "await function; process.exit(0)",
+              "operationExpressions": [
+                "import(pathToFileURL(path.join(root, file)).href)"
+              ]
+            },
+            {
+              "function": "verifyConfigurationSchemaSemantics",
+              "selector": "--check-schema-semantics-only",
+              "completion": "await function; process.exit(0)",
+              "operationExpressions": [
+                "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href)",
+                "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href)",
+                "import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href)",
+                "import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href)",
+                "import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href)"
+              ]
+            }
+          ],
+          "callerPrecedence": "Top-level dispatch in source order: earlier matching probe/check branches can exit before either selector; runtime-consumer branch precedes environment-coverage and schema branches; no dispatcher is bypassed for execution",
+          "unqualifiedEffects": [
+            "Full module initialization and static dependencies before dispatch",
+            "Initialization and transitive dependencies of every dynamically imported module",
+            "Temporary filesystem creation, writing and cleanup in both verification functions",
+            "Provider/adapter calls, callback effects, activation and shutdown in complete selected functions",
+            "Runtime --root/cwd selection; actual source checkout identity"
           ]
         },
         "authorityInputs": []
@@ -68378,7 +68416,7 @@
       {
         "source": "scripts/updates/check-renovate.mjs",
         "semanticClass": "external-renovate-fixed-suffixes",
-        "sourceSha256": "592ecf7c723f28a60809e031ee0781a69c3f4507878836ec8c3d0068055cd574",
+        "sourceSha256": "7c3ce4a1fcc412e9954013629f9db39ae6570ea2159cf0bfbd6cca88fea2f98a",
         "operations": [
           {
             "expression": "import(pathToFileURL(`${renovate}/dist/modules/manager/custom/regex/index.js`))",
@@ -68399,12 +68437,33 @@
             "/dist/modules/manager/custom/regex/index.js",
             "/dist/workers/repository/update/branch/auto-replace.js",
             "/dist/config/global.js"
+          ],
+          "qualificationScope": "Passive selected-source operation/caller/input metadata only; not execution, whole-module initialization, dependency or effect qualification",
+          "runtimeAcquisitionAuthorized": false,
+          "selectedCheckoutBinding": "Source and authorityInputs are bound by exact bytes at the scanner-selected graph root; generator/checker execution root is separately unqualified",
+          "workingDirectorySelection": "Checker reads renovate.json and versions.json relative to process.cwd(); passive metadata binds those exact inputs at scanner-selected checkout, but execution cwd equality remains unqualified",
+          "packageRootSelection": "process.env.RENOVATE_PACKAGE_ROOT ?? '/usr/local/renovate'; nullish fallback, empty string preserved. Root selection is separate from JSON input selection, but relative values (including suffix paths produced from them) resolve against process.cwd() in pathToFileURL; absolute values avoid that cwd dependency",
+          "callerBranches": [
+            {
+              "scope": "whole top-level module",
+              "operations": "Three sequential awaited dynamic imports before mkdtemp and GlobalConfig.set; then actual extraction/assertions/replacements/cleanup",
+              "codexAssertions": "Exactly one @openai/codex dependency and currentValue equals manifest.codex.version"
+            }
+          ],
+          "unqualifiedEffects": [
+            "All external Renovate module identities, initialization and transitive dependencies",
+            "mkdtemp, GlobalConfig state, extraction and real replacement engine effects, filesystem cleanup",
+            "Runtime environment-selected external package root and checker process.cwd()"
           ]
         },
         "authorityInputs": [
           {
             "path": "versions.json",
-            "sha256": "00a5c00ee4b7ef19d756e06ce315dfb033d39467be3762d8fdd47e354ec4ae28"
+            "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+          },
+          {
+            "path": "renovate.json",
+            "sha256": "4e1cff999ab27ff30e114cf344dfd78ad505161e3a2de8e6b0e40edc664563b4"
           }
         ]
       },
@@ -68670,6 +68729,45 @@
             "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
           }
         ]
+      },
+      {
+        "source": "tests/verification/contracts/check-nova-journal-scale.mts",
+        "semanticClass": "fixed-cwd-relative-journal-scale-module",
+        "sourceSha256": "105aa899e31409455bb6deb9febcc1c38a47d66607070e5f18029939cbb61949",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "process.cwd() at evaluation of path.resolve; not import.meta location",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts"
+          ],
+          "qualificationScope": "Passive selected-source operation/caller/input metadata only; not execution, whole-module initialization, dependency or effect qualification",
+          "runtimeAcquisitionAuthorized": false,
+          "selectedCheckoutBinding": "Scanner binds source and selected module at graph root. Actual execution cwd equality is unqualified; cwd-relative path is NOT enforced as scanner-root-relative.",
+          "callerBranches": [
+            {
+              "scope": "whole top-level module",
+              "sequence": "Static imports; awaited Core dynamic import; environment conversion and validation; mkdtemp outside try; journal body inside try; rmSync finally only after successful mkdtemp. No main guard or inert test-only branch."
+            }
+          ],
+          "environmentSelection": {
+            "expression": "Number(process.env.NOVA_JOURNAL_SCALE_MIB ?? '16')",
+            "validation": "After Core initialization, require safe integer 1..512 inclusive; otherwise throw NOVA_JOURNAL_SCALE_MIB_INVALID. Empty string converts to zero and is rejected; default only for nullish absence."
+          },
+          "unqualifiedEffects": [
+            "All static dependency and Core initialization and transitive dependency effects, occurring before environment validation",
+            "Actual cwd-selected module identity and runtime environment",
+            "os.tmpdir selection and mkdtemp filesystem creation; mkdtemp failure precedes try/finally",
+            "FileJournal construction/reopen/append/stat/refresh/records and serialization/filesystem effects; 1MiB payload repeated targetMiB times plus two records",
+            "performance timing and append under 5000ms assertion; tail-sync assertion; console JSON output",
+            "Recursive force cleanup in finally, which may itself throw; no rollback or cleanup success claimed"
+          ]
+        },
+        "authorityInputs": []
       }
     ]
   }

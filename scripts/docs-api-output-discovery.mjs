@@ -1,3 +1,4 @@
+import {deploymentNodeOutputOccurrences} from './docs-api-deployment-node-occurrences.mjs';
 import {observerMaterializedSourceState, canonicalObserverDocumentationSource, resolveObserverDocumentationImport} from './docs-api-observer-materialized-source.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -9,10 +10,11 @@ import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
 import { shellHeredocCustody, shellCommandAcquisitions, shellNativeNodeEntries } from './docs-shell-source-custody.mjs';
-import { assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget } from './docs-api-documentation-role-custody.mjs';
+import { assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedImporterRelativeResolutionMetadata } from './docs-api-documentation-role-custody.mjs';
 import { createSerializedOutputRoleClassifier } from './docs-api-output-role-classification.mjs';
 
 const isRootSelectedCompilerCapability=value=>value?.kind==='root-selected-compiler-require';
+const isImporterResolutionMetadata=value=>value?.kind==='importer-relative-resolution-only-metadata';
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const syntheticDigest = 'a'.repeat(64);
 // Public product execution and extension roots. Tests/fixtures are synthetic;
@@ -33,6 +35,11 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
+  {
+    "source": "tests/verification/contracts/check-nova-journal-scale.mts",
+    "semanticClass": "fixed-cwd-relative-journal-scale-module",
+    "recipeSha256": "6d11209692249fa0a3ae172e818840ba76e011f785aa180e39a3294dcd131460"
+  },
   {
     "source": "scripts/check-ap08-effectful-guide.mjs",
     "semanticClass": "fixed-repository-modules",
@@ -56,7 +63,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "55b8ef2ad4ab006444733f452472abde72883de2d24e95af4d1bce86e982059e"
+    "recipeSha256": "839545485f3a93cd21b0727c5fdb1d98efb596da29eb6b11a94b34d31b04526b"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
@@ -66,7 +73,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/updates/check-renovate.mjs",
     "semanticClass": "external-renovate-fixed-suffixes",
-    "recipeSha256": "fc8489286987e3174cd03cbd34707bf2a0f178d178a70b317bc21808a0ea4662"
+    "recipeSha256": "a0786f7115b03b8f844b137ec01be5d73a12c73740773c8fc771eb3ac101b3e9"
   },
   {
     "source": "skills/buster/engine/test-gates/provider-child.mjs",
@@ -161,7 +168,7 @@ function nodeModuleInputClass(source,kind) {
 const reviewedSyntheticNodeTests=[{
   source:'skills/prism/integration/corpus-pool.mts',sha256:'993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7',
   package:'skills/prism/package.json',script:'test:corpus-pool',command:'node integration/corpus-pool.mts',
-  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'e92de825967a2d76f671145ab42e33a1367ed68e7a2c67427fc93ef86b6a0a6a'}]
+  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'61e79704a061ac9e752b6c72e5f5332692062a16874be532f32cd2a962f6aba8'}]
 },{
   source:'skills/prism/integration/engine-capture-retention.mts',sha256:'83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a',
   package:'skills/prism/package.json',script:'test:engine:native-retention',command:'node --expose-gc integration/engine-capture-retention.mts',
@@ -416,7 +423,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
           // alias, bound argument, or computed URL and resolve its loads here.
           const forwarding=propertyOf(node.expression);
           const base=forwarding==='call'?node.arguments[1]:forwarding==='apply'&&node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]:node.arguments[0];
-          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)))return reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
+          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)))return source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs'?reviewedImporterRelativeResolutionMetadata(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency)):reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
           assert(forwarding!=='bind'&&capability!=='create-require-forwarder'&&base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)&&base.expression.keywordToken===ts.SyntaxKind.ImportKeyword&&base.expression.name.text==='meta',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported createRequire factory base: ${node.getText(tree)}; expected exact import.meta.url`);
           return 'require';
         }
@@ -447,6 +454,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     const syntaxHashForCompilerConsumer=(node,capability)=>hash(node.getText(tree))===capability.consumerSha256&&ts.isVariableDeclaration(node.parent)&&node.parent.name?.getText(tree)==='ts';
     function capabilityCustodyQualified(node,capability) {
       const parent=node.parent;if(!parent)return false;
+      if(isImporterResolutionMetadata(capability))return ts.isCallExpression(node)&&ts.isPropertyAccessExpression(parent)&&parent.expression===node&&parent.name.text==='resolve'&&ts.isCallExpression(parent.parent)&&parent.parent.expression===parent&&hash(parent.parent.getText(tree))===capability.terminalSha256;
       if(isRootSelectedCompilerCapability(capability)) {
         if(ts.isVariableDeclaration(parent)&&parent.name===node)return ts.isIdentifier(node)&&node.text==='require';
         if(ts.isVariableDeclaration(parent)&&parent.initializer===node)return ts.isIdentifier(parent.name)&&parent.name.text==='require'&&ts.isCallExpression(node);
@@ -478,6 +486,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     function visit(node) {
       if(ts.isExportDeclaration(node)&&node.moduleSpecifier&&['module','node:module'].includes(literal(node.moduleSpecifier)))dynamicOperations.push({source,expression:node.getText(tree),operation:node.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability:'node-module-export'});
       const capability=loaderCapability(node);
+      if(isImporterResolutionMetadata(capability))dynamicOperations.push({source,expression:node.parent.parent.getText(tree),operation:node.parent.parent.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability:'importer-relative-resolution-effects-unqualified',resolutionOnlyMetadata:capability});
       if(capability&&!capabilityCustodyQualified(node,capability))dynamicOperations.push({source,expression:node.getText(tree),operation:node.parent?.getText(tree)??node.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability});
       let argument,kind;
       if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier){argument=node.moduleSpecifier;kind=ts.isImportDeclaration(node)?'import':'re-export';}
@@ -1400,11 +1409,43 @@ export function discoverGoApiOutputs(root) {
 }
 
 const nonApiOutputClassifications=new Map();
+// Bind the finite physical graph observations to ACTUAL original scanner
+// descriptors. This selected traversal is deliberately separate from global
+// role acceptance: no scanner role changes here, even for an exact match.
+export function discoverDeploymentNodeOutputObservations(root) {
+  const deployFile=path.join(root,'scripts/deploy.sh');
+  if(!fs.existsSync(deployFile))return [];
+  const observations=deploymentNodeOutputOccurrences(root,fs.readFileSync(deployFile,'utf8'));
+  if(!observations)return [];
+  const sources=[...new Set(observations.map(observation=>observation.source))];
+  const classify=createSerializedOutputRoleClassifier(root,sources);
+  return observations.filter(observation=>classify(observation.source).some(role=>
+    observation.descriptor.line===role.line&&observation.descriptor.sink===role.sink&&
+    observation.descriptor.expression===role.expression));
+}
 export function discoverScriptOutputRoleClassifications(root) {
   const documentationTools=documentationToolSources(root);
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
-  return sources.flatMap(source=>classify(source).flatMap(role=>publicNodeSourceContexts(root,source,{...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))})));
+  const observations=discoverDeploymentNodeOutputObservations(root);
+  return sources.flatMap(source=>classify(source).flatMap(role=>{
+    // Observations are annotations on the original scanner descriptor, NOT a
+    // file-level role grant. Unknown remains unknown, including mandatory
+    // API-producer admission; callers cannot supply a role or a context label.
+    const selectedOccurrences=(observations??[]).filter(observation=>
+      observation.source===source&&observation.descriptor.line===role.line&&
+      observation.descriptor.sink===role.sink&&observation.descriptor.expression===role.expression);
+    const context={...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
+      dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
+      ...(selectedOccurrences.length?{selectedOccurrences}:{} )};
+    // Alias/public-entry contexts have a different invocation identity. The
+    // selected deployment evidence cannot travel across that boundary.
+    return publicNodeSourceContexts(root,source,context).map(context=>{
+      if(!context.canonicalSource)return context;
+      const {selectedOccurrences,...unqualifiedAlias}=context;
+      return unqualifiedAlias;
+    });
+  }));
 }
 export function discoverNonApiOutputClassifications(root) {discoverShellApiOutputs(root);return [...(nonApiOutputClassifications.get(root)??[]),...discoverScriptOutputRoleClassifications(root).filter(role=>role.role==='non-api')];}
 export function shellRawOutputSinks(source,bytes) {
@@ -2397,7 +2438,7 @@ const transformOutputCache=new Map();
 export function discoverTransformedApiOutputs(root) {
   const adapterSources=['scripts/render-litellm-deployment.mjs','scripts/render-postgresql-recovery.mjs','scripts/render-stateful-network-policies.mjs','scripts/render-registry-local.mjs'].filter(source=>fs.existsSync(path.join(root,source)));
   assertProducerAdapterAuthority(root,adapterSources);
-  const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json)$/u.test(file));
+  const dependencyFiles=[...walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json)$/u.test(file)),...walkProductSources(root,['charts/gitops'],()=>true),...(fs.existsSync(path.join(root,'node_modules/js-yaml/dist/js-yaml.mjs'))?['node_modules/js-yaml/dist/js-yaml.mjs']:[])];
   const cacheKey=hash(JSON.stringify([root,dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]),fs.existsSync(path.join(root,'scripts/deploy.sh'))?[fs.realpathSync(path.join(root,'scripts/deploy.sh')),hash(fs.readFileSync(path.join(root,'scripts/deploy.sh')))]:null,fs.existsSync(path.join(root,'versions.json'))?hash(fs.readFileSync(path.join(root,'versions.json'))):null]));
   const caller='scripts/deploy.sh';
   assert(!adapterSources.length||fs.existsSync(path.join(root,caller)),`API_PRODUCT_ADAPTED_RECIPE_INVOCATION_DRIFT: ${caller}; selected renderer caller missing`);
@@ -2438,8 +2479,8 @@ export function discoverTransformedApiOutputs(root) {
     assertProducerAdapterAuthority(root,[continuous]);
     const bytes=fs.readFileSync(path.join(root,continuous),'utf8');
     const tree=ts.createSourceFile(continuous,bytes,ts.ScriptTarget.Latest,true);
-    const fn=tree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='continuousDocuments');
-    assert(fn,`API_PRODUCT_CONTINUOUS_TRANSFORM_MISSING: ${continuous}`);
+    const functions=['continuousDocuments','continuousApplications'].map(name=>tree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text===name));
+    assert(functions.every(Boolean),`API_PRODUCT_CONTINUOUS_TRANSFORM_MISSING: ${continuous}`);
     const environment=tree.statements.filter(ts.isVariableStatement).flatMap(node=>node.declarationList.declarations).find(node=>node.name.getText(tree)==='environment')?.initializer;
     assert(environment&&ts.isStringLiteral(environment),'API_PRODUCT_CONTINUOUS_ENVIRONMENT_UNQUALIFIED');
     const ancestry=['scripts/gitops.mjs','scripts/gitops-bundle.mjs'];
@@ -2450,11 +2491,63 @@ export function discoverTransformedApiOutputs(root) {
     const helpers=ts.createSourceFile(ancestry[1],fs.readFileSync(path.join(root,ancestry[1]),'utf8'),ts.ScriptTarget.Latest,true).statements.filter(ts.isVariableStatement).flatMap(node=>node.declarationList.declarations).filter(node=>['gitOpsName','gitOpsClusterKinds'].includes(node.name.getText()));
     assert.equal(helpers.length,2,'API_PRODUCT_CONTINUOUS_HELPERS_MISSING');
     const controlled={groups:['buster','prism','nova'].map((role,index)=>({role,name:role,namespace:'discovery',path:`releases/gitops/discovery/${role}`,wave:index===2?1:0,helmReleases:[role],resources:[{apiVersion:'v1',kind:'ConfigMap',namespace:'discovery',name:role}]}))};
-    const body=`const environment=${JSON.stringify(environment.text)};${helpers.map(node=>`const ${node.getText()};`).join('')};const readCommittedBundle=()=>input;${bootstrap.getText(bootstrapTree).replace(/^export\s+/u,'')};${fn.getText(tree).replace(/^export\s+/u,'')};continuousDocuments(bootstrapDocuments('offline','releases/gitops/discovery','https://example.invalid/discovery.git','${syntheticDigest.slice(0,40)}','default'),'default')`;
-    const program=`import vm from 'node:vm'; const result=vm.runInNewContext(${JSON.stringify(body)},{input:${JSON.stringify(controlled)},structuredClone,URL},{timeout:1000}); process.stdout.write(JSON.stringify(result));`;
-    const rendered=spawnSync(process.execPath,['--input-type=module','-e',program],{cwd:temporary,env:{PATH:process.env.PATH},encoding:'utf8'});
-    assert.equal(rendered.status,0,`API_PRODUCT_CONTINUOUS_TRANSFORM_FAILED: ${rendered.stderr}`);
-    JSON.parse(rendered.stdout).forEach((value,index)=>result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:continuous,document:index,producer:'script-render',profile:'continuous-bootstrap',sourceDigest:hash(bytes),inputs:ancestry,inputDigest:hash(JSON.stringify([controlled,ancestry.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])])),outputDigest:hash(YAML.stringify(value)),publicOutput:'gitops/production/bootstrap.yaml'}}));
+    const chartInputs=walkProductSources(root,['charts/gitops'],()=>true);
+    const inputs=[continuous,...ancestry,...chartInputs];
+    const sourceInputs=inputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))]);
+    // Use the same maintained js-yaml import as the original child transformer,
+    // not a substitute parser or constructed Application output.
+    const yamlModule=pathToFileURL(path.join(root,'node_modules/js-yaml/dist/js-yaml.mjs')).href;
+    const declarations=`const environment=${JSON.stringify(environment.text)};${helpers.map(node=>`const ${node.getText()};`).join('')};const readCommittedBundle=()=>input;${bootstrap.getText(bootstrapTree).replace(/^export\s+/u,'')};${functions.map(fn=>fn.getText(tree).replace(/^export\s+/u,'')).join(';')}`;
+    const evaluate=(expression,context)=>{
+      const program=`import vm from 'node:vm';import yaml from ${JSON.stringify(yamlModule)};const result=vm.runInNewContext(${JSON.stringify(declarations+';'+expression)},{...${JSON.stringify(context)},yaml,structuredClone,URL},{timeout:1000});process.stdout.write(JSON.stringify(result));`;
+      const rendered=spawnSync(process.execPath,['--input-type=module','-e',program],{cwd:temporary,env:{PATH:process.env.PATH},encoding:'utf8',maxBuffer:32*1024*1024});
+      assert.equal(rendered.status,0,`API_PRODUCT_CONTINUOUS_TRANSFORM_FAILED: ${rendered.stderr}`);return JSON.parse(rendered.stdout);
+    };
+    const namingProfiles=[{id:'default',naming:{}},{id:'custom',naming:{rootName:'discovery-root',bootstrapProject:'discovery-bootstrap',workloadProject:'discovery-workloads'}}];
+    for(const {id,naming}of namingProfiles)for(const manual of [false,true]) {
+      const config=manual?{runtimeAutoSync:false}:{},profile=`continuous-${id}-${manual?'manual':'default'}`;
+      const context={input:controlled,naming,config};
+      const initial=evaluate(`bootstrapDocuments('offline','releases/gitops/discovery','https://example.invalid/discovery.git','${syntheticDigest.slice(0,40)}','default',naming)`,context);
+      const boot=evaluate('continuousDocuments(initial,\'default\',config)',{...context,initial});
+      const values=path.join(temporary,`${profile}-values.json`);fs.writeFileSync(values,JSON.stringify(initial.values));
+      const rendered=spawnSync('helm',['template','runtime',path.join(root,'charts/gitops'),'-n','default','-f',values],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
+      assert.equal(rendered.status,0,`API_PRODUCT_CONTINUOUS_CHILD_RENDER_FAILED: ${rendered.stderr}`);
+      const children=evaluate('continuousApplications(manifest,config)',{...context,manifest:rendered.stdout});
+      const bootstrapApp=boot.find(document=>document.kind==='Application');
+      assert.equal(bootstrapApp.metadata.name,initial.values.rootName);
+      assert.equal(bootstrapApp.spec.project,naming.bootstrapProject??initial.values.rootName);
+      assert.equal(bootstrapApp.spec.source.path,`${environment.text}/apps`);
+      assert.equal(bootstrapApp.spec.source.directory.include,'applications.yaml');
+      assert.equal(bootstrapApp.spec.source.targetRevision,'main');
+      assert.equal(Boolean(bootstrapApp.spec.syncPolicy.automated),!manual);
+      assert.equal(children.filter(document=>document.kind==='Application').length,3);
+      assert.equal(children.filter(document=>document.kind==='AppProject').length,1);
+      for(const document of children){
+        assert.equal(document.metadata.namespace,'default');
+        if(document.kind==='AppProject'){assert.equal(document.metadata.name,initial.values.project);assert.equal(document.metadata.annotations['argocd.argoproj.io/sync-wave'],'-1');continue;}
+        const group=controlled.groups.find(group=>group.name===document.metadata.name);assert(group);
+        assert.equal(document.spec.project,initial.values.project);
+        assert.equal(document.spec.source.path,group.path);
+        assert.equal(document.spec.source.directory.include,'resources.yaml');
+        assert.equal(document.spec.source.targetRevision,'main');
+        assert.equal(document.metadata.annotations['kubeclaw.dev/immutable-bundle-path'],group.path);
+        assert.equal(document.metadata.annotations['argocd.argoproj.io/sync-wave'],String(manual?0:group.wave));
+        assert.equal(Boolean(document.spec.syncPolicy.automated),!manual);
+      }
+      // Negative inputs are genuine rendered children with only the selected
+      // path/include mutated; they are guards, not published discovery outputs.
+      for(const mutation of ['path','include']){
+        const invalid=YAML.parseAllDocuments(rendered.stdout).map(document=>document.toJS());
+        for(const document of invalid)if(document.kind==='Application'){
+          document.metadata.annotations['kubeclaw.dev/immutable-bundle-path']='stale';
+          if(mutation==='path')document.spec.source.path='releases/gitops/../../foreign';else document.spec.source.directory.include='foreign.yaml';
+        }
+        const refused=evaluate('continuousApplications(manifest,config)',{...context,manifest:invalid.map(document=>YAML.stringify(document)).join('---\n')});
+        for(const document of refused)if(document.kind==='Application')assert(!Object.hasOwn(document.metadata.annotations,'kubeclaw.dev/immutable-bundle-path'));
+      }
+      const inputDigest=hash(JSON.stringify({controlled,naming,config,sourceInputs}));
+      for(const [documents,publicOutput]of [[boot,`${environment.text}/bootstrap.yaml`],[children,`${environment.text}/apps/applications.yaml`]])documents.forEach((value,index)=>result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:continuous,document:index,producer:'script-render',profile,sourceDigest:hash(bytes),inputs,inputDigest,outputDigest:hash(YAML.stringify(value)),publicOutput}}));
+    }
   }
   try { for(const [source,args] of recipes) {
     if(!fs.existsSync(path.join(root,source)))continue;
