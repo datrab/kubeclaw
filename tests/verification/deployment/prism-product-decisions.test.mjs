@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
 import { test } from 'node:test';
 import yaml from 'js-yaml';
 
@@ -17,10 +18,22 @@ const configured = {
 function render(config, extra = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'product-chart-'));
   try {
+    // Preserve original authority cases while rendering the complete normal package.
+    // Synthetic CI image/native identities are render vectors, not native boot proof.
+    const projection = prismChartProjection(path.resolve('config'));
+    const chart = path.join(root, 'chart'), packaged = path.join(root, 'packaged');
+    fs.cpSync('charts/prism', chart, { recursive: true, dereference: true });
+    fs.writeFileSync(path.join(chart, 'files/pipeline/prism-topology.json'), JSON.stringify(projection));
+    fs.mkdirSync(packaged);
+    execFileSync('helm', ['package', chart, '--destination', packaged], { stdio: 'pipe' });
+    const archives = fs.readdirSync(packaged).filter(name => name.endsWith('.tgz'));
+    assert.equal(archives.length, 1);
+    const archive = path.join(packaged, archives[0]);
+    assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive, 'prism/files/pipeline/prism-topology.json'], { encoding: 'utf8' })), projection);
     const file = path.join(root, 'values.yaml');
     fs.writeFileSync(file, yaml.dump({ control: { productDecisions: config }, ...extra }));
-    return spawnSync('helm', ['template', 'prism-test', 'charts/prism', '--namespace', 'prism-test',
-      '-f', 'charts/prism/ci-values.yaml', '--set', 'worker.native.namespace=prism-test', '-f', file], { encoding: 'utf8' });
+    return spawnSync('helm', ['template', projection.deployment.releaseName, archive, '--namespace', projection.deployment.namespace,
+      '-f', 'charts/prism/ci-values.yaml', '-f', file], { encoding: 'utf8' });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 function success(result) {
