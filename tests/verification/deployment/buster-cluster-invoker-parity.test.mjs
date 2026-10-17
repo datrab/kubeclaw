@@ -45,6 +45,8 @@ test('both actual charts, packaged role boot and loader enforce shared cluster i
       write(ownerFile, document); write(entry, baseline.entry);
     };
     const capture = () => captureSwarmSettings(entry, busterRuntimeSelection(readTestPipeline(entry))).components['buster-engine'].settings.clusterInvokers;
+    const revision = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], { cwd: repository, encoding: 'utf8' }).trim();
+    const builtAt = new Date().toISOString(); // One genuine build invocation identity across A/B/restored-A.
     const charts = {}, values = {}, projectors = { kubeclaw: busterChartProjection, prism: prismChartProjection };
     for (const name of ['kubeclaw', 'prism']) {
       charts[name] = path.join(root, name); fs.cpSync(`charts/${name}`, charts[name], { recursive: true, dereference: true });
@@ -57,10 +59,16 @@ test('both actual charts, packaged role boot and loader enforce shared cluster i
     values.kubeclaw.runtimeInfrastructure = { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
     values.kubeclaw.extraContainers.find(item => item.name === 'buster-v2-runtime').image = `ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
     const projectionFile = name => path.join(charts[name], 'files/pipeline', name === 'kubeclaw' ? 'buster-topology.json' : 'prism-topology.json');
+    let packageIndex = 0;
     const render = name => {
       const projection = projectors[name](authorRoot), file = path.join(root, `${name}-values.yaml`);
       fs.writeFileSync(file, yaml.dump(values[name]));
-      return spawnSync('helm', ['template', projection.deployment.releaseName, charts[name], '--namespace', projection.deployment.namespace, '-f', file], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+      const packaged = path.join(root, `render-package-${packageIndex++}-${name}`); fs.mkdirSync(packaged);
+      execFileSync('helm', ['package', charts[name], '--destination', packaged], { stdio: 'pipe' });
+      const archives = fs.readdirSync(packaged).filter(file => file.endsWith('.tgz')); assert.equal(archives.length, 1);
+      const archive = path.join(packaged, archives[0]);
+      assert.equal(execFileSync('tar', ['-xzOf', archive, `${name}/files/pipeline/${path.basename(projectionFile(name))}`], { encoding: 'utf8' }), fs.readFileSync(projectionFile(name), 'utf8'));
+      return spawnSync('helm', ['template', projection.deployment.releaseName, archive, '--namespace', projection.deployment.namespace, '-f', file], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
     };
     const checksums = docs => docs.flatMap(doc => Object.entries(doc?.spec?.template?.metadata?.annotations ?? {})
       .filter(([key]) => ['checksum/swarm-config', 'checksum/pipeline-delivery', 'checksum/pipeline-config'].includes(key))
@@ -68,11 +76,32 @@ test('both actual charts, packaged role boot and loader enforce shared cluster i
     let imageIndex = 0;
     const deliver = async policy => {
       assert.deepEqual(capture(), policy);
-      const image = await buildBusterImageBundle({ repository: privateRepository, output: path.join(root, `image-${imageIndex++}`), revision: 'a'.repeat(40), builtAt: '2026-10-16T00:00:00Z' });
+      const image = await buildBusterImageBundle({ repository: privateRepository, output: path.join(root, `image-${imageIndex++}`), revision, builtAt });
+      const manifest = JSON.parse(fs.readFileSync(path.join(image.packageRoot, 'manifest.json'), 'utf8'));
+      assert.equal(manifest.commit, revision); assert.equal(manifest.builtAt, builtAt); assert.equal(image.metadata.revision, revision);
       const boot = await import(pathToFileURL(path.join(image.packageRoot, 'skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href);
       const installed = boot.capturePipelineBootReceipts(image.deliveryRoot, image.systemRoot, 'buster-preparation', image.packageRoot, '/app/skills');
-      assert.deepEqual(installed.components['buster-engine'].settings.clusterInvokers, policy);
       assert.equal(boot.captureBusterParentStartupHandoff(installed).childSelection.callerId, 'buster-runtime');
+      const receiver = await import(pathToFileURL(path.join(image.packageRoot, 'skills/packages/plugin-foundation/config/pipeline-composition.ts')).href);
+      const captures = [];
+      for (const caller of ['buster-preparation', 'buster-runtime']) {
+        const transport = path.join(root, `transport-${imageIndex}-${caller}`); fs.mkdirSync(transport);
+        fs.cpSync(path.join(path.dirname(image.systemRoot), 'expected', caller), path.join(transport, 'version-A'), { recursive: true });
+        fs.symlinkSync('version-A', path.join(transport, '..data'));
+        const capture = () => boot.capturePipelineBootReceipts(transport, image.systemRoot, caller, image.packageRoot, '/app/skills');
+        const selectedCapture = capture();
+        const settings = receiver.projectBusterSettings(selectedCapture, caller);
+        assert.deepEqual(settings.clusterInvokers, policy); assert(Object.isFrozen(settings.clusterInvokers));
+        assert.throws(() => receiver.projectBusterSettings(selectedCapture, caller === 'buster-runtime' ? 'buster-preparation' : 'buster-runtime'), /PIPELINE_VERIFIED_CAPTURE_REQUIRED/u);
+        captures.push({ caller, capture });
+      }
+      const delivered = path.join(image.packageRoot, 'skills/packages/buster-engine/remote-plan-cli.ts');
+      const source = fs.readFileSync(delivered); assert.deepEqual(source, fs.readFileSync('skills/buster/engine/remote-plan-cli.ts'));
+      try {
+        fs.appendFileSync(delivered, '\n// altered delivered parity source\n');
+        for (const { capture } of captures) assert.throws(capture, /PIPELINE_PACKAGE_READBACK_MISMATCH/u);
+      } finally { fs.writeFileSync(delivered, source); }
+      for (const { caller, capture } of captures) assert.deepEqual(receiver.projectBusterSettings(capture(), caller).clusterInvokers, policy);
       values.kubeclaw.pipelineDelivery = { buster: image.metadata };
       const result = {};
       for (const name of ['kubeclaw', 'prism']) {
@@ -92,10 +121,6 @@ test('both actual charts, packaged role boot and loader enforce shared cluster i
           assert.equal(environment.find(item => item.name === 'BUSTER_LEASE_API_GROUP').value, policy.shared.leaseApiGroup);
           assert.equal(environment.find(item => item.name === 'BUSTER_LEASE_API_VERSION').value, policy.shared.leaseApiVersion);
         }
-        const packaged = path.join(root, `package-${imageIndex}-${name}`); fs.mkdirSync(packaged);
-        execFileSync('helm', ['package', charts[name], '--destination', packaged], { stdio: 'pipe' });
-        const archive = path.join(packaged, fs.readdirSync(packaged).find(file => file.endsWith('.tgz')));
-        assert.equal(execFileSync('tar', ['-xzOf', archive, `${name}/files/pipeline/${path.basename(projectionFile(name))}`], { encoding: 'utf8' }), fs.readFileSync(projectionFile(name), 'utf8'));
         result[name] = { docs, digest: projection.generationDigest };
       }
       return result;
