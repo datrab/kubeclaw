@@ -1,0 +1,11 @@
+✔ normal image producer installs a complete role and matching selected central generation (4678.571326ms)
+✔ normal image producer does not invent missing build or caller identity (0.574325ms)
+✔ agent image producer publishes a distinct bridge selection and installed startup without partial main closure (4111.569441ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9425.766816
