@@ -106,11 +106,11 @@ export async function verifyQualityProviderRuntime(options: {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: temporary }],
+      ['kubeclaw.repository-adapter:repository', { ...TEST_CORE_POLICY.repositoryRead, repositoryRoot: temporary }],
       ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch,
         targets: { gate: { byteProfile:'standard', endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
       }],
-      ['kubeclaw.network-http:http', {
+      ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin],
         allowedMethods: ['POST', 'GET', 'DELETE'],
         allowedHeaders: [
@@ -128,6 +128,7 @@ export async function verifyQualityProviderRuntime(options: {
         artifactRoot: path.join(options.stateRoot, 'artifacts'),
       }],
       ['kubeclaw.remote-test-gate:plan', {
+        gateLimits: TEST_CORE_POLICY.remoteTestGate,
         endpoint: endpoint,
         authentication: 'bearer',
         tokenSecret: 'buster.worker',
