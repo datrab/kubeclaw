@@ -1,4 +1,4 @@
-import { object, optionalEnvironmentSecret } from './production-config-values.ts';
+import { boolean, object, optionalEnvironmentSecret } from './production-config-values.ts';
 type Config = Record<string, unknown>;
 
 /** Decode one optional provider object; a declared capability makes it mandatory. */
@@ -58,7 +58,8 @@ function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>,
     typeof directCommandSource?.cgroupRoot === 'string' && directCommandSource.cgroupRoot.length > 0
       ? directCommandSource.cgroupRoot
       : undefined;
-  const allowSampledProcessLimit = directCommandSource?.allowSampledProcessLimit === true;
+  const allowSampledProcessLimit = directCommandSource?.allowSampledProcessLimit === undefined
+    ? false : boolean(directCommandSource.allowSampledProcessLimit, 'directCommand.allowSampledProcessLimit');
   if (directCommandSource && !directCommandCgroup && !allowSampledProcessLimit) {
     throw new Error('BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED');
   }

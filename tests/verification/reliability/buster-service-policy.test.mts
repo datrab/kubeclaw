@@ -6,6 +6,8 @@ import test from 'node:test';
 import { generateKeyPairSync, createHash } from 'node:crypto';
 import { swarmReaderAssets } from '../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts';
 import { readBusterRemotePlanServicePolicy, readLegacyBusterRuntimeServicePolicy } from '../../../skills/common/plugin-runtime/foundation/config/buster-service-policy.ts';
+import { capabilitySources } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
+import { networkHttpOptions } from '../../../skills/buster/engine/test-gates/production-command-options.ts';
 import { runtimeAuthority } from '../../../skills/buster/engine/test-gates/production-config-values.ts';
 import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
 import type { BusterSettings, WorkerCoreSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
@@ -117,4 +119,28 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   for (const allowedCapabilities of [undefined, ['unknown.capability'], ['network.http', 'network.http']]) {
     assert.throws(() => readLegacyBusterRuntimeServicePolicy({ ...runtime, allowedCapabilities }), /SERVICE_POLICY_INVALID/);
   }
+});
+
+
+test('real capability receivers reject malformed boolean authors without false-value refill', () => {
+  const command = (value: unknown) => capabilitySources({ directCommand: {
+    cgroupRoot: '/fixture/cgroup', allowSampledProcessLimit: value,
+  } }, new Set(['command.execute']), {});
+  const network = (value: unknown) => networkHttpOptions({
+    allowedPorts: [443], maximumResponseBytes: 1024, maximumExecutionMs: 1000, allowWebSocket: value,
+  }, null, undefined, undefined);
+  for (const value of [null, 0, 1, '', 'false', 'true', [], {}]) {
+    assert.throws(() => command(value), /BUSTER_REMOTE_CONFIG_INVALID:directCommand.allowSampledProcessLimit/);
+    assert.throws(() => network(value), /BUSTER_REMOTE_CONFIG_INVALID:networkHttp.allowWebSocket/);
+  }
+  for (const value of [undefined, false, true]) {
+    assert.equal(command(value).allowSampledProcessLimit, value === true);
+    assert.equal(network(value).networkHttp?.allowWebSocket, value === true);
+  }
+  assert.throws(() => capabilitySources({ directCommand: { allowSampledProcessLimit: false } },
+    new Set(['command.execute']), {}), /BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED/);
+  assert.equal(capabilitySources({ directCommand: { allowSampledProcessLimit: true } },
+    new Set(['command.execute']), {}).allowSampledProcessLimit, true);
+  assert.equal(capabilitySources({}, new Set(), {}).directCommandSource, null);
+  assert.deepEqual(networkHttpOptions(null, null, undefined, undefined), {});
 });

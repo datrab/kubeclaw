@@ -1,6 +1,7 @@
 import type { BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
 import path from 'node:path';
 import {
+  boolean,
   integer,
   stringMap,
   stringArray,
@@ -116,7 +117,8 @@ export function networkHttpOptions(
                   'networkHttp.allowedRequestHeaders',
                 ),
               }),
-          allowWebSocket: networkHttpSource.allowWebSocket === true,
+          allowWebSocket: networkHttpSource.allowWebSocket === undefined
+            ? false : boolean(networkHttpSource.allowWebSocket, 'networkHttp.allowWebSocket'),
         },
       }
     : {};
