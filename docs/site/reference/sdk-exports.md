@@ -2748,11 +2748,11 @@ Source: [ReportAdapterOutput](https://github.com/datrab/kubeclaw/blob/586f1f558a
 | counts | no | yes | `readonly counts: ReportCountsV1;` | [counts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime.ts#L177-L177) |
 | cases | no | yes | `readonly cases: ReportCaseV1[];` | [cases](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime.ts#L178-L178) |
 | findings | no | yes | `readonly findings: FindingV1[];` | [findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime.ts#L179-L179) |
-| durationMs | no | no | `durationMs: number` | [durationMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/../../../../../ci-green/repo/contracts/pipeline-test-gate/v1/src/types.ts#L367-L367) |
-| casesTruncated | no | no | `casesTruncated: boolean` | [casesTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/../../../../../ci-green/repo/contracts/pipeline-test-gate/v1/src/types.ts#L369-L369) |
-| omittedCaseCount | no | no | `omittedCaseCount: number` | [omittedCaseCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/../../../../../ci-green/repo/contracts/pipeline-test-gate/v1/src/types.ts#L370-L370) |
-| findingsTruncated | no | no | `findingsTruncated: boolean` | [findingsTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/../../../../../ci-green/repo/contracts/pipeline-test-gate/v1/src/types.ts#L372-L372) |
-| omittedFindingCount | no | no | `omittedFindingCount: number` | [omittedFindingCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/../../../../../ci-green/repo/contracts/pipeline-test-gate/v1/src/types.ts#L373-L373) |
+| durationMs | no | no | `durationMs: number` | [durationMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L367-L367) |
+| casesTruncated | no | no | `casesTruncated: boolean` | [casesTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L369-L369) |
+| omittedCaseCount | no | no | `omittedCaseCount: number` | [omittedCaseCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L370-L370) |
+| findingsTruncated | no | no | `findingsTruncated: boolean` | [findingsTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L372-L372) |
+| omittedFindingCount | no | no | `omittedFindingCount: number` | [omittedFindingCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L373-L373) |
 
 No one-to-one plugin-system schema definition owns this export. Its declaration and implementation set its local behavior.
 
@@ -4918,6 +4918,623 @@ No one-to-one plugin-system schema definition owns this export. Its declaration 
 
 These finite KubeClaw-owned declarations are reachable through the public callback and wrapper types. Source-qualified names distinguish identically named declarations. They are not additional named SDK exports. Follow qualified references to other support rows or the exact-source public export above; upstream Node and TypeScript utility APIs are not reproduced.
 
+### ArtifactRefV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ArtifactRefV1`.
+
+[ArtifactRefV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L104-L111)
+
+```ts
+export interface ArtifactRefV1 {
+  artifactId: string;
+  type: string;
+  mediaType: string;
+  contentDigest: string;
+  sizeBytes: number;
+  storageUrl: string;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| artifactId | no | no | `string` | [artifactId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L105-L105) |
+| type | no | no | `string` | [type](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L106-L106) |
+| mediaType | no | no | `string` | [mediaType](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L107-L107) |
+| contentDigest | no | no | `string` | [contentDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L108-L108) |
+| sizeBytes | no | no | `number` | [sizeBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L109-L109) |
+| storageUrl | no | no | `string` | [storageUrl](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L110-L110) |
+
+Owning schema: `#/$defs/artifactRef` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### DeclaredEvidenceV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#DeclaredEvidenceV1`.
+
+[DeclaredEvidenceV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L197-L202)
+
+```ts
+export interface DeclaredEvidenceV1 {
+  evidenceId: string;
+  type: string;
+  file: string;
+  mediaType: string;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| evidenceId | no | no | `string` | [evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L198-L198) |
+| type | no | no | `string` | [type](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L199-L199) |
+| file | no | no | `string` | [file](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L200-L200) |
+| mediaType | no | no | `string` | [mediaType](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L201-L201) |
+
+Owning schema: `#/$defs/declaredEvidence` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### EvidencePolicyV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#EvidencePolicyV1`.
+
+[EvidencePolicyV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L31-L35)
+
+```ts
+export interface EvidencePolicyV1 {
+  onPass: string[];
+  onFail: string[];
+  onError: string[];
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| onPass | no | no | `string[]` | [onPass](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L32-L32) |
+| onFail | no | no | `string[]` | [onFail](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L33-L33) |
+| onError | no | no | `string[]` | [onError](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L34-L34) |
+
+Owning schema: `#/$defs/evidencePolicy` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### ExecutionLimitsV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ExecutionLimitsV1`.
+
+[ExecutionLimitsV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L37-L44)
+
+```ts
+export interface ExecutionLimitsV1 {
+  cpuMillis: number;
+  memoryBytes: number;
+  logBytes: number;
+  artifactBytes: number;
+  artifactFiles: number;
+  processes: number;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| cpuMillis | no | no | `number` | [cpuMillis](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L38-L38) |
+| memoryBytes | no | no | `number` | [memoryBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L39-L39) |
+| logBytes | no | no | `number` | [logBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L40-L40) |
+| artifactBytes | no | no | `number` | [artifactBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L41-L41) |
+| artifactFiles | no | no | `number` | [artifactFiles](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L42-L42) |
+| processes | no | no | `number` | [processes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L43-L43) |
+
+Owning schema: `#/$defs/executionLimits` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### FindingV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#FindingV1`.
+
+[FindingV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L224-L231)
+
+```ts
+export interface FindingV1 {
+  id: string;
+  severity: 'critical' | 'high' | 'medium' | 'low' | 'info';
+  message: string;
+  rule?: string;
+  file?: string;
+  line?: number;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| id | no | no | `string` | [id](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L225-L225) |
+| severity | no | no | `"critical" \| "high" \| "medium" \| "low" \| "info"` | [severity](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L226-L226) |
+| message | no | no | `string` | [message](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L227-L227) |
+| rule | yes | no | `string` | [rule](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L228-L228) |
+| file | yes | no | `string` | [file](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L229-L229) |
+| line | yes | no | `number` | [line](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L230-L230) |
+
+Owning schema: `#/$defs/finding` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### JsonValue — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#JsonValue`.
+
+[JsonValue](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L2-L2)
+
+```ts
+export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+```
+
+Owning schema: `#/$defs/jsonValue` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#JsonValue`.
+
+### MetricV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#MetricV1`.
+
+[MetricV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L233-L237)
+
+```ts
+export interface MetricV1 {
+  name: string;
+  value: number;
+  unit?: string;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| name | no | no | `string` | [name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L234-L234) |
+| value | no | no | `number` | [value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L235-L235) |
+| unit | yes | no | `string` | [unit](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L236-L236) |
+
+Owning schema: `#/$defs/metric` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### PackageRefV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#PackageRefV1`.
+
+[PackageRefV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L11-L15)
+
+```ts
+export interface PackageRefV1 {
+  packageId: string;
+  packageVersion: string;
+  contentDigest: string;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| packageId | no | no | `string` | [packageId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L12-L12) |
+| packageVersion | no | no | `string` | [packageVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L13-L13) |
+| contentDigest | no | no | `string` | [contentDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L14-L14) |
+
+Owning schema: `#/$defs/packageRef` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### PlanNodeKind — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#PlanNodeKind`.
+
+[PlanNodeKind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L5-L5)
+
+```ts
+export type PlanNodeKind = 'test' | 'fixture';
+```
+
+Owning schema: `#/$defs/providerInvocation/properties/nodeKind` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### ProviderConfigurationV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderConfigurationV1`.
+
+[ProviderConfigurationV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L70-L75)
+
+```ts
+export interface ProviderConfigurationV1 {
+  schemaVersion: 'provider-configuration.v1';
+  contractId: string;
+  schemaDigest: string;
+  values: Record<string, JsonValue>;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| schemaVersion | no | no | `"provider-configuration.v1"` | [schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L71-L71) |
+| contractId | no | no | `string` | [contractId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L72-L72) |
+| schemaDigest | no | no | `string` | [schemaDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L73-L73) |
+| values | no | no | `{ [x: string]: JsonValue; }` | [values](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L74-L74) |
+
+Owning schema: `#/$defs/providerConfiguration` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#JsonValue`.
+
+### ProviderDetailsV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderDetailsV1`.
+
+[ProviderDetailsV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L46-L50)
+
+```ts
+export interface ProviderDetailsV1 {
+  schemaId: string;
+  schemaDigest: string;
+  values: Record<string, JsonValue>;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| schemaId | no | no | `string` | [schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L47-L47) |
+| schemaDigest | no | no | `string` | [schemaDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L48-L48) |
+| values | no | no | `{ [x: string]: JsonValue; }` | [values](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L49-L49) |
+
+Owning schema: `#/$defs/providerDetails` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#JsonValue`.
+
+### ProviderInvocationV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderInvocationV1`.
+
+[ProviderInvocationV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L77-L102)
+
+```ts
+export interface ProviderInvocationV1 {
+  schemaVersion: 'provider-invocation.v1';
+  planId: string;
+  runId: string;
+  moduleId: string | null;
+  gateId: string | null;
+  suiteInstanceId: string | null;
+  nodeId: string;
+  executionId: string;
+  testIdentity: string;
+  nodeKind: PlanNodeKind;
+  attemptId: string;
+  attemptNumber: number;
+  provider: ProviderRefV1;
+  configuration: ProviderConfigurationV1;
+  inputs: ResolvedInputV1[];
+  evidence: EvidencePolicyV1;
+  grantedCapabilities: string[];
+  timeoutMs: number;
+  limits: ExecutionLimitsV1;
+  workspace: {
+    repository: string;
+    scratch: string;
+    evidence: string;
+  };
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| schemaVersion | no | no | `"provider-invocation.v1"` | [schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L78-L78) |
+| planId | no | no | `string` | [planId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L79-L79) |
+| runId | no | no | `string` | [runId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L80-L80) |
+| moduleId | no | no | `string \| null` | [moduleId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L81-L81) |
+| gateId | no | no | `string \| null` | [gateId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L82-L82) |
+| suiteInstanceId | no | no | `string \| null` | [suiteInstanceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L83-L83) |
+| nodeId | no | no | `string` | [nodeId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L84-L84) |
+| executionId | no | no | `string` | [executionId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L85-L85) |
+| testIdentity | no | no | `string` | [testIdentity](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L86-L86) |
+| nodeKind | no | no | `"test" \| "fixture"` | [nodeKind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L87-L87) |
+| attemptId | no | no | `string` | [attemptId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L88-L88) |
+| attemptNumber | no | no | `number` | [attemptNumber](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L89-L89) |
+| provider | no | no | `ProviderRefV1` | [provider](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L90-L90) |
+| configuration | no | no | `ProviderConfigurationV1` | [configuration](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L91-L91) |
+| inputs | no | no | `ResolvedInputV1[]` | [inputs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L92-L92) |
+| evidence | no | no | `EvidencePolicyV1` | [evidence](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L93-L93) |
+| grantedCapabilities | no | no | `string[]` | [grantedCapabilities](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L94-L94) |
+| timeoutMs | no | no | `number` | [timeoutMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L95-L95) |
+| limits | no | no | `ExecutionLimitsV1` | [limits](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L96-L96) |
+| workspace | no | no | `{ repository: string; scratch: string; evidence: string; }` | [workspace](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L97-L101) |
+
+Owning schema: `#/$defs/providerInvocation` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#EvidencePolicyV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ExecutionLimitsV1`, `contracts/pipeline-test-gate/v1/src/types.ts#PlanNodeKind`, `contracts/pipeline-test-gate/v1/src/types.ts#ProviderConfigurationV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ProviderRefV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ResolvedInputV1`.
+
+### ProviderOutputV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderOutputV1`.
+
+[ProviderOutputV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L121-L123)
+
+```ts
+export type ProviderOutputV1 =
+  | { name: string; kind: 'value'; schemaId: string; value: JsonValue }
+  | { name: string; kind: 'artifact'; evidenceId: string };
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| name | no | no | `string` | [name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L122-L122) |
+| kind | no | no | `"value" \| "artifact"` | [kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L122-L122) |
+
+Owning schema: `#/$defs/providerOutput` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#JsonValue`.
+
+### ProviderRefV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderRefV1`.
+
+[ProviderRefV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L17-L20)
+
+```ts
+export interface ProviderRefV1 extends PackageRefV1 {
+  registrationId: string;
+  contractId: string;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| registrationId | no | no | `string` | [registrationId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L18-L18) |
+| contractId | no | no | `string` | [contractId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L19-L19) |
+| packageId | no | no | `string` | [packageId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L12-L12) |
+| packageVersion | no | no | `string` | [packageVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L13-L13) |
+| contentDigest | no | no | `string` | [contentDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L14-L14) |
+
+Owning schema: `#/$defs/providerRef` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#PackageRefV1`.
+
+### ProviderReportV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderReportV1`.
+
+[ProviderReportV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L261-L264)
+
+```ts
+export interface ProviderReportV1 {
+  evidenceId: string;
+  format: string;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| evidenceId | no | no | `string` | [evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L262-L262) |
+| format | no | no | `string` | [format](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L263-L263) |
+
+Owning schema: `#/$defs/providerReport` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### ProviderResultV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ProviderResultV1`.
+
+[ProviderResultV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L246-L259)
+
+```ts
+export interface ProviderResultV1 {
+  schemaVersion: 'provider-result.v1';
+  outcome: Exclude<TestOutcome, null>;
+  summary: string;
+  counts: TestCountsV1;
+  findings: FindingV1[];
+  metrics: MetricV1[];
+  evidenceFiles: DeclaredEvidenceV1[];
+  reports: ProviderReportV1[];
+  outputs: ProviderOutputV1[];
+  exitCode: number | null;
+  signal: string | null;
+  providerDetails: ProviderDetailsV1 | null;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| schemaVersion | no | no | `"provider-result.v1"` | [schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L247-L247) |
+| outcome | no | no | `"passed" \| "failed" \| "skipped"` | [outcome](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L248-L248) |
+| summary | no | no | `string` | [summary](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L249-L249) |
+| counts | no | no | `TestCountsV1` | [counts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L250-L250) |
+| findings | no | no | `FindingV1[]` | [findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L251-L251) |
+| metrics | no | no | `MetricV1[]` | [metrics](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L252-L252) |
+| evidenceFiles | no | no | `DeclaredEvidenceV1[]` | [evidenceFiles](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L253-L253) |
+| reports | no | no | `ProviderReportV1[]` | [reports](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L254-L254) |
+| outputs | no | no | `ProviderOutputV1[]` | [outputs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L255-L255) |
+| exitCode | no | no | `number \| null` | [exitCode](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L256-L256) |
+| signal | no | no | `string \| null` | [signal](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L257-L257) |
+| providerDetails | no | no | `ProviderDetailsV1 \| null` | [providerDetails](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L258-L258) |
+
+Owning schema: `#/$defs/providerResult` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#DeclaredEvidenceV1`, `contracts/pipeline-test-gate/v1/src/types.ts#FindingV1`, `contracts/pipeline-test-gate/v1/src/types.ts#MetricV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ProviderDetailsV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ProviderOutputV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ProviderReportV1`, `contracts/pipeline-test-gate/v1/src/types.ts#TestCountsV1`, `contracts/pipeline-test-gate/v1/src/types.ts#TestOutcome`.
+
+### ReportAdapterRefV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ReportAdapterRefV1`.
+
+[ReportAdapterRefV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L333-L338)
+
+```ts
+export interface ReportAdapterRefV1 {
+  adapterId: string;
+  format: string;
+  contractVersion: number;
+  package: PackageRefV1;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| adapterId | no | no | `string` | [adapterId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L334-L334) |
+| format | no | no | `string` | [format](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L335-L335) |
+| contractVersion | no | no | `number` | [contractVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L336-L336) |
+| package | no | no | `PackageRefV1` | [package](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L337-L337) |
+
+Owning schema: `#/$defs/reportAdapterRef` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#PackageRefV1`.
+
+### ReportAdapterResultV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ReportAdapterResultV1`.
+
+[ReportAdapterResultV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L362-L374)
+
+```ts
+export interface ReportAdapterResultV1 {
+  schemaVersion: 'report-adapter-result.v1';
+  adapter: ReportAdapterRefV1;
+  sourceArtifact: ArtifactRefV1;
+  counts: ReportCountsV1;
+  durationMs: number;
+  cases: ReportCaseV1[];
+  casesTruncated: boolean;
+  omittedCaseCount: number;
+  findings: FindingV1[];
+  findingsTruncated: boolean;
+  omittedFindingCount: number;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| schemaVersion | no | no | `"report-adapter-result.v1"` | [schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L363-L363) |
+| adapter | no | no | `ReportAdapterRefV1` | [adapter](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L364-L364) |
+| sourceArtifact | no | no | `ArtifactRefV1` | [sourceArtifact](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L365-L365) |
+| counts | no | no | `ReportCountsV1` | [counts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L366-L366) |
+| durationMs | no | no | `number` | [durationMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L367-L367) |
+| cases | no | no | `ReportCaseV1[]` | [cases](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L368-L368) |
+| casesTruncated | no | no | `boolean` | [casesTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L369-L369) |
+| omittedCaseCount | no | no | `number` | [omittedCaseCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L370-L370) |
+| findings | no | no | `FindingV1[]` | [findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L371-L371) |
+| findingsTruncated | no | no | `boolean` | [findingsTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L372-L372) |
+| omittedFindingCount | no | no | `number` | [omittedFindingCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L373-L373) |
+
+Owning schema: `#/$defs/reportAdapterResult` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#ArtifactRefV1`, `contracts/pipeline-test-gate/v1/src/types.ts#FindingV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ReportAdapterRefV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ReportCaseV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ReportCountsV1`.
+
+### ReportCaseOutcome — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ReportCaseOutcome`.
+
+[ReportCaseOutcome](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L340-L340)
+
+```ts
+export type ReportCaseOutcome = 'passed' | 'failed' | 'errored' | 'skipped';
+```
+
+Owning schema: `#/$defs/reportCase/properties/outcome` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### ReportCaseV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ReportCaseV1`.
+
+[ReportCaseV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L350-L360)
+
+```ts
+export interface ReportCaseV1 {
+  id: string;
+  name: string;
+  suitePath: string[];
+  className: string | null;
+  outcome: ReportCaseOutcome;
+  durationMs: number;
+  findings: FindingV1[];
+  findingsTruncated: boolean;
+  omittedFindingCount: number;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| id | no | no | `string` | [id](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L351-L351) |
+| name | no | no | `string` | [name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L352-L352) |
+| suitePath | no | no | `string[]` | [suitePath](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L353-L353) |
+| className | no | no | `string \| null` | [className](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L354-L354) |
+| outcome | no | no | `"passed" \| "failed" \| "skipped" \| "errored"` | [outcome](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L355-L355) |
+| durationMs | no | no | `number` | [durationMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L356-L356) |
+| findings | no | no | `FindingV1[]` | [findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L357-L357) |
+| findingsTruncated | no | no | `boolean` | [findingsTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L358-L358) |
+| omittedFindingCount | no | no | `number` | [omittedFindingCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L359-L359) |
+
+Owning schema: `#/$defs/reportCase` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#FindingV1`, `contracts/pipeline-test-gate/v1/src/types.ts#ReportCaseOutcome`.
+
+### ReportCountsV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ReportCountsV1`.
+
+[ReportCountsV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L342-L348)
+
+```ts
+export interface ReportCountsV1 {
+  total: number;
+  passed: number;
+  failed: number;
+  errored: number;
+  skipped: number;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| total | no | no | `number` | [total](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L343-L343) |
+| passed | no | no | `number` | [passed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L344-L344) |
+| failed | no | no | `number` | [failed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L345-L345) |
+| errored | no | no | `number` | [errored](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L346-L346) |
+| skipped | no | no | `number` | [skipped](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L347-L347) |
+
+Owning schema: `#/$defs/reportCounts` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### ResolvedInputV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#ResolvedInputV1`.
+
+[ResolvedInputV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L113-L115)
+
+```ts
+export type ResolvedInputV1 =
+  | { name: string; kind: 'value'; schemaId: string; value: JsonValue }
+  | { name: string; kind: 'artifact'; artifact: ArtifactRefV1 };
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| name | no | no | `string` | [name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L114-L114) |
+| kind | no | no | `"value" \| "artifact"` | [kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L114-L114) |
+
+Owning schema: `#/$defs/resolvedInput` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+Qualified local references: `contracts/pipeline-test-gate/v1/src/types.ts#ArtifactRefV1`, `contracts/pipeline-test-gate/v1/src/types.ts#JsonValue`.
+
+### TestCountsV1 — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#TestCountsV1`.
+
+[TestCountsV1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L217-L222)
+
+```ts
+export interface TestCountsV1 {
+  total: number;
+  passed: number;
+  failed: number;
+  skipped: number;
+}
+```
+
+| Resolved member | Optional | Readonly | Type | Source |
+| --- | --- | --- | --- | --- |
+| total | no | no | `number` | [total](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L218-L218) |
+| passed | no | no | `number` | [passed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L219-L219) |
+| failed | no | no | `number` | [failed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L220-L220) |
+| skipped | no | no | `number` | [skipped](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L221-L221) |
+
+Owning schema: `#/$defs/testCounts` in [contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json). Read its rows in the owning rule index below.
+
+### TestOutcome — contracts/pipeline-test-gate/v1/src/types.ts
+
+Qualified declaration: `contracts/pipeline-test-gate/v1/src/types.ts#TestOutcome`.
+
+[TestOutcome](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L8-L8)
+
+```ts
+export type TestOutcome = 'passed' | 'failed' | 'skipped' | null;
+```
+
+No one-to-one owning schema definition: read this TypeScript support declaration and the schema at its consuming field. For example, ProviderResultV1 narrows TestOutcome with Exclude<TestOutcome, null>.
+
 ### CapabilityInvocation — skills/common/plugin-runtime/sdk/src/generated/contracts.ts
 
 Qualified declaration: `skills/common/plugin-runtime/sdk/src/generated/contracts.ts#CapabilityInvocation`.
@@ -5023,6 +5640,273 @@ export interface FencedAdapterInvocation {
 No one-to-one owning schema definition: read this TypeScript support declaration and the schema at its consuming field. For example, ProviderResultV1 narrows TestOutcome with Exclude<TestOutcome, null>.
 
 Qualified local references: `skills/common/plugin-runtime/sdk/src/generated/contracts.ts#EffectRequest`, `skills/common/plugin-runtime/sdk/src/generated/contracts.ts#ResourceLock`, `skills/common/plugin-runtime/sdk/src/runtime.ts#AdapterResourceFence`.
+
+## Callback contract rules
+
+These owning test-gate schemas cover provider invocation, provider result and the assembled report result. Callback ReportAdapterOutput selects only its declared fields; Buster adds adapter and sourceArtifact. `$ref` targets are included recursively, including JSON value recursion. Parent required arrays, unions, defaults/absence and bounds apply independently of TypeScript. JSON Schema string lengths measure Unicode code points.
+
+Owning validation first applies the selected JSON Schema without default insertion or coercion. providerInvocation and providerResult have no extra semantic branch in checkPipelineTestGateContract. reportAdapterResult additionally requires outcome counts to sum to total and unique case IDs. Complete cases require zero omittedCaseCount, exact total length and exact outcome counts. Truncated cases require positive omittedCaseCount, listed plus omitted equal total, and listed outcomes no greater than exact counts. Report and case findingsTruncated must be true exactly when omittedFindingCount is positive. Buster supplies adapter/sourceArtifact provenance before this validation. Failure returns errors from checkPipelineTestGateContract; validatePipelineTestGateContract throws PipelineTestGateContractError. Shape acceptance does not authorize provider execution.
+
+Semantic validator: [reportAdapterResultErrors](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/validation.ts#L100-L145).
+
+| Owning JSON pointer | Declared rules | Source |
+| --- | --- | --- |
+| #/$defs/artifactRef | `{"type":"object","additionalProperties":false,"required":["artifactId","type","mediaType","contentDigest","sizeBytes","storageUrl"]}` | [#/$defs/artifactRef](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L769-L781) |
+| #/$defs/artifactRef/properties/artifactId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/artifactRef/properties/artifactId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L774-L774) |
+| #/$defs/artifactRef/properties/type | `{"$ref":"#/$defs/stableId"}` | [#/$defs/artifactRef/properties/type](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L775-L775) |
+| #/$defs/artifactRef/properties/mediaType | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/artifactRef/properties/mediaType](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L776-L776) |
+| #/$defs/artifactRef/properties/contentDigest | `{"$ref":"#/$defs/digest"}` | [#/$defs/artifactRef/properties/contentDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L777-L777) |
+| #/$defs/artifactRef/properties/sizeBytes | `{"type":"integer","minimum":0}` | [#/$defs/artifactRef/properties/sizeBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L778-L778) |
+| #/$defs/artifactRef/properties/storageUrl | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/artifactRef/properties/storageUrl](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L779-L779) |
+| #/$defs/contractId | `{"type":"string","pattern":"^[a-z0-9][a-z0-9._/-]*@[1-9][0-9]*$","maxLength":256}` | [#/$defs/contractId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L16-L20) |
+| #/$defs/declaredEvidence | `{"type":"object","additionalProperties":false,"required":["evidenceId","type","file","mediaType"]}` | [#/$defs/declaredEvidence](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1373-L1383) |
+| #/$defs/declaredEvidence/properties/evidenceId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/declaredEvidence/properties/evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1378-L1378) |
+| #/$defs/declaredEvidence/properties/type | `{"$ref":"#/$defs/stableId"}` | [#/$defs/declaredEvidence/properties/type](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1379-L1379) |
+| #/$defs/declaredEvidence/properties/file | `{"$ref":"#/$defs/relativePath"}` | [#/$defs/declaredEvidence/properties/file](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1380-L1380) |
+| #/$defs/declaredEvidence/properties/mediaType | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/declaredEvidence/properties/mediaType](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1381-L1381) |
+| #/$defs/digest | `{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"}` | [#/$defs/digest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L21-L24) |
+| #/$defs/evidencePolicy | `{"type":"object","additionalProperties":false,"required":["onPass","onFail","onError"]}` | [#/$defs/evidencePolicy](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L123-L147) |
+| #/$defs/evidencePolicy/properties/onPass | `{"type":"array","maxItems":128,"uniqueItems":true}` | [#/$defs/evidencePolicy/properties/onPass](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L128-L133) |
+| #/$defs/evidencePolicy/properties/onPass/items | `{"$ref":"#/$defs/stableId"}` | [#/$defs/evidencePolicy/properties/onPass/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L131-L131) |
+| #/$defs/evidencePolicy/properties/onFail | `{"type":"array","maxItems":128,"uniqueItems":true}` | [#/$defs/evidencePolicy/properties/onFail](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L134-L139) |
+| #/$defs/evidencePolicy/properties/onFail/items | `{"$ref":"#/$defs/stableId"}` | [#/$defs/evidencePolicy/properties/onFail/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L137-L137) |
+| #/$defs/evidencePolicy/properties/onError | `{"type":"array","maxItems":128,"uniqueItems":true}` | [#/$defs/evidencePolicy/properties/onError](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L140-L145) |
+| #/$defs/evidencePolicy/properties/onError/items | `{"$ref":"#/$defs/stableId"}` | [#/$defs/evidencePolicy/properties/onError/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L143-L143) |
+| #/$defs/executionLimits | `{"type":"object","additionalProperties":false,"required":["cpuMillis","memoryBytes","logBytes","artifactBytes","artifactFiles","processes"]}` | [#/$defs/executionLimits](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L148-L167) |
+| #/$defs/executionLimits/properties/cpuMillis | `{"type":"integer","minimum":1}` | [#/$defs/executionLimits/properties/cpuMillis](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L160-L160) |
+| #/$defs/executionLimits/properties/memoryBytes | `{"type":"integer","minimum":1}` | [#/$defs/executionLimits/properties/memoryBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L161-L161) |
+| #/$defs/executionLimits/properties/logBytes | `{"type":"integer","minimum":0}` | [#/$defs/executionLimits/properties/logBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L162-L162) |
+| #/$defs/executionLimits/properties/artifactBytes | `{"type":"integer","minimum":0}` | [#/$defs/executionLimits/properties/artifactBytes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L163-L163) |
+| #/$defs/executionLimits/properties/artifactFiles | `{"type":"integer","minimum":0}` | [#/$defs/executionLimits/properties/artifactFiles](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L164-L164) |
+| #/$defs/executionLimits/properties/processes | `{"type":"integer","minimum":1}` | [#/$defs/executionLimits/properties/processes](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L165-L165) |
+| #/$defs/finding | `{"type":"object","additionalProperties":false,"required":["id","severity","message"]}` | [#/$defs/finding](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L953-L965) |
+| #/$defs/finding/properties/id | `{"$ref":"#/$defs/stableId"}` | [#/$defs/finding/properties/id](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L958-L958) |
+| #/$defs/finding/properties/severity | `{"enum":["critical","high","medium","low","info"]}` | [#/$defs/finding/properties/severity](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L959-L959) |
+| #/$defs/finding/properties/message | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/finding/properties/message](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L960-L960) |
+| #/$defs/finding/properties/rule | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/finding/properties/rule](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L961-L961) |
+| #/$defs/finding/properties/file | `{"$ref":"#/$defs/relativePath"}` | [#/$defs/finding/properties/file](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L962-L962) |
+| #/$defs/finding/properties/line | `{"type":"integer","minimum":1}` | [#/$defs/finding/properties/line](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L963-L963) |
+| #/$defs/jsonObject | `{"type":"object","maxProperties":256,"additionalProperties":{"$ref":"#/$defs/jsonValue"}}` | [#/$defs/jsonObject](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L47-L51) |
+| #/$defs/jsonObject/additionalProperties | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/jsonObject/additionalProperties](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L50-L50) |
+| #/$defs/jsonValue | `{}` | [#/$defs/jsonValue](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L31-L46) |
+| #/$defs/jsonValue/oneOf/0 | `{"type":"null"}` | [#/$defs/jsonValue/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L33-L33) |
+| #/$defs/jsonValue/oneOf/1 | `{"type":"boolean"}` | [#/$defs/jsonValue/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L34-L34) |
+| #/$defs/jsonValue/oneOf/2 | `{"type":"number"}` | [#/$defs/jsonValue/oneOf/2](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L35-L35) |
+| #/$defs/jsonValue/oneOf/3 | `{"type":"string"}` | [#/$defs/jsonValue/oneOf/3](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L36-L36) |
+| #/$defs/jsonValue/oneOf/4 | `{"type":"array"}` | [#/$defs/jsonValue/oneOf/4](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L37-L40) |
+| #/$defs/jsonValue/oneOf/4/items | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/jsonValue/oneOf/4/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L39-L39) |
+| #/$defs/jsonValue/oneOf/5 | `{"type":"object","additionalProperties":{"$ref":"#/$defs/jsonValue"}}` | [#/$defs/jsonValue/oneOf/5](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L41-L44) |
+| #/$defs/jsonValue/oneOf/5/additionalProperties | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/jsonValue/oneOf/5/additionalProperties](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L43-L43) |
+| #/$defs/metric | `{"type":"object","additionalProperties":false,"required":["name","value"]}` | [#/$defs/metric](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L966-L975) |
+| #/$defs/metric/properties/name | `{"$ref":"#/$defs/stableId"}` | [#/$defs/metric/properties/name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L971-L971) |
+| #/$defs/metric/properties/value | `{"type":"number"}` | [#/$defs/metric/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L972-L972) |
+| #/$defs/metric/properties/unit | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/metric/properties/unit](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L973-L973) |
+| #/$defs/nonEmptyString | `{"type":"string","minLength":1,"maxLength":4096}` | [#/$defs/nonEmptyString](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L6-L10) |
+| #/$defs/packageRef | `{"type":"object","additionalProperties":false,"required":["packageId","packageVersion","contentDigest"]}` | [#/$defs/packageRef](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L52-L61) |
+| #/$defs/packageRef/properties/packageId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/packageRef/properties/packageId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L57-L57) |
+| #/$defs/packageRef/properties/packageVersion | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/packageRef/properties/packageVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L58-L58) |
+| #/$defs/packageRef/properties/contentDigest | `{"$ref":"#/$defs/digest"}` | [#/$defs/packageRef/properties/contentDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L59-L59) |
+| #/$defs/providerConfiguration | `{"type":"object","additionalProperties":false,"required":["schemaVersion","contractId","schemaDigest","values"]}` | [#/$defs/providerConfiguration](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L252-L262) |
+| #/$defs/providerConfiguration/properties/schemaVersion | `{"const":"provider-configuration.v1"}` | [#/$defs/providerConfiguration/properties/schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L257-L257) |
+| #/$defs/providerConfiguration/properties/contractId | `{"$ref":"#/$defs/contractId"}` | [#/$defs/providerConfiguration/properties/contractId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L258-L258) |
+| #/$defs/providerConfiguration/properties/schemaDigest | `{"$ref":"#/$defs/digest"}` | [#/$defs/providerConfiguration/properties/schemaDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L259-L259) |
+| #/$defs/providerConfiguration/properties/values | `{"$ref":"#/$defs/jsonObject"}` | [#/$defs/providerConfiguration/properties/values](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L260-L260) |
+| #/$defs/providerDetails | `{"type":"object","additionalProperties":false,"required":["schemaId","schemaDigest","values"]}` | [#/$defs/providerDetails](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L168-L177) |
+| #/$defs/providerDetails/properties/schemaId | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/providerDetails/properties/schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L173-L173) |
+| #/$defs/providerDetails/properties/schemaDigest | `{"$ref":"#/$defs/digest"}` | [#/$defs/providerDetails/properties/schemaDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L174-L174) |
+| #/$defs/providerDetails/properties/values | `{"$ref":"#/$defs/jsonObject"}` | [#/$defs/providerDetails/properties/values](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L175-L175) |
+| #/$defs/providerInvocation | `{"type":"object","additionalProperties":false,"required":["schemaVersion","planId","runId","moduleId","gateId","suiteInstanceId","nodeId","executionId","testIdentity","nodeKind","attemptId","attemptNumber","provider","configuration","inputs","evidence","grantedCapabilities","timeoutMs","limits","workspace"]}` | [#/$defs/providerInvocation](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L877-L952) |
+| #/$defs/providerInvocation/properties/schemaVersion | `{"const":"provider-invocation.v1"}` | [#/$defs/providerInvocation/properties/schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L903-L903) |
+| #/$defs/providerInvocation/properties/planId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/planId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L904-L904) |
+| #/$defs/providerInvocation/properties/runId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/runId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L905-L905) |
+| #/$defs/providerInvocation/properties/moduleId | `{}` | [#/$defs/providerInvocation/properties/moduleId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L906-L908) |
+| #/$defs/providerInvocation/properties/moduleId/oneOf/0 | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/moduleId/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L907-L907) |
+| #/$defs/providerInvocation/properties/moduleId/oneOf/1 | `{"type":"null"}` | [#/$defs/providerInvocation/properties/moduleId/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L907-L907) |
+| #/$defs/providerInvocation/properties/gateId | `{}` | [#/$defs/providerInvocation/properties/gateId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L909-L911) |
+| #/$defs/providerInvocation/properties/gateId/oneOf/0 | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/gateId/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L910-L910) |
+| #/$defs/providerInvocation/properties/gateId/oneOf/1 | `{"type":"null"}` | [#/$defs/providerInvocation/properties/gateId/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L910-L910) |
+| #/$defs/providerInvocation/properties/suiteInstanceId | `{}` | [#/$defs/providerInvocation/properties/suiteInstanceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L912-L914) |
+| #/$defs/providerInvocation/properties/suiteInstanceId/oneOf/0 | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/suiteInstanceId/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L913-L913) |
+| #/$defs/providerInvocation/properties/suiteInstanceId/oneOf/1 | `{"type":"null"}` | [#/$defs/providerInvocation/properties/suiteInstanceId/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L913-L913) |
+| #/$defs/providerInvocation/properties/nodeId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/nodeId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L915-L915) |
+| #/$defs/providerInvocation/properties/executionId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/executionId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L916-L916) |
+| #/$defs/providerInvocation/properties/testIdentity | `{"type":"string","pattern":"^test:[a-f0-9]{64}$"}` | [#/$defs/providerInvocation/properties/testIdentity](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L917-L917) |
+| #/$defs/providerInvocation/properties/nodeKind | `{"enum":["test","fixture"]}` | [#/$defs/providerInvocation/properties/nodeKind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L918-L918) |
+| #/$defs/providerInvocation/properties/attemptId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/attemptId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L919-L919) |
+| #/$defs/providerInvocation/properties/attemptNumber | `{"type":"integer","minimum":1}` | [#/$defs/providerInvocation/properties/attemptNumber](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L920-L920) |
+| #/$defs/providerInvocation/properties/provider | `{"$ref":"#/$defs/providerRef"}` | [#/$defs/providerInvocation/properties/provider](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L921-L921) |
+| #/$defs/providerInvocation/properties/configuration | `{"$ref":"#/$defs/providerConfiguration"}` | [#/$defs/providerInvocation/properties/configuration](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L922-L922) |
+| #/$defs/providerInvocation/properties/inputs | `{"type":"array","maxItems":128}` | [#/$defs/providerInvocation/properties/inputs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L923-L927) |
+| #/$defs/providerInvocation/properties/inputs/items | `{"$ref":"#/$defs/resolvedInput"}` | [#/$defs/providerInvocation/properties/inputs/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L926-L926) |
+| #/$defs/providerInvocation/properties/evidence | `{"$ref":"#/$defs/evidencePolicy"}` | [#/$defs/providerInvocation/properties/evidence](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L928-L928) |
+| #/$defs/providerInvocation/properties/grantedCapabilities | `{"type":"array","maxItems":128,"uniqueItems":true}` | [#/$defs/providerInvocation/properties/grantedCapabilities](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L929-L934) |
+| #/$defs/providerInvocation/properties/grantedCapabilities/items | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerInvocation/properties/grantedCapabilities/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L932-L932) |
+| #/$defs/providerInvocation/properties/timeoutMs | `{"type":"integer","minimum":1}` | [#/$defs/providerInvocation/properties/timeoutMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L935-L935) |
+| #/$defs/providerInvocation/properties/limits | `{"$ref":"#/$defs/executionLimits"}` | [#/$defs/providerInvocation/properties/limits](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L936-L936) |
+| #/$defs/providerInvocation/properties/workspace | `{"type":"object","additionalProperties":false,"required":["repository","scratch","evidence"]}` | [#/$defs/providerInvocation/properties/workspace](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L937-L946) |
+| #/$defs/providerInvocation/properties/workspace/properties/repository | `{"$ref":"#/$defs/relativePath"}` | [#/$defs/providerInvocation/properties/workspace/properties/repository](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L942-L942) |
+| #/$defs/providerInvocation/properties/workspace/properties/scratch | `{"$ref":"#/$defs/relativePath"}` | [#/$defs/providerInvocation/properties/workspace/properties/scratch](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L943-L943) |
+| #/$defs/providerInvocation/properties/workspace/properties/evidence | `{"$ref":"#/$defs/relativePath"}` | [#/$defs/providerInvocation/properties/workspace/properties/evidence](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L944-L944) |
+| #/$defs/providerInvocation/anyOf/0 | `{}` | [#/$defs/providerInvocation/anyOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L949-L949) |
+| #/$defs/providerInvocation/anyOf/0/properties/moduleId | `{"type":"string"}` | [#/$defs/providerInvocation/anyOf/0/properties/moduleId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L949-L949) |
+| #/$defs/providerInvocation/anyOf/1 | `{}` | [#/$defs/providerInvocation/anyOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L950-L950) |
+| #/$defs/providerInvocation/anyOf/1/properties/gateId | `{"type":"string"}` | [#/$defs/providerInvocation/anyOf/1/properties/gateId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L950-L950) |
+| #/$defs/providerOutput | `{"type":"object","additionalProperties":false,"required":["name","kind"]}` | [#/$defs/providerOutput](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L845-L876) |
+| #/$defs/providerOutput/properties/name | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerOutput/properties/name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L850-L850) |
+| #/$defs/providerOutput/properties/kind | `{"enum":["value","artifact"]}` | [#/$defs/providerOutput/properties/kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L851-L851) |
+| #/$defs/providerOutput/properties/schemaId | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/providerOutput/properties/schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L852-L852) |
+| #/$defs/providerOutput/properties/value | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/providerOutput/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L853-L853) |
+| #/$defs/providerOutput/properties/evidenceId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerOutput/properties/evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L854-L854) |
+| #/$defs/providerOutput/oneOf/0 | `{"required":["schemaId","value"]}` | [#/$defs/providerOutput/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L857-L865) |
+| #/$defs/providerOutput/oneOf/0/properties/kind | `{"const":"value"}` | [#/$defs/providerOutput/oneOf/0/properties/kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L859-L859) |
+| #/$defs/providerOutput/oneOf/0/properties/schemaId | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/providerOutput/oneOf/0/properties/schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L860-L860) |
+| #/$defs/providerOutput/oneOf/0/properties/value | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/providerOutput/oneOf/0/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L861-L861) |
+| #/$defs/providerOutput/oneOf/0/properties/evidenceId | `false` | [#/$defs/providerOutput/oneOf/0/properties/evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L862-L862) |
+| #/$defs/providerOutput/oneOf/1 | `{"required":["evidenceId"]}` | [#/$defs/providerOutput/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L866-L874) |
+| #/$defs/providerOutput/oneOf/1/properties/kind | `{"const":"artifact"}` | [#/$defs/providerOutput/oneOf/1/properties/kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L868-L868) |
+| #/$defs/providerOutput/oneOf/1/properties/schemaId | `false` | [#/$defs/providerOutput/oneOf/1/properties/schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L869-L869) |
+| #/$defs/providerOutput/oneOf/1/properties/value | `false` | [#/$defs/providerOutput/oneOf/1/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L870-L870) |
+| #/$defs/providerOutput/oneOf/1/properties/evidenceId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerOutput/oneOf/1/properties/evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L871-L871) |
+| #/$defs/providerRef | `{"type":"object","additionalProperties":false,"required":["packageId","packageVersion","contentDigest","registrationId","contractId"]}` | [#/$defs/providerRef](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L62-L73) |
+| #/$defs/providerRef/properties/packageId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerRef/properties/packageId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L67-L67) |
+| #/$defs/providerRef/properties/packageVersion | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/providerRef/properties/packageVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L68-L68) |
+| #/$defs/providerRef/properties/contentDigest | `{"$ref":"#/$defs/digest"}` | [#/$defs/providerRef/properties/contentDigest](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L69-L69) |
+| #/$defs/providerRef/properties/registrationId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerRef/properties/registrationId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L70-L70) |
+| #/$defs/providerRef/properties/contractId | `{"$ref":"#/$defs/contractId"}` | [#/$defs/providerRef/properties/contractId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L71-L71) |
+| #/$defs/providerReport | `{"type":"object","additionalProperties":false,"required":["evidenceId","format"]}` | [#/$defs/providerReport](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1008-L1016) |
+| #/$defs/providerReport/properties/evidenceId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerReport/properties/evidenceId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1013-L1013) |
+| #/$defs/providerReport/properties/format | `{"$ref":"#/$defs/stableId"}` | [#/$defs/providerReport/properties/format](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1014-L1014) |
+| #/$defs/providerResult | `{"type":"object","additionalProperties":false,"required":["schemaVersion","outcome","summary","counts","findings","metrics","evidenceFiles","reports","outputs","exitCode","signal","providerDetails"]}` | [#/$defs/providerResult](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1017-L1080) |
+| #/$defs/providerResult/properties/schemaVersion | `{"const":"provider-result.v1"}` | [#/$defs/providerResult/properties/schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1035-L1035) |
+| #/$defs/providerResult/properties/outcome | `{"enum":["passed","failed","skipped"]}` | [#/$defs/providerResult/properties/outcome](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1036-L1036) |
+| #/$defs/providerResult/properties/summary | `{"type":"string","maxLength":4096}` | [#/$defs/providerResult/properties/summary](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1037-L1037) |
+| #/$defs/providerResult/properties/counts | `{"$ref":"#/$defs/testCounts"}` | [#/$defs/providerResult/properties/counts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1038-L1038) |
+| #/$defs/providerResult/properties/findings | `{"type":"array","maxItems":10000}` | [#/$defs/providerResult/properties/findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1039-L1043) |
+| #/$defs/providerResult/properties/findings/items | `{"$ref":"#/$defs/finding"}` | [#/$defs/providerResult/properties/findings/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1042-L1042) |
+| #/$defs/providerResult/properties/metrics | `{"type":"array","maxItems":1000}` | [#/$defs/providerResult/properties/metrics](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1044-L1048) |
+| #/$defs/providerResult/properties/metrics/items | `{"$ref":"#/$defs/metric"}` | [#/$defs/providerResult/properties/metrics/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1047-L1047) |
+| #/$defs/providerResult/properties/evidenceFiles | `{"type":"array","maxItems":1000}` | [#/$defs/providerResult/properties/evidenceFiles](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1049-L1053) |
+| #/$defs/providerResult/properties/evidenceFiles/items | `{"$ref":"#/$defs/declaredEvidence"}` | [#/$defs/providerResult/properties/evidenceFiles/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1052-L1052) |
+| #/$defs/providerResult/properties/reports | `{"type":"array","maxItems":1000}` | [#/$defs/providerResult/properties/reports](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1054-L1058) |
+| #/$defs/providerResult/properties/reports/items | `{"$ref":"#/$defs/providerReport"}` | [#/$defs/providerResult/properties/reports/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1057-L1057) |
+| #/$defs/providerResult/properties/outputs | `{"type":"array","maxItems":128}` | [#/$defs/providerResult/properties/outputs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1059-L1063) |
+| #/$defs/providerResult/properties/outputs/items | `{"$ref":"#/$defs/providerOutput"}` | [#/$defs/providerResult/properties/outputs/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1062-L1062) |
+| #/$defs/providerResult/properties/exitCode | `{}` | [#/$defs/providerResult/properties/exitCode](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1064-L1066) |
+| #/$defs/providerResult/properties/exitCode/oneOf/0 | `{"type":"integer"}` | [#/$defs/providerResult/properties/exitCode/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1065-L1065) |
+| #/$defs/providerResult/properties/exitCode/oneOf/1 | `{"type":"null"}` | [#/$defs/providerResult/properties/exitCode/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1065-L1065) |
+| #/$defs/providerResult/properties/signal | `{}` | [#/$defs/providerResult/properties/signal](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1067-L1072) |
+| #/$defs/providerResult/properties/signal/oneOf/0 | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/providerResult/properties/signal/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1069-L1069) |
+| #/$defs/providerResult/properties/signal/oneOf/1 | `{"type":"null"}` | [#/$defs/providerResult/properties/signal/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1070-L1070) |
+| #/$defs/providerResult/properties/providerDetails | `{}` | [#/$defs/providerResult/properties/providerDetails](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1073-L1078) |
+| #/$defs/providerResult/properties/providerDetails/oneOf/0 | `{"$ref":"#/$defs/providerDetails"}` | [#/$defs/providerResult/properties/providerDetails/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1075-L1075) |
+| #/$defs/providerResult/properties/providerDetails/oneOf/1 | `{"type":"null"}` | [#/$defs/providerResult/properties/providerDetails/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1076-L1076) |
+| #/$defs/relativePath | `{"type":"string","minLength":1,"maxLength":4096,"pattern":"^(?!/)(?!.*(?:^\|/)\\.\\.(?:/\|$)).+$"}` | [#/$defs/relativePath](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L25-L30) |
+| #/$defs/reportAdapterRef | `{"type":"object","additionalProperties":false,"required":["adapterId","format","contractVersion","package"]}` | [#/$defs/reportAdapterRef](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1462-L1472) |
+| #/$defs/reportAdapterRef/properties/adapterId | `{"$ref":"#/$defs/stableId"}` | [#/$defs/reportAdapterRef/properties/adapterId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1467-L1467) |
+| #/$defs/reportAdapterRef/properties/format | `{"$ref":"#/$defs/stableId"}` | [#/$defs/reportAdapterRef/properties/format](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1468-L1468) |
+| #/$defs/reportAdapterRef/properties/contractVersion | `{"type":"integer","minimum":1}` | [#/$defs/reportAdapterRef/properties/contractVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1469-L1469) |
+| #/$defs/reportAdapterRef/properties/package | `{"$ref":"#/$defs/packageRef"}` | [#/$defs/reportAdapterRef/properties/package](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1470-L1470) |
+| #/$defs/reportAdapterResult | `{"type":"object","additionalProperties":false,"required":["schemaVersion","adapter","sourceArtifact","counts","durationMs","cases","casesTruncated","omittedCaseCount","findings","findingsTruncated","omittedFindingCount"]}` | [#/$defs/reportAdapterResult](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1517-L1554) |
+| #/$defs/reportAdapterResult/properties/schemaVersion | `{"const":"report-adapter-result.v1"}` | [#/$defs/reportAdapterResult/properties/schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1534-L1534) |
+| #/$defs/reportAdapterResult/properties/adapter | `{"$ref":"#/$defs/reportAdapterRef"}` | [#/$defs/reportAdapterResult/properties/adapter](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1535-L1535) |
+| #/$defs/reportAdapterResult/properties/sourceArtifact | `{"$ref":"#/$defs/artifactRef"}` | [#/$defs/reportAdapterResult/properties/sourceArtifact](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1536-L1536) |
+| #/$defs/reportAdapterResult/properties/counts | `{"$ref":"#/$defs/reportCounts"}` | [#/$defs/reportAdapterResult/properties/counts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1537-L1537) |
+| #/$defs/reportAdapterResult/properties/durationMs | `{"type":"number","minimum":0}` | [#/$defs/reportAdapterResult/properties/durationMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1538-L1538) |
+| #/$defs/reportAdapterResult/properties/cases | `{"type":"array","maxItems":5000}` | [#/$defs/reportAdapterResult/properties/cases](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1539-L1543) |
+| #/$defs/reportAdapterResult/properties/cases/items | `{"$ref":"#/$defs/reportCase"}` | [#/$defs/reportAdapterResult/properties/cases/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1542-L1542) |
+| #/$defs/reportAdapterResult/properties/casesTruncated | `{"type":"boolean"}` | [#/$defs/reportAdapterResult/properties/casesTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1544-L1544) |
+| #/$defs/reportAdapterResult/properties/omittedCaseCount | `{"type":"integer","minimum":0}` | [#/$defs/reportAdapterResult/properties/omittedCaseCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1545-L1545) |
+| #/$defs/reportAdapterResult/properties/findings | `{"type":"array","maxItems":5000}` | [#/$defs/reportAdapterResult/properties/findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1546-L1550) |
+| #/$defs/reportAdapterResult/properties/findings/items | `{"$ref":"#/$defs/finding"}` | [#/$defs/reportAdapterResult/properties/findings/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1549-L1549) |
+| #/$defs/reportAdapterResult/properties/findingsTruncated | `{"type":"boolean"}` | [#/$defs/reportAdapterResult/properties/findingsTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1551-L1551) |
+| #/$defs/reportAdapterResult/properties/omittedFindingCount | `{"type":"integer","minimum":0}` | [#/$defs/reportAdapterResult/properties/omittedFindingCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1552-L1552) |
+| #/$defs/reportCase | `{"type":"object","additionalProperties":false,"required":["id","name","suitePath","className","outcome","durationMs","findings","findingsTruncated","omittedFindingCount"]}` | [#/$defs/reportCase](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1473-L1504) |
+| #/$defs/reportCase/properties/id | `{"$ref":"#/$defs/stableId"}` | [#/$defs/reportCase/properties/id](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1481-L1481) |
+| #/$defs/reportCase/properties/name | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/reportCase/properties/name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1482-L1482) |
+| #/$defs/reportCase/properties/suitePath | `{"type":"array","maxItems":64}` | [#/$defs/reportCase/properties/suitePath](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1483-L1487) |
+| #/$defs/reportCase/properties/suitePath/items | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/reportCase/properties/suitePath/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1486-L1486) |
+| #/$defs/reportCase/properties/className | `{}` | [#/$defs/reportCase/properties/className](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1488-L1493) |
+| #/$defs/reportCase/properties/className/oneOf/0 | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/reportCase/properties/className/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1490-L1490) |
+| #/$defs/reportCase/properties/className/oneOf/1 | `{"type":"null"}` | [#/$defs/reportCase/properties/className/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1491-L1491) |
+| #/$defs/reportCase/properties/outcome | `{"enum":["passed","failed","errored","skipped"]}` | [#/$defs/reportCase/properties/outcome](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1494-L1494) |
+| #/$defs/reportCase/properties/durationMs | `{"type":"number","minimum":0}` | [#/$defs/reportCase/properties/durationMs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1495-L1495) |
+| #/$defs/reportCase/properties/findings | `{"type":"array","maxItems":100}` | [#/$defs/reportCase/properties/findings](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1496-L1500) |
+| #/$defs/reportCase/properties/findings/items | `{"$ref":"#/$defs/finding"}` | [#/$defs/reportCase/properties/findings/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1499-L1499) |
+| #/$defs/reportCase/properties/findingsTruncated | `{"type":"boolean"}` | [#/$defs/reportCase/properties/findingsTruncated](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1501-L1501) |
+| #/$defs/reportCase/properties/omittedFindingCount | `{"type":"integer","minimum":0}` | [#/$defs/reportCase/properties/omittedFindingCount](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1502-L1502) |
+| #/$defs/reportCounts | `{"type":"object","additionalProperties":false,"required":["total","passed","failed","errored","skipped"]}` | [#/$defs/reportCounts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1505-L1516) |
+| #/$defs/reportCounts/properties/total | `{"type":"integer","minimum":0}` | [#/$defs/reportCounts/properties/total](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1510-L1510) |
+| #/$defs/reportCounts/properties/passed | `{"type":"integer","minimum":0}` | [#/$defs/reportCounts/properties/passed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1511-L1511) |
+| #/$defs/reportCounts/properties/failed | `{"type":"integer","minimum":0}` | [#/$defs/reportCounts/properties/failed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1512-L1512) |
+| #/$defs/reportCounts/properties/errored | `{"type":"integer","minimum":0}` | [#/$defs/reportCounts/properties/errored](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1513-L1513) |
+| #/$defs/reportCounts/properties/skipped | `{"type":"integer","minimum":0}` | [#/$defs/reportCounts/properties/skipped](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L1514-L1514) |
+| #/$defs/resolvedInput | `{"type":"object","additionalProperties":false,"required":["name","kind"]}` | [#/$defs/resolvedInput](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L782-L812) |
+| #/$defs/resolvedInput/properties/name | `{"$ref":"#/$defs/stableId"}` | [#/$defs/resolvedInput/properties/name](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L787-L787) |
+| #/$defs/resolvedInput/properties/kind | `{"enum":["value","artifact"]}` | [#/$defs/resolvedInput/properties/kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L788-L788) |
+| #/$defs/resolvedInput/properties/value | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/resolvedInput/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L789-L789) |
+| #/$defs/resolvedInput/properties/schemaId | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/resolvedInput/properties/schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L790-L790) |
+| #/$defs/resolvedInput/properties/artifact | `{"$ref":"#/$defs/artifactRef"}` | [#/$defs/resolvedInput/properties/artifact](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L791-L791) |
+| #/$defs/resolvedInput/oneOf/0 | `{"required":["value","schemaId"]}` | [#/$defs/resolvedInput/oneOf/0](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L794-L802) |
+| #/$defs/resolvedInput/oneOf/0/properties/kind | `{"const":"value"}` | [#/$defs/resolvedInput/oneOf/0/properties/kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L796-L796) |
+| #/$defs/resolvedInput/oneOf/0/properties/schemaId | `{"$ref":"#/$defs/nonEmptyString"}` | [#/$defs/resolvedInput/oneOf/0/properties/schemaId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L797-L797) |
+| #/$defs/resolvedInput/oneOf/0/properties/value | `{"$ref":"#/$defs/jsonValue"}` | [#/$defs/resolvedInput/oneOf/0/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L798-L798) |
+| #/$defs/resolvedInput/oneOf/0/properties/artifact | `false` | [#/$defs/resolvedInput/oneOf/0/properties/artifact](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L799-L799) |
+| #/$defs/resolvedInput/oneOf/1 | `{"required":["artifact"]}` | [#/$defs/resolvedInput/oneOf/1](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L803-L810) |
+| #/$defs/resolvedInput/oneOf/1/properties/kind | `{"const":"artifact"}` | [#/$defs/resolvedInput/oneOf/1/properties/kind](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L805-L805) |
+| #/$defs/resolvedInput/oneOf/1/properties/artifact | `{"$ref":"#/$defs/artifactRef"}` | [#/$defs/resolvedInput/oneOf/1/properties/artifact](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L806-L806) |
+| #/$defs/resolvedInput/oneOf/1/properties/value | `false` | [#/$defs/resolvedInput/oneOf/1/properties/value](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L807-L807) |
+| #/$defs/stableId | `{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9._:/-]*$","maxLength":256}` | [#/$defs/stableId](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L11-L15) |
+| #/$defs/testCounts | `{"type":"object","additionalProperties":false,"required":["total","passed","failed","skipped"]}` | [#/$defs/testCounts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L976-L986) |
+| #/$defs/testCounts/properties/total | `{"type":"integer","minimum":0}` | [#/$defs/testCounts/properties/total](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L981-L981) |
+| #/$defs/testCounts/properties/passed | `{"type":"integer","minimum":0}` | [#/$defs/testCounts/properties/passed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L982-L982) |
+| #/$defs/testCounts/properties/failed | `{"type":"integer","minimum":0}` | [#/$defs/testCounts/properties/failed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L983-L983) |
+| #/$defs/testCounts/properties/skipped | `{"type":"integer","minimum":0}` | [#/$defs/testCounts/properties/skipped](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json#L984-L984) |
+
+### Provider result admission
+
+After providerResult schema validation, Buster requires total = passed + failed + skipped, and a passed outcome cannot have failed > 0. Evidence IDs and file paths must each be unique; runner-log is reserved; evidence types must be registered. Report evidence IDs must be unique, report formats registered, and each report must refer to declared test-report evidence.
+
+Source: [validateCounts / validateEvidenceDeclarations / validateProviderReports](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/runner.ts#L326-L373).
+
+Before admission, native JSON.stringify output must fit the configured provider-result UTF-8 byte budget. Buster applies schema, counts, selected details, evidence and report checks before freezing a clone. Artifact outputs must refer to declared evidence IDs. These runtime checks do not run merely because a callback has the TypeScript signature.
+
+Source: [provider result admission](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/runner.ts#L1224-L1253).
+
+### Selected provider-details rules
+
+Buster selects these extra rules for kubeclaw.playwright@1, or whenever providerDetails.schemaId is kubeclaw.e2e-result.v1. Other provider-specific details remain governed by their owning provider contract, not a universal E2E requirement.
+
+Require the exact E2E schema ID and SHA-256 of the owning schema bytes, then validate values against that schema. Total must equal passed plus failed plus skipped plus unexecuted and the number of test cases. IDs must be unique; the number of cases with each status must equal its count. Failure throws TEST_PROVIDER_E2E_DETAILS_INVALID.
+
+Source: [validateE2eProviderDetails](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/validation.ts#L56-L69).
+
+| Owning E2E JSON pointer | Declared rules | Source |
+| --- | --- | --- |
+| # | `{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://kubeclaw.dev/contracts/pipeline-test-gate/e2e-result.v1.schema.json","title":"KubeClaw common end-to-end provider result","type":"object","additionalProperties":false,"required":["schemaVersion","provider","targetOrigin","workers","browserProjects","testCases","counts","reportFormat","resourceEnforcement"]}` | [#](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L1-L57) |
+| #/properties/schemaVersion | `{"const":"e2e-result.v1"}` | [#/properties/schemaVersion](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L9-L9) |
+| #/properties/provider | `{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"}` | [#/properties/provider](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L10-L10) |
+| #/properties/targetOrigin | `{"type":"string","format":"uri","maxLength":2048}` | [#/properties/targetOrigin](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L11-L11) |
+| #/properties/workers | `{"type":"integer","minimum":1,"maximum":1024}` | [#/properties/workers](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L12-L12) |
+| #/properties/browserProjects | `{"type":"array","maxItems":256,"uniqueItems":true}` | [#/properties/browserProjects](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L13-L18) |
+| #/properties/browserProjects/items | `{"type":"string","minLength":1,"maxLength":256}` | [#/properties/browserProjects/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L17-L17) |
+| #/properties/testCases | `{"type":"array","minItems":1,"maxItems":100000}` | [#/properties/testCases](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L19-L41) |
+| #/properties/testCases/items | `{"type":"object","additionalProperties":false,"required":["id","title","project","status","attempts","errors"]}` | [#/properties/testCases/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L23-L40) |
+| #/properties/testCases/items/properties/id | `{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"}` | [#/properties/testCases/items/properties/id](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L28-L28) |
+| #/properties/testCases/items/properties/title | `{"type":"string","minLength":1,"maxLength":2048}` | [#/properties/testCases/items/properties/title](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L29-L29) |
+| #/properties/testCases/items/properties/project | `{"type":["string","null"],"maxLength":256}` | [#/properties/testCases/items/properties/project](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L30-L30) |
+| #/properties/testCases/items/properties/browser | `{"type":["string","null"],"maxLength":128}` | [#/properties/testCases/items/properties/browser](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L31-L31) |
+| #/properties/testCases/items/properties/status | `{"enum":["passed","failed","skipped","unexecuted"]}` | [#/properties/testCases/items/properties/status](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L32-L32) |
+| #/properties/testCases/items/properties/attempts | `{"type":"integer","minimum":0,"maximum":1000}` | [#/properties/testCases/items/properties/attempts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L33-L33) |
+| #/properties/testCases/items/properties/errors | `{"type":"array","maxItems":1000}` | [#/properties/testCases/items/properties/errors](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L34-L38) |
+| #/properties/testCases/items/properties/errors/items | `{"type":"string","minLength":1,"maxLength":4096}` | [#/properties/testCases/items/properties/errors/items](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L37-L37) |
+| #/properties/counts | `{"type":"object","additionalProperties":false,"required":["total","passed","failed","skipped","unexecuted"]}` | [#/properties/counts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L42-L53) |
+| #/properties/counts/properties/total | `{"type":"integer","minimum":1}` | [#/properties/counts/properties/total](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L47-L47) |
+| #/properties/counts/properties/passed | `{"type":"integer","minimum":0}` | [#/properties/counts/properties/passed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L48-L48) |
+| #/properties/counts/properties/failed | `{"type":"integer","minimum":0}` | [#/properties/counts/properties/failed](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L49-L49) |
+| #/properties/counts/properties/skipped | `{"type":"integer","minimum":0}` | [#/properties/counts/properties/skipped](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L50-L50) |
+| #/properties/counts/properties/unexecuted | `{"type":"integer","minimum":0}` | [#/properties/counts/properties/unexecuted](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L51-L51) |
+| #/properties/reportFormat | `{"type":"string","minLength":1,"maxLength":128}` | [#/properties/reportFormat](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L54-L54) |
+| #/properties/resourceEnforcement | `{"enum":["cgroup-v2","sampled"]}` | [#/properties/resourceEnforcement](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json#L55-L55) |
 
 ## Complete schema rule index
 
