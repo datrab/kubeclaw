@@ -10,13 +10,14 @@ export function materializeHistoricalRuntime(root, version, checkout) {
   const core = path.join(target, 'skills/nova/core');
   if (fs.existsSync(core)) return core;
   const bytes = fs.readFileSync(new URL('./historical-runtime-producers.json', import.meta.url));
-  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), 'f10877dc4ecb713d79cce6b1b5aaab42e79ddf1df5ad569c6ad8982c100bb4cd');
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), '958bfa3cca7be57ced813031f5154b68942874685d849485b10aaa21eb39a682');
   const archive = JSON.parse(bytes), selected = archive.versions[version];
   assert(selected);
   const original = {
     v1: ['legacy-source-producer/core/execution/engine-snapshots.ts.txt', 'a63c3f3961ebe8ca86328bf428d419307f539f0b'],
     v2: ['legacy-transport-profile/engine-snapshots-v2.ts.txt', 'acca2d4107e47cc61c5659276e03e62204c62fcf'],
     v3: ['legacy-review-cache/engine-snapshots.ts.txt', '6f5301c0a9d93b4444fd9131021491b2e0a05a64'],
+    projectCli: ['legacy-transport-profile/engine-snapshots-v2.ts.txt', 'acca2d4107e47cc61c5659276e03e62204c62fcf'],
   }[version];
   const snapshot = selected.files.find(file => file.path === 'skills/nova/core/execution/engine-snapshots.ts');
   assert.equal(snapshot.gitBlob, original[1]);
