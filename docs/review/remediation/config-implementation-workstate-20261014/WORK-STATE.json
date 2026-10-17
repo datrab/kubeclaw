@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T00:59:54.716071+00:00",
+  "updatedAt": "2026-10-17T01:08:05.107463+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "EXACT_62_PLATFORM_BOUNDARY_MATRIX_COMPOSED_CENTRAL_RECEIVING_OPEN",
+  "status": "EXACT_26_NOTIFICATION_SOURCE_LANES_COMPOSED_24_RECEIVING_RESIDUALS_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue authentic QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root boot/Nova receiving. Central selected platform receiving/history remains OPEN for exact62 rows. Three section-candidate and13 unresolved semantic owner groups remain; matrix joins are not implementation. Preserve all original independent/history/native/archive/full C0-C6 gates; no unchanged green replay.",
+  "nextAction": "Continue authentic QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated sole-root boot/Nova receiving. Exact62 platform rows plus24 notification central-receiving residuals remain OPEN. Remaining2 section-candidate/13 unresolved semantic groups require actual source/owner joins; seven preview schema-only original fields require independent semantic disposition, not fake effects/N-A. Full2409/6845/50 independent/history/native/archive/C0-C6 gates remain mandatory; no unchanged green replay.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -25366,5 +25366,209 @@
     "resumeCondition": "Unchanged suitable isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated PostgreSQL.",
     "writerLock": "SAME nonblocking; released at bounded command exit",
     "noHistoricalFollowup": true
+  },
+  "notificationSourceMatrix20261017": {
+    "at": "2026-10-17T01:08:05.107463+00:00",
+    "status": "EXACT_26_NOTIFICATION_SOURCE_LANES_COMPOSED_24_RECEIVING_RESIDUALS_OPEN",
+    "matrixCommit": "aa6e685ed95c7c10a8052a6727bc717fc457ab0e",
+    "matrixRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-notification-source-matrix-20261017",
+    "productionSourceChanged": false,
+    "originalFields": 26,
+    "exactExistingCoreSourceJoins": 2,
+    "suppliedObserverConfigurationRows": 14,
+    "manifestPolicyRows": 10,
+    "previewSchemaOnlyUnusedOriginalFields": 7,
+    "checks": {
+      "negativeControls": [
+        {
+          "name": "original id",
+          "rejected": true,
+          "error": "'foreign'"
+        },
+        {
+          "name": "original original",
+          "rejected": true,
+          "error": "Original drift: RT-bb2a1c19d400b9c3"
+        },
+        {
+          "name": "original originalObjectSha256",
+          "rejected": true,
+          "error": "Original drift: RT-bb2a1c19d400b9c3"
+        },
+        {
+          "name": "original class",
+          "rejected": true,
+          "error": "Original drift: RT-bb2a1c19d400b9c3"
+        },
+        {
+          "name": "original caseIds",
+          "rejected": true,
+          "error": "Original drift: RT-bb2a1c19d400b9c3"
+        },
+        {
+          "name": "original owner",
+          "rejected": true,
+          "error": "Notification roster drift"
+        },
+        {
+          "name": "missing original field",
+          "rejected": true,
+          "error": "Notification roster drift"
+        },
+        {
+          "name": "duplicate original field",
+          "rejected": true,
+          "error": "Notification roster drift"
+        },
+        {
+          "name": "full roster fields loss",
+          "rejected": true,
+          "error": "Incomplete fields"
+        },
+        {
+          "name": "full roster cases loss",
+          "rejected": true,
+          "error": "Incomplete cases"
+        },
+        {
+          "name": "full roster requirements loss",
+          "rejected": true,
+          "error": "Incomplete requirements"
+        },
+        {
+          "name": "missing schema target",
+          "rejected": true,
+          "error": "'target'"
+        },
+        {
+          "name": "missing schema pipelineLabel",
+          "rejected": true,
+          "error": "'pipelineLabel'"
+        },
+        {
+          "name": "missing schema modelLabel",
+          "rejected": true,
+          "error": "'modelLabel'"
+        },
+        {
+          "name": "missing schema stageLabels",
+          "rejected": true,
+          "error": "'stageLabels'"
+        },
+        {
+          "name": "missing schema maxMessageChars",
+          "rejected": true,
+          "error": "'maxMessageChars'"
+        },
+        {
+          "name": "missing schema suppressEventTypes",
+          "rejected": true,
+          "error": "'suppressEventTypes'"
+        },
+        {
+          "name": "missing observer 0",
+          "rejected": true,
+          "error": "Notification registrations drift"
+        },
+        {
+          "name": "wrong observer export 0",
+          "rejected": true,
+          "error": "Actual observer receiver drift"
+        },
+        {
+          "name": "missing subscriptions 0",
+          "rejected": true,
+          "error": "'subscriptions'"
+        },
+        {
+          "name": "missing observer 0 mode",
+          "rejected": true,
+          "error": "'mode'"
+        },
+        {
+          "name": "missing observer 0 maxAttempts",
+          "rejected": true,
+          "error": "'maxAttempts'"
+        },
+        {
+          "name": "missing observer 0 backoffMs",
+          "rejected": true,
+          "error": "'backoffMs'"
+        },
+        {
+          "name": "missing observer 0 timeoutMs",
+          "rejected": true,
+          "error": "'timeoutMs'"
+        },
+        {
+          "name": "missing observer 1",
+          "rejected": true,
+          "error": "Notification registrations drift"
+        },
+        {
+          "name": "wrong observer export 1",
+          "rejected": true,
+          "error": "Actual observer receiver drift"
+        },
+        {
+          "name": "missing subscriptions 1",
+          "rejected": true,
+          "error": "'subscriptions'"
+        },
+        {
+          "name": "missing observer 1 mode",
+          "rejected": true,
+          "error": "'mode'"
+        },
+        {
+          "name": "missing observer 1 maxAttempts",
+          "rejected": true,
+          "error": "'maxAttempts'"
+        },
+        {
+          "name": "missing observer 1 backoffMs",
+          "rejected": true,
+          "error": "'backoffMs'"
+        },
+        {
+          "name": "missing observer 1 timeoutMs",
+          "rejected": true,
+          "error": "'timeoutMs'"
+        },
+        {
+          "name": "missing Core maxMessageChars standard",
+          "rejected": true,
+          "error": "'maxMessageChars'"
+        }
+      ],
+      "passed": 32,
+      "total": 32,
+      "restoredDeterministic": true,
+      "composedOriginalFields": 26,
+      "exactCoreSourceJoins": 2,
+      "centralReceivingResiduals": 24,
+      "previewSchemaOnlyOriginalFields": 7,
+      "fullRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "integrityFailures": [],
+      "originalCasesNewlyAccepted": 0,
+      "fullC0C6Complete": false,
+      "independentReview": "OPEN; author-run controls only"
+    },
+    "independentReview": "OPEN; no native spawn/reviewer tool exposed; active/recent CONFIG reviewers0; no new reviewer output; unchanged same-surface EROFS not retried. Author matrix controls only.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged: suitable isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted writable archive filesystem and isolated migrated real PostgreSQL database.",
+    "writerLock": "SAME nonblocking; released on bounded command exit",
+    "noHistoricalFollowup": true,
+    "initialAttempt": "Execution-surface90-second timeout produced no checks artifact; owned process ended and lock released. Bounded retry reused unchanged platform closure only outside its input mutations;32/32 controls completed, no weakened assertions."
   }
 }

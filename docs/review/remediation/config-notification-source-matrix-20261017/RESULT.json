@@ -1,0 +1,204 @@
+{
+  "at": "2026-10-17T01:08:05.107463+00:00",
+  "status": "EXACT_26_NOTIFICATION_SOURCE_LANES_COMPOSED_24_RECEIVING_RESIDUALS_OPEN",
+  "matrixCommit": "aa6e685ed95c7c10a8052a6727bc717fc457ab0e",
+  "matrixRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-notification-source-matrix-20261017",
+  "productionSourceChanged": false,
+  "originalFields": 26,
+  "exactExistingCoreSourceJoins": 2,
+  "suppliedObserverConfigurationRows": 14,
+  "manifestPolicyRows": 10,
+  "previewSchemaOnlyUnusedOriginalFields": 7,
+  "checks": {
+    "negativeControls": [
+      {
+        "name": "original id",
+        "rejected": true,
+        "error": "'foreign'"
+      },
+      {
+        "name": "original original",
+        "rejected": true,
+        "error": "Original drift: RT-bb2a1c19d400b9c3"
+      },
+      {
+        "name": "original originalObjectSha256",
+        "rejected": true,
+        "error": "Original drift: RT-bb2a1c19d400b9c3"
+      },
+      {
+        "name": "original class",
+        "rejected": true,
+        "error": "Original drift: RT-bb2a1c19d400b9c3"
+      },
+      {
+        "name": "original caseIds",
+        "rejected": true,
+        "error": "Original drift: RT-bb2a1c19d400b9c3"
+      },
+      {
+        "name": "original owner",
+        "rejected": true,
+        "error": "Notification roster drift"
+      },
+      {
+        "name": "missing original field",
+        "rejected": true,
+        "error": "Notification roster drift"
+      },
+      {
+        "name": "duplicate original field",
+        "rejected": true,
+        "error": "Notification roster drift"
+      },
+      {
+        "name": "full roster fields loss",
+        "rejected": true,
+        "error": "Incomplete fields"
+      },
+      {
+        "name": "full roster cases loss",
+        "rejected": true,
+        "error": "Incomplete cases"
+      },
+      {
+        "name": "full roster requirements loss",
+        "rejected": true,
+        "error": "Incomplete requirements"
+      },
+      {
+        "name": "missing schema target",
+        "rejected": true,
+        "error": "'target'"
+      },
+      {
+        "name": "missing schema pipelineLabel",
+        "rejected": true,
+        "error": "'pipelineLabel'"
+      },
+      {
+        "name": "missing schema modelLabel",
+        "rejected": true,
+        "error": "'modelLabel'"
+      },
+      {
+        "name": "missing schema stageLabels",
+        "rejected": true,
+        "error": "'stageLabels'"
+      },
+      {
+        "name": "missing schema maxMessageChars",
+        "rejected": true,
+        "error": "'maxMessageChars'"
+      },
+      {
+        "name": "missing schema suppressEventTypes",
+        "rejected": true,
+        "error": "'suppressEventTypes'"
+      },
+      {
+        "name": "missing observer 0",
+        "rejected": true,
+        "error": "Notification registrations drift"
+      },
+      {
+        "name": "wrong observer export 0",
+        "rejected": true,
+        "error": "Actual observer receiver drift"
+      },
+      {
+        "name": "missing subscriptions 0",
+        "rejected": true,
+        "error": "'subscriptions'"
+      },
+      {
+        "name": "missing observer 0 mode",
+        "rejected": true,
+        "error": "'mode'"
+      },
+      {
+        "name": "missing observer 0 maxAttempts",
+        "rejected": true,
+        "error": "'maxAttempts'"
+      },
+      {
+        "name": "missing observer 0 backoffMs",
+        "rejected": true,
+        "error": "'backoffMs'"
+      },
+      {
+        "name": "missing observer 0 timeoutMs",
+        "rejected": true,
+        "error": "'timeoutMs'"
+      },
+      {
+        "name": "missing observer 1",
+        "rejected": true,
+        "error": "Notification registrations drift"
+      },
+      {
+        "name": "wrong observer export 1",
+        "rejected": true,
+        "error": "Actual observer receiver drift"
+      },
+      {
+        "name": "missing subscriptions 1",
+        "rejected": true,
+        "error": "'subscriptions'"
+      },
+      {
+        "name": "missing observer 1 mode",
+        "rejected": true,
+        "error": "'mode'"
+      },
+      {
+        "name": "missing observer 1 maxAttempts",
+        "rejected": true,
+        "error": "'maxAttempts'"
+      },
+      {
+        "name": "missing observer 1 backoffMs",
+        "rejected": true,
+        "error": "'backoffMs'"
+      },
+      {
+        "name": "missing observer 1 timeoutMs",
+        "rejected": true,
+        "error": "'timeoutMs'"
+      },
+      {
+        "name": "missing Core maxMessageChars standard",
+        "rejected": true,
+        "error": "'maxMessageChars'"
+      }
+    ],
+    "passed": 32,
+    "total": 32,
+    "restoredDeterministic": true,
+    "composedOriginalFields": 26,
+    "exactCoreSourceJoins": 2,
+    "centralReceivingResiduals": 24,
+    "previewSchemaOnlyOriginalFields": 7,
+    "fullRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "integrityFailures": [],
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "independentReview": "OPEN; author-run controls only"
+  },
+  "independentReview": "OPEN; no native spawn/reviewer tool exposed; active/recent CONFIG reviewers0; no new reviewer output; unchanged same-surface EROFS not retried. Author matrix controls only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged: suitable isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted writable archive filesystem and isolated migrated real PostgreSQL database.",
+  "writerLock": "SAME nonblocking; released on bounded command exit",
+  "noHistoricalFollowup": true,
+  "initialAttempt": "Execution-surface90-second timeout produced no checks artifact; owned process ended and lock released. Bounded retry reused unchanged platform closure only outside its input mutations;32/32 controls completed, no weakened assertions."
+}
