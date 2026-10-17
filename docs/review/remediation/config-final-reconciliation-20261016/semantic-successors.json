@@ -33,6 +33,8 @@
     "exactPrismServiceSourceJoins": 16,
     "staticReviewOwnerPointers": 222,
     "originalTargetDerivedFields": 6,
+    "originalNativeHostProtocolInvariants": 1,
+    "explicitNativeHostReceivingResiduals": 19,
     "exactCoreLeaseMemorySourceJoins": 2,
     "originalCoreProtocolInvariants": 1,
     "explicitCorePlatformReceivingResiduals": 51,
@@ -43,10 +45,11 @@
     "explicitNotificationReceivingResiduals": 24,
     "groupsByStatus": {
       "PARTIAL_EXACT_CORE_LEASE_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS": 1,
-      "UNRESOLVED_SEMANTIC_OWNER_JOIN": 7,
+      "UNRESOLVED_SEMANTIC_OWNER_JOIN": 6,
       "PARTIAL_EXACT_PRISM_BOUNDARY_SOURCE_JOIN": 1,
       "PARTIAL_EXACT_PRISM_ATTEMPT_SOURCE_JOIN": 2,
       "PARTIAL_EXACT_PRISM_ENGINE_SOURCE_JOIN": 1,
+      "EXACT_NATIVE_HOST_YAML_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS": 1,
       "EXACT_PLUGIN_POLICY_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN": 3,
       "PARTIAL_EXACT_CORE_SCALAR_SOURCE_JOIN": 6,
       "EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN": 3,
@@ -7693,7 +7696,6 @@
       "fieldCount": 20,
       "exactExistingMappings": [],
       "remainingFieldIds": [
-        "DLV-NATIVE-HOST-SCHEMAVERSION",
         "DLV-NATIVE-HOST-NODENAME",
         "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
         "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
@@ -7715,8 +7717,1431 @@
         "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION"
       ],
       "candidateSuccessors": [],
-      "status": "UNRESOLVED_SEMANTIC_OWNER_JOIN",
+      "status": "EXACT_NATIVE_HOST_YAML_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS",
       "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "originalNativeHostProtocolInvariants": [
+        {
+          "id": "DLV-NATIVE-HOST-SCHEMAVERSION",
+          "original": "D228#/rows/1645",
+          "originalObjectSha256": "34ef5b596792aad4db1e775bee495207925c64708a3d9cc54c21ae6b2baa4348",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "protocol-invariant",
+          "owner": "native-host",
+          "originalField": "schemaVersion",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "schemaVersion",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 17,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "ORIGINAL_PROTOCOL_INVARIANT_NOT_OPERATOR_GAP",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "policy?.schemaVersion !== 1",
+              "lines": [
+                17
+              ]
+            }
+          ]
+        }
+      ],
+      "explicitNativeHostResiduals": [
+        {
+          "id": "DLV-NATIVE-HOST-NODENAME",
+          "original": "D228#/rows/1646",
+          "originalObjectSha256": "b313a321d714da9794dbe5514ea84ba2d0ff50f9343f57e5366a94fb309357d4",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "nodeName",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "nodeName",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 17,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "typeof policy.nodeName",
+              "lines": [
+                17
+              ]
+            },
+            {
+              "path": "scripts/render-native-worker-node.mjs",
+              "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+              "anchor": "nodeName: selected.nodeName",
+              "lines": [
+                19,
+                21
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+          "original": "D228#/rows/1647",
+          "originalObjectSha256": "bae4a7c02c714559f91af9957edce3f117d1dce996abc2289ff154685ca2806c",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "systemReserve.cpuMillicores",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "systemReserve.cpuMillicores",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(policy.systemReserve); resources(policy.kubernetesReserve);",
+              "lines": [
+                19
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);",
+              "lines": [
+                20
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "const system = { ...selected.systemReserve };",
+              "lines": [
+                53
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "systemReserved: { cpu:",
+              "lines": [
+                57
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+          "original": "D228#/rows/1648",
+          "originalObjectSha256": "3585dbc3eeec878e3a20d2f0b2ec34a1cbcec2be15f7ce53632c34f041c7358c",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "systemReserve.memoryBytes",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "systemReserve.memoryBytes",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(policy.systemReserve); resources(policy.kubernetesReserve);",
+              "lines": [
+                19
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);",
+              "lines": [
+                20
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "const system = { ...selected.systemReserve };",
+              "lines": [
+                53
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "systemReserved: { cpu:",
+              "lines": [
+                57
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+          "original": "D228#/rows/1649",
+          "originalObjectSha256": "8a4d3cacba0ef7a00dd5c7eb94f4acf7c2287656ed78f838bb539e5cdf7aedf5",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "systemReserve.tasks",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "systemReserve.tasks",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 20,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(policy.systemReserve); resources(policy.kubernetesReserve);",
+              "lines": [
+                19
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);",
+              "lines": [
+                20
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "const system = { ...selected.systemReserve };",
+              "lines": [
+                53
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "systemReserved: { cpu:",
+              "lines": [
+                57
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+          "original": "D228#/rows/1650",
+          "originalObjectSha256": "1b8514f1573ea6da32711855e57d46abc63d56098216dbb4c75393c0945c3899",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "kubernetesReserve.cpuMillicores",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "kubernetesReserve.cpuMillicores",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 58,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(policy.systemReserve); resources(policy.kubernetesReserve);",
+              "lines": [
+                19
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);",
+              "lines": [
+                20
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "kubeReserved: { cpu:",
+              "lines": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+          "original": "D228#/rows/1651",
+          "originalObjectSha256": "ff840ffb6b8476519ddffa4699a77b8cd3a71bfda06b94ee6a824da2b18bf0f9",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "kubernetesReserve.memoryBytes",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "kubernetesReserve.memoryBytes",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 58,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(policy.systemReserve); resources(policy.kubernetesReserve);",
+              "lines": [
+                19
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);",
+              "lines": [
+                20
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "kubeReserved: { cpu:",
+              "lines": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+          "original": "D228#/rows/1652",
+          "originalObjectSha256": "d951e1f470862a3459ba7850a0d72d528d444eb5b28cf5aa8b769c4c8ee98fce",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "kubernetesReserve.tasks",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "kubernetesReserve.tasks",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 20,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(policy.systemReserve); resources(policy.kubernetesReserve);",
+              "lines": [
+                19
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);",
+              "lines": [
+                20
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "kubeReserved: { cpu:",
+              "lines": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+          "original": "D228#/rows/1653",
+          "originalObjectSha256": "e7d58d73407db7ae3edcf1f9a9af26594e1fbf73262e034dd0d652b326ff9077",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.buster.namespace",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.buster.namespace",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "typeof pool.namespace",
+              "lines": [
+                23
+              ]
+            },
+            {
+              "path": "scripts/render-native-worker-node.mjs",
+              "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+              "anchor": "namespace: selected.pools.buster.namespace",
+              "lines": [
+                20
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+          "original": "D228#/rows/1654",
+          "originalObjectSha256": "a6ad924e194e41e704a6bd03a4275ee954269840a6e5b23a289a222bcc5dbbe7",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.buster.cpuMillicores",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.buster.cpuMillicores",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(pool);",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "cpuQuotaMicroseconds: pool.cpuMillicores * 100",
+              "lines": [
+                48
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'cpu.max':",
+              "lines": [
+                33
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+          "original": "D228#/rows/1655",
+          "originalObjectSha256": "fa4d66dab1a750f58595f98f4d8bf7a292b2e45aacab81e413474ca556bb0d6e",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.buster.memoryBytes",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.buster.memoryBytes",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(pool);",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "limits: { memoryBytes: pool.memoryBytes",
+              "lines": [
+                47
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'memory.max': String(pool.memoryBytes)",
+              "lines": [
+                32
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+          "original": "D228#/rows/1656",
+          "originalObjectSha256": "8f39c7d2f03cd290a969027cdfcf9dd36fb2c385962530734a1d8cecf9986be7",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.buster.tasks",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.buster.tasks",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(pool.tasks)",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "tasks: pool.tasks",
+              "lines": [
+                47
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'pids.max': String(pool.tasks)",
+              "lines": [
+                33
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+          "original": "D228#/rows/1657",
+          "originalObjectSha256": "984ad13a09cdb2869c358cbe6703327b20fa0546d0d9558c5fdb94405ec975a0",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.buster.maximumActiveScopes",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.buster.maximumActiveScopes",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(pool.maximumActiveScopes)",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "maximumActiveScopes: pool.maximumActiveScopes",
+              "lines": [
+                46
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+          "original": "D228#/rows/1658",
+          "originalObjectSha256": "4aee105d5c5cb937250576957defdfb28ab3804fbb3b27f25eacd45516267eeb",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.prism.namespace",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.prism.namespace",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "typeof pool.namespace",
+              "lines": [
+                23
+              ]
+            },
+            {
+              "path": "scripts/render-native-worker-node.mjs",
+              "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+              "anchor": "namespace: selected.pools.prism.namespace",
+              "lines": [
+                22
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+          "original": "D228#/rows/1659",
+          "originalObjectSha256": "b36dd5b98d073408187f2b13e4151f26329b3c6d5ed77b28e888f31f830896e0",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.prism.cpuMillicores",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.prism.cpuMillicores",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(pool);",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "cpuQuotaMicroseconds: pool.cpuMillicores * 100",
+              "lines": [
+                48
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'cpu.max':",
+              "lines": [
+                33
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+          "original": "D228#/rows/1660",
+          "originalObjectSha256": "47aeae9180c4092bb18fa66aeeb8fa8ff1e4e85b15ac23c2b874eae816e487b3",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.prism.memoryBytes",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.prism.memoryBytes",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "resources(pool);",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "limits: { memoryBytes: pool.memoryBytes",
+              "lines": [
+                47
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'memory.max': String(pool.memoryBytes)",
+              "lines": [
+                32
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+          "original": "D228#/rows/1661",
+          "originalObjectSha256": "ce620176426184c2723459615321b772d7a51205d651278777aac8020b41668a",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.prism.tasks",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.prism.tasks",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(pool.tasks)",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "tasks: pool.tasks",
+              "lines": [
+                47
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'pids.max': String(pool.tasks)",
+              "lines": [
+                33
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+          "original": "D228#/rows/1662",
+          "originalObjectSha256": "a646e022cda08aa0043624c7daa0beb46e0cd235580b233f8bcdabff05a4ba10",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "operator-setting",
+          "owner": "native-host",
+          "originalField": "pools.prism.maximumActiveScopes",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.prism.maximumActiveScopes",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "EXPLICIT_YAML_AUTHOR_CENTRAL_SELECTION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "positive(pool.maximumActiveScopes)",
+              "lines": [
+                24
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "maximumActiveScopes: pool.maximumActiveScopes",
+              "lines": [
+                46
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION",
+          "original": "D228#/rows/1663",
+          "originalObjectSha256": "f066dfea2e80277258a3d830234e278ed7a4184c357759c4a1a1d9aba22bbb8b",
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "class": "version",
+          "owner": "native-host",
+          "originalField": "runtime.containerdVersion",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "runtime.containerdVersion",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "load(fs.readFileSync(file, 'utf8'))",
+            "lines": [
+              36
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "YAML_RUNTIME_VERSION_SOLE_VERSION_AUTHORITY_MIGRATION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/render-native-worker-node.mjs",
+              "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+              "anchor": "const containerdVersion = selected.runtime?.containerdVersion;",
+              "lines": [
+                35
+              ]
+            },
+            {
+              "path": "scripts/render-native-worker-node.mjs",
+              "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+              "anchor": "return { schemaVersion: 1, containerdVersion, roles };",
+              "lines": [
+                43
+              ]
+            },
+            {
+              "path": "scripts/native-worker-node-capacity.mjs",
+              "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+              "anchor": "const runtime = policy.runtime?.containerdVersion;",
+              "lines": [
+                46
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION",
+          "original": "D228#/rows/2281",
+          "originalObjectSha256": "112b796b437ecb68b0379e8c3a29e598fd1746caa0e5216078594981160d776c",
+          "caseIds": [
+            "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+          ],
+          "class": "operator-setting",
+          "owner": "native-delivery-projection",
+          "originalField": "pool CPU period / quota relation",
+          "originalSource": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "line": 48,
+            "field": "pool CPU period / quota relation",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          "centralPhysicalAuthor": null,
+          "runtimeAcceptance": "OPEN; original results unchanged",
+          "independentReview": "OPEN",
+          "currentAuthor": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "cpuPeriodMicroseconds: 100000",
+            "lines": [
+              48
+            ]
+          },
+          "selectedInput": {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+            "anchor": "renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]))",
+            "lines": [
+              72
+            ]
+          },
+          "capture": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "anchor": "createHash('sha256').update(JSON.stringify(selected))",
+            "lines": [
+              43
+            ]
+          },
+          "status": "FIXED_CPU_PERIOD_ORIGINAL_TUNING_OBLIGATION_OPEN",
+          "actualEffects": [
+            {
+              "path": "scripts/native-worker-node-policy.mjs",
+              "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+              "anchor": "cpuQuotaMicroseconds: pool.cpuMillicores * 100",
+              "lines": [
+                48
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "pool.cpuPeriodMicroseconds < 1000",
+              "lines": [
+                27
+              ]
+            },
+            {
+              "path": "scripts/prepare-native-worker-pools.mjs",
+              "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+              "anchor": "'cpu.max':",
+              "lines": [
+                33
+              ]
+            }
+          ]
+        }
+      ],
+      "nativeHostSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/native-host-successors.json",
+        "sha256": "7c1203d079405e51a3cf9c492af09e4d7243ed7b6c140cbbc4c3303cf3933ec6"
+      },
+      "constraint": "Existing explicit POLICY_YAML author -> validator -> renderer -> trusted setup/pool projections. No selected native-host author on current pipeline root. Protocol version remains invariant; runtime containerdVersion remains YAML-authored (version authority migration OPEN), CPU period remains fixed100000us (adjustable original obligation OPEN). No install, D18 change, native acceptance or denied-v10 promotion.",
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
