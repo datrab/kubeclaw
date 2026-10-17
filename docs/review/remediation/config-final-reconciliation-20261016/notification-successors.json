@@ -1,0 +1,1190 @@
+{
+  "scope": "All26 exact original notification fields; source joins only, NOT new externalization or runtime acceptance",
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "counts": {
+    "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN": 14,
+    "EXACT_CORE_NOTIFICATION_SOURCE_JOIN": 2,
+    "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN": 10
+  },
+  "rows": [
+    {
+      "id": "RT-bb2a1c19d400b9c3",
+      "original": "D228#/rows/510",
+      "originalObjectSha256": "1cfb405e3abde8bd0e5c787bb972498e589f8f85afab7f94c9f87d7930604334",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-bb2a1c19d400b9c3-CONTRACT",
+        "RT-bb2a1c19d400b9c3-ALTERNATE",
+        "RT-bb2a1c19d400b9c3-BINDING",
+        "RT-bb2a1c19d400b9c3-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "target",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/target",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/target",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "context.contract.config.target",
+          "lines": [
+            36
+          ]
+        },
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "canonicalId: target(context)",
+          "lines": [
+            181
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-52cc4219965b2248",
+      "original": "D228#/rows/511",
+      "originalObjectSha256": "068d152fcb903aab8055e81bf60e67fa954e97386d4c5646d20f1bb58ec166eb",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-52cc4219965b2248-CONTRACT",
+        "RT-52cc4219965b2248-ALTERNATE",
+        "RT-52cc4219965b2248-BINDING",
+        "RT-52cc4219965b2248-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "pipelineLabel",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/pipelineLabel",
+        "fragmentSha256": "22ccdeb48f624bafdacfb712e743ec4657e45ec75873bfb84d42d95a29ada24c"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/pipelineLabel",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "configuredText(context.contract.config, 'pipelineLabel'",
+          "lines": [
+            191
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF",
+      "retainedFallback": {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+        "anchor": "options.pipelineLabel ?? 'KubeClaw Pipeline'",
+        "lines": [
+          149
+        ]
+      }
+    },
+    {
+      "id": "RT-c0899a74faa1b8a4",
+      "original": "D228#/rows/512",
+      "originalObjectSha256": "0849f8586de6fe51830eb29dcc1138b030405e4b50e275a8315dbd1e5bcc0640",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-c0899a74faa1b8a4-CONTRACT",
+        "RT-c0899a74faa1b8a4-ALTERNATE",
+        "RT-c0899a74faa1b8a4-BINDING",
+        "RT-c0899a74faa1b8a4-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "modelLabel",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/modelLabel",
+        "fragmentSha256": "22ccdeb48f624bafdacfb712e743ec4657e45ec75873bfb84d42d95a29ada24c"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/modelLabel",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "configuredText(context.contract.config, 'modelLabel'",
+          "lines": [
+            192
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-6a2c7aed939b87eb",
+      "original": "D228#/rows/513",
+      "originalObjectSha256": "481fef39a25152506667bc60d9e33955a02c1a377433b8c62aa27273490a0ab8",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-6a2c7aed939b87eb-CONTRACT",
+        "RT-6a2c7aed939b87eb-ALTERNATE",
+        "RT-6a2c7aed939b87eb-BINDING",
+        "RT-6a2c7aed939b87eb-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "stageLabels",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/stageLabels",
+        "fragmentSha256": "6be0cd8664866d7cc623591d1132f1a1d5f7b75c3bdab038252561c59ae88b7d"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/stageLabels",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "const stageLabels = context.contract.config.stageLabels;",
+          "lines": [
+            190
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-e604dff77f9bbefb",
+      "original": "D228#/rows/514",
+      "originalObjectSha256": "72843d87f1534a2f96fe3e14612d80f106ce4a20e55f8c8d7dbc77d6dced6feb",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-6a2c7aed939b87eb-CONTRACT",
+        "RT-6a2c7aed939b87eb-ALTERNATE",
+        "RT-6a2c7aed939b87eb-BINDING",
+        "RT-6a2c7aed939b87eb-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "stageLabels.{key}",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/stageLabels/additionalProperties",
+        "fragmentSha256": "22ccdeb48f624bafdacfb712e743ec4657e45ec75873bfb84d42d95a29ada24c"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/stageLabels",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "const stageLabels = context.contract.config.stageLabels;",
+          "lines": [
+            190
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-1af1a641d4038c03",
+      "original": "D228#/rows/515",
+      "originalObjectSha256": "01b5731e937b69de43f628466d66ea0d4efd9ab3319a1492c80cbdf027fb53fb",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-1af1a641d4038c03-CONTRACT",
+        "RT-1af1a641d4038c03-ALTERNATE",
+        "RT-1af1a641d4038c03-BINDING",
+        "RT-1af1a641d4038c03-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "maxMessageChars",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/maxMessageChars",
+        "fragmentSha256": "fc70a353fc39aa59d4ccc9666ca8722e67b82d66f93f1724b72c9d28a42e5ac8"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "EXACT_CORE_NOTIFICATION_SOURCE_JOIN",
+      "centralPhysicalAuthor": {
+        "path": "config/nova/core.config.json",
+        "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+      },
+      "ownerPointerTemplate": "/profiles/{profile}/settings/notificationPresentation/maxMessageChars",
+      "profileValueHashes": {
+        "standard": "864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "const maximum = context.contract.config.maxMessageChars;",
+          "lines": [
+            188
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-ba5eb8733df2c9f5",
+      "original": "D228#/rows/516",
+      "originalObjectSha256": "e7f91144538bc2fcc52b1c47010ccbc37aa024ea1769a28762eff29949e37db9",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-ba5eb8733df2c9f5-CONTRACT",
+        "RT-ba5eb8733df2c9f5-ALTERNATE",
+        "RT-ba5eb8733df2c9f5-BINDING",
+        "RT-ba5eb8733df2c9f5-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "suppressEventTypes",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/suppressEventTypes",
+        "fragmentSha256": "da22d60a821b36fd5c5fbf3de5a4fa103509b84494cf745b2d2ec311ff88342a"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/suppressEventTypes",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "suppressed.includes(delivery.event.type)",
+          "lines": [
+            187
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-41b3b62a43e8fb4c",
+      "original": "D228#/rows/517",
+      "originalObjectSha256": "9c371473f5dd09bf17ca0eb84742c8849adeb2187ef45bd2d992c48567cba007",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-ba5eb8733df2c9f5-CONTRACT",
+        "RT-ba5eb8733df2c9f5-ALTERNATE",
+        "RT-ba5eb8733df2c9f5-BINDING",
+        "RT-ba5eb8733df2c9f5-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "suppressEventTypes[]",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/suppressEventTypes/items",
+        "fragmentSha256": "29ec966ad6b37d138ce2bb9a66d3242c99e3e644bdc66b199a9e593f801851d5"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:notifications/suppressEventTypes",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "suppressed.includes(delivery.event.type)",
+          "lines": [
+            187
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-a51350fbcf3228b5",
+      "original": "D228#/rows/518",
+      "originalObjectSha256": "4fbdc4ce2c4b11b3a2c2bea745f8b706b882e1222796bf0ddd5938edb28de9a7",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-a51350fbcf3228b5-CONTRACT",
+        "RT-a51350fbcf3228b5-ALTERNATE",
+        "RT-a51350fbcf3228b5-BINDING",
+        "RT-a51350fbcf3228b5-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "target",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/target",
+        "fragmentSha256": "9ac136edb99a2063b3091602181c8d2022fdccb5b514991319d58544c2e57e95"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/target",
+      "actualEffects": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "context.contract.config.target",
+          "lines": [
+            36
+          ]
+        },
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "sha256": "6d91b4594275a93dd702941c7923b1355f3a1238584960831c994a07bf78e54e",
+          "anchor": "canonicalId: target(context)",
+          "lines": [
+            181
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-902a15996aa01b62",
+      "original": "D228#/rows/519",
+      "originalObjectSha256": "f51151d3264e86714d83b9c50da26464c5910cbb7c2e3d19c735747e97c3357b",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-902a15996aa01b62-CONTRACT",
+        "RT-902a15996aa01b62-ALTERNATE",
+        "RT-902a15996aa01b62-BINDING",
+        "RT-902a15996aa01b62-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "pipelineLabel",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/pipelineLabel",
+        "fragmentSha256": "22ccdeb48f624bafdacfb712e743ec4657e45ec75873bfb84d42d95a29ada24c"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/pipelineLabel",
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-bc3a135495bb2e7c",
+      "original": "D228#/rows/520",
+      "originalObjectSha256": "950e801c35137f2f0f927b51b6435f2c427ce6153c154d3824f943f8d5ee5499",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-bc3a135495bb2e7c-CONTRACT",
+        "RT-bc3a135495bb2e7c-ALTERNATE",
+        "RT-bc3a135495bb2e7c-BINDING",
+        "RT-bc3a135495bb2e7c-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "modelLabel",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/modelLabel",
+        "fragmentSha256": "22ccdeb48f624bafdacfb712e743ec4657e45ec75873bfb84d42d95a29ada24c"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/modelLabel",
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-a0b041868386ed82",
+      "original": "D228#/rows/521",
+      "originalObjectSha256": "617f68693d0c09ea9046e36097c053e87cb58d79993e2a6d0679a6ba5e32b239",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-a0b041868386ed82-CONTRACT",
+        "RT-a0b041868386ed82-ALTERNATE",
+        "RT-a0b041868386ed82-BINDING",
+        "RT-a0b041868386ed82-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "stageLabels",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/stageLabels",
+        "fragmentSha256": "6be0cd8664866d7cc623591d1132f1a1d5f7b75c3bdab038252561c59ae88b7d"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/stageLabels",
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-9a974af32353eda8",
+      "original": "D228#/rows/522",
+      "originalObjectSha256": "7737c27cedcdd1bbee695038fe3eee17beb5b12eb8d53d5276ef30c5497d0d44",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-a0b041868386ed82-CONTRACT",
+        "RT-a0b041868386ed82-ALTERNATE",
+        "RT-a0b041868386ed82-BINDING",
+        "RT-a0b041868386ed82-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "stageLabels.{key}",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/stageLabels/additionalProperties",
+        "fragmentSha256": "22ccdeb48f624bafdacfb712e743ec4657e45ec75873bfb84d42d95a29ada24c"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/stageLabels",
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-e1e4b669f3ea8bc7",
+      "original": "D228#/rows/523",
+      "originalObjectSha256": "0fd1ba8a7e15a0f94862b2567159d2f7c90489c4e7d8e7c536dbda8e599dec23",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-e1e4b669f3ea8bc7-CONTRACT",
+        "RT-e1e4b669f3ea8bc7-ALTERNATE",
+        "RT-e1e4b669f3ea8bc7-BINDING",
+        "RT-e1e4b669f3ea8bc7-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "maxMessageChars",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/maxMessageChars",
+        "fragmentSha256": "fc70a353fc39aa59d4ccc9666ca8722e67b82d66f93f1724b72c9d28a42e5ac8"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "EXACT_CORE_NOTIFICATION_SOURCE_JOIN",
+      "centralPhysicalAuthor": {
+        "path": "config/nova/core.config.json",
+        "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+      },
+      "ownerPointerTemplate": "/profiles/{profile}/settings/notificationPresentation/maxMessageChars",
+      "profileValueHashes": {
+        "standard": "864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0"
+      },
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-39808812ba08515c",
+      "original": "D228#/rows/524",
+      "originalObjectSha256": "0078a52a9739ba2ff1c7fd42a9c8a1a85d9aeda77e05d06790a7a78251f85690",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-39808812ba08515c-CONTRACT",
+        "RT-39808812ba08515c-ALTERNATE",
+        "RT-39808812ba08515c-BINDING",
+        "RT-39808812ba08515c-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "suppressEventTypes",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/suppressEventTypes",
+        "fragmentSha256": "da22d60a821b36fd5c5fbf3de5a4fa103509b84494cf745b2d2ec311ff88342a"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/suppressEventTypes",
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-90e39be06cd8373f",
+      "original": "D228#/rows/525",
+      "originalObjectSha256": "615591161f9b3aa32ae3cd7667272b5634308c7e6667f9dff4ac7a239552bd4d",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+        "RT-39808812ba08515c-CONTRACT",
+        "RT-39808812ba08515c-ALTERNATE",
+        "RT-39808812ba08515c-BINDING",
+        "RT-39808812ba08515c-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "suppressEventTypes[]",
+      "schema": {
+        "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+        "sha256": "ddba8411dd0ecd500744e2b5e15d36f4b7bc678d733132cf9de3cd443c29632a",
+        "pointer": "/properties/suppressEventTypes/items",
+        "fragmentSha256": "29ec966ad6b37d138ce2bb9a66d3242c99e3e644bdc66b199a9e593f801851d5"
+      },
+      "projection": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+        "anchor": "selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });",
+        "lines": [
+          238
+        ]
+      },
+      "status": "SUPPLIED_OBSERVER_CONFIGURATION_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "platformPointer": "/observers/kubeclaw.notification-observer:preview-delivery/suppressEventTypes",
+      "actualEffects": [],
+      "effectDisposition": "SCHEMA_ACCEPTED_BUT_UNUSED_BY_DELIVER_PREVIEW",
+      "constraint": "Preview receiver reads only target and its distinct Core fieldLimits; does not call observe/lifecycleNotification. Schema acceptance/projection is not an effect or justified nonapplicability."
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-SUBSCRIPTIONS",
+      "original": "D228#/rows/1425",
+      "originalObjectSha256": "3da49d112c6c6ea7dfb6cd483235cca58fd41596681a11f9854aa7328101e8db",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-SUBSCRIPTIONS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-SUBSCRIPTIONS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-SUBSCRIPTIONS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "subscriptions",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/0/subscriptions",
+        "valueSha256": "fea82be87e42537c675f54230b9862fe6df53eb5127a179d2a53c55a7ce897f8"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "!subscriptions.includes(event.type)",
+          "lines": [
+            86
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MODE",
+      "original": "D228#/rows/1426",
+      "originalObjectSha256": "2e711073da91a045e48c1a7897662ae98da8a8a816b52dd269171c57606e63d6",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MODE-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MODE-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MODE-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.mode",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/0/failurePolicy/mode",
+        "valueSha256": "d0d30cdf76fb39872e5095c1ce43daffdb845a2204733a9c5b22fd4ba0bb46af"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "policy.mode === 'required'",
+          "lines": [
+            90
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MAXATTEMPTS",
+      "original": "D228#/rows/1427",
+      "originalObjectSha256": "5dbdb7406cb94a11d063cd8de4abf3d2a61c7bdf910125723871adde6334373f",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MAXATTEMPTS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MAXATTEMPTS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MAXATTEMPTS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.maxAttempts",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/0/failurePolicy/maxAttempts",
+        "valueSha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "prior >= policy.maxAttempts",
+          "lines": [
+            101
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-BACKOFFMS",
+      "original": "D228#/rows/1428",
+      "originalObjectSha256": "3d6af4d2e37a22411aec7209c7be48560e2d963f91ea36974b7fecbbd4fbefaa",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-BACKOFFMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-BACKOFFMS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-BACKOFFMS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.backoffMs",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/0/failurePolicy/backoffMs",
+        "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "await this.#wait(policy.backoffMs)",
+          "lines": [
+            106
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-TIMEOUTMS",
+      "original": "D228#/rows/1429",
+      "originalObjectSha256": "4b0064554e5afdc86092fc29ef02906810bb2e4b60765f0cbc09f8851492c4b6",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-TIMEOUTMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-TIMEOUTMS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-TIMEOUTMS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.timeoutMs",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/0/failurePolicy/timeoutMs",
+        "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb",
+          "anchor": "const timeoutMs = entry.registration.failurePolicy.timeoutMs;",
+          "lines": [
+            20
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-SUBSCRIPTIONS",
+      "original": "D228#/rows/1430",
+      "originalObjectSha256": "c3731374ea25e5a9e9bbba7b8aecd3aeaafcadca027686ac104537c1564f23f2",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-SUBSCRIPTIONS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-SUBSCRIPTIONS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-SUBSCRIPTIONS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "subscriptions",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/1/subscriptions",
+        "valueSha256": "8b25843af2cf65a0edf1e6a0d06dfdea0ec92a34b7429f6a6fa5e79ed6e8f082"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "!subscriptions.includes(event.type)",
+          "lines": [
+            86
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MODE",
+      "original": "D228#/rows/1431",
+      "originalObjectSha256": "d235143944132f5d298aac8beae875ea0aa91ca99877beba0d909c66ccefe209",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MODE-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MODE-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MODE-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.mode",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/1/failurePolicy/mode",
+        "valueSha256": "d0d30cdf76fb39872e5095c1ce43daffdb845a2204733a9c5b22fd4ba0bb46af"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "policy.mode === 'required'",
+          "lines": [
+            90
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MAXATTEMPTS",
+      "original": "D228#/rows/1432",
+      "originalObjectSha256": "de4a2d8b1102db12d3d766afdfa14696538dbb5305315fa03b9a51bb1f5f532f",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MAXATTEMPTS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MAXATTEMPTS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MAXATTEMPTS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.maxAttempts",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/1/failurePolicy/maxAttempts",
+        "valueSha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "prior >= policy.maxAttempts",
+          "lines": [
+            101
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-BACKOFFMS",
+      "original": "D228#/rows/1433",
+      "originalObjectSha256": "ae0e664777dff80b6db111039f689def5820f13f1deda1495786ff14405011ef",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-BACKOFFMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-BACKOFFMS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-BACKOFFMS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.backoffMs",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/1/failurePolicy/backoffMs",
+        "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "sha256": "900686fb381728f6abbde8a61025af4d8a375f5350c9c1abd6805328cdaac254",
+          "anchor": "await this.#wait(policy.backoffMs)",
+          "lines": [
+            106
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    },
+    {
+      "id": "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-TIMEOUTMS",
+      "original": "D228#/rows/1434",
+      "originalObjectSha256": "cb028c4403445f63e4edccd0a06ff6f47ec54dff3b130ee1297a8a46e456a7f7",
+      "class": "operator-setting",
+      "caseIds": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-TIMEOUTMS-MISSING",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-TIMEOUTMS-ALT",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-TIMEOUTMS-MUTANT"
+      ],
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48"
+      },
+      "runtimeAcceptance": "OPEN; original results unchanged",
+      "independentReview": "OPEN",
+      "originalField": "failurePolicy.timeoutMs",
+      "status": "MANIFEST_OBSERVER_POLICY_CENTRAL_RECEIVING_OPEN",
+      "centralPhysicalAuthor": null,
+      "currentAuthor": {
+        "path": "skills/common/plugins/notification-observer/plugin.json",
+        "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "pointer": "/observers/1/failurePolicy/timeoutMs",
+        "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+      },
+      "actualEffects": [
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "sha256": "9ddcb2ab26128ebace762e1a8d34ac85bf28aa3c640d89b0ae08a0d07d010deb",
+          "anchor": "const timeoutMs = entry.registration.failurePolicy.timeoutMs;",
+          "lines": [
+            20
+          ]
+        }
+      ],
+      "effectDisposition": "PRODUCTIVE_SOURCE_READER_NOT_RUNTIME_PROOF"
+    }
+  ],
+  "snapshot": {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+    "anchor": "configuration: runtime.configuration",
+    "lines": [
+      131
+    ]
+  },
+  "registrySnapshot": {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "4b1ee013f83606ee5b076e0d6438519bfdb16cc85c649181e71ab10fd7566b8d",
+    "anchor": "registration: entry.registration",
+    "lines": [
+      127,
+      128,
+      129
+    ]
+  },
+  "recovery": {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "4c6a48254c4c36645b551fe5a4984ff4662b484583f415034618a9cd8ad38ab1",
+    "anchor": "prepareRuntime(platform, definition, retained.corePolicy",
+    "lines": [
+      66,
+      94
+    ]
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; fresh non-author required",
+  "constraint": "24 non-Core fields remain supplied observer configuration or manifest authors. Preview accepts seven original fields without consuming them; retain obligations pending independent disposition. Core projection alone is not delivery/history acceptance. No private policy root, grant changes or denied v10 activation."
+}

@@ -147,6 +147,17 @@ for identity,row in platform_open.items():
         raise ValueError('Platform boundary original drift: '+identity)
     if row['centralPhysicalAuthor'] is not None or row['runtimeAcceptance']!='OPEN; no original result changed':
         raise ValueError('Platform boundary falsely closed: '+identity)
+notification_path = str((OUT / 'notification-successors.json').relative_to(ROOT))
+notification_joins = read(notification_path)
+notification_rows = {r['id']:r for r in notification_joins['rows']}
+if len(notification_rows)!=26 or len(notification_joins['rows'])!=26:
+    raise ValueError('Notification roster drift')
+for identity,row in notification_rows.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds']):
+        raise ValueError('Notification original drift: '+identity)
+notification_exact = {i:r for i,r in notification_rows.items() if r['status']=='EXACT_CORE_NOTIFICATION_SOURCE_JOIN'}
+if len(notification_exact)!=2: raise ValueError('Notification Core source join drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -250,6 +261,16 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
             group['candidateSuccessors'] = []
             group['status'] = 'EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN'
             group['constraint'] = 'Adjacent Core catalog/cleanup/monitoring/error-excerpt or Redis payload/reply-buffer sections author none of these original platform fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.'
+    notification = [notification_rows[i] for i in ids if i in notification_rows]
+    if notification:
+        if {r['id'] for r in notification}!=set(ids): raise ValueError('Incomplete original notification group')
+        group['exactNotificationCoreMappings'] = [r for r in notification if r['id'] in notification_exact]
+        group['explicitNotificationResiduals'] = [r for r in notification if r['id'] not in notification_exact]
+        group['remainingFieldIds'] = [i for i in ids if i not in notification_exact]
+        group['notificationSupplementalJoin'] = pin(notification_path)
+        group['candidateSuccessors'] = []
+        group['status'] = 'PARTIAL_EXACT_NOTIFICATION_SOURCE_JOIN'
+        group['constraint'] = notification_joins['constraint']
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
@@ -282,7 +303,7 @@ result = {"scope": "Semantic navigation closeout over all45 historic missing loc
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
               "exactPrismAttemptSourceJoins": len(attempt_exact), "explicitPrismAttemptReceivingResiduals": len(attempt_open), "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
-              "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
+              "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",
           "requiredGates": "All2409 fields/6845 cases/50 requirements/fullC0-C6, applicable original effects/history/mutants, native/archive and fresh integrated independent review remain mandatory"}
 if len(groups) != 45:
