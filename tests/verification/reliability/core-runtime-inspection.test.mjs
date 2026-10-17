@@ -1,4 +1,5 @@
-import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
+import { loadCoreRuntimePolicy } from '../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts';
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -61,7 +62,7 @@ test('prepareRuntime still returns activated registrations and persists selected
   const f=fixture(t,`export function execute(){return {schemaVersion:'stage-result.v2',outcome:'passed'}}`);
   const inspected=inspectRuntimeConfiguration(f.platform,f.definition), prepared=await prepareRuntime(f.platform,f.definition);
   assert.deepEqual(prepared.configuration,inspected.configuration);
-  assert.deepEqual(prepared.configuration,{corePolicy:TEST_CORE_POLICY,providers:{},grants:{},adapters:{},activeAdapters:[],observers:{}});
+  assert.deepEqual(prepared.configuration,{corePolicy:loadCoreRuntimePolicy(TEST_CORE_POLICY_SELECTION),providers:{},grants:{},adapters:{},activeAdapters:[],observers:{}});
   assert.deepEqual([...prepared.snapshot.packages.keys()],[...inspected.snapshot.packages.keys()]);
   assert.deepEqual([...prepared.granted.enabledRegistrations],[...inspected.granted.enabledRegistrations]);
   assert.deepEqual(await prepared.activated.stages.get('test.core-inspection').execute(),{schemaVersion:'stage-result.v2',outcome:'passed'});

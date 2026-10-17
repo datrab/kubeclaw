@@ -1,4 +1,4 @@
-import { nativeResourcePolicy } from '../../skills/prism/tests/native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from '../../skills/prism/tests/native/resource-policy.mts';
 import { randomUUID } from 'node:crypto';
 import { validateFixtureAdmission, type BusterFixtureAdmission, type BusterFixtureReadiness } from '../../skills/buster/engine/test-gates/native-fixture-state.ts';
 import { prismNativeAttempt } from '../../skills/prism/engine/worker-envelope.ts';
@@ -7,7 +7,7 @@ import { sha256Digest, workerProfileDigest, workerAttemptSpecDigest } from '@kub
 // Protocol vectors feed real stores; they do not impersonate a running kernel scope.
 export function admission(): BusterFixtureAdmission {
   const envelope = prismNativeAttempt('render', { artifactId: 'fixture-input', type: 'input', mediaType: 'application/json',
-    contentDigest: sha256Digest('{}'), sizeBytes: 2, storageUrl: 'file:///fixture-input' }, `fixture-${randomUUID()}`, nativeResourcePolicy, 600000, 300000);
+    contentDigest: sha256Digest('{}'), sizeBytes: 2, storageUrl: 'file:///fixture-input' }, `fixture-${randomUUID()}`, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   envelope.profile = { ...envelope.profile, workerType: 'buster', profileId: 'buster-fixture-lifetime-v1' };
   envelope.moduleId = 'fixture-module'; envelope.gateId = 'fixture-gate';
   envelope.profile.profileDigest = workerProfileDigest(envelope.profile);

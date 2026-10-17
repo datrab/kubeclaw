@@ -51,8 +51,8 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const configs = new Map<string, Record<string, unknown>>([
     ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') }],
-    ['kubeclaw.remote-test-gate:evidence', { stateRoot: root, manifestStageId: 'summary', gateStageId: 'final-test' }],
-    ['kubeclaw.demo-handoff:handoff', { candidateStageId: 'candidate', deliveryStageId: 'demo-handoff', readyStageId: 'demo-ready', manifestStageId: 'summary', operatorTarget: 'operators', endpoint: 'https://127.0.0.1/v1/demo-ready', tokenPath: path.join(root, 'unused-token'), caPath: path.join(root, 'unused-ca'), stateRoot: path.join(root, 'intents'), timeoutMs: 1000 }],
+    ['kubeclaw.remote-test-gate:evidence', { stateRoot: root, manifestStageId: 'summary', gateStageId: 'final-test', gateLimits: TEST_CORE_POLICY.remoteTestGate }],
+    ['kubeclaw.demo-handoff:handoff', { candidateStageId: 'candidate', deliveryStageId: 'demo-handoff', readyStageId: 'demo-ready', manifestStageId: 'summary', operatorTarget: 'operators', endpoint: 'https://127.0.0.1/v1/demo-ready', tokenPath: path.join(root, 'unused-token'), caPath: path.join(root, 'unused-ca'), stateRoot: path.join(root, 'intents'), timeoutMs: 1000, recordLimits: TEST_CORE_POLICY.demoHandoffStore }],
     [operatorId, { ...TEST_OPERATOR_STORE_POLICY, deliveryRoot: path.join(root, 'sender'), targets: { operators: {
       payloadProfile: 'standard', endpointOrigin: origin, endpointSecret: 'discord.webhook', format: 'discord_webhook',
     } } }],

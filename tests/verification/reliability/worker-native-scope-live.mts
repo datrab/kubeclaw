@@ -1,4 +1,4 @@
-import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from '../../../skills/prism/tests/native/resource-policy.mts';
 import assert from 'node:assert/strict';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { once } from 'node:events';
@@ -158,7 +158,7 @@ test('production launcher and durable owner account the whole host and fence exa
 async function capacityReceipt(owner: NativeWorkerOwnership, stateRoot: string, launcher: string): Promise<void> {
   const artifact = { artifactId: 'input:pool-capacity', type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
-  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
+  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   envelope.resourceBudgets.maximumMemoryBytes = { state: 'requested', limit: limits.memoryBytes };
   envelope.resourceBudgets.maximumTasks = { state: 'requested', limit: limits.tasks };
   envelope.resourceBudgets.cpuTimeMs = { state: 'requested', limit: 10000 };
