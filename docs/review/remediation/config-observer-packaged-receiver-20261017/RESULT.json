@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-17T03:59:32.938240+00:00",
+  "status": "ORIGINAL_OBSERVER_PACKAGED_RECEIVER_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "6b3a29c2c7d2c33ac87afa756bc5d7a63189132e",
+  "sourceRemoteVerified": true,
+  "testedBaseCommit": "dc529acfc279c36508df966d7156ff06df54d4f6",
+  "evidence": "docs/review/remediation/config-observer-packaged-receiver-20261017",
+  "change": "Original Observer selected chart owner now reaches the actual resolver in the genuine builder-produced Buster role (including delivered generated contract), via normal complete Helm .tgz packaging. Real checkout revision and build timestamp replace synthetic builder input. A/B/restored-A, actual workload ConfigMap binding, retained immutable capture, missing policy rejection and restored-positive retained; all prior leaf/ENV/version negatives preserved. No production policy/schema/default/authority changed.",
+  "checks": {
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "normalChartArchives": 1,
+    "validChartRenders": 4,
+    "missingPolicyRenderRejected": true,
+    "realPackagedResolver": true,
+    "actualSourceRevision": true,
+    "syntaxAndDiffCheck": true
+  },
+  "qualification": "Local full chart and delivered source-module receiver only; NOT installed OpenClaw gateway/hook execution, compiled extension dist, OCI/native or full acceptance. Native policy/image digest remains explicitly shape-only render fixture. Worktree source package is not proof of a clean commit. No prior production failure claimed.",
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "unchanged": true
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "unchanged": true
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "unchanged": true
+    }
+  },
+  "independentReview": "OPEN: native spawn/review/collaboration discovery empty, CONFIG subagents0, parent terminal, no fresh independent output. Known unchanged app-server EROFS not retried. Author checks only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "writerLock": "SAME nonblocking exclusive repository lock for mutation/checks/commits/push; released at each bounded command exit",
+  "noHistoricalFollowup": true,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged suitable isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL. No identity/kernel/trust spoof or skipped acceptance.",
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites.",
+  "sourceHashes": {
+    "tests/verification/deployment/agent-observer-policy.test.mjs": "923ad87d9c7dd10c7a359c3c05b942c15257dbf11a17a3adbb381df209e92819"
+  }
+}
