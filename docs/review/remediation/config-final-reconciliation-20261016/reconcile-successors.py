@@ -219,6 +219,13 @@ security_path=str((OUT/'security-provider-successors.json').relative_to(ROOT))
 security_joins=read(security_path)
 security_rows={r['id']:r for r in security_joins['rows']}
 if len(security_rows)!=86:raise ValueError('Security86 roster drift')
+ops_chart_path=str((OUT/'ops-chart-successors.json').relative_to(ROOT))
+ops_chart_joins=read(ops_chart_path)
+ops_chart_rows={r['id']:r for r in ops_chart_joins['rows']}
+if len(ops_chart_rows)!=30 or len(ops_chart_joins['rows'])!=30:raise ValueError('Ops chart30 roster drift')
+for identity,row in ops_chart_rows.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged' or row['centralPhysicalAuthor'] is not None:raise ValueError('Ops chart original/source/acceptance drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -400,6 +407,13 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group['securityProviderSupplementalJoin']=pin(security_path)
         group['status']='EXACT_SECURITY_PROVIDER_SOURCE_LANES_CENTRAL_RECEIVING_OPEN'
         group['constraint']=security_joins['constraint']
+    ops_chart=[ops_chart_rows[i] for i in ids if i in ops_chart_rows]
+    if ops_chart:
+        if {r['id'] for r in ops_chart}!=set(ids):raise ValueError('Incomplete Ops chart group')
+        group['explicitOpsChartReceivingResiduals']=ops_chart
+        group['opsChartSupplementalJoin']=pin(ops_chart_path)
+        group['status']='EXACT_OPS_CHART_VALUES_PROJECTION_CENTRAL_RECEIVING_OPEN'
+        group['constraint']=ops_chart_joins['constraint']
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
@@ -443,12 +457,14 @@ operator_binding_joined=[r['id'] for g in groups for r in g.get('explicitOperato
 if set(operator_binding_joined)!=set(operator_binding_rows) or len(operator_binding_joined)!=11:raise ValueError('Operator11 identities not conserved')
 security_joined=[r['id'] for g in groups for r in g.get('explicitSecurityProviderResiduals',[])]
 if set(security_joined)!=set(security_rows) or len(security_joined)!=86:raise ValueError('Security86 not conserved')
+ops_chart_joined=[r['id'] for g in groups for r in g.get('explicitOpsChartReceivingResiduals',[])]
+if set(ops_chart_joined)!=set(ops_chart_rows) or len(ops_chart_joined)!=30:raise ValueError('Ops chart30 not conserved')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
               "exactPrismAttemptSourceJoins": len(attempt_exact), "explicitPrismAttemptReceivingResiduals": len(attempt_open), "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
-              "explicitSecurityProviderReceivingResiduals":len(security_rows), "explicitOperatorBindingReceivingResiduals":len(operator_binding_rows), "exactGitOpsGeneratedBindingSourceLanes":len(gitops_rows), "originalNativeHostProtocolInvariants":1, "explicitNativeHostReceivingResiduals":19, "exactCoreLeaseMemorySourceJoins":len(core_platform_exact), "originalCoreProtocolInvariants":len(core_platform_protocol), "explicitCorePlatformReceivingResiduals":len(core_platform_rows)-len(core_platform_exact)-len(core_platform_protocol), "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
+              "explicitOpsChartReceivingResiduals":len(ops_chart_rows), "explicitSecurityProviderReceivingResiduals":len(security_rows), "explicitOperatorBindingReceivingResiduals":len(operator_binding_rows), "exactGitOpsGeneratedBindingSourceLanes":len(gitops_rows), "originalNativeHostProtocolInvariants":1, "explicitNativeHostReceivingResiduals":19, "exactCoreLeaseMemorySourceJoins":len(core_platform_exact), "originalCoreProtocolInvariants":len(core_platform_protocol), "explicitCorePlatformReceivingResiduals":len(core_platform_rows)-len(core_platform_exact)-len(core_platform_protocol), "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",
           "requiredGates": "All2409 fields/6845 cases/50 requirements/fullC0-C6, applicable original effects/history/mutants, native/archive and fresh integrated independent review remain mandatory"}
 if len(groups) != 45:
