@@ -15,6 +15,7 @@ function seal(directory) {
     const file = path.join(directory, name), stat = fs.lstatSync(file);
     if (stat.isDirectory()) seal(file);
     else if (stat.isFile()) fs.chmodSync(file, stat.mode & 0o111 ? 0o555 : 0o444);
+    else if (stat.isSymbolicLink()) fs.lchownSync(file, 0, 0);
   }
 }
 function write(file, value) {
@@ -41,7 +42,7 @@ async function fixture(t) {
   fs.symlinkSync('../../packages/plugin-sdk', path.join(modules, '@kubeclaw/plugin-sdk'));
   fs.symlinkSync('../../packages/plugin-foundation', path.join(modules, '@kubeclaw/plugin-foundation'));
   const dependencies = ['ms', 'yaml', 'ajv', 'ajv-formats', 'fast-deep-equal', 'fast-uri', 'json-schema-traverse', 'require-from-string'];
-  for (const name of dependencies) fs.cpSync(path.join(repo, 'node_modules', name), path.join(modules, name), { recursive: true });
+  for (const name of dependencies) fs.cpSync(path.join(repo, 'node_modules', name), path.join(modules, name), { recursive: true, dereference: true });
   fs.writeFileSync(path.join(code, 'skills/runtime.ts'), fs.readFileSync(path.join(repo, 'skills/prism/runtime.ts')));
   seal(code);
   const boot = await import(pathToFileURL(path.join(reader, 'pipeline-boot.mjs')).href);
