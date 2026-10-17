@@ -97,7 +97,7 @@ async function fixture(mode: Mode) {
       agentId:'test',agentRole:'test',model:'test/model',cwd:root,repositoryRoot:root,resultPathPrefix:'results',timingProfile:'fixture'}}}],
     ['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type'],timeoutMs:1000}],
     ['kubeclaw.secret-resolver:secrets',{environment:{'runtime.token':secretName}}],
-    ['kubeclaw.repository-adapter:repository',{repositoryRoot:root}],
+    ['kubeclaw.repository-adapter:repository',{...TEST_CORE_POLICY.repositoryRead,repositoryRoot:root}],
     ['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}],
     ['kubeclaw.pipeline-review:evidence',{storageRoot:root,orchestratorIssuerId:'nova',maximumJournalBytes:1048576,maximumArtifactBytes:1048576,maximumBundleBytes:1048576}],
   ]);

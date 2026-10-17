@@ -72,7 +72,7 @@ if(process.argv[2]==='--child'){
   const audit=Object.fromEntries(['requested','accepted','completed'].map(phase=>[phase,request=>{
     if(phase===boundary){fs.writeSync(1,`CACHE_AUDIT:${phase}\n`);process.kill(process.pid,'SIGKILL');}
   }]));
-  const journal=new FileEffectJournal(journalFile, TEST_CORE_POLICY),runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
+  const journal=new FileEffectJournal(journalFile, TEST_CORE_POLICY),runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),
     effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs, TEST_CORE_POLICY.resourceAcquisition),shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
   await runtime.start();
   const {job,identity,value}=admittedCacheValue(),record=m.records.buildReviewCacheRecord(job,identity,value,profile);

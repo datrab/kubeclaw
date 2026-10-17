@@ -87,14 +87,14 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
   } };
   const configs = new Map([
     ['kubeclaw.runtime-dispatch:openclaw', { ...TEST_OPENCLAW_DISPATCH_POLICY, targetTimingProfiles:{fixture:{...TEST_OPENCLAW_DISPATCH_POLICY.targetTimingProfiles.standard,spawnIntervalMs:0,pollMs:10,maxPollMs:10}}, targets: { forge: { endpoint: `${origin}/tools/invoke`, tokenSecret: 'forge.token', runtime: 'acp', agentId: 'forge', agentRole: 'forge', model: 'test/declared', cwd: repo, repositoryRoot: repo, workspaceRoot: workspaces, resultPathPrefix: '.pipeline/results', timingProfile:'fixture' } } }],
-    ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['authorization', 'content-type'] }],
+    ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['authorization', 'content-type'] }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'forge.token': secret } }],
     ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
-    ['kubeclaw.repository-adapter:repository', { repositoryRoot: repo }],
+    ['kubeclaw.repository-adapter:repository', { ...TEST_CORE_POLICY.repositoryRead, repositoryRoot: repo }],
     ['kubeclaw.lint:executor', { allowedRepositoryRoots: [repo], allowedPolicyRoots: [temporary] }],
     ['kubeclaw.git-workspace:git', { allowedRepositoryRoots: [temporary], workspaceRoot: workspaces, gitExecutable: fs.realpathSync('/usr/bin/git'), errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Workspace Test', authorEmail: 'workspace@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 }],
   ]);
-  const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks, 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks, 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   const runId = `run:forge:${mode}`;
   // This standalone graph tests native parallel Git/worktree lifecycle and lint repair.

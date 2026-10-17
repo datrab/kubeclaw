@@ -34,7 +34,7 @@ test(`module review binds real ${objectFormat} implementation artifacts, retains
   const moduleA = commit('alpha/value.ts', 'export const alpha = 1;\n');
   const moduleB = commit('beta/value.ts', 'export const beta = 2;\n');
   const artifacts = activateArtifacts({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } } as AdapterActivationContext);
-  const repository = activateRepository({ config: { repositoryRoot: repo } } as AdapterActivationContext);
+  const repository = activateRepository({ config: { ...ARTIFACT_TEST_CORE_POLICY.repositoryRead, repositoryRoot: repo } } as AdapterActivationContext);
   const refs: ArtifactRef[] = [];
   let sequence = 0;
   const attempt = (stageId: string, attemptNumber: number) => ({ runId: 'run:modules', stageId, attemptNumber, attemptId: `${stageId}:${attemptNumber}` });
