@@ -1,7 +1,7 @@
 import Ajv2020 from 'ajv/dist/2020.js';
 import {repositoryGradeSchema} from './review-owned-policy-schema.ts';
 /* eslint-disable max-lines -- Review grades, validation, and resolution stay together as one profile authority. */
-import {resolveRepositoryReviewProfile as resolveLegacyProfile} from './legacy-repository-review-profile.ts';
+import {resolveRepositoryReviewProfile as resolveLegacyProfile, parseRepositoryReviewInput as parseLegacyInput} from './legacy-repository-review-profile.ts';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 
 import type { ReviewSliceBudget } from './review-scale-slicing.ts';
@@ -307,10 +307,14 @@ export function resolveRepositoryReviewProfile(values: {
 }
 
 export function parseRepositoryReviewInput(value: unknown, selected?: {readonly grades:unknown;readonly target:RepositoryRuntimeTarget}): ResolvedRepositoryReviewProfile {
+  // Retained v1 input uses its original parser, not a current-policy projection.
+  if (selected === undefined) return parseLegacyInput(value);
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('repository audit input is invalid');
   const record = value as Readonly<Record<string, unknown>>;
   const allowed = new Set(['allowedPrefixes', 'grade', 'mode', 'scope', 'overrides']);
   if (Object.keys(record).some((key) => !allowed.has(key))) throw new Error('repository audit input has unknown fields');
+  // Presence itself is a second author, including an explicit undefined.
+  if (Object.hasOwn(record, 'overrides')) throw new Error('REPOSITORY_GRADE_COMPETING_AUTHOR');
   const legacy = record.allowedPrefixes;
   const scope = record.scope ?? (legacy === undefined ? { kind: 'repository' } : { kind: 'path', prefixes: legacy });
   const settings: { grade?: RepositoryReviewGrade; mode?: RepositoryReviewMode; scope: RepositoryReviewScope;

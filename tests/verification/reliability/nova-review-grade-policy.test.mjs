@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {loadCoreRuntimePolicy,captureCoreRuntimePolicy} from '../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts';
 import {selectedStageConfiguration} from '../../../skills/nova/core/execution/stage-configuration.ts';
 import {resolveRepositoryReviewProfile,parseRepositoryReviewInput,selectedRepositoryGrades} from '../../../skills/nova/plugins/review/src/repository-review-profile.ts';
-import {resolveRepositoryReviewProfile as legacy} from '../../../skills/nova/plugins/review/src/legacy-repository-review-profile.ts';
+import {resolveRepositoryReviewProfile as legacy,parseRepositoryReviewInput as parseLegacyInput} from '../../../skills/nova/plugins/review/src/legacy-repository-review-profile.ts';
 import {targetsFrom} from '../../../skills/common/plugins/runtime-dispatch/src/openclaw-config.ts';
 import {selectedAdapterConfigurations} from '../../../skills/nova/core/execution/engine-runtime.ts';
 const core=()=>loadCoreRuntimePolicy({file:fs.realpathSync('config/nova/core.config.json'),profile:'standard'});
@@ -18,7 +18,7 @@ test('every selected grade preserves original values; runtime-owned tokenizer/ou
   assert.equal(stage.repositoryRuntimeTarget.tokenizerEncoding,actual.tokenizerEncoding);
   assert.equal(stage.repositoryRuntimeTarget.maxOutputTokens,actual.maxOutputTokens);
   for(const grade of ['fast','standard','deep'])assert.deepEqual(parseRepositoryReviewInput({grade},selectedRepositoryGrades(stage)),legacy({grade}));
-  for(const overrides of [{},{maxPrimaryJobs:75},{maxInputTokens:8000000}])assert.throws(()=>parseRepositoryReviewInput({grade:'fast',overrides},selectedRepositoryGrades(stage)),/COMPETING_AUTHOR/);
+  for(const overrides of [undefined,null,{},{maxPrimaryJobs:75},{maxInputTokens:8000000}])assert.throws(()=>parseRepositoryReviewInput({grade:'fast',overrides},selectedRepositoryGrades(stage)),/COMPETING_AUTHOR/);
  }
  const forbidden=structuredClone(policy);forbidden.reviewPolicyCapture.settings.repositoryGrades.fast.maxOutputTokensPerJob=6000;assert.throws(()=>captureCoreRuntimePolicy(forbidden),/CAPTURE_INVALID/);
  assert.throws(()=>selectedStageConfiguration('kubeclaw.audit.repository-review',config,undefined,undefined,policy.reviewPolicyCapture),/TARGET_UNSUPPORTED/);
@@ -46,4 +46,17 @@ test('retained activation restores original targets before timing projection; cu
  const policy=core(),original=binding(policy);
  const received=selectedAdapterConfigurations({'kubeclaw.runtime-dispatch:openclaw':{targets:{different:{model:'current'}}}},policy,{echo:'standard'},undefined,undefined,undefined,original);
  assert.deepEqual(received['kubeclaw.runtime-dispatch:openclaw'],original.configuration);
+});
+
+test('retained review input uses original v1 parser for all scopes and explicit overrides',()=>{
+ for(const grade of ['fast','standard','deep'])for(const input of [
+  {grade}, {grade,overrides:undefined}, {grade,allowedPrefixes:['skills/nova']},
+  {grade,mode:'resume',scope:{kind:'path',prefixes:['skills/nova']}},
+  {grade,overrides:{maxPrimaryJobs:12}},
+ ])assert.deepEqual(parseRepositoryReviewInput(input),parseLegacyInput(input));
+ for(const input of [null,[],{}, {grade:'unknown'},{grade:'fast',unknown:true}]) {
+  let expected;try{parseLegacyInput(input);}catch(error){expected=error;}
+  if(expected)assert.throws(()=>parseRepositoryReviewInput(input),{message:expected.message});
+  else assert.deepEqual(parseRepositoryReviewInput(input),parseLegacyInput(input));
+ }
 });

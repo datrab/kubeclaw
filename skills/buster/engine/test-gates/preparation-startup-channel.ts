@@ -2,7 +2,7 @@ import type { NativeWorkerControlChannel } from '@kubeclaw/worker-core';
 import { portableJson } from '@kubeclaw/plugin-sdk/values';
 import { assertBusterStartupAssociation, busterStartupAssociationBytes, busterStartupAssociation, readBusterStartupHandoff,
   type BusterStartupHandoff } from '@kubeclaw/plugin-foundation/config/buster-startup';
-import { decodePreparationMessage, encodePreparationMessage } from './preparation-channel.ts';
+import { decodePreparationMessage, sendPreparationMessage } from './preparation-channel.ts';
 
 // Fixed-size versioned startup wire; not a configurable operation/admission default.
 export const startupAssociationBytes = busterStartupAssociationBytes;
@@ -26,14 +26,14 @@ export async function receiveBusterStartupAssociation(channel: NativeWorkerContr
     // The parent rechecks retained file/lifetime and post-cleanup kernel state
     // after the blocking receive, before the ACK that permits child effects.
     await authorize();
-    await channel.send(encodePreparationMessage('startup-ack', identity(handoff), Buffer.from(portableJson(busterStartupAssociation(handoff)))));
+    await sendPreparationMessage(channel, { kind: 'startup-ack', admissionId: identity(handoff), content: Buffer.from(portableJson(busterStartupAssociation(handoff))) });
   } catch (error) { channel.destroy(); throw error; }
 }
 export async function sendBusterStartupAssociation(channel: NativeWorkerControlChannel, messages: Messages,
   retained: BusterStartupHandoff): Promise<void> {
   const handoff = readBusterStartupHandoff(retained);
   try {
-    await channel.send(encodePreparationMessage('startup', identity(handoff), Buffer.from(portableJson(busterStartupAssociation(handoff)))));
+    await sendPreparationMessage(channel, { kind: 'startup', admissionId: identity(handoff), content: Buffer.from(portableJson(busterStartupAssociation(handoff))) });
     await receive(messages, 'startup-ack', handoff);
   } catch (error) { channel.destroy(); throw error; }
 }
