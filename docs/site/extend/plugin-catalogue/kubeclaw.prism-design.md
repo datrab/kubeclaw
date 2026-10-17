@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/prism-design/plugin.json; skills/nova/plugins/prism-design/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
 ## Purpose
 
@@ -26,7 +26,7 @@ The stage depends on the configured Prism service and versioned result contract.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.prism-design@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/nova/plugins/prism-design/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/plugin.json)
+- Manifest: [skills/nova/plugins/prism-design/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json)
 
 ## Boundaries
 
@@ -65,7 +65,7 @@ Required capabilities: `runtime.dispatch`, `artifacts.read`, `artifacts.write`, 
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -74,9 +74,9 @@ Configuration fields (schema declarations; defaults are annotations, not proof t
 - `issuerId` (string; required; minLength `1`)
 - `timeoutMinutes` (integer; required; minimum `1`; maximum `525600`)
 
-Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/schemas/input.schema.json)
+Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/schemas/input.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -126,7 +126,7 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/nova/plugins/prism-design/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/plugin.json)
-- Package implementation guide: [skills/nova/plugins/prism-design/README.md](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/README.md)
-- Module for `design`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/src/stage.ts)
-- Test: [skills/nova/plugins/prism-design/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/prism-design/tests/live-function.test.ts)
+- Manifest: [skills/nova/plugins/prism-design/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/plugin.json)
+- Package implementation guide: [skills/nova/plugins/prism-design/README.md](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/README.md)
+- Module for `design`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/src/stage.ts)
+- Test: [skills/nova/plugins/prism-design/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/prism-design/tests/live-function.test.ts)

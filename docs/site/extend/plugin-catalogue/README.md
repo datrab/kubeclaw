@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: scripts/docs-publication.mjs
 Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins
-Last verified: generated during publication
+Last verified: generated source listing only; package checks and their limits are recorded on each package page
 
 ## Purpose
 
@@ -17,6 +17,11 @@ Each package page combines two separate authorities. Maintainers write the pract
 guidance separately from generated facts. The publication generator
 reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated
 refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.
+
+The plugin-foundation owner maintains purpose, use, exclusion, and limit text in
+`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains
+the manifest and schema facts. Do not edit generated catalogue pages as a second
+authority. Change the owning input, then regenerate and run the declared checks.
 
 ## Stage Packages
 

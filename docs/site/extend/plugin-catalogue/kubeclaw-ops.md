@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: plugins/kubeclaw-ops/.codex-plugin/plugin.json; plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md
 Applies to: codex-plugin; package 0.2.0
-Last verified: source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
 ## Purpose
 
@@ -26,7 +26,7 @@ The plugin supplies a skill, but it does not supply the external read-only tools
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -41,7 +41,7 @@ the contract and lifecycle rules that apply to this package.
 - Package identity: `kubeclaw-ops@0.2.0`.
 - Runtime-role manifest inclusion: No runtime role.
 - Additional packaging path: Codex installs this package separately; KubeClaw runtime-role manifests do not contain it.
-- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
+- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
 
 ## Boundaries
 
@@ -105,6 +105,6 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
-- Package implementation guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
-- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/skills)
+- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
+- Package implementation guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
+- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/plugins/kubeclaw-ops/skills)

@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/network-http/plugin.json; skills/common/plugins/network-http/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
 ## Purpose
 
@@ -26,7 +26,7 @@ Destinations, methods, payloads, and response bounds follow operator grants.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.network-http@1.0.0`.
 - Runtime-role manifest inclusion: `buster`, `nova`, `prism`
-- Manifest: [skills/common/plugins/network-http/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/plugin.json)
+- Manifest: [skills/common/plugins/network-http/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/plugin.json)
 
 ## Boundaries
 
@@ -65,7 +65,7 @@ Required capabilities: None.
 
 Provided capabilities: `network.http`
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -126,9 +126,9 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/common/plugins/network-http/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/plugin.json)
-- Package implementation guide: [skills/common/plugins/network-http/README.md](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/README.md)
-- Module for `http`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/src/adapter.ts)
-- Test: [skills/common/plugins/network-http/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/tests/live-function.test.ts)
-- Test: [skills/common/plugins/network-http/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/tests/package-boundary.test.mjs)
-- Test: [skills/common/plugins/network-http/tests/streaming.test.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/tests/streaming.test.ts)
+- Manifest: [skills/common/plugins/network-http/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/plugin.json)
+- Package implementation guide: [skills/common/plugins/network-http/README.md](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/README.md)
+- Module for `http`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/src/adapter.ts)
+- Test: [skills/common/plugins/network-http/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/tests/live-function.test.ts)
+- Test: [skills/common/plugins/network-http/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/tests/package-boundary.test.mjs)
+- Test: [skills/common/plugins/network-http/tests/streaming.test.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/network-http/tests/streaming.test.ts)
