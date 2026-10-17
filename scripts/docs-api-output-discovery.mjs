@@ -36,6 +36,11 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
   {
+    "source": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+    "semanticClass": "fixed-url-pathname-durable-cutover-module",
+    "recipeSha256": "024f5fa940bfeed59d8cb4a04c67f9ea2cdb460b55702274fc57072de313ff17"
+  },
+  {
     "source": "tests/verification/contracts/check-nova-journal-scale.mts",
     "semanticClass": "fixed-cwd-relative-journal-scale-module",
     "recipeSha256": "6d11209692249fa0a3ae172e818840ba76e011f785aa180e39a3294dcd131460"
