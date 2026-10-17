@@ -81,11 +81,29 @@ test('publisher central payload exact UTF-8/overflow/restored positives and orig
  const small=await runPipelineV2(f.platform(),f.definition,'payload:B');assert.equal(small.status,'blocked');assert.equal(f.received.length,1);assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'payload:B'),'events.jsonl'),'utf8'),/TRANSPORT_PAYLOAD_SIZE_EXCEEDED/);
  f.source.adapters[publisherId].targets.operators.payloadProfile='standard';f.write();
  assert.equal((await runPipelineV2(f.platform(),f.definition,'payload:restored')).status,'waiting');assert.equal(f.received.length,2);
- f.source.adapters[publisherId].targets.operators.payloadProfile='missing-current-B';f.write();fs.unlinkSync(f.coreFile);
+ f.source.adapters[publisherId].targets.operators.payloadProfile='missing-current-B';
+ f.source.adapters[publisherId].targets.operators.endpoint='http://127.0.0.1:1/current-B';
+ f.source.adapters[publisherId].targets.operators.signingSecret='missing-B-secret';
+ f.write();fs.unlinkSync(f.coreFile);
+ // Original endpoint, secret reference and payload selection are received together.
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_SIGNAL_REQUIRED/);
+ assert.equal(f.received.length,2);assert.deepEqual(readRunSnapshot(aRoot),saved);
  const wait=first.stages.get('probe').wait;
  const resumed=await resumePipelineV2(f.platform(),f.definition,'payload:A',{schemaVersion:'resume-signal.v2',signalId:'signal:payload',idempotencyKey:'signal-key:payload',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});
  assert.equal(resumed.status,'succeeded');assert.equal(f.received.length,3);assert.deepEqual(readRunSnapshot(aRoot),saved);
- f.source.adapters[publisherId].targets.operators.endpoint+='/changed';f.write();await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+ // Current endpoint B is no longer an author for retained A. Terminal A
+ // must reject before another effect; changed grants remain a real admission negative.
+ const journalFile=path.join(aRoot,'effects.jsonl'),prefix=fs.readFileSync(journalFile);
+ f.source.adapters[publisherId].targets.operators.endpoint+='/changed';f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUN_TERMINAL:payload:A:run.succeeded/);
+ assert.equal(f.received.length,3);assert.deepEqual(fs.readFileSync(journalFile),prefix);assert.deepEqual(readRunSnapshot(aRoot),saved);
+ const originalGrants=structuredClone(f.source.grants[publisherId]);
+ f.source.grants[publisherId]['network.http'].allowedOrigins=['https://changed.invalid'];f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+ assert.equal(f.received.length,3);assert.deepEqual(fs.readFileSync(journalFile),prefix);assert.deepEqual(readRunSnapshot(aRoot),saved);
+ f.source.grants[publisherId]=originalGrants;f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUN_TERMINAL:payload:A:run.succeeded/);
+ assert.equal(f.received.length,3);assert.deepEqual(fs.readFileSync(journalFile),prefix);assert.deepEqual(readRunSnapshot(aRoot),saved);
 });
 test('publisher mandatory central payload profiles and selectors reject all former defaults/duplicates',async t=>{
  const f=await fixture(t,'publisher'),policy=TEST_CORE_POLICY.transportPublisherPayload;
@@ -113,11 +131,29 @@ test('operator central payload exact UTF-8/overflow/restored positives and origi
  const small=await runPipelineV2(f.platform(),f.definition,'payload:B');assert.equal(small.status,'blocked');assert.equal(f.received.length,1);assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'payload:B'),'events.jsonl'),'utf8'),/OPERATOR_PAYLOAD_SIZE_EXCEEDED/);
  f.source.adapters[operatorId].targets.operators.payloadProfile='standard';f.write();
  assert.equal((await runPipelineV2(f.platform(),f.definition,'payload:restored')).status,'waiting');assert.equal(f.received.length,2);
- f.source.adapters[operatorId].targets.operators.payloadProfile='missing-current-B';f.write();fs.unlinkSync(f.coreFile);
+ f.source.adapters[operatorId].targets.operators.payloadProfile='missing-current-B';
+ f.source.adapters[operatorId].targets.operators.endpoint='http://127.0.0.1:1/current-B';
+ f.source.adapters[operatorId].targets.operators.tokenSecret='missing-B-secret';
+ f.write();fs.unlinkSync(f.coreFile);
+ // Original endpoint, secret reference and payload selection are received together.
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_SIGNAL_REQUIRED/);
+ assert.equal(f.received.length,2);assert.deepEqual(readRunSnapshot(aRoot),saved);
  const wait=first.stages.get('probe').wait;
  const resumed=await resumePipelineV2(f.platform(),f.definition,'payload:A',{schemaVersion:'resume-signal.v2',signalId:'signal:payload',idempotencyKey:'signal-key:payload',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});
  assert.equal(resumed.status,'succeeded');assert.equal(f.received.length,3);assert.deepEqual(readRunSnapshot(aRoot),saved);
- f.source.adapters[operatorId].targets.operators.endpoint+='/changed';f.write();await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+ // Current endpoint B is no longer an author for retained A. Terminal A
+ // must reject before another effect; changed grants remain a real admission negative.
+ const journalFile=path.join(aRoot,'effects.jsonl'),prefix=fs.readFileSync(journalFile);
+ f.source.adapters[operatorId].targets.operators.endpoint+='/changed';f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUN_TERMINAL:payload:A:run.succeeded/);
+ assert.equal(f.received.length,3);assert.deepEqual(fs.readFileSync(journalFile),prefix);assert.deepEqual(readRunSnapshot(aRoot),saved);
+ const originalGrants=structuredClone(f.source.grants[operatorId]);
+ f.source.grants[operatorId]['network.http'].allowedOrigins=['https://changed.invalid'];f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+ assert.equal(f.received.length,3);assert.deepEqual(fs.readFileSync(journalFile),prefix);assert.deepEqual(readRunSnapshot(aRoot),saved);
+ f.source.grants[operatorId]=originalGrants;f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUN_TERMINAL:payload:A:run.succeeded/);
+ assert.equal(f.received.length,3);assert.deepEqual(fs.readFileSync(journalFile),prefix);assert.deepEqual(readRunSnapshot(aRoot),saved);
 });
 test('operator mandatory central payload profiles and selectors reject all former defaults/duplicates',async t=>{
  const f=await fixture(t,'operator'),policy=TEST_CORE_POLICY.operatorMessagingPayload;
