@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 1181
+    "files": 1180
   },
   "runtime": {
     "roots": [
@@ -1592,7 +1592,6 @@
         "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
         "skills/nova/plugins/lint/src/engine/tool-registry.ts",
         "skills/nova/plugins/lint/src/engine/tool-summary.ts",
-        "skills/nova/plugins/lint/src/eslint-type-evidence-fixture-7PvlKl/direct-value.ts",
         "skills/nova/plugins/lint/src/request.ts",
         "skills/nova/plugins/lint/src/stage.ts",
         "skills/nova/plugins/lint/src/support/optional-absence.ts",
@@ -3276,7 +3275,6 @@
     "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
     "skills/nova/plugins/lint/src/engine/tool-registry.ts",
     "skills/nova/plugins/lint/src/engine/tool-summary.ts",
-    "skills/nova/plugins/lint/src/eslint-type-evidence-fixture-7PvlKl/direct-value.ts",
     "skills/nova/plugins/lint/src/request.ts",
     "skills/nova/plugins/lint/src/stage.ts",
     "skills/nova/plugins/lint/src/support/optional-absence.ts",
