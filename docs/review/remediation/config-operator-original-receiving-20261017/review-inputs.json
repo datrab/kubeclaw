@@ -1,0 +1,50 @@
+{
+  "sourceCommit": "e1169389b33cbe479bcf25598765d36a074d0306",
+  "reviewStatus": "OPEN_NO_INDEPENDENT_RESULT",
+  "files": [
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "bcb8e841d465ad3f4f879c7b9f2f669d7b7452834b904799ff1d82ecff49c732"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "edc09e7e5cac0f333d2236f8bc9856e39b976f647cde226ba9d03937a755ba1e"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "ad00f25bd308ceed40ee5b9382f004f0ae8d09ac577b5d374bf7f5d60e9559c9"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "346924b3cb60f60955ed2b38a7ee362b52e9ea24b8341a37f7f055ff68b3fd64"
+    },
+    {
+      "path": "skills/nova/core/execution/operator-runtime-binding.ts",
+      "sha256": "1a66afe613d8136d2dd62c12667e855ff4c0ec16202f0ce94a5e3e38d1a6efdf"
+    },
+    {
+      "path": "tests/verification/reliability/nova-operator-original-recovery.test.mjs",
+      "sha256": "6da00e37d2c2cf3549df95d71d79ced5ef7924100b885d16f1877e9696ed399b"
+    },
+    {
+      "path": "tests/verification/reliability/nova-operator-structure-policy.test.mjs",
+      "sha256": "d48f8bc8bae4b33b139e9478133b9dd54d5c250dac2fa4fc2fbc98352da5c703"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "sha256": "0569244081582b61ac6d691be65869ac435fd1e924e948929d2bb179e307bd94"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/config.ts",
+      "sha256": "9162cc09ddd4d87603091283f1cd78858503de872a4cfa0181009662bbe0a900"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+      "sha256": "f32abdb93aa5fffea74b4a2e4e6525c67965e595a63ad8228e58379b108c4c4a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+      "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965"
+    }
+  ]
+}

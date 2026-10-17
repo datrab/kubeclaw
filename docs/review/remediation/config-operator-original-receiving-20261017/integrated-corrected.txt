@@ -1,0 +1,16 @@
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (8266.317886ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (8233.457971ms)
+✔ operator original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.017076ms)
+✔ current v3 original operator capture compares nested structure and version before reprojecting (1.795326ms)
+✔ captured operator structure A/B reaches the real adapter before effects; exact depth/array/object boundaries and restored positives (32.780849ms)
+✔ original v1/v2 operator captures remain unchanged and use their original protocol contract; malformed v3 cannot fall back (65.855585ms)
+✔ real Nova resume and authenticated admin retry/replay restore both original Redis targets without current-source refill (7158.74163ms)
+✔ original Redis capture rejects partial captures, policy disagreement and registration-set drift without refill (0.899624ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17529.384243

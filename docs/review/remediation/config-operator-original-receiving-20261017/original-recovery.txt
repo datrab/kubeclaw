@@ -1,0 +1,10 @@
+✔ real Nova resume and authenticated admin retry/replay restore both original Operator targets without current-source refill (8268.174786ms)
+✔ operator original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.595451ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8996.411053

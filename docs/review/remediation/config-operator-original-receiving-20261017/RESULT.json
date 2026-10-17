@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-17T05:34:14.137541+00:00",
+  "status": "ORIGINAL_OPERATOR_RECEIVING_SOURCE_IMPLEMENTED_FULL_ACCEPTANCE_OPEN",
+  "sourceCommit": "e1169389b33cbe479bcf25598765d36a074d0306",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "remoteHead": "e1169389b33cbe479bcf25598765d36a074d0306",
+  "verified": true,
+  "evidence": "docs/review/remediation/config-operator-original-receiving-20261017",
+  "productionSourceChanged": true,
+  "change": "Complete original Operator target set, endpoint/origin/secret references, format, payload-profile selection and durable deliveryRoot restored together from integrity-checked run snapshot before normal selected Core policy projection/schema/registry/grant/source admission and activation. Original v1/v2 shape and v3 nested structure/version preserved. No new author/root/snapshot wire format/grant authority/secret-byte capture.",
+  "receivers": [
+    "recoverPipeline",
+    "resumePipeline",
+    "reopenPipeline"
+  ],
+  "checks": {
+    "focusedPassed": 9,
+    "focusedTotal": 9,
+    "focusedSkipped": 0,
+    "strictNovaTypecheck": true,
+    "diffCheck": true,
+    "realNovaV1AndV3ResumeAdminRetryAndReplay": true,
+    "originalHmacAndEndpoint": true,
+    "originalDurableStoreNotCurrentB": true,
+    "currentCoreDeletedBeforeResume": true,
+    "changedGrantsAndForeignAdminRejectedBeforeDelivery": true,
+    "originalSnapshotsUnchanged": true,
+    "nestedCapturesFrozenAndOwned": true,
+    "registrationAndPolicyMixRejected": true,
+    "adjacentRedisAndNonoperatorRecoveryCompatibility": true
+  },
+  "retainedInitialFailures": [
+    "First v3 test author omitted required projectCompiler; corrected to complete genuine authored profile with original relative Review reference resolved from original author directory.",
+    "Existing directly relevant structure A/B test republished captured reviewPolicyCapture as author. Fixed fixture to retain original Review selection with original canonical file and omit the prohibited derived capture. Original bounds/assertions unchanged. integrated.txt retained; corrected8/8 in integrated-corrected.txt."
+  ],
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "unchanged": true
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "unchanged": true
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "unchanged": true
+    }
+  },
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "qualityBoundary": {
+    "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
+    "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",
+    "neededImplementation": "Coordinate the SAME approved root/schema/all-profile/file-set/source closure/generation/service/image/package receipt/delivery and original reader, then derive complete policies from authenticated original boot into actual Nova resolver. Do not promote denied v10 or fake receipts.",
+    "inputStore": "runner-attempt-preparation.invocationInputs has ArtifactRefV1 from producer AttemptResultV1, no authenticated sourceRevision/buildDigest/originalInputReceiptDigest/baseline association/storeVersion or inputStore-owned reservations/validity/publication lifecycle. Need actual producer/result/source receipt joins and same original store accounting/sealed bytes/fences before provider execution. Keep BUDGET_SOURCE_RECEIPT_REQUIRED."
+  },
+  "remainingOperatorWork": "Coordinated sole central author/profile/schema/root/delivery and full original field-specific/history/native/independent acceptance remain OPEN. No original field/case residual classification or acceptance result rewritten. This change closes complete original Operator receiving only; local HTTP receiver is controlled fixture, not production delivery/native acceptance.",
+  "independentReview": "OPEN: fresh ALL_TOOLS native spawn/reviewer/collaboration discovery empty; CONFIG subagents0; parent terminal failed, no productive repository owner. Last same-engine upstream attempts HTTP429, no report; not retried unchanged and never counted clean. New source review inputs pinned for fresh reviewer.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Same-engine independent reviewer availability; isolated Linux Docker actual UID/GID1000 delegated writable cgroup/native pool, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL, original historical privileges as previously recorded. External absence does not block all source work.",
+  "writerLock": "SAME shared nonblocking writer lock for mutations/checks/commit/push; released at command exit",
+  "historicalFollowupDispatched": false
+}
