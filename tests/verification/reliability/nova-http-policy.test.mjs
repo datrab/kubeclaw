@@ -35,9 +35,17 @@ test('actual Nova HTTP request/response A/B boundaries and retained A selector+v
  const selected=inspectRuntimeConfiguration(f.platform(),f.definition);assert.deepEqual(selected.adapterConfigurations[id].targetByteProfiles,profiles(a).targetByteProfiles);assert.equal(selected.adapterConfigurations['kubeclaw.network-http:http'].errorExcerptCharacters,1000);
  const first=await runPipelineV2(f.platform(),f.definition,'http:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));assert.equal(f.received.length,1);const saved=readRunSnapshot(runRoot(f.source.storageRoot,'http:A'));
  for(const field of Object.keys(a)) {f.publish({...a,[field]:a[field]-1});const before=f.received.length,result=await runPipelineV2(f.platform(),f.definition,'http:B-'+field);assert.equal(result.status,'blocked');assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'http:B-'+field),'events.jsonl'),'utf8'),field==='maxRequestBytes'?/RUNTIME_REQUEST_SIZE_EXCEEDED/:/RUNTIME_RESPONSE_SIZE_EXCEEDED/);assert.equal(f.received.length,before+(field==='maxResponseBytes'?1:0));}
- f.source.adapters[id].targets.worker.byteProfile='missing-current-B';f.write();fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
+ f.source.adapters[id].targets.worker.byteProfile='missing-current-B';f.source.adapters[id].targets.worker.endpoint='http://127.0.0.1:1/current-B';f.source.adapters[id].targets.worker.tokenSecret='missing-B-secret';
+ f.source.adapters['kubeclaw.network-http:http']={allowedOrigins:['https://changed.invalid'],allowedMethods:['GET'],allowedHeaders:[]};f.write();fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'http:A'),/RECOVERY_SIGNAL_REQUIRED/);
  const resumed=await resumePipelineV2(f.platform(),f.definition,'http:A',{schemaVersion:'resume-signal.v2',signalId:'signal:http',idempotencyKey:'signal-key:http',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});assert.equal(resumed.status,'succeeded');assert.deepEqual(readRunSnapshot(runRoot(f.source.storageRoot,'http:A')),saved);assert.equal(f.source.adapters[id].targets.worker.byteProfile,'missing-current-B');
- f.source.adapters[id].targets.worker.endpoint+='/changed';f.write();await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'http:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+ f.source.adapters[id].targets.worker.endpoint='http://127.0.0.1:1/changed';f.source.adapters[id].targets.worker.tokenSecret='changed.token';
+ f.source.adapters[id].targets.foreign={endpoint:'http://127.0.0.1:1',authentication:'spiffe-proxy',byteProfile:'missing'};
+ f.source.adapters['kubeclaw.network-http:http']={allowedOrigins:['https://changed.invalid'],allowedMethods:['GET'],allowedHeaders:[]};f.write();
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'http:A'),/RECOVERY_RUN_TERMINAL/);
+ assert.deepEqual(readRunSnapshot(runRoot(f.source.storageRoot,'http:A')),saved);
+ f.source.grants[id]['network.http'].allowedOrigins=['https://changed.invalid'];f.write();const before=f.received.length;
+ await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'http:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);assert.equal(f.received.length,before);
 });
 test('actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives',async t=>{
  const f=await fixture(t),a={maxRequestBytes:size(payload),maxResponseBytes:size(responseBody)},raw=f.source.adapters[id];
@@ -157,4 +165,21 @@ test('installed HTTP structure selection survives changed B and removed current 
  fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
  assert.equal((await resumePipelineV2(f.platform(),f.definition,'structure:A',{schemaVersion:'resume-signal.v2',signalId:'signal:structure',idempotencyKey:'signal-key:structure',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}})).status,'succeeded');
  assert.deepEqual(readRunSnapshot(runRoot(f.source.storageRoot,'structure:A')),saved);
+});
+
+
+test('original HTTP binding privately owns nested sets and rejects mixed or foreign receiving',async()=>{
+ const {captureHttpRuntimeBindings:capture,restoreHttpRuntimeBindings:restore}=await import('../../../skills/nova/core/execution/http-runtime-binding.ts');
+ const network='kubeclaw.network-http:http';
+ const raw={[id]:{targets:{worker:{endpoint:'https://original.invalid/dispatch',tokenSecret:'original.token',byteProfile:'standard'}}},[network]:{allowedOrigins:['https://original.invalid'],allowedMethods:['POST'],allowedHeaders:['content-type']}};
+ const effective=structuredClone(selectedAdapterConfigurations(raw,TEST_CORE_POLICY));
+ const original=capture(effective,TEST_CORE_POLICY);effective[id].targets.worker.endpoint='https://changed.invalid';effective[network].allowedOrigins[0]='https://changed.invalid';
+ assert.equal(original[id].targets.worker.endpoint,raw[id].targets.worker.endpoint);assert.deepEqual(original[network].allowedOrigins,raw[network].allowedOrigins);
+ assert(Object.isFrozen(original[id].targets.worker));assert(Object.isFrozen(original[network].allowedMethods));
+ assert.deepEqual(restore(raw,original),raw);assert.deepEqual(capture({},TEST_CORE_POLICY),{});
+ for(const key of ['payloadStructure','targetByteProfiles']) {const mixed=structuredClone(selectedAdapterConfigurations(raw,TEST_CORE_POLICY));delete mixed[id][key];assert.throws(()=>capture(mixed,TEST_CORE_POLICY),/POLICY_MISMATCH/);}
+ const mixed=structuredClone(selectedAdapterConfigurations(raw,TEST_CORE_POLICY));mixed[network].timeoutMs++;assert.throws(()=>capture(mixed,TEST_CORE_POLICY),/POLICY_MISMATCH/);
+ assert.throws(()=>restore({},original),/REGISTRATION_MISMATCH/);assert.throws(()=>restore(raw,{}),/REGISTRATION_MISMATCH/);
+ assert.throws(()=>restore(raw,{'foreign:adapter':{}}),/CONFIGURATION_INVALID/);
+ const restored=restore(raw,original);restored[id].targets.worker.endpoint='https://mutated.invalid';assert.equal(original[id].targets.worker.endpoint,raw[id].targets.worker.endpoint);
 });
