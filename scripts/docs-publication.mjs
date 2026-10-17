@@ -431,7 +431,7 @@ function catalogueIndex() {
     'Owner: plugin-foundation',
     'Evidence: scripts/docs-publication.mjs',
     'Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins',
-    'Last verified: generated during publication', '',
+    'Last verified: generated source listing only; package checks and their limits are recorded on each package page', '',
     '## Purpose', '',
     'Use this catalogue to find every installable extension package and its declared surfaces.', '',
     `The catalogue contains ${plugins.length} packages.`,
@@ -440,6 +440,11 @@ function catalogueIndex() {
     'guidance separately from generated facts. The publication generator',
     'reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated',
     'refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.',
+    '',
+    'The plugin-foundation owner maintains purpose, use, exclusion, and limit text in',
+    '`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains',
+    'the manifest and schema facts. Do not edit generated catalogue pages as a second',
+    'authority. Change the owning input, then regenerate and run the declared checks.',
   ];
   for (const [kind, entries] of groups) {
     lines.push('', `## ${kind[0].toUpperCase()}${kind.slice(1)} Packages`, '');
@@ -676,7 +681,7 @@ function capabilityPage() {
     'Owner: plugin-foundation',
     'Evidence: skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts; skills/buster/engine/test-gates/remote-plan-service.ts',
     'Applies to: Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities',
-    'Last verified: generated during publication', '',
+    'Last verified: generated source listing only; package checks and their limits are recorded on each package page', '',
     '## Purpose', '',
     'Use this catalogue to identify the authority system that interprets a capability name.',
     'Nova grants and Buster runtime capabilities are separate allowlists.',

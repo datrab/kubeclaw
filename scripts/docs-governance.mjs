@@ -14,7 +14,7 @@ const configurationPages = new Set(JSON.parse(fs.readFileSync(path.join(root, 'd
   .requirements.filter((record) => record.id.startsWith('CFG-')).map((record) => record.canonicalTarget));
 const operatorPages = new Set(JSON.parse(fs.readFileSync(path.join(root, 'docs/operator-tasks.json'), 'utf8'))
   .tasks.map((task) => task.canonical.split('#')[0]));
-const generatedReferencePages = new Set(['cli', 'secrets', 'helm-values', 'environment-variables', 'plugin-configuration', 'endpoints', 'verification-commands', 'workflows']
+const generatedReferencePages = new Set(['cli', 'secrets', 'helm-values', 'environment-variables', 'plugin-configuration', 'endpoints', 'verification-commands', 'workflows', 'sdk-exports']
   .map((name) => `docs/site/reference/${name}.md`));
 const prismGuidePages = new Set(['docs/site/understand/prism.md', 'docs/site/understand/prism-runtime.md', 'docs/site/understand/prism-data.md',
   'docs/site/use/prism-studio.md', 'docs/site/extend/platform/prism.md']);
@@ -64,7 +64,7 @@ function checksFor(page) {
 }
 
 function contentKind(page, text) {
-  if (metadata(text, 'Generator')) return 'generated';
+  if (metadata(text, 'Generator') || generatedReferencePages.has(page)) return 'generated';
   if (page === 'docs/site/status/open-issues.md'
     || page === 'docs/site/reference/capabilities.md'
     || [

@@ -5,7 +5,7 @@ Audience: documentation contributor, maintainer, reviewer
 Owner: documentation
 Evidence: scripts/docs-governance.mjs; scripts/docs-publication.mjs; scripts/docs-status.mjs; docs/status/open-issues.json
 Applies to: all reader-facing files below docs/site
-Last verified: 2026-09-17
+Last verified: source-bound maintenance revision; publication and reader results remain separate
 
 ## Purpose
 
@@ -49,9 +49,9 @@ Do not use code as proof of approval. Do not use an accepted decision as proof o
 Do not use a local test as proof of deployment behavior.
 
 The publication tool checks page metadata and repository evidence paths. See the
-[metadata check](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/docs-publication.mjs#L404-L467).
+[metadata check](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-publication.mjs#L831-L861).
 The status generator reads the machine-owned issue register. See the
-[status source boundary](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/docs-status.mjs).
+[status source boundary](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-status.mjs#L113-L159).
 
 ## Generator prerequisites
 
@@ -75,18 +75,22 @@ A maintainer reviews this text when a source dependency changes.
 Generated content lists repetitive facts from manifests, schemas, or registers.
 Do not edit generated content by hand. Change its source or generator, and then regenerate it.
 
-The current generated reader pages are:
+Use the [generated page map](generated-documentation-map.json) to locate each
+page's declared owner, content kind, source dependencies, and checks. Do not
+maintain a second manual inventory here. The map is generated from reader-page
+metadata; it does not prove complete source discovery or successful checks.
+A missing or stale page entry must be corrected through its metadata and the
+map generator before the change is called covered.
 
-- `status/open-issues.md` from `docs/status/open-issues.json`;
-- `reference/capabilities.md` from the capability vocabulary;
-- `reference/cli.md`, `reference/environment-variables.md`, `reference/helm-values.md`,
-  `reference/secrets.md`, `reference/verification-commands.md`, and
-  `reference/workflows.md` from repository inventories;
-- `extend/plugin-catalogue/` from plugin manifests, schemas, guidance, and verification records; and
-- `reference/generated-documentation-map.json` from page metadata.
-
-The plugin publication source keeps authored guidance separate from generated package facts. See the
-[page construction](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/docs-publication.mjs#L160-L238).
+The plugin catalogue has two input authorities. Source manifests and schemas
+own mechanical package facts. Maintainers own the purpose, use, exclusions, and
+limits in the catalogue guidance input. The generator reads that guidance; do
+not edit its generated package pages as a second authored authority. See the
+[current page construction](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-publication.mjs#L255-L299).
+The plugin-foundation owner maintains package guidance. Documentation and the
+source component owner maintain the generated-fact route. For other families,
+use the page's named owner and the
+[maintenance workflow](../extend/documentation-maintenance.md#choose-one-fact-authority-and-its-explanation).
 
 ## Required Page Metadata
 
