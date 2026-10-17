@@ -1,0 +1,257 @@
+{
+  "passed": 49,
+  "total": 49,
+  "negativeControls": [
+    {
+      "name": "missing RT-e6be3d6f3f229ce6",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-d67da1eec2fca55b",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-SUBSCRIPTIONS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MODE",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MAXATTEMPTS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-BACKOFFMS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-TIMEOUTMS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-SUBSCRIPTIONS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MODE",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MAXATTEMPTS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-BACKOFFMS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-TIMEOUTMS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-SUBSCRIPTIONS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MODE",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MAXATTEMPTS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-BACKOFFMS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-TIMEOUTMS",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "original id",
+      "rejected": true,
+      "error": "'foreign'"
+    },
+    {
+      "name": "original original",
+      "rejected": true,
+      "error": "Original drift: RT-e6be3d6f3f229ce6"
+    },
+    {
+      "name": "original originalObjectSha256",
+      "rejected": true,
+      "error": "Original drift: RT-e6be3d6f3f229ce6"
+    },
+    {
+      "name": "original class",
+      "rejected": true,
+      "error": "Original drift: RT-e6be3d6f3f229ce6"
+    },
+    {
+      "name": "original caseIds",
+      "rejected": true,
+      "error": "Original drift: RT-e6be3d6f3f229ce6"
+    },
+    {
+      "name": "original owner",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "duplicate field",
+      "rejected": true,
+      "error": "Plugin policy roster drift"
+    },
+    {
+      "name": "wrong export kubeclaw.secret-resolver0",
+      "rejected": true,
+      "error": "Secret registration drift"
+    },
+    {
+      "name": "wrong export kubeclaw.agent-observability0",
+      "rejected": true,
+      "error": "Observer registration drift"
+    },
+    {
+      "name": "missing subscriptions kubeclaw.agent-observability0",
+      "rejected": true,
+      "error": "'subscriptions'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability0mode",
+      "rejected": true,
+      "error": "'mode'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability0maxAttempts",
+      "rejected": true,
+      "error": "'maxAttempts'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability0backoffMs",
+      "rejected": true,
+      "error": "'backoffMs'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability0timeoutMs",
+      "rejected": true,
+      "error": "'timeoutMs'"
+    },
+    {
+      "name": "wrong export kubeclaw.agent-observability1",
+      "rejected": true,
+      "error": "Observer registration drift"
+    },
+    {
+      "name": "missing subscriptions kubeclaw.agent-observability1",
+      "rejected": true,
+      "error": "'subscriptions'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability1mode",
+      "rejected": true,
+      "error": "'mode'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability1maxAttempts",
+      "rejected": true,
+      "error": "'maxAttempts'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability1backoffMs",
+      "rejected": true,
+      "error": "'backoffMs'"
+    },
+    {
+      "name": "missing kubeclaw.agent-observability1timeoutMs",
+      "rejected": true,
+      "error": "'timeoutMs'"
+    },
+    {
+      "name": "wrong export kubeclaw.telemetry-observer0",
+      "rejected": true,
+      "error": "Observer registration drift"
+    },
+    {
+      "name": "missing subscriptions kubeclaw.telemetry-observer0",
+      "rejected": true,
+      "error": "'subscriptions'"
+    },
+    {
+      "name": "missing kubeclaw.telemetry-observer0mode",
+      "rejected": true,
+      "error": "'mode'"
+    },
+    {
+      "name": "missing kubeclaw.telemetry-observer0maxAttempts",
+      "rejected": true,
+      "error": "'maxAttempts'"
+    },
+    {
+      "name": "missing kubeclaw.telemetry-observer0backoffMs",
+      "rejected": true,
+      "error": "'backoffMs'"
+    },
+    {
+      "name": "missing kubeclaw.telemetry-observer0timeoutMs",
+      "rejected": true,
+      "error": "'timeoutMs'"
+    },
+    {
+      "name": "missing environment schema",
+      "rejected": true,
+      "error": "'environment'"
+    },
+    {
+      "name": "missing environment name schema",
+      "rejected": true,
+      "error": "'additionalProperties'"
+    },
+    {
+      "name": "full roster fields loss",
+      "rejected": true,
+      "error": "Incomplete fields"
+    },
+    {
+      "name": "full roster cases loss",
+      "rejected": true,
+      "error": "Incomplete cases"
+    },
+    {
+      "name": "full roster requirements loss",
+      "rejected": true,
+      "error": "Incomplete requirements"
+    }
+  ],
+  "restoredDeterministic": true,
+  "sourceRows": 17,
+  "centralReceivingResiduals": 17,
+  "fullRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; author controls only"
+}
