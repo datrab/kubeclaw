@@ -8,7 +8,13 @@ import { spawnSync } from 'node:child_process';
 import { load, loadAll, dump } from 'js-yaml';
 import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import { buildBusterImageBundle } from '../../../scripts/build-buster-image-bundle.mjs';
-import { resolveAgentObserverConfig } from '../../../skills/common/plugins/openclaw-agent-observer/src/config.ts';
+import { syncContract } from '../../../skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs';
+
+// The resolver consumes the package-owned generated contract. A clean checkout
+// has no generated files: use its canonical producer before loading the resolver,
+// just as the observer package build/typecheck does (never reuse stale output).
+syncContract();
+const { resolveAgentObserverConfig } = await import('../../../skills/common/plugins/openclaw-agent-observer/src/config.ts');
 
 function sourceRootFromArgs() {
   const index = process.argv.indexOf('--source-root');
