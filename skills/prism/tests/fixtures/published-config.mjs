@@ -5,6 +5,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { declaredPipelineServices, materializePipelineGeneration } from '../../../../scripts/updates/pipeline-generation.mjs';
+import { captureSwarmSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
 
 const repo = fileURLToPath(new URL('../../../../', import.meta.url));
 
@@ -39,6 +40,12 @@ export async function publishedControlConfig(t, changes = {}, workerChanges = un
     fs.writeFileSync(studioFile, JSON.stringify(studioValue));
   }
   if (mutateAuthor !== undefined) await mutateAuthor(author);
+  const services = declaredPipelineServices(author, { role: 'prism', namespace: 'kubeclaw', releaseName: deployment === 'agent-bridge' ? 'agent-prism' : 'prism', deployment });
+  // Reject invalid complete author sets with the SAME production reader before
+  // compiling/copying a role for each malformed-leaf control. This is validation
+  // only, never boot authentication: valid cases still build, publish and load
+  // the genuine installed package below, whose materializer revalidates authors.
+  for (const service of services) captureSwarmSettings(entryFile, service);
   execFileSync('cc', ['-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', path.join(repo, 'scripts/pipeline-publish.c'), '-o', publisher]);
   // Publish from the actual checked-out source identity. This remains local
   // source verification, not proof that the worktree equals a clean commit.
@@ -49,7 +56,6 @@ export async function publishedControlConfig(t, changes = {}, workerChanges = un
   const receipt = JSON.parse(fs.readFileSync(path.join(code, 'manifest.json'), 'utf8'));
   assert.equal(receipt.commit, revision);
   assert.equal(receipt.builtAt, builtAt);
-  const services = declaredPipelineServices(author, { role: 'prism', namespace: 'kubeclaw', releaseName: deployment === 'agent-bridge' ? 'agent-prism' : 'prism', deployment });
   await materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher });
   const mount = path.join(root, 'transport'); fs.mkdirSync(mount);
   fs.cpSync(path.join(output, 'expected', deployment === 'agent-bridge' ? 'prism-agent-bridge' : 'prism-control'), path.join(mount, 'version-A'), { recursive: true });
