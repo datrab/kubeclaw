@@ -6,6 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { test } from 'node:test';
 import yaml from 'js-yaml';
 import Ajv from 'ajv';
+import { fixtureBusterImageDelivery } from '../../fixtures/buster-image-delivery.mjs';
 import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import { exportGitOpsBundle, gitOpsDigest } from '../../../scripts/gitops-bundle.mjs';
 import { bootstrapDocuments, readCommittedBundle, preflightGitOps } from '../../../scripts/gitops.mjs';
@@ -18,16 +19,11 @@ function fixture(run) {
   const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
   const commit = message => { git(['add', '.']); git(['-c', 'user.name=GitOps Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', message]); return git(['rev-parse', 'HEAD']); };
   try {
-    for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true, verbatimSymlinks: true });
-    for (const name of ['swarm.schema.json', 'swarm-components.schema.json']) {
-      const schema = `skills/common/plugin-runtime/foundation/config/${name}`;
-      fs.mkdirSync(path.dirname(path.join(root, schema)), { recursive: true });
-      fs.copyFileSync(path.join(source, schema), path.join(root, schema));
-    }
+    for (const directory of ['charts', 'my-values', 'scripts', 'config', 'packaging/runtime', 'skills/common/plugin-runtime/foundation']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true, verbatimSymlinks: true });
     fs.symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'));
     fs.writeFileSync(path.join(root, '.gitignore'), 'node_modules\n');
     const policy = yaml.load(fs.readFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), 'utf8'));
-    policy.nodeName = 'native-render-test'; policy.pools.buster.namespace = 'agents'; policy.pools.prism.namespace = 'agents';
+    policy.nodeName = 'native-render-test'; policy.pools.buster.namespace = 'kubeclaw'; policy.pools.prism.namespace = 'kubeclaw';
     fs.writeFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), yaml.dump(policy));
     git(['init', '-q']);
     // This repository is deleted as soon as the synchronous test finishes.
@@ -37,12 +33,14 @@ function fixture(run) {
     fs.mkdirSync(path.join(root, 'releases'));
     const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
     const images = Object.fromEntries(names.map((name, index) => [name, `ghcr.io/datrab/kubeclaw-${name}@sha256:${index.toString(16).repeat(64)}`]));
-    fs.writeFileSync(path.join(root, 'releases/runtime-images.json'), JSON.stringify({ schemaVersion: 1, commit: sourceCommit, sourceRunId: 123, sourceRunAttempt: 1, images }));
+    fs.writeFileSync(path.join(root, 'releases/runtime-images.json'), JSON.stringify({ schemaVersion: 1, commit: sourceCommit, sourceRunId: 123, sourceRunAttempt: 1, images,
+      // Public transport fixture only: not a built/installed image or native proof.
+      imageDeliveries: { 'buster-runtime': fixtureBusterImageDelivery(sourceCommit, path.join(root, 'config')) } }));
     execFileSync(process.execPath, ['scripts/updates/materialize-release.mjs', '--family=runtime'], { cwd: root });
     const buster = path.join(root, 'registry.yaml'), prism = path.join(root, 'native.yaml');
     fs.writeFileSync(buster, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } },
       busterNative: { nodeName: policy.nodeName, namespace: policy.pools.buster.namespace, policyDigest: nativePoolPolicy(policy, 'buster').policyDigest } }));
-    fs.writeFileSync(prism, yaml.dump({ worker: { native: { nodeName: 'native-render-test', namespace: 'agents', policyDigest: nativePoolPolicy(policy, 'prism').policyDigest } } }));
+    fs.writeFileSync(prism, yaml.dump({ worker: { native: { nodeName: 'native-render-test', namespace: 'kubeclaw', policyDigest: nativePoolPolicy(policy, 'prism').policyDigest } } }));
     const env = { ...process.env, CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: buster, PRISM_VALUES_FILE: prism };
     run({ root, git, commit, sourceCommit, images, env, policy });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -51,7 +49,7 @@ const directory = 'releases/gitops/reviewed-test';
 const url = 'https://github.com/datrab/kubeclaw.git';
 
 test('real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps', context => fixture(({ root, commit, sourceCommit, env, policy }) => {
-  const bundle = exportGitOpsBundle(root, directory, 'agents', 'agents', env);
+  const bundle = exportGitOpsBundle(root, directory, 'kubeclaw', 'kubeclaw', env);
   assert.equal(bundle.receipt.commit, sourceCommit);
   const busterDocs = yaml.loadAll(fs.readFileSync(path.join(root, directory, 'buster/resources.yaml'), 'utf8')).filter(Boolean);
   const busterPod = busterDocs.find(doc => doc.kind === 'Deployment' && doc.metadata.name === 'agent-buster').spec.template;
@@ -66,7 +64,7 @@ test('real selected-release renderer exports immutable groups and bootstraps a c
   for (const deployment of prismDocs.filter(doc => doc.kind === 'Deployment')) {
     assert.ok(Number(deployment.metadata.annotations?.['argocd.argoproj.io/sync-wave'] ?? 0) > Number(migration.metadata.annotations['argocd.argoproj.io/sync-wave']), deployment.metadata.name);
   }
-  assert.throws(() => exportGitOpsBundle(root, directory, 'agents', 'agents', env), /ALREADY_EXISTS/);
+  assert.throws(() => exportGitOpsBundle(root, directory, 'kubeclaw', 'kubeclaw', env), /ALREADY_EXISTS/);
   const revision = commit('Reviewed immutable manifests');
   const result = bootstrapDocuments(root, directory, url, revision, 'argocd');
   const continuous = renderContinuousEnvironment(root, directory, url, revision, { argoNamespace: 'argocd' });
@@ -133,7 +131,7 @@ test('imperative ownership guard fails closed and permits only other namespaces'
 });
 
 test('committed bundle corruption, switched selection and hidden image changes fail before activation', () => fixture(({ root, commit, env }) => {
-  const bundle = exportGitOpsBundle(root, directory, 'agents', 'agents', env);
+  const bundle = exportGitOpsBundle(root, directory, 'kubeclaw', 'kubeclaw', env);
   const receiptFile = path.join(root, directory, 'bundle.receipt');
   const manifestFile = path.join(root, directory, 'nova/resources.yaml');
   const original = fs.readFileSync(manifestFile, 'utf8');
@@ -153,7 +151,7 @@ test('committed bundle corruption, switched selection and hidden image changes f
 }));
 
 test('activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint', () => fixture(({ root, commit, env }) => {
-  exportGitOpsBundle(root, directory, 'agents', 'agents', env);
+  exportGitOpsBundle(root, directory, 'kubeclaw', 'kubeclaw', env);
   const result = bootstrapDocuments(root, directory, url, commit('Preflight release fixture'), 'argocd');
   const health = fs.readFileSync(path.join(root, 'charts/gitops/files/application-health.lua'), 'utf8');
   const cases = { rootOwner: null, existing: null, releases: [], apps: [], missingSecret: false, hostError: false, health };
@@ -180,10 +178,10 @@ test('activation preflight requires Secrets, sole ownership, native binding and 
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /BOOTSTRAP_OWNER_CONFLICT/); cases.rootOwner = null;
   cases.releases = [{ name: 'agent-buster' }];
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /HELM_OWNER_PRESENT/); cases.releases = [];
-  cases.apps = [{ metadata: { name: 'unrelated' }, spec: { destination: { namespace: 'agents' } } }];
+  cases.apps = [{ metadata: { name: 'unrelated' }, spec: { destination: { namespace: 'kubeclaw' } } }];
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /OTHER_APPLICATION_PRESENT/);
   cases.apps = [{ metadata: { name: 'other-root', namespace: 'argocd', annotations: {
-    'kubeclaw.dev/runtime-namespaces': '["agents"]',
+    'kubeclaw.dev/runtime-namespaces': '["kubeclaw"]',
   } }, spec: { destination: { namespace: 'argocd' } } }];
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /OTHER_APPLICATION_PRESENT/);
   cases.apps = result.bundle.groups.map(group => ({ metadata: { name: group.name, namespace: 'argocd' }, spec: { project: result.values.project, destination: { namespace: group.namespace } } }));
@@ -204,7 +202,7 @@ test('activation preflight requires Secrets, sole ownership, native binding and 
   wrongBinding.busterNative.policyDigest = 'e'.repeat(64);
   fs.writeFileSync(env.BUSTER_VALUES_FILE, yaml.dump(wrongBinding));
   const wrongDirectory = 'releases/gitops/wrong-buster-binding';
-  exportGitOpsBundle(root, wrongDirectory, 'agents', 'agents', env);
+  exportGitOpsBundle(root, wrongDirectory, 'kubeclaw', 'kubeclaw', env);
   const wrongResult = bootstrapDocuments(root, wrongDirectory, url, commit('Wrong Buster binding fixture'), 'argocd');
   cases.apps = [];
   calls.length = 0;
@@ -251,7 +249,7 @@ test('Buster export requires the supplied native binding before publishing a bun
     if (binding === undefined) delete overlay.busterNative;
     else overlay.busterNative = binding;
     fs.writeFileSync(file, yaml.dump(overlay));
-    assert.throws(() => exportGitOpsBundle(root, directory, 'agents', 'agents', env),
+    assert.throws(() => exportGitOpsBundle(root, directory, 'kubeclaw', 'kubeclaw', env),
       error => /native Buster requires one replica and the generated namespace\/node\/policy binding/.test(error.stderr));
     assert.equal(fs.existsSync(path.join(root, directory)), false);
   }
