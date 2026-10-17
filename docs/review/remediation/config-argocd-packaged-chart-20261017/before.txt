@@ -1,0 +1,126 @@
+Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+
+Use --debug flag to render out invalid YAML
+✖ Prism database and migration prerequisites precede its Argo migration hook and all application deployments (53.454301ms)
+✖ all standalone data claims and PostgreSQL-generated claims retain data on Argo prune/delete (41.013089ms)
+✖ an external database selection does not create a phantom migration hook or PostgreSQL data claim (62.097004ms)
+✖ every standalone claim has a same-wave consumer, including backup storage before its first schedule (43.74586ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 310.101271
+
+✖ failing tests:
+
+test at tests/verification/deployment/argocd-chart-order.test.mjs:12:1
+✖ Prism database and migration prerequisites precede its Argo migration hook and all application deployments (53.454301ms)
+  Error: Command failed: helm template gitops-check charts/prism -f charts/prism/ci-values.yaml --namespace default --set ingestion.enabled=true --set ingestion.resources.requests.cpu=100m --set ingestion.resources.requests.memory=128Mi --set ingestion.resources.limits.cpu=1 --set ingestion.resources.limits.memory=512Mi
+  Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:7:49)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:13:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2788746,
+    stdout: '',
+    stderr: 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n'
+  }
+
+test at tests/verification/deployment/argocd-chart-order.test.mjs:33:1
+✖ all standalone data claims and PostgreSQL-generated claims retain data on Argo prune/delete (41.013089ms)
+  Error: Command failed: helm template gitops-check charts/prism -f charts/prism/ci-values.yaml --namespace default
+  Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:7:49)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:34:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2788759,
+    stdout: '',
+    stderr: 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n'
+  }
+
+test at tests/verification/deployment/argocd-chart-order.test.mjs:43:1
+✖ an external database selection does not create a phantom migration hook or PostgreSQL data claim (62.097004ms)
+  Error: Command failed: helm template gitops-check charts/prism -f charts/prism/ci-values.yaml --namespace default --set postgresql.enabled=false
+  Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:7:49)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:44:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2788772,
+    stdout: '',
+    stderr: 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n'
+  }
+
+test at tests/verification/deployment/argocd-chart-order.test.mjs:51:1
+✖ every standalone claim has a same-wave consumer, including backup storage before its first schedule (43.74586ms)
+  Error: Command failed: helm template gitops-check charts/prism -f charts/prism/ci-values.yaml --namespace default
+  Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:7:49)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/argocd-chart-order.test.mjs:52:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2788784,
+    stdout: '',
+    stderr: 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n'
+  }
