@@ -97,3 +97,7 @@ All18 original fields in both nine-field groups now join their actual manifest/s
 ## Exact mixed Core/Platform54 supplement — 2026-10-17
 
 `reconcile-core-platform.py` replaces the final broad section candidate with54 original source lanes:2 existing selected central lease-memory joins,1 retained protocol-invariant,14 supplied Platform and36 supplied grant-value receiving residuals, plus1 fixed resolver retry residual. Schema/vocabulary presence is not a physical author or runtime proof. All54 identities/classes/case memberships are conserved in the composed45-group matrix; all44 unrelated groups remain unchanged.92/92 author controls passed, including corrupted composition and full2409/6845/50 member preservation. No production change or original case newly accepted. Ten unresolved semantic groups, other explicit receiving residuals, QB-R02/InputStore/boot and fresh independent/history/native/archive/full C0–C6 remain OPEN. See `config-core-platform-source-matrix-20261017`.
+
+## Exact security86 supplement — 2026-10-17
+
+Security86 now has exact original schema/manifest/hardcoded business-policy source lanes and actual parser/verdict/registry consumers. All86 central receiving obligations remain OPEN; no new runtime implementation or original cases accepted. Full2409/6845/50 preserved,45 historical groups retained,44 unrelated groups unchanged; three unresolved deployment navigation groups remain. See config-security-provider-matrix-20261017. Independent/original/history/native/archive/full C0–C6 gates remain mandatory.
