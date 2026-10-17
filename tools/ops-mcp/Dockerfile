@@ -1,7 +1,7 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG OPS_MCP_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
 
-ARG OPS_TOOLS_GO_BASE=golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628
+ARG OPS_TOOLS_GO_BASE=golang:1.26.9-alpine3.24@sha256:3082400e369fa24d5fc60bca20edab3f6d604e0c5a690ec66b295eff4dd87ade
 
 FROM ${OPS_TOOLS_GO_BASE} AS hubble-build
 ARG TARGETARCH=amd64
