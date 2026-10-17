@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-17T04:20:22.448205+00:00",
+  "status": "BUSTER_REMAINING_ARCHIVE_DELIVERY_7_OF_8_UID1000_GATE_OPEN",
+  "sourceCommit": "0daaecdbf057918ca2352756546e5acdb0f94f81",
+  "sourceRemoteVerified": true,
+  "testedBaseCommit": "5c8b6500af9ff901d763d82455f97826c1d22e2c",
+  "evidence": "docs/review/remediation/config-buster-complete-archives-20261017",
+  "change": "Remaining original Buster central delivery, admission and readiness Helm calls render complete normal .tgz archives with archived selected topology equality. Central delivery genuine role metadata uses actual checkout revision/time and emitted manifest equality. All original A/B, malformed, restore, package tamper, negative release/receipt, controller Go receiving and real UID assertions preserved. No production source/policy/default/schema/authority change.",
+  "checks": {
+    "central": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "central.txt"
+    },
+    "admission": {
+      "tests": 2,
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "exitCode": 1,
+      "log": "admission.txt",
+      "failure": "Original real service CLI requires actual UID/GID1000; current UID0. No spoof/skip."
+    },
+    "readiness": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "readiness.txt"
+    },
+    "nodeSyntaxAndDiffCheck": true,
+    "postTestChange": "indentation only"
+  },
+  "qualification": "Local real installed Buster role receipts and full chart archives only; render OCI/native inputs remain shape-only. Checkout revision does not assert clean worktree identity. Author commands are not independent/native acceptance. Combined7/8 is not whole-task PASS.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "originalResultsChanged": false
+  },
+  "sourceHashes": {
+    "tests/verification/deployment/buster-central-delivery.test.mjs": "c92a51120975890d2649f8402457e72f7ccc9e4533e43938628c36a573ca22cf",
+    "tests/verification/deployment/buster-admission-render.test.mjs": "7ad7f62513c628692d8f27915e048083781ff69d5ef5c7b5108c6068988703fb",
+    "tests/verification/deployment/buster-readiness-config.test.mjs": "25dbb6f01577289715c245683f76846352687bdfb9b0b99008fb1b2b87785dc7"
+  },
+  "independentReview": "OPEN; native spawn/reviewer tools absent; CONFIG subagents0; parent terminal; no productive reviewer or fresh independent output; unchanged helper EROFS not retried. Author checks only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted writable archive filesystem and isolated migrated PostgreSQL.",
+  "writerLock": "SAME nonblocking shared lock held during closeout/push; released on command exit",
+  "noHistoricalFollowup": true,
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
+}
