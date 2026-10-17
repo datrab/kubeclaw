@@ -55,7 +55,7 @@ test('real portable ArtifactStore write checkpoints and reopens unchanged across
     const code = `import {artifactFromWrite,ArtifactCheckpointRecorder} from ${JSON.stringify(module)};
       import {FileJournal} from ${JSON.stringify(journalModule)};
       const ref=artifactFromWrite(${JSON.stringify(attempt)},${JSON.stringify(request)},${JSON.stringify(response)});
-      const recorder=new ArtifactCheckpointRecorder(new FileJournal(${JSON.stringify(journal)}),()=>{throw Error('duplicate append');});
+      const recorder=new ArtifactCheckpointRecorder(new FileJournal(${JSON.stringify(journal)}, ${JSON.stringify(TEST_CORE_POLICY.journalAppendLockTimeoutMs)}),()=>{throw Error('duplicate append');});
       recorder.checkpoint(ref);recorder.result(ref);
       process.stdout.write(JSON.stringify({locale:Intl.DateTimeFormat().resolvedOptions().locale,refs:recorder.artifacts()}));`;
     for (const [locale, expected] of [['en_US.UTF-8', 'en-US'], ['sv_SE.UTF-8', 'sv-SE']]) {

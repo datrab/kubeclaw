@@ -54,8 +54,8 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     const definition:PipelineDefinition={schemaVersion:'pipeline-definition.v2',id:'dependency-test',maxConcurrency:1,stages:[{id:'one',type:'test.dependency',dependsOn:[],input:{},config:{},execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:10000}}]};
     const prepared=await prepareRuntime(platform,definition);
     const observed:EffectRequest[]=[];
-    const create=()=>new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
+    const create=()=>new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition)});
     runtime=create();await runtime.start();
     const attempt={runId:'run:dependency',stageId:'one',attemptId:'attempt:one',attemptNumber:1};
     const invocation={operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}};
@@ -77,9 +77,10 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     const childSource=`import * as core from ${JSON.stringify(new URL('../../../skills/nova/core/src/index.ts',import.meta.url).href)};
       import {prepareRuntime} from ${JSON.stringify(new URL('../../../skills/nova/core/execution/engine-runtime.ts',import.meta.url).href)};
       const platform=${JSON.stringify(platform)},definition=${JSON.stringify(definition)};
+      const TEST_CORE_POLICY=${JSON.stringify(TEST_CORE_POLICY)};
       const prepared=await prepareRuntime(platform,definition);
-      const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-        effects:new core.EffectCoordinator(new core.FileEffectJournal(${JSON.stringify(path.join(root,'effects.jsonl'))}),undefined,undefined,new core.FileResourceLockManager(${JSON.stringify(path.join(root,'locks'))}),1000)});
+      const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
+        effects:new core.EffectCoordinator(new core.FileEffectJournal(${JSON.stringify(path.join(root,'effects.jsonl'))}, TEST_CORE_POLICY),undefined,undefined,new core.FileResourceLockManager(${JSON.stringify(path.join(root,'locks'))}, TEST_CORE_POLICY),1000, TEST_CORE_POLICY.resourceAcquisition)});
       await runtime.start();await runtime.invoke('runtime.dispatch',${JSON.stringify(crashAttempt)},'parent:crash',${JSON.stringify(crashRequest)},new AbortController().signal);`;
     const child=spawn(process.execPath,['--input-type=module','-e',childSource],{stdio:['ignore','ignore','pipe']});let childError='';child.stderr.on('data',chunk=>{childError+=chunk;});
     const [,killed]=await once(child,'exit');assert.equal(killed,'SIGKILL',childError);assert.equal(hits,4);
@@ -139,14 +140,14 @@ test('explicit dependency delivery identity survives attempts while original ope
       grants:new Map([['test.delivery-consumer:stage',new Map([['runtime.dispatch',{allowedAgents:['probe']} ]])],[id,new Map([['operator.request',{allowedTargets:['operators','uncertain','large']}]])],
         [operator,new Map([['network.http',{allowedOrigins:[origin]}],['secrets.read',{allowedNames:['webhook']} ]])]])});
     const activated=await core.activateRegistry(snapshot,new Set(granted.grants.keys()));
-    const configs=new Map<string,Record<string,unknown>>([[id,{}],[operator,{ ...TEST_OPERATOR_STORE_POLICY,deliveryRoot:path.join(root,'delivery'),targets:{
-      large:{endpoint:origin+'/large',tokenSecret:'webhook',format:'json',maxPayloadBytes:1048576},
-      operators:{endpoint:origin+'/messages',tokenSecret:'webhook',format:'discord_webhook'},uncertain:{endpoint:origin+'/uncertain',tokenSecret:'webhook',format:'discord_webhook'}}}],
-      ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
+    const configs=new Map<string,Record<string,unknown>>([[id,{}],[operator,{ ...TEST_OPERATOR_STORE_POLICY,...TEST_CORE_POLICY.operatorMessagingPayload,...TEST_CORE_POLICY.operatorMessagingFailure,targetPayloadProfiles:{...TEST_CORE_POLICY.operatorMessagingPayload.targetPayloadProfiles,large:{maxPayloadBytes:1048576}},deliveryRoot:path.join(root,'delivery'),targets:{
+      large:{endpoint:origin+'/large',tokenSecret:'webhook',format:'json',payloadProfile:'large'},
+      operators:{endpoint:origin+'/messages',tokenSecret:'webhook',format:'discord_webhook',payloadProfile:'standard'},uncertain:{endpoint:origin+'/uncertain',tokenSecret:'webhook',format:'discord_webhook',payloadProfile:'standard'}}}],
+      ['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
       ['kubeclaw.secret-resolver:secrets',{environment:{webhook:secretName}}]]);
     const observed:EffectRequest[]=[];
     const create=(interruptKey?:string,quota?:number)=>new core.AdapterRuntime({granted,activated,configs:quota===undefined?configs:new Map([...configs,[operator,{...configs.get(operator),deliveryRoot:path.join(root,'quota'),maximumDeliveryBytes:quota}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition)});
     runtime=create();await runtime.start();
     const invoke=(number:number,summary='Full URL and generated demo credentials',target='operators',runId='run:one')=>runtime!.invoke('runtime.dispatch',
       {runId,stageId:'delivery',attemptId:`attempt:${runId}:${number}`,attemptNumber:number},`parent:${runId}:${number}`,

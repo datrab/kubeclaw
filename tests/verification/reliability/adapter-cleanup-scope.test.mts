@@ -68,13 +68,13 @@ for(const mode of ['success','origin','capability','method','timeout','lifecycle
         grants:new Map([['kubeclaw.pipeline-review:evidence',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.implementation-agent']}]])],['kubeclaw.case-study:case-study',new Map([['report.evidence.read',{allowedRunIds:['run:cleanup']}],['runtime.dispatch',{allowedAgents:['probe']}],['artifacts.write',{allowedNamespaces:['kubeclaw.case-study']}]])],
           [id,new Map([['network.http',{allowedOrigins:[origin]}]])]])});
       const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
-      const configs=new Map<string,Record<string,unknown>>([[id,{origin}],['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],timeoutMs:1000}],
+      const configs=new Map<string,Record<string,unknown>>([[id,{origin}],['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],timeoutMs:1000}],
         ['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}],['kubeclaw.pipeline-review:evidence',{storageRoot:root,orchestratorIssuerId:'nova',maximumJournalBytes:1048576,maximumArtifactBytes:1048576,maximumBundleBytes:1048576}] ]);
       const observed: Array<Record<string,unknown>>=[];
       runtime=new core.AdapterRuntime({granted,activated,configs,shutdownTimeoutMs:1000,async emitDomainEvent(){},
         effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,
           {requested(request){observed.push(request as unknown as Record<string,unknown>);},accepted(){},completed(){}},
-          new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
+          new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition)});
       await runtime.start();
       const attempt={runId:'run:scope',stageId:'stage:scope',attemptId:'attempt:scope',attemptNumber:1};
       const start=Date.now();
