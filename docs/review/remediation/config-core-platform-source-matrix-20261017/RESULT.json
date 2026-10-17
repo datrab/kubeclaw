@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-17T01:25:51.985490+00:00",
+  "status": "EXACT_54_CORE_PLATFORM_SOURCE_LANES_2_EXISTING_LEASE_JOINS_1_PROTOCOL_51_RECEIVING_OPEN",
+  "matrixCommit": "f19e69c7e0a8e165bcdb580f17fe7201fdea8987",
+  "matrixRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-core-platform-source-matrix-20261017",
+  "productionSourceChanged": false,
+  "originalFields": 54,
+  "existingCentralLeaseMemorySourceJoins": 2,
+  "originalProtocolInvariants": 1,
+  "suppliedPlatformReceivingResiduals": 14,
+  "suppliedGrantValueReceivingResiduals": 36,
+  "fixedResolverRetryReceivingResiduals": 1,
+  "centralReceivingResiduals": 51,
+  "remainingSectionOnlyCandidates": 0,
+  "unresolvedSemanticGroups": 10,
+  "checks": {
+    "passed": 92,
+    "total": 92,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "originalCasesNewlyAccepted": 0,
+    "all45LocatorIdentitiesAndOriginalOutcomesPreserved": true,
+    "all44UnrelatedGroupsUnchanged": true
+  },
+  "independentReview": "OPEN; native spawn/reviewer discovery empty; CONFIG subagents0; parent done; no new reviewer output. Known unchanged same-surface EROFS not retried. Author matrix controls only.",
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "UNCHANGED: isolated Linux Docker actual UID1000/GID1000 delegated writable cgroup, sufficient genuinely root-trusted writable archive filesystem and migrated isolated real PostgreSQL database.",
+  "writerLock": "SAME nonblocking lock; released at bounded command exit",
+  "noHistoricalFollowup": true
+}
