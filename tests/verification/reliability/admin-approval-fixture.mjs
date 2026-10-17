@@ -35,7 +35,7 @@ export async function approvalFixture(root, rejected) {
       'kubeclaw.operator-messaging:operator': { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['approval-token'] } } },
     adapters: { 'kubeclaw.repository-adapter:repository': { repositoryRoot: repository }, 'kubeclaw.artifact-store:artifact-store': { artifactRoot: path.join(root, 'artifacts') },
       'kubeclaw.wait-store:waits': { root: path.join(root, 'waits') },
-      'kubeclaw.operator-messaging:operator': { deliveryRoot: path.join(root, 'deliveries'), targets: { operators: { endpoint: `${origin}/approval`, tokenSecret: 'approval-token' } } },
+      'kubeclaw.operator-messaging:operator': { deliveryRoot: path.join(root, 'deliveries'), targets: { operators: { payloadProfile: 'standard', endpoint: `${origin}/approval`, tokenSecret: 'approval-token' } } },
       'kubeclaw.network-http:http': { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] },
       'kubeclaw.secret-resolver:secrets': { environment: { 'approval-token': secret } } },
     activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000,
