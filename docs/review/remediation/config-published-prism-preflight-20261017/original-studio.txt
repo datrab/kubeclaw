@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: Studio loads authored operator values and keeps installation inputs outside JSON
+ok 1 - Studio loads authored operator values and keeps installation inputs outside JSON
+  ---
+  duration_ms: 9763.261246
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PORT=""
+ok 2 - Studio rejects retired PORT=""
+  ---
+  duration_ms: 4705.860082
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PORT="8080"
+ok 3 - Studio rejects retired PORT="8080"
+  ---
+  duration_ms: 4760.380865
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_URL=""
+ok 4 - Studio rejects retired PRISM_CONTROL_URL=""
+  ---
+  duration_ms: 4675.641509
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_URL="8080"
+ok 5 - Studio rejects retired PRISM_CONTROL_URL="8080"
+  ---
+  duration_ms: 4890.274709
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_TIMEOUT_MS=""
+ok 6 - Studio rejects retired PRISM_CONTROL_TIMEOUT_MS=""
+  ---
+  duration_ms: 4861.38644
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080"
+ok 7 - Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080"
+  ---
+  duration_ms: 4767.362576
+  type: 'test'
+  ...
+# Subtest: Studio rejects invalid port through original shared validation
+ok 8 - Studio rejects invalid port through original shared validation
+  ---
+  duration_ms: 18.66404
+  type: 'test'
+  ...
+# Subtest: Studio rejects invalid controlTimeoutMs through original shared validation
+ok 9 - Studio rejects invalid controlTimeoutMs through original shared validation
+  ---
+  duration_ms: 16.901195
+  type: 'test'
+  ...
+# Subtest: Studio rejects invalid controlUrl through original shared validation
+ok 10 - Studio rejects invalid controlUrl through original shared validation
+  ---
+  duration_ms: 41.660971
+  type: 'test'
+  ...
+# Subtest: Studio rejects unknown settings and invalid startup terminates before serving
+ok 11 - Studio rejects unknown settings and invalid startup terminates before serving
+  ---
+  duration_ms: 5275.955262
+  type: 'test'
+  ...
+# Subtest: production Studio Docker environment does not reintroduce a retired author
+ok 12 - production Studio Docker environment does not reintroduce a retired author
+  ---
+  duration_ms: 4757.687484
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 49101.929816
