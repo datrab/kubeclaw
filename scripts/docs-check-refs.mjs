@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
+import { upstreamReferenceResolver } from './lib/docs-upstream-reference.mjs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +15,7 @@ import {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs');
+const resolveUpstreamReference = upstreamReferenceResolver(root);
 const gitObjectFormat = execFileSync('git', ['rev-parse', '--show-object-format'], {
   cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
 }).trim();
@@ -165,6 +167,16 @@ function checkMarkdownLinks(filePath, text) {
     }
     if (rawPath && (path.posix.isAbsolute(decodedTarget) || path.win32.isAbsolute(decodedTarget))) {
       errors.push(`${rel(filePath)} links to an absolute local path: ${link.raw}`);
+      continue;
+    }
+    try {
+      if (resolveUpstreamReference(filePath, rawPath ? decodedTarget : '', rawFragment)) {
+        scanCounts.markdownLinks += 1;
+        if (rawFragment) scanCounts.markdownAnchors += 1;
+        continue;
+      }
+    } catch (error) {
+      errors.push(`${rel(filePath)} has an invalid provenance-bound link: ${link.raw}: ${error.message}`);
       continue;
     }
     const resolved = rawPath

@@ -10,6 +10,12 @@ import { markdownInlineLinks, markdownReferenceLinks } from '../lib/docs-markdow
 const sourceRoot = path.resolve(import.meta.dirname, '../..');
 
 function write(root, relative, value) {
+  if (relative === 'scripts/docs-check-refs.mjs') {
+    const helper = 'scripts/lib/docs-upstream-reference.mjs';
+    const destination = path.join(root, helper);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.copyFileSync(path.join(sourceRoot, helper), destination);
+  }
   const target = path.join(root, relative);
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, value);
