@@ -15,7 +15,7 @@ const selected=(root,policy)=>selectedAdapterConfigurations({[id]:raw(root)},pol
 test('captured operator structure A/B reaches the real adapter before effects; exact depth/array/object boundaries and restored positives',async t=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'operator-structure-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  const file=path.join(root,'core.json');
- const author=n=>{const policy=structuredClone(TEST_CORE_POLICY);policy.operatorMessagingPayload.payloadStructure={maximumDepth:n,maximumArrayEntries:n,maximumObjectProperties:n};fs.writeFileSync(file,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v3',profiles:{standard:{settings:policy}}}));};
+ const author=n=>{const policy=structuredClone(TEST_CORE_POLICY);delete policy.reviewPolicyCapture;policy.reviewPolicySelection.file=TEST_CORE_POLICY.reviewPolicyCapture.source.file;policy.operatorMessagingPayload.payloadStructure={maximumDepth:n,maximumArrayEntries:n,maximumObjectProperties:n};fs.writeFileSync(file,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v3',profiles:{standard:{settings:policy}}}));};
  author(2);const a=loadCoreRuntimePolicy({file,profile:'standard'}),retained=JSON.parse(JSON.stringify(a));author(4);const b=loadCoreRuntimePolicy({file,profile:'standard'});fs.unlinkSync(file);
  const pa=captureCoreRuntimePolicy(retained).operatorMessagingPayload.payloadStructure,pb=b.operatorMessagingPayload.payloadStructure;
  for(const [key,value] of [['array',{type:'event.test',artifact:[1,2,3]}],['object',{type:'event.test',artifact:{a:1,b:2,c:3}}],['depth',{type:'event.test',artifact:{a:{b:1}}}]]){

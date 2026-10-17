@@ -1,3 +1,4 @@
+import { captureOperatorRuntimeBindings, type OperatorRuntimeBindings } from './operator-runtime-binding.ts';
 import { captureRedisRuntimeBindings, type RedisRuntimeBindings } from './redis-runtime-binding.ts';
 import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
 import { captureCoreRuntimePolicy, type CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
@@ -158,8 +159,9 @@ export function retainedCoreRuntimePolicy(runRoot: string): CoreRuntimePolicy {
  * Original v1 keeps the established selection-only behavior. Explicit review
  * grades v2 restore the actual original OpenClaw targets for activation; no
  * current target/model values are merged into the original run. Redis restores
- * both complete original targets independently of current Platform values. */
-export function retainedRuntimePolicies(runRoot: string): Readonly<{redisBindings:RedisRuntimeBindings;reviewRuntimeBinding?:ReviewRuntimeBinding;corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>; publisherSelections: Readonly<Record<string,string>>; operatorSelections: Readonly<Record<string,string>>}> {
+ * both complete original targets independently of current Platform values. The
+ * Operator target set and durable-store location also remain original. */
+export function retainedRuntimePolicies(runRoot: string): Readonly<{operatorBindings:OperatorRuntimeBindings;redisBindings:RedisRuntimeBindings;reviewRuntimeBinding?:ReviewRuntimeBinding;corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>; publisherSelections: Readonly<Record<string,string>>; operatorSelections: Readonly<Record<string,string>>}> {
   const configuration = readRunSnapshot(runRoot).registry.configuration as {corePolicy?: unknown; providers?:Record<string,string>;activeAdapters?:readonly string[];adapters?: Record<string,{targets?: unknown}>} | undefined;
   if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
   const corePolicy = captureCoreRuntimePolicy(configuration.corePolicy);
@@ -202,5 +204,5 @@ export function retainedRuntimePolicies(runRoot: string): Readonly<{redisBinding
   const provider=configuration.providers?.['runtime.dispatch'];
   const reviewRuntimeBinding=corePolicy.reviewPolicyCapture?.settings.schemaVersion==='review-owned-decision-profiles.v2' && provider==='kubeclaw.runtime-dispatch:openclaw' && configuration.activeAdapters?.includes(provider)
     ? {provider,configuration:deepFreeze(structuredClone(configuration.adapters?.[provider] ?? {}))} : undefined;
-  return Object.freeze({redisBindings:captureRedisRuntimeBindings(configuration.adapters ?? {},corePolicy),reviewRuntimeBinding,corePolicy,operatorSelections:Object.freeze(operatorSelections),publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
+  return Object.freeze({operatorBindings:captureOperatorRuntimeBindings(configuration.adapters ?? {},corePolicy),redisBindings:captureRedisRuntimeBindings(configuration.adapters ?? {},corePolicy),reviewRuntimeBinding,corePolicy,operatorSelections:Object.freeze(operatorSelections),publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
 }

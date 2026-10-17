@@ -63,7 +63,7 @@ export async function recoverPipeline(platform: PlatformConfig, definitionInput:
   const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
   const retained = retainedRuntimePolicies(runRoot);
-  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
     const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
@@ -91,7 +91,7 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
   const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
   const retained = retainedRuntimePolicies(runRoot);
-  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
     const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
