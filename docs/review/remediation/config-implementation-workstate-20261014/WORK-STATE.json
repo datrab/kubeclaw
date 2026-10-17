@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T00:10:29.883327+00:00",
+  "updatedAt": "2026-10-17T00:18:44.864809+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_DEPLOYMENT_TRUTH_CENTRAL_OBSERVER_AND_GENUINE_RECEIPT_PASS_NOT_FULL_ACCEPTANCE",
+  "status": "STUDIO_ORIGINAL_CONFIG_SOURCE_RECEIPTS_VERIFIED_AGGREGATE_NOT_PASSED",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue genuine QB-R02 producer/build/source/baseline/inputStore ownership/accounting/sealed snapshots/publication plus coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving; original history/native/archive/independent/fullC0-C6 gates remain OPEN. Deployment-truth migration is locally passing; do not replay unchanged suites as new progress.",
+  "nextAction": "Complete genuine QB-R02 prepared producer/source/build/baseline association and existing inputStore reservation/accounting/sealed snapshot/publication, coordinated sole-root boot/Nova receiving. Diagnose remaining full component aggregate with adequate per-suite runtime; do not repeat unchanged Studio-only green suite. Preserve original independent/history/native/archive/fullC0-C6 gates.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -25102,6 +25102,64 @@
     "noHistoricalFollowup": true,
     "sourceHashes": {
       "tests/verification/deployment/check-deployment-truth.mjs": "82c442120a851decd64b20d35642a446bbdac08845d18a967e99cbb73bc259b2"
+    }
+  },
+  "studioActualSourceReceipt20261017": {
+    "at": "2026-10-17T00:18:44.864809+00:00",
+    "status": "STUDIO_ORIGINAL_CONFIG_SOURCE_RECEIPTS_VERIFIED_AGGREGATE_NOT_PASSED",
+    "sourceCommit": "d7b5387cf956cb23baa7f8bc303ae7dbc96cce9c",
+    "sourceRemoteVerified": true,
+    "evidence": "docs/review/remediation/config-final-components-20261017",
+    "change": "Shared genuine Prism published fixture now passes actual checked-out Git HEAD and current build time to the real role builder and asserts both emitted manifest fields before publication. Replaces placeholder metadata; no production source/settings, boot trust, receipts or original behavioral assertions weakened. Local dirty worktree is NOT asserted equal to a clean commit.",
+    "checks": {
+      "originalStudioConfig": {
+        "passed": 12,
+        "total": 12,
+        "failed": 0,
+        "skipped": 0,
+        "log": "studio-config.txt",
+        "scope": "Whole original suite after actual revision/time change; before final two receipt assertions"
+      },
+      "finalReceiptAssertions": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0,
+        "skipped": 0,
+        "log": "final-receipt-assertions.txt",
+        "scope": "Original A/B/captured-A case after adding both emitted receipt assertions; not subset global acceptance"
+      },
+      "syntax": true,
+      "originalComponentAggregate": {
+        "status": "TIMED_OUT_NOT_PASSED",
+        "exitCode": 124,
+        "timeoutSeconds": 55,
+        "passed": 0,
+        "cancelled": 17,
+        "log": "integrated-initial.txt",
+        "diagnosis": "55-second bound insufficient for genuine per-case role assembly. Whole Studio-only original command then completed in170.17seconds. No aggregate/native/UID1000 pass claimed."
+      },
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0,
+        "originalResultsChanged": false
+      }
+    },
+    "independentReview": "OPEN; native spawn/reviewer discovery empty; CONFIG subagents0; no fresh output. Unchanged same-surface EROFS not retried. Author checks are not independent acceptance.",
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "QB_R02_constraint": "Actual original producer attempts and prepared source closures now exist, but TestPlanRunnerOptions still has no original inputStore-owned reservation/sealed-version API or authenticated build/baseline association. Existing FileEvidenceStore is output ownership, not input authority. Do not invent a second store/ledger or receipt-shaped task authority. BUDGET_SOURCE_RECEIPT_REQUIRED remains.",
+    "nextAction": "Complete genuine QB-R02 prepared producer/source/build/baseline association and existing inputStore reservation/accounting/sealed snapshot/publication, coordinated sole-root boot/Nova receiving. Diagnose remaining full component aggregate with adequate per-suite runtime; do not repeat unchanged Studio-only green suite. Preserve original independent/history/native/archive/fullC0-C6 gates.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted archive filesystem, isolated migrated PostgreSQL.",
+    "writerLock": "SAME nonblocking lock acquired per write/check/commit; released on command exit",
+    "noHistoricalFollowup": true,
+    "sourceHashes": {
+      "skills/prism/tests/fixtures/published-config.mjs": "337249b7c87d3f3a87a329c5612c072425487e62e97e9f8a6c1791ff15fa6df8"
     }
   }
 }
