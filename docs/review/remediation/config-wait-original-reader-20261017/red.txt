@@ -1,0 +1,25 @@
+✖ original projected Wait resolves through actual Core adapter despite a relocated current B wait root (9.043844ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 735.020576
+
+✖ failing tests:
+
+test at tests/verification/reliability/wait-value-projection.test.mjs:356:1
+✖ original projected Wait resolves through actual Core adapter despite a relocated current B wait root (9.043844ms)
+  Error: CORE_RUNTIME_POLICY_INVALID
+      at captureCoreRuntimePolicy (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts:76:31)
+      at loadCoreRuntimePolicy (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts:113:20)
+      at inspectRuntimeConfiguration (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-runtime.ts:52:57)
+      at prepareRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-runtime.ts:82:21)
+      at runNewPipeline (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts:38:90)
+      at runPipelineV2 (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine.ts:26:10)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/operator-retention-authority-fixture.test.mjs:63:58)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/wait-value-projection.test.mjs:357:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
