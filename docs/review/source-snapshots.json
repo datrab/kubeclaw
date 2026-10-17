@@ -7,20 +7,20 @@
       "sha256": "739dc749289a172c764187eb9816ff1c8ba14337a09ad19e4fe60ecaec2213dd"
     },
     {
-      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/before/docs/architecture/buster-cluster-configuration.md",
-      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
-    },
-    {
       "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/before-v2/docs/architecture/buster-cluster-configuration.md",
       "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
     },
     {
-      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/files/docs/architecture/buster-cluster-configuration.md",
-      "sha256": "9b3481248d9ba8500106296b78835274078bf6d18cdc4cfc269b4191d97f2acb"
+      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
     },
     {
       "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/files-v2/docs/architecture/buster-cluster-configuration.md",
       "sha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/files/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "9b3481248d9ba8500106296b78835274078bf6d18cdc4cfc269b4191d97f2acb"
     },
     {
       "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/before/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
@@ -127,11 +127,11 @@
       "sha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
     },
     {
-      "path": "docs/review/evidence/buster-process-input-policy-20260921/files/docs/architecture/buster-execution-configuration.md",
+      "path": "docs/review/evidence/buster-process-input-policy-20260921/files-v2/docs/architecture/buster-execution-configuration.md",
       "sha256": "96ace80a6e11ca27418a605b9ec19f3ab8c3eb0320e0571ed5e7b572d7d64a08"
     },
     {
-      "path": "docs/review/evidence/buster-process-input-policy-20260921/files-v2/docs/architecture/buster-execution-configuration.md",
+      "path": "docs/review/evidence/buster-process-input-policy-20260921/files/docs/architecture/buster-execution-configuration.md",
       "sha256": "96ace80a6e11ca27418a605b9ec19f3ab8c3eb0320e0571ed5e7b572d7d64a08"
     },
     {
@@ -516,6 +516,46 @@
     },
     {
       "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/visual/README.md",
+      "sha256": "dadded5f27a5006b797e701cbedb69778288f55014c64e36a115a749f6a70ba5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/project-summary/README.md",
       "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9"
     },
     {
@@ -1007,12 +1047,12 @@
       "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
     },
     {
-      "path": "docs/review/evidence/config-buster-readiness-20260921/sources/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
-      "sha256": "beb6c82af6eff6afc153eb57e65743b8a9ea8750635519f7b9277fe9f05a291f"
-    },
-    {
       "path": "docs/review/evidence/config-buster-readiness-20260921/sources-v2/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
       "sha256": "d639d06cd36a494f668d4b580a1b40306c177227406ff942dace85f40c495723"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/sources/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "beb6c82af6eff6afc153eb57e65743b8a9ea8750635519f7b9277fe9f05a291f"
     },
     {
       "path": "docs/review/evidence/config-buster-readiness-20260921/staging/before/docs/operations/operator-configuration.md",
@@ -1023,12 +1063,12 @@
       "sha256": "c2242d7e8fb09e851903a4402ef230a2dd2039f699b7ee075ee823a22ea3e619"
     },
     {
-      "path": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
-      "sha256": "80c52081f29fbd6d571c261f9623d58d60ba7a24dc812f5977ec2daf2616badd"
-    },
-    {
       "path": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources-v2/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
       "sha256": "a59144d32c87e5ea67c778cd7b4828ab6cd6f5a0157617ad50032faebf3589f9"
+    },
+    {
+      "path": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "sha256": "80c52081f29fbd6d571c261f9623d58d60ba7a24dc812f5977ec2daf2616badd"
     },
     {
       "path": "docs/review/evidence/config-final-four-adapter-inventory-20260921/sources/docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md",
@@ -1063,16 +1103,20 @@
       "sha256": "49db85ebd42763d913a44b982fd01d9f059b0dac5594f93aa994ef0d83c9247c"
     },
     {
-      "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md",
-      "sha256": "7ef675c885584d3ef64574b025faab4652611f1fdde02e6c67c43763e966cf88"
-    },
-    {
       "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/sources-v2/docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md",
       "sha256": "49db85ebd42763d913a44b982fd01d9f059b0dac5594f93aa994ef0d83c9247c"
     },
     {
+      "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md",
+      "sha256": "7ef675c885584d3ef64574b025faab4652611f1fdde02e6c67c43763e966cf88"
+    },
+    {
       "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/lease-author-correction/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
       "sha256": "f8cedc9aacbc816e289e98fe5ccce98c392843ba71eb95886d1a3c0377694806"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources-final/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
+      "sha256": "71e6108a23865551962632c5dece51eb58fd4a7ee88a86a9d32f986efa347d17"
     },
     {
       "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
@@ -1139,16 +1183,16 @@
       "sha256": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67"
     },
     {
-      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources-final/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
-      "sha256": "71e6108a23865551962632c5dece51eb58fd4a7ee88a86a9d32f986efa347d17"
-    },
-    {
       "path": "docs/review/evidence/config-storage-plugin-independent-20260921/additional-source/docs/review/remediation/implementation/config-storage-plugin-inventory-20260921.md",
       "sha256": "949c045e3f8fbde7a814c545ec379462fb41e70859937dad00fabbaaf36f9892"
     },
     {
       "path": "docs/review/evidence/config-testprovider-authority-20260921/semantic-correction/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
       "sha256": "1474af440789f5d2fa0f1b6daa56e6a8726b8a9c8b012ff519127fabda5fdb5a"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources-final/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
+      "sha256": "9e6b5efd2ea490fb1e6b23ba91c0644bc976619815f59ceb25082b2ff36f2e67"
     },
     {
       "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
@@ -1213,10 +1257,6 @@
     {
       "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/visual/README.md",
       "sha256": "dadded5f27a5006b797e701cbedb69778288f55014c64e36a115a749f6a70ba5"
-    },
-    {
-      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources-final/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
-      "sha256": "9e6b5efd2ea490fb1e6b23ba91c0644bc976619815f59ceb25082b2ff36f2e67"
     },
     {
       "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/accepted-status/after.md",
@@ -1479,11 +1519,11 @@
       "sha256": "24bbc4206fb04a6e3004432377e487b7707b2340d756574dd2ba98abc8ae3c66"
     },
     {
-      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/docs/architecture/buster-fixture-cleanup.md",
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files-v2/docs/architecture/buster-fixture-cleanup.md",
       "sha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f"
     },
     {
-      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files-v2/docs/architecture/buster-fixture-cleanup.md",
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/docs/architecture/buster-fixture-cleanup.md",
       "sha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f"
     },
     {
@@ -1535,10 +1575,6 @@
       "sha256": "dd455285522761c5c9f26251291a7f7325d404e53b0e8b220c92c0d5484d63c4"
     },
     {
-      "path": "docs/review/evidence/register-documentation-refresh-20260921/after/docs/review/remediation/implementation/register-consistency-20260920.md",
-      "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
-    },
-    {
       "path": "docs/review/evidence/register-documentation-refresh-20260921/after-v2.md",
       "sha256": "57be44d8996f1d4102f131e41825690335376d5112780b62fafd33f00df1255e"
     },
@@ -1547,12 +1583,16 @@
       "sha256": "04f39517913a1eacae39794260a3f8a52c22e04ca01c1d827f2afc6f53f3c6be"
     },
     {
-      "path": "docs/review/evidence/register-documentation-refresh-20260921/before/docs/review/remediation/implementation/register-consistency-20260920.md",
-      "sha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7"
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/after/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
     },
     {
       "path": "docs/review/evidence/register-documentation-refresh-20260921/before.md",
       "sha256": "36cd1363120e157da3506ed6e84d4faf9459507940d64a83ec2a33fe3a247eee"
+    },
+    {
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/before/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7"
     },
     {
       "path": "docs/review/evidence/register-final-status-update-20260921/before/docs/review/remediation/implementation/open-work-inventory-20260921.md",
