@@ -1,0 +1,11 @@
+{"proof":"actual-wait-adapter-byte-and-count-quota","originalInitialQuota":268435456,"fixedLaterQuota":9440,"fixedLaterRecordQuota":2,"originalSerializedBytes":9312,"projectedSerializedBytes":3186,"finalSerializedBytesIncludingMetadata":5052,"releasedBytes":6126,"rejected":"blocked","admitted":"waiting","recordRejected":"blocked"}
+✔ fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged (12133.649803ms)
+✔ real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt (6630.167062ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19476.862513

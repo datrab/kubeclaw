@@ -1,0 +1,11 @@
+✔ wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement (6547.081573ms)
+✔ a small original Wait cannot fund projection metadata and remains byte-identical (4770.240692ms)
+✔ the existing operator projection receipt replays after Wait projection using the original logical Wait digest (5300.193725ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17314.601406

@@ -17,10 +17,66 @@
     "diffCheck": true,
     "originalSnapshotAndStoreBytesUnchanged": true,
     "noBStoreCreated": true,
-    "originalAudienceAndShutdownRevocationPreserved": true
+    "originalAudienceAndShutdownRevocationPreserved": true,
+    "completeWaitFile": {
+      "at": "2026-10-17T06:09:11.612466+00:00",
+      "status": "COMPLETE_WAIT_FILE_VERIFIED_IN_BOUNDED_GROUPS_NOT_FULL_ACCEPTANCE",
+      "sourceCommit": "b4aaa02980687682dc36f410f2413d7338e720cd",
+      "sourceHashesVerifiedUnchanged": true,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "partitionEvidence": [
+        {
+          "log": "targeted.txt",
+          "passed": 3,
+          "sha256": "cf657ef54e9da62cab61ef97f0aabd5b45debe6c9027f7bf273f591115499068"
+        },
+        {
+          "log": "quota-fence.txt",
+          "passed": 2,
+          "sha256": "7ccd93138ecf043bf2daff675adaac77a8f69d43d7492e8c1f0cebe39e244f11"
+        },
+        {
+          "log": "crash-atomicity.txt",
+          "passed": 2,
+          "sha256": "7a4221a785fc6f310a34be3c4340f987185ae169fd17b22f64e05308211607e3"
+        },
+        {
+          "log": "authority-replay.txt",
+          "passed": 3,
+          "sha256": "9c129015c510ecde975a260fade27633c6046b9ad7376669999cadd389a025df"
+        }
+      ],
+      "caseNames": [
+        "real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity",
+        "retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait",
+        "original projected Wait resolves through actual Core adapter despite a relocated current B wait root",
+        "fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged",
+        "real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt",
+        "actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes",
+        "actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes",
+        "wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement",
+        "a small original Wait cannot fund projection metadata and remains byte-identical",
+        "the existing operator projection receipt replays after Wait projection using the original logical Wait digest"
+      ],
+      "newlyExecutedTests": 7,
+      "previouslyVerifiedTests": 3,
+      "productionSourceChangedThisTurn": false,
+      "independentReview": "OPEN: latest actual same-engine admission HTTP429, no report",
+      "fullC0C6Complete": false,
+      "requiredScope": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50
+      },
+      "qualification": "Complete local Wait file only. Exact 10 distinct cases, immutable source hashes across all four groups. Does not replace independent/native/history/archive acceptance. Previous timed-out run retained as NOT PASS."
+    }
   },
   "beforeFix": "red-corrected.txt actual activated original adapter rejects original projection with WAIT_RETAINED_CORE_EVIDENCE_INVALID after B root relocation. red.txt preserves initial missing fixture leaf.",
-  "executionSurfaceRecovery": "Combined focused run exceeded dynamic exec 90-second lifetime: 13 passes/1 cancellation; NOT PASS. Actual processes exited and lock was free. Recovered with bounded changed-path commands: targeted.txt 3/3 and audience-state.txt 6/6, no skips/cancellations. Full wait-value suite remains NOT VERIFIED at this stand.",
+  "executionSurfaceRecovery": "Combined focused run exceeded dynamic exec 90-second lifetime: 13 passes/1 cancellation; NOT PASS. Actual processes exited and lock was free. Recovered with bounded changed-path commands: targeted.txt 3/3 and audience-state.txt 6/6, no skips/cancellations. Full wait-value suite remains NOT VERIFIED at this stand. Subsequent bounded quota/fence 2/2, actual SIGKILL 2/2 and authority/replay 3/3 now complete all 10 unique file tests with targeted3/3 at identical source hashes; 0 failures/skips/cancellations. Independent/full acceptance stays OPEN.",
   "qualityBoundary": {
     "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
     "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",

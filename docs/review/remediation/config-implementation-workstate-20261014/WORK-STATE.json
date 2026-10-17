@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T06:02:22.485553+00:00",
+  "updatedAt": "2026-10-17T06:09:11.612466+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ORIGINAL_WAIT_READER_FIXED_FULL_ACCEPTANCE_OPEN",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -26874,7 +26874,7 @@
       "routingIntegrity": "Exact suffix/helper preservation plus actual existing glob membership",
       "diffCheck": true
     },
-    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable ℹ summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
+    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable \u2139 summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
     "originalRoster": {
       "fields": {
         "required": 2409,
@@ -29421,5 +29421,61 @@
       "tests/verification/reliability/wait-value-projection.test.mjs": "0b096a837b06c8c98aa0abc0002fa43e584ed2f209cca4367d4cfc834bc89ff1",
       "tests/verification/reliability/operator-retention-authority-fixture.test.mjs": "77af11ac6288c059985efa5098fc7a502dc16bd336916810e44805e67a7802f8"
     }
+  },
+  "waitCompleteLocalVerification20261017": {
+    "at": "2026-10-17T06:09:11.612466+00:00",
+    "status": "COMPLETE_WAIT_FILE_VERIFIED_IN_BOUNDED_GROUPS_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "b4aaa02980687682dc36f410f2413d7338e720cd",
+    "sourceHashesVerifiedUnchanged": true,
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "partitionEvidence": [
+      {
+        "log": "targeted.txt",
+        "passed": 3,
+        "sha256": "cf657ef54e9da62cab61ef97f0aabd5b45debe6c9027f7bf273f591115499068"
+      },
+      {
+        "log": "quota-fence.txt",
+        "passed": 2,
+        "sha256": "7ccd93138ecf043bf2daff675adaac77a8f69d43d7492e8c1f0cebe39e244f11"
+      },
+      {
+        "log": "crash-atomicity.txt",
+        "passed": 2,
+        "sha256": "7a4221a785fc6f310a34be3c4340f987185ae169fd17b22f64e05308211607e3"
+      },
+      {
+        "log": "authority-replay.txt",
+        "passed": 3,
+        "sha256": "9c129015c510ecde975a260fade27633c6046b9ad7376669999cadd389a025df"
+      }
+    ],
+    "caseNames": [
+      "real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity",
+      "retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait",
+      "original projected Wait resolves through actual Core adapter despite a relocated current B wait root",
+      "fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged",
+      "real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt",
+      "actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes",
+      "actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes",
+      "wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement",
+      "a small original Wait cannot fund projection metadata and remains byte-identical",
+      "the existing operator projection receipt replays after Wait projection using the original logical Wait digest"
+    ],
+    "newlyExecutedTests": 7,
+    "previouslyVerifiedTests": 3,
+    "productionSourceChangedThisTurn": false,
+    "independentReview": "OPEN: latest actual same-engine admission HTTP429, no report",
+    "fullC0C6Complete": false,
+    "requiredScope": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "qualification": "Complete local Wait file only. Exact 10 distinct cases, immutable source hashes across all four groups. Does not replace independent/native/history/archive acceptance. Previous timed-out run retained as NOT PASS."
   }
 }
