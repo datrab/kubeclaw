@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T05:51:14.235661+00:00",
+  "updatedAt": "2026-10-17T05:55:13.076023+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_HTTP_RECEIVING_SOURCE_IMPLEMENTED_FULL_ACCEPTANCE_OPEN",
+  "status": "ORIGINAL_DURABLE_STORE_RECEIVING_IMPLEMENTED_FULL_ACCEPTANCE_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -29296,6 +29296,70 @@
     "externalOwner": "Raven",
     "resumeCondition": "Same-engine independent reviewer availability; suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup/native pool, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL.",
     "writerLock": "SAME nonblocking writer lock for source mutations/checks/commit/push; released on command exit",
+    "historicalFollowupDispatched": false
+  },
+  "storeOriginalReceiving20261017": {
+    "at": "2026-10-17T05:55:13.076023+00:00",
+    "status": "ORIGINAL_DURABLE_STORE_RECEIVING_IMPLEMENTED_FULL_ACCEPTANCE_OPEN",
+    "sourceCommit": "7ce662d37353d8a705a4b9e0f3973f09bb698716",
+    "branch": "codex/config-c0-semantic-inventory-20261012",
+    "remoteHead": "7ce662d37353d8a705a4b9e0f3973f09bb698716",
+    "verified": true,
+    "productionSourceChanged": true,
+    "evidence": "docs/review/remediation/config-store-original-receiving-20261017",
+    "change": "Actual recover/resume/admin receivers restore all original Artifact/State/Wait/Telemetry roots before original Core budget projection and unchanged package/schema/registry/grant/source admission. No inputStore producer receipt, new author, snapshot format or authority. Existing durable accounting/replay remains in the actual adapters.",
+    "checks": {
+      "integrationPassed": 13,
+      "integrationTotal": 13,
+      "bindingGuardTestsPassed": 1,
+      "bindingGuardTestsTotal": 1,
+      "skipped": 0,
+      "strictNovaTypecheck": true,
+      "diffCheck": true,
+      "actualResumeAfterBRootChanges": true,
+      "currentCoreDeletedBeforeResume": true,
+      "changedGrantsRejected": true,
+      "noBStoreCreated": true,
+      "originalSnapshotsUnchanged": true,
+      "immutablePrivateCapture": true,
+      "allFourStoresMalformedMixedMissingAndForeignBindingsRejected": true
+    },
+    "redBeforeFix": "red-corrected.txt: actual three A resume paths fail RECOVERY_RUNTIME_CONFIGURATION_MISMATCH after B store relocation",
+    "initialRunnerAndFixtureFailures": "before.txt: optional tsx unavailable; switched to native Node v24 TypeScript. red.txt: loaded platform is immutable; corrected fixture to structuredClone. No production workaround.",
+    "sourceHashes": {
+      "skills/nova/core/execution/store-runtime-binding.ts": "354e067830657149346574ae28c7e302452bf9d5491795e9b89b1814f00e5950",
+      "skills/nova/core/execution/engine-runtime.ts": "42a9ddd9c1634f1538dc929083ce500b573195f84d2dd4a3f1b4a64a87caacab",
+      "skills/nova/core/execution/engine-snapshots.ts": "638d0ce392f44e56db2d9517375dfd6ca909456ab80b17d9d6df2800ef6902e7",
+      "skills/nova/core/execution/engine-run.ts": "4cd698c689f8a56b7f405c7efd6d56244098c924ef5a0ece884e84336ff9db15",
+      "skills/nova/core/execution/engine-admin.ts": "e616ae15090d452582dc3d576f951b28c6ca663e00d7e0b3d6958b50a7a16106",
+      "tests/verification/reliability/nova-artifact-policy.test.mjs": "b797005501c69f8351f1ac4d37dbfd9d537b2c2c2861e4d7fc54be4cae762cc4",
+      "tests/verification/reliability/nova-state-wait-policy.test.mjs": "e8fcd825dd368587484654e256fd0deec73d3279e2c40a88a872689beb8bebed",
+      "tests/verification/reliability/nova-telemetry-policy.test.mjs": "0400d41759910d31bc457261f10e15154f9d3de13da05ebaf769560089c51ee2",
+      "tests/verification/reliability/nova-store-original-binding.test.mjs": "b0f72e5a0d36e2a5f3ef6709db4a14100b08df6574812d7185aaa6904d536af7"
+    },
+    "qualityBoundary": {
+      "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
+      "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",
+      "neededImplementation": "Coordinate the SAME approved root/schema/all-profile/file-set/source closure/generation/service/image/package receipt/delivery and original reader, then derive complete policies from authenticated original boot into actual Nova resolver. Do not promote denied v10 or fake receipts.",
+      "inputStore": "runner-attempt-preparation.invocationInputs has ArtifactRefV1 from producer AttemptResultV1, no authenticated sourceRevision/buildDigest/originalInputReceiptDigest/baseline association/storeVersion or inputStore-owned reservations/validity/publication lifecycle. Need actual producer/result/source receipt joins and same original store accounting/sealed bytes/fences before provider execution. Keep BUDGET_SOURCE_RECEIPT_REQUIRED."
+    },
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+      "originalResultsChanged": false
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "productiveQualityBootImplemented": false,
+    "sealedInputStoreImplemented": false,
+    "qualityActivationAllowed": false,
+    "remainingStoreWork": "Sole central author/profile/schema/root/delivery plus full original semantic/native/history/independent acceptance remain OPEN. This original-root receiver is not inputStore sealed producer/baseline accounting or central externalization completion.",
+    "independentReview": "OPEN: native spawn/review/collaboration tool discovery empty; CONFIG subagents0; parent terminal failed, no productive repository worker. Existing same-engine complete-source attempts HTTP429 without report inspected. No unchanged retry or clean review claimed.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Same-engine independent reviewer availability; suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup/native pool, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL.",
+    "writerLock": "SAME nonblocking lock held per bounded mutation/check/commit/push; released on command exit",
     "historicalFollowupDispatched": false
   }
 }
