@@ -10,11 +10,12 @@ const repo = fileURLToPath(new URL('../../../', import.meta.url));
 const hash = bytes => `sha256:${createHash('sha256').update(bytes).digest('hex')}`;
 const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'];
 function seal(directory) {
+  fs.chownSync(directory, 0, 0);
   fs.chmodSync(directory, 0o755);
   for (const name of fs.readdirSync(directory)) {
     const file = path.join(directory, name), stat = fs.lstatSync(file);
     if (stat.isDirectory()) seal(file);
-    else if (stat.isFile()) fs.chmodSync(file, stat.mode & 0o111 ? 0o555 : 0o444);
+    else if (stat.isFile()) { fs.chownSync(file, 0, 0); fs.chmodSync(file, stat.mode & 0o111 ? 0o555 : 0o444); }
     else if (stat.isSymbolicLink()) fs.lchownSync(file, 0, 0);
   }
 }

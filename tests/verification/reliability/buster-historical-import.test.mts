@@ -97,7 +97,13 @@ test('real historical producer preserves full and compacted jobs in the fixed-UI
   await assert.rejects(fs.stat(path.join(group, 'data', 'inputs', '2')), { code: 'ENOENT' });
   assert.deepEqual(await fs.readFile(originalFile), originalBytes, 'original complete records/receipts remain byte-identical');
   const wire = await fs.readFile(path.join(group, 'data', 'inputs', '1', 'request.json'));
-  assert.deepEqual(wire, Buffer.from(JSON.stringify(full)));
+  // The sealed V1 store is the original byte/ordering authority, not the
+  // pre-publication object's insertion order (the durable codec canonicalizes).
+  const originalState = JSON.parse(originalBytes.toString('utf8'));
+  const originalJob = originalState.records.find((record: any) => record.idempotencyKey === full.idempotencyKey).payload.job;
+  assert.deepEqual(originalJob, full);
+  assert.deepEqual(wire, Buffer.from(JSON.stringify(originalJob)));
+  assert.deepEqual(JSON.parse(wire.toString('utf8')), full);
   assert.equal((await fs.stat(path.join(group, 'data', 'inputs', '1', 'input.json'))).mode & 0o777, 0o444);
   const charges = output.reservations;
   assert.ok(charges.at(-1).bytes >= originalBytes.length + wire.length);

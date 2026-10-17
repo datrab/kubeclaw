@@ -34,18 +34,21 @@ function fixture(t: test.TestContext) {
     const owner = path.join(config, source.ownerPath);
     fs.mkdirSync(path.dirname(owner), { recursive: true });
     fs.copyFileSync(path.join(base, quality ? 'quality-budget-contracts-01/stand/config' : 'same-entry-agent-role-binding-01/stand/config', source.ownerPath), owner);
-    fs.cpSync(path.join(repository, path.dirname(source.provenance.manifestPath)), path.join(directory, path.dirname(source.manifestPath)), { recursive: true });
-    const manifestFile = path.join(directory, source.manifestPath);
-    fs.mkdirSync(path.dirname(manifestFile), { recursive: true });
-    fs.copyFileSync(path.join(repository, source.provenance.manifestPath), manifestFile);
-    for (const section of ['stages','observers','adapters','testProviders']) for (const declaration of source.manifest[section] ?? []) {
-      for (const field of ['module','configSchema','inputSchema','resultSchema']) {
-        if (declaration[field] === undefined) continue;
-        const relative = path.join(path.dirname(source.manifestPath), declaration[field]);
-        const destination = path.join(directory, relative);
-        fs.mkdirSync(path.dirname(destination), { recursive: true });
-        fs.copyFileSync(path.join(repository, relative.slice('source-current/'.length)), destination);
-      }
+    // This denied historical generation must use its declared original whole
+    // package bytes, not the mutable current implementation. Hashes confer no
+    // activation authority; all original receiving/negative checks stay live.
+    const packageRoot = path.posix.dirname(source.manifestPath);
+    const inputContract = read(path.join(repository, 'skills/common/plugin-runtime/foundation/config/pipeline-v10-input-contract.json'));
+    const members = inputContract.packageSources.filter((member: any) => member.relativePath.startsWith(packageRoot + '/'));
+    assert.ok(members.length > 0, `missing original package closure: ${packageId}`);
+    for (const member of members) {
+      const retained = path.join(repository, 'tests/verification/reliability/fixtures/pipeline-v10-retained', member.sha256 + '.fixture');
+      const bytes = fs.readFileSync(fs.existsSync(retained) ? retained : path.join(repository, member.sourcePath));
+      assert.equal(bytes.length, member.byteLength, `original package size: ${member.sourcePath}`);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), member.sha256, `original package identity: ${member.sourcePath}`);
+      const destination = path.join(directory, member.relativePath);
+      fs.mkdirSync(path.dirname(destination), { recursive: true });
+      fs.writeFileSync(destination, bytes);
     }
   }
   const infra = read(path.join(repository, 'skills/common/plugin-runtime/foundation/config/pipeline-v10-infra-schemas.json'));
@@ -227,7 +230,8 @@ test('Core/infra schemas and referenced Platform/compiler dependencies preserve 
     assert.equal(createHash('sha256').update(raw).digest('hex'), source.provenance.schemaSha256);
     assert.deepEqual(source.schema, JSON.parse(raw.toString()));
     for (const dependency of source.dependencies ?? []) {
-      const raw = fs.readFileSync(path.join(repository, dependency.provenance.path));
+      const retained = path.join(repository, 'tests/verification/reliability/fixtures/pipeline-v10-retained', dependency.provenance.sha256 + '.fixture');
+      const raw = fs.readFileSync(fs.existsSync(retained) ? retained : path.join(repository, dependency.provenance.path));
       assert.equal(createHash('sha256').update(raw).digest('hex'), dependency.provenance.sha256);
       assert.deepEqual(dependency.schema, JSON.parse(raw.toString()));
     }
