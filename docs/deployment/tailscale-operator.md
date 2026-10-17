@@ -39,7 +39,7 @@ The current release path pins the chart archive and operator/proxy images throug
 The older static infrastructure review's unpinned-chart statement describes its
 historical review commit, not this current release path.
 
-## Required client and decision matrix
+## Procedure: required client and decision matrix
 
 Complete each row using actual device/user references from the redacted external
 policy. The entries below define checks; they are not fabricated test identities
@@ -61,7 +61,7 @@ is not evidence of a policy deny. Establish the allowed positive control in the
 same test window. Do not store auth keys, OAuth secrets, bearer tokens or passwords
 in these records.
 
-## Rotation and recovery verification
+## Verification: rotation and recovery
 
 Run the completed matrix before and after each applicable change: managed proxy
 restart/recreation, OAuth credential rotation and HTTPS certificate renewal or
@@ -76,7 +76,7 @@ Changing its auth key alone is not a device rotation. Follow the existing
 revoked/re-enrolled and repeat the outbound allow/deny checks. This sidecar does
 not prove an independent host recovery path; IFR-28-001 remains separate.
 
-## Diagnosis and local checks
+## Troubleshooting and local checks
 
 First identify the failing layer: external client/device and grant, name/TLS,
 operator/proxy reconciliation, backend Service/Endpoints and NetworkPolicy, then

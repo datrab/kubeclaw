@@ -3,6 +3,11 @@ on:
   pull_request:
   # main is covered by the required call from build-images.yaml.
   workflow_call:
+# Superseded PR commits must not occupy the runner queue ahead of the current head.
+# Separate workflow keys also keep reusable workflow callers from sharing a group.
+concurrency:
+  group: pr-pipeline-reliability-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:

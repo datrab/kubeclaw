@@ -47,7 +47,6 @@
         "busterNamespaceBroker",
         "commands",
         "swarmConfig",
-        "swarmConfigJson",
         "semgrepConfigYaml",
         "eslintConfigMjs",
         "customSkills",
@@ -59,7 +58,10 @@
         "archviewer",
         "extraVolumes",
         "extraVolumeMounts",
-        "busterRuntimePersistence"
+        "busterRuntimePersistence",
+        "busterNative",
+        "pipelineDelivery",
+        "agentObserverPolicy"
       ],
       "secretReferences": [
         {

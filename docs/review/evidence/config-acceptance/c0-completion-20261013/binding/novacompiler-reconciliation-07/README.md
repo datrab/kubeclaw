@@ -1,0 +1,9 @@
+# Compiled project concurrency: additive disposition correction
+
+This reconciles Runtime batch 11's exact `RT-COMPILER-DEFINITION-MAXCONCURRENCY` correction with the two earlier frozen parent coordinate proposals. Original IDs, classification, bodies, source coordinates, cases and raw evidence remain unchanged. `reconciliation.json` preserves both full original records and the exact child correction; `input-identities.json` binds actual code and inputs.
+
+The productive project compiler explicitly owns a single repository publication lane, constructs dependencies through the previous module's test gate and emits `maxConcurrency: 1`. Its current compatible domain is exactly `[1]`. Neither generic graph validation of a larger positive integer nor raising this scalar establishes a supported parallel project publication profile. Treat this compiled value as a versioned product compatibility invariant, not a new adjustable module knob. A parallel project design is outside this centralization approval package.
+
+The generic Core scheduler is a separate reader: its value comes from the original explicit graph via `PipelineRunner`. Existing workflow graphs retain their task/source identity, positive integer wave bound and actual semantics. No extra central hard-cap/default is invented, and no generic reader is attributed a fictitious compiled-project A/B policy effect.
+
+Future definitions must retain the original field/case IDs while replacing the impossible compiled-policy A/B claim with exact invariant/source/old-author rejection and original graph/recovery conservation obligations. Runtime batch 11 records the bounded definition controls, not target runtime acceptance. Any stronger generic-graph operational capacity policy requires its own actual source/domain/owner definition; this correction does not supply one. Independent whole-C0 review remains pending.

@@ -1,0 +1,156 @@
+{
+  "status": "author-definition-review-pending",
+  "rows": [
+    {
+      "id": "C0-NOVA-COMPILER-MAXIMUM-MODULES",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 128
+      },
+      "unit": "modules",
+      "reader": "projectModules; compileProject calls before orderedModules/sourceStages",
+      "target": "config/core/nova/<profile>.json#/compiler/maximumModules",
+      "scope": "R",
+      "cases": [
+        "positive 64 module graph under64",
+        "65 valid nonoverlapping modules rejects under64 and accepts under128",
+        "missing/wrongtype/nonpositive/over128 rejects policy before compiler",
+        "restored hardcoded128 mutant makes65-under64 negative fail"
+      ],
+      "limitation": "Bounded reductions preserve current cardinality ceiling. Raising128 requires separate resource/algorithm domain evidence, not implemented/claimed.",
+      "source": {
+        "path": "skills/nova/project/compiler.ts",
+        "line": 117,
+        "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+        "field": "project.modules.maximumLength",
+        "text": "  if (!Array.isArray(project.modules) || !project.modules.length || project.modules.length > 128) throw new Error('PROJECT_MODULES_INVALID');"
+      },
+      "class": "operator-setting",
+      "currentDefault": 128,
+      "requirementIds": [
+        "D17",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "A6"
+      ],
+      "status": "source-traced proposed domain; no independent review or complete implemented case harness"
+    },
+    {
+      "id": "C0-NOVA-AUDIT-RESULT-INLINE-BYTES",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16384
+      },
+      "unit": "UTF8 encoded JSON bytes",
+      "reader": "createAdapterRuntime effect completed hook -> auditResult -> lifecycle journal",
+      "target": "config/core/nova/<profile>.json#/observability/maximumInlineEffectResultBytes",
+      "scope": "R",
+      "cases": [
+        "genuine adapter result JSON exactly4096 bytes inline at4096",
+        "4097bytes summary at4096 and inline at16384",
+        "hash/byte identity summary agrees original FileEffectJournal hydrated receipt",
+        "missing/noninteger/nonpositive/over16384 reject before adapter activation",
+        "reintroduced16384 literal mutant fails4097-at4096 case"
+      ],
+      "limitation": "Lifecycle artifactRef string is not by itself proof of durable artifact API. Actual effects/journal.ts completion stores/hydrates full receipts separately; target summary must join that retained evidence, not invent object store write.",
+      "source": {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "line": 65,
+        "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+        "field": "auditResult.maximumInlineBytes",
+        "text": "  if (serialized.length <= 16 * 1024) return result;"
+      },
+      "class": "operator-setting",
+      "currentDefault": 16384,
+      "requirementIds": [
+        "D17",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "A6"
+      ],
+      "status": "source-traced proposed domain; no independent review or complete implemented case harness"
+    },
+    {
+      "id": "C0-NOVA-LEGACY-RECORD-BYTES",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 262144
+      },
+      "unit": "UTF8 record bytes excluding newline",
+      "reader": "runRoot -> journalContainsRunId -> append/matches legacy identity scanner",
+      "target": "config/core/nova/<profile>.json#/recovery/maximumLegacyRecordBytes",
+      "scope": "S",
+      "cases": [
+        "record at65536 scans under65536",
+        "record65537 rejects explicit oversized-history before any new run creation under65536",
+        "same record scans under262144",
+        "no authenticated historic match rejects rather than selecting new run",
+        "reintroduced262144 mutant fails65537-at65536"
+      ],
+      "limitation": "Current oversized lines are silently ignored; target fails explicit oversize instead of treating original run as absent. This changes recovery error contract, not legacy hashes.",
+      "source": {
+        "path": "skills/nova/core/execution/run-root.ts",
+        "line": 6,
+        "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3",
+        "field": "MAX_LEGACY_EVENT_BYTES",
+        "text": "const MAX_LEGACY_EVENT_BYTES = 256 * 1024;"
+      },
+      "class": "operator-setting",
+      "currentDefault": 262144,
+      "requirementIds": [
+        "D17",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "A6"
+      ],
+      "status": "source-traced proposed domain; no independent review or complete implemented case harness"
+    },
+    {
+      "id": "C0-NOVA-LEGACY-SCAN-BYTES",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "unit": "whole legacy journal bytes",
+      "reader": "exported runRoot option -> journalContainsRunId; engine-run calls omit option currently",
+      "target": "config/core/nova/<profile>.json#/recovery/maximumLegacyScanBytes",
+      "scope": "S",
+      "cases": [
+        "authenticated old journal exactlyN bytes scans atN",
+        "N+1 regular file rejects LEGACY_SCAN_BYTE_LIMIT atN before new run discovery/action",
+        "missing/noninteger/nonpositive/less-than-record-policy rejects profile",
+        "oversized changing file rejects during scanner iteration",
+        "omit-required-option mutant fails bounded scan"
+      ],
+      "limitation": "Current productive callers are unbounded, not accepted target policy. Initial preservation profile requires genuine retained-journal inventory/explicit scan cap, no invented deployed value.",
+      "source": {
+        "path": "skills/nova/core/execution/run-root.ts",
+        "line": 63,
+        "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3",
+        "field": "options.maximumLegacyBytes",
+        "text": "  if (options.maximumLegacyBytes !== undefined && (!Number.isSafeInteger(options.maximumLegacyBytes) || options.maximumLegacyBytes < 1)) {"
+      },
+      "class": "operator-setting",
+      "currentDefault": null,
+      "requirementIds": [
+        "D17",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "A6"
+      ],
+      "status": "source-traced proposed domain; no independent review or complete implemented case harness"
+    }
+  ]
+}
