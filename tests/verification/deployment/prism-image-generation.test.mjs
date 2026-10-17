@@ -6,6 +6,7 @@ import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
 import { buildPrismImageBundle } from '../../../scripts/build-prism-image-bundle.mjs';
 
 const repository = fileURLToPath(new URL('../../../', import.meta.url)).replace(/\/$/u, '');
@@ -14,8 +15,21 @@ test('normal image producer installs a complete role and matching selected centr
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-image-projection-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const result = await buildPrismImageBundle({ repository, output: path.join(root, 'image'), callerId: 'prism-ingestion',
-    revision: 'a'.repeat(40), builtAt: '2026-10-15T00:00:00Z' });
-  const chart = yaml.loadAll(execFileSync('helm', ['template', 'prism', 'charts/prism', '--namespace', 'kubeclaw', '-f', 'charts/prism/ci-values.yaml'], { encoding: 'utf8' })).filter(Boolean);
+    revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), builtAt: new Date().toISOString() });
+  const projection = prismChartProjection(path.join(repository, 'config'));
+  const directory = path.join(root, 'chart'), packaged = path.join(root, 'packaged');
+  fs.cpSync('charts/prism', directory, { recursive: true, dereference: true });
+  fs.writeFileSync(path.join(directory, 'files/pipeline/prism-topology.json'), JSON.stringify(projection));
+  fs.mkdirSync(packaged);
+  execFileSync('helm', ['package', directory, '--destination', packaged], { stdio: 'pipe' });
+  const archives = fs.readdirSync(packaged).filter(name => name.endsWith('.tgz'));
+  assert.equal(archives.length, 1);
+  const archive = path.join(packaged, archives[0]);
+  assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive, 'prism/files/pipeline/prism-topology.json'], { encoding: 'utf8' })), projection);
+  assert.equal(projection.generationDigest, result.generationDigest);
+  const manifest = JSON.parse(fs.readFileSync(path.join(result.packageRoot, 'manifest.json'), 'utf8'));
+  assert.equal(manifest.commit, execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim());
+  const chart = yaml.loadAll(execFileSync('helm', ['template', projection.deployment.releaseName, archive, '--namespace', projection.deployment.namespace, '-f', 'charts/prism/ci-values.yaml'], { encoding: 'utf8' })).filter(Boolean);
   for (const document of chart.filter(item => ['Job', 'Deployment'].includes(item.kind))) {
     const spec = document.spec.template.spec;
     for (const container of [...(spec.initContainers ?? []), ...spec.containers]) {

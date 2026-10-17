@@ -20,7 +20,17 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and 
     const bundle = renderNativeWorkerNode(selected);
     const file = path.join(directory, 'native.yaml'); fs.writeFileSync(file, bundle['prism-native-values.yaml']);
     const projection = prismChartProjection(path.resolve('config'));
-    const args = ['template', projection.deployment.releaseName, 'charts/prism', '-f', 'charts/prism/ci-values.yaml',
+    const chart = path.join(directory, 'chart'), packaged = path.join(directory, 'packaged');
+    fs.cpSync('charts/prism', chart, { recursive: true, dereference: true });
+    fs.writeFileSync(path.join(chart, 'files/pipeline/prism-topology.json'), JSON.stringify(projection));
+    fs.mkdirSync(packaged);
+    execFileSync('helm', ['package', chart, '--destination', packaged], { stdio: 'pipe' });
+    const archives = fs.readdirSync(packaged).filter(name => name.endsWith('.tgz'));
+    assert.equal(archives.length, 1);
+    const archive = path.join(packaged, archives[0]);
+    assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive, 'prism/files/pipeline/prism-topology.json'], { encoding: 'utf8' })), projection);
+    // Complete normal archive; OCI/native render identities are not native boot proof.
+    const args = ['template', projection.deployment.releaseName, archive, '-f', 'charts/prism/ci-values.yaml',
       '-f', file, '--namespace', 'kubeclaw', '--set', 'workerTrust.spiffe.enabled=true'];
     const docs = loadAll(execFileSync('helm', args, { encoding: 'utf8' }));
     assert.equal(nativePrismDeploymentSelection(docs, 'kubeclaw', selected), true);
@@ -46,7 +56,7 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and 
     const image = await buildPrismImageBundle({ repository: path.resolve(import.meta.dirname, '../../..'),
       output: path.join(directory, 'image'), callerId: 'prism-worker',
       revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-      builtAt: '2026-10-16T00:00:00Z' });
+      builtAt: new Date().toISOString() });
     const boot = await import(pathToFileURL(path.join(image.packageRoot, 'skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href);
     const installed = await import(pathToFileURL(path.join(image.packageRoot, 'skills/packages/prism-engine/server/worker-config.ts')).href);
     const capture = boot.capturePipelineBootReceipts(image.deliveryRoot, image.systemRoot,
