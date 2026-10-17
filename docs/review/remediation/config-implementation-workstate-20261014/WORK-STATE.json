@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T02:54:26.698510+00:00",
+  "updatedAt": "2026-10-17T02:59:43.770769+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue genuine QB-R02 original producer/source/build/baseline association and inputStore reservation/accounting/sealed snapshot/publication; coordinated authenticated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 unchanged. Required independent/full original/history/native/archive/C0-C6 gates OPEN. Native preparation source fixtures now use current central authors; real guest provisioning/manifests must deliver the same complete file-set. Do not replay unchanged green suites or native infrastructure failures.",
+  "nextAction": "Implement genuine generation/publication/installed boot transport for original Control/Worker subprocess tests, preserving actual entrypoint and original HTTP/native assertions. Continue authentic QB-R02 source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated boot+Nova receiving; BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 unchanged. Full original/history/native/archive/independent C0-C6 gates OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -21139,7 +21139,7 @@
   "lastCheckAt": "2026-10-16T08:40:27.660565+00:00",
   "implementationAgentRunning": false,
   "lastObservedAt": "2026-10-16T22:00:04.143832+00:00",
-  "workerActivity": "Scheduled direct original process-input delivery migration and16/16 checks completed; no persistent worker",
+  "workerActivity": "Scheduled direct Control source producer consolidation,35/35 original policy checks and source controls completed; no persistent worker",
   "writerLock": "SAME nonblocking repository lock; released at command exit",
   "duplicateRecoveryQueued": false,
   "reviewerActive": false,
@@ -26606,6 +26606,68 @@
     "externalOwner": "Raven",
     "resumeCondition": "Isolated Linux Docker UID/GID1000 with delegated writable cgroup and native pool/capabilities, sufficiently large root-trusted writable archive storage and isolated migrated PostgreSQL. Original historical import additionally needs real CHOWN SETUID/SETGID1003 authority. No UID/kernel/trust spoof or skips.",
     "writerLock": "SAME nonblocking shared repository lock; released on command exit",
+    "noHistoricalFollowup": true
+  },
+  "controlSourceOwner20261017": {
+    "at": "2026-10-17T02:59:43.770769+00:00",
+    "status": "ORIGINAL_CONTROL_SOURCE_AUTHORS_CONSOLIDATED_35_OF_35_NOT_PROCESS_ACCEPTANCE",
+    "sourceCommit": "f8f271c730701c5e43101a33fb50f1dafb5b798d",
+    "sourceRemoteVerified": true,
+    "verifiedRemoteHead": "f8f271c730701c5e43101a33fb50f1dafb5b798d",
+    "evidence": "docs/review/remediation/config-control-source-owner-20261017",
+    "change": "Original Control process source producer now emits complete current pipeline file-set and changes only the exact prism-control binding selected settings. The original35-case Control policy suite uses this SAME source producer instead of its duplicate implementation. No central policy default or production source changed. Original listener process and sink-error HTTP assertions untouched.",
+    "checks": {
+      "originalControlPolicy": {
+        "passed": 35,
+        "total": 35,
+        "failed": 0,
+        "skipped": 0
+      },
+      "sourceInputControls": "PASS: two port profiles, eight invalid authored ports rejected, full file-set conservation outside explicit port, immutable original snapshot, restored positive, canonical original unchanged",
+      "strictPrismTypecheck": true,
+      "diffCheck": true
+    },
+    "originalRoster": {
+      "fields": {
+        "required": 2409,
+        "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
+        "unchanged": true
+      },
+      "cases": {
+        "required": 6845,
+        "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/cases.json",
+        "unchanged": true
+      },
+      "requirements": {
+        "required": 50,
+        "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/requirements.json",
+        "unchanged": true
+      }
+    },
+    "sourceSha256": {
+      "skills/prism/tests/fixtures/control-policy.mts": "2c605e1c8900a7f6d42eb2d3af3c2dcf2f7df5e56e0cd7e5708fd840df3efa64",
+      "skills/prism/tests/swarm-control-policy.test.mts": "c8a07b61ec8d774a8c5eb073c56d9ecbdc90d0f0e98395016ba063e3555fb69c"
+    },
+    "receivingResidual": {
+      "boundary": "control-listener.test.mts subprocess -> installed control.ts verifyPipelineBootReceipt(/run/pipeline-delivery, prism-control)",
+      "constraint": "The three original production-process cases still require genuine selected generation materialization, installed role package, expected atomic receipt mount and system generation at actual boot paths. SWARM_CONFIG in the original process invocation is now a current complete source file-set, NOT an authenticated boot receipt; entrypoint still rejects this legacy policy author. Real publication/installed fixture transport remains source work. No fake capture, alternate entrypoint or trust bypass.",
+      "originalProcessTests": "NOT RUN: unchanged known missing installed boot transport; no false full control-listener suite PASS.",
+      "workerNegativeTests": "Original worker-listener-config negative entrypoint fixtures still use retired author and missing installed boot transport; exact assertions retained."
+    },
+    "independentReview": "OPEN: fresh native spawn/reviewer/collaboration discovery empty; CONFIG subagents0, parent done. No fresh independent report; unchanged same-surface reviewer initialization EROFS not replayed. Author checks not independent/native acceptance.",
+    "originalCasesNewlyAccepted": 0,
+    "originalResultsChanged": false,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "nextAction": "Implement genuine generation/publication/installed boot transport for original Control/Worker subprocess tests, preserving actual entrypoint and original HTTP/native assertions. Continue authentic QB-R02 source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication and coordinated boot+Nova receiving; BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 unchanged. Full original/history/native/archive/independent C0-C6 gates OPEN.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Isolated Linux Docker UID/GID1000 with delegated writable cgroup and native pool/capabilities, sufficiently large root-trusted writable archive storage and isolated migrated PostgreSQL. Original historical import additionally needs real CHOWN SETUID/SETGID1003 authority. No UID/kernel/trust spoof or skips.",
+    "writerLock": "SAME shared nonblocking writer lock acquired for bounded changes/checks/commit/push; released at command exit",
     "noHistoricalFollowup": true
   }
 }

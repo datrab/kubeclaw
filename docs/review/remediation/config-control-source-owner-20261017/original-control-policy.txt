@@ -1,0 +1,43 @@
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (21.718512ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (2.961927ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (2.69363ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (1.822147ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (1.719384ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (1.518249ms)
+✔ CC1 Control artifactRoot rejects undefined (1.517949ms)
+✔ CC1 Control artifactRoot rejects null (1.351945ms)
+✔ CC1 Control artifactRoot rejects "" (1.53041ms)
+✔ CC1 Control artifactRoot rejects "/" (1.447528ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.302194ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (13.277324ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (4.62668ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (3.925582ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (1.422247ms)
+✔ CC1 Control artifactRoot rejects 1 (1.329444ms)
+✔ CC1 Control studioPublicUrl rejects undefined (1.446637ms)
+✔ CC1 Control studioPublicUrl rejects null (1.385426ms)
+✔ CC1 Control studioPublicUrl rejects "" (1.409427ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (1.385285ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (1.395416ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (1.434387ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (1.355455ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.53556ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (1.353145ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (1.324414ms)
+✔ CC1 Control studioPublicUrl rejects 1 (1.382716ms)
+✔ CC1 strict Control object (7.845853ms)
+✔ CC1 strict Control object (1.56246ms)
+✔ CC1 strict Control object (1.415687ms)
+✔ CC1 strict Control object (1.553241ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (1.14466ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (1.022746ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (0.864202ms)
+✔ CC2 authored Control snapshot survives file mutation (26.047425ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 645.174609
