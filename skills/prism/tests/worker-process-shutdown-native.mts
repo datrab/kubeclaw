@@ -1,4 +1,4 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { writeWorkerShutdownPolicy } from './fixtures/worker-shutdown-policy.mts';
 import { nativeResourcePolicy, nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -19,12 +19,7 @@ assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true', 'A dedicated n
 async function authoredConfig(t: { after(fn: () => Promise<void>): void }, shutdownTimeoutMs: number, port: number, closeTimeoutMs: number, drainTimeoutMs: number): Promise<string> {
   const root = await mkdtemp(join(tmpdir(), 'prism-shutdown-config-'));
   t.after(() => rm(root, { recursive: true, force: true }));
-  const config = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-  config['prism-worker'].settings.ingress.shutdownTimeoutMs = shutdownTimeoutMs;
-  config['prism-worker'].settings.ingress.port = port;
-  config['prism-worker'].settings.supervisor.closeTimeoutMs = closeTimeoutMs;
-  config['prism-worker'].settings.supervisor.drainTimeoutMs = drainTimeoutMs;
-  const file = join(root, 'swarm.config.json'); writeTestBundle(file, config); return file;
+  return writeWorkerShutdownPolicy(root, shutdownTimeoutMs, port, closeTimeoutMs, drainTimeoutMs);
 }
 
 async function unusedPort(): Promise<number> {
