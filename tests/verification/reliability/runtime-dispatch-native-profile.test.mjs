@@ -27,17 +27,24 @@ const definition={schemaVersion:'pipeline-definition.v2',id:'pipeline:profile',m
 function platform(root,origin,kind){
   const runtimeId=`kubeclaw.runtime-dispatch:${kind==='generic'?'runtime':'openclaw'}`;
   const roots=['common','nova'].map(role=>path.join(source,'skills',role,'plugins'));
-  return {corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
+  const owner=JSON.parse(fs.readFileSync(TEST_CORE_POLICY_SELECTION.file,'utf8'));
+  // Preserve the original bounded I/O timings in the explicit complete owner,
+  // never as a second inline adapter author or a production default change.
+  owner.profiles.standard.settings.openClawDispatch.targetTimingProfiles.fixture={spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:1,sessionTimeoutMs:ioTimeoutMs};
+  owner.profiles.standard.settings.reviewPolicySelection.file=path.resolve(path.dirname(TEST_CORE_POLICY_SELECTION.file),owner.profiles.standard.settings.reviewPolicySelection.file);
+  const ownerFile=path.join(root,'core.config.json');
+  if(!fs.existsSync(ownerFile))fs.writeFileSync(ownerFile,JSON.stringify(owner));
+  return {corePolicySelection: {file:ownerFile,profile:'standard'},schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'runtime.dispatch':runtimeId,
       'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets',
       'git.repository.read':'kubeclaw.repository-adapter:repository','artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store'},
     grants:{'kubeclaw.architecture-validator:architecture':{'runtime.dispatch':{allowedAgents:['agent']},
       'git.repository.read':{allowedPrefixes:['.']},'artifacts.read':{allowedNamespaces:['kubeclaw.architecture-validator']},'artifacts.write':{allowedNamespaces:['kubeclaw.architecture-validator']}},
       [runtimeId]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['runtime.token']},...(kind==='generic'?{}:{'git.repository.read':{allowedPrefixes:['.']}})}},
-    adapters:{[runtimeId]:{targets:{agent:kind==='generic'?{endpoint:origin+'/ack',tokenSecret:'runtime.token'}:
+    adapters:{[runtimeId]:{targets:{agent:kind==='generic'?{endpoint:origin+'/ack',tokenSecret:'runtime.token',byteProfile:'standard'}:
       {endpoint:origin+'/fault',tokenSecret:'runtime.token',runtime:'acp',agentId:'audit',agentRole:'architecture',model:'audit/model',cwd:root,
-        repositoryRoot:root,resultPathPrefix:'results',spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:1,sessionTimeoutMs:ioTimeoutMs}}},
-      'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature'],timeoutMs:ioTimeoutMs},
+        repositoryRoot:root,resultPathPrefix:'results',timingProfile:'fixture'}}},
+      'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature']},
       'kubeclaw.secret-resolver:secrets':{environment:{'runtime.token':'KUBECLAW_PROFILE_LOCAL_TOKEN'}},
       'kubeclaw.repository-adapter:repository':{repositoryRoot:root},'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},
     activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:ioTimeoutMs,effectLockTtlMs:lockTtlMs,
@@ -97,8 +104,8 @@ if(process.argv[2]==='--child'){
     const proposal={id:sdk.sha256Text(sdk.canonicalJson(finding)),jobId:jobs[0].id,jobDigest:jobs[0].digest,finding};
     const verificationJobs=verification.buildScalableVerificationJobs({proposals:[proposal],integrityIssues:[],incompleteJobs:[]},jobs,sdk.sha256Text('policy'));
     const prepared=await prepareRuntime(p,definition),journal=new core.FileEffectJournal(path.join(root,'helper-effects.jsonl'), TEST_CORE_POLICY);
-    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,
+    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),
+      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs,prepared.corePolicy.resourceAcquisition),shutdownTimeoutMs:ioTimeoutMs,
       async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();const checked=[];
     try{
@@ -153,8 +160,8 @@ if(process.argv[2]==='--child'){
         fs.writeSync(1,`AUDIT_BOUNDARY:${name}\n`);process.kill(process.pid,'SIGKILL');
       }
     }]));
-    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs),
+    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs,prepared.corePolicy.resourceAcquisition),
       shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();let result,error;
     const payload=buildArchitectureRequest('agent',definition.stages[0].input,undefined);
