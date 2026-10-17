@@ -201,6 +201,13 @@ if len(native_host_rows)!=20 or len(native_host_joins['rows'])!=20:raise ValueEr
 for identity,row in native_host_rows.items():
     original=originals.get(identity)
     if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['runtimeAcceptance']!='OPEN; original results unchanged' or row['centralPhysicalAuthor'] is not None:raise ValueError('Native host original/acceptance drift')
+gitops_path=str((OUT/'gitops-successors.json').relative_to(ROOT))
+gitops_joins=read(gitops_path)
+gitops_rows={r['id']:r for r in gitops_joins['rows']}
+if len(gitops_rows)!=8 or len(gitops_joins['rows'])!=8:raise ValueError('GitOps8 roster drift')
+for identity,row in gitops_rows.items():
+    original=originals.get(identity)
+    if original is None or any(row[k]!=original[k] for k in ['original','originalObjectSha256','class','caseIds','owner']) or row['class']!='generated-binding' or row['runtimeAcceptance']!='OPEN; original results unchanged' or row['centralPhysicalAuthor'] is not None:raise ValueError('GitOps identity/class/acceptance drift')
 groups = []
 for observation in summary["missingExplicitTargetConfigLocators"]:
     old = observation["path"]
@@ -361,6 +368,13 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
         group['nativeHostSupplementalJoin']=pin(native_host_path)
         group['status']='EXACT_NATIVE_HOST_YAML_SOURCE_JOIN_WITH_PROTOCOL_AND_RECEIVING_RESIDUALS'
         group['constraint']=native_host_joins['constraint']
+    gitops=[gitops_rows[i] for i in ids if i in gitops_rows]
+    if gitops:
+        if {r['id'] for r in gitops}!=set(ids):raise ValueError('Incomplete GitOps8 group')
+        group['exactGitOpsGeneratedSourceLanes']=gitops
+        group['gitopsSupplementalJoin']=pin(gitops_path)
+        group['status']='EXACT_GITOPS_GENERATED_BINDING_SOURCE_LANES_CENTRAL_JOIN_OPEN'
+        group['constraint']=gitops_joins['constraint']
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 
@@ -398,12 +412,14 @@ author_residual_joined=[r['id'] for g in groups for r in g.get('exactAuthorLifet
 if set(author_residual_joined)!=set(author_residual_rows) or len(author_residual_joined)!=len(set(author_residual_joined)):raise ValueError('Author source lanes not conserved')
 native_host_joined=[r['id'] for g in groups for r in g.get('originalNativeHostProtocolInvariants',[])+g.get('explicitNativeHostResiduals',[])]
 if set(native_host_joined)!=set(native_host_rows) or len(native_host_joined)!=len(set(native_host_joined)):raise ValueError('Native host identities not conserved')
+gitops_joined=[r['id'] for g in groups for r in g.get('exactGitOpsGeneratedSourceLanes',[])]
+if set(gitops_joined)!=set(gitops_rows) or len(gitops_joined)!=8:raise ValueError('GitOps8 identities not conserved')
 result = {"scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
           "inputs": [pin(str((OUT / name).relative_to(ROOT))) for name in ["fields.json", "cases.json", "requirements.json", "RESULT.json"]],
           "counts": {"historicalLocatorGroups": len(groups), "exactExistingReviewFieldMappings": len(joined), "exactCurrentCoreScalarSourceJoins": len(adapter_exact), "exactDeliveryStoreSourceJoins": sum(r["status"] == "EXACT_CURRENT_DELIVERY_STORE_SOURCE_JOIN" for r in delivery_exact.values()), "originalTargetSelectedProfileSourceJoins": sum(r["status"] == "ORIGINAL_TARGET_SELECTED_PROFILE_SOURCE_JOIN" for r in delivery_exact.values()),
               "exactPrismAttemptSourceJoins": len(attempt_exact), "explicitPrismAttemptReceivingResiduals": len(attempt_open), "exactPrismEngineSourceJoins": len(engine_exact), "explicitPrismEngineReceivingResiduals": len(engine_open), "exactPrismBoundarySourceJoins": len(boundary_exact), "explicitLiveRunnerResiduals": len(boundary_open), "exactPrismServiceSourceJoins": len(prism_exact), "staticReviewOwnerPointers": sum(m["status"] == "EXACT_EXISTING_REVIEW_OWNER_MAPPING" for m in mappings.values()),
               "originalTargetDerivedFields": sum(m["status"] == "ORIGINAL_ACTIVATION_TARGET_DERIVED" for m in mappings.values()),
-              "originalNativeHostProtocolInvariants":1, "explicitNativeHostReceivingResiduals":19, "exactCoreLeaseMemorySourceJoins":len(core_platform_exact), "originalCoreProtocolInvariants":len(core_platform_protocol), "explicitCorePlatformReceivingResiduals":len(core_platform_rows)-len(core_platform_exact)-len(core_platform_protocol), "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
+              "exactGitOpsGeneratedBindingSourceLanes":len(gitops_rows), "originalNativeHostProtocolInvariants":1, "explicitNativeHostReceivingResiduals":19, "exactCoreLeaseMemorySourceJoins":len(core_platform_exact), "originalCoreProtocolInvariants":len(core_platform_protocol), "explicitCorePlatformReceivingResiduals":len(core_platform_rows)-len(core_platform_exact)-len(core_platform_protocol), "exactDispatchSelectedProfileSourceJoins":len(dispatch_exact), "explicitDispatchReceivingResiduals":len(dispatch_rows)-len(dispatch_exact), "explicitPluginPolicyReceivingResiduals": len(plugin_policy_rows), "exactNotificationCoreSourceJoins": len(notification_exact), "explicitNotificationReceivingResiduals": len(notification_rows)-len(notification_exact), "groupsByStatus": dict(collections.Counter(g["status"] for g in groups))},
           "groups": groups, "fullAcceptance": "OPEN", "independentReviewOfThisJoin": "OPEN",
           "requiredGates": "All2409 fields/6845 cases/50 requirements/fullC0-C6, applicable original effects/history/mutants, native/archive and fresh integrated independent review remain mandatory"}
 if len(groups) != 45:
