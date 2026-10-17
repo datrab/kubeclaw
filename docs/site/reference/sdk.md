@@ -2,7 +2,7 @@
 
 Status: current SDK API reference
 Audience: plugin author, runtime maintainer
-Owner: documentation automation
+Owner: SDK maintainers (plugin-foundation)
 Evidence: skills/common/plugin-runtime/sdk/package.json; skills/common/plugin-runtime/sdk/src/index.ts; skills/common/plugin-runtime/sdk/src/values.ts; skills/common/plugin-runtime/sdk/src/runtime.ts; skills/common/plugin-runtime/sdk/src/source-revision.ts; skills/common/plugin-runtime/sdk/src/review-subject.ts; skills/common/plugin-runtime/sdk/src/source-preflight.ts; skills/common/plugin-runtime/sdk/src/source-approval.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; scripts/docs-sdk-semantics.mjs
 Applies to: current private workspace SDK entrypoints and plugin-system v2 contracts
 Last verified: 2026-10-12; source and bounded pure JSON checks
@@ -11,7 +11,7 @@ The plugin SDK is the shared contract between a pipeline plugin and its runtime.
 
 A **capability** is a named operation that the runtime permits a plugin to request. A **lease** is the current, revocable authority for one invocation. An **artifact** is stored output with an exact byte digest and producer identity. A **digest** is a SHA-256 hash of selected bytes; equal digests do not prove equal authority.
 
-Owner: Documentation automation; SDK maintainers own the product contract. Evidence: source-checked against `586f1f558a673c4df51c0afb9ea535c814b933b1`. The bounded JSON unit check is listed below. Examples that call capabilities are source-only; no activation, provider process, external effect or live deployment is claimed.
+The SDK maintainers (plugin-foundation) own this authored explanation and review its product-contract claims. Documentation automation owns the separate generated export inventory. Evidence: source-checked against `586f1f558a673c4df51c0afb9ea535c814b933b1`. The bounded JSON unit check is listed below. Examples that call capabilities are source-only; no activation, provider process, external effect or live deployment is claimed.
 
 ## Find the contract you need
 
