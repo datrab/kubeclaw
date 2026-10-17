@@ -19487,9 +19487,36 @@
       "id": "A911-09",
       "passCondition": "Generated facts und authored explanation haben getrennte Bereiche und Owners; Autoren kopieren keine generierten Inventare manuell.",
       "automaticFailure": "Zwei manuelle Autoritäten können auseinanderlaufen.",
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+          "evidenceCommit": "c48a4d81d8264f39998af9e681197c32a6a38f66",
+          "ledger": "docs/blueprint/acceptance-evidence/A911-09-currentc559/ledger.json",
+          "ledgerSha256": "8a8b0e2a2d87868a35e133c9bb92065ee53df1da010c1f187517d48956545c10",
+          "scope": "A911-09 only; final261/89 still mandatory."
+        }
+      ],
+      "reviews": [
+        {
+          "id": "codex:01a14956-5694-7bd3-aefd-7fdf75f41828",
+          "role": "source",
+          "verdict": "PASS",
+          "reportArtifactId": "current-source-review"
+        },
+        {
+          "id": "codex:01a14956-5667-7452-b5d0-9359ca09692e",
+          "role": "reader",
+          "verdict": "PASS",
+          "reportArtifactId": "current-reader-review"
+        },
+        {
+          "id": "codex:01a14956-5663-7752-8d5e-a44f39715ef2",
+          "role": "quality",
+          "verdict": "PASS",
+          "reportArtifactId": "current-quality-review"
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": []
     },
