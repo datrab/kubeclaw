@@ -84,3 +84,19 @@ test('all six central leaves are mandatory; malformed, missing and raw duplicate
   for(const value of [TEST_CORE_POLICY[field][key],null])assert.throws(()=>selectedAdapterConfigurations({[id]:{root:f.root,[key]:value}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
  }
 });
+
+ test('original durable store roots survive B relocation without effects at B; grants still bind',async t=>{
+ const f=fixture(t),runId='stores:root';
+ const first=await runPipelineV2(f.platform(),f.definition,runId);assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));
+ const original=runRoot(f.source.storageRoot,runId),snapshot=readRunSnapshot(original);
+ const changed=structuredClone(f.platform()),ids=['kubeclaw.state-store:state', 'kubeclaw.wait-store:waits'];
+ const bRoots=ids.map((id,i)=>path.join(f.root,'forbidden-B-'+i));
+ ids.forEach((id,i)=>{const key=id.includes('artifact-store')?'artifactRoot':'root';changed.adapters[id][key]=bRoots[i];});
+ fs.unlinkSync(f.coreFile);
+ const wait=first.stages.get('probe').wait,signal={schemaVersion:'resume-signal.v2',signalId:'signal:root',idempotencyKey:'signal-key:root',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}};
+ const denied=structuredClone(changed);denied.grants={};
+ await assert.rejects(()=>resumePipelineV2(denied,f.definition,runId,signal));
+ assert.deepEqual(readRunSnapshot(original),snapshot);bRoots.forEach(root=>assert.equal(fs.existsSync(root),false));
+ const resumed=await resumePipelineV2(changed,f.definition,runId,signal);assert.equal(resumed.status,'succeeded',JSON.stringify([...resumed.stages]));
+ assert.deepEqual(readRunSnapshot(original),snapshot);bRoots.forEach(root=>assert.equal(fs.existsSync(root),false));
+ });
