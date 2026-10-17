@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T05:19:01.833496+00:00",
+  "updatedAt": "2026-10-17T05:24:37.871674+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "REDIS_ORIGINAL_RECOVERY_IMPLEMENTED_QUALITY_BOOT_INPUTSTORE_AND_FULL_ACCEPTANCE_OPEN",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -26874,7 +26874,7 @@
       "routingIntegrity": "Exact suffix/helper preservation plus actual existing glob membership",
       "diffCheck": true
     },
-    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable ℹ summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
+    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable \u2139 summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
     "originalRoster": {
       "fields": {
         "required": 2409,
@@ -29006,5 +29006,45 @@
     "resumeCondition": "Independent review: original same-engine upstream availability. Native: suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL; original history privileges as recorded. Local source work remains authorized and unfinished.",
     "writerLock": "SAME exclusive nonblocking lock for each mutation/test/commit/push; released at command exit",
     "historicalFollowupDispatched": false
+  },
+  "redisAdminOriginalVerification20261017": {
+    "at": "2026-10-17T05:24:37.871674+00:00",
+    "status": "ORIGINAL_REDIS_ADMIN_RETRY_AND_IDEMPOTENT_REPLAY_VERIFIED_SOURCE_UNCHANGED",
+    "evidence": "docs/review/remediation/config-redis-admin-original-20261017",
+    "productionSourceChanged": false,
+    "changedTest": "tests/verification/reliability/nova-redis-original-recovery.test.mjs",
+    "command": "node --test tests/verification/reliability/nova-redis-original-recovery.test.mjs",
+    "checks": {
+      "passed": 2,
+      "total": 2,
+      "failed": 0,
+      "skipped": 0,
+      "actualBlockedOriginal": true,
+      "actualAuthenticatedRetry": true,
+      "originalAttemptCount": 2,
+      "changedCurrentTargets": true,
+      "currentCoreDeleted": true,
+      "unauthenticatedActorRejectedBeforeRedisAndDecisionAppend": true,
+      "bothOriginalAdaptersSocketEffects": true,
+      "originalSnapshotUnchanged": true,
+      "recordedDecisionIdempotentReplayNoExtraEffectsOrEvents": true,
+      "diffCheck": true
+    },
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "productiveQualityBootImplemented": false,
+    "sealedInputStoreImplemented": false,
+    "independentReview": "OPEN; existing HTTP429 no report. Author executed integration tests, not independent or native acceptance.",
+    "nextAction": "Coordinated sole-root/schema/all-profile/source/file-set/authenticated boot actual Nova Quality receiving; genuine QB-R02 producer/build/source/baseline inputStore reservation/accounting/sealed publication. Exact current missing APIs recorded in config-redis-original-receiving-20261017/RESULT.json. Redis central12 author/profile/schema/delivery and original field-specific/history/native/independent gates remain OPEN. Keep denied v10 and BUDGET_SOURCE_RECEIPT_REQUIRED.",
+    "externalOwner": "Raven",
+    "externalResumeCondition": "Suitable isolated Linux Docker genuine UID/GID1000 writable delegated cgroup, sufficiently large root-trusted writable archive storage, isolated migrated PostgreSQL.",
+    "writerLock": "SAME nonblocking shared lock; released at command exit; no active CONFIG subagent or productive repository process observed; parent terminal failed",
+    "noHistoricalFollowup": true
   }
 }

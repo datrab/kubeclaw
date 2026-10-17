@@ -1,0 +1,5 @@
+# Redis original administrative recovery
+
+Extends the existing real Nova test with a separate genuine blocked original A. Under changed B targets and deleted current Core, a mismatched authenticated actor is denied before Redis effects or decision append. The authorized retry executes attempt2 through both original adapters; stream/retention/TTL and immutable snapshot are verified. Replaying the recorded decision adds no socket effects or lifecycle events. Original wait/resume and capture controls remain. Two tests pass; no synthetic journal. Controlled RESP server is not a real Redis/native acceptance environment.
+
+No production implementation added. Source0e02e5b23 remains the original receiving checkpoint; this closes its previously unexecuted administrative retry/replay proof only. Central Redis12 and full2409/6845/C0–C6 acceptance remain OPEN. Quality boot/inputStore integration is unchanged and still required; no denied-v10 activation or fabricated receipts. Independent review unavailable (latest HTTP429, no report). Native/archive infrastructure conditions unchanged, owner Raven.
