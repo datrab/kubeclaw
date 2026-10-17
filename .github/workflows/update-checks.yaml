@@ -56,7 +56,7 @@ jobs:
           elif test -f releases/runtime-images.json; then
             node scripts/updates/materialize-release.mjs --check --check-selected-source
           fi
-          if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
+          if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --check-selected-source --family=ops; fi
       - name: Retain original policy failure diagnostics
         if: ${{ failure() && steps.policy-checks.outcome == 'failure' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

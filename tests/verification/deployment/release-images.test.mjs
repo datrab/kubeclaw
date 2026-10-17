@@ -80,5 +80,14 @@ test('generated release values render actual Helm charts with immutable role and
     const opsOutput = execFileSync('helm', ['template', 'ops', path.join(root, 'charts/ops-pod'), '-f', path.join(root, 'releases/values/ops.yaml'), '--set', 'networkPolicy.apiServerCIDRs[0]=192.0.2.1/32'], { encoding: 'utf8' });
     const refs = parseAllDocuments(opsOutput).flatMap(doc => doc.toJSON()?.spec?.template?.spec?.containers ?? []).map(container => container.image);
     for (const ref of Object.values(opsImages)) assert.ok(refs.includes(ref));
+    // CI replays the selected receipt while its replacement is being built.
+    // Current-source materialization must still reject new, unqualified inputs.
+    fs.writeFileSync(path.join(root, 'charts/ops-pod/templates/new-input.yaml'), 'kind: ConfigMap\n');
+    const materialize = path.join(source, 'scripts/updates/materialize-release.mjs');
+    assert.throws(() => execFileSync(process.execPath, [materialize, '--family=ops', '--check'], { cwd: root, stdio: 'pipe' }), /RELEASE_CONFIGURATION_FILESET_CHANGED/);
+    execFileSync(process.execPath, [materialize, '--family=ops', '--check', '--check-selected-source'], { cwd: root });
+    assert.throws(() => execFileSync(process.execPath, [materialize, '--family=ops', '--check-selected-source'], { cwd: root, stdio: 'pipe' }), /SELECTED_SOURCE_CHECK_ONLY/);
+    fs.appendFileSync(path.join(root, 'releases/values/ops.yaml'), '# corrupted selected values\n');
+    assert.throws(() => execFileSync(process.execPath, [materialize, '--family=ops', '--check', '--check-selected-source'], { cwd: root, stdio: 'pipe' }), /Release values drift/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

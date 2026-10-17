@@ -117,6 +117,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run plugin-system:sandbox:build
       - name: Run native authority tests in an actual accounted Linux scope
         id: native-tests
         shell: bash
