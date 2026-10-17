@@ -2551,7 +2551,7 @@
       "contentKind": "authored",
       "status": "current SDK API reference",
       "audience": "plugin author, runtime maintainer",
-      "owner": "documentation automation",
+      "owner": "SDK maintainers (plugin-foundation)",
       "appliesTo": "current private workspace SDK entrypoints and plugin-system v2 contracts",
       "lastVerified": "2026-10-12; source and bounded pure JSON checks",
       "sourceDependencies": [
