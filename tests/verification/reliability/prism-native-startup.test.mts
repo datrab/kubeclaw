@@ -3,7 +3,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { spawnSync } from 'node:child_process';
+import { once } from 'node:events';
+import { fileURLToPath } from 'node:url';
+import { preparePrismProcessPublication, spawnInstalledPrismProcess } from '../../../skills/prism/tests/fixtures/published-process.mjs';
 import { requireNativeWorkerRuntimeIdentity } from '../../../skills/worker/core/worker/native-runtime-identity.ts';
 
 function actualIdentity() {
@@ -32,7 +34,7 @@ test('runtime authority binds the actual kernel boot and cgroup namespace, and r
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });
 
-test('actual native Prism CLI refuses invalid runtime and unavailable host prerequisites before durable admission', () => {
+test('actual native Prism CLI refuses invalid runtime and unavailable host prerequisites before durable admission', async t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'native-prism-startup-'));
   try {
     const poolFile = path.join(directory, 'pool.json');
@@ -45,17 +47,30 @@ test('actual native Prism CLI refuses invalid runtime and unavailable host prere
       policyDigest: 'a'.repeat(64), cgroupRoot, ownershipRoot, nodeIdentityFile, runtimeIdentityFile,
       maximumActiveScopes: 2, limits: { memoryBytes: 16 * 1024 ** 3, tasks: 4096,
         cpuQuotaMicroseconds: 400000, cpuPeriodMicroseconds: 100000 } }), { mode: 0o600 });
-    for (const validNamespace of [false, true]) {
+    // The unchanged native negatives must reach the native boundary through the
+    // real immutable role/generation receipts, not the retired checkout entry.
+    const entryFile = fileURLToPath(new URL('../../../config/pipeline.config.json', import.meta.url));
+    const built = await preparePrismProcessPublication(entryFile, 'prism-worker');
+    t.after(() => fs.rmSync(built.root, { recursive: true, force: true }));
+    for (const validNamespace of [false, true]) await t.test(`actual namespace ${validNamespace}`, async guest => {
       fs.writeFileSync(runtimeIdentityFile, JSON.stringify({ ...actualIdentity(),
         ...(validNamespace ? {} : { bootId: 'stale-boot' }) }), { mode: 0o600 });
-      const result = spawnSync(process.execPath, ['skills/prism/server/worker.ts'], {
-        encoding: 'utf8', timeout: 20000, env: { PATH: process.env.PATH,
-          PRISM_NATIVE_POOL_POLICY_FILE: poolFile, PRISM_NATIVE_LAUNCHER: '/usr/bin/false',
-          PRISM_ENGINE_CONTENT_DIGEST: `sha256:${'a'.repeat(64)}`,
-          WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://test/control', PORT: '0' },
-      });
-      assert.equal(result.error, undefined); assert.equal(result.status, 1, result.stderr);
-      const failure = JSON.parse(result.stderr.trim());
+      const { child } = await spawnInstalledPrismProcess(guest, entryFile, 'prism-worker', {
+        PATH: process.env.PATH,
+        PRISM_NATIVE_POOL_POLICY_FILE: poolFile, PRISM_NATIVE_LAUNCHER: '/usr/bin/false',
+        // Original negative input, never a claim of valid engine/host admission.
+        PRISM_ENGINE_CONTENT_DIGEST: `sha256:${'a'.repeat(64)}`,
+        WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://test/control',
+      }, false, built.code);
+      let stderr = '';
+      child.stderr.setEncoding('utf8'); child.stderr.on('data', bytes => { stderr += String(bytes); });
+      // close follows stderr EOF; exit alone may leave the JSON diagnostic unread.
+      const exited = once(child, 'close');
+      const cutoff = setTimeout(() => child.kill('SIGKILL'), 20000);
+      let code, signal;
+      try { [code, signal] = await exited; } finally { clearTimeout(cutoff); }
+      assert.equal(code, 1, stderr); assert.equal(signal, null, stderr);
+      const failure = JSON.parse(stderr.trim());
       assert.equal(failure.event, 'prism_native_worker_failure');
       // A root test process can itself lack capabilities. Neither that process
       // nor a privileged process with an ordinary-filesystem pool may admit work.
@@ -63,6 +78,6 @@ test('actual native Prism CLI refuses invalid runtime and unavailable host prere
       assert.equal(fs.existsSync(path.join(ownershipRoot, 'owners.json')), false);
       assert.equal(fs.existsSync(path.join(ownershipRoot, 'attempt-journal')), false);
       assert.deepEqual(fs.readdirSync(cgroupRoot), []);
-    }
+    });
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });

@@ -121,7 +121,8 @@ jobs:
         run: |
           sudo systemd-run --scope --quiet \
             -p MemoryAccounting=yes -p TasksAccounting=yes -p CPUAccounting=yes \
-            env "PATH=$PATH" "$(command -v node)" scripts/reliability-tests.mjs native
+            env "PATH=$PATH" PRISM_NATIVE_ISOLATED_TEST_POOL=true \
+              "$(command -v node)" scripts/reliability-tests.mjs native
 
   service-reliability:
     runs-on: ubuntu-latest
