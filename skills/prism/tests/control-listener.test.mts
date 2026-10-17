@@ -2,10 +2,11 @@ import {publishedControlConfig} from './fixtures/published-config.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import net from 'node:net';
-import {spawn} from 'node:child_process';
+import type {ChildProcess} from 'node:child_process';
 import {once} from 'node:events';
 import test from 'node:test';
 import {setTimeout as delay} from 'node:timers/promises';
+import {spawnInstalledPrismProcess} from './fixtures/published-process.mjs';
 import {controlPolicyFixture} from './fixtures/control-policy.mts';
 
 const credentials = {PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test',
@@ -58,7 +59,7 @@ test('Control snapshot owns the port before asynchronous composition; Worker use
   assert.equal(worker.port, 23458);
 });
 
-async function awaitHealth(port: number, child: ReturnType<typeof spawn>, diagnostic: () => string) {
+async function awaitHealth(port: number, child: ChildProcess, diagnostic: () => string) {
   for (let attempt = 0; attempt < 100; attempt++) {
     assert.equal(child.exitCode, null, diagnostic());
     try {
@@ -73,15 +74,10 @@ for (const profile of ['one', 'two']) {
   test(`original production entrypoint serves authored listener profile ${profile}`, async t => {
     const port = await freePort();
     const fixture = controlPolicyFixture(t, {port});
-    const child = spawn(process.execPath, ['skills/prism/server/control.ts'], {
-      env: {...process.env, ...credentials, SWARM_CONFIG: fixture.SWARM_CONFIG}, stdio: ['ignore', 'pipe', 'pipe'],
-    });
+    const {child} = await spawnInstalledPrismProcess(t, fixture.SWARM_CONFIG, 'prism-control', credentials);
     let diagnostic = '';
     child.stdout.on('data', chunk => { diagnostic += chunk; });
     child.stderr.on('data', chunk => { diagnostic += chunk; });
-    t.after(async () => {
-      if (child.exitCode === null && child.signalCode === null) { child.kill('SIGTERM'); await once(child, 'exit'); }
-    });
     await awaitHealth(port, child, () => diagnostic);
     fs.writeFileSync(fixture.SWARM_CONFIG, '{}');
     const response = await fetch(`http://127.0.0.1:${port}/health`);
@@ -92,15 +88,10 @@ for (const profile of ['one', 'two']) {
 test('actual Control preserves HTTP errors and availability when the diagnostic sink fails', async t => {
   const port = await freePort();
   const fixture = controlPolicyFixture(t, {port});
-  const child = spawn(process.execPath, ['skills/prism/tests/fixtures/closed-stderr-control.mts'], {
-    env: {...process.env, ...credentials, SWARM_CONFIG: fixture.SWARM_CONFIG}, stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  const {child} = await spawnInstalledPrismProcess(t, fixture.SWARM_CONFIG, 'prism-control', credentials, true);
   let diagnostic = '';
   child.stdout.on('data', chunk => { diagnostic += chunk; });
   child.stderr.on('data', chunk => { diagnostic += chunk; });
-  t.after(async () => {
-    if (child.exitCode === null && child.signalCode === null) { child.kill('SIGTERM'); await once(child, 'exit'); }
-  });
   await awaitHealth(port, child, () => diagnostic);
   const rejected = await fetch(`http://127.0.0.1:${port}/not-a-route`);
   assert.equal(rejected.status, 422);
