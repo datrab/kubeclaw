@@ -139,7 +139,7 @@ if len(control_exact) != 14 or len(control_open) != 0 or set(control_exact) & (s
 platform_path = str((OUT / 'platform-boundary-successors.json').relative_to(ROOT))
 platform_joins = read(platform_path)
 platform_open = {r['id']:r for r in platform_joins['rows']}
-if len(platform_open)!=50 or len(platform_joins['rows'])!=50:
+if len(platform_open)!=62 or len(platform_joins['rows'])!=62:
     raise ValueError('Platform boundary roster drift')
 for identity,row in platform_open.items():
     original=originals.get(identity)
@@ -245,11 +245,11 @@ for observation in summary["missingExplicitTargetConfigLocators"]:
     if platform:
         group['explicitPlatformResiduals'] = platform
         group['platformSupplementalJoin'] = pin(platform_path)
-        if old in ['config/plugins/kubeclaw.command-runner/default/standard.json', 'config/plugins/kubeclaw.git-workspace/default/standard.json']:
-            if {row['id'] for row in platform}!=set(ids): raise ValueError('Incomplete command/workspace group')
+        if old in ['config/plugins/kubeclaw.command-runner/default/standard.json', 'config/plugins/kubeclaw.git-workspace/default/standard.json', 'config/plugins/kubeclaw.redis-transport/default/standard.json']:
+            if {row['id'] for row in platform}!=set(ids): raise ValueError('Incomplete command/workspace/Redis group')
             group['candidateSuccessors'] = []
             group['status'] = 'EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN'
-            group['constraint'] = 'Adjacent Core catalog/cleanup/monitoring/error-excerpt sections author none of these18 original fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.'
+            group['constraint'] = 'Adjacent Core catalog/cleanup/monitoring/error-excerpt or Redis payload/reply-buffer sections author none of these original platform fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.'
     group["qualification"] = "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     groups.append(group)
 

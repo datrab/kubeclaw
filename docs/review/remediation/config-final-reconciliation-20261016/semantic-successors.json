@@ -34,13 +34,13 @@
     "staticReviewOwnerPointers": 222,
     "originalTargetDerivedFields": 6,
     "groupsByStatus": {
-      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 4,
+      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 3,
       "UNRESOLVED_SEMANTIC_OWNER_JOIN": 13,
       "PARTIAL_EXACT_PRISM_BOUNDARY_SOURCE_JOIN": 1,
       "PARTIAL_EXACT_PRISM_ATTEMPT_SOURCE_JOIN": 2,
       "PARTIAL_EXACT_PRISM_ENGINE_SOURCE_JOIN": 1,
       "PARTIAL_EXACT_CORE_SCALAR_SOURCE_JOIN": 6,
-      "EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN": 2,
+      "EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN": 3,
       "DEFINED_RECEIVING_IMPLEMENTATION_OPEN": 2,
       "PARTIAL_EXACT_DELIVERY_SOURCE_JOIN": 2,
       "EXACT_EXISTING_SCOPED_MAPPING": 7,
@@ -5058,7 +5058,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -5608,9 +5608,9 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
-      "constraint": "Adjacent Core catalog/cleanup/monitoring/error-excerpt sections author none of these18 original fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.",
+      "constraint": "Adjacent Core catalog/cleanup/monitoring/error-excerpt or Redis payload/reply-buffer sections author none of these original platform fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.",
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
@@ -6209,9 +6209,9 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
-      "constraint": "Adjacent Core catalog/cleanup/monitoring/error-excerpt sections author none of these18 original fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.",
+      "constraint": "Adjacent Core catalog/cleanup/monitoring/error-excerpt or Redis payload/reply-buffer sections author none of these original platform fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.",
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
@@ -6876,7 +6876,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -7412,7 +7412,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -8638,7 +8638,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -8674,26 +8674,928 @@
         "RT-7e44278c471f74a4",
         "RT-f8fa3a9727e89696"
       ],
-      "candidateSuccessors": [
+      "candidateSuccessors": [],
+      "status": "EXACT_PLATFORM_SOURCE_JOIN_CENTRAL_RECEIVING_OPEN",
+      "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "explicitPlatformResiduals": [
         {
-          "owner": {
-            "path": "config/nova/core.config.json",
-            "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+          "id": "RT-407a6528409d44e3",
+          "original": "D228#/rows/549",
+          "originalObjectSha256": "44ac342b6cb5bacf8459bca100d7889a56b4b4c77101d5eabe5d358df139009f",
+          "class": "operator-setting",
+          "originalField": "url",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-407a6528409d44e3-CONTRACT",
+            "RT-407a6528409d44e3-ALTERNATE",
+            "RT-407a6528409d44e3-BINDING",
+            "RT-407a6528409d44e3-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:publisher",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:publisher/url",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
           },
-          "pointer": "/profiles/standard/settings/redisTransport",
-          "consumer": {
+          "projection": {
             "path": "skills/nova/core/execution/engine-runtime.ts",
             "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
-            "anchor": "policy.redisTransport",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
             "lines": [
-              194,
-              195
+              141
             ]
-          }
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.url",
+            "lines": [
+              29,
+              32
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/url",
+            "fragmentSha256": "624d2cb4ed719d009d3cefb1f53e1c2305a51572acc4c27aaac28774239fe417"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+              "sha256": "a92eb6089942d66c889c7f23caae832b0fffc69e6ee618015c24c614ef3435ad",
+              "anchor": "options.url.protocol === 'rediss:'",
+              "lines": [
+                10,
+                33
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('publisher', context)",
+              "lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-712fafc04d5c71dc",
+          "original": "D228#/rows/550",
+          "originalObjectSha256": "3bc311cb94f31d446ec9460be8a605887a91c3057ec1a93a17698e0208fefe49",
+          "class": "secret-reference",
+          "originalField": "passwordSecret",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-712fafc04d5c71dc-CONTRACT",
+            "RT-712fafc04d5c71dc-ALTERNATE",
+            "RT-712fafc04d5c71dc-BINDING",
+            "RT-712fafc04d5c71dc-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:publisher",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:publisher/passwordSecret",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.passwordSecret",
+            "lines": [
+              29,
+              36,
+              48
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/passwordSecret",
+            "fragmentSha256": "07f04e2f71b4d72ef9c5a5c24fc39a19b5788667a011fe6a87bfe7a9378566bb"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "canonicalId: options.passwordSecret",
+              "lines": [
+                79
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('publisher', context)",
+              "lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-22118e724097e727",
+          "original": "D228#/rows/551",
+          "originalObjectSha256": "45fbcc8ec0fcea3be22ff2a0c4b0002e8e036043b81baad70f59f4e36db60161",
+          "class": "operator-setting",
+          "originalField": "streamPrefix",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-22118e724097e727-CONTRACT",
+            "RT-22118e724097e727-ALTERNATE",
+            "RT-22118e724097e727-BINDING",
+            "RT-22118e724097e727-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:publisher",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:publisher/streamPrefix",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.streamPrefix",
+            "lines": [
+              29,
+              36,
+              49
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/streamPrefix",
+            "fragmentSha256": "96a9baea5f7a74deab871aa4cf08a5d8329e1ecb1b19524e962b7fe817e8fe73"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "streamIdentity(options.streamPrefix, kind,",
+              "lines": [
+                85
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('publisher', context)",
+              "lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-86084ff0033b262b",
+          "original": "D228#/rows/552",
+          "originalObjectSha256": "f7327b5f3def4a708d5a3e68ea24d4ef5dc368a6092d04cf2592ee55fd694825",
+          "class": "operator-setting",
+          "originalField": "maxLen",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-86084ff0033b262b-CONTRACT",
+            "RT-86084ff0033b262b-ALTERNATE",
+            "RT-86084ff0033b262b-BINDING",
+            "RT-86084ff0033b262b-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:publisher",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:publisher/maxLen",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.maxLen",
+            "lines": [
+              50
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/maxLen",
+            "fragmentSha256": "700693241c848bce8b2a956d68e53847ce0207c8f99cd342731f1a8c9a690a87"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "String(options.maxLen)",
+              "lines": [
+                88
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('publisher', context)",
+              "lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-204be2bd4a45962c",
+          "original": "D228#/rows/553",
+          "originalObjectSha256": "2a3608bc71f7e661f2903fb6a0dd85105f78abf068a26792724b4a997c3a2c1a",
+          "class": "operator-setting",
+          "originalField": "dedupTtlMs",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-204be2bd4a45962c-CONTRACT",
+            "RT-204be2bd4a45962c-ALTERNATE",
+            "RT-204be2bd4a45962c-BINDING",
+            "RT-204be2bd4a45962c-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:publisher",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:publisher/dedupTtlMs",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.dedupTtlMs",
+            "lines": [
+              51
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/dedupTtlMs",
+            "fragmentSha256": "1caf699e35009142a15bc0cac8639eecef5e0c8bf45cc114f35a10292e62ffd3"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "String(options.dedupTtlMs)",
+              "lines": [
+                88
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('publisher', context)",
+              "lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-31d517a634aaec3b",
+          "original": "D228#/rows/554",
+          "originalObjectSha256": "7204925d968e81ed4ddd7de96d1c00f1a64a5beb1e2922a7abbf363a5728e592",
+          "class": "operator-setting",
+          "originalField": "timeoutMs",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-31d517a634aaec3b-CONTRACT",
+            "RT-31d517a634aaec3b-ALTERNATE",
+            "RT-31d517a634aaec3b-BINDING",
+            "RT-31d517a634aaec3b-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:publisher",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:publisher/timeoutMs",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.timeoutMs",
+            "lines": [
+              52
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/timeoutMs",
+            "fragmentSha256": "4a9e85b080ffdb8b0d5bb62e03064fff4073e888c783a07e7c0e2cb204dc0a0c"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+              "sha256": "a92eb6089942d66c889c7f23caae832b0fffc69e6ee618015c24c614ef3435ad",
+              "anchor": "options.timeoutMs)",
+              "lines": [
+                23
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('publisher', context)",
+              "lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-f38d271ec4c551c1",
+          "original": "D228#/rows/555",
+          "originalObjectSha256": "db4878691fe4c1f952435bbe154d7e6289ebdf5e0538f21b228c2bd364220444",
+          "class": "operator-setting",
+          "originalField": "url",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f38d271ec4c551c1-CONTRACT",
+            "RT-f38d271ec4c551c1-ALTERNATE",
+            "RT-f38d271ec4c551c1-BINDING",
+            "RT-f38d271ec4c551c1-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:telemetry",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:telemetry/url",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.url",
+            "lines": [
+              29,
+              32
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/url",
+            "fragmentSha256": "624d2cb4ed719d009d3cefb1f53e1c2305a51572acc4c27aaac28774239fe417"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+              "sha256": "a92eb6089942d66c889c7f23caae832b0fffc69e6ee618015c24c614ef3435ad",
+              "anchor": "options.url.protocol === 'rediss:'",
+              "lines": [
+                10,
+                33
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('telemetry', context)",
+              "lines": [
+                97
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-a62e393117750b0a",
+          "original": "D228#/rows/556",
+          "originalObjectSha256": "373a02d8f8eec4d0835d9b075249684152ac3df90d87039d2162085769d87a06",
+          "class": "secret-reference",
+          "originalField": "passwordSecret",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-a62e393117750b0a-CONTRACT",
+            "RT-a62e393117750b0a-ALTERNATE",
+            "RT-a62e393117750b0a-BINDING",
+            "RT-a62e393117750b0a-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:telemetry",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:telemetry/passwordSecret",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.passwordSecret",
+            "lines": [
+              29,
+              36,
+              48
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/passwordSecret",
+            "fragmentSha256": "07f04e2f71b4d72ef9c5a5c24fc39a19b5788667a011fe6a87bfe7a9378566bb"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "canonicalId: options.passwordSecret",
+              "lines": [
+                79
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('telemetry', context)",
+              "lines": [
+                97
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-e462847e9e3b5763",
+          "original": "D228#/rows/557",
+          "originalObjectSha256": "61e22ac08d52cac856d98a4702785c671aaccc09ebccc29dc4c2cff6e24df3f9",
+          "class": "operator-setting",
+          "originalField": "streamPrefix",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-e462847e9e3b5763-CONTRACT",
+            "RT-e462847e9e3b5763-ALTERNATE",
+            "RT-e462847e9e3b5763-BINDING",
+            "RT-e462847e9e3b5763-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:telemetry",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:telemetry/streamPrefix",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.streamPrefix",
+            "lines": [
+              29,
+              36,
+              49
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/streamPrefix",
+            "fragmentSha256": "96a9baea5f7a74deab871aa4cf08a5d8329e1ecb1b19524e962b7fe817e8fe73"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "streamIdentity(options.streamPrefix, kind,",
+              "lines": [
+                85
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('telemetry', context)",
+              "lines": [
+                97
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-c66ce628629c66ea",
+          "original": "D228#/rows/558",
+          "originalObjectSha256": "9a33773b58f32ab8c435d93cb20f62dbebf14433ec970f6562ea79efd8109f41",
+          "class": "operator-setting",
+          "originalField": "maxLen",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-c66ce628629c66ea-CONTRACT",
+            "RT-c66ce628629c66ea-ALTERNATE",
+            "RT-c66ce628629c66ea-BINDING",
+            "RT-c66ce628629c66ea-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:telemetry",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:telemetry/maxLen",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.maxLen",
+            "lines": [
+              50
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/maxLen",
+            "fragmentSha256": "700693241c848bce8b2a956d68e53847ce0207c8f99cd342731f1a8c9a690a87"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "String(options.maxLen)",
+              "lines": [
+                88
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('telemetry', context)",
+              "lines": [
+                97
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-7e44278c471f74a4",
+          "original": "D228#/rows/559",
+          "originalObjectSha256": "6ce035aa1ecf0d4c1eb00b81921416d8230d7df0eb0c495c9711a14d03b40f10",
+          "class": "operator-setting",
+          "originalField": "dedupTtlMs",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-7e44278c471f74a4-CONTRACT",
+            "RT-7e44278c471f74a4-ALTERNATE",
+            "RT-7e44278c471f74a4-BINDING",
+            "RT-7e44278c471f74a4-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:telemetry",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:telemetry/dedupTtlMs",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.dedupTtlMs",
+            "lines": [
+              51
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/dedupTtlMs",
+            "fragmentSha256": "1caf699e35009142a15bc0cac8639eecef5e0c8bf45cc114f35a10292e62ffd3"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "String(options.dedupTtlMs)",
+              "lines": [
+                88
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('telemetry', context)",
+              "lines": [
+                97
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RT-f8fa3a9727e89696",
+          "original": "D228#/rows/560",
+          "originalObjectSha256": "a676739f01f841d301cb07e162311c1816985d7adaaf90d45c67232228ff6822",
+          "class": "operator-setting",
+          "originalField": "timeoutMs",
+          "caseIds": [
+            "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+            "RT-f8fa3a9727e89696-CONTRACT",
+            "RT-f8fa3a9727e89696-ALTERNATE",
+            "RT-f8fa3a9727e89696-BINDING",
+            "RT-f8fa3a9727e89696-MUTANT"
+          ],
+          "plugin": "kubeclaw.redis-transport",
+          "registration": "kubeclaw.redis-transport:telemetry",
+          "status": "PLATFORM_ADMISSION_OR_TARGET_RECEIVING_NOT_CENTRAL_DELIVERY_ACCEPTANCE",
+          "platformPointerTemplate": "/adapters/kubeclaw.redis-transport:telemetry/timeoutMs",
+          "sourceLane": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+            "sha256": "aa555f378a2667b8629d95ece0ea6d08438c18c77fda04d3cfd4b99216fa5402",
+            "anchor": "readonly adapters:",
+            "lines": [
+              17
+            ]
+          },
+          "projection": {
+            "path": "skills/nova/core/execution/engine-runtime.ts",
+            "sha256": "ae729e9499a2bf0251df148e1d8ca9cee0bd8f62dd3971779d3c5deb9d116811",
+            "anchor": "const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);",
+            "lines": [
+              141
+            ]
+          },
+          "consumer": {
+            "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+            "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+            "anchor": "value.timeoutMs",
+            "lines": [
+              52
+            ]
+          },
+          "manifest": {
+            "path": "skills/common/plugins/redis-transport/plugin.json",
+            "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+          },
+          "schema": {
+            "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+            "sha256": "fd91ec86ebe40aa5029f0ca5d27d01a759e959d9a85b7e12dbd3b914b49a7057",
+            "pointer": "/properties/timeoutMs",
+            "fragmentSha256": "4a9e85b080ffdb8b0d5bb62e03064fff4073e888c783a07e7c0e2cb204dc0a0c"
+          },
+          "centralPhysicalAuthor": null,
+          "currentConfigurationLane": "Original supplied PlatformConfig.adapters, not adjacent Core scalar sections",
+          "runtimeAcceptance": "OPEN; no original result changed",
+          "history": "OPEN: registry snapshot preserves configuration; recovery passes supplied platform.adapters and restores only specific selected profiles. This is not full retained root/allowlist/target identity recovery.",
+          "constraint": "Trace coordinated selected platform author/delivery and original whole configuration capture before closure. Preserve existing grants, task and authentication authority. Secret names are references, never secret bytes. Container joins do not prove every variant child.",
+          "actualEffects": [
+            {
+              "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+              "sha256": "a92eb6089942d66c889c7f23caae832b0fffc69e6ee618015c24c614ef3435ad",
+              "anchor": "options.timeoutMs)",
+              "lines": [
+                23
+              ]
+            },
+            {
+              "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+              "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169",
+              "anchor": "=> activate('telemetry', context)",
+              "lines": [
+                97
+              ]
+            }
+          ]
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
-      "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "platformSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
+      },
+      "constraint": "Adjacent Core catalog/cleanup/monitoring/error-excerpt or Redis payload/reply-buffer sections author none of these original platform fields. Supplied Platform adapters remain actual author; coordinated central selected receiving/history/delivery remains OPEN. No setting or original case accepted.",
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
@@ -17439,7 +18341,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -17832,7 +18734,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -18477,7 +19379,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
@@ -18847,7 +19749,7 @@
       ],
       "platformSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/platform-boundary-successors.json",
-        "sha256": "e9971eb8e35340eb4c49a819924050326ddfb2d12b7be825a473cb0345e6b912"
+        "sha256": "03be0ffad802d55b7a1ec1d86f73ac8d1f1e6ae7d3f41830b7dc1b788d2db0b0"
       },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
