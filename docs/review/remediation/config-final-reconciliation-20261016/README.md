@@ -101,3 +101,7 @@ All18 original fields in both nine-field groups now join their actual manifest/s
 ## Exact security86 supplement — 2026-10-17
 
 Security86 now has exact original schema/manifest/hardcoded business-policy source lanes and actual parser/verdict/registry consumers. All86 central receiving obligations remain OPEN; no new runtime implementation or original cases accepted. Full2409/6845/50 preserved,45 historical groups retained,44 unrelated groups unchanged; three unresolved deployment navigation groups remain. See config-security-provider-matrix-20261017. Independent/original/history/native/archive/full C0–C6 gates remain mandatory.
+
+## Exact Kubeclaw191 supplement — 2026-10-17
+
+The final unresolved historical navigation group now pins all191 original Kubeclaw chart source lanes. All45 groups have explicit navigation/classification; this is not implementation completeness. All191 sole-root deployment receivers remain OPEN. Full2409/6845/50 conserved; no original runtime result changed. See config-kubeclaw-chart-matrix-20261017.
