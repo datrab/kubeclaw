@@ -120,15 +120,18 @@ assert(
   'project-summary package guide must use the configuration schema value',
 );
 
+const sourceRevision = JSON.parse(read('docs/generated/inventory/documentation-source-revision.json')).revision;
+assert.match(sourceRevision, /^[0-9a-f]{40}$/u, 'catalogue source lock must be an exact commit');
+execFileSync('git', ['-C', root, 'cat-file', '-e', `${sourceRevision}^{commit}`]);
 const catalogueRoot = path.join(root, 'docs/site/extend/plugin-catalogue');
 const packagePages = fs.readdirSync(catalogueRoot)
   .filter((name) => name.endsWith('.md') && name !== 'README.md')
   .sort();
 assert.equal(packagePages.length, packageCount, 'published catalogue must contain one page per discovered package');
 const expectedSections = [
-  '## Authored Guidance', '## When To Use It', '## When Not To Use It',
-  '## Most Important Limit', '## Generated Package Facts', '## Boundaries',
-  '## Registration Summary', '## Failure Behavior', '## Verification Record',
+  '## Purpose', '## When To Use It', '## When Not To Use It',
+  '## Most Important Limit', '## Package Reference', '## Boundaries',
+  '## Registration Summary', '## Failure Behavior', '## Package Checks',
   '## Source Evidence',
 ];
 const auditStatuses = new Map(inventory.packages.map((item) => [item.id, item.auditStatus]));
@@ -136,9 +139,27 @@ for (const name of packagePages) {
   const id = name.slice(0, -3);
   const source = fs.readFileSync(path.join(catalogueRoot, name), 'utf8');
   for (const section of expectedSections) assert(source.includes(section), `${name} lacks ${section}`);
-  assert(source.includes(`Catalogue status: \`${auditStatuses.get(id)}\`.`), `${name} has a stale catalogue status`);
+  // Audit status remains an internal inventory obligation, not reader-facing bookkeeping.
+  assert.equal(typeof auditStatuses.get(id), 'string', `${name} lacks an internal audit status`);
+  const authored = guidance.records.find(entry => entry.id === id);
+  for (const [field, heading] of [
+    ['purpose', 'Purpose'], ['useWhen', 'When To Use It'],
+    ['avoidWhen', 'When Not To Use It'], ['criticalLimit', 'Most Important Limit'],
+  ]) {
+    const section = source.split(`## ${heading}\n\n`)[1]?.split('\n## ')[0];
+    assert(section?.startsWith(`${authored[field]}\n`), `${name} has stale authored ${field}`);
+  }
+  const failureSection = source.split('## Failure Behavior\n\n')[1]?.split('\n## ')[0];
+  assert(failureSection?.startsWith(`${authored.operationNote}\n`), `${name} has stale authored operationNote`);
+  if (authored.deploymentNote) assert(source.includes(`- Additional packaging path: ${authored.deploymentNote}`),
+    `${name} lacks its authored deployment note`);
+  assert(source.includes(`Last verified: source facts revision ${sourceRevision}; package behavior sources revision ${revision}.`),
+    `${name} does not distinguish mechanical and behavior evidence revisions`);
   assert(source.includes(`Recorded local command result on ${verification.date}: \`${verificationById.get(id).result}\`.`),
     `${name} has a stale local result`);
+  assert(source.includes(verificationById.get(id).reason), `${name} lacks its exact local result limitation`);
+  assert(source.includes('Local package checks do not prove live host or cluster readiness.'),
+    `${name} overstates local package checks`);
   const item = inventory.packages.find(entry => entry.id === id);
   const manifest = JSON.parse(read(item.manifest));
   if (item.host === 'pipeline-runtime') {
@@ -151,11 +172,10 @@ for (const name of packagePages) {
     assert(!/^Input schema: None\.|^Result schema: None\./mu.test(source), `${id} hides its shared contract`);
   }
   assert(!source.includes('Authored guidance is missing.'), `${name} lacks authored guidance`);
-  assert(source.includes('/blob/' + revision + '/'), `${name} lacks revision-pinned source evidence`);
+  assert(source.includes('/blob/' + sourceRevision + '/'), `${name} lacks revision-pinned source evidence`);
   assert(source.includes('[Install and activate](../testing.md#install-and-activate-by-surface)'), `${name} lacks the activation link`);
   assert(source.includes('[Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)'), `${name} lacks the removal link`);
   assert(source.includes('Declared manifest facts:'), `${name} lacks complete manifest facts`);
-  assert(source.includes('Maintained guidance data owns'), `${name} does not state content authority`);
 }
 assert(fs.existsSync(path.join(catalogueRoot, 'kubeclaw-ops.md')), 'Codex package page is missing');
 const prismCatalogue = fs.readFileSync(path.join(catalogueRoot, 'kubeclaw-prism.md'), 'utf8');
@@ -170,12 +190,15 @@ assert(generatedIndex.includes('Maintainers write the practical'));
 const sourceTargets = new Set();
 for (const name of ['README.md', ...packagePages]) {
   const source = fs.readFileSync(path.join(catalogueRoot, name), 'utf8');
-  for (const match of source.matchAll(new RegExp(`https://github\\.com/datrab/kubeclaw/blob/${revision}/([^#)]+)`, 'gu'))) {
-    sourceTargets.add(match[1]);
+  const links = [...source.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)\s]+)(?:#[^)]*)?/gu)];
+  if (name !== 'README.md') assert(links.length > 0, `${name} has no mechanical source evidence`);
+  for (const [, linkRevision, target] of links) {
+    assert.equal(linkRevision, sourceRevision, `${name} has a stale mechanical source pin for ${target}`);
+    sourceTargets.add(target);
   }
 }
 for (const target of sourceTargets) {
-  execFileSync('git', ['-C', root, 'cat-file', '-e', `${revision}:${target}`]);
+  execFileSync('git', ['-C', root, 'cat-file', '-e', `${sourceRevision}:${target}`]);
 }
 
 const hostLinks = pinnedLinks('docs/site/extend/host-and-engine.md', 25);
