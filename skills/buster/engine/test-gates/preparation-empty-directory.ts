@@ -14,6 +14,36 @@ export function retainEmptyPreparationDirectory(directory: string, uid: 0 | 1000
   });
 }
 
+/** Physical INITIAL proof for the exact layout made by prepareBusterStateRoot.
+ * The parent is a closed inventory, not an empty store: every expected child
+ * must exist with its original owner and be empty. Retain all named inodes
+ * across the metadata fence; replacing an empty child is not the same proof.
+ * This grants no native/source authority or permission to recover retained A.
+ */
+export function retainInitialPreparationStores(directory: string) {
+  const stores = [
+    ['native-sources', 0], ['plan-jobs', 0], ['runs', 0],
+    ['plan-jobs-v2', 1000], ['runs-v2', 1000],
+  ] as const;
+  const names = stores.map(([name]) => name).sort().join(',');
+  const retained: { assertCurrent: () => void; close: () => void }[] = [];
+  try {
+    retained.push(retainDirectory(directory, 0, () => {
+      if (fs.readdirSync(directory).sort().join(',') !== names) {
+        throw new Error('BUSTER_INITIAL_STATE_PRIOR_STATE_UNACCOUNTED');
+      }
+    }));
+    for (const [name, uid] of stores) retained.push(retainEmptyPreparationDirectory(path.join(directory, name), uid));
+    const assertCurrent = () => {
+      for (const capture of retained) capture.assertCurrent();
+      // Bracket child checks with the parent's retained-inode/inventory proof.
+      retained[0]!.assertCurrent();
+    };
+    assertCurrent();
+    return Object.freeze({ assertCurrent, close: () => { for (const capture of retained) capture.close(); } });
+  } catch (error) { for (const capture of retained) capture.close(); throw error; }
+}
+
 /** Before ORIGINAL publication, an absent active pointer is insufficient.
  * Only the existing fence files may inhabit the otherwise pristine ownership
  * store. Even an empty owners.json, journal or original-boots directory denies.

@@ -12,8 +12,8 @@ import { readBusterStartupHandoff, type BusterStartupHandoff } from '@kubeclaw/p
 import { readBusterBootSourceArchive, materializeBusterBootSourceArchive, prepareBusterBootSourceClosure,
   assertPipelineBootCapture, type PipelineBootCapture, type publishBusterBootSourceClosure } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
 import { assertOriginalBusterNativeBootFacts, type captureOriginalBusterNativeBootFacts } from './preparation-boot-closure.ts';
-import { retainEmptyPreparationDirectory, retainUninitializedOwnershipDirectory } from './preparation-empty-directory.ts';
-import { preparationSourceRoot, preparationStateRoot } from './preparation-config.ts';
+import { retainInitialPreparationStores, retainUninitializedOwnershipDirectory } from './preparation-empty-directory.ts';
+import { preparationStateRoot } from './preparation-config.ts';
 import { originalBootMetadataBytes } from './preparation-boot-metadata.ts';
 
 type Facts = ReturnType<typeof captureOriginalBusterNativeBootFacts>;
@@ -140,7 +140,7 @@ export class PreparationOriginalBootStore {
     // before either source/capsule write. Missing A with retained residue denies.
     const pristine = [retainUninitializedOwnershipDirectory(path.dirname(this.#root))];
     try {
-      pristine.push(retainEmptyPreparationDirectory(path.dirname(preparationStateRoot)));
+      pristine.push(retainInitialPreparationStores(path.dirname(preparationStateRoot)));
       const prepared = prepareBusterBootSourceClosure(boot, path.join(this.#root, 'sources'));
       const publication = this.#capsulePublication(handoff, prepared.receipt, facts);
       const addition = prepared.receipt.byteLength + publication.bytes.byteLength;
@@ -234,14 +234,8 @@ export class PreparationOriginalBootStore {
     const active: ActiveBoot = { schemaVersion: 'buster-original-native-active-boot.v1', originalBoot };
     const bytes = Buffer.from(`${portableJson(active)}\n`);
     if (bytes.byteLength > this.#maximumAssociationBytes) throw new Error('BUSTER_ORIGINAL_BOOT_ASSOCIATION_CAPACITY');
-    const empty = [
-      retainEmptyPreparationDirectory(preparationSourceRoot),
-    ];
+    const empty = [retainInitialPreparationStores(path.dirname(preparationStateRoot))];
     try {
-      for (const [directory, uid] of [[preparationStateRoot, 0], ['/var/lib/buster-v2/runs', 0],
-        ['/var/lib/buster-v2/plan-jobs-v2', 1000], ['/var/lib/buster-v2/runs-v2', 1000]] as const) {
-        empty.push(retainEmptyPreparationDirectory(directory, uid));
-      }
 
       await this.#accountingStore(capsule).withMetadataReservation(bytes.byteLength, () => {
         this.#assertInitialOwnershipNamespace(originalBoot, capsule);

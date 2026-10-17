@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
-import { retainEmptyPreparationDirectory, retainUninitializedOwnershipDirectory } from '../../../skills/buster/engine/test-gates/preparation-empty-directory.ts';
+import { retainEmptyPreparationDirectory, retainInitialPreparationStores, retainUninitializedOwnershipDirectory } from '../../../skills/buster/engine/test-gates/preparation-empty-directory.ts';
 import { FileWorkerOwnershipStore } from '../../../skills/worker/core/worker/ownership-store.ts';
 
 // Genuine root-owned physical directories; no forged native facts, pool,
@@ -98,4 +98,47 @@ test('pristine PVC capture denies missing, changed, populated and closed physica
   assert.throws(capture.assertCurrent, /DIRECTORY_CHANGED/);
   capture.close(); capture.close();
   assert.throws(capture.assertCurrent, /CAPTURE_CLOSED/);
+});
+
+function provisionedLayout(t: test.TestContext) {
+  const { root } = fixture(t), volume = path.join(root, 'volume');
+  fs.mkdirSync(volume, { mode: 0o755 });
+  for (const name of ['native-sources', 'plan-jobs', 'runs', 'plan-jobs-v2', 'runs-v2']) {
+    const uid = name.endsWith('-v2') ? 1000 : 0;
+    const child = path.join(volume, name); fs.mkdirSync(child, { mode: uid ? 0o700 : 0o755 });
+    fs.chownSync(child, uid, uid);
+  }
+  return volume;
+}
+
+test('INITIAL publication and activation share the complete provisioned empty-store proof', t => {
+  const volume = provisionedLayout(t);
+  const publication = retainInitialPreparationStores(volume); t.after(publication.close);
+  publication.assertCurrent();
+  const activation = retainInitialPreparationStores(volume); t.after(activation.close);
+  activation.assertCurrent();
+  assert.equal(fs.readdirSync(volume).length, 5, 'proof neither creates nor deletes stores');
+  fs.writeFileSync(path.join(volume, 'plan-jobs-v2', 'retained'), 'original bytes');
+  assert.throws(publication.assertCurrent, /PRIOR_STATE_UNACCOUNTED/);
+  assert.throws(activation.assertCurrent, /PRIOR_STATE_UNACCOUNTED/);
+  assert.equal(fs.readFileSync(path.join(volume, 'plan-jobs-v2', 'retained'), 'utf8'), 'original bytes');
+});
+
+test('INITIAL layout denies unknown or missing children, wrong owner and substituted empty stores', t => {
+  const volume = provisionedLayout(t);
+  fs.writeFileSync(path.join(volume, 'unknown'), '');
+  assert.throws(() => retainInitialPreparationStores(volume), /PRIOR_STATE_UNACCOUNTED/);
+  fs.unlinkSync(path.join(volume, 'unknown'));
+  const source = path.join(volume, 'native-sources');
+  fs.rmdirSync(source);
+  assert.throws(() => retainInitialPreparationStores(volume), /PRIOR_STATE_UNACCOUNTED/);
+  fs.mkdirSync(source, { mode: 0o755 }); fs.chownSync(source, 1000, 1000);
+  assert.throws(() => retainInitialPreparationStores(volume), /DIRECTORY_NOT_TRUSTED/);
+  fs.chownSync(source, 0, 0);
+  const retained = retainInitialPreparationStores(volume); t.after(retained.close);
+  fs.renameSync(source, `${volume}-original-source`); fs.mkdirSync(source, { mode: 0o755 });
+  assert.throws(retained.assertCurrent, /DIRECTORY_CHANGED/);
+  assert.deepEqual(fs.readdirSync(`${volume}-original-source`), []);
+  retained.close(); retained.close();
+  assert.throws(retained.assertCurrent, /CAPTURE_CLOSED/);
 });
