@@ -23,7 +23,7 @@
     "skills/nova/project"
   ],
   "scripts": {
-    "verify:config:components": "tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts",
+    "verify:config:components": "tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && NODE_ENV=test node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts",
     "verify:orchestrator:effect-lock-config": "node --test tests/verification/reliability/effect-lock-configuration.test.mjs",
     "verify:nova-journal-scale": "node tests/verification/contracts/check-nova-journal-scale.mts",
     "scan:images": "bash scripts/scan-runtime-images.sh",
