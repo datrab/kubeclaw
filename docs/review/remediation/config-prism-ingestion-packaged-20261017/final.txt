@@ -1,0 +1,14 @@
+✔ normal Prism chart uses selected central ports/paths without legacy ENV or author mounts (374.853169ms)
+✔ central Prism publication/rendering rejects missing source settings, wrong deployment and duplicate TTL author (215.499174ms)
+✔ generated Prism chart projection is current and contains no competing flat author (564.758562ms)
+✔ disabled ingestion renders no Deployment and requires no invented sizing (257.709764ms)
+✔ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (1005.308287ms)
+✔ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (1957.979275ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3902.420249

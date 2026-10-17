@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T04:24:33.725226+00:00",
+  "updatedAt": "2026-10-17T04:29:19.237029+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "ALL45_HISTORICAL_GROUPS_EXACT_NAVIGATION_RUNTIME_RECEIVING_OPEN",
@@ -17590,7 +17590,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "9e8585376625a3312f4c5d5a664ada46e0089561eee92b1eb16d7d158aabab81",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "99773f054e89909e4b0d0753c3c64f95eb46cd1cedd23a849d7ddf1914b9d177"
     },
-    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli….",
+    "initialTestCorrection": "Expected default label length miscounted: KubeClaw Pipeline has 17 characters; cap16 correctly produces KubeClaw Pipeli\u2026.",
     "finalVerification": {
       "command": [
         "node",
@@ -17611,7 +17611,7 @@
   },
   "notificationRoleLabel20261016": {
     "at": "2026-10-16T02:38:50.940853+00:00",
-    "change": "Generated agent-role title casing can expand Unicode (ß to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
+    "change": "Generated agent-role title casing can expand Unicode (\u00df to SS); final role display now obeys selected maxLabelChars after transformation. Actual publish A/B control covers expansion while preserving raw stage/run identities. No new settings.",
     "verification": [
       {
         "command": [
@@ -17662,7 +17662,7 @@
       "skills/common/plugins/notification-observer/src/observer.ts": "c91b6da0875f437eafa63bdce8e3b0fb70d68298b9b6b1641663284529f12dfa",
       "tests/verification/reliability/nova-notification-policy.test.mjs": "bfdb2cf4529ec10c5eecb38d24b1bc5900bf2bdb2a372c896041d3073fc45dc6"
     },
-    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial ß; corrected genuine expansion input to aßbcdefg without altering formatter semantics.",
+    "initialTestCorrection": "Existing ASCII-word-boundary title casing does not uppercase initial \u00df; corrected genuine expansion input to a\u00dfbcdefg without altering formatter semantics.",
     "finalVerification": {
       "command": [
         "node",
@@ -26874,7 +26874,7 @@
       "routingIntegrity": "Exact suffix/helper preservation plus actual existing glob membership",
       "diffCheck": true
     },
-    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable ℹ summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
+    "supervisorDiagnostic": "Initial post-test count assertion expected TAP # summary but Node produced human-readable \u2139 summary. Corrected count extraction from retained completed log; no green-suite rerun or repository test failure.",
     "originalRoster": {
       "fields": {
         "required": 2409,
@@ -28648,6 +28648,56 @@
     "resumeCondition": "Unchanged isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native environment; sufficient genuinely root-trusted writable archive filesystem and isolated migrated PostgreSQL.",
     "writerLock": "SAME shared nonblocking lock acquired for each bounded writer/check/commit phase; released at command exit",
     "noHistoricalFollowup": true,
+    "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
+  },
+  "prismIngestionPackaged20261017": {
+    "at": "2026-10-17T04:29:19.237029+00:00",
+    "status": "ORIGINAL_PRISM_INGESTION_CENTRAL_PACKAGED_DELIVERY_6_OF_6_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "bba2d3a7c6ed764953a4fbd0e44b633762f53e35",
+    "sourceRemoteVerified": true,
+    "verifiedRemoteHead": "bba2d3a7c6ed764953a4fbd0e44b633762f53e35",
+    "evidence": "docs/review/remediation/config-prism-ingestion-packaged-20261017",
+    "change": "Original ingestion tests use actual whole-profile central author selection, normal complete Helm archives and exact archived topology readback; no retired Helm TTL or ENV author. Central 120000/240000/restored120000 TTL changes actual workload rollout checksum; all original resources/probes/quarantine volume/paused/disabled/invalid quantity and invalid TTL obligations retained at actual receiving boundary. Existing central-chart A/B/namespace/missing-source/duplicate-author cases also render full archives. No production policy/default/schema/authority change.",
+    "checks": {
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "exitCode": 0,
+      "log": "final.txt",
+      "nodeSyntaxAndDiffCheck": true,
+      "postTestChange": "blank line only"
+    },
+    "originalRoster": {
+      "fields": {
+        "required": 2409,
+        "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e"
+      },
+      "cases": {
+        "required": 6845,
+        "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566"
+      },
+      "requirements": {
+        "required": 50,
+        "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add"
+      }
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "independentReview": "OPEN: no callable native spawn/reviewer/collaboration tools; CONFIG subagents0; parent terminal; no productive repository process or fresh independent result. Unchanged same-surface helper EROFS not retried. Author tests only.",
+    "qualification": "Helm render and archived central owner/rollout linkage only. Synthetic OCI/native vectors are render-only, not genuine image/native boot or runtime ingestion expiry proof. Original TTL invalid vectors now reject by production central component validation, not retired Helm author validation.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Unchanged genuine isolated Linux Docker UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted writable archive filesystem and isolated migrated PostgreSQL.",
+    "writerLock": "SAME shared nonblocking lock; released at command exit",
+    "noHistoricalFollowup": true,
+    "sourceHashes": {
+      "tests/verification/deployment/prism-central-chart.test.mjs": "1f5ef315f402a9fdb0e4cf50fcc081fd5fa584dbbe94b9fc38fea1fff2b73854",
+      "tests/verification/deployment/prism-ingestion-resources.test.mjs": "eed63447206bcf1ff159b3759ad672dded3195d36e5f1b730ba701148c4f5859"
+    },
     "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
   }
 }
