@@ -28,7 +28,7 @@ export async function reopenPipeline(platform: PlatformConfig, definitionInput: 
   validateContractValue('administrativeReopenDecision', decision);
   const runRoot = resolveRunRoot(platform.storageRoot, decision.runId);
   const retained = retainedRuntimePolicies(runRoot);
-  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings, retained.publisherBindings);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings, retained.publisherBindings, retained.gitBindings);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (lease) => new AdministrativeReopener(platform, definition, decision, runtime, runRoot, lease, authenticate).run());
 }
 

@@ -36,7 +36,7 @@ test('installed Git retained original run redispatch keeps A after current polic
  const {loadPlatformConfig}=await import('../../../skills/common/plugin-runtime/foundation/config/platform.ts');
  const {runPipelineV2,resumePipelineV2,recoverPipelineV2}=await import('../../../skills/nova/core/execution/engine.ts');
  const {runRoot}=await import('../../../skills/nova/core/execution/run-root.ts');
- const {readRunSnapshot,retainedCoreRuntimePolicy}=await import('../../../skills/nova/core/execution/engine-snapshots.ts');
+ const {readRunSnapshot,retainedCoreRuntimePolicy,retainedRuntimePolicies}=await import('../../../skills/nova/core/execution/engine-snapshots.ts');
  const plugins=path.join(root,'plugins'),plugin=path.join(plugins,'probe'),output=path.join(root,'observed.jsonl');fs.mkdirSync(path.join(plugin,'schemas'),{recursive:true});
  fs.writeFileSync(path.join(plugin,'package.json'),'{"type":"module"}');
  fs.writeFileSync(path.join(plugin,'entry.mjs'),`import fs from 'node:fs';
@@ -56,13 +56,40 @@ test('installed Git retained original run redispatch keeps A after current polic
  const definition={schemaVersion:'pipeline-definition.v2',id:'git-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.git-policy',dependsOn:[],config:{repository,output},input:{},execution:{maxAttempts:3,maxRemediationCycles:0,timeoutMs:10000}}]};
  publish(8);const first=await runPipelineV2(platform(),definition,'git:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));
  const originalRoot=runRoot(source.storageRoot,'git:A'),snapshot=readRunSnapshot(originalRoot);assert.equal(retainedCoreRuntimePolicy(originalRoot).gitWorkspaceFailure.errorExcerptCharacters,8);
- publish(16);assert.equal((await runPipelineV2(platform(),definition,'git:B')).status,'waiting');fs.unlinkSync(file);
+ const original=structuredClone(source.adapters[id]);
+ const retained=retainedRuntimePolicies(originalRoot);assert.deepEqual(retained.gitBindings[id],original);assert(Object.isFrozen(retained.gitBindings[id].allowedRepositoryRoots));
+ const otherRepository=path.join(root,'other-repository'),otherWorkspace=path.join(root,'other-workspace');fs.mkdirSync(otherRepository);fs.mkdirSync(otherWorkspace);
+ source.adapters[id]={allowedRepositoryRoots:[otherRepository],workspaceRoot:otherWorkspace,gitExecutable:fs.realpathSync('/usr/bin/git'),authorName:'Current',authorEmail:'current@example.invalid',maxExecutionMs:2000,maxOutputBytes:32768,terminationGraceMs:50};
+ fs.writeFileSync(platformFile,JSON.stringify(source));
+ publish(16);assert.equal((await runPipelineV2(platform(),definition,'git:B')).status,'waiting');
+ assert.deepEqual(readRunSnapshot(runRoot(source.storageRoot,'git:B')).registry.configuration.adapters[id].allowedRepositoryRoots,[otherRepository]);
+ // Grant drift must still reject before any original child dispatch.
+ source.grants['test.git-policy:probe']['git.sync'].allowedRoots=[otherRepository];fs.writeFileSync(platformFile,JSON.stringify(source));
+ await assert.rejects(recoverPipelineV2(platform(),definition,'git:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+ source.grants['test.git-policy:probe']['git.sync'].allowedRoots=[repository];fs.writeFileSync(platformFile,JSON.stringify(source));fs.unlinkSync(file);
  await assert.rejects(recoverPipelineV2(platform(),definition,'git:A'),/RECOVERY_SIGNAL_REQUIRED/);
  const wait=first.stages.get('probe').wait;
  const resumed=await resumePipelineV2(platform(),definition,'git:A',{schemaVersion:'resume-signal.v2',signalId:'signal:git-A',idempotencyKey:'signal-key:git-A',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});
  assert.equal(resumed.status,'succeeded',JSON.stringify([...resumed.stages]));assert.deepEqual(readRunSnapshot(originalRoot),snapshot);
  const rows=fs.readFileSync(output,'utf8').trim().split('\n').map(JSON.parse);assert.equal(rows.length,3);
- for(const row of rows){assert.match(row.message,/^EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:[a-f0-9]{64}:GIT_COMMAND_FAILED:128:null:/);assert.equal(row.message.split('GIT_COMMAND_FAILED:128:null:')[1].length,row.run==='git:A'?8:16);}
+ for(const row of rows.filter(row=>row.run==='git:A')){assert.match(row.message,/^EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:[a-f0-9]{64}:GIT_COMMAND_FAILED:128:null:/);assert.equal(row.message.split('GIT_COMMAND_FAILED:128:null:')[1].length,row.run==='git:A'?8:16);}
  assert.equal(rows.filter(row=>row.run==='git:A').length,2);
+ assert.match(rows.find(row=>row.run==='git:B').message,/GIT_PATH_DENIED/);
  await assert.rejects(runPipelineV2(platform(),definition,'git:C'),/ENOENT/);assert(!fs.existsSync(runRoot(source.storageRoot,'git:C')));
+});
+
+
+test('complete Git retained binding is private/frozen and rejects absent, mixed and incomplete registrations', async()=>{
+ const {captureGitRuntimeBindings:capture,restoreGitRuntimeBindings:restore}=await import('../../../skills/nova/core/execution/git-runtime-binding.ts');
+ const raw={allowedRepositoryRoots:['/original/repository'],workspaceRoot:'/original/workspaces',gitExecutable:'/usr/bin/git',authorName:'Original',authorEmail:'original@example.invalid',maxExecutionMs:3000,maxOutputBytes:65536,terminationGraceMs:25};
+ const effective=selectedAdapterConfigurations({[id]:raw},TEST_CORE_POLICY);
+ const retained=capture(effective,TEST_CORE_POLICY);assert.deepEqual(retained[id],raw);
+ effective[id].allowedRepositoryRoots[0]='/mutated';assert.equal(retained[id].allowedRepositoryRoots[0],'/original/repository');
+ assert(Object.isFrozen(retained));assert(Object.isFrozen(retained[id]));assert(Object.isFrozen(retained[id].allowedRepositoryRoots));
+ const valid=selectedAdapterConfigurations({[id]:raw},TEST_CORE_POLICY)[id];
+ for(const key of Object.keys(valid)){const invalid=structuredClone(valid);delete invalid[key];assert.throws(()=>capture({[id]:invalid},TEST_CORE_POLICY),/RECOVERY_GIT_/);}
+ for(const invalid of [{...valid,extra:true},{...valid,errorExcerptCharacters:1},{...valid,maxExecutionMs:0},{...valid,allowedRepositoryRoots:[]},{...valid,allowedRepositoryRoots:['/a','/a']}])assert.throws(()=>capture({[id]:invalid},TEST_CORE_POLICY),/RECOVERY_GIT_/);
+ assert.throws(()=>restore({},retained),/REGISTRATION_MISMATCH/);assert.throws(()=>restore({[id]:raw},{}),/REGISTRATION_MISMATCH/);assert.throws(()=>restore({},{foreign:raw}),/CONFIGURATION_INVALID/);
+ const restored=restore({[id]:{current:true}},retained);assert.deepEqual(restored[id],raw);restored[id].allowedRepositoryRoots.push('/new');assert.equal(retained[id].allowedRepositoryRoots.length,1);
+ assert.deepEqual(restore({},capture({},TEST_CORE_POLICY)),{});
 });
