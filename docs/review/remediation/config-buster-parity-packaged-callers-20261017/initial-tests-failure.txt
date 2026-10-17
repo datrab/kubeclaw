@@ -1,0 +1,48 @@
+✖ both actual charts, packaged role boot and loader enforce shared cluster invoker policy (70015.458836ms)
+
+Interrupted while running:
+
+⚠ tests/verification/deployment/buster-process-input-parity.test.mjs (tests/verification/deployment/buster-process-input-parity.test.mjs:1:1)
+✖ tests/verification/deployment/buster-process-input-parity.test.mjs (19365.950462ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 89959.288258
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:20:1
+✖ both actual charts, packaged role boot and loader enforce shared cluster invoker policy (70015.458836ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+        'agent-buster',
+        'checksum/pipeline-delivery',
+  +     '5591d2083b0681199a09a2ca2f8f22bac5bce3cdb48c36f0af794d0fb56b6e81'
+  -     '90a935ab08fa747073246e103a827d7b8dd8e05fc00f138a5939c9557d52a61b'
+      ],
+      [
+        'agent-buster',
+        'checksum/swarm-config',
+        '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:224:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'agent-buster', 'checksum/pipeline-delivery', '5591d2083b0681199a09a2ca2f8f22bac5bce3cdb48c36f0af794d0fb56b6e81' ], [ 'agent-buster', 'checksum/swarm-config', '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885' ] ],
+    expected: [ [ 'agent-buster', 'checksum/pipeline-delivery', '90a935ab08fa747073246e103a827d7b8dd8e05fc00f138a5939c9557d52a61b' ], [ 'agent-buster', 'checksum/swarm-config', '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/buster-process-input-parity.test.mjs:1:1
+✖ tests/verification/deployment/buster-process-input-parity.test.mjs (19365.950462ms)
+  'Promise resolution is still pending but the event loop has already resolved'
