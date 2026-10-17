@@ -34,7 +34,12 @@ let suiteRoot, image, baselineChart, boot, installedWorker, installedControl, in
 const generations = new Map(), documentGenerations = new WeakMap();
 test.before(async () => {
   suiteRoot=fs.mkdtempSync(path.join(os.tmpdir(),'prism-chart-current-'));
-  image=await buildPrismImageBundle({repository:root, output:path.join(suiteRoot,'image'),callerId:'prism-control',revision:'a'.repeat(40),builtAt:'2026-10-16T00:00:00Z'});
+  const revision=execFileSync('git',['rev-parse','--verify','HEAD'],{cwd:root,encoding:'utf8'}).trim();
+  const builtAt=new Date().toISOString();
+  image=await buildPrismImageBundle({repository:root, output:path.join(suiteRoot,'image'),callerId:'prism-control',revision,builtAt});
+  assert.equal(image.revision,revision);
+  const manifest=JSON.parse(fs.readFileSync(path.join(image.packageRoot,'manifest.json'),'utf8'));
+  assert.equal(manifest.commit,revision);assert.equal(manifest.builtAt,builtAt);
   boot=await import(pathToFileURL(path.join(image.packageRoot,'skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href);
   installedWorker=await import(pathToFileURL(path.join(image.packageRoot,'skills/packages/prism-engine/server/worker-config.ts')).href);
   installedControl=await import(pathToFileURL(path.join(image.packageRoot,'skills/packages/prism-engine/server/control-config.ts')).href);
@@ -60,7 +65,13 @@ async function helm(requested, extra=[]) {
   try { projection=prismChartProjection(authorRoot); }
   catch(error) { return {status:1,stderr:String(error),stdout:''}; }
   fs.writeFileSync(path.join(chart,'files/pipeline/prism-topology.json'),JSON.stringify(projection));
-  const result=spawnSync('helm',['template',projection.deployment.releaseName,chart,'--namespace',projection.deployment.namespace,'-f',path.join(chart,'ci-values.yaml'),...extra],{encoding:'utf8',maxBuffer:16*1024*1024});
+  const packaged=fs.mkdtempSync(path.join(suiteRoot,'packaged-'));
+  execFileSync('helm',['package',chart,'--destination',packaged],{stdio:'pipe'});
+  const archives=fs.readdirSync(packaged).filter(name=>name.endsWith('.tgz'));assert.equal(archives.length,1);
+  const archive=path.join(packaged,archives[0]);
+  const archivedProjection=execFileSync('tar',['-xzOf',archive,'prism/files/pipeline/prism-topology.json'],{encoding:'utf8'});
+  assert.deepEqual(JSON.parse(archivedProjection),projection,'normal chart archive retains the selected generation projection');
+  const result=spawnSync('helm',['template',projection.deployment.releaseName,archive,'--namespace',projection.deployment.namespace,'-f',path.join(chart,'ci-values.yaml'),...extra],{encoding:'utf8',maxBuffer:16*1024*1024});
   if(result.status===0) {
     const output=path.join(suiteRoot,`generation-${sequence++}`);
     await materializePipelineGeneration({authorRoot,packageRoot:image.packageRoot,output,services:declaredPipelineServices(authorRoot,{role:'prism',...projection.deployment}),publisher:path.join(suiteRoot,'image/publish')});
