@@ -304,6 +304,7 @@
     "docs:drift:contract:sdk:constructors": "node scripts/check-sdk-contract-mutation-constructors.mjs",
     "docs:drift:contract:check": "node scripts/check-contract-drift.mjs",
     "docs:drift:contract:mutations": "node scripts/check-contract-drift-mutations.mjs",
+    "docs:drift:capability:swarm-boundary:check": "node scripts/check-capability-swarm-boundary.mjs",
     "docs:drift:capability:vocabulary:check": "node scripts/check-capability-vocabulary-drift.mjs",
     "docs:drift:capability:vocabulary:mutations": "node scripts/check-capability-vocabulary-drift-mutations.mjs"
   },

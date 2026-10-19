@@ -702,6 +702,20 @@ function capabilityPage() {
     '| Buster runtime capability | Requested by |',
     '| --- | --- |',
     ...busterRows, '',
+    '## Platform Grants Are Not Swarm Roles', '',
+    'The chart ships a compact `swarm.config.json` with `profile: "standard"` and empty `overrides`.',
+    'Its current standard-profile expander does not produce `roles`, `grants`, or `providers` fields.',
+    'Adding any of those fields through compact overrides is rejected as an unsupported effective config path; it does not grant Nova authority.', '',
+    `> ${sourceLink('Compact chart configuration', path.join(root, 'charts/kubeclaw/files/config/swarm.config.json'))}; ${sourceLink('standard profile and override validation', path.join(root, 'tests/verification/e2e/support/platform-config.ts'))}; ${sourceLink('expanded standard profile', path.join(root, 'tests/verification/e2e/support/config-profiles/standard.json'))}.`, '',
+    'Nova instead loads a separate `pipeline-platform.v2` configuration.',
+    '`providers` maps each capability name to a provider registration identity; `grants` maps a requesting registration identity to capability-specific constraint objects.',
+    'These keys identify registrations, not operator roles. A provider selection alone does not grant a consumer permission.',
+    'For an enabled registration, a requested capability without configured constraints fails with `REGISTRY_CAPABILITY_DENIED`.',
+    'A configured grant for an unrequested capability or a disabled registration fails with `REGISTRY_CAPABILITY_UNREQUESTED`.',
+    'Resource scopes use the constraint lists in the vocabulary above; invocation authorization additionally checks the concrete operation and resource.', '',
+    `> ${sourceLink('Platform schema', path.join(root, 'skills/common/plugin-runtime/foundation/config/platform.schema.json'))}; ${sourceLink('platform loader', path.join(root, 'skills/common/plugin-runtime/foundation/config/platform.ts'))}; ${sourceLink('grant and provider resolution', path.join(root, 'skills/common/plugin-runtime/foundation/registry/capabilities.ts'))}; ${sourceLink('resource authorization', path.join(root, 'skills/nova/core/execution/authorization.ts'))}.`, '',
+    'Stop if a procedure asks you to authorize a Nova plugin by adding a role or grant to compact swarm overrides.',
+    'Use the separately validated Nova platform policy and the plugin registration requirements instead; do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.', '',
     '## Names Used By Both Systems', '',
     'Some names occur in both tables because both systems describe the same external action.',
     'Each system still performs its own admission check and uses its own request contract.',
@@ -1042,6 +1056,7 @@ if (command === 'dependency-report') {
   })));
   console.log(JSON.stringify({ packageCount: plugins.length, registrationCount: records.length, records }, null, 2));
 } else if (command === 'operator-matrix') console.log(operatorPluginMatrix());
+else if (command === 'capability-page') process.stdout.write(capabilityPage());
 else if (command === 'generate') generate();
 else if (command === 'check') checkSite();
 else if (command === 'build') build();

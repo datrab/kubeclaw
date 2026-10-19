@@ -75,6 +75,26 @@ The test-provider contract owns request details; this table does not define Nova
 | `network.http` | [`kubeclaw.api-flow:flow`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/api-flow/plugin.json)<br>[`kubeclaw.demo-auth-smoke:session`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/demo-auth-smoke/plugin.json)<br>[`kubeclaw.http:request`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/plugin.json)<br>[`kubeclaw.openapi:operations`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/openapi/plugin.json)<br>[`kubeclaw.security-providers:headers`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json) |
 | `security.scan` | [`kubeclaw.security-providers:dependency-trivy`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json)<br>[`kubeclaw.security-providers:image-trivy`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json)<br>[`kubeclaw.security-providers:kubernetes-policy`](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/security-providers/plugin.json) |
 
+## Platform Grants Are Not Swarm Roles
+
+The chart ships a compact `swarm.config.json` with `profile: "standard"` and empty `overrides`.
+Its current standard-profile expander does not produce `roles`, `grants`, or `providers` fields.
+Adding any of those fields through compact overrides is rejected as an unsupported effective config path; it does not grant Nova authority.
+
+> [Compact chart configuration](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/charts/kubeclaw/files/config/swarm.config.json); [standard profile and override validation](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/tests/verification/e2e/support/platform-config.ts); [expanded standard profile](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/tests/verification/e2e/support/config-profiles/standard.json).
+
+Nova instead loads a separate `pipeline-platform.v2` configuration.
+`providers` maps each capability name to a provider registration identity; `grants` maps a requesting registration identity to capability-specific constraint objects.
+These keys identify registrations, not operator roles. A provider selection alone does not grant a consumer permission.
+For an enabled registration, a requested capability without configured constraints fails with `REGISTRY_CAPABILITY_DENIED`.
+A configured grant for an unrequested capability or a disabled registration fails with `REGISTRY_CAPABILITY_UNREQUESTED`.
+Resource scopes use the constraint lists in the vocabulary above; invocation authorization additionally checks the concrete operation and resource.
+
+> [Platform schema](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/config/platform.schema.json); [platform loader](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/config/platform.ts); [grant and provider resolution](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/capabilities.ts); [resource authorization](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/execution/authorization.ts).
+
+Stop if a procedure asks you to authorize a Nova plugin by adding a role or grant to compact swarm overrides.
+Use the separately validated Nova platform policy and the plugin registration requirements instead; do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.
+
 ## Names Used By Both Systems
 
 Some names occur in both tables because both systems describe the same external action.
