@@ -7,6 +7,8 @@ import { readNativeWorkerNodeIdentity, requireNativeWorkerRuntimeIdentity, Nativ
   type NativeAttemptBootAssociation } from '@kubeclaw/worker-core';
 import { sha256Digest, validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import { portableJson } from '@kubeclaw/plugin-sdk/values';
+import { readWorkerCorePolicyCapture, captureWorkerCorePolicy, validateWorkerCoreV3Author } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
+import { readPipelineServiceSelection } from '@kubeclaw/plugin-foundation/config/pipeline-generation';
 import { assertBusterLifetimeDescriptor, type BusterLifetimeDescriptor } from '@kubeclaw/plugin-foundation/config/buster-lifetime.mjs';
 import { readBusterStartupHandoff, type BusterStartupHandoff } from '@kubeclaw/plugin-foundation/config/buster-startup';
 import { readBusterBootSourceArchive, materializeBusterBootSourceArchive, prepareBusterBootSourceClosure,
@@ -26,7 +28,7 @@ export interface PreparationOriginalBootArchive {
   readonly contentByteLength: number;
 }
 interface Capsule {
-  readonly schemaVersion: 'buster-original-native-boot-capsule.v1';
+  readonly schemaVersion: 'buster-original-native-boot-capsule.v1' | 'buster-original-native-boot-capsule.v2';
   readonly handoff: BusterStartupHandoff;
   readonly sourceArchive: SourceArchive;
   readonly facts: Facts;
@@ -175,7 +177,8 @@ export class PreparationOriginalBootStore {
       || facts.ownershipStore.file !== path.dirname(this.#root)) throw new Error('BUSTER_ORIGINAL_BOOT_JOIN_MISMATCH');
     const stat = fs.statSync(facts.ownershipStore.file, { bigint: true });
     if (String(stat.dev) !== facts.ownershipStore.device || String(stat.ino) !== facts.ownershipStore.inode) throw new Error('BUSTER_ORIGINAL_BOOT_STORE_CHANGED');
-    const capsule: Capsule = { schemaVersion: 'buster-original-native-boot-capsule.v1', handoff, sourceArchive, facts };
+    const capsule: Capsule = { schemaVersion: facts.schemaVersion === 'buster-native-boot-facts.v2'
+      ? 'buster-original-native-boot-capsule.v2' : 'buster-original-native-boot-capsule.v1', handoff, sourceArchive, facts };
     const content = Buffer.from(`${portableJson(capsule)}\n`), bytes = gzipSync(content);
     const result: PreparationOriginalBootArchive = Object.freeze({ schemaVersion: 'buster-original-native-boot-archive-reference.v1',
       parentBootId: handoff.parentBootId, digest: hash(bytes), byteLength: bytes.byteLength, contentByteLength: content.byteLength });
@@ -203,12 +206,20 @@ export class PreparationOriginalBootStore {
     if (content.byteLength !== original.contentByteLength) throw new Error('BUSTER_ORIGINAL_BOOT_ARCHIVE_SIZE_MISMATCH');
     const value: unknown = JSON.parse(content.toString('utf8'));
     exact(value, ['schemaVersion', 'handoff', 'sourceArchive', 'facts']);
-    if (value.schemaVersion !== 'buster-original-native-boot-capsule.v1') throw new Error('BUSTER_ORIGINAL_BOOT_RECORD_INVALID');
+    if (value.schemaVersion !== 'buster-original-native-boot-capsule.v1'
+      && value.schemaVersion !== 'buster-original-native-boot-capsule.v2') {
+      throw new Error('BUSTER_ORIGINAL_BOOT_RECORD_INVALID');
+    }
     // Decode only the capsule's original source bytes. The current image's
     // handoff/reader decoder must not invalidate or recapture historical A.
     const capsule = value as unknown as Capsule;
+    const selected = capsule.schemaVersion === 'buster-original-native-boot-capsule.v2';
     if (capsule.handoff?.parentBootId !== original.parentBootId
-      || capsule.facts?.schemaVersion !== 'buster-native-boot-facts.v1') throw new Error('BUSTER_ORIGINAL_BOOT_RECORD_INVALID');
+      || capsule.facts?.schemaVersion !== (selected ? 'buster-native-boot-facts.v2' : 'buster-native-boot-facts.v1')
+      || (selected ? capsule.facts.native?.workerCore === undefined : capsule.facts.native?.workerCore !== undefined)) {
+      throw new Error('BUSTER_ORIGINAL_BOOT_RECORD_INVALID');
+    }
+    if (selected) readWorkerCorePolicyCapture(capsule.facts.native.workerCore);
     const source = readBusterBootSourceArchive(capsule.sourceArchive);
     if (source.schemaVersion !== 'buster-boot-source-closure.v2'
       || source.expectedReceipt.generationDigest !== capsule.facts.generationDigest
@@ -217,6 +228,31 @@ export class PreparationOriginalBootStore {
       || source.expectedReceipt.imageReceiptDigest !== capsule.facts.imageReceiptDigest
       || source.expectedReceipt.imageReceiptDigest !== capsule.handoff.imageReceiptDigest
       || source.expectedReceipt.packageReceiptDigest !== capsule.facts.packageReceiptDigest) throw new Error('BUSTER_ORIGINAL_BOOT_JOIN_MISMATCH');
+    if (selected) {
+      // Resolve ONLY retained A. A structurally valid capture is not evidence
+      // that this was the policy selected by the original authenticated source.
+      const member = (name: string): unknown => {
+        const file = source.files.find(file => file.name === `generation/${name}`);
+        if (!file) throw new Error('BUSTER_ORIGINAL_BOOT_CORE_SOURCE_MISMATCH');
+        return JSON.parse(Buffer.from(file.bytes, 'base64').toString('utf8'));
+      };
+      const selection = readPipelineServiceSelection(member('selections/buster-preparation.json'), 'buster-preparation');
+      const bindings = selection.bindings.filter(binding => binding.owner === 'worker-core');
+      const root = member('pipeline.config.json') as { components?: Record<string, string>; bindings?: unknown[] };
+      const owner = member('components/worker-core.config.json') as {
+        profiles: Record<string, { settings: Parameters<typeof captureWorkerCorePolicy>[0] }>;
+      };
+      if (selection.digest !== source.expectedReceipt.selectionDigest
+        || selection.generationDigest !== source.expectedReceipt.generationDigest
+        || selection.packageReceiptDigest !== source.expectedReceipt.packageReceiptDigest
+        || selection.serviceInstanceId !== source.expectedReceipt.serviceInstanceId
+        || bindings.length !== 1 || root?.components?.['worker-core'] !== 'components/worker-core.config.json'
+        || !Array.isArray(root.bindings) || !root.bindings.some(binding => portableJson(binding) === portableJson({ role: selection.role, ...bindings[0] }))
+        || !validateWorkerCoreV3Author(owner) || !Object.hasOwn(owner.profiles, bindings[0]!.profileId)
+        || portableJson(captureWorkerCorePolicy(owner.profiles[bindings[0]!.profileId]!.settings)) !== portableJson(capsule.facts.native.workerCore)) {
+        throw new Error('BUSTER_ORIGINAL_BOOT_CORE_SOURCE_MISMATCH');
+      }
+    }
     this.#lifetime.assertCurrent();
     return capsule;
   }
@@ -254,6 +290,7 @@ export class PreparationOriginalBootStore {
 
   #assertInitialKernel(facts: Facts): void {
     this.#lifetime.assertCurrent();
+    const workerCore = facts.native.workerCore === undefined ? undefined : readWorkerCorePolicyCapture(facts.native.workerCore);
     const ownership = fs.lstatSync(path.dirname(this.#root), { bigint: true });
     if (facts.ownershipStore.file !== path.dirname(this.#root)
       || String(ownership.dev) !== facts.ownershipStore.device || String(ownership.ino) !== facts.ownershipStore.inode) {
@@ -261,10 +298,10 @@ export class PreparationOriginalBootStore {
     }
     if (facts.native.pool.nodeIdentityFile !== '/etc/kubeclaw/native-node-id'
       || facts.native.pool.runtimeIdentityFile !== '/etc/kubeclaw/native-runtime-identity.json'
-      || readNativeWorkerNodeIdentity('/etc/kubeclaw/native-node-id') !== facts.native.nodeIdentity) {
+      || readNativeWorkerNodeIdentity('/etc/kubeclaw/native-node-id', workerCore) !== facts.native.nodeIdentity) {
       throw new Error('BUSTER_ORIGINAL_BOOT_HOST_UNRESOLVED');
     }
-    requireNativeWorkerRuntimeIdentity('/etc/kubeclaw/native-runtime-identity.json');
+    requireNativeWorkerRuntimeIdentity('/etc/kubeclaw/native-runtime-identity.json', workerCore);
     const pool = facts.kernel.pool;
     this.#trusted(pool.file, false);
     const stat = fs.lstatSync(pool.file, { bigint: true });
@@ -459,14 +496,18 @@ export class PreparationOriginalBootStore {
       || String(store.dev) !== capsule.facts.ownershipStore.device || String(store.ino) !== capsule.facts.ownershipStore.inode) {
       throw new Error('BUSTER_ORIGINAL_BOOT_STORE_CHANGED');
     }
+    // Only the policy retained by authentic original capture is eligible here;
+    // absent legacy captures stay legacy, never refill from current B.
+    const workerCore = capsule.facts.native.workerCore === undefined ? undefined
+      : readWorkerCorePolicyCapture(capsule.facts.native.workerCore);
     // Historical node bytes are evidence, never proof that this machine is
     // that node. Only the existing immutable host-preparation mounts join it.
     if (capsule.facts.native.pool.nodeIdentityFile !== '/etc/kubeclaw/native-node-id'
       || capsule.facts.native.pool.runtimeIdentityFile !== '/etc/kubeclaw/native-runtime-identity.json'
-      || readNativeWorkerNodeIdentity('/etc/kubeclaw/native-node-id') !== capsule.facts.native.nodeIdentity) {
+      || readNativeWorkerNodeIdentity('/etc/kubeclaw/native-node-id', workerCore) !== capsule.facts.native.nodeIdentity) {
       throw new Error('BUSTER_ORIGINAL_BOOT_HOST_UNRESOLVED');
     }
-    requireNativeWorkerRuntimeIdentity('/etc/kubeclaw/native-runtime-identity.json');
+    requireNativeWorkerRuntimeIdentity('/etc/kubeclaw/native-runtime-identity.json', workerCore);
     this.#lifetime.assertCurrent();
     return capsule;
   }
@@ -496,7 +537,7 @@ export class PreparationOriginalBootStore {
       const stat = fs.lstatSync(originalStore.file, { bigint: true });
       if (String(stat.dev) !== originalStore.device || String(stat.ino) !== originalStore.inode) throw new Error('BUSTER_ORIGINAL_BOOT_STORE_CHANGED');
       return this.#associationMetadataBytes(capsule);
-    });
+    }, capsule.facts.native.workerCore);
   }
   async #publishAssociation(original: PreparationOriginalBootArchive, capsule: Capsule, file: string, bytes: Buffer): Promise<void> {
     let exists = false;

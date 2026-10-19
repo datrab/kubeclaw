@@ -33,6 +33,9 @@ export function captureOriginalBusterNativeHostFacts(boot: PipelineBootCapture,
   assertPipelineBootCapture(boot, 'buster-preparation');
   const preparation = projectBusterSettings(boot, 'buster-preparation').preparation;
   const poolFile = originalNativeBusterHostPoolFile(native, preparation);
+  // Revalidation must retain the SAME selected original Core policy as the
+  // initial native trust capture; legacy decoder ceilings are not a fallback.
+  const workerCore = selectedWorkerCorePolicy(boot);
   const observations: { file: string; fd: number; before: fs.BigIntStats; directory?: boolean }[] = [];
   const ancestors = new Set<string>();
   const ancestry = (location: string): void => {
@@ -76,11 +79,11 @@ export function captureOriginalBusterNativeHostFacts(boot: PipelineBootCapture,
       file('service-lifetime-guardian', '/usr/local/libexec/kubeclaw-buster-lifetime-guardian'),
       file('node-executable', process.execPath), file('tar-executable', native.tarExecutable)];
     const pool = directory(native.pool.cgroupRoot, true), ownershipStore = directory(native.pool.ownershipRoot, false);
-    if (portableJson(readNativeWorkerPoolPolicy(poolFile, 'buster')) !== portableJson(native.pool)
-      || readNativeWorkerNodeIdentity(native.pool.nodeIdentityFile) !== native.nodeIdentity) {
+    if (portableJson(readNativeWorkerPoolPolicy(poolFile, 'buster', workerCore)) !== portableJson(native.pool)
+      || readNativeWorkerNodeIdentity(native.pool.nodeIdentityFile, workerCore) !== native.nodeIdentity) {
       throw new Error('BUSTER_NATIVE_BOOT_FACT_IDENTITY_CHANGED');
     }
-    requireNativeWorkerRuntimeIdentity(native.pool.runtimeIdentityFile);
+    requireNativeWorkerRuntimeIdentity(native.pool.runtimeIdentityFile, workerCore);
     const bootId = fs.readFileSync('/proc/sys/kernel/random/boot_id', 'utf8').trim();
     const namespace = fs.statSync('/proc/self/ns/cgroup', { bigint: true });
     for (const observation of observations) {
@@ -90,12 +93,12 @@ export function captureOriginalBusterNativeHostFacts(boot: PipelineBootCapture,
         if (!current) throw new Error('BUSTER_NATIVE_BOOT_FACT_IDENTITY_CHANGED');
       }
     }
-    const captured = Object.freeze({ schemaVersion: 'buster-native-host-boot-facts.v1' as const,
+    const captured = Object.freeze({ schemaVersion: workerCore ? 'buster-native-host-boot-facts.v2' as const : 'buster-native-host-boot-facts.v1' as const,
       generationDigest: boot.selectionReceipt.generationDigest, packageReceiptDigest: boot.selectionReceipt.packageReceiptDigest,
       selectionDigest: boot.selectionReceipt.digest, imageReceiptDigest: boot.bootProvenance.expectedReceipt.imageReceiptDigest,
       preparation,
       native: Object.freeze({ pool: native.pool, engineContentDigest: native.engineContentDigest,
-        nodeIdentity: native.nodeIdentity }),
+        nodeIdentity: native.nodeIdentity, ...(workerCore ? { workerCore } : {}) }),
       kernel: Object.freeze({ bootId, namespace: Object.freeze({ device: String(namespace.dev), inode: String(namespace.ino) }), pool }),
       ownershipStore, files: Object.freeze(files) });
     verifiedHostFacts.add(captured);
@@ -116,7 +119,7 @@ export function captureOriginalBusterNativeBootFacts(boot: PipelineBootCapture, 
   const preparation = projectBusterSettings(boot, 'buster-preparation').preparation;
   originalNativeBusterPoolFile(native, preparation);
   const host = captureOriginalBusterNativeHostFacts(boot, native);
-  const captured = Object.freeze({ ...host, schemaVersion: 'buster-native-boot-facts.v1' as const,
+  const captured = Object.freeze({ ...host, schemaVersion: host.native.workerCore ? 'buster-native-boot-facts.v2' as const : 'buster-native-boot-facts.v1' as const,
     native: Object.freeze({ ...host.native,
       sourceAttestationPublicKey: createPublicKey(native.sourceAttestationPublicKey).export({ type: 'spki', format: 'pem' }).toString(),
       trustedSourceAuthority: native.trustedSourceAuthority, stateRoot: native.stateRoot,

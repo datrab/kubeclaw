@@ -89,6 +89,9 @@ test('actual inherited-lock original store denies missing A and wrong exact atte
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
+import { portableJson } from '${new URL('../../../skills/common/plugin-runtime/sdk/src/values.ts', import.meta.url).href}';
+import { captureWorkerCorePolicy } from '${new URL('../../../skills/common/plugin-runtime/foundation/config/worker-core-policy.ts', import.meta.url).href}';
 import { captureBusterLifetimeDescriptor } from '${new URL('../../../skills/common/plugin-runtime/foundation/config/buster-lifetime.mjs', import.meta.url).href}';
 import { PreparationOriginalBootStore, assertOriginalBusterRecoveryContext, originalActiveBootWireMaximumBytes } from '${new URL('../../../skills/buster/engine/test-gates/preparation-boot-store.ts', import.meta.url).href}';
 const base = process.argv[2], envelope = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
@@ -133,6 +136,77 @@ try {
  const activeBytes = fs.readFileSync(activeFile), activeInode = fs.statSync(activeFile).ino;
  assert.throws(() => store.recoveryContext(), /FILE_NOT_TRUSTED/);
  assert.deepEqual(fs.readFileSync(activeFile), activeBytes); assert.equal(fs.statSync(activeFile).ino, activeInode);
+ // Versioned capsule negatives never grant native authority or fabricate A.
+ // Reject mixed facts/policy wires BEFORE attempting any original source read.
+ const capsuleFile = path.join(root, 'original-boots', originalBoot.parentBootId+'.json.gz');
+ for (const [capsuleVersion, factsVersion, native, error] of [
+   ['v1', 'v1', { workerCore: {} }, /RECORD_INVALID/],
+   ['v2', 'v1', { workerCore: {} }, /RECORD_INVALID/],
+   ['v2', 'v2', {}, /RECORD_INVALID/],
+   ['v2', 'v2', { workerCore: {} }, /WORKER_CORE_CAPTURE_INVALID/],
+ ]) {
+   const content = Buffer.from(JSON.stringify({ schemaVersion: 'buster-original-native-boot-capsule.'+capsuleVersion,
+     handoff: { parentBootId: originalBoot.parentBootId }, sourceArchive: {},
+     facts: { schemaVersion: 'buster-native-boot-facts.'+factsVersion, native } }));
+   const bytes = gzipSync(content);
+   fs.writeFileSync(capsuleFile, bytes); fs.chmodSync(capsuleFile, 0o444);
+   const reference = { ...originalBoot, digest: 'sha256:'+createHash('sha256').update(bytes).digest('hex'),
+     byteLength: bytes.byteLength, contentByteLength: content.byteLength };
+   assert.throws(() => store.read(reference), error);
+   assert.deepEqual(fs.readFileSync(capsuleFile), bytes, 'wire denial never repairs original state');
+   fs.unlinkSync(capsuleFile);
+ }
+ // Wire-level archive join only: no fabricated native host or activation.
+ // Even fully rehashed, schema-valid policy B cannot replace archived A.
+ const digest = value => 'sha256:'+createHash('sha256').update(value).digest('hex');
+ const owner = JSON.parse(fs.readFileSync('${new URL('../../../config/components/worker-core.config.json', import.meta.url).pathname}', 'utf8'));
+ const selectedCore = captureWorkerCorePolicy(owner.profiles.standard.settings);
+ const coreBinding = { owner: 'worker-core', instanceId: 'test/buster', profileId: 'standard' };
+ const selectionBody = { schemaVersion: 'pipeline-service-selection.v1', role: 'buster',
+   callerId: 'buster-preparation', serviceInstanceId: 'test/buster', generationDigest: 'sha256:'+'a'.repeat(64),
+   packageReceiptDigest: digest(JSON.stringify({ schemaVersion: 'pipeline-runtime-bundle.v2', files: [] })),
+   bindings: [{ owner: 'buster-engine', instanceId: 'test/buster', profileId: 'standard' }, coreBinding] };
+ const selection = { ...selectionBody, digest: digest(portableJson(selectionBody)) };
+ const imageBytes = JSON.stringify({ wireFixture: 'image' });
+ const expected = { schemaVersion: 'pipeline-expected-delivery.v1', callerId: 'buster-preparation', role: 'buster',
+   serviceInstanceId: 'test/buster', generationDigest: selection.generationDigest, selectionDigest: selection.digest,
+   packageReceiptDigest: selection.packageReceiptDigest, imageReceiptDigest: digest(imageBytes) };
+ const members = {
+   'generation/pipeline.config.json': JSON.stringify({ components: { 'worker-core': 'components/worker-core.config.json' }, bindings: [{ role: 'buster', ...coreBinding }] }),
+   'generation/components/worker-core.config.json': JSON.stringify(owner),
+   'generation/selections/buster-preparation.json': JSON.stringify(selection),
+   'generation/selections/buster-runtime.json': '{}',
+   'generation/package-receipt.json': JSON.stringify({ schemaVersion: 'pipeline-runtime-bundle.v2', files: [] }),
+   'generation/image-receipt.json': imageBytes,
+   'reader/swarm.ts': 'wire fixture', 'reader/swarm.schema.json': '{}',
+ };
+ const sourceContent = Buffer.from(JSON.stringify({ schemaVersion: 'buster-boot-source-closure.v2',
+   expectedReceipt: expected, installedPackageRoot: '/wire-fixture-only', files: Object.entries(members).map(([name, content]) => ({
+     name, digest: digest(content), byteLength: Buffer.byteLength(content), bytes: Buffer.from(content).toString('base64') })) }));
+ const sourceBytes = gzipSync(sourceContent), sourceDirectory = path.join(root, 'original-boots', 'sources');
+ fs.mkdirSync(sourceDirectory, { mode: 0o700 });
+ const sourceFile = path.join(sourceDirectory, selection.generationDigest.slice(7)+'.json.gz');
+ fs.writeFileSync(sourceFile, sourceBytes, { mode: 0o444 });
+ const sourceArchive = { schemaVersion: 'buster-boot-source-archive-receipt.v2', file: sourceFile,
+   digest: digest(sourceBytes), byteLength: sourceBytes.byteLength, contentByteLength: sourceContent.byteLength,
+   generationDigest: selection.generationDigest };
+ const alteredCore = structuredClone(selectedCore);
+ alteredCore.settings.runtime.node_identity_file_bytes = 64;
+ for (const [core, denied] of [[selectedCore, false], [alteredCore, true]]) {
+   const content = Buffer.from(JSON.stringify({ schemaVersion: 'buster-original-native-boot-capsule.v2',
+     handoff: { parentBootId: originalBoot.parentBootId, parentSelection: selection, imageReceiptDigest: expected.imageReceiptDigest }, sourceArchive,
+     facts: { schemaVersion: 'buster-native-boot-facts.v2', generationDigest: expected.generationDigest,
+       selectionDigest: expected.selectionDigest, packageReceiptDigest: expected.packageReceiptDigest,
+       imageReceiptDigest: expected.imageReceiptDigest, native: { workerCore: core } } }));
+   const bytes = gzipSync(content);
+   fs.writeFileSync(capsuleFile, bytes, { mode: 0o444 });
+   const reference = { ...originalBoot, digest: digest(bytes), byteLength: bytes.byteLength, contentByteLength: content.byteLength };
+   if (denied) assert.throws(() => store.read(reference), /CORE_SOURCE_MISMATCH/);
+   else assert.deepEqual(store.read(reference).facts.native.workerCore, selectedCore);
+   assert.deepEqual(fs.readFileSync(capsuleFile), bytes);
+   fs.unlinkSync(capsuleFile);
+ }
+
 } finally { lifetime.close(); }
 `);
   execFileSync('/bin/sh', ['-c', 'exec 9<>"$1"; flock -n 9; exec "$2" "$3" "$4" "$5"',
