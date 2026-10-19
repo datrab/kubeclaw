@@ -66,13 +66,13 @@ test('relative executable uses the captured physical generation; component alias
  assert.equal(projection.projectBusterSettings(retained,'buster-preparation').clusterInvokers.shared.kubectlExecutable,path.join(generation,'system/bin/kubectl'));
 });
 test('actual read-only preflight accepts an explicit complete generation',t=>{
- const f=fixture(t),environment={...process.env,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:sourcePublicKey};for(const key of ['SWARM_CONFIG','BUSTER_LEASE_API_GROUP','BUSTER_LEASE_API_VERSION','BUSTER_ALLOWED_SOURCE_SECRETS'])delete environment[key];
+ const f=fixture(t),environment={...process.env,BUSTER_V2_TOKEN:'fixture-token-00000000000000000000',BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:sourcePublicKey};for(const key of ['SWARM_CONFIG','BUSTER_LEASE_API_GROUP','BUSTER_LEASE_API_VERSION','BUSTER_ALLOWED_SOURCE_SECRETS'])delete environment[key];
  const result=spawnSync(process.execPath,[f.translated],{env:environment,encoding:'utf8',timeout:10000});assert.equal(result.error,undefined);assert.equal(result.status,0,result.stderr);assert.equal(result.stdout,'');assert(!fs.existsSync(f.log));
 });
 
 for(const scenario of ['missing-key','malformed-key','wrong-key-type','wrong-state','wrong-runtime','old-state','old-runtime','blank-authority']){
  test(`actual entrypoint rejects ${scenario} source binding before lifetime/runtime writes`,t=>{
-  const f=fixture(t),environment={...process.env,PATH:`${f.bin}:${process.env.PATH}`,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:sourcePublicKey};
+  const f=fixture(t),environment={...process.env,PATH:`${f.bin}:${process.env.PATH}`,BUSTER_V2_TOKEN:'fixture-token-00000000000000000000',BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:sourcePublicKey};
   for(const key of ['SWARM_CONFIG','BUSTER_LEASE_API_GROUP','BUSTER_LEASE_API_VERSION','BUSTER_ALLOWED_SOURCE_SECRETS','BUSTER_V2_STATE_DIR','BUSTER_V2_RUN_DIR','BUSTER_PLAN_STATE_DIR','BUSTER_PLAN_RUN_DIR','BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY'])delete environment[key];
   if(scenario==='missing-key')delete environment.BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY;
   if(scenario==='malformed-key')environment.BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY='invalid';
@@ -101,9 +101,15 @@ test('actual runtime producer and parent source receiver preserve explicit A/B b
   const output=path.join(f.root,authority.slice(5));fs.mkdirSync(output);
   const key=generateKeyPairSync('ed25519').publicKey.export({type:'spki',format:'pem'}).toString();
   const environment={...process.env,RUNTIME_CONFIG_ROOT:output,REGISTRY_REFERENCE:'registry.example',REGISTRY_CLIENT_RUNTIME:registry,
-   BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY:authority,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:key};
+   BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY:authority,BUSTER_V2_TOKEN:'fixture-token-00000000000000000000',BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:key};
   for(const name of ['BUSTER_V2_STATE_DIR','BUSTER_V2_RUN_DIR','BUSTER_PLAN_STATE_DIR','BUSTER_PLAN_RUN_DIR'])delete environment[name];
-  const result=spawnSync(process.execPath,['-'],{input:producer,env:environment,encoding:'utf8',timeout:10000});
+  // Exercise the real entrypoint's retained-token/unset boundary, not just a
+  // Node producer launched with the original environment still intact.
+  const tokenCapture=entrypoint.match(/^worker_token=.*$/mu)?.[0];
+  const producerInvocation=entrypoint.match(/^  BUSTER_V2_TOKEN=.*node <<'NODE'$/mu)?.[0];
+  assert(tokenCapture);assert(producerInvocation);
+  const script=`set -eu\n${tokenCapture}\nunset BUSTER_V2_TOKEN\n${producerInvocation}\n${producer}\nNODE\n`;
+  const result=spawnSync('/bin/sh',['-s'],{input:script,env:environment,encoding:'utf8',timeout:10000});
   assert.equal(result.error,undefined);assert.equal(result.status,0,result.stderr);
   const runtime=JSON.parse(fs.readFileSync(path.join(output,'runtime.json'),'utf8'));
   const received=readBusterPreparationRuntimeSource(runtime,environment);
@@ -174,13 +180,26 @@ test('actual runtime producer and parent source receiver preserve explicit A/B b
    assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,tokenEnvironmentVariable},unreadable),/BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
    assert.equal(reads,0,'parent rejects the same source/token alias as the production child');
   }
-  let reads=0;
-  const restoredCarrier=new Proxy(environment,{get(target,name){reads++;return target[name];}});
+  const reads=[];
+  const restoredCarrier=new Proxy(environment,{get(target,name){reads.push(name);return target[name];}});
   assert.deepEqual(readBusterPreparationRuntimeSource(runtime,restoredCarrier),received);
-  assert.equal(reads,1,'restored original A/B binding resolves its original public key once');
+  assert.equal(reads.filter(name=>name===runtime.sourceAttestationPublicKeyEnvironmentVariable).length,1,'restored original A/B binding resolves its original public key once');
+  assert.deepEqual(reads,[runtime.tokenEnvironmentVariable,runtime.sourceAttestationPublicKeyEnvironmentVariable],'token and public key each read once, in admission order');
   const invalidOutput=path.join(output,'invalid');fs.mkdirSync(invalidOutput);
   const invalid=spawnSync(process.execPath,['-'],{input:producer,env:{...environment,RUNTIME_CONFIG_ROOT:invalidOutput,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:'invalid'},encoding:'utf8',timeout:10000});
   assert.equal(invalid.status,1);assert.match(invalid.stderr,/BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
   assert.deepEqual(fs.readdirSync(invalidOutput),[],'source validation precedes both platform and runtime writes');
  }
 });
+
+for (const token of [undefined, '', 'x'.repeat(31)]) {
+ test(`actual entrypoint rejects invalid token length ${token?.length ?? 'missing'} before first effect`, t => {
+  const f=fixture(t),environment={...process.env,PATH:`${f.bin}:${process.env.PATH}`,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:sourcePublicKey};
+  for(const name of ['SWARM_CONFIG','BUSTER_TRUSTED_PEER_SPIFFE_ID','BUSTER_V2_TOKEN'])delete environment[name];
+  if(token !== undefined)environment.BUSTER_V2_TOKEN=token;
+  const result=spawnSync('/bin/sh',[path.resolve('docker/buster-runtime-entrypoint.sh')],{env:environment,encoding:'utf8',timeout:10000});
+  assert.equal(result.error,undefined);assert.equal(result.status,1,result.stderr);
+  assert.match(result.stderr,token ? /BUSTER_REMOTE_TOKEN_INVALID/ : /BUSTER_REMOTE_CONFIG_TOKEN_MISSING/);
+  assert.deepEqual(fs.readFileSync(f.log,'utf8').trim().split('\n'),[helper]);
+ });
+}

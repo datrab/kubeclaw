@@ -173,7 +173,7 @@ RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_cl
   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
   BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT="$browser_playwright_cgroup_root" \
-  node <<'NODE'
+  BUSTER_V2_TOKEN="$worker_token" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
 const { projectLegacyBusterPreparationSource } = require('/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts');

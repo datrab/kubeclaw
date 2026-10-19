@@ -80,17 +80,17 @@ const key = generateKeyPairSync('ed25519').publicKey.export({ type: 'spki', form
 const source = { tokenEnvironmentVariable: 'TEST_BUSTER_TOKEN', sourceAttestationPublicKeyEnvironmentVariable: 'TEST_SOURCE_KEY', trustedSourceAuthority: 'fixture:original-source' };
 test('real source key preflight rejects malformed/non-Ed25519 keys and absent issuer; never authenticates provenance', () => {
   const rsa = generateKeyPairSync('rsa', { modulusLength: 1024 }).publicKey.export({ type: 'spki', format: 'pem' }).toString();
-  for (const value of ['not a key', rsa]) assert.throws(() => runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: value }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
-  assert.throws(() => runtimeAuthority({ ...source, trustedSourceAuthority: ' ' }, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }), /AUTHORITY_REQUIRED/);
-  assert.equal(runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }).sourceAttestationPublicKey, key);
+  for (const value of ['not a key', rsa]) assert.throws(() => runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: value }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
+  assert.throws(() => runtimeAuthority({ ...source, trustedSourceAuthority: ' ' }, { TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }), /AUTHORITY_REQUIRED/);
+  assert.equal(runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }).sourceAttestationPublicKey, key);
 });
 
 test('production authority requires one token or proxied-SPIFFE author before confidential reads', () => {
   const { tokenEnvironmentVariable, ...publicSource } = source;
   const peer = { ...publicSource, trustedPeerSpiffeIds: ['spiffe://fixture/buster'] };
-  const environment = { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key };
+  const environment = { TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key };
   const token = runtimeAuthority(source, environment);
-  assert.equal(token.token, 'fixture');
+  assert.equal(token.token, 'fixture-token-00000000000000000000');
   assert.equal(token.trustedPeerSpiffeIds, undefined);
   const spiffe = runtimeAuthority(peer, environment);
   assert.deepEqual(spiffe.trustedPeerSpiffeIds, peer.trustedPeerSpiffeIds);
@@ -113,7 +113,7 @@ test('source carrier and issuer metadata reject before any confidential carrier 
     assert.throws(() => runtimeAuthority({ ...source, trustedSourceAuthority }, unreadable), /BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED/);
   }
   let reads = 0;
-  const restored = new Proxy({ TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }, {
+  const restored = new Proxy({ TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }, {
     get(target, name) { reads++; return Reflect.get(target, name); },
   });
   assert.equal(runtimeAuthority(source, restored).sourceAttestationPublicKey, key);
@@ -139,7 +139,7 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   assert.equal(environmentReads, 0, 'service policy rejects before credential lookup');
   fs.writeFileSync(file, JSON.stringify(runtime));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings, worker.localRuntime,
-    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: 'not a public key' }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: 'not a public key' }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
   fs.writeFileSync(file, JSON.stringify({ ...runtime, trustedPeerSpiffeIds: ['spiffe://fixture/buster'] }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
     worker.localRuntime, environment), /AUTHORITY_XOR_REQUIRED/);
@@ -157,7 +157,7 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   }
   fs.writeFileSync(file, JSON.stringify(runtime));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
-    worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }),
+    worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }),
     /ENOENT/, 'restored valid authority reaches the original missing registry source');
   assert.deepEqual(fs.readdirSync(root), ['runtime.json'], 'invalid inputs never reach registry discovery/store handles');
 });
@@ -197,4 +197,18 @@ test('real capability receivers reject malformed boolean authors without false-v
     new Set(['command.execute']), {}).allowSampledProcessLimit, true);
   assert.equal(capabilitySources({}, new Set(), {}).directCommandSource, null);
   assert.deepEqual(networkHttpOptions(null, null, undefined, undefined), {});
+});
+
+
+test('production token admission rejects before reading source key or discovering registry', () => {
+  for (const token of [undefined, '', 'x'.repeat(31)]) {
+    const environment = new Proxy({ TEST_BUSTER_TOKEN: token }, {
+      get(target, name) {
+        assert.equal(name, 'TEST_BUSTER_TOKEN', 'invalid token must not reach public source carrier');
+        return Reflect.get(target, name);
+      },
+    });
+    assert.throws(() => runtimeAuthority(source, environment), token ? /BUSTER_REMOTE_TOKEN_INVALID/ : /BUSTER_REMOTE_CONFIG_TOKEN_MISSING/);
+  }
+  assert.equal(runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'x'.repeat(32), TEST_SOURCE_KEY: key }).token, 'x'.repeat(32));
 });

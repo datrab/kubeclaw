@@ -43,6 +43,13 @@ export function readBusterPreparationRuntimeSource(runtime: Readonly<Record<stri
   }
   if (!Number.isSafeInteger(runtime.shutdownTimeoutMs) || Number(runtime.shutdownTimeoutMs) < 1
     || Number(runtime.shutdownTimeoutMs) > 0x7fffffff) throw new Error('BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED');
+  // Match the actual HTTP receiver before privileged shell/store effects. The
+  // token stays in its confidential carrier; it is never part of boot facts.
+  if (typeof runtime.tokenEnvironmentVariable === 'string') {
+    const token = environment[runtime.tokenEnvironmentVariable];
+    if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
+    if (token.length < 32) throw new Error('BUSTER_REMOTE_TOKEN_INVALID');
+  }
   let sourceAttestationPublicKey: string;
   try {
     const value = environment[publicKeyName];

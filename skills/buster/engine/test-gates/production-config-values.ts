@@ -233,6 +233,7 @@ export function runtimeAuthority(value: Record<string, unknown>, environment: No
   if (tokenName) {
     token = environment[tokenName];
     if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
+    if (token.length < 32) throw new Error('BUSTER_REMOTE_TOKEN_INVALID');
   }
   const sourceAttestationPublicKey = environment[sourceKeyName];
   if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');
