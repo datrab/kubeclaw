@@ -69,8 +69,10 @@ jobs:
       - name: Validate Buster persistent storage manifests
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
-          node tests/verification/deployment/check-role-chart.mjs
-          node tests/verification/deployment/check-deployment-truth.mjs
+          # Both originals call the genuine generation publisher, which requires
+          # root-owned image/package trees. Preserve that check on hosted runners.
+          sudo env "PATH=$PATH" "$(command -v node)" tests/verification/deployment/check-role-chart.mjs
+          sudo env "PATH=$PATH" "$(command -v node)" tests/verification/deployment/check-deployment-truth.mjs
           # check-role-chart packages, lints and renders all roles with the actual
           # current Buster image receipt and the central release/namespace identity.
       - name: Exercise real isolated provider transport and evidence import

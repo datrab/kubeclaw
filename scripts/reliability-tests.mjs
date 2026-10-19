@@ -4,6 +4,8 @@ import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
 // These originals require genuine root-owned files or fixed-UID transitions.
+// Entrypoint and v10 input-set originals also invoke the real generation
+// publisher, which must reject non-root-owned image/package trees.
 // Keep their original assertions in the disposable, accounted native CI scope.
 const fixedUidTests = ['buster-admission-cli.test.mjs'];
 export const nativeTests = [
@@ -15,6 +17,8 @@ export const nativeTests = [
   'original-native-host.test.mjs',
   'pipeline-boot.test.mjs',
   'pipeline-role-readback.test.mjs',
+  'buster-cluster-entrypoint.test.mjs',
+  'pipeline-v10-input-set.test.mts',
 
   'prism-native-startup.test.mts', 'worker-native-contract.test.mts',
   'worker-native-launcher.test.mts', 'worker-native-observation.test.mts',
