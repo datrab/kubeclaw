@@ -80,7 +80,8 @@ if (variant.constructor === 'typescript-error-code-v1') {
   anchor = JSON.stringify(JSON.parse(original).reportAdapters[0], null, 2).split('\n').map(line => '    ' + line).join('\n') + '\n';
   added = anchor.replace('"id": "junit"', '"id": "fixture-junit"').replace('"format": "junit"', '"format": "fixture-junit"');
   replacement = operation === 'add' ? anchor.trimEnd() + ',\n' + added
-    : operation === 'change' ? anchor.replace('"format": "junit"', '"format": "fixture-junit"') : '';
+    : operation === 'change' ? anchor.replace('"format": "junit"', '"format": "fixture-junit"')
+    : anchor.replace('        "application/xml",\n        "text/xml"', '        "application/xml"');
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
