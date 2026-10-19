@@ -122,6 +122,15 @@ jobs:
         id: native-tests
         shell: bash
         run: |
+          # UID1000 must resolve absolute module paths without traversing the
+          # hosted runner's private home. Preserve the complete checkout,
+          # installed workspace links and sandbox binary; never relax home modes.
+          native_root="$(mktemp -d /tmp/kubeclaw-native.XXXXXX)"
+          trap 'sudo rm -rf -- "$native_root"' EXIT
+          mkdir "$native_root/source"
+          cp -a "$GITHUB_WORKSPACE/." "$native_root/source/"
+          chmod 0755 "$native_root" "$native_root/source"
+          cd "$native_root/source"
           sudo systemd-run --scope --quiet \
             -p MemoryAccounting=yes -p TasksAccounting=yes -p CPUAccounting=yes \
             env "PATH=$PATH" PRISM_NATIVE_ISOLATED_TEST_POOL=true \
