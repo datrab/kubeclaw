@@ -88,6 +88,9 @@ export async function nativeCli(root, admission) {
     cpuQuotaMicroseconds: 100000, cpuPeriodMicroseconds: 100000 };
   fs.mkdirSync(pool);
   try {
+    // The production allocator requires a genuinely delegated, empty pool,
+    // not merely aggregate limits on a cgroup leaf.
+    fs.writeFileSync(path.join(pool, 'cgroup.subtree_control'), '+cpu +memory +pids');
     for (const [name, value] of Object.entries({ 'memory.max': limits.memoryBytes, 'memory.swap.max': 0,
       'pids.max': limits.tasks, 'cpu.max': `${limits.cpuQuotaMicroseconds} ${limits.cpuPeriodMicroseconds}` })) {
       fs.writeFileSync(path.join(pool, name), String(value));
