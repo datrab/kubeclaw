@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
+import ts from 'typescript';
 import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } from './plugin-source-closure.mjs';
 import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
 import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
@@ -674,6 +675,20 @@ function capabilityPage() {
     `| \`${definition.id}\` | ${definition.operations.map((item) => `\`${item}\``).join(', ')} | ${definition.resources.map((item) => `\`${item}\``).join(', ')} | ${definition.constraints.map((item) => `\`${item}\``).join(', ')} | ${[...new Set(novaUsers.get(definition.id))].join('<br>') || 'No installed Nova registration.'} |`);
   const busterRows = busterCapabilities.map((id) =>
     `| \`${id}\` | ${[...new Set(busterUsers.get(id))].join('<br>') || 'No installed test provider.'} |`);
+  const registrationRows = plugins.filter((item) => item.pipeline).flatMap((plugin) =>
+    plugin.registrations.map((registration) => {
+      const namespace = registration.kind === 'test provider' ? 'Buster runtime'
+        : registration.kind === 'report adapter' ? 'Report adapter (no grant namespace)' : 'Nova grant';
+      const source = ts.parseJsonText(plugin.file, fs.readFileSync(plugin.file, 'utf8'));
+      if (source.parseDiagnostics.length) throw new Error(`Invalid plugin manifest: ${rel(plugin.file)}`);
+      const key = extensionKeys.find(([kind]) => kind === registration.kind)[1];
+      const array = source.statements[0].expression.properties.find((property) => property.name.text === key)?.initializer;
+      const node = array?.elements.find((item) => item.properties.some((property) => property.name.text === 'id' && property.initializer.text === registration.id));
+      if (!node) throw new Error(`Missing registration source: ${plugin.manifest.id}:${registration.id}`);
+      const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
+      const endLine = source.getLineAndCharacterOfPosition(node.end - 1).line + 1;
+      return `| ${namespace} | \`${plugin.manifest.id}:${registration.id}\` | ${list(registration.requiredCapabilities)} | ${list(registration.providesCapabilities)} | ${sourceEvidenceLink({ file: plugin.file, line, endLine })} |`;
+    }));
   return `${[
     '# Capability Catalogue', '',
     'Status: implemented',
@@ -702,6 +717,13 @@ function capabilityPage() {
     '| Buster runtime capability | Requested by |',
     '| --- | --- |',
     ...busterRows, '',
+    '## Registration Capability Declarations', '',
+    'The following rows distinguish requested authority from offered authority for every discovered pipeline-plugin registration.',
+    'An empty declaration is shown as None. These are repository declarations, not installed registrations, enabled consumers, selected providers, or granted permissions.',
+    'Test providers use the separate Buster runtime namespace. Report adapters do not acquire Nova grants from their registration kind.', '',
+    '| Namespace | Registration | Required capabilities | Provided capabilities | Authority |',
+    '| --- | --- | --- | --- | --- |',
+    ...registrationRows, '',
     '## Platform Grants Are Not Swarm Roles', '',
     'The chart ships a compact `swarm.config.json` with `profile: "standard"` and empty `overrides`.',
     'Its current standard-profile expander does not produce `roles`, `grants`, or `providers` fields.',

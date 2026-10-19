@@ -308,7 +308,10 @@
     "docs:drift:capability:policy:mutations": "node scripts/check-capability-policy-drift-mutations.mjs",
     "docs:drift:capability:swarm-boundary:check": "node scripts/check-capability-swarm-boundary.mjs",
     "docs:drift:capability:vocabulary:check": "node scripts/check-capability-vocabulary-drift.mjs",
-    "docs:drift:capability:vocabulary:mutations": "node scripts/check-capability-vocabulary-drift-mutations.mjs"
+    "docs:drift:capability:vocabulary:mutations": "node scripts/check-capability-vocabulary-drift-mutations.mjs",
+    "docs:drift:capability:check": "node scripts/check-capability-drift.mjs",
+    "docs:drift:capability:mutations": "node scripts/check-capability-drift-mutations.mjs",
+    "docs:drift:capability:registrations:check": "node scripts/check-capability-registrations-drift.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
