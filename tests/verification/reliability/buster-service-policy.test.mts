@@ -6,7 +6,7 @@ import test from 'node:test';
 import { generateKeyPairSync, createHash } from 'node:crypto';
 import { swarmReaderAssets } from '../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts';
 import { readBusterRemotePlanServicePolicy, readLegacyBusterRuntimeServicePolicy } from '../../../skills/common/plugin-runtime/foundation/config/buster-service-policy.ts';
-import { capabilitySources } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
+import { capabilitySources, validateCapabilitySourceClosure } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
 import { networkHttpOptions } from '../../../skills/buster/engine/test-gates/production-command-options.ts';
 import { runtimeAuthority } from '../../../skills/buster/engine/test-gates/production-config-values.ts';
 import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
@@ -134,6 +134,22 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
     if (name === 'TEST_SOURCE_KEY' || name === 'TEST_BUSTER_TOKEN') environmentReads++;
     return Reflect.get(target, name);
   } });
+  for (const [patch, expected] of [
+    [{ allowedCapabilities: ['network.http'] }, /BUSTER_NETWORK_HTTP_CONFIG_REQUIRED/],
+    [{ networkHttp: {} }, /BUSTER_INACTIVE_CAPABILITY_SOURCE:networkHttp/],
+    [{ allowedCapabilities: ['browser.playwright'], browserPlaywright: {} }, /BUSTER_BROWSER_PLAYWRIGHT_CGROUP_REQUIRED/],
+    [{ allowedCapabilities: ['network.http'], networkHttp: { registryHealth: true } }, /BUSTER_REGISTRY_PEER_REQUIRED/],
+    [{ registryPeer: {} }, /BUSTER_REGISTRY_PEER_INACTIVE/],
+    [{ allowedCapabilities: ['container.build'], containerBuild: {}, registryPeer: {
+      registryBaseUrl: 'https://registry.example', registryReference: 'registry.example',
+      registryUsernameEnvironmentVariable: 'REGISTRY_USER', registryPasswordEnvironmentVariable: 'REGISTRY_PASSWORD',
+    } }, /BUSTER_REGISTRY_PEER_MISMATCH/],
+  ] as const) {
+    fs.writeFileSync(file, JSON.stringify({ ...runtime, ...patch }));
+    assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+      settings, worker.localRuntime, environment), expected);
+    assert.equal(environmentReads, 0, 'conditional source rejection precedes source-key/token reads');
+  }
   fs.writeFileSync(file, JSON.stringify({ ...runtime, maximumResponseBytes: 96 }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings, worker.localRuntime, environment), /SERVICE_POLICY_INVALID/);
   assert.equal(environmentReads, 0, 'service policy rejects before credential lookup');
@@ -211,4 +227,18 @@ test('production token admission rejects before reading source key or discoverin
     assert.throws(() => runtimeAuthority(source, environment), token ? /BUSTER_REMOTE_TOKEN_INVALID/ : /BUSTER_REMOTE_CONFIG_TOKEN_MISSING/);
   }
   assert.equal(runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'x'.repeat(32), TEST_SOURCE_KEY: key }).token, 'x'.repeat(32));
+});
+
+
+test('conditional source closure preserves active-only public peers and restored controls without credentials', () => {
+  const peer = { registryBaseUrl: 'https://registry.example', registryReference: 'registry.example',
+    registryUsernameEnvironmentVariable: 'REGISTRY_USER', registryPasswordEnvironmentVariable: 'REGISTRY_PASSWORD' };
+  const runtime = { networkHttp: { registryHealth: true }, registryPeer: peer };
+  assert.doesNotThrow(() => validateCapabilitySourceClosure(runtime, new Set(['network.http'])));
+  assert.throws(() => validateCapabilitySourceClosure(runtime, new Set()), /INACTIVE_CAPABILITY_SOURCE/);
+  assert.throws(() => validateCapabilitySourceClosure({ ...runtime, registryPeer: { ...peer,
+    registryPasswordEnvironmentVariable: 'invalid-name' } }, new Set(['network.http'])), /REGISTRY_PEER_INVALID/);
+  assert.doesNotThrow(() => validateCapabilitySourceClosure(runtime, new Set(['network.http'])));
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({}, new Set()));
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({ networkHttp: {} }, new Set(['network.http'])));
 });

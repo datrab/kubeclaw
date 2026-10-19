@@ -6,7 +6,7 @@ import { directCommandOptions, containerBuildOptions, networkHttpOptions, securi
 import { browserAxeOptions, browserLighthouseOptions, browserVisualOptions, browserPlaywrightOptions } from './production-browser-options.ts';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions, kubernetesRuntimeSecurityOptions } from './production-cluster-options.ts';
 import { object, registryHealthConfiguration, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
-import { capabilitySources } from './production-capability-sources.ts';
+import { capabilitySources, validateCapabilitySourceClosure } from './production-capability-sources.ts';
 import type { BusterPreparation } from './preparation-client.ts';
 import { validateBusterDependencyReadinessSettings, type BusterSettings, type WorkerCoreSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import fs from 'node:fs';
@@ -34,6 +34,7 @@ export function loadProductionBusterRemotePlanRuntime(
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
   validateRuntimeRoot(value);
   const policy = readLegacyBusterRuntimeServicePolicy(value);
+  validateCapabilitySourceClosure(value, new Set(policy.allowedCapabilities));
   const authority = runtimeAuthority(value, environment);
   const service = configuredService(value, policy, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime, ...(workerCore ? {workerCore} : {}) }, workerRevision, authority.sourceAttestationPublicKey);
   return configuredRuntime(value, policy, directory, service, settings, authority);

@@ -1,5 +1,5 @@
 import { boolean, object } from './production-config-values.ts';
-import { captureRegistryPeer } from './production-registry-peer.ts';
+import { captureRegistryPeer, readRegistryPeerSource } from './production-registry-peer.ts';
 type Config = Record<string, unknown>;
 
 /** Decode one optional provider object; a declared capability makes it mandatory. */
@@ -79,11 +79,7 @@ function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>)
   };
 }
 
-export function capabilitySources(
-  value: Config,
-  allowedCapabilities: ReadonlySet<string>,
-  environment: NodeJS.ProcessEnv,
-) {
+function readCapabilitySources(value: Config, allowedCapabilities: ReadonlySet<string>) {
   const command = commandSources(value, allowedCapabilities);
   for (const key of ['kubernetesFixture', 'tailscaleExposure', 'kubernetesRuntimeSecurity']) {
     if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
@@ -104,9 +100,8 @@ export function capabilitySources(
     'BUSTER_SECURITY_SCAN_CONFIG_REQUIRED',
   );
   const kubernetesRuntimeSecurityEnabled = allowedCapabilities.has('kubernetes.runtime-security');
-  const capturedRegistryPeer = captureRegistryPeer(value, allowedCapabilities, environment);
+  readRegistryPeerSource(value, allowedCapabilities);
   return {
-    capturedRegistryPeer,
     ...command,
     kubernetesFixtureEnabled,
     tailscaleExposureEnabled,
@@ -115,4 +110,17 @@ export function capabilitySources(
     securityScanSource,
     kubernetesRuntimeSecurityEnabled,
   };
+}
+
+/** Conditional public source closure is checked before source-key/token access,
+ * registry discovery or provider/store construction. This is not a source grant
+ * or a selected-generation receiver: v2/v10 admission remains separate.
+ */
+export function validateCapabilitySourceClosure(value: Config, allowedCapabilities: ReadonlySet<string>): void {
+  readCapabilitySources(value, allowedCapabilities);
+}
+
+export function capabilitySources(value: Config, allowedCapabilities: ReadonlySet<string>, environment: NodeJS.ProcessEnv) {
+  const sources = readCapabilitySources(value, allowedCapabilities);
+  return { ...sources, capturedRegistryPeer: captureRegistryPeer(value, allowedCapabilities, environment) };
 }

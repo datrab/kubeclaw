@@ -69,7 +69,9 @@ test('fixture and scanner use the same peer without activating build; scanner ne
 
 test('actual entrypoint materializer reads one operator peer and repeats that exact projection', () => {
   const shell = fs.readFileSync(new URL('../../../docker/buster-runtime-entrypoint.sh', import.meta.url), 'utf8');
-  const script = shell.split("  node <<'NODE'\n")[1]!.split('\nNODE')[0]!;
+  const producer = shell.match(/node <<'NODE'\n([\s\S]*?)\nNODE/u);
+  assert(producer, 'actual runtime producer heredoc must be present');
+  const script = producer[1]!;
   const writes = new Map<string, string>(); let peerReads = 0;
   vm.runInNewContext(script, { process: { env: { RUNTIME_CONFIG_ROOT: '/runtime', REGISTRY_REFERENCE: 'registry.example', REGISTRY_CLIENT_RUNTIME: '/peer' } },
     require(name: string) {

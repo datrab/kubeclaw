@@ -5,8 +5,7 @@ const fields = ['registryBaseUrl', 'registryReference', 'registryCaFile',
   'registryUsernameEnvironmentVariable', 'registryPasswordEnvironmentVariable'] as const;
 
 /** One generated operator peer, shared by active consumers; never activates a provider. */
-export function captureRegistryPeer(value: Record<string, unknown>, capabilities: ReadonlySet<string>,
-  environment: NodeJS.ProcessEnv) {
+export function readRegistryPeerSource(value: Record<string, unknown>, capabilities: ReadonlySet<string>) {
   const network = capabilities.has('network.http') ? object(value.networkHttp, 'networkHttp') : null;
   if (network && network.registryHealth !== undefined && network.registryHealth !== true) {
     throw new Error('BUSTER_REGISTRY_HEALTH_CONFIG_INVALID');
@@ -37,6 +36,14 @@ export function captureRegistryPeer(value: Record<string, unknown>, capabilities
     capabilities.has('security.scan') ? object(object(value.securityScan, 'securityScan').registry, 'securityScan.registry') : null]) {
     if (alias && fields.some(key => alias[key] !== source[key])) throw new Error('BUSTER_REGISTRY_PEER_MISMATCH');
   }
+  return Object.freeze({ ...source });
+}
+
+/** Resolve carriers only after the complete conditional source layer passes. */
+export function captureRegistryPeer(value: Record<string, unknown>, capabilities: ReadonlySet<string>,
+  environment: NodeJS.ProcessEnv) {
+  const source = readRegistryPeerSource(value, capabilities);
+  if (!source) return undefined;
   const username = optionalEnvironmentSecret(source, 'registryUsernameEnvironmentVariable', environment);
   const password = optionalEnvironmentSecret(source, 'registryPasswordEnvironmentVariable', environment);
   registryHealthConfiguration(true, source, username, password);
