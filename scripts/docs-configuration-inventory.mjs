@@ -9051,7 +9051,9 @@ async function verifyRuntimeConsumerSemantics() {
     const enabled = vm.runInNewContext(`${enabledNode.getText(healthAst)}; enabled`, { process: { env: raw === undefined ? {} : { TEST: raw } } });
     assert.equal(enabled('TEST', fallback), expected);
   }
-  const bare = environmentOccurrences('charts/example/templates/workload.yaml', 'env:\n  - {name: REDIS_HOST, value: redis}\nscript: |\n  printf "%s" "$REDIS_HOST"\n');
+  // Use a real dependency-free chart namespace: helper custody validates Chart.yaml
+  // even when this synthetic payload contains no template helper calls.
+  const bare = environmentOccurrences('charts/ops-pod/templates/ap98-bare-semantic-fixture.yaml', 'env:\n  - {name: REDIS_HOST, value: redis}\nscript: |\n  printf "%s" "$REDIS_HOST"\n');
   assert(bare.some((occurrence) => occurrence.name === 'REDIS_HOST' && occurrence.kind === 'embedded-shell-env'));
   const ops = await importSource('tools/ops-mcp/src/config.mjs');
   assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');

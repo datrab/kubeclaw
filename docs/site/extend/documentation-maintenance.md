@@ -189,11 +189,18 @@ Run these from the repository root with the locked Node dependencies installed.
 The commands create and remove isolated temporary source trees; they do not
 exercise a cluster. A focused prefix still performs shared baseline preparation,
 so it is not a single cheap parser invocation.
+The shared runtime-semantic preflight imports local workspace packages, including
+`@kubeclaw/worker-core` and `@kubeclaw/plugin-foundation`; installing external
+parser packages alone is insufficient. Restore the repository's workspace
+installation before retrying an unresolved-package error. The schema-only option
+runs that runtime preflight first, then the schema assertions; it does not skip
+runtime imports and does not run the mutation cases listed below.
 
 | Changed boundary | Focused command | What the result does not prove |
 | --- | --- | --- |
 | Recursive schema validation semantics | `node scripts/check-configuration-drift-mutations.mjs --schema-semantics-only` | No generator publication or live consumer execution. |
 | Environment reads inside shell-launched Node | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-node-heredoc:` | Current cases cover discovery by addition, not change or removal. |
+| Environment reads inside inline Node (`node -e`) | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=inline-node-environment:` | Current cases cover addition only; this acquisition path is separate from a heredoc. |
 | Python reads inside a shell heredoc | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-python-heredoc:` | Current cases cover addition only; Node extraction is a different path. |
 | JavaScript embedded in a YAML payload | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-yaml-javascript:` | Current cases cover addition only, not every ConfigMap consumer. |
 | Deployment payload authority | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-payload-authority:` | Payload add/change/remove is not Kubernetes API-schema field coverage. |
@@ -242,6 +249,7 @@ an unrelated prose change does not require or permit a retirement run.
 | New identity lacks semantics or owner | The discovered source and unmapped identity | Assign its real consumer/owner and explanation; keep its missing coverage explicit. |
 | Generator failed after writing | Exit status, first error, owned partial diff | Repair prerequisites/source, rerun only the responsible generator, and inspect unrelated work remains intact. |
 | Helm authority reports `runtime consumer line changed` | Field identity, pinned source-line hash, consumer and enclosing branch | Compare the actual consumer and its branch with the recorded contract. For a pure relocation, retain the unchanged hash and semantics and update the exact location in the authority registry, its generator and the Boolean-semantics check together. If bytes or behavior changed, review the field meaning before regenerating. Never replace the expected hash with the reported actual hash just to pass. |
+| Helper custody reports missing chart metadata during a synthetic probe | Source identity and the first `Chart.yaml` diagnostic | Use a fixture in a real, supported chart namespace with its metadata and template directory present. A fabricated `charts/example/` identity cannot establish helper custody; do not disable the namespace check. |
 | Check reports stale output | Exact path, expected owning generator, input revision | Repair input and regenerate that output. Never hand-edit it merely to satisfy equality. |
 | Reader cannot finish a documented step | Task, failed step, missing prerequisite or unsafe ambiguity | Correct the guide and repeat the affected task with an independent reader. |
 | Rename loses route/fragment or required meaning | Old link and successor mapping, parity defect | Restore the needed authority or fix successor/redirect before removal. |
