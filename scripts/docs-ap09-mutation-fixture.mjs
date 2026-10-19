@@ -36,6 +36,11 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "  stages.push({ id: 'fixture-stage', type: 'kubeclaw.fixture.stage', dependsOn: [], config: {}, input: {} });\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? "  stages.push(...demoStages(demo,final.test.providerPlan.plan).map(stage => ({ ...stage, type: 'kubeclaw.fixture.replacement' })));\n" : '';
+} else if (variant.constructor === 'typescript-capability-v1') {
+  anchor = "  'state.read': definition(['read'], ['state.namespace'], ['allowedNamespaces']),\n";
+  added = "  'fixture.state.inspect': definition(['inspect'], ['fixture.namespace'], ['allowedFixtureNamespaces']),\n";
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? "  'state.read': definition(['inspect'], ['fixture.namespace'], ['allowedFixtureNamespaces']),\n" : '';
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
