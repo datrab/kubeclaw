@@ -213,6 +213,54 @@ baseline before retrying. For an API-field change, also inspect the API authorit
 exact field binding and consumer; a checksum rejection alone cannot establish
 that the documented field meaning is correct.
 
+### Requalify an intentionally rejected example
+
+`API_PRODUCT_REJECTED_PROFILE_CHART_DRIFT` means that the chart bound to an
+intentional rejection changed. It is not proof of detected documentation drift
+and not permission to suppress a failed example render. Read the named entry in
+`scripts/docs-api-rejected-output-profiles.json`, compare changed chart sources,
+and inspect the exact rejection guard and selected input before refreshing its
+source digests. Preserve input bindings unless the input itself was reviewed.
+
+For `examples/buster-values.yaml`, the illustration selects `agentRole: buster`
+but supplies no `extraContainers`; the chart defaults that list to empty. The
+unchanged guard requires exactly one `buster-v2-runtime` entry for this role.
+Run the authentic invocation from the registry:
+
+```bash
+helm template agent-buster charts/kubeclaw --namespace kubeclaw --values examples/buster-values.yaml
+node --test --test-name-pattern='reviewed illustrative rejection' scripts/tests/api-reference.test.mjs
+```
+
+The first command must fail with exit 1, no manifest output, and the named
+missing-runtime-container diagnostic. Its template line number may move when
+unrelated earlier template code changes; compare the guard, not just the line
+number. The second command checks rejection, changed input, changed diagnostic,
+and unexpected success against a synthetic chart; it does not validate this
+product profile or any live cluster. After source review and the authentic
+render, update only the reviewed chart digests and exact observed diagnostic,
+then rerun the owning inventory generator. Discovery separately checks the
+source-bound derived input and an uninstrumented render; do not update those
+bindings just to bypass a failure.
+
+Stop before deployment: this illustration is still incomplete. Follow the
+[configuration selection procedure](../use/install.md#select-configuration)
+to prepare a complete runtime container, registry transport and credentials,
+and require successful offline rendering of that selected configuration. A
+continued rejection, a newly successful illustration, or a different error
+requires diagnosis before changing its recorded classification. Requalifying
+this rejection neither certifies valid profiles nor supplies a runtime release
+receipt or a live deployment result.
+
+Discovery must also render genuinely new output branches. The Archviewer
+`networkPolicyProvider` enum has separate `cilium` and `kubernetes` profiles:
+the default exercises `CiliumNetworkPolicy`, while the explicit Kubernetes
+profile exercises `networking.k8s.io/v1 NetworkPolicy`. Boolean toggles cannot
+select an enum branch. `API_PRODUCT_HELM_BRANCH_UNDISCOVERED` remains a failed
+baseline until the named branch has an appropriate constructor profile; do not
+disable branch witnesses or count that failure as a mutation PASS. These are
+offline output profiles, not proof that either policy is enforced by a cluster.
+
 ### Recover a deployment adapter mismatch before Helm regeneration
 
 `npm run docs:inventory:local-helm` first discovers a candidate configuration
