@@ -5120,9 +5120,9 @@ export const documentationExecutableRoleRecipes = {
   },
   "scripts/docs-sdk-reference.mjs": {
     "source": "scripts/docs-sdk-reference.mjs",
-    "sourceSha256": "0c5f092cd210dc8d3832343614aa1a6861f31a6c1d60142f925b974342854657",
+    "sourceSha256": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
     "role": "documentation-consumer",
-    "consumer": "Exact SDK source/config/type/schema and authored semantic evidence analyzer/reference renderer; returned inventory/Markdown consumed by individually qualified generator SDK slots/check comparison/fresh external staging/status diagnostics. Never product SDK API execution or arbitrary caller render callbacks.",
+    "consumer": "Exact SDK source/config/type/schema and authored semantic evidence analyzer/reference renderer; returned inventory/Markdown consumed by individually qualified generator SDK slots/check comparison/fresh external staging/status diagnostics. Never product SDK API execution or arbitrary caller render callbacks. Rendering/prose renewal 2026-10-19: callback count sentences, fenced union signatures and referenced-type lists only; discovery, compiler acquisition, roots, profiles and caller limits unchanged.",
     "selectors": [
       {
         "expressionSha256": "06a540f10ab77dc86091ac2231636245115d870c0e4cceb6f226aff8a92b73cf"
@@ -5143,7 +5143,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "321be934f4eb62a55aa06dd55b186f6e180f5fcab5a335fe5d0782b4832dbee0"
       },
       {
-        "expressionSha256": "5c423ce40944c020d385d4c65b0d07384de0ca52e98069aa470ba7c0c983bfba"
+        "expressionSha256": "c8e2d5416b5686373ea5d4d98f895815aa8e3e37e7cbe438471fdf50b2c69c82"
       },
       {
         "expressionSha256": "53cab1c38fe15c7fd2d48486017956026b4c7bd850b11f1a9616cb38201fd775"
@@ -5203,7 +5203,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c6cc8a35bea24e070aeeacbeb8f931209671b9f02bc320787132a2796788c2c"
       }
     ],
-    "factsDigest": "665f6d09ea278c79fb0d7ed1505a4c13f8632703f071ba4a2bef243d393e442c",
+    "factsDigest": "5985f6dfcc71350c9200fdfcf273906977e1f848c6ae0c48e5bb541276561b50",
     "authorityInputs": []
   }
 };
@@ -5336,7 +5336,7 @@ const reviewedIsolatedCompilerInput=frozenRecipes({
 });
 const reviewedRootSelectedCompilerRecipe=frozenRecipes({
   "source": "scripts/docs-sdk-reference.mjs",
-  "sourceSha256": "0c5f092cd210dc8d3832343614aa1a6861f31a6c1d60142f925b974342854657",
+  "sourceSha256": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
   "factoryImport": "import {createRequire} from 'node:module';",
   "pathImport": "import path from 'node:path';",
   "owners": {
@@ -5350,7 +5350,7 @@ const reviewedRootSelectedCompilerRecipe=frozenRecipes({
       "rootFlow": "destructured root -> path.resolve(root) assignment -> path.join(root,package.json)"
     },
     "generateSdkReference": {
-      "ownerSyntaxSha256": "5c423ce40944c020d385d4c65b0d07384de0ca52e98069aa470ba7c0c983bfba",
+      "ownerSyntaxSha256": "c8e2d5416b5686373ea5d4d98f895815aa8e3e37e7cbe438471fdf50b2c69c82",
       "factorySyntax": "createRequire(path.join(path.resolve(root),'package.json'))",
       "factorySha256": "4923eaae06dd093dab343fa401fb25d8b4d0b6884836083dbae000151d302a7c",
       "consumerSyntax": "require('typescript')",
@@ -5964,7 +5964,7 @@ const reviewedSdkGeneratorRecipe=frozenRecipes({
   "sourceSha256": "c83c5653177b9b0a56326b0e315c409dc3c814c95d37dd53933402a2288aa718",
   "importSyntax": "import { generateSdkReference } from './docs-sdk-reference.mjs';",
   "importSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12",
-  "targetSourceSha256": "0c5f092cd210dc8d3832343614aa1a6861f31a6c1d60142f925b974342854657",
+  "targetSourceSha256": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
   "owner": "stableWriteMap",
   "ownerSyntaxSha256": "9bc57118d89d42c808cc6b29e6522d428c9b27779ba3c4f26e06db7b2e73d681",
   "callSyntax": "generateSdkReference({ root, revision: sourceRevision })",

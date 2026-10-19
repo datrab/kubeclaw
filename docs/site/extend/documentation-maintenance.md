@@ -213,6 +213,25 @@ baseline before retrying. For an API-field change, also inspect the API authorit
 exact field binding and consumer; a checksum rejection alone cannot establish
 that the documented field meaning is correct.
 
+### Recover a source-bound SDK compiler check
+
+`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED` with `root compiler custody` identifies
+an unqualified documentation tool, not an undocumented product field. Stop before
+counting the selected mutation as detected drift. Compare the named SDK generator
+against the version bound in `scripts/docs-api-documentation-role-custody.mjs`.
+Separate rendering or explanatory-text changes from compiler acquisition,
+caller-selected root flow, imports, source discovery and output destinations.
+
+For a rendering-only change, renew only the affected source, owner, selector and
+reachable-operation bindings after inspecting that diff. Keep exact factory and
+consumer checks, compiler package membership, root restrictions and caller limits
+unchanged. Verify that altered compiler imports, roots and added output operations
+are still rejected; then run the affected SDK tests and retry the owning inventory
+baseline. Do not grant a compiler new execution authority or refresh unrelated
+recipes to make a focused configuration probe run. A healthy tool baseline is
+only a prerequisite: the selected add/change/remove probes must still demonstrate
+stale reader output and recovery before they count as drift coverage.
+
 ### Requalify an intentionally rejected example
 
 `API_PRODUCT_REJECTED_PROFILE_CHART_DRIFT` means that the chart bound to an
