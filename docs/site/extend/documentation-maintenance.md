@@ -239,6 +239,21 @@ it: its resource-only `--set-json` argument depends on exactly one selected
 `buster-v2-runtime` container and validates both resource maps. Do not substitute
 an image, environment, or credential overlay for that resource selection.
 
+For `deploy_agent`, this resource path runs only for the `buster` role with a
+private values file. If `busterRuntimeResources` is absent, the helper emits
+nothing and no resource override is appended. When present, both `requests` and
+`limits` require CPU and memory strings; only optional `ephemeral-storage` is
+also accepted. The helper selects `extraContainers` from the private overlay
+when supplied, otherwise from the base, and requires exactly one container named
+`buster-v2-runtime`. It emits only that container index's `.resources` assignment,
+not a replacement container list. The caller appends base values, private values,
+and then the resource `--set-json` argument before the selected-role render.
+Invalid resource data or a missing/duplicate runtime container stops before that
+render and removes an already-created temporary bundle override. Diagnose the
+selected values and container list; do not retry by copying the release's full
+container specification into the overlay. This source-level check is not a
+successful Helm render or cluster deployment.
+
 Reconcile the actual producer and helper behavior with the API adapter's reviewed
 recipe and source bindings before updating them. Do not refresh fingerprints or
 disable recipe checks to unblock Helm generation. Then rerun the owning Helm
