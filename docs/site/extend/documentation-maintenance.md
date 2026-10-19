@@ -164,12 +164,20 @@ default or authority. For a removed error identity, verify its absence from
 current output, the retained dynamic family, and the changed safe-action text.
 Do not mutate production source as an experiment while another task uses it.
 
-Use isolated fixtures for addition, semantic change, and removal in each affected
-reference family. First demonstrate a healthy baseline. Introduce one mutation,
+Use isolated fixtures for addition, semantic change, and removal on each distinct
+affected generator or parser path. Reuse an existing valid probe when several
+registered variants share that path; state which source extraction and output
+comparison they share. A common parser library alone does not establish shared
+coverage: different AST selectors, embedded languages, renderers, or comparison
+sections can require their own representative probe. First demonstrate a healthy
+baseline. Introduce one mutation,
 require the intended drift failure and named affected page, restore the fixture,
 and require recovery. A generic parser crash or unrelated stale file is not the
 intended rejection. New-source and passive-neighbor cases distinguish discovery
-from a hard-coded expected count. Preserve current bytes and the fixture diff.
+from a hard-coded expected count. Keep the check read-only for published pages.
+Record the checked revision,
+command, exit status, affected reader page, and recovery result. Raw logs and
+source snapshots are not completion requirements; keep functional fixtures.
 The existing configuration mutation suite creates a temporary tree, copies
 inputs, and starts generator/publisher child processes; it also queries Git.
 It is not a no-write check. Inspect its current scope and dependencies before
@@ -186,9 +194,10 @@ Ask independent readers to use the page without chat history or undocumented
 maintainer hints. Give a concrete Find, Understand, and Act task chosen before
 they read it. For the default example: find the field, explain which consumer
 wins, identify restart/new-run impact, choose the valid override and safe
-rejection response. Retain missing steps as defects. Independently check source
-accuracy and language/navigation quality; the author cannot supply all of those
-independent observations by rereading the same draft.
+rejection response. Retain missing steps as defects. One independent topic review
+can assess source accuracy, reader usability, and
+language/navigation quality together. It must report the actual task outcomes
+and unresolved defects; the author cannot replace it by rereading the same draft.
 
 ## Rename, retire, and recover
 

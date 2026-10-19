@@ -211,6 +211,40 @@ Referenzen vollständig sind und ihre Vollständigkeit gegen Änderungen verteid
 | A911-11 | Repräsentative Add-, Change- und Remove-Proben je tatsächlich unterschiedlichem Referenzgenerator-/Parserweg erkennen veraltete Dokumentation und benennen den betroffenen Leserort. Gemeinsame Wege dürfen mit kurzer Begründung dieselbe Probe nutzen. | Ein unabhängiger Generator-/Parserweg bleibt ohne Driftprobe, eine Probe bleibt unerwartet grün oder ein fachfremder Buildfehler gilt als Driftbeweis. |
 | A911-12 | Ein unabhängiger Source-Auditor bestätigt den vollständigen Suchraum und ein Maintainer reproduziert alle Generatoren aus sauberem Checkout ohne nicht deklarierte Werkzeuge. | Autorenselbstauskunft oder erfolgreicher aktueller Output genügt. |
 
+### A911-11: Zuordnung vorhandener Proben zu wirklichen Wegen
+
+Arbeitszuordnung am Stand `3a8a1afd`, keine Abnahme und kein zweites Register.
+Die Befehle unten sind vorhandene Prüfungen, keine Behauptung eines neuen Laufs.
+`completionRecords` bleibt der einzige Ort für eine spätere Reviewentscheidung.
+
+| Unterschiedlicher Weg / Quelle | Vorhandene repräsentative Probe | Betroffener Leserort / Abdeckungsgrenze |
+| --- | --- | --- |
+| Konfiguration: YAML-Felder und Helm-Bindungen (`docs-configuration-inventory.mjs`) | `check-configuration-drift-mutations.mjs --case-prefix=helm-field:` | `reference/helm-values.md`; gerenderte Ressourcen und eingebettete Payloads nicht mit bloßen Values gleichsetzen. |
+| Konfiguration: YAML-Environment und Shell-Secretquellen | Derselbe Runner, Präfixe `environment-setting:` und `secret-setting:` | `reference/environment-variables.md`, `reference/secrets.md`; unterschiedliche Extraktoren, nicht durch YAML-Feldprobe ersetzt. |
+| Konfiguration: Shell-CLI und TypeScript-CLI | Derselbe Runner, Präfixe `script-flag:` und `nova-cli-flag:` | `reference/cli.md`; `check-configuration-cli-drift.mjs` delegiert denselben Inventargenerator und ergänzt Definition-/Invocation-Semantik. Kein zweiter Generator, aber zwei Parserwege. |
+| Konfiguration: JSON-Payload, rekursives JSON-Schema, TypeScript-Präzedenz | Derselbe Runner, Präfixe `swarm-config-field:`, `nested-plugin-config:` und `default-precedence:` | `reference/plugin-configuration.md`; Schema-Refs/Bedingungen und Quellenbindung bleiben eigene fachliche Kontrollen im vorhandenen Runner. |
+| Pipeline: rekursive Interfacefelder | `check-schema-drift-mutations.mjs` | `reference/workflows.md`; `schemaRows()` ist nicht der Deklarations-/Importgraph-Parser. |
+| Pipeline: Compiler-Deklarationen und erreichbare Imports | `check-workflow-drift-mutations.mjs`; Stage-Probe im Schema-Runner | `reference/workflows.md`; beide verwenden `productPipelineSections()` und denselben Compilergraph. Keine weitere Probe je Stage-Variante nötig. |
+| Pipeline: Progress-Deklarationen und erreichbare Imports | `check-progress-contract-drift-mutations.mjs`, auch im Contract-Runner | `reference/workflows.md`; Graphalgorithmus mit Compiler geteilt, aber eigener Root und eigener Vergleichsabschnitt werden tatsächlich geprüft. |
+| SDK: öffentliche Exports und Vertragsmitglieder | `check-contract-drift-mutations.mjs` | `extend/developer-handbook.md` delegiert `reference/sdk.md` und `reference/sdk-exports.md`. Der Gate prüft zuerst Syntax und reviewed Source-Bindings; keine Behauptung, die Mutationen hätten erfolgreich kompiliert oder jeden SDK-Extraktor separat durchlaufen. |
+| Capabilities: TypeScript-Vokabular und JSON-Beispielpolicy | `check-capability-drift-mutations.mjs` | `reference/capabilities.md`; zwei verschiedene Parser/Authorities, keine Ableitung von Swarm-Rollen zu Plattformgrants. |
+| Capabilities: rekursive Manifestdiscovery und required/provided-Richtung | `check-capability-registrations-drift-controls.mjs` | `reference/capabilities.md`; Add/Remove von Registrierung und Richtungstausch/Namespacewechsel prüfen diesen eigenen Weg. Nicht durch Vokabularprobe ersetzt. |
+| Registrierungen: JSON-Manifest und Reportadapter | `check-plugin-manifest-drift-mutations.mjs`, `check-report-registration-drift-mutations.mjs` | `extend/plugin-catalogue/kubeclaw.lint.md`, `reference/buster-suites.md`; gemeinsame AJV-Schemaauthority, aber unterschiedliche Tabellenvergleiche, deshalb beide vorhandenen Proben behalten. |
+| Registrierungen: TS-Extensionunion, JS-Providerrecord, JS-Fixturedeklaration | `check-extension-class-drift-mutations.mjs`, `check-provider-registration-drift-mutations.mjs`, `check-fixture-registration-drift-mutations.mjs` | `extend/README.md`, `reference/buster-provider-configuration.md`, `reference/buster-suites.md`; TypeScript-Parserbibliothek gemeinsam, AST-Auswahl und Consumer verschieden. |
+| Errors: Buster-Fehlerextraktion | `check-error-code-drift-mutations.mjs` | `reference/buster-error-codes.md`; keine pauschale Übertragung auf Events oder Endpoints. |
+| Plattform: Source-/Regexextraktion für Endpoints, Outbound, Events, Stores und Ops-Tools | `check-platform-surface-drift-mutations.mjs`: jeweilige benannte Gruppen | `reference/platform-surfaces-generated.md` und deren Explanation-Ziele; TS/JS-Endpunkte, Go-Controller, Prefixrouting und Outbound sind im Runner getrennt. Gleicher Ausgabe-Gate bedeutet nicht gleicher Extraktor. |
+| Plattform: Helm-/YAML-Ressourcen, Claims, Secrets und Abhängigkeiten | Derselbe Plattform-Runner: `dependency`, `store-claim-template`, `secret`, `runtime-service` plus Job-/Policy-/RBAC-Kontrollen | Dieselbe Plattformreferenz; Helm-Renderpfad ist unabhängig von der Source-/Regexextraktion. Job/Policy/RBAC sind vorhandene Change-Kontrollen, kein behauptetes Add/Remove je Spezialfall. |
+
+Noch konkret zu entscheiden: Der unabhängige Themenreview muss prüfen, ob die
+zusätzlichen Konfigurations-Extraktoren (insbesondere eingebettete Sprachen und
+Deployment-API-/Schemaauflösung) sowie Plattform-Go-/Renderpfade mit den vorhandenen
+Proben ausreichend repräsentiert sind. Dafür zuerst deren vorhandene Fälle lesen;
+nur einen tatsächlich unvertretenen Parser-/Vergleichsweg ergänzen. Die historischen
+84 Varianten sind keine To-do-Liste. Ein fehlender Familien-Sammelbefehl ist kein
+fehlender Parserweg: die vorhandenen fokussierten Befehle dürfen direkt laufen.
+Ein unabhängiges Urteil liegt für diese Zuordnung noch nicht vor. A911-11 bleibt
+`not-accepted`; auch eine vorhandene Testdatei ist kein bestandenes Ergebnis.
+
 ## 10. AP09.12 — Publication und Reader Experience
 
 AP09.12 umfasst alle zehn zugeordneten IDs. Gestaltung darf Inhalt auffindbar
