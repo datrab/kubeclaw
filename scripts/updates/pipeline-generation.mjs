@@ -51,7 +51,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const { captureSwarmSettings } = await import(pathToFileURL(path.join(directory, 'swarm.ts')).href);
     const { capturePipelineInputSet } = await import(pathToFileURL(path.join(directory, 'pipeline-input-set.ts')).href);
     const { capturePipelineMaterializerInputSource } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-input-set.ts')).href);
-    const { createPipelineGenerationReceipt, createPipelineServiceSelection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
+    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
     const { verifyInstalledRuntimeBundle, assertRuntimeBundleObservations } = await import(pathToFileURL(path.join(directory, 'runtime-bundle-receipt.mjs')).href);
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
@@ -98,6 +98,11 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const imageBytes = jsonBytes(image);
     write(stage, 'system/image-receipt.json', imageBytes);
     for (const selection of selections) {
+      if (selection.role === 'buster') {
+        const capture = captures.find(value => value.identity.callerId === selection.callerId);
+        write(stage, `system/selections/${selection.callerId}.buster.json`,
+          jsonBytes(createBusterSelectedOwnerProjection(capture, selection)));
+      }
       write(stage, `system/selections/${selection.callerId}.json`, jsonBytes(selection));
       write(stage, `expected/${selection.callerId}/expected-delivery.json`, jsonBytes({
         schemaVersion: 'pipeline-expected-delivery.v1', role: selection.role, serviceInstanceId: selection.serviceInstanceId,

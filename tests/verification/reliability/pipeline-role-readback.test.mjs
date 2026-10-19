@@ -765,6 +765,27 @@ test('real Buster role binds parent and child to the same runtime service and ow
     loaded.push(projection.projectBusterSettings(capture, service.callerId));
   }
   assert.deepEqual(loaded[0], loaded[1]);
+  const selectedFile = path.join(output, 'system/selections/buster-preparation.buster.json');
+  const selectedBytes = fs.readFileSync(selectedFile);
+  const selectedOwner = JSON.parse(selectedBytes);
+  assert.equal(selectedOwner.schemaVersion, 'buster-selected-owner-projection.v1');
+  assert.deepEqual(selectedOwner.author, JSON.parse(fs.readFileSync(path.join(author, 'components/buster-engine.config.json'))));
+  const recapture = () => boot.capturePipelineBootReceipts(path.join(root, 'transport-buster-preparation'),
+    path.join(output, 'system'), 'buster-preparation', code, '/app/skills');
+  for (const mutate of [value => { value.callerId = 'buster-runtime'; },
+    value => { value.schemaVersion = 'buster-remote-plan-runtime.v1'; },
+    value => { delete value.author.profiles.runtime; },
+    value => { value.settings.preparation.maximumInputBytes++; },
+    value => { value.sourceAttestationPublicKeyEnvironmentVariable = 'FORGED_SOURCE'; }]) {
+    const changed = structuredClone(selectedOwner); mutate(changed);
+    fs.chmodSync(selectedFile, 0o644); write(selectedFile, changed); fs.chmodSync(selectedFile, 0o444);
+    assert.throws(recapture, /BUSTER_SELECTED_OWNER_PROJECTION_MISMATCH/);
+  }
+  fs.unlinkSync(selectedFile);
+  assert.throws(recapture, /ENOENT/, 'missing projection cannot fall back to ENV or current owner');
+  fs.writeFileSync(selectedFile, selectedBytes, { mode: 0o444 });
+  assert.deepEqual(projection.projectBusterSettings(recapture(), 'buster-preparation'), loaded[0]);
+
   assert.deepEqual(projection.selectedWorkerCorePolicy(captures['buster-preparation']),projection.selectedWorkerCorePolicy(captures['buster-runtime']));
   assert.equal(projection.selectedWorkerCorePolicy(captures['buster-runtime']).settings.runtime.retain_logs['buster-provider'],false);
   const startup = await import(pathToFileURL(path.join(foundation, 'buster-startup.ts')).href);
@@ -781,6 +802,7 @@ test('real Buster role binds parent and child to the same runtime service and ow
   assert.ok(closure.files.some(file => file.name === 'generation/pipeline.config.json'));
   assert.ok(closure.files.some(file => file.name === 'generation/package-receipt.json'));
   assert.ok(closure.files.some(file => file.name === 'reader/swarm.ts'));
+  assert.deepEqual(Buffer.from(closure.files.find(file => file.name === 'generation/selections/buster-preparation.buster.json').bytes, 'base64'), selectedBytes);
   assert.equal(closure.schemaVersion, 'buster-boot-source-closure.v2');
   const archivedPackage = JSON.parse(Buffer.from(closure.files.find(file => file.name === 'generation/package-receipt.json').bytes, 'base64').toString('utf8'));
   assert.equal(closure.files.filter(file => /^(package|package-alias)\//u.test(file.name)).length, archivedPackage.files.length);
@@ -845,6 +867,7 @@ test('real Buster role binds parent and child to the same runtime service and ow
     const replayDirectory = path.join(replayRoot, 'replay-original');
     const replay = boot.materializeBusterBootSourceArchive(archiveReceipt, replayDirectory);
     assert.equal(replay.schemaVersion, 'buster-inert-original-source-replay.v1');
+    assert.deepEqual(fs.readFileSync(path.join(replay.systemRoot, 'selections/buster-preparation.buster.json')), selectedBytes);
     assert.deepEqual(fs.readFileSync(path.join(replay.systemRoot, 'pipeline.config.json')), retainedEntryBytes,
       'actual restored original A is independent of drifted installed B');
     assert.deepEqual(fs.readFileSync(path.join(replay.packageRoot, 'manifest.json')), Buffer.from(

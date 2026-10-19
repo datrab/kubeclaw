@@ -4,7 +4,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { captureSwarmSettings } from './swarm.ts';
-import { createPipelineGenerationReceipt, readPipelineServiceSelection, selectionProjection } from './pipeline-generation.ts';
+import { createPipelineGenerationReceipt, readPipelineServiceSelection, selectionProjection, receiveBusterSelectedOwnerProjection } from './pipeline-generation.ts';
 import { swarmReaderAssets, swarmReaderAssetLocations } from './swarm-bundle.ts';
 import { verifyInstalledRuntimeBundle } from './runtime-bundle-receipt.mjs';
 import { captureBusterStartupFile } from './buster-startup-file.mjs';
@@ -115,6 +115,11 @@ function captureBoot(expectedMount, systemRoot, callerId, packageRoot, runtimeSu
       || selection.packageReceiptDigest !== expected.packageReceiptDigest || selection.role !== expected.role
       || selection.serviceInstanceId !== expected.serviceInstanceId) throw new Error('PIPELINE_SELECTION_RECEIPT_MISMATCH');
     const capture = captureSwarmSettings(path.join(systemRoot, 'pipeline.config.json'), selectionProjection(selection));
+    if (selection.role === 'buster') {
+      receiveBusterSelectedOwnerProjection(JSON.parse(readTrusted(
+        path.join(systemRoot, 'selections', `${callerId}.buster.json`), observations,
+        PACKAGE_RECEIPT_LIMIT, 0o444).toString('utf8')), capture, selection);
+    }
     for (const file of capture.identity.files) {
       const bytes = readTrusted(path.join(systemRoot, file.name), observations, Number.MAX_SAFE_INTEGER, 0o444);
       if (sha256(bytes) !== `sha256:${file.sha256}` || bytes.byteLength !== file.byteLength) throw new Error('PIPELINE_GENERATION_CHANGED');
@@ -177,6 +182,9 @@ export function captureBusterParentStartupHandoff(parent) {
       const bytes = readTrusted(new URL(swarmReaderAssetLocations[asset.name]), observations, Number.MAX_SAFE_INTEGER);
       if (sha256(bytes) !== asset.digest || bytes.byteLength !== asset.byteLength) throw new Error('BUSTER_STARTUP_READER_CHANGED');
     }
+    receiveBusterSelectedOwnerProjection(JSON.parse(readTrusted(
+      path.join(root, 'selections/buster-runtime.buster.json'), observations, PACKAGE_RECEIPT_LIMIT, 0o444).toString('utf8')),
+      childCapture, child);
     const handoff = createBusterStartupHandoff(parent, child);
     for (const { file, fd, before } of observations) if ((fd !== undefined && !same(before, fs.fstatSync(fd, { bigint: true })))
       || !same(before, fs.lstatSync(file, { bigint: true }))) throw new Error('BUSTER_STARTUP_SELECTION_CHANGED');
@@ -216,6 +224,13 @@ export function captureBusterBootSourceClosure(parent) {
         throw new Error('BUSTER_BOOT_ARCHIVE_SOURCE_CHANGED');
       }
       files.push(Object.freeze({ name: `generation/${name}`, digest: sha256(bytes), byteLength: bytes.byteLength, bytes: bytes.toString('base64') }));
+      const selected = readPipelineServiceSelection(JSON.parse(bytes.toString('utf8')), caller);
+      const selectedCapture = captureSwarmSettings(parent.identity.entry, selectionProjection(selected));
+      const projectionName = `selections/${caller}.buster.json`;
+      const projectionBytes = readTrusted(path.join(root, projectionName), observations, PACKAGE_RECEIPT_LIMIT, 0o444);
+      receiveBusterSelectedOwnerProjection(JSON.parse(projectionBytes.toString('utf8')), selectedCapture, selected);
+      files.push(Object.freeze({ name: `generation/${projectionName}`, digest: sha256(projectionBytes),
+        byteLength: projectionBytes.byteLength, bytes: projectionBytes.toString('base64') }));
     }
     for (const asset of swarmReaderAssets) member(`reader/${asset.name}`, fileURLToPath(swarmReaderAssetLocations[asset.name]), asset.digest, asset.byteLength);
     const packageBytes = Buffer.from(files.find(file => file.name === 'generation/package-receipt.json').bytes, 'base64');

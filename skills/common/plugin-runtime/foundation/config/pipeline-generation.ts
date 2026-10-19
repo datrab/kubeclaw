@@ -82,3 +82,37 @@ export function selectionProjection(receipt: PipelineServiceSelection): SwarmSel
   return Object.freeze({ role: receipt.role, serviceInstanceId: receipt.serviceInstanceId,
     callerId: receipt.callerId, bindings: receipt.bindings });
 }
+
+/** Immutable delivery of the complete admitted Buster owner, including every
+ * profile. This v1 projection covers the supported v3 generation only; it is
+ * not runtime.v1 ENV source authority or permission to activate v10.
+ */
+export function createBusterSelectedOwnerProjection(capture: Capture, selection: PipelineServiceSelection) {
+  if (!['buster-preparation', 'buster-runtime'].includes(selection.callerId)
+    || selection.role !== 'buster' || capture.identity.callerId !== selection.callerId
+    || createPipelineGenerationReceipt(capture).digest !== selection.generationDigest) {
+    throw new Error('BUSTER_SELECTED_OWNER_IDENTITY_MISMATCH');
+  }
+  const binding = selection.bindings.find(value => value.owner === 'buster-engine');
+  const author = capture.authors['buster-engine'];
+  const component = capture.components['buster-engine'];
+  if (!binding || !author || !component
+    || portableJson(author.profiles[binding.profileId]?.settings) !== portableJson(component.settings)) {
+    throw new Error('BUSTER_SELECTED_OWNER_PROFILE_MISMATCH');
+  }
+  const projection = structuredClone({ schemaVersion: 'buster-selected-owner-projection.v1',
+    generationDigest: selection.generationDigest, selectionDigest: selection.digest,
+    packageReceiptDigest: selection.packageReceiptDigest, callerId: selection.callerId,
+    serviceInstanceId: selection.serviceInstanceId, binding, author, settings: component.settings });
+  deepFreeze(projection);
+  return projection;
+}
+
+/** Receive only the exact caller-bound projection of the already verified
+ * original generation. No current B lookup, partial merge or ENV fallback.
+ */
+export function receiveBusterSelectedOwnerProjection(value: unknown, capture: Capture, selection: PipelineServiceSelection) {
+  const expected = createBusterSelectedOwnerProjection(capture, selection);
+  if (portableJson(value) !== portableJson(expected)) throw new Error('BUSTER_SELECTED_OWNER_PROJECTION_MISMATCH');
+  return expected;
+}
