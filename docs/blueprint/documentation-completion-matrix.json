@@ -1,5 +1,7 @@
 {
   "schemaVersion": "kubeclaw-documentation-completion-working-matrix.v1",
+  "acceptancePolicy": "compact-topic-review-20261019",
+  "completionRecords": [],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
   "sourceRevision": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
   "authorIdentity": "/root",
@@ -17651,8 +17653,8 @@
     },
     {
       "id": "A97-11",
-      "passCondition": "Ein Fresh-Context-Reviewer kann für jede Abhängigkeit aus der Dokumentation Diagnose und sichere Recovery auswählen; ein zweiter Reviewer gleicht alle Matrizen vollständig gegen aktuelle Sources ab.",
-      "automaticFailure": "Stichprobe, Autorenselbstauskunft oder bloßer Linkcheck ersetzt einen der beiden Reviews.",
+      "passCondition": "Ein unabhängiger Reviewer prüft die Abhängigkeiten und Matrizen gegen die aktuellen Quellen und kann aus der Dokumentation Diagnose und sichere Recovery auswählen.",
+      "automaticFailure": "Autorenselbstauskunft, bloße Dateiexistenz oder ein Linkcheck ersetzt die unabhängige inhaltliche und aufgabenbezogene Prüfung.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -18138,7 +18140,7 @@
     },
     {
       "id": "A98-10",
-      "passCondition": "Ein rekursives Konfigurationsinventar erfasst `swarm.config.json`, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer.",
+      "passCondition": "Ein rekursives Konfigurationsinventar erfasst innerhalb der verbindlichen Produktgrenze `swarm.config.json`, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer. Tatsächlich verwendete oder unterstützte Kubernetes-Konfigurationen einschließlich relevanter Defaults und Auslassungen sind zugeordnet; allgemeine Upstream-Felder werden verlinkt.",
       "automaticFailure": "Eine Quelle oder ein verschachteltes Feld fehlt; README-Text gilt nicht als Authority.",
       "state": "not-accepted",
       "evidence": [],
@@ -18782,8 +18784,8 @@
     },
     {
       "id": "A99-11",
-      "passCondition": "Ein am geprüften Commit erzeugtes Beispielinventar erfasst jedes veröffentlichte ausführbare Beispiel einschließlich eingebetteter Codeblöcke und verlinkter Beispielartefakte. Jedes Beispiel wird mit der passenden Toolchain geprüft und unverändert in einem vorregistrierten Szenario bis zum dokumentierten Ergebnis einschließlich relevanter Fehler-, Cleanup- und Zustandsprüfung ausgeführt. Das Ledger bindet Beispiel-ID und Content-Hash an Szenario, Umgebung, Beobachtungen und Artefakte. Gemeinsame Läufe sind nur zulässig, wenn sie jedes enthaltene Beispiel tatsächlich ausführen. Rein erklärende Fragmente sind ausdrücklich als nicht ausführbar gekennzeichnet und werden auf Vertragstreue geprüft.",
-      "automaticFailure": "Ein als ausführbar dargestelltes Beispiel ist nur geparst, kompiliert oder aufgelöst, fehlt im Inventar, wurde vor der Ausführung undokumentiert verändert oder besitzt keinen bestandenen Ausführungsnachweis. Ein `not run`-Label ersetzt diesen Nachweis nicht.",
+      "passCondition": "Alle veröffentlichten Beispiele sind auffindbar und ihrem Anspruch entsprechend geprüft. Ausführbare Anleitungen nennen Toolchain, Voraussetzungen, erwartetes Ergebnis, Fehler und Cleanup; erklärende Fragmente und nicht ausgeführte Produktwege sind klar gekennzeichnet.",
+      "automaticFailure": "Eine nicht ausgeführte Anleitung wird als erfolgreich ausgeführt dargestellt, ein Beispiel widerspricht dem aktuellen Vertrag oder ein notwendiger Schritt fehlt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -19253,8 +19255,8 @@
     },
     {
       "id": "A910-13",
-      "passCondition": "Ein am geprüften Commit aus Pipeline-, Host- und Worker-Engine-Verträgen erzeugtes Discovery-Inventar bestimmt alle Erweiterungsklassen. Das Aufgabeninventar enthält je entdeckter Erweiterungsklasse eine vorregistrierte Erstellungsaufgabe und je komplexem Plugin eine vorregistrierte Änderungsaufgabe. Bei jeder Erstellungsaufgabe erstellt ein unabhängiger Fresh-Context-Reader oder Agent eine neue minimale Erweiterung mit neuer Identität aus dem dokumentierten Ausgangszustand. Er erstellt Paketstruktur, Abhängigkeiten, Manifest, Registrierung, Berechtigungen und Konfiguration anhand der veröffentlichten Anleitung und weist Build, Tests, Aktivierung, Beobachtung, negativen Weg, Compatibility, Entfernung und Remaining Data nach. Dokumentierte Generatoren und Templates sind zulässig; eine bereits fertig registrierte Erweiterung darf den Aufbau nicht ersetzen. Jeder notwendige undokumentierte Schritt ergibt `FAIL`; nach einer Dokumentationskorrektur wiederholt ein neuer Teilnehmer die betroffene Erstellungsaufgabe. Unabhängige Reader führen auch jede komplexe Änderungsaufgabe praktisch aus. Ein echter Produktblocker bleibt `NOT READY` und kann keinen Pflichtlauf bestehen.",
-      "automaticFailure": "Eine Änderung an einer vorhandenen Erweiterung wird als Nachweis der Neuerstellung gewertet, vorbereitete Registrierung oder Maintainerhilfe verdeckt einen fehlenden Erstellungsschritt, oder eine statische Klassenliste, feste Sollzahl, ein einziges Beispiel, eine nach dem Ergebnis gewählte Aufgabe oder ein gelesener Blocker wird auf weitere Erweiterungen hochgerechnet.",
+      "passCondition": "Alle unterstützten Erweiterungsklassen und komplexen Plugins besitzen vollständige Erstellungs- oder Änderungsanleitungen. Ein unabhängiger Reviewer prüft repräsentative unterschiedliche Wege anhand der veröffentlichten Anleitung einschließlich Berechtigungen, Tests, Aktivierung, Fehler, Entfernung und Datenresten.",
+      "automaticFailure": "Eine unterstützte Erweiterungsklasse oder wesentliche Pluginfunktion fehlt, Maintainerwissen ersetzt einen dokumentierten Schritt oder eine Produktgrenze wird verschwiegen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -19341,8 +19343,8 @@
     },
     {
       "id": "A911-02",
-      "passCondition": "Jede Referenz ist rekursiv vollständig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position.",
-      "automaticFailure": "Verschachtelte Felder oder dynamische Familien fehlen.",
+      "passCondition": "Jede Referenz ist innerhalb der verbindlichen Produktgrenze rekursiv vollständig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position. Allgemeine Kubernetes-Felder werden passend verlinkt; tatsächlich verwendete oder unterstützte Konfigurationen werden produktbezogen erklärt.",
+      "automaticFailure": "Verschachtelte Produkteingaben, tatsächlich verwendete oder unterstützte Konfigurationen oder dynamische Produktfamilien fehlen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [
@@ -19559,8 +19561,8 @@
     },
     {
       "id": "A911-11",
-      "passCondition": "Für jede der zehn Referenzfamilien beweist mindestens eine Add-, Change- und Remove-Mutation den Driftfehler und die richtige betroffene Seite.",
-      "automaticFailure": "Nur ein universeller Mutationstest oder feste Countänderung deckt alle Familien ab.",
+      "passCondition": "Repräsentative Add-, Change- und Remove-Proben je tatsächlich unterschiedlichem Referenzgenerator-/Parserweg erkennen veraltete Dokumentation und benennen den betroffenen Leserort. Gemeinsame Wege dürfen mit kurzer Begründung dieselbe Probe nutzen.",
+      "automaticFailure": "Ein unabhängiger Generator-/Parserweg bleibt ohne Driftprobe, eine Probe bleibt unerwartet grün oder ein fachfremder Buildfehler gilt als Driftbeweis.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -19824,8 +19826,8 @@
     },
     {
       "id": "A913-03",
-      "passCondition": "Drei getrennte Fresh-Context-Reviews prüfen Quelltreue, Reader-Reproduzierbarkeit sowie Sprache/Architektur; jeder materielle Befund wird korrigiert und erneut geprüft.",
-      "automaticFailure": "Derselbe Autor nimmt sich selbst ab oder ein FAIL wird nur kommentiert.",
+      "passCondition": "Mindestens ein vom Autor unabhängiger Review pro zusammenhängendem Themenbereich prüft Quelltreue, Leseraufgaben sowie Sprache und Struktur; wesentliche Befunde sind korrigiert und betroffene Änderungen nachgeprüft.",
+      "automaticFailure": "Der Autor nimmt sich selbst unabhängig ab, ein wesentlicher Befund bleibt offen oder eine relevante Korrektur wird ohne gezielte Nachprüfung übernommen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [
@@ -19942,8 +19944,8 @@
     },
     {
       "id": "A913-08",
-      "passCondition": "Das kombinierte Mutationpaket führt jede der 28 vorregistrierten Varianten aus `config`, `schema`, `cli`, `contract`, `event`, `endpoint`, `store`, `secret`, `runtime-service`, `ops-tool`, `capability`, `plugin-registration`, `error-code` und `workflow` mit Add, Change und Remove ein; jede der 84 Mutationen scheitert am zuständigen Docs-Gate und nennt die erwartete betroffene Seite.",
-      "automaticFailure": "Eine Mutation bleibt grün, verwendet einen nachträglich gewählten Patch, trifft eine andere Sourcefläche oder scheitert nur an einem fachfremden Buildfehler.",
+      "passCondition": "Repräsentative Driftproben decken die tatsächlich unterschiedlichen Generator-/Parserwege ab und erkennen Hinzufügen, Ändern und Entfernen mit dem richtigen Leserort. Bestehende gültige Proben werden wiederverwendet und gemeinsame Wege kurz begründet.",
+      "automaticFailure": "Ein unabhängiger Weg fehlt, veraltete Dokumentation bleibt unbemerkt oder ein fachfremder Buildfehler wird als erfolgreicher Driftbeweis gewertet.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -19952,8 +19954,8 @@
     },
     {
       "id": "A913-09",
-      "passCondition": "Alle Checks laufen aus sauberem Checkout; Evidence-Bundle bindet Commit, Toolversionen, Umgebung, Befehle, Exit-Codes, Logs, Skips und Reviewerbefunde.",
-      "automaticFailure": "Arbeitsbaum ist schmutzig, Evidenz veränderbar oder Umgebung unbekannt.",
+      "passCondition": "Der kompakte Abschluss nennt geprüften Commit und Umfang, relevante Befehle oder Prüfschritte mit Ergebnissen, unabhängigen Review und verbleibende Produktgrenzen; betroffene Quellen und Seiten stimmen mit dem geprüften Stand überein.",
+      "automaticFailure": "Commit oder Umfang sind unbekannt, eine relevante Änderung blieb ungeprüft oder ein fehlgeschlagener Check wird als bestanden dargestellt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
