@@ -5,7 +5,9 @@ import { pathToFileURL } from 'node:url';
 
 // These originals require genuine root-owned files or fixed-UID transitions.
 // Keep their original assertions in the disposable, accounted native CI scope.
+const fixedUidTests = ['buster-admission-cli.test.mjs'];
 export const nativeTests = [
+  ...fixedUidTests,
   'buster-historical-import.test.mts',
   'original-boot-admission.test.mts',
   'original-boot-metadata.test.mts',
@@ -52,7 +54,24 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     fs.accessSync('skills/common/plugin-runtime/foundation/isolation/plugin-sandbox', fs.constants.X_OK);
   }
   console.log(`Reliability ${group} ${shard}/${shards}: ${files.length} files\n${files.join('\n')}`);
-  const result = spawnSync(process.execPath, ['--test', '--test-concurrency=2', ...files.map(file => `${directory}/${file}`)], { stdio: 'inherit' });
-  if (result.error) throw result.error;
-  process.exitCode = result.status ?? 1;
+  // Fixed-UID originals need the native scope's real root authority, not the
+  // hosted runner's incidental UID or a mocked process.getuid. Keep their
+  // assertions intact and execute them once with no inherited root groups.
+  const rootFiles = group === 'native' ? files.filter(file => !fixedUidTests.includes(file)) : files;
+  let exitCode = 0;
+  if (rootFiles.length > 0) {
+    const result = spawnSync(process.execPath, ['--test', '--test-concurrency=2', ...rootFiles.map(file => `${directory}/${file}`)], { stdio: 'inherit' });
+    if (result.error) throw result.error;
+    exitCode = result.status ?? 1;
+  }
+  if (group === 'native') {
+    const fixedFiles = files.filter(file => fixedUidTests.includes(file));
+    if (fixedFiles.length > 0) {
+      const fixed = spawnSync('/usr/bin/setpriv', ['--reuid=1000', '--regid=1000', '--clear-groups',
+        process.execPath, '--test', '--test-concurrency=2', ...fixedFiles.map(file => `${directory}/${file}`)], { stdio: 'inherit' });
+      if (fixed.error) throw fixed.error;
+      if (fixed.status !== 0) exitCode = fixed.status ?? 1;
+    }
+  }
+  process.exitCode = exitCode;
 }
