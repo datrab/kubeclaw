@@ -34,13 +34,25 @@ export function materializeHistoricalRuntime(root, version, checkout) {
     fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.writeFileSync(destination, content);
   }
+  // Shared node_modules may resolve workspace packages into another checkout.
+  // Select archived workspace dependencies by their verified package names,
+  // not by the physical location of that shared installation.
+  const archivedPackages = new Map();
+  for (const file of selected.files.filter(file => file.path.endsWith('/package.json'))) {
+    const manifest = JSON.parse(archive.blobs[file.gitBlob]);
+    if (typeof manifest.name !== 'string') continue;
+    assert(!archivedPackages.has(manifest.name), `HISTORICAL_PACKAGE_DUPLICATE:${manifest.name}`);
+    archivedPackages.set(manifest.name, path.dirname(path.join(target, file.path)));
+  }
   const modules = path.join(target, 'node_modules'); fs.mkdirSync(modules);
   for (const name of fs.readdirSync(path.join(checkout, 'node_modules'))) {
     const original = path.join(checkout, 'node_modules', name);
     const link = (input, output) => {
       const real = fs.realpathSync(input), relative = path.relative(checkout, real);
       const archived = path.join(target, relative);
-      fs.symlinkSync(!relative.startsWith('..') && fs.existsSync(archived) ? archived : real, output, 'dir');
+      const installedName = path.relative(modules, output).split(path.sep).join('/');
+      fs.symlinkSync(archivedPackages.get(installedName)
+        ?? (!relative.startsWith('..') && fs.existsSync(archived) ? archived : real), output, 'dir');
     };
     if (name.startsWith('@')) {
       fs.mkdirSync(path.join(modules, name));
