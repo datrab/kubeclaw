@@ -235,15 +235,29 @@ Die Befehle unten sind vorhandene Prüfungen, keine Behauptung eines neuen Laufs
 | Plattform: Source-/Regexextraktion für Endpoints, Outbound, Events, Stores und Ops-Tools | `check-platform-surface-drift-mutations.mjs`: jeweilige benannte Gruppen | `reference/platform-surfaces-generated.md` und deren Explanation-Ziele; TS/JS-Endpunkte, Go-Controller, Prefixrouting und Outbound sind im Runner getrennt. Gleicher Ausgabe-Gate bedeutet nicht gleicher Extraktor. |
 | Plattform: Helm-/YAML-Ressourcen, Claims, Secrets und Abhängigkeiten | Derselbe Plattform-Runner: `dependency`, `store-claim-template`, `secret`, `runtime-service` plus Job-/Policy-/RBAC-Kontrollen | Dieselbe Plattformreferenz; Helm-Renderpfad ist unabhängig von der Source-/Regexextraktion. Job/Policy/RBAC sind vorhandene Change-Kontrollen, kein behauptetes Add/Remove je Spezialfall. |
 
-Noch konkret zu entscheiden: Der unabhängige Themenreview muss prüfen, ob die
-zusätzlichen Konfigurations-Extraktoren (insbesondere eingebettete Sprachen und
-Deployment-API-/Schemaauflösung) sowie Plattform-Go-/Renderpfade mit den vorhandenen
-Proben ausreichend repräsentiert sind. Dafür zuerst deren vorhandene Fälle lesen;
-nur einen tatsächlich unvertretenen Parser-/Vergleichsweg ergänzen. Die historischen
-84 Varianten sind keine To-do-Liste. Ein fehlender Familien-Sammelbefehl ist kein
-fehlender Parserweg: die vorhandenen fokussierten Befehle dürfen direkt laufen.
-Ein unabhängiges Urteil liegt für diese Zuordnung noch nicht vor. A911-11 bleibt
-`not-accepted`; auch eine vorhandene Testdatei ist kein bestandenes Ergebnis.
+Quellinspektion der vorhandenen Konfigurationsproben (Fortsetzung nach
+`23c732e1`): `embedded-node-heredoc:`, `inline-node-environment:`,
+`embedded-python-heredoc:` und `embedded-yaml-javascript:` besitzen jeweils nur
+eine Add-Probe. Das sind eigene Einbettungs-/Sprachwege; die allgemeinen
+`environment-setting:`-Proben belegen deren Change/Remove nicht. Vor neuen
+Tests zuerst die vorhandenen positiven Reader-Fixtures und Consumer-Kontrollen
+auf Wiederverwendbarkeit prüfen; fehlende Change/Remove-Abdeckung bleibt offen.
+
+Für Deployment-API-Auflösung existieren `api-operational-field:add`,
+`api-authority-lock:bytes-change`, `api-authority-source:content-change` und
+`api-leaf-context:parent-substitution`. Lock-/Byteabweichung beweist Integrität,
+nicht semantische Add/Change/Remove-Abdeckung des API-Feldresolvers. Die vorhandene
+`embedded-payload-authority:`-Dreierprobe prüft die Payloadgrenze, nicht automatisch
+die API-Schemaauflösung. Keine dieser Kontrollen wird hier als Inhaltsabnahme
+gezählt. Plattform-Go-Endpunkte und Go-Outbound haben dagegen bereits explizite
+Add/Change/Remove-Konstruktoren; dafür keine neuen Varianten bauen.
+
+Der unabhängige Themenreview muss diese konkreten Grenzen und die tatsächlichen
+Ergebnisse prüfen. Die historischen 84 Varianten sind keine To-do-Liste. Ein
+fehlender Familien-Sammelbefehl ist kein fehlender Parserweg: die vorhandenen
+fokussierten Befehle dürfen direkt laufen. Ein unabhängiges Urteil liegt für diese
+Zuordnung noch nicht vor. A911-11 bleibt `not-accepted`; auch eine vorhandene
+Testdatei ist kein bestandenes Ergebnis.
 
 ## 10. AP09.12 — Publication und Reader Experience
 

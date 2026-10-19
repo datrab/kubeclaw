@@ -183,6 +183,29 @@ inputs, and starts generator/publisher child processes; it also queries Git.
 It is not a no-write check. Inspect its current scope and dependencies before
 selecting it, and do not apply its results to untested error/event/store families.
 
+### Select configuration probes by extraction boundary
+
+Run these from the repository root with the locked Node dependencies installed.
+The commands create and remove isolated temporary source trees; they do not
+exercise a cluster. A focused prefix still performs shared baseline preparation,
+so it is not a single cheap parser invocation.
+
+| Changed boundary | Focused command | What the result does not prove |
+| --- | --- | --- |
+| Recursive schema validation semantics | `node scripts/check-configuration-drift-mutations.mjs --schema-semantics-only` | No generator publication or live consumer execution. |
+| Environment reads inside shell-launched Node | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-node-heredoc:` | Current cases cover discovery by addition, not change or removal. |
+| Python reads inside a shell heredoc | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-python-heredoc:` | Current cases cover addition only; Node extraction is a different path. |
+| JavaScript embedded in a YAML payload | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-yaml-javascript:` | Current cases cover addition only, not every ConfigMap consumer. |
+| Deployment payload authority | `node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-payload-authority:` | Payload add/change/remove is not Kubernetes API-schema field coverage. |
+
+Require the selected case names in the output, followed by baseline recovery.
+Do not treat a successful exit with no selected cases as coverage. A missing
+package, parser crash, or unrelated stale baseline is a failed qualification,
+not detected documentation drift. Restore the locked toolchain or the affected
+baseline before retrying. For an API-field change, also inspect the API authority,
+exact field binding and consumer; a checksum rejection alone cannot establish
+that the documented field meaning is correct.
+
 Validate examples against their actual contract, not merely JSON syntax.
 Record the schema/version, consumer, setup, expected output, failure/cleanup,
 and any external effects. Execute only in the documented isolated or authorized
