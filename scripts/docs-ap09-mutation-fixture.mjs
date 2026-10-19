@@ -36,6 +36,16 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "  stages.push({ id: 'fixture-stage', type: 'kubeclaw.fixture.stage', dependsOn: [], config: {}, input: {} });\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? "  stages.push(...demoStages(demo,final.test.providerPlan.plan).map(stage => ({ ...stage, type: 'kubeclaw.fixture.replacement' })));\n" : '';
+} else if (variant.constructor === 'typescript-export-v1') {
+  anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
+  added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? anchor.replace('pipeline-plugin-v2', 'fixture-plugin-v3') : '';
+} else if (variant.constructor === 'typescript-contract-member-v1') {
+  anchor = "  schemaVersion: 'review-cache-profile.v1';\n";
+  added = '  fixtureCompatibility?: { version: "fixture.v1"; strict: boolean };\n';
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? "  schemaVersion?: 'review-cache-profile.v2';\n" : '';
 } else if (variant.constructor === 'typescript-progress-contract-v1') {
   anchor = '      version: valueOrDefault(scaffold.version, DEFAULTS.version),\n';
   added = '      fixtureRecoveryMode: valueOrDefault(scaffold.fixtureRecoveryMode, "manual"),\n';
