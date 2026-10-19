@@ -5,6 +5,7 @@ import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { declaredPipelineServices, materializePipelineGeneration } from '../../../scripts/updates/pipeline-generation.mjs';
 import { cliProfile } from './buster-cli-profile.mjs';
+import { preparedPlanStateRoot, preparedPlanRuntimeRoot } from '../../../skills/buster/engine/test-gates/prepared-plan-paths.ts';
 import { currentTestCgroup } from '../../verification/reliability/native-test-cgroup.mts';
 
 // Install an actual image/generation into a private mount namespace. Neither
@@ -46,6 +47,9 @@ export async function nativeCli(root, admission) {
   directory('var/lib/buster-v2'); directory('var/lib/buster-v2/native-sources');
   directory('var/lib/buster-v2/plan-jobs', 0o700, 1000, 1000);
   directory('var/lib/buster-v2/runs', 0o700, 1000, 1000);
+  for (const writable of [preparedPlanStateRoot('/var/lib/buster-v2/plan-jobs'), preparedPlanRuntimeRoot('/var/lib/buster-v2/runs')]) {
+    directory(writable.slice(1), 0o700, 1000, 1000);
+  }
   directory('var/lib/buster-v2/platform-state', 0o700, 1000, 1000);
   directory('var/lib/native-ownership'); directory('native'); directory('tmp', 0o1777);
   // copyFile preserves source ownership (setup-node is runner-owned). Install
