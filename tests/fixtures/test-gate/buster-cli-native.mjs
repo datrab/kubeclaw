@@ -48,7 +48,12 @@ export async function nativeCli(root, admission) {
   directory('var/lib/buster-v2/runs', 0o700, 1000, 1000);
   directory('var/lib/buster-v2/platform-state', 0o700, 1000, 1000);
   directory('var/lib/native-ownership'); directory('native'); directory('tmp', 0o1777);
-  fs.copyFileSync(process.execPath, path.join(jail, 'native/node')); fs.chmodSync(path.join(jail, 'native/node'), 0o755);
+  // copyFile preserves source ownership (setup-node is runner-owned). Install
+  // the private executable as root, as required by the real native parent.
+  const node = path.join(jail, 'native/node');
+  execFileSync('/usr/bin/install', ['-o', '0', '-g', '0', '-m', '0755', process.execPath, node]);
+  assert.equal(fs.statSync(node).uid, 0);
+  assert.equal(fs.statSync(node).mode & 0o7777, 0o755);
   const libexec = directory('native/libexec');
   for (const [source, name] of [['scripts/buster-lifetime-guardian.c', 'kubeclaw-buster-lifetime-guardian'],
     ['skills/worker/core/worker/native-worker-launcher.c', 'kubeclaw-native-worker-launcher']]) {
