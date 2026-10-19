@@ -129,6 +129,28 @@ The term “integration” does not name a registration type.
 Classify an integration by its behavior.
 Use an adapter for an external effect, an observer for event delivery, or a host extension for host hooks.
 
+### Registry Extension Class Indexes
+
+The registry snapshot exposes the following registration indexes. Primary maps
+select stages, observers, capability adapters, test providers, and report adapters.
+Capability, contract, and format indexes are alternate lookups, not additional
+extension classes. Each entry retains its package and provenance. This table
+records type contracts, not evidence that a package was installed or activated;
+use the individual extension guides below for activation and safe removal.
+
+| Snapshot index | Entry contract |
+| --- | --- |
+| `stages` | `ReadonlyMap<string,StageRegistryEntry>` |
+| `observers` | `ReadonlyMap<string,ObserverRegistryEntry>` |
+| `adapters` | `ReadonlyMap<string,AdapterRegistryEntry>` |
+| `capabilityProviders` | `ReadonlyMap<string,readonlyAdapterRegistryEntry[]>` |
+| `testProviders` | `ReadonlyMap<string,TestProviderRegistryEntry>` |
+| `testProviderContracts` | `ReadonlyMap<string,TestProviderRegistryEntry>` |
+| `reportAdapters` | `ReadonlyMap<string,ReportAdapterRegistryEntry>` |
+| `reportAdapterFormats` | `ReadonlyMap<string,readonlyReportAdapterRegistryEntry[]>` |
+
+Source: [Registry snapshot and registration entry contracts](https://github.com/datrab/kubeclaw/blob/c46de6bab8835d6146e90ff0adbede08f5bacb85/skills/common/plugin-runtime/foundation/registry/types.ts#L20-L64).
+
 ## Choose Configuration First
 
 Use configuration when all required code and public contract types already exist.

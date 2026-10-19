@@ -58,6 +58,11 @@ if (variant.constructor === 'typescript-error-code-v1') {
     if (operation === 'change') replacement = anchor.replace('kubeclaw.lint.pre-check', 'kubeclaw.lint.fixture-replacement');
     else replacement = '';
   }
+} else if (variant.constructor === 'typescript-extension-class-v1') {
+  anchor = '  readonly stages: ReadonlyMap<string, StageRegistryEntry>;\n';
+  added = '  readonly fixtureStages: ReadonlyMap<string, StageRegistryEntry>;\n';
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? '  readonly stages: ReadonlyMap<string, ObserverRegistryEntry>;\n' : '';
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
