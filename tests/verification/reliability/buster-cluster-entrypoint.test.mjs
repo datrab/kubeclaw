@@ -107,14 +107,52 @@ test('actual runtime producer and parent source receiver preserve explicit A/B b
   assert.equal(result.error,undefined);assert.equal(result.status,0,result.stderr);
   const runtime=JSON.parse(fs.readFileSync(path.join(output,'runtime.json'),'utf8'));
   const received=readBusterPreparationRuntimeSource(runtime,environment);
-  assert.deepEqual(received,{sourceAttestationPublicKey:key,trustedSourceAuthority:authority,stateRoot:'/var/lib/buster-v2/plan-jobs',serviceShutdownTimeoutMs:15000});
+  assert.deepEqual(received,{sourceAttestationPublicKey:key,trustedSourceAuthority:authority,stateRoot:'/var/lib/buster-v2/plan-jobs',tarExecutable:'/usr/bin/tar',serviceShutdownTimeoutMs:15000});
   assert.equal(runtime.runtimeRoot,'/var/lib/buster-v2/runs');assert(Object.isFrozen(received));
+  for(const tarExecutable of [undefined,null,'tar','/bin/tar','/tmp/tar',{},['/usr/bin/tar']]){
+   const unreadable=new Proxy({}, {get(){throw new Error('carrier read before tool rejection');}});
+   assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,tarExecutable},unreadable),/BUSTER_NATIVE_TAR_LOCATOR_INVALID/);
+  }
+  assert.deepEqual(readBusterPreparationRuntimeSource(runtime,environment),received,'restored original locator retains exact A/B binding');
+  for(const schemaVersion of [undefined,null,'buster-remote-plan-runtime.v2','pipeline-component.v3',1]){
+   const conflicting={...runtime,schemaVersion};
+   Object.defineProperty(conflicting,'sourceAttestationPublicKeyEnvironmentVariable',{get(){throw new Error('source carrier must not be read');}});
+   assert.throws(()=>readBusterPreparationRuntimeSource(conflicting,environment),/BUSTER_REMOTE_CONFIG_VERSION_INVALID/);
+  }
+  for(const author of ['runtimeService','remotePlanService']){
+   for(const value of [undefined,{}, {shutdownTimeoutMs:runtime.shutdownTimeoutMs}]){
+    assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,[author]:value},environment),/BUSTER_SERVICE_POLICY_COMPETING_AUTHOR/);
+   }
+  }
   for(const shutdownTimeoutMs of [0,-1,1.5,2147483648,'15000',undefined]){
    assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,shutdownTimeoutMs},environment),/BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED/);
   }
   for(const [field,value] of [['stateRoot','/tmp/state'],['runtimeRoot','/tmp/runs'],['sourceAttestationPublicKeyEnvironmentVariable','missing'],['trustedSourceAuthority',' ']]){
    assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,[field]:value},environment),/BUSTER_NATIVE_STATE_ROOT_INVALID|BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
   }
+  for(const [field,value,error] of [
+   ['stateRoot','/tmp/state',/BUSTER_NATIVE_STATE_ROOT_INVALID/],
+   ['runtimeRoot','/tmp/runs',/BUSTER_NATIVE_STATE_ROOT_INVALID/],
+   ...[0,-1,1.5,2147483648,'15000',undefined].map(value=>['shutdownTimeoutMs',value,/BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED/]),
+  ]){
+   let reads=0;
+   const unreadable=new Proxy({}, {get(){reads++;throw new Error('source carrier read before complete metadata rejection');}});
+   assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,[field]:value},unreadable),error);
+   assert.equal(reads,0,'unsupported storage/timer metadata must not resolve the source carrier');
+  }
+  // Parent and child must agree on the existing distinct source/token carrier
+  // contract before either receives a key. Even a valid PEM in the token
+  // carrier must not make the privileged parent accept what the child denies.
+  for(const tokenEnvironmentVariable of [runtime.sourceAttestationPublicKeyEnvironmentVariable]){
+   let reads=0;
+   const unreadable=new Proxy(environment,{get(){reads++;throw new Error('aliased token carrier must not be read');}});
+   assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,tokenEnvironmentVariable},unreadable),/BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
+   assert.equal(reads,0,'parent rejects the same source/token alias as the production child');
+  }
+  let reads=0;
+  const restoredCarrier=new Proxy(environment,{get(target,name){reads++;return target[name];}});
+  assert.deepEqual(readBusterPreparationRuntimeSource(runtime,restoredCarrier),received);
+  assert.equal(reads,1,'restored original A/B binding resolves its original public key once');
   const invalidOutput=path.join(output,'invalid');fs.mkdirSync(invalidOutput);
   const invalid=spawnSync(process.execPath,['-'],{input:producer,env:{...environment,RUNTIME_CONFIG_ROOT:invalidOutput,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:'invalid'},encoding:'utf8',timeout:10000});
   assert.equal(invalid.status,1);assert.match(invalid.stderr,/BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);

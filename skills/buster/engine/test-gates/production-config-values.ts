@@ -171,6 +171,7 @@ export function scannerRegistry(source: Record<string, unknown>, capturedRegistr
 
 export function validateRuntimeRoot(value: Record<string, unknown>): void {
   if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
+  if (value.tarExecutable !== '/usr/bin/tar') throw new Error('BUSTER_NATIVE_TAR_LOCATOR_INVALID');
   for (const key of ['kubernetesFixture', 'tailscaleExposure', 'kubernetesRuntimeSecurity']) {
     if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
   }
@@ -219,12 +220,19 @@ export function runtimeAuthority(value: Record<string, unknown>, environment: No
       throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID');
     }
     tokenName = value.tokenEnvironmentVariable;
+  }
+  const sourceKeyName = value.sourceAttestationPublicKeyEnvironmentVariable;
+  if (typeof sourceKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_ENV_INVALID');
+  }
+  if (typeof value.trustedSourceAuthority !== 'string' || !value.trustedSourceAuthority.trim()) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED');
+  }
+  // Validate both carrier names and issuer metadata before any confidential
+  // lookup. Even equal public-key/token aliases must never read token bytes.
+  if (tokenName) {
     token = environment[tokenName];
     if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
-  }
-  const sourceKeyName = value.sourceAttestationPublicKeyEnvironmentVariable as string;
-  if (!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
-    throw new Error('BUSTER_SOURCE_ATTESTATION_ENV_INVALID');
   }
   const sourceAttestationPublicKey = environment[sourceKeyName];
   if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');
@@ -233,9 +241,6 @@ export function runtimeAuthority(value: Record<string, unknown>, environment: No
   try {
     if (createPublicKey(sourceAttestationPublicKey).asymmetricKeyType !== 'ed25519') throw new Error('wrong key type');
   } catch (cause) { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID', { cause }); }
-  if (typeof value.trustedSourceAuthority !== 'string' || !value.trustedSourceAuthority.trim()) {
-    throw new Error('BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED');
-  }
   return { trustedPeerSpiffeIds, token, sourceAttestationPublicKey };
 }
 

@@ -202,7 +202,6 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
     : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
   ...preparationSource,
-  tarExecutable: '/usr/bin/tar',
   registryPeer,
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,

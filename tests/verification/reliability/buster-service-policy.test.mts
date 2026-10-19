@@ -104,6 +104,22 @@ test('production authority requires one token or proxied-SPIFFE author before co
   assert.deepEqual(runtimeAuthority(peer, environment), spiffe, 'restored SPIFFE source retains exact authority');
 });
 
+test('source carrier and issuer metadata reject before any confidential carrier lookup', () => {
+  const unreadable = new Proxy({}, { get() { assert.fail('invalid source metadata must not read confidential carriers'); } });
+  for (const sourceAttestationPublicKeyEnvironmentVariable of [undefined, null, [], ['TEST_SOURCE_KEY'], 1, 'bad-name', 'TEST_BUSTER_TOKEN']) {
+    assert.throws(() => runtimeAuthority({ ...source, sourceAttestationPublicKeyEnvironmentVariable }, unreadable), /BUSTER_SOURCE_ATTESTATION_ENV_INVALID/);
+  }
+  for (const trustedSourceAuthority of [undefined, null, '', ' ', 1]) {
+    assert.throws(() => runtimeAuthority({ ...source, trustedSourceAuthority }, unreadable), /BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED/);
+  }
+  let reads = 0;
+  const restored = new Proxy({ TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }, {
+    get(target, name) { reads++; return Reflect.get(target, name); },
+  });
+  assert.equal(runtimeAuthority(source, restored).sourceAttestationPublicKey, key);
+  assert.equal(reads, 2, 'restored valid names read each original carrier once');
+});
+
 test('actual production loader rejects service policy/source crypto BEFORE registry or store effects', t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-service-preflight-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -128,6 +144,17 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
     worker.localRuntime, environment), /AUTHORITY_XOR_REQUIRED/);
   assert.equal(environmentReads, 0, 'competing authority rejects before confidential source lookup');
+  for (const [patch, expected] of [
+    ...[undefined, null, 'tar', '/bin/tar', '/tmp/tar', {}, ['/usr/bin/tar']].map(tarExecutable => [{ tarExecutable }, /BUSTER_NATIVE_TAR_LOCATOR_INVALID/] as const),
+    [{ sourceAttestationPublicKeyEnvironmentVariable: 'TEST_BUSTER_TOKEN' }, /BUSTER_SOURCE_ATTESTATION_ENV_INVALID/],
+    [{ sourceAttestationPublicKeyEnvironmentVariable: ['TEST_SOURCE_KEY'] }, /BUSTER_REMOTE_CONFIG_INVALID:sourceAttestationPublicKeyEnvironmentVariable/],
+    [{ trustedSourceAuthority: ' ' }, /BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED/],
+  ] as const) {
+    fs.writeFileSync(file, JSON.stringify({ ...runtime, ...patch }));
+    assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
+      worker.localRuntime, environment), expected);
+    assert.equal(environmentReads, 0, 'invalid source metadata rejects in the actual loader before any confidential read');
+  }
   fs.writeFileSync(file, JSON.stringify(runtime));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
     worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }),
