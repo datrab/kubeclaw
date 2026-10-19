@@ -198,9 +198,6 @@ fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
 fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',
   host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),
-  ...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID
-    ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
-    : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
   ...preparationSource,
   registryPeer,
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },

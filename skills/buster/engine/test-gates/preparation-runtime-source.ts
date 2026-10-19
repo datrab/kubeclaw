@@ -15,6 +15,21 @@ export function readBusterPreparationRuntimeSource(runtime: Readonly<Record<stri
   // The generated installed-tool locator is not an editable policy or PATH
   // fallback. Reject unsupported input before reading any source carrier.
   if (runtime.tarExecutable !== '/usr/bin/tar') throw new Error('BUSTER_NATIVE_TAR_LOCATOR_INVALID');
+  // Authentication metadata must agree with the runtime child before source
+  // trust is captured. Proxied SPIFFE is not a substitute for the source key.
+  if (Object.hasOwn(runtime, 'trustedPeerSpiffeIds') === Object.hasOwn(runtime, 'tokenEnvironmentVariable')) {
+    throw new Error('BUSTER_REMOTE_CONFIG_AUTHORITY_XOR_REQUIRED');
+  }
+  if (Object.hasOwn(runtime, 'trustedPeerSpiffeIds')) {
+    const peers = runtime.trustedPeerSpiffeIds;
+    if (!Array.isArray(peers) || peers.length === 0 || peers.length > 32
+      || peers.some(peer => typeof peer !== 'string' || peer.length === 0)) {
+      throw new Error('BUSTER_REMOTE_CONFIG_INVALID:trustedPeerSpiffeIds');
+    }
+  } else if (typeof runtime.tokenEnvironmentVariable !== 'string'
+    || !/^[A-Z][A-Z0-9_]*$/u.test(runtime.tokenEnvironmentVariable)) {
+    throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID');
+  }
   const publicKeyName = runtime.sourceAttestationPublicKeyEnvironmentVariable;
   if (typeof publicKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(publicKeyName)
     || publicKeyName === runtime.tokenEnvironmentVariable
@@ -51,6 +66,9 @@ export function projectLegacyBusterPreparationSource(environment: NodeJS.Process
   }
   const runtime = Object.freeze({
     schemaVersion: 'buster-remote-plan-runtime.v1',
+    ...(environment.BUSTER_TRUSTED_PEER_SPIFFE_ID
+      ? { trustedPeerSpiffeIds: [environment.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
+      : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
     sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
     trustedSourceAuthority: environment.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
     stateRoot: environment.BUSTER_PLAN_STATE_DIR || '/var/lib/buster-v2/plan-jobs',

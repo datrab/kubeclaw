@@ -107,8 +107,33 @@ test('actual runtime producer and parent source receiver preserve explicit A/B b
   assert.equal(result.error,undefined);assert.equal(result.status,0,result.stderr);
   const runtime=JSON.parse(fs.readFileSync(path.join(output,'runtime.json'),'utf8'));
   const received=readBusterPreparationRuntimeSource(runtime,environment);
+  const {tokenEnvironmentVariable,...publicRuntime}=runtime;
+  const unreadableAuth=new Proxy({}, {get(){assert.fail('invalid authentication metadata must reject before source carrier read');}});
+  for(const invalid of [publicRuntime,{...runtime,trustedPeerSpiffeIds:['spiffe://fixture/buster']},
+   {...runtime,trustedPeerSpiffeIds:undefined}]){
+   assert.throws(()=>readBusterPreparationRuntimeSource(invalid,unreadableAuth),/AUTHORITY_XOR_REQUIRED/);
+  }
+  for(const tokenEnvironmentVariable of [undefined,null,'bad-name',[],1]){
+   assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,tokenEnvironmentVariable},unreadableAuth),/TOKEN_ENV_INVALID/);
+  }
+  for(const trustedPeerSpiffeIds of [undefined,null,[],[''],[1],Array(33).fill('spiffe://fixture/buster')]){
+   assert.throws(()=>readBusterPreparationRuntimeSource({...publicRuntime,trustedPeerSpiffeIds},unreadableAuth),/CONFIG_INVALID:trustedPeerSpiffeIds/);
+  }
+  const peerRuntime={...publicRuntime,trustedPeerSpiffeIds:['spiffe://fixture/buster']};
+  assert.deepEqual(readBusterPreparationRuntimeSource(peerRuntime,environment),received);
+
   assert.deepEqual(received,{sourceAttestationPublicKey:key,trustedSourceAuthority:authority,stateRoot:'/var/lib/buster-v2/plan-jobs',tarExecutable:'/usr/bin/tar',serviceShutdownTimeoutMs:15000});
   assert.equal(runtime.runtimeRoot,'/var/lib/buster-v2/runs');assert(Object.isFrozen(received));
+  assert.equal(runtime.tokenEnvironmentVariable,'BUSTER_V2_TOKEN');
+  const peerOutput=path.join(output,'peer');fs.mkdirSync(peerOutput);
+  const peerEnvironment={...environment,RUNTIME_CONFIG_ROOT:peerOutput,BUSTER_TRUSTED_PEER_SPIFFE_ID:'spiffe://fixture/buster'};
+  const peerResult=spawnSync(process.execPath,['-'],{input:producer,env:peerEnvironment,encoding:'utf8',timeout:10000});
+  assert.equal(peerResult.error,undefined);assert.equal(peerResult.status,0,peerResult.stderr);
+  const producedPeer=JSON.parse(fs.readFileSync(path.join(peerOutput,'runtime.json'),'utf8'));
+  assert.deepEqual(producedPeer.trustedPeerSpiffeIds,['spiffe://fixture/buster']);
+  assert.equal(Object.hasOwn(producedPeer,'tokenEnvironmentVariable'),false);
+  assert.deepEqual(readBusterPreparationRuntimeSource(producedPeer,peerEnvironment),received);
+
   for(const tarExecutable of [undefined,null,'tar','/bin/tar','/tmp/tar',{},['/usr/bin/tar']]){
    const unreadable=new Proxy({}, {get(){throw new Error('carrier read before tool rejection');}});
    assert.throws(()=>readBusterPreparationRuntimeSource({...runtime,tarExecutable},unreadable),/BUSTER_NATIVE_TAR_LOCATOR_INVALID/);
