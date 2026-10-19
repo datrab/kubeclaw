@@ -311,7 +311,9 @@
     "docs:drift:capability:vocabulary:mutations": "node scripts/check-capability-vocabulary-drift-mutations.mjs",
     "docs:drift:capability:check": "node scripts/check-capability-drift.mjs",
     "docs:drift:capability:mutations": "node scripts/check-capability-drift-mutations.mjs",
-    "docs:drift:capability:registrations:check": "node scripts/check-capability-registrations-drift.mjs"
+    "docs:drift:capability:registrations:check": "node scripts/check-capability-registrations-drift.mjs",
+    "docs:drift:plugin-registration:manifest:check": "node scripts/check-plugin-manifest-drift.mjs",
+    "docs:drift:plugin-registration:manifest:mutations": "node scripts/check-plugin-manifest-drift-mutations.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

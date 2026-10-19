@@ -47,6 +47,17 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = '      "operator.request": { "allowedTargets": ["operators", "fixture-operators"] },\n';
   replacement = operation === 'add' ? added
     : operation === 'change' ? '      "operator.request": { "allowedTargets": ["fixture-operators"] },\n' : '';
+} else if (variant.constructor === 'plugin-manifest-registration-v1') {
+  // Reuse existing executable/schema paths; discovery does not execute the added registration.
+  anchor = '  "stages": [\n';
+  added = '    {"id":"fixture-lint","type":"kubeclaw.lint.fixture","module":"src/stage.ts","export":"executePreCheck","requiredCapabilities":["lint.execute"],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"},\n';
+  if (operation === 'add') replacement = anchor + added;
+  else {
+    const manifest = JSON.parse(original);
+    anchor = JSON.stringify(manifest.stages[0], null, 2).split('\n').map(line => '    ' + line).join('\n') + ',\n';
+    if (operation === 'change') replacement = anchor.replace('kubeclaw.lint.pre-check', 'kubeclaw.lint.fixture-replacement');
+    else replacement = '';
+  }
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
