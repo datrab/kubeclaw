@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict';
+import { providerCatalogueReference } from './buster-provider-catalogue-reference.mjs';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -250,6 +251,8 @@ function appendContract(title, schema, file) {
 
 for (const provider of providers) appendContract(provider.contractId, provider.schema, provider.file);
 appendContract('kubeclaw.api-flow-document@1', flow, flowFile);
+
+lines.push(providerCatalogueReference.trimEnd(), '');
 
 lines.push('## Maintenance Rule', '',
   'Change and commit a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',

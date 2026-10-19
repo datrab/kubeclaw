@@ -315,7 +315,9 @@
     "docs:drift:plugin-registration:manifest:check": "node scripts/check-plugin-manifest-drift.mjs",
     "docs:drift:plugin-registration:manifest:mutations": "node scripts/check-plugin-manifest-drift-mutations.mjs",
     "docs:drift:plugin-registration:extension-class:check": "node scripts/check-extension-class-drift.mjs",
-    "docs:drift:plugin-registration:extension-class:mutations": "node scripts/check-extension-class-drift-mutations.mjs"
+    "docs:drift:plugin-registration:extension-class:mutations": "node scripts/check-extension-class-drift-mutations.mjs",
+    "docs:drift:plugin-registration:provider:check": "node scripts/check-provider-registration-drift.mjs",
+    "docs:drift:plugin-registration:provider:mutations": "node scripts/check-provider-registration-drift-mutations.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
