@@ -216,7 +216,7 @@ export class BusterRemotePlanService {
   }
 
   async shutdown(timeoutMs: number): Promise<void> {
-    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1) {
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 0x7fffffff) {
       throw new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID');
     }
     this.#stopping = true; this.#queue.clear();

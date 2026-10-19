@@ -1,3 +1,6 @@
+import http from 'node:http';
+import { BusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/remote-plan-runtime.ts';
+import type { BusterRemotePlanService as ProductionService } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
 import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
@@ -70,6 +73,7 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
       await limited.accept(first, new Date().toISOString());
       await limited.accept(queued, new Date().toISOString());
     }
+    await assert.rejects(() => service.shutdown(0x80000000), /BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID/u);
     await service.recover();
     assert.equal(service.bootstrapReady(), true);
     if (timing === 'read-failure') {
@@ -138,4 +142,101 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
     if (timing === 'queued') assert.equal((await limited.get(queued.jobId)).payload.status.state, 'accepted', 'queued durable job must remain available to restart recovery');
     assert.equal(fs.readFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'utf8'), 'original filesystem ENOTDIR; no provider can start');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+// Model only the service boundary here; listener, sockets, timer, and runtime
+// shutdown are production code. Durable service recovery is exercised above.
+function drainRuntime(service: Pick<ProductionService, 'recover' | 'shutdown' | 'readiness'>, timeout = 1000) {
+  return new BusterRemotePlanRuntime({ service: service as ProductionService,
+    host: '127.0.0.1', port: 0, token: 'shutdown-test-token-0000000000000000', maximumRequestBytes: 1024,
+    maximumResponseBytes: 1024, maximumResultBytes: 1024, shutdownTimeoutMs: timeout });
+}
+
+test('runtime closes service admission before awaiting an in-flight HTTP response', async () => {
+  let entered!: () => void;
+  const entering = new Promise<void>(resolve => { entered = resolve; });
+  let release!: () => void;
+  const released = new Promise<void>(resolve => { release = resolve; });
+  let calls = 0;
+  const runtime = drainRuntime({ recover: async () => {},
+    readiness: async () => { entered(); await released; return { schemaVersion: 'buster-plan-readiness.v1', ready: false, code: 'stopping' }; },
+    shutdown: async () => { calls++; release(); } });
+  const address = await runtime.start();
+  const response = new Promise<number | undefined>((resolve, reject) => {
+    const request = http.get({ host: address.address, port: address.port, path: '/readyz', agent: false }, response => {
+      response.resume(); response.on('end', () => resolve(response.statusCode));
+    });
+    request.on('error', reject);
+  });
+  // Attach a rejection handler before shutdown can forcibly close the socket.
+  const outcome = response.then(status => ({ status }), error => ({ error }));
+  await entering;
+  const first = runtime.stop();
+  assert.equal(runtime.stop(), first, 'concurrent callers must share the original drain');
+  await first;
+  assert.deepEqual(await outcome, { status: 503 });
+  assert.equal(calls, 1);
+  await runtime.stop();
+  assert.equal(calls, 1);
+  await assert.rejects(() => runtime.start(), /BUSTER_REMOTE_RUNTIME_STOPPED/u);
+});
+
+test('runtime timeout retains failure and does not mint a second shutdown budget', async () => {
+  let calls = 0;
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  const runtime = drainRuntime({ recover: async () => {},
+    readiness: async () => ({ schemaVersion: 'buster-plan-readiness.v1', ready: true, code: 'ready' }), shutdown: async () => { calls++; await pending; } }, 20);
+  await runtime.start();
+  const stopped = runtime.stop();
+  try {
+    await assert.rejects(stopped, /BUSTER_REMOTE_SHUTDOWN_TIMEOUT/u);
+    assert.equal(runtime.stop(), stopped);
+    await assert.rejects(runtime.stop(), /BUSTER_REMOTE_SHUTDOWN_TIMEOUT/u);
+    await assert.rejects(() => runtime.start(), /BUSTER_REMOTE_RUNTIME_STOPPED/u);
+    assert.equal(calls, 1);
+  } finally { release(); }
+});
+
+test('runtime preserves service failure and rejects timer overflow before recovery', async () => {
+  let recoveries = 0;
+  const failure = new Error('original durable cleanup failure');
+  const service = { recover: async () => { recoveries++; }, readiness: async () => ({ schemaVersion: 'buster-plan-readiness.v1', ready: true, code: 'ready' }),
+    shutdown: async () => { throw failure; } };
+  for (const timeout of [0, -1, 1.5, NaN, Infinity, 0x80000000]) {
+    assert.throws(() => drainRuntime(service, timeout), /BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID/u);
+  }
+  assert.equal(recoveries, 0);
+  const runtime = drainRuntime(service);
+  await runtime.start();
+  await assert.rejects(runtime.stop(), error => error === failure);
+  await assert.rejects(runtime.stop(), error => error === failure);
+});
+
+
+test('HTTP timeout preserves an already rejected durable service shutdown', async () => {
+  let entered!: () => void;
+  const entering = new Promise<void>(resolve => { entered = resolve; });
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  const failure = new Error('original durable write failed');
+  const runtime = drainRuntime({ recover: async () => {},
+    readiness: async () => { entered(); await pending; return { schemaVersion: 'buster-plan-readiness.v1', ready: false, code: 'stopping' }; },
+    shutdown: async () => { throw failure; } }, 20);
+  const address = await runtime.start();
+  const request = http.get({ host: address.address, port: address.port, path: '/readyz', agent: false });
+  request.on('error', () => {});
+  try {
+    await entering;
+    const stopped = runtime.stop();
+    const verify = (error: unknown): boolean => {
+      assert.ok(error instanceof AggregateError);
+      assert.equal(error.errors[0], failure);
+      assert.match(error.errors[1].message, /BUSTER_REMOTE_SHUTDOWN_TIMEOUT/u);
+      return true;
+    };
+    await assert.rejects(stopped, verify);
+    assert.equal(runtime.stop(), stopped);
+    await assert.rejects(runtime.stop(), verify);
+  } finally { release(); request.destroy(); }
 });
