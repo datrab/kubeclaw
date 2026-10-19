@@ -693,6 +693,33 @@ case details, but the original report remains stored and the adapter still
 validates the complete document. A provider result with a missing required
 report is an error, even when its process returned zero.
 
+## Report Adapter Registration
+
+The installed JUnit adapter is declared by package `kubeclaw.junit-report@1.0.0`
+using `pipeline-plugin-v2`. Report formats are not declared by the production
+runtime configuration loader: that loader assembles the package registry.
+The adapter manifest declares the following fields; the format identifies the
+report protocol, while the module and export identify its normalization code.
+
+| Adapter ID | Manifest field | Declared value |
+| --- | --- | --- |
+| `junit` | `id` | `junit` |
+| `junit` | `format` | `junit` |
+| `junit` | `contractVersion` | `1` |
+| `junit` | `module` | `src/adapter.js` |
+| `junit` | `export` | `adapt` |
+| `junit` | `mediaTypes` | `["application/junit+xml","application/xml","text/xml"]` |
+
+The provider declares its permitted report formats separately. Each returned
+report must reference retained `test-report` evidence. The runner selects an
+adapter by package, adapter ID, format, and contract version, then supplies the
+stored artifact to the adapter runtime. A matching manifest alone does not prove
+that a provider emitted a valid artifact or that sandbox execution succeeded.
+
+Sources: [adapter manifest](https://github.com/datrab/kubeclaw/blob/36adbf27e408e8c3f429a09d0dd1c5de94c33694/skills/buster/plugins/junit-report-adapter/plugin.json#L1-L23),
+[provider report validation and adapter selection](https://github.com/datrab/kubeclaw/blob/36adbf27e408e8c3f429a09d0dd1c5de94c33694/skills/buster/engine/test-gates/runner.ts#L357-L379),
+and [retained artifact consumption](https://github.com/datrab/kubeclaw/blob/36adbf27e408e8c3f429a09d0dd1c5de94c33694/skills/buster/engine/test-gates/runner.ts#L1474-L1497).
+
 ## Error Codes and Safe Actions
 
 An error code identifies the boundary that could not produce trustworthy test

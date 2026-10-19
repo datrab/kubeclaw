@@ -319,7 +319,9 @@
     "docs:drift:plugin-registration:provider:check": "node scripts/check-provider-registration-drift.mjs",
     "docs:drift:plugin-registration:provider:mutations": "node scripts/check-provider-registration-drift-mutations.mjs",
     "docs:drift:plugin-registration:fixture:check": "node scripts/check-fixture-registration-drift.mjs",
-    "docs:drift:plugin-registration:fixture:mutations": "node scripts/check-fixture-registration-drift-mutations.mjs"
+    "docs:drift:plugin-registration:fixture:mutations": "node scripts/check-fixture-registration-drift-mutations.mjs",
+    "docs:drift:plugin-registration:report:check": "node scripts/check-report-registration-drift.mjs",
+    "docs:drift:plugin-registration:report:mutations": "node scripts/check-report-registration-drift-mutations.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
