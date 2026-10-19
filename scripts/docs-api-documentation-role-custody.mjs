@@ -26280,7 +26280,7 @@ const reviewedImporterResolutionRecipe={
     },
     {
       "source": "package.json",
-      "sha256": "d19ba8b9082ebaab00ee2008e688dd4808cc3882141b10bbdda8cce8b50c3d6a"
+      "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
     }
   ],
   "operations": [
@@ -26353,8 +26353,8 @@ const reviewedImporterResolutionRecipe={
       "verify:product": "npm run typecheck:skills && npm run progress:scaffold:typecheck && npm run verify:contracts && npm run verify:pipeline && npm run docs:check"
     },
     "package": {
-      "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo/package.json",
-      "sha256": "d19ba8b9082ebaab00ee2008e688dd4808cc3882141b10bbdda8cce8b50c3d6a"
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/package.json",
+      "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
     },
     "method": "Exact literal native source caller search plus npm run literal edge inventory; no claim to parse dynamic shell commands or authorize execution",
     "independentBoundaryDecision": {
