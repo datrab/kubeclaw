@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 1181
+    "files": 1182
   },
   "runtime": {
     "roots": [
@@ -118,6 +118,7 @@
       "skills/buster/engine/test-gates/production-cluster-options.ts",
       "skills/buster/engine/test-gates/production-command-options.ts",
       "skills/buster/engine/test-gates/production-config-values.ts",
+      "skills/buster/engine/test-gates/production-registry-peer.ts",
       "skills/buster/engine/test-gates/production.ts",
       "skills/buster/engine/test-gates/provider-capabilities.ts",
       "skills/buster/engine/test-gates/provider-child.mjs",
@@ -2514,6 +2515,7 @@
     "skills/buster/engine/test-gates/production-cluster-options.ts",
     "skills/buster/engine/test-gates/production-command-options.ts",
     "skills/buster/engine/test-gates/production-config-values.ts",
+    "skills/buster/engine/test-gates/production-registry-peer.ts",
     "skills/buster/engine/test-gates/production.ts",
     "skills/buster/engine/test-gates/provider-capabilities.ts",
     "skills/buster/engine/test-gates/provider-child.mjs",
