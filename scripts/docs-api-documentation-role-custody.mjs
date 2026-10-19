@@ -8725,7 +8725,7 @@ export const reviewedRootNodeEntryRecipes = {
     },
     "scripts/tests/docs-publication-assets.test.mjs": {
       "purpose": "Publication temporary reader/asset-copy consumer",
-      "terminalPurpose": "8–25 build synthetic classification and unique temporary site; 27–97 enumerate/copy/validate fixture reader assets/pages and reject unapproved/symlink inputs.",
+      "terminalPurpose": "8–25 build synthetic classification and unique temporary site; 27–118 enumerate/copy/validate fixture assets/pages and in-memory positive manifest, rejecting unapproved paths and symlinks. Manifest is asserted, never published or transported.",
       "limits": "copyPublicationAssets is an exported general filesystem producer and its caller-supplied outputRoot is not inherently temporary. Bound only exact fixture calls and asset list; retain actual publication entry.",
       "callers": [
         {
@@ -8756,7 +8756,7 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "kind": "ImportDeclaration",
-          "syntaxSha256": "a48d26c2812daac024a5482e5a41758c72e28c205f357ba8455f71686c76f30b"
+          "syntaxSha256": "dc92fbed44c727705b8889835cdbb28a4c5a42529c0132e6f9f71ed34b5a88ea"
         },
         {
           "kind": "FunctionDeclaration",
@@ -8793,11 +8793,22 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "kind": "ExpressionStatement",
           "syntaxSha256": "aaff0c95d1992266aee6bd4f31b1def42fea66dd6f98302e5ed6a374585926b9"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "a0fa6994395140be2659911b32e9becc2d249b6ae170d48cb39a07188bce6a5c"
+        },
+        {
+          "kind": "ExpressionStatement",
+          "syntaxSha256": "1bdf238209991ffdbf5368a215b91b97806acf1807858720c51836be8bfca87c"
         }
       ],
       "selectors": [
         {
           "expressionSha256": "2d6db0a1dbbf7d24583a3a71044136cd9b2e180570d5625140d460444ab39499"
+        },
+        {
+          "expressionSha256": "d23bb2f5ebf86998169361bfbcabbcba0d3ea54528c80ed53cd5b9b73ed75629"
         },
         {
           "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
@@ -8818,7 +8829,10 @@ export const reviewedRootNodeEntryRecipes = {
           "expressionSha256": "839cf2655267094fdbf41ad83d7b89fa202606d6b1235454745934a1c6f2529f"
         },
         {
-          "expressionSha256": "a48d26c2812daac024a5482e5a41758c72e28c205f357ba8455f71686c76f30b"
+          "expressionSha256": "dc92fbed44c727705b8889835cdbb28a4c5a42529c0132e6f9f71ed34b5a88ea"
+        },
+        {
+          "expressionSha256": "0edb0b2a8a23375775aa3fea638fd79884247f17201ed5b8cd4a1eb1671ebcea"
         },
         {
           "expressionSha256": "0058f0b0963e1806b1ad1135a69444bf74fc5799bb9021ea20d7db07dbda58b6"
@@ -8831,6 +8845,12 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "expressionSha256": "b2a5206c48e3e46f19efcfc5d2ef48503c10226a2a6ecb6d136b825c3e0458ae"
+        },
+        {
+          "expressionSha256": "1bdf238209991ffdbf5368a215b91b97806acf1807858720c51836be8bfca87c"
+        },
+        {
+          "expressionSha256": "a0fa6994395140be2659911b32e9becc2d249b6ae170d48cb39a07188bce6a5c"
         },
         {
           "expressionSha256": "9da4c17936ce79526cac69f70f2cb51ace4af34e79acf266a33df67e3b223443"

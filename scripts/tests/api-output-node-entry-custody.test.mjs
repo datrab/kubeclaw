@@ -11,24 +11,26 @@ const emit="const body={apiVersion:'v1',kind:'Secret',metadata:{name:'public-tes
 function fixture(run){const root=fs.mkdtempSync(path.join(os.tmpdir(),'docs-node-entry-'));const write=(source,bytes)=>{fs.mkdirSync(path.dirname(path.join(root,source)),{recursive:true});fs.writeFileSync(path.join(root,source),bytes);};try{run({root,write});}finally{fs.rmSync(root,{recursive:true,force:true});}}
 function harnessFixture(run){fixture(context=>{for(const source of new Set([...Object.keys(reviewedRootNodeEntryRecipes.entries),...reviewedRootNodeEntryRecipes.closure.map(x=>x.source)]))context.write(source,fs.readFileSync(path.join(repository,source)));context.write('package.json',JSON.stringify(activeDefinition));run(context);});}
 const allHarnessEntries=Object.entries(reviewedRootNodeEntryRecipes.entries).flatMap(([source,recipe])=>recipe.callers.map(caller=>({...caller,source})));
+const expectedHarnessSources=Object.keys(reviewedRootNodeEntryRecipes.entries).sort();
+const assertHarnessSources=actual=>assert.deepEqual([...actual].sort(),expectedHarnessSources);
 const activeDefinition={scripts:Object.fromEntries(allHarnessEntries.map(x=>[x.name,x.command]))};
 
-test('exact17 caller-qualified fixture harnesses retain genuine imported and child producers',()=>harnessFixture(({root})=>{
+test('exact caller-qualified fixture harnesses retain genuine imported and child producers',()=>harnessFixture(({root})=>{
  const qualified=qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries);
- assert.equal(qualified.size,17);
+ assertHarnessSources(qualified);
  for(const product of ['skills/nova/pipeline.ts','skills/nova/plugins/preflight-contract/src/stage.ts','skills/common/plugins/artifact-store/src/adapter.ts','skills/common/plugin-runtime/foundation/observability/durable-records.ts'])assert(!qualified.has(product));
  assert(!qualified.has('scripts/tests/fixtures/review-supervisor.mjs'));
 }));
 
 test('harness caller and public reachability cannot transfer fixture purpose',()=>harnessFixture(({root})=>{
  const source='scripts/tests/docs-publication-links.test.mjs';
- assert.equal(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries).size,17);
+ assertHarnessSources(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries));
  assert.throws(()=>qualifiedRootNodeHarnessSources(root,{},[]),/actual caller\/public entry authority differs/);
  const publicDefinition={...activeDefinition,main:source};fs.writeFileSync(path.join(root,'package.json'),JSON.stringify(publicDefinition));assert.throws(()=>qualifiedRootNodeHarnessSources(root,publicDefinition,allHarnessEntries),/PUBLIC_CONSUMER_UNQUALIFIED.*package public entry/);
  const directDefinition={scripts:{...activeDefinition.scripts,'run:public':'node '+source}};fs.writeFileSync(path.join(root,'package.json'),JSON.stringify(directDefinition));assert.throws(()=>qualifiedRootNodeHarnessSources(root,directDefinition,[...allHarnessEntries,{name:'run:public',command:'node '+source,source}]),/PUBLIC_CONSUMER_UNQUALIFIED.*run:public/);
  assert.throws(()=>qualifiedRootNodeHarnessSources(root,directDefinition,allHarnessEntries),/actual native caller inventory differs/);
  const nestedDefinition={scripts:{...activeDefinition.scripts,'run:nested':"bash -c 'node "+source+"'"}};fs.writeFileSync(path.join(root,'package.json'),JSON.stringify(nestedDefinition));assert.throws(()=>qualifiedRootNodeHarnessSources(root,nestedDefinition,allHarnessEntries),/unsupported nested shell -c Node acquisition/);
- const passiveDefinition={scripts:{...activeDefinition.scripts,'run:passive':"node tools/print-path.mjs "+source}};fs.writeFileSync(path.join(root,'package.json'),JSON.stringify(passiveDefinition));assert.equal(qualifiedRootNodeHarnessSources(root,passiveDefinition,allHarnessEntries).size,17);
+ const passiveDefinition={scripts:{...activeDefinition.scripts,'run:passive':"node tools/print-path.mjs "+source}};fs.writeFileSync(path.join(root,'package.json'),JSON.stringify(passiveDefinition));assertHarnessSources(qualifiedRootNodeHarnessSources(root,passiveDefinition,allHarnessEntries));
  fs.writeFileSync(path.join(root,'package.json'),'{}');assert.equal(qualifiedRootNodeHarnessSources(root,{},[]).size,0);
 }));
 
@@ -40,7 +42,7 @@ test('import-time effects, generated crash/historical child bytes, fixture root 
   ['scripts/docs-parity-batches.mjs',null,"\nprocess.stdout.write(process.env.EXTERNAL_BODY);\n"],
   ['scripts/tests/docs-publication-links.test.mjs',null,"\nexport function publish(){console.log(JSON.stringify({apiVersion:'v1',kind:'Secret'}));}\n"]
  ])harnessFixture(({root,write})=>{
-  assert.equal(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries).size,17);
+  assertHarnessSources(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries));
   let bytes=fs.readFileSync(path.join(root,source),'utf8');
   if(before){assert(bytes.includes(before),'native fixture mutation target missing: '+source);bytes=bytes.replace(before,after);}else bytes+=after;
   write(source,bytes);assert.throws(()=>qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries),/NODE_ENTRY_CUSTODY_UNQUALIFIED|PUBLIC_CONSUMER_UNQUALIFIED/);
@@ -49,7 +51,7 @@ test('import-time effects, generated crash/historical child bytes, fixture root 
 
 test('literal generated supervisor child argument/lease and declarative registration/schema authority remain bound',()=>{
  for(const source of ['scripts/tests/repository-review-supervisor-state.test.mjs','skills/nova/plugins/preflight-contract/schemas/config.schema.json'])harnessFixture(({root,write})=>{
-  assert.equal(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries).size,17);
+  assertHarnessSources(qualifiedRootNodeHarnessSources(root,activeDefinition,allHarnessEntries));
   const bytes=fs.readFileSync(path.join(root,source),'utf8');
   write(source,source.endsWith('.json')?JSON.stringify({...JSON.parse(bytes),additionalProperties:true}):bytes.replace('process.argv[1]','process.argv[2]'));
   assert.notEqual(fs.readFileSync(path.join(root,source),'utf8'),bytes);
