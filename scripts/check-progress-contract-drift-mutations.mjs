@@ -53,7 +53,7 @@ try {
           assert(output.includes(relative), `${id}: missing affected page`);
           assert(fs.readFileSync(path.join(temporary, relative)).equals(pages[index]), `${id}: gate wrote page`);
         });
-        console.log(`${id}: rejected by bounded product-pipeline contract checker (full ${family.gate} not yet implemented); ${family.diagnosticCode}; ${variant.expectedPages.join(', ')}`);
+        console.log(`${id}: rejected by bounded product-pipeline contract checker (full ${family.gate} not exercised by this bounded runner); ${family.diagnosticCode}; ${variant.expectedPages.join(', ')}`);
       } finally { fs.writeFileSync(source, original); }
       const restored = gate();
       assert.equal(restored.status, 0, restored.stdout + restored.stderr);
@@ -67,5 +67,5 @@ try {
     } finally { fs.writeFileSync(source, original); }
     assert.equal(gate().status, 0, 'parser control restoration failed');
   }
-  console.log('progress-contract Add/Change/Remove: 3/3 rejected; restored published baselines PASS; parser errors separate. SDK export and public member variants remain unqualified; not full contract-family or independent A911-11 acceptance.');
+  console.log('progress-contract Add/Change/Remove: 3/3 rejected; restored published baselines PASS; parser errors separate. SDK export and public member variants are not exercised by this bounded runner; not full contract-family or independent A911-11 acceptance.');
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
