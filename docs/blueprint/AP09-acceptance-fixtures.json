@@ -481,7 +481,7 @@
       "kind": "capability", "operations": ["add", "change", "remove"], "gate": "docs:drift:capability:check", "command": "npm run docs:drift:capability:check", "diagnosticCode": "DOC_DRIFT_CAPABILITY",
       "variants": [
         { "id": "plugin-capability", "sourceAuthority": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts", "constructor": "typescript-capability-v1", "expectedPages": ["docs/site/reference/capabilities.md"], "semanticChange": "capability identity, provider, consumer, resource, and denial" },
-        { "id": "role-grant", "sourceAuthority": "charts/kubeclaw/files/config/swarm.config.json", "constructor": "json-role-grant-v1", "expectedPages": ["docs/site/reference/capabilities.md"], "semanticChange": "role, grant, resource scope, translation boundary, and denial" }
+        { "id": "role-grant", "sourceAuthority": "docs/site/use/workflows/wait-resume/platform.template.json", "constructor": "json-role-grant-v1", "expectedPages": ["docs/site/reference/capabilities.md"], "semanticChange": "registration grant, provider selection, resource scope, no swarm-role translation, and denial; separate wait/resume example policy, not deployed authority" }
       ]
     },
     {

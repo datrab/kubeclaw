@@ -64,6 +64,7 @@ assert.throws(() => resolveCapabilityGrants(snapshot, { ...policy, enabledRegist
 const revision = JSON.parse(read('docs/generated/inventory/documentation-source-revision.json')).revision;
 for (const relative of [
   'charts/kubeclaw/files/config/swarm.config.json',
+  'docs/site/use/workflows/wait-resume/platform.template.json',
   'tests/verification/e2e/support/platform-config.ts',
   'tests/verification/e2e/support/config-profiles/standard.json',
   'skills/common/plugin-runtime/foundation/config/platform.schema.json',
@@ -82,4 +83,4 @@ assert.equal(generated.stdout, read('docs/site/reference/capabilities.md'), 'cap
 assert(generated.stdout.includes('## Platform Grants Are Not Swarm Roles\n'));
 console.log('Native swarm boundary PASS: no role/grant/provider translation; 6 invalid-authority controls rejected; known override accepted.');
 console.log('Separate platform loader and finite registry grant/denial controls PASS; canonical capability page exact.');
-console.log('NOT a registered role-grant Add/Change/Remove drift result, installed-registry/deployment proof, or independent A911-11 acceptance. Compact swarm fixture has no grant authority; fixture correction remains required.');
+console.log('NOT a registered role-grant Add/Change/Remove drift result, installed-registry/deployment proof, or independent A911-11 acceptance. Compact swarm has no grant authority; the corrected role-grant fixture targets the separate example platform policy.');

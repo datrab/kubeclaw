@@ -41,6 +41,12 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "  'fixture.state.inspect': definition(['inspect'], ['fixture.namespace'], ['allowedFixtureNamespaces']),\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? "  'state.read': definition(['inspect'], ['fixture.namespace'], ['allowedFixtureNamespaces']),\n" : '';
+} else if (variant.constructor === 'json-role-grant-v1') {
+  // A real requesting registration and vocabulary-supported constraint; no invented swarm role.
+  anchor = '      "operator.request": { "allowedTargets": ["operators"] },\n';
+  added = '      "operator.request": { "allowedTargets": ["operators", "fixture-operators"] },\n';
+  replacement = operation === 'add' ? added
+    : operation === 'change' ? '      "operator.request": { "allowedTargets": ["fixture-operators"] },\n' : '';
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";

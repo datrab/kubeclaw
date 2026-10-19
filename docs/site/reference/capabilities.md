@@ -95,6 +95,57 @@ Resource scopes use the constraint lists in the vocabulary above; invocation aut
 Stop if a procedure asks you to authorize a Nova plugin by adding a role or grant to compact swarm overrides.
 Use the separately validated Nova platform policy and the plugin registration requirements instead; do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.
 
+## Wait/Resume Example Grant Policy
+
+This is the shipped wait/resume example template, not the chart default or an effective deployment policy.
+Registration identities select consumers and providers; constraint lists restrict the allowed resource scopes.
+Resolve all REPLACE_WITH placeholders and validate the installed registrations before use. No operator-role translation exists.
+Removing a requested grant denies admission; selecting a provider without a consumer grant does not authorize access.
+
+> [Example platform policy](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/docs/site/use/workflows/wait-resume/platform.template.json).
+
+<!-- BEGIN WAIT RESUME GRANT POLICY -->
+```json
+{
+  "providers": {
+    "operator.request": "kubeclaw.operator-messaging:operator",
+    "signal.wait": "kubeclaw.wait-store:waits",
+    "network.http": "kubeclaw.network-http:http",
+    "secrets.read": "kubeclaw.secret-resolver:secrets"
+  },
+  "grants": {
+    "kubeclaw.human-approval:approval": {
+      "operator.request": {
+        "allowedTargets": [
+          "operators"
+        ]
+      },
+      "signal.wait": {
+        "allowedSignalTypes": [
+          "approval.resolved"
+        ],
+        "allowedIssuerIds": [
+          "operator:local"
+        ]
+      }
+    },
+    "kubeclaw.operator-messaging:operator": {
+      "network.http": {
+        "allowedOrigins": [
+          "http://127.0.0.1:18765"
+        ]
+      },
+      "secrets.read": {
+        "allowedNames": [
+          "operator.webhook"
+        ]
+      }
+    }
+  }
+}
+```
+<!-- END WAIT RESUME GRANT POLICY -->
+
 ## Names Used By Both Systems
 
 Some names occur in both tables because both systems describe the same external action.
