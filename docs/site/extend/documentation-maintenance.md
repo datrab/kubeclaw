@@ -275,6 +275,27 @@ Bind the exact field to that receiving meaning rather than a generic Boolean
 fallback. A repaired source binding still needs the candidate generator and
 its affected drift probe to pass; it does not establish live controller behavior.
 
+For Application `spec.syncPolicy.retry`, separate timing from execution timeouts
+and retry authority. Production Applications here request limit 3, base `10s`,
+factor 2 and cap `1m`. The pinned scheduler computes base times factor to the
+retry-count power, capped only when maxDuration is positive. Scheduler defaults
+are 5 seconds, factor 2 and a 3-minute cap. Empty duration strings use those
+defaults; integer strings mean seconds, and unit-bearing strings use Go duration
+parsing. Invalid nonempty durations become `OperationError`, not a successful
+retry. Zero or negative caps disable the cap; nonpositive bases or factors can
+produce immediately due waits. Schema-valid input is not necessarily safe.
+
+The typed limit is separate: zero permits no retry, negative permits unlimited
+retries, and termination prevents this retry branch. Omission in a fresh typed
+strategy is zero, not a promise about defaults supplied by every sync initiator.
+Inspect the operation and external-effect uncertainty before changing policy;
+do not force repeated syncs to bypass a scheduling error. Correct the exact
+field, rerun its generator and affected probe, and keep live execution unverified
+until tested in the target environment. See the
+[pinned retry receiver](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/types.go#L1543-L1605),
+[default constants](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/application_defaults.go#L5-L8)
+and [controller eligibility/error branch](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/controller/appcontroller.go#L1619-L1639).
+
 Validate examples against their actual contract, not merely JSON syntax.
 Record the schema/version, consumer, setup, expected output, failure/cleanup,
 and any external effects. Execute only in the documented isolated or authorized
