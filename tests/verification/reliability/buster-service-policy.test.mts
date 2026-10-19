@@ -85,6 +85,25 @@ test('real source key preflight rejects malformed/non-Ed25519 keys and absent is
   assert.equal(runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }).sourceAttestationPublicKey, key);
 });
 
+test('production authority requires one token or proxied-SPIFFE author before confidential reads', () => {
+  const { tokenEnvironmentVariable, ...publicSource } = source;
+  const peer = { ...publicSource, trustedPeerSpiffeIds: ['spiffe://fixture/buster'] };
+  const environment = { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key };
+  const token = runtimeAuthority(source, environment);
+  assert.equal(token.token, 'fixture');
+  assert.equal(token.trustedPeerSpiffeIds, undefined);
+  const spiffe = runtimeAuthority(peer, environment);
+  assert.deepEqual(spiffe.trustedPeerSpiffeIds, peer.trustedPeerSpiffeIds);
+  assert.equal(spiffe.token, undefined);
+  const unreadable = new Proxy({}, { get() { assert.fail('ambiguous authority must reject before secret lookup'); } });
+  for (const value of [publicSource, { ...peer, tokenEnvironmentVariable },
+    { ...peer, tokenEnvironmentVariable: undefined }, { ...source, trustedPeerSpiffeIds: undefined }]) {
+    assert.throws(() => runtimeAuthority(value, unreadable), /AUTHORITY_XOR_REQUIRED/);
+  }
+  assert.deepEqual(runtimeAuthority(source, environment), token, 'restored token source retains exact authority');
+  assert.deepEqual(runtimeAuthority(peer, environment), spiffe, 'restored SPIFFE source retains exact authority');
+});
+
 test('actual production loader rejects service policy/source crypto BEFORE registry or store effects', t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-service-preflight-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -105,6 +124,14 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   fs.writeFileSync(file, JSON.stringify(runtime));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings, worker.localRuntime,
     { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: 'not a public key' }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
+  fs.writeFileSync(file, JSON.stringify({ ...runtime, trustedPeerSpiffeIds: ['spiffe://fixture/buster'] }));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
+    worker.localRuntime, environment), /AUTHORITY_XOR_REQUIRED/);
+  assert.equal(environmentReads, 0, 'competing authority rejects before confidential source lookup');
+  fs.writeFileSync(file, JSON.stringify(runtime));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings,
+    worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }),
+    /ENOENT/, 'restored valid authority reaches the original missing registry source');
   assert.deepEqual(fs.readdirSync(root), ['runtime.json'], 'invalid inputs never reach registry discovery/store handles');
 });
 

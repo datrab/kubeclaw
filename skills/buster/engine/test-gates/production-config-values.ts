@@ -198,6 +198,12 @@ export function validateRuntimeRoot(value: Record<string, unknown>): void {
 }
 
 export function runtimeAuthority(value: Record<string, unknown>, environment: NodeJS.ProcessEnv) {
+  // Reject competing authentication authors before reading either confidential
+  // carrier or constructing registry/store handles. SPIFFE is proxied peer
+  // authentication here, not a replacement source-key or delivery receipt.
+  if (Object.hasOwn(value, 'trustedPeerSpiffeIds') === Object.hasOwn(value, 'tokenEnvironmentVariable')) {
+    throw new Error('BUSTER_REMOTE_CONFIG_AUTHORITY_XOR_REQUIRED');
+  }
   const trustedPeerSpiffeIds =
     value.trustedPeerSpiffeIds === undefined
       ? undefined
