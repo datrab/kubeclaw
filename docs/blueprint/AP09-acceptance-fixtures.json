@@ -491,7 +491,7 @@
         { "id": "extension-class", "sourceAuthority": "skills/common/plugin-runtime/foundation/registry/types.ts", "constructor": "typescript-extension-class-v1", "expectedPages": ["docs/site/extend/README.md"], "semanticChange": "extension family, contract, registration, activation, and removal path" },
         { "id": "provider-registration", "sourceAuthority": "tests/verification/e2e/provider-catalog.mjs", "constructor": "javascript-provider-registration-v1", "expectedPages": ["docs/site/reference/buster-provider-configuration.md"], "semanticChange": "provider identity, namespace, configuration, and selection" },
         { "id": "fixture-registration", "sourceAuthority": "tests/verification/e2e/fixture-coverage.mjs", "constructor": "javascript-fixture-registration-v1", "expectedPages": ["docs/site/reference/buster-suites.md"], "semanticChange": "fixture identity, suite consumer, input, and output" },
-        { "id": "report-format-registration", "sourceAuthority": "skills/buster/engine/test-gates/production.ts", "constructor": "typescript-report-registration-v1", "expectedPages": ["docs/site/reference/buster-suites.md"], "semanticChange": "report identity, producer, schema, artifact, and consumer" }
+        { "id": "report-format-registration", "sourceAuthority": "skills/buster/plugins/junit-report-adapter/plugin.json", "constructor": "json-report-registration-v1", "expectedPages": ["docs/site/reference/buster-suites.md"], "semanticChange": "report identity, producer, schema, artifact, and consumer" }
       ]
     },
     {

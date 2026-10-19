@@ -75,6 +75,12 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "  'fixture-budget': 'The assembled fixture stays within the declared artifact byte budget.',\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? anchor.replace('declared artifact byte budget', 'declared compressed artifact byte budget') : '';
+} else if (variant.constructor === 'json-report-registration-v1') {
+  // Production composition does not declare report formats; the adapter manifest does.
+  anchor = JSON.stringify(JSON.parse(original).reportAdapters[0], null, 2).split('\n').map(line => '    ' + line).join('\n') + '\n';
+  added = anchor.replace('"id": "junit"', '"id": "fixture-junit"').replace('"format": "junit"', '"format": "fixture-junit"');
+  replacement = operation === 'add' ? anchor.trimEnd() + ',\n' + added
+    : operation === 'change' ? anchor.replace('"format": "junit"', '"format": "fixture-junit"') : '';
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
