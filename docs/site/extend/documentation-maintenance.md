@@ -261,6 +261,20 @@ generator, inspect its diff, run `npm run docs:inventory:local-helm:check`, and
 repeat only the configuration probe that needed this baseline. Until those
 steps pass, keep the corresponding Add/Change/Remove result unverified.
 
+If candidate discovery reports `CONFIG_YAML_API_CONTRACT_GAP`, inspect the exact
+API kind and field named in the error before changing a Helm pin. For example,
+AppProject `spec.orphanedResources.warn` is a warning switch, not permission to
+prune resources. In the pinned Argo CD receiver, explicit `true` enables a warning
+only when eligible orphaned resources remain; `false`, omitted and null do not.
+A present `orphanedResources` object still enables discovery without warnings.
+Removing that parent disables this discovery path. Managed resources, project
+permissions, other Applications and exclusions still filter the result; discovery
+errors are not successful warnings. See the [pinned warning receiver](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/controller/appcontroller.go#L580-L688)
+and [Boolean pointer contract](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/types.go#L2805-L2823).
+Bind the exact field to that receiving meaning rather than a generic Boolean
+fallback. A repaired source binding still needs the candidate generator and
+its affected drift probe to pass; it does not establish live controller behavior.
+
 Validate examples against their actual contract, not merely JSON syntax.
 Record the schema/version, consumer, setup, expected output, failure/cleanup,
 and any external effects. Execute only in the documented isolated or authorized
