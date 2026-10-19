@@ -34,8 +34,17 @@ for (const admission of [
       // Read the real parent -> guardian -> service process tree. The CLI also
       // refuses any UID/GID other than 1000 before it can emit readiness.
       const children = pid => fs.readFileSync(`/proc/${pid}/task/${pid}/children`, 'utf8').trim().split(/\s+/).filter(Boolean);
-      const [guardian] = children(child.pid); assert.ok(guardian, 'real guardian remains alive');
-      const [service] = children(guardian); assert.ok(service, 'real service remains alive');
+      const installedGuardian = fs.statSync(path.join(jail, 'native/libexec/kubeclaw-buster-lifetime-guardian'));
+      // The parent also retains a real flock helper for journal ownership.
+      // Identify the guardian by the installed executable inode, not order.
+      const guardians = children(child.pid).filter(pid => {
+        const executable = fs.statSync(`/proc/${pid}/exe`);
+        return executable.dev === installedGuardian.dev && executable.ino === installedGuardian.ino;
+      });
+      assert.equal(guardians.length, 1, 'exactly one real installed guardian remains alive');
+      const services = children(guardians[0]);
+      assert.equal(services.length, 1, 'the guardian retains exactly one real service');
+      const [service] = services;
       const identity = fs.readFileSync(`/proc/${service}/status`, 'utf8');
       assert.match(identity, /^Uid:\s+1000\s+1000\s+1000\s+1000$/m);
       assert.match(identity, /^Gid:\s+1000\s+1000\s+1000\s+1000$/m);
@@ -44,8 +53,10 @@ for (const admission of [
       // Readiness follows the production fd3 ACK; the test never writes an ACK.
       child.kill('SIGTERM'); assert.deepEqual(await exited, { code: 0, signal: null }, stderr);
       assert.equal(fs.readFileSync(path.join(fixture.pool, 'cgroup.events'), 'utf8').includes('populated 0'), true);
-      assert.deepEqual(fs.readdirSync(path.join(jail, 'var/lib/buster-v2/native-sources')), [],
-        'empty-store startup performs no preparation request');
+      const sources = path.join(jail, 'var/lib/buster-v2/native-sources');
+      assert.deepEqual(fs.readdirSync(sources), ['source-ledger'], 'no preparation source group was created');
+      assert.deepEqual(fs.readdirSync(path.join(sources, 'source-ledger')), ['.write-lock'],
+        'recovery reads only the empty ledger; no reservation or preparation request was persisted');
     } finally {
       lines.close(); if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
       await exited; fixture.dispose();
