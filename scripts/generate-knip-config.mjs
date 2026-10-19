@@ -91,6 +91,12 @@ const pluginDirectories = [
 
 const workspaces = {
   '.': {
+    // Resolve the real installed preflight import to its role-bundle source.
+    // This keeps its exports checked through the productive caller, not ignored.
+    paths: {
+      '/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts':
+        ['skills/buster/engine/test-gates/preparation-runtime-source.ts'],
+    },
     // The live Kubernetes fixture invokes this host executable via execFileSync;
     // it is not a JavaScript module import.
     ignoreUnresolved: [

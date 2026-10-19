@@ -44,6 +44,11 @@
   ],
   "workspaces": {
     ".": {
+      "paths": {
+        "/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts": [
+          "skills/buster/engine/test-gates/preparation-runtime-source.ts"
+        ]
+      },
       "ignoreUnresolved": [
         "^/usr/local/bin/kubectl$",
         "^/usr/bin/systemd-notify$",

@@ -2,7 +2,7 @@ import type { WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createPublicKey } from 'node:crypto';
+import { readBusterPreparationRuntimeSource } from './preparation-runtime-source.ts';
 import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity,
   requireNativeWorkerLauncher } from '@kubeclaw/worker-core';
 import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
@@ -38,19 +38,7 @@ export function captureNativeBusterPreparationTrust(settings: BusterPreparationS
 export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv, workerCore?: WorkerCorePolicyCapture) {
   const trusted = captureNativeBusterPreparationTrust(settings, environment, workerCore);
   const runtime = readRootConfiguration(settings.maximumInputBytes);
-  const publicKeyName = runtime.sourceAttestationPublicKeyEnvironmentVariable;
-  if (typeof publicKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(publicKeyName)
-    || typeof runtime.trustedSourceAuthority !== 'string' || !runtime.trustedSourceAuthority) throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID');
-  const sourceAttestationPublicKey = environment[publicKeyName];
-  if (!sourceAttestationPublicKey || createPublicKey(sourceAttestationPublicKey).asymmetricKeyType !== 'ed25519') {
-    throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID');
-  }
-  if ((runtime.stateRoot !== preparationStateRoot || runtime.runtimeRoot !== '/var/lib/buster-v2/runs')) throw new Error('BUSTER_NATIVE_STATE_ROOT_INVALID');
-  if (!Number.isSafeInteger(runtime.shutdownTimeoutMs) || Number(runtime.shutdownTimeoutMs) < 1
-    || Number(runtime.shutdownTimeoutMs) > 0x7fffffff) throw new Error('BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED');
-  const captured = Object.freeze({ ...trusted, sourceAttestationPublicKey,
-    trustedSourceAuthority: runtime.trustedSourceAuthority, stateRoot: runtime.stateRoot,
-    serviceShutdownTimeoutMs: Number(runtime.shutdownTimeoutMs) });
+  const captured = Object.freeze({ ...trusted, ...readBusterPreparationRuntimeSource(runtime, environment) });
   nativeTrustCaptures.set(captured, nativeTrustCaptures.get(trusted)!);
   return captured;
 }

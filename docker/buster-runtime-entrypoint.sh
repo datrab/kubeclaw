@@ -173,9 +173,11 @@ RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_cl
   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
   BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT="$browser_playwright_cgroup_root" \
-  BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
+  node <<'NODE'
 const fs = require('fs');
 const path = require('path');
+const { projectLegacyBusterPreparationSource } = require('/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts');
+const preparationSource = projectLegacyBusterPreparationSource(process.env);
 const root = process.env.RUNTIME_CONFIG_ROOT;
 const registry = process.env.REGISTRY_REFERENCE;
 const plugins = '/app/skills/plugins';
@@ -198,15 +200,11 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   ...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID
     ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
     : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
-  sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
-  trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
-  stateRoot: process.env.BUSTER_V2_STATE_DIR,
-  runtimeRoot: process.env.BUSTER_V2_RUN_DIR,
+  ...preparationSource,
   tarExecutable: '/usr/bin/tar',
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumResponseBytes: 67108864,
-  shutdownTimeoutMs: 15000,
   allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security'],
   directCommand: {
     executableCatalog: {
