@@ -299,7 +299,8 @@
     "docs:drift:workflow:check": "node scripts/docs-product-pipeline-reference.mjs workflow",
     "docs:drift:workflow:mutations": "node scripts/check-workflow-drift-mutations.mjs",
     "docs:drift:schema:check": "node scripts/docs-product-pipeline-reference.mjs schema",
-    "docs:drift:schema:mutations": "node scripts/check-schema-drift-mutations.mjs"
+    "docs:drift:schema:mutations": "node scripts/check-schema-drift-mutations.mjs",
+    "docs:drift:contract:progress:mutations": "node scripts/check-progress-contract-drift-mutations.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

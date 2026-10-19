@@ -36,6 +36,11 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "  stages.push({ id: 'fixture-stage', type: 'kubeclaw.fixture.stage', dependsOn: [], config: {}, input: {} });\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? "  stages.push(...demoStages(demo,final.test.providerPlan.plan).map(stage => ({ ...stage, type: 'kubeclaw.fixture.replacement' })));\n" : '';
+} else if (variant.constructor === 'typescript-progress-contract-v1') {
+  anchor = '      version: valueOrDefault(scaffold.version, DEFAULTS.version),\n';
+  added = '      fixtureRecoveryMode: valueOrDefault(scaffold.fixtureRecoveryMode, "manual"),\n';
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? '      version: valueOrDefault(scaffold.version, "fixture-progress-v2"),\n' : '';
 } else {
   throw new Error(`constructor not implemented: ${variant.constructor}`);
 }
