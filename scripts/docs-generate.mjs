@@ -23,6 +23,13 @@ const option = (name, fallback) => {
 const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
+const only = option('--only', null);
+if (argv.includes('--only') && only !== 'workflows') {
+  throw new Error('--only supports exactly workflows');
+}
+if (only && argv.includes('--update-source-revision')) {
+  throw new Error('bounded generation must not update the shared source revision lock');
+}
 const allowDetachedSourceRoot = argv.includes('--allow-detached-source-root');
 const updateSourceRevision = argv.includes('--update-source-revision');
 const sourceRevisionLockPath = path.join(root, 'docs/generated/inventory/documentation-source-revision.json');
@@ -130,6 +137,10 @@ function selectedValue(value) {
 }
 
 function stableWriteMap() {
+  // Keep bounded workflow publication independent of unrelated SDK inventories.
+  if (only === 'workflows') return new Map([
+    ['docs/site/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],
+  ]);
   const deploy = readJson('docs/generated/inventory/deploy-script.json');
   const secrets = readJson('docs/generated/inventory/secret-setup.json');
   const configurationValues = readJson('docs/generated/inventory/configuration-values.json');
@@ -799,6 +810,11 @@ function renderWorkflows(workflows) {
   // Documentation production belongs to the internal inventory. The reader
   // reference describes automation that builds, validates, or delivers the product.
   const productWorkflows = workflows.workflows.filter((workflow) => workflow.path !== '.github/workflows/docs-checks.yaml');
+  const pipeline = renderProductPipeline(root);
+  const pipelineSources = [...new Set([
+    'skills/common/plugin-runtime/sdk/src/generated/contracts.ts',
+    ...[...pipeline.matchAll(/^### (.+\.ts)$/gmu)].map(match => match[1]),
+  ])];
   return `# Workflow Inventory
 
 Status: generated reference
@@ -823,7 +839,13 @@ ${table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/
   workflow.jobs.map((job) => `\`${job}\``).join(', '),
   workflow.commandAndActionRefs.map((ref) => `\`${ref}\``).join('<br>'),
 ]))}
-${renderProductPipeline(root)}
+${pipeline}
+
+## Product pipeline source revision
+
+The product pipeline declarations above are generated from revision \`${sourceRevision}\`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
+
+${pipelineSources.map(source => `### Source: ${source}\n\n${sourceRangeLinks(source)}`).join('\n\n')}
 
 ${generatedEnd()}
 ## Drift Guardrails
