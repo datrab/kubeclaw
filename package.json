@@ -297,7 +297,9 @@
     "docs:drift:error-code:check": "node scripts/check-error-code-drift.mjs",
     "docs:drift:error-code:mutations": "node scripts/check-error-code-drift-mutations.mjs",
     "docs:drift:workflow:check": "node scripts/docs-product-pipeline-reference.mjs workflow",
-    "docs:drift:workflow:mutations": "node scripts/check-workflow-drift-mutations.mjs"
+    "docs:drift:workflow:mutations": "node scripts/check-workflow-drift-mutations.mjs",
+    "docs:drift:schema:check": "node scripts/docs-product-pipeline-reference.mjs schema",
+    "docs:drift:schema:mutations": "node scripts/check-schema-drift-mutations.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

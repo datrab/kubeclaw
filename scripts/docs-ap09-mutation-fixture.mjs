@@ -26,6 +26,16 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "  stages.push({ id: 'fixture-workflow', type: 'kubeclaw.fixture.workflow', dependsOn: [], config: {}, input: {} });\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? "  if (demo) stages.push(...demoStages(demo,final.test.providerPlan.plan));\n" : '';
+} else if (variant.constructor === 'typescript-contract-field-v1') {
+  anchor = '    maxTechnicalRetries?: number;\n';
+  added = '    fixtureRetryPolicy?: { maximum: number; mode: "bounded" | "disabled" };\n';
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? '    maxTechnicalRetries: number | null;\n' : '';
+} else if (variant.constructor === 'typescript-stage-kind-v1') {
+  anchor = "  stages.push(...demoStages(demo,final.test.providerPlan.plan));\n";
+  added = "  stages.push({ id: 'fixture-stage', type: 'kubeclaw.fixture.stage', dependsOn: [], config: {}, input: {} });\n";
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? "  stages.push(...demoStages(demo,final.test.providerPlan.plan).map(stage => ({ ...stage, type: 'kubeclaw.fixture.replacement' })));\n" : '';
 } else {
   throw new Error(`constructor not implemented: ${variant.constructor}`);
 }
