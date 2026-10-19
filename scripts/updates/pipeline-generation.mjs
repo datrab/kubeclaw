@@ -3,6 +3,8 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { isDeepStrictEqual } from 'node:util';
+import { runtimeBundleFiles, validateRuntimeBundleReceipt } from '../../skills/common/plugin-runtime/foundation/config/runtime-bundle-receipt.mjs';
 
 const hash = bytes => `sha256:${createHash('sha256').update(bytes).digest('hex')}`;
 function syncDirectory(directory) {
@@ -45,6 +47,15 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       || (manifestStat.mode & 0o022n) !== 0n || manifestStat.size > 8n * 1024n * 1024n) throw new Error('PIPELINE_PACKAGE_MANIFEST_NOT_TRUSTED');
     const packageBytes = fs.readFileSync(manifestFd);
     const receipt = JSON.parse(packageBytes);
+    // Bootstrap with the producer's own verifier, before evaluating ANY code
+    // from the candidate package (including its verifier and dependencies).
+    // The installed verifier below additionally checks package-local import
+    // resolution; it cannot safely be its own first readback check.
+    validateRuntimeBundleReceipt(receipt, receipt.role, receipt.runtimeSurface);
+    if (!isDeepStrictEqual(runtimeBundleFiles(packageRoot, true, observations),
+      [...receipt.files].sort((a, b) => a.path < b.path ? -1 : 1))) {
+      throw new Error('PIPELINE_PACKAGE_READBACK_MISMATCH');
+    }
     const foundation = receipt.packages?.find(record => record.id === 'plugin-foundation');
     if (!foundation || foundation.target !== 'skills/packages/plugin-foundation') throw new Error('PIPELINE_FOUNDATION_PACKAGE_REQUIRED');
     const directory = path.join(packageRoot, foundation.target, 'config');

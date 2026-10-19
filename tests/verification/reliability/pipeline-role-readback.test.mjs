@@ -43,6 +43,29 @@ test('real Prism role package readback drives all service caller compositions', 
   fs.renameSync(originalManifest, outsideManifest); fs.symlinkSync(outsideManifest, originalManifest);
   await assert.rejects(materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher }), /ELOOP/);
   fs.unlinkSync(originalManifest); fs.renameSync(outsideManifest, originalManifest);
+  // Actual package code must not execute before the PRODUCER has verified its
+  // bytes. In particular, importing a candidate's own verifier first would let
+  // that verifier (or an imported dependency) run before rejecting the package.
+  const executionMarker = path.join(root, 'unverified-code-ran');
+  for (const member of [
+    'skills/packages/plugin-foundation/config/swarm.ts',
+    'skills/packages/plugin-foundation/config/pipeline-input-set.ts',
+    'skills/packages/plugin-foundation/config/pipeline-v10-input-set.ts',
+    'skills/packages/plugin-foundation/config/pipeline-generation.ts',
+    'skills/packages/plugin-foundation/config/runtime-bundle-receipt.mjs',
+    'skills/packages/plugin-sdk/src/values.ts',
+  ]) {
+    const file = path.join(code, member), original = fs.readFileSync(file);
+    const trap = `import { writeFileSync as unverifiedWrite } from 'node:fs';\nunverifiedWrite(${JSON.stringify(executionMarker)}, 'ran');\n`;
+    try {
+      fs.writeFileSync(file, Buffer.concat([Buffer.from(trap), original]));
+      await assert.rejects(materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher }),
+        /PIPELINE_PACKAGE_READBACK_MISMATCH/, member);
+      assert.equal(fs.existsSync(executionMarker), false, `${member} rejected before module evaluation`);
+      assert.equal(fs.existsSync(output), false, 'no output from unverified code');
+      assert.equal(fs.readdirSync(root).some(name => name.startsWith('.pipeline-stage-')), false);
+    } finally { fs.writeFileSync(file, original); }
+  }
   const result = await materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher });
   assert.equal(result.callers.length, 4);
   await assert.rejects(materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher }), /GENERATION_EXISTS/);
