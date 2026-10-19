@@ -5259,7 +5259,7 @@ export function rootSelectedCompilerTarget(root,capability,recordDependency=()=>
  if(!isRootSelectedCompilerCapability(capability)||capability.source!==recipe.source||capability.sourceSha256!==recipe.sourceSha256||capability.baseRelative!=='package.json'||capability.specifier!=='typescript'||capability.targetRelative!==recipe.foundation.target||capability.version!=='5.9.3'||capability.runtimeAcquisitionAuthorized!==false||JSON.stringify(capability.nativeFoundationIdentity)!==JSON.stringify(recipe.foundation.nativeFoundationIdentity))fail('capability identity/base/target');
  const selected=recipe.owners[capability.owner];
  if(!selected||selected.ownerSyntaxSha256!==capability.ownerSyntaxSha256||selected.factorySha256!==capability.factorySha256||selected.consumerSha256!==capability.consumerSha256||selected.profile!==capability.profile||JSON.stringify(recipe.profiles[selected.profile])!==JSON.stringify(capability.profileIdentity)||capability.rootInput?.kind!=='symbolic-caller-selected-root'||capability.rootInput.requiresCanonicalDynamicInput!==true)fail('owner/profile');
- if(typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root].includes(root))||fs.realpathSync(root)!==root)fail('canonical dependency root');
+ if(typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root].includes(root))||fs.realpathSync(root)!==root)fail('canonical dependency root');
  const foundationInputFacts=new Map();
  const recordFact=fact=>{recordDependency(fact.path);foundationInputFacts.set(fact.path,fact);};
  const fileFact=selected=>{
@@ -5268,7 +5268,14 @@ export function rootSelectedCompilerTarget(root,capability,recordDependency=()=>
   const sha256=syntaxSha256(fs.readFileSync(file));
   recordFact({path:selected,kind:'file',canonical:file,sha256});return sha256;
  };
- for(const pin of (root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput.pins:recipe.foundation.pins))if(fileFact(pin.path)!==pin.sha256)fail(`foundation bytes ${pin.path}`);
+ const selectedInput=root===reviewedRecoveryCompilerInput.root?reviewedRecoveryCompilerInput:root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput:recipe.foundation;
+ for(const absent of selectedInput.absent??[]){
+  const file=path.join(root,absent);let present=false;
+  try{fs.lstatSync(file);present=true;}catch(error){if(error.code!=='ENOENT')throw error;}
+  if(present)fail(`unexpected input metadata ${absent}`);
+  recordFact({path:absent,kind:'absent',canonical:null});
+ }
+ for(const pin of selectedInput.pins)if(fileFact(pin.path)!==pin.sha256)fail(`foundation bytes ${pin.path}`);
  const members=[],directories=[];
  function walk(selected){
   const file=path.join(root,selected);
@@ -5306,6 +5313,33 @@ export function reviewedSdkGeneratorImport(source,bytes,tree) {
  let owner=calls[0].parent;while(owner&&!ts.isFunctionDeclaration(owner))owner=owner.parent;if(owner!==owners[0])fail('call owner');
  return frozenRecipes({...recipe,sourcePurposeOnly:true,runtimeExecutionAuthorized:false,existingSelectorRenewalAuthorized:false});
 }
+
+// Finite recovery checkout input; all existing compiler membership checks still apply.
+const reviewedRecoveryCompilerInput=frozenRecipes({
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "pins": [
+    {
+      "path": "package.json",
+      "sha256": "602c41b16a66c10ba9e7385ddb12bb9e1cf9227183374acbe987198640ed4cab"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
+    },
+    {
+      "path": "node_modules/typescript/package.json",
+      "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    {
+      "path": "node_modules/typescript/lib/typescript.js",
+      "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    }
+  ],
+  "absent": [
+    "node_modules/.package-lock.json"
+  ],
+  "scope": "Finite recovery scanner input; exact existing TypeScript 5.9.3 package membership unchanged. No npm hidden installation metadata exists in this reconstructed local toolchain. No runtime acquisition, source acceptance or AP acceptance."
+});
 
 // Exact isolated CI input successor; compiler source/profile and finite physical membership unchanged.
 const reviewedIsolatedCompilerInput=frozenRecipes({

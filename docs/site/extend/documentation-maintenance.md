@@ -232,6 +232,27 @@ recipes to make a focused configuration probe run. A healthy tool baseline is
 only a prerequisite: the selected add/change/remove probes must still demonstrate
 stale reader output and recovery before they count as drift coverage.
 
+### Recover a compiler installation after moving the checkout
+
+A `root compiler resolution: canonical dependency root` failure means the scanner
+has not qualified that exact checkout location. It is not documentation drift.
+Use a finite checkout-specific input binding rather than allowing arbitrary roots.
+Compare the root manifest and lockfile with the bound revision, then verify the
+entire installed TypeScript 5.9.3 package against the existing member/directory
+catalogue before qualifying the new input. The compiler directory and all its
+members must be physical files/directories, not links into another checkout.
+A matching version string or entrypoint hash alone is insufficient.
+
+The reconstructed recovery installation has no npm hidden installation lockfile;
+its exact input binding records that absence explicitly. Do not copy another
+installation's `.package-lock.json` to fabricate metadata. If one appears later,
+stop and inspect/requalify the installation instead of deleting it blindly.
+Check that both compiler owners accept the qualified root and reject unlisted
+or noncanonical roots, extra package members and unexpected metadata. Then retry
+the owning inventory baseline. This scanner qualification grants neither runtime
+execution authority nor documentation acceptance; no live compiler installation
+or product run is demonstrated by these checks.
+
 ### Requalify an intentionally rejected example
 
 `API_PRODUCT_REJECTED_PROFILE_CHART_DRIFT` means that the chart bound to an
