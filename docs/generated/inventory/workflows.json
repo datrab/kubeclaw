@@ -200,7 +200,6 @@
         "node --test tests/verification/deployment/reliability-groups.test.mjs",
         "node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs",
         "node node_modules/playwright/cli.js install --with-deps chromium",
-        "node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4",
         "node scripts/reliability-tests.mjs services",
         "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
         "node tests/verification/contracts/check-prism-postgres-transactions.mts",
