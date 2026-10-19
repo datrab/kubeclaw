@@ -68314,11 +68314,11 @@
       {
         "source": "scripts/docs-configuration-inventory.mjs",
         "semanticClass": "finite-documentation-runtime-semantics",
-        "sourceSha256": "da12854783f312aeac62ea90f6a69a35b8f8444c50b11ac53706214ffc346348",
+        "sourceSha256": "62018eee24bbef0f6be4c5b1aa6ca56496b988be3cae4eb82dacce2fb1e3875d",
         "operations": [
           {
             "expression": "import(pathToFileURL(path.join(root, file)).href)",
-            "operationSha256": "b7e20c77a3e54c1f69a76780ba210044e6b18d6aa26a40ec1e8f82890382e271"
+            "operationSha256": "464229bde294d982a6986cdd4de1c228a3e719b08e7813e362cb6fd9cee09457"
           },
           {
             "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href)",
