@@ -155,44 +155,44 @@ const booleanInputContract = (field) => {
 const booleanRuntimeProof = (field) => {
   const proofByPath = {
     '$.codeBundle.enabled': [
-      ['charts/kubeclaw/templates/deployment.yaml', 878, 'runtime-boolean-parser', 'The health script applies the false default and validates the bundle manifest in startup and readiness modes.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 937, 'runtime-shell-consumer', 'The init script installs the bundle only when the quoted environment value is exactly `true`.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 950, 'runtime-boolean-parser', 'The health script applies the false default and validates the bundle manifest in startup and readiness modes.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 1009, 'runtime-shell-consumer', 'The init script installs the bundle only when the quoted environment value is exactly `true`.'],
     ],
     '$.discord.enabled': [
-      ['charts/kubeclaw/templates/configmap-gateway.yaml', 201, 'generated-json-consumer', 'The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.'],
-      ['charts/kubeclaw/templates/configmap-gateway.yaml', 277, 'generated-json-consumer', 'The same unquoted scalar becomes the Discord plugin-entry Boolean.'],
+      ['charts/kubeclaw/templates/configmap-gateway.yaml', 221, 'generated-json-consumer', 'The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.'],
+      ['charts/kubeclaw/templates/configmap-gateway.yaml', 297, 'generated-json-consumer', 'The same unquoted scalar becomes the Discord plugin-entry Boolean.'],
     ],
     '$.probes.dependencies.gateway.enabled': [
-      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 897, 'runtime-probe-consumer', 'Liveness consumes the gateway switch with default true.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 904, 'runtime-probe-consumer', 'Startup consumes the gateway switch with default true.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 912, 'runtime-probe-consumer', 'Readiness consumes the gateway switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 784, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 969, 'runtime-probe-consumer', 'Liveness consumes the gateway switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 976, 'runtime-probe-consumer', 'Startup consumes the gateway switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 984, 'runtime-probe-consumer', 'Readiness consumes the gateway switch with default true.'],
     ],
     '$.probes.dependencies.redis.enabled': [
-      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 905, 'runtime-probe-consumer', 'Startup consumes the Redis switch with default true.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 913, 'runtime-probe-consumer', 'Readiness consumes the Redis switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 784, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 977, 'runtime-probe-consumer', 'Startup consumes the Redis switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 985, 'runtime-probe-consumer', 'Readiness consumes the Redis switch with default true.'],
     ],
     '$.probes.dependencies.redisStream.enabled': [
-      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 906, 'runtime-probe-consumer', 'Startup alone consumes the Redis Stream switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 784, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 978, 'runtime-probe-consumer', 'Startup alone consumes the Redis Stream switch with default true.'],
     ],
     '$.probes.dependencies.litellm.enabled': [
-      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 907, 'runtime-probe-consumer', 'Startup alone consumes the LiteLLM switch with default false.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 784, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 979, 'runtime-probe-consumer', 'Startup alone consumes the LiteLLM switch with default false.'],
     ],
     '$.probes.dependencies.registries.enabled': [
-      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 908, 'runtime-probe-consumer', 'Startup alone consumes the registry switch with default false.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 784, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 980, 'runtime-probe-consumer', 'Startup alone consumes the registry switch with default false.'],
     ],
     '$.swarmConfig.overrideOnRestart': [
-      ['charts/kubeclaw/templates/deployment.yaml', 635, 'runtime-shell-consumer', 'The restart script applies the override only to `.semgrep.yml`.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 643, 'runtime-shell-consumer', 'The restart script applies the same override to `eslint.config.mjs`.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 650, 'runtime-shell-consumer', 'The following `.yamllint.yml` copy is unconditional and proves the override boundary.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 707, 'runtime-shell-consumer', 'The restart script applies the override only to `.semgrep.yml`.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 715, 'runtime-shell-consumer', 'The restart script applies the same override to `eslint.config.mjs`.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 722, 'runtime-shell-consumer', 'The following `.yamllint.yml` copy is unconditional and proves the override boundary.'],
     ],
     '$.workspace.overrideOnRestart': [
-      ['charts/kubeclaw/templates/deployment.yaml', 421, 'runtime-shell-consumer', 'The restart script enumerates the seven managed workspace documents.'],
-      ['charts/kubeclaw/templates/deployment.yaml', 423, 'runtime-shell-consumer', 'The restart script overwrites an existing document only when the value is exactly `true`.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 458, 'runtime-shell-consumer', 'The restart script enumerates the seven managed workspace documents.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 460, 'runtime-shell-consumer', 'The restart script overwrites an existing document only when the value is exactly `true`.'],
     ],
   };
   return (proofByPath[field.path] ?? []).map(([proofPath, line, kind, authority]) => {

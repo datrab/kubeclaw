@@ -241,15 +241,15 @@ for (const [sourcePath, fieldPath, emptyProof, behaviorProof] of [
 }
 
 for (const [fieldPath, expectedLines] of [
-  ['$.codeBundle.enabled', [878, 937]],
-  ['$.discord.enabled', [201, 277]],
-  ['$.probes.dependencies.gateway.enabled', [712, 897, 904, 912]],
-  ['$.probes.dependencies.redis.enabled', [712, 905, 913]],
-  ['$.probes.dependencies.redisStream.enabled', [712, 906]],
-  ['$.probes.dependencies.litellm.enabled', [712, 907]],
-  ['$.probes.dependencies.registries.enabled', [712, 908]],
-  ['$.swarmConfig.overrideOnRestart', [635, 643, 650]],
-  ['$.workspace.overrideOnRestart', [421, 423]],
+  ['$.codeBundle.enabled', [950, 1009]],
+  ['$.discord.enabled', [221, 297]],
+  ['$.probes.dependencies.gateway.enabled', [784, 969, 976, 984]],
+  ['$.probes.dependencies.redis.enabled', [784, 977, 985]],
+  ['$.probes.dependencies.redisStream.enabled', [784, 978]],
+  ['$.probes.dependencies.litellm.enabled', [784, 979]],
+  ['$.probes.dependencies.registries.enabled', [784, 980]],
+  ['$.swarmConfig.overrideOnRestart', [707, 715, 722]],
+  ['$.workspace.overrideOnRestart', [458, 460]],
 ]) {
   const matching = booleanAuthorities.filter((field) => field.fieldPath === fieldPath);
   assert(matching.length > 0, `${fieldPath}: runtime-proof family is missing`);
