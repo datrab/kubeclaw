@@ -151,6 +151,54 @@ independent of how many suites were selected.
 >
 > [Coverage validates requirement mapping and every resolved matrix variation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/coverage.ts#L1-L112).
 
+## E2E Fixture Coverage Policy
+
+The E2E harness maintains a separate coverage policy in
+[fixture-coverage.mjs](https://github.com/datrab/kubeclaw/blob/fe58209941f6aa597cc3e942959cf86906e451a4/tests/verification/e2e/fixture-coverage.mjs#L1-L60).
+This is not the installed fixture-provider registry and does not add a shipped
+suite. Its requirement statements describe intended checks, not observed passes.
+
+`fixtureCoverage(projectId, baseRevision, modules, kind)` accepts module records
+with `moduleId` and `ownedPaths`. It requires a lowercase hexadecimal base revision
+of 40 or 64 characters and rejects unknown module IDs. For each selected module,
+`moduleRequirements` supplies the `module-contract` statement. Module coverage
+also adds `dependency-policy`, `artifact-budget`, and `registry-health`
+requirements. Their checks point to `dependency-security`, `size-budget`, and
+`health`; the module-contract check points to `unit/command`.
+
+For cumulative coverage, `finalRequirements` supplies integration requirements.
+Each integration check uses its requirement ID as its node ID; module-contract
+checks instead use `unit/command-<moduleId>`. Only the exact `module` and
+`cumulative` kinds are supported by the downstream contract. The function builds
+`gate-coverage.v1`, computes `policyDigest` over the unsigned object, validates
+the coverage contract, and returns it. Digest construction and contract
+validation may reject the input; constructing a policy never executes its nodes
+or proves that a deployment passed. Do not use this policy inventory as a list
+of fixture-provider input/output ports.
+
+| Policy map | Requirement ID | Statement |
+| --- | --- | --- |
+| `moduleRequirements` | `01-nginx` | Nginx listens on 8080 and provides the declared static document root and fallback routes. |
+| `moduleRequirements` | `02-nginx` | The content branch contains its declared marker, HTML shape and ownership boundaries. |
+| `moduleRequirements` | `03-nginx` | The asset branch contains its declared style, source marker and ownership boundaries. |
+| `moduleRequirements` | `04-nginx` | The immutable runtime packages foundation and source files and composes the declared content and asset surfaces. |
+| `finalRequirements` | `size-budget` | The assembled project stays within the declared artifact byte budget. |
+| `finalRequirements` | `container-build` | The assembled project builds the selected immutable deployment image. |
+| `finalRequirements` | `checked-manifest` | The checked deployment manifest is provided to the deployment and policy consumers. |
+| `finalRequirements` | `health` | The deployed internal endpoint returns the expected application marker. |
+| `finalRequirements` | `api-flow` | The deployed application satisfies the declared API flow. |
+| `finalRequirements` | `openapi` | The deployed application satisfies the declared OpenAPI operation. |
+| `finalRequirements` | `axe` | The deployed application meets the selected accessibility checks. |
+| `finalRequirements` | `performance` | The deployed application meets the declared performance budget. |
+| `finalRequirements` | `visual` | The deployed application matches the declared visual baseline. |
+| `finalRequirements` | `playwright` | The deployed application passes its original browser interaction checks. |
+| `finalRequirements` | `security-headers` | The deployed endpoint meets the configured response-header policy. |
+| `finalRequirements` | `dependency-security` | The integrated dependency tree passes the selected vulnerability policy. |
+| `finalRequirements` | `image-security` | The exact deployment image passes the selected image vulnerability policy. |
+| `finalRequirements` | `kubernetes-policy-security` | The checked manifest passes the selected Kubernetes policy. |
+| `finalRequirements` | `kubernetes-runtime-security` | The deployed workload passes the selected runtime policy. |
+| `finalRequirements` | `public-http-health` | The transferred public endpoint serves the expected application marker. |
+
 ## Suite Inventory
 
 | Suite contract | Shipped nodes | Default concurrency | Main prerequisite |

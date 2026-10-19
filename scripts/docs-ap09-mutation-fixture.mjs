@@ -69,6 +69,12 @@ if (variant.constructor === 'typescript-error-code-v1') {
   added = "      namespace: value.namespace ?? 'default',\n";
   replacement = operation === 'add' ? anchor + added
     : operation === 'change' ? '      providerRole: value.agentRole,\n' : '';
+} else if (variant.constructor === 'javascript-fixture-registration-v1') {
+  // Actual authority is the E2E coverage requirement policy, not fixture-provider discovery.
+  anchor = "  'size-budget': 'The assembled project stays within the declared artifact byte budget.',\n";
+  added = "  'fixture-budget': 'The assembled fixture stays within the declared artifact byte budget.',\n";
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? anchor.replace('declared artifact byte budget', 'declared compressed artifact byte budget') : '';
 } else if (variant.constructor === 'typescript-export-v1') {
   anchor = "export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;\n";
   added = "export const FIXTURE_PLUGIN_COMPATIBILITY = 'fixture-plugin-v1' as const;\n";
