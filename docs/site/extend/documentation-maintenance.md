@@ -213,6 +213,39 @@ baseline before retrying. For an API-field change, also inspect the API authorit
 exact field binding and consumer; a checksum rejection alone cannot establish
 that the documented field meaning is correct.
 
+### Recover a deployment adapter mismatch before Helm regeneration
+
+`npm run docs:inventory:local-helm` first discovers a candidate configuration
+inventory. That discovery also checks deployment API producer recipes. An
+`API_PRODUCT_ADAPTER_RECIPE_DRIFT` for `scripts/deploy.sh` can therefore stop the
+command before it writes the Helm authority registry. This is a failed baseline,
+not a successful Helm-field drift probe.
+
+Read the structured operation diff and follow changed helper calls. The current
+bundle reader, `scripts/bundle-values-field.mjs`, parses YAML, selects the overlay
+before the base for the requested key, skips null/empty values, and rejects
+non-string selected values. `scripts/bundle-override-values.mjs` serializes the
+bundle mapping instead of interpolating YAML fragments; quotes and newlines must
+remain data, not new YAML documents. Check these boundaries with the existing
+local tests:
+
+```bash
+node --test scripts/tests/deploy-bundle-values-field.test.mjs scripts/tests/deploy-bundle-override-values.test.mjs
+```
+
+These checks do not qualify the API adapter recipe or the Helm inventory. Also
+inspect `scripts/buster-resource-overlay.mjs` if the changed call graph reaches
+it: its resource-only `--set-json` argument depends on exactly one selected
+`buster-v2-runtime` container and validates both resource maps. Do not substitute
+an image, environment, or credential overlay for that resource selection.
+
+Reconcile the actual producer and helper behavior with the API adapter's reviewed
+recipe and source bindings before updating them. Do not refresh fingerprints or
+disable recipe checks to unblock Helm generation. Then rerun the owning Helm
+generator, inspect its diff, run `npm run docs:inventory:local-helm:check`, and
+repeat only the configuration probe that needed this baseline. Until those
+steps pass, keep the corresponding Add/Change/Remove result unverified.
+
 Validate examples against their actual contract, not merely JSON syntax.
 Record the schema/version, consumer, setup, expected output, failure/cleanup,
 and any external effects. Execute only in the documented isolated or authorized
