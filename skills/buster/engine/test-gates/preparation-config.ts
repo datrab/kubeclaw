@@ -35,8 +35,11 @@ export function captureNativeBusterPreparationTrust(settings: BusterPreparationS
 }
 
 /** Generated runtime read is separate from the recovery-only pool/node/code trust capture. */
-export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv, workerCore?: WorkerCorePolicyCapture) {
-  const trusted = captureNativeBusterPreparationTrust(settings, environment, workerCore);
+export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv,
+  trusted: ReturnType<typeof captureNativeBusterPreparationTrust>) {
+  // Receive the SAME host-validated trust; never recapture a second pool from
+  // mutable environment after the supervisor has checked its physical facts.
+  originalNativeBusterHostPoolFile(trusted, settings);
   const runtime = readRootConfiguration(settings.maximumInputBytes);
   const captured = Object.freeze({ ...trusted, ...readBusterPreparationRuntimeSource(runtime, environment) });
   nativeTrustCaptures.set(captured, nativeTrustCaptures.get(trusted)!);

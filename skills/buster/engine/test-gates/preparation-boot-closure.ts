@@ -9,7 +9,7 @@ import { originalNativeBusterPoolFile, originalNativeBusterHostPoolFile, capture
 
 type Native = ReturnType<typeof nativeBusterPreparationConfig>;
 const verifiedFacts = new WeakSet<object>();
-const verifiedHostFacts = new WeakSet<object>();
+const verifiedHostFacts = new WeakMap<object, ReturnType<typeof captureNativeBusterPreparationTrust>>();
 const hash = (bytes: Uint8Array): `sha256:${string}` => `sha256:${createHash('sha256').update(bytes).digest('hex')}`;
 const same = (a: fs.BigIntStats, b: fs.BigIntStats): boolean =>
   ['dev', 'ino', 'mode', 'uid', 'gid', 'nlink', 'size', 'mtimeNs', 'ctimeNs'].every(key =>
@@ -101,13 +101,22 @@ export function captureOriginalBusterNativeHostFacts(boot: PipelineBootCapture,
         nodeIdentity: native.nodeIdentity, ...(workerCore ? { workerCore } : {}) }),
       kernel: Object.freeze({ bootId, namespace: Object.freeze({ device: String(namespace.dev), inode: String(namespace.ino) }), pool }),
       ownershipStore, files: Object.freeze(files) });
-    verifiedHostFacts.add(captured);
+    verifiedHostFacts.set(captured, native);
     return captured;
   } finally { for (const { fd } of observations) fs.closeSync(fd); }
 }
 
 export function assertOriginalBusterNativeHostFacts(value: unknown): asserts value is ReturnType<typeof captureOriginalBusterNativeHostFacts> {
   if (!value || typeof value !== 'object' || !verifiedHostFacts.has(value)) throw new Error('BUSTER_NATIVE_VERIFIED_HOST_FACTS_REQUIRED');
+}
+
+/** Receive the exact native trust that produced the verified host evidence.
+ * No reconstruction from serialized facts, and no source/activation authority.
+ * The runtime reader must still join its selected preparation before any read.
+ */
+export function receiveBusterNativeHostTrust(value: unknown) {
+  assertOriginalBusterNativeHostFacts(value);
+  return verifiedHostFacts.get(value)!;
 }
 
 /** Existing complete capture retains its original wire and source requirements.

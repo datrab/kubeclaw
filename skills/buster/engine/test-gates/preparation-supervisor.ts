@@ -1,3 +1,4 @@
+import { captureInitialBusterNativeHostFacts, receiveBusterNativeHostTrust } from './preparation-boot-closure.ts';
 import { preparationCleanupReconciliation } from './preparation-cleanup.ts';
 import { runHistoricalImport } from './preparation-historical-import.ts';
 import { recoverPreparationLedger } from './preparation-recovery.ts';
@@ -42,7 +43,10 @@ async function runLockedBusterPreparationSupervisor(lifetime: BusterLifetimeDesc
   const boot = verifyPipelineBootReceipt('/run/pipeline-delivery', 'buster-preparation');
   const settings = projectBusterSettings(boot, 'buster-preparation').preparation;
   const handoff = captureBusterParentStartupHandoff(boot);
-  const native = nativeBusterPreparationConfig(settings, process.env, selectedWorkerCorePolicy(boot));
+  // Host-only evidence validates the real files/kernel before the runtime
+  // source read. It is not an INITIAL publication or retained-original receipt.
+  const host = captureInitialBusterNativeHostFacts(boot, process.env);
+  const native = nativeBusterPreparationConfig(settings, process.env, receiveBusterNativeHostTrust(host));
   const source = await fs.lstat(preparationSourceRoot);
   if (!source.isDirectory() || source.uid !== 0 || (source.mode & 0o022) !== 0
     || await fs.realpath(preparationSourceRoot) !== preparationSourceRoot) throw new Error('BUSTER_NATIVE_SOURCE_ROOT_NOT_TRUSTED');

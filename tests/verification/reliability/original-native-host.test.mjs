@@ -46,8 +46,12 @@ test('delivered INITIAL host capture uses immutable selected preparation before 
   assert.throws(() => config.originalNativeBusterHostPoolFile(fakeNative, settings), /VERIFIED_TRUST_CAPTURE_REQUIRED/);
   assert.throws(() => closure.captureOriginalBusterNativeHostFacts(capture, fakeNative), /VERIFIED_TRUST_CAPTURE_REQUIRED/);
   assert.equal(forgedNativeRead, false);
+  const unreadableSource = new Proxy({}, { get() { assert.fail('forged host trust must reject before source carrier reads'); } });
+  assert.throws(() => config.nativeBusterPreparationConfig(settings, unreadableSource, fakeNative), /VERIFIED_TRUST_CAPTURE_REQUIRED/);
+  assert.equal(forgedNativeRead, false);
   for (const fake of [{ schemaVersion: 'buster-native-host-boot-facts.v1' }, { schemaVersion: 'buster-native-boot-facts.v1' }]) {
     assert.throws(() => closure.assertOriginalBusterNativeHostFacts(fake), /VERIFIED_HOST_FACTS_REQUIRED/);
+    assert.throws(() => closure.receiveBusterNativeHostTrust(fake), /VERIFIED_HOST_FACTS_REQUIRED/);
     assert.throws(() => closure.assertOriginalBusterNativeBootFacts(fake), /VERIFIED_BOOT_FACTS_REQUIRED/);
   }
   // Real emitted immutable code/owner/source receipt route, but actual installed
