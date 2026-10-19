@@ -1,10 +1,12 @@
-import { boolean, object, optionalEnvironmentSecret } from './production-config-values.ts';
+import { boolean, object } from './production-config-values.ts';
+import { captureRegistryPeer } from './production-registry-peer.ts';
 type Config = Record<string, unknown>;
 
 /** Decode one optional provider object; a declared capability makes it mandatory. */
 function capabilitySource(value: Config, field: string, required: boolean, error: string) {
   const source = value[field] === undefined ? null : object(value[field], field);
   if (required && !source) throw new Error(error);
+  if (!required && source) throw new Error(`BUSTER_INACTIVE_CAPABILITY_SOURCE:${field}`);
   return source;
 }
 
@@ -47,7 +49,7 @@ function browserSources(value: Config, allowedCapabilities: ReadonlySet<string>)
   };
 }
 
-function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>, environment: NodeJS.ProcessEnv) {
+function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>) {
   const directCommandSource = capabilitySource(
     value,
     'directCommand',
@@ -69,21 +71,11 @@ function commandSources(value: Config, allowedCapabilities: ReadonlySet<string>,
     allowedCapabilities.has('container.build'),
     'BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED',
   );
-  const registryUsername = containerBuildSource
-    ? optionalEnvironmentSecret(containerBuildSource, 'registryUsernameEnvironmentVariable', environment)
-    : undefined;
-  const registryPassword = containerBuildSource
-    ? optionalEnvironmentSecret(containerBuildSource, 'registryPasswordEnvironmentVariable', environment)
-    : undefined;
-  if ((registryUsername === undefined) !== (registryPassword === undefined))
-    throw new Error('BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE');
   return {
     directCommandSource,
     containerBuildSource,
     directCommandCgroup,
     allowSampledProcessLimit,
-    registryUsername,
-    registryPassword,
   };
 }
 
@@ -92,7 +84,7 @@ export function capabilitySources(
   allowedCapabilities: ReadonlySet<string>,
   environment: NodeJS.ProcessEnv,
 ) {
-  const command = commandSources(value, allowedCapabilities, environment);
+  const command = commandSources(value, allowedCapabilities);
   for (const key of ['kubernetesFixture', 'tailscaleExposure', 'kubernetesRuntimeSecurity']) {
     if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
   }
@@ -112,7 +104,9 @@ export function capabilitySources(
     'BUSTER_SECURITY_SCAN_CONFIG_REQUIRED',
   );
   const kubernetesRuntimeSecurityEnabled = allowedCapabilities.has('kubernetes.runtime-security');
+  const capturedRegistryPeer = captureRegistryPeer(value, allowedCapabilities, environment);
   return {
+    capturedRegistryPeer,
     ...command,
     kubernetesFixtureEnabled,
     tailscaleExposureEnabled,

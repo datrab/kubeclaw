@@ -1,3 +1,4 @@
+import type { captureRegistryPeer } from './production-registry-peer.ts';
 import { createPublicKey } from 'node:crypto';
 import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { buildRegistry } from '@kubeclaw/plugin-foundation/registry/build';
@@ -137,11 +138,11 @@ export function registryHealthConfiguration(
   return options;
 }
 
-export function scannerRegistry(source: Record<string, unknown>, environment: NodeJS.ProcessEnv, directory: string) {
+export function scannerRegistry(source: Record<string, unknown>, capturedRegistryPeer: ReturnType<typeof captureRegistryPeer>, directory: string) {
   if (source.registry === undefined) return {};
   const registry = object(source.registry, 'securityScan.registry');
-  const username = optionalEnvironmentSecret(registry, 'registryUsernameEnvironmentVariable', environment);
-  const password = optionalEnvironmentSecret(registry, 'registryPasswordEnvironmentVariable', environment);
+  if (!capturedRegistryPeer) throw new Error('BUSTER_REGISTRY_PEER_REQUIRED');
+  const { username, password } = capturedRegistryPeer;
   if ((username === undefined) !== (password === undefined))
     throw new Error('BUSTER_SCAN_REGISTRY_CREDENTIALS_INCOMPLETE');
   const url = new URL(String(registry.registryBaseUrl));

@@ -1,5 +1,6 @@
 import type { BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
 import path from 'node:path';
+import type { captureRegistryPeer } from './production-registry-peer.ts';
 import {
   boolean,
   integer,
@@ -74,7 +75,7 @@ export function containerBuildOptions(
 
 export function networkHttpOptions(
   networkHttpSource: Source,
-  containerBuildSource: Source,
+  registryPeerSource: Source,
   registryUsername: string | undefined,
   registryPassword: string | undefined,
 ): Pick<BusterCapabilityRuntimeOptions, 'networkHttp'> {
@@ -86,7 +87,7 @@ export function networkHttpOptions(
             : {
                 registryHealth: registryHealthConfiguration(
                   networkHttpSource.registryHealth,
-                  containerBuildSource,
+                  registryPeerSource,
                   registryUsername,
                   registryPassword,
                 ),
@@ -127,7 +128,7 @@ export function networkHttpOptions(
 export function securityScanOptions(
   securityScanSource: Source,
   directory: string,
-  environment: NodeJS.ProcessEnv,
+  capturedRegistryPeer: ReturnType<typeof captureRegistryPeer>,
 ): Pick<BusterCapabilityRuntimeOptions, 'securityScan'> {
   return securityScanSource
     ? {
@@ -141,7 +142,7 @@ export function securityScanOptions(
           maximumOutputBytes: integer(securityScanSource.maximumOutputBytes, 'securityScan.maximumOutputBytes'),
           cacheDirectory: path.resolve(directory, String(securityScanSource.cacheDirectory)),
           ...optionalDatabasePolicy(securityScanSource.databasePolicy),
-          ...scannerRegistry(securityScanSource, environment, directory),
+          ...scannerRegistry(securityScanSource, capturedRegistryPeer, directory),
         },
       }
     : {};

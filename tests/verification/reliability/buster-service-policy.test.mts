@@ -110,7 +110,7 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   const settings = JSON.parse(fs.readFileSync(new URL('../../../config/components/buster-engine.config.json', import.meta.url), 'utf8')).profiles.runtime.settings as BusterSettings;
   const worker = JSON.parse(fs.readFileSync(new URL('../../../config/components/worker-core.config.json', import.meta.url), 'utf8')).profiles.standard.settings as WorkerCoreSettings;
   const runtime = { schemaVersion: 'buster-remote-plan-runtime.v1', ...baseline, ...source,
-    platformConfig: path.join(root, 'never-resolve-platform.json'), stateRoot: path.join(root, 'must-not-create-store'),
+    allowedCapabilities: [], platformConfig: path.join(root, 'never-resolve-platform.json'), stateRoot: path.join(root, 'must-not-create-store'),
     runtimeRoot: path.join(root, 'must-not-create-runs'), tarExecutable: '/usr/bin/tar' };
   const file = path.join(root, 'runtime.json');
   let environmentReads = 0;

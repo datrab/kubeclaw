@@ -31,10 +31,15 @@ export function readinessRuntime(root: string, policy: BusterDependencyReadiness
   const workerLocalRuntime = (selected.components['worker-core']!.settings as unknown as WorkerCoreSettings).localRuntime;
   const source = JSON.parse(fs.readFileSync(profile.runtime, 'utf8'));
   source.allowedCapabilities = enabled ? ['container.build'] : [];
+  if (enabled) {
+  source.registryPeer = { registryBaseUrl: 'https://registry.example.test', registryReference: 'registry.example.test',
+    registryUsernameEnvironmentVariable: 'READINESS_REGISTRY_USER', registryPasswordEnvironmentVariable: 'READINESS_REGISTRY_PASSWORD' };
+  Object.assign(profile.environment, { READINESS_REGISTRY_USER: 'fixture', READINESS_REGISTRY_PASSWORD: 'fixture-private' });
   source.containerBuild = { buildctlExecutable: fixture.executable, buildkitHost: 'unix:///fixture-not-buildkit.sock',
-    registryBaseUrl: 'https://registry.example.test', registryReference: 'registry.example.test',
+    ...source.registryPeer,
     repositoryPrefix: 'fixture', allowedPlatforms: ['linux/amd64'], allowedBuildArguments: [],
     maximumLogBytes: 1024, maximumExecutionMs: 1000, maximumManifestBytes: 1024 };
+  }
   fs.writeFileSync(profile.runtime, JSON.stringify(source));
   const preparation = new ModeledPreparation(path.join(root, 'plan-jobs'), {
     recordLimits: source.recordLimits, maximumArchiveBytes: 1048576,

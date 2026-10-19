@@ -180,6 +180,7 @@ const { projectLegacyBusterPreparationSource } = require('/app/skills/packages/b
 const preparationSource = projectLegacyBusterPreparationSource(process.env);
 const root = process.env.RUNTIME_CONFIG_ROOT;
 const registry = process.env.REGISTRY_REFERENCE;
+const registryPeer = JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8'));
 const plugins = '/app/skills/plugins';
 const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')
   .split(',').map((value) => value.trim()).filter(Boolean);
@@ -202,6 +203,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
   ...preparationSource,
   tarExecutable: '/usr/bin/tar',
+  registryPeer,
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumResponseBytes: 67108864,
@@ -229,7 +231,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   },
   containerBuild: {
     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
-    ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
+    ...registryPeer,
     repositoryPrefix: 'kubeclaw/pipeline', allowedPlatforms: ['linux/amd64', 'linux/arm64'],
     allowedBuildArguments: ['NODE_ENV'], maximumLogBytes: 8388608,
     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
@@ -293,7 +295,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     runAsGid: 1000,
   },
   securityScan: {
-    registry: JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
+    registry: registryPeer,
     trivyExecutable: '/usr/local/bin/trivy',
     allowedRegistryPrefixes: [`${registry}/kubeclaw`],
     maximumExecutionMs: 900000,

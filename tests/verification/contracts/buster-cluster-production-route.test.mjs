@@ -136,11 +136,10 @@ for (const profile of profiles) for (const capability of capabilities) {
         maximumResultStoreBytes: 64 * 1024 * 1024, allowedCapabilities: mode === 'route-denied' ? [] : [capability],
         maximumResponseBytes: 2 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, shutdownTimeoutMs: 5000, recordLimits: records,
         clusterBindings: { controllerNamespace: profile.namespace },
-        containerBuild: { buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: 'unix:///run/buildkit.sock',
+        ...(capability === 'kubernetes.fixture' && mode !== 'route-denied' ? { registryPeer: {
           registryBaseUrl: `https://${profile.registry.split('/')[0]}`, registryReference: profile.registry.split('/')[0],
           registryUsernameEnvironmentVariable: 'CI2_REGISTRY_USER', registryPasswordEnvironmentVariable: 'CI2_REGISTRY_PASSWORD',
-          repositoryPrefix: 'ci2', allowedPlatforms: ['linux/amd64'], allowedBuildArguments: [], maximumLogBytes: 1024,
-          maximumExecutionMs: 5000, maximumManifestBytes: 1024 } };
+        } } : {}) };
       const config = path.join(runRoot, 'runtime.json'); fs.writeFileSync(config, JSON.stringify(configuration));
       // Only native preparation identity/publication is modeled. Parser/extractor,
       // production decoder, real service/store, Nova HTTP and child IPC remain real.

@@ -42,11 +42,11 @@ export function loadProductionBusterRemotePlanRuntime(
 function configuredService(value: Record<string, unknown>, policy: BusterRemotePlanServicePolicy, directory: string, environment: NodeJS.ProcessEnv,
   preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime']; workerCore?: WorkerCorePolicyCapture }, workerRevision: string, sourceAttestationPublicKey: string) {
   const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.buster.dependencyReadiness);
-  const registry = runtimeRegistry(value, directory);
   const allowedCapabilities = new Set(policy.allowedCapabilities);
   const sources = capabilitySources(value, allowedCapabilities, environment);
+  const registry = runtimeRegistry(value, directory);
   const stateRoot = path.resolve(directory, value.stateRoot as string);
-  const capabilities = configuredCapabilities(sources, directory, environment, settings.buster.clusterInvokers, value.clusterBindings);
+  const capabilities = configuredCapabilities(sources, directory, settings.buster.clusterInvokers, value.clusterBindings);
   return new BusterRemotePlanService({
     preparation,
     store: new FileBusterPlanJobStore(stateRoot, {
@@ -66,37 +66,37 @@ function configuredService(value: Record<string, unknown>, policy: BusterRemoteP
   });
 }
 
-function configuredCapabilities(sources: ReturnType<typeof capabilitySources>, directory: string, environment: NodeJS.ProcessEnv,
+function configuredCapabilities(sources: ReturnType<typeof capabilitySources>, directory: string,
   policy: BusterClusterInvokerSettings, bindingSource: unknown) {
   const {
     directCommandSource, containerBuildSource,
     networkHttpSource, browserAxeSource, browserLighthouseSource, browserVisualSource,
     browserPlaywrightSource, securityScanSource,
-    directCommandCgroup, allowSampledProcessLimit, registryUsername, registryPassword, browserPlaywrightCgroup,
+    directCommandCgroup, allowSampledProcessLimit, capturedRegistryPeer, browserPlaywrightCgroup,
   } = sources;
   return {
     ...directCommandOptions(directCommandSource, directory, directCommandCgroup, allowSampledProcessLimit),
-    ...containerBuildOptions(containerBuildSource, directory, registryUsername, registryPassword),
+    ...containerBuildOptions(containerBuildSource, directory, capturedRegistryPeer?.username, capturedRegistryPeer?.password),
     ...configuredClusterCapabilities(sources, policy, bindingSource),
-    ...networkHttpOptions(networkHttpSource, containerBuildSource, registryUsername, registryPassword),
+    ...networkHttpOptions(networkHttpSource, capturedRegistryPeer?.source ?? null, capturedRegistryPeer?.username, capturedRegistryPeer?.password),
     ...browserAxeOptions(browserAxeSource),
     ...browserLighthouseOptions(browserLighthouseSource),
     ...browserVisualOptions(browserVisualSource),
     ...browserPlaywrightOptions(browserPlaywrightSource, directory, browserPlaywrightCgroup),
-    ...securityScanOptions(securityScanSource, directory, environment),
+    ...securityScanOptions(securityScanSource, directory, capturedRegistryPeer),
   };
 }
 
 function configuredClusterCapabilities(sources: ReturnType<typeof capabilitySources>,
   policy: BusterClusterInvokerSettings, bindingSource: unknown) {
   const { kubernetesFixtureEnabled, tailscaleExposureEnabled, kubernetesRuntimeSecurityEnabled,
-    containerBuildSource, registryUsername, registryPassword } = sources;
+    capturedRegistryPeer } = sources;
   if (!kubernetesFixtureEnabled && !tailscaleExposureEnabled && !kubernetesRuntimeSecurityEnabled
     && bindingSource === undefined) return {};
   const binding = clusterRuntimeBinding(bindingSource, policy);
   return {
     ...kubernetesFixtureOptions(kubernetesFixtureEnabled, policy, binding, kubernetesFixtureEnabled
-      ? registryHealthConfiguration(true, containerBuildSource, registryUsername, registryPassword).origin : undefined),
+      ? registryHealthConfiguration(true, capturedRegistryPeer?.source ?? null, capturedRegistryPeer?.username, capturedRegistryPeer?.password).origin : undefined),
     ...tailscaleExposureOptions(tailscaleExposureEnabled, policy, binding),
     ...kubernetesRuntimeSecurityOptions(kubernetesRuntimeSecurityEnabled, policy, binding),
   };
