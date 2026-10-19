@@ -14,13 +14,22 @@ const fixtures = JSON.parse(fs.readFileSync(path.join(root, 'docs/blueprint/AP09
 const family = fixtures.mutationTests.find(item => item.kind === kind);
 const variant = family?.variants.find(item => item.id === variantId);
 assert(variant && family.operations.includes(operation) && !trailing.length, 'unregistered mutation');
-assert(variant.constructor === 'typescript-error-code-v1', `constructor not implemented: ${variant.constructor}`);
 const original = fs.readFileSync(path.join(root, variant.sourceAuthority), 'utf8');
-const anchor = "  if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');\n";
-assert.equal(original.split(anchor).length, 2, 'error-code fixture anchor must occur exactly once');
-const added = "  if (sourceAttestationPublicKey === 'fixture-rejected-key') throw new Error('BUSTER_SOURCE_ATTESTATION_ROTATED_PUBLIC_KEY_MISSING');\n";
-const replacement = operation === 'add' ? anchor + added
-  : operation === 'change' ? anchor.replace('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING', 'BUSTER_SOURCE_ATTESTATION_ROTATED_PUBLIC_KEY_MISSING') : '';
+let anchor, added, replacement;
+if (variant.constructor === 'typescript-error-code-v1') {
+  anchor = "  if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');\n";
+  added = "  if (sourceAttestationPublicKey === 'fixture-rejected-key') throw new Error('BUSTER_SOURCE_ATTESTATION_ROTATED_PUBLIC_KEY_MISSING');\n";
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? anchor.replace('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING', 'BUSTER_SOURCE_ATTESTATION_ROTATED_PUBLIC_KEY_MISSING') : '';
+} else if (variant.constructor === 'typescript-workflow-selection-v1') {
+  anchor = "  stages.push(...demoStages(demo,final.test.providerPlan.plan));\n";
+  added = "  stages.push({ id: 'fixture-workflow', type: 'kubeclaw.fixture.workflow', dependsOn: [], config: {}, input: {} });\n";
+  replacement = operation === 'add' ? anchor + added
+    : operation === 'change' ? "  if (demo) stages.push(...demoStages(demo,final.test.providerPlan.plan));\n" : '';
+} else {
+  throw new Error(`constructor not implemented: ${variant.constructor}`);
+}
+assert.equal(original.split(anchor).length, 2, 'fixture anchor must occur exactly once');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-ap09-patch-'));
 try {
   for (const [side, content] of [['a', original], ['b', original.replace(anchor, replacement)]]) {
