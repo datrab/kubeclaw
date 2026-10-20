@@ -179,7 +179,7 @@
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -354,9 +354,19 @@
             "docs/site/understand/components-and-authority.md"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
         }
       ],
-      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
@@ -490,7 +500,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -591,9 +601,19 @@
             "docs/site/understand/worker-core.md"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
         }
       ],
-      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
@@ -1725,7 +1745,7 @@
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -1811,7 +1831,20 @@
         "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
+        }
+      ],
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
@@ -1993,6 +2026,56 @@
         "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
         "No new whole-gate acceptance;all inherited scoped limits retained.",
         "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-closeout-ARC006-20261020",
+      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/close_runtime_docs",
+      "gateIds": [],
+      "requirementIds": [
+        "ARC-006"
+      ],
+      "pages": [
+        "docs/site/understand/components-and-authority.md"
+      ],
+      "sources": [
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+        "contracts/agent-observability/v1/src/constants.ts",
+        "contracts/agent-observability/v1/src/routing.ts",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/prism.json",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "contracts/agent-observability/v1/tests/validation.test.ts"
+      ],
+      "checks": [
+        {
+          "command": "node contracts/agent-observability/v1/tests/validation.test.ts",
+          "exitCode": 0,
+          "observation": "Canonical ingress/routing/size contract passed;no generated execution repair."
+        },
+        {
+          "command": "Independent architecture-map source/reader/quality and previous-record impact review",
+          "exitCode": 0,
+          "observation": "Whole ARC006 all3aspects PASS;12local destinations resolve,exact writer/index/routing and stream constants compared."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete architecture communication/failure/data map now distinguishes separatehostobserverRedisprojection,volatilequeue,retry/deadletter/retention and lifecycle-authority boundaries.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Hostobserverruntimewrapper blocked before assertions by absent generatedcontract;no functionalhost/Redis/liveclaim.",
+        "No fullcommunication/telemetry/publication gate inferred."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -2761,7 +2844,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2773,22 +2856,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L122",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
-        "reason": "Separate OpenClaw host observer control/payload/dead-letter Redis crossing path absent.",
-        "campaign": "independent-correction-closeout-20261020"
-      }
+      "completionRecord": "AP09-closeout-ARC006-20261020"
     },
     {
       "id": "NVC-001",
