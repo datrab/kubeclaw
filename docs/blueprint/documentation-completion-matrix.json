@@ -1468,6 +1468,64 @@
       ],
       "openIssues": [],
       "verdict": "PASS"
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "author": "Documentation implementation authors",
+      "reviewer": "/root/review_publication",
+      "gateIds": [
+        "A912-02"
+      ],
+      "requirementIds": [
+        "PUB-001"
+      ],
+      "pages": [
+        "docs/site/reference/documentation-site.md",
+        "docs/site/README.md",
+        "docs/site/understand/README.md",
+        "docs/site/use/README.md",
+        "docs/site/extend/README.md",
+        "docs/site/reference/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/product-surfaces.md"
+      ],
+      "sources": [
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-publication.mjs",
+        "scripts/lib/docs-publication-links.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node --test scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-links.test.mjs",
+          "exitCode": 0,
+          "observation": "Independent reviewer executed 66 passing tests, zero skips; finite selector, unexpected Markdown and symlink rejection, link rebasing and anchors."
+        },
+        {
+          "command": "Independent shared-parser canonical navigation traversal and role/task label review",
+          "exitCode": 0,
+          "observation": "166 of 166 positively registered pages reachable within three local page decisions: depth counts 1/22/142/1. Meaningful home and role/task labels inspected."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent navigation-only acceptance for PUB-001 and A912-02; all canonical pages reachable through meaningful role/task links in at most three decisions. Reviewed sources and pages unchanged since baseline.",
+      "limits": [
+        "Navigation reachability only, not substantive acceptance of all destinations.",
+        "Publication/reference/boundary checks remain failed; no successful current output build, search, accessibility, rendered/offline task or live acceptance claimed.",
+        "Pre-existing dirty events.md excluded and preserved."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -17056,7 +17114,7 @@
       "pageOwner": null,
       "readerTask": "Navigation erreicht jede Kernaufgabe",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -17077,16 +17135,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L384"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L384",
+      "completionRecord": "AP09-reviewed-publication-navigation-20261020"
     },
     {
       "id": "PUB-002",
@@ -21835,7 +21891,7 @@
       "id": "A912-02",
       "passCondition": "Jeder kanonische Leserweg ist aus Startseite und passender Rollen-/Aufgabennavigation in höchstens drei sinnvollen Entscheidungen erreichbar.",
       "automaticFailure": "Erreichbarkeit wird nur über Volltextsuche oder einen globalen Dateibaum erreicht.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -21848,7 +21904,8 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "AP09-reviewed-publication-navigation-20261020"
     },
     {
       "id": "A912-03",
