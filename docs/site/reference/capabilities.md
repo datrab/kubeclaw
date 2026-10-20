@@ -4,7 +4,7 @@ Status: implemented
 Audience: plugin author, operator, security reviewer
 Owner: plugin-foundation
 Evidence: skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts; skills/buster/engine/test-gates/remote-plan-service.ts
-Applies to: Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities
+Applies to: Nova grants, Buster runtime capabilities, plugin declarations, worker profiles, Kubernetes RBAC, and Codex interface boundaries
 Last verified: generated source listing only; package checks and their limits are recorded on each package page
 
 ## Purpose
@@ -18,6 +18,24 @@ A shared name does not transfer a Nova grant into Buster or a Buster route into 
 > [Nova defines operations, resource types, and grant constraints](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts).
 >
 > [Buster builds explicit runtime routes for allowed test-provider capabilities](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/remote-plan-service.ts).
+
+## Choose the Owning Authority
+
+Start with the component that rejected the operation, not with a matching capability string. These namespaces do not form one permission list.
+
+| Namespace | What the declaration means | Enforcement and reader route | No automatic translation |
+| --- | --- | --- | --- |
+| Nova plugin registration | `requiredCapabilities` requests authority; `providesCapabilities` offers an implementation. | The platform grant resolver selects providers and grants constraints; invocation checks the stage lease. Use the Nova tables and platform policy below. | Neither declaration grants permission by itself. A Buster test-provider declaration uses its own runtime namespace. |
+| Buster test-provider runtime | A provider requests named runtime operations. | Buster resolves the provider and checks its configured runtime routes; use the Buster table below. | A Nova grant does not install a Buster route or bypass Buster admission. |
+| Worker profile and attempt | Profile `capabilities` bounds the attempt; `grantedCapabilities` must be a subset. `resourceCapabilities` describes measurement semantics, not permission. | [Worker profiles, engines, and roles](worker-profiles-and-roles.md) explains profile digests, host admission, budgets, and measured results. | A matching `artifacts.read` or `network.http` string is not a Nova lease or a Kubernetes permission. A profile declaration is not a measured observation. |
+| Kubernetes RBAC | Roles bind API verbs, resource types, and scopes to a Kubernetes subject such as a ServiceAccount. | [Security and trust](../understand/security-and-trust.md) separates API authority, workload identity, network access, and plugin leases. | Neither a Nova grant nor a worker capability grants Kubernetes API access. RBAC does not authorize an unrelated application HTTP operation. |
+| Codex plugin interface | The Ops plugin advertises `Read` in `interface.capabilities`. | [Codex integration](../understand/codex-integration.md) follows the separate MCP connection, bearer check, API token, and RBAC boundaries. | `Read` is interface metadata, not a Nova grant, a Buster route, or an enforcement guarantee. The optional Ops Pod can separately grant namespace-scoped pod exec. |
+
+For a denied Nova call, check the requesting registration, selected provider, grant constraints, and concrete lease operation/resource. For a Buster denial, check the provider request and runtime route separately.
+For worker admission, compare the advertised profile digest, attempted capability subset, and host resource policy. For a Kubernetes denial, inspect the actual caller ServiceAccount and bound API verb/resource/namespace; do not broaden a plugin grant to fix RBAC.
+For a Codex/MCP failure, distinguish connection authentication from Kubernetes authorization. Stop before changing policy when the rejecting boundary or caller is unknown. Do not grant across namespaces by name matching or assume that an unchanged retry will change authorization.
+
+> [Worker profile and attempt schemas](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json); [Ops ServiceAccount and RBAC rules](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/charts/ops-pod/templates/rbac.yaml); [Codex interface declaration](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/plugins/kubeclaw-ops/.codex-plugin/plugin.json).
 
 ## Nova Grant Vocabulary
 
