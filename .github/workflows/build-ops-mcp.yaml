@@ -64,8 +64,29 @@ jobs:
       - name: Test Ops MCP
         working-directory: tools/ops-mcp
         run: |
-          npm ci --ignore-scripts
-          npm test
+          # Preserve each original exit code and expose bounded failure output
+          # in check annotations when authenticated Actions logs are unavailable.
+          run_ops_check() {
+            local phase="$1" log status message
+            shift
+            log="$(mktemp)"
+            if "$@" >"$log" 2>&1; then
+              cat "$log"
+              rm -f "$log"
+            else
+              status=$?
+              cat "$log"
+              message="$(tail -c 6000 "$log")"
+              message="${message//'%'/'%25'}"
+              message="${message//$'\r'/'%0D'}"
+              message="${message//$'\n'/'%0A'}"
+              printf '::error title=Ops MCP %s failed (exit %s)::%s\n' "$phase" "$status" "$message"
+              rm -f "$log"
+              return "$status"
+            fi
+          }
+          run_ops_check install npm ci --ignore-scripts
+          run_ops_check test npm test
       - name: Test Cilium policy contracts
         run: |
           python3 -m pip install PyYAML==6.0.3
