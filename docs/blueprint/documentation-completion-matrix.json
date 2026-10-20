@@ -64,7 +64,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -140,7 +140,13 @@
         "Other-page/global refs/publication/boundary checks failed; not accepted by this scoped review."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "impactReview": {
+        "reviewer": "/root/review_worker_ready",
+        "verdict": "PASS",
+        "summary": "Original11 topic pages and implementations unchanged; generated map differs only in corrected capabilities.appliesTo. Source/reader/quality PASSs explicitly preserved by focused independent impact review."
+      }
     },
     {
       "id": "AP09.2-ready-topics-20261020",
@@ -438,6 +444,437 @@
       ],
       "openIssues": [],
       "verdict": "PASS"
+    },
+    {
+      "id": "AP09.3-ready-worker-topics-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/review_worker_ready",
+      "gateIds": [],
+      "requirementIds": [
+        "WKC-001",
+        "WKC-003",
+        "WKC-004",
+        "WKC-005",
+        "WKC-006",
+        "WKC-007",
+        "WKC-008",
+        "WKC-009",
+        "WKC-010",
+        "WKC-012",
+        "WKC-013"
+      ],
+      "pages": [
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "sources": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+        "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/log-decoder.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "skills/worker/core/worker/native-worker-process.ts",
+        "skills/worker/core/worker/native-process-control.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/resource-reservations.ts",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "skills/worker/core/worker/ownership-state.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-result.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/config/native-worker.ts",
+        "scripts/docs-check-refs.mjs"
+      ],
+      "checks": [
+        {
+          "command": "npm run verify:worker-core:contracts",
+          "exitCode": 0,
+          "observation": "12 contracts validated; contract TypeScript passed."
+        },
+        {
+          "command": "npm run docs:core-guides:check",
+          "exitCode": 0,
+          "observation": "3 guides,52 mapped requirements,220 pinned links and223 named Worker errors validated."
+        },
+        {
+          "command": "Focused worker executor/local-runtime and control/spool/ownership/resource tests",
+          "exitCode": 0,
+          "observation": "Runtime assertions and28 reliability cases passed."
+        },
+        {
+          "command": "NODE_ENV=test worker-native-contract and worker-native-journal tests",
+          "exitCode": 0,
+          "observation": "9/9 passed; explicit test mode, no live root-launcher claim."
+        },
+        {
+          "command": "Independent Worker topic and scoped reader review",
+          "exitCode": 0,
+          "observation": "11 named requirements source/reader/quality PASS; focused17 links,3anchors,2repo refs,91pinned links passed."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for neutral worker authority, readiness/claims/replay, trusted supervisor/launch/control/spool/resources/cancellation and ownership/cleanup/result-sealing descriptions.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "WKC-002/014 field-reference completeness and WKC-011 native recovery result classification remain FAIL.",
+        "Broad wrappers fail at unrelated missing Buster/browser dependencies; no whole-suite or live cgroup claim."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09.7-ready-platform-topics-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/review_platform_ready",
+      "gateIds": [
+        "A97-02",
+        "A97-04"
+      ],
+      "requirementIds": [
+        "SPC-004",
+        "SPC-005",
+        "SPC-006",
+        "SPC-007",
+        "INF-001",
+        "INF-002",
+        "INF-003",
+        "INF-004",
+        "INF-005",
+        "INF-006",
+        "INF-007",
+        "INF-008",
+        "INF-009",
+        "INF-010",
+        "INF-011",
+        "SEC-001",
+        "SEC-002",
+        "SEC-003",
+        "SEC-004",
+        "SEC-005",
+        "SEC-006",
+        "SEC-007"
+      ],
+      "pages": [
+        "docs/site/understand/forge.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/codex-integration.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/security-and-trust.md"
+      ],
+      "sources": [
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+        "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+        "skills/nova/plugins/review/src/stage.ts",
+        "skills/nova/plugins/review/src/review-policy-resolver.ts",
+        "skills/nova/plugins/review/src/review-reducer.ts",
+        "skills/nova/plugins/review/src/review-report-contract.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "skills/nova/plugins/review/plugin.json",
+        "skills/nova/plugins/review/schemas/input.schema.json",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/server/agent-job-runner.mjs",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+        "skills/common/plugins/openclaw-agent-observer/package.json",
+        "my-values/nova-values.yaml",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        ".agents/plugins/marketplace.json",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/templates/rbac.yaml",
+        "charts/ops-pod/values.yaml",
+        "tools/ops-mcp/src/server.mjs",
+        "tools/ops-mcp/src/config.mjs",
+        "tools/ops-mcp/src/authentication.mjs",
+        "tools/ops-mcp/src/kubernetes.mjs",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/package.json",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "docker/archviewer.nginx.conf",
+        "docker/Dockerfile.archviewer",
+        "scripts/deploy.sh",
+        "scripts/platform-services.mjs",
+        "scripts/argocd-self-management.mjs",
+        "scripts/check-cni-portability.mjs",
+        "charts/kubeclaw/values.yaml",
+        "charts/prism/templates/networkpolicy.yaml",
+        "my-values/infra/registry-local.yaml",
+        "docker/buster-runtime-entrypoint.sh",
+        "scripts/registry-client-config.mjs",
+        "my-values/infra/registry-mirror.yaml",
+        "gitops/platform/values/redis.yaml",
+        "gitops/platform/values/postgresql.yaml",
+        "gitops/platform/values/tailscale-operator.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "gitops/platform/values/loki.yaml",
+        "gitops/platform/values/alloy.yaml",
+        "docker/Dockerfile.nova",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "my-values/prism-agent-values.yaml",
+        "skills/worker/core/worker/trust.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/test-gates/source-snapshot.ts",
+        "skills/prism/control/session.ts",
+        "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "my-values/setup-secrets.sh",
+        "my-values/infra/spire-values.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "scripts/check-platform-specialist-guides.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node tests/protocol.test.ts (skills/nova/plugins/implementation-agent)",
+          "exitCode": 0,
+          "observation": "Protocol suite passed."
+        },
+        {
+          "command": "Echo policy resolver/report/profile unit tests (skills/nova/plugins/review)",
+          "exitCode": 0,
+          "observation": "All3 suites passed."
+        },
+        {
+          "command": "Focused Ops Helm render/source review and CNI portability check",
+          "exitCode": 0,
+          "observation": "Default and exec-disabled renders passed;4Core renders and192sourcefiles establish bounded source/render portability, no live fallback claim."
+        },
+        {
+          "command": "node --test tests/verification/deployment/registry-client-config.test.mjs tests/verification/deployment/archviewer-policy-provider.test.mjs",
+          "exitCode": 0,
+          "observation": "7/7 passed."
+        },
+        {
+          "command": "Worker SPIFFE trust and readiness checks",
+          "exitCode": 0,
+          "observation": "Trust contract and3 readiness tests passed."
+        },
+        {
+          "command": "Independent specialist/dependency/security source and reader review",
+          "exitCode": 0,
+          "observation": "22 named requirements and whole A97-02/A97-04 source/reader/quality PASS; exact owners,contracts,failures and recovery reviewed."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for Forge/Echo/OpenClaw/Codex, infrastructure INF001..011 and seven security topics. Explicit whole-gate PASS for six named runtime dependencies and optional-layer/unsupported-fallback boundary.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "SPC-010 Archviewer alternative and INF-012 embedding-client release remain FAIL; SPC-009 HTTP/auth execution check dependency missing.",
+        "A97-08 complete discovered trust/Secret inventory reconciliation not established; broad specialist sourcepin check failed and not treated as passed."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09.7-ready-data-topics-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/review_data_ready",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-002",
+        "COM-006",
+        "COM-007",
+        "DAT-002",
+        "DAT-003",
+        "DAT-007",
+        "TEL-001",
+        "TEL-004",
+        "TEL-005",
+        "TEL-006",
+        "TEL-007"
+      ],
+      "pages": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/understand/deployment-and-trust.md"
+      ],
+      "sources": [
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/core/test-gates/remote-result-import.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/exchange.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "scripts/redis-prepare-migration.sh",
+        "my-values/infra/redis-values.yaml",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "contracts/agent-observability/v1/src/constants.ts",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "skills/prism/tests/artifact-durability.test.mts",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/check-platform-specialist-guides.mjs",
+        "charts/prism/templates/networkpolicy.yaml",
+        "scripts/docs-check-refs.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent communication/state/telemetry source and reader review",
+          "exitCode": 0,
+          "observation": "11 named requirements source/reader/quality PASS; exact journals,transport,observer and evidence boundaries reviewed."
+        },
+        {
+          "command": "Focused telemetry observer/store,Redis transport and observer/control/ownership tests",
+          "exitCode": 0,
+          "observation": "Relevant parity/live-function checks and30focused tests passed; not a deployed service claim."
+        },
+        {
+          "command": "Focused reader link/anchor inspection",
+          "exitCode": 0,
+          "observation": "46 scoped local links passed."
+        },
+        {
+          "command": "Remote result import decisions",
+          "exitCode": 0,
+          "observation": "7 decisions passed; trust/evidence checked before import."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for Nova-Buster dispatch/result import,Worker control channel,Redis streams,Core and Worker persistence,transport-vs-authority and five telemetry authority/identity/recovery/retention topics.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "TEL-002 event-specific payload catalogue and DAT-008 codec/exact-reference compatibility remain FAIL.",
+        "Other15 assigned scopes remain NOT_READY from incomplete independent full source coverage; A97-05/07 NOT_READY,A97-06 FAIL."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "revision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/review_worker_ready",
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "pages": [
+        "docs/site/understand/buster.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/nova.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/lint-policy-generated.md",
+        "docs/site/reference/capabilities.md"
+      ],
+      "sources": [
+        "skills/nova/core/test-gates/resolver.ts",
+        "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        "skills/nova/core/execution/context.ts",
+        "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+        "scripts/docs-lint-policy-reference.mjs",
+        "charts/kubeclaw/files/config/knip.json",
+        "versions.json",
+        "docker/nova-tools/package.json",
+        "docker/nova-tools/package-lock.json",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-route-continuity.mjs",
+        "scripts/docs-published-route-baseline.json",
+        "scripts/check-core-architecture-guides.mjs",
+        "scripts/docs-status.mjs",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "checks": [
+        {
+          "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+          "exitCode": 0,
+          "observation": "Unsafe default zero,acknowledged retry,missing acknowledgment and policy maximum explicitly checked;PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+          "exitCode": 0,
+          "observation": "Registry absent-grant denial PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+          "exitCode": 0,
+          "observation": "Out-of-grant invocation denial PASS."
+        },
+        {
+          "command": "node scripts/docs-lint-policy-reference.mjs --check",
+          "exitCode": 0,
+          "observation": "Current Knip digest,Debian snapshot and runtime base match authorities."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "166 pages current; only corrected appliesTo scalar changed in projection."
+        },
+        {
+          "command": "Independent focused re-review and foundation impact review",
+          "exitCode": 0,
+          "observation": "All7 corrections source/reader/quality PASS; previous11foundation PASSs preserved."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Carries forward prior reviewed unchanged topic content; unrelated whole-file pin/publication failures remain open."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -729,7 +1166,7 @@
         "scripts/docs-status.mjs",
         "docs/status/open-issues.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -741,22 +1178,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L99",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Generated documentation map appliesTo metadata differs from capability page.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "GOV-007",
@@ -2829,7 +3258,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2841,16 +3270,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L151"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L151",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-002",
@@ -2888,7 +3315,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L152"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L152",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Nested/versioned worker public field reference incomplete.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "WKC-003",
@@ -2905,7 +3338,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2917,16 +3350,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L153"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L153",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-004",
@@ -2943,7 +3374,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2955,16 +3386,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L154"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L154",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-005",
@@ -2981,7 +3410,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2993,16 +3422,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L155"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L155",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-006",
@@ -3019,7 +3446,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3031,16 +3458,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L156"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L156",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-007",
@@ -3057,7 +3482,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3069,16 +3494,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L157"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L157",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-008",
@@ -3095,7 +3518,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3107,16 +3530,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L158"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L158",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-009",
@@ -3133,7 +3554,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3145,16 +3566,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L159"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L159",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-010",
@@ -3171,7 +3590,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3183,16 +3602,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L160"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L160",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-011",
@@ -3230,7 +3647,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L161"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L161",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Native recovery emits errored and cleanup/fencing split,not the documented interrupted enum.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "WKC-012",
@@ -3247,7 +3670,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3259,16 +3682,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L162"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L162",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-013",
@@ -3285,7 +3706,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3297,16 +3718,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L163"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L163",
+      "completionRecord": "AP09.3-ready-worker-topics-20261020"
     },
     {
       "id": "WKC-014",
@@ -3344,7 +3763,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L164"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L164",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Full worker resource/input/observation field table incomplete.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "SPC-001",
@@ -3359,7 +3784,7 @@
         "skills/buster/engine/test-gates",
         "contracts/pipeline-test-gate/v1"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3372,22 +3797,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L170",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Unsafe retries are possible with acceptUnsafeRetry:true; unconditional prohibition is false.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "SPC-002",
@@ -3472,7 +3889,7 @@
         "tests/verification/reliability/forge-workspace.test.mts",
         "tests/verification/reliability/forge-lock-wait.test.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3504,12 +3921,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -3529,7 +3943,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SPC-005",
@@ -3544,7 +3959,7 @@
         "skills/nova/plugins/review/schemas",
         "skills/nova/plugins/review/tests"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3577,12 +3992,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -3601,7 +4013,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SPC-006",
@@ -3620,7 +4033,7 @@
         "skills/prism/storage/index.ts",
         "skills/prism/storage/migrations/014_agent_jobs.sql"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3653,12 +4066,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -3677,7 +4087,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SPC-007",
@@ -3693,7 +4104,7 @@
         "charts/ops-pod",
         "tools/ops-mcp"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3725,12 +4136,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -3750,7 +4158,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SPC-008",
@@ -3867,7 +4276,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "SPC-010",
@@ -3942,7 +4357,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Archviewer page denies existing Kubernetes NetworkPolicy alternative.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-001",
@@ -4591,7 +5012,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-002",
@@ -4611,7 +5038,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -4643,12 +5070,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -4668,7 +5092,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "COM-003",
@@ -4745,7 +5170,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-004",
@@ -4823,7 +5254,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-005",
@@ -4900,7 +5337,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-006",
@@ -4920,7 +5363,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -4950,12 +5393,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -4977,7 +5417,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "COM-007",
@@ -4997,7 +5438,7 @@
         "charts/prism",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5030,12 +5471,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -5054,7 +5492,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "COM-008",
@@ -5131,7 +5570,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-009",
@@ -5208,7 +5653,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-010",
@@ -5285,7 +5736,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-011",
@@ -5362,7 +5819,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "COM-012",
@@ -5439,7 +5902,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "DAT-001",
@@ -5516,7 +5985,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "DAT-002",
@@ -5536,7 +6011,7 @@
         "scripts/postgresql-recovery.sh",
         "scripts/redis-prepare-migration.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5565,12 +6040,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -5593,7 +6065,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "DAT-003",
@@ -5613,7 +6086,7 @@
         "scripts/postgresql-recovery.sh",
         "scripts/redis-prepare-migration.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5642,12 +6115,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -5670,7 +6140,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "DAT-004",
@@ -5747,7 +6218,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "DAT-005",
@@ -5824,7 +6301,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "DAT-006",
@@ -5930,7 +6413,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "DAT-007",
@@ -5950,7 +6439,7 @@
         "scripts/postgresql-recovery.sh",
         "scripts/redis-prepare-migration.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5982,12 +6471,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6007,7 +6493,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "DAT-008",
@@ -6084,7 +6571,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Artifact codec/default/exact-reference visibility compatibility undocumented.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "DAT-009",
@@ -6161,7 +6654,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "TEL-001",
@@ -6181,7 +6680,7 @@
         "contracts/telemetry/v1",
         "skills/nova/core/execution/engine-runtime.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6212,12 +6711,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6238,7 +6734,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "TEL-002",
@@ -6314,7 +6811,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Active event-specific payload catalogue absent.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "TEL-003",
@@ -6390,7 +6893,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "TEL-004",
@@ -6409,7 +6918,7 @@
         "skills/common/plugins/redis-transport",
         "contracts/telemetry/v1"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6440,12 +6949,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6466,7 +6972,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "TEL-005",
@@ -6484,7 +6991,7 @@
         "skills/buster/engine/test-gates/provider-loader.ts",
         "skills/buster/engine/test-gates/report-adapter-runtime.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6515,12 +7022,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6541,7 +7045,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "TEL-006",
@@ -6556,7 +7061,7 @@
         "charts/kubeclaw",
         "charts/prism"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6586,12 +7091,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6613,7 +7115,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "TEL-007",
@@ -6632,7 +7135,7 @@
         "skills/common/plugins/redis-transport",
         "contracts/telemetry/v1"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6663,12 +7166,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6689,7 +7189,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-data-topics-20261020"
     },
     {
       "id": "INF-001",
@@ -6706,7 +7207,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6735,12 +7236,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6763,7 +7261,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-002",
@@ -6780,7 +7279,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6811,12 +7310,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6837,7 +7333,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-003",
@@ -6854,7 +7351,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6886,12 +7383,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6911,7 +7405,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-004",
@@ -6928,7 +7423,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6960,12 +7455,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6985,7 +7477,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-005",
@@ -7002,7 +7495,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7036,12 +7529,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7059,7 +7549,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-006",
@@ -7076,7 +7567,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7110,12 +7601,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7133,7 +7621,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-007",
@@ -7150,7 +7639,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7184,12 +7673,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7207,7 +7693,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-008",
@@ -7224,7 +7711,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7257,12 +7744,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7281,7 +7765,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-009",
@@ -7298,7 +7783,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7332,12 +7817,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7355,7 +7837,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-010",
@@ -7372,7 +7855,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7406,12 +7889,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7429,7 +7909,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-011",
@@ -7446,7 +7927,7 @@
         "gitops/platform",
         "my-values/infra"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7478,12 +7959,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7503,7 +7981,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "INF-012",
@@ -7608,7 +8087,13 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Selected embedding client release changed; exact old-client limits claimed as current.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "SEC-001",
@@ -7626,7 +8111,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7655,12 +8140,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7683,7 +8165,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SEC-002",
@@ -7701,7 +8184,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7731,12 +8214,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7758,7 +8238,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SEC-003",
@@ -7776,7 +8257,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7806,12 +8287,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7833,7 +8311,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SEC-004",
@@ -7851,7 +8330,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7881,12 +8360,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7908,7 +8384,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SEC-005",
@@ -7926,7 +8403,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7957,12 +8434,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7983,7 +8457,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SEC-006",
@@ -8001,7 +8476,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -8032,12 +8507,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -8058,7 +8530,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "SEC-007",
@@ -8076,7 +8549,7 @@
         "my-values/setup-secrets.sh",
         "skills/nova/core/test-gates/source-snapshot.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -8105,12 +8578,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -8133,7 +8603,8 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "OPR-001",
@@ -10483,7 +10954,7 @@
         "contracts/pipeline-test-gate/v1/suites",
         "skills/buster/plugins"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -10496,22 +10967,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L281",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Retry-safety prohibition omits explicit acceptUnsafeRetry opt-in.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "CFG-007",
@@ -11579,7 +12042,7 @@
         "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
         "skills/nova/plugins/lint/src/engine"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11591,22 +12054,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L291",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Generated Knip digest,Debian snapshot and Nova runtime base stale.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "CFG-017",
@@ -12265,7 +12720,7 @@
         "skills/buster/engine/test-gates",
         "skills/buster/plugins"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -12278,22 +12733,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L309",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Unsafe retry is rejected only without explicit acknowledgment, not unconditionally.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "FLW-012",
@@ -13871,7 +14318,7 @@
         "skills/buster/engine/test-gates/runner.ts",
         "skills/buster/engine/test-gates/report-adapter-runtime.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -13884,22 +14331,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L334",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Resolver retry description omits implemented unsafe-retry opt-in.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "EXT-006",
@@ -13919,7 +14358,7 @@
         "skills/nova/plugins/lint/src/adapter.ts",
         "skills/nova/plugins/lint/src/engine/policy-version.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -13931,22 +14370,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L335",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Nonexistent REGISTRY_CAPABILITY_NOT_GRANTED; actual admission/invocation errors differ.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "Reviewed-corrections-20261020"
     },
     {
       "id": "EXT-007",
@@ -17979,11 +18410,12 @@
       "id": "A97-02",
       "passCondition": "Redis, PostgreSQL, Git-Origin, OCI-Registry, BuildKit und Tailscale besitzen je Owner, Zweck, Consumer, Protokoll, Endpoint, Identität, Konfiguration, Default, Präzedenz, Health-Signal, Ausfallwirkung, Stop-Regel und Recovery.",
       "automaticFailure": "Eine Pflichtabhängigkeit hat nur eine Produktbeschreibung oder Installationsnotiz.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "A97-03",
@@ -17993,17 +18425,24 @@
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Current embedding-client release/limits authority wrong.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "A97-04",
       "passCondition": "Argo CD, Cilium und Monitoring sind als optionale Plattformschichten erklärt; die Dokumentation zeigt die funktionsfähige Pipelinegrenze ohne sie und die zusätzlichen Fähigkeiten mit ihnen.",
       "automaticFailure": "Optionalität wird behauptet, ohne Abhängigkeitspfade und Fallback wie Flannel zu prüfen.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "AP09.7-ready-platform-topics-20261020"
     },
     {
       "id": "A97-05",
@@ -18032,7 +18471,13 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Every active communication edge/endpoint not fully reconciled.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "A97-06",
@@ -18061,7 +18506,13 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Artifact codec compatibility omitted;fullstoreinventory not fully audited.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "A97-07",
@@ -18071,7 +18522,13 @@
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Complete telemetry path/inventory coverage not independently established.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "A97-08",
@@ -18100,7 +18557,13 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Complete discovered trust/Secret/route inventory not independently reconciled.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "A97-09",
@@ -18110,7 +18573,13 @@
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Archviewer supported alternative missing and Ops MCP HTTP check blocked.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "A97-10",
