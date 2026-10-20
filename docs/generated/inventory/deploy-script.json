@@ -1,75 +1,281 @@
 {
   "generatedFrom": [
-    "scripts/deploy.sh"
+    "scripts/deploy.sh",
+    "scripts/run-lint-report.mjs",
+    "scripts/generate-buster-error-reference.mjs",
+    "scripts/generate-buster-provider-reference.mjs"
   ],
   "commands": [
     {
+      "invocation": "./scripts/deploy.sh render <nova|buster> [image|code]",
+      "description": "Render the selected release without applying it; image is the default mode. Requires the selected runtime release."
+    },
+    {
+      "invocation": "./scripts/deploy.sh render prism",
+      "description": "Render the dedicated Prism release without applying it. Requires the selected runtime release."
+    },
+    {
       "invocation": "./scripts/deploy.sh setup",
-      "description": "Create namespace + secrets + helm repos"
+      "description": "Create namespace, required Secrets and Helm repositories."
     },
     {
       "invocation": "./scripts/deploy.sh secrets",
-      "description": "Create/copy/prompt required Kubernetes secrets"
+      "description": "Create/copy/prompt required Kubernetes Secrets, including enabled Prism inputs."
     },
     {
       "invocation": "./scripts/deploy.sh infra",
-      "description": "Deploy required infra plus optional PostgreSQL/LiteLLM"
+      "description": "Deploy required infrastructure and enabled optional components."
     },
     {
       "invocation": "./scripts/deploy.sh tailscale",
-      "description": "Deploy Tailscale Kubernetes Operator"
+      "description": "Deploy the Tailscale Kubernetes Operator."
+    },
+    {
+      "invocation": "./scripts/deploy.sh buildkit-preflight [image] [pull-secret]",
+      "description": "Check rootless BuildKit with a temporary cluster Pod; image defaults to BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE and must be digest-pinned."
     },
     {
       "invocation": "./scripts/deploy.sh native-node-render OUT [POLICY]",
-      "description": "Generate a reviewable host-pool setup bundle"
+      "description": "Generate a new reviewable host-pool setup directory; policy defaults to my-values/infra/native-worker-pools.yaml. Does not apply host setup."
     },
     {
-      "invocation": "./scripts/deploy.sh nova-production-preflights <image>",
-      "description": "Run all required proofs after all source cutovers"
+      "invocation": "./scripts/deploy.sh native-node-preflight [POLICY]",
+      "description": "Read-only native capacity check on the selected host; policy defaults to my-values/infra/native-worker-pools.yaml."
+    },
+    {
+      "invocation": "./scripts/deploy.sh buster-buildkit-smoke",
+      "description": "Deprecated alias for nova-buildkit-preflight."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-buildkit-preflight",
+      "description": "Build, publish, deploy and verify through the Nova/Buster production capability graph."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-unit-preflight",
+      "description": "Run a real unit process through Nova and Buster."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-kubernetes-fixture-preflight [image] [secret-name]",
+      "description": "Exercise a retained Kubernetes fixture; image falls back to KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE; Secret to KUBECLAW_KUBERNETES_PREFLIGHT_SECRET then kubeclaw-fixture-preflight."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-http-preflight [image]",
+      "description": "Exercise the real HTTP provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-a11y-preflight [image]",
+      "description": "Exercise the real browser accessibility provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-api-preflight [image]",
+      "description": "Exercise the real API provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-lighthouse-preflight [image]",
+      "description": "Exercise the real Lighthouse provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-visual-preflight [image]",
+      "description": "Exercise the real visual comparison provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-e2e-preflight [image]",
+      "description": "Exercise the real browser end-to-end provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-security-preflight [image]",
+      "description": "Exercise the real security provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-tailscale-preflight [image]",
+      "description": "Exercise the real Kubernetes/Tailscale provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    },
+    {
+      "invocation": "./scripts/deploy.sh nova-production-preflights [image] [secret-name]",
+      "description": "Run production-required suite preflights; image falls back to KUBECLAW_PRODUCTION_PREFLIGHT_IMAGE; Secret to KUBECLAW_KUBERNETES_PREFLIGHT_SECRET then kubeclaw-fixture-preflight."
+    },
+    {
+      "invocation": "./scripts/deploy.sh worker-trust-e2e",
+      "description": "Exercise cluster SPIRE identity, mTLS, authorization and source attestation."
+    },
+    {
+      "invocation": "./scripts/deploy.sh buster-infra-smoke",
+      "description": "Publish through Redis and exercise deployed Buster, BuildKit and deployment."
     },
     {
       "invocation": "./scripts/deploy.sh agents",
-      "description": "Deploy agents (Nova + Buster)"
+      "description": "Deploy Nova and Buster from selected runtime values."
     },
     {
-      "invocation": "./scripts/deploy.sh agent <name>",
-      "description": "[--with-code]  Deploy Nova, Buster, or Prism"
+      "invocation": "./scripts/deploy.sh agent <nova|buster> [--with-code]",
+      "description": "Deploy one agent; --with-code additionally preflights, deploys and smoke-checks its code bundle."
     },
     {
-      "invocation": "./scripts/deploy.sh image",
-      "description": "Deploy both agents using image/runtime values"
+      "invocation": "./scripts/deploy.sh agent prism",
+      "description": "Deploy the dedicated Prism release; --with-code is not supported for Prism."
     },
     {
-      "invocation": "./scripts/deploy.sh image <name>",
-      "description": "Deploy one agent using image/runtime values"
+      "invocation": "./scripts/deploy.sh image [nova|buster|both]",
+      "description": "Deploy selected agent images; omitted target means both."
     },
     {
-      "invocation": "./scripts/deploy.sh smoke",
-      "description": "Run pod-level smoke checks for Nova + Buster"
-    },
-    {
-      "invocation": "./scripts/deploy.sh smoke-agent <name>",
-      "description": "Run pod-level smoke checks for one agent"
+      "invocation": "./scripts/deploy.sh code [nova|buster|both]",
+      "description": "Deploy selected code bundles; omitted target means both."
     },
     {
       "invocation": "./scripts/deploy.sh all",
-      "description": "Full deployment (setup + infra + agents)"
+      "description": "Create prerequisites, infrastructure and enabled Prism release, then deploy agents."
+    },
+    {
+      "invocation": "./scripts/deploy.sh smoke",
+      "description": "Run Nova/Buster Pod-level smoke checks."
+    },
+    {
+      "invocation": "./scripts/deploy.sh smoke-agent <nova|buster>",
+      "description": "Run Pod-level smoke checks for one named agent."
     },
     {
       "invocation": "./scripts/deploy.sh status",
-      "description": "Show all pods and services"
+      "description": "Show agents/infrastructure and enabled Prism status."
+    },
+    {
+      "invocation": "./scripts/deploy.sh prism",
+      "description": "Deploy the dedicated multi-workload Prism release."
+    },
+    {
+      "invocation": "./scripts/deploy.sh prism-smoke",
+      "description": "Run Prism smoke checks."
+    },
+    {
+      "invocation": "./scripts/deploy.sh prism-e2e",
+      "description": "Run the Prism end-to-end check."
+    },
+    {
+      "invocation": "./scripts/deploy.sh prism-status",
+      "description": "Show Prism status."
+    },
+    {
+      "invocation": "./scripts/deploy.sh teardown-prism",
+      "description": "Remove the Prism release using its scoped teardown procedure."
     },
     {
       "invocation": "./scripts/deploy.sh teardown",
-      "description": "Remove agents + infra, keep namespace/secrets"
+      "description": "After confirmation, remove agents and infrastructure; preserve namespace and Secrets. PVC cleanup can delete data."
     },
     {
       "invocation": "./scripts/deploy.sh teardown-agents",
-      "description": "Remove agents only, keep infra"
+      "description": "Remove agents only; preserve infrastructure."
     },
     {
       "invocation": "./scripts/deploy.sh teardown-all",
-      "description": "Destroy namespace and everything in it"
+      "description": "After destroy confirmation, remove the namespace and its contents, including Secrets and PVCs."
+    }
+  ],
+  "supplementalCliCommands": [
+    {
+      "sourcePath": "scripts/run-lint-report.mjs",
+      "invocation": "npm run lint:report -- --policy PATH --policy-project ID --output PATH [options]",
+      "behavior": "Every listed option takes one following nonempty value that must not start with --. Repeated scalar options use the last value; repeated list options append. Unknown options and missing required values fail with exit 2. --help returns help before required checks; --include-debt and --include-experimental are no-value booleans documented in Defined Flags. Runtime failure or failed tools use exit 1; blocking findings use exit 3; a successful unblocked report uses exit 0. Kubernetes overrides are passed only when at least one raw-manifest or helm-chart entry exists.",
+      "options": [
+        {
+          "name": "--policy",
+          "value": "PATH",
+          "default": "required",
+          "meaning": "Lint policy file, resolved against the invoking current directory.",
+          "line": 45
+        },
+        {
+          "name": "--policy-project",
+          "value": "ID",
+          "default": "required",
+          "meaning": "Project ID selected within the lint policy.",
+          "line": 46
+        },
+        {
+          "name": "--output",
+          "value": "PATH",
+          "default": "required",
+          "meaning": "Validated JSON report destination, atomically replaced; parent directories are created.",
+          "line": 47
+        },
+        {
+          "name": "--working-directory",
+          "value": "PATH",
+          "default": "current directory",
+          "meaning": "Repository to inspect; resolved to an absolute path.",
+          "line": 48
+        },
+        {
+          "name": "--project",
+          "value": "NAME",
+          "default": "omitted",
+          "meaning": "Project name recorded in the report.",
+          "line": 49
+        },
+        {
+          "name": "--module-path",
+          "value": "PATH",
+          "default": "omitted",
+          "meaning": "Restrict tools to one repository-relative module.",
+          "line": 50
+        },
+        {
+          "name": "--tier",
+          "value": "pre-check|full",
+          "default": "full",
+          "meaning": "Select lint tier; any other value is rejected.",
+          "line": 51
+        },
+        {
+          "name": "--changed-file",
+          "value": "PATH",
+          "default": "empty list; repeatable",
+          "meaning": "Append a changed file restriction in argument order.",
+          "line": 54
+        },
+        {
+          "name": "--raw-manifest",
+          "value": "PATH",
+          "default": "empty list; repeatable",
+          "meaning": "Append a Kubernetes raw input override.",
+          "line": 55
+        },
+        {
+          "name": "--helm-chart",
+          "value": "PATH",
+          "default": "empty list; repeatable",
+          "meaning": "Append a Kubernetes chart input override.",
+          "line": 56
+        }
+      ]
+    },
+    {
+      "sourcePath": "scripts/generate-buster-error-reference.mjs",
+      "invocation": "node scripts/generate-buster-error-reference.mjs [--revision=SHA] [--write]",
+      "behavior": "Requires a full 40-character lowercase hex revision. The revision value uses equals syntax, not a separate following argument. The first --revision= occurrence wins. Without --write, compare generated bytes with the current reader reference; --write replaces it. Other command-line tokens are not used as option definitions by these parsers.",
+      "options": [
+        {
+          "name": "--revision=SHA",
+          "value": "40 lowercase hexadecimal characters",
+          "default": "Existing buster-error-codes.md Evidence revision; no fallback when absent.",
+          "meaning": "Select source citation revision for the generated reference.",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "sourcePath": "scripts/generate-buster-provider-reference.mjs",
+      "invocation": "node scripts/generate-buster-provider-reference.mjs [--revision=SHA] [--write]",
+      "behavior": "Requires a full 40-character lowercase hex revision identifying an existing commit; pinned inputs must match current inputs. The revision value uses equals syntax, not a separate following argument. The first --revision= occurrence wins. Without --write, compare generated bytes with the current reader reference; --write replaces it. Other command-line tokens are not used as option definitions by these parsers.",
+      "options": [
+        {
+          "name": "--revision=SHA",
+          "value": "40 lowercase hexadecimal characters",
+          "default": "Existing provider reference Evidence revision, then 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f.",
+          "meaning": "Select source citation revision for the generated reference.",
+          "line": 12
+        }
+      ]
     }
   ],
   "commandCases": [

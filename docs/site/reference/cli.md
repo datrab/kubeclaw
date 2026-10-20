@@ -9,75 +9,57 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists deployment commands and source-backed operator or developer CLI definitions. Internal documentation and one-time repository tooling remains in the machine inventory but is not a user command surface. Arguments passed to external commands are outside this inventory because their parsers and compatibility contracts belong to those commands; they are not KubeClaw option definitions.
+This page lists deployment commands and source-backed operator or developer CLI definitions. Internal documentation and one-time repository tooling remain in the machine inventory but is not a user command surface. Arguments passed to external commands are outside this inventory because their parsers and compatibility contracts belong to those commands; they are not KubeClaw option definitions.
 
 <!-- BEGIN GENERATED: source-backed reference -->
 
-Generated from: `scripts/deploy.sh`, `docs/generated/inventory/configuration-runtime-inputs.json`
+Generated from: `scripts/deploy.sh`, `scripts/run-lint-report.mjs`, `scripts/generate-buster-error-reference.mjs`, `scripts/generate-buster-provider-reference.mjs`, `docs/generated/inventory/configuration-runtime-inputs.json`
 
 ## Deployment Commands
 
 | Command | Description |
 | --- | --- |
-| `./scripts/deploy.sh setup` | Create namespace + secrets + helm repos |
-| `./scripts/deploy.sh secrets` | Create/copy/prompt required Kubernetes secrets |
-| `./scripts/deploy.sh infra` | Deploy required infra plus optional PostgreSQL/LiteLLM |
-| `./scripts/deploy.sh tailscale` | Deploy Tailscale Kubernetes Operator |
-| `./scripts/deploy.sh native-node-render OUT [POLICY]` | Generate a reviewable host-pool setup bundle |
-| `./scripts/deploy.sh nova-production-preflights <image>` | Run all required proofs after all source cutovers |
-| `./scripts/deploy.sh agents` | Deploy agents (Nova + Buster) |
-| `./scripts/deploy.sh agent <name>` | [--with-code]  Deploy Nova, Buster, or Prism |
-| `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
-| `./scripts/deploy.sh image <name>` | Deploy one agent using image/runtime values |
-| `./scripts/deploy.sh smoke` | Run pod-level smoke checks for Nova + Buster |
-| `./scripts/deploy.sh smoke-agent <name>` | Run pod-level smoke checks for one agent |
-| `./scripts/deploy.sh all` | Full deployment (setup + infra + agents) |
-| `./scripts/deploy.sh status` | Show all pods and services |
-| `./scripts/deploy.sh teardown` | Remove agents + infra, keep namespace/secrets |
-| `./scripts/deploy.sh teardown-agents` | Remove agents only, keep infra |
-| `./scripts/deploy.sh teardown-all` | Destroy namespace and everything in it |
-
-## Command Cases
-
-- `render`
-- `setup`
-- `infra`
-- `secrets`
-- `tailscale`
-- `buildkit-preflight`
-- `native-node-render`
-- `native-node-preflight`
-- `buster-buildkit-smoke`
-- `nova-buildkit-preflight`
-- `nova-unit-preflight`
-- `nova-kubernetes-fixture-preflight`
-- `nova-http-preflight`
-- `nova-a11y-preflight`
-- `nova-api-preflight`
-- `nova-lighthouse-preflight`
-- `nova-visual-preflight`
-- `nova-e2e-preflight`
-- `nova-security-preflight`
-- `nova-tailscale-preflight`
-- `nova-production-preflights`
-- `worker-trust-e2e`
-- `buster-infra-smoke`
-- `agents`
-- `agent`
-- `image`
-- `code`
-- `all`
-- `smoke`
-- `smoke-agent`
-- `status`
-- `prism`
-- `prism-smoke`
-- `prism-e2e`
-- `prism-status`
-- `teardown-prism`
-- `teardown`
-- `teardown-agents`
-- `teardown-all`
+| `./scripts/deploy.sh render <nova\|buster> [image\|code]` | Render the selected release without applying it; image is the default mode. Requires the selected runtime release. |
+| `./scripts/deploy.sh render prism` | Render the dedicated Prism release without applying it. Requires the selected runtime release. |
+| `./scripts/deploy.sh setup` | Create namespace, required Secrets and Helm repositories. |
+| `./scripts/deploy.sh secrets` | Create/copy/prompt required Kubernetes Secrets, including enabled Prism inputs. |
+| `./scripts/deploy.sh infra` | Deploy required infrastructure and enabled optional components. |
+| `./scripts/deploy.sh tailscale` | Deploy the Tailscale Kubernetes Operator. |
+| `./scripts/deploy.sh buildkit-preflight [image] [pull-secret]` | Check rootless BuildKit with a temporary cluster Pod; image defaults to BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE and must be digest-pinned. |
+| `./scripts/deploy.sh native-node-render OUT [POLICY]` | Generate a new reviewable host-pool setup directory; policy defaults to my-values/infra/native-worker-pools.yaml. Does not apply host setup. |
+| `./scripts/deploy.sh native-node-preflight [POLICY]` | Read-only native capacity check on the selected host; policy defaults to my-values/infra/native-worker-pools.yaml. |
+| `./scripts/deploy.sh buster-buildkit-smoke` | Deprecated alias for nova-buildkit-preflight. |
+| `./scripts/deploy.sh nova-buildkit-preflight` | Build, publish, deploy and verify through the Nova/Buster production capability graph. |
+| `./scripts/deploy.sh nova-unit-preflight` | Run a real unit process through Nova and Buster. |
+| `./scripts/deploy.sh nova-kubernetes-fixture-preflight [image] [secret-name]` | Exercise a retained Kubernetes fixture; image falls back to KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE; Secret to KUBECLAW_KUBERNETES_PREFLIGHT_SECRET then kubeclaw-fixture-preflight. |
+| `./scripts/deploy.sh nova-http-preflight [image]` | Exercise the real HTTP provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-a11y-preflight [image]` | Exercise the real browser accessibility provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-api-preflight [image]` | Exercise the real API provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-lighthouse-preflight [image]` | Exercise the real Lighthouse provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-visual-preflight [image]` | Exercise the real visual comparison provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-e2e-preflight [image]` | Exercise the real browser end-to-end provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-security-preflight [image]` | Exercise the real security provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-tailscale-preflight [image]` | Exercise the real Kubernetes/Tailscale provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input. |
+| `./scripts/deploy.sh nova-production-preflights [image] [secret-name]` | Run production-required suite preflights; image falls back to KUBECLAW_PRODUCTION_PREFLIGHT_IMAGE; Secret to KUBECLAW_KUBERNETES_PREFLIGHT_SECRET then kubeclaw-fixture-preflight. |
+| `./scripts/deploy.sh worker-trust-e2e` | Exercise cluster SPIRE identity, mTLS, authorization and source attestation. |
+| `./scripts/deploy.sh buster-infra-smoke` | Publish through Redis and exercise deployed Buster, BuildKit and deployment. |
+| `./scripts/deploy.sh agents` | Deploy Nova and Buster from selected runtime values. |
+| `./scripts/deploy.sh agent <nova\|buster> [--with-code]` | Deploy one agent; --with-code additionally preflights, deploys and smoke-checks its code bundle. |
+| `./scripts/deploy.sh agent prism` | Deploy the dedicated Prism release; --with-code is not supported for Prism. |
+| `./scripts/deploy.sh image [nova\|buster\|both]` | Deploy selected agent images; omitted target means both. |
+| `./scripts/deploy.sh code [nova\|buster\|both]` | Deploy selected code bundles; omitted target means both. |
+| `./scripts/deploy.sh all` | Create prerequisites, infrastructure and enabled Prism release, then deploy agents. |
+| `./scripts/deploy.sh smoke` | Run Nova/Buster Pod-level smoke checks. |
+| `./scripts/deploy.sh smoke-agent <nova\|buster>` | Run Pod-level smoke checks for one named agent. |
+| `./scripts/deploy.sh status` | Show agents/infrastructure and enabled Prism status. |
+| `./scripts/deploy.sh prism` | Deploy the dedicated multi-workload Prism release. |
+| `./scripts/deploy.sh prism-smoke` | Run Prism smoke checks. |
+| `./scripts/deploy.sh prism-e2e` | Run the Prism end-to-end check. |
+| `./scripts/deploy.sh prism-status` | Show Prism status. |
+| `./scripts/deploy.sh teardown-prism` | Remove the Prism release using its scoped teardown procedure. |
+| `./scripts/deploy.sh teardown` | After confirmation, remove agents and infrastructure; preserve namespace and Secrets. PVC cleanup can delete data. |
+| `./scripts/deploy.sh teardown-agents` | Remove agents only; preserve infrastructure. |
+| `./scripts/deploy.sh teardown-all` | After destroy confirmation, remove the namespace and its contents, including Secrets and PVCs. |
 
 ## Component Flags
 
@@ -85,6 +67,41 @@ Generated from: `scripts/deploy.sh`, `docs/generated/inventory/configuration-run
 - `KUBECLAW_DEPLOY_LITELLM`
 - `TAILSCALE_OPERATOR_ENABLED`
 - `ALLOW_PARTIAL_INFRA`
+
+## Additional Public Command Options
+
+`npm run lint:report -- --policy PATH --policy-project ID --output PATH [options]`
+
+Every listed option takes one following nonempty value that must not start with --. Repeated scalar options use the last value; repeated list options append. Unknown options and missing required values fail with exit 2. --help returns help before required checks; --include-debt and --include-experimental are no-value booleans documented in Defined Flags. Runtime failure or failed tools use exit 1; blocking findings use exit 3; a successful unblocked report uses exit 0. Kubernetes overrides are passed only when at least one raw-manifest or helm-chart entry exists.
+
+| Option | Value | Required / default | Meaning | Source |
+| --- | --- | --- | --- | --- |
+| `--policy` | PATH | required | Lint policy file, resolved against the invoking current directory. | [`scripts/run-lint-report.mjs:45`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L45-L45) |
+| `--policy-project` | ID | required | Project ID selected within the lint policy. | [`scripts/run-lint-report.mjs:46`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L46-L46) |
+| `--output` | PATH | required | Validated JSON report destination, atomically replaced; parent directories are created. | [`scripts/run-lint-report.mjs:47`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L47-L47) |
+| `--working-directory` | PATH | current directory | Repository to inspect; resolved to an absolute path. | [`scripts/run-lint-report.mjs:48`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L48-L48) |
+| `--project` | NAME | omitted | Project name recorded in the report. | [`scripts/run-lint-report.mjs:49`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L49-L49) |
+| `--module-path` | PATH | omitted | Restrict tools to one repository-relative module. | [`scripts/run-lint-report.mjs:50`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L50-L50) |
+| `--tier` | pre-check\|full | full | Select lint tier; any other value is rejected. | [`scripts/run-lint-report.mjs:51`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L51-L51) |
+| `--changed-file` | PATH | empty list; repeatable | Append a changed file restriction in argument order. | [`scripts/run-lint-report.mjs:54`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L54-L54) |
+| `--raw-manifest` | PATH | empty list; repeatable | Append a Kubernetes raw input override. | [`scripts/run-lint-report.mjs:55`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L55-L55) |
+| `--helm-chart` | PATH | empty list; repeatable | Append a Kubernetes chart input override. | [`scripts/run-lint-report.mjs:56`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/run-lint-report.mjs#L56-L56) |
+
+`node scripts/generate-buster-error-reference.mjs [--revision=SHA] [--write]`
+
+Requires a full 40-character lowercase hex revision. The revision value uses equals syntax, not a separate following argument. The first --revision= occurrence wins. Without --write, compare generated bytes with the current reader reference; --write replaces it. Other command-line tokens are not used as option definitions by these parsers.
+
+| Option | Value | Required / default | Meaning | Source |
+| --- | --- | --- | --- | --- |
+| `--revision=SHA` | 40 lowercase hexadecimal characters | Existing buster-error-codes.md Evidence revision; no fallback when absent. | Select source citation revision for the generated reference. | [`scripts/generate-buster-error-reference.mjs:10`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/generate-buster-error-reference.mjs#L10-L10) |
+
+`node scripts/generate-buster-provider-reference.mjs [--revision=SHA] [--write]`
+
+Requires a full 40-character lowercase hex revision identifying an existing commit; pinned inputs must match current inputs. The revision value uses equals syntax, not a separate following argument. The first --revision= occurrence wins. Without --write, compare generated bytes with the current reader reference; --write replaces it. Other command-line tokens are not used as option definitions by these parsers.
+
+| Option | Value | Required / default | Meaning | Source |
+| --- | --- | --- | --- | --- |
+| `--revision=SHA` | 40 lowercase hexadecimal characters | Existing provider reference Evidence revision, then 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f. | Select source citation revision for the generated reference. | [`scripts/generate-buster-provider-reference.mjs:12`](https://github.com/datrab/kubeclaw/blob/d01c30192d571b564f9b79061cb5862d45e482f1/scripts/generate-buster-provider-reference.mjs#L12-L12) |
 
 ## Defined Flags
 

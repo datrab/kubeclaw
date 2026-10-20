@@ -19,49 +19,181 @@ function lineNumber(text, needle) {
 }
 
 function parseHeaderUsage(scriptText) {
-  const commands = [];
-  const lines = scriptText.split('\n');
-  const invocationForms = [
-    'native-node-render OUT [POLICY]',
-    'nova-production-preflights <image>',
-    'image <name>',
-    'code <target>',
-    'image',
-    'smoke-agent <name>',
-    'teardown-agents',
-    'teardown-all',
-    'agent <name>',
-    'setup',
-    'secrets',
-    'infra',
-    'tailscale',
-    'agents',
-    'smoke',
-    'all',
-    'status',
-    'teardown',
-  ];
-  for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i];
-    const match = line.match(/^#\s+\.\/deploy\.sh\s+(.+)$/);
-    if (match) {
-      const body = match[1].trim();
-      const form = invocationForms.find((candidate) => body === candidate || body.startsWith(`${candidate} `));
-      if (!form) continue;
-      let description = body.slice(form.length).trim();
-      const next = lines[i + 1] || '';
-      const continuation = next.match(/^#\s{10,}([A-Z].*)$/);
-      if (continuation) {
-        description = `${description} ${continuation[1].trim()}`.trim();
-        i += 1;
-      }
-      commands.push({
-        invocation: `./scripts/deploy.sh ${form}`.trim(),
-        description,
-      });
-    }
-  }
-  return commands;
+  // Explicit public invocation contracts, checked against every main dispatch case.
+  // The header omits commands and sometimes their positional arguments; bare case
+  // names are not a usable reader reference. Do not discover internal functions.
+  const forms = [
+    [
+        "render <nova|buster> [image|code]",
+        "Render the selected release without applying it; image is the default mode. Requires the selected runtime release."
+    ],
+    [
+        "render prism",
+        "Render the dedicated Prism release without applying it. Requires the selected runtime release."
+    ],
+    [
+        "setup",
+        "Create namespace, required Secrets and Helm repositories."
+    ],
+    [
+        "secrets",
+        "Create/copy/prompt required Kubernetes Secrets, including enabled Prism inputs."
+    ],
+    [
+        "infra",
+        "Deploy required infrastructure and enabled optional components."
+    ],
+    [
+        "tailscale",
+        "Deploy the Tailscale Kubernetes Operator."
+    ],
+    [
+        "buildkit-preflight [image] [pull-secret]",
+        "Check rootless BuildKit with a temporary cluster Pod; image defaults to BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE and must be digest-pinned."
+    ],
+    [
+        "native-node-render OUT [POLICY]",
+        "Generate a new reviewable host-pool setup directory; policy defaults to my-values/infra/native-worker-pools.yaml. Does not apply host setup."
+    ],
+    [
+        "native-node-preflight [POLICY]",
+        "Read-only native capacity check on the selected host; policy defaults to my-values/infra/native-worker-pools.yaml."
+    ],
+    [
+        "buster-buildkit-smoke",
+        "Deprecated alias for nova-buildkit-preflight."
+    ],
+    [
+        "nova-buildkit-preflight",
+        "Build, publish, deploy and verify through the Nova/Buster production capability graph."
+    ],
+    [
+        "nova-unit-preflight",
+        "Run a real unit process through Nova and Buster."
+    ],
+    [
+        "nova-kubernetes-fixture-preflight [image] [secret-name]",
+        "Exercise a retained Kubernetes fixture; image falls back to KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE; Secret to KUBECLAW_KUBERNETES_PREFLIGHT_SECRET then kubeclaw-fixture-preflight."
+    ],
+    [
+        "nova-http-preflight [image]",
+        "Exercise the real HTTP provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-a11y-preflight [image]",
+        "Exercise the real browser accessibility provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-api-preflight [image]",
+        "Exercise the real API provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-lighthouse-preflight [image]",
+        "Exercise the real Lighthouse provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-visual-preflight [image]",
+        "Exercise the real visual comparison provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-e2e-preflight [image]",
+        "Exercise the real browser end-to-end provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-security-preflight [image]",
+        "Exercise the real security provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-tailscale-preflight [image]",
+        "Exercise the real Kubernetes/Tailscale provider path through Nova and Buster; select a digest-pinned workload image or its command-specific environment input."
+    ],
+    [
+        "nova-production-preflights [image] [secret-name]",
+        "Run production-required suite preflights; image falls back to KUBECLAW_PRODUCTION_PREFLIGHT_IMAGE; Secret to KUBECLAW_KUBERNETES_PREFLIGHT_SECRET then kubeclaw-fixture-preflight."
+    ],
+    [
+        "worker-trust-e2e",
+        "Exercise cluster SPIRE identity, mTLS, authorization and source attestation."
+    ],
+    [
+        "buster-infra-smoke",
+        "Publish through Redis and exercise deployed Buster, BuildKit and deployment."
+    ],
+    [
+        "agents",
+        "Deploy Nova and Buster from selected runtime values."
+    ],
+    [
+        "agent <nova|buster> [--with-code]",
+        "Deploy one agent; --with-code additionally preflights, deploys and smoke-checks its code bundle."
+    ],
+    [
+        "agent prism",
+        "Deploy the dedicated Prism release; --with-code is not supported for Prism."
+    ],
+    [
+        "image [nova|buster|both]",
+        "Deploy selected agent images; omitted target means both."
+    ],
+    [
+        "code [nova|buster|both]",
+        "Deploy selected code bundles; omitted target means both."
+    ],
+    [
+        "all",
+        "Create prerequisites, infrastructure and enabled Prism release, then deploy agents."
+    ],
+    [
+        "smoke",
+        "Run Nova/Buster Pod-level smoke checks."
+    ],
+    [
+        "smoke-agent <nova|buster>",
+        "Run Pod-level smoke checks for one named agent."
+    ],
+    [
+        "status",
+        "Show agents/infrastructure and enabled Prism status."
+    ],
+    [
+        "prism",
+        "Deploy the dedicated multi-workload Prism release."
+    ],
+    [
+        "prism-smoke",
+        "Run Prism smoke checks."
+    ],
+    [
+        "prism-e2e",
+        "Run the Prism end-to-end check."
+    ],
+    [
+        "prism-status",
+        "Show Prism status."
+    ],
+    [
+        "teardown-prism",
+        "Remove the Prism release using its scoped teardown procedure."
+    ],
+    [
+        "teardown",
+        "After confirmation, remove agents and infrastructure; preserve namespace and Secrets. PVC cleanup can delete data."
+    ],
+    [
+        "teardown-agents",
+        "Remove agents only; preserve infrastructure."
+    ],
+    [
+        "teardown-all",
+        "After destroy confirmation, remove the namespace and its contents, including Secrets and PVCs."
+    ]
+];
+  const cases = parseCaseCommands(scriptText);
+  const covered = new Set(forms.map(([form]) => form.split(' ')[0]));
+  const missing = cases.filter(command => !covered.has(command));
+  const extra = [...covered].filter(command => !cases.includes(command));
+  if (missing.length || extra.length) throw new Error(`Deployment invocation coverage drift: missing=${missing} extra=${extra}`);
+  return forms.map(([form, description]) => ({ invocation: `./scripts/deploy.sh ${form}`, description }));
 }
 
 function parseHeaderEnv(scriptText) {
@@ -106,13 +238,49 @@ function fileInventory(relPath) {
   return yamlFileInventory(relPath, read);
 }
 
+function publicMapCliContracts() {
+  const sourcePath = 'scripts/run-lint-report.mjs';
+  const text = read(sourcePath);
+  const options = [
+    ['--policy', 'PATH', 'required', 'Lint policy file, resolved against the invoking current directory.'],
+    ['--policy-project', 'ID', 'required', 'Project ID selected within the lint policy.'],
+    ['--output', 'PATH', 'required', 'Validated JSON report destination, atomically replaced; parent directories are created.'],
+    ['--working-directory', 'PATH', 'current directory', 'Repository to inspect; resolved to an absolute path.'],
+    ['--project', 'NAME', 'omitted', 'Project name recorded in the report.'],
+    ['--module-path', 'PATH', 'omitted', 'Restrict tools to one repository-relative module.'],
+    ['--tier', 'pre-check|full', 'full', 'Select lint tier; any other value is rejected.'],
+    ['--changed-file', 'PATH', 'empty list; repeatable', 'Append a changed file restriction in argument order.'],
+    ['--raw-manifest', 'PATH', 'empty list; repeatable', 'Append a Kubernetes raw input override.'],
+    ['--helm-chart', 'PATH', 'empty list; repeatable', 'Append a Kubernetes chart input override.'],
+  ];
+  const maps = [...text.matchAll(/const (?:valueOptions|listOptions) = new Map\(\[([\s\S]*?)\]\);/g)];
+  if (maps.length !== 2) throw new Error('Lint report public option-map shape drift');
+  const names = maps.flatMap(match => [...match[1].matchAll(/\['(--[a-z-]+)', '[a-zA-Z]+'\]/g)].map(row => row[1]));
+  if (JSON.stringify(names) !== JSON.stringify(options.map(row => row[0]))) throw new Error('Lint report public option-map contract drift');
+  return [{
+    sourcePath,
+    invocation: 'npm run lint:report -- --policy PATH --policy-project ID --output PATH [options]',
+    behavior: 'Every listed option takes one following nonempty value that must not start with --. Repeated scalar options use the last value; repeated list options append. Unknown options and missing required values fail with exit 2. --help returns help before required checks; --include-debt and --include-experimental are no-value booleans documented in Defined Flags. Runtime failure or failed tools use exit 1; blocking findings use exit 3; a successful unblocked report uses exit 0. Kubernetes overrides are passed only when at least one raw-manifest or helm-chart entry exists.',
+    options: options.map(([name, value, defaultValue, meaning]) => ({ name, value, default: defaultValue, meaning, line: lineNumber(text, `['${name}',`) })),
+  }, ...[
+    ['scripts/generate-buster-error-reference.mjs', 'Existing buster-error-codes.md Evidence revision; no fallback when absent.', 'Requires a full 40-character lowercase hex revision.'],
+    ['scripts/generate-buster-provider-reference.mjs', 'Existing provider reference Evidence revision, then 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f.', 'Requires a full 40-character lowercase hex revision identifying an existing commit; pinned inputs must match current inputs.'],
+  ].map(([sourcePath, fallback, validation]) => ({
+    sourcePath,
+    invocation: `node ${sourcePath} [--revision=SHA] [--write]`,
+    behavior: `${validation} The revision value uses equals syntax, not a separate following argument. The first --revision= occurrence wins. Without --write, compare generated bytes with the current reader reference; --write replaces it. Other command-line tokens are not used as option definitions by these parsers.`,
+    options: [{ name: '--revision=SHA', value: '40 lowercase hexadecimal characters', default: fallback, meaning: 'Select source citation revision for the generated reference.', line: lineNumber(read(sourcePath), 'process.argv.find') }],
+  }))];
+}
+
 function buildDeployScriptInventory() {
   const scriptPath = 'scripts/deploy.sh';
   const text = read(scriptPath);
   const envNames = parseHeaderEnv(text).map((item) => item.name);
   return {
-    generatedFrom: [scriptPath],
+    generatedFrom: [scriptPath, 'scripts/run-lint-report.mjs', 'scripts/generate-buster-error-reference.mjs', 'scripts/generate-buster-provider-reference.mjs'],
     commands: parseHeaderUsage(text),
+    supplementalCliCommands: publicMapCliContracts(),
     commandCases: parseCaseCommands(text),
     environment: parseHeaderEnv(text),
     defaults: parseDefaultAssignments(text, envNames),

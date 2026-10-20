@@ -35,7 +35,7 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists deployment commands and source-backed operator or developer CLI definitions. Internal documentation and one-time repository tooling remains in the machine inventory but is not a user command surface. Arguments passed to external commands are outside this inventory because their parsers and compatibility contracts belong to those commands; they are not KubeClaw option definitions.
+This page lists deployment commands and source-backed operator or developer CLI definitions. Internal documentation and one-time repository tooling remain in the machine inventory but is not a user command surface. Arguments passed to external commands are outside this inventory because their parsers and compatibility contracts belong to those commands; they are not KubeClaw option definitions.
 
 ${generatedNotice([...deploy.generatedFrom, 'docs/generated/inventory/configuration-runtime-inputs.json'])}
 ## Deployment Commands
@@ -45,13 +45,19 @@ ${table(['Command', 'Description'], deploy.commands.map((command) => [
   command.description,
 ]))}
 
-## Command Cases
-
-${deploy.commandCases.map((command) => `- \`${command}\``).join('\n')}
-
 ## Component Flags
 
 ${deploy.componentFlags.map((flag) => `- \`${flag}\``).join('\n')}
+
+## Additional Public Command Options
+
+${(deploy.supplementalCliCommands ?? []).map(command => `\`${command.invocation}\`
+
+${command.behavior}
+
+${table(['Option', 'Value', 'Required / default', 'Meaning', 'Source'], command.options.map(option => [
+  `\`${option.name}\``, option.value, option.default, option.meaning, sourceLink(command.sourcePath, option.line),
+]))}`).join('\n\n')}
 
 ## Defined Flags
 
