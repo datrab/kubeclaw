@@ -1,11 +1,23 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputPath = path.join(repoRoot, 'charts/kubeclaw/files/config/knip.json');
 const checkOnly = process.argv.includes('--check');
+
+// This is an exact retained upstream bundle, not a first-party API we may
+// tree-shake. Keep its bytes pinned before classifying only its export issues
+// as upstream-owned. All other issue types and all first-party exports remain
+// checked; no directory/glob exemption is generated.
+const upstreamNormalization = 'skills/common/plugin-runtime/foundation/config/string-coerce-CIXf7egm.mjs';
+const durationSources = readJson('skills/common/plugin-runtime/foundation/config/gateway-native-duration-sources.json');
+const normalizationDigest = createHash('sha256').update(fs.readFileSync(path.join(repoRoot, upstreamNormalization))).digest('hex');
+if (normalizationDigest !== durationSources['string-coerce-CIXf7egm.mjs']?.sha256) {
+  throw new Error('Knip upstream normalization ownership requires unchanged pinned source bytes');
+}
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, file), 'utf8'));
@@ -190,6 +202,7 @@ for (const directory of pluginDirectories) workspaces[directory] = pluginWorkspa
 
 const config = {
   $schema: 'https://unpkg.com/knip@6/schema.json',
+  ignoreIssues: { [upstreamNormalization]: ['exports'] },
   // Internal helpers are allowed to remain exported for package-local tests and
   // diagnostics; only symbols unused even inside their defining module matter.
   ignoreExportsUsedInFile: true,
