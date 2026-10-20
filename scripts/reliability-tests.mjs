@@ -10,6 +10,7 @@ import { pathToFileURL } from 'node:url';
 export const nativeTests = [
   'buster-admission-cli.test.mjs',
   'buster-historical-import.test.mts',
+  'buster-historical-identities.test.mts',
   'original-boot-admission.test.mts',
   'original-boot-metadata.test.mts',
   'original-initial-state.test.mts',

@@ -319,7 +319,8 @@
         "npm run test:studio-remediation --workspace @kubeclaw/prism",
         "npm run typecheck:integration",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
-        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444"
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
       ]
     },
     {

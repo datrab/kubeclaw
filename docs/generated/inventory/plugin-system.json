@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 1182
+    "files": 1184
   },
   "runtime": {
     "roots": [
@@ -72,6 +72,7 @@
       "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
       "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
       "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "skills/buster/engine/test-gates/preparation-cleanup-policy.ts",
       "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
       "skills/buster/engine/test-gates/preparation-cleanup.ts",
       "skills/buster/engine/test-gates/preparation-client.ts",
@@ -181,6 +182,7 @@
       "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
       "skills/common/plugin-runtime/foundation/config/buster-lifetime.d.mts",
       "skills/common/plugin-runtime/foundation/config/buster-lifetime.mjs",
+      "skills/common/plugin-runtime/foundation/config/buster-preparation-v10.ts",
       "skills/common/plugin-runtime/foundation/config/buster-service-policy.schema.json",
       "skills/common/plugin-runtime/foundation/config/buster-service-policy.ts",
       "skills/common/plugin-runtime/foundation/config/buster-source-replay.mjs",
@@ -2469,6 +2471,7 @@
     "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
     "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
     "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "skills/buster/engine/test-gates/preparation-cleanup-policy.ts",
     "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
     "skills/buster/engine/test-gates/preparation-cleanup.ts",
     "skills/buster/engine/test-gates/preparation-client.ts",
@@ -2709,6 +2712,7 @@
     "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
     "skills/common/plugin-runtime/foundation/config/buster-lifetime.d.mts",
     "skills/common/plugin-runtime/foundation/config/buster-lifetime.mjs",
+    "skills/common/plugin-runtime/foundation/config/buster-preparation-v10.ts",
     "skills/common/plugin-runtime/foundation/config/buster-service-policy.schema.json",
     "skills/common/plugin-runtime/foundation/config/buster-service-policy.ts",
     "skills/common/plugin-runtime/foundation/config/buster-source-replay.mjs",
