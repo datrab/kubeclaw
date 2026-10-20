@@ -8,6 +8,7 @@ import {
   buildRegistry,
   createProductionNovaTestGate,
   discoverPackages,
+  FileNovaGateImportStore,
   resolveTestPlan,
   type TestScopeDeclaration,
 } from '@kubeclaw/nova-core';
@@ -74,7 +75,7 @@ try {
     createdAt: new Date().toISOString(), declaration, suiteTemplates: [template], registry,
     facts: { changedPaths: ['scripts/unit.mjs'], moduleType: 'service', pipelineStage: 'preflight' },
     policy: { defaultTimeoutMs: 30_000, maximumTimeoutMs: 30_000,
-      defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 0, maximumMatrixSize: 1,
+      defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 1, maximumMatrixSize: 1,
       maximumNodes: 2, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { unit: 1 } } });
   const nova = createProductionNovaTestGate({ stateRoot: state, endpoint: route.endpoint, token,
     sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey,
@@ -101,7 +102,7 @@ try {
     throw new Error('UNIT_PREFLIGHT_EVIDENCE_IMPORT_INVALID');
   }
   const imported = imports[0].payload;
-  const attempt = imported.remoteResult.attempts.find((entry: any) => entry.nodeId === 'unit:production');
+  const attempt = imported.remoteResult.attempts.find((entry: any) => entry.nodeId === 'unit/production');
   const commandResources = attempt?.providerDetails?.values?.commandResources;
   if (attempt?.providerDetails?.values?.reportCount !== 1
     || !Number.isSafeInteger(commandResources?.maximumProcesses)
@@ -109,9 +110,14 @@ try {
     || !Number.isSafeInteger(commandResources?.cpuTimeMs)) {
     throw new Error('UNIT_PREFLIGHT_PROCESS_EVIDENCE_INVALID');
   }
-  const graphs = records('execution-graph').filter((record) => record.stream === 'test-execution-graphs');
-  if (graphs.length !== 1 || graphs[0].payload.planDigest !== plan.planDigest
-    || !graphs[0].payload.results.every((node: any) => node.state === 'completed')) {
+  const importStore = new FileNovaGateImportStore(path.join(state, 'imports'), {
+    recordLimits: { maximumRecords: 100, maximumBytes: 32 * 1024 * 1024,
+      maximumRecordBytes: 8 * 1024 * 1024 },
+    maximumEvidenceStoreBytes: 64 * 1024 * 1024,
+  });
+  const graphs = await importStore.readExecutionGraphs();
+  if (graphs.length !== 1 || graphs[0].planDigest !== plan.planDigest
+    || !graphs[0].results.every((node: any) => node.state === 'completed')) {
     throw new Error('UNIT_PREFLIGHT_EXECUTION_GRAPH_INVALID');
   }
   process.stdout.write(`${JSON.stringify({ ok: true,

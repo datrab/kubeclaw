@@ -8,6 +8,7 @@ import {
   buildRegistry,
   createProductionNovaTestGate,
   discoverPackages,
+  FileNovaGateImportStore,
   resolveTestPlan,
 } from '@kubeclaw/nova-core';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
@@ -107,9 +108,14 @@ try {
     || typeof output.reference !== 'string' || !output.reference.endsWith(`@${output.digest}`)) {
     throw new Error('CONTAINER_BUILD_PREFLIGHT_IMAGE_EVIDENCE_INVALID');
   }
-  const graphs = records('execution-graph').filter((record) => record.stream === 'test-execution-graphs');
-  if (graphs.length !== 1 || graphs[0].payload.planDigest !== plan.planDigest
-    || !graphs[0].payload.results.every((node: any) => node.state === 'completed')) {
+  const importStore = new FileNovaGateImportStore(path.join(state, 'imports'), {
+    recordLimits: { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024,
+      maximumRecordBytes: 16 * 1024 * 1024 },
+    maximumEvidenceStoreBytes: 64 * 1024 * 1024,
+  });
+  const graphs = await importStore.readExecutionGraphs();
+  if (graphs.length !== 1 || graphs[0].planDigest !== plan.planDigest
+    || !graphs[0].results.every((node: any) => node.state === 'completed')) {
     throw new Error('CONTAINER_BUILD_PREFLIGHT_EXECUTION_GRAPH_INVALID');
   }
   process.stdout.write(`${JSON.stringify({ ok: true,
