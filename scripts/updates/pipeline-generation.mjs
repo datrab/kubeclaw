@@ -66,7 +66,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const { captureSwarmSettings } = await import(pathToFileURL(path.join(directory, 'swarm.ts')).href);
     const { capturePipelineInputSet } = await import(pathToFileURL(path.join(directory, 'pipeline-input-set.ts')).href);
     const { capturePipelineMaterializerInputSource } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-input-set.ts')).href);
-    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
+    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10GenerationReceipt } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
     const { verifyInstalledRuntimeBundle, assertRuntimeBundleObservations } = await import(pathToFileURL(path.join(directory, 'runtime-bundle-receipt.mjs')).href);
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
@@ -115,6 +115,11 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       const child = selected.find(value => value.service.callerId === 'buster-runtime');
       if (parent.service.serviceInstanceId !== child.service.serviceInstanceId
         || parent.original.profileId !== child.original.profileId) throw new Error('PIPELINE_BUSTER_HANDOFF_SELECTION_MISMATCH');
+    }
+    // Prepare the distinct full-input v10 producer identity, never a relabeled
+    // legacy v1 receipt. Source/caller and output/boot admission remain closed.
+    if (inputSource.rootSchemaVersion === 'pipeline-entry.v10') {
+      createPipelineV10GenerationReceipt(inputSource.declared.capture);
     }
     const captures = [], selections = [];
     for (const service of services) {

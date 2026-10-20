@@ -2,6 +2,9 @@ import { PORTABLE_JSON_ENCODING, portableJson, sha256Text } from '@kubeclaw/plug
 import { swarmReaderAssets, validateSwarmSelection } from './swarm-bundle.ts';
 import type { captureSwarmSettings } from './swarm.ts';
 import type { SwarmSelection } from './swarm-bundle.ts';
+import type { capturePipelineInputSet } from './pipeline-input-set.ts';
+import { preflightPipelineV10Owners } from './swarm-bundle.ts';
+import { composePipelineV10InputSet } from './pipeline-v10-input-set.ts';
 
 type Capture = ReturnType<typeof captureSwarmSettings>;
 type Digest = `sha256:${string}`;
@@ -122,4 +125,37 @@ export function receiveBusterSelectedOwnerProjection(value: unknown, capture: Ca
   const expected = createBusterSelectedOwnerProjection(capture, selection);
   if (portableJson(value) !== portableJson(expected)) throw new Error('BUSTER_SELECTED_OWNER_PROJECTION_MISMATCH');
   return expected;
+}
+
+/** Versioned producer identity for the complete retained v10 source set.
+ * Deliberately distinct from generation.v1: never relabel the v3 codec or infer
+ * source/caller/native authorization from these public source digests.
+ */
+export function createPipelineV10GenerationReceipt(inputs: ReturnType<typeof capturePipelineInputSet>) {
+  inputs.assertCurrent();
+  const replacements = ['config/pipeline.config.json', 'schemas/pipeline-entry.schema.json'].map(name => {
+    const member = inputs.members.find(value => value.relativePath === name);
+    if (!member) throw new Error('PIPELINE_V10_GENERATION_INPUT_SET_REQUIRED');
+    return member;
+  });
+  const declared = composePipelineV10InputSet(replacements);
+  if (portableJson(inputs.members) !== portableJson(declared.members)) throw new Error('PIPELINE_V10_GENERATION_INPUT_SET_REQUIRED');
+  const root = JSON.parse(inputs.read('config/pipeline.config.json').toString('utf8'));
+  const names = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'];
+  const authors = Object.fromEntries(names.map(owner => [owner,
+    JSON.parse(inputs.read(`config/components/${owner}.config.json`).toString('utf8'))]));
+  preflightPipelineV10Owners(root, authors);
+  const profiles = names.flatMap(owner => Object.entries(authors[owner].profiles).map(([profileId, profile]) => ({
+    owner, profileId, digest: sha256Text(portableJson((profile as { settings: unknown }).settings)),
+  })));
+  profiles.sort((a, b) => portableJson([a.owner, a.profileId]) < portableJson([b.owner, b.profileId]) ? -1 : 1);
+  const body = { schemaVersion: 'pipeline-generation.v2' as const, encoding: PORTABLE_JSON_ENCODING,
+    rootSchemaVersion: 'pipeline-entry.v10' as const, inputGenerationSha256: inputs.inputGenerationSha256,
+    files: inputs.members.map(member => ({ path: member.relativePath, byteLength: member.byteLength,
+      digest: `sha256:${member.sha256}` })),
+    readerAssets: [...swarmReaderAssets].sort((a, b) => a.name < b.name ? -1 : 1), profiles };
+  inputs.assertCurrent();
+  const receipt = { ...body, digest: sha256Text(portableJson(body)) };
+  deepFreeze(receipt);
+  return receipt;
 }

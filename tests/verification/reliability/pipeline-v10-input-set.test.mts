@@ -1319,3 +1319,28 @@ test('Buster runtime v2 original network-only policy rejects inactive source bra
   assert.deepEqual(run(runtime), original, 'restored original network-only projection');
   assert.equal(original.activationAllowed, false);
 });
+
+
+test('versioned generation producer binds every retained v10 input and all original owner profiles without activating legacy output', async t => {
+ const { createPipelineV10GenerationReceipt } = await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
+ const root = tree(t), original = capture(root, replacements); t.after(original.capture.close);
+ const receipt = createPipelineV10GenerationReceipt(original.capture);
+ assert.equal(receipt.schemaVersion, 'pipeline-generation.v2');
+ assert.equal(receipt.rootSchemaVersion, 'pipeline-entry.v10');
+ assert.equal(receipt.inputGenerationSha256, original.capture.inputGenerationSha256);
+ assert.equal(receipt.files.length, original.capture.members.length);
+ const subset = capturePipelineInputSet(root, original.capture.members.filter(member => member.relativePath.startsWith('config/') || member.relativePath === 'schemas/pipeline-entry.schema.json'));
+ try { assert.throws(() => createPipelineV10GenerationReceipt(subset), /GENERATION_INPUT_SET_REQUIRED/); } finally { subset.close(); }
+ assert.deepEqual(receipt.files.map(file => file.path), original.capture.members.map(member => member.relativePath));
+ assert.equal(receipt.profiles.filter(profile => profile.owner === 'buster-engine').length, 95);
+ assert.equal(Object.isFrozen(receipt.profiles[0]), true);
+ assert.deepEqual(createPipelineV10GenerationReceipt(original.capture), receipt);
+ const schema = path.join(root, 'schemas/browser/axe.task.schema.json');
+ const bytes = fs.readFileSync(schema); fs.appendFileSync(schema, ' ');
+ assert.throws(() => createPipelineV10GenerationReceipt(original.capture), /INPUT_CHANGED/);
+ original.capture.close(); fs.writeFileSync(schema, bytes);
+ const restored = capture(root, replacements); t.after(restored.capture.close);
+ assert.deepEqual(createPipelineV10GenerationReceipt(restored.capture), receipt);
+ restored.capture.close();
+ assert.throws(() => createPipelineV10GenerationReceipt(restored.capture), /CAPTURE_CLOSED/);
+});
