@@ -226,6 +226,19 @@ try {
  }
  cases.push([selectedCore, handoff, /PREPARATION_SOURCE_MISMATCH/, undefined]);
  cases.push([selectedCore, handoff, null]); // Restored original A still decodes after every negative.
+ // A sibling directory may be created by another native job while A is read.
+ // Exercise that interleaving deterministically without changing archived bytes.
+ const originalReadFileSync = fs.readFileSync;
+ let siblingChanges = 0, archiveMutation, restoreMutation;
+ fs.readFileSync = function(file, ...args) {
+   const bytes = originalReadFileSync.call(this, file, ...args);
+   if (typeof file === 'number' && fs.readlinkSync('/proc/self/fd/'+file) === sourceFile) {
+     const sibling = fs.mkdtempSync(path.join(base, 'unrelated-'));
+     fs.rmdirSync(sibling); siblingChanges++;
+     if (archiveMutation) restoreMutation = archiveMutation();
+   }
+   return bytes;
+ };
  for (const entry of cases) {
    const [core, originalHandoff, denied] = entry;
    const preparation = entry.length === 4 ? entry[3] : selectedPreparation;
@@ -240,8 +253,26 @@ try {
    if (denied) assert.throws(() => store.read(reference), denied);
    else assert.deepEqual(store.read(reference).facts.native.workerCore, selectedCore);
    assert.deepEqual(fs.readFileSync(capsuleFile), bytes);
+   if (entry === cases.at(-1)) {
+     for (const mutate of [
+       () => { fs.chmodSync(sourceFile, 0o644); return () => fs.chmodSync(sourceFile, 0o444); },
+       () => { fs.renameSync(sourceFile, sourceFile+'.saved'); fs.copyFileSync(sourceFile+'.saved', sourceFile); fs.chmodSync(sourceFile, 0o444);
+         return () => { fs.unlinkSync(sourceFile); fs.renameSync(sourceFile+'.saved', sourceFile); }; },
+       () => { fs.chmodSync(sourceDirectory, 0o755); return () => fs.chmodSync(sourceDirectory, 0o700); },
+       () => { fs.renameSync(sourceDirectory, sourceDirectory+'.saved'); fs.symlinkSync(sourceDirectory+'.saved', sourceDirectory);
+         return () => { fs.unlinkSync(sourceDirectory); fs.renameSync(sourceDirectory+'.saved', sourceDirectory); }; },
+     ]) {
+       archiveMutation = mutate;
+       try { assert.throws(() => store.read(reference), /PIPELINE_FILE_CHANGED|BUSTER_BOOT_ARCHIVE_CHANGED/); }
+       finally { archiveMutation = undefined; restoreMutation?.(); restoreMutation = undefined; }
+       assert.deepEqual(store.read(reference).facts.native.workerCore, selectedCore, 'restored original still reads');
+     }
+   }
    fs.unlinkSync(capsuleFile);
  }
+
+ assert.ok(siblingChanges >= cases.length, 'every original read observed unrelated sibling churn');
+ fs.readFileSync = originalReadFileSync;
 
  const sourceCases = [
    [value => { value['generation/pipeline.config.json'].components['buster-engine'] = 'other.json'; }, /PREPARATION_SOURCE_MISMATCH/],

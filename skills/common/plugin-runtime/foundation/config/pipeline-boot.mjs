@@ -403,8 +403,16 @@ export function readBusterBootSourceArchive(receipt) {
         throw new Error('BUSTER_BOOT_ARCHIVE_CODE_CLOSURE_MISMATCH');
       }
     }
-    for (const { file, fd, before } of observations) if ((fd !== undefined && !same(before, fs.fstatSync(fd, { bigint: true })))
-      || !same(before, fs.lstatSync(file, { bigint: true }))) throw new Error('BUSTER_BOOT_ARCHIVE_CHANGED');
+    for (const { file, fd, before } of observations) {
+      // Ancestor directories are identity/trust boundaries, not inventories.
+      // Other native jobs may add siblings (including under /dev) during this
+      // read. Keep full byte/metadata observations for the archive file itself.
+      const unchanged = stat => before.isDirectory()
+        ? stat.isDirectory() && ['dev', 'ino', 'mode', 'uid', 'gid'].every(key => stat[key] === before[key])
+        : same(before, stat);
+      if ((fd !== undefined && !unchanged(fs.fstatSync(fd, { bigint: true })))
+        || !unchanged(fs.lstatSync(file, { bigint: true }))) throw new Error('BUSTER_BOOT_ARCHIVE_CHANGED');
+    }
     for (const file of closure.files) Object.freeze(file);
     Object.freeze(closure.files); Object.freeze(closure.expectedReceipt);
     return Object.freeze(closure);
