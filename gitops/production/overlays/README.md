@@ -12,10 +12,11 @@ remain disabled until resource accounting and ownership adoption are complete.
   annotations select only buster-v2-runtime for the host cgroup namespace.
   The role pool remains host-owned; the entrypoint may delegate the browser
   child to its builder identity. The mount uses Directory, never DirectoryOrCreate.
-  Gateway requests/limits are 250m/1Gi and 1 CPU/2Gi; runtime requests/limits are
-  500m/2Gi and 1.5 CPU/8Gi. These Pod budgets are additional to the host pool;
+  Gateway requests/limits are 250m/1Gi and 1 CPU/24Gi; runtime requests/limits are
+  500m/2Gi and 1.5 CPU/24Gi. These Pod budgets are additional to the host pool;
   this is not an 8Gi total Buster ceiling. Init and proxy budgets are additional.
-  Initial sizing is provisional until real workload measurements establish it.
+  Gateway and runtime memory ceilings are 24Gi each; requests remain unchanged.
+  These ceilings do not reserve 48Gi; monitor concurrent usage against node capacity.
   HTTP registry routing is explicit and retains the existing image authority.
 
 `busterRuntimeResources` is interpreted by `scripts/deploy.sh` through

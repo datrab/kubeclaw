@@ -14,7 +14,7 @@ gateway:
       ephemeral-storage: 1Gi
     limits:
       cpu: '1'
-      memory: 2Gi
+      memory: 24Gi
       ephemeral-storage: 50Gi
 busterRuntimeResources:
   requests:
@@ -23,7 +23,7 @@ busterRuntimeResources:
     ephemeral-storage: 8Gi
   limits:
     cpu: 1500m
-    memory: 8Gi
+    memory: 24Gi
     ephemeral-storage: 60Gi
 extraVolumes:
   - name: buster-v2-state
