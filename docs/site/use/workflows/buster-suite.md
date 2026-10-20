@@ -164,7 +164,8 @@ Resolution must reject, before remote execution:
 - unknown suite or provider identities;
 - unknown configuration fields or invalid values;
 - excluded or overridden node names that do not exist;
-- a retry on a provider that is not retry-safe;
+- a positive retry count on a provider that is not retry-safe without explicit
+  `acceptUnsafeRetry: true`;
 - missing, incompatible, or cyclic links;
 - an unsupported matrix field or oversized expansion;
 - a missing required coverage target; and

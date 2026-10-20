@@ -509,8 +509,12 @@ contract requires structured evidence that shows a failure.
 
 ## Retry, Cancellation, And Cleanup
 
-The resolver assigns a retry only when the provider declares `retrySafe` and policy
-permits a retry. The runner records each attempt. A later pass after an earlier failed
+The resolver permits a positive retry count when policy allows it and the provider
+declares `retrySafe` or the node explicitly sets `acceptUnsafeRetry: true`. Without
+that declaration, a non-retry-safe provider gets no default retries; a positive
+request is rejected unless the node acknowledges the risk. The acknowledgment
+does not grant idempotence or reverse earlier effects. The runner records each
+attempt. A later pass after an earlier failed
 or incomplete attempt is unstable, not indistinguishable from a first-attempt pass.
 
 Provider cancellation uses the execution context signal. The sandbox must terminate

@@ -344,7 +344,8 @@ different facts and both are necessary.
 | --- | --- | --- |
 | `nova omits its plugin` | Source package exists but Nova role does not select it | Add the exact package ID and review closure |
 | `CAPABILITY_PROVIDER_MISSING` | No selected adapter provides a granted capability | Configure an installed provider |
-| `REGISTRY_CAPABILITY_NOT_GRANTED` | Caller requested authority outside its grant | Correct the bounded grant or plugin declaration |
+| `REGISTRY_CAPABILITY_DENIED` | Registry admission found a required capability missing from the granted set | Correct the plugin declaration or its bounded grant before activation |
+| `PLUGIN_CAPABILITY_DENIED` | An executing caller requested a capability outside its grant | Inspect the caller and invocation; correct the bounded grant without broadening unrelated authority |
 | `PIPELINE_STAGE_NOT_ACTIVATED` | Registry knows the stage but activation did not select it | Inspect graph type and enabled registration |
 | `REGISTRY_RESULT_INVALID` | Config, input, result, or checkpoint violates schema | Correct the producer; do not weaken validation |
 | `REQUIRED_OBSERVER_DELIVERY_FAILED` | Required observer exhausted attempts | Repair dependency and resume draining from checkpoint |

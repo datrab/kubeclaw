@@ -266,7 +266,9 @@ configuration, inputs, workspace, log function, signal, and capability calls.
 
 Fixtures can retain a live resource for dependent tests. Their cleanup runs
 after consumers finish. Tests return facts and evidence, not fixture lifecycle
-authority. A non-retry-safe provider cannot gain retries from a suite override.
+authority. A non-retry-safe provider receives no retries by default. A suite can explicitly
+request retries with `acceptUnsafeRetry: true`, within the policy retry limit.
+This acknowledges the risk; it does not make the provider retry-safe.
 
 > [Provider loading verifies the package digest and imports an attempt-owned snapshot](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/provider-loader.ts#L37-L86).
 >

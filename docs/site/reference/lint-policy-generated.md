@@ -166,7 +166,7 @@ sources. Runtime reports include only explicit policy `config_path` digests.
 | `eslint-type-evidence-tests-config.mjs` | explicit policy `config_path` | `ad76b2e0987bc7f8f8df9480d2fc11d8e123b229293811b0f2c4871b7884e138` |
 | `eslint.config.mjs` | explicit policy `config_path` | `688ce808afd2c7f69024ce80d8d82ba1c3642a3daeb8187863464db83b3a3670` |
 | `jscpd.json` | explicit policy `config_path` | `0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9` |
-| `knip.json` | explicit policy `config_path` | `f3b6ced7573925bf338b8d3c9789d794792af62364fae1f227c9c997624b5d23` |
+| `knip.json` | explicit policy `config_path` | `a4cdaefa215be97e2852da29b16bdbf663666fa46bf9239d5ae31f8b65e77bbc` |
 | `jscpd-tests.json` | implicit imported or companion source | `ad5863319bfcde746150cdd37f36664d82a84e075b0bdc341ff151a81b9838b5` |
 | `type-evidence-eslint-plugin.mjs` | implicit imported or companion source | `e80eaa390bc2b0887e7f9d2380f38a1f9d394ec7bfab3f268cd3643b5cc95160` |
 
@@ -177,7 +177,7 @@ versions are also checked against the root entry in its package lock. Python and
 Go analysers installed by the image build use the explicit `versions.json`
 arguments below. Tools supplied as Debian-snapshot packages have no independent
 semantic version authority here: their authority is the built Nova tools image
-identity together with its `DEBIAN_SNAPSHOT` input (`20260901T000000Z`).
+identity together with its `DEBIAN_SNAPSHOT` input (`20261008T000000Z`).
 
 | Analyser | Version | Canonical source |
 | --- | --- | --- |
@@ -203,7 +203,7 @@ identity together with its `DEBIAN_SNAPSHOT` input (`20260901T000000Z`).
 | `typescript` | `5.9.3` | `docker/nova-tools/package.json` direct dependency; lock verified |
 | `typescript-eslint` | `8.64.0` | `docker/nova-tools/package.json` direct dependency; lock verified |
 | `kubernetes-schema-tree` | `c8f4e61c63bc529749125ac566bccc6986e08d45` | `versions.json` source commit; selected tree matches `KUBECTL_VERSION` |
-| `nova-runtime-base` | `2026.9.4@sha256:cc596b846506a5f4cfcee111394a2725f375f01cca2ebb492a161fd1b747f101` | `versions.json` OpenClaw base image identity |
+| `nova-runtime-base` | `2026.10.3@sha256:70b8dbd23f8d27a206f43f9828fdebc87289e50d56dc55177354c9270d764026` | `versions.json` OpenClaw base image identity |
 
 ## Shipped Project
 

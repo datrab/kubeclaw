@@ -53,8 +53,10 @@ port to one exact upstream output. A dependency alone does not transfer data.
 
 `mode: blocking` contributes failure to the gate. `mode: advisory` records the
 result without blocking the gate. A fixture supplies a resource and has no
-quality mode. `retries` is permitted only when the provider declares
-`retrySafe: true`. A retry creates a new attempt identity; it does not erase
+quality mode. Positive `retries` requires `retrySafe: true` or the explicit
+`acceptUnsafeRetry: true` acknowledgment, and must stay within the policy retry
+limit. A non-retry-safe provider gets zero retries when `retries` is omitted.
+A retry creates a new attempt identity; it does not erase
 prior evidence. `concurrencyGroup` uses the resolved group limit.
 
 A condition can produce `skipped`. An unavailable dependency can also skip a

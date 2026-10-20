@@ -1674,7 +1674,7 @@
       "status": "implemented",
       "audience": "plugin author, operator, security reviewer",
       "owner": "plugin-foundation",
-      "appliesTo": "Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities",
+      "appliesTo": "Nova grants, Buster runtime capabilities, plugin declarations, worker profiles, Kubernetes RBAC, and Codex interface boundaries",
       "lastVerified": "generated source listing only; package checks and their limits are recorded on each package page",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
