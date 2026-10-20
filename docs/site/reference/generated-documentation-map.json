@@ -1869,7 +1869,7 @@
       "status": "bounded reference; discovery and recovery limits stated below",
       "audience": "operator, developer, plugin author, maintainer",
       "owner": "documentation; named contract and store components own behavior",
-      "appliesTo": "the eight named contract families and actual selected reader boundaries below",
+      "appliesTo": "the nine named contract families and actual selected reader boundaries below",
       "lastVerified": "2026-10-15; current source behavior checked; no migration, backup or recovery executed",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
@@ -2318,17 +2318,20 @@
     {
       "page": "docs/site/reference/platform-surfaces-generated.md",
       "route": "/reference/platform-surfaces-generated/",
-      "contentKind": "authored",
+      "contentKind": "generated",
       "status": "current",
       "audience": "platform operator, runtime maintainer, security maintainer",
       "owner": "platform maintainers",
       "appliesTo": "dependencies, runtime resources, secret references, server endpoints, outbound connections, stores, events, and Ops MCP tools",
       "lastVerified": "2026-09-21",
       "sourceDependencies": [
+        "scripts/docs-platform-surface-inventory.mjs",
         "docs/generated/inventory/platform-surfaces.json",
         "docs/config/platform-surface-map.json"
       ],
       "checks": [
+        "npm run docs:ap09:platform-inventory:check",
+        "npm run docs:ap09:platform-drift:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2670,7 +2673,7 @@
       "status": "current configuration and contract reference",
       "audience": "platform operator, worker implementer, pipeline author",
       "owner": "worker core and Prism",
-      "appliesTo": "worker protocol v1, profile v2/v3, and current Prism workers",
+      "appliesTo": "worker protocol v1, profile v1/v2/v3, Buster local workers, and current Prism workers",
       "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
       "sourceDependencies": [
         "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",

@@ -9,7 +9,29 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists every current scalar, list, and map in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.
+This page presents an inventory snapshot of scalars, lists, and maps in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Known current omissions are documented before the generated snapshot. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.
+
+## Current Selectors Missing From The Generated Inventory
+
+The generated inventory below is not exhaustive for the current chart. Its stored
+source snapshot omits the following selectors. Use the current chart and selected
+overlays for these values; the generated counts do not include this correction.
+
+| Input | Default or selected value | Consumer and boundary |
+| --- | --- | --- |
+| `discord.requireMention` | Chart default `true`; checked-in Nova overlay selects `false`. | With Discord enabled, the gateway template writes this value to `channels.discord.guilds["*"].requireMention`. Inspect the selected overlay before relying on mention-only routing. |
+| `archviewer.networkPolicyProvider` | Chart default `cilium`; an empty value falls back to `cilium`. | With Archviewer enabled, the Nova-only template accepts `cilium` or `kubernetes`. It emits the corresponding policy resource and rejects other values during rendering. A rendered policy does not prove cluster enforcement. |
+
+Evidence: [chart Discord default](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L188-L190),
+[Nova Discord selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/my-values/nova-values.yaml#L52-L55),
+[gateway consumer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/configmap-gateway.yaml#L234-L242),
+[Archviewer defaults](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L529-L535),
+[Archviewer validation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L1-L8),
+and [policy resource selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L39-L66).
+
+This correction documents those omitted inputs only. Inventory regeneration and
+independent completeness review remain pending; it does not establish exhaustive
+configuration coverage or successful deployment.
 
 <!-- BEGIN GENERATED: source-backed reference -->
 

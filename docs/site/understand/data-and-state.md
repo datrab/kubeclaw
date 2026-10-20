@@ -1017,6 +1017,40 @@ that no journal, result, baseline, report, backup, or active recovery process
 still refers to an object before deletion. Absence from the latest UI is not
 such proof.
 
+### Generic JSON artifact encoding and reads
+
+The generic artifact adapter accepts only `application/json` writes. Omitting
+`encoding` selects legacy `canonicalJson`; the retained `ArtifactRef` has no
+encoding field. Explicit `encoding: "kubeclaw-json.utf16.v1"` selects
+`portableJson` and retains that exact label. Other labels, including `null`,
+fail with `ARTIFACT_ENCODING_UNSUPPORTED`. This is a serialization identity,
+not a declaration that the stored UTF-8 bytes are UTF-16 text.
+
+| Read operation | Selection and result |
+| --- | --- |
+| `get_json` | Select by artifact ID, namespace and digest; return the parsed value, digest, byte size and stored reference. |
+| `get_json_bytes` | Select by the same keys and require the complete `reference` payload; return verified JSON text and the stored reference with the parsed value. Missing reference fails with `ARTIFACT_REFERENCE_REQUIRED`; a candidate with no exact matching reference fails with `ARTIFACT_REFERENCE_CORRUPT`. |
+| `get_latest_json` / `get_latest_json_bytes` | Select the latest completed matching artifact in the caller's run, not the latest artifact across all runs. The bytes variant includes verified JSON text. |
+
+Metadata admission precedes immutable blob publication. A metadata-only write
+intent is not readable completion: reads skip its missing blob and may return
+an older completed match. No completed match yields `ARTIFACT_NOT_FOUND`.
+Corrupt blob bytes yield `ARTIFACT_INTEGRITY_FAILED`; other verification failures
+propagate rather than authorizing a fallback to unchecked data.
+
+Preserve the complete reference and encoding when copying or restoring an
+artifact. Identical digests do not authorize adding or removing a codec label,
+even when the two encoders happen to produce identical bytes. Stop on reference
+or integrity failure; reconcile the producer's retained checkpoint, metadata and
+blob before retrying. Do not relabel a retained reference to force a read.
+These rules describe local adapter and checkpoint behavior, not a successful
+remote backup or restore exercise.
+
+> **Source evidence:**
+> [Legacy locale ordering and explicit portable UTF-16 code-unit key ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/values.ts#L45-L63).
+> [Adapter encoding, read selection, verification and metadata-before-blob publication](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L38-L173).
+> [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L39-L106).
+
 ## Backup Groups
 
 | Group | Include | Writer fence | Restore order | Current automation boundary |

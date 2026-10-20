@@ -23,6 +23,7 @@ Generated from: `scripts/deploy.sh`, `docs/generated/inventory/configuration-run
 | `./scripts/deploy.sh secrets` | Create/copy/prompt required Kubernetes secrets |
 | `./scripts/deploy.sh infra` | Deploy required infra plus optional PostgreSQL/LiteLLM |
 | `./scripts/deploy.sh tailscale` | Deploy Tailscale Kubernetes Operator |
+| `./scripts/deploy.sh native-node-render OUT [POLICY]` | Generate a reviewable host-pool setup bundle |
 | `./scripts/deploy.sh nova-production-preflights <image>` | Run all required proofs after all source cutovers |
 | `./scripts/deploy.sh agents` | Deploy agents (Nova + Buster) |
 | `./scripts/deploy.sh agent <name>` | [--with-code]  Deploy Nova, Buster, or Prism |

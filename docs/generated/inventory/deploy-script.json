@@ -20,6 +20,10 @@
       "description": "Deploy Tailscale Kubernetes Operator"
     },
     {
+      "invocation": "./scripts/deploy.sh native-node-render OUT [POLICY]",
+      "description": "Generate a reviewable host-pool setup bundle"
+    },
+    {
       "invocation": "./scripts/deploy.sh nova-production-preflights <image>",
       "description": "Run all required proofs after all source cutovers"
     },
@@ -336,12 +340,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 869,
-    "secrets": 906,
-    "tailscale": 997,
-    "infra": 1092,
-    "agents": 1454,
-    "smoke": 1579,
-    "teardown": 2824
+    "setup": 855,
+    "secrets": 892,
+    "tailscale": 983,
+    "infra": 1078,
+    "agents": 1440,
+    "smoke": 1565,
+    "teardown": 2810
   }
 }

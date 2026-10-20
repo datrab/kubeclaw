@@ -4,7 +4,7 @@ Status: bounded reference; discovery and recovery limits stated below
 Audience: operator, developer, plugin author, maintainer
 Owner: documentation; named contract and store components own behavior
 Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; contracts/prism/v1/src/index.ts; contracts/delivery-manifest/v3/src/index.ts; skills/common/plugin-runtime/foundation/observability/record-retirement.ts
-Applies to: the eight named contract families and actual selected reader boundaries below
+Applies to: the nine named contract families and actual selected reader boundaries below
 Last verified: 2026-10-15; current source behavior checked; no migration, backup or recovery executed
 
 ## Identify the contract before changing a version
@@ -72,9 +72,42 @@ rollback between arbitrary versions.
 | Delivery manifest v2/v3 | Project-summary producer returns v2 when delivery encoding is absent; otherwise calls v3 creator | `delivery-manifest.v3`, semantic `delivery-manifest.utf16-v1` and artifact encoding are distinct. Closed v3 keys and recursive relations apply. This producer branch does not prove every downstream reader, converter or safe removal direction | [Nova project](nova-project.md), [compatibility](configuration-compatibility.md) |
 | Durable adapter records/stores v1/v2 | Record replay checks version/owner; explicit retirement selects current v2 records under domain and store fences | v1 header has no owner; v2 requires a valid owner. Supported read/replay does not authorize retirement. Tombstones retain replay identity without payload; no general age-based garbage collection or blob deletion follows | [Stores and retention](stores-and-retention.md), [recovery](../use/recovery.md) |
 | Telemetry/agent envelopes | Active lifecycle/domain v2 and separate host schema 1; delivered flat telemetry v1 remains a distinct asset | An equal version number does not join these envelopes. Retained flat assets do not implement ingestion, ordering, retention or authentication; external reader applicability must be assessed before removal | [Telemetry](../understand/telemetry.md), [retained contract source](../../../contracts/telemetry/v1/README.md) |
+| Optional demo product decision | Prism records an operator intent, signs `demo-product-decision.v1` inside `demo-product-decision-envelope.v1`, and sends it to the configured controller | Enabled only by `PRISM_PRODUCT_DECISIONS_ENABLED=true`. Status recovery reuses the recorded signed envelope; it does not issue a replacement decision. No automatic version conversion or retirement is established | [Decision wire contract](#optional-demo-product-decision-wire-contract) |
 
 **Source — actual extension callers:**
 [package-local registration module/schema acquisition](../../../skills/common/plugin-runtime/foundation/registry/build.ts#L32-L70) (`skills/common/plugin-runtime/foundation/registry/build.ts:32-70`, current-checkout SHA-256 `c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867`). [stage config/input validation](../../../skills/nova/core/execution/runner.ts#L40-L46) (`skills/nova/core/execution/runner.ts:40-46`, current-checkout SHA-256 `9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6`). [returned stage result validation](../../../skills/nova/core/execution/stage-executor.ts#L35-L48) (`skills/nova/core/execution/stage-executor.ts:35-48`, current-checkout SHA-256 `4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb`). [checkpoint sequence/eventId validation](../../../skills/nova/core/telemetry/observers.ts#L51-L58) (`skills/nova/core/telemetry/observers.ts:51-58`, current-checkout SHA-256 `b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd`).
+
+### Optional demo product decision wire contract
+
+The feature flag controls availability, not contract identity. When enabled,
+Prism requires an explicit operator allowlist, HTTPS origins, a dedicated Ed25519
+signing key, and controller CA/token files. Session authorization and mutation
+Origin/CSRF checks precede recording. Disabled routes return HTTP 404.
+
+| Layer | Marker and exact binding |
+| --- | --- |
+| Operator intent | Closed fields `decisionId`, `action`, `reason`, `subject`; `extensionSeconds` only for `extend`. Actions are `accept` or `extend`. The ID is a lowercase hexadecimal UUID-shaped string. Reason is nonblank and at most 2000 UTF-8 bytes. Extension is an integer from 1 through 9223372036 seconds. |
+| Subject | Required `leaseName`, `leaseUID`, `sourceRevision`, `candidateDigest`, `resultDigest`, `readyDigest`, `generation`, `expectedExpiry`, `expectedRevision`, `url`, `runId`. Generation is a positive safe integer; other fields are nonempty strings of at most 2048 characters at this parser boundary. This does not establish controller-side digest or lease acceptance. |
+| Signed payload | `demo-product-decision.v1`: subject fields except `url` and `runId`, plus `issuer`, `actorId`, decision/action/reason, `issuedAt`, `expiresAt`, and extension seconds only for `extend`. Expiry is bounded by five minutes and the operator session, rounded down to whole seconds. |
+| Envelope | `demo-product-decision-envelope.v1`, base64 payload bytes and base64 signature. Ed25519 signs the UTF-8 domain `kubeclaw.demo-product-decision.v1` followed by one NUL byte and the exact JSON payload bytes. The payload digest is SHA-256 of those bytes, not the envelope. |
+| Receipt | `demo-product-decision-receipt.v1`; Prism checks decision/payload/actor/issuer/lease/ready/generation bindings, action and expected state, previous and resulting expiry, applied timestamp, and equality of the recorded envelope. A returned object alone is not accepted as a bound receipt. |
+
+Prism durably records the intent and envelope before reconciling with the
+controller. It requests `/v1/demo-product/status` using
+`demo-product-status-request.v1`; on failure it resends the identical envelope
+to `/v1/demo-product/decisions`. An unconfirmed result remains `pending` (HTTP
+202). Recover the same decision through its operator-owned recovery route;
+do not create a replacement to resolve a lost response.
+
+A reused decision ID must match the recorded actor and normalized intent digest.
+Changing an intent under the same ID is rejected. Preserve the original envelope,
+receipt, issuer verification material, and lease identity while reconciliation or
+retained audit readers require them. These sources establish the current Prism
+writer and receipt reader, not a future-version converter, downgrade, key-removal
+schedule, or safe deletion procedure. Stop retirement until those consumers and
+outstanding decisions are reconciled. No live controller execution is claimed.
+
+**Source — current Prism decision boundaries:** [intent, feature configuration and signer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/control/product-decisions.ts#L6-L72); [receipt binding and identical-envelope reconciliation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/server/product-decisions.ts#L9-L42); [durable intent identity and receipt conflict checks](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/storage/product-decisions.ts#L9-L29).
 
 ### A readable snapshot can still be unrecoverable with changed inputs
 
@@ -150,7 +183,7 @@ empty accounting field or rewrite retained state to make it load.
 A partial migration needs its domain owner and supported recovery route before
 writers resume. Unknown external consumers are a stop condition for removal.
 
-The eight families above are source-bounded examples with concrete selected
+The nine families above are source-bounded examples with concrete selected
 callers, not an exhaustive inventory of logical IDs, schemas, embedded
 validators, all engine operations or every writer/reader pair. Other host,
 OpenClaw/Codex, operations and external contract roots remain to be reconciled.

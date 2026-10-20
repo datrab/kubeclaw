@@ -18,10 +18,11 @@ guidance separately from generated facts. The publication generator
 reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated
 refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.
 
-The plugin-foundation owner maintains purpose, use, exclusion, and limit text in
-`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains
-the manifest and schema facts. Do not edit generated catalogue pages as a second
-authority. Change the owning input, then regenerate and run the declared checks.
+The plugin-foundation owner maintains purpose, use, exclusion, and limit text.
+The source component owner maintains manifest and schema facts.
+Do not edit generated catalogue pages as a second authority.
+Follow the [documentation maintenance procedure](../documentation-maintenance.md#generate-only-owned-facts-then-check)
+to change the owning input, regenerate, and run the declared checks.
 
 ## Stage Packages
 

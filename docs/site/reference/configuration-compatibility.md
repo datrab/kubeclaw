@@ -37,10 +37,17 @@ be mixed with that snapshot.
 | `execution-graph-snapshot.v2` | No new authoring | Recover only | Recovery rebuilds using the stored version before digest comparison. |
 | `worker-attempt-envelope/result/profile.v3` | Author for native Prism | Read | Uses native-attempt-tree resources and Linux tasks. Producer, worker, and result versions must agree. |
 | Worker v2 envelope/result/profile | Author for current Prism agent launcher | Read | Uses resource capability/budget v1 and `maximumProcesses`; unavailable measurement is explicit. |
-| Worker v1 retained records | No new authoring | Read where the v1 contract path is selected | No resource-accounting fields may be inferred. Do not turn absence into zero. |
+| Worker v1 envelope/result/profile | Author for current Buster local test execution; also retained records | Read where the v1 contract path is selected | Buster creates capability-selected `buster.local.<capability-key>` profiles and new v1 attempts using `buster-test-engine` / `kubeclaw.buster-engine@1`, bound to the registry snapshot digest. No resource-accounting fields may be inferred. Do not turn absence into zero. |
 | `worker-protocol.v1` | Author | Read | Exact protocol value in current worker versions. |
 | Prism native pool policy schema `1` | Host preparation | Read | Exact role, node, digest, paths, and positive aggregate limits; actual cgroup must match. |
 | Compact swarm profile `standard` | Shipped test/runtime authoring | Read only by callers of the expander | Exact feature/tuning assertions; unknown profiles/paths reject. Not a pipeline-platform version. |
+
+Buster v1 is a current producer, not a retained-only compatibility path.
+The [profile constructor](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L566-L588)
+selects `provider.execute` plus granted provider capabilities and binds the engine
+to the registry snapshot. The [attempt constructor](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L1518-L1525)
+creates new `worker-attempt-envelope.v1` records. This does not change the
+separate Prism v2 agent and v3 native authoring routes or prove live execution.
 
 ## What pins a Nova run
 

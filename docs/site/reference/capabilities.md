@@ -187,7 +187,7 @@ Resource scopes use the constraint lists in the vocabulary above; invocation aut
 > [Platform schema](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/config/platform.schema.json); [platform loader](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/config/platform.ts); [grant and provider resolution](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/capabilities.ts); [resource authorization](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/execution/authorization.ts).
 
 Stop if a procedure asks you to authorize a Nova plugin by adding a role or grant to compact swarm overrides.
-Use the separately validated Nova platform policy and the plugin registration requirements instead; do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.
+Use the separately validated Nova platform policy and the plugin registration requirements instead. Do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.
 
 ## Wait/Resume Example Grant Policy
 

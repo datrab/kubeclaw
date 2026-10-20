@@ -274,14 +274,14 @@ node --test --test-name-pattern='reviewed illustrative rejection' scripts/tests/
 
 The first command must fail with exit 1, no manifest output, and the named
 missing-runtime-container diagnostic. Its template line number may move when
-unrelated earlier template code changes; compare the guard, not just the line
+unrelated earlier template code changes; compare the guard as well as the line
 number. The second command checks rejection, changed input, changed diagnostic,
 and unexpected success against a synthetic chart; it does not validate this
 product profile or any live cluster. After source review and the authentic
 render, update only the reviewed chart digests and exact observed diagnostic,
 then rerun the owning inventory generator. Discovery separately checks the
 source-bound derived input and an uninstrumented render; do not update those
-bindings just to bypass a failure.
+bindings to bypass a failure.
 
 Stop before deployment: this illustration is still incomplete. Follow the
 [configuration selection procedure](../use/install.md#select-configuration)
@@ -297,7 +297,7 @@ Discovery must also render genuinely new output branches. The Archviewer
 the default exercises `CiliumNetworkPolicy`, while the explicit Kubernetes
 profile exercises `networking.k8s.io/v1 NetworkPolicy`. Boolean toggles cannot
 select an enum branch. `API_PRODUCT_HELM_BRANCH_UNDISCOVERED` remains a failed
-baseline until the named branch has an appropriate constructor profile; do not
+baseline until a constructor profile renders the named branch; do not
 disable branch witnesses or count that failure as a mutation PASS. These are
 offline output profiles, not proof that either policy is enforced by a cluster.
 

@@ -29,19 +29,25 @@ product needs a supported publisher, revision selection, or independent scaling.
 >
 > [The image contains only Nginx configuration and an initially empty `/designs` directory](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.archviewer#L1-L22).
 >
-> [The chart refuses non-Nova roles and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/archviewer.yaml#L1-L10).
+> [The chart refuses non-Nova roles, invalid policy providers, and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L1-L13).
 
 ## Request Path
 
 The container listens on TCP 3456. A dedicated ClusterIP Service exposes that
-port. A Tailscale Ingress publishes the configured private hostname. A
-CiliumNetworkPolicy permits port 3456 only from the Tailscale operator proxy
-that owns this exact Ingress.
+port. A Tailscale Ingress publishes the configured private hostname.
+`archviewer.networkPolicyProvider` selects `cilium` (the default) or `kubernetes`.
+The chart renders a CiliumNetworkPolicy or standard Kubernetes NetworkPolicy,
+respectively. Both select Nova pods and admit TCP 3456 from the Tailscale operator
+namespace and the proxy labels for this exact Ingress.
 
-The Archviewer option therefore requires the Tailscale Ingress controller and
-the Cilium CRD even though the main pipeline can run with another CNI. This is
-an Archviewer deployment dependency, not a pipeline dependency. The template
-does not have a non-Cilium policy variant.
+The Tailscale Ingress controller is required for both variants. Only the `cilium`
+variant requires the Cilium CRD. For a non-Cilium deployment, explicitly select
+`kubernetes` and use a CNI that enforces Kubernetes NetworkPolicy. Any other
+provider value fails chart rendering. A successful render proves the selected
+resource shape, not live network enforcement or equivalent whole-platform
+security. Verify permitted proxy access and denied unrelated-pod access before
+relying on the policy. Policies are additive: another applicable allow policy
+can broaden access, so inspect all policies selecting the Nova pod.
 
 This policy is additional defense, not the only authentication. Nginx requires
 HTTP Basic authentication for documents. The htpasswd file comes from key
@@ -52,14 +58,15 @@ unknown document returns 404.
 | Value | Default or rule |
 | --- | --- |
 | `archviewer.enabled` | `false` |
+| `archviewer.networkPolicyProvider` | `cilium`; accepts `cilium` or `kubernetes` |
 | `archviewer.existingSecret` | Required when enabled |
 | `archviewer.hostname` | `nova-architecture` |
 | `archviewer.tailscaleOperatorNamespace` | `tailscale` |
 | Service/container port | 3456/TCP, fixed |
 
 `archviewer.enabled` renders only the dedicated Service, Tailscale Ingress,
-Cilium policy, and authentication Secret volume. It does not inject the Nginx
-container or `/designs` mount. The current Nova deployment supplies those
+selected network policy, and authentication Secret volume. It does not inject
+the Nginx container or `/designs` mount. The current Nova deployment supplies those
 separately through `extraContainers`. Thus both configuration parts must agree:
 enabling the access resources without the sidecar leaves a Service with no
 listener on pod port 3456; adding the sidecar without `archviewer.enabled` leaves no
@@ -69,7 +76,9 @@ dedicated private publication route or auth volume.
 >
 > [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/archviewer.nginx.conf#L1-L19).
 >
-> [Service, Tailscale Ingress, and Cilium policy bind the same private endpoint](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/archviewer.yaml#L11-L53).
+> [The current chart validates the provider and renders the private Service, Ingress, and selected policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L5-L80).
+>
+> [The current values default to Cilium](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L529-L539).
 >
 > [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L1644-L1652).
 
@@ -101,8 +110,8 @@ volume manually.
 
 The empty directory is valid, so health can be green while no presentation is
 published. Health proves only that Nginx is running and its configuration loaded.
-It does not prove authentication, Tailnet routing, Cilium policy, Secret quality,
-or document presence.
+It does not prove authentication, Tailnet routing, network-policy enforcement,
+Secret quality, or document presence.
 
 The checked-in Nova example injects the sidecar through `extraContainers`,
 mounts the workspace subpath `prism/designs`, and currently names the image
@@ -122,17 +131,18 @@ release receipt before deployment.
 
 | Symptom | Likely boundary | Recovery |
 | --- | --- | --- |
-| Helm render fails | Wrong role, missing hostname/Secret, or duplicate legacy port. | Correct values; do not bypass the template guard. |
+| Helm render fails | Wrong role, invalid policy provider, missing hostname/Secret, or duplicate legacy port. | Correct values; do not bypass the template guard. |
 | Health works, document returns 401 | Credentials absent or wrong. | Use an account present in the mounted htpasswd file. |
 | Document returns 403 | htpasswd file is unavailable or Nginx cannot read it. | Repair the Secret mount and file mode. |
 | Document returns 404 | File is not present under `/designs`; no supported publisher creates it. | Stop. Preserve the request and mounted-volume observations. Do not restart Nginx or write a file manually; publication needs an implemented producer contract. |
 | Tailnet hostname does not connect | Tailscale Ingress, DNS, Service, or proxy ownership failed. | Trace the Ingress and exact proxy labels before changing Nginx. |
-| Connection is denied only with Cilium | Policy does not recognize the owning proxy. | Compare namespace and parent-resource labels with the rendered policy. |
+| Connection is denied by the selected network policy | Policy does not recognize the owning proxy. | Compare namespace and parent-resource labels with the rendered CiliumNetworkPolicy or NetworkPolicy; do not disable the policy. |
 
 ## Operation And Supported Changes
 
 After a deployment change, render the chart and verify the Nova-only guard,
-Secret name and `htpasswd` key, sidecar port, read-only `/designs` mount,
+policy provider and CNI enforcement support, Secret name and `htpasswd` key,
+sidecar port, read-only `/designs` mount,
 Service selector, Ingress hostname, and exact Tailscale proxy labels. In the
 running environment, distinguish these observations:
 
@@ -156,4 +166,4 @@ The native reliability test starts real Nginx and proves unauthenticated and
 wrong-password denial, authenticated retrieval, disabled listing, fail-closed
 behavior after credential removal, and independent health. It runs only when
 `ARCHVIEWER_TEST_NGINX` points to a real Nginx binary. It does not prove live
-Tailscale DNS, TLS, or Cilium enforcement.
+Tailscale DNS, TLS, or network-policy enforcement.

@@ -4,7 +4,7 @@ Status: current configuration and contract reference
 Audience: platform operator, worker implementer, pipeline author
 Owner: worker core and Prism
 Evidence: contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json; skills/worker/core/worker/local-runtime.ts; skills/worker/core/worker/native-pool-policy.ts; skills/prism/engine/worker-envelope.ts; skills/prism/server/agent-attempt.ts
-Applies to: worker protocol v1, profile v2/v3, and current Prism workers
+Applies to: worker protocol v1, profile v1/v2/v3, Buster local workers, and current Prism workers
 Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 
 ## Use the correct identity concept
@@ -21,7 +21,34 @@ one for another.
 | Native pool role | Host-generated pool policy | Binds a worker process to one host cgroup pool, node identity, capacity, and ownership store. |
 | Database role | Prism database bootstrap | Separates schema changes, application access, and read-only access. It is unrelated to worker profiles. |
 
-## Current worker profile (`worker-profile.v3`)
+## Current Buster local profiles (`worker-profile.v1`)
+
+Buster creates new v1 profiles and attempts; v1 is not retained-only history.
+Its [profile constructor](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L553-L603)
+selects provider-declared capabilities granted for the node. A node-ID grant
+entry takes precedence over a package/registration-ID grant entry; if neither entry exists, the grant list is empty. The profile adds `provider.execute`, deduplicates and sorts
+that capability set, then hashes its NUL-separated names. The first 16 hex
+characters form `buster.local.<capability-key>`.
+
+The profile has worker type `buster`, core contract `kubeclaw.worker-core@1`,
+engine `buster-test-engine`, engine contract `kubeclaw.buster-engine@1`, and
+engine version `1.0.0`. Engine `contentDigest` is the registry snapshot digest;
+`profileDigest` binds the complete profile without its digest field.
+
+Unless a caller supplies a worker runtime, Buster [registers a local worker](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L737-L755)
+as `worker:buster:local`, advertises the plan's distinct profile digests and
+`worker-protocol.v1`, and uses `maximumConcurrency` as count capacity.
+The [attempt producer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L1518-L1580)
+creates a new `worker-attempt-envelope.v1` bound to that worker and selected
+profile, with the node's granted capabilities and v1 limits.
+
+The [closed v1 profile schema](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json#L107-L133)
+has no `resourceCapabilities`. Do not infer v2/v3 measurement scope, measured
+native-attempt-tree resources, or native pool admission from this local v1
+registration. Missing resource observations are not zero use. This source path
+does not establish a deployed or remotely scheduled Buster worker.
+
+## Native worker profile (`worker-profile.v3`)
 
 The profile is a closed object. Every field is required. A producer computes
 `profileDigest` over the profile without the digest field. An attempt carries

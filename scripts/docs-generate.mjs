@@ -679,8 +679,8 @@ The Surface column identifies the receiving process. A \`maintainer-verification
 
 1. Find the variable, then select the consumer source for the command or workload you are configuring. The same name can have different defaults and validation in different processes.
 2. Read that consumer's accepted form, empty-value behavior, precedence, and failure boundary. Precedence is local to that consumer; table order does not define a global override order.
-3. Follow the Surface guidance. For an injected value, change the owning Helm, GitOps, Secret, or generated-configuration input rather than exporting a second value in your terminal. An internal shell assignment is not an operator setting.
-4. Verify the effective workload configuration and the consumer's documented health or failure signal. Finding a source reference, generating this table, or passing a syntax check does not establish that a deployed process received the value.
+3. Follow the Surface guidance. For an injected value, change the owning Helm, GitOps, Secret, or generated-configuration input. Do not export a competing terminal value. An internal shell assignment is not an operator setting.
+4. Verify the effective workload configuration and the consumer's documented health or failure signal. Source references, table generation, and syntax checks do not prove that a deployed process received the value.
 
 Embedded Node or Python readers inside shell scripts and YAML payloads are receiving processes too. Their presence does not make their inputs externally configurable. An injection-only row proves a producer, not the receiving program's defaults or validation; use the named external authority before changing it. Secret classifications describe provenance and handling, not verified live access control. Do not print Secret values when checking effective configuration.
 
@@ -784,6 +784,25 @@ ${table(['Command', 'Description'], commands.map((command) => [
   command.description,
 ]))}
 ${generatedEnd()}
+## Command Effects And Authority
+
+The deployment commands above are not all read-only verification. Run them from
+the repository root with the intended Kubernetes context and namespace selected.
+The platform maintainer owns this deployment route; use the [CLI reference](cli.md)
+and [operator procedure](../use/operate.md) for prerequisites and recovery.
+
+| Command family | Effect and required authority | Expected observation and stop boundary |
+| --- | --- | --- |
+| \`image\`, \`image <name>\` | Mutates the selected agent deployment through \`cmd_image\` → \`deploy_agent\` in image mode. Requires deployment write authority, not only permission to inspect pods. | Applies selected image/runtime values and waits for deployment health. A failure can follow partial mutation; inspect the selected release before recovery. Do not run as a read-only check. |
+| \`nova-production-preflights <image>\` | Runs live production-suite preflights after source-cutover checks. Requires the individual preflights' cluster, execution and external-service authority; can create workloads, images and receipts. | Each required proof must succeed. Stop on failure; do not equate partial results with whole-suite acceptance or retry unknown external effects blindly. |
+| \`smoke\`, \`smoke-agent <name>\` | Inspects deployed workloads, waits for readiness and executes gateway/health/file checks inside containers. Requires cluster read and pod-exec authority. \`smoke\` also checks Prism when enabled. | Successful checks establish only the tested pod/health boundary, not a full pipeline run. Diagnose a failed check before changing deployments. |
+| \`status\` | Reads resource status; includes Prism status when enabled. Requires resource-read authority in the selected namespaces. | Displays observed resources, not functional pipeline acceptance. Missing or unhealthy resources require diagnosis, not an automatic redeploy. |
+
+These effects follow the dispatch and \`cmd_image\`, \`cmd_smoke_agent\`, \`cmd_smoke\`,
+\`cmd_status\` and \`cmd_nova_production_preflights\` implementations in
+[scripts/deploy.sh](../../../scripts/deploy.sh). No command here has been executed
+against a live deployment as part of this documentation correction.
+
 ## Local Documentation And Deployment Checks
 
 \`\`\`bash
@@ -852,7 +871,7 @@ ${pipeline}
 
 ## Product pipeline source revision
 
-The product pipeline declarations above are generated from revision \`${sourceRevision}\`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
+The documentation generator derives the product pipeline declarations above from revision \`${sourceRevision}\`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
 
 ${pipelineSources.map(source => `### Source: ${source}\n\n${sourceRangeLinks(source)}`).join('\n\n')}
 

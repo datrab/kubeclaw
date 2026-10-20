@@ -55,7 +55,7 @@ top-level stage field in this table is required.
 | `stages[].execution` | Required closed object | All budgets and deadlines for this node. |
 | `stages[].execution.maxAttempts` | Required integer ≥ 1 | Total invocation ceiling, including initial work and attempts needed for configured repair policy. |
 | `stages[].execution.maxRemediationCycles` | Required integer ≥ 0 | Direct repair-cycle ceiling when no category budget owns the repair. |
-| `stages[].execution.maxTechnicalRetries` | Optional integer 0–100 | Technical retry allowance. If omitted, category-budget validation treats it as zero. |
+| `stages[].execution.maxTechnicalRetries` | Schema-optional integer 0–100 | Technical retry allowance. Graph validation requires an explicit value when a repair budget applies to this stage. Use `0` for no technical retries; omission does not default to zero. |
 | `stages[].execution.repairCategory` | Optional local ID | Charges a failed check's repair request to a category on its repair owner. The owner must declare that category. |
 | `stages[].execution.repairBudget` | Optional closed object | Declares categorized repair limits owned by this stage. |
 | `...repairBudget.categories` | Required non-empty object with at most 32 local-ID keys; each value integer 0–100 | Per-category maximum repair orders. A zero explicitly denies the category. |
@@ -70,6 +70,13 @@ numbers, strings, arrays, and objects. The envelope does not set size limits;
 the selected registration schema can impose them.
 
 ## Graph rules beyond JSON Schema
+
+A stage that owns `execution.repairBudget` must set `maxTechnicalRetries`.
+A requester whose `repairCategory` selects its repair owner's budget must also set it.
+Omission in either case fails with `GRAPH_TECHNICAL_RETRY_BUDGET_INVALID:<stage-id>`.
+An explicit `0` satisfies this field check; the attempt ceiling must still cover
+the initial attempt and all permitted repair orders. Without an applicable budget,
+this graph check permits omission.
 
 Core builds and validates the graph after contract validation:
 

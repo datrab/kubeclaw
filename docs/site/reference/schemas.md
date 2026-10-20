@@ -125,7 +125,7 @@ or controller run is demonstrated here.
 
 | Authority / reader route | Source identity and consumer | Version and interpretation boundary |
 | --- | --- | --- |
-| [worker-v1](../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json) | [validator / checkPipelineWorkerCoreContract](../../../contracts/pipeline-worker-core/v1/src/validation.ts#L23-L30); [PipelineWorkerCoreDefinition](../../../contracts/pipeline-worker-core/v1/src/types.ts#L262-L274); [attempt version dispatch / evidence/log/result validation](../../../skills/worker/core/worker/attempt-executor.ts#L188-L203) | Base/retained v1; selected dispatch still exists; older does not automatically mean deprecated. |
+| [worker-v1](../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json) | [validator / checkPipelineWorkerCoreContract](../../../contracts/pipeline-worker-core/v1/src/validation.ts#L23-L30); [PipelineWorkerCoreDefinition](../../../contracts/pipeline-worker-core/v1/src/types.ts#L262-L274); [attempt version dispatch / evidence/log/result validation](../../../skills/worker/core/worker/attempt-executor.ts#L188-L203) | Active Buster v1 producer, not retained-only: [profile constructor](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L566-L585) creates `worker-profile.v1`; [attempt constructor](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L1518-L1525) creates new `worker-attempt-envelope.v1`. The executor selects the v1 validator for these envelopes. See [current Buster local profiles](worker-profiles-and-roles.md#current-buster-local-profiles-worker-profilev1) for capability, registration and resource-accounting limits; no v2/v3 resource semantics or deployed execution is implied. |
 | [worker-v2](../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json) | [checkWorkerResourceContractV2 / validateWorkerResourceContractV2](../../../contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts#L10-L17); [version dispatch](../../../skills/worker/core/worker/attempt-executor.ts#L188-L190) | Selected v2 resource branch; process accounting and additional relation checks. |
 | [worker-v3](../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json) | [checkWorkerResourceContractV3 / validateWorkerResourceContractV3](../../../contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts#L10-L17); [version dispatch](../../../skills/worker/core/worker/attempt-executor.ts#L188-L190); [worker admission](../../../skills/prism/server/worker-service.ts#L84-L94) | Native v3 resource branch; task accounting and Prism admission, not v2 process semantics. |
 | [prism-chart-values](../../../charts/prism/values.schema.json) | [chart identity](../../../charts/prism/Chart.yaml#L1-L6); [render / invalid-value test declaration](../../../tests/verification/deployment/prism-product-decisions.test.mjs#L17-L25) | Helm chart-root input; rendered templates and external Helm validation are separate from plugin registry validation. |
@@ -133,7 +133,56 @@ or controller run is demonstrated here.
 | [nova-project-v2-validator](../../../skills/nova/project/compiler.ts) `object/text/id/absolute/strings / compileProject` | [project JSON acquisition / compileProject](../../../skills/nova/project/cli.ts#L30-L39) | Executable closed input validation, not an invented project.schema.json; helper-built graph has its own validation. |
 | [review-verification-inline](../../../skills/nova/plugins/review/src/echo-review-verification-contract.ts) `echoReviewVerificationOutputSchema` | [outputContract / parseEchoReviewVerificationDispatchResponse](../../../skills/nova/plugins/review/src/scalable-review-verification.ts#L296-L303); [parseEchoReviewVerificationOutput / parseEchoReviewVerificationDispatchResponse](../../../skills/nova/plugins/review/src/echo-review-verification-parser.ts#L108-L123) | Embedded outputContract plus manual response parser; generated companion equality not established. |
 | [review-bundle-inline](../../../skills/nova/plugins/review/src/review-bundle-contract.ts) `reviewBundleSchema, portableReviewBundleSchema` | [rendered/additional outputs and --check branch](../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L5-L41) | Embedded legacy/portable source objects; generator maintains two companions. Runtime version selection/parity not fully traced. |
-| [review-policy-inline](../../../skills/nova/plugins/review/src/review-policy-contract.ts) `REVIEW_POLICY_SCHEMA_VERSION / reviewPolicySchema` | Embedded source object; runtime selection not fully traced | Source version is v2; old v1 retention/deprecation and resolver parity are unresolved. |
+| [review-policy-inline](../../../skills/nova/plugins/review/src/review-policy-contract.ts) `REVIEW_POLICY_SCHEMA_VERSION / reviewPolicySchema` | [parseReviewPolicy](../../../skills/nova/plugins/review/src/review-policy-parser.ts#L262-L274); [resolveReviewPolicy](../../../skills/nova/plugins/review/src/review-policy-resolver.ts#L60-L86) | Current parser requires v2. Every supplied candidate is validated; the last authorized source wins as a complete policy, not a field merge. See the policy selection rules below. |
+
+### Optional demo decision executable authority
+
+The optional demo product decision path is an executable contract, not a
+registered plugin schema. `parseProductIntent` checks closed intent and subject
+objects before the POST route records the decision. `signProductIntent` emits
+`demo-product-decision.v1` inside `demo-product-decision-envelope.v1`; the
+signature binds the exact payload bytes under the domain
+`kubeclaw.demo-product-decision.v1` followed by one NUL byte. Feature selection
+requires `PRISM_PRODUCT_DECISIONS_ENABLED=true`; being optional does not remove
+this public input from the schema-authority map.
+
+The receiving Prism `receiptFor` checks `demo-product-decision-receipt.v1`
+against the recorded decision and envelope. This is distinct from the external
+controller's admission and signature verification; Prism-side source inspection
+does not establish those remote checks or a successful execution.
+[The wire-contract reference](contracts.md#optional-demo-product-decision-wire-contract)
+gives exact fields, limits, consumers and identical-envelope recovery rules.
+No automatic version conversion, downgrade or retirement path is established;
+retain the recorded envelope and reconcile outstanding decisions before removal.
+
+**Source:** [intent parser, signer and feature selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/control/product-decisions.ts#L6-L72);
+[POST consumer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/server/product-decisions.ts#L56-L62);
+[bound receipt and reconciliation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/server/product-decisions.ts#L9-L40).
+No live controller or migration check was run for this entry.
+
+### Review policy selection and rejected versions
+
+The current policy parser accepts only `review-policy.v2`. Keeping the v1
+schema file does not make v1 a valid input to that parser. Do not relabel a
+retained v1 policy as v2; construct and validate the complete current policy.
+This statement does not establish a migration path for older consumers.
+
+`resolveReviewPolicy` always validates the built-in policy first. It then
+validates a supplied settings-file policy and an authorized run override, in
+that order. The last supplied candidate replaces the entire policy; fields
+are not merged. An invalid lower-priority candidate still stops resolution.
+An override requires `authorized === true`; otherwise resolution throws
+`run_override review policy is not authorized` rather than falling back.
+
+Retain the selected source and policy digest for diagnosis. Correct the owning
+input or authorization before retrying; do not bypass the version guard.
+A valid policy does not prove a successful review or permission to execute it.
+
+**Source:** [skills/nova/plugins/review/src/review-policy-parser.ts:256–274](../../../skills/nova/plugins/review/src/review-policy-parser.ts#L256-L274) (committed-source SHA-256 `24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb`).
+
+**Source:** [skills/nova/plugins/review/src/review-policy-resolver.ts:45–86](../../../skills/nova/plugins/review/src/review-policy-resolver.ts#L45-L86) (committed-source SHA-256 `c05b626889142e5cf8bd8b9c30446c9bef87b3a7ac5d9dd10799ff769c9dc0ad`).
+
+**Source:** [skills/nova/plugins/review/scripts/generate-policy-schema.mjs:6–13](../../../skills/nova/plugins/review/scripts/generate-policy-schema.mjs#L6-L13) (committed-source SHA-256 `7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64`).
 
 For Worker definitions select the exact `$defs` entry (for example
 `workerProfile`, `workerAttemptEnvelope` or `workerAttemptResult`) and then
@@ -206,9 +255,9 @@ from a filename. No companion is labelled obsolete without version evidence.
 | [`skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json`](../../../skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json) | [source object -> output / --check](../../../skills/nova/plugins/review/scripts/generate-verification-schema.mjs#L5-L21) | No generation/parity command executed. |
 | [`skills/nova/plugins/review/schemas/review-bundle.v1.schema.json`](../../../skills/nova/plugins/review/schemas/review-bundle.v1.schema.json) | [reviewBundleSchema / rendered output](../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L5-L21) | Legacy number is not automatic deprecated status. |
 | [`skills/nova/plugins/review/schemas/review-bundle.v2.schema.json`](../../../skills/nova/plugins/review/schemas/review-bundle.v2.schema.json) | [portableReviewBundleSchema / additional](../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L24-L41) | No parity or execution proof. |
-| [`skills/nova/plugins/review/schemas/review-policy.v1.schema.json`](../../../skills/nova/plugins/review/schemas/review-policy.v1.schema.json) | Version/consumer relationship not established | Current constant v2 is insufficient to infer all old consumers absent; retain unresolved applicability. |
-| [`skills/nova/plugins/review/schemas/review-policy.v2.schema.json`](../../../skills/nova/plugins/review/schemas/review-policy.v2.schema.json) | Version/consumer relationship not established | Current in-source schema object has same version marker; no exact generated schema equality or resolver path acceptance inferred. |
-| [`skills/nova/plugins/review/schemas/review-report.v1.schema.json`](../../../skills/nova/plugins/review/schemas/review-report.v1.schema.json) | Version/consumer relationship not established | No absence or deprecation assertion from basename. Outside registration selector; requires source owner version-mapping follow-up. |
+| [`skills/nova/plugins/review/schemas/review-policy.v1.schema.json`](../../../skills/nova/plugins/review/schemas/review-policy.v1.schema.json) | [current parser version guard](../../../skills/nova/plugins/review/src/review-policy-parser.ts#L262-L274) | Retained v1 file is not accepted by this current parser. No automatic migration or repository-wide absence of older consumers is asserted. |
+| [`skills/nova/plugins/review/schemas/review-policy.v2.schema.json`](../../../skills/nova/plugins/review/schemas/review-policy.v2.schema.json) | [schema generator](../../../skills/nova/plugins/review/scripts/generate-policy-schema.mjs#L6-L13); [resolver](../../../skills/nova/plugins/review/src/review-policy-resolver.ts#L60-L86) | Generated from the current policy source object; current parser requires v2. Schema-byte equality and runtime tests are separate checks, not implications of the filename. |
+| [`skills/nova/plugins/review/schemas/review-report.v1.schema.json`](../../../skills/nova/plugins/review/schemas/review-report.v1.schema.json) | [current report validator](../../../skills/nova/plugins/review/src/review-report-contract.ts#L218-L235); [governor history consumer](../../../skills/nova/plugins/review/src/review-governor-history.ts#L49-L59) | Retained v1 schema declares `review-report.v1` and no required governor. Current validator requires a governor; history accepts v2 without semantic encoding and v3 with semantic encoding, not v1. Keep retained v1 bytes with their original reader; do not relabel them or infer automatic migration. Repository-wide absence of older consumers is not established. |
 | [`skills/nova/plugins/review/schemas/review-report.v2.schema.json`](../../../skills/nova/plugins/review/schemas/review-report.v2.schema.json) | [report source object acquisition](../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L24-L27) | Current report validator accepts declared/portable versions; exact JSON companion parity not proved. |
 | [`skills/nova/plugins/review/schemas/review-report.v3.schema.json`](../../../skills/nova/plugins/review/schemas/review-report.v3.schema.json) | [portable report output](../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L24-L41) | No generated-byte parity or runtime exercise performed. |
 

@@ -75,11 +75,38 @@ wire constraint or establish every payload's recursive semantics.
 | --- | --- | --- |
 | `PipelineRunner.run` append | New lifecycle envelope; sequence from `appendSequenced`, fresh event ID, supplied identity/payload and causation | Recovery and event consumers need the original run/graph identity and event type |
 | `StageExecutor` plugin-context append | Domain envelope with owner provenance and attempt ID as causation | Registration authority and actual payload meaning remain distinct from the generic JSON-object shape |
+| Observer plugin-context append | Domain envelope with observer provenance and delivery ID as causation | Same canonical journal, but a new event ID/sequence; it is not the delivery wrapper or checkpoint |
 | `effectAppender` | `effect.requested`, `effect.accepted`, `effect.completed` or `effect.failed` with effect/attempt identity | Attempts whose ID starts `observer:` are excluded from this bridge to prevent observer-effect feedback |
 | OpenClaw agent-events adapter | `plugin.kubeclaw.openclaw-agent-events.<hook-with-hyphens>` from its supported hook and normalized identity/payload | This granted domain adapter is not the separate host Redis observer or an unconstrained hook registry |
 
 **Source — actual appenders and selected hook mapping:**
 [PipelineRunner.run lifecycle append](../../../skills/nova/core/execution/runner.ts#L60-L77) (`skills/nova/core/execution/runner.ts:60-77`, current-checkout SHA-256 `9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6`). [StageExecutor plugin-context domain append](../../../skills/nova/core/execution/stage-executor.ts#L82-L97) (`skills/nova/core/execution/stage-executor.ts:82-97`, current-checkout SHA-256 `4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb`). [effectAppender observer feedback exclusion](../../../skills/nova/core/execution/engine-runtime.ts#L53-L61) (`skills/nova/core/execution/engine-runtime.ts:53-61`, current-checkout SHA-256 `de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec`). [SUPPORTED_HOOKS](../../../skills/common/plugins/openclaw-agent-events/src/adapter.ts#L5-L10) (`skills/common/plugins/openclaw-agent-events/src/adapter.ts:5-10`, current-checkout SHA-256 `665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7`). [normalized hook domain emit](../../../skills/common/plugins/openclaw-agent-events/src/adapter.ts#L70-L80) (`skills/common/plugins/openclaw-agent-events/src/adapter.ts:70-80`, current-checkout SHA-256 `665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7`).
+
+### OpenClaw hook payload is a projection, not the raw hook
+
+All supported hooks in the granted `openclaw-agent-events` adapter share the
+same `openclaw-agent-event.v2` payload: `schemaVersion`, `observedFields` and
+`metrics`. `observedFields` contains sorted, truncated field names, not their
+values. The adapter excludes identity keys and keys matching its sensitive-name
+filter, then keeps at most the first 128 remaining entries; each observed name
+is limited to 128 characters. This is a bounded projection, not a promise that
+all raw fields survive or that a raw hook payload is retained.
+
+`metrics` keeps only allowlisted duration, latency, count, token-count, success,
+cached and status-code keys whose values are finite numbers or booleans. String
+values are not copied. Consumers must not reconstruct prompts, tool arguments
+or results from this record. Identity is normalized separately: nested camelCase,
+nested snake_case, top-level camelCase, then top-level snake_case, selecting the
+first non-nullish value. An invalid selected run ID drops the hook; it does not
+fall through to a later candidate. Optional stage/attempt IDs must be nonempty
+strings of at most 512 characters or are omitted.
+
+See the actual [normalization and projection implementation](../../../skills/common/plugins/openclaw-agent-events/src/adapter.ts#L12-L71).
+Observer-produced domain records instead retain the payload supplied by the
+granted observer, with its provenance and delivery causation; see the
+[observer append path](../../../skills/nova/core/telemetry/observer-delivery.ts#L37-L40).
+Neither generic envelope shape establishes a universal payload schema for other
+plugin producers.
 
 The platform surface inventory extracts selected lifecycle names, the shipped
 OpenClaw domain adapter's hooks and agent-observability ingress names. It does

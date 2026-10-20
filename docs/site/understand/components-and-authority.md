@@ -307,7 +307,7 @@ A deterministic boundary must still verify identity, evidence, and policy.
 ## The Plugin Runtime: The Controlled Connection Layer
 
 A plugin package declares one or more registrations.
-The registry knows these registration kinds:
+The plugin registry knows five registration kinds:
 
 | Kind | Purpose | Can change lifecycle state? |
 | --- | --- | --- |
@@ -316,7 +316,17 @@ The registry knows these registration kinds:
 | Capability adapter | Performs a controlled external effect. | No. It returns a receipt. |
 | Test provider | Performs one declared Buster test operation. | No. |
 | Report adapter | Reads one declared report format and normalizes facts. | No. |
-| OpenClaw extension | Connects OpenClaw hooks to a host integration. | No pipeline authority. |
+
+OpenClaw host extensions are a separate packaging surface, not a sixth plugin
+registration kind. Runtime role manifests list them under `extensions`, separately
+from `plugins`. A host extension connects host hooks to an integration; packaging
+it does not grant pipeline lifecycle authority.
+
+> **Source evidence — Registration and host-extension boundaries**
+>
+> [The plugin manifest defines the five registration arrays](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L448).
+>
+> [Nova packages host extensions separately from plugins](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/packaging/runtime/roles/nova.json#L58-L62).
 
 Discovery means that the runtime found and validated a package declaration.
 Registration means that the fixed registry contains its declared surface.

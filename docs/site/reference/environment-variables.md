@@ -17,8 +17,8 @@ The Surface column identifies the receiving process. A `maintainer-verification-
 
 1. Find the variable, then select the consumer source for the command or workload you are configuring. The same name can have different defaults and validation in different processes.
 2. Read that consumer's accepted form, empty-value behavior, precedence, and failure boundary. Precedence is local to that consumer; table order does not define a global override order.
-3. Follow the Surface guidance. For an injected value, change the owning Helm, GitOps, Secret, or generated-configuration input rather than exporting a second value in your terminal. An internal shell assignment is not an operator setting.
-4. Verify the effective workload configuration and the consumer's documented health or failure signal. Finding a source reference, generating this table, or passing a syntax check does not establish that a deployed process received the value.
+3. Follow the Surface guidance. For an injected value, change the owning Helm, GitOps, Secret, or generated-configuration input. Do not export a competing terminal value. An internal shell assignment is not an operator setting.
+4. Verify the effective workload configuration and the consumer's documented health or failure signal. Source references, table generation, and syntax checks do not prove that a deployed process received the value.
 
 Embedded Node or Python readers inside shell scripts and YAML payloads are receiving processes too. Their presence does not make their inputs externally configurable. An injection-only row proves a producer, not the receiving program's defaults or validation; use the named external authority before changing it. Secret classifications describe provenance and handling, not verified live access control. Do not print Secret values when checking effective configuration.
 

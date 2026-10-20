@@ -139,6 +139,32 @@ checks. A ready service can still reject a later envelope or budget.
 **Source — availability probe versus per-request authentication:**
 [checkWorkerNonceTable availability-only query](../../../skills/prism/server/worker-readiness.ts#L8-L10) (`skills/prism/server/worker-readiness.ts:8–10`, current-checkout SHA-256 `b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e`). [WorkerNonceDatabase.run / check / authenticate](../../../skills/prism/server/worker-readiness.ts#L87-L103) (`skills/prism/server/worker-readiness.ts:87–103`, current-checkout SHA-256 `b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e`). [PostgresNonceStore.consume conflict detection](../../../skills/prism/server/internal-auth.ts#L26-L49) (`skills/prism/server/internal-auth.ts:26–49`, current-checkout SHA-256 `e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72`). [verifyInternalRequest signature and replay rejection](../../../skills/prism/server/internal-auth.ts#L52-L87) (`skills/prism/server/internal-auth.ts:52–87`, current-checkout SHA-256 `e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72`). [actual worker request authentication before dispatch](../../../skills/prism/server/worker-service.ts#L55-L60) (`skills/prism/server/worker-service.ts:55–60`, current-checkout SHA-256 `90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4`).
 
+## Runtime target configuration rejection
+
+`RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:<key>` is an error message, not a typed
+`RegistryError.code`. The suffix is the exact unsupported target property name.
+For example, `RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:extraOption` identifies
+`extraOption`; it does not identify the target or a failed remote operation.
+Preserve the selected target identity separately, without secret values.
+
+For the OpenClaw runtime adapter, `targetsFrom` validates each target against
+its explicit allowed-key set. It throws on the first unknown own enumerable
+property. `activate` calls this parser before creating the dispatch adapter.
+This rejection prevents that activation from returning a usable adapter; it is
+not an HTTP response or evidence of a dispatched request. It does not establish
+the outcome of work submitted by another adapter instance or an earlier run.
+
+Stop activation retries with unchanged input. Compare the selected target
+configuration with the OpenClaw configuration schema and parser for that release.
+Correct the misspelled property, or remove an unsupported property after checking
+its intended behavior. Do not disable exact-key validation or assume that another
+runtime adapter accepts the same fields. Revalidate before activation; a corrected
+configuration alone does not prove host readiness or successful task execution.
+Reconcile any earlier uncertain operation separately before resubmitting work.
+
+**Source — OpenClaw target keys, exact suffix, parser and activation order:**
+[openclaw-config.ts:4–7](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L4-L7) [openclaw-config.ts:51–54](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L54) [openclaw-config.ts:82–86](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L82-L86) [openclaw-adapter.ts:18–24](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L18-L24)
+
 ## Diagnose uncertainty before retry
 
 | Observation | First distinction | Preserve / next decision |

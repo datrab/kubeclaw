@@ -56,10 +56,10 @@ do not repair a mismatch by weakening its source guard.
 > **Source — evidence revisions**
 >
 > Claim: selected catalogue evidence uses the documentation source revision; plain Evidence links in staged pages use HEAD.
-> Implementation: `scripts/docs-publication.mjs`, `sourceEvidenceLink`, lines 147–164; `build` Evidence conversion, lines 993–1013.
+> Implementation: [sourceEvidenceLink](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L148-L166); Evidence conversion in [build](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L1060-L1096).
 > Contract: the catalogue checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.
 > Validation: no build or test execution for this statement.
-> Checkout identity: publisher SHA-256 `c5eeab7ccabf48343ff7a118c8d74da2dd3300dfbe57271008f5248bbc2ecd70`. This identifies the current file bytes, not a claimed committed revision.
+> Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.
 > Limit: these locators do not provide a rendered snippet or prove that HEAD contains local changes. Reconcile the source bytes before creating a commit permalink.
 
 The build does not render an inline code-evidence box or retrieve a displayed
@@ -160,10 +160,10 @@ unprepared or restricted environment.
 > **Source — publication modes and owned output**
 >
 > Claim: generation writes its owned pages/section; checking compares inputs; staging removes its output only after input checks and then writes sequentially.
-> Implementation: `scripts/docs-publication.mjs`, `generate`, lines 713–721; `compareGenerated`, lines 723–735; `checkSite` input selection, lines 831–854; `build` and report, lines 993–1027.
+> Implementation: [generate](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L780-L788); [compareGenerated](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L790-L802); input selection in [checkSite](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L898-L1058); staging and report in [build](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L1060-L1096).
 > Contract: `package.json` selects the explicit generate/check/build modes. The report lists declared checks and input identity, not browser results.
 > Validation: no mode or helper test execution for this statement.
-> Checkout identity: publisher SHA-256 `c5eeab7ccabf48343ff7a118c8d74da2dd3300dfbe57271008f5248bbc2ecd70`; no committed revision asserted for these file bytes.
+> Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.
 > Limit: initialization, source/Git prerequisites and selected helper effects still apply. The staging directory is not an atomic publication transaction or rendered site.
 
 Inspect `.tmp/docs-publication/build-report.json` and its sibling pages/assets.

@@ -411,10 +411,21 @@ unrelated registrations retain the same identities.
 
 ### 5. Replace or remove
 
-For replacement, add and validate the new exact package before disabling the old
-one. Prove the new functional path, drain old pinned runs, then remove old
-selection and grants. Do not delete the old package while a run snapshot or
-validator can still reference it.
+For replacement, stage the new exact package outside the active discovery roots.
+Have the platform owner select a candidate package set containing only one package
+for each manifest ID. For a same-ID replacement, its candidate `installationRoots`
+must discover the new package instead of the old package, never both. Disabling
+an adapter, observer, or grant does not remove its package from discovery.
+[Registry construction rejects duplicate package IDs before activation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/foundation/registry/build.ts#L276-L283)
+with `REGISTRY_PACKAGE_DUPLICATE`.
+
+Repeat the compile procedure against that candidate configuration and prove the
+new functional path before changing new-run admission. Stop if discovery includes
+both versions or the owner cannot isolate their package sets. Keep the previous
+configuration and exact digest-bound packages available for old pinned runs and
+recovery; do not move or delete packages they still reference. Drain those runs
+before retiring old selection and grants. Existing runs do not adopt the new
+package merely because new admission selects it.
 
 For external package removal, stop after drain unless an approved operator tool
 calls the owned removal API with authorization and a direct child of the

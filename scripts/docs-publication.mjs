@@ -442,10 +442,11 @@ function catalogueIndex() {
     'reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated',
     'refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.',
     '',
-    'The plugin-foundation owner maintains purpose, use, exclusion, and limit text in',
-    '`docs/blueprint/AP08-catalogue-guidance.json`. The source component owner maintains',
-    'the manifest and schema facts. Do not edit generated catalogue pages as a second',
-    'authority. Change the owning input, then regenerate and run the declared checks.',
+    'The plugin-foundation owner maintains purpose, use, exclusion, and limit text.',
+    'The source component owner maintains manifest and schema facts.',
+    'Do not edit generated catalogue pages as a second authority.',
+    'Follow the [documentation maintenance procedure](../documentation-maintenance.md#generate-only-owned-facts-then-check)',
+    'to change the owning input, regenerate, and run the declared checks.',
   ];
   for (const [kind, entries] of groups) {
     lines.push('', `## ${kind[0].toUpperCase()}${kind.slice(1)} Packages`, '');
@@ -750,7 +751,7 @@ function capabilityPage() {
     'Resource scopes use the constraint lists in the vocabulary above; invocation authorization additionally checks the concrete operation and resource.', '',
     `> ${sourceLink('Platform schema', path.join(root, 'skills/common/plugin-runtime/foundation/config/platform.schema.json'))}; ${sourceLink('platform loader', path.join(root, 'skills/common/plugin-runtime/foundation/config/platform.ts'))}; ${sourceLink('grant and provider resolution', path.join(root, 'skills/common/plugin-runtime/foundation/registry/capabilities.ts'))}; ${sourceLink('resource authorization', path.join(root, 'skills/nova/core/execution/authorization.ts'))}.`, '',
     'Stop if a procedure asks you to authorize a Nova plugin by adding a role or grant to compact swarm overrides.',
-    'Use the separately validated Nova platform policy and the plugin registration requirements instead; do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.', '',
+    'Use the separately validated Nova platform policy and the plugin registration requirements instead. Do not infer a role-to-grant translation or an effective deployment policy from the chart defaults.', '',
     '## Wait/Resume Example Grant Policy', '',
     'This is the shipped wait/resume example template, not the chart default or an effective deployment policy.',
     'Registration identities select consumers and providers; constraint lists restrict the allowed resource scopes.',
@@ -804,7 +805,8 @@ function compareGenerated() {
 const metadataFields = ['Status', 'Audience', 'Owner', 'Evidence', 'Applies to', 'Last verified'];
 const vague = /\b(simply|obviously|appropriate|properly|normally|just|easy|easily|somehow|various)\b/iu;
 const passive = /\b(?:is|are|was|were|be|been)\s+(?:performed|handled|processed|executed|validated|generated|created|written|provided|configured|managed|implemented|defined|recorded|resolved|accepted|granted)\b/iu;
-const legacyTerms = /\b(?:needs_nova|action_required)\b/u;
+// needs_nova remains an active Prism AgentJob wire state, not a removed term.
+const legacyTerms = /\baction_required\b/u;
 
 function stripMarkdown(line) {
   return line.replace(/\[[^\]]+\]\([^)]+\)/gu, 'LINK').replace(/`[^`]+`/gu, 'TERM').replace(/^[-*]\s+/u, '');

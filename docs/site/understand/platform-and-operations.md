@@ -675,8 +675,13 @@ provider call timed out.
 
 Nova and Buster also enable distinct Discord bot channels. Each role receives a
 different bot-token key and channel ID. The rendered gateway applies the user
-allowlist, requires a mention in guilds, binds the default Discord account to
-the main agent, and sends execution approvals only to configured approvers.
+allowlist, renders the selected `discord.requireMention` value for guilds,
+binds the default Discord account to the main agent, and sends execution
+approvals only to configured approvers. The chart default is `true`; the
+Nova values override it to `false`. A mention is therefore not universally
+required. This setting does not remove the configured user allowlist.
+
+> **Source evidence:** [The chart defaults to requiring a mention](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L188-L191); [Nova overrides the mention setting](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/my-values/nova-values.yaml#L52-L56); [The gateway renders that value into the guild policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/configmap-gateway.yaml#L235-L242).
 Prism declares a Discord credential source but leaves its channel disabled.
 
 The shared webhook is a second Discord identity. Its secret value contains the

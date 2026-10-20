@@ -786,7 +786,7 @@ The deployed Prism Agent values enable SPIFFE and disable Redis and registry pro
 Those values also enable the startup doctor before gateway startup, with
 `--max-old-space-size=3072`. Its resource requests are 100m CPU and 256Mi
 memory; limits are two CPUs and 4Gi memory. The heap setting is not the
-container memory limit. These are configured migration headroom, not proof
+container memory limit. These settings reserve migration headroom; they do not prove
 that a particular persistent state will migrate successfully or fit in memory.
 
 

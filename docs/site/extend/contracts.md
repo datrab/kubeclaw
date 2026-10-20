@@ -317,6 +317,10 @@ replace package bytes underneath a recoverable run. Install a new version, direc
 work to it, drain old work, and remove old bytes only after recovery no longer needs
 them.
 
+For a same-ID replacement, follow the [exclusive discovery-root procedure](../use/plugins.md#5-replace-or-remove).
+The new candidate must not discover both versions of the package.
+Retain the original configuration and exact packages for old pinned runs.
+
 ## Unsupported Shortcuts
 
 - A stage cannot call the network or process API merely because Node exposes it.

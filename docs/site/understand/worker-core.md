@@ -237,6 +237,58 @@ generation, worker, or start time.
 >
 > [Relational validation binds the claim to the attempt, grants to the profile, and unique package and input identities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L115-L152).
 
+### Versioned Limits And Resource Fields
+
+Choose the envelope version before constructing its nested resource fields.
+All objects below reject extra keys. Fields are required unless a variant
+explicitly excludes them; these schemas do not insert default values.
+
+| `limits` field | Versions | Unit and allowed integer range |
+| --- | --- | --- |
+| `timeoutMs`, `cleanupTimeoutMs` | v1, v2, v3 | Milliseconds, 1–2147483647 each. |
+| `logBytes` | v1, v2, v3 | Bytes, 0–16777216. |
+| `resultBytes` | v1, v2, v3 | Bytes, at least 1. |
+| `evidenceBytes` | v1, v2, v3 | Bytes, at least 0. |
+| `evidenceFiles` | v1, v2, v3 | File count, at least 0. |
+| `cpuMillis` | v1 only | CPU milliseconds, at least 1. |
+| `memoryBytes` | v1 only | Bytes, at least 1. |
+| `processes` | v1 only | Process count, at least 1. |
+
+The v2/v3 `limits` object rejects `cpuMillis`, `memoryBytes`, and `processes`.
+Instead, their envelopes require `resourceBudgets` and their profiles require
+`resourceCapabilities`. Their results require `profileDigest`,
+`attemptSpecDigest`, and `resourceAccounting`.
+
+| Structure | v2 envelope/profile/result | v3 envelope/profile/result |
+| --- | --- | --- |
+| Metric keys, all required | `cpuTimeMs`, `maximumMemoryBytes`, `maximumProcesses` | `cpuTimeMs`, `maximumMemoryBytes`, `maximumTasks` |
+| Metric units, in that order | `milliseconds`, `bytes`, `processes` | `milliseconds`, `bytes`, `linux-tasks` |
+| Capabilities `schemaVersion` | `worker-resource-capabilities.v1` | `worker-resource-capabilities.v2` |
+| Budgets `schemaVersion` | `worker-resource-budgets.v1` | `worker-resource-budgets.v2` |
+| Accounting `schemaVersion` | `worker-resource-accounting.v1` | `worker-resource-accounting.v2` |
+
+Each budget metric is either `{state: "requested", limit: N}` with integer
+`N >= 1`, or `{state: "unrequested"}` without a `limit`. An unrequested budget
+is not a zero budget. Each observation metric is either
+`{status: "observed", value: N}` with integer `N >= 0`, or
+`{status: "unavailable", reason: "..."}`. Reasons contain 1–4096 characters.
+Unavailable observations are not measured zeroes.
+
+Each v2 capability metric requires `scope`, its exact unit, and `measurement`.
+The scope contains 1–4096 characters. `measurement: "measured"` adds no fields;
+`"sampled"` requires integer `sampleIntervalMs >= 1`; `"unavailable"` requires
+a 1–4096-character `reason`. These variants reject each other's extra fields.
+Every v3 capability instead fixes `scope: "native-attempt-tree"` and
+`measurement: "measured"`; sampled/unavailable capability variants do not apply.
+Linux tasks include process main threads and additional threads.
+
+For v2/v3, `resourceAccounting` requires exactly `schemaVersion`, `capabilities`,
+`budgets`, and `observations`, using the corresponding version and metric keys
+above. Observations have no separate `schemaVersion` field. These wire shapes
+do not themselves prove enforcement or successful live resource measurement.
+
+> **Versioned field authority:** [v1 limits and envelope](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154); [v2 resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts); [v3 native resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts); [v1 bounds](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json); [v2 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json); [v3 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json).
+
 ### Wire Message Field Reference
 
 The remaining public messages use the same attempt binding.
@@ -724,8 +776,15 @@ It inventories kernel scopes and durable records under one supervisor lock.
 After ownership recovery, the attempt journal is reconciled. A sealed result is
 replayed. A stored process result is rebuilt only when the ownership record is
 `disposed` and its final counters exactly match the process record. An accepted
-attempt without a process result becomes an interrupted result only when
-ownership proves that the scope is quiescent or was never launched.
+attempt without a process result receives a sealed native result with
+`state: errored` and error code `WORKER_NATIVE_INTERRUPTED_RESULT_UNAVAILABLE`.
+Ownership must prove that the scope is quiescent or was never launched.
+For a never-launched attempt, `cleanup.state` is `not_required`. Otherwise it is
+`failed`: draining the process tree does not prove specialist external-effect
+cleanup. Recovery fences admission when cleanup failed. Preserve the journal and
+ownership records; reconcile external effects before retrying or restoring admission.
+The neutral executor can emit `interrupted`; native recovery does not use that
+wire state for this missing-result case.
 
 Different-host storage is not accepted as local recovery. A persistent volume
 can move while processes continue on the old machine. The store therefore
@@ -736,7 +795,7 @@ after that host identity is stable.
 >
 > [Ownership recovery fences unknown, missing, changed, and cross-boot scopes before admission](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-worker-ownership.ts#L149-L283).
 >
-> [Attempt recovery requires matching durable ownership before it rebuilds or interrupts a result](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-attempt-recovery.ts#L9-L41).
+> [Attempt recovery requires durable ownership and fences admission after failed cleanup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-attempt-recovery.ts#L9-L41).
 
 ## Result, Digest, And Receipt
 
@@ -831,8 +890,8 @@ constructs them.
 | --- | --- |
 | Request was rejected before durable admission. | Retry according to caller policy. Keep the same attempt specification only if it is still valid. |
 | Journal contains a sealed result. | Replay and return that exact result. Do not execute again. |
-| Journal accepted the attempt and ownership proves never launched. | Return the sealed interrupted result. The controller can decide on a higher generation. |
-| Current scope was found and drained, but no process result exists. | Return an interrupted result with final observations. Reconcile external effects before a higher generation. |
+| Journal accepted the attempt and ownership proves never launched. | Return the sealed `errored` result with `WORKER_NATIVE_INTERRUPTED_RESULT_UNAVAILABLE` and cleanup `not_required`. The controller decides whether a higher generation is safe. |
+| Current scope was found and drained, but no process result exists. | Return the sealed `errored` result with `WORKER_NATIVE_INTERRUPTED_RESULT_UNAVAILABLE`, final observations, and cleanup `failed`. Fence admission and reconcile external effects before a higher generation. |
 | Ownership or scope is unknown, changed, live, or inconsistent. | Stop. Fence admission and require operator action. |
 | Generic execution reports an unresolved phase. | Assume external effects can exist. Reconcile before retry. |
 

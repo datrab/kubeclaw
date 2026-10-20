@@ -438,6 +438,11 @@ establish a live deployment result. Revision: `f68a7294abf0928c1aabf290c6a7e486c
 Use an update when identity and compatible contracts remain stable. Use a replacement
 when identity, host contract, authority, state format, or recovery bytes change.
 
+For a same-ID replacement, follow the [exclusive package-set selection procedure](../use/plugins.md#5-replace-or-remove).
+The candidate discovery roots must select only the new package, never both versions.
+Disabling a registration does not remove its package from discovery.
+Keep the old configuration and exact packages available to their pinned runs.
+
 1. Record the old package version, digest, configuration, and state owners.
 2. Read the new compatibility and migration notes.
 3. Run static, package, and platform checks against the new bytes.

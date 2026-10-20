@@ -321,6 +321,516 @@ Each lifecycle event has the same envelope fields:
 >
 > [The effect bridge emits bounded effect facts but excludes effects created by observer delivery to prevent a feedback loop](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-runtime.ts#L53-L59).
 
+### Run-start event payloads
+
+The pipeline loop records startup with envelope identity `{ runId }`.
+
+| Event | Payload and condition |
+| --- | --- |
+| `run.created` | On a non-resume start, `{ runIdentity }`, whose fields are `runId`, `pipelineId`, and `graphDigest` from the runner identity. |
+| `run.started` | Immediately follows `run.created` on that path, with an empty payload `{}`; it does not include the graph or stage results. |
+| `run.resumed` | On a resume start only when `resumeEventAlreadyRecorded` is false or omitted: `{ runIdentity, ...resumePayload }`. Caller-supplied resume fields are spread last and can replace the payload's `runIdentity`; the envelope `runId` remains the runner's. |
+
+A resume start does not emit `run.created` or `run.started`. When
+`resumeEventAlreadyRecorded` is true, this startup path emits no event; it does
+not itself verify the earlier record. The runner defaults causation to
+`resumeCausationId`, or `null`. Startup events are appended before the loop
+awaits its event-commit callback and checks cancellation or schedules stages.
+They therefore do not prove an attempt, external effect, or successful run.
+This table covers pipeline-loop startup, not other administrative producers
+or waiting, paused, and terminal run payloads.
+
+> **Source evidence — run-start payloads**
+>
+> [Exact startup branch and spread order](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L46-L53).
+> [Startup commit and cancellation ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L20-L25).
+> [Run identity, envelope, default payload, and causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L60-L65).
+
+### Administrative run-resumed payload
+
+Administrative reopening emits a different `run.resumed` payload from loop startup.
+The envelope identifies only `runId`; `causationId` is the administrative
+`decisionId`. The payload is `{ administrativeDecision }`, containing the full
+accepted decision, not `runIdentity`, a stage result, or an accepted resume signal.
+This event also precedes a requested cancellation; its name does not prove retry.
+
+The reopener records a new administrative decision before appending this event.
+It suppresses a duplicate when a lifecycle event already has the same decision
+causation and type. That event lookup adds no stage filter for `run.resumed`.
+The subsequent execution path sets `resumeEventAlreadyRecorded: true`, so loop
+startup does not emit a second resume event. Replays can instead return a retained
+terminal or waiting result after draining observers. The resume event alone proves
+neither a new attempt nor successful continuation or external-effect reconciliation.
+This section covers administrative reopening only; signal-based resume is separate.
+
+> **Source evidence — administrative run-resumed payload**
+>
+> [Decision recording before resume append](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L40-L54).
+> [Replay, cancellation selection, and startup suppression](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L90-L109).
+> [Duplicate matching, envelope, and full decision payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L136-L147).
+
+### Terminal run event payloads
+
+The pipeline loop emits `run.succeeded`, `run.failed`, `run.blocked`, or
+`run.cancelled` with envelope identity `{ runId }` and an empty payload `{}`.
+These events do not include stage results, counters, a failure reason, or an
+external-effect cleanup receipt. Causation defaults to `resumeCausationId`, or
+`null`; the terminal event does not automatically identify a failing attempt.
+
+A terminal batch decision selects failed, blocked, or cancelled and uses the
+terminal-return path. When scheduling has no ready stages, finalization instead
+checks all stage states. Success requires every stage to be succeeded or skipped,
+except a pending remediation-only target without a return owner. Otherwise,
+finalization selects the first present status in this order: failed, blocked,
+cancelled, waiting; if none is present, it selects failed.
+
+A waiting finalization emits no terminal run event. The earlier paused-batch
+return also returns waiting without this finalization path. Do not infer a
+`run.waiting` event from either return value. On terminal paths, Nova appends the
+event and awaits the event-commit callback before returning the run result.
+A terminal event alone does not prove rollback, cleanup, or human acceptance.
+This table covers pipeline-loop producers, not administrative run events.
+
+> **Source evidence — terminal run payloads**
+>
+> [Batch terminal and paused-return selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L29-L37).
+> [Terminal and finalization producers, precedence, and commit ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L133-L148).
+> [Default payload and envelope causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L60-L65).
+
+### Pipeline cancellation event payloads
+
+At the start of each loop iteration, Nova checks the runner's abort signal.
+When it is aborted, the loop preserves stages already marked `skipped`,
+`succeeded`, `failed`, `blocked`, or `cancelled`. For each other stage, it sets
+status to `cancelled` and appends the following stage event before the run event.
+
+| Event | Envelope identity | Payload |
+| --- | --- | --- |
+| `stage.cancelled` | `runId` and `stageId`; no `attemptId` | `attemptsUsed` and `remediationCyclesUsed`, copied from the prior stage state. No result or cancellation reason is included on this path. |
+| `run.cancelled` | `runId` only | Empty object `{}`. It does not contain the abort signal's reason or a list of cancelled stages. |
+
+The loop then awaits its event-commit callback and returns status `cancelled`.
+The abort check is not a synchronous interruption of an executing batch: the
+loop awaits the selected stages and records their decisions before its next
+iteration. A terminal decision or a waiting return can end that iteration
+without reaching another abort check. These events do not prove that external
+effects stopped or were rolled back. Administrative cancellation and completed
+stage decisions are separate producers; their payloads must not be inferred
+from this table.
+
+> **Source evidence — pipeline cancellation payloads**
+>
+> [Abort guard, preserved terminal states, payloads, and commit ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L75-L83).
+> [Batch execution, decision recording, and early return ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
+> [Default empty payload and envelope construction](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L60-L65).
+
+### Skipped-stage event payload
+
+`stage.skipped` records an unmet activation condition, not an executed attempt.
+Its identity contains `runId` and `stageId`. The pipeline loop sets the stage
+status to `skipped` before appending the event.
+
+| Payload field | Exact meaning |
+| --- | --- |
+| `stageType` | The skipped stage definition's registered type. |
+| `reason.code` | Exactly `core.activation_condition_not_met`. |
+| `reason.details.sourceStage` | Stage whose output facts supply the activation input. |
+| `reason.details.fact` | Fact key read from that source stage. |
+| `reason.details.equals` | Required value from the activation condition. |
+| `reason.details.factPresent` | Whether the observed value is not `undefined`. This is not a truthiness check. |
+| `reason.details.observed` | Present only when the observed value is not `undefined`; `false`, `0`, and `null` remain values. |
+| `attemptsUsed`, `remediationCyclesUsed` | Existing stage counters, copied unchanged by this skip path. |
+
+A stage without an activation condition is not skipped by this check.
+Otherwise, missing source facts or a failed `Object.is` comparison triggers the skip.
+Do not interpret this event as a timeout, cancellation, failed attempt, or rollback.
+The envelope's causation defaults to the runner's `resumeCausationId`, or `null`;
+it does not automatically name the source stage or an attempt.
+Other stage-event payloads remain outside this bounded correction.
+
+> **Source evidence — skipped-stage payload**
+>
+> [Activation test, state update, and exact payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L105-L116).
+>
+> [Journal envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+
+### Started-stage event payload
+
+`stage.started` marks the pipeline loop's transition to `running`, before the
+Stage Executor runs. Its envelope identity contains `runId` and `stageId`,
+not an attempt ID. It does not prove dispatch, a completed result, or an
+external effect.
+
+| Payload field | Exact meaning |
+| --- | --- |
+| `stageType` | The stage definition's registered type. |
+| `agentRole` | Included only when `definition.config.agentRole` is a string; absent for other values. This is configuration, not proof of role activation. |
+| `administrativeOverride` | Included as `true` only when the loop consumes this stage's administrative attempt override; otherwise omitted, not `false`. |
+
+Without an override, an exhausted attempt budget returns a blocked decision
+before the loop emits `stage.started`. On the start path, Nova appends the event
+and awaits the event-commit callback before invoking the executor. A retained
+start event alone therefore does not establish that an attempt was created.
+The runner defaults causation to `resumeCausationId`, or `null`; it does not
+assign a future attempt ID. Other stage payloads still need separate contracts.
+
+> **Source evidence — started-stage payload**
+>
+> [Budget check, running transition, exact fields, flush, and executor ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L118-L130).
+> [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+
+### Successful-stage event payload
+
+`stage.succeeded` describes a stage completion decision, not whole-run success.
+Its envelope identity contains `runId` and `stageId`, without an attempt ID.
+
+| Payload field | Exact meaning |
+| --- | --- |
+| `stageType` | The stage definition's registered type. |
+| `agentRole` | Included only when `definition.config.agentRole` is a string. |
+| `outcome` | The completed decision's result outcome; not a separate run result. |
+| `attemptsUsed`, `remediationCyclesUsed` | Counters from the decision's stage state. |
+| `facts` | Included when stage-state facts are truthy; an empty object is truthy and remains present. |
+| `remediationReturnTo` | Included when the stage state's return target is truthy. |
+
+This producer does not include the full result, artifacts, or a reason field.
+Use attempt and artifact events for those separate contracts.
+A remediation completion then resets its requesting stage to `pending` and
+emits `stage.scheduled` for that requester, with `reason: remediation_completed`
+and `remediationStageId` naming the completed remediation stage.
+A missing requester instead raises `GRAPH_REMEDIATION_RETURN_MISSING` after
+appending the success event. The success event alone does not prove rescheduling.
+It also does not prove external-effect reconciliation or whole-run acceptance.
+Other terminal-stage payloads remain outside this bounded correction.
+
+> **Source evidence — successful-stage payload**
+>
+> [Exact success fields, remediation state update, missing-requester error, and rescheduling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L113-L126).
+
+### Failed-stage event payload
+
+The decision processor emits `stage.failed` when a stop decision's stage state
+is neither `blocked` nor `cancelled`. Those two states instead select
+`stage.blocked` or `stage.cancelled` with the same stop-path payload below.
+The envelope identifies `runId` and `stageId`, not an attempt.
+
+| Payload field | Exact meaning |
+| --- | --- |
+| `stageType` | The stage definition's registered type. |
+| `agentRole` | Included only when `definition.config.agentRole` is a string. |
+| `outcome` | The decision result's outcome; do not infer it from the event name. |
+| `reason` | Copied from `decision.result.reason`; the producer does not synthesize a failure reason when none exists. |
+| `attemptsUsed`, `remediationCyclesUsed` | Counters from the decision's stage state. |
+
+This payload does not include the complete result, artifacts, facts, or a retry
+schedule. A stop event is not evidence of rollback or external-effect reversal.
+The processor records a terminal batch outcome after appending it; when several
+terminal decisions occur, `failed` outranks `blocked`, which outranks `cancelled`.
+Do not treat this stage event as the separate terminal run event.
+The administrative and remediation-target producers of `stage.blocked`, and
+the pipeline cancellation producer, have different payloads; the table above
+applies only to the decision processor's stop path.
+
+> **Source evidence — failed-stage stop payload**
+>
+> [Stop-event selection and exact fields](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L105-L110).
+> [Terminal batch priority](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L129-L131).
+
+### Retrying-stage event payload
+
+`stage.retrying` records the decision processor returning a stage to `pending`.
+Its envelope identity contains `runId` and `stageId`, without an attempt ID.
+The payload contains only `attemptsUsed` and `remediationCyclesUsed`, copied
+from the decision's stage state. It does not carry the result, reason,
+`stageType`, `agentRole`, next attempt identity, or a retry deadline.
+
+The processor updates the state before appending this event, then forces the
+stage into the scheduling frontier. The event does not establish that another
+attempt was dispatched or that an external effect is safe to repeat.
+It does not reset the counters or prove successful recovery.
+The runner defaults causation to `resumeCausationId`, or `null`.
+This contract covers the decision processor's retry path, not administrative
+repair or remediation scheduling.
+
+> **Source evidence — retrying-stage payload**
+>
+> [State transition, exact payload, and forced scheduling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L63-L67).
+> [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+
+### Waiting-stage decision payloads
+
+The decision processor emits `stage.waiting` for a persisted wait or a cooldown.
+Both variants identify `runId` and `stageId`, without an attempt ID, and include
+`attemptsUsed` and `remediationCyclesUsed` from the decision's stage state.
+
+| Decision | Additional payload | Reader interpretation |
+| --- | --- | --- |
+| `persist_wait` | `wait`, copied from `action.wait` | The supplied wait request, not an accepted resume signal. |
+| `cooldown` | `retryAt`, copied from `action.retryAt` | The decision's retry time, not proof that another attempt was dispatched. |
+
+These alternatives are mutually exclusive in this producer: the persisted-wait
+branch does not add `retryAt`, and the cooldown branch does not add `wait`.
+Neither adds `stageType`, `agentRole`, the complete result, or a reason.
+After appending the event, the recorder marks the batch paused. It does not
+sleep until the deadline or dispatch a replacement attempt in this handler.
+The runner defaults causation to `resumeCausationId`, or `null`.
+The remediation scheduler also emits `stage.waiting`, but carries a different
+payload (`remediationStageId` and `repairRequest`); do not parse it as either
+variant above. Waiting alone is not evidence of external-effect safety.
+
+> **Source evidence — waiting-stage decision payloads**
+>
+> [Exact branch selection, fields, and paused outcome](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L97-L103).
+> [Separate remediation producer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L70-L80).
+> [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+
+### Orchestrator-required decision payload
+
+The decision recorder emits `orchestrator.required` for `request_orchestrator`,
+`pause_for_orchestrator`, and `request_repair_authorization`. Its envelope
+identifies `runId` and `stageId`, without an attempt ID. The runner defaults
+causation to `resumeCausationId`, or `null`.
+
+All three branches carry `attemptsUsed`, `remediationCyclesUsed`, and `wait`.
+Only `request_orchestrator` adds top-level `afterAttempt`. The generated wait
+uses `schemaVersion: wait-request.v2`, `kind: orchestrator`,
+`signalType: core.orchestrator.resume`, and `expiresAt: null`.
+Its `authorizedIssuer` has `type: orchestrator` and the recorder's issuer ID.
+The `waitId` prefixes `wait:orchestrator:` to the SHA-256 hex digest of canonical
+JSON for `[runId, stageId, attemptNumber]`.
+
+| Action | Nested `wait.request` |
+| --- | --- |
+| `request_orchestrator` | `{ afterAttempt }`, also reflected in the top-level field. |
+| `pause_for_orchestrator` | The supplied wait's `request`, when truthy; other supplied wait fields do not override the generated envelope. |
+| `request_repair_authorization` | `{ repairAuthorization: action.pending }`; no top-level `afterAttempt`. |
+
+The recorder stores the generated wait in stage state before appending this
+event, then marks the batch paused. This handler does not emit `wait.created`
+or accept a resume signal. A request for authorization is not authorization
+itself, completed repair, or permission to repeat an uncertain external effect.
+This section covers the decision-recorder producer, not every administrative
+continuation or the complete event catalogue.
+
+> **Source evidence — orchestrator-required decision payload**
+>
+> [Three action guards, state update, exact payload, and pause](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L88-L95).
+> [Generated wait identity, authority, and nested request selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/lifecycle/wait-request.ts#L5-L19).
+> [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+
+### Remediation-wait payload
+
+For `schedule_remediation`, the decision recorder emits `stage.waiting` for the
+requesting stage, not the repair target. Its identity contains `runId` and the
+requesting `stageId`, without an attempt ID.
+
+| Payload field | Meaning |
+| --- | --- |
+| `attemptsUsed`, `remediationCyclesUsed` | Counters from the requesting stage's decision state. |
+| `remediationStageId` | Target stage selected by the scheduling action. |
+| `repairRequest` | Action-supplied request, or a request constructed from the graph, requester, target, remediation generation, and result. |
+
+The nested `repair-request.v1` contains `schemaVersion`, `requesterStageId`,
+`targetStageId`, `generation`, `requesterResult`, and `invalidatedStageIds`.
+It can also carry `budgetOrder`. The fallback builder clones the requester result
+and sorts the invalidated stage IDs. These IDs include the requester and affected
+descendants, but exclude the repair target.
+
+The recorder appends the event before applying the repair request and forcing
+the target into scheduling. Applying the request clears invalidated decision
+state, leaves the requester waiting, and makes the target pending with a return
+link to the requester. This handler does not mark the batch paused.
+Unlike persisted-wait and cooldown events, this payload has no `wait` or `retryAt`.
+The event does not prove target dispatch, repair success, or safe repetition of
+external effects. Terminal targets and conflicting return owners take the blocked
+path below instead. Administrative remediation is a separate producer.
+
+> **Source evidence — remediation-wait payload**
+>
+> [Guarded producer, exact payload, append/apply/schedule order](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L69-L80).
+> [Nested request, affected stages, and state application](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/lifecycle/remediation.ts#L5-L58).
+
+### Blocked remediation-target payload
+
+The remediation scheduler emits `stage.blocked` when its target is already
+`blocked`, `failed`, or `cancelled`. It also uses this path when the target
+already names a different requesting stage in `remediationReturnTo`.
+The identity contains `runId` and the requesting `stageId`, not the target's ID.
+
+The payload contains `attemptsUsed`, `remediationCyclesUsed`,
+`remediationStageId` (the target), and `reason: remediation_target_terminal`.
+The counters come from the blocked requesting stage. This producer does not
+include `outcome`, `stageType`, `agentRole`, a complete result, or `repairRequest`.
+
+Nova sets the requester to `blocked` before appending this event. The terminal
+batch outcome can still be `failed` or `cancelled`, according to the target's
+status; the event name alone does not determine the run outcome.
+A conflicting return owner selects a blocked terminal outcome instead.
+Neither branch applies the repair request or forces the target into scheduling.
+Do not treat this event as a completed remediation or permission to repeat effects.
+
+> **Source evidence — blocked remediation target**
+>
+> [Target-status and return-owner guards, exact payload, and terminal selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L69-L85).
+
+### Administrative consumed-attempt blocked payloads
+
+Two administrative paths emit `stage.blocked` with different reasons.
+Both identify `runId` and `stageId`, without `attemptId` in the envelope.
+Neither payload contains a complete result or proves external rollback.
+
+| Producer and condition | Payload |
+| --- | --- |
+| Administrative reopener: retry has no decision-matching terminal stage event, the target is `blocked`, `pending`, or `running`, and a decision-matching `attempt.created` exists. | `administrativeDecision` (the full accepted decision), `attemptsUsed`, `remediationCyclesUsed`, and `reason: administrative_attempt_interrupted`. Counters come from the recovered target. |
+| Decision recorder: an administrative override produces an action other than `complete` or `stop`, after repair-budget evaluation. | `attemptsUsed`, `remediationCyclesUsed`, and `reason: administrative_attempt_consumed`. Counters come from the evaluated decision state. This payload has no `administrativeDecision` field. |
+
+The reopener removes wait and remediation-routing fields from the target state.
+It marks a consumed target `blocked`, then appends the event with decision causation.
+Duplicate matching uses decision ID, event type, and stage ID. Without a matching
+attempt, it marks the target `pending` and permits an administrative override
+instead; that branch emits no blocked event here. Matching uses the current
+decision's causation, not every historical attempt for the stage.
+
+The decision recorder stores the evaluated state and records result artifacts first.
+It then sets the stage `blocked`, appends the consumed-attempt event, and records
+a blocked terminal batch outcome. It does not execute the otherwise selected
+retry, remediation, or wait handler. Neither event authorizes repeating uncertain
+external effects. These payloads are distinct from ordinary stop and terminal-target events.
+
+> **Source evidence — administrative consumed-attempt payloads**
+>
+> [Reopener retry guard, state cleanup, matching and exact payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L118-L125).
+> [Decision-causation matching, envelope, deduplication and audit field](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L138-L147).
+> [Override interception and artifact ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L29-L36).
+> [Consumed-attempt blocked state, exact payload and terminal outcome](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L57-L61).
+
+### Accepted-signal wait-resolution payload
+
+`wait.resolved` identifies `runId`, the recovered waiting `stageId`, and
+`waitId`. Its causation is `signal.signalId`; its payload is `{ signal }`,
+not just the signal's guidance payload. The nested `resume-signal.v2` object
+contains `schemaVersion`, `signalId`, `idempotencyKey`, `waitId`, `signalType`,
+`issuer` (`type` and `id`), `issuedAt`, and the JSON-object `payload`.
+
+The resume path checks pinned packages and graph, recoverable run state, wait
+history, signal schema, matching wait/type/issuer, expiry, and issue time.
+It checks repair authorization before recording the signal in `signals.jsonl`,
+then appends the resolution. The signal journal rejects a changed signal with
+an existing idempotency key and another signal for an already recorded wait.
+Resolution deduplication matches lifecycle type, run, wait, and signal causation.
+The mutation lease is checked before a new resolution append.
+
+These are separate journal writes, not one atomic cross-journal transaction.
+After resolution, Nova reconstructs stage state and passes `signal.payload` as
+resume guidance to execution. The event alone proves neither a new attempt nor
+successful continuation; subsequent execution and effect-safety checks can fail.
+This contract covers signal-driven resolution, not administrative reopening.
+
+> **Source evidence — accepted-signal resolution**
+>
+> [Resume guards, journal ordering, duplicate checks, and exact event](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-run.ts#L82-L122).
+> [Signal validation against the recovered wait](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-snapshots.ts#L137-L145).
+> [Nested signal contract](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L543-L555).
+
+### Attempt event payloads
+
+The Stage Executor emits these five events with `runId`, `stageId`, and
+`attemptId` in the envelope identity. They describe an attempt, not confirmed
+external effects or overall run success.
+
+| Event | Payload and interpretation |
+| --- | --- |
+| `attempt.created` | `attemptNumber` and nested `attempt`. The nested `stage-attempt.v2` record contains `identity`, `owner`, `stageType`, `leaseId`, `status: created`, `retryBudgetUsed`, `remediationBudgetUsed`, and `createdAt`. |
+| `attempt.dispatched` | Empty object. The identity remains in the envelope; this event does not carry a result. |
+| `attempt.completed` | `repairIdentityEncoding: kubeclaw-json.utf16.v1`, `outcome`, optional `reason`, and a cloned `result`. All outcomes except `timed_out` and `cancelled` use this event, including `failed`, `blocked`, and `retry`. |
+| `attempt.timed_out` | Same result payload, selected when `result.outcome` is `timed_out`. Do not infer that an external effect stopped. |
+| `attempt.cancelled` | Same result payload, selected when `result.outcome` is `cancelled`. Cancellation does not establish external rollback. |
+
+The nested attempt identity includes the attempt number. Its `owner` combines
+package identity with `registrationId`; `createdAt` comes from lease issuance.
+The budget fields copy stage counters when the executor records the attempt.
+The result uses `stage-result.v2` and includes `outcome` and an `artifacts` array.
+An optional `reason` carries `code`, optional `message`, and optional `details`.
+Consumers must retain the full result rather than treating `attempt.completed`
+as a success-only notification. Use the recovery authority before repeating
+an action whose external outcome remains uncertain.
+
+This table covers the Stage Executor attempt family only. Other lifecycle
+families and plugin-specific nested payloads still need their own field contracts.
+No deployed event delivery or full payload-catalogue acceptance is claimed.
+
+> **Source evidence — attempt payloads**
+>
+> [Attempt creation and dispatch](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/stage-executor.ts#L112-L119).
+> [Result event selection and payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/stage-executor.ts#L137-L141).
+> [The runner defaults an omitted payload to an empty object](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L64).
+> [Nested attempt and result contracts](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L484-L538).
+
+### Artifact event payload
+
+`artifact.created` carries `runId`, `stageId`, and `artifactId` in the envelope
+identity. Its `causationId` is the producer attempt ID; the envelope identity
+itself does not include `attemptId` on this recorder path.
+
+| Payload field | Contract |
+| --- | --- |
+| `namespace`, `mediaType`, `digest`, `sizeBytes` | Copied from the recorded artifact reference. |
+| `artifact` | A cloned full reference: `artifactId`, `namespace`, `mediaType`, `digest`, `sizeBytes`, `producer`, and optional `encoding: kubeclaw-json.utf16.v1`. `producer` retains `runId`, `stageId`, `attemptId`, and `attemptNumber`. |
+| `checkpoint` | Present as `true` for a checkpoint; omitted for an artifact projected from a stage result. Omission does not mean the artifact has no producer. |
+
+Checkpoint writes require `checkpoint: true` and operation `put_json`. Before
+recording, Nova checks the returned reference against the request resource,
+namespace, media type, encoding, serialized-content digest, byte count, and
+producer attempt. Result artifacts take a separate path: Nova validates the
+stage result and checks each artifact's run and stage producer binding. Do not
+interpret a result-derived event as proof that Nova reread the stored bytes.
+
+An exact previously recorded reference emits no duplicate event. A different
+reference with the same artifact ID and producer attempt raises a conflict.
+Recovery projects artifacts from committed attempt results before dependent
+stages receive their index. This event describes an artifact reference, not
+successful completion of the whole run or an off-node backup.
+
+> **Source evidence — artifact payload**
+>
+> [Checkpoint response and producer validation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/artifact-checkpoints.ts#L37-L59).
+> [Result recovery, producer binding, payload construction, and duplicate/conflict handling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/artifact-checkpoints.ts#L78-L124).
+> [The nested artifact reference contract](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L497-L505).
+
+### Effect event payloads
+
+The effect bridge supplies `runId`, `stageId`, `attemptId`, and `effectId` in
+identity. Its `causationId` is the attempt ID. Observer-prefixed attempts emit
+none of these lifecycle events, which prevents observer feedback loops.
+
+| Event | Payload |
+| --- | --- |
+| `effect.requested` | `executionMode`, `capability`, `operation`, and `resource`. The request payload is not copied into this event. |
+| `effect.accepted` | `executionMode` only. Acceptance is not completion or proof of an external result. |
+| `effect.completed` | `executionMode`, `adapter` package resolution, and `result` from a completed receipt. An absent receipt result becomes an empty object. |
+| `effect.failed` | `executionMode`, `adapter` package resolution, and `error` from a non-completed receipt. An absent receipt error becomes an empty object. |
+
+`executionMode` distinguishes `durable` from `confidential`. Confidential requests
+replace the resource canonical ID with `[confidential]`. Their completion audit
+contains `{ confidential: true }`, not the adapter response. Their failure audit
+uses code `adapter.confidential_effect_failed` and a fixed message, not the caught error.
+Do not interpret a confidential completion as a journaled result available for recovery.
+
+For non-confidential results, the bridge measures `JSON.stringify(result)` bytes.
+At most 16 KiB remains inline. Larger results become `effect-result-summary.v1`
+with `contentDigest`, `artifactRef: effect-result:<contentDigest>`, `bytes`, and
+`externalized: true`. The digest uses SHA-256 of those serialized bytes.
+This bridge constructs the summary; it does not write an artifact or provide a
+retrieval API. Do not treat `artifactRef` alone as proof of retrievable storage.
+Use the effect recovery authority before repeating an uncertain external action.
+This table closes only the described payload omission, not the full lifecycle catalog.
+
+> **Source evidence — effect payloads**
+>
+> [Envelope, observer exclusion, result summary, and four payload constructors](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-runtime.ts#L53-L84).
+> [Durable mode and confidential request/result audit boundaries](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/effects/coordinator.ts#L20-L54).
+> [Confidential request and receipt construction](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/effects/coordinator.ts#L57-L73).
+
 ### Plugin domain events
 
 `plugin-domain-event.v2` uses the same event identity, sequence, timestamp,

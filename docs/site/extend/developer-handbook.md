@@ -1318,7 +1318,8 @@ inert discovery: reading a manifest must not run untrusted plugin code. Test
 unknown registration, wrong identity, undeclared capability, changed bytes under
 an existing digest, activation denial, replacement, and removal with retained
 state. Add checkpoint/recovery fixtures when registry state can survive a
-restart. Use [Plugin Runtime](../understand/plugin-runtime.md) and the changed
+restart. Follow the [exclusive replacement and retained-run procedure](../use/plugins.md#5-replace-or-remove)
+when testing same-ID package replacement. Use [Plugin Runtime](../understand/plugin-runtime.md) and the changed
 [package guide](plugin-catalogue/README.md); run `docs:core-guides:check` and the
 [documentation-change chain](#documentation-change-chain).
 
@@ -1877,7 +1878,7 @@ following table describes the workflow's own triggers and dependencies.
 | [build-images.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L1-L50) | Main push/manual | Reliability and update-policy must succeed; image-input detection controls build. Ten-image matrix, 60 min, GHCR write token. Stores image receipts; code-bundle releases are separately assembled. Optional leased-namespace Prism live job requires its enable variable and test secrets. |
 | [build-ops-mcp.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L1-L50) | Path-filtered pull request/main push/manual | Untrusted validation builds/tests/scans without registry publication; trusted main publishes separate Ops images. Uses its own Node 22 test host and separate lockfiles; container Node is selected centrally. |
 | [publish-image-receipts.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/publish-image-receipts.yaml#L1-L35) | Reusable trusted build call | Preserves exact image receipts as release assets beyond temporary CI artifact retention. |
-| [promote-runtime.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/promote-runtime.yaml#L1-L59) | Manual family/source-run selection | Verifies successful main run, receipt and digest; scans; opens release-selection PR with GitHub App identity. Does not rebuild selected images. |
+| [promote-runtime.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/promote-runtime.yaml#L1-L59) | Manual family/source-run selection | Verifies successful main run, receipt and digest; scans without rebuilding. Runtime opens a release-selection PR with GitHub App identity. Ops commits the release and bootstrap selection directly to main using github.token; it does not open that PR. |
 | [auto-promote-runtime.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/auto-promote-runtime.yaml#L1-L60) | Successful trusted workflow completion with GitOps enabled | Selects compatible images/code and creates production deployment selection. This is a write-authority path. |
 | [rollback-runtime.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/rollback-runtime.yaml#L1-L60) | Manual prior deployment selection | Serialized preparation; opens rollback PR without image rebuild. Merge authorizes GitOps synchronization when configured. Data rollback is separate. |
 | [dependency-updates.yaml](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/dependency-updates.yaml#L1-L56) | Scheduled/manual | 60 min; checksum-pinned Renovate and configured GitHub App. Proposes updates; it is not permission to bypass checks. |
@@ -1892,8 +1893,11 @@ retry of failed product tests. Bounded package/network retries must not be
 confused with lifecycle retry or an external effect replay.
 
 CI secrets belong to their trust path. Runtime/Ops publication uses
-`GITHUB_TOKEN` for packages. Promotion/updater paths use
-`DEPENDENCY_APP_ID` and `DEPENDENCY_APP_PRIVATE_KEY` to create the write identity.
+`GITHUB_TOKEN` for packages. Manual runtime promotion and dependency updates use
+`DEPENDENCY_APP_ID` and `DEPENDENCY_APP_PRIVATE_KEY` to create the App write identity.
+Manual Ops promotion instead uses `github.token` with `contents: write` for its direct main push.
+A rejected push is a failed promotion, not an opened PR or a completed selection.
+Do not bypass repository protection or substitute credentials to force that push.
 Optional Prism live checks use `PRISM_TEST_KUBECONFIG_B64` and `PRISM_E2E_USER`;
 the client must not create arbitrary namespaces and must be able to create the
 controller lease. Do not transfer these secrets to a local unit test.
@@ -1904,6 +1908,8 @@ run is missing proof, not a passed merge/release gate.
 > **Source evidence — workflow authority**
 >
 > Claim: trigger, trust, conditional image build, and promotion are separate controls.
+> Manual promotion authority: [Ops direct main push](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/.github/workflows/promote-runtime.yaml#L80-L92);
+> [runtime App identity and release-selection PR](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/.github/workflows/promote-runtime.yaml#L93-L130).
 > Implementation: [image dependency/matrix selection](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L1-L50).
 > [optional live identity](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-images.yaml#L188-L224).
 > [read-only documentation job](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/docs-checks.yaml#L1-L19).
@@ -2010,10 +2016,16 @@ packages.
 Image build produces candidate digests and receipts bound to a source commit.
 Bundle assembly produces Nova/Buster/Prism archives and checksums. Publication
 preserves receipts as release assets. Promotion verifies a successful main
-source run and materializes values from its exact receipts. Manual promotion
-opens a PR; automatic production selection is a separately enabled workflow.
-When continuous GitOps is active, merging the selection authorizes Argo to
-apply it. A release PR is therefore not always a harmless metadata-only change.
+source run and materializes values from its exact receipts. Manual runtime
+promotion opens a release-selection PR using the GitHub App identity. Manual
+Ops promotion instead commits the release and bootstrap selection directly to
+`main` using `github.token`; there is no intervening selection PR to merge.
+Automatic production selection is a separately enabled workflow. When continuous
+GitOps is active, merging the runtime selection authorizes Argo to apply it.
+For Ops, the successful direct push is the selection boundary; a configured
+controller can reconcile the changed bootstrap selection without a later PR merge.
+Authorize the family-specific write before starting manual promotion. A release
+selection is not always a harmless metadata-only change.
 
 For release-tool changes, run:
 

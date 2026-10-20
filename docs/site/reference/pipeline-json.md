@@ -97,7 +97,8 @@ other fields are optional. Unknown fields are invalid.
 | `uses` | Versioned provider contract ID matching `name@positive-version` | Selects an installed test-provider registration. |
 | `config` | JSON object; default `{}` | Deep-merged with matrix values, then validated against the selected provider schema. Provider defaults are resolved there. |
 | `mode` | `blocking` or `advisory`; test default `blocking`; fixtures resolve to `null` | Blocking failures affect the gate. Advisory results remain evidence without failing the gate. |
-| `review.agent` | Closed object with required stable `agent` ID | Requests provider-result assessment by that agent where the runtime supports it. |
+| `review` | Optional closed object with required `agent` field; unknown fields are invalid | Configures provider-result assessment where the runtime supports it. |
+| `review.agent` | Required stable-ID string when `review` is present | Identifies the assessment agent; for example, `"review": {"agent": "reviewer"}`. |
 | `needs[]` | String node ID, or closed `{nodeId, acceptedResults?}` | Adds a dependency. A string means only `passed` is accepted. |
 | `needs[].acceptedResults` | Non-empty unique subset of `passed`, `failed`, `skipped`, `errored`, `cancelled`, `timed_out` | Allows a downstream node to run after the listed effects. |
 | `inputs.<port>.from` | Required stable source node ID | Source node for a typed value or artifact link. |

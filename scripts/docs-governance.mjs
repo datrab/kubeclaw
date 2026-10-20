@@ -18,6 +18,8 @@ const operatorPages = new Set(JSON.parse(fs.readFileSync(path.join(root, 'docs/o
   .tasks.map((task) => task.canonical.split('#')[0]));
 const generatedReferencePages = new Set(['cli', 'secrets', 'helm-values', 'environment-variables', 'plugin-configuration', 'endpoints', 'verification-commands', 'workflows', 'sdk-exports']
   .map((name) => `docs/site/reference/${name}.md`));
+const platformInventoryPage = 'docs/site/reference/platform-surfaces-generated.md';
+const platformInventoryGenerator = 'scripts/docs-platform-surface-inventory.mjs';
 const prismGuidePages = new Set(['docs/site/understand/prism.md', 'docs/site/understand/prism-runtime.md', 'docs/site/understand/prism-data.md',
   'docs/site/use/prism-studio.md', 'docs/site/extend/platform/prism.md']);
 
@@ -49,6 +51,9 @@ function checksFor(page) {
   if (configurationPages.has(page) || generatedReferencePages.has(page)) {
     checks.unshift('npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations');
   }
+  if (page === platformInventoryPage) {
+    checks.unshift('npm run docs:ap09:platform-inventory:check', 'npm run docs:ap09:platform-drift:mutations');
+  }
   if (operatorPages.has(page)) checks.unshift('npm run docs:operator-tasks:check');
   if (prismGuidePages.has(page)) checks.unshift('npm run docs:prism-guides:check');
   if (page === 'docs/site/reference/helm-values.md') checks.unshift('npm run docs:inventory:local-helm:check');
@@ -66,7 +71,7 @@ function checksFor(page) {
 }
 
 function contentKind(page, text) {
-  if (metadata(text, 'Generator') || generatedReferencePages.has(page)) return 'generated';
+  if (page === platformInventoryPage || metadata(text, 'Generator') || generatedReferencePages.has(page)) return 'generated';
   if (page === 'docs/site/status/open-issues.md'
     || page === 'docs/site/reference/capabilities.md'
     || [
@@ -94,7 +99,9 @@ const pages = walk(siteRoot)
     const missing = metadataFields.filter((field) => values[field] === null);
     if (missing.length) throw new Error(`${page} lacks metadata: ${missing.join(', ')}`);
     const evidence = values.Evidence.split(';').map((value) => value.trim());
-    const generator = metadata(text, 'Generator') ?? (generatedReferencePages.has(page) ? 'scripts/docs-generate.mjs' : null);
+    const generator = metadata(text, 'Generator')
+      ?? (page === platformInventoryPage ? platformInventoryGenerator
+        : generatedReferencePages.has(page) ? 'scripts/docs-generate.mjs' : null);
     return {
       page,
       route: publicRoute(item),

@@ -307,7 +307,7 @@ The returned `progress` object is not proof that any caller persists it. Writer/
 
 ## Product pipeline source revision
 
-The product pipeline declarations above are generated from revision `06962b4fb396bf79277f20230b2c507536ed2c63`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
+The documentation generator derives the product pipeline declarations above from revision `06962b4fb396bf79277f20230b2c507536ed2c63`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
 
 ### Source: skills/common/plugin-runtime/sdk/src/generated/contracts.ts
 

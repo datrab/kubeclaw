@@ -31,6 +31,7 @@ load.
 | Signal | Cause | Safe action |
 | --- | --- | --- |
 | `PLATFORM_CONFIG_INVALID:<canonical-path>:<Ajv-details>` | Missing/unknown field, wrong type, invalid digest/path string, duplicate item, or number outside schema range. | Use the JSON pointer/keyword in the details. Fix the one operator-owned file and validate again. |
+| `RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:<key>` | An OpenClaw runtime target contains an unsupported property. The suffix names that property, not the target. | Stop activation retries. Correct the selected target against its release schema and parser, then validate again. See [runtime target rejection](errors.md#runtime-target-configuration-rejection) for exact construction, pre-dispatch scope, and earlier-operation reconciliation. |
 | `PIPELINE_STAGE_OWNER_MISSING:<type>` | No trusted discovered stage registration owns the type. | Check exact stage spelling, installation roots, package manifest, and trust digest. |
 | Provider or grant resolution error | Required capability has no unambiguous selected provider or resource grant. | Compare enabled registration requirements with `providers` and `grants`. Do not broaden unrelated grants. |
 | Registration configuration error | A stage, adapter, observer, or provider object violates its own schema. | Use the named registration reference. Distinguish schema defaults from caller-inserted values. |

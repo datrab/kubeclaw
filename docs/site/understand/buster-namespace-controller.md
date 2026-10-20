@@ -63,14 +63,17 @@ checks the immutable spec and operator policy, then provisions namespace resourc
 in sequence. The fixture polls the lease and applies its workload after the
 namespace phase becomes `Ready`.
 
-The public lease supports more than the fixture constructor writes. The
-[complete recursive lease reference](../reference/helm-values.md#api-field-2d7090db945e3299f8e7) includes all spec variants,
-status records, nested collections, required members, CEL rules and receiving
-conditions. CEL is the API server's expression language for validating a resource
+The public lease supports more than the fixture constructor writes. Inspect the
+[owned CRD schema](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L33-L568) for spec variants,
+status records, nested collections, required members and CEL rules.
+This is the source schema, not a generated field-level reader reference.
+The Helm values reference describes chart configuration, not this lease object.
+CEL is the API server's expression language for validating a resource
 and its transition from the previous stored resource. Standard root `metadata`
-is Kubernetes ObjectMeta, handled by the server; it is not a separate owned
-metadata-child schema. Use the [metadata boundary](../reference/helm-values.md#api-field-e5b8003a74b771aad5b3) for
-that authority and its operation-specific reference.
+is Kubernetes [ObjectMeta](https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/object-meta/),
+handled by the server; it is not a separate owned metadata-child schema.
+Use [API object updates](../reference/api-object-updates.md) to distinguish
+apply operations and parent validation from the lease's own schema rules.
 
 The controller also creates fixed namespace safeguards. The ResourceQuota bounds
 Pods, CPU, memory, ephemeral storage, PVC count and requested persistent storage.
@@ -175,7 +178,7 @@ and [E2E port selection](https://github.com/datrab/kubeclaw/blob/be78787633d774e
 show the actual receiving permissions and ports.
 
 The exact constraints and transition rules are in the
-[owned spec reference](../reference/helm-values.md#api-field-446072fe13a4ef01e5dc). The controller's
+[owned spec schema](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L40-L182). The controller's
 [spec validation and digest](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L1598-L1653)
 apply operator policy after schema validation. A locally constructed request can
 pass a helper and still fail API admission, or pass admission and fail operator
