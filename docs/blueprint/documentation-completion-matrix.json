@@ -1505,7 +1505,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -1610,9 +1610,19 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "/root/review_example_publication/review_cli_complete",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "changedDependencies": [
+            "scripts/docs-inventory.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent whole CLI review explicitly preserves this prior topic: every bound reader page and other dependency byte-identical; inventory change confined to complete deploy forms and additive public CLI supplement, with secret/Helm/workflow and non-command deploy facts unchanged."
         }
       ],
-      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
@@ -1904,7 +1914,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -1988,11 +1998,24 @@
         "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/review_example_publication/review_cli_complete",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "changedDependencies": [
+            "scripts/docs-inventory.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent whole CLI review explicitly preserves this prior topic: every bound reader page and other dependency byte-identical; inventory change confined to complete deploy forms and additive public CLI supplement, with secret/Helm/workflow and non-command deploy facts unchanged."
+        }
+      ],
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2084,7 +2107,20 @@
         "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/review_example_publication/review_cli_complete",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+          "changedDependencies": [
+            "scripts/docs-inventory.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent whole CLI review explicitly preserves this prior topic: every bound reader page and other dependency byte-identical; inventory change confined to complete deploy forms and additive public CLI supplement, with secret/Helm/workflow and non-command deploy facts unchanged."
+        }
+      ],
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -2287,6 +2323,92 @@
         "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
         "No live Kubernetesadmission/DNS/delivery/RBAC/recovery/deletion orglobalpublicationgreenclaim.",
         "StandardObjectMeta remains upstream;renderedpolicy andcontrollerfallbacks areseparatefromshippedtemplate values."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-complete-public-cli-20261020",
+      "revision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4",
+      "author": "/root/review_example_publication",
+      "reviewer": "/root/review_example_publication/review_cli_complete",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-002"
+      ],
+      "pages": [
+        "docs/site/reference/cli.md"
+      ],
+      "sources": [
+        "scripts/check-monitoring.mjs",
+        "scripts/check-runtime-role-manifests.mjs",
+        "scripts/deploy.sh",
+        "scripts/docs-generate-core.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/generate-buster-error-reference.mjs",
+        "scripts/generate-buster-provider-reference.mjs",
+        "scripts/generate-knip-config.mjs",
+        "scripts/generate-local-helm-authorities.mjs",
+        "scripts/generate-operator-task-registry.mjs",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/lint-baseline-prune.mjs",
+        "scripts/run-lint-report.mjs",
+        "scripts/runtime-tool-locks.mjs",
+        "scripts/scan-runtime-images.sh",
+        "scripts/versions.mjs",
+        "skills/buster/engine/remote-plan-cli.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "skills/nova/plugins/lint/src/engine/index.ts",
+        "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+        "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+        "skills/nova/plugins/review/scripts/generate-verification-schema.mjs",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/legacy-import-cli.ts",
+        "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "tools/native-worker-nri/main.go",
+        "docs/generated/inventory/deploy-script.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-inventory.mjs --check",
+          "exitCode": 0,
+          "observation": "All four inventories current; bounded CLI generation only."
+        },
+        {
+          "command": "Independent main-dispatch and published CLI parser comparison",
+          "exitCode": 0,
+          "observation": "39 dispatch cases,41 forms,58 prior definitions across25 owning published source paths and12 supplemental valued options complete; source/reader/quality PASS."
+        },
+        {
+          "command": "Direct renderCli reader parity with preserved source citations",
+          "exitCode": 0,
+          "observation": "Entire CLI page matches owning renderer and inventories; old source citations preserved and12 new source citations bound to unchanged committed source."
+        },
+        {
+          "command": "Independent actual lint parseArguments source evaluation",
+          "exitCode": 0,
+          "observation": "Ten valued flags,required guards,scalar last-wins,list append,help and unknown/missing/invalid cases checked without executing lint work."
+        },
+        {
+          "command": "node --test scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14 finite publication asset/link controls pass; not a global publication claim."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete published operator/developer CLI reference: every deploy invocation and existing public definition plus previously omitted map-defined lint options and equals-syntax Buster revision selectors; actual defaults,arity,repeat,error and destructive-operation boundaries independently reviewed.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment,provider credential or remote execution claim.",
+        "Generic CLI drift wrapper remains blocked before CLI on existing Helm authority hash mismatch; no whole generation,publication,CI or AP09.11 gate acceptance.",
+        "Internal documentation tooling and flags passed to external programs remain outside this published CLI contract."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -16587,7 +16709,7 @@
         "docs/generated/inventory/configuration-runtime-inputs.json",
         "scripts/docs-generate.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "generated",
       "generator": "resolve from page generation metadata",
       "automatedChecks": [
@@ -16612,22 +16734,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L358",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
-        "reason": "Publicnative-node-preflight/render argument forms still absent despite fixednative-node-render.",
-        "campaign": "independent-correction-closeout-20261020"
-      }
+      "completionRecord": "AP09-complete-public-cli-20261020"
     },
     {
       "id": "REF-003",
