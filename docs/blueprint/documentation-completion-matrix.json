@@ -1129,7 +1129,7 @@
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+      "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1198,11 +1198,24 @@
       "summary": "Independent topic acceptance for FLW-002, FLW-004, FLW-008; whole-gate acceptance only for explicitly reviewed none.",
       "limits": [
         "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
-        "Full project input,compiled before/after,artifact/telemetry success,retry/repair,interruption,Redis replay and Worker recovery worked exercises remain FAIL.",
+        "Executed artifact/telemetry success,retry/repair,interruption,Redis replay and Worker recovery worked exercises remain open. Full project input and compiler before/after separately accepted after independent review.",
         "External-effect fixture fails before mutation on runtime-dispatch import admission; demo tests and full Buster wrapper not green. No A99 whole-gate acceptance."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/review_first_project",
+          "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent exact additive first-project impact review preserves prior accepted scopes. Old workflowbody and all166publicationroutes unchanged;exactsourceassetcopiedbyte-for-byte,unapprovedneighborstillrejected."
+        }
+      ],
+      "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d"
     },
     {
       "id": "AP09-reader-developers-20261020",
@@ -1671,7 +1684,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -1739,9 +1752,21 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "/root/review_example_publication",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+          "changedDependencies": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent exact additive first-project impact review preserves prior accepted scopes. Old workflowbody and all166publicationroutes unchanged;exactsourceassetcopiedbyte-for-byte,unapprovedneighborstillrejected."
         }
       ],
-      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-closeout-runtime-20261020",
@@ -2076,6 +2101,79 @@
         "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
         "Hostobserverruntimewrapper blocked before assertions by absent generatedcontract;no functionalhost/Redis/liveclaim.",
         "No fullcommunication/telemetry/publication gate inferred."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/review_first_project",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-003",
+        "FLW-005"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sources": [
+        "skills/nova/pipeline.ts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/source.ts",
+        "skills/nova/project/coverage.ts",
+        "skills/nova/project/review-semantics.ts",
+        "skills/nova/project/delivery-manifest.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/nova/core/src/index.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "contracts/pipeline-test-gate/v1/src/index.ts",
+        "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "docs/config/documentation-tree-classification.json"
+      ],
+      "checks": [
+        {
+          "command": "node docs/site/use/workflows/examples/first-project.mjs /tmp/pr13-first-project-independent-20261020-review",
+          "exitCode": 0,
+          "observation": "Complete materializedproject and realcanonicalcompilergraph:8stages,executionfalse,platformAdmissionfalse;path/baseline/digests genuine."
+        },
+        {
+          "command": "Independent originalcompiler/contract assertions on completeproject andgraph",
+          "exitCode": 0,
+          "observation": "Exactrecompile,schemas,resolvedplans,coverage,8stageedges/repairbudget checked;invalidproject/workspace/architecture andexistingoutput denied."
+        },
+        {
+          "command": "node --test /tmp/pr13-first-project-independent-20261020-review/repository/app/greeting.test.mjs",
+          "exitCode": 0,
+          "observation": "1/1passed;onlyexistinggreetingassertion,notproviderrun."
+        },
+        {
+          "command": "node --test scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs",
+          "exitCode": 0,
+          "observation": "14/14passed;independentexact17assetcopybytecomparison andunapprovedneighborrejection alsoPASS.166routesunchanged."
+        },
+        {
+          "command": "Independent first-project source/reader/quality review and boundedpublicationreview",
+          "exitCode": 0,
+          "observation": "BothwholeFLW003/005all3aspectsPASS;15locallinksresolve,exact.mjsassetclassification/allowanceconfirmed."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete published maintainednova-project.v2 materializer andactualcompiledgraphwithall8stages,ordinary/repair edges,budgets,prerequisites,writeeffects,expectedobservations andcleanup. Independentfunctionalreviewandpublicationimpactreview complete.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Compile-only: no runtimeadmission,platform/lintpolicy/provideragentexecution,runartifact/audit/telemetry/delivery proof.",
+        "NoFLW001/006orwholeA99/A912gateacceptanceinferred;globaltree/publication/readerboundary issuesremain.",
+        "Helperrequirespreparedsourcecheckout;publishedsourceasset isnotstandalonedownloadedsoftware."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -13561,7 +13659,7 @@
       "pageOwner": null,
       "readerTask": "Validiertes `nova-project.v2` Beispiel",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -13583,22 +13681,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L301",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-003 — Validiertes `nova-project.v2` Beispiel — FAIL. Canonical target: docs/site/use/workflows/README.md. FAIL, F1. No published complete nova-project.v2 input exists. Buster suite expects an operator-supplied descriptor; tests generate fixtures, not a reader-maintained project example.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-first-project-example-20261020"
     },
     {
       "id": "FLW-004",
@@ -13649,7 +13739,7 @@
       "pageOwner": null,
       "readerTask": "Vorher-/Nachher-Erklärung des kompilierten Graphen",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -13671,22 +13761,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L303",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- FLW-005 — Vorher-/Nachher-Erklärung des kompilierten Graphen — FAIL. Canonical target: docs/site/use/workflows/README.md. FAIL, F2. No concrete valid project input and resulting complete compiled graph with explained generated stages/edges is published. Generic compile summary and architecture mechanism prose do not supply before/after.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-first-project-example-20261020"
     },
     {
       "id": "FLW-006",
