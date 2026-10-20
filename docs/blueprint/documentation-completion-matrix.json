@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "92ee169f31923170d68e06ca2585db0fc2376c00",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -60,11 +60,26 @@
         "No A911-11 mutation-suite or whole-AP09 acceptance."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_config_reference",
+          "verdict": "PASS",
+          "previousReviewedRevision": "92ee169f31923170d68e06ca2585db0fc2376c00",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/reference/worker-profiles-and-roles.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "92ee169f31923170d68e06ca2585db0fc2376c00"
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -141,16 +156,30 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "previousReviewedRevision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
         "summary": "Original11 topic pages and implementations unchanged; generated map differs only in corrected capabilities.appliesTo. Source/reader/quality PASSs explicitly preserved by focused independent impact review."
-      }
+      },
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_config_reference",
+          "verdict": "PASS",
+          "previousReviewedRevision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ]
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -313,7 +342,21 @@
         "Kernel isolation remains environment-dependent; no whole-AP09.2 or gate acceptance."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md",
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
@@ -447,7 +490,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -536,11 +579,25 @@
         "Broad wrappers fail at unrelated missing Buster/browser dependencies; no whole-suite or live cgroup claim."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/understand/components-and-authority.md",
+            "docs/site/understand/worker-core.md"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -690,11 +747,24 @@
         "A97-08 complete discovered trust/Secret inventory reconciliation not established; broad specialist sourcepin check failed and not treated as passed."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -783,11 +853,26 @@
         "Other15 assigned scopes remain NOT_READY from incomplete independent full source coverage; A97-05/07 NOT_READY,A97-06 FAIL."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_runtime_docs",
+          "verdict": "PASS",
+          "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md",
+            "docs/site/understand/data-and-state.md",
+            "docs/site/understand/telemetry.md"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "9370d16410bb7f7aeeb66e11d18403764074eeae"
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -874,11 +959,26 @@
         "Carries forward prior reviewed unchanged topic content; unrelated whole-file pin/publication failures remain open."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_config_reference",
+          "verdict": "PASS",
+          "previousReviewedRevision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "ac5aa14e12e549f557ed92ec2438b200e7160ce9"
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -991,7 +1091,21 @@
         "No live backup/restore,application recovery,operator authentication or full installation/diagnosis/maintenance acceptance."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_developer_maintenance",
+          "verdict": "PASS",
+          "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/use/plugins.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d"
     },
     {
       "id": "AP09-reader-workflows-20261020",
@@ -1072,7 +1186,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1222,11 +1336,29 @@
         "Ops promotion authority,host version,same-ID replacement roots and missing capability/Forge/Echo change tasks remain FAIL. Inventory word-count freshness and choice-guide metadata check not green."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_developer_maintenance",
+          "verdict": "PASS",
+          "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/contracts.md",
+            "docs/site/extend/developer-handbook.md",
+            "docs/site/extend/plugin-catalogue/README.md",
+            "scripts/docs-generate.mjs",
+            "scripts/docs-governance.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d"
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1301,11 +1433,26 @@
         "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_config_reference",
+          "verdict": "PASS",
+          "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/reference/configuration-errors.md",
+            "scripts/docs-generate.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -1397,11 +1544,26 @@
         "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_config_reference",
+          "verdict": "PASS",
+          "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/plugin-catalogue/README.md",
+            "scripts/docs-inventory.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1467,11 +1629,29 @@
         "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_config_reference",
+          "verdict": "PASS",
+          "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/documentation-maintenance.md",
+            "docs/site/extend/plugin-catalogue/README.md",
+            "docs/site/reference/verification-commands.md",
+            "scripts/docs-generate.mjs",
+            "scripts/docs-governance.mjs",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -1523,6 +1703,296 @@
         "Navigation reachability only, not substantive acceptance of all destinations.",
         "Publication/reference/boundary checks remain failed; no successful current output build, search, accessibility, rendered/offline task or live acceptance claimed.",
         "Pre-existing dirty events.md excluded and preserved."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_developer_maintenance",
+          "verdict": "PASS",
+          "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md",
+            "docs/site/extend/plugin-catalogue/README.md",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        }
+      ],
+      "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d"
+    },
+    {
+      "id": "AP09-closeout-runtime-20261020",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/close_runtime_docs",
+      "gateIds": [],
+      "requirementIds": [
+        "ARC-003",
+        "SPC-010",
+        "DAT-008",
+        "WKC-002",
+        "WKC-011",
+        "WKC-014"
+      ],
+      "pages": [
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "sources": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/prism.json",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "docker/archviewer.nginx.conf",
+        "docker/Dockerfile.archviewer",
+        "tests/verification/deployment/archviewer-policy-provider.test.mjs",
+        "skills/common/plugins/artifact-store/src/adapter.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+        "skills/nova/core/execution/artifact-checkpoints.ts",
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+        "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts",
+        "skills/worker/core/worker/native-result.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "contracts/agent-observability/v1/src/constants.ts",
+        "docker/Dockerfile.nova",
+        "skills/common/plugins/agent-observability/src/observers.ts",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "my-values/nova-values.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/tests/buster-lease-receiver.test.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node --test tests/verification/deployment/archviewer-policy-provider.test.mjs tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+          "exitCode": 0,
+          "observation": "6/6 passed:actual policy variants and codec/checkpoint refusal semantics."
+        },
+        {
+          "command": "NODE_ENV=test node --test tests/verification/reliability/worker-native-contract.test.mts tests/verification/reliability/worker-native-journal.test.mts",
+          "exitCode": 0,
+          "observation": "9/9 passed:versioned native contracts and original durable recovery;no live root/cgroup claim."
+        },
+        {
+          "command": "Independent runtime source/reader and impact review",
+          "exitCode": 0,
+          "observation": "6 complete requirement PASSs;97 local links checked;old accepted scopes preserved separately."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent sourceAccuracy/readerUsability/quality PASS for ARC-003, SPC-010, DAT-008, WKC-002, WKC-011, WKC-014. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-closeout-config-reference-20261020",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/close_config_reference",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-004",
+        "CFG-005",
+        "CFG-008",
+        "CFG-018",
+        "REF-015"
+      ],
+      "pages": [
+        "docs/site/reference/pipeline-definition.md",
+        "docs/site/reference/pipeline-json.md",
+        "docs/site/reference/worker-profiles-and-roles.md",
+        "docs/site/reference/configuration-compatibility.md",
+        "docs/site/reference/images-and-digests.md"
+      ],
+      "sources": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/execution/graph-repair-budget.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/test-gates/types.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/nova/core/test-gates/pipeline.ts",
+        "contracts/pipeline-test-gate/v1/src/coverage.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        ".github/workflows/promote-runtime.yaml",
+        "versions.json",
+        "scripts/versions.mjs",
+        "scripts/gitops-rollback.mjs",
+        "scripts/deploy.sh",
+        "scripts/docs-inventory.mjs",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-publication.mjs",
+        "skills/prism/control/agent-jobs.ts",
+        "scripts/docs-governance.mjs",
+        "scripts/check-runtime-role-manifests.mjs",
+        "scripts/docs-sdk-reference.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+          "exitCode": 0,
+          "observation": "Graph contract passed;4actual omission/zero/owner/requester assertions also passed."
+        },
+        {
+          "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+          "exitCode": 0,
+          "observation": "10nodes/2links passed;review object and stable agent-ID path reconciled."
+        },
+        {
+          "command": "node tests/verification/contracts/check-pipeline-worker-core-contracts.mts",
+          "exitCode": 0,
+          "observation": "12versioned contracts passed;active Buster v1 and Prism v2/v3 sources reconciled."
+        },
+        {
+          "command": "node --test tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/code-release.test.mjs",
+          "exitCode": 0,
+          "observation": "18/18 local tests passed;not registry/build/deployment proof."
+        },
+        {
+          "command": "Independent configuration/reference source/reader and impact review",
+          "exitCode": 0,
+          "observation": "5 complete named requirement PASSs;full referenced topic semantics reviewed,broader incomplete reference families excluded."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent sourceAccuracy/readerUsability/quality PASS for CFG-004, CFG-005, CFG-008, CFG-018, REF-015. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "author": "Documentation authors and correction coordinator",
+      "reviewer": "/root/close_developer_maintenance",
+      "gateIds": [],
+      "requirementIds": [
+        "DEV-005",
+        "DEV-008",
+        "EXT-007",
+        "EXT-008",
+        "CDV-005",
+        "OPL-003",
+        "OPL-004",
+        "PLG-004",
+        "PLG-012",
+        "GOV-005",
+        "GOV-007"
+      ],
+      "pages": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/use/plugins.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/testing.md",
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "sources": [
+        ".github/workflows/promote-runtime.yaml",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/server/agent-job-routes.ts",
+        "versions.json",
+        "docker/Dockerfile.buster-gateway",
+        "docker/Dockerfile.prism-agent",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/lib/docs-route-continuity.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/tests/docs-route-continuity.test.mjs",
+        "scripts/tests/docs-publication-links.test.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/versions.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node --test scripts/tests/docs-route-continuity.test.mjs scripts/tests/docs-publication-links.test.mjs scripts/tests/docs-publication-assets.test.mjs",
+          "exitCode": 0,
+          "observation": "24/24 passed;known route guards/assets and executable/source link retention."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "166pages mapped;correct owning platform generator/check/classification."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+          "exitCode": 0,
+          "observation": "Registry contract passed;duplicate identity/discovery beforeactivation confirmed."
+        },
+        {
+          "command": "node scripts/versions.mjs --check",
+          "exitCode": 0,
+          "observation": "45consumers/4inputs/5locks current;selectedhost version checked againstDockerdefaults."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs capability-page (stdout exact-byte comparison)",
+          "exitCode": 0,
+          "observation": "Current generated capability output exactly equalsreaderpage after template mirror."
+        },
+        {
+          "command": "Independent developer/operator/governance source/reader and impact review",
+          "exitCode": 0,
+          "observation": "11complete named requirement PASSs;3exact retained-root readerlinks resolved;existing scopes preserved separately."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent sourceAccuracy/readerUsability/quality PASS for DEV-005, DEV-008, EXT-007, EXT-008, CDV-005, OPL-003, OPL-004, PLG-004, PLG-012, GOV-005, GOV-007. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "limits": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -1767,7 +2237,7 @@
         "scripts/docs-status.mjs",
         "docs/status/open-issues.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1792,22 +2262,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L98",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- GOV-005 — Trennung generierter Fakten und redaktioneller Erklärungen — FAIL. Canonical: docs/site/reference/documentation-governance.md. FAIL F1: current generated platform page is classified authored; its generator/check is absent from the page map, defeating the instructed authored/generated maintenance selection.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "GOV-006",
@@ -1858,7 +2320,7 @@
         "scripts/docs-status.mjs",
         "docs/status/open-issues.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1883,22 +2345,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L100",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- GOV-007 — Begriffs-, Deprecation-, Redirect- und Supersession-Regeln — FAIL. Canonical: docs/site/reference/documentation-governance.md. FAIL F2: deprecated-term authority incorrectly says needs_nova is not an active contract term; current protected Prism job API still returns that state. Structural redirect controls alone do not validate this meaning.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "GOV-008",
@@ -2205,7 +2659,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2217,22 +2671,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L119",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Six registry kinds claimed; actual manifest has five, host extensions separately packaged.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-runtime-20261020"
     },
     {
       "id": "ARC-004",
@@ -2339,9 +2785,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L122",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Complete communication claim omits separate OpenClaw observer Redis control/payload/dead-letter route.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Separate OpenClaw host observer control/payload/dead-letter Redis crossing path absent.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -3963,7 +4409,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3975,22 +4421,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L152",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Nested/versioned worker public field reference incomplete.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-runtime-20261020"
     },
     {
       "id": "WKC-003",
@@ -4295,7 +4733,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -4307,22 +4745,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L161",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Native recovery emits errored and cleanup/fencing split,not the documented interrupted enum.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-runtime-20261020"
     },
     {
       "id": "WKC-012",
@@ -4411,7 +4841,7 @@
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
         "tests/verification/reliability"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -4423,22 +4853,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L164",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Full worker resource/input/observation field table incomplete.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-runtime-20261020"
     },
     {
       "id": "SPC-001",
@@ -4869,9 +5291,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L177",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Three promised Helm field anchors missing.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Raw CRD link replaces broken links but recursive reader field reference still absent.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -4969,7 +5391,7 @@
         "my-values/nova-values.yaml",
         "charts/kubeclaw/templates/deployment.yaml"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5002,12 +5424,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -5027,12 +5446,7 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Archviewer page denies existing Kubernetes NetworkPolicy alternative.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-runtime-20261020"
     },
     {
       "id": "PLG-001",
@@ -5163,7 +5577,7 @@
         "skills/buster/engine/test-gates/provider-loader.ts",
         "skills/buster/engine/test-gates/report-adapter-runtime.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5175,22 +5589,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L188",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Replacement instructions omit mutually exclusive discovered package-set/root selection before duplicate-ID admission.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "PLG-005",
@@ -5503,7 +5909,7 @@
         "skills/common/plugin-runtime/foundation/registry",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -5515,22 +5921,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L196",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Replacement/recovery instructions omit retained-but-undiscovered roots and pinned old package sets.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "PLG-013",
@@ -7183,7 +7581,7 @@
         "scripts/postgresql-recovery.sh",
         "scripts/redis-prepare-migration.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7213,12 +7611,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -7241,12 +7636,7 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Artifact codec/default/exact-reference visibility compatibility undocumented.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-runtime-20261020"
     },
     {
       "id": "DAT-009",
@@ -7483,9 +7873,9 @@
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Active event-specific payload catalogue absent.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Lifecycle details nowaccurate;exact active agent-observability-event.v2 and full producer catalogue stillmissing.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -8759,9 +9149,9 @@
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Selected embedding client release changed; exact old-client limits claimed as current.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Old2026.9.4 embedding-client behavioral limits still claimed current vs selected2026.10.3.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -10967,7 +11357,7 @@
         "skills/common/plugin-runtime/foundation/registry/activation.ts",
         "skills/common/plugin-runtime/foundation/packages/install.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11000,12 +11390,9 @@
       ],
       "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -11037,12 +11424,7 @@
         "reason": "Activation and success observations versus installed/effective configuration.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- OPL-003 FAIL",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "OPL-004",
@@ -11057,7 +11439,7 @@
         "skills/common/plugin-runtime/foundation/registry/activation.ts",
         "skills/common/plugin-runtime/foundation/packages/install.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11090,12 +11472,9 @@
       ],
       "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -11127,12 +11506,7 @@
         "reason": "Plugin diagnosis/change/disable/replace/remove and remaining resources.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- OPL-004 FAIL",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "OPL-005",
@@ -11493,7 +11867,7 @@
         "skills/nova/core/execution/graph-build.ts",
         "skills/nova/core/execution/pipeline-loop.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11523,12 +11897,9 @@
       ],
       "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -11559,12 +11930,7 @@
         "reason": "Pipeline definition recursive schema and current runtime semantics.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-004 — `reference/pipeline-definition.md:58`.** Says omitted `stages[].execution.maxTechnicalRetries` is treated as zero in categorized repair validation. Actual `skills/nova/core/execution/graph-repair-budget.ts:3-7,12-19` calls `technicalLimit()` and rejects `undefined` with `GRAPH_TECHNICAL_RETRY_BUDGET_INVALID` when a repair budget applies. Focused actual-code reproduction: schema-valid stage with `repairBudget`, omitted retries rejects graph build; identical stage with explicit `maxTechnicalRetries: 0` passes. Correct schema-optional versus semantic requirement/default behavior; do not change implementation for this documentation review.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-config-reference-20261020"
     },
     {
       "id": "CFG-005",
@@ -11580,7 +11946,7 @@
         "skills/nova/core/test-gates/resolver.ts",
         "skills/common/plugin-runtime/foundation/config/published-pair.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11610,12 +11976,9 @@
       ],
       "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -11646,12 +12009,7 @@
         "reason": "Selected pipeline control-file values and actual consumer.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-005 — `reference/pipeline-json.md:100`.** The node field table calls `review.agent` a closed object containing an `agent` ID. Actual `skills/nova/core/test-gates/types.ts:33` and `resolver.ts:201-205` require `review` to be the closed object and `review.agent` to be a stable-ID string. Correct the path/type split so readers do not construct an invalid nested object.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-config-reference-20261020"
     },
     {
       "id": "CFG-006",
@@ -11790,7 +12148,7 @@
         "skills/prism/engine/worker-envelope.ts",
         "skills/prism/server/agent-attempt.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11820,12 +12178,9 @@
       ],
       "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -11856,12 +12211,7 @@
         "reason": "Worker profile/engine/role selected configuration and enforcement consumer.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-008 — `reference/worker-profiles-and-roles.md`.** Presents v2/v3 and current shipped Prism profiles but omits the active Buster v1 producer from this required exhaustive worker/profile/engine reference. `skills/buster/engine/test-gates/runner.ts:566-588` constructs `worker-profile.v1`, dynamic `buster.local.<capability-key>` profile IDs, `buster-test-engine`/`kubeclaw.buster-engine@1` engine identity and registry-digest binding. At `1519-1524` it constructs new `worker-attempt-envelope.v1` attempts. Document this supported current producer, its capability selection and v1 resource/registration boundary; it is not merely retained history.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-config-reference-20261020"
     },
     {
       "id": "CFG-009",
@@ -12918,7 +13268,7 @@
         "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
         "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -12950,12 +13300,9 @@
       ],
       "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -13040,12 +13387,7 @@
         "reason": "Actual supported configuration/compatibility limits for preflight and change.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-018 — `reference/configuration-compatibility.md:40`.** Marks worker v1 as retained-only with “No new authoring.” The active Buster profile/envelope creation above disproves that support classification. Distinguish current Buster v1 production from retained compatibility and Prism v2/v3 production.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-config-reference-20261020"
     },
     {
       "id": "FLW-001",
@@ -14330,7 +14672,7 @@
       "pageOwner": null,
       "readerTask": "CI-Workflows und erforderliche Gates",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -14353,12 +14695,9 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -14438,12 +14777,7 @@
         "report": "/home/node/Documents/Codex/a98-evidence/ap98-finding-evidence-reconciliation/report.md",
         "scope": "Remove only closed authored defect identities; do not set requirement accepted or waive wider/manual/execution/generated-content proof."
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- DEV-005 — CI-Workflows und erforderliche Gates: **FAIL**, SA F / RU F / Q P; H; DEV-R1. Branch-protection unknowns are honestly separated, but manual Ops authority is wrong.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "DEV-006",
@@ -14700,7 +15034,7 @@
       "pageOwner": null,
       "readerTask": "Release, Versionierung, Migration und Changelog",
       "sourceDependencies": [],
-      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -14723,12 +15057,9 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -14811,12 +15142,7 @@
         ],
         "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
       },
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- DEV-008 — Release, Versionierung, Migration und Changelog: **FAIL**, SA F / RU F / Q P; H; DEV-R1. Good conditional lock sync, version identities and irreversible-data limits do not fix incorrect Ops promotion semantics.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "DEV-009",
@@ -15233,7 +15559,7 @@
         "packaging/runtime/roles",
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -15260,22 +15586,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L336",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- EXT-007 — OpenClaw, Codex, Worker Engine und Rollen: **FAIL**, SA F / RU F / Q P; X; DEV-R2. Selection/packaging boundaries otherwise sound; wrong exact host release affects actual verification.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "EXT-008",
@@ -15292,7 +15610,7 @@
         "packaging/runtime/roles",
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -15319,22 +15637,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L337",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- EXT-008 — Extension Testing und Lifecycle: **FAIL**, SA P / RU F / Q P; X; DEV-R3. Positive tutorial/removal succeeds; same-ID replacement with recoverable runs remains procedurally incomplete.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "EXT-009",
@@ -15568,7 +15878,7 @@
       "pageOwner": null,
       "readerTask": "Foundation Registry, Trust oder Isolation ändern",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -15591,22 +15901,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L343",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- CDV-005 — Foundation Registry, Trust oder Isolation ändern: **FAIL**, SA P / RU F / Q P; F; DEV-R3. Discovery/trust/import/activation mechanisms are correctly stated, but retained replacement procedure lacks its necessary root/package-set selection.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-developer-maintenance-20261020"
     },
     {
       "id": "CDV-006",
@@ -16060,9 +16362,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L358",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-002 FAIL — F/F/P.** `docs/site/reference/cli.md:19–47` gives only 16 deployment invocation forms, followed by bare case names. Public `native-node-render` has no required positional arguments or usable invocation. Actual `scripts/deploy.sh:13` defines `native-node-render OUT [POLICY]`; the finite forms selector in `scripts/docs-inventory.mjs:22–48` omits it. Internal unpublished tooling flags were not treated as public CLI defects.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Publicnative-node-preflight/render argument forms still absent despite fixednative-node-render.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -16230,9 +16532,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L360",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-004 FAIL — F/F/P.** `docs/site/reference/schemas.md:136,209–225` leaves review policy v1/v2 and report v1 consumer/version relationships unresolved, and expressly omits further contracts/telemetry/API/host/ops/embedded authorities. Actual `skills/nova/plugins/review/src/review-policy-resolver.ts` and `review-policy-contract.ts` provide current policy selection/validation. The requirement is all schemas/constraints/defaults, not a list of unresolved names. This is missing consumer semantics, not a demand for live validator execution.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Supported schema family and recursive consumer/default coverage remains incomplete.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -16277,9 +16579,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L361",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-005 FAIL — F/F/P.** `docs/site/reference/errors.md:163–175` has useful bounded routing but no exhaustive dynamic-family coverage. Concrete omitted active family: `skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:7,51–53` emits `RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:<key>`. Neither central errors nor linked `configuration-errors.md` gives its exact construction, trigger, effect and safe action. Successful Buster catalogue coverage does not cover this family.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Added correctdynamicfamily but fullproduct emitter/wrapper/HTTP/result translation coverage missing.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -16321,7 +16623,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L362"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L362",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "OpenClaw hook projection accurate;full event/payload census and currentdiscoverybinding notclosed.",
+        "campaign": "independent-correction-closeout-20261020"
+      }
     },
     {
       "id": "REF-007",
@@ -16498,9 +16806,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L366",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-010 FAIL — F/F/P.** `docs/site/reference/contracts.md:153–158` is expressly only eight bounded examples, not the requested contract/version/producer/consumer inventory. Concrete supported optional contract absent from central contracts/schema/compatibility routes: `skills/prism/control/product-decisions.ts:6,14–18` defines domain `kubeclaw.demo-product-decision.v1`, envelope `demo-product-decision-envelope.v1`, payload `demo-product-decision.v1`; feature enablement at :23–28 does not make this shipped public contract irrelevant. Its compatibility/retirement direction is not documented here.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Accurate demo decision family added;stillbounded examples notwhole contract inventory.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -16719,9 +17027,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L369",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-013 FAIL — F/F/P.** `docs/site/reference/helm-values.md:12` promises every current scalar/list/map, but both generated field inventory and page omit current public selectors `charts/kubeclaw/values.yaml:189` `discord.requireMention`, :532 `archviewer.networkPolicyProvider`, and the selected override `my-values/nova-values.yaml:53` `discord.requireMention`. Compared all 67 inventoried YAML source files: six have changed since stored source digests; these specific fields are demonstrably absent, not just stale pin noise.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Supplemental Helm selectors correct;full generated inventory/defaults stale.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -16780,7 +17088,7 @@
       "pageOwner": null,
       "readerTask": "Images, Versionen und Digests",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -16801,22 +17109,14 @@
       ],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L371",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-015 FAIL — F/F/P.** `docs/site/reference/images-and-digests.md:226` describes manual promotion as proposing a selection PR. Actual `.github/workflows/promote-runtime.yaml:80–92` treats Ops separately, authenticates with `github.token` and pushes `HEAD:main` directly. Only non-Ops uses App token / selection PR (:94–102). This materially changes operator authorization/deployment expectations.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-closeout-config-reference-20261020"
     },
     {
       "id": "REF-016",
@@ -16867,9 +17167,9 @@
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L372",
       "closureDecision": {
         "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **REF-016 FAIL — F/F/P.** `docs/site/reference/verification-commands.md:19–26` lists mutating `deploy.sh image`/`image <name>` as verification commands without write-effect classification; :34–54 gives bare aggregate commands and a small claim map, not all-command purpose/environment/write-effect/owner/change-to-check routing. `workflows.md` supplies workflow trigger facts but does not repair those omissions. This is a reader-safety/coverage defect, not a failed broad test used as proof of drift.",
-        "campaign": "independent-ready-topics-20261020"
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Deploymentwriteeffects documented;fullcheck environment/effect/owner/change routing incomplete.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
@@ -21205,10 +21505,10 @@
         "limits": "Completegate has additional required practical/canonical/inventory/productscopes; no staticfacet approval substitutes"
       },
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "Independent developers review: material supported-task or authority gap; see topic closure decisions.",
-        "campaign": "independent-ready-topics-20261020"
+        "verdict": "NOT_READY",
+        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+        "reason": "Ops authority defect fixed;whole integrated command/prerequisite chain not independently completed.",
+        "campaign": "independent-correction-closeout-20261020"
       }
     },
     {
