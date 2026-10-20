@@ -4,11 +4,26 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import test from 'node:test';
+import { channel } from 'node:diagnostics_channel';
 import { TailscaleExposureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/tailscale-exposure-runtime.ts';
 import { exposureAPI } from './tailscale-api-fixture.mjs';
 
-test('actual kubectl binds Ready, replay and cleanup to durable exposure ownership', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-wire-')); const api = await exposureAPI(root);
+test('actual kubectl binds Ready, replay and cleanup to durable exposure ownership', async (t) => {
+  const started = performance.now(); const events = [];
+  const record = event => {
+    if (events.length === 150) events.shift();
+    events.push({ atMs: Math.round(performance.now() - started), ...event });
+  };
+  const children = channel('child_process');
+  const observeChild = ({ process: child }) => {
+    const began = performance.now();
+    record({ event: 'child-created' });
+    child.once('spawn', () => record({ event: 'child-spawn', executable: child.spawnfile, verb: child.spawnargs?.[1] }));
+    child.once('error', error => record({ event: 'child-error', code: error.code, elapsedMs: Math.round(performance.now() - began) }));
+    child.once('close', (code, signal) => record({ event: 'child-close', executable: child.spawnfile, code, signal, elapsedMs: Math.round(performance.now() - began) }));
+  };
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-wire-')); const api = await exposureAPI(root, { onRequest: record });
+  children.subscribe(observeChild);
   const priorConfig = process.env.KUBECONFIG; process.env.KUBECONFIG = api.config;
   try {
     const client = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
@@ -17,7 +32,10 @@ test('actual kubectl binds Ready, replay and cleanup to durable exposure ownersh
     const request = attempt => ({ operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:attempt:${attempt}` },
       payload: { leaseName: 'preview-one', namespace: 'test-one', serviceName: 'web', servicePort: 80,
         expiresAt: api.state.lease.status.expiresAt, path: '/current', readinessTimeoutMs: 5000 } });
-    const invoke = value => client.invoke('kubernetes.exposure', value, new AbortController().signal);
+    const invoke = value => {
+      record({ event: 'invoke', operation: value.operation, attempt: value.resource.canonicalId });
+      return client.invoke('kubernetes.exposure', value, new AbortController().signal);
+    };
     const first = request('one'); const result = await invoke(first);
     assert.equal(result.url, 'https://preview.ts.net/current', 'previous Ready URL never satisfies new generation');
     assert(api.state.staleReads >= 3); assert.match(result.releaseAction, /exposure-owner/);
@@ -68,7 +86,12 @@ test('actual kubectl binds Ready, replay and cleanup to durable exposure ownersh
     api.state.lease.metadata.annotations['kubeclaw.forgestack.ai/exposure-predecessors'] = 'null';
     await assert.rejects(invoke(request('seven')), /PREDECESSORS_INVALID/);
     assert.equal(api.state.patches.length, patchCount, 'corrupt lineage cannot authorize another mutation');
+  } catch (error) {
+    children.unsubscribe(observeChild);
+    t.diagnostic(JSON.stringify({ diagnostic: 'tailscale-generation-failure', node: process.version, platform: process.platform, arch: process.arch, events }));
+    throw error;
   } finally {
+    children.unsubscribe(observeChild);
     if (priorConfig === undefined) delete process.env.KUBECONFIG; else process.env.KUBECONFIG = priorConfig;
     await api.close(); fs.rmSync(root, { recursive: true, force: true });
   }
