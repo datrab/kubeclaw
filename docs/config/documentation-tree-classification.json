@@ -22923,6 +22923,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/reference/buster-namespace-lease.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published BusterNamespaceLease owned-field and receiver reference.",
+      "originalPath": "docs/site/reference/buster-namespace-lease.md",
+      "expectedPath": "docs/site/reference/buster-namespace-lease.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/reference/buster-provider-configuration.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",

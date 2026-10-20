@@ -63,11 +63,14 @@ checks the immutable spec and operator policy, then provisions namespace resourc
 in sequence. The fixture polls the lease and applies its workload after the
 namespace phase becomes `Ready`.
 
-The public lease supports more than the fixture constructor writes. Inspect the
-[owned CRD schema](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L33-L568) for spec variants,
-status records, nested collections, required members and CEL rules.
-This is the source schema, not a generated field-level reader reference.
-The Helm values reference describes chart configuration, not this lease object.
+The public lease supports more than the fixture constructor writes. Use the
+[BusterNamespaceLease field reference](../reference/buster-namespace-lease.md)
+for every owned spec/status field, nested collection, type, required member,
+default boundary and transition rule. Its shipped prefix enum and TTL maximum
+are explicitly distinguished from the operator-rendered installed contract.
+The [owned CRD schema](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L33-L568)
+is the schema authority; the Helm values reference describes chart configuration,
+not this lease object.
 CEL is the API server's expression language for validating a resource
 and its transition from the previous stored resource. Standard root `metadata`
 is Kubernetes [ObjectMeta](https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/object-meta/),
