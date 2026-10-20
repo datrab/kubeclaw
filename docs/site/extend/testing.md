@@ -255,8 +255,12 @@ behavior, but it cannot install executable code or grant itself authority.
 
 This route covers `kubeclaw-agent-observer` version `0.0.0` in the Buster
 gateway and `kubeclaw-prism` version `0.1.0` in the Prism agent. The image
-builds select OpenClaw `2026.9.4` with a fixed image digest. Both manifests
-require plugin API and gateway version `2026.9.1` or later. That minimum is
+build defaults select OpenClaw `2026.10.3` with a fixed image digest.
+The [release selection](https://github.com/datrab/kubeclaw/blob/9c8c39e70c15cbfa754ca8a923f851b76dc2486a/versions.json#L3-L6)
+matches the [Buster gateway default](https://github.com/datrab/kubeclaw/blob/9c8c39e70c15cbfa754ca8a923f851b76dc2486a/docker/Dockerfile.buster-gateway#L1-L8)
+and [Prism agent default](https://github.com/datrab/kubeclaw/blob/9c8c39e70c15cbfa754ca8a923f851b76dc2486a/docker/Dockerfile.prism-agent#L1-L8).
+These are source defaults, not evidence of a deployed host version.
+Both manifests require plugin API and gateway version `2026.9.1` or later. That minimum is
 not proof that every later host version works. Use the pinned build version.
 A host is the process that loads the extension. Its SDK is a library interface;
 SDK availability alone does not show that the host selected this extension.
