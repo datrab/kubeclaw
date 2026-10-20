@@ -66,7 +66,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const { captureSwarmSettings } = await import(pathToFileURL(path.join(directory, 'swarm.ts')).href);
     const { capturePipelineInputSet } = await import(pathToFileURL(path.join(directory, 'pipeline-input-set.ts')).href);
     const { capturePipelineMaterializerInputSource } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-input-set.ts')).href);
-    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection, receivePipelineV10ServiceSelection, receiveBusterV10SelectedOwnerProjection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
+    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection, receivePipelineV10ServiceSelection, receiveBusterV10SelectedOwnerProjection, createPipelineV10ImageReceipt, receivePipelineV10ImageReceipt } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
     const { verifyInstalledRuntimeBundle, assertRuntimeBundleObservations } = await import(pathToFileURL(path.join(directory, 'runtime-bundle-receipt.mjs')).href);
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
@@ -132,6 +132,13 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
             received, service, hash(packageBytes));
         }
       }
+    }
+    if (inputSource.rootSchemaVersion === 'pipeline-entry.v10') {
+      // Bind and read back the whole versioned release output against retained
+      // inputs and the separately held release composition/package. This is
+      // still a candidate: source/caller and boot gates below remain closed.
+      const image = createPipelineV10ImageReceipt(inputSource.declared.capture, services, hash(packageBytes));
+      receivePipelineV10ImageReceipt(JSON.parse(jsonBytes(image)), inputSource.declared.capture, services, hash(packageBytes));
     }
     const captures = [], selections = [];
     for (const service of services) {

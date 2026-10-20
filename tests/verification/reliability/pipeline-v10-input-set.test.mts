@@ -1451,3 +1451,44 @@ test('versioned v10 wire receivers require separate original tuple/package and p
  restored.capture.close();
  assert.throws(() => receiveOwner(owner, restored.capture, selected, request, pkg), /CAPTURE_CLOSED/);
 });
+
+test('versioned v10 full release image binds original composition package and owner without boot admission', async t => {
+ const { createPipelineV10ImageReceipt: create, receivePipelineV10ImageReceipt: receive } =
+   await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
+ const root = tree(t), original = capture(root, replacements); t.after(original.capture.close);
+ const document = JSON.parse(original.capture.read('config/pipeline.config.json').toString());
+ const tuple = (callerId: string, instance = 'fixture.service.buster-runtime'): any => ({ role: 'buster', callerId,
+   serviceInstanceId: instance, bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === instance)
+     .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) });
+ const services = [tuple('buster-preparation'), tuple('buster-runtime')];
+ const pkg = ('sha256:' + 'a'.repeat(64)) as `sha256:${string}`;
+ const otherPkg = ('sha256:' + 'b'.repeat(64)) as `sha256:${string}`;
+ const image = create(original.capture, services, pkg), wire = JSON.parse(JSON.stringify(image));
+ const run = (value: unknown = wire) => receive(value, original.capture, services, pkg);
+ assert.equal(image.schemaVersion, 'pipeline-image-generation.v2');
+ assert.deepEqual(Object.keys(image.selectionDigests).sort(), ['buster-preparation', 'buster-runtime']);
+ assert.deepEqual(Object.keys(image.ownerProjectionDigests).sort(), ['buster-preparation', 'buster-runtime']);
+ assert.equal(Object.isFrozen(run().selectionDigests), true);
+ assert.equal(Object.isFrozen(run().ownerProjectionDigests), true);
+ assert.deepEqual(create(original.capture, [...services].reverse(), pkg), image);
+ for (const foreign of [null, [], { ...wire, extra: true }, { ...wire, schemaVersion: 'pipeline-image-generation.v1' },
+   { ...wire, generationDigest: 'sha256:' + '0'.repeat(64) }, { ...wire, inputGenerationSha256: '0'.repeat(64) },
+   { ...wire, selectionDigests: {} }, { ...wire, ownerProjectionDigests: {} }, { ...wire, digest: 'sha256:' + '0'.repeat(64) },
+   create(original.capture, services, otherPkg), create(original.capture,
+     [tuple('buster-preparation', 'fixture.service.buster-security-runtime'), tuple('buster-runtime', 'fixture.service.buster-security-runtime')], pkg)]) {
+  assert.throws(() => run(foreign), /IMAGE_RECEIPT_MISMATCH/); assert.deepEqual(run(), image);
+ }
+ for (const bad of [[], [services[0]], [services[1]], [...services, services[0]]]) {
+  assert.throws(() => create(original.capture, bad, pkg), /RELEASE_(?:COMPOSITION_REQUIRED|COMPOSITION_INVALID|CALLER_CLOSURE_REQUIRED)/);
+ }
+ assert.throws(() => create(original.capture, [services[0], tuple('buster-runtime', 'fixture.service.buster-security-runtime')], pkg), /HANDOFF_SELECTION_MISMATCH/);
+ assert.throws(() => receive(image, original.capture, services, otherPkg), /IMAGE_RECEIPT_MISMATCH/);
+ wire.selectionDigests = {}; wire.ownerProjectionDigests = {};
+ assert.deepEqual(receive(image, original.capture, services, pkg), image);
+ const file = path.join(root, 'schemas/pipeline-entry.schema.json'), bytes = fs.readFileSync(file);
+ fs.appendFileSync(file, ' '); assert.throws(() => run(image), /INPUT_CHANGED/);
+ original.capture.close(); fs.writeFileSync(file, bytes);
+ const restored = capture(root, replacements); t.after(restored.capture.close);
+ assert.deepEqual(receive(image, restored.capture, services, pkg), image);
+ restored.capture.close(); assert.throws(() => receive(image, restored.capture, services, pkg), /CAPTURE_CLOSED/);
+});

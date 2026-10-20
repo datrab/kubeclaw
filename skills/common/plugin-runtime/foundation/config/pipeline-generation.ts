@@ -241,3 +241,50 @@ export function receiveBusterV10SelectedOwnerProjection(value: unknown,
   if (portableJson(value) !== portableJson(expected)) throw new Error('BUSTER_V10_SELECTED_OWNER_PROJECTION_MISMATCH');
   return expected;
 }
+
+/** Versioned full-release output candidate. This binds the exact original caller
+ * closure, complete Buster owner projections and package, not boot authority.
+ * Never feed this v2 receipt to the legacy image/expected-delivery receivers.
+ */
+export function createPipelineV10ImageReceipt(inputs: ReturnType<typeof capturePipelineInputSet>,
+  services: readonly SwarmSelection[], packageReceiptDigest: Digest) {
+  if (!Array.isArray(services) || services.length === 0) throw new Error('PIPELINE_RELEASE_COMPOSITION_REQUIRED');
+  services = structuredClone(services);
+  const selections = services.map(service => createPipelineV10ServiceSelection(inputs, service, packageReceiptDigest));
+  const role = selections[0]!.role;
+  const callers = new Set(selections.map(selection => selection.callerId));
+  if (selections.some(selection => selection.role !== role) || callers.size !== selections.length) {
+    throw new Error('PIPELINE_RELEASE_COMPOSITION_INVALID');
+  }
+  const required = role === 'buster' ? ['buster-preparation', 'buster-runtime']
+    : role === 'prism' ? (callers.has('prism-agent-bridge') ? ['prism-agent-bridge']
+      : ['prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion']) : [];
+  if (!required.length || callers.size !== required.length || required.some(caller => !callers.has(caller as SwarmSelection['callerId']))) {
+    throw new Error('PIPELINE_RELEASE_CALLER_CLOSURE_REQUIRED');
+  }
+  if (role === 'buster' && selections.some(selection => selection.serviceInstanceId !== selections[0]!.serviceInstanceId)) {
+    throw new Error('PIPELINE_BUSTER_HANDOFF_SELECTION_MISMATCH');
+  }
+  const ordered = [...selections].sort((a, b) => a.callerId < b.callerId ? -1 : 1);
+  const generation = createPipelineV10GenerationReceipt(inputs);
+  const body = { schemaVersion: 'pipeline-image-generation.v2' as const, role,
+    generationDigest: generation.digest, inputGenerationSha256: inputs.inputGenerationSha256, packageReceiptDigest,
+    selectionDigests: Object.fromEntries(ordered.map(selection => [selection.callerId, selection.digest])),
+    ownerProjectionDigests: Object.fromEntries(ordered.filter(selection => selection.role === 'buster')
+      .map(selection => [selection.callerId, sha256Text(portableJson(createBusterV10SelectedOwnerProjection(inputs, selection)))])) };
+  inputs.assertCurrent();
+  const receipt = { ...body, digest: sha256Text(portableJson(body)) };
+  deepFreeze(receipt);
+  return receipt;
+}
+
+/** Full output readback is compared to independently held original composition
+ * and package, never to caller identities obtained from the received image.
+ * Existing source/caller and native boot admission remain separately required.
+ */
+export function receivePipelineV10ImageReceipt(value: unknown,
+  inputs: ReturnType<typeof capturePipelineInputSet>, services: readonly SwarmSelection[], packageReceiptDigest: Digest) {
+  const expected = createPipelineV10ImageReceipt(inputs, services, packageReceiptDigest);
+  if (portableJson(value) !== portableJson(expected)) throw new Error('PIPELINE_V10_IMAGE_RECEIPT_MISMATCH');
+  return expected;
+}
