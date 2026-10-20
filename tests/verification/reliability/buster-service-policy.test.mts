@@ -5,9 +5,10 @@ import path from 'node:path';
 import test from 'node:test';
 import { generateKeyPairSync, createHash } from 'node:crypto';
 import { swarmReaderAssets } from '../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts';
-import { readBusterRemotePlanServicePolicy, readLegacyBusterRuntimeServicePolicy } from '../../../skills/common/plugin-runtime/foundation/config/buster-service-policy.ts';
+import { readBusterRemotePlanServicePolicy, readLegacyBusterRuntimeServicePolicy, receiveBusterRuntimeV2ServicePolicy } from '../../../skills/common/plugin-runtime/foundation/config/buster-service-policy.ts';
 import { capabilitySources, validateCapabilitySourceClosure } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
-import { networkHttpOptions } from '../../../skills/buster/engine/test-gates/production-command-options.ts';
+import { containerBuildOptions, directCommandOptions, networkHttpOptions, securityScanOptions } from '../../../skills/buster/engine/test-gates/production-command-options.ts';
+import { browserAxeOptions, browserLighthouseOptions, browserVisualOptions, browserPlaywrightOptions } from '../../../skills/buster/engine/test-gates/production-browser-options.ts';
 import { runtimeAuthority } from '../../../skills/buster/engine/test-gates/production-config-values.ts';
 import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
 import type { BusterSettings, WorkerCoreSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
@@ -78,6 +79,12 @@ test('required service leaves, closed aliases and actual wire/timer boundaries r
 
 const key = generateKeyPairSync('ed25519').publicKey.export({ type: 'spki', format: 'pem' }).toString();
 const source = { tokenEnvironmentVariable: 'TEST_BUSTER_TOKEN', sourceAttestationPublicKeyEnvironmentVariable: 'TEST_SOURCE_KEY', trustedSourceAuthority: 'fixture:original-source' };
+const directCommandPolicy = {
+  executableCatalog: { node: '/usr/bin/node' }, executableSearchPath: ['/usr/bin'], runtimeReadRoots: ['/usr/lib'],
+  maximumOutputBytes: 1024, maximumExecutionMs: 1000, maximumProcesses: 8,
+  maximumMemoryBytes: 1048576, maximumCpuMillis: 100, terminationGraceMs: 10,
+};
+
 test('real source key preflight rejects malformed/non-Ed25519 keys and absent issuer; never authenticates provenance', () => {
   const rsa = generateKeyPairSync('rsa', { modulusLength: 1024 }).publicKey.export({ type: 'spki', format: 'pem' }).toString();
   for (const value of ['not a key', rsa]) assert.throws(() => runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: value }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
@@ -120,6 +127,28 @@ test('source carrier and issuer metadata reject before any confidential carrier 
   assert.equal(reads, 2, 'restored valid names read each original carrier once');
 });
 
+test('runtime child retains the admitted original issuer across either confidential carrier read', () => {
+  const environment = { TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key };
+  const original = runtimeAuthority(source, environment);
+  assert.equal(original.trustedSourceAuthority, source.trustedSourceAuthority);
+  for (const carrier of ['TEST_BUSTER_TOKEN', 'TEST_SOURCE_KEY']) {
+    const candidate = { ...source };
+    const reads: PropertyKey[] = [];
+    const received = runtimeAuthority(candidate, new Proxy(environment, {
+      get(target, name) {
+        reads.push(name);
+        if (name === carrier) candidate.trustedSourceAuthority = 'foreign:replacement-issuer';
+        return Reflect.get(target, name);
+      },
+    }));
+    assert.equal(candidate.trustedSourceAuthority, 'foreign:replacement-issuer');
+    assert.deepEqual(received, original, 'carrier lookup must not replace the admitted issuer');
+    assert.equal(Object.isFrozen(received), true);
+    assert.deepEqual(reads, ['TEST_BUSTER_TOKEN', 'TEST_SOURCE_KEY']);
+  }
+  assert.deepEqual(runtimeAuthority(source, environment), original, 'restored original source');
+});
+
 test('actual production loader rejects service policy/source crypto BEFORE registry or store effects', t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-service-preflight-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -139,6 +168,12 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
     [{ networkHttp: {} }, /BUSTER_INACTIVE_CAPABILITY_SOURCE:networkHttp/],
     [{ allowedCapabilities: ['browser.playwright'], browserPlaywright: {} }, /BUSTER_BROWSER_PLAYWRIGHT_CGROUP_REQUIRED/],
     [{ allowedCapabilities: ['network.http'], networkHttp: { registryHealth: true } }, /BUSTER_REGISTRY_PEER_REQUIRED/],
+    ...['kubernetes.fixture', 'kubernetes.exposure', 'kubernetes.runtime-security'].flatMap(capability => [
+      [{ allowedCapabilities: [capability] }, /BUSTER_REMOTE_CONFIG_INVALID:clusterBindings/],
+      ...[null, [], {}, { controllerNamespace: 'Bad_namespace' }, { controllerNamespace: 'ok', extra: true }].map(clusterBindings =>
+        [{ allowedCapabilities: [capability], clusterBindings }, /BUSTER_(?:CLUSTER_BINDINGS_INVALID|REMOTE_CONFIG_INVALID:clusterBindings)/] as const),
+    ]),
+    [{ clusterBindings: { controllerNamespace: 'Bad_namespace' } }, /BUSTER_CLUSTER_BINDINGS_INVALID/],
     [{ registryPeer: {} }, /BUSTER_REGISTRY_PEER_INACTIVE/],
     [{ allowedCapabilities: ['container.build'], containerBuild: {}, registryPeer: {
       registryBaseUrl: 'https://registry.example', registryReference: 'registry.example',
@@ -194,7 +229,7 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
 
 test('real capability receivers reject malformed boolean authors without false-value refill', () => {
   const command = (value: unknown) => capabilitySources({ directCommand: {
-    cgroupRoot: '/fixture/cgroup', allowSampledProcessLimit: value,
+    ...directCommandPolicy, cgroupRoot: '/fixture/cgroup', allowSampledProcessLimit: value,
   } }, new Set(['command.execute']), {});
   const network = (value: unknown) => networkHttpOptions({
     allowedPorts: [443], maximumResponseBytes: 1024, maximumExecutionMs: 1000, allowWebSocket: value,
@@ -209,7 +244,7 @@ test('real capability receivers reject malformed boolean authors without false-v
   }
   assert.throws(() => capabilitySources({ directCommand: { allowSampledProcessLimit: false } },
     new Set(['command.execute']), {}), /BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED/);
-  assert.equal(capabilitySources({ directCommand: { allowSampledProcessLimit: true } },
+  assert.equal(capabilitySources({ directCommand: { ...directCommandPolicy, allowSampledProcessLimit: true } },
     new Set(['command.execute']), {}).allowSampledProcessLimit, true);
   assert.equal(capabilitySources({}, new Set(), {}).directCommandSource, null);
   assert.deepEqual(networkHttpOptions(null, null, undefined, undefined), {});
@@ -233,12 +268,237 @@ test('production token admission rejects before reading source key or discoverin
 test('conditional source closure preserves active-only public peers and restored controls without credentials', () => {
   const peer = { registryBaseUrl: 'https://registry.example', registryReference: 'registry.example',
     registryUsernameEnvironmentVariable: 'REGISTRY_USER', registryPasswordEnvironmentVariable: 'REGISTRY_PASSWORD' };
-  const runtime = { networkHttp: { registryHealth: true }, registryPeer: peer };
+  const networkPolicy = { allowedPorts: [443], maximumResponseBytes: 1024, maximumExecutionMs: 1000 };
+  const runtime = { networkHttp: { ...networkPolicy, registryHealth: true }, registryPeer: peer };
   assert.doesNotThrow(() => validateCapabilitySourceClosure(runtime, new Set(['network.http'])));
   assert.throws(() => validateCapabilitySourceClosure(runtime, new Set()), /INACTIVE_CAPABILITY_SOURCE/);
   assert.throws(() => validateCapabilitySourceClosure({ ...runtime, registryPeer: { ...peer,
     registryPasswordEnvironmentVariable: 'invalid-name' } }, new Set(['network.http'])), /REGISTRY_PEER_INVALID/);
   assert.doesNotThrow(() => validateCapabilitySourceClosure(runtime, new Set(['network.http'])));
   assert.doesNotThrow(() => validateCapabilitySourceClosure({}, new Set()));
-  assert.doesNotThrow(() => validateCapabilitySourceClosure({ networkHttp: {} }, new Set(['network.http'])));
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({ networkHttp: networkPolicy }, new Set(['network.http'])));
+});
+
+
+test('runtime v2 receives every original complete selected service policy and denies current-B refill', () => {
+  for (const [name, profile] of Object.entries(owner.profiles)) {
+    const selected = (profile as { settings: { remotePlanService: Record<string, unknown> } }).settings.remotePlanService;
+    const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2', ...structuredClone(selected) };
+    assert.deepEqual(receiveBusterRuntimeV2ServicePolicy(runtime, selected), selected, name);
+    for (const key of Object.keys(selected)) {
+      const missing: Record<string, unknown> = structuredClone(runtime); delete missing[key];
+      assert.throws(() => receiveBusterRuntimeV2ServicePolicy(missing, selected), /BUSTER_SERVICE_POLICY_INVALID/, `${name}:${key}`);
+    }
+    const changed = { ...runtime, port: selected.port === 0 ? 1 : 0 };
+    assert.throws(() => receiveBusterRuntimeV2ServicePolicy(changed, selected), /BUSTER_SELECTED_SERVICE_POLICY_MISMATCH/, name);
+    assert.deepEqual(receiveBusterRuntimeV2ServicePolicy(runtime, selected), selected, 'restored original');
+    assert.throws(() => receiveBusterRuntimeV2ServicePolicy({ ...runtime, remotePlanService: selected }, selected), /COMPETING_AUTHOR/);
+    assert.throws(() => receiveBusterRuntimeV2ServicePolicy({ ...runtime, schemaVersion: 'buster-remote-plan-runtime.v1' }, selected), /VERSION_INVALID/);
+  }
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2', ...structuredClone(baseline) };
+  const received = receiveBusterRuntimeV2ServicePolicy(runtime, baseline);
+  runtime.recordLimits.maximumBytes++;
+  assert.deepEqual(received, baseline);
+  assert.equal(Object.isFrozen(received.recordLimits), true);
+});
+
+
+test('cluster source preflight shares the actual namespace domain and preserves legacy inactive binding support', () => {
+  const peer = { registryBaseUrl: 'http://registry.example:5000', registryReference: 'registry.example:5000' };
+  const noReads = new Proxy({}, { get() { assert.fail('public cluster source must reject before confidential reads'); } });
+  for (const capability of ['kubernetes.fixture', 'kubernetes.exposure', 'kubernetes.runtime-security']) {
+    for (const controllerNamespace of ['a', 'a'.repeat(63), 'a-b']) {
+      const runtime = { clusterBindings: { controllerNamespace }, ...(capability === 'kubernetes.fixture' ? { registryPeer: peer } : {}) };
+      assert.doesNotThrow(() => validateCapabilitySourceClosure(runtime, new Set([capability])));
+      assert.doesNotThrow(() => capabilitySources(runtime, new Set([capability]), noReads));
+    }
+    for (const controllerNamespace of ['', 'a'.repeat(64), '-a', 'a-', 'A', 'a.b', 'a/b', 'a\n', 1, null]) {
+      const runtime = { clusterBindings: { controllerNamespace }, registryPeer: peer };
+      assert.throws(() => capabilitySources(runtime, new Set([capability]), noReads), /BUSTER_CLUSTER_BINDINGS_INVALID/);
+    }
+  }
+  // v1 historically validates an explicitly supplied binding even without a
+  // cluster provider; the selected v2 receiver must separately forbid unused aliases.
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({ clusterBindings: { controllerNamespace: 'original' } }, new Set()));
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({}, new Set()));
+});
+
+
+test('command public policy rejects before confidential reads in source closure and actual loader', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-command-preflight-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const settings = JSON.parse(fs.readFileSync(new URL('../../../config/components/buster-engine.config.json', import.meta.url), 'utf8')).profiles.runtime.settings as BusterSettings;
+  const worker = JSON.parse(fs.readFileSync(new URL('../../../config/components/worker-core.config.json', import.meta.url), 'utf8')).profiles.standard.settings as WorkerCoreSettings;
+  const directCommand = { ...directCommandPolicy, cgroupRoot: '/fixture/cgroup' };
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v1', ...baseline, ...source,
+    allowedCapabilities: ['command.execute'], directCommand,
+    platformConfig: path.join(root, 'never-resolve-platform.json'), stateRoot: path.join(root, 'must-not-create-store'),
+    runtimeRoot: path.join(root, 'must-not-create-runs'), tarExecutable: '/usr/bin/tar' };
+  const file = path.join(root, 'runtime.json');
+  let confidentialReads = 0;
+  const environment = new Proxy({ KUBECLAW_BUILD_REVISION: 'a'.repeat(40) }, {
+    get(target, name) {
+      if (name === 'TEST_SOURCE_KEY' || name === 'TEST_BUSTER_TOKEN') confidentialReads++;
+      return Reflect.get(target, name);
+    },
+  });
+  const capabilities = new Set(['command.execute']);
+  for (const field of Object.keys(directCommandPolicy)) {
+    for (const bad of [undefined, null, false, 0, '', {}, []]) {
+      // An empty executable catalog is permitted by the original decoder.
+      if (field === 'executableCatalog' && bad && typeof bad === 'object' && !Array.isArray(bad)) continue;
+      const invalid = { ...directCommand, [field]: bad };
+      const error = new RegExp('BUSTER_REMOTE_CONFIG_INVALID:directCommand.' + field);
+      assert.throws(() => validateCapabilitySourceClosure({ directCommand: invalid }, capabilities), error, field);
+      fs.writeFileSync(file, JSON.stringify({ ...runtime, directCommand: invalid }));
+      assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+        settings, worker.localRuntime, environment), error, field);
+      assert.equal(confidentialReads, 0, field + ' must reject before source-key/token reads');
+    }
+  }
+  assert.throws(() => validateCapabilitySourceClosure({ directCommand }, new Set()), /INACTIVE_CAPABILITY_SOURCE/);
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({ directCommand }, capabilities));
+  assert.deepEqual(directCommandOptions(directCommand, root, '/fixture/cgroup', false).directCommand,
+    { ...directCommandPolicy, executableCatalog: new Map(Object.entries(directCommandPolicy.executableCatalog)), cgroupRoot: '/fixture/cgroup' });
+  fs.writeFileSync(file, JSON.stringify(runtime));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+    settings, worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40),
+      TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }), /ENOENT/,
+    'restored complete command source reaches original missing platform, not a native launch');
+  assert.deepEqual(fs.readdirSync(root), ['runtime.json'], 'no provider, store, cgroup or executable activation');
+});
+
+
+test('build and scanner original public limits reject before loader authority; restored domains stay unchanged', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-build-scan-preflight-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const settings = JSON.parse(fs.readFileSync(new URL('../../../config/components/buster-engine.config.json', import.meta.url), 'utf8')).profiles.runtime.settings as BusterSettings;
+  const worker = JSON.parse(fs.readFileSync(new URL('../../../config/components/worker-core.config.json', import.meta.url), 'utf8')).profiles.standard.settings as WorkerCoreSettings;
+  const registryPeer = { registryBaseUrl: 'http://registry.example', registryReference: 'registry.example' };
+  const build = { ...registryPeer, buildctlExecutable: '/not-an-installed-buildctl', buildkitHost: 'unix:///not-a-socket',
+    repositoryPrefix: 'fixture', allowedPlatforms: ['linux/amd64'], maximumLogBytes: 1,
+    maximumExecutionMs: 1, maximumManifestBytes: 1 };
+  const scan = { trivyExecutable: '/not-an-installed-trivy', cacheDirectory: '/not-a-cache',
+    registry: registryPeer, allowedRegistryPrefixes: ['registry.example/fixture'], maximumExecutionMs: 1, maximumOutputBytes: 1 };
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v1', ...baseline, ...source,
+    platformConfig: path.join(root, 'missing-platform.json'), stateRoot: path.join(root, 'must-not-create-store'),
+    runtimeRoot: path.join(root, 'must-not-create-runs'), tarExecutable: '/usr/bin/tar', registryPeer };
+  const file = path.join(root, 'runtime.json');
+  let confidentialReads = 0;
+  const environment = new Proxy({ KUBECLAW_BUILD_REVISION: 'a'.repeat(40) }, { get(target, name) {
+    if (name === 'TEST_SOURCE_KEY' || name === 'TEST_BUSTER_TOKEN') confidentialReads++;
+    return Reflect.get(target, name);
+  } });
+  for (const [capability, field, valid, requiredFields] of [
+    ['container.build', 'containerBuild', build, ['allowedPlatforms', 'maximumLogBytes', 'maximumExecutionMs', 'maximumManifestBytes']],
+    ['security.scan', 'securityScan', scan, ['allowedRegistryPrefixes', 'maximumExecutionMs', 'maximumOutputBytes']],
+  ] as const) {
+    const capabilities = new Set([capability]);
+    const complete = { ...runtime, allowedCapabilities: [capability], [field]: valid };
+    const patches: Record<string, unknown>[] = requiredFields.flatMap(name =>
+      [undefined, null, false, 0, '', {}, []].map(bad => ({ [name]: bad })));
+    if (field === 'containerBuild') patches.push({ allowedBuildArguments: null }, { allowedBuildArguments: [1] });
+    else patches.push({ databasePolicy: null }, ...['maximumVulnerabilityAgeMs', 'maximumJavaAgeMs', 'maximumDatabaseBytes'].flatMap(name =>
+      [undefined, null, 0, Number.MAX_SAFE_INTEGER + 1].map(bad => ({ databasePolicy: {
+        maximumVulnerabilityAgeMs: 1, maximumJavaAgeMs: 1, maximumDatabaseBytes: 1, [name]: bad,
+      } }))));
+    for (const patch of patches) {
+      const invalid = { ...complete, [field]: { ...valid, ...patch } };
+      const error = new RegExp('BUSTER_REMOTE_CONFIG_INVALID:' + field);
+      assert.throws(() => validateCapabilitySourceClosure(invalid, capabilities), error);
+      fs.writeFileSync(file, JSON.stringify(invalid));
+      assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+        settings, worker.localRuntime, environment), error);
+      assert.equal(confidentialReads, 0, 'public rejection before source key/token/registry secrets');
+    }
+    assert.doesNotThrow(() => validateCapabilitySourceClosure(complete, capabilities));
+    assert.throws(() => validateCapabilitySourceClosure(complete, new Set()), /INACTIVE_CAPABILITY_SOURCE/);
+    fs.writeFileSync(file, JSON.stringify(complete));
+    assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+      settings, worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40),
+        TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }), /ENOENT/,
+      'restored valid input reaches original platform lookup without launching tools');
+  }
+  const buildOptions = containerBuildOptions(build, root, undefined, undefined).containerBuild!;
+  assert.deepEqual(buildOptions.allowedBuildArguments, [], 'original absent optional build argument domain');
+  assert.equal(buildOptions.maximumManifestBytes, 1, 'no invented minimum');
+  assert.doesNotThrow(() => validateCapabilitySourceClosure({ registryPeer, containerBuild: { ...build, allowedBuildArguments: [] } }, new Set(['container.build'])));
+  const databasePolicy = { maximumVulnerabilityAgeMs: 1, maximumJavaAgeMs: 1, maximumDatabaseBytes: 1 };
+  assert.deepEqual(securityScanOptions({ ...scan, databasePolicy }, root,
+    { source: registryPeer, username: undefined, password: undefined }).securityScan!.databasePolicy, databasePolicy);
+  assert.equal(securityScanOptions(scan, root, { source: registryPeer, username: undefined, password: undefined }).securityScan!.databasePolicy, undefined);
+  assert.deepEqual(fs.readdirSync(root), ['runtime.json'], 'no cache/store/native tool activation');
+});
+
+
+test('all original browser public policies reject before confidential reads without resolving native tools', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-browser-preflight-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const settings = JSON.parse(fs.readFileSync(new URL('../../../config/components/buster-engine.config.json', import.meta.url), 'utf8')).profiles.runtime.settings as BusterSettings;
+  const worker = JSON.parse(fs.readFileSync(new URL('../../../config/components/worker-core.config.json', import.meta.url), 'utf8')).profiles.standard.settings as WorkerCoreSettings;
+  const common = { allowedBrowsers: ['chromium'], maximumCombinations: 1, maximumConcurrency: 1,
+    maximumExecutionMs: 1, maximumResultBytes: 1, maximumScreenshotBytes: 1 };
+  const policies: [string, string, Record<string, unknown>][] = [
+    ['browser.axe', 'browserAxe', { ...common, maximumScreenshots: 1 }],
+    ['browser.lighthouse', 'browserLighthouse', { maximumRuns: 1, maximumExecutionMs: 1, maximumResultBytes: 1 }],
+    ['browser.visual', 'browserVisual', { ...common, maximumMasksPerCombination: 1 }],
+    ['browser.playwright', 'browserPlaywright', { allowedTargetPorts: [65535], readOnlyRoots: ['/'],
+      maximumWorkers: 1, maximumExecutionMs: 1, maximumOutputBytes: 1, maximumResultBytes: 1,
+      maximumArtifactBytes: 1, maximumArtifactFiles: 1, maximumProcesses: 1, maximumMemoryBytes: 1,
+      maximumCpuMillis: 1, terminationGraceMs: 1, runAsUid: 1, runAsGid: 1 }],
+  ];
+  const file = path.join(root, 'runtime.json');
+  let confidentialReads = 0;
+  const environment = new Proxy({ KUBECLAW_BUILD_REVISION: 'a'.repeat(40) }, { get(target, name) {
+    if (name === 'TEST_SOURCE_KEY' || name === 'TEST_BUSTER_TOKEN') confidentialReads++;
+    return Reflect.get(target, name);
+  } });
+  for (const [capability, field, policy] of policies) {
+    const valid = { ...policy, cgroupRoot: '/not-a-cgroup', browserExecutables: { chromium: '/not-an-executable' },
+      chromeExecutable: '/not-a-chrome', playwrightExecutable: '/not-a-playwright' };
+    const complete = { schemaVersion: 'buster-remote-plan-runtime.v1', ...baseline, ...source,
+      platformConfig: path.join(root, 'missing-platform.json'), stateRoot: path.join(root, 'must-not-create-store'),
+      runtimeRoot: path.join(root, 'must-not-create-runs'), tarExecutable: '/usr/bin/tar',
+      allowedCapabilities: [capability], [field]: valid };
+    const patches = Object.keys(policy).flatMap(name => [undefined, null, false, 0, '', {}, []].map(bad => ({ [name]: bad })));
+    patches.push({ allowedOrigins: [1] });
+    if (field === 'browserPlaywright') patches.push({ allowedTargetPorts: [65536] });
+    if (field === 'browserAxe' || field === 'browserVisual') {
+      patches.push({ allowedBrowsers: ['safari'] }, { allowedBrowsers: ['chromium', 'safari'] },
+        { allowedBrowsers: ['Chromium'] });
+      for (const browser of ['chromium', 'firefox', 'webkit']) {
+        assert.doesNotThrow(() => validateCapabilitySourceClosure({ ...complete,
+          [field]: { ...valid, allowedBrowsers: [browser] } }, new Set([capability])),
+        'every original provider browser stays supported without native tool lookup');
+      }
+    }
+    for (const patch of patches) {
+      const invalid = { ...complete, [field]: { ...valid, ...patch } };
+      const error = new RegExp('BUSTER_REMOTE_CONFIG_INVALID:' + field);
+      assert.throws(() => validateCapabilitySourceClosure(invalid, new Set([capability])), error);
+      fs.writeFileSync(file, JSON.stringify(invalid));
+      assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+        settings, worker.localRuntime, environment), error);
+      assert.equal(confidentialReads, 0, 'public browser rejection before source key/token');
+    }
+    assert.doesNotThrow(() => validateCapabilitySourceClosure(complete, new Set([capability])),
+      'source closure must not stat, resolve or activate invalid native paths');
+    assert.doesNotThrow(() => validateCapabilitySourceClosure({ ...complete, [field]: { ...valid, allowedOrigins: [] } }, new Set([capability])));
+    assert.throws(() => validateCapabilitySourceClosure(complete, new Set()), /INACTIVE_CAPABILITY_SOURCE/);
+    fs.writeFileSync(file, JSON.stringify(complete));
+    assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation,
+      settings, worker.localRuntime, { KUBECLAW_BUILD_REVISION: 'a'.repeat(40),
+        TEST_BUSTER_TOKEN: 'fixture-token-00000000000000000000', TEST_SOURCE_KEY: key }), /ENOENT/,
+      'restored complete browser policy reaches original platform lookup, not tool activation');
+  }
+  const axe = browserAxeOptions({ ...policies[0][2] }).browserAxe!;
+  assert.deepEqual(axe.allowedOrigins, []); assert.deepEqual(axe.browserExecutables, {});
+  assert.equal(axe.maximumScreenshots, 1);
+  const lighthouse = browserLighthouseOptions({ ...policies[1][2], chromeExecutable: process.execPath }).browserLighthouse!;
+  assert.equal(lighthouse.maximumRuns, 1); assert.equal(lighthouse.chromeExecutable, fs.realpathSync(process.execPath));
+  assert.equal(browserVisualOptions(policies[2][2]).browserVisual!.maximumMasksPerCombination, 1);
+  const playwright = browserPlaywrightOptions(policies[3][2], root, 'cg').browserPlaywright!;
+  assert.deepEqual(playwright.allowedTargetPorts, [65535]); assert.equal(playwright.runAsUid, 1);
+  assert.equal(playwright.cgroupRoot, path.join(root, 'cg'));
+  assert.deepEqual(fs.readdirSync(root), ['runtime.json'], 'no browser/store/cgroup effects');
 });

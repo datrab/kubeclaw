@@ -93,6 +93,13 @@ export function createBusterSelectedOwnerProjection(capture: Capture, selection:
     || createPipelineGenerationReceipt(capture).digest !== selection.generationDigest) {
     throw new Error('BUSTER_SELECTED_OWNER_IDENTITY_MISMATCH');
   }
+  // A shared generation contains multiple service tuples. Equal owner settings
+  // alone cannot join the received service/instance/bindings to this capture.
+  // Reconstruct only from the retained original, never from current authors.
+  const originalSelection = createPipelineServiceSelection(capture, selection.callerId, selection.packageReceiptDigest);
+  if (portableJson(selection) !== portableJson(originalSelection)) {
+    throw new Error('BUSTER_SELECTED_OWNER_IDENTITY_MISMATCH');
+  }
   const binding = selection.bindings.find(value => value.owner === 'buster-engine');
   const author = capture.authors['buster-engine'];
   const component = capture.components['buster-engine'];

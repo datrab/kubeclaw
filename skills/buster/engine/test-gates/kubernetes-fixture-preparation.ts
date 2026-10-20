@@ -105,7 +105,7 @@ function readRequest(settings: KubernetesFixtureSettings, request: TestProviderC
     const servicePort = integer(payload.servicePort, 'servicePort', 1, 65_535);
     const expectedServiceTargetPort = payload.serviceTargetPort === undefined
         ? null : integer(payload.serviceTargetPort, 'serviceTargetPort', 1, 65_535);
-    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);
+    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', settings.maximumSecretReferenceEntries, SECRET_NAME);
     if (secretReferences.some((name) => !settings.secretReferences.has(name))) {
         throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
     }

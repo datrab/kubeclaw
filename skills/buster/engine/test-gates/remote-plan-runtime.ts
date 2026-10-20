@@ -31,8 +31,14 @@ export class BusterRemotePlanRuntime {
       || options.shutdownTimeoutMs > 0x7fffffff) {
       throw new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID');
     }
-    this.#options = options;
-    this.#server = createBusterRemotePlanHttpServer(options);
+    // Retain the same admitted S listener/drain policy for start and stop;
+    // caller mutation cannot redirect recovery or mint another drain ceiling.
+    this.#options = Object.freeze({ ...options,
+      ...(options.trustedPeerSpiffeIds === undefined ? {} : {
+        trustedPeerSpiffeIds: Object.freeze([...options.trustedPeerSpiffeIds]),
+      }),
+    });
+    this.#server = createBusterRemotePlanHttpServer(this.#options);
   }
 
   async start(): Promise<AddressInfo> {

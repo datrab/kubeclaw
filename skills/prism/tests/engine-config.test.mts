@@ -17,7 +17,13 @@ test('published engine policy crosses actual closed child assignment and governs
       maximumAssetSourceCharacters: prefix.length + (index === 1 ? 8 : 4) };
     const f = await publishedControlConfig(t, {}, {}, undefined, author => {
       const file = join(author, 'components/prism-execution.config.json');
-      const value = JSON.parse(fs.readFileSync(file, 'utf8')); value.profiles.standard.settings.enginePolicy = enginePolicy;
+      const value = JSON.parse(fs.readFileSync(file, 'utf8'));
+      // Mutate only this test's cache/input leaves; retain the complete selected
+      // v2 render policy through the real publisher and assigned child reader.
+      const selected = value.profiles.standard.settings.enginePolicy;
+      assert.equal(selected.schemaVersion, 'prism-engine-policy.v2');
+      Object.assign(enginePolicy, { schemaVersion: selected.schemaVersion, render: selected.render });
+      value.profiles.standard.settings.enginePolicy = enginePolicy;
       fs.writeFileSync(file, JSON.stringify(value));
     });
     const root = join(f.root, 'role/skills/packages/prism-engine');

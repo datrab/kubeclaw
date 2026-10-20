@@ -1,5 +1,6 @@
 import { parseDocument } from 'yaml';
 import { captureCorpusRanking } from './corpus-ranking.ts';
+import { captureBusterPreparationV10 } from './buster-preparation-v10.ts';
 import { validateWorkerCoreV3Author } from './worker-core-policy.ts';
 import { inspectPipelineV10PackageSource } from './pipeline-v10-package-source.ts';
 import { preflightPipelineV10Infrastructure } from './pipeline-v10-infra.ts';
@@ -20,7 +21,7 @@ const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean;
 };
 const ajv = new AjvConstructor({ allErrors: true, strict: true });
 const readerAssetNames = ['pipeline-v10-receiver.ts', 'pipeline-v10-receiver-schemas.json', 'pipeline-v10-input-set.ts', 'pipeline-v10-input-contract.json', 'pipeline-v10-package-source.ts', 'pipeline-v10-package-sources.json', 'registry-digest.ts', 'registry-errors.ts', 'browser-native-profile.ts', 'browser-native-profile-sources.json', 'gateway-native-duration.ts', 'gateway-native-duration-sources.json', 'parse-duration-DBWI377R.mjs', 'string-coerce-CIXf7egm.mjs', 'provisioning-task-reference.ts', 'provisioning-task-reference.schema.json', 'pipeline-v10-recovery.ts', 'pipeline-v10-gateway.ts', 'pipeline-v10-gateway-sources.json', 'pipeline-v10-infra.ts', 'pipeline-v10-infra-schemas.json', 'swarm.schema.json', 'swarm-components.schema.json', 'worker-core-policy.ts', 'worker-core-v3.schema.json', 'corpus-ranking.ts', 'pipeline-v10-owner-schemas.json', 'pipeline-v10-plugin-schemas.json', 'pipeline-v10-plugin-relations.ts', 'pipeline-v10-source-relations.json', 'swarm-bundle.ts', 'swarm.ts',
-  'buster-cluster-invokers.ts', 'buster-execution.ts', 'buster-service-policy.ts', 'buster-service-policy.schema.json', 'pipeline-generation.ts', 'pipeline-input-set.ts', 'pipeline-boot.mjs',
+  'buster-preparation-v10.ts', 'buster-cluster-invokers.ts', 'buster-execution.ts', 'buster-service-policy.ts', 'buster-service-policy.schema.json', 'pipeline-generation.ts', 'pipeline-input-set.ts', 'pipeline-boot.mjs',
   'runtime-bundle-receipt.mjs', 'buster-startup.ts', 'buster-startup-file.mjs', 'buster-lifetime.mjs', 'pipeline-composition.ts', 'sdk-values.ts'] as const;
 export const swarmReaderAssetLocations = Object.freeze(Object.fromEntries(readerAssetNames.map(name =>
   [name, name === 'registry-digest.ts' ? new URL('../registry/digest.ts', import.meta.url).href : name === 'registry-errors.ts' ? new URL('../registry/errors.ts', import.meta.url).href : name === 'sdk-values.ts' ? import.meta.resolve('@kubeclaw/plugin-sdk/values') : new URL(name, import.meta.url).href])) as Record<typeof readerAssetNames[number], string>);
@@ -63,9 +64,21 @@ export function preflightPipelineV10Owners(document: unknown, supplied: unknown)
   for (const owner of owners) {
     const validator = validators[owner];
     if (!validator(authors[owner])) throw new Error(`PIPELINE_V10_OWNER_INVALID:${owner}:${JSON.stringify(validator.errors)}`);
+    // Schema-valid native policies can still request unsupported Buster log
+    // writers or leave no room for terminal journal diagnostics. Validate EVERY
+    // original Worker profile before exposing any selected v10 service.
+    if (owner === 'worker-core' && !validateWorkerCoreV3Author(authors[owner])) {
+      throw new Error('PIPELINE_V10_OWNER_INVALID:worker-core:NATIVE_POLICY');
+    }
     counts[owner] = Object.keys(authors[owner].profiles).length;
     if (owner === 'buster-engine') {
-      for (const profile of Object.values(authors[owner].profiles)) readBusterRemotePlanServicePolicy(profile.settings.remotePlanService);
+      for (const profile of Object.values(authors[owner].profiles)) {
+        readBusterRemotePlanServicePolicy(profile.settings.remotePlanService);
+        // The real physical loader and every source inspector share the full
+        // versioned preparation codec. Schema shape alone cannot establish
+        // completion, result or source-store accounting for an unselected arm.
+        captureBusterPreparationV10(profile.settings.preparation);
+      }
     }
   }
   const root = document as { bindings: Binding[]; pluginSelections: Record<string, string>[];

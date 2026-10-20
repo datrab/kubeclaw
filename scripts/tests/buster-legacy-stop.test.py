@@ -153,8 +153,52 @@ class StopProducerTests(unittest.TestCase):
         plan = {'mountId': 1, 'device': 2, 'inode': 3, 'inventoryDigest': 'plan',
                 'store': {'device': 2, 'inode': 4, 'bytes': 5, 'digest': 'store'}}
         runtime = {'mountId': 1, 'device': 2, 'inode': 6, 'inventoryDigest': 'runtime'}
-        return {'phase': 'completed', 'transactionId': 'fixture', 'capture': {},
-                'receipt': {'plan': plan, 'runtime': runtime}}
+        captured = {'node': {'uid': 'node'}, 'machineId': 'machine', 'bootId': 'boot',
+                    'pvc': {'uid': 'pvc'}, 'pv': {'uid': 'pv'}, 'deployment': {'uid': 'deployment'},
+                    'writers': [{'pid': 1, 'startTime': 2}], 'groups': ['/group'],
+                    'runtimeVersion': 'runtime', 'runtimeEndpoint': 'endpoint', 'unit': {'text': 'unit'}}
+        state = {'phase': 'completed', 'transactionId': 'fixture', 'capture': captured,
+                 'locks': [{'device': 2, 'inode': 7}], 'createdLockEntries': ['lock']}
+        # Spell out the original producer wire fields independently of its helper.
+        receipt = {'schemaVersion': 'buster-legacy-stop-seal.v1', 'transactionId': 'fixture',
+                   'policyDigest': transaction.digest(policy()), 'captureDigest': transaction.digest(captured),
+                   'node': captured['node'], 'machineId': 'machine', 'bootId': 'boot',
+                   'pvc': captured['pvc'], 'pv': captured['pv'], 'deployment': captured['deployment'],
+                   'writers': captured['writers'], 'quiescentGroups': ['/group'],
+                   'runtimeVersion': 'runtime', 'runtimeEndpoint': 'endpoint',
+                   'unitDigest': transaction.digest(captured['unit']), 'locks': state['locks'],
+                   'createdLockEntries': ['lock'], 'plan': plan, 'runtime': runtime}
+        receipt['receiptDigest'] = transaction.digest(receipt)
+        state['receipt'] = receipt
+        return state
+
+    def test_completed_receipt_identity_rejected_before_readback_or_host_actions(self):
+        for field, value in [('schemaVersion', 'foreign'), ('transactionId', 'foreign'),
+                             ('policyDigest', 'sha256:' + '0' * 64),
+                             ('captureDigest', 'sha256:' + '0' * 64),
+                             ('receiptDigest', 'sha256:' + '0' * 64),
+                             ('node', {'uid': 'foreign'}), ('machineId', 'foreign'), ('bootId', 'foreign'),
+                             ('pvc', {'uid': 'foreign'}), ('pv', {'uid': 'foreign'}),
+                             ('deployment', {'uid': 'foreign'}), ('writers', []), ('quiescentGroups', []),
+                             ('runtimeVersion', 'foreign'), ('runtimeEndpoint', 'foreign'),
+                             ('unitDigest', 'sha256:' + '0' * 64), ('locks', []), ('createdLockEntries', []),
+                             ('extra', 'foreign')]:
+            state = self.completed_fixture()
+            state['receipt'][field] = value
+            # Even an internally consistent digest cannot authorize a foreign
+            # transaction/policy/capture. Integrity alone is not provenance.
+            if field != 'receiptDigest':
+                state['receipt']['receiptDigest'] = transaction.digest({
+                    key: item for key, item in state['receipt'].items() if key != 'receiptDigest'})
+            with self.subTest(field=field), \
+                    patch.object(transaction, 'verify_tree') as verify, \
+                    patch.object(transaction, 'publish') as publish, \
+                    patch.object(transaction, 'restore_unit') as restore:
+                with self.assertRaisesRegex(ValueError, '^BUSTER_LEGACY_STOP_TERMINAL_RECEIPT_CHANGED$'):
+                    transaction.complete(Path('/unused'), state, policy())
+                verify.assert_not_called()
+                publish.assert_not_called()
+                restore.assert_not_called()
 
     def test_completed_replaced_store_rejected_before_publication(self):
         state = self.completed_fixture()
@@ -186,7 +230,7 @@ class StopProducerTests(unittest.TestCase):
     def test_completed_matching_receipt_published_before_restore(self):
         state = self.completed_fixture()
         current = copy.deepcopy(state['receipt'])
-        for observation in current.values():
+        for observation in [current['plan'], current['runtime']]:
             observation.update(mountId=101, device=102)
         current['plan']['store']['device'] = 102
         calls = []

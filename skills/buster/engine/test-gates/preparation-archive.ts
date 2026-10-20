@@ -1,3 +1,4 @@
+import { captureBusterPreparationV10 } from '@kubeclaw/plugin-foundation/config/buster-preparation-v10';
 import { spawn } from 'node:child_process';
 import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 
@@ -9,6 +10,7 @@ async function runTar(
   args: readonly string[],
   signal: AbortSignal,
   limits: ArchivePreparationLimits,
+  diagnosticCodeUnits: number,
   onLine?: (line: string) => void,
 ): Promise<void> {
   signal.throwIfAborted();
@@ -48,7 +50,7 @@ async function runTar(
         try { onLine(pending); } catch (error) { fault = error instanceof Error ? error : new Error(String(error)); }
       }
       if (fault) reject(fault);
-      else if (code !== 0) reject(new Error(`BUSTER_REMOTE_TAR_FAILED:${code}:${terminationSignal ?? ''}:${stderr.toString('utf8').slice(-4096)}`));
+      else if (code !== 0) reject(new Error(`BUSTER_REMOTE_TAR_FAILED:${code}:${terminationSignal ?? ''}:${stderr.toString('utf8').slice(-diagnosticCodeUnits)}`));
       else resolve();
     });
   });
@@ -60,7 +62,13 @@ export async function safeExtract(
   target: string,
   limits: ArchivePreparationLimits,
   signal: AbortSignal,
+  version: 'legacy' | 'v10' = 'legacy',
 ): Promise<void> {
+  if (!['legacy', 'v10'].includes(version)) throw new Error('BUSTER_PREPARATION_VERSION_INVALID');
+  const authored = version === 'v10' ? captureBusterPreparationV10(limits) : null;
+  if (!authored && 'tarDiagnosticCodeUnits' in limits) throw new Error('BUSTER_PREPARATION_VERSION_INVALID');
+  limits = authored ?? { ...limits };
+  const diagnosticCodeUnits = authored ? authored.tarDiagnosticCodeUnits : 4096;
   let entries = 0;
   let total = 0;
   const unsafeName = (name: string): boolean => {
@@ -69,7 +77,7 @@ export async function safeExtract(
     const parts = normalized.split('/');
     return parts.some((part, index) => part === '..' || part === '' || (part === '.' && index !== 0));
   };
-  await runTar(tarExecutable, ['--numeric-owner', '-tvzf', archive], signal, limits, (entry) => {
+  await runTar(tarExecutable, ['--numeric-owner', '-tvzf', archive], signal, limits, diagnosticCodeUnits, (entry) => {
     entries += 1;
     if (entries > limits.maximumArchiveEntries) throw new Error('BUSTER_REMOTE_ARCHIVE_ENTRY_LIMIT');
     if (!/^[-d]/u.test(entry)) throw new Error('BUSTER_REMOTE_ARCHIVE_TYPE_DENIED');
@@ -82,6 +90,6 @@ export async function safeExtract(
       throw new Error('BUSTER_REMOTE_ARCHIVE_EXPANDED_SIZE_EXCEEDED');
     }
   });
-  await runTar(tarExecutable, ['--no-same-owner', '--no-same-permissions', '-xzf', archive, '-C', target], signal, limits);
+  await runTar(tarExecutable, ['--no-same-owner', '--no-same-permissions', '-xzf', archive, '-C', target], signal, limits, diagnosticCodeUnits);
 }
 

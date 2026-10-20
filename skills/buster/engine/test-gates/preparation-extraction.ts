@@ -84,7 +84,7 @@ export async function extractBusterPreparation(options: PreparationExecutionOpti
 async function extractReserved(options: PreparationExecutionOptions,
   staged: BusterStagedAdmission, signal: AbortSignal): Promise<PreparedSource> {
   const envelope = await options.ledger.reserveExtraction(randomBytes(16).toString('hex'), staged,
-    preparationProfile(options.engineContentDigest), new Date());
+    preparationProfile(options.engineContentDigest, options.ledger.version), new Date());
   const admissionId = envelope.operation.values.admissionId;
   if (typeof admissionId !== 'string') throw new Error('BUSTER_PREPARATION_ADMISSION_ID_INVALID');
   const reservation = (await options.ledger.reservations()).find(item => item.admissionId === admissionId);

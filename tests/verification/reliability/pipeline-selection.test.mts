@@ -6,7 +6,7 @@ import path from 'node:path';
 import { readSwarmBundle, type SwarmSelection } from '../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts';
 import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { createPipelineGenerationReceipt, createPipelineServiceSelection, readPipelineServiceSelection,
-  selectionProjection } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts';
+  createBusterSelectedOwnerProjection, receiveBusterSelectedOwnerProjection, selectionProjection } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts';
 import { portableJson, sha256Text } from '@kubeclaw/plugin-sdk/values';
 
 const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'];
@@ -172,4 +172,35 @@ test('closed service receipt detects alteration and fixes caller/package/generat
     assert.throws(() => readPipelineServiceSelection({ ...body, digest: sha256Text(portableJson(body)) }, 'prism-studio'),
       /SWARM_CONFIG_SELECTION/);
   }
+});
+
+
+test('Buster owner delivery joins the exact original service selection, not only profile settings', t => {
+  const f = fixture(t);
+  const bindings: SwarmSelection['bindings'] = (['buster-engine', 'worker-core'] as const).map(owner =>
+    ({ owner, instanceId: 'test.release/buster', profileId: 'standard' }));
+  f.entry.bindings = bindings.map(binding => ({ role: 'buster', ...binding }));
+  f.writeEntry();
+  const selection: SwarmSelection = { role: 'buster', serviceInstanceId: 'test.release/buster',
+    callerId: 'buster-runtime', bindings };
+  const capture = captureSwarmSettings(f.file, selection);
+  const receipt = createPipelineServiceSelection(capture, 'buster-runtime', `sha256:${'a'.repeat(64)}`);
+  const projection = createBusterSelectedOwnerProjection(capture, receipt);
+  assert.deepEqual(receiveBusterSelectedOwnerProjection(projection, capture, receipt), projection);
+  for (const patch of [
+    { serviceInstanceId: 'other.release/buster' },
+    { bindings: receipt.bindings.map(binding => ({ ...binding, instanceId: 'other.release/buster' })) },
+    { bindings: receipt.bindings.filter(binding => binding.owner !== 'worker-core') },
+    { bindings: [...receipt.bindings, receipt.bindings[0]] },
+  ]) {
+    const { digest: _digest, ...body } = receipt;
+    const changedBody = { ...body, ...patch };
+    const changed = { ...changedBody, digest: sha256Text(portableJson(changedBody)) };
+    assert.throws(() => createBusterSelectedOwnerProjection(capture, changed), /BUSTER_SELECTED_OWNER_IDENTITY_MISMATCH/);
+  }
+  assert.throws(() => createBusterSelectedOwnerProjection(capture,
+    { ...receipt, digest: `sha256:${'b'.repeat(64)}` }), /BUSTER_SELECTED_OWNER_IDENTITY_MISMATCH/);
+  assert.deepEqual(receiveBusterSelectedOwnerProjection(projection, capture, receipt), projection,
+    'restored exact original retains every owner/profile and service/caller identity');
+  assert(Object.isFrozen(projection.author.profiles));
 });

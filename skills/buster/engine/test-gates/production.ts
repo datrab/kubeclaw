@@ -36,12 +36,12 @@ export function loadProductionBusterRemotePlanRuntime(
   const policy = readLegacyBusterRuntimeServicePolicy(value);
   validateCapabilitySourceClosure(value, new Set(policy.allowedCapabilities));
   const authority = runtimeAuthority(value, environment);
-  const service = configuredService(value, policy, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime, ...(workerCore ? {workerCore} : {}) }, workerRevision, authority.sourceAttestationPublicKey);
+  const service = configuredService(value, policy, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime, ...(workerCore ? {workerCore} : {}) }, workerRevision, authority);
   return configuredRuntime(value, policy, directory, service, settings, authority);
 }
 
 function configuredService(value: Record<string, unknown>, policy: BusterRemotePlanServicePolicy, directory: string, environment: NodeJS.ProcessEnv,
-  preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime']; workerCore?: WorkerCorePolicyCapture }, workerRevision: string, sourceAttestationPublicKey: string) {
+  preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime']; workerCore?: WorkerCorePolicyCapture }, workerRevision: string, sourceAuthority: ReturnType<typeof runtimeAuthority>) {
   const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.buster.dependencyReadiness);
   const allowedCapabilities = new Set(policy.allowedCapabilities);
   const sources = capabilitySources(value, allowedCapabilities, environment);
@@ -54,8 +54,8 @@ function configuredService(value: Record<string, unknown>, policy: BusterRemoteP
       recordLimits: policy.recordLimits,
       maximumResultBytes: policy.maximumResultBytes,
       maximumResultStoreBytes: policy.maximumResultStoreBytes,
-      trustedSourceAuthority: value.trustedSourceAuthority as string,
-      sourceAttestationPublicKey,
+      trustedSourceAuthority: sourceAuthority.trustedSourceAuthority,
+      sourceAttestationPublicKey: sourceAuthority.sourceAttestationPublicKey,
     }),
     registry,
     dependencyReadiness,

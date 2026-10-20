@@ -17,6 +17,10 @@ test('production harness validates native module gates and rejects counter-based
   const source = path.join(repo, 'Projects', projectName, 'src');
   const swarm = path.join(source, '.swarm');
   const oldRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
+  const oldLegacyRegistry = process.env.KUBECLAW_LOCAL_REGISTRY;
+  // This offline fixture owns its registry contract; inherited legacy authors
+  // must not compete with it. The production decoder still rejects them.
+  delete process.env.KUBECLAW_LOCAL_REGISTRY;
   process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
   const oldImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
   process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry.example.test:5443/library/nginx@sha256:${'a'.repeat(64)}`;
@@ -86,6 +90,7 @@ test('production harness validates native module gates and rejects counter-based
     assert.match(rejected.stderr, /RETRY_FIXTURE_REQUIRES_COMMITTED_DEFECT/);
   } finally {
     if (oldRegistry === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG; else process.env.KUBECLAW_REGISTRY_CONFIG = oldRegistry;
+    if (oldLegacyRegistry === undefined) delete process.env.KUBECLAW_LOCAL_REGISTRY; else process.env.KUBECLAW_LOCAL_REGISTRY = oldLegacyRegistry;
     if (oldImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE; else process.env.REAL_E2E_DEPLOYMENT_IMAGE = oldImage;
     fs.rmSync(root, { recursive: true, force: true });
   }

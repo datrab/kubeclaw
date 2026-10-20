@@ -8,6 +8,7 @@ import { readNativeWorkerNodeIdentity, requireNativeWorkerRuntimeIdentity, Nativ
 import { sha256Digest, validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import { portableJson } from '@kubeclaw/plugin-sdk/values';
 import { readWorkerCorePolicyCapture, captureWorkerCorePolicy, validateWorkerCoreV3Author } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
+import { captureBusterPreparationV10 } from '@kubeclaw/plugin-foundation/config/buster-preparation-v10';
 import { readPipelineServiceSelection } from '@kubeclaw/plugin-foundation/config/pipeline-generation';
 import { assertBusterLifetimeDescriptor, type BusterLifetimeDescriptor } from '@kubeclaw/plugin-foundation/config/buster-lifetime.mjs';
 import { readBusterStartupHandoff, type BusterStartupHandoff } from '@kubeclaw/plugin-foundation/config/buster-startup';
@@ -237,8 +238,23 @@ export class PreparationOriginalBootStore {
         return JSON.parse(Buffer.from(file.bytes, 'base64').toString('utf8'));
       };
       const selection = readPipelineServiceSelection(member('selections/buster-preparation.json'), 'buster-preparation');
+      // These are retained original receipts, never the current image decoder
+      // or new activation authority. A digest field in a rehashed capsule is
+      // not the full original caller/profile/package association.
+      const parent = readPipelineServiceSelection(capsule.handoff.parentSelection, 'buster-preparation');
+      const child = readPipelineServiceSelection(member('selections/buster-runtime.json'), 'buster-runtime');
+      const handedChild = readPipelineServiceSelection(capsule.handoff.childSelection, 'buster-runtime');
+      if (capsule.handoff.generationDigest !== source.expectedReceipt.generationDigest
+        || portableJson(parent) !== portableJson(selection) || portableJson(handedChild) !== portableJson(child)
+        || child.generationDigest !== source.expectedReceipt.generationDigest
+        || child.packageReceiptDigest !== source.expectedReceipt.packageReceiptDigest
+        || child.serviceInstanceId !== source.expectedReceipt.serviceInstanceId
+        || portableJson(parent.bindings.filter(binding => binding.owner === 'buster-engine'))
+          !== portableJson(child.bindings.filter(binding => binding.owner === 'buster-engine'))) {
+        throw new Error('BUSTER_ORIGINAL_BOOT_JOIN_MISMATCH');
+      }
       const bindings = selection.bindings.filter(binding => binding.owner === 'worker-core');
-      const root = member('pipeline.config.json') as { components?: Record<string, string>; bindings?: unknown[] };
+      const root = member('pipeline.config.json') as { schemaVersion?: string; components?: Record<string, string>; bindings?: unknown[] };
       const owner = member('components/worker-core.config.json') as {
         profiles: Record<string, { settings: Parameters<typeof captureWorkerCorePolicy>[0] }>;
       };
@@ -251,6 +267,32 @@ export class PreparationOriginalBootStore {
         || !validateWorkerCoreV3Author(owner) || !Object.hasOwn(owner.profiles, bindings[0]!.profileId)
         || portableJson(captureWorkerCorePolicy(owner.profiles[bindings[0]!.profileId]!.settings)) !== portableJson(capsule.facts.native.workerCore)) {
         throw new Error('BUSTER_ORIGINAL_BOOT_CORE_SOURCE_MISMATCH');
+      }
+      if (root.schemaVersion === 'pipeline-entry.v10') {
+        // v10 is selected by retained A's explicit root, never by optional
+        // fields in current B or the capsule. Decode ALL original preparation
+        // profiles without discarding any of the seven additional authors.
+        const engineBindings = selection.bindings.filter(binding => binding.owner === 'buster-engine');
+        const engine = member('components/buster-engine.config.json') as {
+          schemaVersion?: string; owner?: string;
+          profiles?: Record<string, { settings?: { preparation?: unknown } }>;
+        };
+        if (root.components?.['buster-engine'] !== 'components/buster-engine.config.json'
+          || engineBindings.length !== 1 || engine.schemaVersion !== 'pipeline-component.v3' || engine.owner !== 'buster-engine'
+          || !engine.profiles || typeof engine.profiles !== 'object' || Array.isArray(engine.profiles)
+          || !Object.hasOwn(engine.profiles, engineBindings[0]!.profileId)
+          || root.bindings!.filter(binding => {
+            const row = binding as { role?: string; owner?: string; instanceId?: string } | null;
+            return row?.role === selection.role && row.owner === 'buster-engine' && row.instanceId === selection.serviceInstanceId;
+          }).length !== 1
+          || !root.bindings!.some(binding => portableJson(binding) === portableJson({ role: selection.role, ...engineBindings[0] }))) {
+          throw new Error('BUSTER_ORIGINAL_BOOT_PREPARATION_SOURCE_MISMATCH');
+        }
+        for (const profile of Object.values(engine.profiles)) captureBusterPreparationV10(profile.settings?.preparation);
+        const preparation = captureBusterPreparationV10(engine.profiles[engineBindings[0]!.profileId]!.settings?.preparation);
+        if (!capsule.facts.preparation || portableJson(preparation) !== portableJson(capsule.facts.preparation)) {
+          throw new Error('BUSTER_ORIGINAL_BOOT_PREPARATION_SOURCE_MISMATCH');
+        }
       }
     }
     this.#lifetime.assertCurrent();

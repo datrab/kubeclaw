@@ -140,7 +140,8 @@
               "maximumAliases": 1000,
               "maximumFlattenVisits": 100000,
               "maximumFlattenPending": 100000
-            }
+            },
+            "maximumSecretReferenceEntries": 32
           },
           "tailscaleExposure": {
             "allowedNamespacePrefixes": [
@@ -317,7 +318,8 @@
               "maximumAliases": 1000,
               "maximumFlattenVisits": 100000,
               "maximumFlattenPending": 100000
-            }
+            },
+            "maximumSecretReferenceEntries": 32
           },
           "tailscaleExposure": {
             "allowedNamespacePrefixes": [

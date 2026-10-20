@@ -26,7 +26,10 @@ export function readRegistryPeerSource(value: Record<string, unknown>, capabilit
   const names = [source.registryUsernameEnvironmentVariable, source.registryPasswordEnvironmentVariable];
   if (url.origin !== source.registryBaseUrl || url.host !== source.registryReference
     || !['http:', 'https:'].includes(url.protocol)
-    || (url.protocol === 'https:' ? names.some(name => typeof name !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(name))
+    // Match the ORIGINAL registry-client producer's public host/name domain;
+    // URL alone also admits IPv6 and underscore hosts that it cannot produce.
+    || !/^[a-z0-9.-]+(?::[0-9]+)?$/u.test(url.host)
+    || (url.protocol === 'https:' ? names.some(name => typeof name !== 'string' || !/^[A-Z][A-Z0-9_]+$/u.test(name))
       : names.some(name => name !== undefined) || source.registryCaFile !== undefined)
     || (source.registryCaFile !== undefined && (!path.isAbsolute(String(source.registryCaFile)) || /[\r\n\0]/u.test(String(source.registryCaFile))))) {
     throw new Error('BUSTER_REGISTRY_PEER_INVALID');

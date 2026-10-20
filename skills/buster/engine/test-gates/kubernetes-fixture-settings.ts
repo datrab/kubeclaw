@@ -39,6 +39,7 @@ export interface KubernetesFixtureCapabilityInvokerOptions {
     readonly allowDefaultStorageClass: boolean;
     readonly runnerSubject: string;
     readonly credentialReaderSubject: string;
+    readonly maximumSecretReferenceEntries: number;
     readonly maximumManifestBytes: number;
     readonly maximumResources: number;
     readonly maximumPersistentVolumeClaimBytes: number;
@@ -67,6 +68,7 @@ export class KubernetesFixtureSettings {
     readonly allowDefaultStorageClass: boolean;
     readonly runnerSubject: string;
     readonly credentialReaderSubject: string;
+    readonly maximumSecretReferenceEntries: number;
     readonly maximumManifestBytes: number;
     readonly maximumResources: number;
     readonly maximumPersistentVolumeClaimBytes: bigint;
@@ -105,6 +107,7 @@ export class KubernetesFixtureSettings {
         this.allowDefaultStorageClass = options.allowDefaultStorageClass;
         this.runnerSubject = runnerSubject;
         this.credentialReaderSubject = credentialReaderSubject;
+        this.maximumSecretReferenceEntries = options.maximumSecretReferenceEntries;
         this.maximumManifestBytes = options.maximumManifestBytes;
         this.maximumResources = options.maximumResources;
         this.maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);
@@ -149,6 +152,9 @@ function validateStorageOptions(options: KubernetesFixtureCapabilityInvokerOptio
     }
 }
 function validateLimits(options: KubernetesFixtureCapabilityInvokerOptions): void {
+    if (!Number.isSafeInteger(options.maximumSecretReferenceEntries)
+        || options.maximumSecretReferenceEntries < 0 || options.maximumSecretReferenceEntries > 32)
+        throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_LIMIT_INVALID');
     for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],
         [options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],
         [options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {

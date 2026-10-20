@@ -1,4 +1,25 @@
+import { readLegacyBusterRuntimeServicePolicy } from '@kubeclaw/plugin-foundation/config/buster-service-policy';
 import { createPublicKey } from 'node:crypto';
+import { validateRuntimeRoot } from './production-config-values.ts';
+import { validateCapabilitySourceClosure } from './production-capability-sources.ts';
+
+/** The privileged parent receives the complete installed legacy runtime, not
+ * the shell producer's partial source projection. Reject the child's service
+ * policy before resolving credentials or creating native ownership/journals.
+ * This remains v1 validation, never selected-generation/source authority.
+ */
+export function readBusterPreparationRuntime(runtime: Readonly<Record<string, unknown>>,
+  environment: NodeJS.ProcessEnv) {
+  const policy = readLegacyBusterRuntimeServicePolicy(runtime);
+  // The complete privileged receiver must reject the same retired root authors
+  // and required public locators as its child before accessing credentials.
+  // The shell producer's partial projection remains a separate legacy API.
+  validateRuntimeRoot(runtime);
+  // Match the child's public conditional-source admission before the root
+  // parent resolves key/token carriers or creates native ownership state.
+  validateCapabilitySourceClosure(runtime, new Set(policy.allowedCapabilities));
+  return readBusterPreparationRuntimeSource(runtime, environment);
+}
 
 /** Effect-free receiver for the existing runtime.v1 source binding. This is
  * legacy runtime input, NOT selected-generation or original-boot authority.
@@ -43,6 +64,12 @@ export function readBusterPreparationRuntimeSource(runtime: Readonly<Record<stri
   }
   if (!Number.isSafeInteger(runtime.shutdownTimeoutMs) || Number(runtime.shutdownTimeoutMs) < 1
     || Number(runtime.shutdownTimeoutMs) > 0x7fffffff) throw new Error('BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED');
+  // Carrier resolution must not replace the admitted original source tuple.
+  // Retain its public primitive metadata before either environment lookup;
+  // parsing a key does not validate a second mutable runtime configuration.
+  const originalSource = Object.freeze({ trustedSourceAuthority: runtime.trustedSourceAuthority,
+    stateRoot: runtime.stateRoot, tarExecutable: runtime.tarExecutable,
+    serviceShutdownTimeoutMs: Number(runtime.shutdownTimeoutMs) });
   // Match the actual HTTP receiver before privileged shell/store effects. The
   // token stays in its confidential carrier; it is never part of boot facts.
   if (typeof runtime.tokenEnvironmentVariable === 'string') {
@@ -58,8 +85,7 @@ export function readBusterPreparationRuntimeSource(runtime: Readonly<Record<stri
     if (key.asymmetricKeyType !== 'ed25519') throw new Error('wrong public key algorithm');
     sourceAttestationPublicKey = key.export({ type: 'spki', format: 'pem' }).toString();
   } catch { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID'); }
-  return Object.freeze({ sourceAttestationPublicKey, trustedSourceAuthority: runtime.trustedSourceAuthority,
-    stateRoot: runtime.stateRoot, tarExecutable: runtime.tarExecutable, serviceShutdownTimeoutMs: Number(runtime.shutdownTimeoutMs) });
+  return Object.freeze({ sourceAttestationPublicKey, ...originalSource });
 }
 
 /** The existing shell producer's exact legacy projection, now validated before

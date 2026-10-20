@@ -1,3 +1,6 @@
+import { preparationEnvelope, preparationProfile, preparationOperationSettings } from '../../../skills/buster/engine/test-gates/preparation-envelope.ts';
+import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import { inspectPipelineV10BusterServiceSelection, inspectPipelineV10BusterRuntimeSourceIdentity } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts';
 import { resolveTestPlan } from '../../../skills/nova/core/test-gates/resolver.ts';
 import { validatePipelineTestGateContract } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
 import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
@@ -106,15 +109,106 @@ test('EXISTING real role materializer enumerates all v10 inputs before source de
   const root=tree(t), code=path.join(root,'role'), output=path.join(root,'must-not-publish');
   execFileSync(process.execPath,[path.join(repository,'scripts/build-runtime-role-bundle.mjs'),'buster',code,
     'a'.repeat(40),'config-v10-materializer-input-test','2026-10-15T00:00:00Z'],{cwd:repository,stdio:'pipe'});
-  const document=JSON.parse(rootBytes.toString()), binding=document.bindings.find((b: any)=>b.owner==='buster-engine');
+  const document=JSON.parse(rootBytes.toString()), binding=document.bindings.find((b: any)=>b.owner==='buster-engine' && b.instanceId==='fixture.service.buster-runtime');
   const service={role:'buster',callerId:'buster-preparation',serviceInstanceId:binding.instanceId,
-    bindings:[{owner:'buster-engine',instanceId:binding.instanceId,profileId:binding.profileId}]};
-  const run=()=>materializePipelineGeneration({authorRoot:path.join(root,'config'),packageRoot:code,output,services:[service],publisher:path.join(root,'NONEXISTENT-MUST-NOT-EXECUTE')});
-  await assert.rejects(run,/PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);assert.equal(fs.existsSync(output),false);
+    bindings:document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === binding.instanceId).map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId }))};
+  const child = { ...service, callerId: 'buster-runtime', bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === binding.instanceId).map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
+  const complete = [service, child];
+  const run=(services: any[] = complete)=>materializePipelineGeneration({authorRoot:path.join(root,'config'),packageRoot:code,output,services,publisher:path.join(root,'NONEXISTENT-MUST-NOT-EXECUTE')});
+  for (const services of [[service], [child], [service, child, child], [service, { ...child, role: 'prism' }],
+    [service, { ...child, callerId: 'unknown-caller' }], [null, child]]) {
+    await assert.rejects(() => run(services), /PIPELINE_RELEASE_(?:COMPOSITION_INVALID|CALLER_CLOSURE_REQUIRED)/);
+    assert.equal(fs.existsSync(output), false);
+  }
+  const other = document.bindings.find((b: any) => b.owner === 'buster-engine' && b.instanceId === 'fixture.service.buster-security-runtime');
+  await assert.rejects(() => run([{ ...service, serviceInstanceId: other.instanceId, bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === other.instanceId).map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) }, child]), /PIPELINE_BUSTER_HANDOFF_SELECTION_MISMATCH/);
+  assert.equal(fs.existsSync(output), false);
+
+  // Exact release bindings must agree with the original selected root even
+  // before the still-closed source/caller gate; denial alone is not this join.
+  for (const index of [0, 1]) {
+    const changed = structuredClone(complete);
+    changed[index]!.bindings[0]!.profileId = 'foreign-profile';
+    await assert.rejects(() => run(changed), /PIPELINE_RELEASE_BINDING_MISMATCH/);
+    assert.equal(fs.existsSync(output), false);
+  }
+  const missingParentWorker = structuredClone(service);
+  missingParentWorker.bindings = missingParentWorker.bindings.filter((b: any) => b.owner !== 'worker-core');
+  await assert.rejects(() => run([missingParentWorker, child]), /WORKER_CORE_VERSIONED_SELECTION_REQUIRED/);
+  const wrongWorker = structuredClone(child);
+  wrongWorker.bindings.find((binding: any) => binding.owner === 'worker-core').profileId = 'foreign-worker';
+  await assert.rejects(() => run([service, wrongWorker]), /PIPELINE_RELEASE_BINDING_MISMATCH/);
+  await assert.rejects(() => run([service, { ...child, bindings: [...child.bindings].reverse() }]), /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  for (const bindings of [[], [...child.bindings, child.bindings[0]],
+    child.bindings.map((binding: any) => ({ ...binding, instanceId: 'foreign-instance' }))]) {
+    await assert.rejects(() => run([service, { ...child, bindings }]), /SWARM_CONFIG_SELECTION_OWNERS_INVALID/);
+    assert.equal(fs.existsSync(output), false);
+  }
+  await assert.rejects(() => run(),/PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);assert.equal(fs.existsSync(output),false);
   const schema=path.join(root,'schemas/browser/axe.task.schema.json'),original=fs.readFileSync(schema);fs.unlinkSync(schema);
-  await assert.rejects(run,{code:'ENOENT'});assert.equal(fs.existsSync(output),false);
-  fs.writeFileSync(schema,original);await assert.rejects(run,/PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  await assert.rejects(() => run(),{code:'ENOENT'});assert.equal(fs.existsSync(output),false);
+  fs.writeFileSync(schema,original);await assert.rejects(() => run(),/PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
   assert.equal(fs.readdirSync(root).some(name=>name.startsWith('.pipeline-stage-')),false);
+});
+
+
+// Exact root/profile concordance is shared by all release callers, not just
+// the Buster parent/child pair. This is inspection, never source admission.
+test('real Prism v10 release callers preserve exact original owner bindings before source admission', async t => {
+  const { execFileSync } = await import('node:child_process');
+  const { materializePipelineGeneration } = await import('../../../scripts/updates/pipeline-generation.mjs');
+  const root = tree(t), code = path.join(root, 'prism-role'), output = path.join(root, 'must-not-publish');
+  execFileSync(process.execPath, [path.join(repository, 'scripts/build-runtime-role-bundle.mjs'), 'prism', code,
+    'a'.repeat(40), 'config-v10-prism-binding-test', '2026-10-20T00:00:00Z'], { cwd: repository, stdio: 'pipe' });
+  const document = JSON.parse(rootBytes.toString());
+  const owners: Record<string, string[]> = {
+    'prism-control': ['prism-control', 'prism-execution'],
+    'prism-worker': ['prism-worker', 'prism-control', 'prism-execution'],
+    'prism-studio': ['prism-studio'], 'prism-ingestion': ['prism-control'],
+    'prism-agent-bridge': ['prism-control'],
+  };
+  const selected = (callerId: string) => {
+    const serviceInstanceId = `fixture.service.${['prism-ingestion', 'prism-agent-bridge'].includes(callerId) ? 'prism-control' : callerId}`;
+    return { role: 'prism', callerId, serviceInstanceId,
+      bindings: document.bindings.filter((b: any) => b.role === 'prism' && b.instanceId === serviceInstanceId && owners[callerId]!.includes(b.owner))
+        .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
+  };
+  const complete = ['prism-control', 'prism-worker', 'prism-studio', 'prism-ingestion'].map(selected);
+  const run = (services: any[]) => materializePipelineGeneration({ authorRoot: path.join(root, 'config'), packageRoot: code,
+    output, services, publisher: path.join(root, 'NONEXISTENT-MUST-NOT-EXECUTE') });
+  for (const composition of [complete, [selected('prism-agent-bridge')]]) {
+    for (let index = 0; index < composition.length; index++) {
+      for (let owner = 0; owner < composition[index]!.bindings.length; owner++) {
+        const changed = structuredClone(composition);
+        changed[index]!.bindings[owner]!.profileId = 'foreign-profile';
+        await assert.rejects(() => run(changed), /PIPELINE_RELEASE_BINDING_MISMATCH/);
+        assert.equal(fs.existsSync(output), false);
+      }
+      if (['prism-control', 'prism-worker'].includes(composition[index]!.callerId)) {
+        const missingWorker = structuredClone(composition);
+        missingWorker[index]!.bindings = missingWorker[index]!.bindings.filter((b: any) => b.owner !== 'worker-core');
+        await assert.rejects(() => run(missingWorker), /WORKER_CORE_VERSIONED_SELECTION_REQUIRED/);
+        assert.equal(fs.existsSync(output), false);
+      }
+      const foreign = structuredClone(composition);
+      foreign[index]!.serviceInstanceId = 'foreign-service';
+      for (const binding of foreign[index]!.bindings) binding.instanceId = 'foreign-service';
+      await assert.rejects(() => run(foreign), /PIPELINE_RELEASE_BINDING_MISMATCH/);
+      const missing = structuredClone(composition); missing[index]!.bindings.shift();
+      await assert.rejects(() => run(missing), /SWARM_CONFIG_SELECTION_OWNERS_INVALID/);
+      const duplicate = structuredClone(composition); duplicate[index]!.bindings.push(duplicate[index]!.bindings[0]);
+      await assert.rejects(() => run(duplicate), /SWARM_CONFIG_SELECTION_OWNERS_INVALID/);
+    }
+    // Historical Prism v3 callers lack the required WorkerCore binding. They
+    // must fail at that original rule, not hide it behind source denial.
+    // The standalone bridge consumes no WorkerCore and retains source denial.
+    const denial = composition.length === 1 ? /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/ : /WORKER_CORE_VERSIONED_SELECTION_REQUIRED/;
+    await assert.rejects(() => run(composition.map(service => ({ ...service, bindings: [...service.bindings].reverse() }))),
+      denial);
+    await assert.rejects(() => run(composition), denial);
+    assert.equal(fs.existsSync(output), false);
+    assert.equal(fs.readdirSync(root).some(name => name.startsWith('.pipeline-stage-')), false);
+  }
 });
 
 function novaCandidate(name:string, rootHash:string, inputHash:string){
@@ -167,6 +261,35 @@ test('registry/source join rejects missing, changed, foreign package/provenance 
  const adapterRaw=Buffer.from(JSON.stringify(adapter));
  assert.throws(()=>inspectPipelineV10NovaRegistryIdentity(adapterRaw,{...registry,adapters:new Map()},f.capture),/REGISTRY_REGISTRATION_MISSING/);
  assert.equal(inspectPipelineV10NovaRegistryIdentity(adapterRaw,registry,f.capture).stageType,null);
+});
+test('Nova stage and adapter all-profile processing reaches original registry validators without activation',t=>{
+ const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);const registry=novaRegistryTree(root);
+ const names=fs.readdirSync(path.join(base,'same-entry-agent-role-binding-01/outputs/nova'));
+ for(const name of names){
+  const value=novaCandidate(name,replacements[0]!.sha256,f.capture.inputGenerationSha256),raw=Buffer.from(JSON.stringify(value));
+  const run=(candidate:any)=>inspectPipelineV10NovaRegistryIdentity(raw,candidate,f.capture);
+  assert.throws(()=>run({...registry,schemas:new Map()}),/REGISTRY_SCHEMA_NOT_COMPILED/);
+  const validated:unknown[]=[];
+  const schemas=new Map([...registry.schemas].map(([key,validator])=>[key,{...validator,validate:(configuration:unknown)=>{
+   validated.push(structuredClone(configuration));validator.validate(configuration);
+  }}]));
+  const result=run({...registry,schemas});
+  const owner=JSON.parse(f.capture.read(`config/${value.binding.ownerPath}`).toString());
+  const expected=Object.values(owner.profiles).map((profile:any)=>Object.hasOwn(profile.processing,value.binding.registrationId)
+   ?profile.processing[value.binding.registrationId]:profile.processing);
+  assert.deepEqual(validated,expected,name);
+  assert.ok(validated.length>0,name);
+  let calls=0;
+  const rejectingSchemas=new Map([...registry.schemas].map(([key,validator])=>[key,{...validator,validate:(configuration:unknown)=>{
+   validator.validate(configuration);if(++calls===expected.length)throw new Error('ORIGINAL_FINAL_PROFILE_REJECTED');
+  }}]));
+  assert.throws(()=>run({...registry,schemas:rejectingSchemas}),/ORIGINAL_FINAL_PROFILE_REJECTED/);
+  assert.equal(calls,expected.length);
+  for(const key of ['installedSourceAuthorizationVerified','stageInstanceAuthorizationVerified','callerAuthorizationVerified','originalRunAuthorizationVerified','activationAllowed']as const)
+   assert.equal(result[key],false);
+  assert.equal(run(registry).registrySourceCoherent,true);
+ }
+ assert.equal(names.length,8);
 });
 test('actual compiler membership has explicit uncovered stage owners and no registry-to-original-instance ABI',async t=>{
  const root=tree(t),registry=novaRegistryTree(root);
@@ -322,6 +445,42 @@ test('network HTTP plain adapter processing joins exact selected owner/manifest/
  const packages=read(path.join(repository,'skills/common/plugin-runtime/foundation/config/pipeline-v10-package-sources.json'));
  assert.equal(r.sourcePackageDigest,packages.packages['kubeclaw.network-http'].contentDigest);
  assert.equal(Object.hasOwn(r,'receipt'),false);assert.equal(Object.hasOwn(r,'caller'),false);
+});
+test('network adapter uses real original registry configuration consumer for all profiles without activation',t=>{
+ const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);
+ const {selection,configuration}=networkCandidate(f);
+ const sources=read(path.join(repository,'skills/common/plugin-runtime/foundation/config/pipeline-v10-package-sources.json')).packages;
+ const registryRoot=path.join(root,'network-registry');fs.mkdirSync(registryRoot);
+ fs.cpSync(path.join(root,sources[selection.packageId].generationRoot),path.join(registryRoot,selection.packageId),{recursive:true});
+ const registry=buildRegistry(discoverPackages({installationRoots:[registryRoot],trustPolicy:{trustedBuiltinRoots:[registryRoot],
+  allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'local-network-source-control'}}));
+ const raw=Buffer.from(JSON.stringify(configuration));
+ const run=(candidate:any=registry)=>inspectPipelineV10NetworkAdapterSourceIdentity(selection,raw,f.capture,candidate);
+ const entry=registry.adapters.get(selection.registrationId)!;
+ const replace=(changed:any)=>({...registry,adapters:new Map([[selection.registrationId,changed]])});
+ assert.equal(inspectPipelineV10NetworkAdapterSourceIdentity(selection,raw,f.capture).registrySourceCoherent,false);
+ assert.throws(()=>run({...registry,adapters:new Map()}),/ADAPTER_REGISTRY_PACKAGE/);
+ assert.throws(()=>run({...registry,apiVersion:'foreign'}),/ADAPTER_REGISTRY_API_VERSION/);
+ assert.throws(()=>run(replace({...entry,registration:{...entry.registration,export:'foreign'}})),/ADAPTER_REGISTRY_PROVENANCE/);
+ assert.throws(()=>run(replace({...entry,provenance:{...entry.provenance,surface:'test_provider'}})),/ADAPTER_REGISTRY_PROVENANCE/);
+ assert.throws(()=>run(replace({...entry,package:{...entry.package}})),/ADAPTER_REGISTRY_PACKAGE/);
+ const pkg={...entry.package,provenance:{...entry.package.provenance,package:{...entry.package.provenance.package,contentDigest:'sha256:'+'0'.repeat(64)}}};
+ assert.throws(()=>run({...replace({...entry,package:pkg,provenance:{...entry.provenance,package:pkg.provenance}}),
+  packages:new Map([[selection.packageId,pkg]])}),/ADAPTER_REGISTRY_SOURCE/);
+ assert.throws(()=>run({...registry,schemas:new Map()}),/REGISTRY_SCHEMA_NOT_COMPILED/);
+ // Observe the real retained validator, including the unselected original
+ // profile, while preserving its validation and all source assertions.
+ const validated:any[]=[];
+ const schemas=new Map([...registry.schemas].map(([key,validator])=>[key,{...validator,validate:(value:unknown)=>{
+  validated.push(structuredClone(value));validator.validate(value);
+ }}]));
+ const result=run({...registry,schemas});
+ const owner=JSON.parse(f.capture.read('config/plugins/kubeclaw.network-http.config.json').toString());
+ assert.deepEqual(validated,Object.values(owner.profiles).map((profile:any)=>profile.processing));
+ assert.ok(validated.length>1);assert.equal(result.registrySourceCoherent,true);
+ for(const key of ['installedSourceAuthorizationVerified','callerAuthorizationVerified','originalAuthorizationVerified','activationAllowed']as const)
+  assert.equal(result[key],false);
+ assert.equal(run().registrySourceCoherent,true);
 });
 test('network adapter rejects provider/composite/foreign tuples, default omission, wrappers and config substitutions; restores plain config',t=>{
  const f=capture(tree(t),replacements);t.after(f.capture.close);const {selection,configuration}=networkCandidate(f);
@@ -530,7 +689,7 @@ function demoGraphCandidate(original:any){
 test('WFINAL02 Cumulative and Demo actual builders consume ONLY their explicit groups, historical graphs unchanged',async t=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'helper-policy-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  const {projectSourceFixture}=await import('./project-source-fixture.mjs');const fixture=await projectSourceFixture(root,{review:true,clean:false});t.after(()=>fixture.close());
- const project=fixture.project;project.final.review={agent:'architect'};
+ const project={...fixture.project,final:{...fixture.project.final,review:{agent:'architect'}}};
  const groups={source:{timeoutMs:120000},cumulative:{timeoutMs:1800000},demo:{timeoutMs:120000}};
  const legacy=cumulativeStages(project,project.modules,'implement-ui');assert.deepEqual(cumulativeStagesWithExecutionGroups(project,project.modules,'implement-ui',groups),legacy);
  const selected=structuredClone(groups);selected.source.timeoutMs=90000;selected.cumulative.timeoutMs=600000;selected.demo.timeoutMs=240000;
@@ -867,4 +1026,296 @@ test('Quality service map requires both real registry packages and exact retaine
  assert.equal(complete.activationAllowed,false);assert.equal(complete.selectedProviderPolicies.size,2);
  f.capture.close();fs.writeFileSync(file,before);const restored=capture(root,replacements);t.after(restored.capture.close);
  assert.deepEqual([...inspectPipelineV10QualityServiceSelection(service,registry,restored.capture).selectedProviderPolicies],[...complete.selectedProviderPolicies]);
+});
+
+test('Buster runtime v2 derives its service policy from original complete input selection, never current B', t => {
+  const directory = tree(t), retained = capture(directory, replacements); t.after(retained.capture.close);
+  const root = JSON.parse(rootBytes.toString()), binding = root.bindings.find((b: any) => b.owner === 'buster-engine' && b.instanceId === 'fixture.service.buster-runtime');
+  const selection = { role: 'buster', callerId: 'buster-runtime', serviceInstanceId: binding.instanceId };
+  const owner = JSON.parse(retained.capture.read('config/components/buster-engine.config.json').toString());
+  const policy = owner.profiles[binding.profileId].settings.remotePlanService;
+  const providers = owner.profiles[binding.profileId].settings.execution.capabilityProviders;
+  const sources = Object.fromEntries(['directCommand', 'containerBuild', 'networkHttp', 'browserAxe',
+    'browserLighthouse', 'browserVisual', 'browserPlaywright', 'securityScan'].map(field => [field,
+      { ...structuredClone(providers[field]), ...(field.startsWith('browser') ? { allowedOrigins: structuredClone(providers.browserAccess.allowedOrigins) } : {}) }]));
+  const chart = JSON.parse(retained.capture.read('charts/kubeclaw/values.yaml').toString());
+  const deployment = root.deploymentSelections.find((d: any) => d.consumer === 'namespace-controller' && d.busterComponentInstanceId === binding.instanceId);
+  const namespace = chart.profiles[deployment.profileId].readonlyBindings.releaseNamespace;
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2', ...structuredClone(policy), ...sources,
+    clusterBindings: { controllerNamespace: namespace } };
+  const output = Buffer.from(JSON.stringify(runtime));
+  const run = (value = output) => inspectPipelineV10BusterRuntimeSourceIdentity(selection, value, retained.capture);
+  const result = run();
+  // One captured caller tuple must own BOTH policy and deployment source joins.
+  // Reading the captured generation may invoke an upstream reader; subsequent
+  // mutation of the supplied tuple must not retarget the namespace selection.
+  const movingSelection = { ...selection };
+  const capturedCaller = inspectPipelineV10BusterRuntimeSourceIdentity(movingSelection, output, {
+    inputGenerationSha256: retained.capture.inputGenerationSha256,
+    assertCurrent: retained.capture.assertCurrent,
+    read(name: string) {
+      movingSelection.serviceInstanceId = 'foreign-service-after-capture';
+      return retained.capture.read(name);
+    },
+  });
+  assert.equal(movingSelection.serviceInstanceId, 'foreign-service-after-capture');
+  assert.equal(capturedCaller.serviceInstanceId, binding.instanceId);
+  assert.equal(capturedCaller.callerId, 'buster-runtime');
+  assert.deepEqual(capturedCaller, result);
+  assert.equal(Object.isFrozen(capturedCaller), true);
+  for (const clusterBindings of [undefined, null, {}, { controllerNamespace: 'other-original' },
+    { controllerNamespace: namespace, extra: true }]) {
+    assert.throws(() => run(Buffer.from(JSON.stringify({ ...runtime, clusterBindings }))), /BUSTER_CLUSTER_NAMESPACE_SOURCE/);
+  }
+  const fromRoot = (changed: any) => inspectPipelineV10BusterRuntimeSourceIdentity(selection, output, {
+    inputGenerationSha256: retained.capture.inputGenerationSha256, assertCurrent: retained.capture.assertCurrent,
+    read(name: string) { return name === 'config/pipeline.config.json' ? Buffer.from(JSON.stringify(changed)) : retained.capture.read(name); },
+  });
+  const noDeployment = structuredClone(root);
+  noDeployment.deploymentSelections = noDeployment.deploymentSelections.filter((d: any) => d !== undefined && d.consumer !== 'namespace-controller');
+  assert.throws(() => fromRoot(noDeployment), /BUSTER_CLUSTER_DEPLOYMENT_REQUIRED/);
+  const foreignDeployment = structuredClone(root);
+  foreignDeployment.deploymentSelections.find((d: any) => d.consumer === 'namespace-controller').busterComponentInstanceId = 'other-service';
+  assert.throws(() => fromRoot(foreignDeployment), /BUSTER_CLUSTER_DEPLOYMENT_REQUIRED/);
+  const ambiguousDeployment = structuredClone(root);
+  ambiguousDeployment.deploymentSelections.push({ ...structuredClone(deployment),
+    deploymentInstanceId: 'second-deployment', serviceInstanceId: 'second-controller' });
+  assert.throws(() => fromRoot(ambiguousDeployment), /BUSTER_CLUSTER_DEPLOYMENT_REQUIRED/);
+  assert.deepEqual(result.policy, policy); assert.equal(result.profileId, binding.profileId);
+  assert.equal(result.activationAllowed, false); assert.equal(result.originalAuthorizationVerified, false);
+  assert.equal(result.inputGenerationSha256, retained.capture.inputGenerationSha256);
+  const workerBinding = root.bindings.find((b: any) => b.owner === 'worker-core' && b.role === 'buster' && b.instanceId === selection.serviceInstanceId);
+  const workerBytes = retained.capture.read('config/components/worker-core.config.json');
+  assert.ok(result.worker);
+  assert.equal(result.worker.profileId, workerBinding.profileId);
+  assert.equal(result.worker.ownerRawSha256, createHash('sha256').update(workerBytes).digest('hex'));
+  assert.deepEqual(result.worker.capture.settings, JSON.parse(workerBytes.toString()).profiles[workerBinding.profileId].settings);
+  assert.equal(Object.isFrozen(result.worker.capture.settings.runtime.retain_logs), true);
+  const preparationWorker = inspectPipelineV10BusterServiceSelection({ ...selection, callerId: 'buster-preparation' }, retained.capture).worker;
+  assert.deepEqual(preparationWorker, result.worker, 'versioned preparation consumes the same selected WorkerCore policy');
+
+  const selectedCluster = owner.profiles[binding.profileId].settings.clusterInvokers;
+  assert.ok(result.clusterInvokers);
+  assert.deepEqual(result.clusterInvokers, selectedCluster,
+    'complete original cluster policy, not a namespace-only generated binding');
+  const assertDeepFrozen = (value: unknown): void => {
+    if (value && typeof value === 'object') {
+      assert.equal(Object.isFrozen(value), true);
+      for (const child of Object.values(value)) assertDeepFrozen(child);
+    }
+  };
+  assertDeepFrozen(result.clusterInvokers);
+  assert.deepEqual(validateBusterClusterInvokerSettings(result.clusterInvokers), selectedCluster,
+    'complete original policy reaches native decoder without dropping secret-entry obligation');
+  assert.equal(inspectPipelineV10BusterServiceSelection({ ...selection, callerId: 'buster-preparation' }, retained.capture).clusterInvokers, null,
+    'preparation never gains runtime cluster authority');
+  assert.equal(Object.hasOwn(runtime, 'clusterInvokers'), false,
+    'owner policy is not a new v2 generated field');
+
+  assert.equal(Object.isFrozen(result.policy.recordLimits), true);
+  assert.equal(Object.isFrozen(result.providerPolicies.browserAxe?.allowedOrigins), true);
+  // Exercise every original active public field, not just a representative cap.
+  for (const [field, source] of Object.entries(sources)) {
+    const absent: any = structuredClone(runtime); delete absent[field];
+    assert.throws(() => run(Buffer.from(JSON.stringify(absent))), /BUSTER_PROVIDER_REQUIRED/);
+    for (const key of Object.keys(source)) {
+      const missing: any = structuredClone(runtime); delete missing[field][key];
+      assert.throws(() => run(Buffer.from(JSON.stringify(missing))), /BUSTER_PROVIDER_POLICY/);
+      const changed: any = structuredClone(runtime); changed[field][key] = null;
+      assert.throws(() => run(Buffer.from(JSON.stringify(changed))), /BUSTER_PROVIDER_POLICY/);
+    }
+  }
+  const extraNative: any = structuredClone(runtime);
+  extraNative.directCommand.cgroupRoot = '/unverified-native';
+  assert.equal(run(Buffer.from(JSON.stringify(extraNative))).activationAllowed, false,
+    'extra native locator never becomes authorization');
+  assert.throws(() => run(Buffer.from(JSON.stringify({ ...runtime, port: policy.port === 0 ? 1 : 0 }))), /SELECTED_SERVICE_POLICY_MISMATCH/);
+  for (const name of Object.keys(policy)) {
+    const absent: any = structuredClone(runtime); delete absent[name];
+    assert.throws(() => run(Buffer.from(JSON.stringify(absent))), /SERVICE_POLICY_INVALID/);
+  }
+  assert.throws(() => inspectPipelineV10BusterServiceSelection({ ...selection, serviceInstanceId: 'not-original' }, retained.capture), /EXACT_BUSTER_TUPLE/);
+  assert.throws(() => inspectPipelineV10BusterServiceSelection({ ...selection, callerId: 'prism-control' }, retained.capture), /BUSTER_SERVICE_SELECTION/);
+  assert.throws(() => inspectPipelineV10BusterServiceSelection({ ...selection, profileId: binding.profileId }, retained.capture), /BUSTER_SERVICE_SELECTION/);
+  assert.throws(() => inspectPipelineV10BusterRuntimeSourceIdentity({ ...selection, callerId: 'buster-preparation' }, output, retained.capture), /BUSTER_RUNTIME_CALLER/);
+  // The selected v2 path must preserve the actual production receiver's
+  // retired-author boundary, even when an extra value equals its owner.
+  for (const [field, value] of Object.entries({
+    kubernetesFixture: false, tailscaleExposure: false, kubernetesRuntimeSecurity: false,
+    dependencyReadiness: owner.profiles[binding.profileId].settings.dependencyReadiness,
+    maximumArchiveBytes: 1, maximumExtractedBytes: 1, maximumRequestBytes: 1,
+    maximumActiveJobs: 1, maximumQueuedJobs: 1, maximumConcurrentAttempts: 1,
+  })) {
+    assert.throws(() => run(Buffer.from(JSON.stringify({ ...runtime, [field]: value }))),
+      /SWARM_CONFIG_LEGACY_OVERRIDE/, `v2 cannot restore retired author ${field}`);
+  }
+  assert.deepEqual(run(), result, 'restored original output');
+  const file = path.join(directory, 'config/components/buster-engine.config.json'), original = fs.readFileSync(file);
+  fs.appendFileSync(file, ' '); assert.throws(() => run(), /INPUT_CHANGED/);
+  retained.capture.close(); fs.writeFileSync(file, original);
+  const restored = capture(directory, replacements); t.after(restored.capture.close);
+  assert.deepEqual(inspectPipelineV10BusterRuntimeSourceIdentity(selection, output, restored.capture), result);
+});
+
+test('Buster selection validates unselected policies and exact same-instance Worker peer before service receiving', t => {
+  const directory = tree(t), originalRoot = JSON.parse(rootBytes.toString());
+  const binding = originalRoot.bindings.find((b: any) => b.owner === 'buster-engine' && b.instanceId === 'fixture.service.buster-runtime');
+  const selection = { role: 'buster', callerId: 'buster-runtime', serviceInstanceId: binding.instanceId };
+  const supplied = new Map<string, Buffer>();
+  for (const [name, relative] of Object.entries(originalRoot.components)) supplied.set(`config/${relative}`, fs.readFileSync(path.join(directory, 'config', relative as string)));
+  const inspect = (root: any, callerId = selection.callerId) => inspectPipelineV10BusterServiceSelection({ ...selection, callerId }, {
+    inputGenerationSha256: 'a'.repeat(64), assertCurrent() {}, read(name: string) {
+      if (name === 'config/pipeline.config.json') return Buffer.from(JSON.stringify(root));
+      const value = supplied.get(name); assert.ok(value, name); return Buffer.from(value);
+    },
+  });
+  const ownerPath = 'config/components/buster-engine.config.json', bytes = supplied.get(ownerPath)!;
+  const owner = JSON.parse(bytes.toString());
+  const unselected = Object.keys(owner.profiles).find(name => name !== binding.profileId)!;
+  delete owner.profiles[unselected].settings.remotePlanService;
+  supplied.set(ownerPath, Buffer.from(JSON.stringify(owner)));
+  assert.throws(() => inspect(originalRoot), /OWNER_INVALID/);
+  supplied.set(ownerPath, bytes);
+  const selectedSettings = JSON.parse(bytes.toString()).profiles[binding.profileId].settings;
+  for (const caller of ['buster-runtime', 'buster-preparation']) {
+    const selected = inspect(originalRoot, caller);
+    assert.deepEqual(selected.preparation, selectedSettings.preparation,
+      'complete v10 preparation includes all seven explicitly authored policy leaves');
+    assert.equal(Object.isFrozen(selected.preparation), true);
+    assert.equal(Object.isFrozen(selected.preparation.resourcePolicy), true);
+    assert.deepEqual(selected.admission, selectedSettings.admission);
+    assert.deepEqual(selected.dependencyReadiness, selectedSettings.dependencyReadiness);
+    assert.equal(Object.isFrozen(selected.admission), true);
+    assert.equal(Object.isFrozen(selected.dependencyReadiness), true);
+    assert.equal(selected.activationAllowed, false);
+    const profile = preparationProfile(`sha256:${'a'.repeat(64)}`, 'v10');
+    const issued = new Date('2026-10-20T00:00:00.000Z');
+    const makeEnvelope = (settings: any, phase: any = { kind: 'stage' }) => preparationEnvelope(
+      'a'.repeat(32), profile, settings, issued, 1003, phase, 'v10');
+    const envelope = makeEnvelope(selected.preparation);
+    assert.deepEqual(preparationOperationSettings(envelope), selected.preparation);
+    const mismatched = structuredClone(envelope);
+    mismatched.operation.inputSchemaId = 'buster-preparation-input.v1';
+    assert.throws(() => preparationOperationSettings(mismatched), /OPERATION_VERSION_MISMATCH/);
+    const wrongDigest = structuredClone(envelope);
+    wrongDigest.operation.inputSchemaDigest = `sha256:${'b'.repeat(64)}`;
+    assert.throws(() => preparationOperationSettings(wrongDigest), /OPERATION_VERSION_MISMATCH/);
+    assert.equal(envelope.operation.contractId, 'kubeclaw.buster-preparation@2');
+    assert.equal(envelope.operation.inputSchemaId, 'buster-preparation-input.v2');
+    assert.deepEqual(envelope.operation.values.settings, selectedSettings.preparation);
+    assert.equal(envelope.limits.logBytes, selected.preparation.attemptLogBytes);
+    assert.equal(envelope.limits.evidenceBytes, selected.preparation.attemptEvidenceBytes);
+    assert.equal(envelope.limits.evidenceFiles, selected.preparation.attemptEvidenceFiles);
+    assert.equal(Date.parse(envelope.claim.expiresAt) - issued.getTime(),
+      selected.preparation.timeoutMs + selected.preparation.completionPhaseAllowance * selected.preparation.cleanupTimeoutMs);
+    const changed = { ...selected.preparation, attemptLogBytes: 2, attemptEvidenceBytes: 3,
+      attemptEvidenceFiles: 2, completionPhaseAllowance: 9 };
+    const altered = makeEnvelope(changed);
+    assert.notEqual(altered.attemptSpecDigest, envelope.attemptSpecDigest);
+    assert.equal(altered.limits.logBytes, 2);
+    assert.equal(altered.limits.evidenceBytes, 3);
+    assert.equal(altered.limits.evidenceFiles, 2);
+    assert.equal(Date.parse(altered.claim.expiresAt) - issued.getTime(),
+      changed.timeoutMs + 9 * changed.cleanupTimeoutMs);
+    assert.throws(() => preparationEnvelope('a'.repeat(32), preparationProfile(`sha256:${'a'.repeat(64)}`),
+      selected.preparation, issued, 1003, { kind: 'stage' }, 'v10'), /PROFILE_VERSION_MISMATCH/);
+    assert.throws(() => makeEnvelope(selected.preparation, { kind: 'historical', descriptor: {} }), /V10_HISTORICAL_UNSUPPORTED/);
+    for (const field of ['attemptLogBytes', 'attemptEvidenceBytes', 'attemptEvidenceFiles', 'completionPhaseAllowance',
+      'storeLockWaitSeconds', 'tarDiagnosticCodeUnits', 'resultInputReserveMultiplier']) {
+      const missing: any = { ...selected.preparation }; delete missing[field];
+      assert.throws(() => makeEnvelope(missing), /BUSTER_PREPARATION_V10_INVALID/);
+    }
+    assert.deepEqual(makeEnvelope(selected.preparation), envelope, 'restored complete v2 wire');
+  }
+  // Schema-valid but impossible budgets in ANY retained profile must reject.
+  // In particular v10's multiplier is authored, not legacy's literal four.
+  for (const profileId of [binding.profileId, unselected]) {
+    for (const field of ['maximumOutputBytes', 'maximumSourceBytes', 'closeTimeoutMs', 'resultInputReserveMultiplier', 'completionPhaseAllowance', 'attemptEvidenceBytes']) {
+      const changed = JSON.parse(bytes.toString());
+      const preparation = changed.profiles[profileId].settings.preparation;
+      if (field === 'maximumOutputBytes') preparation[field] = preparation.maximumResultBytes;
+      else if (field === 'maximumSourceBytes') preparation[field] = preparation.maximumRequestBytes;
+      else if (field === 'closeTimeoutMs') preparation[field] = preparation.drainTimeoutMs;
+      else if (field === 'completionPhaseAllowance') preparation[field] = 2_147_483_647;
+      else if (field === 'attemptEvidenceBytes') preparation[field] = Number.MAX_SAFE_INTEGER + 1;
+      else {
+        preparation[field] = 8;
+        preparation.maximumOutputBytes = preparation.maximumResultBytes + 4 * preparation.maximumInputBytes;
+      }
+      supplied.set(ownerPath, Buffer.from(JSON.stringify(changed)));
+      assert.throws(() => inspect(originalRoot), /BUSTER_PREPARATION_V10_/, `${profileId}:${field}`);
+      assert.throws(() => inspect(originalRoot, 'buster-preparation'), /BUSTER_PREPARATION_V10_/);
+    }
+  }
+  supplied.set(ownerPath, bytes);
+  assert.deepEqual(inspect(originalRoot).preparation, selectedSettings.preparation, 'restored complete preparation');
+  const largerMultiplier = JSON.parse(bytes.toString());
+  const largerPreparation = largerMultiplier.profiles[binding.profileId].settings.preparation;
+  largerPreparation.resultInputReserveMultiplier = 8;
+  supplied.set(ownerPath, Buffer.from(JSON.stringify(largerMultiplier)));
+  assert.deepEqual(inspect(originalRoot).preparation, largerPreparation, 'supported original authored multiplier is preserved, not defaulted to four');
+  for (const field of ['attemptEvidenceBytes', 'attemptEvidenceFiles', 'attemptLogBytes', 'completionPhaseAllowance',
+    'storeLockWaitSeconds', 'tarDiagnosticCodeUnits', 'resultInputReserveMultiplier']) {
+    const missing = JSON.parse(bytes.toString());
+    delete missing.profiles[unselected].settings.preparation[field];
+    supplied.set(ownerPath, Buffer.from(JSON.stringify(missing)));
+    assert.throws(() => inspect(originalRoot), /OWNER_INVALID/, `required v10 preparation author ${field}`);
+  }
+  supplied.set(ownerPath, bytes);
+
+  const noPeer = structuredClone(originalRoot);
+  noPeer.bindings.find((b: any) => b.owner === 'worker-core' && b.instanceId === binding.instanceId).instanceId = 'different-original-worker';
+  assert.throws(() => inspect(noPeer), /BUSTER_WORKER_PEER/);
+  assert.throws(() => inspect(noPeer, 'buster-preparation'), /BUSTER_WORKER_PEER/);
+  assert.deepEqual(inspect(originalRoot, 'buster-preparation').worker, inspect(originalRoot).worker);
+  const escaped = structuredClone(originalRoot); escaped.components['buster-engine'] = '../current-B.json';
+  assert.throws(() => inspect(escaped), /BUSTER_OWNER_PATH/);
+  const workerPath = 'config/components/worker-core.config.json', workerBytes = supplied.get(workerPath)!;
+  const workerOwner = JSON.parse(workerBytes.toString());
+  workerOwner.profiles['unselected-native-invalid'] = structuredClone(Object.values(workerOwner.profiles)[0]);
+  workerOwner.profiles['unselected-native-invalid'].settings.runtime.retain_logs['buster-provider'] = true;
+  supplied.set(workerPath, Buffer.from(JSON.stringify(workerOwner)));
+  assert.throws(() => inspect(originalRoot), /OWNER_INVALID:worker-core:NATIVE_POLICY/);
+  workerOwner.profiles['unselected-native-invalid'].settings.runtime.retain_logs['buster-provider'] = false;
+  workerOwner.profiles['unselected-native-invalid'].settings.runtime.journal_record_bytes = 32768;
+  assert.throws(() => { supplied.set(workerPath, Buffer.from(JSON.stringify(workerOwner))); inspect(originalRoot); }, /OWNER_INVALID:worker-core:NATIVE_POLICY/);
+  supplied.set(workerPath, workerBytes);
+  assert.equal(inspect(originalRoot).activationAllowed, false);
+});
+
+
+test('Buster runtime v2 original network-only policy rejects inactive source branches without authorizing native extras', t => {
+  const directory = tree(t), root = JSON.parse(rootBytes.toString());
+  const binding = root.bindings.find((b: any) => b.owner === 'buster-engine' && b.instanceId === 'fixture.service.buster-runtime');
+  binding.profileId = 'network-only';
+  const bytes = Buffer.from(JSON.stringify(root));
+  fs.writeFileSync(path.join(directory, 'config/pipeline.config.json'), bytes);
+  const retained = capture(directory, [row('config/pipeline.config.json', bytes), replacements[1]!]); t.after(retained.capture.close);
+  const selection = { role: 'buster', callerId: 'buster-runtime', serviceInstanceId: binding.instanceId };
+  const owner = JSON.parse(retained.capture.read('config/components/buster-engine.config.json').toString());
+  const settings = owner.profiles['network-only'].settings;
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2', ...structuredClone(settings.remotePlanService),
+    networkHttp: structuredClone(settings.execution.capabilityProviders.networkHttp) };
+  const run = (value: any) => inspectPipelineV10BusterRuntimeSourceIdentity(selection, Buffer.from(JSON.stringify(value)), retained.capture);
+  const original = run(runtime);
+  assert.deepEqual(Object.keys(original.providerPolicies), ['networkHttp']);
+  assert.deepEqual(original.clusterInvokers, settings.clusterInvokers,
+    'complete selected policy remains required even when cluster capabilities are inactive');
+  for (const field of ['directCommand', 'containerBuild', 'browserAxe', 'browserLighthouse', 'browserVisual', 'browserPlaywright', 'securityScan']) {
+    assert.throws(() => run({ ...runtime, [field]: {} }), /BUSTER_INACTIVE_PROVIDER/);
+    assert.throws(() => run({ ...runtime, [field]: null }), /BUSTER_INACTIVE_PROVIDER/);
+  }
+  // Even an otherwise valid binding from this same retained deployment is
+  // forbidden when the selected original service has no cluster capability.
+  const chart = JSON.parse(retained.capture.read('charts/kubeclaw/values.yaml').toString());
+  const deployment = root.deploymentSelections.find((d: any) => d.consumer === 'namespace-controller'
+    && d.busterComponentInstanceId === binding.instanceId);
+  const namespace = chart.profiles[deployment.profileId].readonlyBindings.releaseNamespace;
+  for (const clusterBindings of [null, {}, { controllerNamespace: namespace },
+    { controllerNamespace: 'foreign-namespace' }, { controllerNamespace: namespace, extra: true }]) {
+    assert.throws(() => run({ ...runtime, clusterBindings }), /BUSTER_INACTIVE_CLUSTER_SOURCE/);
+  }
+  assert.equal(Object.hasOwn(runtime, 'clusterBindings'), false);
+  assert.deepEqual(run(runtime), original, 'restored original network-only projection');
+  assert.equal(original.activationAllowed, false);
 });

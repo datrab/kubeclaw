@@ -1,5 +1,5 @@
 import { QUALITY_TASK_SCHEMA_DIGEST, remotePlanDigest, validatePipelineTestGateContract, type ProviderConfigurationV2, type SelectedProviderPolicyV1 } from '@kubeclaw/pipeline-test-gate-contract';
-import { resolveTestProviderConfiguration } from '../registry/configuration.ts';
+import { validateRuntimeRegistrationConfiguration, resolveTestProviderConfiguration } from '../registry/configuration.ts';
 import { isDeepStrictEqual } from 'node:util';
 import { computePackageFileSetDigest } from '../registry/digest.ts';
 import fs from 'node:fs';
@@ -7,6 +7,11 @@ import { createHash } from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { parseDocument } from 'yaml';
+import { preflightPipelineV10Owners } from './swarm-bundle.ts';
+import { captureWorkerCorePolicy } from './worker-core-policy.ts';
+import { captureBusterPreparationV10 } from './buster-preparation-v10.ts';
+import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings } from './swarm.ts';
+import { readBusterRemotePlanServicePolicy, receiveBusterRuntimeV2ServicePolicy } from './buster-service-policy.ts';
 import { preflightPipelineV10Infrastructure } from './pipeline-v10-infra.ts';
 import type { capturePipelineInputSet } from './pipeline-input-set.ts';
 import { composePipelineV10InputSet } from './pipeline-v10-input-set.ts';
@@ -127,6 +132,19 @@ export function inspectPipelineV10NovaRegistryIdentity(output:Uint8Array,registr
     &&packageIdentity.packageVersion===manifest.packageVersion&&packageIdentity.contentDigest===binding.sourcePackageDigest,
     'REGISTRY_PACKAGE_IDENTITY');
   requireBinding(registry.apiVersion===manifest.apiVersion,'REGISTRY_API_VERSION');
+  // Source coherence is necessary but not the original configuration ABI.
+  // Validate every retained owner profile through the SAME registry consumer;
+  // do not resolve defaults, import modules or grant a stage-instance identity.
+  const owner=parse(inputs.read(`config/${binding.ownerPath}`));
+  for(const profile of Object.values(owner.profiles) as any[]) {
+    const processing=profile.processing;
+    const configuration=Object.hasOwn(processing,binding.registrationId)?processing[binding.registrationId]:processing;
+    validateRuntimeRegistrationConfiguration(registry,new Set([binding.registrationId]),{
+      stages:binding.kind==='stage'?[{type:declaration.type,config:configuration}]:[],
+      observers:new Map(),
+      adapters:binding.kind==='adapter'?new Map([[binding.registrationId,configuration]]):new Map(),
+    });
+  }
   inputs.assertCurrent();
   return Object.freeze({...identity,registrationSurface:binding.kind as 'stage'|'adapter',registrationId:binding.registrationId as string,
     stageType:binding.kind==='stage'?declaration.type as string:null,
@@ -291,7 +309,8 @@ export function inspectPipelineV10InfrastructureSourceIdentity(family: 'controll
  * SDK/capability/registry/caller authorization, and never executes activate().
  */
 export function inspectPipelineV10NetworkAdapterSourceIdentity(selection: unknown, output: Uint8Array,
-  inputs: Pick<ReturnType<typeof capturePipelineInputSet>, 'inputGenerationSha256' | 'read' | 'assertCurrent'>) {
+  inputs: Pick<ReturnType<typeof capturePipelineInputSet>, 'inputGenerationSha256' | 'read' | 'assertCurrent'>,
+  registry?: RegistrySnapshot) {
   requireBinding(selection && typeof selection === 'object' && !Array.isArray(selection), 'ADAPTER_SELECTION');
   const tuple = parse(Buffer.from(JSON.stringify(selection))), raw = Buffer.from(output), configuration = parse(raw);
   const fields = ['kind','packageId','registrationId','instanceId','ownerPath','profileId','serviceInstanceId'];
@@ -343,10 +362,37 @@ export function inspectPipelineV10NetworkAdapterSourceIdentity(selection: unknow
   }
   requireBinding(isDeepStrictEqual(configuration, owner.profiles[tuple.profileId].processing), 'SELECTED_CONFIGURATION');
   const ownerSchemaRawSha256 = sha(inputs.read('schemas/security/kubeclaw.network-http.schema.json'));
+  if (registry) {
+    // Use the original effect-free configuration consumer and its retained
+    // compiled schemas, not a freshly imported adapter or output-shaped grant.
+    const entry = registry.adapters.get(tuple.registrationId);
+    const installed = registry.packages.get(tuple.packageId);
+    requireBinding(registry.apiVersion === manifest.apiVersion, 'ADAPTER_REGISTRY_API_VERSION');
+    requireBinding(entry && installed && entry.package === installed
+      && isDeepStrictEqual(installed.manifest, manifest), 'ADAPTER_REGISTRY_PACKAGE');
+    requireBinding(isDeepStrictEqual(entry!.registration, declaration)
+      && entry!.provenance.schemaVersion === 'registration-provenance.v2'
+      && entry!.provenance.surface === 'adapter'
+      && entry!.provenance.registrationId === declaration.id
+      && isDeepStrictEqual(entry!.provenance.package, installed!.provenance), 'ADAPTER_REGISTRY_PROVENANCE');
+    const identity = installed!.provenance.package;
+    requireBinding(identity.pluginId === tuple.packageId && identity.apiVersion === manifest.apiVersion
+      && identity.packageVersion === manifest.packageVersion && identity.contentDigest === sourcePackageDigest,
+      'ADAPTER_REGISTRY_SOURCE');
+    // All original profiles must work in the same actual registry ABI. No
+    // resolve/default insertion, stage/provider wrapper or activation is used.
+    for (const profile of Object.values(owner.profiles) as any[]) {
+      validateRuntimeRegistrationConfiguration(registry, new Set([tuple.registrationId]), {
+        stages: [], observers: new Map(), adapters: new Map([[tuple.registrationId, profile.processing]]),
+      });
+    }
+  }
   inputs.assertCurrent();
   return Object.freeze({family:'network-adapter' as const, rootRawSha256:sha(rootBytes), inputGenerationSha256:inputs.inputGenerationSha256,
     outputRawSha256:sha(raw), ownerRawSha256:sha(ownerBytes), ownerSchemaRawSha256, manifestRawSha256:sha(manifestBytes),
     configSchemaRawSha256:sha(configSchemaBytes), sourcePackageDigest,
+    registrySourceCoherent: registry !== undefined, installedSourceAuthorizationVerified:false as const,
+    callerAuthorizationVerified:false as const,
     selectedConfigurationVerified:true as const, profileDigestVerified:false as const,
     originalAuthorizationVerified:false as const, c3AuthorizationVerified:false as const, activationAllowed:false as const});
 }
@@ -548,4 +594,147 @@ export function inspectPipelineV10QualityServiceSelection(serviceInstanceId: str
   return Object.freeze({ serviceInstanceId, rootRawSha256: sha(rootBytes), inputGenerationSha256: inputs.inputGenerationSha256,
     selectedProviderPolicies, registrySourceCoherent: true as const, installedSourceAuthorizationVerified: false as const,
     callerAuthorizationVerified: false as const, activationAllowed: false as const });
+}
+
+/** Resolve the service policy from the SAME retained root and complete owner
+ * set, not a policy passed by an output producer. Local source coherence only:
+ * the materializer still denies v10 source/caller and output admission. */
+export function inspectPipelineV10BusterServiceSelection(selection: unknown,
+  inputs: Pick<ReturnType<typeof capturePipelineInputSet>, 'inputGenerationSha256' | 'read' | 'assertCurrent'>) {
+  const tuple = parse(Buffer.from(JSON.stringify(selection)));
+  requireBinding(tuple && typeof tuple === 'object' && !Array.isArray(tuple)
+    && Object.keys(tuple).sort().join(',') === 'callerId,role,serviceInstanceId'
+    && tuple.role === 'buster' && ['buster-preparation', 'buster-runtime'].includes(tuple.callerId)
+    && typeof tuple.serviceInstanceId === 'string', 'BUSTER_SERVICE_SELECTION');
+  inputs.assertCurrent();
+  const rootBytes = inputs.read('config/pipeline.config.json'), root = parse(rootBytes);
+  requireBinding(root.schemaVersion === 'pipeline-entry.v10', 'ROOT_VERSION');
+  // Fixed original owner paths only. Never follow output-selected locators.
+  const names = ['buster-engine', 'worker-core', 'prism-control', 'prism-studio', 'prism-worker', 'prism-execution'];
+  requireBinding(names.every(name => root.components?.[name] === `components/${name}.config.json`), 'BUSTER_OWNER_PATH');
+  const rawOwners = new Map(names.map(name => [name, inputs.read(`config/components/${name}.config.json`)]));
+  const owners = Object.fromEntries(Array.from(rawOwners, ([name, bytes]) => [name, parse(bytes)]));
+  const busterOwnerBytes = rawOwners.get('buster-engine');
+  requireBinding(busterOwnerBytes, 'BUSTER_OWNER_SOURCE_REQUIRED');
+  preflightPipelineV10Owners(root, owners);
+  const matches = root.bindings.filter((row: any) => row.role === 'buster'
+    && row.owner === 'buster-engine' && row.instanceId === tuple.serviceInstanceId);
+  requireBinding(matches.length === 1, 'EXACT_BUSTER_TUPLE');
+  const binding = matches[0];
+  // Versioned WorkerCore v3 is consumed by BOTH preparation and runtime.
+  // Each caller must retain its exact SAME-instance root-selected peer.
+  const peers = root.bindings.filter((row: any) => row.role === 'buster' && row.owner === 'worker-core'
+    && row.instanceId === tuple.serviceInstanceId);
+  requireBinding(peers.length === 1, 'BUSTER_WORKER_PEER');
+  // Both callers receive the complete native policy of their SAME-instance
+  // Worker, never a current
+  // default or a union of another caller's grants. This snapshot is not native
+  // installation, caller or delivery authorization.
+  const workerBytes = rawOwners.get('worker-core');
+  requireBinding(workerBytes, 'BUSTER_WORKER_SOURCE_REQUIRED');
+  const worker = Object.freeze({
+    ownerRawSha256: sha(workerBytes), profileId: peers[0].profileId as string,
+    capture: captureWorkerCorePolicy(owners['worker-core'].profiles[peers[0].profileId].settings),
+  });
+  const settings = owners['buster-engine'].profiles[binding.profileId].settings;
+  // Run the existing production admission/readiness codecs for EVERY original Buster profile,
+  // not only the selected schema-valid service policy. These snapshots remain
+  // public source data, not native/source/caller admission authority.
+  for (const profile of Object.values(owners['buster-engine'].profiles) as any[]) {
+    validateBusterAdmissionSettings(profile.settings.admission);
+    validateBusterDependencyReadinessSettings(profile.settings.dependencyReadiness);
+  }
+  const preparation = captureBusterPreparationV10(settings.preparation);
+  const admission = validateBusterAdmissionSettings(settings.admission);
+  const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.dependencyReadiness);
+  const policy = readBusterRemotePlanServicePolicy(settings.remotePlanService);
+  // The actual production consumer receives this whole SAME-profile owner
+  // policy separately from runtime.clusterBindings (namespace only). Never
+  // manufacture cluster policy fields in the generated v2 wire or mistake
+  // these public settings for an installed namespace/registry/native receipt.
+  // These are the original public policy leaves, not executable, credential,
+  // cluster or registry receipts. Keep the complete owner captured above; emit
+  // only active provider policies, never a union of another service's sources.
+  const providerPolicies: Record<string, Readonly<Record<string, unknown>>> = {};
+  const providers = { directCommand: 'command.execute', containerBuild: 'container.build',
+    networkHttp: 'network.http', browserAxe: 'browser.axe', browserLighthouse: 'browser.lighthouse',
+    browserVisual: 'browser.visual', browserPlaywright: 'browser.playwright', securityScan: 'security.scan' };
+  const freeze = (value: any): any => {
+    if (value && typeof value === 'object') { for (const child of Object.values(value)) freeze(child); Object.freeze(value); }
+    return value;
+  };
+  // Keep the historical schema's complete validated node, including
+  // maximumSecretReferenceEntries. Native source/registry/installation authority
+  // remains separate from this public policy. All owner profiles were validated
+  // by preflight above.
+  const clusterInvokers: Readonly<Record<string, unknown>> | null = tuple.callerId === 'buster-runtime'
+    ? freeze(structuredClone(settings.clusterInvokers)) : null;
+  if (tuple.callerId === 'buster-runtime') for (const [field, capability] of Object.entries(providers)) {
+    if (!policy.allowedCapabilities.includes(capability)) continue;
+    const selected = structuredClone(settings.execution.capabilityProviders[field]);
+    // Browser origin policy is the shared original browserAccess owner node,
+    // not a generated per-browser override or installed executable locator.
+    if (field.startsWith('browser')) selected.allowedOrigins = structuredClone(settings.execution.capabilityProviders.browserAccess.allowedOrigins);
+    providerPolicies[field] = freeze(selected);
+  }
+  Object.freeze(providerPolicies);
+  inputs.assertCurrent();
+  return Object.freeze({ role: tuple.role as 'buster', callerId: tuple.callerId as 'buster-preparation' | 'buster-runtime',
+    serviceInstanceId: tuple.serviceInstanceId as string,
+    rootRawSha256: sha(rootBytes), inputGenerationSha256: inputs.inputGenerationSha256,
+    ownerRawSha256: sha(busterOwnerBytes), profileId: binding.profileId as string, policy, worker, preparation, admission, dependencyReadiness, clusterInvokers, providerPolicies,
+    selectedConfigurationVerified: true as const, originalAuthorizationVerified: false as const, activationAllowed: false as const });
+}
+
+/** Runtime.v2 equality against original root-selected policy; not a grant. */
+export function inspectPipelineV10BusterRuntimeSourceIdentity(selection: unknown, output: Uint8Array,
+  inputs: Pick<ReturnType<typeof capturePipelineInputSet>, 'inputGenerationSha256' | 'read' | 'assertCurrent'>) {
+  requireBinding(selection && typeof selection === 'object'
+    && (selection as { callerId?: unknown }).callerId === 'buster-runtime', 'BUSTER_RUNTIME_CALLER');
+  const raw = Buffer.from(output), original = inspectPipelineV10BusterServiceSelection(selection, inputs);
+  const runtime = parse(raw);
+  const policy = receiveBusterRuntimeV2ServicePolicy(runtime, original.policy);
+  // Compare every selected public leaf before treating output as coherent.
+  // Extra source fields may carry separately admitted native/registry locators;
+  // their presence is NOT verified or authorized by this local equality check.
+  for (const field of ['directCommand', 'containerBuild', 'networkHttp', 'browserAxe',
+    'browserLighthouse', 'browserVisual', 'browserPlaywright', 'securityScan']) {
+    const selected = original.providerPolicies[field];
+    if (!selected) { requireBinding(!Object.hasOwn(runtime, field), `BUSTER_INACTIVE_PROVIDER:${field}`); continue; }
+    const received = runtime[field];
+    requireBinding(received && typeof received === 'object' && !Array.isArray(received), `BUSTER_PROVIDER_REQUIRED:${field}`);
+    for (const [key, value] of Object.entries(selected)) {
+      requireBinding(Object.hasOwn(received, key) && isDeepStrictEqual(received[key], value), `BUSTER_PROVIDER_POLICY:${field}:${key}`);
+    }
+  }
+  // Cluster namespace is authored by the original selected deployment, not
+  // Buster's policy owner or an output-selected namespace. This joins public
+  // sources only; installed cluster/issuer/caller receipts remain mandatory.
+  const clusterActive = policy.allowedCapabilities.some(capability =>
+    ['kubernetes.fixture', 'kubernetes.exposure', 'kubernetes.runtime-security'].includes(capability));
+  if (clusterActive) {
+    const root = parse(inputs.read('config/pipeline.config.json'));
+    const deployments = root.deploymentSelections.filter((row: any) => row.role === 'buster'
+      && row.consumer === 'namespace-controller' && row.busterComponentInstanceId === original.serviceInstanceId);
+    requireBinding(deployments.length === 1, 'BUSTER_CLUSTER_DEPLOYMENT_REQUIRED');
+    const deployment = deployments[0];
+    requireBinding(deployment.ownerPath === 'charts/kubeclaw/values.yaml', 'BUSTER_CLUSTER_OWNER_PATH');
+    const chart = parseDocument(inputs.read('charts/kubeclaw/values.yaml').toString('utf8'),
+      { version: '1.2', uniqueKeys: true, strict: true });
+    requireBinding(chart.errors.length === 0, 'BUSTER_CLUSTER_OWNER_PARSE');
+    const profile = chart.toJS().profiles[deployment.profileId];
+    requireBinding(profile, 'BUSTER_CLUSTER_PROFILE_REQUIRED');
+    inspectPipelineV10InfrastructureSourceIdentity('controller', deployment,
+      Buffer.from(JSON.stringify(profile)), inputs);
+    requireBinding(profile.settings.busterNamespaceBroker.enabled, 'BUSTER_CLUSTER_CONTROLLER_DISABLED');
+    requireBinding(isDeepStrictEqual(runtime.clusterBindings,
+      { controllerNamespace: profile.readonlyBindings.releaseNamespace }), 'BUSTER_CLUSTER_NAMESPACE_SOURCE');
+  } else {
+    // The complete owner cluster policy remains captured, but an inactive
+    // generated source must not escape through the nonactivating inspector.
+    // A valid-looking namespace is not a reason to admit an unselected branch.
+    requireBinding(!Object.hasOwn(runtime, 'clusterBindings'), 'BUSTER_INACTIVE_CLUSTER_SOURCE');
+  }
+  inputs.assertCurrent();
+  return Object.freeze({ ...original, policy, outputRawSha256: sha(raw) });
 }

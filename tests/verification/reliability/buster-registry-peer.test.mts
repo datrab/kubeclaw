@@ -2,8 +2,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import test from 'node:test';
-import { capabilitySources } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
+import { capabilitySources, validateCapabilitySourceClosure } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
 import { networkHttpOptions, securityScanOptions } from '../../../skills/buster/engine/test-gates/production-command-options.ts';
+import { registryClientConfig, registryClientOrigin } from '../../../scripts/registry-client-config.mjs';
 import { RegistryHealthAccess } from '../../../skills/buster/engine/test-gates/registry-health-access.ts';
 
 const peer = { registryBaseUrl: 'https://registry.example', registryReference: 'registry.example',
@@ -58,7 +59,7 @@ test('presence, alias, transport, and credential-name errors reject before looku
 });
 
 test('fixture and scanner use the same peer without activating build; scanner never rereads credentials', () => {
-  assert.deepEqual(capabilitySources({ registryPeer: peer }, new Set(['kubernetes.fixture']), env).capturedRegistryPeer?.source, peer);
+  assert.deepEqual(capabilitySources({ registryPeer: peer, clusterBindings: { controllerNamespace: 'original' } }, new Set(['kubernetes.fixture']), env).capturedRegistryPeer?.source, peer);
   const scan = { registry: { ...peer }, trivyExecutable: '/trivy', cacheDirectory: '/cache',
     allowedRegistryPrefixes: ['registry.example/'], maximumExecutionMs: 1000, maximumOutputBytes: 1024 };
   const sources = capabilitySources({ registryPeer: peer, securityScan: scan }, new Set(['security.scan']), env);
@@ -106,6 +107,25 @@ test('production loader starts network-only runtime, rejects bad peer before reg
   fs.writeFileSync(fixture.runtime, JSON.stringify({ ...runtimeSource, registryPeer: { ...peer, registryReference: 'wrong.example' }, platformConfig: '/never/read/platform' }));
   assert.throws(load, /REGISTRY_PEER_INVALID/);
   assert.equal(fs.existsSync(path.join(root, 'plan-jobs')), false);
+  const publicOnly = new Proxy({}, { get(_target, name) {
+    if (name === 'KUBECLAW_BUILD_REVISION') return fixture.environment.KUBECLAW_BUILD_REVISION;
+    if (['REGISTRY_USER', 'REGISTRY_PASSWORD', 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
+      'BUSTER_V2_TOKEN'].includes(String(name)) || String(name) === runtimeSource.tokenEnvironmentVariable
+      || String(name) === runtimeSource.sourceAttestationPublicKeyEnvironmentVariable) {
+      assert.fail('invalid network policy must reject before confidential lookup: ' + String(name));
+    }
+    return undefined;
+  } });
+  for (const patch of [{ allowedPorts: [65536] }, { maximumResponseBytes: 0 },
+    { maximumExecutionMs: 0 }, { maximumExecutionMs: 2147483648 },
+    { allowedMethods: ['TRACE'] }, { allowedMethods: ['get'] },
+    { allowedRequestHeaders: ['Host'] }, { allowedRequestHeaders: ['x bad'] },
+    { allowWebSocket: 'false' }]) {
+    fs.writeFileSync(fixture.runtime, JSON.stringify({ ...runtimeSource, networkHttp: { ...network, ...patch } }));
+    assert.throws(() => loadProductionBusterRemotePlanRuntime(fixture.runtime, preparation as never,
+      settings, worker.localRuntime, publicOnly), /BUSTER_REMOTE_CONFIG_INVALID:networkHttp/);
+    assert.equal(fs.existsSync(path.join(root, 'plan-jobs')), false);
+  }
   fs.writeFileSync(fixture.runtime, JSON.stringify(runtimeSource));
   const runtime = load();
   try {
@@ -113,4 +133,94 @@ test('production loader starts network-only runtime, rejects bad peer before reg
     const response = await fetch(`http://127.0.0.1:${address.port}/readyz`, { headers: { authorization: `Bearer ${fixture.environment.ADMISSION_TEST_TOKEN}` } });
     assert.equal(response.status, 200);
   } finally { await runtime.stop(); }
+});
+
+
+test('every active public network policy field rejects before confidential lookup and restores', () => {
+  const capabilities = new Set(['network.http']);
+  const invalid = [
+    { allowedOrigins: [1] }, { allowedHostSuffixes: [1] }, { allowedPorts: [65536] },
+    { maximumResponseBytes: 0 }, { maximumExecutionMs: 0 }, { maximumRequestBytes: 0 },
+    { allowedMethods: [] }, { allowedMethods: ['TRACE'] }, { allowedMethods: ['get'] },
+    { allowedMethods: ['GET', 'CONNECT'] }, { allowedRequestHeaders: [1] },
+    ...['connection', 'content-length', 'HOST', 'Proxy-Authorization', 'transfer-encoding', 'upgrade', 'x bad', 'x:bad', 'x\r\ny'].map(name => ({ allowedRequestHeaders: [name] })),
+    { maximumExecutionMs: 2147483648 }, { allowWebSocket: 'false' },
+  ];
+  for (const patch of invalid) {
+    assert.throws(() => capabilitySources({ registryPeer: peer, networkHttp: { ...network, ...patch } },
+      capabilities, noReads), /BUSTER_REMOTE_CONFIG_INVALID:networkHttp/);
+  }
+  for (const method of ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT']) {
+    const policy = { ...network, maximumExecutionMs: 2147483647, allowedMethods: [method],
+      allowedRequestHeaders: ['X-Custom', 'accept', "x!#$%&'*+.^_`|~-"] };
+    assert.doesNotThrow(() => validateCapabilitySourceClosure({ networkHttp: policy, registryPeer: peer }, capabilities));
+    const options = networkHttpOptions(policy, peer, env.REGISTRY_USER, env.REGISTRY_PASSWORD).networkHttp!;
+    assert.deepEqual(options.allowedMethods, [method]);
+    assert.deepEqual(options.allowedRequestHeaders, policy.allowedRequestHeaders);
+    assert.equal(options.maximumExecutionMs, 2147483647);
+  }
+  const restored = capabilitySources({ registryPeer: peer, networkHttp: network }, capabilities, env);
+  assert.deepEqual(restored.capturedRegistryPeer?.source, peer);
+  assert.equal(networkHttpOptions(restored.networkHttpSource, restored.capturedRegistryPeer!.source,
+    restored.capturedRegistryPeer!.username, restored.capturedRegistryPeer!.password).networkHttp?.maximumExecutionMs, 1000);
+});
+
+
+test('registry peer preserves the original operator producer domain before any confidential read', () => {
+  const capabilities = new Set(['network.http']);
+  const auth = { usernameEnvironmentVariable: 'REGISTRY_USER', passwordEnvironmentVariable: 'REGISTRY_PASSWORD' };
+  // Use the actual original operator producer, not hand-authored output aliases.
+  // Public projection equality still does NOT authenticate original revisions.
+  for (const registry of [
+    { endpoint: 'http://registry.example:5000', transport: 'http-lab' },
+    { endpoint: 'https://registry.example', transport: 'https', auth },
+    { endpoint: 'https://REGISTRY.example:443/', transport: 'https', auth },
+    { endpoint: 'https://registry.example:5443', transport: 'https', auth,
+      caFile: '/worker/registry-ca.crt', nodeCaFile: '/node/registry-ca.crt' },
+  ]) {
+    const original = { schemaVersion: 'registry-clients.v1', registry };
+    const produced = registryClientConfig(original, env).runtime;
+    assert.equal(produced.registryBaseUrl, registryClientOrigin(original));
+    const captured = capabilitySources({ registryPeer: produced, networkHttp: network }, capabilities,
+      registry.transport === 'http-lab' ? noReads : env).capturedRegistryPeer!;
+    assert.deepEqual(captured.source, produced);
+    assert.equal(Object.isFrozen(captured.source), true);
+  }
+  for (const [registry, received] of [
+    [{ endpoint: 'https://[::1]', transport: 'https', auth },
+      { ...peer, registryBaseUrl: 'https://[::1]', registryReference: '[::1]' }],
+    [{ endpoint: 'https://bad_host.example', transport: 'https', auth },
+      { ...peer, registryBaseUrl: 'https://bad_host.example', registryReference: 'bad_host.example' }],
+    [{ endpoint: peer.registryBaseUrl, transport: 'https', auth: { ...auth, usernameEnvironmentVariable: 'A' } },
+      { ...peer, registryUsernameEnvironmentVariable: 'A' }],
+    [{ endpoint: peer.registryBaseUrl, transport: 'https', auth: { ...auth, passwordEnvironmentVariable: 'Z' } },
+      { ...peer, registryPasswordEnvironmentVariable: 'Z' }],
+  ]) {
+    assert.throws(() => registryClientOrigin({ schemaVersion: 'registry-clients.v1', registry }));
+    assert.throws(() => capabilitySources({ registryPeer: received, networkHttp: network }, capabilities, noReads),
+      /BUSTER_REGISTRY_PEER_INVALID/);
+    // Restore the original supported projection after every rejected input.
+    assert.deepEqual(capabilitySources({ registryPeer: peer, networkHttp: network }, capabilities, env)
+      .capturedRegistryPeer!.source, peer);
+  }
+});
+
+
+test('conditional provider closure rejects every explicitly present inactive source before carrier reads', () => {
+  const providers = [
+    ['command.execute', 'directCommand'], ['container.build', 'containerBuild'],
+    ['network.http', 'networkHttp'], ['browser.axe', 'browserAxe'],
+    ['browser.lighthouse', 'browserLighthouse'], ['browser.visual', 'browserVisual'],
+    ['browser.playwright', 'browserPlaywright'], ['security.scan', 'securityScan'],
+  ] as const;
+  for (const [capability, field] of providers) {
+    for (const supplied of [undefined, null, {}, false, 0, '']) {
+      assert.throws(() => capabilitySources({ [field]: supplied }, new Set(), noReads),
+        new RegExp('BUSTER_INACTIVE_CAPABILITY_SOURCE:' + field), field + ':' + String(supplied));
+    }
+    assert.throws(() => capabilitySources({ [field]: undefined }, new Set([capability]), noReads),
+      /CONFIG_REQUIRED/, field + ': active omission stays required');
+    // Restored omission must not resolve an inactive credential carrier.
+    assert.equal(capabilitySources({}, new Set(), noReads).capturedRegistryPeer, undefined);
+  }
 });

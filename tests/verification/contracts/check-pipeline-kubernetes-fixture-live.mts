@@ -111,7 +111,7 @@ try {
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: [`${registryHost}/${repositoryName}`],
     allowedSecretReferences: [],
     allowedStorageClasses: [], allowDefaultStorageClass: true,
-    maximumManifestBytes: 4 * 1024 * 1024, maximumResources: 64,
+    maximumSecretReferenceEntries: 32, maximumManifestBytes: 4 * 1024 * 1024, maximumResources: 64,
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 20 * 1024 ** 3,
     maximumRetentionSeconds: 3600,
     maximumExecutionMs: 180_000, pollIntervalMs: 500 });

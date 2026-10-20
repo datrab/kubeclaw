@@ -1,3 +1,5 @@
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
+import { busterChartProjection } from '../../../scripts/generate-buster-chart-config.mjs';
 import {fixtureBusterImageDelivery} from '../../fixtures/buster-image-delivery.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -153,6 +155,10 @@ test('real materialization and Helm render enable pinned bundles for all three a
       namespace: policy.pools.buster.namespace, policyDigest: nativePoolPolicy(policy, 'buster').policyDigest };
     buster.runtimeInfrastructure = { ...buster.runtimeInfrastructure, registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
     fs.writeFileSync(busterFile, yaml.dump(buster));
+    // The fixture changed the native owner, which belongs to the same full
+    // generation. Rebuild both normal chart projections before freezing source.
+    fs.writeFileSync(path.join(root, 'charts/prism/files/pipeline/prism-topology.json'), `${JSON.stringify(prismChartProjection(path.join(root, 'config')), null, 2)}\n`);
+    fs.writeFileSync(path.join(root, 'charts/kubeclaw/files/pipeline/buster-topology.json'), `${JSON.stringify(busterChartProjection(path.join(root, 'config')), null, 2)}\n`);
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']); const imageCommit = commit();
     fs.mkdirSync(path.join(root, 'skills/nova'), { recursive: true }); fs.writeFileSync(path.join(root, 'skills/nova/change.ts'), 'export const changed = true;');
     const codeCommit = commit(); fs.mkdirSync(path.join(root, 'releases'));

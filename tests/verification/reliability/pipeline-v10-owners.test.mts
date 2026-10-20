@@ -80,6 +80,47 @@ test('existing physical loader checks v10 root and every owner, but never emits 
   const selection = { role: 'buster' as const, callerId: 'buster-preparation' as const, serviceInstanceId: binding.instanceId,
     bindings: [{ owner: 'buster-engine' as const, instanceId: binding.instanceId, profileId: binding.profileId }] };
   assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection), /V10_SOURCE_LAYOUT_REQUIRED/);
+  // Whole-owner functional receiving precedes plugin/source I/O, including
+  // unselected arms. No successful source/boot/caller authority is inferred.
+  const busterFile = path.join(directory, 'components/buster-engine.config.json');
+  const originalBuster = fs.readFileSync(busterFile);
+  const selectedProfiles = new Set(root.bindings.filter((b: any) => b.owner === 'buster-engine').map((b: any) => b.profileId));
+  const unselected = Object.keys(owners['buster-engine'].profiles).find(name => !selectedProfiles.has(name))!;
+  assert.ok(unselected);
+  for (const profileId of [binding.profileId, unselected]) {
+    for (const field of ['maximumOutputBytes', 'maximumSourceBytes', 'closeTimeoutMs',
+      'resultInputReserveMultiplier', 'completionPhaseAllowance', 'attemptEvidenceBytes']) {
+      const changed = JSON.parse(originalBuster.toString());
+      const preparation = changed.profiles[profileId].settings.preparation;
+      if (field === 'maximumOutputBytes') preparation[field] = preparation.maximumResultBytes;
+      else if (field === 'maximumSourceBytes') preparation[field] = preparation.maximumRequestBytes;
+      else if (field === 'closeTimeoutMs') preparation[field] = preparation.drainTimeoutMs;
+      else if (field === 'completionPhaseAllowance') preparation[field] = 2_147_483_647;
+      else if (field === 'attemptEvidenceBytes') preparation[field] = Number.MAX_SAFE_INTEGER + 1;
+      else {
+        preparation[field] = 8;
+        preparation.maximumOutputBytes = preparation.maximumResultBytes + 4 * preparation.maximumInputBytes;
+      }
+      fs.writeFileSync(busterFile, JSON.stringify(changed));
+      assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection),
+        /BUSTER_PREPARATION_V10_/, `${profileId}:${field} before plugin I/O`);
+    }
+    for (const field of ['attemptEvidenceBytes', 'attemptEvidenceFiles', 'attemptLogBytes',
+      'completionPhaseAllowance', 'storeLockWaitSeconds', 'tarDiagnosticCodeUnits', 'resultInputReserveMultiplier']) {
+      const changed = JSON.parse(originalBuster.toString());
+      delete changed.profiles[profileId].settings.preparation[field];
+      fs.writeFileSync(busterFile, JSON.stringify(changed));
+      assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection), /OWNER_INVALID/);
+    }
+  }
+  const supported = JSON.parse(originalBuster.toString());
+  supported.profiles[binding.profileId].settings.preparation.resultInputReserveMultiplier = 8;
+  fs.writeFileSync(busterFile, JSON.stringify(supported));
+  assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection), /V10_SOURCE_LAYOUT_REQUIRED/,
+    'supported authored multiplier reaches original source denial, never a legacy default');
+  fs.writeFileSync(busterFile, originalBuster);
+  assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection), /V10_SOURCE_LAYOUT_REQUIRED/,
+    'restored complete original still denied without source installation');
   const wrong = structuredClone(root); wrong.unknownAuthor = 'not admitted';
   fs.writeFileSync(path.join(directory, 'pipeline.config.json'), JSON.stringify(wrong));
   fs.unlinkSync(path.join(directory, 'components/buster-engine.config.json'));

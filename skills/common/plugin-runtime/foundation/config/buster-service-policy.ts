@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { isDeepStrictEqual } from 'node:util';
 import Ajv2020 from 'ajv/dist/2020.js';
 
 /** Exact ten reviewed C3 service leaves on the EXISTING Buster owner.
@@ -57,4 +58,47 @@ export function readLegacyBusterRuntimeServicePolicy(runtime: Readonly<Record<st
     maximumResultBytes: runtime.maximumResultBytes, maximumResultStoreBytes: runtime.maximumResultStoreBytes,
     maximumResponseBytes: runtime.maximumResponseBytes, shutdownTimeoutMs: runtime.shutdownTimeoutMs,
     allowedCapabilities: runtime.allowedCapabilities }, validateLegacy);
+}
+
+/** Preserve the actual runtime receiver's retired-author boundary in the
+ * selected v2 source relation too. Equal values are still competing authors;
+ * this validation grants no source/caller/native or output authority.
+ */
+export function rejectRetiredBusterRuntimeAuthors(value: Readonly<Record<string, unknown>>): void {
+  for (const key of ['kubernetesFixture', 'tailscaleExposure', 'kubernetesRuntimeSecurity']) {
+    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
+  }
+  if (Object.hasOwn(value, 'dependencyReadiness')) {
+    throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness:use buster-engine.config.json settings.dependencyReadiness');
+  }
+  for (const key of ['maximumArchiveBytes', 'maximumExtractedBytes', 'maximumRequestBytes']) {
+    if (Object.hasOwn(value, key))
+      throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.preparation`);
+  }
+  for (const key of ['maximumActiveJobs', 'maximumQueuedJobs', 'maximumConcurrentAttempts']) {
+    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.admission`);
+  }
+}
+
+/** Versioned runtime.v2 receiving relation. The selected policy must come from
+ * the original, whole-generation Buster binding; this comparison is not a
+ * delivery/source grant and must never authorize v10 by itself.
+ */
+export function receiveBusterRuntimeV2ServicePolicy(
+  runtime: Readonly<Record<string, unknown>>,
+  originalSelectedPolicy: unknown,
+): BusterRemotePlanServicePolicy {
+  if (runtime.schemaVersion !== 'buster-remote-plan-runtime.v2') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
+  if (Object.hasOwn(runtime, 'runtimeService') || Object.hasOwn(runtime, 'remotePlanService')) {
+    throw new Error('BUSTER_SERVICE_POLICY_COMPETING_AUTHOR');
+  }
+  rejectRetiredBusterRuntimeAuthors(runtime);
+  const selected = readBusterRemotePlanServicePolicy(originalSelectedPolicy);
+  const received = readBusterRemotePlanServicePolicy({ host: runtime.host, port: runtime.port,
+    recordLimits: runtime.recordLimits, maximumResultBytes: runtime.maximumResultBytes,
+    maximumResultStoreBytes: runtime.maximumResultStoreBytes,
+    maximumResponseBytes: runtime.maximumResponseBytes, shutdownTimeoutMs: runtime.shutdownTimeoutMs,
+    allowedCapabilities: runtime.allowedCapabilities });
+  if (!isDeepStrictEqual(received, selected)) throw new Error('BUSTER_SELECTED_SERVICE_POLICY_MISMATCH');
+  return selected;
 }

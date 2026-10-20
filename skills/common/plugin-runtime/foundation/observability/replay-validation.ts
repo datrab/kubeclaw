@@ -1,5 +1,6 @@
 import { assertAdmissionRetiredEntry } from './admission-retirement.ts';
 import fs from 'node:fs/promises';
+import { constants as bufferConstants } from 'node:buffer';
 import {
   canonicalJson,
   decodePipelineObservabilityContract,
@@ -27,7 +28,12 @@ export async function readBoundedSnapshot(file: string, maximumBytes: number): P
   const handle = await fs.open(file, 'r');
   try {
     const stat = await handle.stat();
-    replayAssert(stat.isFile() && stat.size <= maximumBytes, 'snapshot-size');
+    replayAssert(stat.isFile() && Number.isSafeInteger(stat.size) && stat.size >= 0
+      && stat.size <= maximumBytes, 'snapshot-size');
+    // Snapshot decoding needs BOTH a Buffer and a UTF-8 string. Use this
+    // process's ABI, never a guessed universal signed-32-bit policy ceiling.
+    replayAssert(stat.size <= bufferConstants.MAX_LENGTH
+      && stat.size <= bufferConstants.MAX_STRING_LENGTH, 'snapshot-size');
     const bytes = Buffer.alloc(stat.size);
     let offset = 0;
     while (offset < bytes.length) {

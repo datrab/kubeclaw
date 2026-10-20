@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
-import { preparationDigest } from './preparation-header.ts';
 import { historicalInputDirectory, type HistoricalImportReceipt } from './preparation-historical-reference.ts';
 import { transformHistoricalSnapshot, type HistoricalBatchContext } from './preparation-historical-batch.ts';
 import type { HistoricalStorageReservation } from './preparation-historical-channel.ts';
@@ -89,5 +88,3 @@ export async function materializeHistoricalImport(bytes: Buffer, context: Histor
     attemptSpecDigest: context.attemptSpecDigest, recordCount: batch.recordCount, wireCount: batch.wireCount,
     wireBytes: batch.wireBytes, manifestDigest: wireDigest(manifest), initialV2StoreDigest: wireDigest(candidate) };
 }
-
-export function historicalSummaryDigest(summary: HistoricalHostSummary): string { return preparationDigest(summary); }

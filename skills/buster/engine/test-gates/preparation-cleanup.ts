@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import { nativeSourceCleanupOperation, verifyNativeSourceCleanupResult,
   type NativeCleanupReconciliation } from '@kubeclaw/worker-core';
 import type { WorkerAttemptEnvelopeV3, WorkerAttemptResultV3 } from '@kubeclaw/pipeline-worker-core-contract';
+import { preparationOperationSettings } from './preparation-envelope.ts';
 import { preparationDigest } from './preparation-header.ts';
 import { preparationSourceDirectory } from './preparation-source.ts';
 import { verifyPreparationGate, removeEmptyPreparationGate } from './preparation-gate.ts';
@@ -76,7 +77,8 @@ async function reconcileSource(options: PreparationExecutionOptions, original: W
   }
   if (record.slotReleased) return null;
   const effects = previous?.effects ?? await sourceEffects(options, record);
-  const settings = structuredClone(options.settings);
+  const settings = structuredClone(original.operation.contractId === 'kubeclaw.buster-preparation@2'
+    ? preparationOperationSettings(original) : options.settings);
   const association: PreparationCleanupAssociation = {
     envelope: preparationCleanupEnvelope(original, result, effects, settings, options.engineContentDigest),
     settings, effects, previousEnvelopeDigest: previous ? preparationDigest(previous.envelope) : null,
@@ -89,10 +91,24 @@ async function reconcileSource(options: PreparationExecutionOptions, original: W
 
 /** Startup only, while the root parent lifetime fence excludes publication and manual mutation. */
 export function preparationCleanupReconciliation(options: PreparationExecutionOptions): NativeCleanupReconciliation {
-  return { journal: options.journal,
-    cleanupProfileDigest: preparationCleanupProfile(options.engineContentDigest).profileDigest,
-    reconcile: ({ envelope, result }) => reconcileSource(options, envelope, result),
+  // WorkerCore binds one cleanup profile per recovery capability. Select that
+  // profile from the ledger's explicit codec, not current settings or the first
+  // retained record; a mixed journal must remain fenced before source effects.
+  const version = options.ledger.version;
+  const cleanupProfileDigest = preparationCleanupProfile(options.engineContentDigest, version).profileDigest;
+  const originalContract = version === 'v10' ? 'kubeclaw.buster-preparation@2' : 'kubeclaw.buster-preparation@1';
+  return { journal: options.journal, cleanupProfileDigest,
+    reconcile: ({ envelope, result }) => {
+      if (envelope.operation.contractId !== originalContract) {
+        throw new Error('BUSTER_PREPARATION_CLEANUP_VERSION_MISMATCH');
+      }
+      preparationOperationSettings(envelope);
+      return reconcileSource(options, envelope, result);
+    },
     async resolveFailedCleanup({ envelope }) {
+      if (envelope.profile.profileDigest !== cleanupProfileDigest) {
+        throw new Error('BUSTER_PREPARATION_CLEANUP_VERSION_MISMATCH');
+      }
       for (const record of await options.ledger.reservations()) {
         const predecessor = record.cleanup.find(item => preparationDigest(item.envelope) === preparationDigest(envelope));
         const successful = record.cleanup.at(-1);

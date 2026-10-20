@@ -193,6 +193,69 @@ socket.send(Buffer.from('denied'), 53, '127.0.0.1', (error) => process.exit(erro
   assert.equal(fs.existsSync(path.join(prismA, 'skills/packages/prism-contract/schemas/prism-v1.schema.json')), true);
   assert.equal(fs.existsSync(path.join(prismA, 'skills/packages/prism-contract/fixtures/minimal-web.json')), true);
 
+  // Development-file disposition must not become a generic test-dir prune.
+  for (const bundle of [novaA, busterA, prismA]) {
+    const dependency = path.join(bundle, 'skills/node_modules/fast-uri');
+    if (!fs.existsSync(dependency)) continue;
+    assert.equal(fs.existsSync(path.join(dependency, 'test')), false,
+      'fast-uri tape development tests must not enter the runtime bundle');
+    for (const relative of ['index.js', 'lib/schemes.js', 'lib/utils.js']) {
+      assert.deepEqual(fs.readFileSync(path.join(dependency, relative)),
+        fs.readFileSync(path.join(root, 'node_modules/fast-uri', relative)),
+        `fast-uri runtime bytes must remain original: ${relative}`);
+    }
+  }
+  const developmentDispositions = [
+    ['robots-parser', ['test']],
+    ['zod', ['src/v3/tests', 'src/v3/benchmarks', 'src/v4/core/tests',
+      'src/v4/classic/tests', 'src/v4/mini/tests']],
+    ['@paulirish/trace_engine', ['test', '.tmp/tsbuildinfo/test']],
+  ];
+  for (const [name, developmentPaths] of developmentDispositions) {
+    const source = path.join(root, 'node_modules', name);
+    const bundled = path.join(busterA, 'skills/node_modules', name);
+    for (const relative of developmentPaths) {
+      assert.equal(fs.existsSync(path.join(source, relative)), true,
+        `development disposition must refer to an actual upstream directory: ${name}/${relative}`);
+      assert.equal(fs.existsSync(path.join(bundled, relative)), false,
+        `dependency development-only directory leaked: ${name}/${relative}`);
+    }
+    // Every other upstream file remains byte-identical, including declarations,
+    // Zod source-conditioned exports and trace_engine runtime models.
+    function verifyRetained(relative = '') {
+      for (const entry of fs.readdirSync(path.join(source, relative), { withFileTypes: true })) {
+        const child = path.posix.join(relative, entry.name);
+        if (developmentPaths.includes(child) || entry.name === 'node_modules') continue;
+        if (entry.isDirectory()) verifyRetained(child);
+        else if (entry.isFile() && !entry.name.endsWith('.tsbuildinfo')) {
+          assert.deepEqual(fs.readFileSync(path.join(bundled, child)),
+            fs.readFileSync(path.join(source, child)), `upstream runtime bytes changed: ${name}/${child}`);
+        }
+      }
+    }
+    verifyRetained();
+  }
+  execFileSync(process.execPath, ['--input-type=module', '-e', `
+    import {createRequire} from 'node:module';
+    const require = createRequire(${JSON.stringify(path.join(busterA, 'skills/node_modules/robots-parser/package.json'))});
+    const robots = require('robots-parser')('https://example.test/robots.txt', 'User-agent: *\\nDisallow: /private');
+    if (robots.isAllowed('https://example.test/private', 'bundle') !== false) process.exit(2);
+    for (const suffix of ['', '/v3', '/v4', '/v4-mini', '/v4/mini', '/v4/core', '/v4/locales']) {
+      require('zod' + suffix);
+      await import(require.resolve('zod' + suffix).replace(/\\.cjs$/, '.js'));
+    }
+    const trace = await import(${JSON.stringify(pathToFileURL(path.join(busterA,
+      'skills/node_modules/@paulirish/trace_engine/analyze-trace.mjs')).href)});
+    if (typeof trace.analyzeEvents !== 'function') process.exit(3);
+  `], { cwd: temporary, env: { PATH: process.env.PATH ?? '', NODE_PATH: '' } });
+  // Both are published runtime interfaces despite a directory named test.
+  for (const relative of ['playwright/lib/mcp/test/testBackend.js',
+    'lighthouse/cli/test/smokehouse/frontends/smokehouse-bin.js']) {
+    assert.deepEqual(fs.readFileSync(path.join(busterA, 'skills/node_modules', relative)),
+      fs.readFileSync(path.join(root, 'node_modules', relative)),
+      `published dependency runtime module must remain original: ${relative}`);
+  }
+
   for (const [role, bundle] of [['nova', novaA], ['buster', busterA], ['prism', prismA]]) {
     const entrypoint = pathToFileURL(path.join(bundle, 'skills', role === 'nova' ? 'pipeline.ts' : 'runtime.ts')).href;
     const expression = role === 'nova'

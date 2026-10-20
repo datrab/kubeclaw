@@ -1,6 +1,7 @@
+import type { BusterPreparationV10Settings } from '@kubeclaw/plugin-foundation/config/buster-preparation-v10';
 import { historicalChannelLimits } from './preparation-historical-channel.ts';
 import { assertHistoricalImportDescriptor, type HistoricalImportDescriptor } from './preparation-historical-reference.ts';
-import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { preparationOperationSettings } from './preparation-envelope.ts';
 import { executeNativeWorkerAttempt, type NativeWorkerControlChannel } from '@kubeclaw/worker-core';
 import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import { assertPreparationSlot } from './preparation-slots.ts';
@@ -13,7 +14,7 @@ export async function runPreparationPhase(options: PreparationExecutionOptions,
   envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal,
   exchange: (channel: NativeWorkerControlChannel, cancelled: AbortSignal) => Promise<void>) {
   const { owner, journal } = options;
-  const settings = validateBusterPreparationSettings(envelope.operation.values.settings);
+  const { settings, limits } = preparationPhasePolicy(envelope);
   const slot = envelope.operation.values.preparationUid;
   const admissionId = envelope.operation.values.admissionId;
   assertPreparationSlot(slot);
@@ -26,10 +27,7 @@ export async function runPreparationPhase(options: PreparationExecutionOptions,
     : preparationHostChannelLimits(settings);
   const result = await executeNativeWorkerAttempt({ envelope, journal, process: {
     owner, signal, command: preparationCommand(admissionId, settings, options.command, slot, historical ? 'historical' : 'prepare'),
-    limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,
-      tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,
-      maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,
-      pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs },
+    limits,
     control: { limits: channelLimits, run: exchange },
   } });
   if (result.state !== 'completed' || result.cleanup.state !== 'completed') {
@@ -42,4 +40,14 @@ export async function runPreparationPhase(options: PreparationExecutionOptions,
     throw new Error('BUSTER_PREPARATION_PUBLICATION_QUIESCENCE_UNPROVEN');
   }
   return result;
+}
+
+/** Original envelope codec drives the real native launch, never current options. */
+export function preparationPhasePolicy(envelope: WorkerAttemptEnvelopeV3) {
+  const settings = preparationOperationSettings(envelope);
+  return { settings, limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,
+      tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + (envelope.operation.contractId === 'kubeclaw.buster-preparation@2'
+        ? (settings as BusterPreparationV10Settings).completionPhaseAllowance : 8) * settings.cleanupTimeoutMs,
+      maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,
+      pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs } };
 }

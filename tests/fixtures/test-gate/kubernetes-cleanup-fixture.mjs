@@ -79,7 +79,7 @@ export function invoker(root, api) {
     processInputPolicy: runnerExecutionPolicy.processInput, controllerNamespace: 'kubeclaw',
     leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'],
     allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [], allowedStorageClasses: [],
-    allowDefaultStorageClass: false, maximumManifestBytes: 1048576, maximumResources: 64,
+    allowDefaultStorageClass: false, maximumSecretReferenceEntries: 32, maximumManifestBytes: 1048576, maximumResources: 64,
     maximumPersistentVolumeClaimBytes: 1, maximumPersistentVolumeTotalBytes: 1,
     maximumRetentionSeconds: 3600, maximumExecutionMs: 10000, pollIntervalMs: 50,
     execute: api.execute.bind(api) });

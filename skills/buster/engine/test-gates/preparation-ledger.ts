@@ -7,6 +7,8 @@ import { type WorkerAttemptEnvelopeV3, type WorkerProfileV3 } from '@kubeclaw/pi
 import { assertStagedInput, assertBusterInput, type StagedAdmission, type BusterStagedAdmission } from './preparation-input.ts';
 import { gateReservation, stagedInputReservation, extractedSourceReservation } from './preparation-reservations.ts';
 import { preparationDigest } from './preparation-header.ts';
+import { captureBusterPreparationV10 } from '@kubeclaw/plugin-foundation/config/buster-preparation-v10';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { preparationEnvelope } from './preparation-envelope.ts';
 import { preparationSlots } from './preparation-slots.ts';
 import path from 'node:path';
@@ -19,14 +21,25 @@ import { type PreparedSourceReference } from './preparation-header.ts';
 /** Root-owned metadata. Failed or uncertain lifetimes keep their full reservation. */
 export class PreparationSourceLedger {
   readonly #file: string;
+  readonly #version: 'legacy' | 'v10';
+  readonly #lockWaitSeconds: number;
   readonly #settings: BusterPreparationSettings;
   readonly #originalBoot: NativeAttemptBootAssociation | undefined;
 
-  constructor(root: string, settings: BusterPreparationSettings, originalBoot?: NativeAttemptBootAssociation) {
+  constructor(root: string, settings: BusterPreparationSettings, originalBoot?: NativeAttemptBootAssociation,
+    version: 'legacy' | 'v10' = 'legacy') {
+    if (!['legacy', 'v10'].includes(version)) throw new Error('BUSTER_PREPARATION_VERSION_INVALID');
+    const v10 = version === 'v10' ? captureBusterPreparationV10(settings) : null;
+    const captured = v10 ?? validateBusterPreparationSettings(settings);
+    this.#version = version;
+    this.#lockWaitSeconds = v10 ? v10.storeLockWaitSeconds : 5;
     this.#file = path.join(root, 'source-ledger', 'state.json');
-    this.#settings = structuredClone(settings);
+    this.#settings = structuredClone(captured);
     this.#originalBoot = originalBoot;
   }
+
+  /** Explicit constructor-selected codec; never infer from current settings or retained keys. */
+  get version(): 'legacy' | 'v10' { return this.#version; }
 
   async reserve(admissionId: string, profile: WorkerProfileV3, now: Date): Promise<WorkerAttemptEnvelopeV3> {
     profile = structuredClone(profile);
@@ -39,16 +52,17 @@ export class PreparationSourceLedger {
       const occupied = new Set(state.reservations.filter(item => !item.slotReleased).map(item => item.slot));
       const slot = preparationSlots.slice(0, this.#settings.maximumActivePreparations).find(candidate => !occupied.has(candidate));
       if (slot === undefined) throw new Error('BUSTER_PREPARATION_SLOT_CAPACITY');
-      const envelope = preparationEnvelope(admissionId, profile, this.#settings, now, slot, { kind: 'stage' });
+      const envelope = preparationEnvelope(admissionId, profile, this.#settings, now, slot, { kind: 'stage' }, this.#version);
       const reservation = initialSourceReservation(admissionId, envelope, slot, gateReservation(this.#settings));
       await this.#originalBoot?.bind(envelope);
       await this.#write({ ...state, reservations: [...state.reservations, reservation] });
       return structuredClone(envelope);
-    });
+    }, this.#lockWaitSeconds);
   }
 
   async reserveHistorical(importId: string, profile: WorkerProfileV3, now: Date,
     descriptor: HistoricalImportDescriptor): Promise<WorkerAttemptEnvelopeV3> {
+    if (this.#version === 'v10') throw new Error('BUSTER_PREPARATION_V10_HISTORICAL_UNSUPPORTED');
     descriptor = structuredClone(descriptor);
     profile = structuredClone(profile);
     now = new Date(now);
@@ -75,7 +89,7 @@ export class PreparationSourceLedger {
       await this.#originalBoot?.bind(envelope);
       await this.#write({ ...state, reservations: [...state.reservations, reservation] });
       return structuredClone(envelope);
-    });
+    }, this.#lockWaitSeconds);
   }
 
   async reserveHistoricalStorage(importId: string, required: {
@@ -154,7 +168,7 @@ export class PreparationSourceLedger {
       const slot = preparationSlots.slice(0, this.#settings.maximumActivePreparations).find(value => !occupied.has(value));
       if (slot === undefined) throw new Error('BUSTER_PREPARATION_SLOT_CAPACITY');
       const envelope = preparationEnvelope(admissionId, profile, this.#settings, now, slot,
-        { kind: 'extract', input: structuredClone(staged.input) });
+        { kind: 'extract', input: structuredClone(staged.input) }, this.#version);
       const reservation: SourceReservation = {
         ...initialSourceReservation(admissionId, envelope, slot, extractedSourceReservation(staged, this.#settings)),
         phase: 'reserved',
@@ -165,7 +179,7 @@ export class PreparationSourceLedger {
       await this.#originalBoot?.bind(envelope);
       await this.#write({ ...state, reservations: [...state.reservations, reservation] });
       return structuredClone(envelope);
-    });
+    }, this.#lockWaitSeconds);
   }
 
   async #validateRetainedInput(state: SourceLedger, staged: BusterStagedAdmission): Promise<void> {
@@ -293,7 +307,7 @@ export class PreparationSourceLedger {
   }
 
   async reservations(): Promise<readonly SourceReservation[]> {
-    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));
+    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations), this.#lockWaitSeconds);
   }
 
   async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation | Promise<SourceReservation>): Promise<void> {
@@ -304,13 +318,18 @@ export class PreparationSourceLedger {
       const reservations = [...state.reservations];
       reservations[index] = await update(reservations[index]!);
       await this.#write({ ...state, reservations });
-    });
+    }, this.#lockWaitSeconds);
   }
 
   async #read(): Promise<SourceLedger> {
     const state = await readDurableState<SourceLedger>(this.#file, empty, this.#settings.maximumMetadataBytes);
     validateSourceLedger(state);
     for (const record of state.reservations) {
+      // The ledger's explicit receiver version is selected with its boot, not
+      // inferred from retained settings. Resolve the original codec before
+      // applying this receiver's quotas, transitions or boot associations.
+      const originalVersion = record.envelope.operation.contractId === 'kubeclaw.buster-preparation@2' ? 'v10' : 'legacy';
+      if (originalVersion !== this.#version) throw new Error('BUSTER_PREPARATION_LEDGER_VERSION_MISMATCH');
       await this.#originalBoot?.verify(record.envelope);
       for (const cleanup of record.cleanup) await this.#originalBoot?.verify(cleanup.envelope);
     }

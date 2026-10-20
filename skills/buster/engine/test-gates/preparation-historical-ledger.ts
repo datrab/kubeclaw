@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
-import { constants } from 'node:fs';
+import { constants, type Stats } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
-import { type HistoricalImportDescriptor } from './preparation-historical-reference.ts';
+import { assertHistoricalImportDescriptor, type HistoricalImportDescriptor } from './preparation-historical-reference.ts';
 
 function requireRoot(): void {
   if (process.getuid?.() !== 0) throw new Error('BUSTER_HISTORICAL_ROOT_REQUIRED');
@@ -17,6 +17,24 @@ export async function assertHistoricalAncestors(directory: string): Promise<void
     if (!stat.isDirectory() || stat.uid !== 0 || (stat.mode & 0o022) !== 0
       || await fs.realpath(current) !== current) throw new Error('BUSTER_HISTORICAL_ANCESTOR_UNTRUSTED');
     if (current === '/') break;
+  }
+}
+
+/** A retained descriptor is not a source grant. Keep its opened inode AND
+ * pathname stable through the complete read, including async yield boundaries. */
+async function assertUnchanged(file: string, before: Stats, after: Stats): Promise<void> {
+  const named = await fs.lstat(file);
+  if (!named.isFile() || named.dev !== before.dev || named.ino !== before.ino
+    || after.dev !== before.dev || after.ino !== before.ino
+    || after.size !== before.size || after.mtimeMs !== before.mtimeMs
+    || after.ctimeMs !== before.ctimeMs || after.mode !== before.mode
+    || after.uid !== before.uid || after.gid !== before.gid || after.nlink !== 1
+    // lstat is another await: the same opened inode may change after the final
+    // descriptor stat. Validate the named observation too, not only its inode.
+    || named.size !== before.size || named.mtimeMs !== before.mtimeMs
+    || named.ctimeMs !== before.ctimeMs || named.mode !== before.mode
+    || named.uid !== before.uid || named.gid !== before.gid || named.nlink !== 1) {
+    throw new Error('BUSTER_HISTORICAL_SOURCE_CHANGED');
   }
 }
 
@@ -39,7 +57,8 @@ export async function digestHistoricalFile(file: string, maximumBytes: number): 
       hash.update(buffer.subarray(0, read.bytesRead));
     }
     const after = await handle.stat();
-    if (offset !== stat.size || after.size !== stat.size || after.mtimeMs !== stat.mtimeMs || after.ctimeMs !== stat.ctimeMs) {
+    await assertUnchanged(file, stat, after);
+    if (offset !== stat.size) {
       throw new Error('BUSTER_HISTORICAL_SOURCE_CHANGED');
     }
     return { schemaVersion: 'buster-historical-import-descriptor.v1', originalStoreDigest: `sha256:${hash.digest('hex')}`,
@@ -49,6 +68,7 @@ export async function digestHistoricalFile(file: string, maximumBytes: number): 
 
 export async function* historicalSnapshotChunks(stateRoot: string, descriptor: HistoricalImportDescriptor): AsyncGenerator<Buffer> {
   requireRoot();
+  assertHistoricalImportDescriptor(descriptor);
   const file = path.join(stateRoot, 'records', 'store.json');
   const handle = await fs.open(file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
   try {
@@ -66,6 +86,7 @@ export async function* historicalSnapshotChunks(stateRoot: string, descriptor: H
       hash.update(bytes);
       yield bytes;
     }
+    await assertUnchanged(file, stat, await handle.stat());
     if (`sha256:${hash.digest('hex')}` !== descriptor.originalStoreDigest) throw new Error('BUSTER_HISTORICAL_SOURCE_CHANGED');
   } finally { await handle.close(); }
 }

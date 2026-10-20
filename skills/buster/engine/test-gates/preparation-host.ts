@@ -6,7 +6,7 @@ import {
   type WorkerAttemptOperation,
 } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { preparationOperationSettings } from './preparation-envelope.ts';
 import { readPreparationInput, materializePreparedSource, preparationSourceDirectory } from './preparation-source.ts';
 import { PreparationHostInput, preparationHostChannelLimits } from './preparation-host-channel.ts';
 import { stagePreparationInput, stagedInputMetadata, assertBusterInput, wireDigest, type BusterInputReference } from './preparation-input.ts';
@@ -37,13 +37,12 @@ async function assignedPhase() {
     throw new Error('BUSTER_PREPARATION_ENVELOPE_LIMIT');
   }
   const envelope = await readEnvelope(maximumInputBytes);
-  const settings = validateBusterPreparationSettings(envelope.operation.values.settings);
+  const settings = preparationOperationSettings(envelope);
   const admissionId = envelope.operation.values.admissionId;
   const preparationUid = envelope.operation.values.preparationUid;
   assertPreparationSlot(preparationUid);
   if (process.getuid?.() !== preparationUid || process.getgid?.() !== preparationUid) throw new Error('BUSTER_PREPARATION_SLOT_INVALID');
-  if (typeof admissionId !== 'string' || Object.keys(envelope.operation.values).sort().join(',') !== 'admissionId,phase,preparationUid,settings'
-    || envelope.operation.contractId !== 'kubeclaw.buster-preparation@1') throw new Error('BUSTER_PREPARATION_OPERATION_INVALID');
+  if (typeof admissionId !== 'string' || Object.keys(envelope.operation.values).sort().join(',') !== 'admissionId,phase,preparationUid,settings') throw new Error('BUSTER_PREPARATION_OPERATION_INVALID');
   const phase = envelope.operation.values.phase as { kind?: unknown; input?: unknown };
   if (!phase || !['stage', 'extract'].includes(String(phase.kind))
     || Object.keys(phase).sort().join(',') !== (phase.kind === 'stage' ? 'kind' : 'input,kind')) {
@@ -51,7 +50,8 @@ async function assignedPhase() {
   }
   const sourceRoot = environment('BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT');
   preparationSourceDirectory(sourceRoot, admissionId);
-  return { envelope, settings, admissionId, phase, sourceRoot };
+  const version = envelope.operation.contractId === 'kubeclaw.buster-preparation@2' ? 'v10' as const : 'legacy' as const;
+  return { envelope, settings, admissionId, phase, sourceRoot, version };
 }
 
 function measureResources(scope: string) {
@@ -65,7 +65,7 @@ function measureResources(scope: string) {
 
 async function main(): Promise<void> {
   const scope = environment('KUBECLAW_NATIVE_SCOPE');
-  const { envelope, settings, admissionId, phase, sourceRoot } = await assignedPhase();
+  const { envelope, settings, admissionId, phase, sourceRoot, version } = await assignedPhase();
   const channel = new NativeWorkerControlChannel(new Socket({ fd: 3, readable: true, writable: true, allowHalfOpen: true }), preparationHostChannelLimits(settings));
   const input = new PreparationHostInput(channel, admissionId);
   const cancellation = new AbortController();
@@ -85,7 +85,7 @@ async function main(): Promise<void> {
       let values: unknown;
       let schemaId: string;
       if (phase.kind === 'stage') {
-        const staged = stagedInputMetadata(job, wire, admissionId, envelope.attemptSpecDigest, settings);
+        const staged = stagedInputMetadata(job, wire, admissionId, envelope.attemptSpecDigest, settings, version);
         const accepted = await input.admission(staged);
         values = accepted ? await stagePreparationInput(staged, wire, sourceRoot, signal, () => { allocated = true; }) : { declined: true };
         schemaId = accepted ? 'buster-staged-input-result.v1' : 'buster-declined-input-result.v1';
@@ -97,7 +97,7 @@ async function main(): Promise<void> {
           throw new Error('BUSTER_PREPARATION_RETAINED_INPUT_MISMATCH');
         }
         values = await materializePreparedSource(job, { admissionId, attemptSpecDigest: envelope.attemptSpecDigest,
-          root: sourceRoot, tarExecutable: environment('BUSTER_PREPARATION_ASSIGNED_TAR'), settings, signal,
+          root: sourceRoot, tarExecutable: environment('BUSTER_PREPARATION_ASSIGNED_TAR'), settings, version, signal,
           onAllocated: () => { allocated = true; } });
         schemaId = 'buster-preparation-result.v1';
       }

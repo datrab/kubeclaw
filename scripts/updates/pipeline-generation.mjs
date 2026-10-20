@@ -30,6 +30,10 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     if (typeof directory !== 'string' || !path.isAbsolute(directory) || path.resolve(directory) !== directory) throw new Error('PIPELINE_MATERIALIZATION_PATH_INVALID');
   }
   if (!Array.isArray(services) || services.length === 0) throw new Error('PIPELINE_RELEASE_COMPOSITION_REQUIRED');
+  // One original caller/binding composition owns this entire publication.
+  // Installed imports yield below; never reread mutable caller-owned tuples
+  // after validating a different composition or selecting its source policy.
+  services = structuredClone(services);
   if (fs.existsSync(output)) throw new Error('PIPELINE_GENERATION_EXISTS');
   const observations = [];
   let stage, inputCapture;
@@ -67,10 +71,53 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
     inputCapture = inputSource.declared?.capture;
-    const callers = new Set(), captures = [], selections = [];
+    // Validate the complete release composition before source/caller admission.
+    // A valid first tuple must not hide a missing, duplicated or foreign caller.
+    const callers = new Set();
     for (const service of services) {
-      if (service.role !== receipt.role || callers.has(service.callerId)) throw new Error('PIPELINE_RELEASE_COMPOSITION_INVALID');
+      if (!service || service.role !== receipt.role || callers.has(service.callerId)) throw new Error('PIPELINE_RELEASE_COMPOSITION_INVALID');
       callers.add(service.callerId);
+    }
+    const requiredCallers = receipt.role === 'prism' ? (callers.has('prism-agent-bridge') ? ['prism-agent-bridge'] : ['prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'])
+      : receipt.role === 'buster' ? ['buster-preparation', 'buster-runtime'] : [];
+    if (requiredCallers.length === 0 || callers.size !== requiredCallers.length || requiredCallers.some(caller => !callers.has(caller))) throw new Error('PIPELINE_RELEASE_CALLER_CLOSURE_REQUIRED');
+    // All v10 release callers must match the same captured root's exact
+    // owner/profile tuples before source/caller admission. This local join is
+    // not an activation grant and never emits a legacy output.
+    if (inputSource.rootSchemaVersion === 'pipeline-entry.v10') {
+      const { validateSwarmSelection } = await import(pathToFileURL(path.join(directory, 'swarm-bundle.ts')).href);
+      const sourceRoot = JSON.parse(inputSource.declared.capture.read('config/pipeline.config.json'));
+      const workerCore = JSON.parse(inputSource.declared.capture.read('config/components/worker-core.config.json'));
+      for (const service of services) {
+        validateSwarmSelection(service);
+        const expected = sourceRoot.bindings.filter(binding => binding.role === service.role
+          && binding.instanceId === service.serviceInstanceId
+          && service.bindings.some(selected => selected.owner === binding.owner))
+          .map(({ owner, instanceId, profileId }) => ({ owner, instanceId, profileId }));
+        const ordered = bindings => [...bindings].sort((a, b) => a.owner.localeCompare(b.owner));
+        if (!isDeepStrictEqual(ordered(service.bindings), ordered(expected))) throw new Error('PIPELINE_RELEASE_BINDING_MISMATCH');
+
+      }
+      for (const service of services) {
+        // Preserve the original versioned consumer set: v3 WorkerCore is
+        // mandatory for these callers, not an optional caller-owned subset.
+        if (['prism-control', 'prism-worker', 'buster-preparation'].includes(service.callerId)
+          && service.bindings.some(binding => binding.owner === 'worker-core') !== (workerCore.schemaVersion === 'pipeline-component.v3')) {
+          throw new Error('WORKER_CORE_VERSIONED_SELECTION_REQUIRED');
+        }
+      }
+    }
+    if (inputSource.rootSchemaVersion === 'pipeline-entry.v10' && receipt.role === 'buster') {
+      const { inspectPipelineV10BusterServiceSelection } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-receiver.ts')).href);
+      const selected = services.map(service => ({ service, original: inspectPipelineV10BusterServiceSelection({ role: service.role,
+        callerId: service.callerId, serviceInstanceId: service.serviceInstanceId }, inputSource.declared.capture) }));
+      const parent = selected.find(value => value.service.callerId === 'buster-preparation');
+      const child = selected.find(value => value.service.callerId === 'buster-runtime');
+      if (parent.service.serviceInstanceId !== child.service.serviceInstanceId
+        || parent.original.profileId !== child.original.profileId) throw new Error('PIPELINE_BUSTER_HANDOFF_SELECTION_MISMATCH');
+    }
+    const captures = [], selections = [];
+    for (const service of services) {
       const capture = captureSwarmSettings(path.join(authorRoot, 'pipeline.config.json'), service);
       const capturedRoot = capture.identity.files.find(file => file.name === 'pipeline.config.json');
       if (!capturedRoot || capturedRoot.sha256 !== inputSource.rootMember.sha256 || capturedRoot.byteLength !== inputSource.rootMember.byteLength) throw new Error('PIPELINE_AUTHOR_GENERATION_CHANGED');
@@ -80,9 +127,6 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       captures.push(capture);
       selections.push(createPipelineServiceSelection(capture, service.callerId, hash(packageBytes)));
     }
-    const requiredCallers = receipt.role === 'prism' ? (callers.has('prism-agent-bridge') ? ['prism-agent-bridge'] : ['prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'])
-      : receipt.role === 'buster' ? ['buster-preparation', 'buster-runtime'] : [];
-    if (requiredCallers.length === 0 || callers.size !== requiredCallers.length || requiredCallers.some(caller => !callers.has(caller))) throw new Error('PIPELINE_RELEASE_CALLER_CLOSURE_REQUIRED');
     if (receipt.role === 'buster') {
       const parent = selections.find(selection => selection.callerId === 'buster-preparation');
       const child = selections.find(selection => selection.callerId === 'buster-runtime');

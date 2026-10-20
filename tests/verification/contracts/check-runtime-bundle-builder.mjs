@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
+import { runtimeBundleFiles, validateRuntimeBundleReceipt } from '../../../skills/common/plugin-runtime/foundation/config/runtime-bundle-receipt.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-bundle-proof-'));
@@ -16,7 +17,23 @@ try {
     execFileSync(process.execPath, [path.join(root, 'scripts/build-runtime-role-bundle.mjs'), role, output, commit, 'v2', builtAt]);
     const roleManifest = JSON.parse(fs.readFileSync(path.join(root, `packaging/runtime/roles/${role}.json`), 'utf8'));
     const bundleManifest = JSON.parse(fs.readFileSync(path.join(output, 'manifest.json'), 'utf8'));
-    assert.equal(bundleManifest.schemaVersion, 'pipeline-runtime-bundle.v1');
+    assert.equal(bundleManifest.schemaVersion, 'pipeline-runtime-bundle.v2');
+    const surface = role === 'prism' ? '/app/prism/skills' : '/app/skills';
+    assert.equal(bundleManifest.runtimeSurface, surface);
+    assert.equal(bundleManifest.entrypoint, `${surface}/${roleManifest.entrypoint.output}`);
+    assert.equal(bundleManifest.commit, commit);
+    assert.equal(bundleManifest.builtAt, builtAt);
+    assert.equal(bundleManifest.contractVersion, 'v2');
+    assert.deepEqual(bundleManifest.externalCapabilities, roleManifest.externalCapabilities);
+    assert.equal(validateRuntimeBundleReceipt(bundleManifest, role, surface), bundleManifest);
+    assert.deepEqual(bundleManifest.files, runtimeBundleFiles(output, false), `${role} complete emitted file readback`);
+    // Keep the original package/entrypoint/isolation controls below. V2 must
+    // additionally reject legacy or partial receipts rather than accept either.
+    for (const changed of [
+      { ...bundleManifest, schemaVersion: 'pipeline-runtime-bundle.v1' },
+      { ...bundleManifest, files: [] },
+      { ...bundleManifest, runtimeSurface: '/foreign/skills' },
+    ]) assert.throws(() => validateRuntimeBundleReceipt(changed, role, surface), /PIPELINE_PACKAGE_RECEIPT_INVALID/);
     assert.equal(bundleManifest.bundleKind, 'app-skills-package-set');
     assert.equal(bundleManifest.role, role);
     assert.deepEqual(bundleManifest.packages.map((entry) => entry.id), roleManifest.packages);

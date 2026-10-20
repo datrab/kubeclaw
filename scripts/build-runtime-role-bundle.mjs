@@ -27,13 +27,14 @@ assert(fs.existsSync(isolationLauncher), 'plugin isolation launcher is not built
 assert(fs.statSync(isolationLauncher).isFile() && (fs.statSync(isolationLauncher).mode & 0o111) !== 0,
   'plugin isolation launcher is not executable');
 
-function selectedFiles(sourceRoot, singleFile, excludedDirectories = ['dist', 'node_modules', 'tests', 'test-results', 'playwright-report', '.playwright']) {
+function selectedFiles(sourceRoot, singleFile, excludedDirectories = ['dist', 'node_modules', 'tests', 'test-results', 'playwright-report', '.playwright'], excludedRelativeDirectories = []) {
   if (singleFile) return [singleFile];
   const result = [];
   function visit(relative) {
     const directory = path.join(sourceRoot, relative);
     for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((left, right) => left.name.localeCompare(right.name))) {
-      if (entry.isDirectory() && excludedDirectories.includes(entry.name)) continue;
+      if (entry.isDirectory() && (excludedDirectories.includes(entry.name)
+        || excludedRelativeDirectories.includes(path.posix.join(relative.split(path.sep).join('/'), entry.name)))) continue;
       const child = path.posix.join(relative.split(path.sep).join('/'), entry.name);
       const absolute = path.join(sourceRoot, child);
       assert.equal(entry.isSymbolicLink(), false, `runtime package cannot contain a symbolic link: ${absolute}`);
@@ -58,14 +59,14 @@ function contentDigest(sourceRoot, files) {
   return `sha256:${hash.digest('hex')}`;
 }
 
-function assertSelectionUnchanged(sourceRoot, files, digest, label, singleFile, excludedDirectories) {
-  const currentFiles = selectedFiles(sourceRoot, singleFile, excludedDirectories);
+function assertSelectionUnchanged(sourceRoot, files, digest, label, singleFile, excludedDirectories, excludedRelativeDirectories) {
+  const currentFiles = selectedFiles(sourceRoot, singleFile, excludedDirectories, excludedRelativeDirectories);
   assert.deepEqual(currentFiles, files, `${label} file set changed during assembly`);
   assert.equal(contentDigest(sourceRoot, currentFiles), digest, `${label} changed during assembly`);
 }
 
-function trackSelection(sourceRoot, files, digest, label, singleFile, excludedDirectories) {
-  finalSourceChecks.push({ sourceRoot, files, digest, label, singleFile, excludedDirectories });
+function trackSelection(sourceRoot, files, digest, label, singleFile, excludedDirectories, excludedRelativeDirectories) {
+  finalSourceChecks.push({ sourceRoot, files, digest, label, singleFile, excludedDirectories, excludedRelativeDirectories });
 }
 
 function writeFile(relativeTarget, content, mode = 0o644) {
@@ -225,14 +226,27 @@ while (dependencyQueue.length > 0) {
   const manifest = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'package.json'), 'utf8'));
   // Published dependency folders named test/tests can be runtime modules
   // (e.g. Playwright lib/mcp/test/testBackend). Preserve the package closure.
-  const files = selectedFiles(sourceRoot, undefined, ['node_modules']);
+  // Exact published-version dispositions, relative to this dependency only.
+  // Preserve advertised exports, bins, and source-conditioned Zod modules;
+  // never interpret a directory basename (e.g. Playwright mcp/test) as proof.
+  // robots-parser: mocha suite; trace_engine: node:test and emitted test
+  // declarations; Zod: vitest suites and the benchmark importing test Mocker.
+  const developmentPaths = {
+    'fast-uri@3.1.5': ['test'],
+    'robots-parser@3.0.1': ['test'],
+    'zod@3.25.76': ['src/v3/tests', 'src/v3/benchmarks', 'src/v4/core/tests',
+      'src/v4/classic/tests', 'src/v4/mini/tests'],
+    '@paulirish/trace_engine@0.0.65': ['test', '.tmp/tsbuildinfo/test'],
+  };
+  const developmentRoots = developmentPaths[`${name}@${manifest.version}`] ?? [];
+  const files = selectedFiles(sourceRoot, undefined, ['node_modules'], developmentRoots);
   const before = contentDigest(sourceRoot, files);
   const target = path.posix.join('skills/node_modules', name);
   copySelection(sourceRoot, files, target);
   assertSelectionUnchanged(sourceRoot, files, before, `runtime dependency ${name}`, undefined,
-    ['node_modules']);
+    ['node_modules'], developmentRoots);
   trackSelection(sourceRoot, files, before, `runtime dependency ${name}`, undefined,
-    ['node_modules']);
+    ['node_modules'], developmentRoots);
   dependencyRecords.push({ name, version: manifest.version, sourceDigest: before, files: files.length, target });
   for (const dependency of Object.keys(manifest.dependencies ?? {})) {
     if (!internalPackageNames.has(dependency)) dependencyQueue.push(dependency);
@@ -259,7 +273,7 @@ writeFile(path.posix.join('skills', roleManifest.entrypoint.output), facade, rol
 
 for (const check of finalSourceChecks) {
   assertSelectionUnchanged(check.sourceRoot, check.files, check.digest, check.label,
-    check.singleFile, check.excludedDirectories);
+    check.singleFile, check.excludedDirectories, check.excludedRelativeDirectories);
 }
 
 const bundleManifest = {

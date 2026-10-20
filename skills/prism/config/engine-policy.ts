@@ -23,7 +23,7 @@ export function readPrismRenderPolicy(value: unknown): PrismRenderSettings {
   if (!exact(value, 'height,locale,reducedMotion,schemaVersion,timezoneId,widths')) throw new Error('PRISM_RENDER_POLICY_REQUIRED');
   const p = value as PrismRenderSettings;
   if (p.schemaVersion !== 'prism-render-policy.v1' || !exact(p.widths, 'compact,regular,wide')) throw new Error('PRISM_RENDER_POLICY_INVALID');
-  for (const [v, max] of [[p.widths.compact,390],[p.widths.regular,768],[p.widths.wide,1440],[p.height,1000]]) {
+  for (const [v, max] of [[p.widths.compact,390],[p.widths.regular,768],[p.widths.wide,1440],[p.height,1000]] as const) {
     if (!Number.isSafeInteger(v) || v < 1 || v > max) throw new Error('PRISM_RENDER_DIMENSION_INVALID');
   }
   if (!(p.widths.compact < p.widths.regular && p.widths.regular < p.widths.wide)) throw new Error('PRISM_RENDER_WIDTH_ORDER_INVALID');

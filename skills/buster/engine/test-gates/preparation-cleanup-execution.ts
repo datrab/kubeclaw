@@ -1,3 +1,4 @@
+import { preparationCleanupPolicy } from './preparation-cleanup-policy.ts';
 import { executeNativeWorkerAttempt, recoverNativeAttempt, verifyNativeSourceCleanupResult } from '@kubeclaw/worker-core';
 import type { WorkerAttemptResultV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import type { PreparationCleanupAssociation } from './preparation-cleanup-binding.ts';
@@ -23,17 +24,15 @@ export async function recoverPreparationCleanup(options: PreparationExecutionOpt
 /** Only this invocation's new cleanup may launch; a new failure keeps the owner fenced. */
 export async function executePreparationCleanup(options: PreparationExecutionOptions,
   association: PreparationCleanupAssociation): Promise<WorkerAttemptResultV3> {
-  const { envelope, settings, effects } = association;
+  const { envelope, effects } = association;
+  const { settings, limits } = preparationCleanupPolicy(envelope, association.settings);
   const command = preparationCommand(effects.admissionId, settings, options.command, effects.gate.preparationUid, 'cleanup');
   const encoded = JSON.stringify({ effects, settings });
   if (Buffer.byteLength(encoded) > settings.maximumInputBytes) throw new Error('BUSTER_PREPARATION_CLEANUP_INPUT_LIMIT');
   const result = await executeNativeWorkerAttempt({ envelope, journal: options.journal, process: {
     owner: options.owner,
     command: { ...command, environment: { ...command.environment, BUSTER_PREPARATION_ASSIGNED_CLEANUP: encoded } },
-    limits: { cpuTimeMs: settings.resourcePolicy.cpuTimeMs, memoryBytes: settings.resourcePolicy.memoryBytes,
-      tasks: settings.resourcePolicy.tasks, timeoutMs: settings.timeoutMs + 8 * settings.cleanupTimeoutMs,
-      maximumInputBytes: settings.maximumInputBytes, maximumOutputBytes: settings.maximumOutputBytes,
-      pollIntervalMs: settings.pollIntervalMs, closeTimeoutMs: settings.closeTimeoutMs },
+    limits,
   } });
   await options.ledger.recordCleanupResult(effects.admissionId, preparationDigest(envelope), result.resultDigest);
   await verifyNativeSourceCleanupResult(options.journal, options.owner, envelope);

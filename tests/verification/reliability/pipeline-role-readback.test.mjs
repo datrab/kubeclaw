@@ -66,7 +66,18 @@ test('real Prism role package readback drives all service caller compositions', 
       assert.equal(fs.readdirSync(root).some(name => name.startsWith('.pipeline-stage-')), false);
     } finally { fs.writeFileSync(file, original); }
   }
-  const result = await materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher });
+  // Capture the original full caller composition at invocation, before the
+  // materializer awaits installed imports. Later mutation of caller-owned
+  // arrays/tuples/bindings must neither retarget nor truncate the generation.
+  const originalServices = structuredClone(services);
+  const pendingGeneration = materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher });
+  services[0].serviceInstanceId = 'foreign-after-invocation';
+  services[0].bindings[0].profileId = 'foreign-after-invocation';
+  services.splice(1);
+  let result;
+  try { result = await pendingGeneration; }
+  finally { services.splice(0, services.length, ...originalServices); }
+
   assert.equal(result.callers.length, 4);
   await assert.rejects(materializePipelineGeneration({ authorRoot: author, packageRoot: code, output, services, publisher }), /GENERATION_EXISTS/);
   const foundation = path.join(code, 'skills/packages/plugin-foundation/config');

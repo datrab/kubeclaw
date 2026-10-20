@@ -34,6 +34,18 @@ test('delivered INITIAL host capture uses immutable selected preparation before 
   assert.equal(materialized.inputGenerationSha256, inputCodec.hashPipelineInputSet(capture.identity.files.map(file => ({ relativePath: file.name, byteLength: file.byteLength, sha256: file.sha256 }))));
   const settings = projection.projectBusterSettings(capture, 'buster-preparation').preparation;
   assert.equal(settings.maximumOwnershipBytes, 16777216, 'original ownership cap is never enlarged');
+  // Complete selected preparation is admitted before touching host inputs.
+  // Neither missing legacy authors nor a complete v10 author may be silently
+  // treated as the installed legacy native contract.
+  const noHostReads = new Proxy({}, { get() { assert.fail('invalid preparation must deny before host lookup'); } });
+  const retained = JSON.parse(fs.readFileSync(path.join(repo,
+    'docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/config/components/buster-engine.config.json'), 'utf8'));
+  for (const invalid of [undefined, {}, { ...settings, maximumActivePreparations: 0 },
+    { ...settings, resourcePolicy: { ...settings.resourcePolicy, memoryBytes: 0 } },
+    { ...settings, maximumSourceBytes: 1 }, retained.profiles['local-A'].settings.preparation]) {
+    assert.throws(() => config.captureNativeBusterPreparationTrust(invalid, noHostReads),
+      /SWARM_CONFIG_BUSTER_/);
+  }
   const lookedUp = [];
   const absentNative = new Proxy({}, { get(_target, name) { lookedUp.push(name); return undefined; } });
   assert.throws(() => closure.captureInitialBusterNativeHostFacts(capture, absentNative), /BUSTER_NATIVE_POOL_POLICY_REQUIRED/);

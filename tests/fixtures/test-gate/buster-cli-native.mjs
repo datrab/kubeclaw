@@ -10,7 +10,7 @@ import { currentTestCgroup } from '../../verification/reliability/native-test-cg
 
 // Install an actual image/generation into a private mount namespace. Neither
 // the privileged parent, guardian, CLI nor their startup protocol is replaced.
-export async function nativeCli(root, admission) {
+export async function nativeCli(root, admission, { untrustedLocalMount = false } = {}) {
   assert.equal(process.getuid(), 0);
   assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true');
   // Fail before any host setup when the caller cannot isolate installed paths.
@@ -106,10 +106,13 @@ export async function nativeCli(root, admission) {
     write('native/pool.json', JSON.stringify(policy));
     const mounts = ['/usr', '/bin', '/lib', '/lib64', '/proc', '/sys', '/dev'];
     for (const mount of mounts) if (fs.existsSync(mount)) directory(mount.slice(1));
+    // tmpfs defaults to 1777; the real parent correctly rejects that writable
+    // /usr/local ancestor even when libexec and its files are root-owned.
+    // Install the private mount as a trusted root directory, like the image.
     // All mounts live below the fresh jail and disappear with unshare. The
     // inherited host cgroup namespace is retained for real identity checking.
     const launcher = path.join(root, 'launch.sh');
-    fs.writeFileSync(launcher, `#!/bin/sh\nset -eu\njail=$1\nshift\nfor source in /usr /bin /lib /lib64 /proc /sys /dev; do\n  if [ -e "$source" ]; then mount --rbind "$source" "$jail$source"; fi\ndone\nmount -t tmpfs tmpfs "$jail/usr/local"\nmkdir "$jail/usr/local/libexec"\nmount --bind "$jail/native/libexec" "$jail/usr/local/libexec"\nexec chroot "$jail" /bin/sh -c 'exec 9<>/run/kubeclaw-buster/lifetime.lock; flock -n 9; exec /native/node /app/skills/packages/buster-engine/native-parent.ts'\n`);
+    fs.writeFileSync(launcher, `#!/bin/sh\nset -eu\njail=$1\nshift\nfor source in /usr /bin /lib /lib64 /proc /sys /dev; do\n  if [ -e "$source" ]; then mount --rbind "$source" "$jail$source"; fi\ndone\nmount -t tmpfs -o mode=${untrustedLocalMount ? '1777' : '0755'},uid=0,gid=0 tmpfs "$jail/usr/local"\nmkdir "$jail/usr/local/libexec"\nmount --bind "$jail/native/libexec" "$jail/usr/local/libexec"\nexec chroot "$jail" /bin/sh -c 'exec 9<>/run/kubeclaw-buster/lifetime.lock; flock -n 9; exec /native/node /app/skills/packages/buster-engine/native-parent.ts'\n`);
     const environment = { ...profile.environment, KUBECLAW_BUILD_REVISION: revision,
       BUSTER_NATIVE_POOL_POLICY_FILE: '/native/pool.json',
       BUSTER_ENGINE_CONTENT_DIGEST: `sha256:${crypto.createHash('sha256').update(fs.readFileSync(path.join(packageRoot, 'skills/packages/buster-engine/native-parent.ts'))).digest('hex')}` };

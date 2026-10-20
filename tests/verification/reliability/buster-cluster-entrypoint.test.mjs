@@ -91,16 +91,18 @@ for(const scenario of ['missing-key','malformed-key','wrong-key-type','wrong-sta
 
 test('actual runtime producer and parent source receiver preserve explicit A/B bindings without host authority',async t=>{
  const f=fixture(t),sourceModule=path.join(image.packageRoot,'skills/packages/buster-engine/test-gates/preparation-runtime-source.ts');
- const {readBusterPreparationRuntimeSource}=await import(pathToFileURL(sourceModule).href);
+ const {readBusterPreparationRuntimeSource,readBusterPreparationRuntime}=await import(pathToFileURL(sourceModule).href);
  const entrypoint=fs.readFileSync('docker/buster-runtime-entrypoint.sh','utf8');
  const match=entrypoint.match(/node <<'NODE'\n([\s\S]*?)\nNODE/u);assert(match,'original runtime producer exists');
  const producer=match[1].replace('/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts',sourceModule)
   .replace('/app/skills/node_modules/playwright',createRequire(import.meta.url).resolve('playwright'));
- const registry=path.join(f.root,'registry.json');fs.writeFileSync(registry,JSON.stringify({registryReference:'registry.example'}));
+ const registry=path.join(f.root,'registry.json');fs.writeFileSync(registry,JSON.stringify({registryReference:'registry.example',registryBaseUrl:'http://registry.example'}));
  for(const authority of ['nova:source-A','nova:source-B']){
   const output=path.join(f.root,authority.slice(5));fs.mkdirSync(output);
   const key=generateKeyPairSync('ed25519').publicKey.export({type:'spki',format:'pem'}).toString();
   const environment={...process.env,RUNTIME_CONFIG_ROOT:output,REGISTRY_REFERENCE:'registry.example',REGISTRY_CLIENT_RUNTIME:registry,
+   // Public producer inputs only: these locators do not claim native execution or source authority.
+   CONTROLLER_NAMESPACE:'fixture-original',BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT:'/sys/fs/cgroup/fixture-original',
    BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY:authority,BUSTER_V2_TOKEN:'fixture-token-00000000000000000000',BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:key};
   for(const name of ['BUSTER_V2_STATE_DIR','BUSTER_V2_RUN_DIR','BUSTER_PLAN_STATE_DIR','BUSTER_PLAN_RUN_DIR'])delete environment[name];
   // Exercise the real entrypoint's retained-token/unset boundary, not just a
@@ -113,6 +115,93 @@ test('actual runtime producer and parent source receiver preserve explicit A/B b
   assert.equal(result.error,undefined);assert.equal(result.status,0,result.stderr);
   const runtime=JSON.parse(fs.readFileSync(path.join(output,'runtime.json'),'utf8'));
   const received=readBusterPreparationRuntimeSource(runtime,environment);
+  assert.deepEqual(readBusterPreparationRuntime(runtime,environment),received,'complete installed parent runtime agrees with original source projection');
+  const unreadablePolicy=new Proxy({}, {get(){assert.fail('invalid child service policy must reject before parent credential/native effects');}});
+  for(const field of ['host','port','recordLimits','maximumResultBytes','maximumResultStoreBytes','maximumResponseBytes','shutdownTimeoutMs','allowedCapabilities']){
+   const invalid={...runtime};delete invalid[field];
+   assert.throws(()=>readBusterPreparationRuntime(invalid,unreadablePolicy),/BUSTER_SERVICE_POLICY_INVALID/,field);
+  }
+  for(const patch of [{port:65536},{host:'unregistered.example'},{maximumResponseBytes:96},
+   {recordLimits:{...runtime.recordLimits,maximumRecords:0}},{allowedCapabilities:['network.http','network.http']}]){
+   assert.throws(()=>readBusterPreparationRuntime({...runtime,...patch},unreadablePolicy),/BUSTER_SERVICE_POLICY_INVALID/);
+  }
+  const unreadableRoot=new Proxy({}, {get(){assert.fail('invalid complete runtime root must reject before parent credential/native effects');}});
+  for(const field of ['platformConfig']){
+   for(const value of [undefined,null,'',0,{},[]]){
+    assert.throws(()=>readBusterPreparationRuntime({...runtime,[field]:value},unreadableRoot),new RegExp('BUSTER_REMOTE_CONFIG_INVALID:'+field),field);
+   }
+  }
+  for(const field of ['kubernetesFixture','tailscaleExposure','kubernetesRuntimeSecurity','dependencyReadiness',
+   'maximumArchiveBytes','maximumExtractedBytes','maximumRequestBytes','maximumActiveJobs','maximumQueuedJobs','maximumConcurrentAttempts']){
+   for(const value of [undefined,false,{},1]){
+    assert.throws(()=>readBusterPreparationRuntime({...runtime,[field]:value},unreadableRoot),new RegExp('SWARM_CONFIG_LEGACY_OVERRIDE:'+field),field);
+   }
+  }
+  assert.deepEqual(readBusterPreparationRuntime(runtime,environment),received,'restored original root preserves full A/B source binding');
+  const unreadableSources=new Proxy({}, {get(){assert.fail('invalid conditional source must reject before parent key/token/native effects');}});
+  for(const [capability,field,expected] of [
+   ['command.execute','directCommand',/BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED/],
+   ['container.build','containerBuild',/BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED/],
+   ['network.http','networkHttp',/BUSTER_NETWORK_HTTP_CONFIG_REQUIRED/],
+   ['browser.axe','browserAxe',/BUSTER_BROWSER_AXE_CONFIG_REQUIRED/],
+   ['browser.lighthouse','browserLighthouse',/BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED/],
+   ['browser.visual','browserVisual',/BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED/],
+   ['browser.playwright','browserPlaywright',/BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED/],
+   ['security.scan','securityScan',/BUSTER_SECURITY_SCAN_CONFIG_REQUIRED/],
+  ]){
+   const missing={...runtime};delete missing[field];
+   assert(runtime.allowedCapabilities.includes(capability),'original complete runtime exercises '+capability);
+   assert.throws(()=>readBusterPreparationRuntime(missing,unreadableSources),expected,field);
+   const inactive={...runtime,allowedCapabilities:runtime.allowedCapabilities.filter(value=>value!==capability)};
+   assert.throws(()=>readBusterPreparationRuntime(inactive,unreadableSources),new RegExp('BUSTER_INACTIVE_CAPABILITY_SOURCE:'+field),field);
+  }
+  for(const clusterBindings of [undefined,null,{}, {controllerNamespace:'Bad_namespace'}]){
+   assert.throws(()=>readBusterPreparationRuntime({...runtime,clusterBindings},unreadableSources),/BUSTER_(?:CLUSTER_BINDINGS_INVALID|REMOTE_CONFIG_INVALID:clusterBindings)/);
+  }
+  for(const patch of [{allowedOrigins:[1]},{allowedHostSuffixes:[1]},{allowedPorts:[65536]},
+   {maximumResponseBytes:0},{maximumExecutionMs:0},{maximumRequestBytes:0},
+   {allowedMethods:[]},{allowedRequestHeaders:[1]},{allowWebSocket:'false'}]){
+   assert.throws(()=>readBusterPreparationRuntime({...runtime,networkHttp:{...runtime.networkHttp,...patch}},unreadableSources),
+    /BUSTER_REMOTE_CONFIG_INVALID:networkHttp/,'invalid network policy before parent key/token/native effects');
+  }
+  for(const patch of [{executableCatalog:null},{executableSearchPath:[]},{runtimeReadRoots:[1]},
+   {maximumOutputBytes:0},{maximumExecutionMs:0},{maximumProcesses:0},
+   {maximumMemoryBytes:0},{maximumCpuMillis:0},{terminationGraceMs:0}]){
+   assert.throws(()=>readBusterPreparationRuntime({...runtime,directCommand:{...runtime.directCommand,...patch}},unreadableSources),
+    /BUSTER_REMOTE_CONFIG_INVALID:directCommand/,'invalid command policy before parent key/token/native effects');
+  }
+  for(const [field,patches] of [
+   ['containerBuild',[{allowedPlatforms:[]},{allowedBuildArguments:[1]},
+    {maximumLogBytes:0},{maximumExecutionMs:0},{maximumManifestBytes:0}]],
+   ['securityScan',[{allowedRegistryPrefixes:[]},{maximumExecutionMs:0},{maximumOutputBytes:0},
+    {databasePolicy:null},{databasePolicy:{maximumVulnerabilityAgeMs:0,maximumJavaAgeMs:1,maximumDatabaseBytes:1}},
+    {databasePolicy:{maximumVulnerabilityAgeMs:1,maximumJavaAgeMs:0,maximumDatabaseBytes:1}},
+    {databasePolicy:{maximumVulnerabilityAgeMs:1,maximumJavaAgeMs:1,maximumDatabaseBytes:0}}]],
+  ]){
+   for(const patch of patches){
+    assert.throws(()=>readBusterPreparationRuntime({...runtime,[field]:{...runtime[field],...patch}},unreadableSources),
+     new RegExp('BUSTER_REMOTE_CONFIG_INVALID:'+field),'invalid build/scan policy before parent confidential/native effects');
+   }
+  }
+  for(const [field,patches] of [
+   ['browserAxe',[{allowedBrowsers:[]},{allowedOrigins:[1]},{maximumCombinations:0},{maximumConcurrency:0},
+    {maximumExecutionMs:0},{maximumResultBytes:0},{maximumScreenshots:0},{maximumScreenshotBytes:0}]],
+   ['browserLighthouse',[{allowedOrigins:[1]},{maximumRuns:0},{maximumExecutionMs:0},{maximumResultBytes:0}]],
+   ['browserVisual',[{allowedBrowsers:[]},{allowedOrigins:[1]},{maximumCombinations:0},{maximumConcurrency:0},
+    {maximumExecutionMs:0},{maximumResultBytes:0},{maximumScreenshotBytes:0},{maximumMasksPerCombination:0}]],
+   ['browserPlaywright',[{allowedOrigins:[1]},{allowedTargetPorts:[65536]},{readOnlyRoots:[]},
+    ...['maximumWorkers','maximumExecutionMs','maximumOutputBytes','maximumResultBytes','maximumArtifactBytes',
+     'maximumArtifactFiles','maximumProcesses','maximumMemoryBytes','maximumCpuMillis','terminationGraceMs',
+     'runAsUid','runAsGid'].map(name=>({[name]:0}))]],
+  ]){
+   for(const patch of patches){
+    assert.throws(()=>readBusterPreparationRuntime({...runtime,[field]:{...runtime[field],...patch}},unreadableSources),
+     new RegExp('BUSTER_REMOTE_CONFIG_INVALID:'+field),'invalid browser policy before parent confidential/native effects');
+   }
+  }
+  assert.deepEqual(readBusterPreparationRuntime(runtime,environment),received,'restored original sources still admit the same A/B source binding');
+  assert.deepEqual(readBusterPreparationRuntime(runtime,environment),received,'restored complete A/B runtime preserves original source binding');
+
   const {tokenEnvironmentVariable,...publicRuntime}=runtime;
   const unreadableAuth=new Proxy({}, {get(){assert.fail('invalid authentication metadata must reject before source carrier read');}});
   for(const invalid of [publicRuntime,{...runtime,trustedPeerSpiffeIds:['spiffe://fixture/buster']},
@@ -185,6 +274,22 @@ test('actual runtime producer and parent source receiver preserve explicit A/B b
   assert.deepEqual(readBusterPreparationRuntimeSource(runtime,restoredCarrier),received);
   assert.equal(reads.filter(name=>name===runtime.sourceAttestationPublicKeyEnvironmentVariable).length,1,'restored original A/B binding resolves its original public key once');
   assert.deepEqual(reads,[runtime.tokenEnvironmentVariable,runtime.sourceAttestationPublicKeyEnvironmentVariable],'token and public key each read once, in admission order');
+  // Public metadata belongs to the original admitted source, not to a second
+  // configuration supplied as a side effect of resolving its carrier.
+  for (const receiver of [readBusterPreparationRuntimeSource,readBusterPreparationRuntime]) {
+   for (const mutationCarrier of [runtime.tokenEnvironmentVariable,runtime.sourceAttestationPublicKeyEnvironmentVariable]) {
+    const candidate=structuredClone(runtime),carrierReads=[];
+    const mutatingCarrier=new Proxy(environment,{get(target,name){
+     carrierReads.push(name);
+     if(name===mutationCarrier)Object.assign(candidate,{trustedSourceAuthority:'foreign:issuer',
+      stateRoot:'/tmp/foreign-state',tarExecutable:'/tmp/foreign-tar',shutdownTimeoutMs:0});
+     return target[name];
+    }});
+    assert.deepEqual(receiver(candidate,mutatingCarrier),received,'carrier resolution cannot replace the admitted original source metadata');
+    assert.deepEqual(carrierReads,[runtime.tokenEnvironmentVariable,runtime.sourceAttestationPublicKeyEnvironmentVariable]);
+   }
+  }
+  assert.deepEqual(readBusterPreparationRuntime(runtime,environment),received,'restored original A/B source remains unchanged after carrier mutation controls');
   const invalidOutput=path.join(output,'invalid');fs.mkdirSync(invalidOutput);
   const invalid=spawnSync(process.execPath,['-'],{input:producer,env:{...environment,RUNTIME_CONFIG_ROOT:invalidOutput,BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:'invalid'},encoding:'utf8',timeout:10000});
   assert.equal(invalid.status,1);assert.match(invalid.stderr,/BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);

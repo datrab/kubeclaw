@@ -1,4 +1,4 @@
-import { assertHistoricalImportDescriptor, type HistoricalImportDescriptor } from './preparation-historical-reference.ts';
+import { assertHistoricalImportDescriptor } from './preparation-historical-reference.ts';
 
 /** Read-only kernel observation. This value is explicitly NOT migration authority. */
 interface HistoricalFilesystemObservation {
@@ -18,22 +18,6 @@ export interface HistoricalImmutableTreeObservation extends HistoricalFilesystem
 }
 export interface HistoricalImmutableRuntimeObservation extends HistoricalFilesystemObservation {
   readonly schemaVersion: 'buster-legacy-immutable-runtime.v1';
-}
-
-declare const verifiedHistoricalAuthority: unique symbol;
-/** Contract for the future maintained stop-receipt verifier. No constructor or
- * decoder exists until that authority has real quiescence/restart-fence proof.
- * The private brand prevents ordinary observation objects from satisfying this
- * interface; it is not a substitute for the future runtime verification. */
-export interface VerifiedHistoricalSource {
-  readonly [verifiedHistoricalAuthority]: true;
-  readonly schemaVersion: 'buster-verified-historical-source.v1';
-  readonly sourceKind: 'immutable-original';
-  readonly transactionId: string;
-  readonly stopReceiptDigest: string;
-  readonly observation: HistoricalImmutableTreeObservation;
-  readonly originalStore: HistoricalImportDescriptor;
-  readonly runtimeArtifacts: HistoricalImmutableRuntimeObservation;
 }
 
 function exact(value: unknown, keys: string): asserts value is Record<string, unknown> {

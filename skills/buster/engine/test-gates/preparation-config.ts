@@ -2,10 +2,10 @@ import type { WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readBusterPreparationRuntimeSource } from './preparation-runtime-source.ts';
+import { readBusterPreparationRuntime } from './preparation-runtime-source.ts';
 import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity,
   requireNativeWorkerLauncher } from '@kubeclaw/worker-core';
-import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { validateBusterPreparationSettings, type BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { portableJson } from '@kubeclaw/plugin-sdk/values';
 
 export const preparationStateRoot = '/var/lib/buster-v2/plan-jobs';
@@ -15,6 +15,11 @@ const nativeTrustCaptures = new WeakMap<object, Readonly<{ poolFile: string; set
 
 /** The root parent reads only bounded immutable configuration; it never constructs providers. */
 export function captureNativeBusterPreparationTrust(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv, workerCore?: WorkerCorePolicyCapture) {
+  // This installed INITIAL host path still receives the closed legacy codec.
+  // Reject incomplete/mixed preparation authors before native file or ENV reads;
+  // v10 source installation remains a separate, explicitly denied cutover.
+  settings = validateBusterPreparationSettings(settings);
+  const originalSettings = portableJson(settings);
   const poolFile = environment.BUSTER_NATIVE_POOL_POLICY_FILE;
   if (!poolFile) throw new Error('BUSTER_NATIVE_POOL_POLICY_REQUIRED');
   const pool = readNativeWorkerPoolPolicy(poolFile, 'buster', workerCore);
@@ -30,7 +35,7 @@ export function captureNativeBusterPreparationTrust(settings: BusterPreparationS
   requireNativeWorkerLauncher(fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')));
   const captured = Object.freeze({ pool, launcher, engineContentDigest: engineContentDigest!,
     nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile, workerCore), tarExecutable: '/usr/bin/tar' });
-  nativeTrustCaptures.set(captured, Object.freeze({ poolFile, settings: portableJson(settings) }));
+  nativeTrustCaptures.set(captured, Object.freeze({ poolFile, settings: originalSettings }));
   return captured;
 }
 
@@ -41,7 +46,7 @@ export function nativeBusterPreparationConfig(settings: BusterPreparationSetting
   // mutable environment after the supervisor has checked its physical facts.
   originalNativeBusterHostPoolFile(trusted, settings);
   const runtime = readRootConfiguration(settings.maximumInputBytes);
-  const captured = Object.freeze({ ...trusted, ...readBusterPreparationRuntimeSource(runtime, environment) });
+  const captured = Object.freeze({ ...trusted, ...readBusterPreparationRuntime(runtime, environment) });
   nativeTrustCaptures.set(captured, nativeTrustCaptures.get(trusted)!);
   return captured;
 }
@@ -86,24 +91,4 @@ function readRootConfiguration(maximumBytes: number): Record<string, unknown> {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('BUSTER_NATIVE_CONFIG_INVALID');
     return value as Record<string, unknown>;
   } finally { fs.closeSync(fd); }
-}
-
-/** ConfigMap symlinks may resolve only through root-controlled immutable ancestry. */
-export function requireRootBusterSettings(environment: NodeJS.ProcessEnv): void {
-  const file = environment.SWARM_CONFIG;
-  if (!file || !path.isAbsolute(file) || path.resolve(file) !== file) throw new Error('BUSTER_NATIVE_SWARM_CONFIG_REQUIRED');
-  for (const candidate of [path.dirname(file), path.dirname(fs.realpathSync(file))]) {
-    let current = '/';
-    for (const component of candidate.split('/').filter(Boolean)) {
-      current = path.join(current, component);
-      const stat = fs.lstatSync(current);
-      if (!stat.isDirectory() || stat.uid !== 0 || (stat.mode & 0o022) !== 0) {
-        throw new Error('BUSTER_NATIVE_SWARM_CONFIG_NOT_TRUSTED');
-      }
-    }
-  }
-  const stat = fs.statSync(file);
-  if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0) {
-    throw new Error('BUSTER_NATIVE_SWARM_CONFIG_NOT_TRUSTED');
-  }
 }

@@ -177,6 +177,16 @@ test('both actual charts, packaged role boot and loader enforce shared cluster i
     for (const name of ['kubeclaw', 'prism']) { assert.notEqual(second[name].digest, first[name].digest); assert.notDeepEqual(checksums(second[name].docs), checksums(first[name].docs)); }
     const inspectedPrefixes = structuredClone(selected); inspectedPrefixes.runtimeSecurity.allowedNamespacePrefixes = ['a'.repeat(50), 'test-', ...Array(33).fill('test')];
     writePolicy(inspectedPrefixes); await deliver(inspectedPrefixes);
+    // This original policy's supported domain is 0..32, unlike positive-only
+    // resource limits. Exercise the new field through both generators and the
+    // genuine packaged parent/child receiving path; zero disables references.
+    for (const limit of [0, 1, 32]) {
+      const policy = structuredClone(selected); policy.kubernetesFixture.maximumSecretReferenceEntries = limit;
+      writePolicy(policy);
+      for (const project of Object.values(projectors)) project(authorRoot);
+      assert.equal(capture().kubernetesFixture.maximumSecretReferenceEntries, limit);
+      if (limit === 0) await deliver(policy);
+    }
     for (const version of ['v1', 'v1alpha1', 'v2beta12']) {
       const policy = structuredClone(selected); policy.shared.leaseApiVersion = version; writePolicy(policy);
       for (const project of Object.values(projectors)) project(authorRoot);
@@ -192,9 +202,11 @@ test('both actual charts, packaged role boot and loader enforce shared cluster i
       const current = location.reduce((value, key) => value[key], selected);
       const invalidValues = typeof current === 'number' ? [undefined, null, true, '10', 0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1]
         : typeof current === 'boolean' ? [undefined, null, 0, 'true'] : [undefined, null, 42, {}];
-      // Zero is explicitly supported for future skew; all preexisting numeric negatives remain.
-      const rejectedValues = location.join('.') === 'runtimeSecurity.maximumFutureSkewMs'
-        ? invalidValues.filter(value => value !== 0) : invalidValues;
+      // Preserve all preexisting numeric negatives. The newly received secret
+      // entry ceiling, like future skew, explicitly supports zero.
+      const zeroAllowed = ['runtimeSecurity.maximumFutureSkewMs', 'kubernetesFixture.maximumSecretReferenceEntries'].includes(location.join('.'));
+      const rejectedValues = zeroAllowed ? invalidValues.filter(value => value !== 0) : invalidValues;
+      if (location.join('.') === 'kubernetesFixture.maximumSecretReferenceEntries') rejectedValues.push(33);
       for (const value of rejectedValues) {
         const variant = structuredClone(selected);
         const parent = location.slice(0, -1).reduce((item, key) => item[key], variant);

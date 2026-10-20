@@ -1,12 +1,17 @@
+import { readBrowserAxePolicy, readBrowserLighthousePolicy, readBrowserVisualPolicy, readBrowserPlaywrightPolicy } from './production-browser-options.ts';
+import { readContainerBuildPolicy, readDirectCommandPolicy, readNetworkHttpPolicy, readSecurityScanPolicy } from './production-command-options.ts';
+import { readClusterRuntimeSource } from './production-cluster-options.ts';
 import { boolean, object } from './production-config-values.ts';
 import { captureRegistryPeer, readRegistryPeerSource } from './production-registry-peer.ts';
 type Config = Record<string, unknown>;
 
 /** Decode one optional provider object; a declared capability makes it mandatory. */
 function capabilitySource(value: Config, field: string, required: boolean, error: string) {
+  // Presence, not truthiness, is the conditional-source boundary. Even an
+  // undefined/null inactive branch is a supplied second source, not omission.
+  if (!required && Object.hasOwn(value, field)) throw new Error(`BUSTER_INACTIVE_CAPABILITY_SOURCE:${field}`);
   const source = value[field] === undefined ? null : object(value[field], field);
   if (required && !source) throw new Error(error);
-  if (!required && source) throw new Error(`BUSTER_INACTIVE_CAPABILITY_SOURCE:${field}`);
   return source;
 }
 
@@ -93,6 +98,13 @@ function readCapabilitySources(value: Config, allowedCapabilities: ReadonlySet<s
     'BUSTER_NETWORK_HTTP_CONFIG_REQUIRED',
   );
   const browser = browserSources(value, allowedCapabilities);
+  // Decode public browser policies only; executable lookup and native activation
+  // remain after source/token/registry authority admission.
+  if (browser.browserAxeSource) readBrowserAxePolicy(browser.browserAxeSource);
+  if (browser.browserLighthouseSource) readBrowserLighthousePolicy(browser.browserLighthouseSource);
+  if (browser.browserVisualSource) readBrowserVisualPolicy(browser.browserVisualSource);
+  if (browser.browserPlaywrightSource) readBrowserPlaywrightPolicy(browser.browserPlaywrightSource);
+
   const securityScanSource = capabilitySource(
     value,
     'securityScan',
@@ -100,7 +112,18 @@ function readCapabilitySources(value: Config, allowedCapabilities: ReadonlySet<s
     'BUSTER_SECURITY_SCAN_CONFIG_REQUIRED',
   );
   const kubernetesRuntimeSecurityEnabled = allowedCapabilities.has('kubernetes.runtime-security');
+  // Validate the original public binding before registry credentials, source
+  // keys, discovery or stores. Keep v1's supplied-but-inactive validation;
+  // selected v2 admission remains a separate closed receiving contract.
+  if (kubernetesFixtureEnabled || tailscaleExposureEnabled || kubernetesRuntimeSecurityEnabled
+    || Object.hasOwn(value, 'clusterBindings')) readClusterRuntimeSource(value.clusterBindings);
   readRegistryPeerSource(value, allowedCapabilities);
+  // Validate all active network policy fields before any token/source-key or
+  // registry credential lookup, in both privileged parent and runtime child.
+  if (networkHttpSource) readNetworkHttpPolicy(networkHttpSource);
+  if (command.directCommandSource) readDirectCommandPolicy(command.directCommandSource);
+  if (command.containerBuildSource) readContainerBuildPolicy(command.containerBuildSource);
+  if (securityScanSource) readSecurityScanPolicy(securityScanSource);
   return {
     ...command,
     kubernetesFixtureEnabled,

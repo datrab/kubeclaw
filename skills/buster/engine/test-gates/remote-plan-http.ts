@@ -95,6 +95,13 @@ export function createBusterRemotePlanHttpServer(options: {
   readonly maximumResultBytes: number;
   readonly tls?: Readonly<{ key: string | Buffer; cert: string | Buffer }>;
 }): http.Server {
+  // Keep admitted process/wire policy independent of the caller's mutable
+  // options. The service is the original live handle, not a cloned provider.
+  options = Object.freeze({ ...options,
+    ...(options.trustedPeerSpiffeIds === undefined ? {} : {
+      trustedPeerSpiffeIds: Object.freeze([...options.trustedPeerSpiffeIds]),
+    }),
+  });
   if ((options.token === undefined) === (options.trustedPeerSpiffeIds === undefined)) {
     throw new Error('BUSTER_REMOTE_AUTHENTICATION_INVALID');
   }
@@ -103,6 +110,10 @@ export function createBusterRemotePlanHttpServer(options: {
   for (const limit of [options.maximumRequestBytes, options.maximumResponseBytes, options.maximumResultBytes]) {
     if (!Number.isSafeInteger(limit) || limit < 1) throw new Error('BUSTER_REMOTE_HTTP_LIMIT_INVALID');
   }
+  // Native wire floor, not a default policy: the complete fixed readiness
+  // response (dependency unavailable) is 97 UTF-8 bytes. It also contains
+  // the full size-error fallback; accepting a smaller cap breaks the quota.
+  if (options.maximumResponseBytes < 97) throw new Error('BUSTER_REMOTE_HTTP_LIMIT_INVALID');
   const handler: http.RequestListener = (request, response) => {
     void (async () => {
       if (await healthResponse(request, response, options)) return;

@@ -16,6 +16,7 @@ const cases = [
   ['kubernetes.fixture', 'namespace', /KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED/],
   ['kubernetes.fixture', 'registry', /KUBERNETES_FIXTURE_IMAGE_DENIED/],
   ['kubernetes.fixture', 'secret', /KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/],
+  ['kubernetes.fixture', 'secretLimit', /KUBERNETES_FIXTURE_REQUEST_INVALID:secretReferences/],
   ['kubernetes.fixture', 'storage', /KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED/],
   ['kubernetes.fixture', 'manifest', /KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT/],
   ['kubernetes.exposure', 'namespace', /TAILSCALE_EXPOSURE_NAMESPACE_DENIED/],
@@ -26,6 +27,7 @@ function alter(policy, capability, field, direct) {
   if (field === 'namespace') selected.allowedNamespacePrefixes.splice(0, 1, 'changed');
   if (field === 'registry') (direct ? selected.allowedRegistryPrefixes : selected.registryRepositoryPrefixes).splice(0, 1, direct ? 'registry.local/changed' : 'changed');
   if (field === 'secret') selected.allowedSecretReferences.splice(0, 1, 'changed');
+  if (field === 'secretLimit') selected.maximumSecretReferenceEntries = 0;
   if (field === 'storage') selected.allowedStorageClasses.splice(0, 1, 'changed');
   if (field === 'manifest') selected.manifest.maximumDepth = 1;
   if (field === 'host') selected.allowedHostSuffixes.splice(0, 1, '.changed.invalid');
@@ -61,7 +63,7 @@ for (const mode of ['file', 'caller']) for (const [capability, field, expected] 
     };
     const captured = create(options);
     const input = capability === 'kubernetes.fixture' ? request(root, 'delete') : exposureRequest;
-    if (field === 'secret') input.payload.secretReferences = ['source'];
+    if (field === 'secret' || field === 'secretLimit') input.payload.secretReferences = ['source'];
     if (field === 'storage') {
       fs.appendFileSync(input.payload.manifestPath, '\n---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: data\nspec:\n  storageClassName: fast\n  accessModes: [ReadWriteOnce]\n  resources:\n    requests:\n      storage: 1Mi\n');
       input.payload.manifestDigest = `sha256:${crypto.createHash('sha256').update(fs.readFileSync(input.payload.manifestPath)).digest('hex')}`;

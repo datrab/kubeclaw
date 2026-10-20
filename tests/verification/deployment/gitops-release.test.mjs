@@ -1,3 +1,5 @@
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
+import { busterChartProjection } from '../../../scripts/generate-buster-chart-config.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -25,6 +27,10 @@ function fixture(run) {
     const policy = yaml.load(fs.readFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), 'utf8'));
     policy.nodeName = 'native-render-test'; policy.pools.buster.namespace = 'kubeclaw'; policy.pools.prism.namespace = 'kubeclaw';
     fs.writeFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), yaml.dump(policy));
+    // The fixture changed the native owner, which belongs to the same full
+    // generation. Rebuild both normal chart projections before freezing source.
+    fs.writeFileSync(path.join(root, 'charts/prism/files/pipeline/prism-topology.json'), `${JSON.stringify(prismChartProjection(path.join(root, 'config')), null, 2)}\n`);
+    fs.writeFileSync(path.join(root, 'charts/kubeclaw/files/pipeline/buster-topology.json'), `${JSON.stringify(busterChartProjection(path.join(root, 'config')), null, 2)}\n`);
     git(['init', '-q']);
     // This repository is deleted as soon as the synchronous test finishes.
     // Detached maintenance can otherwise recreate .git during that deletion.

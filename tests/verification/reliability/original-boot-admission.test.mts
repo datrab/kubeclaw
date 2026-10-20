@@ -91,6 +91,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { portableJson } from '${new URL('../../../skills/common/plugin-runtime/sdk/src/values.ts', import.meta.url).href}';
+import { captureBusterPreparationV10 } from '${new URL('../../../skills/common/plugin-runtime/foundation/config/buster-preparation-v10.ts', import.meta.url).href}';
 import { captureWorkerCorePolicy } from '${new URL('../../../skills/common/plugin-runtime/foundation/config/worker-core-policy.ts', import.meta.url).href}';
 import { captureBusterLifetimeDescriptor } from '${new URL('../../../skills/common/plugin-runtime/foundation/config/buster-lifetime.mjs', import.meta.url).href}';
 import { PreparationOriginalBootStore, assertOriginalBusterRecoveryContext, originalActiveBootWireMaximumBytes } from '${new URL('../../../skills/buster/engine/test-gates/preparation-boot-store.ts', import.meta.url).href}';
@@ -161,21 +162,27 @@ try {
  const digest = value => 'sha256:'+createHash('sha256').update(value).digest('hex');
  const owner = JSON.parse(fs.readFileSync('${new URL('../../../config/components/worker-core.config.json', import.meta.url).pathname}', 'utf8'));
  const selectedCore = captureWorkerCorePolicy(owner.profiles.standard.settings);
+ const preparationOwner = JSON.parse(fs.readFileSync('${new URL('../../../docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/config/components/buster-engine.config.json', import.meta.url).pathname}', 'utf8'));
+ const selectedPreparation = captureBusterPreparationV10(preparationOwner.profiles['local-A'].settings.preparation);
+ const engineBinding = { owner: 'buster-engine', instanceId: 'test/buster', profileId: 'local-A' };
  const coreBinding = { owner: 'worker-core', instanceId: 'test/buster', profileId: 'standard' };
  const selectionBody = { schemaVersion: 'pipeline-service-selection.v1', role: 'buster',
    callerId: 'buster-preparation', serviceInstanceId: 'test/buster', generationDigest: 'sha256:'+'a'.repeat(64),
    packageReceiptDigest: digest(JSON.stringify({ schemaVersion: 'pipeline-runtime-bundle.v2', files: [] })),
-   bindings: [{ owner: 'buster-engine', instanceId: 'test/buster', profileId: 'standard' }, coreBinding] };
+   bindings: [{ owner: 'buster-engine', instanceId: 'test/buster', profileId: 'local-A' }, coreBinding] };
  const selection = { ...selectionBody, digest: digest(portableJson(selectionBody)) };
+ const childBody = { ...selectionBody, callerId: 'buster-runtime' };
+ const childSelection = { ...childBody, digest: digest(portableJson(childBody)) };
  const imageBytes = JSON.stringify({ wireFixture: 'image' });
  const expected = { schemaVersion: 'pipeline-expected-delivery.v1', callerId: 'buster-preparation', role: 'buster',
    serviceInstanceId: 'test/buster', generationDigest: selection.generationDigest, selectionDigest: selection.digest,
    packageReceiptDigest: selection.packageReceiptDigest, imageReceiptDigest: digest(imageBytes) };
  const members = {
-   'generation/pipeline.config.json': JSON.stringify({ components: { 'worker-core': 'components/worker-core.config.json' }, bindings: [{ role: 'buster', ...coreBinding }] }),
+   'generation/pipeline.config.json': JSON.stringify({ schemaVersion: 'pipeline-entry.v10', components: { 'worker-core': 'components/worker-core.config.json', 'buster-engine': 'components/buster-engine.config.json' }, bindings: [{ role: 'buster', ...coreBinding }, { role: 'buster', ...engineBinding }] }),
    'generation/components/worker-core.config.json': JSON.stringify(owner),
+   'generation/components/buster-engine.config.json': JSON.stringify(preparationOwner),
    'generation/selections/buster-preparation.json': JSON.stringify(selection),
-   'generation/selections/buster-runtime.json': '{}',
+   'generation/selections/buster-runtime.json': JSON.stringify(childSelection),
    'generation/package-receipt.json': JSON.stringify({ schemaVersion: 'pipeline-runtime-bundle.v2', files: [] }),
    'generation/image-receipt.json': imageBytes,
    'reader/swarm.ts': 'wire fixture', 'reader/swarm.schema.json': '{}',
@@ -192,18 +199,83 @@ try {
    generationDigest: selection.generationDigest };
  const alteredCore = structuredClone(selectedCore);
  alteredCore.settings.runtime.node_identity_file_bytes = 64;
- for (const [core, denied] of [[selectedCore, false], [alteredCore, true]]) {
+ const handoff = { parentBootId: originalBoot.parentBootId, generationDigest: expected.generationDigest,
+   parentSelection: selection, childSelection, imageReceiptDigest: expected.imageReceiptDigest };
+ const cases = [[selectedCore, handoff, null], [alteredCore, handoff, /CORE_SOURCE_MISMATCH/]];
+ // These are inert wire controls, not host/native acceptance. Rehashing a
+ // capsule or a foreign selection must not substitute its original receipt.
+ cases.push([selectedCore, { ...handoff, generationDigest: 'sha256:'+'b'.repeat(64) }, /JOIN_MISMATCH/]);
+ for (const key of ['parentSelection', 'childSelection']) {
+   for (const change of [
+     { generationDigest: 'sha256:'+'b'.repeat(64) },
+     { packageReceiptDigest: 'sha256:'+'b'.repeat(64) },
+     { serviceInstanceId: 'foreign/buster', bindings: handoff[key].bindings.map(binding => ({ ...binding, instanceId: 'foreign/buster' })) },
+     { bindings: handoff[key].bindings.map(binding => ({ ...binding, profileId: 'foreign-profile' })) },
+   ]) {
+     const changed = { ...handoff[key], ...change };
+     cases.push([selectedCore, { ...handoff, [key]: changed }, /SELECTION|JOIN_MISMATCH/]);
+     const { digest: _, ...body } = changed;
+     cases.push([selectedCore, { ...handoff, [key]: { ...body, digest: digest(portableJson(body)) } }, /JOIN_MISMATCH/]);
+   }
+ }
+ for (const key of ['attemptEvidenceBytes', 'attemptEvidenceFiles', 'attemptLogBytes', 'completionPhaseAllowance', 'storeLockWaitSeconds', 'tarDiagnosticCodeUnits', 'resultInputReserveMultiplier']) {
+   const changed = structuredClone(selectedPreparation); changed[key] += 1;
+   cases.push([selectedCore, handoff, /PREPARATION_SOURCE_MISMATCH/, changed]);
+   const omitted = structuredClone(selectedPreparation); delete omitted[key];
+   cases.push([selectedCore, handoff, /PREPARATION_SOURCE_MISMATCH/, omitted]);
+ }
+ cases.push([selectedCore, handoff, /PREPARATION_SOURCE_MISMATCH/, undefined]);
+ cases.push([selectedCore, handoff, null]); // Restored original A still decodes after every negative.
+ for (const entry of cases) {
+   const [core, originalHandoff, denied] = entry;
+   const preparation = entry.length === 4 ? entry[3] : selectedPreparation;
    const content = Buffer.from(JSON.stringify({ schemaVersion: 'buster-original-native-boot-capsule.v2',
-     handoff: { parentBootId: originalBoot.parentBootId, parentSelection: selection, imageReceiptDigest: expected.imageReceiptDigest }, sourceArchive,
+     handoff: originalHandoff, sourceArchive,
      facts: { schemaVersion: 'buster-native-boot-facts.v2', generationDigest: expected.generationDigest,
        selectionDigest: expected.selectionDigest, packageReceiptDigest: expected.packageReceiptDigest,
-       imageReceiptDigest: expected.imageReceiptDigest, native: { workerCore: core } } }));
+       imageReceiptDigest: expected.imageReceiptDigest, preparation, native: { workerCore: core } } }));
    const bytes = gzipSync(content);
    fs.writeFileSync(capsuleFile, bytes, { mode: 0o444 });
    const reference = { ...originalBoot, digest: digest(bytes), byteLength: bytes.byteLength, contentByteLength: content.byteLength };
-   if (denied) assert.throws(() => store.read(reference), /CORE_SOURCE_MISMATCH/);
+   if (denied) assert.throws(() => store.read(reference), denied);
    else assert.deepEqual(store.read(reference).facts.native.workerCore, selectedCore);
    assert.deepEqual(fs.readFileSync(capsuleFile), bytes);
+   fs.unlinkSync(capsuleFile);
+ }
+
+ const sourceCases = [
+   [value => { value['generation/pipeline.config.json'].components['buster-engine'] = 'other.json'; }, /PREPARATION_SOURCE_MISMATCH/],
+   [value => { value['generation/pipeline.config.json'].bindings = value['generation/pipeline.config.json'].bindings.filter(binding => binding.owner !== 'buster-engine'); }, /PREPARATION_SOURCE_MISMATCH/],
+   [value => { value['generation/pipeline.config.json'].bindings.push({ role: 'buster', ...engineBinding }); }, /PREPARATION_SOURCE_MISMATCH/],
+   [value => { value['generation/pipeline.config.json'].bindings.push({ role: 'buster', ...engineBinding, profileId: 'foreign-profile' }); }, /PREPARATION_SOURCE_MISMATCH/],
+   [value => { value['generation/components/buster-engine.config.json'].schemaVersion = 'pipeline-component.v2'; }, /PREPARATION_SOURCE_MISMATCH/],
+   [value => { delete value['generation/components/buster-engine.config.json'].profiles['local-A']; }, /PREPARATION_SOURCE_MISMATCH/],
+   [value => { const profiles = value['generation/components/buster-engine.config.json'].profiles; delete profiles[Object.keys(profiles).find(key => key !== 'local-A')].settings.preparation.storeLockWaitSeconds; }, /BUSTER_PREPARATION_V10_INVALID/],
+   [value => { delete value['generation/components/buster-engine.config.json'].profiles['local-A'].settings.preparation.resultInputReserveMultiplier; }, /BUSTER_PREPARATION_V10_INVALID/],
+   [() => {}, null],
+ ];
+ for (const [mutate, denied] of sourceCases) {
+   const originalMembers = Object.fromEntries(Object.entries(members).filter(([name]) => name.endsWith('.json')).map(([name, bytes]) => [name, JSON.parse(bytes)]));
+   mutate(originalMembers);
+   const closure = JSON.parse(sourceContent);
+   closure.files = closure.files.map(file => {
+     if (!Object.hasOwn(originalMembers, file.name)) return file;
+     const bytes = Buffer.from(JSON.stringify(originalMembers[file.name]));
+     return { ...file, bytes: bytes.toString('base64'), byteLength: bytes.byteLength, digest: digest(bytes) };
+   });
+   const content = Buffer.from(JSON.stringify(closure)), bytes = gzipSync(content);
+   fs.unlinkSync(sourceFile); fs.writeFileSync(sourceFile, bytes, { mode: 0o444 });
+   const archive = { ...sourceArchive, digest: digest(bytes), byteLength: bytes.byteLength, contentByteLength: content.byteLength };
+   const capsuleContent = Buffer.from(JSON.stringify({ schemaVersion: 'buster-original-native-boot-capsule.v2', handoff, sourceArchive: archive,
+     facts: { schemaVersion: 'buster-native-boot-facts.v2', generationDigest: expected.generationDigest, selectionDigest: expected.selectionDigest,
+       packageReceiptDigest: expected.packageReceiptDigest, imageReceiptDigest: expected.imageReceiptDigest, preparation: selectedPreparation, native: { workerCore: selectedCore } } }));
+   const capsuleBytes = gzipSync(capsuleContent);
+   fs.writeFileSync(capsuleFile, capsuleBytes, { mode: 0o444 });
+   const reference = { ...originalBoot, digest: digest(capsuleBytes), byteLength: capsuleBytes.byteLength, contentByteLength: capsuleContent.byteLength };
+   if (denied) assert.throws(() => store.read(reference), denied);
+   else assert.deepEqual(store.read(reference).facts.preparation, selectedPreparation);
+   assert.deepEqual(fs.readFileSync(sourceFile), bytes, 'source denial does not rewrite A');
+   assert.deepEqual(fs.readFileSync(capsuleFile), capsuleBytes);
    fs.unlinkSync(capsuleFile);
  }
 

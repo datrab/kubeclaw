@@ -184,13 +184,14 @@ export async function writeDurableState(
 }
 async function acquireKernelLock(
   lockFile: string,
+  lockWaitSeconds: number,
 ): Promise<() => Promise<void>> {
   const child = spawn(
     "/usr/bin/flock",
     [
       "--exclusive",
       "--timeout",
-      "5",
+      String(lockWaitSeconds),
       lockFile,
       "/bin/sh",
       "-c",
@@ -244,7 +245,12 @@ async function cleanupCrashArtifacts(
 export async function withDurableStoreLock<T>(
   file: string,
   operation: () => Promise<T>,
+  lockWaitSeconds = 5,
 ): Promise<T> {
+  // Legacy callers retain their original five-second wait. Explicit new policy
+  // is validated before filesystem effects or starting the kernel lock helper.
+  if (!Number.isSafeInteger(lockWaitSeconds) || lockWaitSeconds < 1)
+    throw new Error("OBSERVABILITY_STORE_LOCK_WAIT_INVALID");
   const directory = path.dirname(file);
   await ensureDirectoryDurable(directory);
   const lockFile = path.join(directory, ".write-lock");
@@ -258,7 +264,7 @@ export async function withDurableStoreLock<T>(
   }
   let release: () => Promise<void>;
   try {
-    release = await acquireKernelLock(lockFile);
+    release = await acquireKernelLock(lockFile, lockWaitSeconds);
   } catch (error) {
     throw new Error(
       `OBSERVABILITY_STORE_LOCK_FAILED:${file}:${error instanceof Error ? error.message : String(error)}`,

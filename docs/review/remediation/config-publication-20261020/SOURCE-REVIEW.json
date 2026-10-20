@@ -1,0 +1,208 @@
+{
+  "updatedAt": "2026-10-20T05:21:32.301616+00:00",
+  "baseline": "566252474dec4be6f14e9aa0a8e080d1d69ff484",
+  "qualification": "Independent nonauthor bounded source closeout of 90 accumulated source/config/test files, NOT complete C0-C6 or native acceptance. Existing admission/stop/source/output gates remain.",
+  "review": {
+    "engine": "codex",
+    "cli": "0.160.0 installed native CLI",
+    "helper": "autoreview --mode local --engine codex --no-web-search --codex-bin <installed CLI> --dataset <complete changed production source chunks>",
+    "modelAuthSandbox": "No model/auth/CODEX_HOME overrides; read-only sandbox preserved. Reviewers could not initialize sandbox filesystem tools, so actual reviews rely on supplied complete diffs/source/dependency chunks.",
+    "finalReports": {
+      "runtime": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The supplied changes preserve legacy runtime behavior while moving public policy validation before confidential reads, capturing the admitted source authority, and retaining immutable HTTP and runtime options. No actionable regression or concrete security defect was identified. Review was limited to the supplied bundle; tests were not run.",
+        "overall_confidence": 0.87
+      },
+      "preparation": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "No actionable defects were identified in the supplied changes. Review covered the versioned source and cleanup policies, legacy compatibility, package import bindings, and validation before effects. Filesystem inspection failed because the sandbox could not initialize, so conclusions rely on the supplied sources, diffs, and dependency context. No tests were run.",
+        "overall_confidence": 0.8
+      },
+      "durability": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The supplied changes strengthen receipt identity, retained-source consistency, publication sequencing, and allocation bounds without an identifiable regression. Legacy defaults remain intact. This assessment is limited to the supplied change bundle and source; no tests were run and no native runtime acceptance is implied.",
+        "overall_confidence": 0.86
+      },
+      "delivery": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "No actionable defects were identified in the supplied change bundle. The intentional v10 admission barriers remain intact. Filesystem inspection failed because the sandbox could not initialize, so this review relied on the supplied diffs and source chunks; tests were not run.",
+        "overall_confidence": 0.78
+      }
+    },
+    "previousRejectedFinding": {
+      "finding": "preparation-review.json findings[0] P1 missing adjacent schema",
+      "decision": "rejected",
+      "reason": "Sparse review snapshot omitted unchanged baseline dependencies. The adjacent schema is tracked in the ORIGINAL repository and already present, unchanged, in baseline HEAD. Actual import succeeds and real preparation and installed-role tests load this module. No source path change is correct or necessary.",
+      "schemaPath": "skills/common/plugin-runtime/foundation/config/pipeline-v10-owner-schemas.json",
+      "schemaSha256": "4d2c76092f97925518a98bafc3cb0cf5418baa2f82ee4d297dea0ee8b6d42fa6",
+      "baselineCommit": "566252474dec4be6f14e9aa0a8e080d1d69ff484",
+      "baselineContainsSameSchema": true,
+      "actualCodecImport": "node import ./skills/common/plugin-runtime/foundation/config/buster-preparation-v10.ts succeeded",
+      "testEvidence": "focused-tests.log 88/88 passed, including real preparation/ledger/cleanup imports; prism-delivery.log passes real installed role readback",
+      "acceptedFindings": []
+    }
+  },
+  "files": {
+    "charts/kubeclaw/files/config/buster-engine.config.json": "67ac8e7f9192ba68de31c42370e398343731d7dd8481220d9bfdaf8266289bc8",
+    "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json": "22a463108d6a85e8ec6d820329eb17f9c4a40663febbea9b3b0559cee20fa265",
+    "charts/kubeclaw/files/pipeline/buster-topology.json": "132817c89f49f51047e1019358237e0062000fdce46539c4cfecfd40b37773c1",
+    "charts/prism/files/pipeline/prism-topology.json": "c04fd634fd2fedb79750bccfc9a003715a6f726797bc4da30a9e516a0391f271",
+    "config/components/buster-engine.config.json": "4b240f0b295a41ca6c2b22d8161b4023b18a57f8d1e25868599056874ce84e2d",
+    "scripts/build-runtime-role-bundle.mjs": "bf00e67330f0d2d4ea1fc78b28fbe10373835e90cf0a09cfb66b937c8bef643e",
+    "scripts/buster_legacy_stop_transaction.py": "e9f30028762c0f158ba3ba7b5a90f0bd1c475b7dbc9ab9344d975a7f66bc7e6b",
+    "scripts/tests/buster-legacy-stop.test.py": "50ef45cba5818f634b9b5c6c6e55adbbab30b784443445f02f69be9f3f7fdb09",
+    "scripts/updates/pipeline-generation.mjs": "01fe2210d24793b2cc9347ea38ec2c98d99c5f37ce8bc08252c9a2b56b4f2973",
+    "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts": "3d0e8ac4deb664fa3d8f22836c6b69ef651fb1c570a060446b45a7c43ff52d24",
+    "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts": "fcdc372edb05ff79dfc9743725d34c458fbe69561bf3fc0ea0c18f8f60ce53f0",
+    "skills/buster/engine/test-gates/preparation-archive.ts": "d39aafd23728bc58e0dc6512d91e0620993a18598915f2f2d4fae1e1a98fd850",
+    "skills/buster/engine/test-gates/preparation-boot-store.ts": "8afca3375b881371a61bc797aafd689c529b84fa2ca33bbfbf14e2e78451a681",
+    "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts": "6963d43c4229fbdaedbab6669db3579953edd1805088a600e7ddbdeb8324b72a",
+    "skills/buster/engine/test-gates/preparation-cleanup-execution.ts": "9f1cee6ba99566190c21a5b434feb9604393b723121c77f47431ba559994909f",
+    "skills/buster/engine/test-gates/preparation-cleanup-host.ts": "0bb5c73a78c9ac6c6d5e70edaa97afb96e4f2db078f39e1fa069c77c7a246034",
+    "skills/buster/engine/test-gates/preparation-cleanup-validation.ts": "35ad83173ea219b8cb1f4c28273509437be72a30cc194b21b5aeb8d3f9da1221",
+    "skills/buster/engine/test-gates/preparation-cleanup.ts": "f347775adfc52c1a10d792da62b782645fd25e1c01bc9f215ce3d5a0f68c8a1c",
+    "skills/buster/engine/test-gates/preparation-config.ts": "2612f6022d6ead814a27180054199203fb69011e93afdb3d819e976c0e1cfcd7",
+    "skills/buster/engine/test-gates/preparation-envelope.ts": "5f40b6aab58ee6075f24b145c7000a05573d594d20f9538a3aa30d7692040930",
+    "skills/buster/engine/test-gates/preparation-execution.ts": "cc90c9bc7556634fbddcd773aeabdfd75ecd3b86894d87a5f3c89e4e8e4124fe",
+    "skills/buster/engine/test-gates/preparation-extraction.ts": "030d39ec499c72a57801d2abc2b8788085d1a2ab9a55c312ae8f88b69fc3a674",
+    "skills/buster/engine/test-gates/preparation-historical-ledger.ts": "853ace920a9c2b59c74e24b40d882d35e0b8f97b3142ad1955dbd094593dbfaa",
+    "skills/buster/engine/test-gates/preparation-historical-materialize.ts": "49d388f80d562f3dc2a56fe9570d371d3b10049d75ddedd4696f53f629df44fb",
+    "skills/buster/engine/test-gates/preparation-historical-publication.ts": "4196ead919b1bd017b3fbf234a4b90be6183da7b552c769baedebc974bff03c7",
+    "skills/buster/engine/test-gates/preparation-historical-source.ts": "7f3938def4e5bef76ad861c0122e9017546ab20a7d5767ea017cb0170e18b3dd",
+    "skills/buster/engine/test-gates/preparation-host.ts": "8a9ea4b5746d9637277bdd73a57e849140387c384aa8825b15f857307b465f3e",
+    "skills/buster/engine/test-gates/preparation-input.ts": "4f6f8d0274a0d50f06bfc71368bc527e931070355ae18d2a2d4908c946cfc327",
+    "skills/buster/engine/test-gates/preparation-ledger-state.ts": "8514f566fe19aee79aeb22cc13a4c26bfd5aeb0ab50c7ea900a378022df5078f",
+    "skills/buster/engine/test-gates/preparation-ledger.ts": "724f897c20cd6a61485ab09f0e67c48a1ecb7003c45dab87e500da511087f309",
+    "skills/buster/engine/test-gates/preparation-native-phase.ts": "0f9b55770036778fe54e7940ffc724c3a07c110d870e0e80059b8176d6392304",
+    "skills/buster/engine/test-gates/preparation-runtime-source.ts": "12bd6a38c6ce38f7e790747aac9d432eae152dea3607f86fa558403534b3f207",
+    "skills/buster/engine/test-gates/preparation-source.ts": "df6983b5b72080b093269b2d07d0c5d1311ac4ab125fa408a5053877ebf55d9a",
+    "skills/buster/engine/test-gates/production-browser-options.ts": "31835a817be724cb1ae16605c75b1f31bf0a3731594585efc155b530567ca2c5",
+    "skills/buster/engine/test-gates/production-capability-sources.ts": "5dcd9221461ff6e3ea3561f484d38e4740db52f42a076e2a1a005cb59dc56fc3",
+    "skills/buster/engine/test-gates/production-cluster-options.ts": "0f9ed99b19188994e7ff540e4f3b3bd055365836c92e60f9fb00582c622a03c0",
+    "skills/buster/engine/test-gates/production-command-options.ts": "1b7ccef3861354f16dec4f1a54fdea166d15669fa33f0e3d7c0cf4849389508e",
+    "skills/buster/engine/test-gates/production-config-values.ts": "1706d6702df126ec724c08f1924db8fe897cd1e17058bc5bce375b038173e73e",
+    "skills/buster/engine/test-gates/production-registry-peer.ts": "300f21388abc978859886566a74c9efa65b8b2dbc154b7541c08c323211925e1",
+    "skills/buster/engine/test-gates/production.ts": "68e7bdfcd822a2d6f45e9360a039bc26a0085e95dfeb932b491c0bf7f00c2ce6",
+    "skills/buster/engine/test-gates/remote-plan-http.ts": "5db2c27c6218bab5762213397802964b470ce87b5bb33d5e090988778ab8e223",
+    "skills/buster/engine/test-gates/remote-plan-runtime.ts": "57b3de5d8b42f9af14c6410d3789933bd39a6dd101745bbf0bef6224b76f86de",
+    "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts": "093104c4580fc1c445aaf93af1cbd83a6554c4776f8666ac117990a50f290a55",
+    "skills/common/plugin-runtime/foundation/config/buster-service-policy.ts": "fdb26d7bb3f588ba1dd930887cf0459f675929d2efd7e918a0c4d234e355f3a8",
+    "skills/common/plugin-runtime/foundation/config/pipeline-generation.ts": "3b233659ffc82ee5de4f1c274007ac59df68b3e37c9e1a04f78da2d1f5505ec5",
+    "skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts": "e011b1a846282e8a11c641f00a20c7c67ce92dd8555fe2d281069f78855570d6",
+    "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts": "7eef73b907915956f83443c392cf031a8c9cccaf7af0fe26c09ea536c32f2b02",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "7f976e3c594f11e6c07e1a38ca83d2134215ada97c6d3cb610c7f5bb0e13e335",
+    "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts": "a55e11d68e7e6847beb7dde9c09513dc88c4f9578f74578f5462dfca76650158",
+    "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "07afd3a04d63a88db974276db848afd9c6062f279452ba50d8d50f6d0dfb40b8",
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "1912a6f8cad9da339902510a19dd08f0e2be4a96cb763f93131d6b47f78ad339",
+    "skills/common/plugin-runtime/foundation/observability/replay-validation.ts": "9bd70ec5bacdf904c5cfa51f7a7e79b21daaa0274b953403b7c8e33592329bc9",
+    "skills/prism/config/engine-policy.ts": "724b90b340300405b76934cd9dfb5990564467334ff62ec50c8e410891e9da2a",
+    "skills/prism/tests/engine-config.test.mts": "9c60cdf5789486b0144ee403163a6ec3b63a0c14292cda9dd8cd1a94186797ed",
+    "tests/fixtures/test-gate/buster-cli-native.mjs": "28df96a92af9668d6f5cdc4a19c8d0ece0e9e57463292606438b9c3507e1b369",
+    "tests/fixtures/test-gate/historical-import-child.mts": "9fffea07012d10f0dac22041bf5257c79e1e8f2b79ed1ee5ad39f5b84e5e68e8",
+    "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs": "7a4fc67ec46694f7511dc5f03a67fb280345f01f5cc13817e1b8b868a62fad39",
+    "tests/verification/contracts/buster-cluster-capture.test.mjs": "08a80466272a550083853d9d8376a2d71d9640d2f6e6805039a8d6188cceca41",
+    "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs": "727ad59f053a14f955986c75e8911b3bfb012071be0beaa6f702724bbc63a56a",
+    "tests/verification/contracts/buster-process-input-callers.test.mjs": "ff03720b228e476b8bcfb3e5ebdcb8acd7041255ecf63c03864dbe78b485fc27",
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts": "d993fc7c87c9014664e22d5aaba9e2e10793426093da5bfe9416cbed8cc38183",
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts": "619d9894858d8cf5a91d58149c8b7428ea1e2c7da31847735692d881abd0252d",
+    "tests/verification/contracts/check-runtime-bundle-builder.mjs": "e7e320b34c056d36f37ad40ae9452a6d893777bd61f5ea5d7ef51c745cf5ae8c",
+    "tests/verification/contracts/check-runtime-bundle-isolation.mjs": "424d81e7aeab113837c1dbb0405641e56c205749040d32c5ccb4753767b66c7d",
+    "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs": "d87b81e6dd5287ff6dedab089acf4729059ddcfab080f0ffbdf723491f03258b",
+    "tests/verification/deployment/code-release.test.mjs": "c9c615b475e45cb302ccefc6e841de9ec37859fc4775e4be8a52ea5a19fd44fe",
+    "tests/verification/deployment/gitops-release.test.mjs": "38385c948dbb1fd3e1d103b6b10b83a3c06ea106ccfde1679b7287719479eff8",
+    "tests/verification/e2e/production-graph-validation.test.mts": "cbe629d457f1a97d174dc2a0529979b54eb58c59c117ca048fe4d2453fa522d2",
+    "tests/verification/e2e/real-run-evidence.test.mjs": "c4cfeb2aa426d4822d97d804448bf1a9fc89f707728c2b7a3bcca681143f8397",
+    "tests/verification/e2e/registry-target.test.mjs": "5233d053ef8f78c360afebccf2d244ffccf0e4b65eb42bbb07b25bc2d96ecb44",
+    "tests/verification/reliability/blob-read-boundary.test.mjs": "4473233b464ac021c0340ac49da27b2151728a8881402e1684d761ba87373f71",
+    "tests/verification/reliability/buster-admission-cli.test.mjs": "9ce576466497dce8a1271e34abe7664991e4ba9c857b8eb171d1fe71ef6d7d79",
+    "tests/verification/reliability/buster-cluster-entrypoint.test.mjs": "3c203273f48fe828099b3823f4582e0a7d1956456e908af3bd933e7db267ceac",
+    "tests/verification/reliability/buster-historical-identities.test.mts": "2b3ba23937b937101f68eb439dc6de51f8d691a22c2fd08afde78d9b37aae841",
+    "tests/verification/reliability/buster-preparation-identities.test.mts": "6ad2da2ed88a21efee18e67d834f03143d08ab90883f742a9fd07e2191a109d2",
+    "tests/verification/reliability/buster-preparation-ledger.test.mts": "32142f1e627fffe9e6240a5a7eb2e82fee2edc570a5f7a8b50232040ed14144e",
+    "tests/verification/reliability/buster-registry-peer.test.mts": "28aeb9a01a7fa149a3a6ebdbaacfaa8cb5d0bf820ff203240a7f2cafc42a3bb0",
+    "tests/verification/reliability/buster-service-policy.test.mts": "dd607f9ac75359de94c81e6883b73ea60f373a7108b0e9f028ee8050b65ecf76",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts": "5ea71ea735c9d4fe3004f2931d85547f67514c1f3c825741a11cf07a41575468",
+    "tests/verification/reliability/kubernetes-manifest-budget.test.mjs": "884eaef7698b0e084823299d71fce4c1279b1ef48a8a46bc13b0aa002b2ff821",
+    "tests/verification/reliability/original-boot-admission.test.mts": "fb597cab36d32bab63e22a1eaf1d87272d069ef0312180524ff84498bae31221",
+    "tests/verification/reliability/original-native-host.test.mjs": "a8bc325d378840428420438cf9ad06ad633981000fd0160c69dcc75914c32431",
+    "tests/verification/reliability/pipeline-role-readback.test.mjs": "6ec6a48d4a964ec4f6c056d91c879f90d545e806b913144b4ee76b6d40f8610b",
+    "tests/verification/reliability/pipeline-selection.test.mts": "a8db02c87b0aff869967c2c23280da84c9e0cfa52c6d129290d61676e7ce0da2",
+    "tests/verification/reliability/pipeline-v10-input-set.test.mts": "70ff29c38b8806f9c77e64cd9e4e76d694df37433fcd1b33e6cb9263bd727259",
+    "tests/verification/reliability/pipeline-v10-owners.test.mts": "d564822894787fafea24774b06d7e5caf521e111c60d6616a65d04ec1daaf965",
+    "tests/verification/reliability/tsconfig.buster-shutdown.json": "b4bf2ae49dcbe3fee87cf7a3ca2a8a0d548ac4dbed403764efed1947e0e61e08",
+    "skills/buster/engine/test-gates/preparation-cleanup-policy.ts": "9c050998c7dd5e27c0e59dc20f03fbe12d741273b248e34165cba88373bb4ffa",
+    "skills/common/plugin-runtime/foundation/config/buster-preparation-v10.ts": "9538c4d6e9e44c8eaadcf97d9efb42bce452588ba1b2c7595a3de58c6ecd4dce",
+    "tests/verification/reliability/buster-response-boundary.test.mts": "d87a4ab5160f13cc27120477095bcf8ccc9a7bb44e4b7667e25f6b9aeb68606e"
+  },
+  "additionalDefectFixed": "Real original package isolation failed on eight checkout-relative imports of the new v10 codec. All eight now use existing package exports. Same unchanged original isolation passes across 3 roles/9 negative controls; affected source re-reviewed clean.",
+  "verification": {
+    "focusedTests": "88/88 pass, no skips; before package-import-only correction",
+    "affectedPreparationAfterCorrection": "30/30 pass, no skips",
+    "wholeOriginalV10Suite": "57/57 pass, no skips",
+    "actualPrismPackageReadback": "1/1 pass",
+    "actualThreeRolePackageIsolation": {
+      "ok": true,
+      "phase": "5.6-E",
+      "roles": 3,
+      "negativeProofs": 9
+    },
+    "integrationTypechecks": "exit0 after correction",
+    "generatedDocs": "exit0",
+    "bothChartProjectionChecks": "exit0",
+    "releaseTests": {
+      "result": "15 original code-release/GitOps tests passed; source-only Prism engine test rerun in maintained NODE_ENV=test mode",
+      "firstMixedRun": "15/16; Prism source-only test inherited production environment and required native engine identity",
+      "log": "config-publish-20261020T0513/release-tests.log",
+      "sourceOnlyPrismEngineFinal": "1/1 pass using maintained NODE_ENV=test; no native engine identity synthesized"
+    },
+    "legacyStopSuite": {
+      "result": "NOT VERIFIED under required unprivileged identity",
+      "rootAttempt": "17 pass / 1 fail: test explicitly requires non-root",
+      "actualUid1000Attempt": "setpriv setresuid EPERM; no assertion or identity spoofing",
+      "evidence": {
+        "argv": [
+          "setpriv",
+          "--reuid=1000",
+          "--regid=1000",
+          "--init-groups",
+          "python3",
+          "/tmp/config-legacy-stop-unprivileged-7v3g1oa7/scripts/tests/buster-legacy-stop.test.py"
+        ],
+        "exitCode": 127,
+        "realUid": 1000,
+        "sourceCopies": [
+          {
+            "path": "scripts/buster_legacy_stop_transaction.py",
+            "sha256": "e9f30028762c0f158ba3ba7b5a90f0bd1c475b7dbc9ab9344d975a7f66bc7e6b"
+          },
+          {
+            "path": "scripts/buster-legacy-stop.py",
+            "sha256": "e41b1e61115f21e0d908a89d18f498153cdf84dd0384e32325a16ff369287822"
+          },
+          {
+            "path": "scripts/buster_legacy_stop_runtime.py",
+            "sha256": "da13076f4cb8ef08c5e9e393da89b9f06b3f4675195c61960bd377a004ac1ef2"
+          },
+          {
+            "path": "scripts/buster_legacy_stop_files.py",
+            "sha256": "2c674ea367c0a45013893db18c4b0260f79ded257f9c08b8a6c46b8e004ed3b3"
+          },
+          {
+            "path": "scripts/buster_legacy_stop_policy.py",
+            "sha256": "d88e4d8b6e9070ddd80be7ddf890cb5ce78efe394c969aac6ebc8f98e2983158"
+          },
+          {
+            "path": "scripts/tests/buster-legacy-stop.test.py",
+            "sha256": "50ef45cba5818f634b9b5c6c6e55adbbab30b784443445f02f69be9f3f7fdb09"
+          }
+        ]
+      }
+    },
+    "static": "15 hash-pinned original upstream parser export findings remain open; no excludes/vendor trimming/fake use added",
+    "fullNativeAndInitialRecovery": "NOT VERIFIED; CAP/UID/cgroup/trusted archive storage prerequisites remain"
+  }
+}

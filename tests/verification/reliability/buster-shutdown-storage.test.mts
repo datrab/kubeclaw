@@ -240,3 +240,28 @@ test('HTTP timeout preserves an already rejected durable service shutdown', asyn
     await assert.rejects(runtime.stop(), verify);
   } finally { release(); request.destroy(); }
 });
+
+
+test('runtime retains original listener, service and drain policy across caller mutation', async () => {
+  let recoveries = 0;
+  const ceilings: number[] = [];
+  const service = { recover: async () => { recoveries++; },
+    shutdown: async (ceiling: number) => { ceilings.push(ceiling); } };
+  const supplied = { service: service as unknown as ProductionService,
+    host: '127.0.0.1', port: 0, token: 'shutdown-test-token-0000000000000000',
+    maximumRequestBytes: 1024, maximumResponseBytes: 1024,
+    maximumResultBytes: 1024, shutdownTimeoutMs: 750 };
+  const runtime = new BusterRemotePlanRuntime(supplied);
+  supplied.service = new Proxy({} as ProductionService, {
+    get() { assert.fail('runtime must retain the original service'); },
+  });
+  supplied.host = 'not-an-original-listener.invalid';
+  supplied.port = 65536;
+  supplied.shutdownTimeoutMs = 1;
+  try {
+    const address = await runtime.start();
+    assert.equal(address.address, '127.0.0.1');
+    assert.equal(recoveries, 1);
+  } finally { await runtime.stop(); }
+  assert.deepEqual(ceilings, [750], 'one original S process-drain ceiling, no replacement budget');
+});

@@ -25,7 +25,7 @@ export async function executeBusterPreparation(options: PreparationExecutionOpti
   admit: (job: PreparedPlanJob) => Promise<boolean>): Promise<StagedAdmission | null> {
   const { ledger } = options;
   const admissionId = randomBytes(16).toString('hex');
-  const envelope = await ledger.reserve(admissionId, preparationProfile(options.engineContentDigest), new Date());
+  const envelope = await ledger.reserve(admissionId, preparationProfile(options.engineContentDigest, options.ledger.version), new Date());
   const gate = await createPreparationGate(options.command.sourceRoot, admissionId, envelope);
   await ledger.bindGate(admissionId, gate);
   let permitted: StagedAdmission | undefined;

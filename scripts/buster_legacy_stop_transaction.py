@@ -105,11 +105,29 @@ def same_seal(current, sealed):
     return stable(current) == stable(sealed)
 
 
+def receipt_identity(state, policy):
+    captured = state['capture']
+    return {'schemaVersion': 'buster-legacy-stop-seal.v1', 'transactionId': state['transactionId'],
+            'policyDigest': digest(policy), 'captureDigest': digest(captured), 'node': captured['node'],
+            'machineId': captured['machineId'], 'bootId': captured['bootId'], 'pvc': captured['pvc'], 'pv': captured['pv'],
+            'deployment': captured['deployment'], 'writers': captured['writers'], 'quiescentGroups': captured['groups'],
+            'runtimeVersion': captured['runtimeVersion'], 'runtimeEndpoint': captured['runtimeEndpoint'],
+            'unitDigest': digest(captured['unit']), 'locks': state['locks'],
+            'createdLockEntries': state['createdLockEntries']}
+
+
 def complete(path, state, policy):
     limits = policy['limits']; captured = state['capture']; volume = Path(policy['volumeRoot'])
     plan_root, runtime_root = volume / 'plan-jobs', volume / 'runs'
     if state['phase'] == 'completed':
         receipt = state['receipt']
+        # Completed state is not a license to reuse a foreign transaction's
+        # receipt. Bind the retained bytes before tree readback or host action.
+        require(isinstance(receipt, dict)
+                and set(receipt) == set(receipt_identity(state, policy)) | {'plan', 'runtime', 'receiptDigest'}
+                and all(receipt[key] == value for key, value in receipt_identity(state, policy).items())
+                and receipt.get('receiptDigest') == digest({key: value for key, value in receipt.items()
+                                                           if key != 'receiptDigest'}), 'TERMINAL_RECEIPT_CHANGED')
         require(same_seal(verify_tree(plan_root, 'plan', limits), receipt['plan']), 'PLAN_SEAL_CHANGED')
         require(same_seal(verify_tree(runtime_root, 'runtime', limits), receipt['runtime']), 'RUNTIME_SEAL_CHANGED')
         publish(volume, state['transactionId'], encode(receipt) + b'\n', limits['maximumReceiptBytes'])
@@ -150,13 +168,8 @@ def complete(path, state, policy):
         reserve_completion(state, limits)
         save(path, state, limits['maximumTransactionBytes'])
         seal_tree(plan_root, plan); seal_tree(runtime_root, runtime)
-        receipt = {'schemaVersion': 'buster-legacy-stop-seal.v1', 'transactionId': state['transactionId'],
-                   'policyDigest': digest(policy), 'captureDigest': digest(captured), 'node': captured['node'],
-                   'machineId': captured['machineId'], 'bootId': captured['bootId'], 'pvc': captured['pvc'], 'pv': captured['pv'],
-                   'deployment': captured['deployment'], 'writers': captured['writers'], 'quiescentGroups': captured['groups'],
-                   'runtimeVersion': captured['runtimeVersion'], 'runtimeEndpoint': captured['runtimeEndpoint'],
-                   'unitDigest': digest(captured['unit']), 'locks': state['locks'], 'createdLockEntries': created,
-                   'plan': verify_tree(plan_root, 'plan', limits), 'runtime': verify_tree(runtime_root, 'runtime', limits)}
+        receipt = dict(receipt_identity(state, policy),
+                       plan=verify_tree(plan_root, 'plan', limits), runtime=verify_tree(runtime_root, 'runtime', limits))
         receipt['receiptDigest'] = digest(receipt)
         data = encode(receipt) + b'\n'
         require(len(data) <= limits['maximumReceiptBytes'], 'RECEIPT_QUOTA')

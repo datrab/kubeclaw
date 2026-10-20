@@ -1,3 +1,4 @@
+import { preparationOperationSettings } from './preparation-envelope.ts';
 import { validatePreparationCleanupChain } from './preparation-cleanup-validation.ts';
 import type { PreparationCleanupAssociation } from './preparation-cleanup-binding.ts';
 import { assertHistoricalImportDescriptor, type HistoricalImportDescriptor } from './preparation-historical-reference.ts';
@@ -100,8 +101,10 @@ function validateReservationEnvelope(item: SourceReservation): void {
   const values = item.envelope.operation.values;
   if (values.preparationUid !== item.slot || values.admissionId !== item.admissionId
     || item.envelope.attemptSpecDigest !== item.attemptSpecDigest
-    || item.envelope.operation.contractId !== 'kubeclaw.buster-preparation@1'
     || Object.keys(values).sort().join(',') !== 'admissionId,phase,preparationUid,settings') invalid();
+  // Dispatch only by the original signed operation identity; current settings
+  // never reinterpret retained legacy or explicit v10 records.
+  preparationOperationSettings(item.envelope);
   const phase = values.phase as { kind?: unknown; input?: unknown; descriptor?: unknown };
   if (!phase || typeof phase !== 'object') invalid();
   if (item.historicalDescriptor !== null) {
