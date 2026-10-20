@@ -23627,6 +23627,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/use/workflows/examples/first-project.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw compile-only project example.",
+      "originalPath": "docs/site/use/workflows/examples/first-project.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/first-project.mjs",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
