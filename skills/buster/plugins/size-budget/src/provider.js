@@ -122,7 +122,7 @@ async function verifiedFile(artifact, label, maximumBytes, signal) {
     throw new Error(`SIZE_BUDGET_INPUT_SIZE_INVALID:${label}`);
   }
   const candidate = fs.realpathSync(fileURLToPath(artifact.storageUrl));
-  const handle = await fs.promises.open(candidate, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+  const handle = await fs.promises.open(candidate, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
   let verified = false;
   try {
     const before = await handle.stat();

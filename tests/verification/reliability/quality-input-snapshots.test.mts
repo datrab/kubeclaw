@@ -5,7 +5,7 @@ import fsp from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import {execFileSync} from 'node:child_process';
+import {execFileSync,spawnSync} from 'node:child_process';
 import {pathToFileURL} from 'node:url';
 import {provider as coverage} from '../../../skills/buster/plugins/coverage-budget/src/provider.js';
 import {provider as size} from '../../../skills/buster/plugins/size-budget/src/provider.js';
@@ -104,4 +104,23 @@ for(const phase of ['eof','close'] as const)test(`size file cancellation during 
   const name=`cancel-${phase}`;await assert.rejects(size().execute(f.invocation(input,name),{...f.context(name),signal:controller.signal}),/SIZE_BUDGET_CANCELLED/);
   assert.equal(controller.signal.aborted,true);assert.equal(fs.existsSync(path.join(f.workspace,`evidence-${name}`,'size-budget-baseline.json')),false);
  }finally{fsp.open=open;}
+}));
+
+// A FIFO with no writer must be rejected, not block before the regular-file guard.
+// Run the real providers in a bounded child so the regression cannot hang the suite.
+for(const target of ['coverage','build-output','baseline'] as const)test(`quality ${target} rejects unwritten FIFO and restores regular input`,()=>fixture(async root=>{
+ const f=await sizeFixture(root),fifo=path.join(root,'unwritten.fifo');execFileSync('mkfifo',[fifo]);
+ const invalid={artifactId:'fifo',type:'artifact',mediaType:target==='coverage'?'text/lcov':target==='baseline'?'application/vnd.kubeclaw.size-budget-baseline+json':'application/octet-stream',sizeBytes:0,contentDigest:`sha256:${crypto.createHash('sha256').update('').digest('hex')}`,storageUrl:pathToFileURL(fifo).href};
+ const name=`fifo-${target}`;
+ const invocation=target==='coverage'?coverageInput(invalid):f.invocation(target==='build-output'?invalid:artifact(f.tar,'application/x-tar'),name,target==='baseline'?invalid:undefined);
+ const module=new URL(target==='coverage'?'../../../skills/buster/plugins/coverage-budget/src/provider.js':'../../../skills/buster/plugins/size-budget/src/provider.js',import.meta.url).href;
+ const program=`import assert from 'node:assert/strict';import fsp from 'node:fs/promises';import {provider} from ${JSON.stringify(module)};
+ const open=fsp.open;let closed=false;fsp.open=async(...args)=>{const handle=await open(...args);if(String(args[0])===process.argv[1]){const close=handle.close.bind(handle);handle.close=async()=>{await close();closed=true;};}return handle;};
+ const invocation=JSON.parse(process.argv[2]);await assert.rejects(provider().execute(invocation,{workspaceRoot:process.argv[3],signal:new AbortController().signal,log(){}}),/${target==='coverage'?'COVERAGE_INPUT_SIZE_MISMATCH':'SIZE_BUDGET_INPUT_SIZE_MISMATCH:'+target}/);assert.equal(closed,true);`;
+ const child=spawnSync(process.execPath,['--input-type=module','--eval',program,fifo,JSON.stringify(invocation),f.workspace],{encoding:'utf8',timeout:5000});
+ assert.equal(child.error,undefined,`${target}: ${child.error?.message}`);assert.equal(child.status,0,child.stderr);
+ assert.equal(fs.existsSync(path.join(f.workspace,`evidence-${name}`,'size-budget-baseline.json')),false);
+ if(target==='coverage'){
+  const file=path.join(root,'restored.info');fs.writeFileSync(file,'SF:actual.ts\nDA:1,1\n');assert.equal((await coverage().execute(coverageInput(artifact(file)))).outcome,'passed');
+ }else assert.equal((await size().execute(f.invocation(artifact(f.tar,'application/x-tar'),`restored-${target}`,target==='baseline'?f.baseline:undefined),f.context(`restored-${target}`))).outcome,'passed');
 }));

@@ -4,7 +4,7 @@ import path from 'node:path';
 import { once } from 'node:events';
 
 // Explicit Kubernetes wire-protocol fixture, not a controller or tailnet substitute.
-export async function exposureAPI(root) {
+export async function exposureAPI(root, {onRequest} = {}) {
   const group = 'kubeclaw.forgestack.ai';
   const state = { reads: 0, patches: [], autoObserve: true, observedAfterReads: 3, staleReads: 0, conflict: false,
     lease: { apiVersion: `${group}/v1alpha1`, kind: 'BusterNamespaceLease',
@@ -17,6 +17,18 @@ export async function exposureAPI(root) {
   const server = http.createServer(async (request, response) => {
     response.setHeader('content-type', 'application/json');
     const url = new URL(request.url, 'http://localhost'); const route = url.pathname;
+    if (onRequest) {
+      const started = performance.now();
+      onRequest({ event: 'api-request', method: request.method, route });
+      response.once('finish', () => onRequest({ event: 'api-finish', method: request.method, route,
+        statusCode: response.statusCode, elapsedMs: Math.round(performance.now() - started) }));
+      request.once('aborted', () => onRequest({ event: 'api-request-aborted', method: request.method, route,
+        elapsedMs: Math.round(performance.now() - started) }));
+      response.once('close', () => {
+        if (!response.writableFinished) onRequest({ event: 'api-response-closed-before-finish', method: request.method, route,
+          elapsedMs: Math.round(performance.now() - started) });
+      });
+    }
     const send = value => response.end(JSON.stringify(value));
     if (route === '/api') return send({ kind: 'APIVersions', apiVersion: 'v1', versions: ['v1'] });
     if (route === '/apis') return send({ kind: 'APIGroupList', apiVersion: 'v1', groups: [group, 'authorization.k8s.io'].map(name => ({ name,
