@@ -1392,3 +1392,62 @@ test('versioned v10 selection and full Buster owner bind original caller profile
  assert.throws(() => select(original.capture, tuple, pkg), /CAPTURE_CLOSED/);
  assert.throws(() => project(original.capture, valid), /CAPTURE_CLOSED/);
 });
+
+
+test('versioned v10 wire receivers require separate original tuple/package and preserve full owner without boot admission', async t => {
+ const { createPipelineV10ServiceSelection: select, createBusterV10SelectedOwnerProjection: project,
+   receivePipelineV10ServiceSelection: receive, receiveBusterV10SelectedOwnerProjection: receiveOwner,
+   readPipelineServiceSelection: legacy } = await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
+ const root = tree(t), original = capture(root, replacements); t.after(original.capture.close);
+ const document = JSON.parse(original.capture.read('config/pipeline.config.json').toString());
+ const tuple = (callerId: 'buster-preparation' | 'buster-runtime', serviceInstanceId = 'fixture.service.buster-runtime'): any => ({
+   role: 'buster', callerId, serviceInstanceId,
+   bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === serviceInstanceId)
+     .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) });
+ const pkg = ('sha256:' + 'a'.repeat(64)) as `sha256:${string}`;
+ const otherPkg = ('sha256:' + 'b'.repeat(64)) as `sha256:${string}`;
+ for (const callerId of ['buster-preparation', 'buster-runtime'] as const) {
+  const request = tuple(callerId), selected = select(original.capture, request, pkg), owner = project(original.capture, selected);
+  const wire = JSON.parse(JSON.stringify(selected)), ownerWire = JSON.parse(JSON.stringify(owner));
+  const run = (selection: unknown = wire, projection: unknown = ownerWire) => receiveOwner(projection, original.capture, selection, request, pkg);
+  assert.deepEqual(receive(wire, original.capture, request, pkg), selected);
+  assert.deepEqual(run(), owner);
+  assert.equal(Object.keys(run().author.profiles).length, 95);
+  assert.equal(Object.isFrozen(run().author.profiles), true);
+  assert.equal(Object.isFrozen(receive(wire, original.capture, request, pkg).bindings), true);
+  for (const foreign of [null, [], { ...wire, extra: true }, { ...wire, schemaVersion: 'pipeline-service-selection.v1' },
+    { ...wire, digest: 'sha256:' + '0'.repeat(64) }, select(original.capture, request, otherPkg),
+    select(original.capture, tuple(callerId === 'buster-runtime' ? 'buster-preparation' : 'buster-runtime'), pkg),
+    select(original.capture, tuple(callerId, 'fixture.service.buster-security-runtime'), pkg)]) {
+   assert.throws(() => run(foreign), /SERVICE_SELECTION_MISMATCH/);
+   assert.deepEqual(run(), owner);
+  }
+  assert.throws(() => receive(wire, original.capture, request, otherPkg), /SERVICE_SELECTION_MISMATCH/);
+  for (const mutate of [
+   (v: any) => { v.schemaVersion = 'buster-selected-owner-projection.v1'; },
+   (v: any) => { v.extra = true; },
+   (v: any) => { v.selectionDigest = 'sha256:' + '0'.repeat(64); },
+   (v: any) => { delete v.author.profiles[Object.keys(v.author.profiles).find(k => k !== v.binding.profileId)!]; },
+   (v: any) => { v.settings.remotePlanService.port++; },
+   (v: any) => { const k = Object.keys(v.author.profiles).find(k => k !== v.binding.profileId)!; v.author.profiles[k].settings.remotePlanService.port++; },
+  ]) {
+   const changed = structuredClone(ownerWire); mutate(changed);
+   assert.throws(() => run(wire, changed), /SELECTED_OWNER_PROJECTION_MISMATCH/);
+   assert.deepEqual(run(), owner);
+  }
+  wire.bindings[0].profileId = 'caller-mutation'; ownerWire.author.profiles = {};
+  assert.deepEqual(receive(selected, original.capture, request, pkg), selected);
+  assert.deepEqual(receiveOwner(owner, original.capture, selected, request, pkg), owner);
+  assert.throws(() => legacy(selected, callerId), /SERVICE_SELECTION_INVALID/);
+ }
+ const request = tuple('buster-runtime'), selected = select(original.capture, request, pkg), owner = project(original.capture, selected);
+ const file = path.join(root, 'schemas/pipeline-entry.schema.json'), bytes = fs.readFileSync(file);
+ fs.appendFileSync(file, ' ');
+ assert.throws(() => receive(selected, original.capture, request, pkg), /INPUT_CHANGED/);
+ assert.throws(() => receiveOwner(owner, original.capture, selected, request, pkg), /INPUT_CHANGED/);
+ original.capture.close(); fs.writeFileSync(file, bytes);
+ const restored = capture(root, replacements); t.after(restored.capture.close);
+ assert.deepEqual(receiveOwner(owner, restored.capture, selected, request, pkg), owner);
+ restored.capture.close();
+ assert.throws(() => receiveOwner(owner, restored.capture, selected, request, pkg), /CAPTURE_CLOSED/);
+});

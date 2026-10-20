@@ -216,3 +216,28 @@ export function createBusterV10SelectedOwnerProjection(inputs: ReturnType<typeof
   deepFreeze(projection);
   return projection;
 }
+
+/** Read back a v2 wire against the retained original inputs and the receiving
+ * caller/package tuple. Never derive the expected tuple from untrusted wire.
+ * This source-bound comparison is not source/caller or boot authorization.
+ */
+export function receivePipelineV10ServiceSelection(value: unknown,
+  inputs: ReturnType<typeof capturePipelineInputSet>, selection: SwarmSelection,
+  packageReceiptDigest: Digest) {
+  const expected = createPipelineV10ServiceSelection(inputs, selection, packageReceiptDigest);
+  if (portableJson(value) !== portableJson(expected)) throw new Error('PIPELINE_V10_SERVICE_SELECTION_MISMATCH');
+  return expected;
+}
+
+/** Receive the full original owner, including unselected profiles, only after
+ * the independently supplied receiving tuple and package have matched. No
+ * legacy v1 receiver, current-author lookup, partial merge or ENV fallback.
+ */
+export function receiveBusterV10SelectedOwnerProjection(value: unknown,
+  inputs: ReturnType<typeof capturePipelineInputSet>, selectionValue: unknown,
+  selection: SwarmSelection, packageReceiptDigest: Digest) {
+  const received = receivePipelineV10ServiceSelection(selectionValue, inputs, selection, packageReceiptDigest);
+  const expected = createBusterV10SelectedOwnerProjection(inputs, received);
+  if (portableJson(value) !== portableJson(expected)) throw new Error('BUSTER_V10_SELECTED_OWNER_PROJECTION_MISMATCH');
+  return expected;
+}

@@ -66,7 +66,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const { captureSwarmSettings } = await import(pathToFileURL(path.join(directory, 'swarm.ts')).href);
     const { capturePipelineInputSet } = await import(pathToFileURL(path.join(directory, 'pipeline-input-set.ts')).href);
     const { capturePipelineMaterializerInputSource } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-input-set.ts')).href);
-    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
+    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection, receivePipelineV10ServiceSelection, receiveBusterV10SelectedOwnerProjection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
     const { verifyInstalledRuntimeBundle, assertRuntimeBundleObservations } = await import(pathToFileURL(path.join(directory, 'runtime-bundle-receipt.mjs')).href);
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
@@ -121,7 +121,16 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     if (inputSource.rootSchemaVersion === 'pipeline-entry.v10') {
       for (const service of services) {
         const candidate = createPipelineV10ServiceSelection(inputSource.declared.capture, service, hash(packageBytes));
-        if (receipt.role === 'buster') createBusterV10SelectedOwnerProjection(inputSource.declared.capture, candidate);
+        // Exercise the versioned wire readback against the SAME retained
+        // original inputs and separately held caller/package tuple. This does
+        // not open the source/caller or output/boot admission below.
+        const received = receivePipelineV10ServiceSelection(JSON.parse(jsonBytes(candidate)),
+          inputSource.declared.capture, service, hash(packageBytes));
+        if (receipt.role === 'buster') {
+          const owner = createBusterV10SelectedOwnerProjection(inputSource.declared.capture, received);
+          receiveBusterV10SelectedOwnerProjection(JSON.parse(jsonBytes(owner)), inputSource.declared.capture,
+            received, service, hash(packageBytes));
+        }
       }
     }
     const captures = [], selections = [];
