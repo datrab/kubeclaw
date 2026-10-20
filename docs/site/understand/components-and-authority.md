@@ -480,6 +480,7 @@ the contract, authority, persistence, and failure behavior in the same row.
 | Buster or Prism runtime | Worker Core | Worker envelope, profile, claim, cancellation, progress, logs, evidence, and terminal result | Local runtime call or a role-owned remote transport | Worker attempt journal, ownership store, output spool, and result seal | Worker host policy and the calling role's result policy | Admission rejects before launch, or recovery fences new work until ownership and process state are safe. |
 | Trusted native supervisor | Unprivileged specialist host | Length-bounded envelope, framed control messages, cancellation, and provisional result | Standard input/output plus a private framed control endpoint | Supervisor-owned journal, spool, ownership record, observations, and final seal | Native worker host policy | The supervisor terminates and drains the process tree. It does not accept a result while control requests remain unsettled. |
 | Redis transport adapter | Redis and an external consumer | `transport.publish` or `telemetry.emit` payload plus idempotency identity | RESP over `redis:` or TLS-protected `rediss:` | Redis stream and deduplication key; lifecycle authority stays in Nova | Redis stream length and deduplication TTL from platform configuration | Delivery can retry within adapter policy. Redis loss cannot create or change a lifecycle decision. |
+| OpenClaw host agent-observer extension | Redis ingress streams and downstream observability readers | Versioned host hook, diagnostic, and agent-event projections; distinct from Nova observer delivery | Host-owned Redis client, bounded in-process queues, then `XADD` with JSON in `data` | Process queues are volatile; Redis ingress is a projection, not the Nova lifecycle journal | Host observer configuration bounds each queue, event size, stream length, command timeout, and control retry attempts | Payload writes get one writer attempt. Control writes have bounded retries, then best-effort dead-letter publication. Queue overflow, process loss, or write failure can lose projections without changing lifecycle truth. |
 | Source-capable stage or service | Git repository and isolated workspace | Repository identity, immutable revision, allowed path, commit, merge, or sync request | Git process through the selected capability adapter | Git object database; Nova stores the accepted commit identity | Repository owner and workspace-cleanup policy | The operation stops on identity or path mismatch. Recovery does not substitute the current branch head. |
 | Buster container-build provider | BuildKit and OCI registry | Bounded build context, Dockerfile, platform, image reference, and digest-bearing result | BuildKit API and OCI registry protocol | BuildKit cache is derived; registry content digest is the image authority | BuildKit cache policy and registry retention policy | The suite reports an execution error or failed check. It does not treat a local cache hit as a published image. |
 | Prism services | PostgreSQL and artifact storage | Projects, revisions, operations, approvals, retrieval records, bundles, and artifact identities | PostgreSQL protocol and artifact capability calls | PostgreSQL owns relational design state; artifact storage owns immutable bytes | Prism database and artifact retention policy | Prism stops the affected operation. It can rebuild a declared projection, but it cannot recreate an approval from a preview. |
@@ -500,6 +501,28 @@ the contract, authority, persistence, and failure behavior in the same row.
 > [Worker Core binds specialist work to the generic execution hooks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/attempt-executor.ts#L30-L106).
 >
 > **Limit:** The table proves source-level contracts and ownership. Deployment-specific retention periods and live reachability still require the target environment's configuration and acceptance evidence.
+
+### Separate OpenClaw host observer path
+
+The host extension normalizes hooks, model-usage diagnostics, and agent events.
+It writes to `pipeline:agent-observability:control:v1` or
+`pipeline:agent-observability:payload:v1`, according to the ingress event type.
+The writer drains control events before payload events.
+Its queue admission checks event size and the per-stream queue ceiling.
+These queues and duplicate filters belong to the process, not a durable outbox.
+
+After exhausted control-write retries, the writer attempts
+`pipeline:agent-observability:deadletter:v1` with the failed source stream,
+serialized event, failure time, and error. Dead-letter publication can also fail.
+Payload failure does not take this dead-letter path.
+Redis stream length uses approximate trimming, not an age-based retention guarantee.
+A timed-out command can have reached Redis; retries do not prove exactly-once delivery.
+Downstream readers must retain their own interpretation and duplicate-handling rules.
+This ingress does not replay or authorize Nova lifecycle decisions.
+
+> **Source boundary:** [Host observer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/index.ts),
+> [queue, retry, and dead-letter writer](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts),
+> and [ingress constants](https://github.com/datrab/kubeclaw/blob/f50e90cd19501dcbf422423310a8f1fe7f3ca9c8/contracts/agent-observability/v1/src/constants.ts).
 
 **Why this design exists:** Recovery needs one answer for each fact.
 A cache or transport copy can disappear without changing the fact's owner.
