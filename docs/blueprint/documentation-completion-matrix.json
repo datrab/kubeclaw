@@ -61,6 +61,383 @@
       ],
       "openIssues": [],
       "verdict": "PASS"
+    },
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation implementation authors before review campaign",
+      "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
+      "gateIds": [],
+      "requirementIds": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/understand/README.md",
+        "docs/site/decisions/README.md",
+        "docs/site/status/current.md"
+      ],
+      "sources": [
+        "docs/site/README.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/README.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-status.mjs",
+        "packaging/runtime/package-ownership.json",
+        "docs/site/understand/README.md",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "docs/site/decisions/README.md",
+        "docs/blueprint/05-decision-record-catalogue.md",
+        "docs/site/status/current.md",
+        "docs/status/open-issues.json",
+        "docs/status/finding-identities.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/check-core-architecture-guides.mjs",
+          "exitCode": 0,
+          "observation": "3 pages,52 mapped requirements,220 pinned links; actual topic sources independently inspected."
+        },
+        {
+          "command": "node scripts/docs-status.mjs --check",
+          "exitCode": 0,
+          "observation": "Issue schema/counts/references and generated view agree."
+        },
+        {
+          "command": "Independent topic source and reader review",
+          "exitCode": 0,
+          "observation": "All11 named scopes PASS;18 inspected/supporting pages,298 local links, no missing paths/anchors; decision identity namespaces compared."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+      "limits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "GOV-002 exhaustive inventory and DEC-002 full rationale review remain NOT_READY; GOV-006 metadata map stale.",
+        "Other-page/global refs/publication/boundary checks failed; not accepted by this scoped review."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09.2-ready-topics-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation implementation authors before review campaign",
+      "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
+      "gateIds": [],
+      "requirementIds": [
+        "ARC-001",
+        "ARC-002",
+        "ARC-004",
+        "ARC-005",
+        "NVC-001",
+        "NVC-004",
+        "NVC-005",
+        "NVC-006",
+        "NVC-007",
+        "NVC-008",
+        "NVC-009",
+        "NVC-010",
+        "NVC-011",
+        "NVC-012",
+        "NVC-013",
+        "NVC-014",
+        "NVC-015",
+        "NVC-016",
+        "NVC-017",
+        "NVC-018",
+        "PLG-001",
+        "PLG-002",
+        "PLG-003",
+        "PLG-005",
+        "PLG-007",
+        "PLG-010",
+        "PLG-013",
+        "PLG-014"
+      ],
+      "pages": [
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/extend/README.md"
+      ],
+      "sources": [
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/prism.json",
+        "skills/nova/pipeline.ts",
+        "docs/site/understand/request-state-recovery.md",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/source.ts",
+        "skills/nova/core/execution/graph.ts",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/lease.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/lifecycle/recovery.ts",
+        "skills/nova/core/lifecycle/recovery-state.ts",
+        "skills/nova/core/lifecycle/repair-budget.ts",
+        "skills/nova/core/lifecycle/repair-authorization.ts",
+        "skills/nova/core/lifecycle/wait-request.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/common/plugins/operator-messaging/src/payload.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/nova/core/execution/artifact-checkpoints.ts",
+        "skills/nova/core/execution/run-mutation.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/core/test-gates/dispatch-operation.ts",
+        "skills/nova/core/test-gates/remote-result-import.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/digest.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/foundation/packages/install.ts",
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/engine-runtime.ts"
+      ],
+      "checks": [
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-contracts.mjs",
+          "exitCode": 0,
+          "observation": "Plugin-v2 contracts PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+          "exitCode": 0,
+          "observation": "Registry contracts PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+          "exitCode": 0,
+          "observation": "Platform configuration contracts PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
+          "exitCode": 0,
+          "observation": "Lifecycle contracts PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+          "exitCode": 0,
+          "observation": "Checkpoint recovery contracts PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-nova-run-root.mts",
+          "exitCode": 0,
+          "observation": "Run root contracts PASS."
+        },
+        {
+          "command": "node tests/verification/contracts/check-pipeline-remote-result-import.mts",
+          "exitCode": 0,
+          "observation": "Seven decisions; evidence verified before import."
+        },
+        {
+          "command": "node --test tests/verification/reliability/lifecycle.test.mts",
+          "exitCode": 0,
+          "observation": "2/2 real recorder/journal repair ordering and SIGKILL after durable wait resolution."
+        },
+        {
+          "command": "node --test tests/verification/reliability/audit-projection.test.mts",
+          "exitCode": 0,
+          "observation": "1/1 actual journal projection and corrupt-history rejection."
+        },
+        {
+          "command": "Independent source/reader review of28 named requirements",
+          "exitCode": 0,
+          "observation": "Each PASS;63 local file targets exist and19 local Markdown anchors resolve."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for named authority/architecture, execution/graph/state/repair/effects/wait/recovery/audit/result import and plugin contract/discovery/configuration/isolation/removal/extension scopes.",
+      "limits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "ARC-003/006 and PLG-004/012 have material content gaps and are not accepted.",
+        "NVC-002/003,PLG-006/008/009/011 remain NOT_READY; missing workspace dependency or stale capability-security fixture blocks their checks.",
+        "Kernel isolation remains environment-dependent; no whole-AP09.2 or gate acceptance."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09.4-ready-prism-topics-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation implementation authors before review campaign",
+      "reviewer": "/root/review_a91103 (01a157bb-c870-79c0-917a-0e2191dd73cc)",
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-002",
+        "SPC-003",
+        "CDV-009"
+      ],
+      "pages": [
+        "docs/site/understand/prism.md",
+        "docs/site/understand/prism-data.md",
+        "docs/site/extend/platform/prism.md"
+      ],
+      "sources": [
+        "skills/prism/runtime.ts",
+        "skills/prism/domain/index.ts",
+        "skills/prism/engine/index.ts",
+        "skills/prism/engine/worker-binding.ts",
+        "skills/prism/engine/worker-envelope.ts",
+        "skills/prism/pipeline-adapter/index.ts",
+        "skills/prism/preferences/index.ts",
+        "skills/prism/corpus/index.ts",
+        "skills/prism/storage/index.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/control/design-generations.ts",
+        "skills/prism/control/preference-snapshot.ts",
+        "skills/prism/control/pipeline-preference-subject.ts",
+        "skills/prism/control/native-operation-store.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/session.ts",
+        "skills/prism/directions/index.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/worker-service.ts",
+        "skills/prism/server/worker-operation.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/database-roles.ts",
+        "skills/prism/config/database-bootstrap.ts",
+        "contracts/prism/v1/src/complexity.ts",
+        "contracts/prism/v1/src/baseline-archive.ts",
+        "packaging/runtime/roles/prism.json",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.yaml",
+        "charts/prism/files/prism-backup.sh",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "contracts/pipeline-test-gate/v1/src/remote.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts"
+      ],
+      "checks": [
+        {
+          "command": "node --test skills/prism/tests/domain.test.mts skills/prism/tests/pipeline-adapter.test.mts",
+          "exitCode": 0,
+          "observation": "15/15 passed."
+        },
+        {
+          "command": "node contracts/prism/v1/tests/contracts.test.mts",
+          "exitCode": 0,
+          "observation": "Contract fixtures passed."
+        },
+        {
+          "command": "Independent Prism source/reader topic review",
+          "exitCode": 0,
+          "observation": "Overview,data and extension guide PASS; relevant source pins and reader links checked."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for Prism component authority, data/revision/CAS/approval/publication/retention boundaries and developer change ownership.",
+      "limits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "OPR-010 full Studio journey remains NOT_READY; not all3094 lines reviewed.",
+        "Whole-file package.json guide pin check failed; unchanged inspected Prism source claims independently verified, no aggregate guide PASS."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09.5-ready-buster-core-change-20261020",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "author": "Documentation implementation authors before review campaign",
+      "reviewer": "/root/review_a91103 (01a157bb-c870-79c0-917a-0e2191dd73cc)",
+      "gateIds": [],
+      "requirementIds": [
+        "CDV-008"
+      ],
+      "pages": [
+        "docs/site/extend/platform/buster.md"
+      ],
+      "sources": [
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "contracts/pipeline-test-gate/v1/src/remote.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "packaging/runtime/roles/buster.json"
+      ],
+      "checks": [
+        {
+          "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+          "exitCode": 0,
+          "observation": "10nodes,2links,resolved digest."
+        },
+        {
+          "command": "Independent Buster core developer source/reader review",
+          "exitCode": 0,
+          "observation": "Change ownership, immutable plan/protocol identity, result authority, capability expansion and namespace lifecycle PASS;4 reader links valid."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent PASS for Buster core change guide, separate from provider/suite topics with unsafe-retry documentation findings.",
+      "limits": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "Other Buster and Lint requirements failed or remain unreviewed; no whole-component closure."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -150,7 +527,7 @@
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -162,16 +539,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L94"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L94",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "GOV-002",
@@ -215,7 +590,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L95"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L95",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Exhaustive public surface reconciliation not established by family map review.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "GOV-003",
@@ -231,7 +612,7 @@
         "scripts/docs-status.mjs",
         "docs/status/open-issues.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -243,16 +624,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L96"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L96",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "GOV-004",
@@ -265,7 +644,7 @@
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -277,16 +656,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L97"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L97",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "GOV-005",
@@ -373,7 +750,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L99"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L99",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Generated documentation map appliesTo metadata differs from capability page.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "GOV-007",
@@ -436,7 +819,7 @@
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -448,16 +831,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L101"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L101",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "ENT-001",
@@ -472,7 +853,7 @@
         "skills/nova/core",
         "skills/worker/core"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -484,16 +865,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L107"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L107",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "ENT-002",
@@ -508,7 +887,7 @@
         "skills/nova/core",
         "skills/worker/core"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -520,16 +899,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L108"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L108",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "ENT-003",
@@ -544,7 +921,7 @@
         "skills/nova/core",
         "skills/worker/core"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -556,16 +933,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L109"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L109",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "ENT-004",
@@ -580,7 +955,7 @@
         "skills/nova/core",
         "skills/worker/core"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -592,16 +967,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L110"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L110",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "ENT-005",
@@ -666,7 +1039,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -678,16 +1051,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L117"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L117",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "ARC-002",
@@ -702,7 +1073,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -714,16 +1085,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L118"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L118",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "ARC-003",
@@ -759,7 +1128,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L119"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L119",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Six registry kinds claimed; actual manifest has five, host extensions separately packaged.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "ARC-004",
@@ -774,7 +1149,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -786,16 +1161,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L120"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L120",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "ARC-005",
@@ -810,7 +1183,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -822,16 +1195,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L121"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L121",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "ARC-006",
@@ -867,7 +1238,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L122"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L122",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Complete communication claim omits separate OpenClaw observer Redis control/payload/dead-letter route.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "NVC-001",
@@ -882,7 +1259,7 @@
         "skills/worker/core",
         "packaging/runtime/roles"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -894,16 +1271,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L128"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L128",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-002",
@@ -994,7 +1369,13 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L129"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L129",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Relevant source/compiler check blocked by unresolved @kubeclaw/delivery-manifest-contract.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "NVC-003",
@@ -1085,7 +1466,13 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L130"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L130",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Relevant source/compiler check blocked by unresolved @kubeclaw/delivery-manifest-contract.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "NVC-004",
@@ -1100,7 +1487,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1112,12 +1499,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1176,7 +1560,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L131"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L131",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-005",
@@ -1191,7 +1576,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1203,12 +1588,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1267,7 +1649,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L132"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L132",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-006",
@@ -1282,7 +1665,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1294,12 +1677,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1358,7 +1738,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L133"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L133",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-007",
@@ -1373,7 +1754,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1385,12 +1766,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1449,7 +1827,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L134"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L134",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-008",
@@ -1464,7 +1843,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1476,12 +1855,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1540,7 +1916,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L135"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L135",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-009",
@@ -1555,7 +1932,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1567,12 +1944,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1631,7 +2005,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L136"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L136",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-010",
@@ -1646,7 +2021,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1658,12 +2033,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1722,7 +2094,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L137"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L137",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-011",
@@ -1737,7 +2110,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1749,12 +2122,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1813,7 +2183,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L138"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L138",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-012",
@@ -1828,7 +2199,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1840,12 +2211,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1904,7 +2272,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L139"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L139",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-013",
@@ -1919,7 +2288,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -1931,12 +2300,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -1995,7 +2361,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L140"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L140",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-014",
@@ -2010,7 +2377,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2022,12 +2389,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -2086,7 +2450,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L141"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L141",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-015",
@@ -2101,7 +2466,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2113,12 +2478,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -2177,7 +2539,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L142"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L142",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-016",
@@ -2192,7 +2555,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2204,12 +2567,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -2275,7 +2635,8 @@
         ],
         "report": "/home/node/Documents/Codex/a98-evidence/ap98-finding-evidence-reconciliation/report.md",
         "scope": "Remove only closed authored defect identities; do not set requirement accepted or waive wider/manual/execution/generated-content proof."
-      }
+      },
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-017",
@@ -2290,7 +2651,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2302,12 +2663,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -2366,7 +2724,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L144"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L144",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "NVC-018",
@@ -2381,7 +2740,7 @@
         "skills/nova/core",
         "skills/common/plugin-runtime"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -2393,12 +2752,9 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -2457,7 +2813,8 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L145"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L145",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "WKC-001",
@@ -3024,7 +3381,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L170"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L170",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Unsafe retries are possible with acceptUnsafeRetry:true; unconditional prohibition is false.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "SPC-002",
@@ -3039,7 +3402,7 @@
         "contracts/prism/v1",
         "skills/nova/plugins/prism-design"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3051,16 +3414,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L171"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L171",
+      "completionRecord": "AP09.4-ready-prism-topics-20261020"
     },
     {
       "id": "SPC-003",
@@ -3075,7 +3436,7 @@
         "skills/prism",
         "charts/prism"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3087,16 +3448,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L172"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L172",
+      "completionRecord": "AP09.4-ready-prism-topics-20261020"
     },
     {
       "id": "SPC-004",
@@ -3429,7 +3788,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L177"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L177",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Three promised Helm field anchors missing.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "SPC-009",
@@ -3595,7 +3960,7 @@
         "skills/buster/engine/test-gates/provider-loader.ts",
         "skills/buster/engine/test-gates/report-adapter-runtime.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3607,16 +3972,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L185"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L185",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-002",
@@ -3635,7 +3998,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3647,16 +4010,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L186"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L186",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-003",
@@ -3675,7 +4036,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3687,16 +4048,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L187"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L187",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-004",
@@ -3735,7 +4094,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L188"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L188",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Replacement instructions omit mutually exclusive discovered package-set/root selection before duplicate-ID admission.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-005",
@@ -3754,7 +4119,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3766,16 +4131,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L189"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L189",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-006",
@@ -3815,7 +4178,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L190"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L190",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Installed-package import/activation verification blocked by same missing dependency.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-007",
@@ -3834,7 +4203,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3846,16 +4215,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L191"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L191",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-008",
@@ -3895,7 +4262,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L192"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L192",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Capability-security checker stops at stale expected24 vs actual28 vocabulary.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-009",
@@ -3935,7 +4308,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L193"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L193",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Capability-security checker stops at stale expected24 vs actual28 vocabulary.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-010",
@@ -3954,7 +4333,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3966,16 +4345,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L194"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L194",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-011",
@@ -4015,7 +4392,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L195"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L195",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Installed-package import/activation verification blocked by same missing dependency.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-012",
@@ -4051,7 +4434,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L196"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L196",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Replacement/recovery instructions omit retained-but-undiscovered roots and pinned old package sets.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "PLG-013",
@@ -4070,7 +4459,7 @@
         "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
         "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -4082,16 +4471,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L197"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L197",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "PLG-014",
@@ -4108,7 +4495,7 @@
         "packaging/runtime/roles",
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -4120,16 +4507,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L198"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L198",
+      "completionRecord": "AP09.2-ready-topics-20261020"
     },
     {
       "id": "COM-001",
@@ -9242,7 +9627,13 @@
         "A98-PRISM-CSI-UNCONDITIONAL-PREREQUISITE",
         "A98-PRISM-REASONING-EMBEDDING-ROUTES"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L270"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L270",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Full3094-line Studio journey independent review incomplete.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "OPL-001",
@@ -10114,7 +10505,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L281"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L281",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Retry-safety prohibition omits explicit acceptUnsafeRetry opt-in.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "CFG-007",
@@ -11203,7 +11600,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L291"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L291",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Generated Knip digest,Debian snapshot and Nova runtime base stale.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "CFG-017",
@@ -11884,7 +12287,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L309"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L309",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Unsafe retry is rejected only without explicit acknowledgment, not unconditionally.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "FLW-012",
@@ -13484,7 +13893,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L334"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L334",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Resolver retry description omits implemented unsafe-retry opt-in.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "EXT-006",
@@ -13525,7 +13940,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L335"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L335",
+      "closureDecision": {
+        "verdict": "FAIL",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "Nonexistent REGISTRY_CAPABILITY_NOT_GRANTED; actual admission/invocation errors differ.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "EXT-007",
@@ -14001,7 +14422,7 @@
         "skills/buster/engine/test-gates",
         "cmd/buster-namespace-controller"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -14014,16 +14435,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L346"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L346",
+      "completionRecord": "AP09.5-ready-buster-core-change-20261020"
     },
     {
       "id": "CDV-009",
@@ -14038,7 +14457,7 @@
         "contracts/prism/v1",
         "tests/verification/contracts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -14050,16 +14469,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L347"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L347",
+      "completionRecord": "AP09.4-ready-prism-topics-20261020"
     },
     {
       "id": "CDV-010",
@@ -15189,7 +15606,7 @@
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -15201,16 +15618,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L380"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L380",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "DEC-002",
@@ -15244,7 +15659,13 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L381"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L381",
+      "closureDecision": {
+        "verdict": "NOT_READY",
+        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+        "reason": "All historical decision rationales/alternatives/supersession not semantically compared.",
+        "campaign": "independent-ready-topics-20261020"
+      }
     },
     {
       "id": "STA-001",
@@ -15259,7 +15680,7 @@
         "packaging/runtime/roles/buster.json",
         "packaging/runtime/roles/prism.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -15271,16 +15692,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L382"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L382",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "STA-002",
@@ -15295,7 +15714,7 @@
         "packaging/runtime/roles/buster.json",
         "packaging/runtime/roles/prism.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -15307,16 +15726,14 @@
       "packageGateCandidates": [],
       "acceptanceMappingState": "pending-individual-mapping",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L383"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L383",
+      "completionRecord": "AP09.1-ready-topics-20261020"
     },
     {
       "id": "PUB-001",
