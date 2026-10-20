@@ -1344,3 +1344,51 @@ test('versioned generation producer binds every retained v10 input and all origi
  restored.capture.close();
  assert.throws(() => createPipelineV10GenerationReceipt(restored.capture), /CAPTURE_CLOSED/);
 });
+
+
+test('versioned v10 selection and full Buster owner bind original caller profiles without legacy admission', async t => {
+ const { createPipelineV10ServiceSelection: select, createBusterV10SelectedOwnerProjection: project,
+   readPipelineServiceSelection } = await import('../../../skills/common/plugin-runtime/foundation/config/pipeline-generation.ts');
+ const original = capture(tree(t), replacements); t.after(original.capture.close);
+ const document = JSON.parse(original.capture.read('config/pipeline.config.json').toString());
+ const serviceInstanceId = 'fixture.service.buster-runtime';
+ const tuple: any = { role: 'buster', callerId: 'buster-preparation', serviceInstanceId,
+   bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === serviceInstanceId)
+     .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) };
+ const pkg = ('sha256:' + 'a'.repeat(64)) as `sha256:${string}`;
+ for (const callerId of ['buster-preparation', 'buster-runtime'] as const) {
+  const request = { ...structuredClone(tuple), callerId }, receipt = select(original.capture, request, pkg);
+  const owner = project(original.capture, receipt);
+  assert.equal(receipt.schemaVersion, 'pipeline-service-selection.v2');
+  assert.equal(owner.schemaVersion, 'buster-selected-owner-projection.v2');
+  assert.deepEqual(owner.author, JSON.parse(original.capture.read('config/components/buster-engine.config.json').toString()));
+  assert.equal(Object.keys(owner.author.profiles).length, 95);
+  assert.deepEqual(owner.settings, owner.author.profiles[owner.binding.profileId].settings);
+  assert.equal(owner.selectionDigest, receipt.digest);
+  assert.equal(Object.isFrozen(owner.author.profiles), true);
+  assert.equal(Object.isFrozen(owner.settings.preparation.resourcePolicy), true);
+  assert.throws(() => readPipelineServiceSelection(receipt, callerId), /SERVICE_SELECTION_INVALID/);
+  assert.deepEqual(select(original.capture, { ...request, bindings: [...request.bindings].reverse() }, pkg), receipt);
+  assert.notEqual(select(original.capture, request, ('sha256:' + 'b'.repeat(64)) as any).digest, receipt.digest);
+  request.bindings[0].profileId = 'caller-mutation';
+  assert.notEqual(receipt.bindings[0]!.profileId, 'caller-mutation');
+  for (const field of ['digest', 'generationDigest', 'packageReceiptDigest']) {
+   const changed: any = structuredClone(receipt); changed[field] = 'sha256:' + '0'.repeat(64);
+   assert.throws(() => project(original.capture, changed), /IDENTITY_MISMATCH/);
+  }
+  assert.throws(() => project(original.capture, { ...receipt, schemaVersion: 'pipeline-service-selection.v1' } as any), /IDENTITY_MISMATCH/);
+  assert.throws(() => project(original.capture, { ...receipt, extra: true } as any), /IDENTITY_MISMATCH/);
+  assert.deepEqual(project(original.capture, receipt), owner);
+ }
+ const valid = select(original.capture, tuple, pkg);
+ assert.throws(() => select(original.capture, tuple, 'bad' as any), /PACKAGE_DIGEST_INVALID/);
+ const wrong = structuredClone(tuple); wrong.bindings[0].profileId = 'foreign-profile';
+ assert.throws(() => select(original.capture, wrong, pkg), /BINDING_MISMATCH/);
+ const missingWorker = structuredClone(tuple); missingWorker.bindings = missingWorker.bindings.filter((b: any) => b.owner !== 'worker-core');
+ assert.throws(() => select(original.capture, missingWorker, pkg), /WORKER_CORE_VERSIONED_SELECTION_REQUIRED/);
+ const foreign = structuredClone(tuple); foreign.serviceInstanceId = 'foreign'; foreign.bindings.forEach((b: any) => b.instanceId = 'foreign');
+ assert.throws(() => select(original.capture, foreign, pkg), /BINDING_MISMATCH/);
+ original.capture.close();
+ assert.throws(() => select(original.capture, tuple, pkg), /CAPTURE_CLOSED/);
+ assert.throws(() => project(original.capture, valid), /CAPTURE_CLOSED/);
+});

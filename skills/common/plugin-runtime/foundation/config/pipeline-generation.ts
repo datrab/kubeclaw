@@ -159,3 +159,60 @@ export function createPipelineV10GenerationReceipt(inputs: ReturnType<typeof cap
   deepFreeze(receipt);
   return receipt;
 }
+
+
+/** Source-bound v10 delivery candidate, NOT a Swarm capture or boot grant.
+ * The distinct v2 wire must never pass a legacy selection/owner receiver.
+ */
+export function createPipelineV10ServiceSelection(inputs: ReturnType<typeof capturePipelineInputSet>,
+  selection: SwarmSelection, packageReceiptDigest: Digest) {
+  // Snapshot the caller tuple before consulting the captured author tree.
+  selection = structuredClone(selection);
+  validateSwarmSelection(selection);
+  if (!digestPattern.test(packageReceiptDigest)) throw new Error('PIPELINE_PACKAGE_DIGEST_INVALID');
+  const generation = createPipelineV10GenerationReceipt(inputs);
+  const root = JSON.parse(inputs.read('config/pipeline.config.json').toString('utf8'));
+  const worker = JSON.parse(inputs.read('config/components/worker-core.config.json').toString('utf8'));
+  const ordered = (bindings: SwarmSelection['bindings']) => [...bindings].sort((a, b) => a.owner < b.owner ? -1 : a.owner > b.owner ? 1 : 0);
+  const expected = root.bindings.filter((binding: SwarmSelection['bindings'][number] & { role: string }) =>
+    binding.role === selection.role && binding.instanceId === selection.serviceInstanceId
+    && selection.bindings.some(value => value.owner === binding.owner))
+    .map(({ owner, instanceId, profileId }: SwarmSelection['bindings'][number]) => ({ owner, instanceId, profileId }));
+  if (portableJson(ordered(selection.bindings)) !== portableJson(ordered(expected))) {
+    throw new Error('PIPELINE_RELEASE_BINDING_MISMATCH');
+  }
+  if (['prism-control', 'prism-worker', 'buster-preparation'].includes(selection.callerId)
+    && selection.bindings.some(value => value.owner === 'worker-core') !== (worker.schemaVersion === 'pipeline-component.v3')) {
+    throw new Error('WORKER_CORE_VERSIONED_SELECTION_REQUIRED');
+  }
+  const body = { schemaVersion: 'pipeline-service-selection.v2' as const, ...selection,
+    bindings: ordered(selection.bindings), generationDigest: generation.digest, packageReceiptDigest };
+  inputs.assertCurrent();
+  const receipt = { ...body, digest: sha256Text(portableJson(body)) };
+  deepFreeze(receipt);
+  return receipt;
+}
+
+/** Exact original full-owner candidate. All profiles remain in the projection;
+ * source/caller/native admission stays separately required, never inferred here.
+ */
+export function createBusterV10SelectedOwnerProjection(inputs: ReturnType<typeof capturePipelineInputSet>,
+  selection: ReturnType<typeof createPipelineV10ServiceSelection>) {
+  const tuple: SwarmSelection = { role: selection.role, callerId: selection.callerId,
+    serviceInstanceId: selection.serviceInstanceId, bindings: selection.bindings };
+  const expected = createPipelineV10ServiceSelection(inputs, tuple, selection.packageReceiptDigest);
+  if (selection.role !== 'buster' || portableJson(selection) !== portableJson(expected)) {
+    throw new Error('BUSTER_SELECTED_OWNER_IDENTITY_MISMATCH');
+  }
+  const binding = selection.bindings.find(value => value.owner === 'buster-engine');
+  const author = JSON.parse(inputs.read('config/components/buster-engine.config.json').toString('utf8'));
+  if (!binding || !Object.hasOwn(author.profiles, binding.profileId)) throw new Error('BUSTER_SELECTED_OWNER_PROFILE_MISMATCH');
+  const projection = { schemaVersion: 'buster-selected-owner-projection.v2' as const,
+    generationDigest: selection.generationDigest, selectionDigest: selection.digest,
+    packageReceiptDigest: selection.packageReceiptDigest, callerId: selection.callerId,
+    serviceInstanceId: selection.serviceInstanceId, binding: structuredClone(binding), author,
+    settings: structuredClone(author.profiles[binding.profileId].settings) };
+  inputs.assertCurrent();
+  deepFreeze(projection);
+  return projection;
+}

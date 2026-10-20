@@ -66,7 +66,7 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     const { captureSwarmSettings } = await import(pathToFileURL(path.join(directory, 'swarm.ts')).href);
     const { capturePipelineInputSet } = await import(pathToFileURL(path.join(directory, 'pipeline-input-set.ts')).href);
     const { capturePipelineMaterializerInputSource } = await import(pathToFileURL(path.join(directory, 'pipeline-v10-input-set.ts')).href);
-    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10GenerationReceipt } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
+    const { createPipelineGenerationReceipt, createPipelineServiceSelection, createBusterSelectedOwnerProjection, createPipelineV10ServiceSelection, createBusterV10SelectedOwnerProjection } = await import(pathToFileURL(path.join(directory, 'pipeline-generation.ts')).href);
     const { verifyInstalledRuntimeBundle, assertRuntimeBundleObservations } = await import(pathToFileURL(path.join(directory, 'runtime-bundle-receipt.mjs')).href);
     verifyInstalledRuntimeBundle(receipt, packageRoot, receipt.role, receipt.runtimeSurface, observations);
     const inputSource = capturePipelineMaterializerInputSource(authorRoot);
@@ -119,7 +119,10 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     // Prepare the distinct full-input v10 producer identity, never a relabeled
     // legacy v1 receipt. Source/caller and output/boot admission remain closed.
     if (inputSource.rootSchemaVersion === 'pipeline-entry.v10') {
-      createPipelineV10GenerationReceipt(inputSource.declared.capture);
+      for (const service of services) {
+        const candidate = createPipelineV10ServiceSelection(inputSource.declared.capture, service, hash(packageBytes));
+        if (receipt.role === 'buster') createBusterV10SelectedOwnerProjection(inputSource.declared.capture, candidate);
+      }
     }
     const captures = [], selections = [];
     for (const service of services) {
