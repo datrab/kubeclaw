@@ -2264,7 +2264,7 @@ cleanup; a later lookup cannot prove which CREATE the API server accepted. The p
 owner must resolve that uncertainty through the independent administration route.
 Do not adopt or delete a later same-name object. The restore helper sends
 UID/resource-version DeleteOptions through
-[kubectl raw DELETE](https://github.com/kubernetes/kubectl/blob/v0.34.1/pkg/cmd/delete/delete.go#L297-L313),
+[kubectl raw DELETE](https://github.com/kubernetes/kubectl/blob/b2cb112e103aff2bb7d5e300d56105cd63fddb21/pkg/cmd/delete/delete.go#L297-L313),
 then separately waits for absence. A conflict or lost DELETE response requires
 guarded observation before any owner-authorized retry. Never fall back to ordinary
 name-only delete. These namespace checks still require the owner's exclusion

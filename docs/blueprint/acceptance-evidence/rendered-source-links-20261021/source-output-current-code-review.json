@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects were found in the provided changes. The object cache preserves per-link view and fragment checks, local Git lookups enforce committed object types, and upstream reads retain the fixed HTTPS origin and response bounds. The artifact checker also covers script sources. This verdict is limited to code inspection; tests and full upstream or built-HTML verification were not run.",
+  "overall_confidence": 0.86
+}

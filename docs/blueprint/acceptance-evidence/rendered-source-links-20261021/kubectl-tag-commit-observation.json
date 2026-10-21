@@ -1,0 +1,5 @@
+{
+  "command": "git ls-remote https://github.com/kubernetes/kubectl.git refs/tags/v0.34.0 refs/tags/v0.34.1 refs/tags/v0.34.0^{} refs/tags/v0.34.1^{}",
+  "stdout": "ed55c29bbf1ffc3c072905ce4279949e443afda8\trefs/tags/v0.34.0\nd0412c1e32e99cde17099c2d8734ba7ea6207f21\trefs/tags/v0.34.0^{}\nca76296383f91b09c0a4369bebd7642101533b1b\trefs/tags/v0.34.1\nb2cb112e103aff2bb7d5e300d56105cd63fddb21\trefs/tags/v0.34.1^{}\n",
+  "meaning": "Exact annotated tags and peeled commits actually observed; file contents/ranges remain subject to original full-source output verification."
+}

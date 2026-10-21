@@ -107,4 +107,4 @@ The result above states the exact local limit. Run the package command in the ta
 
 - Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
 - Package implementation guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
-- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/plugins/kubeclaw-ops/skills)
+- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/tree/7994a51e16bc752357c3a801190b12b7d6a191a4/plugins/kubeclaw-ops/skills)

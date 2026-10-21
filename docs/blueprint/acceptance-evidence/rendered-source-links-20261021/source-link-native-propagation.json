@@ -1,0 +1,539 @@
+{
+  "baseline": "4e5408fc",
+  "changes": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "symbol": "sourceLink",
+      "kind": "FunctionDeclaration",
+      "previous": "48e6a2687da24d170dacc3f989b045311b53910c2c013f22328daec1b555aa49",
+      "current": "fdfbcc8dc782032655752466017edf5f266965b24994fb799f41bb4d0b309c0a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "symbol": "build",
+      "kind": "FunctionDeclaration",
+      "previous": "fe124ec019cae7fe00cdf056a0a8be0546344e43b08fd617185ef2060d661a2e",
+      "current": "3a3d0af3ecba2109140836d699bee899d3fd35f4424ef4c14a7bc3d77169e17a"
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "symbol": "<operation>",
+      "kind": "ForOfStatement",
+      "previous": "f1f9fe0360a1795cee67544872835f451de5dd9afbaf7628aae8910f458cbee5",
+      "current": "3dca5d356b625961ab802359414d51d3fc707de488f3337191e746befc6b9448"
+    }
+  ],
+  "renewals": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "previous": "ccbfe712f68d1f30c0678776c4ef7697ef64b07fc3d6cfe9b8f198128ffa8009",
+      "current": "70d68f75fba9a329b9c722da1ef28460f333b9e28b44afebea24ad77a60a4a67",
+      "previousSelectors": [
+        {
+          "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
+        },
+        {
+          "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        },
+        {
+          "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
+        },
+        {
+          "expressionSha256": "e22de70d0bb8dcc735fccb5d1d7d729ed93d07d8d1f4fef200ed4fc7c165c887"
+        },
+        {
+          "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
+        },
+        {
+          "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
+        },
+        {
+          "expressionSha256": "65491b3548072ab7a580463371049edc85fe58fd9c1d1459d1f26e39c10e7ca7"
+        },
+        {
+          "expressionSha256": "2f12af5443d5036be4bc11a35f7889b8a084186361b1534a7951ad714731109b"
+        },
+        {
+          "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
+        },
+        {
+          "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+        },
+        {
+          "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
+        },
+        {
+          "expressionSha256": "7f78fba2053ebaa024b06b246d76d95e8ab3c6eba91e8b602530191ffa264f9d"
+        },
+        {
+          "expressionSha256": "5614341553720863663420155ef5926e32d0618b2dbc8437e021d081baf85c3b"
+        },
+        {
+          "expressionSha256": "ad71e2ef067ad76e91242d31aa2eb7bc97f19e1a6e78800dbbf064f7345c4f9d"
+        },
+        {
+          "expressionSha256": "bf67a1197a8863e8a99a69c8403188d1944a2254c2771fbd969bf20388d64ec0"
+        },
+        {
+          "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+        },
+        {
+          "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+        },
+        {
+          "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+        },
+        {
+          "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+        },
+        {
+          "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+        },
+        {
+          "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+        },
+        {
+          "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+        },
+        {
+          "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+        },
+        {
+          "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+        },
+        {
+          "expressionSha256": "f82ad64727d9ea72105c364f30ad778c815b296123b94c44f188159b4a748d62"
+        },
+        {
+          "expressionSha256": "8d1faed33fda3249bd689f1cfa1fecb13651800ca91b280bf981f2a4d4b05563"
+        },
+        {
+          "expressionSha256": "30e086693ae7677827737ce740f1b68f6f8a63afc7c323dbda307ed6fe2bcb46"
+        },
+        {
+          "expressionSha256": "77e4a2851e56069c2acd853b145c333e5905f241f9d03636c5b9756014598b45"
+        },
+        {
+          "expressionSha256": "882a2a6ed9395c6210f33cb627b5ebaad3c610c9ab6b297ad09e20170e41124e"
+        },
+        {
+          "expressionSha256": "087c06fb05f5be388319068b1da79adfda421f18e80b451cc30facd1f5fd65ba"
+        },
+        {
+          "expressionSha256": "d8894d8eaab1ffad77821997a8c0c42a368c4108397b730136b665fcb57eb1d6"
+        },
+        {
+          "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
+        }
+      ],
+      "selectorReceipt": [
+        {
+          "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
+        },
+        {
+          "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
+        },
+        {
+          "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        },
+        {
+          "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
+        },
+        {
+          "expressionSha256": "e22de70d0bb8dcc735fccb5d1d7d729ed93d07d8d1f4fef200ed4fc7c165c887"
+        },
+        {
+          "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
+        },
+        {
+          "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
+        },
+        {
+          "expressionSha256": "65491b3548072ab7a580463371049edc85fe58fd9c1d1459d1f26e39c10e7ca7"
+        },
+        {
+          "expressionSha256": "2f12af5443d5036be4bc11a35f7889b8a084186361b1534a7951ad714731109b"
+        },
+        {
+          "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
+        },
+        {
+          "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+        },
+        {
+          "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
+        },
+        {
+          "expressionSha256": "7f78fba2053ebaa024b06b246d76d95e8ab3c6eba91e8b602530191ffa264f9d"
+        },
+        {
+          "expressionSha256": "5614341553720863663420155ef5926e32d0618b2dbc8437e021d081baf85c3b"
+        },
+        {
+          "expressionSha256": "ad71e2ef067ad76e91242d31aa2eb7bc97f19e1a6e78800dbbf064f7345c4f9d"
+        },
+        {
+          "expressionSha256": "bf67a1197a8863e8a99a69c8403188d1944a2254c2771fbd969bf20388d64ec0"
+        },
+        {
+          "expressionSha256": "d7daf9332ea623bdd1bd45c64a09120cce23e61039141d63da162bd75ffad70c"
+        },
+        {
+          "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+        },
+        {
+          "expressionSha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+        },
+        {
+          "expressionSha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+        },
+        {
+          "expressionSha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+        },
+        {
+          "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+        },
+        {
+          "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+        },
+        {
+          "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+        },
+        {
+          "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+        },
+        {
+          "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+        },
+        {
+          "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+        },
+        {
+          "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+        },
+        {
+          "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+        },
+        {
+          "expressionSha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+        },
+        {
+          "expressionSha256": "f82ad64727d9ea72105c364f30ad778c815b296123b94c44f188159b4a748d62"
+        },
+        {
+          "expressionSha256": "8d1faed33fda3249bd689f1cfa1fecb13651800ca91b280bf981f2a4d4b05563"
+        },
+        {
+          "expressionSha256": "30e086693ae7677827737ce740f1b68f6f8a63afc7c323dbda307ed6fe2bcb46"
+        },
+        {
+          "expressionSha256": "77e4a2851e56069c2acd853b145c333e5905f241f9d03636c5b9756014598b45"
+        },
+        {
+          "expressionSha256": "882a2a6ed9395c6210f33cb627b5ebaad3c610c9ab6b297ad09e20170e41124e"
+        },
+        {
+          "expressionSha256": "087c06fb05f5be388319068b1da79adfda421f18e80b451cc30facd1f5fd65ba"
+        },
+        {
+          "expressionSha256": "d8894d8eaab1ffad77821997a8c0c42a368c4108397b730136b665fcb57eb1d6"
+        },
+        {
+          "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
+        }
+      ],
+      "selectorsChanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true,
+      "changedStatements": [
+        {
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "build",
+          "kind": "FunctionDeclaration",
+          "previous": "fe124ec019cae7fe00cdf056a0a8be0546344e43b08fd617185ef2060d661a2e",
+          "current": "3a3d0af3ecba2109140836d699bee899d3fd35f4424ef4c14a7bc3d77169e17a"
+        },
+        {
+          "source": "scripts/docs-publication.mjs",
+          "symbol": "sourceLink",
+          "kind": "FunctionDeclaration",
+          "previous": "48e6a2687da24d170dacc3f989b045311b53910c2c013f22328daec1b555aa49",
+          "current": "fdfbcc8dc782032655752466017edf5f266965b24994fb799f41bb4d0b309c0a"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "previous": "72b7b3111976d58e532e8806b0b1a807d8ef8e5b91cbf82966649b3149dda8b3",
+      "current": "8c1439fc35d9a1d063b9cbd1f9a7ac6bb7a27b1fc653e091d4c249d45077c574",
+      "previousSelectors": [
+        {
+          "expressionSha256": "39b41069a19f6818c703ae0ce9a83c2efaf0c6f23d9cbe82afe85b402b2bc77e"
+        },
+        {
+          "expressionSha256": "24502c0329d10c2649694b1de8333b3ad3289865e91745237cee6d0605e4620c"
+        },
+        {
+          "expressionSha256": "0f9fa9269fe79888749d1cc7c0014fbcde848aaf9dd9154279e87752ce4083db"
+        },
+        {
+          "expressionSha256": "fbf5146d7c75e878a077a6442a6ed03b25678c0a08e20273e15e2b0a364aef0c"
+        },
+        {
+          "expressionSha256": "28756ea8dc7d55cf1a7110a2619111cccc27f2569289201c44875f86528953f8"
+        },
+        {
+          "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+        }
+      ],
+      "selectorReceipt": [
+        {
+          "expressionSha256": "39b41069a19f6818c703ae0ce9a83c2efaf0c6f23d9cbe82afe85b402b2bc77e"
+        },
+        {
+          "expressionSha256": "24502c0329d10c2649694b1de8333b3ad3289865e91745237cee6d0605e4620c"
+        },
+        {
+          "expressionSha256": "0f9fa9269fe79888749d1cc7c0014fbcde848aaf9dd9154279e87752ce4083db"
+        },
+        {
+          "expressionSha256": "fbf5146d7c75e878a077a6442a6ed03b25678c0a08e20273e15e2b0a364aef0c"
+        },
+        {
+          "expressionSha256": "28756ea8dc7d55cf1a7110a2619111cccc27f2569289201c44875f86528953f8"
+        },
+        {
+          "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+        },
+        {
+          "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+        },
+        {
+          "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+        },
+        {
+          "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+        },
+        {
+          "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+        }
+      ],
+      "selectorsChanged": false,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true,
+      "changedStatements": [
+        {
+          "source": "scripts/docs-reader/check-artifact.mjs",
+          "symbol": "<operation>",
+          "kind": "ForOfStatement",
+          "previous": "f1f9fe0360a1795cee67544872835f451de5dd9afbaf7628aae8910f458cbee5",
+          "current": "3dca5d356b625961ab802359414d51d3fc707de488f3337191e746befc6b9448"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    "scripts/docs-ap09-catalogue.mjs",
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-api-output-role-classification.mjs",
+    "scripts/docs-api-product-scope.mjs",
+    "scripts/docs-api-receiver-coverage.mjs",
+    "scripts/docs-api-reference.mjs",
+    "scripts/docs-api-schema-authorities.mjs",
+    "scripts/docs-argo-receiver-contracts.mjs",
+    "scripts/docs-blueprint-generate.mjs",
+    "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+    "scripts/docs-buster-lease-receiver-contracts.mjs",
+    "scripts/docs-check-coverage.mjs",
+    "scripts/docs-check-refs.mjs",
+    "scripts/docs-check.mjs",
+    "scripts/docs-cilium-receiver-contracts.mjs",
+    "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+    "scripts/docs-configuration-inventory.mjs",
+    "scripts/docs-generate-core.mjs",
+    "scripts/docs-generate.mjs",
+    "scripts/docs-governance.mjs",
+    "scripts/docs-inventory.mjs",
+    "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-admission-status-contracts.mjs",
+    "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+    "scripts/docs-lint-policy-reference.mjs",
+    "scripts/docs-local-helm-authorities.mjs",
+    "scripts/docs-parity-batches.mjs",
+    "scripts/docs-parity-check.mjs",
+    "scripts/docs-parity-extract.mjs",
+    "scripts/docs-parity-review-assignments.mjs",
+    "scripts/docs-parity-status.mjs",
+    "scripts/docs-parity-transition.mjs",
+    "scripts/docs-platform-surface-inventory.mjs",
+    "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+    "scripts/docs-runtime-consumer-contracts.mjs",
+    "scripts/docs-secret-inventory.mjs",
+    "scripts/docs-status.mjs",
+    "scripts/docs-tree-boundary.mjs",
+    "scripts/docs-yaml-field-authorities.mjs",
+    "scripts/docs-yaml-inventory.mjs",
+    "scripts/docs-sdk-reference.mjs",
+    "scripts/docs-reader/renderer.mjs",
+    "scripts/docs-reader/check-search.mjs"
+  ],
+  "newRoles": [
+    {
+      "source": "scripts/docs-reader/source-links.mjs",
+      "recipe": {
+        "role": "documentation-consumer",
+        "consumer": "Read-only documentation primary-source locator/commit/file-or-tree/line-and-anchor verification. Local Git reads and fixed primary GitHub HTTPS source reads yield only validated source-location metadata, byte counts and hashes; retrieved source is never executed, imported or submitted as product API data. This output-purpose qualification is not a sandbox or a grant for runtime effects.",
+        "selectors": [
+          {
+            "expressionSha256": "b9be7b76be3436dcd68a0e498572f09413448c6578294f57d5d89bdbc7eba096"
+          },
+          {
+            "expressionSha256": "2167a6d464c00348eafb15bca4aedf01dc5e9a3ade5bf9521d8706a0b0d2dc2d"
+          },
+          {
+            "expressionSha256": "4ef0dfd51b00a3095217b8d22ebe3cca18d30924935dbea3ec5ab8e58562e5eb"
+          },
+          {
+            "expressionSha256": "de5073f0172087fb4c0b754096f69a02e513e41af43a0151e78517be129614ea"
+          },
+          {
+            "expressionSha256": "5fac44e498b2755d3db802f66d2f52cab9003d91f0495d3949265b619e97d5b1"
+          },
+          {
+            "expressionSha256": "94308c3b065cad4915af4dd20fc7ff92a941ff64b673dd325bb6bd0edc443674"
+          },
+          {
+            "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+          },
+          {
+            "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+          },
+          {
+            "expressionSha256": "c3f25b01f047a45a75ecff2df7dee503d6e831182bd772979a75192633246986"
+          }
+        ],
+        "factsDigest": "d0538c224ed61b50313f9090c4db6ef92eade1d431d5d33077bde929f0bb22e7",
+        "authorityInputs": []
+      }
+    },
+    {
+      "source": "scripts/docs-reader/check-source-links.mjs",
+      "recipe": {
+        "role": "documentation-consumer",
+        "consumer": "Read-only documentation primary-source locator/commit/file-or-tree/line-and-anchor verification. Local Git reads and fixed primary GitHub HTTPS source reads yield only validated source-location metadata, byte counts and hashes; retrieved source is never executed, imported or submitted as product API data. This output-purpose qualification is not a sandbox or a grant for runtime effects.",
+        "selectors": [
+          {
+            "expressionSha256": "b33a227f98c9f1a0232839c47386e939f143a7c4a321c0744f4abcbd9369db72"
+          },
+          {
+            "expressionSha256": "0f9fa9269fe79888749d1cc7c0014fbcde848aaf9dd9154279e87752ce4083db"
+          },
+          {
+            "expressionSha256": "f2379ee6686347b81fa3fa0205a4e385937c8537c5d4712c40572cbdec51b2d9"
+          },
+          {
+            "expressionSha256": "374331f9f92124fbcee62eddaf566796a7a1ab2a138543c1be73fc8f31d8a84f"
+          },
+          {
+            "expressionSha256": "ddce147a3c760c2bae65cbae849d143bdecca224e03ad1b5d98a677cf198be71"
+          },
+          {
+            "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+          },
+          {
+            "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+          },
+          {
+            "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+          },
+          {
+            "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+          },
+          {
+            "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+          },
+          {
+            "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+          },
+          {
+            "expressionSha256": "0c89f13533df865f22c5e057f78d0d378abfe489df316e1f9eb5d1217ce31504"
+          },
+          {
+            "expressionSha256": "ea9f784e3ab66a2e645e68bbf4e2a2b2b670ea52d0aeefa411da4a91adc6b9bb"
+          }
+        ],
+        "factsDigest": "0e119ef0c9d93c542393a91afc8290da9a1d08c1e0739dade4ec6eb75f6904dd",
+        "authorityInputs": []
+      }
+    }
+  ]
+}

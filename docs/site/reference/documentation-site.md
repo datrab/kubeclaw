@@ -3,7 +3,7 @@
 Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Evidence: scripts/docs-publication.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
 Applies to: positively selected repository reader pages and the local HTML publication artifact
 Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
 
@@ -143,7 +143,7 @@ Install the isolated, locked reader dependencies before checking or building:
 
 ```sh
 npm ci --prefix scripts/docs-reader --ignore-scripts
-node --test scripts/tests/docs-reader.test.mjs
+node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs
 ```
 Prepare the selected route's additional tools and source revision through the
 [handbook prerequisites](../extend/developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route).
@@ -168,6 +168,7 @@ npm run docs:publication:check
 npm run docs:publication:build
 node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs
 node scripts/docs-reader/check-search.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs
 ```
 
 These are instructions, not a record of successful execution for this page.
@@ -187,6 +188,16 @@ link conversion, sanitization, navigation, and search belong to
 `scripts/docs-reader/renderer.mjs`. Their original parser/build regressions run
 with `node --test scripts/tests/docs-reader.test.mjs`. These tests do not replace
 browser, hosting, or assistive-technology reader checks.
+
+The source-link check reads the actual digest-verified HTML, not Markdown alone.
+For this repository, it checks full commit objects, file/directory types and
+physical line or Markdown-anchor bounds through Git. For upstream file links,
+it requests the exact full-commit path from GitHub's primary raw-source host and
+checks those returned bytes. This separate maintenance check needs network
+access for upstream sources; it does not make reading or local search depend on
+network access. Missing objects, tags instead of full revisions, wrong object
+types, unavailable upstream sources, and invalid ranges stop the check. Source
+existence and valid ranges do not prove that the linked code supports a claim.
 
 Inspect `.tmp/docs-publication/build-report.json` and `reader-manifest.json`.
 The build report retains its input digest, selected page and asset counts, and

@@ -4095,6 +4095,9 @@ export const documentationExecutableRoleRecipes = {
     "consumer": "Repository reader Markdown/reference/publication generation and documentation consistency diagnostics; selected local documentation files, not product API submission.",
     "selectors": [
       {
+        "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
+      },
+      {
         "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
       },
       {
@@ -4218,7 +4221,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "ccbfe712f68d1f30c0678776c4ef7697ef64b07fc3d6cfe9b8f198128ffa8009",
+    "factsDigest": "70d68f75fba9a329b9c722da1ef28460f333b9e28b44afebea24ad77a60a4a67",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5453,7 +5456,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
       }
     ],
-    "factsDigest": "72b7b3111976d58e532e8806b0b1a807d8ef8e5b91cbf82966649b3149dda8b3",
+    "factsDigest": "8c1439fc35d9a1d063b9cbd1f9a7ac6bb7a27b1fc653e091d4c249d45077c574",
     "authorityInputs": []
   }
 ,
@@ -5499,6 +5502,95 @@ export const documentationExecutableRoleRecipes = {
       }
     ],
     "factsDigest": "8ab0979f81fb2e1fc6abc99072ba8f4271276aca78c5f21d124038791a8c36b2",
+    "authorityInputs": []
+  }
+,
+  "scripts/docs-reader/source-links.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Read-only documentation primary-source locator/commit/file-or-tree/line-and-anchor verification. Local Git reads and fixed primary GitHub HTTPS source reads yield only validated source-location metadata, byte counts and hashes; retrieved source is never executed, imported or submitted as product API data. This output-purpose qualification is not a sandbox or a grant for runtime effects.",
+    "selectors": [
+      {
+        "expressionSha256": "b9be7b76be3436dcd68a0e498572f09413448c6578294f57d5d89bdbc7eba096"
+      },
+      {
+        "expressionSha256": "2167a6d464c00348eafb15bca4aedf01dc5e9a3ade5bf9521d8706a0b0d2dc2d"
+      },
+      {
+        "expressionSha256": "4ef0dfd51b00a3095217b8d22ebe3cca18d30924935dbea3ec5ab8e58562e5eb"
+      },
+      {
+        "expressionSha256": "de5073f0172087fb4c0b754096f69a02e513e41af43a0151e78517be129614ea"
+      },
+      {
+        "expressionSha256": "5fac44e498b2755d3db802f66d2f52cab9003d91f0495d3949265b619e97d5b1"
+      },
+      {
+        "expressionSha256": "94308c3b065cad4915af4dd20fc7ff92a941ff64b673dd325bb6bd0edc443674"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+      },
+      {
+        "expressionSha256": "c3f25b01f047a45a75ecff2df7dee503d6e831182bd772979a75192633246986"
+      }
+    ],
+    "factsDigest": "d0538c224ed61b50313f9090c4db6ef92eade1d431d5d33077bde929f0bb22e7",
+    "authorityInputs": []
+  },
+  "scripts/docs-reader/check-source-links.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Read-only documentation primary-source locator/commit/file-or-tree/line-and-anchor verification. Local Git reads and fixed primary GitHub HTTPS source reads yield only validated source-location metadata, byte counts and hashes; retrieved source is never executed, imported or submitted as product API data. This output-purpose qualification is not a sandbox or a grant for runtime effects.",
+    "selectors": [
+      {
+        "expressionSha256": "b33a227f98c9f1a0232839c47386e939f143a7c4a321c0744f4abcbd9369db72"
+      },
+      {
+        "expressionSha256": "0f9fa9269fe79888749d1cc7c0014fbcde848aaf9dd9154279e87752ce4083db"
+      },
+      {
+        "expressionSha256": "f2379ee6686347b81fa3fa0205a4e385937c8537c5d4712c40572cbdec51b2d9"
+      },
+      {
+        "expressionSha256": "374331f9f92124fbcee62eddaf566796a7a1ab2a138543c1be73fc8f31d8a84f"
+      },
+      {
+        "expressionSha256": "ddce147a3c760c2bae65cbae849d143bdecca224e03ad1b5d98a677cf198be71"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+      },
+      {
+        "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+      },
+      {
+        "expressionSha256": "0c89f13533df865f22c5e057f78d0d378abfe489df316e1f9eb5d1217ce31504"
+      },
+      {
+        "expressionSha256": "ea9f784e3ab66a2e645e68bbf4e2a2b2b670ea52d0aeefa411da4a91adc6b9bb"
+      }
+    ],
+    "factsDigest": "0e119ef0c9d93c542393a91afc8290da9a1d08c1e0739dade4ec6eb75f6904dd",
     "authorityInputs": []
   }
 };

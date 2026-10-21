@@ -1192,7 +1192,7 @@ to the API, so a different namespace with the same name must not be deleted.
 That precondition does not freeze namespace membership, PVC binding or provider
 operations. The complete owned exclusion window remains required through the
 final independent Kubernetes and provider disposition checks.
-[`kubectl` accepts a single local request-body file for raw DELETE](https://github.com/kubernetes/kubectl/blob/v0.34.0/pkg/cmd/delete/delete.go#L275-L307).
+[`kubectl` accepts a single local request-body file for raw DELETE](https://github.com/kubernetes/kubectl/blob/d0412c1e32e99cde17099c2d8734ba7ea6207f21/pkg/cmd/delete/delete.go#L275-L307).
 The local raw-request interface was checked with kubectl `v1.34.11` against
 an isolated HTTP fixture; this is not a supported-cluster-version or live
 delete result. The platform owner must confirm that the selected client supports

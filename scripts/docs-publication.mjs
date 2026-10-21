@@ -230,7 +230,11 @@ function manifestValue(value) {
 }
 
 function sourceLink(label, target) {
-  return `[${label}](${sourceBase}/${rel(target)})`;
+  const relative = rel(target);
+  const entry = git('ls-tree', '-z', sourceRevision, '--', relative);
+  const selected = /^(100644|100755|040000) (blob|tree) [a-f0-9]{40}\t([^\0]+)\0$/u.exec(entry);
+  if (!selected || selected[3] !== relative) throw new Error(`Source link is not a committed regular file or directory: ${relative}`);
+  return `[${label}](${remoteBase()}/${selected[2]}/${sourceRevision}/${relative})`;
 }
 
 function schemaFacts(directory, schemaPath, inlineSchema, manifestFile) {
@@ -1076,7 +1080,12 @@ function build() {
       if (evidence.includes('**')) return `Evidence: ${evidence}`;
       const links = evidence.split(';').map((item) => item.trim()).map((item) => item.includes(' every ') || item.startsWith('every ')
         ? item
-        : `[${item}](${base}/${item})`);
+        : (() => {
+          const entry = git('ls-tree', '-z', revision, '--', item);
+          const selected = /^(100644|100755|040000) (blob|tree) [a-f0-9]{40}\t([^\0]+)\0$/u.exec(entry);
+          if (!selected || selected[3] !== item) throw new Error(`Evidence is not a committed regular file or directory: ${item}`);
+          return `[${item}](${remoteBase()}/${selected[2]}/${revision}/${item})`;
+        })());
       return `Evidence: ${links.join('; ')}`;
     });
     text = text.replace(/^Last verified: generated during publication$/mu, `Last verified: ${revision}`);

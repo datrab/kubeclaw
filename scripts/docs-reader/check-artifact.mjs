@@ -31,7 +31,7 @@ for (const entry of manifest.outputs) {
     }
     if (node.tagName === 'a' && attributes.name) ids.add(attributes.name);
     if (attributes.href) links.push(attributes.href);
-    if (node.tagName === 'img' && attributes.src) links.push(attributes.src);
+    if (['img', 'script'].includes(node.tagName) && attributes.src) links.push(attributes.src);
     for (const child of node.childNodes ?? []) walk(child);
   }
   walk(parse(bytes.toString('utf8')));

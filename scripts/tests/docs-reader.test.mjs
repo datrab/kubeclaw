@@ -90,4 +90,14 @@ test('artifact checker rejects changed output bytes and a digest-consistent brok
   const broken = check();
   assert.notEqual(broken.status, 0);
   assert.match(broken.stderr, /Missing rendered fragment/u);
+  buildReader(options);
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('src="reader.js"', 'src="missing.js"'));
+  const scriptManifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+  const scriptEntry = scriptManifest.outputs.find(item => item.path === 'README.html');
+  scriptEntry.bytes = fs.statSync(file).size;
+  scriptEntry.sha256 = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  fs.writeFileSync(manifestFile, JSON.stringify(scriptManifest));
+  const missingScript = check();
+  assert.notEqual(missingScript.status, 0);
+  assert.match(missingScript.stderr, /missing\.js/u);
 });
