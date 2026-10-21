@@ -56,7 +56,8 @@
     "OPS_NPM_BRACE_VERSION": "5.0.11",
     "OPS_NPM_IP_VERSION": "10.3.1",
     "OPS_NPM_UNDICI_VERSION": "6.28.1",
-    "OPS_NPM_CACHE_SEMANTICS_VERSION": "4.3.0"
+    "OPS_NPM_CACHE_SEMANTICS_VERSION": "4.3.0",
+    "HELM_SOURCE_SHA256": "f0e596af707e2e5c0411d1dd314264450fd68fa484c87fb9fdf1c3beed4323b9"
   },
   "imageOverrides": {
     "buster-runtime": {
@@ -65,9 +66,7 @@
     },
     "ops-pod": {
       "KUBECTL_VERSION": "v1.34.11",
-      "HELM_VERSION": "v3.22.1",
-      "HELM_SHA256_AMD64": "896cf63684a42a723d61c980369d6e588330927deb13676ca0d85006dd6da0ea",
-      "HELM_SHA256_ARM64": "4c29e286b279d170fa048ddfc3e4e83dcd069ca9c52102766ba672d7149e694d"
+      "HELM_VERSION": "v3.22.1"
     }
   },
   "infrastructure": {

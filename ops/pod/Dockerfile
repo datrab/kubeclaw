@@ -36,20 +36,25 @@ RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=read
     -ldflags "-X k8s.io/client-go/pkg/version.gitVersion=${KUBECTL_VERSION} -X k8s.io/component-base/version.gitVersion=${KUBECTL_VERSION}" \
     -o /out/kubectl .
 
-FROM ${OPS_NODE_BASE} AS tools
+# Rebuild the unchanged Helm release with the centrally patched Go toolchain.
+FROM ${OPS_TOOLS_GO_BASE} AS helm-build
 ARG TARGETARCH=amd64
 ARG HELM_VERSION=v3.22.1
-ARG HELM_SHA256_AMD64=896cf63684a42a723d61c980369d6e588330927deb13676ca0d85006dd6da0ea
-ARG HELM_SHA256_ARM64=4c29e286b279d170fa048ddfc3e4e83dcd069ca9c52102766ba672d7149e694d
-RUN apk add --no-cache curl
-WORKDIR /downloads
-RUN case "$TARGETARCH" in \
-      amd64) helm_sha="$HELM_SHA256_AMD64" ;; \
-      arm64) helm_sha="$HELM_SHA256_ARM64" ;; \
-      *) exit 1 ;; esac \
-    && curl -fsSLo helm.tar.gz "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz" \
-    && printf '%s  helm.tar.gz\n' "$helm_sha" | sha256sum -c - \
-    && tar -xzf helm.tar.gz && mv "linux-${TARGETARCH}/helm" helm && chmod 0755 helm
+ARG HELM_SOURCE_SHA256=f0e596af707e2e5c0411d1dd314264450fd68fa484c87fb9fdf1c3beed4323b9
+ENV GOTOOLCHAIN=local
+WORKDIR /src
+RUN apk add --no-cache make \
+    && wget -O source.tar.gz "https://codeload.github.com/helm/helm/tar.gz/refs/tags/${HELM_VERSION}" \
+    && printf '%s  source.tar.gz\n' "$HELM_SOURCE_SHA256" | sha256sum -c - \
+    && tar -xzf source.tar.gz --strip-components=1 && rm source.tar.gz
+RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
+      if [ "$attempt" -ge 3 ]; then exit 1; fi; \
+      sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
+    done
+# Use upstream's version and Kubernetes default linker flags, without a .git checkout.
+RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} \
+    make build GOFLAGS=-mod=readonly VERSION="${HELM_VERSION}" \
+      GIT_TAG="${HELM_VERSION}" GIT_COMMIT= GIT_DIRTY=clean
 
 FROM ${OPS_NODE_BASE}
 ARG OPS_NPM_TAR_VERSION=7.5.21
@@ -68,7 +73,8 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force \
     && ln -s /opt/codex/node_modules/.bin/codex /usr/local/bin/codex \
     && codex --version && codex remote-control --help
-COPY --from=tools /downloads/helm /usr/local/bin/helm
+COPY --from=helm-build /src/bin/helm /usr/local/bin/helm
+COPY --from=helm-build /src/LICENSE /usr/local/share/licenses/helm/LICENSE
 COPY --from=kubectl-build /out/kubectl /usr/local/bin/kubectl
 COPY --from=gh-build /out/gh /usr/local/bin/gh
 COPY --from=gh-build /src/LICENSE /usr/local/share/licenses/gh/LICENSE
