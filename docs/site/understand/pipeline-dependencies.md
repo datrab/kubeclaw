@@ -5,7 +5,7 @@ Audience: architecture reader, operator, maintainer, security reviewer
 Owner: platform architecture and pipeline owners
 Evidence: packaging/runtime/roles; skills/nova/core; skills/common/plugins/redis-transport; skills/buster/engine; charts/kubeclaw; charts/prism
 Applies to: current source, role declarations, charts, and selected infrastructure
-Last verified: 2026-09-16
+Last verified: 2026-09-16; diagram boundary correction source-checked on 2026-10-21; no live result
 
 ## Purpose
 
@@ -69,7 +69,7 @@ flowchart LR
     Core -->|fixed test plan| Buster[Buster role]
     Buster -->|container build| BuildKit[Rootless BuildKit]
     BuildKit -->|push image| Registry[(Writable OCI registry)]
-    Mirror[(Docker Hub mirror)] -->|cached base image| BuildKit
+    Mirror[(Docker Hub mirror)] -. explicit client configuration .-> BuildKit
     Registry -->|digest pull| TestPod[Test workload]
     Buster -->|selected exposure stage| Tail[Tailscale controller]
     Core -->|selected design stage| Prism[Prism]
@@ -98,7 +98,7 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Nova Core | Directed connection — fixed test plan | Buster role |
 | Buster role | Directed connection — container build | Rootless BuildKit |
 | Rootless BuildKit | Directed connection — push image | Writable OCI registry |
-| Docker Hub mirror | Directed connection — cached base image | Rootless BuildKit |
+| Docker Hub mirror | Dotted relationship — explicit client configuration | Rootless BuildKit |
 | Writable OCI registry | Directed connection — digest pull | Test workload |
 | Buster role | Directed connection — selected exposure stage | Tailscale controller |
 | Nova Core | Directed connection — selected design stage | Prism |
@@ -106,7 +106,9 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Buster role | Directed connection — verified result | Nova Core |
 | Prism | Directed connection — approved result | Nova Core |
 
-The complete lab deploys and verifies every solid-line dependency shown here.
+This map states intended dependencies, not observations from a live lab.
+Deploying a mirror does not configure its clients.
+BuildKit uses the mirror only when its explicit client contract selects it.
 One individual graph can leave a service idle when it has no matching stage.
 
 ## Nova, Nova Core, and Their Host Role
@@ -126,6 +128,21 @@ The Nova role can add controlled integrations without adding them to the state m
 
 **Failure effect:** A lost Nova run store prevents safe recovery.
 A failed optional adapter can block its stages while the canonical run record remains intact.
+
+> **Source evidence — Mirror routing needs an explicit client selection**
+>
+> **Claim:** A configured mirror endpoint adds Docker Hub routing. A deployed mirror alone does not.
+>
+> **Implementation:** [BuildKit routing and client selection](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/registry-client-config.mjs#L66-L89); [Runtime consumes the generated BuildKit configuration](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/docker/buster-runtime-entrypoint.sh#L11-L29)
+>
+> **Contract:** The [registry-clients.v1 consumer](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/registry-client-config.mjs#L83-L89) requires an explicit registry contract and selects the optional mirror endpoint.
+>
+> **Test:** [Registry-client configuration tests](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/registry-client-config.test.mjs) Source inspected; not executed for this correction.
+>
+> **Checked revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** This correction does not establish live mirror requests, upstream registry behavior, or any other pipeline-map connection.
+
 
 > **Source evidence — Nova contains more than Core**
 >

@@ -6,7 +6,7 @@ Owner: platform security and runtime maintainers
 Evidence: my-values/infra/spire-values.yaml; charts/kubeclaw/templates/configmap-worker-trust.yaml; charts/prism/templates/networkpolicy.yaml; skills/nova/core/execution/authorization.ts; my-values/setup-secrets.sh; skills/nova/core/test-gates/source-snapshot.ts
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: the current supported release and its documented lab deployment
-Last verified: 2026-09-20
+Last verified: 2026-09-20; diagram boundary correction source-checked on 2026-10-21; no live result
 
 ## Purpose
 
@@ -74,7 +74,7 @@ flowchart LR
     Nova -->|SPIFFE mTLS| Prism[Prism]
     Control[Prism Control] -->|SPIFFE mTLS| Worker[Prism Worker]
     Nova -->|leased capability| Adapter[Capability adapter]
-    Adapter -->|named secret only| Secret[(Kubernetes Secret)]
+    Adapter -->|mapped logical secret name| Secret[Mapped process environment]
     Adapter -->|allowed namespace| Store[(Durable store)]
     Build[BuildKit] -->|content digest| Registry[(OCI registry)]
     Registry -->|pinned image| Workload[Runtime workload]
@@ -98,7 +98,7 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Nova | Directed connection — SPIFFE mTLS | Prism |
 | Prism Control | Directed connection — SPIFFE mTLS | Prism Worker |
 | Nova | Directed connection — leased capability | Capability adapter |
-| Capability adapter | Directed connection — named secret only | Kubernetes Secret |
+| Capability adapter | Directed connection — mapped logical secret name | Mapped process environment |
 | Capability adapter | Directed connection — allowed namespace | Durable store |
 | BuildKit | Directed connection — content digest | OCI registry |
 | OCI registry | Directed connection — pinned image | Runtime workload |
@@ -111,6 +111,21 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 
 
 Text version: humans enter through an operator or application boundary. Nova delegates work through explicit leases. Protected worker calls use SPIFFE mutual TLS. The Nova-to-Buster path also carries a signed, immutable source snapshot. Capability adapters mediate access to secrets and durable stores. BuildKit sends content to a registry, and deployments select immutable image identities. Network policy limits which of these paths packets can use.
+
+
+> **Source evidence — Secret resolution reads the mapped process environment**
+>
+> **Claim:** The secret adapter maps a logical secret name to an environment variable and returns its value.
+>
+> **Implementation:** [Complete adapter resolution path](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/src/adapter.ts#L3-L19)
+>
+> **Contract:** [Selected plugin and configuration schema](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/plugin.json) describes the adapter registration; it does not grant Kubernetes Secret API access.
+>
+> **Test:** [Secret resolver local-function test](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/tests/live-function.test.ts) Source inspected; not executed for this correction.
+>
+> **Checked revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`.
+>
+> **Limit:** Kubernetes may supply process environment separately. This adapter does not fetch Kubernetes Secrets or establish their RBAC or rotation behavior.
 
 ## One Request Passes Several Independent Checks
 

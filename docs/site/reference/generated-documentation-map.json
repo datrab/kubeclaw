@@ -2980,7 +2980,7 @@
       "audience": "new reader, architecture reader, maintainer, security reviewer",
       "owner": "platform architecture",
       "appliesTo": "current source and declared runtime roles",
-      "lastVerified": "source and contract inspection on 2026-09-19",
+      "lastVerified": "source and contract inspection on 2026-09-19; diagram boundary correction source-checked on 2026-10-21; no live result",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -3025,7 +3025,7 @@
       "audience": "operator, architecture reader, security reviewer, maintainer",
       "owner": "platform architecture and operations",
       "appliesTo": "current Helm charts and runtime-role declarations",
-      "lastVerified": "2026-09-21",
+      "lastVerified": "2026-09-21; diagram boundary correction source-checked on 2026-10-21; no live result",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "charts/kubeclaw",
@@ -3150,7 +3150,7 @@
       "audience": "architecture reader, operator, maintainer, security reviewer",
       "owner": "platform architecture and pipeline owners",
       "appliesTo": "current source, role declarations, charts, and selected infrastructure",
-      "lastVerified": "2026-09-16",
+      "lastVerified": "2026-09-16; diagram boundary correction source-checked on 2026-10-21; no live result",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "skills/nova/core",
@@ -3321,7 +3321,7 @@
       "audience": "operator, security reviewer, architecture reader, maintainer",
       "owner": "platform security and runtime maintainers",
       "appliesTo": "the current supported release and its documented lab deployment",
-      "lastVerified": "2026-09-20",
+      "lastVerified": "2026-09-20; diagram boundary correction source-checked on 2026-10-21; no live result",
       "sourceDependencies": [
         "my-values/infra/spire-values.yaml",
         "charts/kubeclaw/templates/configmap-worker-trust.yaml",

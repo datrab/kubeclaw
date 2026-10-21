@@ -6,7 +6,7 @@ Owner: platform architecture and operations
 Evidence: packaging/runtime/roles; charts/kubeclaw; charts/prism
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: current Helm charts and runtime-role declarations
-Last verified: 2026-09-21
+Last verified: 2026-09-21; diagram boundary correction source-checked on 2026-10-21; no live result
 
 ## Purpose
 
@@ -39,7 +39,6 @@ flowchart LR
     Control -->|Envoy and SPIFFE mTLS| PWorker[Prism Worker]
     Control -->|bearer HTTP| Ingestion[Optional Prism Ingestion]
     Control --> DB[(Prism PostgreSQL)]
-    PWorker --> DB
     Control --> Artifacts[(Prism artifact PVC)]
     Nova --> RunStore[(Nova run storage)]
     Buster --> BStore[(Buster job and evidence storage)]
@@ -53,7 +52,9 @@ first reaches the `agent-prism` Envoy and loopback bridge. The bridge reaches
 Control through a second protected route. Control persists an agent job before
 the bridge launches OpenClaw. OpenClaw commits a fenced result back to Control.
 Studio calls Control through the application route. Control can call the native
-Worker, optional Ingestion workload, and Prism PostgreSQL. The Prism OpenClaw
+Worker, optional Ingestion workload, and Prism PostgreSQL.
+The selected SPIFFE Worker does not construct the HMAC nonce database.
+The separate HMAC mode uses PostgreSQL for authentication nonces and readiness. The Prism OpenClaw
 gateway can call LiteLLM for memory embeddings. Nova, Buster, Prism, OpenClaw,
 and LiteLLM keep different owner state. Observers receive committed events only
 after Nova writes them. Managed OpenAI reasoning, Vertex embeddings through
@@ -80,7 +81,6 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism Control | Directed connection — Envoy and SPIFFE mTLS | Prism Worker |
 | Prism Control | Directed connection — bearer HTTP | Optional Prism Ingestion |
 | Prism Control | Directed connection | Prism PostgreSQL |
-| Prism Worker | Directed connection | Prism PostgreSQL |
 | Prism Control | Directed connection | Prism artifact PVC |
 | Nova role | Directed connection | Nova run storage |
 | Buster role | Directed connection | Buster job and evidence storage |
@@ -95,6 +95,21 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 > [The role proxy accepts Nova, Control, and test-runner identities at 18082 and forwards only to the loopback bridge](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
 >
 > [Control receives its database, Ingestion, Worker, agent, and exact SPIFFE settings from the rendered chart](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L90-L138).
+
+
+> **Source evidence — Worker authentication modes have different database boundaries**
+>
+> **Claim:** The Worker constructs and uses its nonce database only for HMAC authentication, not for SPIFFE.
+>
+> **Implementation:** [Authentication mode selection](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/worker.ts#L20-L25); [Request authentication](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/worker-service.ts#L54-L58); [HMAC-only readiness check](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/worker-service.ts#L79-L82)
+>
+> **Contract:** [Discriminated WorkerAuthentication type](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/worker-service.ts#L11-L13)
+>
+> **Test:** [HMAC and SPIFFE readiness tests](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/tests/worker-readiness.native.mts) Source inspected; not executed for this correction.
+>
+> **Checked revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`.
+>
+> **Limit:** This correction does not establish a database dependency for the SPIFFE Worker or prove any live authentication path.
 
 ## Runtime Roles and Workloads
 

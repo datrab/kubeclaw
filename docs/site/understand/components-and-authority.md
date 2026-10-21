@@ -6,7 +6,7 @@ Owner: platform architecture
 Evidence: skills/nova/core; skills/worker/core; packaging/runtime/roles
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: current source and declared runtime roles
-Last verified: source and contract inspection on 2026-09-19
+Last verified: source and contract inspection on 2026-09-19; diagram boundary correction source-checked on 2026-10-21; no live result
 
 ## Purpose
 
@@ -33,7 +33,7 @@ flowchart TB
     Prism --> Worker
     Runtime[Plugin runtime] --> Nova
     Runtime --> Buster
-    Runtime --> Prism
+    Packaging[Prism role manifest] -. package declarations only .-> Prism
 ```
 
 Text version: A human gives the project and signals to Nova.
@@ -41,7 +41,8 @@ Nova delegates bounded work to Forge, Echo, Prism, and Buster.
 All specialists return facts or artifacts to Nova.
 Nova makes the canonical lifecycle decision.
 Buster and Prism use Worker Core.
-The plugin runtime loads declared extension points for each applicable role.
+The plugin runtime activates selected Nova and Buster extension points.
+The Prism role manifest declares packaged plugins; packaging does not establish their activation.
 
 **Text alternative to the diagram**
 
@@ -62,7 +63,22 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism | Directed connection | Worker Core |
 | Plugin runtime | Directed connection | Nova |
 | Plugin runtime | Directed connection | Buster |
-| Plugin runtime | Directed connection | Prism |
+| Prism role manifest | Dotted relationship — package declarations only | Prism |
+
+
+> **Source evidence — Prism packaging is not plugin activation**
+>
+> **Claim:** The Prism role lists packages, plugins, and an extension. This declaration is not an execution path.
+>
+> **Implementation:** [Prism role declarations](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/prism.json#L1-L29)
+>
+> **Contract:** The same role manifest describes the packaging boundary, not an activation API.
+>
+> **Test:** [Bundle-builder verification](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/tests/verification/contracts/check-runtime-bundle-builder.mjs) Source inspected; not executed for this correction.
+>
+> **Checked revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`.
+>
+> **Limit:** This correction does not establish Prism plugin activation, live role execution, or any other diagram connection.
 
 ## Nova and Nova Core
 

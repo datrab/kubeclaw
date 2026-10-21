@@ -43,7 +43,7 @@
       "index": 0,
       "readerQuestion": "Which components control a run and which components return bounded facts?",
       "owner": "platform architecture",
-      "sourceSha256": "3055085c9491cbf037f0336f5387501250125d0b2e055fe844e3a7a7d8a2e603",
+      "sourceSha256": "598521dd3d46c5552ffc4bb6f314636c52bd116620adcfc5a46d9c5ce2685996",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -124,7 +124,7 @@
       "index": 0,
       "readerQuestion": "Which protected connections join Nova, Buster and the Prism runtime?",
       "owner": "platform architecture and operations",
-      "sourceSha256": "900f6b9f8bf1aa50d63def58affe720862a26e819be4b9c13334e0868b4a3618",
+      "sourceSha256": "0b46dd457b3c143a792d90960888bd35f96ebb4afb7df5d17bbd7bbd66fd5fed",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -169,7 +169,7 @@
       "index": 0,
       "readerQuestion": "Where are identity, transport, policy and credential trust boundaries enforced?",
       "owner": "platform security and runtime maintainers",
-      "sourceSha256": "a88eb76c65b3c44af54288ff5e03aa387d46545bdb7df5606a60f2eaea1e2c12",
+      "sourceSha256": "6222f0452d37839a406b21b0d66b25b077183ce6704130906b14dcc39963a1fb",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -196,7 +196,7 @@
       "index": 0,
       "readerQuestion": "Which data and infrastructure dependencies support the complete pipeline path?",
       "owner": "platform architecture and pipeline owners",
-      "sourceSha256": "678d2a16813bfd173d9ba7a25758263014f23810374c98e47fe06e7b272fe967",
+      "sourceSha256": "5ac3a1440f8b732b0d3f877171382cda822e3ca0b93b2e85905b71b1ad634e76",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
