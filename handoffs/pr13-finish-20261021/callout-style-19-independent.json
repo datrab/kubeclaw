@@ -1,0 +1,153 @@
+{
+  "scope": "19 root-authored style-only deltas across four previously independently reviewed v2 callout candidates",
+  "review": {
+    "Source": "PASS",
+    "semanticReader": "PASS",
+    "Quality": "PASS"
+  },
+  "findings": [],
+  "pages": [
+    {
+      "page": "docs/site/understand/telemetry.md",
+      "beforeExactReviewedV2": true,
+      "mainExactAfter": true,
+      "urlsOrderExact": true,
+      "lineCountUnchanged": true,
+      "changedLines": 2,
+      "sha256": "8e09011eba74b8fed94a0e25e9e3695445c8a0bd6f4f6846bd4906d1b40cfeae",
+      "deltas": [
+        {
+          "before": "> **Test evidence:** [Observer reconstruction fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/observer-recovery.test.mts#L54-L84) contains exhausted retries, healthy other-run delivery and reconstructed checkpoint assertions; a fresh execution result is not established here.",
+          "after": "> **Test evidence:** [Observer reconstruction fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/observer-recovery.test.mts#L54-L84) contains exhausted retries, healthy other-run delivery and reconstructed checkpoint assertions. No fresh execution result accompanies this callout."
+        },
+        {
+          "before": "> **Test evidence:** [Local notification chain fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/tests/live-function.test.ts#L104-L141) contains bounded fields, preview filtering and checkpoint deduplication assertions; a fresh execution result is not established here.",
+          "after": "> **Test evidence:** [Local notification chain fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/tests/live-function.test.ts#L104-L141) contains bounded fields, preview filtering and checkpoint deduplication assertions. No fresh execution result accompanies this callout."
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/nova-core.md",
+      "beforeExactReviewedV2": true,
+      "mainExactAfter": true,
+      "urlsOrderExact": true,
+      "lineCountUnchanged": true,
+      "changedLines": 1,
+      "sha256": "48bf718a99a91005880e3e4ee23ed04979a50f1c1f5da6f55da2e186f40632de",
+      "deltas": [
+        {
+          "before": "> **Contract or setting:** The lease binds active owner/grants; memory and CPU declarations require enforcement by an appropriate isolated executor.",
+          "after": "> **Contract or setting:** The lease binds active owner/grants; memory and CPU declarations require an isolated executor that enforces those limits."
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/plugin-runtime.md",
+      "beforeExactReviewedV2": true,
+      "mainExactAfter": true,
+      "urlsOrderExact": true,
+      "lineCountUnchanged": true,
+      "changedLines": 8,
+      "sha256": "320a25fc4214feb5c670e977556aea9cc3856fe2d7db10c0db2fd653455e1163",
+      "deltas": [
+        {
+          "before": "> **Test evidence:** [Registry selection fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L64-L96) contains snapshot immutability, provider selection and invalid-config rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Registry selection fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L64-L96) contains snapshot immutability, provider selection and invalid-config rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Identity/snapshot fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L52-L70) contains package digest shape, deep freezing and exact owner selection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Identity/snapshot fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L52-L70) contains package digest shape, deep freezing and exact owner selection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Configuration schema rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L77-L96) contains valid empty config and unknown configuration-field rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Configuration schema rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L77-L96) contains valid empty config and unknown configuration-field rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Provider and absent-grant controls](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L70-L110) contains provider selection, absent grant and invalid provider rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Provider and absent-grant controls](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L70-L110) contains provider selection, absent grant and invalid provider rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Contract or setting:** Core-only capabilities cannot be granted; exact or declared hierarchy matching applies, not wildcard expansion.",
+          "after": "> **Contract or setting:** Grants cannot include Core-only capabilities; exact or declared hierarchy matching applies, not wildcard expansion."
+        },
+        {
+          "before": "> **Test evidence:** [Required-grant denial](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L97-L110) contains missing grant and invalid configured provider rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Required-grant denial](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L97-L110) contains missing grant and invalid configured provider rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Closed stage configuration control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L77-L96) contains owner-schema validation and unknown configuration rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Closed stage configuration control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L77-L96) contains owner-schema validation and unknown configuration rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** The three named source links are test definitions, not completed suite results. No combined run or deployment-host kernel acceptance is recorded by this callout.",
+          "after": "> **Test evidence:** The three named source links are test definitions, not completed suite results. This callout records no combined run or deployment-host kernel acceptance."
+        }
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-runtime.md",
+      "beforeExactReviewedV2": true,
+      "mainExactAfter": true,
+      "urlsOrderExact": true,
+      "lineCountUnchanged": true,
+      "changedLines": 8,
+      "sha256": "4052b0df77b46c148607cf142095024eeea6146ab49e26cf0a09918eac770084",
+      "deltas": [
+        {
+          "before": "> **Test evidence:** [Internal authentication fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/internal-auth.test.mts#L9-L17) contains changed-body, expired timestamp and consumed-nonce rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Internal authentication fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/internal-auth.test.mts#L9-L17) contains changed-body, expired timestamp and consumed-nonce rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Agent transaction fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/agent-jobs.test.mts#L59-L77) contains stale fence, identical result replay and changed payload rejection assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Agent transaction fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/agent-jobs.test.mts#L59-L77) contains stale fence, identical result replay and changed payload rejection assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Agent restart uncertainty fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/agent-jobs.test.mts#L40-L59) contains database reopen and no replay of potentially started work assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Agent restart uncertainty fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/agent-jobs.test.mts#L40-L59) contains database reopen and no replay of potentially started work assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Nonce-readiness failure fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-readiness.test.mts#L8-L20) contains connection refusal diagnostic without credential leakage assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Nonce-readiness failure fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-readiness.test.mts#L8-L20) contains connection refusal diagnostic without credential leakage assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Service deadline config controls](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-shutdown-boundaries.test.mts#L65-L79) contains invalid deadline rejection and bounded default parsing assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Service deadline config controls](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-shutdown-boundaries.test.mts#L65-L79) contains invalid deadline rejection and bounded default parsing assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Native connection shutdown fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-shutdown-boundaries.test.mts#L34-L63) contains actual pg acquisition drain and explicit unresolved deadline assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Native connection shutdown fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-shutdown-boundaries.test.mts#L34-L63) contains actual pg acquisition drain and explicit unresolved deadline assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Cookie forwarding unit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/studio-proxy.test.mts#L1-L18) contains preservation of both Set-Cookie values and response header filtering assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Cookie forwarding unit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/studio-proxy.test.mts#L1-L18) contains preservation of both Set-Cookie values and response header filtering assertions. These assertions do not establish an execution result."
+        },
+        {
+          "before": "> **Test evidence:** [Pure adapter assertions](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/pipeline-adapter.test.mts#L4-L49) contains visual mapping, invalid digest and module-scoped read-only assignments assertions; these are not a recorded execution result for this boundary.",
+          "after": "> **Test evidence:** [Pure adapter assertions](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/pipeline-adapter.test.mts#L4-L49) contains visual mapping, invalid digest and module-scoped read-only assignments assertions. These assertions do not establish an execution result."
+        }
+      ]
+    }
+  ],
+  "reuse": [
+    "telemetry-nova-v2-independent-addendum.md/json: unchanged 57 scopes plus corrected durable-effect claim",
+    "plugin-prism-v2-independent-addendum.md/json: unchanged 38 scopes plus three corrected deltas"
+  ],
+  "limits": [
+    "No product/test/generator execution claimed.",
+    "No current rendered Reader or pending owning publication check acceptance claimed.",
+    "No compound/global gate acceptance or register changes.",
+    "Initial partial preparation failure is retained; only complete final candidates compared to exact reviewed v2 originals."
+  ],
+  "checks": [
+    {
+      "command": "Independent Python byte/diff/URL verification of four before/after pairs against reviewed frozen v2 originals and actual main pages",
+      "exit": 0,
+      "observation": "19 changed lines only (2/1/8/8); all before bytes exact reviewed v2; all after bytes exact main; complete ordered URLs unchanged; line counts unchanged."
+    },
+    {
+      "command": "node callout-style-19-independent-structure.mjs",
+      "exit": 0,
+      "observation": "Actual installed MarkdownIt production Source-block selection: telemetry30, Nova28, Plugin21, Prism20; every block retains all six fields together. These are99 existing block dispositions, including previously unchanged startup, not99 newly authored callouts."
+    }
+  ]
+}

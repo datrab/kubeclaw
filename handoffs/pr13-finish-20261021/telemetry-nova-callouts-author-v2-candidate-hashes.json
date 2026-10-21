@@ -1,0 +1,44 @@
+{
+  "baseline": {
+    "HEAD": "263dcf1cb0123fc68ded76d88cd9aff6dc2c5b7d",
+    "files": [
+      {
+        "path": "docs/site/understand/telemetry.md",
+        "worktreeSha256": "9724cdaef33312532b3d23eb8f939ae3006b8ca61bffd55130f46255c8fcf618",
+        "HEADSha256": "d3dcaaca4eddebe51582429da2bd459deb5b6087fbac2e7decd01315a73caad8"
+      },
+      {
+        "path": "docs/site/understand/nova-core.md",
+        "worktreeSha256": "0fae34e1c3d265e10737052d34693d0e945404c7036a27fd8510902255cb432e",
+        "HEADSha256": "0fae34e1c3d265e10737052d34693d0e945404c7036a27fd8510902255cb432e"
+      }
+    ],
+    "scope": "Captured actual main worktree page bytes, not claim all Source clean; parent edits excluded from author writes."
+  },
+  "files": [
+    {
+      "path": "docs/site/understand/telemetry.md",
+      "baselineSha256": "9724cdaef33312532b3d23eb8f939ae3006b8ca61bffd55130f46255c8fcf618",
+      "candidateSha256": "6fb2f994d0802987012345f57777a777e08faa90179c231fe8304b30f1660ca7",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    },
+    {
+      "path": "docs/site/understand/nova-core.md",
+      "baselineSha256": "0fae34e1c3d265e10737052d34693d0e945404c7036a27fd8510902255cb432e",
+      "candidateSha256": "7f8f08666ce7a3c7613c63dfaf6df1c8ce4709369bda831b4253f4dea624a3f0",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    }
+  ],
+  "staticChecks": {
+    "58SixFieldMappings": true,
+    "allOldLinksAndPinRevisionsPreservedInOrder": true,
+    "all118WholePinnedObjectsEqualCurrent": true,
+    "allLineRangesWithinPinnedSource": true,
+    "outsideCalloutsByteIdentical": true,
+    "telemetryUpTo128CorrectionPreserved": true
+  },
+  "execution": "Static scratch processing only; no target imports/tests/generators or main writes.",
+  "correction": "F1 only: remove false universal chronology from one Claim; all other58batch bytes preserved."
+}

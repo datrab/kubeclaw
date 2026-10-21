@@ -42,6 +42,10 @@ do not create a running service. No v1-to-v2 adapter exists.
 
 > **Source evidence — the version boundary**
 >
+> **Claim:** Active Nova v2 and host ingress v1 are distinct from inactive retained telemetry v1.
+>
+> **Implementation:** Retained status, agent contract constants and SDK envelopes below define the separate families.
+>
 > [The retained v1 README defines its inactive runtime status and limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/telemetry/v1/README.md#L1-L7).
 >
 > [The active agent-observability contract fixes its schema, source, stream
@@ -49,6 +53,14 @@ do not create a running service. No v1-to-v2 adapter exists.
 >
 > [The active SDK defines lifecycle and plugin-domain event envelopes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L656).
 > [It defines observer delivery and checkpoint contracts separately](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L657-L672).
+>
+> **Contract or setting:** Their versioned envelopes and delivery/checkpoint types do not define a v1-to-v2 runtime bridge.
+>
+> **Test evidence:** An executed retained-v1 runtime activation check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** Retained schemas/types are compatibility assets, not proof of a running producer or consumer.
 
 ### What the retained v1 asset contains
 
@@ -205,6 +217,10 @@ can support end-to-end evidence.
 
 > **Source evidence — OpenClaw producer path**
 >
+> **Claim:** OpenClaw host inputs normalize into bounded queues and Redis streams without a repository replay consumer.
+>
+> **Implementation:** Registration, normalizer, dedupe, routing and writer functions below trace admission through drop/dead-letter handling.
+>
 > [The extension registers hooks and its runtime-event subscription](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L240-L268).
 > [It also registers status, self-test, and service lifecycle](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L269-L308).
 > [Normalization extracts optional correlation identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L67-L90)
@@ -222,6 +238,14 @@ can support end-to-end evidence.
 > [The writer applies bounded retries and command timeouts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L201-L231),
 > then [records a drop and makes the one dead-letter attempt for control
 > data](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L234-L264).
+>
+> **Contract or setting:** Agent ingress v1 validation, size/depth limits, queue configuration and bounded write policy govern this producer.
+>
+> **Test evidence:** An executed deployed OpenClaw-host to Redis delivery check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** XADD acceptance is not downstream consumption; process queues/dedupe disappear on restart and raw content is not redacted.
 
 #### Complete host-ingress v1 event and payload catalogue
 
@@ -307,6 +331,10 @@ Redis. These inputs do not create an automatic v1-to-Nova-v2 consumer.
 
 > **Source evidence — complete host-ingress contract**
 >
+> **Claim:** Host-ingress v1 has type-specific required/optional payload and correlation rules.
+>
+> **Implementation:** Types, validators and hook/runtime normalizers below define each admitted field and fallback.
+>
 > [Identity, history, common fields and LLM payload declarations.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/types.ts#L35-L94)
 > [Agent, tool, model and subagent payload declarations.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/types.ts#L95-L148)
 > [Remaining subagent/session fields and full ingress envelope.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/types.ts#L149-L188)
@@ -318,6 +346,14 @@ Redis. These inputs do not create an automatic v1-to-Nova-v2 consumer.
 > [Exact identity aliases and fallback order.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L67-L95)
 > [Runtime stream mapping, reception timestamp, validation and diagnostic ingress.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L108-L167)
 > [History normalization and declared content fields.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-values.ts#L127-L143)
+>
+> **Contract or setting:** The ingress envelope is separate from Nova events; tool-parent IDs are required while other identities can be absent.
+>
+> **Test evidence:** An executed complete deployed host-ingress catalogue check is not established by this source trace.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** Normalization fallback/null values are not evidence that an upstream host supplied the value or that a child ran.
 
 #### Exact deployed configuration
 
@@ -412,11 +448,23 @@ Each lifecycle event has the same envelope fields:
 
 > **Source evidence — lifecycle production**
 >
+> **Claim:** Nova appends canonical lifecycle envelopes while observer effect events do not feed back into delivery.
+>
+> **Implementation:** SDK envelope, runner append and effect bridge below assign type/sequence and exclude observation loops.
+>
 > [The SDK contract contains the full closed list and common envelope fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L605-L645).
 >
 > [The pipeline runner assigns the journal sequence and writes run, stage, and attempt events through one append function](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/runner.ts#L49-L78).
 >
 > [The effect bridge emits bounded effect facts but excludes effects created by observer delivery to prevent a feedback loop](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-runtime.ts#L53-L59).
+>
+> **Contract or setting:** The closed lifecycle type list and common identity/payload envelope govern production.
+>
+> **Test evidence:** An executed complete production lifecycle event emission check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** A canonical event is not proof that an observer activated or a sink received it.
 
 ### Run-start event payloads
 
@@ -439,9 +487,21 @@ or waiting, paused, and terminal run payloads.
 
 > **Source evidence — run-start payloads**
 >
+> **Claim:** Loop startup chooses created/started or resumed events with distinct payloads.
+>
+> **Implementation:** Startup branches, commit ordering and runner envelope below define their fields.
+>
 > [Exact startup branch and spread order](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L46-L53).
 > [Startup commit and cancellation ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L20-L25).
 > [Run identity, envelope, default payload, and causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L60-L65).
+>
+> **Contract or setting:** Caller resumePayload spreads last; envelope run identity remains the runner identity.
+>
+> **Test evidence:** An executed run-created/started/resumed startup payload check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** Startup commits precede scheduling and do not prove an attempt or external effect.
 
 ### Administrative run-resumed payload
 
@@ -462,9 +522,21 @@ This section covers administrative reopening only; signal-based resume is separa
 
 > **Source evidence — administrative run-resumed payload**
 >
+> **Claim:** Administrative run.resumed carries its accepted decision and suppresses the later loop-start duplicate.
+>
+> **Implementation:** Administrative append/replay and duplicate matching below define this separate producer.
+>
 > [Decision recording before resume append](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L40-L54).
 > [Replay, cancellation selection, and startup suppression](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L90-L109).
 > [Duplicate matching, envelope, and full decision payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L136-L147).
+>
+> **Contract or setting:** Decision causation and full administrativeDecision payload differ from signal or ordinary startup payloads.
+>
+> **Test evidence:** An executed administrative run-resumed payload check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** This event can precede cancellation and does not prove retry, a new attempt or reconciled external work.
 
 ### Terminal run event payloads
 
@@ -490,9 +562,21 @@ This table covers pipeline-loop producers, not administrative run events.
 
 > **Source evidence — terminal run payloads**
 >
+> **Claim:** Terminal loop run events use empty payloads and committed state-derived precedence.
+>
+> **Implementation:** Batch return, finalization and runner envelope below select and append the terminal event.
+>
 > [Batch terminal and paused-return selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L29-L37).
 > [Terminal and finalization producers, precedence, and commit ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L133-L148).
 > [Default payload and envelope causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L60-L65).
+>
+> **Contract or setting:** Completion requires succeeded/skipped work subject to the stated unused-remediation exception.
+>
+> **Test evidence:** An executed all terminal run payload variants check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** A terminal event does not prove rollback/cleanup; waiting returns need not emit run.waiting.
 
 ### Pipeline cancellation event payloads
 
@@ -517,9 +601,21 @@ from this table.
 
 > **Source evidence — pipeline cancellation payloads**
 >
+> **Claim:** Loop cancellation preserves terminal stages and records counters for each newly cancelled stage.
+>
+> **Implementation:** Abort guard, batch ordering and default envelope below define this producer.
+>
 > [Abort guard, preserved terminal states, payloads, and commit ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L75-L83).
 > [Batch execution, decision recording, and early return ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
 > [Default empty payload and envelope construction](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L60-L65).
+>
+> **Contract or setting:** The loop checks cancellation at iteration boundaries, not by synchronously interrupting an executing batch.
+>
+> **Test evidence:** An executed pipeline cancellation payload and early-return ordering check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** These events do not prove external effects stopped or describe administrative cancellation payloads.
 
 ### Skipped-stage event payload
 
@@ -547,9 +643,21 @@ Other stage-event payloads remain outside this bounded correction.
 
 > **Source evidence — skipped-stage payload**
 >
+> **Claim:** An unmet activation condition skips a stage without creating an executed attempt.
+>
+> **Implementation:** The activation producer and envelope below preserve observed values and existing counters.
+>
 > [Activation test, state update, and exact payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L105-L116).
 >
 > [Journal envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+>
+> **Contract or setting:** Object.is comparison and explicit fact presence distinguish false/zero/null from an absent fact.
+>
+> **Test evidence:** An executed every skipped-stage observed-value variant check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** A skipped event is not a timeout, failed attempt, rollback or proof of source-stage execution.
 
 ### Started-stage event payload
 
@@ -573,8 +681,20 @@ assign a future attempt ID. Other stage payloads still need separate contracts.
 
 > **Source evidence — started-stage payload**
 >
+> **Claim:** stage.started records the running transition before executor dispatch, with only conditional label/override fields.
+>
+> **Implementation:** Budget guard, append/flush and executor ordering below define the start producer.
+>
 > [Budget check, running transition, exact fields, flush, and executor ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/pipeline-loop.ts#L118-L130).
 > [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+>
+> **Contract or setting:** An exhausted budget blocks before the event unless the administrative override applies.
+>
+> **Test evidence:** An executed stage-started payload ordering check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** The event carries no attempt ID and does not prove attempt creation, remote dispatch or completion.
 
 ### Successful-stage event payload
 
@@ -602,7 +722,19 @@ Other terminal-stage payloads remain outside this bounded correction.
 
 > **Source evidence — successful-stage payload**
 >
+> **Claim:** stage.succeeded records a completion decision and can precede remediation-requester rescheduling.
+>
+> **Implementation:** Success append, requester update/error and scheduled-event construction below define this path.
+>
 > [Exact success fields, remediation state update, missing-requester error, and rescheduling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L113-L126).
+>
+> **Contract or setting:** The current stage state supplies counters/facts/return target; a missing requester fails after the append.
+>
+> **Test evidence:** An executed successful-stage and repair-return payload check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** The event alone proves neither whole-run success nor successful requester rescheduling.
 
 ### Failed-stage event payload
 
@@ -630,8 +762,20 @@ applies only to the decision processor's stop path.
 
 > **Source evidence — failed-stage stop payload**
 >
+> **Claim:** Stop decisions select failed/blocked/cancelled stage events with the same bounded stop-path fields.
+>
+> **Implementation:** Stop constructor and terminal priority below define this producer.
+>
 > [Stop-event selection and exact fields](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L105-L110).
 > [Terminal batch priority](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L129-L131).
+>
+> **Contract or setting:** State selects the event type; result outcome/reason and counters remain distinct payload values.
+>
+> **Test evidence:** An executed all failed-stage stop payload variants check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** The name does not prove rollback or equal the separate terminal run event; other blocked producers differ.
 
 ### Retrying-stage event payload
 
@@ -651,8 +795,20 @@ repair or remediation scheduling.
 
 > **Source evidence — retrying-stage payload**
 >
+> **Claim:** stage.retrying records pending state and spent counters before forced scheduling.
+>
+> **Implementation:** Retry-state update, append and runner envelope below define this producer.
+>
 > [State transition, exact payload, and forced scheduling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L63-L67).
 > [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+>
+> **Contract or setting:** The event supplies no next-attempt identity, result or retry deadline.
+>
+> **Test evidence:** An executed retrying-stage counter payload check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** It does not reset budgets or prove another dispatch is safe or has started.
 
 ### Waiting-stage decision payloads
 
@@ -677,9 +833,21 @@ variant above. Waiting alone is not evidence of external-effect safety.
 
 > **Source evidence — waiting-stage decision payloads**
 >
+> **Claim:** Persisted waits and cooldowns have distinct stage.waiting payload variants.
+>
+> **Implementation:** Decision branches, remediation producer and runner envelope below separate these fields.
+>
 > [Exact branch selection, fields, and paused outcome](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L97-L103).
 > [Separate remediation producer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L70-L80).
 > [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+>
+> **Contract or setting:** persist_wait carries wait; cooldown carries retryAt; remediation uses a different payload.
+>
+> **Test evidence:** An executed wait/cooldown payload alternatives check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** A paused batch neither sleeps until expiry nor proves safe repetition of external effects.
 
 ### Orchestrator-required decision payload
 
@@ -711,9 +879,21 @@ continuation or the complete event catalogue.
 
 > **Source evidence — orchestrator-required decision payload**
 >
+> **Claim:** Three orchestrator actions generate one Core-owned wait envelope with action-specific request context.
+>
+> **Implementation:** Decision guards, generated wait and runner envelope below construct identity and authority.
+>
 > [Three action guards, state update, exact payload, and pause](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L88-L95).
 > [Generated wait identity, authority, and nested request selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/lifecycle/wait-request.ts#L5-L19).
 > [Envelope and default causation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L65).
+>
+> **Contract or setting:** core.orchestrator.resume, configured issuer and action-specific nested request govern the wait.
+>
+> **Test evidence:** An executed all orchestrator-required payload branches check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** Requesting authorization is not receiving it; this handler does not accept a signal or prove completed repair.
 
 ### Remediation-wait payload
 
@@ -744,8 +924,20 @@ path below instead. Administrative remediation is a separate producer.
 
 > **Source evidence — remediation-wait payload**
 >
+> **Claim:** Remediation waiting identifies the requester and binds a repair request before scheduling its target.
+>
+> **Implementation:** Producer append/apply order and remediation builder below determine affected-stage identity.
+>
 > [Guarded producer, exact payload, append/apply/schedule order](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L69-L80).
 > [Nested request, affected stages, and state application](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/lifecycle/remediation.ts#L5-L58).
+>
+> **Contract or setting:** repair-request.v1 binds requester, target, generation, result and invalidated stages, optionally budgetOrder.
+>
+> **Test evidence:** An executed complete remediation-wait payload check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** The event does not prove repair-target dispatch/success or authority to repeat uncertain effects.
 
 ### Blocked remediation-target payload
 
@@ -768,7 +960,19 @@ Do not treat this event as a completed remediation or permission to repeat effec
 
 > **Source evidence — blocked remediation target**
 >
+> **Claim:** A terminal or differently owned repair target blocks its requester without scheduling that target.
+>
+> **Implementation:** Target-status/return-owner guards below select the blocked payload and batch outcome.
+>
 > [Target-status and return-owner guards, exact payload, and terminal selection](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L69-L85).
+>
+> **Contract or setting:** The requesting stage owns envelope/counters; remediationStageId names the target.
+>
+> **Test evidence:** An executed blocked remediation-target payload check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** The stage-blocked name does not alone determine the terminal run status or establish completed remediation.
 
 ### Administrative consumed-attempt blocked payloads
 
@@ -796,10 +1000,22 @@ external effects. These payloads are distinct from ordinary stop and terminal-ta
 
 > **Source evidence — administrative consumed-attempt payloads**
 >
+> **Claim:** Administrative interrupted/consumed-attempt paths emit different blocked reasons and payloads.
+>
+> **Implementation:** Reopener causation checks and decision-recorder override interception below define both producers.
+>
 > [Reopener retry guard, state cleanup, matching and exact payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L118-L125).
 > [Decision-causation matching, envelope, deduplication and audit field](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-admin.ts#L138-L147).
 > [Override interception and artifact ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L29-L36).
 > [Consumed-attempt blocked state, exact payload and terminal outcome](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/run-decisions.ts#L57-L61).
+>
+> **Contract or setting:** Decision ID/type/stage matching and consumed counters constrain the administrative path.
+>
+> **Test evidence:** An executed both administrative consumed-attempt payloads check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** Neither payload is a full result, external rollback receipt or permission to repeat an uncertain effect.
 
 ### Accepted-signal wait-resolution payload
 
@@ -825,9 +1041,21 @@ This contract covers signal-driven resolution, not administrative reopening.
 
 > **Source evidence — accepted-signal resolution**
 >
+> **Claim:** wait.resolved records the complete accepted signal under signal causation before resumed guidance execution.
+>
+> **Implementation:** Resume guards, signal schema and resolution constructor below define ordering and identity.
+>
 > [Resume guards, journal ordering, duplicate checks, and exact event](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-run.ts#L82-L122).
 > [Signal validation against the recovered wait](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-snapshots.ts#L137-L144).
 > [Nested signal contract](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L543-L555).
+>
+> **Contract or setting:** resume-signal.v2 and exact wait/type/issuer/time checks precede separate signal and event writes.
+>
+> **Test evidence:** [Controlled signal replay check](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/contracts/check-plugin-system-v2-resume.mjs#L69-L88) contains resume and duplicate/stale rejection assertions; a fresh execution result is not established here.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** The two journal writes are not one cross-journal transaction; resolution alone does not prove another attempt succeeded.
 
 ### Attempt event payloads
 
@@ -858,10 +1086,22 @@ No deployed event delivery or full payload-catalogue acceptance is claimed.
 
 > **Source evidence — attempt payloads**
 >
+> **Claim:** Attempt-created/dispatched/result events retain attempt identity and distinguish cancelled/timed-out result selection.
+>
+> **Implementation:** Executor constructors and SDK attempt/result types below define the payloads.
+>
 > [Attempt creation and dispatch](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/stage-executor.ts#L112-L119).
 > [Result event selection and payload](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/stage-executor.ts#L137-L141).
 > [The runner defaults an omitted payload to an empty object](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/runner.ts#L61-L64).
 > [Nested attempt and result contracts](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L484-L538).
+>
+> **Contract or setting:** stage-attempt.v2 and stage-result.v2 bind producer/budgets/results; attempt.completed is not success-only.
+>
+> **Test evidence:** An executed all five attempt payload constructors check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** These records do not establish confirmed external effects, deployed event delivery or whole-run success.
 
 ### Artifact event payload
 
@@ -890,9 +1130,21 @@ successful completion of the whole run or an off-node backup.
 
 > **Source evidence — artifact payload**
 >
+> **Claim:** artifact.created records a producer-bound reference, with checkpoint true only on the checkpoint path.
+>
+> **Implementation:** Checkpoint validation, result recovery/recording and nested reference type below define the fields.
+>
 > [Checkpoint response and producer validation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/artifact-checkpoints.ts#L37-L59).
 > [Result recovery, producer binding, payload construction, and duplicate/conflict handling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/artifact-checkpoints.ts#L78-L124).
 > [The nested artifact reference contract](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L497-L505).
+>
+> **Contract or setting:** Checkpoint JSON digest/size/encoding/producer checks differ from result-derived reference projection.
+>
+> **Test evidence:** An executed complete checkpoint/result artifact payload matrix check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** A result-derived event does not prove a byte reread, whole-run completion or off-node backup.
 
 ### Effect event payloads
 
@@ -924,9 +1176,21 @@ This table closes only the described payload omission, not the full lifecycle ca
 
 > **Source evidence — effect payloads**
 >
+> **Claim:** Effect lifecycle events omit request bodies, redact confidential effects and summarize oversized results.
+>
+> **Implementation:** Effect bridge constructors and coordinator paths below define envelope and projection.
+>
 > [Envelope, observer exclusion, result summary, and four payload constructors](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/execution/engine-runtime.ts#L53-L84).
 > [Durable mode and confidential request/result audit boundaries](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/effects/coordinator.ts#L20-L54).
 > [Confidential request and receipt construction](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/nova/core/effects/coordinator.ts#L57-L73).
+>
+> **Contract or setting:** Durable/confidential mode and the 16KiB inline threshold control this audit representation.
+>
+> **Test evidence:** An executed all four effect payload and summary variants check is not established by this source trace.
+>
+> **Revision:** `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`. Source bindings, not execution receipts.
+>
+> **Limit:** An effect-result summary reference is not a written artifact/retrieval API or recoverable confidential response.
 
 ### Plugin domain events
 
@@ -946,9 +1210,21 @@ consumer relies on it.
 
 > **Source evidence — domain event authority**
 >
+> **Claim:** Plugin domain events retain canonical sequence and exact registration provenance.
+>
+> **Implementation:** SDK event type and stage emission below assign producer and attempt causation.
+>
 > [The SDK requires producer provenance on every plugin domain event](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L646-L656).
 >
 > [Stage emission assigns canonical sequence, producer provenance, attempt causation, and the supplied type and payload](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/stage-executor.ts#L82-L97).
+>
+> **Contract or setting:** An open event type still needs its producer-owned versioned payload/subscription contract.
+>
+> **Test evidence:** An executed every shipped plugin domain event check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** An open type string grants no new lifecycle authority, consumer compatibility or permission to expose secrets.
 
 ### Active agent-observability v2 projection
 
@@ -1019,6 +1295,10 @@ and artifact tests are not deployed-host or end-to-end delivery evidence.
 
 > **Source evidence — canonical hook reduction and observer projection**
 >
+> **Claim:** The pipeline hook source reduces admitted fields into a separate canonical v2 projection and granted sink requests.
+>
+> **Implementation:** Source reduction, observer projection, redactor and sink admission below define this separate path.
+>
 > [The source adapter reduces hook fields and requires bounded existing run identity.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L10-L66)
 > [The bounded source queue emits the namespaced domain event.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L67-L94)
 > [All eight projection fields and telemetry append invocation.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/agent-observability/src/observers.ts#L1-L24)
@@ -1026,6 +1306,14 @@ and artifact tests are not deployed-host or end-to-end delivery evidence.
 > [Exact structured-redaction pattern and traversal/string bounds.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/sdk/src/values.ts#L107-L128)
 > [File sink admission, default limits and idempotent durable append.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/telemetry-store/src/adapter.ts#L5-L40)
 > [Artifact size and store-capacity configuration.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/artifact-store/src/adapter.ts#L156-L175)
+>
+> **Contract or setting:** Run identity, bounded observedFields/metrics and eight output fields differ from direct-host raw ingress v1.
+>
+> **Test evidence:** [Projection redaction unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/agent-observability/tests/observers.unit.test.mjs#L5-L19) contains payload redaction and omission of deliveryAttempt assertions; a fresh execution result is not established here.
+>
+> **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. Source bindings, not execution receipts.
+>
+> **Limit:** The unit uses a supplied delivery; it does not prove v1 Redis consumption, a live host or an end-to-end deployed sink.
 
 ## Producer and Consumer Matrix
 
@@ -1075,6 +1363,10 @@ revision.
 
 > **Source evidence — shipped producer and consumers**
 >
+> **Claim:** Five shipped observer registrations have distinct subscriptions, grants and failure policies.
+>
+> **Implementation:** Observer manifests and fixed hook producer below declare the available registrations/types.
+>
 > [The telemetry observer manifest contains its exact 27 subscriptions and bounded best-effort policy](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/plugin.json#L6-L50).
 >
 > [The notification manifest separates lifecycle notifications from artifact preview delivery](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/plugin.json#L6-L59).
@@ -1082,6 +1374,14 @@ revision.
 > [The agent-observability manifest declares both the 12-event telemetry consumer and the five-event evidence consumer](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/agent-observability/plugin.json#L6-L65).
 >
 > [The OpenClaw adapter derives only the fixed prefixed type from an admitted hook name](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L52-L82).
+>
+> **Contract or setting:** The manifest lists availability; platform selection/grants decide activation and the selected provider decides persistence.
+>
+> **Test evidence:** An executed all shipped registrations in one deployment check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** A manifest entry or local package test does not establish activated delivery or a reachable sink.
 
 ## Identity and Correlation
 
@@ -1133,9 +1433,21 @@ not a new event.
 
 > **Source evidence — stable delivery**
 >
+> **Claim:** Observer/event identity yields stable delivery and adapter keys; Redis deduplication has a separate bounded lifetime.
+>
+> **Implementation:** Delivery construction and Redis Lua append/dedup below define the stable logical identity.
+>
 > [Observer delivery derives a stable delivery ID and stable adapter keys from observer and event identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observer-delivery.ts#L15-L43).
 >
 > [Redis performs deduplication and stream append in one Lua operation and returns the original stream entry ID on replay](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport/src/adapter.ts#L14-L20).
+>
+> **Contract or setting:** Exact repeated key/content can replay, while stream MAXLEN and dedup TTL retain independent meanings.
+>
+> **Test evidence:** An executed live lost-acknowledgement replay through the configured Redis sink check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** Stable keys do not guarantee indefinite deduplication, stream retention or a complete external consumer history.
 
 ## Redaction and Sensitive Data
 
@@ -1165,6 +1477,10 @@ remove or summarize sensitive values at the producer boundary.
 
 > **Source evidence — projection safety**
 >
+> **Claim:** Telemetry and audit projections redact named structured fields but cannot classify arbitrary secret content.
+>
+> **Implementation:** Telemetry observer, safe file projection and audit functions below define their different redaction scopes.
+>
 > [The telemetry observer creates a v2 envelope and redacts event identity and payload before adapter invocation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/src/observer.ts#L7-L29).
 >
 > [The file telemetry projection rejects unsafe object shapes and applies bounded
@@ -1172,6 +1488,14 @@ remove or summarize sensitive values at the producer boundary.
 > [It rejects invalid scalar values and redacts protected field names](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-store/src/projection.ts#L63-L94).
 >
 > [The audit reader rebuilds from the verified journal, redacts identity and payload, and binds its digest to record hashes and journal head](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/audit.ts#L6-L27).
+>
+> **Contract or setting:** Bounded JSON traversal and field-name patterns apply only at the specified projection boundary.
+>
+> **Test evidence:** [Telemetry projection unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/tests/live-function.test.ts#L33-L46) contains redacted payload and telemetry invocation shape assertions; a fresh execution result is not established here.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** The supplied delivery/unit does not prove semantic privacy, safe canonical journals or redaction of CRI logs.
 
 ## Observer Delivery, Checkpoints, and Recovery
 
@@ -1213,9 +1537,21 @@ delivery journal, and its checkpoint does not advance.
 
 > **Source evidence — recovery behavior**
 >
+> **Claim:** Observer completion/checkpoint recovery respects recorded attempts and required/best-effort failure policy.
+>
+> **Implementation:** Delivery loop and recovery reducer below apply subscription, attempt and checkpoint rules.
+>
 > [Observer Runtime filters subscriptions, enforces checkpoints, applies required or best-effort policy, retries, and checkpoints only after success](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observers.ts#L70-L106).
 >
 > [Recovery validates attempt transitions and rebuilds the maximum attempt and completed-delivery sets](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observer-recovery.ts#L71-L82).
+>
+> **Contract or setting:** Required throws on exhaustion; best effort blocks the same observer/run for that drain without advancing its checkpoint.
+>
+> **Test evidence:** [Observer reconstruction fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/observer-recovery.test.mts#L54-L84) contains exhausted retries, healthy other-run delivery and reconstructed checkpoint assertions. No fresh execution result accompanies this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** This real local-file observer is not a deployed external sink; its best-effort case does not test every required-mode failure.
 
 ## Sink Contracts
 
@@ -1394,6 +1730,10 @@ position sets. Readiness of either collector is not end-to-end log evidence.
 
 > **Source evidence — optional monitoring**
 >
+> **Claim:** Optional Prometheus/Grafana and CRI/Alloy/Loki configuration forms a separate non-authoritative monitoring path.
+>
+> **Implementation:** Retention, collector discovery/relabel/write and data-source values below define the configured path.
+>
 > [Prometheus retains 15 days on 20 GiB and Grafana uses a 5 GiB volume plus the
 > Loki data source](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/prometheus.yaml#L3-L50).
 > [Loki is one unauthenticated filesystem-backed replica with 720-hour retention
@@ -1407,6 +1747,14 @@ position sets. Readiness of either collector is not end-to-end log evidence.
 > `namespace`, `job`, `pod`, and `container` labels](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L47-L98).
 > [File discovery constructs CRI paths and Loki write sends to the in-cluster
 > push endpoint without external labels](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L100-L130).
+>
+> **Contract or setting:** Chart values select storage/retention/labels and collector positions; they do not bridge canonical event delivery.
+>
+> **Test evidence:** An executed live scrape and complete CRI-to-Loki delivery check is not established by this source trace.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** Values do not prove live targets, zero log loss, secret redaction, capacity for the retention window or restored data.
 
 ### Why event telemetry and platform monitoring are separate
 
@@ -1689,6 +2037,10 @@ access controls rather than forwarding it as notification text.
 
 > **Source evidence — configuration and lifecycle shaping**
 >
+> **Claim:** Notification lifecycle summaries use closed configuration and bounded display shaping, not semantic redaction.
+>
+> **Implementation:** Config schema, target/text helpers and lifecycle output builder below implement that projection.
+>
 > [The closed config schema fixes optional fields and limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/schemas/config.schema.json#L1-L23).
 >
 > [Target validation and the two distinct text normalizers](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L48-L69).
@@ -1696,6 +2048,14 @@ access controls rather than forwarding it as notification text.
 > [Reason selection and stage/title/field presentation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L82-L118).
 >
 > [Lifecycle output construction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L119-L145).
+>
+> **Contract or setting:** Optional target still must be nonempty at publish; lifecycle suppression runs before target validation.
+>
+> **Test evidence:** [Local notification chain fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/tests/live-function.test.ts#L104-L141) contains bounded fields, preview filtering and checkpoint deduplication assertions. No fresh execution result accompanies this callout.
+>
+> **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. Source bindings, not execution receipts.
+>
+> **Limit:** The local HTTP chain is not a deployed receiver, process-crash recovery or proof that free-text summaries contain no secrets.
 
 ### Artifact preview projection
 

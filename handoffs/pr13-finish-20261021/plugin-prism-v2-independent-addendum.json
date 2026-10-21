@@ -1,0 +1,27 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "scope": "Exactly3corrected v2 deltas, original38bounded scopes unchanged",
+  "Source": "PASS",
+  "semanticReader": "PASS",
+  "Quality": "PASS",
+  "files": [
+    {
+      "path": "docs/site/understand/plugin-runtime.md",
+      "sha256": "b17fbb5d4d025b6ac01ae61f68fa86048a4d157e6e8458330d39e98d500242b9"
+    },
+    {
+      "path": "docs/site/understand/prism-runtime.md",
+      "sha256": "d90cc5844c5ecc50a0d66303730826537d21cc724cfc188ebce479135526adf0"
+    }
+  ],
+  "basis": [
+    "F1 separates unchanged stored configuration from permitted exact package identity upgrade chains; matches unconditional snapshot configuration comparison before package upgrades.",
+    "F3 names OpenClaw extension as tool registrar and private bridge as forwarding component; matches their separate complete source responsibilities.",
+    "F2 blank becomes quoted blank within same claim, preserving links/prose and joining the actual Source block."
+  ],
+  "limits": [
+    "No whole A91205, compound27/58/41 verdict, source generation, product/test execution or main/register writes.",
+    "Fresh built Reader remains parent-owned."
+  ],
+  "structuralEvidence": "Actual installed MarkdownIt exit0: Plugin21+Prism20 all6fields within same Source block; plugin-prism-v2-independent-structure.json"
+}

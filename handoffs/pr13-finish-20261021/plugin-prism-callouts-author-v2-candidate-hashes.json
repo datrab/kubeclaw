@@ -1,0 +1,47 @@
+{
+  "baseline": {
+    "HEAD": "2e89bce7e59009e39de32d7df2bf8c52e839d5e9",
+    "files": [
+      {
+        "path": "docs/site/understand/plugin-runtime.md",
+        "worktreeSha256": "651e56f3f395963c08e6305956c752ef707651d53f3e419bbd75b0ca8faad568",
+        "HEADSha256": "651e56f3f395963c08e6305956c752ef707651d53f3e419bbd75b0ca8faad568"
+      },
+      {
+        "path": "docs/site/understand/prism-runtime.md",
+        "worktreeSha256": "d9b5b53baa6dc725aaeac49179a80af9f2b6aa293bbded8e2d7fec5ff3369d3c",
+        "HEADSha256": "d9b5b53baa6dc725aaeac49179a80af9f2b6aa293bbded8e2d7fec5ff3369d3c"
+      }
+    ],
+    "scope": "Exact captured worktree pages; no clean whole-source claim."
+  },
+  "files": [
+    {
+      "path": "docs/site/understand/plugin-runtime.md",
+      "baselineSha256": "651e56f3f395963c08e6305956c752ef707651d53f3e419bbd75b0ca8faad568",
+      "candidateSha256": "b17fbb5d4d025b6ac01ae61f68fa86048a4d157e6e8458330d39e98d500242b9",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    },
+    {
+      "path": "docs/site/understand/prism-runtime.md",
+      "baselineSha256": "d9b5b53baa6dc725aaeac49179a80af9f2b6aa293bbded8e2d7fec5ff3369d3c",
+      "candidateSha256": "d90cc5844c5ecc50a0d66303730826537d21cc724cfc188ebce479135526adf0",
+      "outsideCalloutsByteIdentical": false,
+      "headingsPreserved": true,
+      "exception": "Exactly one inherited unquoted separator becomes > to keep the real Source block contiguous (F2); all other outside bytes unchanged."
+    }
+  ],
+  "staticChecks": {
+    "all41BoxesDispositioned": true,
+    "40SixFieldMappingsAdded": true,
+    "oneExistingCompleteBoxExactUnchanged": true,
+    "allOldLinksAndPinRevisionsPreservedInOrder": true,
+    "all71WholePinnedObjectsEqualCurrent": true,
+    "allLineRangesWithinPinnedSource": true,
+    "outsideCalloutsByteIdentical": false,
+    "onlyOutsideChangeIsQuotedSeparatorF2": true
+  },
+  "execution": "Static scratch processing only; no target imports/tests/generators or main writes.",
+  "correction": "Only F1/F3 Claim replacement and F2 quote separator; other38 scopes/startup exact unchanged."
+}

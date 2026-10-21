@@ -1,0 +1,499 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "author": "/root/workflow_acceptance",
+  "scope": "Separate complete41-callout batch,40additions+1exact unchanged; not compound acceptance",
+  "status": "NOT_READY exactly3material findings after complete coherent review",
+  "files": [
+    {
+      "path": "docs/site/understand/plugin-runtime.md",
+      "baselineSha256": "651e56f3f395963c08e6305956c752ef707651d53f3e419bbd75b0ca8faad568",
+      "candidateSha256": "9571b7cfc533e8a35bb849d1c5d056fbe9ecd423e82d228e665f8d1610bba288",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    },
+    {
+      "path": "docs/site/understand/prism-runtime.md",
+      "baselineSha256": "d9b5b53baa6dc725aaeac49179a80af9f2b6aa293bbded8e2d7fec5ff3369d3c",
+      "candidateSha256": "958a8ce84644a23ce1f6523b8017b291bd0bcb3a236e68ac4ed8e364ae52ab78",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "box": 9,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "field": "Claim",
+      "severity": "material",
+      "text": "Recovery keeps pinned bytes/configuration unless an exact authorized upgrade chain permits the change.",
+      "evidence": "engine-snapshots.ts29\u201340 unconditionally compares stored.configuration to runtime.configuration at33 before processing any package upgrade; package upgrades50\u201366 change only exact package identities.",
+      "fix": "Separate the boundaries: Recovery requires the stored runtime configuration; exact authorized upgrade chains can permit changed package versions/digests only."
+    },
+    {
+      "id": "F2",
+      "box": 41,
+      "page": "docs/site/understand/prism-runtime.md",
+      "field": "Markdown Source-block structure",
+      "severity": "material",
+      "evidence": "Actual MarkdownIt top-level source block at candidate1033 closes at the unquoted blank line after Agent SPIFFE link (about1047). Contract/Test/Revision/Limit are in another blockquote without Source heading; source-preview discovery selects only first Source block and misses four fields/startup-doctor link.",
+      "fix": "Replace the single unquoted blank line between Agent SPIFFE and startup-doctor links with a quoted blank line (>), preserving URLs/prose, then rerun actual MarkdownIt same-block check."
+    },
+    {
+      "id": "F3",
+      "box": 31,
+      "page": "docs/site/understand/prism-runtime.md",
+      "field": "Claim",
+      "severity": "material",
+      "text": "The private bridge forwards admitted work and exposes only two Prism mutation tools to the model.",
+      "evidence": "agent-bridge.mjs1\u201337 is private HTTP forwarding/job-status/runner helper and registers no model tools. openclaw-plugin/index.mjs22\u201380 separately registers prism_create_design_set/prism_apply_revision inside the OpenClaw host. Original surrounding chapter correctly separates these owners.",
+      "fix": "The private bridge forwards admitted work; the OpenClaw extension exposes two Prism mutation tools to the model."
+    }
+  ],
+  "perBox": [
+    {
+      "index": 1,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 the complete preparation order**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 2,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 identity contracts**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 3,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 role-neutral boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 4,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 deterministic inert discovery**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 5,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 path and schema admission**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 6,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 digest and trust decision**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 7,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 install admission and publication**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 8,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 build and freeze**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 9,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 compatibility during recovery**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "FAIL",
+      "semanticReader": "FAIL",
+      "Quality": "FAIL",
+      "findings": [
+        "F1"
+      ]
+    },
+    {
+      "index": 10,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 explicit and transitive selection**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 11,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 vocabulary and denial rules**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 12,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 configuration boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 import admission**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 activation modes and current boundary**",
+      "disposition": "UNCHANGED_EXISTING_SIX_FIELDS",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 lease contract and enforcement**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 process and protocol boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 state ownership and idempotency**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 durable effect ownership**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 removal boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 registry error vocabulary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/plugin-runtime.md",
+      "title": "> **Source evidence \u2014 focused verification**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 product boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 23,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 packaged role**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 24,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 composition and defaults**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 25,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 session boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 26,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 internal authentication**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 27,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 pipeline dispatch**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 28,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 fenced agent writes**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 29,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 optional authority**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 30,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 no blind replay**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 31,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 bridge and tool surface**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "FAIL",
+      "semanticReader": "FAIL",
+      "Quality": "FAIL",
+      "findings": [
+        "F3"
+      ]
+    },
+    {
+      "index": 32,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 approval and publication**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 33,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 readiness meaning**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 34,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 limits**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 35,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 attempt binding**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 36,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 cancellation and shutdown**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 37,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 durable replay**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 38,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 Studio boundary**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 39,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 acquisition controls**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 40,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 adapter scope**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "findings": []
+    },
+    {
+      "index": 41,
+      "page": "docs/site/understand/prism-runtime.md",
+      "title": "> **Source evidence \u2014 deployment constraints**",
+      "disposition": "AUTHOR_FIELDS_ADDED",
+      "Source": "PASS",
+      "semanticReader": "FAIL",
+      "Quality": "FAIL",
+      "findings": [
+        "F2"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "command": "Actual installed MarkdownIt parser (html:true), production top-level Source block selection, semantic inline-token field labels within same block",
+      "exit": 0,
+      "observation": "Plugin21complete; Prism19complete+deployment Source block missing4fields. Script/report plugin-prism-independent-structure.mjs/.json. Initial root dependency lookup failed MODULE_NOT_FOUND; corrected require base to real scripts/docs-reader package; no package installation."
+    },
+    {
+      "command": "Inert independent baseline/candidate hashes, outside-callout byte comparison, ordered original URL comparison",
+      "exit": 0,
+      "observation": "Both exact baseline pages equal2e89; all original URLs retained, all outside bytes exact; existing startup callout exactly unchanged."
+    },
+    {
+      "command": "git show each allowed immutable revision:path plus full current bytes and line ranges",
+      "exit": 0,
+      "observation": "71distinct complete objects currentequal and all rangesvalid; detail plugin-prism-independent-bindings.json."
+    }
+  ],
+  "readScope": [
+    "All41dispositions and complete two-page surrounding context including diagrams/tables/failures/recovery/change/verification limits.",
+    "Fresh complete registry328, Prism internal-auth17/pipeline-adapter49/readiness41/shutdown79/studio-proxy18 tests; agent-jobs113 unchanged complete prior read reused. No tests executed.",
+    "Fresh controlling engine-snapshot config/upgrade guard, activation integrity/import sequence, Control config, Worker config/lifecycle, native operation/reservation/result/evidence, bridge/host tool registration and HMAC admission reads. Exact unchanged earlier whole plugin/Prism topic mechanisms reused only within valid scopes."
+  ],
+  "limits": [
+    "No source imports/product/test/service/generator/currentDATA execution; only installed MarkdownIt dependency parser executes against prose.",
+    "Main/public/register unchanged.",
+    "No whole A91205, runtime/nativekernel/live deployment, release/CI, new record counts, or compound27/58/41PASS.",
+    "Fresh built Reader remains parent-owned after actual candidate integration/corrections."
+  ]
+}

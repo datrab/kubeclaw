@@ -30,9 +30,21 @@ The benefit is that a model response cannot silently become a durable design rev
 
 > **Source evidence — product boundary**
 >
+> **Claim:** Prism owns design state while model generation and native deterministic execution cross different boundaries.
+>
+> **Implementation:** Engine operation names and native-operation generation rejection below implement that division.
+>
 > [The engine contract defines generate, render, evaluate, ingest, and publish as the Prism operation names](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/engine/index.ts#L12-L33).
 >
 > [The native operation rejects generation because generation must use the OpenClaw agent path](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-operation.ts#L58-L76).
+>
+> **Contract or setting:** The engine operation contract includes generate, but native Worker policy rejects it in favor of OpenClaw.
+>
+> **Test evidence:** An executed complete live Prism design journey check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A model execution receipt is not a committed design result, human approval or Nova lifecycle decision.
 
 ## Runtime Map
 
@@ -110,9 +122,21 @@ These are the pinned implementation boundaries, not a newly executed live result
 
 > **Source evidence — packaged role**
 >
+> **Claim:** The packaged Prism role and chart select distinct components and exactly one native Worker.
+>
+> **Implementation:** Role declaration and workload guards below define the composition.
+>
 > [The Prism runtime role declares its packages, platform plugins, observer extension, and read-only project snapshot capability](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/packaging/runtime/roles/prism.json#L1-L28).
 >
 > [The Helm chart deploys separate Control, Studio, and Worker workloads and requires exactly one native Worker](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L1-L23).
+>
+> **Contract or setting:** Runtime package/plugin selections and one-worker deployment guard are configuration authority, not operational health.
+>
+> **Test evidence:** An executed packaged-role deployment check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A role manifest and successful chart shape do not prove service startup, node preparation or access readiness.
 
 ## 1. Control: The Durable Authority
 
@@ -144,9 +168,21 @@ This startup snapshot prevents later environment changes from changing a running
 
 > **Source evidence — composition and defaults**
 >
+> **Claim:** Control captures service configuration and uses PostgreSQL as production state authority.
+>
+> **Implementation:** Control configuration and listener below validate dependencies before accepting requests.
+>
 > [Control validates secrets, trust identities, URLs, storage, result size, and dispatch time during composition](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-config.ts#L16-L72).
 >
 > [The production listener uses a PostgreSQL pool and has no embedded-runtime switch](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control.ts#L1-L9).
+>
+> **Contract or setting:** Required secrets, trust mode, URLs, storage/result limits and database connection select the startup contract.
+>
+> **Test evidence:** An executed production Control startup check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** Configuration validity does not prove reachable Worker/Ingestion/artifacts or a successful database operation.
 
 ### Public health and readiness
 
@@ -174,9 +210,21 @@ The optional product-decision routes add a separate operator allowlist.
 
 > **Source evidence — session boundary**
 >
+> **Claim:** Studio ingress identity becomes a signed short-lived session with separate CSRF admission.
+>
+> **Implementation:** Session codec and Control cookie/CSRF handling below implement that boundary.
+>
 > [Session signing, expiry, audience validation, and Tailscale identity exchange are explicit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/session.ts#L3-L19).
 >
 > [Control sets both 15-minute cookies and requires the CSRF value on mutating user requests](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L108-L123).
+>
+> **Contract or setting:** Ingress secret, audience/expiry and cookie/header matching determine admission; general routes do not apply stored roles as fine-grained policy.
+>
+> **Test evidence:** An executed deployed user session and CSRF check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A valid session is not a product-decision operator grant or proof of Tailnet identity enforcement upstream.
 
 ### Internal trust modes
 
@@ -193,11 +241,23 @@ Worker HMAC requests have a five-minute timestamp window and a PostgreSQL nonce 
 
 > **Source evidence — internal authentication**
 >
+> **Claim:** Selected internal trust mode must be complete; HMAC binds one-time nonce, time and exact body.
+>
+> **Implementation:** Control trust configuration and internal-auth verification below implement admission/replay checks.
+>
 > [Control fails startup when the selected trust policy is incomplete](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-config.ts#L22-L37).
 >
 > [Worker HMAC binds timestamp, nonce, body digest, signature, audience, and one-time nonce consumption](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-auth.ts#L3-L14).
 >
 > [Verification enforces the five-minute window and rejects a consumed nonce](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-auth.ts#L52-L86).
+>
+> **Contract or setting:** SPIFFE requires configured peers; HMAC requires secrets and nonce storage within its five-minute window.
+>
+> **Test evidence:** [Internal authentication fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/internal-auth.test.mts#L9-L17) contains changed-body, expired timestamp and consumed-nonce rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** PGlite/in-memory nonce fixtures do not prove deployed proxy peer validation, production PostgreSQL or transport security.
 
 ## 2. API Surface and Request Flows
 
@@ -225,9 +285,21 @@ It does not publish a new baseline on the pipeline request path.
 
 > **Source evidence — pipeline dispatch**
 >
+> **Claim:** Pipeline dispatch binds architecture/idempotency before admitting design work or returning an existing approved archive.
+>
+> **Implementation:** Control dispatch validation and architecture-transition branches below define the two paths.
+>
 > [Dispatch checks transport identity, a 2 MB body limit, idempotency, and the design-request contract](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L174-L213).
 >
 > [Control records the architecture transition before it either admits design work or returns the approved archive](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L214-L240).
+>
+> **Contract or setting:** prism.design-request.v1, transport identity, 2 MB body limit and approval binding constrain this route.
+>
+> **Test evidence:** An executed live Nova dispatch to approved Prism baseline check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A 202 waiting response or supplied approvalId is not new publication or pipeline completion.
 
 ### Agent routes
 
@@ -248,9 +320,21 @@ This prevents a process failure from leaving a design change without its durable
 
 > **Source evidence — fenced agent writes**
 >
+> **Claim:** Agent writes require the live fenced job and commit design state with its durable result in one transaction.
+>
+> **Implementation:** Agent routes and design-set/revision handlers below validate identity and delegate to the repository.
+>
 > [Agent job routes require the trusted Prism Agent peer and expose claim, read, and finish operations](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-job-routes.ts#L6-L26).
 >
 > [Design sets and revisions validate job identity and commit through the revision repository](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L243-L277).
+>
+> **Contract or setting:** Prism Agent SPIFFE identity, exact design/revision shape, generation and source revision constrain writes.
+>
+> **Test evidence:** [Agent transaction fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/agent-jobs.test.mts#L59-L77) contains stale fence, identical result replay and changed payload rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** The PGlite/local-process fixture is not a live model or deployed SPIFFE admission result.
 
 ### Session routes
 
@@ -312,11 +396,23 @@ It does not create a replacement decision.
 
 > **Source evidence — optional authority**
 >
+> **Claim:** Optional product decisions store signed intent before a bounded controller call and recover the same uncertain decision.
+>
+> **Implementation:** Authority loader, pinned controller transport and decision-recovery functions below implement the path.
+>
 > [Product authority is disabled unless all explicit HTTPS, operator, key, controller, CA, and token settings validate](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/product-decisions.ts#L20-L35).
 >
 > [The controller transport uses a 15-second timeout, a 1 MB response limit, a pinned CA, and its service-account token](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/product-controller.ts#L12-L28).
 >
 > [An uncertain outcome retries the same status or decision envelope and never issues a replacement](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/product-decisions.ts#L26-L40).
+>
+> **Contract or setting:** Explicit operator/Origin/CSRF, signing key, HTTPS origins, CA and service-account token are required when enabled.
+>
+> **Test evidence:** An executed live product-controller decision check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A pending response is not controller acceptance or authority to create a replacement decision ID.
 
 ## 3. The Main Design Journey
 
@@ -399,11 +495,23 @@ The local process termination path sends `SIGTERM` to the process group and send
 
 > **Source evidence — no blind replay**
 >
+> **Claim:** Claimed agent work never returns automatically to the accepted queue after launch uncertainty.
+>
+> **Implementation:** Job claim/expiry, runner and process launcher below preserve its session/fence identity.
+>
 > [Claim serializes admission, expires old running work to `needs_nova`, supersedes stale accepted work, and issues a 16-minute fenced attempt](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L38-L53).
 >
 > [The runner validates the durable identity, uses the stable session key, and records any launch uncertainty as an errored outcome](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-job-runner.mjs#L16-L46).
 >
 > [The launcher uses a detached process group and escalates from `SIGTERM` to `SIGKILL` after one second](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-process.ts#L14-L38).
+>
+> **Contract or setting:** Only accepted jobs can be claimed; running expiry becomes needs_nova with no supported resolution transition.
+>
+> **Test evidence:** [Agent restart uncertainty fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/agent-jobs.test.mts#L40-L59) contains database reopen and no replay of potentially started work assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** Local process termination does not prove a remote model stopped; needs_nova still requires a supported future reconciliation path.
 
 ### Agent Bridge admission and probes
 
@@ -442,11 +550,23 @@ CPU, memory, and complete child-process counts are explicitly unrequested becaus
 
 > **Source evidence — bridge and tool surface**
 >
+> **Claim:** The private bridge forwards admitted work; the OpenClaw extension exposes two Prism mutation tools to the model.
+>
+> **Implementation:** Bridge, OpenClaw extension and attempt envelope below define listener/routes/tools/limits.
+>
 > [The bridge defines its loopback listener, routes, body limit, deadlines, poll interval, and shutdown request](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-bridge.mjs#L1-L37).
 >
 > [The OpenClaw extension exposes only the design-set and revision tools](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/openclaw-plugin/index.mjs#L22-L80).
 >
 > [The launcher envelope declares its unavailable measurements and exact execution, cleanup, log, result, and evidence limits](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-attempt.ts#L5-L28).
+>
+> **Contract or setting:** Job identity and the agent Worker envelope constrain launch; CPU/memory/full-child metrics are explicitly unrequested.
+>
+> **Test evidence:** An executed deployed bridge/proxy/model/tool chain check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** Loopback health/ready and local execution limits do not prove Control reachability, remote resource use or a complete design journey.
 
 ### Approval is not publication
 
@@ -473,11 +593,23 @@ It prevents a lightweight approval from being mistaken for complete implementati
 
 > **Source evidence — approval and publication**
 >
+> **Claim:** Approval binds one revision/warning set; publication separately renders and stores an immutable approved baseline.
+>
+> **Implementation:** Approval checks, render/evidence loop and baseline assembly below enforce these distinct steps.
+>
 > [Approval binds the current revision, architecture, quality status, and exact warning acceptance](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L521-L565).
 >
 > [Publication renders each view, state, and viewport and rejects missing or failing accessibility evidence](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L693-L752).
 >
 > [The assembled archive and its exact component digests are committed to the baseline record](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L753-L797).
+>
+> **Contract or setting:** Active architecture/round/direction, exact accepted warnings and per-view/state/viewport evidence constrain publication.
+>
+> **Test evidence:** An executed full approval-to-baseline publication check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** An approval record alone is not a complete archive, a live render result or implementation acceptance.
 
 ## 4. Native Worker and Engine Execution
 
@@ -515,9 +647,21 @@ Call `/ready` when end-to-end Worker admission must be checked.
 
 > **Source evidence — readiness meaning**
 >
+> **Claim:** Worker liveness, native bootstrap and dependency readiness have different proof scopes.
+>
+> **Implementation:** Worker service and chart probe below separate initialization from ready admission.
+>
 > [The Worker distinguishes liveness, bootstrap reconciliation, dependency readiness, and attempt admission](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-service.ts#L28-L107).
 >
 > [The deployment uses `/bootstrap` to break the first-install migration dependency](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L157-L162).
+>
+> **Contract or setting:** The chart probes bootstrap for first-install migration ordering; HMAC nonce database readiness needs the separate ready path.
+>
+> **Test evidence:** [Nonce-readiness failure fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-readiness.test.mts#L8-L20) contains connection refusal diagnostic without credential leakage assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A refused local port is not PostgreSQL availability, prepared native ownership or a successful attempted workload.
 
 ### Admission limits and defaults
 
@@ -552,11 +696,23 @@ The Helm chart also requires Worker shutdown to exceed native close plus drain t
 
 > **Source evidence — limits**
 >
+> **Claim:** Worker configuration and envelope enforce different ingress, execution, evidence and native-resource bounds.
+>
+> **Implementation:** Worker/native configuration and envelope producer below set defaults and validators.
+>
 > [Ingress defaults and validation are centralized in Worker configuration](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-config.ts#L17-L38).
 >
 > [Native policy, store, journal, launcher, identity, and timing defaults are explicit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/config/native-worker.ts#L25-L83).
 >
 > [The produced attempt fixes execution, cleanup, log, result, and evidence budgets](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/engine/worker-envelope.ts#L33-L52).
+>
+> **Contract or setting:** Positive-safe limits, host maxima and shutdown/grace relationships constrain this configured profile.
+>
+> **Test evidence:** [Service deadline config controls](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-shutdown-boundaries.test.mts#L65-L79) contains invalid deadline rejection and bounded default parsing assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** This deadline fixture does not establish every resource maximum or target-host CPU/memory enforcement.
 
 ### Attempt and evidence flow
 
@@ -578,11 +734,23 @@ It checks evidence count, total bytes, duplicate IDs, media type, canonical arti
 
 > **Source evidence — attempt binding**
 >
+> **Claim:** Control durably reserves the accepted envelope and verifies result/evidence identity before hydration.
+>
+> **Implementation:** Native operation, Worker policy and evidence-import functions below enforce that binding.
+>
 > [Control stores the input, reserves the attempt, records the terminal result before hydration, and completes only after hydration](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation.ts#L12-L29).
 >
 > [The Worker accepts only the installed profile and resource budgets within host policy](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/native-worker-execution.ts#L28-L47).
 >
 > [Control validates bound results and all evidence limits before import](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/worker-evidence.ts#L5-L37).
+>
+> **Contract or setting:** Installed profile, host resource maxima and evidence ID/media/URL/size/digest rules constrain accepted results.
+>
+> **Test evidence:** An executed full native attempt and evidence hydration check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A bound terminal result is not hydrated evidence; failed import must not authorize a replacement attempt.
 
 ### Cancellation and shutdown
 
@@ -606,9 +774,21 @@ The native ownership layer must provide that proof.
 
 > **Source evidence — cancellation and shutdown**
 >
+> **Claim:** Worker shutdown fences admission and drains requests but connection closure is not process-tree proof.
+>
+> **Implementation:** Lifecycle stopping/unsafe state and deadline handling below define cancellation/cleanup ordering.
+>
 > [The lifecycle has separate stopping and unsafe states and aborts active requests during bounded shutdown](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-lifecycle.ts#L24-L64).
 >
 > [Shutdown drains requests and dependencies and reports unresolved work or a deadline instead of claiming success](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-lifecycle.ts#L66-L103).
+>
+> **Contract or setting:** Worker shutdown deadline and native ownership reconciliation govern different completion conditions.
+>
+> **Test evidence:** [Native connection shutdown fixture](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/worker-shutdown-boundaries.test.mts#L34-L63) contains actual pg acquisition drain and explicit unresolved deadline assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** The TCP-peer/pg fixture is not native engine execution; deadline failure does not attest that a child tree was reaped.
 
 ## 5. Durable Restart and Recovery
 
@@ -642,9 +822,21 @@ Prism does not invent missing authority for legacy data.
 
 > **Source evidence — durable replay**
 >
+> **Claim:** Native replay reuses the originally stored envelope/result and rejects conflicting authority.
+>
+> **Implementation:** Reservation and result-store transactions below bind idempotency and terminal state.
+>
 > [Reservation locks the idempotency key, checks request identity, and preserves the original accepted envelope](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L25-L44).
 >
 > [Result recording rejects changed attempts and conflicting terminal results](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L47-L67).
+>
+> **Contract or setting:** Exact request digest, accepted attempt and terminal result constrain reuse; legacy missing bindings require reconciliation.
+>
+> **Test evidence:** An executed complete native replay and evidence-failure recovery check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A cached result without its accepted envelope cannot be promoted into a new valid attempt or safe automatic dispatch.
 
 ### Restart limits
 
@@ -692,11 +884,23 @@ Stable Studio errors include:
 
 > **Source evidence — Studio boundary**
 >
+> **Claim:** Studio is a bounded same-origin proxy/static client, not design state or session-signing authority.
+>
+> **Implementation:** Studio config, proxy request and static-serving functions below implement those boundaries.
+>
 > [Studio validates its port and timeout and defaults to the built static root and in-cluster Control](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/studio-config.ts#L4-L17).
 >
 > [The proxy header allowlist, body limit, disconnect cancellation, timeout, and streaming behavior are explicit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/studio-request.ts#L44-L103).
 >
 > [Static serving prevents path escape and adds the browser content policy](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/studio-request.ts#L106-L138).
+>
+> **Contract or setting:** Header allowlist, ingress secret, body/timeout bounds and canonical static root constrain forwarding.
+>
+> **Test evidence:** [Cookie forwarding unit](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/studio-proxy.test.mts#L1-L18) contains preservation of both Set-Cookie values and response header filtering assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** That unit does not test the whole live proxy; client disconnect does not imply Control cancelled its durable operation.
 
 ## 7. Ingestion: Untrusted Content Boundary
 
@@ -739,11 +943,23 @@ Its `/health` and `/ready` routes do not test quarantine writes or external DNS 
 
 > **Source evidence — acquisition controls**
 >
+> **Claim:** Ingestion bounds untrusted acquisition/quarantine while Control still blocks public-web admission.
+>
+> **Implementation:** Ingestion startup/acquisition and Control corpus path below implement the separate authority boundaries.
+>
 > [Ingestion validates its secret, quarantine root, bounded TTL, and address deny rules at startup](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/ingestion.ts#L10-L35).
 >
 > [HTTPS acquisition pins DNS, limits redirects, enforces size, filters media, and quarantines by digest](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/ingestion.ts#L36-L80).
 >
 > [Control currently blocks public-web input and activates a corpus revision only after embedding and quarantine cleanup](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L810-L842).
+>
+> **Contract or setting:** Secret, DNS/IP/redirect/media/size rules and quarantine TTL apply before digest-bound embedding/cleanup/activation.
+>
+> **Test evidence:** An executed live public-web ingestion through Control check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** An acquisition implementation is not an admitted user feature, semantic media safety or proof of complete corpus activation.
 
 ## 8. Pipeline Adapter
 
@@ -768,7 +984,19 @@ Those checks remain the caller's responsibility.
 
 > **Source evidence — adapter scope**
 >
+> **Claim:** The pipeline adapter only converts supplied baseline targets into Buster and read-only Forge declarations.
+>
+> **Implementation:** The two pure conversion functions below define fixed viewport and provider mappings.
+>
 > [The complete adapter is a pair of pure conversion functions with fixed viewport and visual-plan mappings](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/pipeline-adapter/index.ts#L1-L56).
+>
+> **Contract or setting:** Baseline digest/target checks do not validate caller project IDs, paths, duplicate identities or archive content.
+>
+> **Test evidence:** [Pure adapter assertions](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/tests/pipeline-adapter.test.mts#L4-L49) contains visual mapping, invalid digest and module-scoped read-only assignments assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** A converted plan is not an archive read, remote test execution, approval or automatic full Nova integration.
 
 ## 9. Deployment Topology
 
@@ -804,13 +1032,25 @@ that a particular persistent state will migrate successfully or fit in memory.
 
 > **Source evidence — deployment constraints**
 >
+> **Claim:** Prism deployment separates component identity/credentials and constrains native Worker placement and storage writers.
+>
+> **Implementation:** Workload and Agent values below define pod/node/mount/probe/trust and startup-doctor settings.
+>
 > [The workload binds the Worker to one node, mounts the native cgroup and identity files, and gives only Control the artifact volume](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L45-L65).
 >
 > [Application and trust-sidecar environment, probes, mounts, and credentials are separate](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L71-L188).
 >
 > [The Prism Agent values colocate the loopback bridge with OpenClaw and configure SPIFFE trust](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/my-values/prism-agent-values.yaml#L66-L107).
-
+>
 > [Startup-doctor enablement, heap setting, resource requests, and limits are explicit role values](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/my-values/prism-agent-values.yaml#L5-L13).
+>
+> **Contract or setting:** One Worker/native host, Control RWO storage, selected network/SPIFFE paths and Agent resource values are separate deployment requirements.
+>
+> **Test evidence:** An executed complete deployed Prism topology check is not established by this source evidence.
+>
+> **Revision:** `b2b85d4c8d3174aa41507cde77637227bb709e1e`. Source bindings, not execution receipts.
+>
+> **Limit:** Chart values and heap limits do not prove persistent-state migration, live access, host isolation or readiness of the complete journey.
 
 ## 10. Implemented Boundaries and Open Limits
 

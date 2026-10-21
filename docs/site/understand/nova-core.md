@@ -80,6 +80,10 @@ the reducer does not directly read the receipt journal.
 
 > **Source evidence — control authority**
 >
+> **Claim:** Core, not a plugin, owns scheduling and lifecycle transitions.
+>
+> **Implementation:** Runner admission, reducer, executor, loop and audit functions below trace the control path.
+>
 > [The runner validates the graph and stage inputs before it creates the scheduling loop](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/runner.ts#L40-L78).
 >
 > [The reducer owns all stage states and permitted lifecycle actions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/reducer.ts#L9-L52).
@@ -89,6 +93,14 @@ the reducer does not directly read the receipt journal.
 >
 > [The loop records decisions before its next scheduling selection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
 > [Audit derives its redacted projection from journal records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/audit.ts#L13-L27).
+>
+> **Contract or setting:** The graph and typed result constrain scheduling; receipts influence lifecycle through the returned result, not a direct reducer receipt read.
+>
+> **Test evidence:** An executed complete project-to-durable-decision check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** These control-flow sources do not prove successful production execution or an external effect.
 
 ## Authority and Invariants
 
@@ -112,9 +124,21 @@ Automatic repetition would be easier, but it could duplicate a deployment, publi
 
 > **Source evidence — immutable run identity**
 >
+> **Claim:** Graph identity is frozen and run mutations share an exclusive lease.
+>
+> **Implementation:** Graph snapshot construction and engine mutation-lock entry below enforce these separate identities.
+>
 > [The graph snapshot contains ordered nodes, ordinary edges, remediation edges, concurrency, and a content digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L13-L50).
 >
 > [New, recovery, and resume paths execute inside the run mutation lock](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L36-L43).
+>
+> **Contract or setting:** The snapshot digest binds nodes, both edge classes and concurrency; a mutation lease does not replace that digest.
+>
+> **Test evidence:** An executed concurrent mutation and changed-graph recovery check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Exclusive local mutation does not prove remote-resource fencing or target-volume durability.
 
 ### Identities do not substitute for each other
 
@@ -142,9 +166,21 @@ A remote job ID without its request digest does not identify the admitted reques
 
 > **Source evidence — attempt and effect identity**
 >
+> **Claim:** Attempt/lease identity and external-effect identity bind different authority.
+>
+> **Implementation:** The executor and effect request type below construct those identities.
+>
 > [The stage executor creates the attempt and lease identities and records package ownership](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L55-L79).
 >
 > [The effect contract binds idempotency, attempt, capability, operation, resource, and payload](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/contracts.ts#L4-L14).
+>
+> **Contract or setting:** The effect contract binds attempt, capability, operation, resource, payload and idempotency key.
+>
+> **Test evidence:** An executed cross-attempt effect-identity rejection check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Matching labels alone do not prove trusted artifact bytes or authorize another attempt.
 
 ## 1. Project Admission and Compilation
 
@@ -161,7 +197,19 @@ Recovery compiles the recovery form and then verifies the stored run identity.
 
 > **Source evidence — command selection and baseline checks**
 >
+> **Claim:** The project CLI selects compile, run, recover or signal and checks its admitted runtime/baseline.
+>
+> **Implementation:** The linked CLI branch defines operation selection and its ordering.
+>
 > [The project CLI validates its operation, validates the installed runtime, and selects compile, run, recover, or resume](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/cli.ts#L19-L56).
+>
+> **Contract or setting:** Project/platform inputs select this CLI path; compile output uses exclusive creation and does not start pipeline effects.
+>
+> **Test evidence:** An executed production project CLI check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A compiled definition is not an executed run, and compilation does not guarantee live provider availability.
 
 ### Input admission
 
@@ -199,6 +247,10 @@ The source binding makes the exact instruction set part of the admitted project 
 
 > **Source evidence — strict project validation**
 >
+> **Claim:** Project admission rejects ambiguous fields, ownership, plans and control-file selection.
+>
+> **Implementation:** Compiler validation and source-admission helpers below bind the accepted project meaning.
+>
 > [Compiler helpers reject unknown fields, invalid IDs, non-canonical paths, duplicate lists, and unsafe ownership paths](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L11-L45).
 >
 > [Module admission checks unique ownership, requirements, plan digest, plan scope, and a blocking test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L89-L134).
@@ -206,6 +258,14 @@ The source binding makes the exact instruction set part of the admitted project 
 > [Project admission checks the schema version, paths, baseline, dependency order, and final configuration](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L137-L192).
 >
 > [Source admission selects architecture and module control files and binds them to the project contract](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/source.ts#L19-L66).
+>
+> **Contract or setting:** nova-project.v2, blocking test-plan scope/digest and selected control paths constrain the compiler.
+>
+> **Test evidence:** An executed full project admission and source-approval journey check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Valid input does not certify architecture quality, operator approval or successful implementation.
 
 ### Compiler output
 
@@ -225,9 +285,21 @@ It includes all possible orders in `maxAttempts`, so a repair recheck does not a
 
 > **Source evidence — emitted stages and budgets**
 >
+> **Claim:** The project compiler emits declared module/repair chains and an explicit single-lane execution policy.
+>
+> **Implementation:** Module and final compiler construction below emit the stages and limits.
+>
 > [The module compiler creates implementation, lint, optional review, and test stages with declared repair routes](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L47-L86).
 >
 > [The compiler orders modules, adds source and cumulative stages, sets project concurrency to one, and validates the final definition](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L171-L192).
+>
+> **Contract or setting:** Compiler-derived concurrency and budgets apply to its project output; explicit graphs do not inherit them.
+>
+> **Test evidence:** [Repair/recheck fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/repair-budget.test.mjs#L21-L37) contains category orders and mandatory rechecks assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** That controlled explicit-graph fixture does not establish successful execution of every project-compiled stage.
 
 ## 2. Graph Construction, Validation, and Freeze
 
@@ -264,9 +336,21 @@ If Core treated both as ordinary dependencies, repair could create a cycle or re
 
 > **Source evidence — graph safety rules**
 >
+> **Claim:** Graph admission freezes a safe dependency/remediation/activation structure.
+>
+> **Implementation:** The graph builder and snapshot code below validate and digest that structure.
+>
 > [The graph builder validates execution limits, dependencies, cycles, remediation order, shared targets, and activations](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph-build.ts#L8-L96).
 >
 > [The graph object freezes sorted structures and creates a versioned digest from portable JSON](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L19-L50).
+>
+> **Contract or setting:** Attempt, repair and timeout limits and safe edge relationships must be declared before execution.
+>
+> **Test evidence:** An executed complete graph safety matrix check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A valid frozen graph does not prove its stage implementation, input semantics or remote dependencies.
 
 ## 3. Registry Admission and Snapshot Handoff
 
@@ -300,11 +384,23 @@ A recovered run must use the admitted set, or use an explicit package-upgrade de
 
 > **Source evidence — runtime preparation**
 >
+> **Claim:** Runtime preparation resolves trusted package ownership, grants, configuration and one atomic snapshot.
+>
+> **Implementation:** Preparation, runner admission and snapshot publication below connect the registry to execution.
+>
 > [Runtime preparation discovers trusted packages, builds the registry, resolves policy, validates configuration, and activates registrations](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L23-L49).
 >
 > [The runner validates every stage owner, configuration, and input against the granted registry](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/runner.ts#L40-L46).
 >
 > [The snapshot code records runtime provenance and publishes one integrity-checked file atomically](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L75-L134).
+>
+> **Contract or setting:** Pinned package provenance and validated owner schemas determine admitted stage/config/input meaning.
+>
+> **Test evidence:** An executed complete registry activation and snapshot interruption check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** An atomic file publication does not prove host power-loss survival or every platform setting is captured.
 
 ### Recovery compatibility
 
@@ -319,9 +415,21 @@ It never reinterprets an old run with a convenient new graph.
 
 > **Source evidence — pinned package and graph verification**
 >
+> **Claim:** Recovery requires the admitted graph and exact pinned packages or an explicit compatible upgrade.
+>
+> **Implementation:** The snapshot verification functions below compare recorded packages and graph identity.
+>
 > [Recovery checks recorded package upgrades and every pinned package identity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L20-L66).
 >
 > [Recovery requires the same pipeline ID and graph digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L68-L72).
+>
+> **Contract or setting:** Package ID/API compatibility and exact old-to-new upgrade identity do not authorize graph replacement.
+>
+> **Test evidence:** [Resume graph-drift control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-resume.mjs#L63-L73) contains changed-definition rejection and exact-definition resume assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** The controlled resume fixture does not validate arbitrary package upgrades or deployed compatibility.
 
 ## 4. Durable State and the Run Root
 
@@ -376,6 +484,10 @@ File and directory synchronization reduce risk, but they do not prove storage du
 
 > **Source evidence — run directory and journal**
 >
+> **Claim:** Run-root identity and hash-chained journals preserve ordered history with an explicit acquisition/tail-repair boundary.
+>
+> **Implementation:** Run-root, journal, detached-JSON and plugin-state functions below implement storage admission.
+>
 > [The run-root resolver validates the run ID, uses a hashed directory, and verifies an older directory before use](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/run-root.ts#L62-L75).
 >
 > [The journal repairs an incomplete tail and, after it loads a prefix, rejects a later rewind or divergence](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/journal.ts#L59-L103).
@@ -385,6 +497,14 @@ File and directory synchronization reduce risk, but they do not prove storage du
 > [The JSON snapshotter accepts only detached JSON-safe values](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/json-value.ts#L6-L48).
 >
 > [The plugin-state journal enforces namespace, registration provenance, sequence, and idempotency](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/plugins.ts#L22-L105).
+>
+> **Contract or setting:** Plugin state binds namespace/provenance/idempotency; Linux flock and correct filesystem locking are prerequisites.
+>
+> **Test evidence:** [Audit corruption fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/audit-projection.test.mts#L10-L28) contains unchanged complete journal, redaction and changed-record rejection assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A new reader cannot detect valid-prefix rollback without an external trusted head; file synchronization is not a power-loss test.
 
 ## 5. Scheduling, Readiness, and Concurrency
 
@@ -423,6 +543,10 @@ If no stage is ready and the graph is not complete, Core derives the strongest p
 
 > **Source evidence — deterministic readiness**
 >
+> **Claim:** The scheduler selects stable ready stages and handles conditional skips and forced repair separately.
+>
+> **Implementation:** Graph readiness, pipeline selection and finalization below define the scheduling frontier.
+>
 > [The graph returns sorted stages whose dependencies are complete and excludes remediation-only targets](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L52-L54).
 >
 > [The loop limits each batch, orders repair decisions after siblings, and pauses or terminates from recorded decisions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
@@ -430,6 +554,14 @@ If no stage is ready and the graph is not complete, Core derives the strongest p
 > [Selection handles forced repair work and records conditional skips](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L86-L116).
 >
 > [Finalization defines completion and derives the run status](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L137-L143).
+>
+> **Contract or setting:** Ordinary ancestors, graph concurrency and declared activation facts constrain selection.
+>
+> **Test evidence:** An executed complete concurrent scheduling and repair-order matrix check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Deterministic selection does not impose completion order on concurrent external operations.
 
 ## 6. Stage Dispatch and Attempt Authority
 
@@ -472,6 +604,10 @@ The invocation check prevents a broadly typed capability from becoming broad acc
 
 > **Source evidence — attempt and lease construction**
 >
+> **Claim:** An attempt gets a revocable lease, bounded visibility and capability-specific resource checks.
+>
+> **Implementation:** Executor, authorization and invocation-context functions below construct and check attempt authority.
+>
 > [The executor resolves the active owner, validates the returned result, records completion, and always cleans up](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L31-L52).
 >
 > [The executor creates attempt identity, lease limits, context, artifact visibility, and durable attempt records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L55-L119).
@@ -479,6 +615,14 @@ The invocation check prevents a broadly typed capability from becoming broad acc
 > [Capability authorization applies a specific resource rule for each supported capability family](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/authorization.ts#L39-L129).
 >
 > [The invocation context checks lease state, grants, event namespace, and run identity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/context.ts#L34-L79).
+>
+> **Contract or setting:** The lease binds active owner/grants; memory and CPU declarations require an isolated executor that enforces those limits.
+>
+> **Test evidence:** An executed complete attempt-grant and resource-limit matrix check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** An in-process lease is not a cross-host worker claim or proof of memory/CPU isolation.
 
 ### Timeout and cleanup order
 
@@ -494,9 +638,21 @@ Adapter shutdown runs even when the pipeline throws.
 
 > **Source evidence — deadline and result normalization**
 >
+> **Claim:** Timeout/cancellation revoke local attempt authority and map failures to controlled results.
+>
+> **Implementation:** Executor races and nested engine cleanup below define normalization and shutdown ordering.
+>
 > [The executor races operation, cancellation, and timeout, then maps failures to controlled stage results](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L121-L145).
 >
 > [The engine drains observers and shuts down adapters in nested `finally` blocks](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L21-L34).
+>
+> **Contract or setting:** Stage deadline and abort signal select the controlled outcome; observer drain and adapter shutdown remain separate cleanup operations.
+>
+> **Test evidence:** An executed production timeout and adapter shutdown check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Aborting an attempt does not prove a remote effect stopped or that shutdown completed without another error.
 
 ## 7. Lifecycle State and Result Mapping
 
@@ -559,9 +715,21 @@ This rule prevents completion order from changing the final result of one batch.
 
 > **Source evidence — complete reducer table**
 >
+> **Claim:** Only a running stage can map a typed result into Core lifecycle state and spent budgets.
+>
+> **Implementation:** Reducer and decision-recorder handlers below own transition and terminal-priority rules.
+>
 > [The reducer defines every stage state, lifecycle action, result handler, and budget check](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/reducer.ts#L9-L135).
 >
 > [The decision recorder persists retry, repair, wait, stop, completion, and terminal priority](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/run-decisions.ts#L29-L131).
+>
+> **Contract or setting:** stage-result.v2 and declared execution budgets constrain actions; replay uses those same rules.
+>
+> **Test evidence:** [Repair result/replay fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/repair-budget.test.mjs#L21-L37) contains spent attempts and equivalent journal replay assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** The fixture checks selected repair paths, not every result/state combination or external completion.
 
 ## 8. Technical Retry and Product Repair
 
@@ -617,6 +785,10 @@ Combining them could let infrastructure noise consume all repair work, or let re
 
 > **Source evidence — repair budgets and identity**
 >
+> **Claim:** Technical retries, automatic repairs and authorized extra orders spend distinct but bounded authority.
+>
+> **Implementation:** Budget validation, compiler policy, authorization and remediation functions below establish the ledger.
+>
 > [The stage contract requires the hard execution bounds and declares each optional specialized budget](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L510).
 >
 > [Graph validation requires a technical retry limit for a repair-budget owner and proves the aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
@@ -628,6 +800,14 @@ Combining them could let infrastructure noise consume all repair work, or let re
 > [Repair authorization checks the request digest, current history, budget disposition, wait, and issuer](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/repair-authorization.ts#L6-L30).
 >
 > [Repair application records the return path and invalidates dependent results before reuse](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/remediation.ts#L15-L53).
+>
+> **Contract or setting:** The hard maxAttempts ceiling remains above all admitted repair/retry work; authorization binds pending digest/history/issuer.
+>
+> **Test evidence:** [Extra-order authorization fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/repair-budget.test.mjs#L39-L64) contains wrong-pending-digest rejection, bounded extra order and replay assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Authorization cannot restore an exhausted hard ceiling or make an uncertain effect safe to repeat.
 
 ## 9. Wait, Signal, and Resume
 
@@ -682,6 +862,10 @@ the `WAIT_*` failures apply before these stage-specific checks.
 
 > **Source evidence — production signal consumers**
 >
+> **Claim:** The active wait envelope and the resumed stage payload have separate validators and authority.
+>
+> **Implementation:** Approval wrappers, Core wait replacement, repair authorization and review consumer below select the effective signal.
+>
 > [Human approval validates guidance, its nested issuer, expiry, and the created wait](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/human-approval/src/approval.ts#L85-L132).
 >
 > [Architecture approval verifies the report and requires a reason for approval of findings](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/human-approval/src/architecture-approval.ts#L100-L141).
@@ -694,6 +878,14 @@ the `WAIT_*` failures apply before these stage-specific checks.
 > [Its reducer returns orchestrator_required](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/review/src/review-reducer.ts#L100-L124).
 >
 > Revision: the page's evidence revision. Test evidence: successful production wait/resume execution remains unverified.
+>
+> **Contract or setting:** Use the durable Core signal type/issuer; the review plugin name does not survive orchestrator wait replacement as independent authority.
+>
+> **Test evidence:** [Core wait/resume fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-resume.mjs#L42-L62) contains generated orchestrator wait and signal construction assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A controlled Core wait does not prove successful production human, architecture or Prism approval.
 
 ### Current Prism approval publication failure
 
@@ -730,6 +922,10 @@ production approval path has no demonstrated successful execution.
 
 > **Source evidence — failed Prism handoff**
 >
+> **Claim:** The selected Prism-to-operator payload mismatch blocks before an active Core wait exists.
+>
+> **Implementation:** Prism dispatch, closed payload parser and AdapterRuntime wrapping below trace that specific failed handoff.
+>
 > [The stage declares approval guidance, conditional dispatch, wait creation, publication, and the blocked catch result](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/prism-design/src/stage.ts#L8-L35).
 >
 > [The payload parser's closed key set excludes architectureDigest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/operator-messaging/src/payload.ts#L3-L4).
@@ -739,6 +935,14 @@ production approval path has no demonstrated successful execution.
 > [AdapterRuntime wraps a non-completed external-effect receipt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapters.ts#L53-L66).
 >
 > Limit: this source trace identifies a contract failure; it is not an observed production run or a completed fix.
+>
+> **Contract or setting:** The selected operator payload contract excludes top-level architectureDigest; another adapter needs separate compatibility proof.
+>
+> **Test evidence:** An executed successful corrected Prism approval handoff check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** This is a source-traced contract failure, not an observed production failure or completed fix; prior design/wait-adapter effects can exist.
 
 Resume performs these checks in order:
 
@@ -775,6 +979,10 @@ A cooldown is different: recovery can continue after `retryAt`, but not before i
 
 > **Source evidence — signal validation and single use**
 >
+> **Claim:** Resume checks the exact active wait and stores one bound signal before continuation.
+>
+> **Implementation:** Shared signal schema, snapshot validation and engine resume/recovery below define admission and single use.
+>
 > [The shared schema gives wait requests and resume signals closed field sets, issuer types, timestamps, and JSON payloads](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L747-L806).
 >
 > [Signal validation checks contract, wait, signal type, issuer, expiry, and freshness](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L137-L143).
@@ -782,6 +990,14 @@ A cooldown is different: recovery can continue after `retryAt`, but not before i
 > [Resume verifies identity, replays the wait, records the signal once, and supplies continuation guidance](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L82-L121).
 >
 > [Recovery refuses an active wait and an early cooldown](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L56-L79).
+>
+> **Contract or setting:** resume-signal.v2 binds wait/type/issuer/time/payload; a stored signal identity does not bypass terminal-run checks.
+>
+> **Test evidence:** [Duplicate resume control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-resume.mjs#L69-L88) contains successful controlled resume and terminal/stale replay rejection assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** The signal store is not a generic repeat-success CLI contract, and accepted guidance can still fail its stage consumer.
 
 ## 10. Effects, Locks, Fencing, and Receipts
 
@@ -822,6 +1038,10 @@ The cost is weaker automatic recovery because Core does not retain the confident
 
 > **Source evidence — durable effect ordering**
 >
+> **Claim:** Durable effects bind stable request identity, resource locking, acceptance, fencing and terminal receipts.
+>
+> **Implementation:** Durable invocation, confidential coordinator and file-lock manager below implement the effect boundary.
+>
 > [Durable invocation checks prior state, locks the resource, rechecks identity, and chooses invoke or receipt recovery](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/durable-invocation.ts#L39-L116).
 >
 > [The adapter must assert the current fence before Core stores its receipt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/durable-invocation.ts#L119-L163).
@@ -829,6 +1049,14 @@ The cost is weaker automatic recovery because Core does not retain the confident
 > [The coordinator keeps confidential values out of the durable request and writes redacted audit facts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/coordinator.ts#L34-L71).
 >
 > [The file lock manager assigns monotonic fencing tokens and rejects a live competing owner](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/locks.ts#L83-L144).
+>
+> **Contract or setting:** Stable idempotency content and current fencing constrain receipt acceptance; confidential request bodies stay outside the durable request journal.
+>
+> **Test evidence:** [External interruption fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/external-effect-recovery.test.mts#L78-L95) contains single mutation and unresolved/continuation recovery rejection assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A local receipt or confidential audit summary is not proof of arbitrary receiver deduplication or durable confidential-request recovery.
 
 ### Effect recovery stops
 
@@ -869,12 +1097,24 @@ This page establishes no execution verification of that procedure.
 
 > **Source evidence — effect recovery gate**
 >
+> **Claim:** Recovery refuses an unresolved accepted effect or an unsupported interrupted external continuation.
+>
+> **Implementation:** Effect classification and shared execution/admin paths below enforce the stop before adapters start.
+>
 > [Recovery classifies safe checkpoint operations and rejects unresolved or interrupted external work](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/effect-recovery.ts#L8-L29).
 >
 > [The shared execution path checks effects before adapter startup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L21-L34).
 > [Administrative retry and remediation use that same path; cancellation uses a separate stop path](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-admin.ts#L89-L120).
 >
 > Limit: these guards do not establish a successful effect-recovery exercise.
+>
+> **Contract or setting:** Administrative retry/remediation do not bypass the shared effect gate; no general receipt-import authority exists.
+>
+> **Test evidence:** [Real local effect-stop fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/external-effect-recovery.test.mts#L78-L95) contains before/after-receipt and lost-response stop behavior assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** The fixture does not implement a general authenticated external-continuation or manual receipt-repair procedure.
 
 ## 11. Artifact Checkpoints and Visibility
 
@@ -902,9 +1142,21 @@ It does not let a partial attempt claim final stage success.
 
 > **Source evidence — checkpoint admission and replay**
 >
+> **Claim:** A checkpoint binds exact JSON content and producer identity before it gains artifact authority.
+>
+> **Implementation:** Checkpoint admission and replay recorder below verify, deduplicate and restore artifact references.
+>
 > [Checkpoint admission verifies operation, serialized content, digest, size, metadata, and producer attempt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/artifact-checkpoints.ts#L37-L59).
 >
 > [The recorder restores artifacts, deduplicates exact records, rejects conflicts, and writes lifecycle evidence](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/artifact-checkpoints.ts#L74-L144).
+>
+> **Contract or setting:** put_json with checkpoint true must match serialized digest/size/encoding/namespace and the current producer attempt.
+>
+> **Test evidence:** An executed complete checkpoint admission and replay matrix check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A checkpoint preserves partial work; it is not final stage success or an off-node backup.
 
 ## 12. Cancellation and Shutdown
 
@@ -944,6 +1196,10 @@ history.
 
 > **Source evidence — cancellation and cleanup**
 >
+> **Claim:** Cancellation closes local authority; observers drain before adapter shutdown under distinct bounds.
+>
+> **Implementation:** Platform timeout, loop/executor cancellation and invocation-phase/engine cleanup below implement that sequence.
+>
 > [The platform contract requires one positive shutdown timeout and passes it to adapter runtime control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
 >
 > [The loop records cancellation for all open stages and for the run](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L75-L84).
@@ -953,6 +1209,14 @@ history.
 > [The adapter invocation phase rejects calls after close and bounds cleanup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapter-invocation-phase.ts#L14-L60).
 >
 > [The engine drains observers before adapter shutdown and preserves both actions in nested cleanup boundaries](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L21-L34).
+>
+> **Contract or setting:** Platform shutdownTimeoutMs and each observer failure policy govern different cleanup operations.
+>
+> **Test evidence:** An executed full cancellation and shutdown chain check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A later shutdown error cannot erase committed lifecycle events or prove rollback of accepted external work.
 
 ## 13. Restart and Recovery
 
@@ -986,11 +1250,23 @@ A new attempt gets a new identity and lease.
 
 > **Source evidence — replay and interrupted attempts**
 >
+> **Claim:** Recovery replays the same durable decisions and spends an interrupted attempt rather than restoring its authority.
+>
+> **Implementation:** Recovery fold, replay-state handlers and engine admission below rebuild state under immutable identity.
+>
 > [Recovery folds matching lifecycle events and resets only interrupted running states](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/recovery.ts#L18-L34).
 >
 > [The replay reducer reconstructs attempts, waits, repairs, facts, and terminal states](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/recovery-state.ts#L30-L179).
 >
 > [The engine verifies immutable identity, reconciles state, and resumes through the normal execution path](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L46-L69).
+>
+> **Contract or setting:** Stored graph/packages, attempt counters, waits and repair projection identity constrain continuation.
+>
+> **Test evidence:** [Repair replay assertions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/repair-budget.test.mjs#L15-L37) contains replayed stage state equality and consumed attempts assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Matching replay does not make a missing effect receipt safe or remove an active wait/cooldown.
 
 ## 14. Administrative Reopen
 
@@ -1025,9 +1301,21 @@ The separate journal and strict binding make that authority visible and replayab
 
 > **Source evidence — administrative repair**
 >
+> **Claim:** Administrative reopen is a separately authenticated, journaled retry/repair/cancel decision.
+>
+> **Implementation:** Administrative repair admission and lifecycle contract below describe evidence and issuer requirements.
+>
 > [Administrative repair requires the remediation continuation, durable result evidence, current state, and remaining budget](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/administrative-repair.ts#L9-L28).
 >
 > [The lifecycle contract describes the trusted issuer, identity, and continuation limits](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/README.md#L23-L41).
+>
+> **Contract or setting:** The durable prior result, continuation, trusted actor and remaining category ledger constrain repair.
+>
+> **Test evidence:** [Administrative category-ledger fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/repair-budget.test.mjs#L100-L120) contains exhausted-ledger rejection and admitted repair assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Administrative authority cannot reset spent budgets, import a missing receipt or certify an interrupted external outcome.
 
 ## 15. Nova-to-Buster Test Dispatch
 
@@ -1046,9 +1334,21 @@ It never reads uncommitted working-tree bytes for this handoff.
 
 > **Source evidence — plan and source binding**
 >
+> **Claim:** Buster dispatch binds a resolved test plan to one attested committed source archive.
+>
+> **Implementation:** Plan resolution and committed-source snapshot code below construct the handoff identities.
+>
 > [The resolver validates declarations and creates stable plan structures before contract validation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/resolver.ts#L30-L220).
 >
 > [Source snapshot creation binds repository, commit, tree, archive digest, size, and creator authority](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/source-snapshot.ts#L16-L64).
+>
+> **Contract or setting:** Plan/provider/dependency/limit contracts and archive commit/tree/digest/creator binding determine admitted work.
+>
+> **Test evidence:** An executed complete committed-source remote test journey check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** An archive/plan digest does not prove a remote worker executed the plan or returned valid evidence.
 
 ### Dispatch and transport recovery
 
@@ -1094,6 +1394,10 @@ deadline.
 
 > **Source evidence — remote dispatch**
 >
+> **Claim:** Remote dispatch retains one job/request identity and one deadline through polling and interruption cleanup.
+>
+> **Implementation:** Deadline, transport, dispatch operation and durable store functions below define submission/reconciliation.
+>
 > [The gate deadline shares one expiry across child operations, delays, cancellation, and timeout errors](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/deadline.ts#L1-L42).
 >
 > [Remote job creation binds the plan, source, grants, idempotency key, and request digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-dispatch.ts#L23-L55).
@@ -1109,6 +1413,14 @@ deadline.
 >
 > [The store appends interruption outcomes separately from stored jobs](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-dispatch-store.ts#L59-L64).
 > [The caller shares its remaining deadline with dispatch and import without adding dispatch cleanup to import failures](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-import.ts#L262-L277).
+>
+> **Contract or setting:** HTTPS/loopback policy, response bounds and the separate cleanup deadline constrain requests; cancellation/404 alone is not terminal proof.
+>
+> **Test evidence:** An executed live Buster interruption and cleanup check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** An unknown cleanup outcome or ordinary transport/import error does not authorize a new job identity or repeated external work.
 
 ### Import result authority once
 
@@ -1129,11 +1441,23 @@ Nova converts that evidence into passed, failed, execution-error, or product-rev
 
 > **Source evidence — result verification and import**
 >
+> **Claim:** Nova verifies terminal remote identities/results/evidence before one bound import becomes readable.
+>
+> **Implementation:** Result authority and pending/complete import-store paths below validate the imported facts.
+>
 > [Result authority verifies remote identities, digests, attempts, reports, artifacts, and node decisions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-authority.ts#L35-L190).
 >
 > [The importer accepts only terminal status, verifies completed results, checks evidence limits and digests, and records once](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-import.ts#L200-L248).
 >
 > [The import store uses pending and complete states and rejects a conflicting import](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-import.ts#L146-L196).
+>
+> **Contract or setting:** Exact execution binding, per-object digest/size and aggregate evidence bounds constrain acceptance.
+>
+> **Test evidence:** An executed complete live remote result/evidence import check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Verified returned bytes are not a successful entire pipeline or independently authenticated truth of every remote assertion.
 
 ## 16. Audit and Observer Delivery
 
@@ -1187,11 +1511,23 @@ This rule prevents an observation loop.
 
 > **Source evidence — audit projection**
 >
+> **Claim:** Audit is a redacted journal-derived view; observer delivery keeps separate attempts and checkpoints.
+>
+> **Implementation:** Audit reader, journal acquisition and observer runtime below trace these projections.
+>
 > [Audit rebuilds from the hash-verified journal, redacts sensitive keys, preserves source hashes, and adds a digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/audit.ts#L6-L27).
 >
 > [A new journal reader validates the file that it sees but has no previously trusted head for a rollback comparison](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/journal.ts#L42-L77).
 >
 > [Observer delivery uses durable attempts, provenance-bound checkpoints, subscriptions, and bounded failure policy](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/observers.ts#L14-L106).
+>
+> **Contract or setting:** pipeline-audit.v1 binds source hashes/head; observer provenance/subscriptions/failure policy determine delivery.
+>
+> **Test evidence:** [Audit integrity assertions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/audit-projection.test.mts#L10-L28) contains redaction, repeatability and corrupt-record rejection assertions; a fresh execution result is not established here.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Acquisition can repair an incomplete tail; a new reader needs an external head to detect rollback, and audit is not every store.
 
 ## 17. Failure Families and Operator Response
 

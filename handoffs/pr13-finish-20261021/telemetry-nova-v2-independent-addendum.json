@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "scope": "F1-only v2 Claim delta, other57 independent scopes unchanged",
+  "Source": "PASS",
+  "semanticReader": "PASS",
+  "Quality": "PASS",
+  "materialFindings": [],
+  "files": [
+    {
+      "path": "docs/site/understand/telemetry.md",
+      "sha256": "6fb2f994d0802987012345f57777a777e08faa90179c231fe8304b30f1660ca7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/site/understand/nova-core.md",
+      "sha256": "7f8f08666ce7a3c7613c63dfaf6df1c8ce4709369bda831b4253f4dea624a3f0",
+      "unchanged": false
+    }
+  ],
+  "basis": "Exact diff replaces only false universal order with nonchronological mechanism summary supported by previously read full durable-invocation. Telemetry entire file unchanged; all other Nova bytes unchanged. Reuse complete original57-field/context independent review, including retained test/live limits.",
+  "limits": [
+    "Not whole A91205 or compound27/58/41 PASS.",
+    "No new test/product/generator/main execution.",
+    "Fresh changed Reader remains parent-owned."
+  ]
+}

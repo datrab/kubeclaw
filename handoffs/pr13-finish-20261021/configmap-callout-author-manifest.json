@@ -1,0 +1,43 @@
+{
+  "author": "/root",
+  "baseRevision": "d8e97be18ce7f2114212c64305fced4aa7b691a6",
+  "page": "docs/site/reference/configuration-change-impact.md",
+  "baselineSha256": "c8e9a84b585bd96eb0d8e095e8a6188980f8a0584adbd7cca396f8a16e91854e",
+  "candidateSha256": "aeab634d1f11c3c4b215e9b57ba92fe2a3688c5d7461f11bb9f06e06426c97d6",
+  "links": [
+    [
+      "Manager selection",
+      "pkg/kubelet/kubelet.go#L650-L669"
+    ],
+    [
+      "cached read",
+      "pkg/kubelet/util/manager/cache_based_manager.go#L176-L205"
+    ],
+    [
+      "watch synchronization",
+      "pkg/kubelet/util/manager/watch_based_manager.go#L310-L337"
+    ],
+    [
+      "volume publication",
+      "pkg/volume/util/atomic_writer.go#L189-L264"
+    ],
+    [
+      "opened-file subPath bind",
+      "pkg/volume/util/subpath/subpath_linux.go#L175-L226"
+    ],
+    [
+      "environment construction",
+      "pkg/kubelet/kubelet_pods.go#L774-L802"
+    ],
+    [
+      "environment passed to the container",
+      "pkg/kubelet/kuberuntime/kuberuntime_container.go#L396-L405"
+    ]
+  ],
+  "scope": "Only links inserted into existing complete ConfigMap consumption implementation field; original wording, checks dates, bounds and every old URL preserved. Atomic writer contiguous189-264 joins preexisting189-211/213-244/247-264 ranges, needs pinnedrange verification. No newly claimed Source/test/live execution or schema semantics.",
+  "limits": [
+    "Author only; nonauthor review pending.",
+    "No main/Source import/producer/network/render execution.",
+    "Ordinary source/excerpt checks and fresh Reader required after reviewed integration."
+  ]
+}

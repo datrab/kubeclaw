@@ -65,7 +65,19 @@ This order is a safety property. The runtime must know *which bytes*, *which own
 
 > **Source evidence — the complete preparation order**
 >
+> **Claim:** Preparation resolves package ownership, policy and configuration before activation.
+>
+> **Implementation:** prepareRuntime below orders these admission steps.
+>
 > [`prepareRuntime()` performs discovery, registry construction, enablement, grant resolution, configuration validation, and activation in that order](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L29-L50).
+>
+> **Contract or setting:** Installation/trust/provider/grant configuration is platform authority, not stage input.
+>
+> **Test evidence:** [Registry selection fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L64-L96) contains snapshot immutability, provider selection and invalid-config rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A prepared runtime is not proof of successful plugin work or deployed isolation.
 
 ## Four Identities That Must Not Be Confused
 
@@ -93,9 +105,21 @@ Trust evidence supplies the separate policy decision about the source.
 
 > **Source evidence — identity contracts**
 >
+> **Claim:** Package, content and registration identities answer distinct integrity/ownership/selection questions.
+>
+> **Implementation:** Manifest and provenance contracts below define these identity records.
+>
 > [The manifest contract fixes the API version, validates a semantic package version, and declares the five registration arrays](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L448).
 >
 > [Package and registration provenance bind source, trust evidence, canonical path, surface, and registration ID](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L874-L930).
+>
+> **Contract or setting:** API version, semantic package version, source/trust evidence and registration surface have separate fields.
+>
+> **Test evidence:** [Identity/snapshot fixture](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L52-L70) contains package digest shape, deep freezing and exact owner selection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A content digest is not publisher authentication or compatibility proof.
 
 ## Runtime Roles And Their Authority
 
@@ -114,7 +138,19 @@ This split lets Foundation stay role-neutral. Nova can use the same package fact
 
 > **Source evidence — role-neutral boundary**
 >
+> **Claim:** Foundation supplies role-neutral mechanism; Nova and Buster retain their different execution authority.
+>
+> **Implementation:** The Foundation boundary document below states that ownership split.
+>
 > [Foundation explicitly excludes pipeline policy and worker or specialist execution meaning](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/BOUNDARIES.md#L1-L5).
+>
+> **Contract or setting:** BOUNDARIES.md is the declared architecture contract, not a new runtime permission.
+>
+> **Test evidence:** An executed whole cross-role authority check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** This architecture declaration does not prove that every caller respects the boundary or that a deployed worker is isolated.
 
 ## Discovery Reads Data, Not Executable Code
 
@@ -143,7 +179,19 @@ Symlink aliases cannot create two logical copies of one package because canonica
 
 > **Source evidence — deterministic inert discovery**
 >
+> **Claim:** Discovery reads direct-child manifests and records trusted provenance without importing registrations.
+>
+> **Implementation:** The discovery flow below canonicalizes roots, orders candidates and builds package facts.
+>
 > [Root canonicalization, direct-child selection, sorting, manifest parsing, digest calculation, and provenance creation are one discovery flow](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/discovery.ts#L13-L137).
+>
+> **Contract or setting:** Operator installation/trusted roots and explicit digest/attestation policy govern admission.
+>
+> **Test evidence:** [Canonical alias rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L115-L126) contains duplicate-root rejection after realpath aliasing assertions; these are not a recorded execution result for this boundary.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** This fixture does not prove every hostile tree shape or runtime code behavior; discovery is not activation.
 
 ## Manifest, Schema, And Path Admission
 
@@ -174,9 +222,21 @@ The runtime keeps both a validator that does not add defaults and a resolver tha
 
 > **Source evidence — path and schema admission**
 >
+> **Claim:** Registry admission confines module/schema references and compiles package-scoped validators.
+>
+> **Implementation:** Build path checks and schema parsing below validate inert references.
+>
 > [Registry construction resolves referenced files by canonical path and requires each target to remain a file inside its package](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/build.ts#L33-L70).
 >
 > [Manifest parsing and per-document schema compilation fail with structured registry errors](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/schema.ts#L62-L116).
+>
+> **Contract or setting:** Closed manifest and JSON Schema 2020-12 documents define structure; defaults use a separate cloned-input resolver.
+>
+> **Test evidence:** [Configuration schema rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L77-L96) contains valid empty config and unknown configuration-field rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Schema admission does not prove a callable export, inert import or correct function execution.
 
 ## Integrity And Provenance
 
@@ -200,9 +260,21 @@ The trust record keeps the verifier, method, verification time, source reference
 
 > **Source evidence — digest and trust decision**
 >
+> **Claim:** Sorted paths and bytes define package integrity; separate operator trust policy defines provenance.
+>
+> **Implementation:** Digest and discovery trust branches below implement those independent checks.
+>
 > [The digest covers sorted paths and bytes and rejects symlinks](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/digest.ts#L6-L27).
 >
 > [Discovery maps built-in roots, digest allowlists, and verified attestations to distinct provenance records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/discovery.ts#L62-L103).
+>
+> **Contract or setting:** Built-in roots, allowed source digests and verified attestations select trust scope; a hash is not a signature.
+>
+> **Test evidence:** [Post-discovery mutation rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L128-L135) contains changed package-byte rejection before activation assertions; these are not a recorded execution result for this boundary.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A digest check does not establish original publisher identity or target-host safety.
 
 ## External Package Installation
 
@@ -231,7 +303,19 @@ The final rename gives atomic visibility. The implementation does not claim a po
 
 > **Source evidence — install admission and publication**
 >
+> **Claim:** External install validates a local bundle twice and publishes a distinct immutable target by rename.
+>
+> **Implementation:** Installer admission/copy/publication below enforce actor, tree, syntax, trust and target rules.
+>
 > [External installation enforces authority, source trust, package limits, bundled dependencies, syntax checks, double validation, and rename publication](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L218).
+>
+> **Contract or setting:** Operator allowlist, source policy, expected digest and file/size bounds govern installation; external adapters are unsupported.
+>
+> **Test evidence:** An executed external bundle installation and interruption check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Syntax validation is not module execution; rename visibility is not proven power-loss durability or a complete package lifecycle.
 
 ## Registry Construction And Global Ownership
 
@@ -261,9 +345,21 @@ The snapshot digest covers package versions and digests plus the stable registra
 
 > **Source evidence — build and freeze**
 >
+> **Claim:** Global ownership conflicts reject the registry instead of choosing by discovery order.
+>
+> **Implementation:** Registry index construction and conflict guards below assign the unique names.
+>
 > [The builder validates global ownership and constructs every registry index](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/build.ts#L183-L220).
 >
 > [Package, registration, stage, and provider-contract conflicts fail before snapshot creation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/build.ts#L223-L317).
+>
+> **Contract or setting:** Stage/provider-contract identity is unique; shared capability/report-format candidates need later exact selection.
+>
+> **Test evidence:** [Duplicate package control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L115-L126) contains repeated package and aliased-root rejection assertions; these are not a recorded execution result for this boundary.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** This selected fixture does not exercise every conflict index or grant policy.
 
 ## Compatibility Is Explicit And Conservative
 
@@ -281,7 +377,19 @@ The rejected alternative is “use the newest compatible-looking package.” Tha
 
 > **Source evidence — compatibility during recovery**
 >
+> **Claim:** Recovery requires the stored runtime configuration; exact authorized upgrade chains can permit changed package versions/digests only.
+>
+> **Implementation:** Snapshot verification below compares the stored and selected identities.
+>
 > [Recovery verifies the package set, runtime configuration, pinned versions and digests, and every explicit upgrade edge](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L23-L66).
+>
+> **Contract or setting:** Upgrade edges preserve package ID/API and exact old-to-new version/digest identity.
+>
+> **Test evidence:** An executed complete package-upgrade recovery chain check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Close version numbers or newly installed code cannot reinterpret old state automatically.
 
 ## Selection Is Separate From Installation
 
@@ -307,9 +415,21 @@ This prevents unused installed code from gaining runtime authority.
 
 > **Source evidence — explicit and transitive selection**
 >
+> **Claim:** Enablement resolves explicitly needed registrations and transitive providers before activation.
+>
+> **Implementation:** Nova initial selection and capability resolution below build that admitted set.
+>
 > [Nova derives the initial enabled set from configured stages, observers, and adapters](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L44-L50).
 >
 > [Capability resolution adds provider dependencies, rejects missing or ambiguous providers, and detects adapter cycles](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L217).
+>
+> **Contract or setting:** Selected providers must exist and declare the capability; ambiguity/cycles are errors rather than fallback precedence.
+>
+> **Test evidence:** [Provider and absent-grant controls](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L70-L110) contains provider selection, absent grant and invalid provider rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** An installed package is only available; these assertions do not establish every provider cycle or an operational remote dependency.
 
 ## Capabilities And Grants
 
@@ -373,11 +493,23 @@ The following table gives the complete resource-matching model.
 
 > **Source evidence — vocabulary and denial rules**
 >
+> **Claim:** Declarations, provider choice and bounded grants must agree before each resource invocation.
+>
+> **Implementation:** Vocabulary, constraint validation and Nova authorization below implement the capability boundary.
+>
 > [The capability vocabulary defines 28 plugin-facing capabilities and four permanently core-only capabilities](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L37-L127).
 >
 > [Constraint validation requires exact fields and canonical paths, prefixes, and origins](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L130-L197).
 >
 > [Nova checks the resource-specific constraint again for every capability invocation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/authorization.ts#L39-L130).
+>
+> **Contract or setting:** Grants cannot include Core-only capabilities; exact or declared hierarchy matching applies, not wildcard expansion.
+>
+> **Test evidence:** [Required-grant denial](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L97-L110) contains missing grant and invalid configured provider rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** The fixture covers selected denials, not proof of all constraints or every deployed credential boundary.
 
 ## Configuration Ownership And Precedence
 
@@ -429,6 +561,10 @@ changes, not as harmless host tuning.
 
 > **Source evidence — configuration boundary**
 >
+> **Claim:** Platform policy and registration-owned stage/configuration inputs are separate authorities.
+>
+> **Implementation:** Platform loader, registration validators and snapshot writers below preserve their distinct scope.
+>
 > [The platform type lists every host-owned configuration family](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
 >
 > [The loader validates the closed platform schema and resolves its host paths relative to the configuration file](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.ts#L30-L70).
@@ -442,6 +578,14 @@ changes, not as harmless host tuning.
 > [The stage-definition contract includes registration-owned `config` and `input`](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L446-L468).
 >
 > [The immutable registry record retains effective provider, grant, adapter, observer, isolation, package, and stage-owner choices](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L123-L134).
+>
+> **Contract or setting:** Only the stated runtime subset enters the snapshot; omitted platform fields require separate change control.
+>
+> **Test evidence:** [Closed stage configuration control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L77-L96) contains owner-schema validation and unknown configuration rejection assertions. These assertions do not establish an execution result.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Stored configuration is not redacted and does not detect changes to omitted host settings; use secret references, not values.
 
 ## Import Audit Is An Admission Check, Not The Runtime Sandbox
 
@@ -466,9 +610,21 @@ This audit finds a broad set of import-time side effects. It is not proof that l
 
 > **Source evidence — import admission**
 >
+> **Claim:** Trusted activation audits import-time effects between two integrity checks before host import.
+>
+> **Implementation:** Activation and the audit child below check named exports and process-global/side-effect operations.
+>
 > [Activation checks package integrity, audits trusted imports, and checks integrity again before any import](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 >
 > [The audit child blocks side-effect APIs and verifies the requested export and process-global state](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs#L9-L121).
+>
+> **Contract or setting:** The audit process permission/API restrictions and 30-second timeout constrain import admission, not later trusted execution.
+>
+> **Test evidence:** [Import-side-effect control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L186-L216) contains synchronous/async import write rejection assertions; these are not a recorded execution result for this boundary.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** This admission audit is not a runtime sandbox or proof that trusted functions have no later side effects.
 
 ## Activation Is Fail-Closed
 
@@ -557,9 +713,21 @@ Possession of an old JavaScript object does not preserve authority because every
 
 > **Source evidence — lease contract and enforcement**
 >
+> **Claim:** A revocable lease grants context use only for its fixed attempt, grants and time interval.
+>
+> **Implementation:** Lease contract and RevocableLease below define expiry and permanent revocation.
+>
 > [The contract binds attempt, registration, grants, limits, time, and revocation facts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L942-L1011).
 >
 > [`RevocableLease` denies revoked, invalid, and expired contexts and records permanent revocation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/lease.ts#L6-L35).
+>
+> **Contract or setting:** expiresAt is exclusive; every capability/event/state access must still check the live lease.
+>
+> **Test evidence:** An executed complete expired/revoked invocation matrix check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Retaining a JavaScript context does not retain authority; an invocation lease is not an external resource lock.
 
 ## Isolation For External Stages And Observers
 
@@ -595,11 +763,23 @@ A protocol test alone does not prove those kernel controls on a deployment host.
 
 > **Source evidence — process and protocol boundary**
 >
+> **Claim:** External stage/observer calls use a per-invocation OS process and bounded parent-mediated protocol.
+>
+> **Implementation:** Isolation runner, session and cgroup controller below implement launch, requests and termination.
+>
 > [The isolation runner creates the cgroup, starts the native supervisor with limited reads and no add-ons, and always closes the cgroup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/runner.ts#L16-L58).
 >
 > [The session bounds messages, routes capabilities through the parent context, rejects undrained work, and escalates process termination](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
 >
 > [The cgroup controller validates delegation, applies an exact memory ceiling, disables swap, kills the full group, and detects OOM termination](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L13-L59).
+>
+> **Contract or setting:** Native launcher, Linux controls and delegated cgroup-v2 prerequisites determine whether this mode can start.
+>
+> **Test evidence:** An executed deployment-host kernel isolation and process cleanup check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Protocol definitions alone do not prove Landlock/seccomp/cgroup enforcement or complete termination on the target host.
 
 ## Plugin State Ownership
 
@@ -627,9 +807,21 @@ An explicit upgrade must define how the new identity interprets or replaces that
 
 > **Source evidence — state ownership and idempotency**
 >
+> **Claim:** Plugin state entries bind namespace, registration provenance, sequence and exact idempotent content.
+>
+> **Implementation:** PluginStateJournal and its state-entry schema below own append and replay admission.
+>
 > [`PluginStateJournal` binds one namespace to one registration provenance and enforces sequence and idempotency](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/plugins.ts#L12-L140).
 >
 > [The canonical state-entry contract fixes its ownership and replay fields](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1155-L1177).
+>
+> **Contract or setting:** Namespace includes package and registration identity; changed package digest needs explicit compatible state handling.
+>
+> **Test evidence:** An executed complete plugin-state ownership and conflict matrix check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** An append-only projection is not canonical lifecycle authority or permission for replacement code to adopt retained state.
 
 ## Effects And Durable Authority
 
@@ -651,9 +843,21 @@ They solve different problems and must not be treated as interchangeable.
 
 > **Source evidence — durable effect ownership**
 >
+> **Claim:** Effect receipt authority and fenced resource ownership remain separate from a plugin invocation lease.
+>
+> **Implementation:** Engine effect bridge and resource-lock contract below record and constrain external operations.
+>
 > [Nova constructs the effect journal and resource-lock manager and records requested, accepted, completed, and failed effect facts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L53-L87).
 >
 > [The contract requires monotonically fenced resource locks with active, released, or expired state](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1140-L1153).
+>
+> **Contract or setting:** Stable request/idempotency and monotonic fencing bind external resource ownership; confidential results use a separate path.
+>
+> **Test evidence:** An executed full external-effect loss/recovery through this plugin host check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A missing local return does not prove no action occurred, and a confidential audit projection is not a durable response body.
 
 ## Replacement, Disablement, And Removal
 
@@ -680,9 +884,21 @@ Removal is therefore a final filesystem action, not a complete lifecycle manager
 
 > **Source evidence — removal boundary**
 >
+> **Claim:** Removal is a final direct-child filesystem operation after caller-owned drain/reference checks.
+>
+> **Implementation:** Removal function and recovery identity checks below delimit deletion versus retained-run authority.
+>
 > [`removeInstalledPackage()` accepts only a direct installation-root child and performs rename-before-delete](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234).
 >
 > [Run recovery refuses silent byte replacement and permits only an exact recorded upgrade chain](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L28-L66).
+>
+> **Contract or setting:** Exact installed path and pinned package identities constrain removal/replacement; the helper does not authorize lifecycle retirement.
+>
+> **Test evidence:** An executed complete package drain and removal procedure check is not established by this source evidence.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Disablement/removal does not delete journals, revoke external credentials or reconcile accepted effects.
 
 ## Failure And Recovery Map
 
@@ -749,11 +965,23 @@ Their suffix identifies the failed ownership, sequence, idempotency, package, gr
 
 > **Source evidence — registry error vocabulary**
 >
+> **Claim:** Registry, installation and isolation diagnostics name different failed authority boundaries.
+>
+> **Implementation:** Typed errors, installer and isolation session below supply those code families.
+>
 > [The typed registry error list is the source for public registry admission and activation codes](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L37).
 >
 > [The installer throws bounded operator, trust, tree, syntax, adapter, digest, and publication diagnostics](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L234).
 >
 > [The isolation session defines protocol, RPC, child-outcome, and cleanup diagnostics](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
+>
+> **Contract or setting:** Public error types, active thrown sites and internal success/protocol markers have distinct meanings.
+>
+> **Test evidence:** [Registry diagnostic assertions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L97-L135) contains denial/provider/duplicate/integrity error-code checks assertions; these are not a recorded execution result for this boundary.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A declared code is not proof its branch executes; this is not an exhaustive runtime or global error census.
 
 | Phase | Representative failure | Safe result | Recovery owner |
 | --- | --- | --- | --- |
@@ -802,11 +1030,23 @@ Contract tests prove runtime behavior in their test environments. A deployment m
 
 > **Source evidence — focused verification**
 >
+> **Claim:** Maintained contract suites define focused registry, grant and external-isolation verification scenarios.
+>
+> **Implementation:** The three linked fixture programs below contain the named assertions.
+>
 > [Registry tests exercise schema validation, grants, duplicate roots, digest mutation, import side effects, and invalid exports](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L1-L323).
 >
 > [Capability-security tests exercise unrequested grants, invalid constraints, ambiguous providers, adapter cycles, and core-only capabilities](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs#L1-L494).
 >
 > [External-package and isolation tests cover operator authority, source identity, package trust, cancellation, crash behavior, and the external-adapter rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-phase11.mts#L1-L297).
+>
+> **Contract or setting:** Fixture package/platform inputs exercise test contracts; actual host kernel prerequisites remain separate.
+>
+> **Test evidence:** The three named source links are test definitions, not completed suite results. This callout records no combined run or deployment-host kernel acceptance.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Passing selected contracts cannot establish every deployed host control or logical correctness of plugin implementations.
 
 ## A Practical Trace
 

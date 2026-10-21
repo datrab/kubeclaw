@@ -1,0 +1,658 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "author": "/root/workflow_acceptance",
+  "status": "NOT_READY one material field correction, complete coherent review",
+  "scope": "58 existing callouts only: telemetry30, nova-core28",
+  "baseline": "Exact captured worktree page bytes independently equal 2e89bce7; historical captured HEAD263dcf1 is not a clean-source claim.",
+  "files": [
+    {
+      "path": "docs/site/understand/telemetry.md",
+      "baselineSha256": "9724cdaef33312532b3d23eb8f939ae3006b8ca61bffd55130f46255c8fcf618",
+      "candidateSha256": "6fb2f994d0802987012345f57777a777e08faa90179c231fe8304b30f1660ca7",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    },
+    {
+      "path": "docs/site/understand/nova-core.md",
+      "baselineSha256": "0fae34e1c3d265e10737052d34693d0e945404c7036a27fd8510902255cb432e",
+      "candidateSha256": "8d0fbbef7b1abc14f5089f5fcad8ca1f75b3510e03ed6b31fdaf1ea23b845d86",
+      "outsideCalloutsByteIdentical": true,
+      "headingsPreserved": true
+    }
+  ],
+  "Source": "NOT_READY F1",
+  "semanticReader": "NOT_READY F1",
+  "Quality": "NOT_READY F1",
+  "perBox": [
+    {
+      "index": 1,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 43,
+      "title": "> **Source evidence \u2014 the version boundary**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 2,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 206,
+      "title": "> **Source evidence \u2014 OpenClaw producer path**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 3,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 308,
+      "title": "> **Source evidence \u2014 complete host-ingress contract**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 4,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 413,
+      "title": "> **Source evidence \u2014 lifecycle production**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 5,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 440,
+      "title": "> **Source evidence \u2014 run-start payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 6,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 463,
+      "title": "> **Source evidence \u2014 administrative run-resumed payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 7,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 491,
+      "title": "> **Source evidence \u2014 terminal run payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 8,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 518,
+      "title": "> **Source evidence \u2014 pipeline cancellation payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 9,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 548,
+      "title": "> **Source evidence \u2014 skipped-stage payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 10,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 574,
+      "title": "> **Source evidence \u2014 started-stage payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 11,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 603,
+      "title": "> **Source evidence \u2014 successful-stage payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 12,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 631,
+      "title": "> **Source evidence \u2014 failed-stage stop payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 13,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 652,
+      "title": "> **Source evidence \u2014 retrying-stage payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 14,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 678,
+      "title": "> **Source evidence \u2014 waiting-stage decision payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 15,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 712,
+      "title": "> **Source evidence \u2014 orchestrator-required decision payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 16,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 745,
+      "title": "> **Source evidence \u2014 remediation-wait payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 17,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 769,
+      "title": "> **Source evidence \u2014 blocked remediation target**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 18,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 797,
+      "title": "> **Source evidence \u2014 administrative consumed-attempt payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 19,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 826,
+      "title": "> **Source evidence \u2014 accepted-signal resolution**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 20,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 859,
+      "title": "> **Source evidence \u2014 attempt payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 21,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 891,
+      "title": "> **Source evidence \u2014 artifact payload**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 22,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 925,
+      "title": "> **Source evidence \u2014 effect payloads**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 23,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 947,
+      "title": "> **Source evidence \u2014 domain event authority**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 24,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1020,
+      "title": "> **Source evidence \u2014 canonical hook reduction and observer projection**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 25,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1076,
+      "title": "> **Source evidence \u2014 shipped producer and consumers**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 26,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1134,
+      "title": "> **Source evidence \u2014 stable delivery**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 27,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1166,
+      "title": "> **Source evidence \u2014 projection safety**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 28,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1214,
+      "title": "> **Source evidence \u2014 recovery behavior**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 29,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1395,
+      "title": "> **Source evidence \u2014 optional monitoring**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 30,
+      "page": "docs/site/understand/telemetry.md",
+      "originalLine": 1690,
+      "title": "> **Source evidence \u2014 configuration and lifecycle shaping**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 31,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 81,
+      "title": "> **Source evidence \u2014 control authority**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 32,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 113,
+      "title": "> **Source evidence \u2014 immutable run identity**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 33,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 143,
+      "title": "> **Source evidence \u2014 attempt and effect identity**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 34,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 162,
+      "title": "> **Source evidence \u2014 command selection and baseline checks**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 35,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 200,
+      "title": "> **Source evidence \u2014 strict project validation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 36,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 226,
+      "title": "> **Source evidence \u2014 emitted stages and budgets**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 37,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 265,
+      "title": "> **Source evidence \u2014 graph safety rules**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 38,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 301,
+      "title": "> **Source evidence \u2014 runtime preparation**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 39,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 320,
+      "title": "> **Source evidence \u2014 pinned package and graph verification**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 40,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 377,
+      "title": "> **Source evidence \u2014 run directory and journal**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 41,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 424,
+      "title": "> **Source evidence \u2014 deterministic readiness**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 42,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 473,
+      "title": "> **Source evidence \u2014 attempt and lease construction**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 43,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 495,
+      "title": "> **Source evidence \u2014 deadline and result normalization**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 44,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 560,
+      "title": "> **Source evidence \u2014 complete reducer table**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 45,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 618,
+      "title": "> **Source evidence \u2014 repair budgets and identity**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 46,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 683,
+      "title": "> **Source evidence \u2014 production signal consumers**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 47,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 731,
+      "title": "> **Source evidence \u2014 failed Prism handoff**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 48,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 776,
+      "title": "> **Source evidence \u2014 signal validation and single use**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 49,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 823,
+      "title": "> **Source evidence \u2014 durable effect ordering**",
+      "Source": "FAIL",
+      "semanticReader": "FAIL",
+      "Quality": "FAIL",
+      "finding": "F1"
+    },
+    {
+      "index": 50,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 870,
+      "title": "> **Source evidence \u2014 effect recovery gate**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 51,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 903,
+      "title": "> **Source evidence \u2014 checkpoint admission and replay**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 52,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 945,
+      "title": "> **Source evidence \u2014 cancellation and cleanup**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 53,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 987,
+      "title": "> **Source evidence \u2014 replay and interrupted attempts**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 54,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 1026,
+      "title": "> **Source evidence \u2014 administrative repair**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 55,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 1047,
+      "title": "> **Source evidence \u2014 plan and source binding**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 56,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 1095,
+      "title": "> **Source evidence \u2014 remote dispatch**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 57,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 1130,
+      "title": "> **Source evidence \u2014 result verification and import**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    },
+    {
+      "index": 58,
+      "page": "docs/site/understand/nova-core.md",
+      "originalLine": 1188,
+      "title": "> **Source evidence \u2014 audit projection**",
+      "Source": "PASS",
+      "semanticReader": "PASS",
+      "Quality": "PASS",
+      "finding": null
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "material",
+      "page": "docs/site/understand/nova-core.md",
+      "box": "Source evidence \u2014 durable effect ordering",
+      "field": "Claim",
+      "currentText": "Durable effects bind request, acceptance, resource lock, fence and terminal receipt in that order.",
+      "source": "skills/nova/core/effects/durable-invocation.ts",
+      "evidence": "execute39\u201358 checks prior identity/receipt then acquires resource at44 before executeLocked87\u2013103 records requested98 and accepted100; invoked adapter/fence handling119\u2013163 and receipt persistence167\u2013174 follow. Existing surrounding chapter sequence also lists lock5, request7, acceptance8.",
+      "correction": "Remove false chronological assertion; e.g. Durable effects bind stable request identity, resource locking, acceptance, fencing and terminal receipts. Or explicitly distinguish fresh-invocation order from prior-receipt reuse and failure receipt recording.",
+      "caution": "Do not replace with universal current-fence-before-every-terminal-receipt claim: prior receipt reuse, receipt recovery, and failed invocation receipts have different branches."
+    }
+  ],
+  "staticEvidence": "telemetry-nova-independent-bindings.json",
+  "bindingSummary": {
+    "completePageLinkedObjects": 126,
+    "allFullBytesEqualCurrent": true,
+    "allRangesValid": true,
+    "bothBaselinesEqual2e89bce7": true,
+    "outsideAll58BoxesByteIdentical": true,
+    "allOldUrlsRetainedInOrder": true,
+    "allSixFieldsPresent": true
+  },
+  "checks": [
+    {
+      "command": "Inert Python baseline/candidate SHA and block-removal/ordered URL comparison",
+      "exit": 0
+    },
+    {
+      "command": "git show each immutable revision:path; complete physical byte equality and range bounds",
+      "exit": 0
+    },
+    {
+      "command": "Complete58 field/context review; fresh constructor and test-assertion text reads",
+      "exit": 0,
+      "observation": "No source imports, product/test execution, generator or main/register writes."
+    }
+  ],
+  "freshReadScope": [
+    "Complete348 field texts and surrounding two-page claims/tables/limits/procedures/diagrams via baseline-readable context plus exact full URL/object bindings.",
+    "Complete pipeline-loop.ts, run-decisions.ts, engine-admin.ts, wait-request.ts, stage-executor.ts, durable-invocation.ts, openclaw-agent-events/adapter.ts, agent-observability/observers.ts, observer-delivery.ts, observer-recovery.ts, observers.ts; relevant engine-runtime prepare/event bridge.",
+    "Complete audit-projection28, observer-recovery85, repair-budget120, external-effect-recovery102, plugin-system-v2-resume91, agent-observability observers.unit19, telemetry-observer live-function, telemetry-store live-function and notification-observer live-function test texts. No execution."
+  ],
+  "reusedEvidenceLimits": [
+    "Exact unchanged earlier platform/COM/TEL/NVC/compiler/import/provider/signal/failure-workflow/notification topic source proofs only; not all126-source semantic reapproval.",
+    "No fresh execution inferred from test links, historical verification metadata or complete object equality.",
+    "No whole A91205, new counts, runtime, release, livehost/Redis/CNI/transport, whole-owner/census or general continuation acceptance.",
+    "Parent current Reader2e89 concerns already integrated27 batch, not these58 candidates. Fresh changed Reader remains pending integration/correction."
+  ]
+}

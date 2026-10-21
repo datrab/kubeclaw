@@ -123,7 +123,21 @@ resulting application behavior. [environment source precedence](https://github.c
 >
 > **Claim:** Manager reads, volume publication, Linux subPath mounts and container environment construction have different update boundaries.
 >
-> **Implementation:** The pinned links above identify the responsible Kubelet, volume writer and runtime configuration paths.
+> **Implementation:** The pinned links above identify the responsible Kubelet, volume writer and runtime configuration paths. The same mechanisms are available below.
+>
+> [Manager selection](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet.go#L650-L669).
+>
+> [cached read](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L176-L205).
+>
+> [watch synchronization](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/watch_based_manager.go#L310-L337).
+>
+> [volume publication](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L189-L264).
+>
+> [opened-file subPath bind](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/subpath/subpath_linux.go#L175-L226).
+>
+> [environment construction](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L774-L802).
+>
+> [environment passed to the container](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kuberuntime/kuberuntime_container.go#L396-L405).
 >
 > **Contract or setting:** `configMapAndSecretChangeDetectionStrategy`, Pod ConfigMap volume references, `subPath`, `envFrom` and `env.valueFrom`.
 >

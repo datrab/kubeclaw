@@ -1,0 +1,507 @@
+{
+  "parser": "Actual MarkdownIt html:true, production top-level Source block selection; fields read from inline token content within same block",
+  "results": [
+    {
+      "page": "plugin-runtime",
+      "blocks": [
+        {
+          "line": 66,
+          "title": "Source evidence — the complete preparation order",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 106,
+          "title": "Source evidence — identity contracts",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 139,
+          "title": "Source evidence — role-neutral boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 180,
+          "title": "Source evidence — deterministic inert discovery",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 223,
+          "title": "Source evidence — path and schema admission",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 261,
+          "title": "Source evidence — digest and trust decision",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 304,
+          "title": "Source evidence — install admission and publication",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 346,
+          "title": "Source evidence — build and freeze",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 378,
+          "title": "Source evidence — compatibility during recovery",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 416,
+          "title": "Source evidence — explicit and transitive selection",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 494,
+          "title": "Source evidence — vocabulary and denial rules",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 562,
+          "title": "Source evidence — configuration boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 611,
+          "title": "Source evidence — import admission",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 675,
+          "title": "Source evidence — activation modes and current boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 714,
+          "title": "Source evidence — lease contract and enforcement",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 764,
+          "title": "Source evidence — process and protocol boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 808,
+          "title": "Source evidence — state ownership and idempotency",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 844,
+          "title": "Source evidence — durable effect ownership",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 885,
+          "title": "Source evidence — removal boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 966,
+          "title": "Source evidence — registry error vocabulary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 1031,
+          "title": "Source evidence — focused verification",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        }
+      ]
+    },
+    {
+      "page": "prism-runtime",
+      "blocks": [
+        {
+          "line": 31,
+          "title": "Source evidence — product boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 123,
+          "title": "Source evidence — packaged role",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 169,
+          "title": "Source evidence — composition and defaults",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 211,
+          "title": "Source evidence — session boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 242,
+          "title": "Source evidence — internal authentication",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 286,
+          "title": "Source evidence — pipeline dispatch",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 321,
+          "title": "Source evidence — fenced agent writes",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 397,
+          "title": "Source evidence — optional authority",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 496,
+          "title": "Source evidence — no blind replay",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 551,
+          "title": "Source evidence — bridge and tool surface",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 594,
+          "title": "Source evidence — approval and publication",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 648,
+          "title": "Source evidence — readiness meaning",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 697,
+          "title": "Source evidence — limits",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 735,
+          "title": "Source evidence — attempt binding",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 775,
+          "title": "Source evidence — cancellation and shutdown",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 823,
+          "title": "Source evidence — durable replay",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 885,
+          "title": "Source evidence — Studio boundary",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 944,
+          "title": "Source evidence — acquisition controls",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 985,
+          "title": "Source evidence — adapter scope",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        },
+        {
+          "line": 1033,
+          "title": "Source evidence — deployment constraints",
+          "fields": {
+            "Claim": true,
+            "Implementation": true,
+            "Contract or setting": true,
+            "Test evidence": true,
+            "Revision": true,
+            "Limit": true
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "source": "pkg/kubelet/kubelet.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet.go",
+    "status": 200,
+    "sha256": "8bd51001076b1528572637701dda1c58355c6b7e43f78c145e171df47f48ffb4",
+    "wholeBytes": 141658,
+    "range": [
+      650,
+      669
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/0.go"
+  },
+  {
+    "source": "pkg/kubelet/util/manager/cache_based_manager.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go",
+    "status": 200,
+    "sha256": "6c045bccba61873ccd0b49ae3ca20d0f772a839de76de4c6eed87f16e90a4bf2",
+    "wholeBytes": 8476,
+    "range": [
+      176,
+      205
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/1.go"
+  },
+  {
+    "source": "pkg/kubelet/util/manager/watch_based_manager.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/watch_based_manager.go",
+    "status": 200,
+    "sha256": "61d698b691dee1fbf43518961920d5ef6387ad8152f7b21c8cacbdf90b58223e",
+    "wholeBytes": 13071,
+    "range": [
+      310,
+      337
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/2.go"
+  },
+  {
+    "source": "pkg/volume/util/atomic_writer.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go",
+    "status": 200,
+    "sha256": "eb5f473227d4f90dce481fd0e0cfa679df1c559fb6b8343954a84f5ff86693a2",
+    "wholeBytes": 16982,
+    "range": [
+      189,
+      264
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/3.go"
+  },
+  {
+    "source": "pkg/volume/util/subpath/subpath_linux.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/subpath/subpath_linux.go",
+    "status": 200,
+    "sha256": "b97e97140c90c1a681b3ffba4e007f2039d0580d407bd3f83cda8d06b7ab396c",
+    "wholeBytes": 21355,
+    "range": [
+      175,
+      226
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/4.go"
+  },
+  {
+    "source": "pkg/kubelet/kubelet_pods.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go",
+    "status": 200,
+    "sha256": "6ec191009886ae9c110389ee2765b3547b3b38f386f934a30c47354112d7363b",
+    "wholeBytes": 117377,
+    "range": [
+      774,
+      802
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/5.go"
+  },
+  {
+    "source": "pkg/kubelet/kuberuntime/kuberuntime_container.go",
+    "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kuberuntime/kuberuntime_container.go",
+    "status": 200,
+    "sha256": "3bcff2834789a3286bdf4cb56f60878d59fdce6b5c96284211ba916f16e61b68",
+    "wholeBytes": 60955,
+    "range": [
+      396,
+      405
+    ],
+    "local": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/configmap-callout-independent/6.go"
+  }
+]
