@@ -45921,9 +45921,21 @@
           "sourcePath": "handoffs/pr13-reset-20261021/diagram-services-review.md",
           "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-closeout.md",
+          "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "56f1f4db2e6962db11f55a8fbfcd3ef9b18a0ab336ac469c5f0d85f38660ad6f"
     },
@@ -46059,9 +46071,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "0e4d6c1e1832dd5331db134162b603635feed18500ee0eb5edecfbac3c87ea57"
     },
@@ -48017,12 +48036,24 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/buster-diagram-source-review.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/buster-diagram-source-review.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/buster-diagram-source-review.json",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "988ccc0ce5d0fa3eaedcfb15eaaebcd24b176011ecddfc20515b3b30058e2a77"
     },
@@ -48113,12 +48144,24 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-diagram-manifest.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-diagram-manifest.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-diagram-manifest.json",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "914334014b510a5a58c74dc0f6119c9b6527d3b6b21f5f27a304ecc5ed39cb0c"
     },
@@ -48472,9 +48515,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-harness-provenance.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-harness-provenance.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "3f083c5ce0bcc4932a641418fcea3c27d4b132814f1cee813e1fb21491faebb9"
     },
@@ -48501,9 +48551,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-observations.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-observations.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "b811963eeca1286749abbeb28104a98d5c1bcb7487d456f14e1849fb7bfc21d3"
     },
@@ -49811,9 +49868,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/initial-semantic-review.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/initial-semantic-review.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "a2d126ef827b6277d3a72b0e7bd4e028f0f646e33bb22a994e423b6cdece582a"
     },
@@ -49904,12 +49968,24 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-corrected-source-review.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-corrected-source-review.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-corrected-source-review.json",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "595786354f98304d1313b75fda3df2b0b96e3686d3507e0108196211635b29e3"
     },
@@ -50500,12 +50576,24 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-corrected-source-review.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-corrected-source-review.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-corrected-source-review.json",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "022701a146f7c7885dd9257676232b84700e4262c8ba9ff1f3e2e268b6998a6b"
     },
@@ -50524,12 +50612,24 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-initial-source-findings.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-initial-source-findings.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-data-initial-source-findings.json",
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "160bda77abc643f1701abff2dfd9fdf8a88524e40e016fc645f3113628f01e3f"
     },
@@ -50556,9 +50656,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-readability-correction-review.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/prism-readability-correction-review.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "9276eb7e354556b44349a3efb9c4f97341012f9268ad4756911c5aef7774bc34"
     },
@@ -50648,9 +50755,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/system-and-confirmed-corrections-review.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/system-and-confirmed-corrections-review.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "33824bf46c8c47b585fcb4fcbf10ac432bc310ee0844691553e115cb1fb855c3"
     },
@@ -50677,9 +50791,16 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "903517e77f41728e68be8b7900a76408d1a78b98c803293b1f5629fe843d547c"
     },
@@ -53202,6 +53323,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/prism-diagram-review.md",
+          "token": "docs/blueprint/documentation-completion-matrix.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-ap09-acceptance-contract.mjs",
           "token": "docs/blueprint/documentation-completion-matrix.json",
           "inputUse": false
@@ -53222,7 +53348,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "32c8d746a46ffd3a004c1bf905a7117206694aaa38216215a9d3503a401242aa"
+      "sha256": "acbeadd56a01d268ce48e774154d8b05a13c10d08b9a9dc3f70a7cab28716b4b"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -54290,7 +54416,17 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/prism-diagram-review.md",
+          "token": "docs/config/documentation-diagrams.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
+          "token": "docs/config/documentation-diagrams.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/config/documentation-diagrams.json",
           "inputUse": false
         },
@@ -54305,7 +54441,9 @@
           "inputUse": true
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "1e3bc507ad0a36dd66f2e4e7f0f9832964d16d574de59c0650da8c8149a64f40"
     },
@@ -156314,6 +156452,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/extend/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "README.md",
           "token": "docs/site/extend/README.md",
           "inputUse": false
@@ -156370,6 +156513,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs",
         "scripts/check-extension-class-drift.mjs",
         "scripts/check-platform-specialist-guides.mjs",
@@ -157806,6 +157950,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/extend/lint.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/extend/lint.md",
           "inputUse": false
@@ -157822,6 +157971,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -171815,6 +171965,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-closeout.md",
+          "token": "docs/site/reference/documentation-site.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/reference/documentation-site.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/documentation-site.md",
           "inputUse": false
@@ -171825,7 +171985,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -172604,6 +172766,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
+          "token": "docs/site/reference/generated-documentation-map.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-published-route-baseline.json",
           "token": "docs/site/reference/generated-documentation-map.json",
           "inputUse": false
@@ -173173,7 +173340,17 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
+          "token": "docs/site/reference/images-and-digests.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
+          "token": "docs/site/reference/images-and-digests.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
           "token": "docs/site/reference/images-and-digests.md",
           "inputUse": false
         },
@@ -173188,7 +173365,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -177389,6 +177568,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/understand/buster-namespace-controller.md",
           "inputUse": true
@@ -177405,6 +177589,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -177512,6 +177697,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/buster.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-buster-guides.mjs",
           "token": "docs/site/understand/buster.md",
           "inputUse": false
@@ -177528,6 +177718,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -177823,6 +178014,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/understand/communication.md",
           "inputUse": false
@@ -177839,6 +178035,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -177998,6 +178195,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/components-and-authority.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-core-architecture-guides.mjs",
           "token": "docs/site/understand/components-and-authority.md",
           "inputUse": false
@@ -178019,6 +178221,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -178402,6 +178605,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/deployment-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/deployment-and-trust.md",
           "inputUse": false
@@ -178422,7 +178630,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -178784,6 +178994,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/nova-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-core-architecture-guides.mjs",
           "token": "docs/site/understand/nova-core.md",
           "inputUse": true
@@ -178800,6 +179015,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -179245,6 +179461,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/pipeline-dependencies.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/understand/pipeline-dependencies.md",
           "inputUse": false
@@ -179255,7 +179476,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json"
+      ],
       "indirectExecutableConsumers": [
         {
           "executableSource": "scripts/tests/docs-reader-source-previews.test.mjs",
@@ -179431,6 +179654,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/diagram-system-review.md",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "my-values/buster-values.yaml",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
@@ -179510,6 +179743,7 @@
         ".codex/handoffs/documentation-cloud/evidence-index.json",
         "charts/kubeclaw/templates/_registry-clients.tpl",
         "docker/buster-runtime-entrypoint.sh",
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "my-values/buster-values.yaml",
         "my-values/infra/cilium-values.yaml",
         "my-values/infra/k3s-registries.yaml",
@@ -179656,6 +179890,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/plugin-runtime.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-core-architecture-guides.mjs",
           "token": "docs/site/understand/plugin-runtime.md",
           "inputUse": true
@@ -179672,6 +179911,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -179814,6 +180054,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/prism-data.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/understand/prism-data.md",
           "inputUse": false
@@ -179835,6 +180080,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -179982,6 +180228,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/prism-runtime.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/understand/prism-runtime.md",
           "inputUse": false
@@ -179998,6 +180249,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -180130,6 +180382,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/prism-diagram-review.md",
+          "token": "docs/site/understand/prism.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/prism.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/understand/prism.md",
           "inputUse": false
@@ -180151,6 +180413,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -180333,6 +180596,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/request-state-recovery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-core-architecture-guides.mjs",
           "token": "docs/site/understand/request-state-recovery.md",
           "inputUse": false
@@ -180349,6 +180617,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -180652,6 +180921,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/security-review.md",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
@@ -180673,6 +180952,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -180847,6 +181127,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": true
@@ -180863,6 +181148,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [
@@ -180992,6 +181278,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
+          "token": "docs/site/understand/worker-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/check-core-architecture-guides.mjs",
           "token": "docs/site/understand/worker-core.md",
           "inputUse": false
@@ -181013,6 +181304,7 @@
         }
       ],
       "executableConsumers": [
+        "handoffs/pr13-reset-20261021/whole-diagram-record-inputs.json",
         "scripts/check-core-architecture-guides.mjs",
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
@@ -182096,6 +182388,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "handoffs/pr13-reset-20261021/release-review.md",
           "token": "docs/site/use/install.md",
           "inputUse": false
@@ -182326,6 +182623,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/maintenance.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "handoffs/pr13-reset-20261021/metadata-preservation-review.md",
           "token": "docs/site/use/maintenance.md",
           "inputUse": false
         },
