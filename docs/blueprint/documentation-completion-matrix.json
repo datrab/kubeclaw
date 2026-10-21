@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -73,13 +73,23 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "92ee169f31923170d68e06ca2585db0fc2376c00"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -156,7 +166,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
@@ -184,6 +194,17 @@
           ],
           "verdict": "PASS",
           "summary": "Independent SPC008 impact review: one exact new canonical lease page/classification/route,167pages within3steps;old entries unchanged. Generated map adds only newpage and accepted firstprojectmetadata. Prior accepted requirements/gates and limits preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/README.md",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ]
     },
@@ -520,7 +541,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -641,13 +662,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/understand/worker-core.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -818,13 +849,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -938,13 +979,23 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/understand/telemetry.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1054,13 +1105,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent SPC008 impact review: one exact new canonical lease page/classification/route,167pages within3steps;old entries unchanged. Generated map adds only newpage and accepted firstprojectmetadata. Prior accepted requirements/gates and limits preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1185,13 +1247,23 @@
             "scripts/docs-publication.mjs"
           ],
           "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/use/plugins.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d"
+      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1275,9 +1347,19 @@
           ],
           "verdict": "PASS",
           "summary": "Independent exact additive first-project impact review preserves prior accepted scopes. Old workflowbody and all166publicationroutes unchanged;exactsourceassetcopiedbyte-for-byte,unapprovedneighborstillrejected."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d"
+      "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a"
     },
     {
       "id": "AP09-reader-developers-20261020",
@@ -1678,7 +1760,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1772,13 +1854,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/extend/documentation-maintenance.md",
+            "docs/site/reference/verification-commands.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -1869,13 +1962,24 @@
           ],
           "verdict": "PASS",
           "summary": "Independent SPC008 impact review: one exact new canonical lease page/classification/route,167pages within3steps;old entries unchanged. Generated map adds only newpage and accepted firstprojectmetadata. Prior accepted requirements/gates and limits preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/README.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a"
+      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -1972,9 +2076,19 @@
             "docs/site/understand/components-and-authority.md"
           ],
           "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/understand/worker-core.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9"
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
@@ -2079,7 +2193,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2192,9 +2306,19 @@
           ],
           "verdict": "PASS",
           "summary": "Independent targeted source/reader/quality review preserves original requirements, gates and execution limits. Exact adapter/confidential/cleanup corrections, current gateway client, reference ranges/placeholder and parser negative controls checked; no broader acceptance."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/use/plugins.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -2248,7 +2372,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -2328,9 +2452,19 @@
           ],
           "verdict": "PASS",
           "summary": "Independent SPC008 impact review: one exact new canonical lease page/classification/route,167pages within3steps;old entries unchanged. Generated map adds only newpage and accepted firstprojectmetadata. Prior accepted requirements/gates and limits preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a"
+      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
@@ -2489,7 +2623,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -2551,11 +2685,25 @@
         "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/reference/capabilities.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        }
+      ],
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -2598,11 +2746,24 @@
         "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/use/plugins.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        }
+      ],
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
-      "revision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -2648,7 +2809,20 @@
         "Upstream implementation review is not upstream test execution or image/source attestation."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        }
+      ],
+      "previousReviewedRevision": "ad66f324ab0273db59397d42f35d94cd4dc62cdd"
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
@@ -2709,6 +2883,80 @@
         "Documentation and repository evidence only; no live deployment, outage, provider embedding, native isolation or production restore claim.",
         "No global documentation/publication/Helm-generation acceptance; unsupported importer-relative resolution remains an explicit global blocker.",
         "No clean npm-ci/install reproduction, whole A910-01 gate, complete old-reader migration matrix or application restore certified."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "author": "Documentation authors and /root entry correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-003",
+        "OPR-008",
+        "CFG-003",
+        "ENT-005"
+      ],
+      "pages": [
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/understand/README.md",
+        "docs/site/README.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/operate.md",
+        "docs/site/extend/first-plugin.md"
+      ],
+      "sources": [
+        "scripts/deploy.sh",
+        "versions.json",
+        "releases/ops-images.json",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/source.ts",
+        "tests/verification/contracts/check-project-compiler.mts",
+        "docs/site/use/workflows/examples/first-project.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent whole operator review, entry correction closeout and publication impact review",
+          "exitCode": 0,
+          "observation": "All4 complete requirements sourceAccuracy/readerUsability/quality PASS. Current unsupported runtime selection, trust-verifier, upgrade-pair and restore boundaries accurately stop mutation. Three reader continuations and complete materialized compile-only project available; no whole operator gate inferred."
+        },
+        {
+          "command": "node tests/verification/contracts/check-project-compiler.mts",
+          "exitCode": 0,
+          "observation": "Full preceding assertions plus legacy-authoring-import and source-launcher checks pass after ignored locked workspace/tokenizer dependencies prepared; zero executed pipeline stages."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6084local links,3287anchors,8301repository paths,31674pinned source links at corrected entry; later publication pin replacements checked against505byte-identical source pairs."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "167mapped pages; generated map current."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "167pages/51plugins pass; build produces Markdown publication and declaredassets, not rendered HTML or deployed/browsable site."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+      "limits": [
+        "Documentation/source and bounded local compiler evidence only; no live install/readiness, upgrade/rollback, restore, provider/pipeline execution, clean dependency installation or native isolation certified.",
+        "No A98-03/A98-08/A98-09 or global generator/publication/UI gates accepted by these four requirements.",
+        "Historical composite findings retain other-page scopes. Only the accepted canonical-page namespace/status/decision-reason facets are closed."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -3251,7 +3499,7 @@
         "skills/nova/core",
         "skills/worker/core"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -3282,17 +3530,26 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L111",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- ENT-005 — Schnellstart für Leser, Operator und Entwickler — NOT_READY. Canonical target: docs/site/understand/README.md. NOT_READY. Architecture entry is clear and links operator/developer tracks; greeting journey check passes and approval workflow now has complete concrete local inputs. Full three-persona quickstart/source/reader continuity was not independently exercised. Do not infer FAIL solely from unexecuted deployment, or PASS solely from this index.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+        "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- ENT-005 — Schnellstart für Leser, Operator und Entwickler — NOT_READY. Canonical target: docs/site/understand/README.md. NOT_READY. Architecture entry is clear and links operator/developer tracks; greeting journey check passes and approval workflow now has complete concrete local inputs. Full three-persona quickstart/source/reader continuity was not independently exercised. Do not infer FAIL solely from unexecuted deployment, or PASS solely from this index.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-install-maintenance-project-entry-20261021"
     },
     {
       "id": "ARC-001",
@@ -10606,7 +10863,7 @@
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"
       ],
-      "sourceVerification": "independent-current-content-role-facets-supported-formal-execution-generated-and-final-gates-pending",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -10645,7 +10902,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [
         {
           "class": "root-bounded-automatic-gates",
@@ -10817,10 +11074,7 @@
           "verifiedInputs": 5773
         }
       ],
-      "openFindingIds": [
-        "A98-R2-NAMESPACE-CONTINUITY",
-        "A98-R2-PRISM-CURRENT-STATUS"
-      ],
+      "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L263",
       "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
       "acceptanceMappingBasis": {
@@ -10849,11 +11103,24 @@
       },
       "currentContentScopeQualification": "Exact current page content contributions from Source, Reader and Quality reports; prior whole FAIL reports stay immutable. Operator route capacity dependency separately reviewed at current bytes; no whole route reissuance or practical/package acceptance.",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- OPR-003 NOT_READY",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+        "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- OPR-003 NOT_READY",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "historicalFindingIds": [
+        "A98-R2-NAMESPACE-CONTINUITY",
+        "A98-R2-PRISM-CURRENT-STATUS"
+      ],
+      "completionRecord": "AP09-install-maintenance-project-entry-20261021"
     },
     {
       "id": "OPR-004",
@@ -11491,7 +11758,7 @@
         "scripts/deploy.sh",
         "scripts/remove-qdrant.sh"
       ],
-      "sourceVerification": "independent-current-content-role-facets-supported-formal-execution-generated-and-final-gates-pending",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11529,7 +11796,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [
         {
           "revision": "674e73fdd8c90ca237aa2e6d505abe49fc57b008",
@@ -11712,9 +11979,7 @@
           "verifiedInputs": 5773
         }
       ],
-      "openFindingIds": [
-        "A98-READER-NAMESPACE"
-      ],
+      "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L268",
       "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
       "acceptanceMappingBasis": {
@@ -11731,11 +11996,23 @@
       },
       "currentContentScopeQualification": "Exact current page content contributions from Source, Reader and Quality reports; prior whole FAIL reports stay immutable. Operator route capacity dependency separately reviewed at current bytes; no whole route reissuance or practical/package acceptance.",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
-        "reason": "- OPR-008 NOT_READY",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+        "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
+          "reason": "- OPR-008 NOT_READY",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "historicalFindingIds": [
+        "A98-READER-NAMESPACE"
+      ],
+      "completionRecord": "AP09-install-maintenance-project-entry-20261021"
     },
     {
       "id": "OPR-009",
@@ -12553,7 +12830,7 @@
         "skills/nova/project/demo.ts",
         "skills/nova/project/cli.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -12588,7 +12865,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -12610,9 +12887,7 @@
           "scope": "role-specific bounded review; no global acceptance"
         }
       ],
-      "openFindingIds": [
-        "A98-QUALITY-DECISION-REASONS"
-      ],
+      "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L278",
       "acceptanceMappingBasis": {
         "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
@@ -12620,11 +12895,23 @@
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-003 — `reference/nova-project.md`.** Substantive field/command/source-binding/legacy-import/gate/demo/recovery content was inspected against project CLI/compiler/source and earlier independent source review; no new falsehood established. However `check-project-compiler.mts` now exits 1 before assertions because `@kubeclaw/nova-core` cannot resolve in this environment. Source/reader/quality PASS for inspected unchanged content; overall verification NOT_READY. No dependency repair attempted.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+        "reason": "Complete safe install/preflight, maintain/retire, project reference and connected first-reader routes accepted. First-project input omission corrected; current compiler contract check now passes.",
+        "campaign": "independent-compact-closeout-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- **CFG-003 — `reference/nova-project.md`.** Substantive field/command/source-binding/legacy-import/gate/demo/recovery content was inspected against project CLI/compiler/source and earlier independent source review; no new falsehood established. However `check-project-compiler.mts` now exits 1 before assertions because `@kubeclaw/nova-core` cannot resolve in this environment. Source/reader/quality PASS for inspected unchanged content; overall verification NOT_READY. No dependency repair attempted.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "historicalFindingIds": [
+        "A98-QUALITY-DECISION-REASONS"
+      ],
+      "completionRecord": "AP09-install-maintenance-project-entry-20261021"
     },
     {
       "id": "CFG-004",
@@ -34725,6 +35012,18 @@
       "pageSha256": "e31675fad53c6d5e590f22656fcb630feb03b9fa63e671d38c974cb8c86bd021",
       "sourceReviewer": "/root/diagnose_corrected_complete_source_fresh",
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
+    },
+    "currentCloseout20261021": {
+      "securedSourceRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "acceptedRequirements": 174,
+      "acceptedGates": 12,
+      "newRequirementsThisCampaign": 16,
+      "newGatesThisCampaign": 2,
+      "nextWork": "Finish ordinary executable import qualification and global generator checks; finish whole MNT002/007 and OPL001/005 audits, remaining config/event/error/store/reference/workflow/developer/publication gaps.",
+      "codeCandidate": "Working-tree operation-only resolver classification and fixed Core-import Source recipes;20focused tests pass. Last8recipes independently clean;3additional same-form sources await targeted final review. No metadata/runtime blanket exemption.",
+      "currentGlobalBlocker": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs unresolved ordinary import; must qualify actual finite module input, not suppress it.",
+      "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
+      "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit."
     }
   },
   "productBoundaries": [
