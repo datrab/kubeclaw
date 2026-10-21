@@ -39,12 +39,15 @@ Use it when you do not know which track owns a component, interface, or configur
 ## Three Connected First Journeys
 
 - Architecture readers start with [Understand KubeClaw](understand/README.md).
-- Operators start with the [Operator Quickstart](use/quickstart.md), then continue to [Configure and Operate](use/operate.md).
+- Operators start with the [Operator Quickstart](use/quickstart.md), then compile the [maintained first project](use/workflows/README.md#materialize-and-compile-a-first-project). Use [Configure and Operate](use/operate.md) for governed execution.
 - Plugin developers start with [Create and Activate a First Pipeline Plugin](extend/first-plugin.md).
 
-The operator route does not yet supply a self-contained first pipeline input.
-It requires operator-owned platform and project files.
-The [Configure and Operate](use/operate.md#understand-the-two-command-forms) page states their command boundary.
+The first-project exercise supplies the complete local project and repository
+inputs, compiles the eight-stage graph, and explains inspection, failures and
+cleanup. It does not admit or execute that graph. A governed run additionally
+requires operator-owned runtime platform configuration, grants and services.
+[The two command forms](use/operate.md#understand-the-two-command-forms)
+define that separate execution boundary.
 
 ## Documentation Tracks
 

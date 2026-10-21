@@ -166,7 +166,7 @@ Do not mutate production source as an experiment while another task uses it.
 
 Use isolated fixtures for addition, semantic change, and removal on each distinct
 affected generator or parser path. Reuse an existing valid probe when several
-registered variants share that path; state which source extraction and output
+registered variants share that path; state which input parsing and output
 comparison they share. A common parser library alone does not establish shared
 coverage: different AST selectors, embedded languages, renderers, or comparison
 sections can require their own representative probe. First demonstrate a healthy

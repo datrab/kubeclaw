@@ -557,7 +557,7 @@ The upstream release source is commit
 `59cb44796b0f1f0daa0e37af8b1495abb45d9bc1`.
 The [release metadata](https://github.com/openclaw/openclaw/releases/tag/v2026.10.3)
 identifies that commit; [the local version authority](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/versions.json#L1-L6)
-selects the image and digest. Source inspection is not an image/source attestation
+selects the image and digest. These implementation links are not an image/source attestation
 or a deployed LiteLLM-to-Vertex result.
 
 OpenClaw sends text to `POST /v1/embeddings` with the configured model and an
@@ -604,7 +604,7 @@ result or a Prism operation row.
 > **Claim:** These request, error, timeout and retry rules belong to the selected OpenClaw `2026.10.3` source, not the historical `2026.9.4` client.
 > **Implementation:** The request, error, vector, memory-manager and retry links above identify the exact implementation boundaries.
 > **Contract or setting:** The [chart selection](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/charts/kubeclaw/templates/configmap-gateway.yaml#L65-L79) supplies `openai-compatible`, the remote key and `gemini-embedding-001`.
-> **Test evidence:** Source inspection only. No upstream client suite or deployed embedding request is claimed to have run here.
+> **Test evidence:** Implementation evidence only. No upstream client suite or deployed embedding request is claimed to have run here.
 > **Revision:** OpenClaw `59cb44796b0f1f0daa0e37af8b1495abb45d9bc1`; KubeClaw `7994a51e16bc752357c3a801190b12b7d6a191a4`.
 > **Limit:** No image/source attestation, live route, provider quota or end-to-end owner deadline is established by these links.
 
@@ -672,7 +672,9 @@ approvals only to configured approvers. The chart default is `true`; the
 Nova values override it to `false`. A mention is therefore not universally
 required. This setting does not remove the configured user allowlist.
 
-> **Source evidence:** [The chart defaults to requiring a mention](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L188-L191); [Nova overrides the mention setting](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/my-values/nova-values.yaml#L52-L56); [The gateway renders that value into the guild policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/configmap-gateway.yaml#L235-L242).
+> **Source evidence:** [The chart defaults to requiring a mention](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L188-L191).
+> [Nova overrides the mention setting](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/my-values/nova-values.yaml#L52-L56).
+> [The gateway renders that value into the guild policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/configmap-gateway.yaml#L235-L242).
 Prism declares a Discord credential source but leaves its channel disabled.
 
 The shared webhook is a second Discord identity. Its secret value contains the

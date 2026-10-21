@@ -88,7 +88,7 @@ All supported hooks in the granted `openclaw-agent-events` adapter share the
 same `openclaw-agent-event.v2` payload: `schemaVersion`, `observedFields` and
 `metrics`. `observedFields` contains sorted, truncated field names, not their
 values. The adapter excludes identity keys and keys matching its sensitive-name
-filter, then keeps at most the first 128 remaining entries; each observed name
+filter, then keeps at most the first 128 entries after filtering; each observed name
 is limited to 128 characters. This is a bounded projection, not a promise that
 all raw fields survive or that a raw hook payload is retained.
 

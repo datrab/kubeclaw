@@ -470,7 +470,7 @@ external effect.
 Without an override, an exhausted attempt budget returns a blocked decision
 before the loop emits `stage.started`. On the start path, Nova appends the event
 and awaits the event-commit callback before invoking the executor. A retained
-start event alone therefore does not establish that an attempt was created.
+start event alone therefore does not establish creation of an attempt.
 The runner defaults causation to `resumeCausationId`, or `null`; it does not
 assign a future attempt ID. Other stage payloads still need separate contracts.
 
@@ -708,7 +708,7 @@ external effects. These payloads are distinct from ordinary stop and terminal-ta
 
 `wait.resolved` identifies `runId`, the recovered waiting `stageId`, and
 `waitId`. Its causation is `signal.signalId`; its payload is `{ signal }`,
-not just the signal's guidance payload. The nested `resume-signal.v2` object
+not only the signal's guidance payload. The nested `resume-signal.v2` object
 contains `schemaVersion`, `signalId`, `idempotencyKey`, `waitId`, `signalType`,
 `issuer` (`type` and `id`), `issuedAt`, and the JSON-object `payload`.
 

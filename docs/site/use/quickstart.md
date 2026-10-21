@@ -14,7 +14,11 @@ This quickstart makes no cluster change and starts no external effect.
 It is not a second install, readiness, or run-control authority.
 
 Use [Plan and Install](install.md) for deployment.
-Use [Configure and Operate](operate.md) to start a governed run.
+Use the [maintained first project](workflows/README.md#materialize-and-compile-a-first-project)
+for complete local inputs, eight-stage compilation, graph inspection and cleanup.
+That exercise neither admits nor executes a runtime pipeline.
+Use [Configure and Operate](operate.md) to start a governed run with separately
+owned platform configuration, grants and services.
 
 ## Prerequisites
 

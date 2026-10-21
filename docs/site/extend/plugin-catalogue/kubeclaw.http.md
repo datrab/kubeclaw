@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/http/plugin.json; skills/buster/plugins/http/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+Last verified: source facts revision 7994a51e16bc752357c3a801190b12b7d6a191a4; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
 ## Purpose
 
@@ -26,7 +26,7 @@ Network reach and request behavior remain inside the resolved provider plan.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/http/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.http@1.0.0`.
 - Runtime-role manifest inclusion: `buster`
-- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/plugin.json)
+- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/http/plugin.json)
 
 ## Boundaries
 
@@ -65,7 +65,7 @@ Required capabilities: `network.http`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/http/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -142,6 +142,6 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/plugin.json)
-- Package implementation guide: [skills/buster/plugins/http/README.md](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/README.md)
-- Module for `request`: [src/provider.js](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/plugins/http/src/provider.js)
+- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/http/plugin.json)
+- Package implementation guide: [skills/buster/plugins/http/README.md](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/http/README.md)
+- Module for `request`: [src/provider.js](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/http/src/provider.js)

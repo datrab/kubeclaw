@@ -136,7 +136,7 @@ from this exercise.
 ### Cleanup and ownership
 
 Keep `project.json` and `compiled.json` while comparing their inputs and graph.
-No Core storage or adapter state is created by this helper. After inspection,
+This helper creates no Core storage or adapter state. After inspection,
 delete only the new directory recorded in `FIRST_PROJECT`, including its
 private disposable repository and empty workspace directory. Do not delete
 an operator-selected policy, real project checkout, platform storage or any

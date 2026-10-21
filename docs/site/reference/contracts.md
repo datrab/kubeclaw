@@ -107,7 +107,9 @@ writer and receipt reader, not a future-version converter, downgrade, key-remova
 schedule, or safe deletion procedure. Stop retirement until those consumers and
 outstanding decisions are reconciled. No live controller execution is claimed.
 
-**Source — current Prism decision boundaries:** [intent, feature configuration and signer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/control/product-decisions.ts#L6-L72); [receipt binding and identical-envelope reconciliation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/server/product-decisions.ts#L9-L42); [durable intent identity and receipt conflict checks](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/storage/product-decisions.ts#L9-L29).
+**Source — current Prism decision boundaries:** [intent, feature configuration and signer](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/control/product-decisions.ts#L6-L72).
+[receipt binding and identical-envelope reconciliation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/server/product-decisions.ts#L9-L42).
+[durable intent identity and receipt conflict checks](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/prism/storage/product-decisions.ts#L9-L29).
 
 ### A readable snapshot can still be unrecoverable with changed inputs
 

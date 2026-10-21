@@ -148,7 +148,7 @@ this public input from the schema-authority map.
 
 The receiving Prism `receiptFor` checks `demo-product-decision-receipt.v1`
 against the recorded decision and envelope. This is distinct from the external
-controller's admission and signature verification; Prism-side source inspection
+controller's admission and signature verification; the Prism implementation
 does not establish those remote checks or a successful execution.
 [The wire-contract reference](contracts.md#optional-demo-product-decision-wire-contract)
 gives exact fields, limits, consumers and identical-envelope recovery rules.

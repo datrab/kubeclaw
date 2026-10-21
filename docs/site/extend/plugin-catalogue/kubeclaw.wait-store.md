@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/wait-store/plugin.json; skills/common/plugins/wait-store/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+Last verified: source facts revision 7994a51e16bc752357c3a801190b12b7d6a191a4; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
 ## Purpose
 
@@ -26,7 +26,7 @@ The adapter stores waits. Core validates signals and owns wait resolution and co
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.wait-store@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/common/plugins/wait-store/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/plugin.json)
+- Manifest: [skills/common/plugins/wait-store/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/plugin.json)
 
 ## Boundaries
 
@@ -65,7 +65,7 @@ Required capabilities: None.
 
 Provided capabilities: `signal.wait`
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -124,8 +124,8 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/common/plugins/wait-store/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/plugin.json)
-- Package implementation guide: [skills/common/plugins/wait-store/README.md](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/README.md)
-- Module for `waits`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/src/adapter.ts)
-- Test: [skills/common/plugins/wait-store/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/tests/live-function.test.ts)
-- Test: [skills/common/plugins/wait-store/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/wait-store/tests/package-boundary.test.mjs)
+- Manifest: [skills/common/plugins/wait-store/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/plugin.json)
+- Package implementation guide: [skills/common/plugins/wait-store/README.md](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/README.md)
+- Module for `waits`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/src/adapter.ts)
+- Test: [skills/common/plugins/wait-store/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/tests/live-function.test.ts)
+- Test: [skills/common/plugins/wait-store/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/wait-store/tests/package-boundary.test.mjs)

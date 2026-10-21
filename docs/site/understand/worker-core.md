@@ -287,7 +287,12 @@ For v2/v3, `resourceAccounting` requires exactly `schemaVersion`, `capabilities`
 above. Observations have no separate `schemaVersion` field. These wire shapes
 do not themselves prove enforcement or successful live resource measurement.
 
-> **Versioned field authority:** [v1 limits and envelope](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154); [v2 resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts); [v3 native resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts); [v1 bounds](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json); [v2 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json); [v3 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json).
+> **Versioned field authority:** [v1 limits and envelope](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154).
+> [v2 resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts).
+> [v3 native resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts).
+> [v1 bounds](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json).
+> [v2 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json).
+> [v3 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json).
 
 ### Wire Message Field Reference
 
