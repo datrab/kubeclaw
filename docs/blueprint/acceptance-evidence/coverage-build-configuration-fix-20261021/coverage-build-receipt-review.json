@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The scoped Source-purpose, immutable-guard and exact-propagation receipts are consistent. The source hash and recipe hash match; the six import operations, selected modules, caller guards, roots and qualification limits remain unchanged. The propagation evidence accounts for exactly five renewed consumer digests and 49 unchanged roles, reconstructing prior digests with unchanged selectors and child authorities. No actionable defect found. This verdict does not grant generated-artifact, runtime-acquisition, whole-CFG007 or global acceptance.",
+  "overall_confidence": 0.94
+}

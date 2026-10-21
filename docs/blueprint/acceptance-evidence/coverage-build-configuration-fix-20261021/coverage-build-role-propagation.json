@@ -1,0 +1,198 @@
+{
+  "baseline": "7b35fa97103772c26db24d41ece6df55a51095b1",
+  "changes": [
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "kind": "FirstStatement",
+      "symbol": "SCHEMA_RUNTIME_FALLBACK_AUTHORITIES",
+      "previous": "104286fba1845841fa5114002aa7327455542aaa4b70f8f53f56faa5b5325feb",
+      "current": "e7a87041c3bcb6e99cbbf4ce611b6a4e6b4e62ba9f17ec7efda1b7df0575bd55"
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaRuntimeValidationRules",
+      "previous": "b2c2be08e653c20fd8893c33c7ee44485852680eabf60ee93f2a5cf195e9d569",
+      "current": "73d4b151986921b81918ee12e00dcbb5eadd1000dfef00f000a661473f678a35"
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaSpecificPurpose",
+      "previous": "2981c32fbf8135944d9696bdcf210b558bd71cddd3e649ec9cc94af1d7729c3a",
+      "current": "c5a3a5d7f4869c68847e7d6e3dabd47ad0121629af491877913b6174be0a7671"
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "kind": "FirstStatement",
+      "symbol": "reviewedDocumentationModuleInputRecipes",
+      "previous": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6",
+      "current": "521875623c4225d4223ef1becec0ae3964d95332621b2f1fa84d029322b91b48"
+    },
+    {
+      "source": "scripts/docs-api-producer-adapter-authorities.json",
+      "kind": "source-input",
+      "previous": "44c62495b99200c84da989a6b7fc0c9085ab977c080db5c2fae8f0fbd21cff76",
+      "current": "45cc98229725698f7d34e7dc781f6fdeed404e5f1cdf5ec21dc430fe00c3a5dc"
+    }
+  ],
+  "renewals": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "previous": "1bb8d32ca7bec0c2a7e6e149b90510e9fc368b84c0ce7123444eed0a6f06e62d",
+      "current": "283218c93ee807b65c863cde424729860bd15bee7758158f5f51c91e011ac517",
+      "changedStatements": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6",
+          "current": "521875623c4225d4223ef1becec0ae3964d95332621b2f1fa84d029322b91b48"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "previous": "a1d4706a8917d4cbc5818a74d43ef90f20481de70523e99625b73b6d18cc262a",
+      "current": "7e7e0bd82122508f5709aa71783a1affbce43299cbeb2b8e65b75527ad5276ff",
+      "changedStatements": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6",
+          "current": "521875623c4225d4223ef1becec0ae3964d95332621b2f1fa84d029322b91b48"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "previous": "5ed5323c54bb3abab5d6c6edb3abc785d8910d861a581699c36cbcf0e471037a",
+      "current": "850f2161e60d4d722bdde4f6cef94120194421d04de850456e4e1c6df0b750aa",
+      "changedStatements": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6",
+          "current": "521875623c4225d4223ef1becec0ae3964d95332621b2f1fa84d029322b91b48"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "previous": "987c9097e2815be15efff95b2749cd5a86c40fe63c64b28a68bbce523b2e43b0",
+      "current": "51d1f93ec1a0c0fc91eafc6a2b81fcbe4f6d44699d3ed2c626b8cf271661b95a",
+      "changedStatements": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6",
+          "current": "521875623c4225d4223ef1becec0ae3964d95332621b2f1fa84d029322b91b48"
+        },
+        {
+          "source": "scripts/docs-configuration-inventory.mjs",
+          "kind": "FirstStatement",
+          "symbol": "SCHEMA_RUNTIME_FALLBACK_AUTHORITIES",
+          "previous": "104286fba1845841fa5114002aa7327455542aaa4b70f8f53f56faa5b5325feb",
+          "current": "e7a87041c3bcb6e99cbbf4ce611b6a4e6b4e62ba9f17ec7efda1b7df0575bd55"
+        },
+        {
+          "source": "scripts/docs-configuration-inventory.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "schemaRuntimeValidationRules",
+          "previous": "b2c2be08e653c20fd8893c33c7ee44485852680eabf60ee93f2a5cf195e9d569",
+          "current": "73d4b151986921b81918ee12e00dcbb5eadd1000dfef00f000a661473f678a35"
+        },
+        {
+          "source": "scripts/docs-configuration-inventory.mjs",
+          "kind": "FunctionDeclaration",
+          "symbol": "schemaSpecificPurpose",
+          "previous": "2981c32fbf8135944d9696bdcf210b558bd71cddd3e649ec9cc94af1d7729c3a",
+          "current": "c5a3a5d7f4869c68847e7d6e3dabd47ad0121629af491877913b6174be0a7671"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "previous": "6d9035f35f8bbdd59b291ea724a3b3ac2931efe7f5c4692ab84316b390b01672",
+      "current": "18f2a0b2139a328ab9a0292b94a8da99acec23bdfee1b8652a7d36982000f03d",
+      "changedStatements": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6",
+          "current": "521875623c4225d4223ef1becec0ae3964d95332621b2f1fa84d029322b91b48"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    }
+  ],
+  "unchanged": [
+    "scripts/docs-ap09-catalogue.mjs",
+    "scripts/docs-api-output-role-classification.mjs",
+    "scripts/docs-api-receiver-coverage.mjs",
+    "scripts/docs-api-schema-authorities.mjs",
+    "scripts/docs-argo-receiver-contracts.mjs",
+    "scripts/docs-blueprint-generate.mjs",
+    "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+    "scripts/docs-buster-lease-receiver-contracts.mjs",
+    "scripts/docs-check-coverage.mjs",
+    "scripts/docs-check-refs.mjs",
+    "scripts/docs-check.mjs",
+    "scripts/docs-cilium-receiver-contracts.mjs",
+    "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+    "scripts/docs-generate-core.mjs",
+    "scripts/docs-governance.mjs",
+    "scripts/docs-inventory.mjs",
+    "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-admission-status-contracts.mjs",
+    "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+    "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+    "scripts/docs-lint-policy-reference.mjs",
+    "scripts/docs-local-helm-authorities.mjs",
+    "scripts/docs-parity-batches.mjs",
+    "scripts/docs-parity-check.mjs",
+    "scripts/docs-parity-extract.mjs",
+    "scripts/docs-parity-review-assignments.mjs",
+    "scripts/docs-parity-status.mjs",
+    "scripts/docs-parity-transition.mjs",
+    "scripts/docs-platform-surface-inventory.mjs",
+    "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+    "scripts/docs-publication.mjs",
+    "scripts/docs-runtime-consumer-contracts.mjs",
+    "scripts/docs-secret-inventory.mjs",
+    "scripts/docs-status.mjs",
+    "scripts/docs-tree-boundary.mjs",
+    "scripts/docs-yaml-field-authorities.mjs",
+    "scripts/docs-yaml-inventory.mjs",
+    "scripts/docs-sdk-reference.mjs"
+  ]
+}

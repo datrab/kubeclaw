@@ -160,7 +160,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "794b1b1ef173c4c95bfdb6074b5aabe0950f6dc0904acae0569ed5aa7baf4264"
+    "recipeSha256": "8ac674eed162ceb151a62df01300151ec522b385e9afd4e66f8a4358362a6aac"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
