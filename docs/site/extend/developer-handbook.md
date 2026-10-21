@@ -1718,8 +1718,8 @@ run `docs:platform-specialist-guides:check` and the
 > Claim: bearer authentication stays required locally, while unavailable Kubernetes reads remain errors.
 > Implementation: [listener configuration](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/src/config.mjs#L1-L23), [authentication source/rotation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/src/authentication.mjs#L4-L38).
 > Contract or setting: [Ops package scripts](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/package.json#L1-L22), [CI package/image separation](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/.github/workflows/build-ops-mcp.yaml#L62-L113).
-> Required fixture: [local tool/read fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/local.test.mjs#L10-L51). Install the separate locked dependencies, including `@modelcontextprotocol/server`, before running it. A child exit before listener readiness is a startup failure.
-> Test evidence: [local tool/read fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/local.test.mjs#L10-L51). Status: source-only; no execution result is asserted.
+> Required fixture: [local tool/read fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/local.test.mjs#L10-L50). Install the separate locked dependencies, including `@modelcontextprotocol/server`, before running it. A child exit before listener readiness is a startup failure.
+> Test evidence: [local tool/read fixture](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tools/ops-mcp/test/local.test.mjs#L10-L50). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
 > Limit: package or image success cannot prove live Kubernetes authorization.
 

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found in the scoped changes. The checker permits the release revision only for the three exact paths/ranges on extend/testing.md, uses expectedRevision for both equality and Git-object lookup, and retains line-bound checks. Inspected Git objects support the stated release defaults; historical packaging citations retain their prior revision. Both citation corrections remove only blank line 51 and preserve assertions and prose. For previously accepted scopes: developer-handbook.md sourceAccuracy PASS, readerUsability PASS, quality impact PASS; ops-mcp.md sourceAccuracy PASS, readerUsability PASS, quality impact PASS. Full module Source/native selected consumer: NOT_READY; saved negative-control evidence was not found locally, and checks were not executed under the read-only restrictions. Registry native-contract batching remains outside this assessment. No runtime, global, or gate acceptance is asserted.",
+  "overall_confidence": 0.93
+}

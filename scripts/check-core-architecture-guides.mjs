@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
 const root = path.resolve(import.meta.dirname, '..');
-const revision = '4f089958db97a551f406c157d774bda143a38946';
+const revision = 'ce7740252864a9b547bee8a35260d6ab10c9f05e';
 
 function sourceFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {

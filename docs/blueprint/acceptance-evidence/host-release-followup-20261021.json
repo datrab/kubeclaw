@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Complete Source/native selected consumer verdict: PASS within the requested scope. Inspected the complete catalogue checker, package-script consumer chain, reader-reference checker, selected Git objects, and saved artifacts. The release exception applies only to the three exact paths/ranges on testing.md; equality and Git lookup use the same expected revision, retaining historical pins and line bounds. Selected release ranges support the page's version and digest claims. Parent-attributed evidence records the successful 54-page, 51-package, 435-source, 72-link catalogue baseline and observer proof; both saved negative controls report rejection. The later reader-range failure is addressed by the citation corrections. No checks were independently executed. Preserved verdicts for developer-handbook.md and ops-mcp.md: sourceAccuracy PASS, readerUsability PASS, quality impact PASS; the corrected ranges preserve assertions and prose. No global, gate, runtime, live-host, or cluster acceptance is asserted. Registry digest batching and other guides remain outside this assessment.",
+  "overall_confidence": 0.96
+}

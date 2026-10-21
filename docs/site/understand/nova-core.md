@@ -4,7 +4,7 @@ Status: implemented with stated limits
 Audience: architecture reader, Nova developer, operator, incident responder
 Owner: Nova maintainers
 Evidence: skills/nova/project; skills/nova/core; skills/common/plugin-runtime
-Evidence revision: `4f089958db97a551f406c157d774bda143a38946`
+Evidence revision: `ce7740252864a9b547bee8a35260d6ab10c9f05e`
 Applies to: `nova-project.v2`, `pipeline-definition.v2`, and the current Nova Core runtime
 Last verified: source and contract inspection on 2026-10-11 at `a1569b61663e4bc85e11d38bd896bb99ed0bd396`; linked implementation files are byte-identical to the evidence revision. This inspection does not establish successful production execution.
 
@@ -80,15 +80,15 @@ the reducer does not directly read the receipt journal.
 
 > **Source evidence — control authority**
 >
-> [The runner validates the graph and stage inputs before it creates the scheduling loop](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/runner.ts#L40-L78).
+> [The runner validates the graph and stage inputs before it creates the scheduling loop](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/runner.ts#L40-L78).
 >
-> [The reducer owns all stage states and permitted lifecycle actions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/reducer.ts#L9-L52).
+> [The reducer owns all stage states and permitted lifecycle actions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/reducer.ts#L9-L52).
 >
-> [AdapterRuntime checks receipt outcomes before it returns effect responses to an attempt](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L52-L66).
-> [The executor records the typed result before applying the reducer](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L31-L52).
+> [AdapterRuntime checks receipt outcomes before it returns effect responses to an attempt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapters.ts#L52-L66).
+> [The executor records the typed result before applying the reducer](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L31-L52).
 >
-> [The loop records decisions before its next scheduling selection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
-> [Audit derives its redacted projection from journal records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/audit.ts#L13-L27).
+> [The loop records decisions before its next scheduling selection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
+> [Audit derives its redacted projection from journal records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/audit.ts#L13-L27).
 
 ## Authority and Invariants
 
@@ -112,9 +112,9 @@ Automatic repetition would be easier, but it could duplicate a deployment, publi
 
 > **Source evidence — immutable run identity**
 >
-> [The graph snapshot contains ordered nodes, ordinary edges, remediation edges, concurrency, and a content digest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph.ts#L13-L50).
+> [The graph snapshot contains ordered nodes, ordinary edges, remediation edges, concurrency, and a content digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L13-L50).
 >
-> [New, recovery, and resume paths execute inside the run mutation lock](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L36-L43).
+> [New, recovery, and resume paths execute inside the run mutation lock](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L36-L43).
 
 ### Identities do not substitute for each other
 
@@ -142,9 +142,9 @@ A remote job ID without its request digest does not identify the admitted reques
 
 > **Source evidence — attempt and effect identity**
 >
-> [The stage executor creates the attempt and lease identities and records package ownership](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L55-L79).
+> [The stage executor creates the attempt and lease identities and records package ownership](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L55-L79).
 >
-> [The effect contract binds idempotency, attempt, capability, operation, resource, and payload](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/effects/contracts.ts#L4-L14).
+> [The effect contract binds idempotency, attempt, capability, operation, resource, and payload](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/contracts.ts#L4-L14).
 
 ## 1. Project Admission and Compilation
 
@@ -161,7 +161,7 @@ Recovery compiles the recovery form and then verifies the stored run identity.
 
 > **Source evidence — command selection and baseline checks**
 >
-> [The project CLI validates its operation, validates the installed runtime, and selects compile, run, recover, or resume](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/cli.ts#L19-L56).
+> [The project CLI validates its operation, validates the installed runtime, and selects compile, run, recover, or resume](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/cli.ts#L19-L56).
 
 ### Input admission
 
@@ -199,13 +199,13 @@ The source binding makes the exact instruction set part of the admitted project 
 
 > **Source evidence — strict project validation**
 >
-> [Compiler helpers reject unknown fields, invalid IDs, non-canonical paths, duplicate lists, and unsafe ownership paths](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L11-L45).
+> [Compiler helpers reject unknown fields, invalid IDs, non-canonical paths, duplicate lists, and unsafe ownership paths](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L11-L45).
 >
-> [Module admission checks unique ownership, requirements, plan digest, plan scope, and a blocking test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L89-L134).
+> [Module admission checks unique ownership, requirements, plan digest, plan scope, and a blocking test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L89-L134).
 >
-> [Project admission checks the schema version, paths, baseline, dependency order, and final configuration](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L137-L192).
+> [Project admission checks the schema version, paths, baseline, dependency order, and final configuration](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L137-L192).
 >
-> [Source admission selects architecture and module control files and binds them to the project contract](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/source.ts#L19-L66).
+> [Source admission selects architecture and module control files and binds them to the project contract](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/source.ts#L19-L66).
 
 ### Compiler output
 
@@ -225,9 +225,9 @@ It includes all possible orders in `maxAttempts`, so a repair recheck does not a
 
 > **Source evidence — emitted stages and budgets**
 >
-> [The module compiler creates implementation, lint, optional review, and test stages with declared repair routes](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L47-L86).
+> [The module compiler creates implementation, lint, optional review, and test stages with declared repair routes](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L47-L86).
 >
-> [The compiler orders modules, adds source and cumulative stages, sets project concurrency to one, and validates the final definition](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L171-L192).
+> [The compiler orders modules, adds source and cumulative stages, sets project concurrency to one, and validates the final definition](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L171-L192).
 
 ## 2. Graph Construction, Validation, and Freeze
 
@@ -264,9 +264,9 @@ If Core treated both as ordinary dependencies, repair could create a cycle or re
 
 > **Source evidence — graph safety rules**
 >
-> [The graph builder validates execution limits, dependencies, cycles, remediation order, shared targets, and activations](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph-build.ts#L8-L96).
+> [The graph builder validates execution limits, dependencies, cycles, remediation order, shared targets, and activations](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph-build.ts#L8-L96).
 >
-> [The graph object freezes sorted structures and creates a versioned digest from portable JSON](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph.ts#L19-L50).
+> [The graph object freezes sorted structures and creates a versioned digest from portable JSON](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L19-L50).
 
 ## 3. Registry Admission and Snapshot Handoff
 
@@ -300,11 +300,11 @@ A recovered run must use the admitted set, or use an explicit package-upgrade de
 
 > **Source evidence — runtime preparation**
 >
-> [Runtime preparation discovers trusted packages, builds the registry, resolves policy, validates configuration, and activates registrations](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L23-L49).
+> [Runtime preparation discovers trusted packages, builds the registry, resolves policy, validates configuration, and activates registrations](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L23-L49).
 >
-> [The runner validates every stage owner, configuration, and input against the granted registry](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/runner.ts#L40-L46).
+> [The runner validates every stage owner, configuration, and input against the granted registry](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/runner.ts#L40-L46).
 >
-> [The snapshot code records runtime provenance and publishes one integrity-checked file atomically](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L75-L134).
+> [The snapshot code records runtime provenance and publishes one integrity-checked file atomically](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L75-L134).
 
 ### Recovery compatibility
 
@@ -319,9 +319,9 @@ It never reinterprets an old run with a convenient new graph.
 
 > **Source evidence — pinned package and graph verification**
 >
-> [Recovery checks recorded package upgrades and every pinned package identity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L20-L66).
+> [Recovery checks recorded package upgrades and every pinned package identity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L20-L66).
 >
-> [Recovery requires the same pipeline ID and graph digest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L68-L72).
+> [Recovery requires the same pipeline ID and graph digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L68-L72).
 
 ## 4. Durable State and the Run Root
 
@@ -376,15 +376,15 @@ File and directory synchronization reduce risk, but they do not prove storage du
 
 > **Source evidence — run directory and journal**
 >
-> [The run-root resolver validates the run ID, uses a hashed directory, and verifies an older directory before use](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/run-root.ts#L62-L75).
+> [The run-root resolver validates the run ID, uses a hashed directory, and verifies an older directory before use](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/run-root.ts#L62-L75).
 >
-> [The journal repairs an incomplete tail and, after it loads a prefix, rejects a later rewind or divergence](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L59-L103).
+> [The journal repairs an incomplete tail and, after it loads a prefix, rejects a later rewind or divergence](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/journal.ts#L59-L103).
 >
-> [Journal append computes the hash chain, writes all bytes, synchronizes them, and verifies the final size](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L125-L155).
+> [Journal append computes the hash chain, writes all bytes, synchronizes them, and verifies the final size](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/journal.ts#L125-L155).
 >
-> [The JSON snapshotter accepts only detached JSON-safe values](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/json-value.ts#L6-L48).
+> [The JSON snapshotter accepts only detached JSON-safe values](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/json-value.ts#L6-L48).
 >
-> [The plugin-state journal enforces namespace, registration provenance, sequence, and idempotency](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/plugins.ts#L22-L105).
+> [The plugin-state journal enforces namespace, registration provenance, sequence, and idempotency](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/plugins.ts#L22-L105).
 
 ## 5. Scheduling, Readiness, and Concurrency
 
@@ -423,13 +423,13 @@ If no stage is ready and the graph is not complete, Core derives the strongest p
 
 > **Source evidence — deterministic readiness**
 >
-> [The graph returns sorted stages whose dependencies are complete and excludes remediation-only targets](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph.ts#L52-L54).
+> [The graph returns sorted stages whose dependencies are complete and excludes remediation-only targets](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L52-L54).
 >
-> [The loop limits each batch, orders repair decisions after siblings, and pauses or terminates from recorded decisions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
+> [The loop limits each batch, orders repair decisions after siblings, and pauses or terminates from recorded decisions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
 >
-> [Selection handles forced repair work and records conditional skips](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L86-L116).
+> [Selection handles forced repair work and records conditional skips](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L86-L116).
 >
-> [Finalization defines completion and derives the run status](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L137-L143).
+> [Finalization defines completion and derives the run status](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L137-L143).
 
 ## 6. Stage Dispatch and Attempt Authority
 
@@ -472,13 +472,13 @@ The invocation check prevents a broadly typed capability from becoming broad acc
 
 > **Source evidence — attempt and lease construction**
 >
-> [The executor resolves the active owner, validates the returned result, records completion, and always cleans up](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L31-L52).
+> [The executor resolves the active owner, validates the returned result, records completion, and always cleans up](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L31-L52).
 >
-> [The executor creates attempt identity, lease limits, context, artifact visibility, and durable attempt records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L55-L119).
+> [The executor creates attempt identity, lease limits, context, artifact visibility, and durable attempt records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L55-L119).
 >
-> [Capability authorization applies a specific resource rule for each supported capability family](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/authorization.ts#L39-L129).
+> [Capability authorization applies a specific resource rule for each supported capability family](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/authorization.ts#L39-L129).
 >
-> [The invocation context checks lease state, grants, event namespace, and run identity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/context.ts#L34-L79).
+> [The invocation context checks lease state, grants, event namespace, and run identity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/context.ts#L34-L79).
 
 ### Timeout and cleanup order
 
@@ -494,9 +494,9 @@ Adapter shutdown runs even when the pipeline throws.
 
 > **Source evidence — deadline and result normalization**
 >
-> [The executor races operation, cancellation, and timeout, then maps failures to controlled stage results](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L121-L145).
+> [The executor races operation, cancellation, and timeout, then maps failures to controlled stage results](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L121-L145).
 >
-> [The engine drains observers and shuts down adapters in nested `finally` blocks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L21-L34).
+> [The engine drains observers and shuts down adapters in nested `finally` blocks](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L21-L34).
 
 ## 7. Lifecycle State and Result Mapping
 
@@ -559,9 +559,9 @@ This rule prevents completion order from changing the final result of one batch.
 
 > **Source evidence — complete reducer table**
 >
-> [The reducer defines every stage state, lifecycle action, result handler, and budget check](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/reducer.ts#L9-L135).
+> [The reducer defines every stage state, lifecycle action, result handler, and budget check](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/reducer.ts#L9-L135).
 >
-> [The decision recorder persists retry, repair, wait, stop, completion, and terminal priority](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/run-decisions.ts#L29-L131).
+> [The decision recorder persists retry, repair, wait, stop, completion, and terminal priority](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/run-decisions.ts#L29-L131).
 
 ## 8. Technical Retry and Product Repair
 
@@ -617,17 +617,17 @@ Combining them could let infrastructure noise consume all repair work, or let re
 
 > **Source evidence — repair budgets and identity**
 >
-> [The stage contract requires the hard execution bounds and declares each optional specialized budget](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L510).
+> [The stage contract requires the hard execution bounds and declares each optional specialized budget](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L510).
 >
-> [Graph validation requires a technical retry limit for a repair-budget owner and proves the aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
+> [Graph validation requires a technical retry limit for a repair-budget owner and proves the aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
 >
-> [The project compiler calculates its explicit timeout, technical retry, repair categories, and aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L55-L66).
+> [The project compiler calculates its explicit timeout, technical retry, repair categories, and aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/compiler.ts#L55-L66).
 >
-> [The repair budget decides automatic, authorized, and blocked orders and records their stable identity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-budget.ts#L27-L100).
+> [The repair budget decides automatic, authorized, and blocked orders and records their stable identity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/repair-budget.ts#L27-L100).
 >
-> [Repair authorization checks the request digest, current history, budget disposition, wait, and issuer](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-authorization.ts#L6-L30).
+> [Repair authorization checks the request digest, current history, budget disposition, wait, and issuer](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/repair-authorization.ts#L6-L30).
 >
-> [Repair application records the return path and invalidates dependent results before reuse](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/remediation.ts#L15-L53).
+> [Repair application records the return path and invalidates dependent results before reuse](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/remediation.ts#L15-L53).
 
 ## 9. Wait, Signal, and Resume
 
@@ -682,16 +682,16 @@ the `WAIT_*` failures apply before these stage-specific checks.
 
 > **Source evidence — production signal consumers**
 >
-> [Human approval validates guidance, its nested issuer, expiry, and the created wait](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/human-approval/src/approval.ts#L85-L132).
+> [Human approval validates guidance, its nested issuer, expiry, and the created wait](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/human-approval/src/approval.ts#L85-L132).
 >
-> [Architecture approval verifies the report and requires a reason for approval of findings](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/human-approval/src/architecture-approval.ts#L100-L141).
+> [Architecture approval verifies the report and requires a reason for approval of findings](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/human-approval/src/architecture-approval.ts#L100-L141).
 >
-> [Core replaces orchestrator waits and retains only their optional request](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/wait-request.ts#L5-L19).
+> [Core replaces orchestrator waits and retains only their optional request](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/wait-request.ts#L5-L19).
 >
-> [Repair guidance has exact keys and binds the pending digest, history, budget, and issuer](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-authorization.ts#L6-L30).
+> [Repair guidance has exact keys and binds the pending digest, history, budget, and issuer](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/repair-authorization.ts#L6-L30).
 >
-> [Review supplies its original wait without request context and forwards helper guidance to dispatch](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/review/src/stage.ts#L52-L87).
-> [Its reducer returns orchestrator_required](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/review/src/review-reducer.ts#L100-L124).
+> [Review supplies its original wait without request context and forwards helper guidance to dispatch](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/review/src/stage.ts#L52-L87).
+> [Its reducer returns orchestrator_required](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/review/src/review-reducer.ts#L100-L124).
 >
 > Revision: the page's evidence revision. Test evidence: successful production wait/resume execution remains unverified.
 
@@ -730,13 +730,13 @@ production approval path has no demonstrated successful execution.
 
 > **Source evidence — failed Prism handoff**
 >
-> [The stage declares approval guidance, conditional dispatch, wait creation, publication, and the blocked catch result](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/prism-design/src/stage.ts#L8-L35).
+> [The stage declares approval guidance, conditional dispatch, wait creation, publication, and the blocked catch result](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/plugins/prism-design/src/stage.ts#L8-L35).
 >
-> [The payload parser's closed key set excludes architectureDigest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/operator-messaging/src/payload.ts#L3-L4).
-> [It rejects unknown keys before other payload checks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/operator-messaging/src/payload.ts#L93-L101).
+> [The payload parser's closed key set excludes architectureDigest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/operator-messaging/src/payload.ts#L3-L4).
+> [It rejects unknown keys before other payload checks](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/operator-messaging/src/payload.ts#L93-L101).
 >
-> [Delivery parses before reservation and transport](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/operator-messaging/src/adapter.ts#L37-L44).
-> [AdapterRuntime wraps a non-completed external-effect receipt](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L53-L66).
+> [Delivery parses before reservation and transport](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugins/operator-messaging/src/adapter.ts#L37-L44).
+> [AdapterRuntime wraps a non-completed external-effect receipt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapters.ts#L53-L66).
 >
 > Limit: this source trace identifies a contract failure; it is not an observed production run or a completed fix.
 
@@ -775,13 +775,13 @@ A cooldown is different: recovery can continue after `retryAt`, but not before i
 
 > **Source evidence — signal validation and single use**
 >
-> [The shared schema gives wait requests and resume signals closed field sets, issuer types, timestamps, and JSON payloads](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L747-L806).
+> [The shared schema gives wait requests and resume signals closed field sets, issuer types, timestamps, and JSON payloads](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L747-L806).
 >
-> [Signal validation checks contract, wait, signal type, issuer, expiry, and freshness](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L137-L143).
+> [Signal validation checks contract, wait, signal type, issuer, expiry, and freshness](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L137-L143).
 >
-> [Resume verifies identity, replays the wait, records the signal once, and supplies continuation guidance](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L82-L121).
+> [Resume verifies identity, replays the wait, records the signal once, and supplies continuation guidance](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L82-L121).
 >
-> [Recovery refuses an active wait and an early cooldown](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L56-L79).
+> [Recovery refuses an active wait and an early cooldown](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L56-L79).
 
 ## 10. Effects, Locks, Fencing, and Receipts
 
@@ -822,13 +822,13 @@ The cost is weaker automatic recovery because Core does not retain the confident
 
 > **Source evidence — durable effect ordering**
 >
-> [Durable invocation checks prior state, locks the resource, rechecks identity, and chooses invoke or receipt recovery](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/effects/durable-invocation.ts#L39-L116).
+> [Durable invocation checks prior state, locks the resource, rechecks identity, and chooses invoke or receipt recovery](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/durable-invocation.ts#L39-L116).
 >
-> [The adapter must assert the current fence before Core stores its receipt](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/effects/durable-invocation.ts#L119-L163).
+> [The adapter must assert the current fence before Core stores its receipt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/durable-invocation.ts#L119-L163).
 >
-> [The coordinator keeps confidential values out of the durable request and writes redacted audit facts](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/effects/coordinator.ts#L34-L71).
+> [The coordinator keeps confidential values out of the durable request and writes redacted audit facts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/coordinator.ts#L34-L71).
 >
-> [The file lock manager assigns monotonic fencing tokens and rejects a live competing owner](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/effects/locks.ts#L83-L144).
+> [The file lock manager assigns monotonic fencing tokens and rejects a live competing owner](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/locks.ts#L83-L144).
 
 ### Effect recovery stops
 
@@ -869,10 +869,10 @@ This page establishes no execution verification of that procedure.
 
 > **Source evidence — effect recovery gate**
 >
-> [Recovery classifies safe checkpoint operations and rejects unresolved or interrupted external work](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/effect-recovery.ts#L8-L29).
+> [Recovery classifies safe checkpoint operations and rejects unresolved or interrupted external work](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/effect-recovery.ts#L8-L29).
 >
-> [The shared execution path checks effects before adapter startup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L21-L34).
-> [Administrative retry and remediation use that same path; cancellation uses a separate stop path](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-admin.ts#L89-L120).
+> [The shared execution path checks effects before adapter startup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L21-L34).
+> [Administrative retry and remediation use that same path; cancellation uses a separate stop path](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-admin.ts#L89-L120).
 >
 > Limit: these guards do not establish a successful effect-recovery exercise.
 
@@ -902,9 +902,9 @@ It does not let a partial attempt claim final stage success.
 
 > **Source evidence — checkpoint admission and replay**
 >
-> [Checkpoint admission verifies operation, serialized content, digest, size, metadata, and producer attempt](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/artifact-checkpoints.ts#L37-L59).
+> [Checkpoint admission verifies operation, serialized content, digest, size, metadata, and producer attempt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/artifact-checkpoints.ts#L37-L59).
 >
-> [The recorder restores artifacts, deduplicates exact records, rejects conflicts, and writes lifecycle evidence](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/artifact-checkpoints.ts#L74-L144).
+> [The recorder restores artifacts, deduplicates exact records, rejects conflicts, and writes lifecycle evidence](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/artifact-checkpoints.ts#L74-L144).
 
 ## 12. Cancellation and Shutdown
 
@@ -944,15 +944,15 @@ history.
 
 > **Source evidence — cancellation and cleanup**
 >
-> [The platform contract requires one positive shutdown timeout and passes it to adapter runtime control](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
+> [The platform contract requires one positive shutdown timeout and passes it to adapter runtime control](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
 >
-> [The loop records cancellation for all open stages and for the run](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L75-L84).
+> [The loop records cancellation for all open stages and for the run](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L75-L84).
 >
-> [The attempt executor propagates cancellation, records its outcome, and revokes the lease](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L65-L79).
+> [The attempt executor propagates cancellation, records its outcome, and revokes the lease](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L65-L79).
 >
-> [The adapter invocation phase rejects calls after close and bounds cleanup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-invocation-phase.ts#L14-L60).
+> [The adapter invocation phase rejects calls after close and bounds cleanup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapter-invocation-phase.ts#L14-L60).
 >
-> [The engine drains observers before adapter shutdown and preserves both actions in nested cleanup boundaries](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L21-L34).
+> [The engine drains observers before adapter shutdown and preserves both actions in nested cleanup boundaries](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L21-L34).
 
 ## 13. Restart and Recovery
 
@@ -986,11 +986,11 @@ A new attempt gets a new identity and lease.
 
 > **Source evidence — replay and interrupted attempts**
 >
-> [Recovery folds matching lifecycle events and resets only interrupted running states](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/recovery.ts#L18-L34).
+> [Recovery folds matching lifecycle events and resets only interrupted running states](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/recovery.ts#L18-L34).
 >
-> [The replay reducer reconstructs attempts, waits, repairs, facts, and terminal states](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/recovery-state.ts#L30-L179).
+> [The replay reducer reconstructs attempts, waits, repairs, facts, and terminal states](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/recovery-state.ts#L30-L179).
 >
-> [The engine verifies immutable identity, reconciles state, and resumes through the normal execution path](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L46-L69).
+> [The engine verifies immutable identity, reconciles state, and resumes through the normal execution path](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L46-L69).
 
 ## 14. Administrative Reopen
 
@@ -1025,9 +1025,9 @@ The separate journal and strict binding make that authority visible and replayab
 
 > **Source evidence — administrative repair**
 >
-> [Administrative repair requires the remediation continuation, durable result evidence, current state, and remaining budget](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/administrative-repair.ts#L9-L28).
+> [Administrative repair requires the remediation continuation, durable result evidence, current state, and remaining budget](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/administrative-repair.ts#L9-L28).
 >
-> [The lifecycle contract describes the trusted issuer, identity, and continuation limits](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/README.md#L23-L41).
+> [The lifecycle contract describes the trusted issuer, identity, and continuation limits](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/README.md#L23-L41).
 
 ## 15. Nova-to-Buster Test Dispatch
 
@@ -1046,9 +1046,9 @@ It never reads uncommitted working-tree bytes for this handoff.
 
 > **Source evidence — plan and source binding**
 >
-> [The resolver validates declarations and creates stable plan structures before contract validation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/resolver.ts#L30-L220).
+> [The resolver validates declarations and creates stable plan structures before contract validation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/resolver.ts#L30-L220).
 >
-> [Source snapshot creation binds repository, commit, tree, archive digest, size, and creator authority](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/source-snapshot.ts#L16-L64).
+> [Source snapshot creation binds repository, commit, tree, archive digest, size, and creator authority](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/source-snapshot.ts#L16-L64).
 
 ### Dispatch and transport recovery
 
@@ -1094,21 +1094,21 @@ deadline.
 
 > **Source evidence — remote dispatch**
 >
-> [The gate deadline shares one expiry across child operations, delays, cancellation, and timeout errors](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/deadline.ts#L1-L42).
+> [The gate deadline shares one expiry across child operations, delays, cancellation, and timeout errors](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/deadline.ts#L1-L42).
 >
-> [Remote job creation binds the plan, source, grants, idempotency key, and request digest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch.ts#L23-L55).
+> [Remote job creation binds the plan, source, grants, idempotency key, and request digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-dispatch.ts#L23-L55).
 >
-> [The secure endpoint rule rejects plaintext transport outside loopback](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/secure-endpoint.ts#L1-L14).
+> [The secure endpoint rule rejects plaintext transport outside loopback](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/secure-endpoint.ts#L1-L14).
 >
-> [Dispatch distinguishes active-deadline failures from prepared-operation interruption cleanup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L18-L35).
+> [Dispatch distinguishes active-deadline failures from prepared-operation interruption cleanup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/dispatch-operation.ts#L18-L35).
 >
-> [Polling selects submission after 404 and retries only classified transport failures](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L37-L55).
+> [Polling selects submission after 404 and retries only classified transport failures](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/dispatch-operation.ts#L37-L55).
 >
-> [Cleanup attempts cancellation, polls the same job, and records terminal or unknown state](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L56-L82).
-> [The dispatcher defaults cleanup to 10 seconds](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch.ts#L85-L90).
+> [Cleanup attempts cancellation, polls the same job, and records terminal or unknown state](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/dispatch-operation.ts#L56-L82).
+> [The dispatcher defaults cleanup to 10 seconds](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-dispatch.ts#L85-L90).
 >
-> [The store appends interruption outcomes separately from stored jobs](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch-store.ts#L59-L64).
-> [The caller shares its remaining deadline with dispatch and import without adding dispatch cleanup to import failures](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-result-import.ts#L262-L277).
+> [The store appends interruption outcomes separately from stored jobs](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-dispatch-store.ts#L59-L64).
+> [The caller shares its remaining deadline with dispatch and import without adding dispatch cleanup to import failures](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-import.ts#L262-L277).
 
 ### Import result authority once
 
@@ -1129,11 +1129,11 @@ Nova converts that evidence into passed, failed, execution-error, or product-rev
 
 > **Source evidence — result verification and import**
 >
-> [Result authority verifies remote identities, digests, attempts, reports, artifacts, and node decisions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-result-authority.ts#L35-L190).
+> [Result authority verifies remote identities, digests, attempts, reports, artifacts, and node decisions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-authority.ts#L35-L190).
 >
-> [The importer accepts only terminal status, verifies completed results, checks evidence limits and digests, and records once](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-result-import.ts#L200-L248).
+> [The importer accepts only terminal status, verifies completed results, checks evidence limits and digests, and records once](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-import.ts#L200-L248).
 >
-> [The import store uses pending and complete states and rejects a conflicting import](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-result-import.ts#L146-L196).
+> [The import store uses pending and complete states and rejects a conflicting import](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates/remote-result-import.ts#L146-L196).
 
 ## 16. Audit and Observer Delivery
 
@@ -1187,11 +1187,11 @@ This rule prevents an observation loop.
 
 > **Source evidence — audit projection**
 >
-> [Audit rebuilds from the hash-verified journal, redacts sensitive keys, preserves source hashes, and adds a digest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/audit.ts#L6-L27).
+> [Audit rebuilds from the hash-verified journal, redacts sensitive keys, preserves source hashes, and adds a digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/audit.ts#L6-L27).
 >
-> [A new journal reader validates the file that it sees but has no previously trusted head for a rollback comparison](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L42-L77).
+> [A new journal reader validates the file that it sees but has no previously trusted head for a rollback comparison](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/journal.ts#L42-L77).
 >
-> [Observer delivery uses durable attempts, provenance-bound checkpoints, subscriptions, and bounded failure policy](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/observers.ts#L14-L106).
+> [Observer delivery uses durable attempts, provenance-bound checkpoints, subscriptions, and bounded failure policy](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/observers.ts#L14-L106).
 
 ## 17. Failure Families and Operator Response
 
@@ -1233,10 +1233,10 @@ to choose the safe response; rejection alone does not prove an active wait.
 | `DURABLE_RECORD_*` | A durable record operation lost synchronous authorization or reused an idempotency identity with different content. | The record is rejected before it becomes authority. | Retry only the same record after authority returns. | Restore the authorized context or issue a new identity for different content. |
 | `LEGACY_IMPORT_*` or `LEGACY_SCAN_*` | A one-time legacy import lacks required structure, policy acknowledgement, canonical paths, or bounded scan input. | Import stops and no new run gains the old data. | Do not retry unchanged legacy input. | Correct the import bundle or start a new run when safe conversion cannot preserve meaning. |
 
-[The terminal guard](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L46-L50)
-and [resume order](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L82-L122)
+[The terminal guard](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L46-L50)
+and [resume order](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L82-L122)
 define the separate wait outcomes above.
-[Signal validation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L137-L144)
+[Signal validation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L137-L144)
 checks current-clock expiry and creation-time freshness. These are source
 boundaries; they do not establish successful lifecycle execution.
 
@@ -1244,13 +1244,13 @@ The family table gives the decision rule.
 The thrown site gives the exact trigger and identity.
 The following source groups are the canonical detailed index for the current revision:
 
-- [Project compiler and command error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/project)
-- [Graph, dispatch, wait, recovery, and attempt error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution)
-- [Reducer and repair error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle)
-- [Journal and plugin-state error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state)
-- [Effect and lock error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/effects)
-- [Remote test-gate error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates)
-- [Audit and observer error sites](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry)
+- [Project compiler and command error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project)
+- [Graph, dispatch, wait, recovery, and attempt error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution)
+- [Reducer and repair error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle)
+- [Journal and plugin-state error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state)
+- [Effect and lock error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects)
+- [Remote test-gate error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/test-gates)
+- [Audit and observer error sites](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry)
 
 ## 18. Design Decisions and Their Costs
 
@@ -1281,7 +1281,7 @@ plugin processes or prove storage survival after power loss.
 **Reconsider when:** Multiple writers are required and a versioned protocol can
 prove equivalent admission, ordering, replay, and budget checks.
 
-[The reducer defines state and result transitions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/reducer.ts#L9-L135).
+[The reducer defines state and result transitions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/reducer.ts#L9-L135).
 
 ### Frozen graph and runtime
 
@@ -1300,7 +1300,7 @@ registry identity; the snapshot does not include all platform settings.
 **Reconsider when:** A migration protocol preserves old run meaning and proves
 compatibility for the exact changed identities and settings.
 
-[Snapshot verification enforces package and graph identity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L20-L72).
+[Snapshot verification enforces package and graph identity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L20-L72).
 
 ### Journal and projection
 
@@ -1318,7 +1318,7 @@ reader cannot detect a valid-prefix rollback without an external trusted head.
 **Reconsider when:** History size requires compaction and a checked snapshot
 format preserves evidence, rollback detection, and replay equivalence.
 
-[The journal verifies and appends hash-chained records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L59-L155).
+[The journal verifies and appends hash-chained records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/journal.ts#L59-L155).
 
 ### Fail closed on uncertain effects
 
@@ -1337,7 +1337,7 @@ Core does not implement a general receipt-import or external-continuation proced
 to the exact effect and passes the interruption, duplicate, and fencing checks
 listed in [Effect recovery stops](#effect-recovery-stops).
 
-[The effect gate distinguishes missing outcome from interrupted external continuation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/effect-recovery.ts#L8-L29).
+[The effect gate distinguishes missing outcome from interrupted external continuation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/effect-recovery.ts#L8-L29).
 
 ### Bounded repair
 
@@ -1356,8 +1356,8 @@ repair authorization cannot restore an exhausted hard attempt ceiling.
 **Reconsider when:** Budget policies change and graph validation, replay, and
 operator explanations can preserve each action's authority and aggregate bound.
 
-[Graph validation checks the aggregate budget](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
-[Repair policy selects automatic, authorized, or blocked orders](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-budget.ts#L27-L100).
+[Graph validation checks the aggregate budget](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
+[Repair policy selects automatic, authorized, or blocked orders](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/repair-budget.ts#L27-L100).
 
 ## 19. Safe Change Checklist
 

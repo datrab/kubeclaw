@@ -13,6 +13,14 @@ const readerRevisions = new Map([
   ['docs/site/extend/testing.md', 'f68a7294abf0928c1aabf290c6a7e486c651a808'],
 ]);
 
+// Release image selection was independently refreshed without rewriting the
+// historical package-behavior evidence. Only these three exact Source ranges belong
+// to that separately reviewed release fact; all other pins retain their scope.
+const releaseEvidenceRevision = '9c8c39e70c15cbfa754ca8a923f851b76dc2486a';
+const releaseEvidenceSources = new Set([
+  'versions.json#L3-L6', 'docker/Dockerfile.buster-gateway#L1-L8', 'docker/Dockerfile.prism-agent#L1-L8',
+]);
+
 function read(relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');
 }
@@ -24,8 +32,10 @@ function pinnedLinks(relative, minimum) {
   const links = [...source.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)]+)#L([0-9]+)-L([0-9]+)/gu)];
   assert(links.length >= minimum, `${relative} has only ${links.length} pinned line links`);
   for (const [, linkRevision, repositoryPath, firstValue, lastValue] of links) {
-    assert.equal(linkRevision, readerRevision, `${relative} uses another revision for ${repositoryPath}`);
-    const value = execFileSync('git', ['-C', root, 'show', `${readerRevision}:${repositoryPath}`], { encoding: 'utf8' });
+    const expectedRevision = relative === 'docs/site/extend/testing.md' && releaseEvidenceSources.has(`${repositoryPath}#L${firstValue}-L${lastValue}`)
+      ? releaseEvidenceRevision : readerRevision;
+    assert.equal(linkRevision, expectedRevision, `${relative} uses another revision for ${repositoryPath}`);
+    const value = execFileSync('git', ['-C', root, 'show', `${expectedRevision}:${repositoryPath}`], { encoding: 'utf8' });
     const first = Number(firstValue);
     const last = Number(lastValue);
     assert(first >= 1 && last >= first && last <= value.split('\n').length,

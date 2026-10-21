@@ -4,7 +4,7 @@ Status: implemented with stated native-host limits
 Audience: Worker Core developer, specialist-engine developer, operator, security reviewer
 Owner: Worker Core maintainers
 Evidence: contracts/pipeline-worker-core/v1; skills/worker/core; skills/prism/server/native-worker-execution.ts; tests/verification/contracts/check-pipeline-worker-attempt-executor.mts; tests/verification/reliability
-Evidence revision: `4f089958db97a551f406c157d774bda143a38946`
+Evidence revision: `ce7740252864a9b547bee8a35260d6ab10c9f05e`
 Applies to: Worker protocol v1, attempt envelopes v1-v3, generic execution, and Linux native execution
 Last verified: source, contract, and focused test inspection on 2026-09-19
 
@@ -24,9 +24,9 @@ have the same domain meaning.
 
 > **Core boundary**
 >
-> [The public package exports attempt mechanics, native process controls, ownership, trust helpers, and contract digests](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/src/index.ts#L1-L52).
+> [The public package exports attempt mechanics, native process controls, ownership, trust helpers, and contract digests](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/src/index.ts#L1-L52).
 >
-> [The operation interface keeps specialist execution behind prepare, execute, terminate, measure, cleanup, evidence, and finalization hooks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L30-L93).
+> [The operation interface keeps specialist execution behind prepare, execute, terminate, measure, cleanup, evidence, and finalization hooks](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L30-L93).
 
 ## The Two Execution Layers
 
@@ -47,9 +47,9 @@ That process runs the neutral executor with Prism's operation adapter.
 
 > **Real integration**
 >
-> [The Prism supervisor constructs the journal, completes recovery, fixes the host command, and then exposes execution](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/prism/server/native-worker-execution.ts#L10-L49).
+> [The Prism supervisor constructs the journal, completes recovery, fixes the host command, and then exposes execution](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/prism/server/native-worker-execution.ts#L10-L49).
 >
-> [The unprivileged Prism host validates the v3 envelope and runs the neutral executor](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/prism/server/native-worker-host.ts#L13-L33).
+> [The unprivileged Prism host validates the v3 envelope and runs the neutral executor](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/prism/server/native-worker-host.ts#L13-L33).
 
 ## Attempt Flow
 
@@ -124,11 +124,11 @@ reason, v3 uses `maximumTasks`. It does not rename the v1
 
 > **Version evidence**
 >
-> [The v2 types add explicit capabilities, budgets, observations, and result binding without changing v1](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts#L1-L24).
+> [The v2 types add explicit capabilities, budgets, observations, and result binding without changing v1](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts#L1-L24).
 >
-> [The v3 types define measured native-tree metrics and Linux task units](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts#L1-L31).
+> [The v3 types define measured native-tree metrics and Linux task units](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts#L1-L31).
 >
-> [Separate JSON Schemas define the exact v1, v2, and v3 field constraints](https://github.com/datrab/kubeclaw/tree/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/schemas).
+> [Separate JSON Schemas define the exact v1, v2, and v3 field constraints](https://github.com/datrab/kubeclaw/tree/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/schemas).
 
 ### Upgrade Rules
 
@@ -146,9 +146,9 @@ shape. It refuses legacy state when host identity cannot be proved.
 
 > **Compatibility controls**
 >
-> [Envelope consistency permits only claim-expiry extension and rejects changes to identity, profile, protocol, or accepted specification](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L247-L269).
+> [Envelope consistency permits only claim-expiry extension and rejects changes to identity, profile, protocol, or accepted specification](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/validation.ts#L247-L269).
 >
-> [Ownership decoding contains the only v1-to-v2 store conversion and validates every retained record](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/ownership-state.ts#L93-L122).
+> [Ownership decoding contains the only v1-to-v2 store conversion and validates every retained record](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-state.ts#L93-L122).
 
 ## Profiles And Engine Identity
 
@@ -175,9 +175,9 @@ caller select less authority for one attempt.
 
 > **Identity validation**
 >
-> [The contract declares frozen package, engine, and profile identities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/types.ts#L28-L49).
+> [The contract declares frozen package, engine, and profile identities](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/types.ts#L28-L49).
 >
-> [The validator recalculates the profile digest and rejects duplicate profile IDs](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L66-L95).
+> [The validator recalculates the profile digest and rejects duplicate profile IDs](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/validation.ts#L66-L95).
 
 ### Registration And Readiness
 
@@ -200,9 +200,9 @@ inventory. A verification failure closes admission.
 
 > **Readiness evidence**
 >
-> [The local runtime constructs registration and health records from its live active-attempt map](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/local-runtime.ts#L89-L151).
+> [The local runtime constructs registration and health records from its live active-attempt map](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/local-runtime.ts#L89-L151).
 >
-> [The native pool verifies its filesystem identity and every configured aggregate limit](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-resource-pool.ts#L18-L58).
+> [The native pool verifies its filesystem identity and every configured aggregate limit](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-resource-pool.ts#L18-L58).
 
 ## Envelope And Attempt Identity
 
@@ -233,9 +233,9 @@ generation, worker, or start time.
 
 > **Envelope source**
 >
-> [The complete v1 envelope and limits are declared in the contract types](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/types.ts#L105-L154).
+> [The complete v1 envelope and limits are declared in the contract types](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/types.ts#L105-L154).
 >
-> [Relational validation binds the claim to the attempt, grants to the profile, and unique package and input identities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L115-L152).
+> [Relational validation binds the claim to the attempt, grants to the profile, and unique package and input identities](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/validation.ts#L115-L152).
 
 ### Versioned Limits And Resource Fields
 
@@ -287,12 +287,12 @@ For v2/v3, `resourceAccounting` requires exactly `schemaVersion`, `capabilities`
 above. Observations have no separate `schemaVersion` field. These wire shapes
 do not themselves prove enforcement or successful live resource measurement.
 
-> **Versioned field authority:** [v1 limits and envelope](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154).
-> [v2 resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts).
-> [v3 native resource types](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts).
-> [v1 bounds](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json).
-> [v2 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json).
-> [v3 bounds and variants](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json).
+> **Versioned field authority:** [v1 limits and envelope](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154).
+> [v2 resource types](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts).
+> [v3 native resource types](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts).
+> [v1 bounds](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json).
+> [v2 bounds and variants](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json).
+> [v3 bounds and variants](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json).
 
 ### Wire Message Field Reference
 
@@ -318,11 +318,11 @@ the signed subject and context digests to the actual request or artifact.
 
 > **Wire-contract evidence**
 >
-> [The contract types declare every progress, log, cancellation, evidence, specialist-result, cleanup, error, receipt, and trust-envelope field](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/types.ts#L8-L238).
+> [The contract types declare every progress, log, cancellation, evidence, specialist-result, cleanup, error, receipt, and trust-envelope field](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/types.ts#L8-L238).
 >
-> [Message and cancellation binding compare their identities with the accepted envelope](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L220-L245).
+> [Message and cancellation binding compare their identities with the accepted envelope](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/validation.ts#L220-L245).
 >
-> [Trust-envelope signing and verification use a domain-separated canonical message and Ed25519](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/trust.ts#L1-L44).
+> [Trust-envelope signing and verification use a domain-separated canonical message and Ed25519](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/trust.ts#L1-L44).
 
 ### Claims, Generation, And Duplicate Protection
 
@@ -348,9 +348,9 @@ after every lower generation is `disposed` or `abandoned`.
 
 > **Duplicate and generation evidence**
 >
-> [The local runtime checks state, capacity, worker, dates, protocol, profile, duplicate attempts, and replay capacity before execution](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/local-runtime.ts#L155-L205).
+> [The local runtime checks state, capacity, worker, dates, protocol, profile, duplicate attempts, and replay capacity before execution](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/local-runtime.ts#L155-L205).
 >
-> [The ownership store rejects stale generations and requires previous ownership reconciliation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/ownership-store.ts#L95-L120).
+> [The ownership store rejects stale generations and requires previous ownership reconciliation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-store.ts#L95-L120).
 
 ## Admission Before Execution
 
@@ -378,9 +378,9 @@ worker fences all later admission.
 
 > **Admission evidence**
 >
-> [The executor performs time-window and measurement checks before prepare or execute](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L240-L278).
+> [The executor performs time-window and measurement checks before prepare or execute](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L240-L278).
 >
-> [Native execution persists admission, recovers prior state, matches accepted budgets, and seals capacity rejection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-attempt-executor.ts#L20-L78).
+> [Native execution persists admission, recovers prior state, matches accepted budgets, and seals capacity rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-attempt-executor.ts#L20-L78).
 
 ## Specialist Execution Contract
 
@@ -451,11 +451,11 @@ validates and reseals it.
 
 > **Output evidence**
 >
-> [The neutral executor bounds, digests, publishes, and stores logs before terminal result creation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L284-L341).
+> [The neutral executor bounds, digests, publishes, and stores logs before terminal result creation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L284-L341).
 >
-> [The private native spool synchronizes every append and refuses overflow](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-output-spool.ts#L14-L70).
+> [The private native spool synchronizes every append and refuses overflow](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-output-spool.ts#L14-L70).
 >
-> [Journal replay verifies retained output before it rebuilds a process result](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-attempt-journal.ts#L90-L113).
+> [Journal replay verifies retained output before it rebuilds a process result](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-attempt-journal.ts#L90-L113).
 
 ### Evidence
 
@@ -507,11 +507,11 @@ metrics as a substitute for these counters.
 
 > **Accounting evidence**
 >
-> [The native observer reads and validates the exact cgroup v2 counters](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-resource-observation.ts#L5-L67).
+> [The native observer reads and validates the exact cgroup v2 counters](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-resource-observation.ts#L5-L67).
 >
-> [Scope creation installs memory, swap, OOM-group, and task limits before any process enters](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-resource-scope.ts#L57-L99).
+> [Scope creation installs memory, swap, OOM-group, and task limits before any process enters](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-resource-scope.ts#L57-L99).
 >
-> [The reservation counter enforces aggregate memory, task, and active-scope capacity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/resource-reservations.ts#L3-L38).
+> [The reservation counter enforces aggregate memory, task, and active-scope capacity](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/resource-reservations.ts#L3-L38).
 
 ## Native Launch And Trust Boundary
 
@@ -551,9 +551,9 @@ Forced cleanup uses `cgroup.kill` to reach all descendants.
 
 > **Launch evidence**
 >
-> [Startup verifies supervisor capabilities and launcher ownership and mode](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-supervisor-authority.ts#L1-L22).
+> [Startup verifies supervisor capabilities and launcher ownership and mode](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-supervisor-authority.ts#L1-L22).
 >
-> [The launcher joins the cgroup before execution, drops credentials, enables no-new-privileges, and closes the parent-death race](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-worker-launcher.c#L36-L85).
+> [The launcher joins the cgroup before execution, drops credentials, enables no-new-privileges, and closes the parent-death race](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-worker-launcher.c#L36-L85).
 
 ### Host And Runtime Identity
 
@@ -595,9 +595,9 @@ callback fails cleanup.
 
 > **Channel evidence**
 >
-> [The channel implements bounded framing, serialized writes, a single reader, and truncated-frame rejection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-control-channel.ts#L3-L74).
+> [The channel implements bounded framing, serialized writes, a single reader, and truncated-frame rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-control-channel.ts#L3-L74).
 >
-> [Process control binds the channel to descriptor 3 and closes it with the process lifetime](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-process-control.ts#L5-L31).
+> [Process control binds the channel to descriptor 3 and closes it with the process lifetime](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-process-control.ts#L5-L31).
 
 ## Deadlines, Cancellation, And Termination
 
@@ -631,11 +631,11 @@ result is invented.
 
 > **Termination evidence**
 >
-> [The generic executor races execution with attempt, claim, and cancellation deadlines and quarantines unsettled work](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L343-L458).
+> [The generic executor races execution with attempt, claim, and cancellation deadlines and quarantines unsettled work](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L343-L458).
 >
-> [The native process applies graceful cancellation, forced closure, resource polling, and final tree drain](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-worker-process.ts#L60-L145).
+> [The native process applies graceful cancellation, forced closure, resource polling, and final tree drain](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-worker-process.ts#L60-L145).
 >
-> [The scope uses `cgroup.kill` and waits for an empty population before disposal](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-resource-scope.ts#L145-L178).
+> [The scope uses `cgroup.kill` and waits for an empty population before disposal](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-resource-scope.ts#L145-L178).
 
 ## Durable Ownership
 
@@ -723,13 +723,13 @@ identity, binding, and scope state or stops admission.
 
 > **Ownership evidence**
 >
-> [Claim consistency permits only an expiry extension and rejects an identity or work change](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L247-L269).
+> [Claim consistency permits only an expiry extension and rejects an identity or work change](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/validation.ts#L247-L269).
 >
-> [Local health reports a monotonic sequence but creates no durable ownership heartbeat](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/local-runtime.ts#L116-L151).
+> [Local health reports a monotonic sequence but creates no durable ownership heartbeat](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/local-runtime.ts#L116-L151).
 >
-> [The ownership record and file store define identity, phases, binding, diagnosis, counters, locking, and compare-and-swap updates](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/ownership-store.ts#L10-L170).
+> [The ownership record and file store define identity, phases, binding, diagnosis, counters, locking, and compare-and-swap updates](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-store.ts#L10-L170).
 >
-> [The transition graph and strict record validator reject impossible stored states](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/ownership-state.ts#L5-L90).
+> [The transition graph and strict record validator reject impossible stored states](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-state.ts#L5-L90).
 
 ## Attempt Journal And Commit Boundaries
 
@@ -757,9 +757,9 @@ input bytes, output bytes, and result bytes all have configured positive limits.
 
 > **Journal evidence**
 >
-> [The journal reserves bounded space, persists canonical input, verifies output, and seals a single result](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-attempt-journal.ts#L19-L179).
+> [The journal reserves bounded space, persists canonical input, verifies output, and seals a single result](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-attempt-journal.ts#L19-L179).
 >
-> [The journal-state validator defines its exact stored fields and rejects non-quiescent process records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-journal-state.ts#L9-L73).
+> [The journal-state validator defines its exact stored fields and rejects non-quiescent process records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-journal-state.ts#L9-L73).
 
 ## Restart And Reconciliation
 
@@ -798,9 +798,9 @@ after that host identity is stable.
 
 > **Recovery evidence**
 >
-> [Ownership recovery fences unknown, missing, changed, and cross-boot scopes before admission](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-worker-ownership.ts#L149-L283).
+> [Ownership recovery fences unknown, missing, changed, and cross-boot scopes before admission](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-worker-ownership.ts#L149-L283).
 >
-> [Attempt recovery requires durable ownership and fences admission after failed cleanup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-attempt-recovery.ts#L9-L41).
+> [Attempt recovery requires durable ownership and fences admission after failed cleanup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-attempt-recovery.ts#L9-L41).
 
 ## Result, Digest, And Receipt
 
@@ -831,9 +831,9 @@ not a signature.
 
 > **Result evidence**
 >
-> [The contract declares all result, resource, cleanup, error, digest, and receipt fields](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/types.ts#L181-L238).
+> [The contract declares all result, resource, cleanup, error, digest, and receipt fields](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/contracts/pipeline-worker-core/v1/src/types.ts#L181-L238).
 >
-> [The native supervisor parses the provisional host result, binds it to the envelope, applies final counters, and creates its own seal](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-result.ts#L7-L75).
+> [The native supervisor parses the provisional host result, binds it to the envelope, applies final counters, and creates its own seal](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-result.ts#L7-L75).
 
 ## Error Reference And Retry Decisions
 
@@ -883,11 +883,11 @@ constructs them.
 
 > **Error authorities**
 >
-> [Generic execution defines attempt, content, completion, and result failure precedence](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L95-L106).
+> [Generic execution defines attempt, content, completion, and result failure precedence](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L95-L106).
 >
-> [Native process control defines process, output, control, deadline, and resource fault selection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/native-worker-process.ts#L43-L145).
+> [Native process control defines process, output, control, deadline, and resource fault selection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/native-worker-process.ts#L43-L145).
 >
-> [Ownership transitions and validation define durable-state failures](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/ownership-state.ts#L11-L122).
+> [Ownership transitions and validation define durable-state failures](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/ownership-state.ts#L11-L122).
 
 ### Safe Retry Table
 
@@ -939,9 +939,9 @@ bounded worker into a remote command service.
 
 > **Extension examples**
 >
-> [Prism binds its five known operations and exact request and result schemas outside Worker Core](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/prism/engine/worker-binding.ts#L8-L49).
+> [Prism binds its five known operations and exact request and result schemas outside Worker Core](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/prism/engine/worker-binding.ts#L8-L49).
 >
-> [Runtime-surface tests prove that Worker execution is exported by worker roles and not by Nova](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-pipeline-runtime-role-surfaces.mts#L1-L24).
+> [Runtime-surface tests prove that Worker execution is exported by worker roles and not by Nova](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-pipeline-runtime-role-surfaces.mts#L1-L24).
 
 ## Verification Map
 
@@ -949,16 +949,16 @@ Use the smallest relevant check first. Then run the complete Worker suites.
 
 | Concern | Maintained proof |
 | --- | --- |
-| Contract fields, digests, bindings, and schemas | [Worker contract check](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-pipeline-worker-core-contracts.mts) |
-| Neutral hook order, limits, evidence, logs, cancellation, and result sealing | [Attempt executor check](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-pipeline-worker-attempt-executor.mts) |
-| Registration, health, capacity, duplicate protection, drain, and claim expiry | [Local runtime check](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-pipeline-worker-local-runtime.mts) |
-| Control framing and session bounds | [Control-channel test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-control-channel.test.mts) |
-| Journal replay, storage bounds, conflict, and corruption | [Native journal test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-native-journal.test.mts) |
-| Ownership phases, generations, restart recovery, and fencing | [Ownership-store test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-ownership-store.test.mts) |
-| Native output durability and bounds | [Output-spool test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-output-spool.test.mts) |
-| Native contracts and terminal resource binding | [Native contract test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-native-contract.test.mts) and [terminal-resource test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-terminal-resources.test.mts) |
-| Real cgroup v2 launch, kill, drain, counters, and replay | [Native scope live test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-native-scope-live.mts) |
-| Root-owned launcher behavior | [Launcher test](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/reliability/worker-native-launcher.test.mts) |
+| Contract fields, digests, bindings, and schemas | [Worker contract check](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-pipeline-worker-core-contracts.mts) |
+| Neutral hook order, limits, evidence, logs, cancellation, and result sealing | [Attempt executor check](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-pipeline-worker-attempt-executor.mts) |
+| Registration, health, capacity, duplicate protection, drain, and claim expiry | [Local runtime check](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-pipeline-worker-local-runtime.mts) |
+| Control framing and session bounds | [Control-channel test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-control-channel.test.mts) |
+| Journal replay, storage bounds, conflict, and corruption | [Native journal test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-native-journal.test.mts) |
+| Ownership phases, generations, restart recovery, and fencing | [Ownership-store test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-ownership-store.test.mts) |
+| Native output durability and bounds | [Output-spool test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-output-spool.test.mts) |
+| Native contracts and terminal resource binding | [Native contract test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-native-contract.test.mts) and [terminal-resource test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-terminal-resources.test.mts) |
+| Real cgroup v2 launch, kill, drain, counters, and replay | [Native scope live test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-native-scope-live.mts) |
+| Root-owned launcher behavior | [Launcher test](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/reliability/worker-native-launcher.test.mts) |
 
 Most contract tests run without root. Native scope and launcher tests need a
 compatible Linux host, delegated cgroup v2 controllers, and the required

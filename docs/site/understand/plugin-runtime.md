@@ -4,7 +4,7 @@ Status: implemented design; host-kernel acceptance remains environment-specific
 Audience: platform developer, plugin author, security engineer, operator
 Owner: plugin-runtime maintainers
 Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/common/plugin-runtime/foundation; skills/nova/core/execution; skills/nova/core/state/plugins.ts; tests/verification/contracts/check-plugin-system-v2-registry.mjs; tests/verification/contracts/check-plugin-system-v2-capability-security.mjs; tests/verification/contracts/check-plugin-system-v2-phase11.mts
-Evidence revision: `4f089958db97a551f406c157d774bda143a38946`
+Evidence revision: `ce7740252864a9b547bee8a35260d6ab10c9f05e`
 Applies to: `pipeline-plugin-v2`, `pipeline-platform.v2`, and the current Nova plugin host
 Last verified: source and contract inspection on 2026-09-19
 
@@ -65,7 +65,7 @@ This order is a safety property. The runtime must know *which bytes*, *which own
 
 > **Source evidence — the complete preparation order**
 >
-> [`prepareRuntime()` performs discovery, registry construction, enablement, grant resolution, configuration validation, and activation in that order](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L29-L50).
+> [`prepareRuntime()` performs discovery, registry construction, enablement, grant resolution, configuration validation, and activation in that order](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L29-L50).
 
 ## Four Identities That Must Not Be Confused
 
@@ -93,9 +93,9 @@ Trust evidence supplies the separate policy decision about the source.
 
 > **Source evidence — identity contracts**
 >
-> [The manifest contract fixes the API version, validates a semantic package version, and declares the five registration arrays](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L448).
+> [The manifest contract fixes the API version, validates a semantic package version, and declares the five registration arrays](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L448).
 >
-> [Package and registration provenance bind source, trust evidence, canonical path, surface, and registration ID](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L874-L930).
+> [Package and registration provenance bind source, trust evidence, canonical path, surface, and registration ID](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L874-L930).
 
 ## Runtime Roles And Their Authority
 
@@ -114,7 +114,7 @@ This split lets Foundation stay role-neutral. Nova can use the same package fact
 
 > **Source evidence — role-neutral boundary**
 >
-> [Foundation explicitly excludes pipeline policy and worker or specialist execution meaning](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/BOUNDARIES.md#L1-L5).
+> [Foundation explicitly excludes pipeline policy and worker or specialist execution meaning](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/BOUNDARIES.md#L1-L5).
 
 ## Discovery Reads Data, Not Executable Code
 
@@ -143,7 +143,7 @@ Symlink aliases cannot create two logical copies of one package because canonica
 
 > **Source evidence — deterministic inert discovery**
 >
-> [Root canonicalization, direct-child selection, sorting, manifest parsing, digest calculation, and provenance creation are one discovery flow](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/discovery.ts#L13-L137).
+> [Root canonicalization, direct-child selection, sorting, manifest parsing, digest calculation, and provenance creation are one discovery flow](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/discovery.ts#L13-L137).
 
 ## Manifest, Schema, And Path Admission
 
@@ -174,9 +174,9 @@ The runtime keeps both a validator that does not add defaults and a resolver tha
 
 > **Source evidence — path and schema admission**
 >
-> [Registry construction resolves referenced files by canonical path and requires each target to remain a file inside its package](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/build.ts#L33-L70).
+> [Registry construction resolves referenced files by canonical path and requires each target to remain a file inside its package](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/build.ts#L33-L70).
 >
-> [Manifest parsing and per-document schema compilation fail with structured registry errors](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/schema.ts#L62-L116).
+> [Manifest parsing and per-document schema compilation fail with structured registry errors](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/schema.ts#L62-L116).
 
 ## Integrity And Provenance
 
@@ -200,9 +200,9 @@ The trust record keeps the verifier, method, verification time, source reference
 
 > **Source evidence — digest and trust decision**
 >
-> [The digest covers sorted paths and bytes and rejects symlinks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/digest.ts#L6-L27).
+> [The digest covers sorted paths and bytes and rejects symlinks](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/digest.ts#L6-L27).
 >
-> [Discovery maps built-in roots, digest allowlists, and verified attestations to distinct provenance records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/discovery.ts#L62-L103).
+> [Discovery maps built-in roots, digest allowlists, and verified attestations to distinct provenance records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/discovery.ts#L62-L103).
 
 ## External Package Installation
 
@@ -231,7 +231,7 @@ The final rename gives atomic visibility. The implementation does not claim a po
 
 > **Source evidence — install admission and publication**
 >
-> [External installation enforces authority, source trust, package limits, bundled dependencies, syntax checks, double validation, and rename publication](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L218).
+> [External installation enforces authority, source trust, package limits, bundled dependencies, syntax checks, double validation, and rename publication](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L218).
 
 ## Registry Construction And Global Ownership
 
@@ -261,9 +261,9 @@ The snapshot digest covers package versions and digests plus the stable registra
 
 > **Source evidence — build and freeze**
 >
-> [The builder validates global ownership and constructs every registry index](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/build.ts#L183-L220).
+> [The builder validates global ownership and constructs every registry index](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/build.ts#L183-L220).
 >
-> [Package, registration, stage, and provider-contract conflicts fail before snapshot creation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/build.ts#L223-L317).
+> [Package, registration, stage, and provider-contract conflicts fail before snapshot creation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/build.ts#L223-L317).
 
 ## Compatibility Is Explicit And Conservative
 
@@ -281,7 +281,7 @@ The rejected alternative is “use the newest compatible-looking package.” Tha
 
 > **Source evidence — compatibility during recovery**
 >
-> [Recovery verifies the package set, runtime configuration, pinned versions and digests, and every explicit upgrade edge](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L23-L66).
+> [Recovery verifies the package set, runtime configuration, pinned versions and digests, and every explicit upgrade edge](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L23-L66).
 
 ## Selection Is Separate From Installation
 
@@ -307,9 +307,9 @@ This prevents unused installed code from gaining runtime authority.
 
 > **Source evidence — explicit and transitive selection**
 >
-> [Nova derives the initial enabled set from configured stages, observers, and adapters](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L44-L50).
+> [Nova derives the initial enabled set from configured stages, observers, and adapters](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L44-L50).
 >
-> [Capability resolution adds provider dependencies, rejects missing or ambiguous providers, and detects adapter cycles](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L217).
+> [Capability resolution adds provider dependencies, rejects missing or ambiguous providers, and detects adapter cycles](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L217).
 
 ## Capabilities And Grants
 
@@ -373,11 +373,11 @@ The following table gives the complete resource-matching model.
 
 > **Source evidence — vocabulary and denial rules**
 >
-> [The capability vocabulary defines 28 plugin-facing capabilities and four permanently core-only capabilities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L37-L127).
+> [The capability vocabulary defines 28 plugin-facing capabilities and four permanently core-only capabilities](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L37-L127).
 >
-> [Constraint validation requires exact fields and canonical paths, prefixes, and origins](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L130-L197).
+> [Constraint validation requires exact fields and canonical paths, prefixes, and origins](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L130-L197).
 >
-> [Nova checks the resource-specific constraint again for every capability invocation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/authorization.ts#L39-L130).
+> [Nova checks the resource-specific constraint again for every capability invocation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/authorization.ts#L39-L130).
 
 ## Configuration Ownership And Precedence
 
@@ -429,19 +429,19 @@ changes, not as harmless host tuning.
 
 > **Source evidence — configuration boundary**
 >
-> [The platform type lists every host-owned configuration family](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
+> [The platform type lists every host-owned configuration family](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
 >
-> [The loader validates the closed platform schema and resolves its host paths relative to the configuration file](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L30-L70).
+> [The loader validates the closed platform schema and resolves its host paths relative to the configuration file](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.ts#L30-L70).
 >
-> [Registration-owned validators reject missing owners and invalid stage, observer, adapter, and test-provider values](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/configuration.ts#L28-L121).
+> [Registration-owned validators reject missing owners and invalid stage, observer, adapter, and test-provider values](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/configuration.ts#L28-L121).
 >
-> [Runtime preparation defines the exact platform-configuration subset that enters the immutable run record](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L23-L42).
+> [Runtime preparation defines the exact platform-configuration subset that enters the immutable run record](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L23-L42).
 >
-> [The graph snapshot retains its nodes as complete stage definitions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph.ts#L13-L19).
+> [The graph snapshot retains its nodes as complete stage definitions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L13-L19).
 >
-> [The stage-definition contract includes registration-owned `config` and `input`](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L446-L468).
+> [The stage-definition contract includes registration-owned `config` and `input`](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L446-L468).
 >
-> [The immutable registry record retains effective provider, grant, adapter, observer, isolation, package, and stage-owner choices](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L123-L134).
+> [The immutable registry record retains effective provider, grant, adapter, observer, isolation, package, and stage-owner choices](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L123-L134).
 
 ## Import Audit Is An Admission Check, Not The Runtime Sandbox
 
@@ -466,9 +466,9 @@ This audit finds a broad set of import-time side effects. It is not proof that l
 
 > **Source evidence — import admission**
 >
-> [Activation checks package integrity, audits trusted imports, and checks integrity again before any import](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
+> [Activation checks package integrity, audits trusted imports, and checks integrity again before any import](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 >
-> [The audit child blocks side-effect APIs and verifies the requested export and process-global state](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs#L9-L121).
+> [The audit child blocks side-effect APIs and verifies the requested export and process-global state](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs#L9-L121).
 
 ## Activation Is Fail-Closed
 
@@ -518,17 +518,17 @@ checks for an adapter that ignores abort and never settles.
 
 > **Source evidence — activation modes and current boundary**
 >
-> [Activation selects direct import or isolated invocation from trust scope and rejects external adapters](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
+> [Activation selects direct import or isolated invocation from trust scope and rejects external adapters](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
 >
 > **Claim:** Factory and readiness waits have timeout races; failed-start cleanup can remain pending after its abort timer. Pending failed-readiness cleanup prevents the outer rollback from revoking the remaining started contexts.
 >
-> **Implementation:** The starter [orders dependencies and attempts rollback on failure](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L25-L61). It [races factory activation and revokes timed-out contexts](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L100-L103). It [awaits failed-readiness teardown and rollback directly](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L144-L165). The runtime [publishes only a complete started set](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L43-L49) and [separately races normal shutdown against a deadline](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L74-L86).
+> **Implementation:** The starter [orders dependencies and attempts rollback on failure](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapter-startup.ts#L25-L61). It [races factory activation and revokes timed-out contexts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapter-startup.ts#L100-L103). It [awaits failed-readiness teardown and rollback directly](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapter-startup.ts#L144-L165). The runtime [publishes only a complete started set](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapters.ts#L43-L49) and [separately races normal shutdown against a deadline](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapters.ts#L74-L86).
 >
-> **Contract or setting:** [`shutdownTimeoutMs` is a positive platform-owned integer](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.schema.json#L95-L95). The [startup helper races the operation against rejection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-support.ts#L15-L18).
+> **Contract or setting:** [`shutdownTimeoutMs` is a positive platform-owned integer](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/config/platform.schema.json#L95-L95). The [startup helper races the operation against rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapter-support.ts#L15-L18).
 >
-> **Test evidence:** The contract fixture [uses stalled readiness with a shutdown that settles](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs#L448-L474). This page records no executed result for that fixture.
+> **Test evidence:** The contract fixture [uses stalled readiness with a shutdown that settles](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs#L448-L474). This page records no executed result for that fixture.
 >
-> **Revision:** `4f089958db97a551f406c157d774bda143a38946`
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`
 >
 > **Limit:** The fixture does not establish bounded failed-start cleanup when shutdown ignores abort. No live cleanup outcome is established here.
 
@@ -557,9 +557,9 @@ Possession of an old JavaScript object does not preserve authority because every
 
 > **Source evidence — lease contract and enforcement**
 >
-> [The contract binds attempt, registration, grants, limits, time, and revocation facts](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L942-L1011).
+> [The contract binds attempt, registration, grants, limits, time, and revocation facts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L942-L1011).
 >
-> [`RevocableLease` denies revoked, invalid, and expired contexts and records permanent revocation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/lease.ts#L6-L35).
+> [`RevocableLease` denies revoked, invalid, and expired contexts and records permanent revocation](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/lease.ts#L6-L35).
 
 ## Isolation For External Stages And Observers
 
@@ -595,11 +595,11 @@ A protocol test alone does not prove those kernel controls on a deployment host.
 
 > **Source evidence — process and protocol boundary**
 >
-> [The isolation runner creates the cgroup, starts the native supervisor with limited reads and no add-ons, and always closes the cgroup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/runner.ts#L16-L58).
+> [The isolation runner creates the cgroup, starts the native supervisor with limited reads and no add-ons, and always closes the cgroup](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/runner.ts#L16-L58).
 >
-> [The session bounds messages, routes capabilities through the parent context, rejects undrained work, and escalates process termination](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
+> [The session bounds messages, routes capabilities through the parent context, rejects undrained work, and escalates process termination](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
 >
-> [The cgroup controller validates delegation, applies an exact memory ceiling, disables swap, kills the full group, and detects OOM termination](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L13-L59).
+> [The cgroup controller validates delegation, applies an exact memory ceiling, disables swap, kills the full group, and detects OOM termination](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L13-L59).
 
 ## Plugin State Ownership
 
@@ -627,9 +627,9 @@ An explicit upgrade must define how the new identity interprets or replaces that
 
 > **Source evidence — state ownership and idempotency**
 >
-> [`PluginStateJournal` binds one namespace to one registration provenance and enforces sequence and idempotency](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/plugins.ts#L12-L140).
+> [`PluginStateJournal` binds one namespace to one registration provenance and enforces sequence and idempotency](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/state/plugins.ts#L12-L140).
 >
-> [The canonical state-entry contract fixes its ownership and replay fields](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1155-L1177).
+> [The canonical state-entry contract fixes its ownership and replay fields](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1155-L1177).
 
 ## Effects And Durable Authority
 
@@ -651,9 +651,9 @@ They solve different problems and must not be treated as interchangeable.
 
 > **Source evidence — durable effect ownership**
 >
-> [Nova constructs the effect journal and resource-lock manager and records requested, accepted, completed, and failed effect facts](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L53-L87).
+> [Nova constructs the effect journal and resource-lock manager and records requested, accepted, completed, and failed effect facts](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-runtime.ts#L53-L87).
 >
-> [The contract requires monotonically fenced resource locks with active, released, or expired state](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1140-L1153).
+> [The contract requires monotonically fenced resource locks with active, released, or expired state](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1140-L1153).
 
 ## Replacement, Disablement, And Removal
 
@@ -680,9 +680,9 @@ Removal is therefore a final filesystem action, not a complete lifecycle manager
 
 > **Source evidence — removal boundary**
 >
-> [`removeInstalledPackage()` accepts only a direct installation-root child and performs rename-before-delete](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234).
+> [`removeInstalledPackage()` accepts only a direct installation-root child and performs rename-before-delete](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234).
 >
-> [Run recovery refuses silent byte replacement and permits only an exact recorded upgrade chain](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L28-L66).
+> [Run recovery refuses silent byte replacement and permits only an exact recorded upgrade chain](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-snapshots.ts#L28-L66).
 
 ## Failure And Recovery Map
 
@@ -749,11 +749,11 @@ Their suffix identifies the failed ownership, sequence, idempotency, package, gr
 
 > **Source evidence — registry error vocabulary**
 >
-> [The typed registry error list is the source for public registry admission and activation codes](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L37).
+> [The typed registry error list is the source for public registry admission and activation codes](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L37).
 >
-> [The installer throws bounded operator, trust, tree, syntax, adapter, digest, and publication diagnostics](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L234).
+> [The installer throws bounded operator, trust, tree, syntax, adapter, digest, and publication diagnostics](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L234).
 >
-> [The isolation session defines protocol, RPC, child-outcome, and cleanup diagnostics](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
+> [The isolation session defines protocol, RPC, child-outcome, and cleanup diagnostics](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
 
 | Phase | Representative failure | Safe result | Recovery owner |
 | --- | --- | --- | --- |
@@ -802,11 +802,11 @@ Contract tests prove runtime behavior in their test environments. A deployment m
 
 > **Source evidence — focused verification**
 >
-> [Registry tests exercise schema validation, grants, duplicate roots, digest mutation, import side effects, and invalid exports](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L1-L323).
+> [Registry tests exercise schema validation, grants, duplicate roots, digest mutation, import side effects, and invalid exports](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L1-L323).
 >
-> [Capability-security tests exercise unrequested grants, invalid constraints, ambiguous providers, adapter cycles, and core-only capabilities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs#L1-L466).
+> [Capability-security tests exercise unrequested grants, invalid constraints, ambiguous providers, adapter cycles, and core-only capabilities](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs#L1-L494).
 >
-> [External-package and isolation tests cover operator authority, source identity, package trust, cancellation, crash behavior, and the external-adapter rejection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-phase11.mts#L1-L297).
+> [External-package and isolation tests cover operator authority, source identity, package trust, cancellation, crash behavior, and the external-adapter rejection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/tests/verification/contracts/check-plugin-system-v2-phase11.mts#L1-L297).
 
 ## A Practical Trace
 

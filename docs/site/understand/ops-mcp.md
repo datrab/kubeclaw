@@ -326,7 +326,7 @@ Check three layers before treating a call as successful:
    complete retained history.
 
 Source: [HTTP error bodies and dispatch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L508-L560),
-[local MCP failure-envelope test](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L32-L51),
+[local MCP failure-envelope test](https://github.com/datrab/kubeclaw/blob/54a535b6046bc54e9aeeebee9c4cd24388477115/tools/ops-mcp/test/local.test.mjs#L32-L50),
 and the Hubble result links above. Exact SDK validation-error text is not a
 stable diagnostic identifier.
 
