@@ -9,7 +9,7 @@ import { PNG } from 'pngjs';
 import { BrowserVisualCapabilityInvoker } from '@kubeclaw/buster-engine';
 import { provider } from '../src/provider.js';
 
-const root = fs.mkdtempSync(path.join(os.tmpdir(), 'visual-provider-')); let changed = false; let deniedOrigin = '';
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'visual-provider-')); let changed = false; let maskControlChanged = false; let deniedOrigin = '';
 const repository = path.join(root, 'workspace/repository');
 for (const directory of ['.swarm/visual', 'baselines', '../../artifacts', '../../observability']) fs.mkdirSync(path.resolve(repository, directory), { recursive: true });
 const deniedServer = http.createServer((_request, response) => { response.end('denied-origin'); });
@@ -18,6 +18,11 @@ const deniedAddress = deniedServer.address(); if (!deniedAddress || typeof denie
 deniedOrigin = `http://127.0.0.1:${deniedAddress.port}`;
 const server = http.createServer((request, response) => {
   response.setHeader('content-type', 'text/html');
+  if (request.url === '/mask-coverage') return response.end(`<!doctype html><style>
+    *{margin:0}body{background:white}div{position:absolute;top:20px;width:40px;height:40px}
+    #a{left:20px;background:#ff0000}#b{left:100px;background:#00ff00}
+    #control{left:180px;background:${maskControlChanged ? '#000000' : '#0000ff'}}</style>
+    <div id="a"></div><div id="b"></div><div id="control"></div>`);
   if (request.url === '/egress') return response.end(`<!doctype html><img src="${deniedOrigin}/pixel.png">`);
   if (request.url === '/websocket') return response.end(`<!doctype html><script>new WebSocket('${deniedOrigin.replace('http:', 'ws:')}/socket')</script>`);
   if (request.url === '/slow') return setTimeout(() => response.end('<!doctype html><p>late</p>'), 2000);
@@ -102,6 +107,64 @@ try {
     ...invocation.configuration.values, targets: ['home', 'about'], masks: [{ target: 'home', selectors: ['#dynamic'] },
       { target: 'about', selectors: ['#dynamic'] }] } } }, context);
   assert.equal(multiple.counts.total, 2); writeManifest();
+
+  // RT-086164702f20b582-BROWSER04-ALTERNATE: scoped real-render witness.
+  // Local provider/capability execution is NOT Nova/Buster isolated-plan admission.
+  // Use actual Chromium bytes/version, one immutable captured baseline and A/B/A.
+  const maskCapture: any = await capability.invoke('browser.visual', { operation: 'capture',
+    resource: { type: 'network.url', canonicalId: origin }, payload: {
+      combinations: [{ id: 'target-a', route: '/mask-coverage', profile, masks: ['#a'] }], timeoutMs: 30000,
+    } }, controller.signal);
+  const maskBaseline = Buffer.from(maskCapture.results[0].data, 'base64');
+  const maskBaselineFile = 'baselines/mask-coverage.png';
+  fs.writeFileSync(path.join(repository, maskBaselineFile), maskBaseline);
+  const maskDigest = `sha256:${crypto.createHash('sha256').update(maskBaseline).digest('hex')}`;
+  const maskManifest = { ...originalManifest,
+    baselineBundleDigest: `sha256:${crypto.createHash('sha256').update(maskDigest).digest('hex')}`,
+    entries: [{ ...originalManifest.entries[0], id: 'target-a', route: '/mask-coverage',
+      baselineFile: maskBaselineFile, sha256: maskDigest, browserVersion: maskCapture.results[0].browserVersion }] };
+  writeManifest(maskManifest);
+  const maskInvocation = (target: string, selectors: string[]) => ({ ...invocation,
+    configuration: { values: { ...invocation.configuration.values, targets: ['target-a'],
+      masks: [{ target, selectors }] } } });
+  const pixel = (bytes: Buffer, x: number, y: number) => {
+    const png = PNG.sync.read(bytes); const offset = (y * png.width + x) * 4;
+    return [...png.data.subarray(offset, offset + 4)];
+  };
+  const maskA = [255, 0, 255, 255], red = [255, 0, 0, 255], green = [0, 255, 0, 255], blue = [0, 0, 255, 255];
+  assert.deepEqual(pixel(maskBaseline, 40, 40), maskA);
+  assert.deepEqual(pixel(maskBaseline, 120, 40), green);
+  assert.deepEqual(pixel(maskBaseline, 200, 40), blue);
+  for (const selector of ['#a', '#b', '#a']) {
+    const result = await provider().execute(maskInvocation('target-a', [selector]), context);
+    assert.equal(result.outcome, selector === '#a' ? 'passed' : 'failed');
+    const details = result.providerDetails.values.results[0];
+    assert.equal(details.id, 'target-a'); assert.deepEqual(details.masks, [selector]);
+    assert.equal(details.baselineDigest, maskDigest);
+    assert.equal(details.browserVersion, maskCapture.results[0].browserVersion);
+    assert.equal(details.baselineBrowserVersion, maskCapture.results[0].browserVersion);
+    const currentFile = result.evidenceFiles.find((item: any) => item.type === 'visual-current');
+    assert(currentFile && typeof currentFile.file === 'string');
+    const currentBytes = fs.readFileSync(path.join(root, 'workspace/evidence', currentFile.file));
+    assert.equal(`sha256:${crypto.createHash('sha256').update(currentBytes).digest('hex')}`, details.currentDigest);
+    assert.deepEqual(pixel(currentBytes, 40, 40), selector === '#a' ? maskA : red);
+    assert.deepEqual(pixel(currentBytes, 120, 40), selector === '#b' ? maskA : green);
+    assert.deepEqual(pixel(currentBytes, 200, 40), blue, 'mask selection must not hide the unmasked control');
+    if (selector === '#a') assert.equal(details.diffCount, 0);
+    else assert(details.diffCount > 0, 'moving the mask must change real PNG coverage, not only metadata');
+  }
+  const unmasked = await provider().execute(maskInvocation('target-a', []), context);
+  assert.equal(unmasked.outcome, 'failed', 'dropping the mask must expose the original DOM');
+  maskControlChanged = true;
+  const controlChanged = await provider().execute(maskInvocation('target-a', ['#a']), context);
+  assert.equal(controlChanged.outcome, 'failed', 'A must still detect changes outside its mask');
+  maskControlChanged = false;
+  await assert.rejects(() => provider().execute(maskInvocation('unknown', ['#a']), context), /VISUAL_MASK_INVALID/);
+  const restoredMaskA = await provider().execute(maskInvocation('target-a', ['#a']), context);
+  assert.equal(restoredMaskA.outcome, 'passed', 'negative control must not poison restored A');
+  assert.deepEqual(fs.readFileSync(path.join(repository, maskBaselineFile)), maskBaseline,
+    'A/B/A, unmasked and negative controls must not mutate the real captured baseline');
+  writeManifest();
 
   const direct = (route: string, signal = controller.signal) => capability.invoke('browser.visual', { operation: 'capture',
     resource: { type: 'network.url', canonicalId: origin }, payload: { combinations: [{ id: 'denied', route, profile, masks: [] }], timeoutMs: 30000 } }, signal);
