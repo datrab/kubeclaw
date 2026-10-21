@@ -1037,18 +1037,6 @@
     },
     {
       "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
-      "path": "skills/nova/core/effects/coordinator.ts"
-    },
-    {
-      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
-      "path": "skills/nova/core/execution/adapter-startup.ts"
-    },
-    {
-      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
-      "path": "skills/nova/core/execution/adapters.ts"
-    },
-    {
-      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
       "path": "skills/nova/plugins/architecture-validator/plugin.json"
     },
     {
@@ -2085,6 +2073,10 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/common/plugin-runtime/sdk/src/index.ts"
     },
     {
@@ -2242,10 +2234,6 @@
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "tests/verification/integration/http-provider-live.test.ts"
-    },
-    {
-      "revision": "c46de6bab8835d6146e90ff0adbede08f5bacb85",
-      "path": "skills/common/plugin-runtime/foundation/registry/types.ts"
     },
     {
       "revision": "f68a7294abf0928c1aabf290c6a7e486c651a808",

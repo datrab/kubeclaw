@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The new SHA256 pin matches the installed hidden lockfile, whose TypeScript entry agrees with the root lockfile. The existing fileFact/recordDependency path records this input for cache invalidation. Source ownership, native target binding, exact compiler membership, and no-runtime-acquisition guards remain unchanged; no import or role authority is broadened. No actionable defects found. No tests or generators were run.",
+  "overall_confidence": 0.98
+}

@@ -1,0 +1,91 @@
+{
+  "sourceRevision": "cbd6522d36720268c869345066978adf09a7dec4",
+  "change": "Previously reviewed fixed module recipe / hardcoded anchor only; no other native operation fact changes",
+  "renewals": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "previous": "fbf6ee4ec15d9862b9d460ad41277139dc997b92c1d421bba37012ec719d9574",
+      "current": "1bb8d32ca7bec0c2a7e6e149b90510e9fc368b84c0ce7123444eed0a6f06e62d",
+      "changes": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "b66401b1d9f57805ab4bd5da97680418b69c9aa159d37f0768ddc7411ee568f5",
+          "current": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "previous": "3feab83157430d195482c97e736f453419f2eb4036e55fb3650a8616559a899d",
+      "current": "a1d4706a8917d4cbc5818a74d43ef90f20481de70523e99625b73b6d18cc262a",
+      "changes": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "b66401b1d9f57805ab4bd5da97680418b69c9aa159d37f0768ddc7411ee568f5",
+          "current": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "previous": "8f07508284e3c2624efb3e919cc54b21aa86291ea7a11527482dc88fbad4feb1",
+      "current": "5ed5323c54bb3abab5d6c6edb3abc785d8910d861a581699c36cbcf0e471037a",
+      "changes": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "b66401b1d9f57805ab4bd5da97680418b69c9aa159d37f0768ddc7411ee568f5",
+          "current": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "previous": "e787f4d86d737cc94237bbcb14278629d23af5fa5f282cd81bec018f253c5f5f",
+      "current": "987c9097e2815be15efff95b2749cd5a86c40fe63c64b28a68bbce523b2e43b0",
+      "changes": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "b66401b1d9f57805ab4bd5da97680418b69c9aa159d37f0768ddc7411ee568f5",
+          "current": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "previous": "d600aadd11c13708e6e9c2fa408ada6f5d54c91eed78e7ca029d2785e36b9c1f",
+      "current": "6d9035f35f8bbdd59b291ea724a3b3ac2931efe7f5c4692ab84316b390b01672",
+      "changes": [
+        {
+          "source": "scripts/docs-api-output-discovery.mjs",
+          "kind": "FirstStatement",
+          "symbol": "reviewedDocumentationModuleInputRecipes",
+          "previous": "b66401b1d9f57805ab4bd5da97680418b69c9aa159d37f0768ddc7411ee568f5",
+          "current": "629d2d0253b519caf06511e5fc0124024c592610c0e40bdeef95cc2d199dc2d6"
+        }
+      ],
+      "selectorsUnchanged": true,
+      "authorityInputsUnchanged": true,
+      "priorFactsExactlyReconstructed": true
+    }
+  ]
+}

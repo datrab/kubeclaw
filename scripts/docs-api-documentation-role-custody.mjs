@@ -547,7 +547,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "fbf6ee4ec15d9862b9d460ad41277139dc997b92c1d421bba37012ec719d9574",
+    "factsDigest": "1bb8d32ca7bec0c2a7e6e149b90510e9fc368b84c0ce7123444eed0a6f06e62d",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -765,7 +765,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "3feab83157430d195482c97e736f453419f2eb4036e55fb3650a8616559a899d",
+    "factsDigest": "a1d4706a8917d4cbc5818a74d43ef90f20481de70523e99625b73b6d18cc262a",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1044,7 +1044,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "8f07508284e3c2624efb3e919cc54b21aa86291ea7a11527482dc88fbad4feb1",
+    "factsDigest": "5ed5323c54bb3abab5d6c6edb3abc785d8910d861a581699c36cbcf0e471037a",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1840,7 +1840,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "e787f4d86d737cc94237bbcb14278629d23af5fa5f282cd81bec018f253c5f5f",
+    "factsDigest": "987c9097e2815be15efff95b2749cd5a86c40fe63c64b28a68bbce523b2e43b0",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -1943,7 +1943,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "d600aadd11c13708e6e9c2fa408ada6f5d54c91eed78e7ca029d2785e36b9c1f",
+    "factsDigest": "6d9035f35f8bbdd59b291ea724a3b3ac2931efe7f5c4692ab84316b390b01672",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -5482,6 +5482,10 @@ const reviewedRecoveryCompilerInput=frozenRecipes({
       "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
     },
     {
+      "path": "node_modules/.package-lock.json",
+      "sha256": "5de787895573574c33b442fa83a469c616269de39ed7941662031b5b6d638474"
+    },
+    {
       "path": "node_modules/typescript/package.json",
       "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
     },
@@ -5490,10 +5494,8 @@ const reviewedRecoveryCompilerInput=frozenRecipes({
       "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
     }
   ],
-  "absent": [
-    "node_modules/.package-lock.json"
-  ],
-  "scope": "Finite recovery scanner input; exact existing TypeScript 5.9.3 package membership unchanged. No npm hidden installation metadata exists in this reconstructed local toolchain. No runtime acquisition, source acceptance or AP acceptance."
+  "absent": [],
+  "scope": "Finite recovery scanner input; exact existing TypeScript 5.9.3 package membership unchanged. The locked npm ci --include=dev installation supplies an exact pinned hidden installation lock; its metadata is an input fact, not an import authority. No runtime acquisition, source acceptance or AP acceptance."
 });
 
 // Exact isolated CI input successor; compiler source/profile and finite physical membership unchanged.

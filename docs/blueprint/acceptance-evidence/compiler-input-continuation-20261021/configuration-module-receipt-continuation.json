@@ -1,0 +1,17 @@
+{
+  "source": "scripts/docs-configuration-inventory.mjs",
+  "previousSourceRevision": "e86e08dc6552bbb37c119f8046659e5aa350711d",
+  "previousSourceSha256": "62018eee24bbef0f6be4c5b1aa6ca56496b988be3cae4eb82dacce2fb1e3875d",
+  "currentSourceSha256": "6d613c07a01efa64ae1d3bd41a4e9cc6f694b1c465d34bfe075bf0ac0d9927d1",
+  "previousRecipeSha256": "6905bf830878559824881980ab76b70c307b78a95a141567060722d3cc5c6d9f",
+  "currentRecipeSha256": "794b1b1ef173c4c95bfdb6074b5aabe0950f6dc0904acae0569ed5aa7baf4264",
+  "changedRecipeFields": [
+    "sourceSha256"
+  ],
+  "operationsModulePathsCallersAndEffectsUnchanged": true,
+  "completedSourceReviews": [
+    "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-bounded-code-review.json",
+    "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/schema-role-review.json"
+  ],
+  "scope": "Exact continuation of previously whole-reviewed configuration module input/source purpose; only two API-flow documentation field contracts changed. No dynamic acquisition or effect authority."
+}

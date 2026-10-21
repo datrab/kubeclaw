@@ -1,0 +1,26 @@
+{
+  "passed": 5,
+  "total": 5,
+  "results": [
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "pass": true
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "pass": true
+    }
+  ]
+}

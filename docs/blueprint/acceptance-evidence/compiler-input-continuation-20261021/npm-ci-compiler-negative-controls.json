@@ -1,0 +1,35 @@
+{
+  "source": "scripts/docs-api-documentation-role-custody.mjs",
+  "sourceSha256": "110d1fb95c492ebee18ba7177ee7647f6bfd80b21367aedd6b3d5e4035e0f949",
+  "originalTargetFunctionSha256": "f3a14dd38cf9caab525f4f553b25ed871edfaf308066ddcc467b2b960c41779b",
+  "method": "Exact original production target function and helper definitions in private VM with real filesystem and exact package bytes. Only recovery recipe root points to private copied inputs. No production checkout mutation, compiler execution or arbitrary root admission.",
+  "results": [
+    {
+      "case": "exact pinned installation accepted",
+      "owner": "discoverSdkSurface",
+      "pass": true
+    },
+    {
+      "case": "exact pinned installation accepted",
+      "owner": "generateSdkReference",
+      "pass": true
+    },
+    {
+      "case": "changed hidden lock rejected",
+      "pass": true
+    },
+    {
+      "case": "missing hidden lock rejected",
+      "pass": true
+    },
+    {
+      "case": "additional compiler member rejected",
+      "pass": true
+    },
+    {
+      "case": "different compiler specifier rejected",
+      "pass": true
+    }
+  ],
+  "scriptSha256": "7cbf7c95886475fceaea556d038d26766b2c8c166050747066675e7b1911b19a"
+}

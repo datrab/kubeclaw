@@ -1,0 +1,32 @@
+{
+  "unchangedReviewPaths": true,
+  "unchangedPermissionsAndCommands": true,
+  "previousEvidenceObjects": 567,
+  "currentEvidenceObjects": 564,
+  "removed": [
+    {
+      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "path": "skills/nova/core/effects/coordinator.ts"
+    },
+    {
+      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "path": "skills/nova/core/execution/adapter-startup.ts"
+    },
+    {
+      "revision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "path": "skills/nova/core/execution/adapters.ts"
+    },
+    {
+      "revision": "c46de6bab8835d6146e90ff0adbede08f5bacb85",
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts"
+    }
+  ],
+  "added": [
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts"
+    }
+  ],
+  "allGitObjectsExist": true,
+  "scope": "Mechanical refresh of evidence locators only; no reader/content or global gate acceptance"
+}
