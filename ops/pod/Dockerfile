@@ -43,7 +43,7 @@ ARG HELM_VERSION=v3.22.1
 ARG HELM_SOURCE_SHA256=f0e596af707e2e5c0411d1dd314264450fd68fa484c87fb9fdf1c3beed4323b9
 ENV GOTOOLCHAIN=local
 WORKDIR /src
-RUN apk add --no-cache make \
+RUN apk add --no-cache bash make \
     && wget -O source.tar.gz "https://codeload.github.com/helm/helm/tar.gz/refs/tags/${HELM_VERSION}" \
     && printf '%s  source.tar.gz\n' "$HELM_SOURCE_SHA256" | sha256sum -c - \
     && tar -xzf source.tar.gz --strip-components=1 && rm source.tar.gz

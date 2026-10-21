@@ -114,6 +114,12 @@ for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'H
     }
     continue;
   }
+  if (tool === 'HELM' && args === next.imageOverrides['ops-pod']) {
+    // Ops rebuilds the release source with its centrally patched Go toolchain.
+    const source = await get(`https://codeload.github.com/helm/helm/tar.gz/refs/tags/v${version}`);
+    next.buildArgs.HELM_SOURCE_SHA256 = sha(Buffer.from(await source.arrayBuffer()));
+    continue;
+  }
   for (const arch of ['amd64', 'arm64']) {
     console.log(`Verifying upstream ${tool} ${version} linux/${arch}`);
     const { url, digest } = await releaseArtifact(tool, version, arch);

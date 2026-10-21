@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -45,4 +46,45 @@ test('the actual trusted updater runs from an isolated read-only module set with
     if (fs.existsSync(path.join(trusted, 'updates'))) fs.chmodSync(path.join(trusted, 'updates'), 0o755);
     fs.rmSync(temporary, { recursive: true, force: true });
   }
+});
+
+
+test('the actual Ops Helm updater pins source bytes without restoring precompiled binary authors', () => {
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-helm-source-updater-'));
+  try {
+    for (const file of ['versions.json', 'package-lock.json', ...versionOutputs(root).keys()]) {
+      const target = path.join(temporary, file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(path.join(root, file), target);
+    }
+    for (const name of ['python-tools', 'go-tools', 'runtime-tool-locks.json']) {
+      fs.cpSync(path.join(root, 'docker', name), path.join(temporary, 'docker', name), { recursive: true });
+    }
+    for (const args of [['init', '-q'], ['config', 'user.name', 'Helm updater test'],
+      ['config', 'user.email', 'updater@example.invalid'], ['add', '.'], ['commit', '-qm', 'Original source pin']]) {
+      execFileSync('git', args, { cwd: temporary, timeout: 30000 });
+    }
+    const manifestPath = path.join(temporary, 'versions.json');
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    manifest.imageOverrides['ops-pod'].HELM_VERSION = 'v3.99.9';
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+    const preload = path.join(temporary, 'upstream-fixture.mjs');
+    fs.writeFileSync(preload, `
+      import assert from 'node:assert/strict';
+      globalThis.fetch = async url => {
+        assert.equal(String(url), 'https://codeload.github.com/helm/helm/tar.gz/refs/tags/v3.99.9');
+        return new Response('exact Helm source bytes');
+      };
+    `);
+    execFileSync(process.execPath, ['--import', preload, path.join(root, 'scripts/updates/refresh-versions.mjs')],
+      { cwd: temporary, timeout: 30000, stdio: 'pipe' });
+    const updated = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    manifest.buildArgs.HELM_SOURCE_SHA256 = createHash('sha256').update('exact Helm source bytes').digest('hex');
+    assert.deepEqual(updated, manifest);
+    const dockerfile = fs.readFileSync(path.join(temporary, 'ops/pod/Dockerfile'), 'utf8');
+    assert.ok(dockerfile.includes('ARG HELM_VERSION=v3.99.9'));
+    assert.ok(dockerfile.includes('ARG HELM_SOURCE_SHA256=' + manifest.buildArgs.HELM_SOURCE_SHA256));
+    assert.equal('HELM_SHA256_AMD64' in updated.imageOverrides['ops-pod'], false);
+    assert.equal('HELM_SHA256_ARM64' in updated.imageOverrides['ops-pod'], false);
+  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 });
