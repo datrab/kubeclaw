@@ -434,7 +434,12 @@ fi
 ```
 
 Runtime rendering requires `releases/runtime-images.json` and its generated values.
-The current source revision does not contain that runtime selection.
+The current checkout contains runtime image and code receipts, but its selection
+fails configuration verification at
+`RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json`.
+Stop before mutation and resolve the selection through the release owner.
+Do not rewrite receipts or bypass this check. The first failure does not
+establish whether later checks would pass.
 
 If the selection is absent, stop before any cluster mutation, including the
 DNS and storage probe, namespace creation, and Secret setup.

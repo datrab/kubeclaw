@@ -689,9 +689,8 @@ readiness. Record the checkout commit separately from the receipt commits.
 
 Retain the review/merge references, run and attempt identities, artifact and
 receipt digests, scan status, checkout commit, sanitized check outputs and
-exit statuses. For Ops image acquisition, use the same workflow with `family=ops`
-and a successful `.github/workflows/build-ops-mcp.yaml` run; its local family
-check is `--family=ops`. This does not authorize an Ops deployment.
+exit statuses. Ops uses a different write and authorization boundary; follow
+[Acquire an Ops selection](#acquire-an-ops-selection), not the runtime PR steps.
 
 If version inputs change, use the controlled generation path in a separate
 reviewed change:
@@ -704,6 +703,55 @@ node --test tests/verification/deployment/versions.test.mjs
 
 Review every generated diff with the version change. Do not edit generated
 digests to make a check pass.
+
+### Acquire an Ops selection
+
+Use this procedure only for Ops images. The release maintainer and environment
+owner must approve the exact source run and the direct `main` write **before
+dispatch**. Unlike runtime promotion, this branch does not open a selection PR.
+It updates the Ops receipt, generated values and Argo bootstrap selection, then
+pushes directly to `main`. A configured controller can reconcile that change.
+Do not rely on a later PR review to prevent deployment.
+
+1. Select a successful `main` run of **Build Ops Images**
+   (`.github/workflows/build-ops-mcp.yaml`), triggered by `push` or
+   `workflow_dispatch`. Record its numeric run ID, attempt and full source commit.
+   Confirm the release `ops-images-<run-id>-<attempt>` contains `ops-images.json`
+   and the intended immutable images. Review their configuration and compatibility
+   with the target environment before authorization.
+2. Confirm **Promote image release** is enabled and the maintainer may dispatch
+   it. Its `github.token` needs Actions/package reads and Contents write for
+   the direct push. The runtime GitHub App and selection-PR permissions are not
+   this branch's authority. Stop if repository protection rejects that write;
+   do not bypass protection.
+3. After the owners authorize the write and possible reconciliation, dispatch
+   on `main` with `family=ops` and `source_run_id=<run-id>`. Retain the promotion
+   run. Require source verification, materialization, bootstrap selection update,
+   immutable-image scan, artifact upload and **Select Ops release on main**
+   to finish successfully. The artifact is named `proposed-runtime-release`
+   even for this family; upload alone is not a successful push.
+4. Read back the pushed `main` commit and review every changed release and
+   `gitops/platform/bootstrap/codex-ops.yaml` file against the approved plan.
+   Record that selection commit separately from the image-build commit.
+   On failure or an uncertain push response, inspect both the run and remote
+   state before retrying. Do not interpret an absent PR as failed Ops promotion.
+5. Obtain a clean disposable checkout of that exact selection commit using the
+   preceding checkout block, requiring `releases/ops-images.json` instead of the
+   runtime receipt. Complete locked dependency installation and receipt-source
+   verification with the approved read identity. Run
+   `node scripts/updates/materialize-release.mjs --family=ops --check` and
+   `npm run versions:check`. Require zero exits and an unchanged checkout.
+   Stop on any failed prerequisite or check; do not repair deployment inputs
+   silently. Actual rollout, running image identity and Ops readiness remain
+   separate observations.
+
+Retain the prior selection, approvals, run/attempt, receipt and artifact digests,
+scan result, direct-push commit, sanitized checks and any controller observations.
+This procedure has no observed Ops workflow dispatch, push or deployment result.
+
+**Source:** [family-specific source-run validation](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/.github/workflows/promote-runtime.yaml#L37-L53),
+[materialization, scan and artifact](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/.github/workflows/promote-runtime.yaml#L61-L79),
+and [Ops direct push versus runtime App and PR](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/.github/workflows/promote-runtime.yaml#L80-L131).
 
 ## Change Plan
 
@@ -1026,7 +1074,7 @@ comparison; it does not authorize changing the selected receipt or live workload
 >
 > **Implementation:** [The init checks the archive hash and copies the manifest](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/charts/kubeclaw/templates/deployment.yaml#L1090-L1157); [the main container mounts runtime-config read-only](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/charts/kubeclaw/templates/deployment.yaml#L1485-L1495).
 >
-> **Contract or setting:** [selectedRelease preserves configuration and code-selection checks](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/scripts/updates/deployment-release.mjs#L32-L44); [the code receipt binds role, archive hash, contract, and source run](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/scripts/updates/code-release.mjs#L6-L18).
+> **Contract or setting:** [selectedRelease preserves configuration and code-selection checks](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/scripts/updates/deployment-release.mjs#L32-L44). [The code receipt binds role, archive hash, contract, and source run](https://github.com/datrab/kubeclaw/blob/2384072a8103b187a588862b90784868ce3661b2/scripts/updates/code-release.mjs#L6-L18).
 >
 > **Test evidence:** Local synthetic fixture checks cover all three roles, identity changes, incorrect manifests, input/configuration failures, and selection stops. No cluster result follows from those fixtures.
 >
