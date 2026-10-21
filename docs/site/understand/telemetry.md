@@ -7,6 +7,7 @@ Evidence: skills/nova/core/telemetry; skills/common/plugins/openclaw-agent-obser
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, OpenClaw agent-observability ingress v1, and retained telemetry v1 assets
 Last verified: contract, runtime, plugin, chart configuration, and focused-test inspection on 2026-09-21
+Scoped source correction: 2026-10-21 against `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; agent projection/host-ingress catalogues reconciled; no deployed end-to-end delivery claim.
 
 ## Purpose
 
@@ -221,6 +222,102 @@ can support end-to-end evidence.
 > [The writer applies bounded retries and command timeouts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L201-L231),
 > then [records a drop and makes the one dead-letter attempt for control
 > data](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L234-L264).
+
+#### Complete host-ingress v1 event and payload catalogue
+
+Every ingress record has six envelope fields: `v: 1`, `type` from the 13 rows
+below, `source: "openclaw.plugin.agent-observer"`, `ts`, `identity`, and
+`payload`. The normalizer assigns `ts` from its reception clock with
+`toISOString()`; it does not preserve an upstream event timestamp as authority.
+Validation requires RFC 3339 without leap seconds. This envelope is neither
+Nova's journal event nor the agent-observability v2 projection below.
+
+`identity` can contain these optional fields: `run_id`, `project`,
+`session_key`, `session_id`, `gateway_label`, `dispatch_id`, `agent_id`,
+`agent_type`, `module_id`, `gate_id`, `attempt`, `tool_call_id`,
+`model_call_id`, `parent_session_key`, and `child_session_key`. Present string
+identities must be non-empty; a non-null `attempt` must be a positive integer.
+The normalizer omits unresolved identities; validation also tolerates `null`
+for optional identity values. Only the
+two tool types require both `tool_call_id` and `model_call_id`. Other types
+can have an empty identity object: missing correlation is not a fabricated run.
+The normalizer resolves each field through its named event/context aliases;
+it merges hook context, event `context`, then event `ctx`, with later context
+keys winning, and selected fields can fall back to metadata. See the exact
+identity source mapping rather than treating all payload fields as identities.
+
+In the table, **required** means required by the ingress validator in addition
+to the exact `hook`. Other named fields are optional in the declared type.
+Every payload can also have optional JSON `metadata` and finite-number
+`event_bytes`; the current payload normalizer copies record-shaped metadata
+but does not synthesize `event_bytes`. JSON values can be `null`. Optional
+strings and numbers can also be `null`; thread flags can be boolean or `null`.
+Normalizers usually emit absent scalar/JSON input as `null`, histories as `[]`,
+and omit record fields such as `request`, `usage`, `context`, or `metadata`
+when their source is not an object. These normalization results are not proof
+that the upstream hook supplied a value. The validator is not a general
+closed-object schema for payload keys.
+
+| Event type | Exact payload hook | Required fields beyond hook | Other declared payload fields |
+| --- | --- | --- | --- |
+| `openclaw.agent.ended` | `agent_end` | None | `outcome`, `reason`, `error`, `duration_ms`, `final_messages` |
+| `openclaw.llm.input` | `llm_input` | JSON `prompt`; array `history_messages` | `system_prompt`, `provider`, `model`, record `request` |
+| `openclaw.llm.output` | `llm_output` | JSON `response` | `assistant_response`, JSON `assistant_message`, `history_messages`, `provider`, `model`, record `usage` |
+| `openclaw.subagent.spawned` | `subagent_spawned` | None | All subagent fields listed below |
+| `openclaw.subagent.delivery_target` | `subagent_delivery_target` | None | All subagent fields listed below |
+| `openclaw.subagent.ended` | `subagent_ended` | None | All subagent fields listed below |
+| `openclaw.tool.started` | `before_tool_call` | Non-empty `tool_name`; JSON `params`; both tool identities in envelope | None |
+| `openclaw.tool.finished` | `after_tool_call` | Non-empty `tool_name`; both tool identities in envelope | JSON `params`, `result`, `error`; `duration_ms`, `outcome` |
+| `openclaw.model.started` | `model_call_started` | None | `provider`, `model`, record `request` |
+| `openclaw.model.ended` | `model_call_ended` | None | `provider`, `model`, `outcome`, JSON `error`, `duration_ms`, record `usage` |
+| `openclaw.model.usage` | `model_usage` | None | `provider`, `model`, `cost_usd`, `duration_ms`, records `context`, `usage` |
+| `openclaw.session.started` | `session_start` | None | `session_key`, `session_id`, `outcome`, `reason`, JSON `error`, `duration_ms` |
+| `openclaw.session.ended` | `session_end` | None | `session_key`, `session_id`, `outcome`, `reason`, JSON `error`, `duration_ms` |
+
+The complete subagent field set, shared by the three rows, is
+`child_session_key`, `child_session_id`, `agent_id`, `requester_session_key`,
+`child_run_id`, `mode`, `spawn_mode`, `thread`,
+`expects_completion_message`, JSON `requester_origin`, `outcome`, `reason`,
+JSON `error`, and `duration_ms`. These are payload observations, not proof that
+a child ran or that a delivery target accepted output. A history-message row
+requires JSON `content`; it can also carry `role`, `name`, `tool_call_id`, and
+record `metadata`. The history normalizer accepts scalar items as content and
+uses `content`, or a text/message fallback, for object items.
+
+For LLM input, prompt precedence is `prompt`, `input`, `providerInput`, then
+`messages`; history uses the history aliases then `messages`. For output,
+response precedence is `response`, `output`, assistant-response aliases, `text`,
+then `message.content`. Provider aliases are `provider`, `providerId`,
+`modelProvider`; model aliases are `model`, `modelId`, `resolvedModel`.
+A started-tool observation without a name becomes `unknown_tool`; its absent
+parameters become `{}`. Finished-tool parameters use only `params`; result can
+fall back to `output`. Duration accepts camel case, snake case, or `duration`.
+Outcome uses explicit outcome/status, then success/ok or error; agent/session
+normalization can additionally infer success/error from phase `end`/`error`.
+These are coercion and fallback rules, not new domain decisions.
+
+The 12 hooks map to 12 of these types. The thirteenth, `openclaw.model.usage`,
+comes from the `model.usage` diagnostic, not a thirteenth hook. Runtime streams
+can enter existing hook mappings: lifecycle start becomes session-start,
+lifecycle end/error becomes agent-end, assistant becomes LLM-output, item
+start/end becomes tool-start/tool-finish, and command-output/patch/approval
+becomes tool-finish. Unsupported phases return no event. Tool identity admission
+still applies; a mapped observation missing its parent IDs is rejected before
+Redis. These inputs do not create an automatic v1-to-Nova-v2 consumer.
+
+> **Source evidence — complete host-ingress contract**
+>
+> [Identity, history, common fields and LLM payload declarations.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/types.ts#L35-L94)
+> [Agent, tool, model and subagent payload declarations.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/types.ts#L95-L148)
+> [Remaining subagent/session fields and full ingress envelope.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/types.ts#L149-L188)
+> [Required versus optional payload validation and hook matching.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/validation.ts#L170-L225)
+> [Envelope admission and mandatory tool-parent identities.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/contracts/agent-observability/v1/src/validation.ts#L226-L252)
+> [Model-usage, LLM and started-tool normalization.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L49-L104)
+> [Finished-tool, agent-end and model normalization.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L105-L150)
+> [Subagent/session fields and hook dispatch.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L151-L207)
+> [Exact identity aliases and fallback order.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L67-L95)
+> [Runtime stream mapping, reception timestamp, validation and diagnostic ingress.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L108-L167)
+> [History normalization and declared content fields.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/src/hook-values.ts#L127-L143)
 
 #### Exact deployed configuration
 
@@ -853,6 +950,83 @@ consumer relies on it.
 >
 > [Stage emission assigns canonical sequence, producer provenance, attempt causation, and the supplied type and payload](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/stage-executor.ts#L82-L97).
 
+### Active agent-observability v2 projection
+
+The pipeline `kubeclaw.openclaw-agent-events:source` adapter is not the direct
+Buster host-to-Redis writer above. It accepts only a hook with an existing
+non-empty run identity (at most 512 characters). It emits a namespaced
+`plugin-domain-event.v2`; Nova supplies journal sequence and producer provenance.
+Its inner payload is `openclaw-agent-event.v2`, containing exactly
+`schemaVersion`, `observedFields`, and `metrics`. It removes top-level identity
+and credential-like field names, takes at most 128 remaining entries, sorts
+their names (each truncated to 128 characters) into `observedFields`, and keeps
+only finite numeric or boolean safe-metric fields in `metrics`. It does not
+copy the raw prompt, tool result, or v1 ingress payload. Field-name presence
+can itself disclose information, so this reduction is not semantic privacy.
+
+The two agent-observability observers project that canonical domain event into
+this separate eight-field object. Every field is emitted; the projection has
+no `deliveryAttempt`, `causationId`, or `producer` field.
+
+| Field | Exact source and meaning |
+| --- | --- |
+| `schemaVersion` | Constant `agent-observability-event.v2` |
+| `deliveryId` | Current Observer Runtime delivery identity |
+| `eventId` | Canonical domain-event identity |
+| `eventType` | Canonical namespaced event type, not a v1 `openclaw.*` type |
+| `sequence` | Canonical journal sequence, not a Redis stream ID |
+| `identity` | Canonical event identity copied unchanged, not passed through the payload redactor |
+| `occurredAt` | Canonical event timestamp, not a new projection timestamp |
+| `payload` | Canonical payload passed through `redactStructuredValue` |
+
+`kubeclaw.agent-observability:ingester` invokes `telemetry.emit` operation
+`append`, resource type `telemetry.event`, canonical ID equal to `eventType`,
+with this object as the request payload. The selected granted adapter owns
+persistence. The file telemetry adapter stores a second safely validated and
+redacted projection in `telemetry/plugin-events`; Redis selection follows its
+separate transport contract. Do not infer the three direct-host v1 stream
+names from this capability call.
+
+`kubeclaw.agent-observability:evidence` invokes `artifacts.write` operation
+`put_json`, resource type `artifact.object`, canonical ID
+`agent-evidence:<eventId>`. Its request specifies namespace
+`kubeclaw.agent-observability-evidence`, media type `application/json`, and the
+same projected object as `value`. Artifact encoding, content digest, capacity,
+idempotency and retained bytes belong to the artifact adapter and its effect
+receipt, not to an additional canonical event authority. The observer awaits
+each call and does not swallow a rejection. Its manifest's existing
+best-effort retry/checkpoint policy applies; a failed projection cannot change
+the canonical event or prove business success.
+
+The payload redactor replaces keys matching authorization, cookie, password,
+secret, token, API-key or credential patterns with `[redacted]`. It truncates
+beyond depth 16, keeps at most 1,000 array items or object entries at a level,
+and truncates strings beyond 65,536 characters. The observer applies it only
+to `payload`: identifiers and timestamps pass through unchanged. The envelope
+has no observer-specific byte ceiling; selected sink/effect limits still
+apply. The file sink defaults to a 1 MiB record ceiling; the artifact adapter
+defaults to a 16 MiB artifact ceiling. Rejection is not permission to enlarge
+all limits or drop canonical evidence. Neither field-name redaction nor these
+bounds remove secrets hidden in innocent free text or identity fields.
+
+This v2 projection subscribes to the 12 domain hook types, while its evidence
+observer selects the five types listed below. The direct host v1 writer has
+13 ingress types because it additionally consumes model-usage diagnostics.
+The paths have different normalization, identity admission, redaction, stores,
+and recovery. There is no repository v1-stream consumer that converts raw host
+records into these canonical domain events or v2 projections. Local file-store
+and artifact tests are not deployed-host or end-to-end delivery evidence.
+
+> **Source evidence — canonical hook reduction and observer projection**
+>
+> [The source adapter reduces hook fields and requires bounded existing run identity.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L10-L66)
+> [The bounded source queue emits the namespaced domain event.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L67-L94)
+> [All eight projection fields and telemetry append invocation.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/agent-observability/src/observers.ts#L1-L24)
+> [Artifact canonical ID, namespace, media type and projected value.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/agent-observability/src/observers.ts#L25-L35)
+> [Exact structured-redaction pattern and traversal/string bounds.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugin-runtime/sdk/src/values.ts#L107-L128)
+> [File sink admission, default limits and idempotent durable append.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/telemetry-store/src/adapter.ts#L5-L40)
+> [Artifact size and store-capacity configuration.](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/artifact-store/src/adapter.ts#L156-L175)
+
 ## Producer and Consumer Matrix
 
 | Record | Producer | Canonical authority | Direct consumers | Subscription or filter | Delivery and sink |
@@ -983,6 +1157,7 @@ remove or summarize sensitive values at the producer boundary.
 | Boundary | Redacts | Does not guarantee |
 | --- | --- | --- |
 | Telemetry observer envelope | Structured identity and payload through SDK redaction | Removal of an unknown sensitive field name |
+| Agent-observability v2 projection | Canonical payload only through SDK redaction; the source adapter already reduces hook fields | Redaction of copied identity or semantic secrets in retained text/name fields |
 | File telemetry projection | Protected and selected personal field names after safe JSON snapshot | Semantic recognition of secrets in free text |
 | Audit projection | Credential-like field names in identity and payload | That original `events.jsonl` contains no secrets |
 | Redis adapter | No additional semantic redaction | Confidentiality without `rediss:` and correct network policy |

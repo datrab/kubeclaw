@@ -23,6 +23,7 @@ const specifications = [
   {
     file: 'docs/site/understand/buster-namespace-controller.md', minimumLinks: 6,
     revision: 'be78787633d774e9fd2a2ff401311499a555156d',
+    additionalRevisions: ['f99aecbb00cb399b46dfbbeb3ddb375fba6218e7'],
     required: ['## Why a fixture requests a lease', '## From request to workload',
       '## Choose a request and keep its authority stable', '## Access and credential boundaries',
       '## Read each observation at its own level', '## Preview ownership and verified readiness',

@@ -45,7 +45,7 @@ Use the scaffold's `--apply` operation to publish the pair. See
 The loader projects only these fields. Do not rely on unknown root or scope
 fields being rejected: ignored input has no effect and is unsafe as policy.
 
-`lint` is closed by the loader's checks:
+The loader validates these known `lint` fields:
 
 | Field | Requirement |
 | --- | --- |
@@ -57,6 +57,7 @@ fields being rejected: ignored input has no effect and is unsafe as policy.
 At least one manifest or chart is required when `lint` exists. Paths are
 project inputs to the lint registration; this loader does not prove that the
 files exist.
+Unknown `lint` fields are ignored, not rejected. They cannot enforce policy.
 
 ## Test scope fields
 

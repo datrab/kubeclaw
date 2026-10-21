@@ -64,7 +64,7 @@ in sequence. The fixture polls the lease and applies its workload after the
 namespace phase becomes `Ready`.
 
 The public lease supports more than the fixture constructor writes. Use the
-[BusterNamespaceLease field reference](../reference/buster-namespace-lease.md)
+[complete recursive lease reference](../reference/buster-namespace-lease.md)
 for every owned spec/status field, nested collection, type, required member,
 default boundary and transition rule. Its shipped prefix enum and TTL maximum
 are explicitly distinguished from the operator-rendered installed contract.

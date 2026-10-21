@@ -1,0 +1,13 @@
+# Independent correction review — 2026-10-21
+
+Reviewer: /root, independent of page author /root/operator_acceptance.
+
+Scope: communication.md selected model/Discord changes and telemetry.md complete host-ingress v1 catalogue and canonical agent-observability v2 projection. Read the full diff against 0e35889a, actual ingress types/validation, hook payload and identity/runtime normalizers, source adapter, observer projection and manifest, SDK redaction, telemetry store adapter, gateway model template and selected values. Source/Reader/Quality PASS for these corrections: field requirements distinguish declared interfaces from validator admission and actual normalization; source, canonical event and sink authority remain distinct; payload-only redaction does not falsely cover identity. Selected models and mention policy are role-specific, not claims about external provider availability or effective persisted configuration.
+
+Parent reran ingress validation (exit0). Author's focused projection/parity/file-store and host-normalizer tests, docs and source-reference checks are retained in platform-corrections-author-report.md. Parent separately compared all Mermaid source blocks on all three edited understand pages to 0e35889a: byte-identical. Targeted diff whitespace check exit0.
+
+Narrow preservation: unchanged SPIFFE/trust, dependency decision traces, Nova/Buster/Worker dispatch, persistence and recovery, registry transport, private routes and subscriptions remain supported in their existing named accepted scopes. Added source blocks and technical prose do not change search implementation, positive asset selection, headings/anchors or diagrams; no new browser observation or Reader artifact approval is asserted. Existing records intersecting these pages may retain their prior scoped verdict with this bounded correction review; this is not new whole-page, package, release or global acceptance.
+
+Pipeline lint correction independently reviewed by /root/workflow_acceptance against loader plus a real unknown-key loader exercise: PASS. Namespace reference link changes only its label to the explicit complete recursive reference, same URL. Checker now registers only the already independently verified exact current CRD revision f99aecbb00cb399b46dfbbeb3ddb375fba6218e7; unchanged byte/range guards remain. Full Buster guide check advances beyond CRD but still FAILS on stale chart values. That failure is not reported as green and needs coherent source review/repair. No claim that runtime examples passed.
+
+Existing RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a release stop. No deployment, provider call, Discord handling or end-to-end host delivery exercised.
