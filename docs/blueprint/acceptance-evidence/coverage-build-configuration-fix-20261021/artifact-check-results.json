@@ -1,0 +1,10 @@
+{
+  "coverage-build-schema-generate.log": "wrote docs/generated/inventory/configuration-schemas.json",
+  "coverage-build-schema-check.log": "Configuration documentation inventory is current.",
+  "coverage-build-reference-generate.log": "wrote docs/site/reference/plugin-configuration.md",
+  "coverage-build-reference-check.log": "generated reference docs are current",
+  "coverage-build-docs-check.log": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)",
+  "coverage-build-refs-check.log": "docs reference check passed (6032 local links, 3284 local anchors, 8321 repository path refs, 31898 pinned source links)",
+  "coverage-build-publication-check.log": "documentation publication passed (167 pages, 51 plugins)",
+  "coverage-build-plugin-inventory-check.log": "verified AP08 extension inventory (51 manifests)"
+}

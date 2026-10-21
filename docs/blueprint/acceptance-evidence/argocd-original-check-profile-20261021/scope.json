@@ -1,0 +1,11 @@
+{
+  "status": "bounded-source-and-runtime-observation-only-not-API-adapter-admission",
+  "source": "scripts/argocd-self-management.mjs",
+  "profile": "byte-identical original --check in private read-only Node permission scope",
+  "result": "21 exact AppProject/Application artifacts matched; all files unchanged, four permission denial controls passed.",
+  "limits": [
+    "No normal generation, cluster/API apply, network or general helper mode execution.",
+    "This is not a nonAPI role grant or globalAPI/acceptance completion; Source emitter remains API-producing.",
+    "Next: review and implement Source-owned frozen source/artifact conformance binding without adding unqualified program execution to inventory."
+  ]
+}

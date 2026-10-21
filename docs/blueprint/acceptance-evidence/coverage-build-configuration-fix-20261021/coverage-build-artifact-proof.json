@@ -1,0 +1,28 @@
+{
+  "sourceRevision": "2f719b1028c0140a5168cc8e6ec1c0964e06c7e2",
+  "inventoryChangedFields": [
+    {
+      "source": "skills/buster/plugins/container-build/schemas/config.schema.json",
+      "field": "$.outputName"
+    },
+    {
+      "source": "skills/buster/plugins/container-build/schemas/config.schema.json",
+      "field": "$.platform"
+    },
+    {
+      "source": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "field": "$.combine"
+    },
+    {
+      "source": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "field": "$.minimumLinePercent"
+    }
+  ],
+  "inventoryChangedLeaves": 32,
+  "allOtherInventoryBytesSemanticallyUnchanged": true,
+  "pinnedReferenceLinks": 3159,
+  "pinnedWholeSourceFiles": 252,
+  "allPinnedFilesMatchCurrentBytes": true,
+  "allSourceLineBoundsValid": true,
+  "limits": "Four field fact repair and exact Source pins only; no wholeCFG007/global/runtime acceptance."
+}
