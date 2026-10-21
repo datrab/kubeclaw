@@ -38,7 +38,7 @@ function checkFragment(target, object) {
   assert(object.anchors.has(target.fragment), `Missing source Markdown anchor: ${target.file}#${target.fragment}`);
 }
 
-async function readPrimarySource(target) {
+export async function readPrimarySource(target) {
   assert.equal(target.view, 'blob', 'Remote directory sources require separate tree verification');
   const file = target.file.split('/').map(encodeURIComponent).join('/');
   const url = `https://raw.githubusercontent.com/${target.repository}/${target.revision}/${file}`;

@@ -118,7 +118,7 @@ ${toc ? `<aside aria-label="On this page"><strong>On this page</strong>${toc}</a
 }
 
 // Inputs come only from the publication selector; this never walks the repository.
-export function buildReader({ outputRoot, pages, assets, revision, sourceLink }) {
+export function buildReader({ outputRoot, pages, assets, revision, sourceLink, sourcePreviews }) {
   const routes = new Map(pages.map(p => [p.relative, `/${p.relative.slice(0, -3)}.html`]));
   const directories = new Set();
   for (const asset of assets) {
@@ -126,7 +126,7 @@ export function buildReader({ outputRoot, pages, assets, revision, sourceLink })
   }
   for (const dir of directories) routes.set(dir, routes.get(`${dir}/README.md`) ?? `/${dir}/index.html`);
   const allowedAssets = new Set(assets);
-  const rendered = pages.map(p => ({ ...p, ...renderReaderMarkdown(p.text, p.relative, routes, allowedAssets, sourceLink) }));
+  const rendered = pages.map(p => ({ ...p, ...renderReaderMarkdown(p.text, p.relative, routes, allowedAssets, sourceLink), searchHtml: p.searchSourceText === undefined ? undefined : renderReaderMarkdown(p.searchSourceText, p.relative, routes, allowedAssets, sourceLink).html }));
   const outputs = [];
   const write = (relative, text) => {
     const target = path.join(outputRoot, relative);
@@ -154,11 +154,12 @@ export function buildReader({ outputRoot, pages, assets, revision, sourceLink })
   }
   write('search.html', shell({ title: 'Search documentation', prefix: '', revision, nav: navigation('', ''), body: `<h1>Search documentation</h1><p>Search every published page, including configuration names and code examples. All search data stays in this documentation artifact.</p><form id="search-form" role="search"><label for="query">Words or exact identifier</label><div class="search-controls"><input id="query" name="q" type="search" autocomplete="off"><button>Search</button></div></form><p id="search-status" role="status"></p><ol id="search-results"></ol><noscript><p>Search requires JavaScript. Use the documentation navigation or your browser's Find command to read without JavaScript.</p></noscript>` }));
   // Script loading also supports a locally opened artifact without a fetch server.
-  const index = rendered.map(p => ({ title: p.title, headings: p.headings.map(h => h.label), route: routes.get(p.relative).slice(1), text: sanitizeHtml(p.html, { allowedTags: [], allowedAttributes: {} }).replace(/&(?:amp|lt|gt|quot);/gu, s => ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"' })[s]).replace(/\s+/gu, ' ') }));
+  const index = rendered.map(p => ({ title: p.title, headings: p.headings.map(h => h.label), route: routes.get(p.relative).slice(1), text: sanitizeHtml(p.searchHtml ?? p.html, { allowedTags: [], allowedAttributes: {} }).replace(/&(?:amp|lt|gt|quot);/gu, s => ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"' })[s]).replace(/\s+/gu, ' ') }));
   write('search-index.js', `window.kubeclawSearchIndex=${JSON.stringify(index).replace(/</gu, '\\u003c')};\n`);
   write('reader.css', readerCss);
   write('reader.js', readerScript);
   write('index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=README.html"><title>KubeClaw Documentation</title></head><body><a href="README.html">Open KubeClaw Documentation</a></body></html>\n`);
+  if (sourcePreviews) write('source-previews.json', `${JSON.stringify(sourcePreviews, null, 2)}\n`);
   const manifest = { schemaVersion: 'kubeclaw-reader-artifact.v1', revision, pageCount: rendered.length, outputs: outputs.sort((a, b) => a.path.localeCompare(b.path)) };
   write('reader-manifest.json', `${JSON.stringify(manifest, null, 2)}\n`);
   return manifest;

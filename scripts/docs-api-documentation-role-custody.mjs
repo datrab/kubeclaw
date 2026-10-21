@@ -4191,6 +4191,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
       },
       {
+        "expressionSha256": "d716f9bb26d8c5cc118b74aa49cff43c50c56198ddaafe8ea288d73dd3be693e"
+      },
+      {
         "expressionSha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
       },
       {
@@ -4224,7 +4227,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "633a1fba9f2d17f8f7e1a176943e79fe54e794bc5ed065cfcceb29c95e39418f",
+    "factsDigest": "8979a3b0f8d6dcf708bea9de86d37de86279bfec6d018d9c8c15e33af0315a1e",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5388,7 +5391,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
       },
       {
-        "expressionSha256": "39671655a966ebffbb9914b1fe7efabd0e669da1ed35b3ebbccc447dcaf9d0a4"
+        "expressionSha256": "b687dba0528dd3c2ac2c1373e2b6d1153fa7af9803ec3637b9f0ea59449048b0"
       },
       {
         "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
@@ -5421,7 +5424,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
       }
     ],
-    "factsDigest": "d8ea9bfd7f1b26d7f8698d5177be6df2aa4ecf2f1096cb8d0400df4434c63f27",
+    "factsDigest": "e1e54ed489ab0c6887b611653fec25f7c41ca8504c1f9ce4edb79ded0412f557",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-artifact.mjs": {
@@ -5525,6 +5528,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "de5073f0172087fb4c0b754096f69a02e513e41af43a0151e78517be129614ea"
       },
       {
+        "expressionSha256": "81cbd83bf5ac851fd20fb230ca8e0c7c07bf182ebec4bad99fbbbc3148fe8aae"
+      },
+      {
         "expressionSha256": "5fac44e498b2755d3db802f66d2f52cab9003d91f0495d3949265b619e97d5b1"
       },
       {
@@ -5546,7 +5552,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "c3f25b01f047a45a75ecff2df7dee503d6e831182bd772979a75192633246986"
       }
     ],
-    "factsDigest": "d0538c224ed61b50313f9090c4db6ef92eade1d431d5d33077bde929f0bb22e7",
+    "factsDigest": "ebacc268fbfec19af69642190a1d22151d1d4640e83a7fe2dd6e2e0cfeaff1ae",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-source-links.mjs": {
@@ -5593,7 +5599,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "ea9f784e3ab66a2e645e68bbf4e2a2b2b670ea52d0aeefa411da4a91adc6b9bb"
       }
     ],
-    "factsDigest": "0e119ef0c9d93c542393a91afc8290da9a1d08c1e0739dade4ec6eb75f6904dd",
+    "factsDigest": "d55158b42669f73f2f0c670fdf14bd09d7d4713013048372b1ed709e81f84d02",
     "authorityInputs": []
   }
 ,
@@ -5609,6 +5615,83 @@ export const documentationExecutableRoleRecipes = {
       }
     ],
     "factsDigest": "0c86abe719d8e56f6c93979dfd03949a5646d6f91be899308badcc36de401293",
+    "authorityInputs": []
+  }
+,
+  "scripts/docs-reader/source-previews.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Positive-selected documentation source-evidence excerpts and their byte/range/HTML receipts. Exact committed regular Git blobs or fixed primary GitHub HTTPS source bytes are rendered only as escaped inert code, never executed/imported or submitted as API payloads. Validation reads actual artifact Markdown/HTML, positive page manifest and fresh immutable source. This output-purpose classification grants no runtime effects.",
+    "selectors": [
+      {
+        "expressionSha256": "19799871fe21e1683524c631775ebd6adaec920b2b41d43dc0589829f051bb92"
+      },
+      {
+        "expressionSha256": "2167a6d464c00348eafb15bca4aedf01dc5e9a3ade5bf9521d8706a0b0d2dc2d"
+      },
+      {
+        "expressionSha256": "4ef0dfd51b00a3095217b8d22ebe3cca18d30924935dbea3ec5ab8e58562e5eb"
+      },
+      {
+        "expressionSha256": "de5073f0172087fb4c0b754096f69a02e513e41af43a0151e78517be129614ea"
+      },
+      {
+        "expressionSha256": "eb2a637ccb942e7a9556a41c5d1850c7af03559ed189ab23b75ef99ffcde205d"
+      },
+      {
+        "expressionSha256": "93129df0fc25905aa7f182064b9d522371ac5c3fa35ae76edfee92130d55a518"
+      },
+      {
+        "expressionSha256": "490f49f3f4a26c8d9b1ff787519d3f83f71e42b2f6ab5119a80dba54ce7c23d9"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+      },
+      {
+        "expressionSha256": "85e54e34634ed22885a9819098ca65fb5efe0c8ba08fc9637ff1c035a64aeed0"
+      },
+      {
+        "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+      }
+    ],
+    "factsDigest": "772cc4df98c798f7a086c3c53377a834b5fa03d9479215c640608cf0c6ff5084",
+    "authorityInputs": []
+  },
+  "scripts/docs-reader/check-source-previews.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Positive-selected documentation source-evidence excerpts and their byte/range/HTML receipts. Exact committed regular Git blobs or fixed primary GitHub HTTPS source bytes are rendered only as escaped inert code, never executed/imported or submitted as API payloads. Validation reads actual artifact Markdown/HTML, positive page manifest and fresh immutable source. This output-purpose classification grants no runtime effects.",
+    "selectors": [
+      {
+        "expressionSha256": "09f0447130321ed406afd0ffd36d96161c845bdd3973647d78ff271fd3e4c6c4"
+      },
+      {
+        "expressionSha256": "fc9817cd14f408a948afbd35996384b6ba0d617dca929a39d6d128adda97af26"
+      },
+      {
+        "expressionSha256": "b6b30f876ae443d8f6ff369bcb85d40a9e58e2dc03be8b5fb71fc72e86d7c796"
+      },
+      {
+        "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+      },
+      {
+        "expressionSha256": "f2215af37355526d5a62f84e42b57c563b9d2310f88dd549bcd686150d152e4c"
+      },
+      {
+        "expressionSha256": "3b6841c30c02aec73f8bb8cc92814537b0ce5e6ff448ee8d874ca1f6d56e1420"
+      }
+    ],
+    "factsDigest": "7a249dadbf54e0083cf47853ac1761b532d07e3ab66388b7fcadfb6686df8486",
     "authorityInputs": []
   }
 };

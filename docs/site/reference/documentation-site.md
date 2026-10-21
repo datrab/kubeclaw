@@ -3,7 +3,7 @@
 Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Evidence: scripts/docs-publication.mjs; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
 Applies to: positively selected repository reader pages and the local HTML publication artifact
 Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
 
@@ -69,12 +69,29 @@ do not repair a mismatch by weakening its source guard.
 > Contract: the catalogue checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.
 > Validation: no build or test execution for this statement.
 > Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.
-> Limit: these locators do not provide a rendered snippet or prove that HEAD contains local changes. Reconcile the source bytes before creating a commit permalink.
+> Limit: the displayed excerpt is historical source, not proof that HEAD contains local changes or that the cited behavior ran. Reconcile the source bytes before creating a commit permalink.
 
-The build does not render an inline code-evidence box or retrieve a displayed
-snippet from the linked commit for every authored claim. Open the cited source
-and check the claim, contract, validation, revision, and limitation explicitly.
-An old permalink remains readable but may no longer describe current behavior.
+For a source-evidence box, the build reads each linked file at its exact full
+commit and adds a native **Source** disclosure inside that same box. The
+disclosure shows its path, line range, revision, source link, and automatically
+read code. An explicit line range is retained in full. A file link without a
+range shows its first 80 lines (or fewer for a shorter file), labelled as an
+excerpt. Directory links and named Markdown anchors remain ordinary links.
+The original claim, contract, test or validation statement, and limits remain
+in the box; the preview does not invent missing evidence or a successful test.
+
+The displayed text is escaped, never imported or executed. CRLF line endings
+are normalized to LF for HTML display; the receipt separately records the hash
+of the original source bytes and the displayed excerpt. Preview code does not
+enter the reader's search index. Each build records its input Markdown and
+excerpt hashes in `source-previews.json`; the preview checker compares actual
+rendered text with a fresh read of the linked commit, not a copied code sample.
+
+Building or rechecking previews of upstream sources requires network access.
+Once built, the disclosures and source excerpts remain readable from the local
+artifact without JavaScript or network. The external source link still needs
+network access when opened. An old permalink and matching preview may no
+longer describe current behavior; check the stated claim and revision.
 
 ## What enters publication
 
@@ -143,7 +160,7 @@ Install the isolated, locked reader dependencies before checking or building:
 
 ```sh
 npm ci --prefix scripts/docs-reader --ignore-scripts
-node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs
+node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs
 ```
 Prepare the selected route's additional tools and source revision through the
 [handbook prerequisites](../extend/developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route).
@@ -169,6 +186,7 @@ npm run docs:publication:build
 node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs
 node scripts/docs-reader/check-search.mjs
 node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs
 ```
 
 These are instructions, not a record of successful execution for this page.

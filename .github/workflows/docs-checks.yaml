@@ -33,7 +33,7 @@ jobs:
       - name: Install repository dependencies
         run: npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts
       - name: Check reader publication and render HTML
-        run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs
+        run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs
       - name: Check blueprint and suite documentation contracts
         run: npm run docs:blueprint:check && npm run verify:docs:schema-fields && npm run verify:docs:error-codes && npm run verify:docs:examples && npm run verify:docs:controlled-language
       - name: Check docs workflow trigger coverage

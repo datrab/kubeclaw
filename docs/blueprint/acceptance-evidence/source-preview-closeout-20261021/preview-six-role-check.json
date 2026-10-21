@@ -1,0 +1,26 @@
+[
+  {
+    "source": "scripts/docs-publication.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/renderer.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/source-links.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/check-source-links.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/source-previews.mjs",
+    "result": "PASS"
+  },
+  {
+    "source": "scripts/docs-reader/check-source-previews.mjs",
+    "result": "PASS"
+  }
+]
