@@ -1576,7 +1576,7 @@
       "audience": "reader, operator, plugin author, maintainer, documentation owner",
       "owner": "documentation architecture",
       "appliesTo": "current repository product and platform surfaces",
-      "lastVerified": "source and contract inspection on 2026-09-19",
+      "lastVerified": "source and contract inspection on 2026-09-19; inventory-boundary paragraph refreshed 2026-10-21 only; family-row depth labels not requalified",
       "sourceDependencies": [
         "package.json",
         "packaging/runtime/package-ownership.json",
@@ -3831,13 +3831,16 @@
       "audience": "first-time pipeline author and operator",
       "owner": "Nova Core and Delivery Lint maintainers",
       "appliesTo": "pipeline-platform.v2 and pipeline-definition.v2 on a supported local Linux host",
-      "lastVerified": "2026-10-21; actual local CLI success, blocked path and missing-grant admission check",
+      "lastVerified": "2026-10-21; actual local CLI success, blocked path, missing-grant admission and same-run durable observer/telemetry checks",
       "sourceDependencies": [
         "docs/site/use/workflows/examples/local-core.mjs",
         "skills/nova/core/cli.ts",
         "skills/nova/plugins/delivery-lint",
         "skills/nova/plugins/repository-adapter",
-        "skills/common/plugins/artifact-store"
+        "skills/common/plugins/artifact-store",
+        "skills/common/plugins/telemetry-observer",
+        "skills/common/plugins/telemetry-store",
+        "skills/nova/core/telemetry"
       ],
       "checks": [
         "npm run docs:governance:check",

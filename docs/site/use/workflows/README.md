@@ -14,7 +14,7 @@ new stage attempt; it does not change the result of the earlier attempt.
 
 | Task | Reader path | Evidence boundary |
 | --- | --- | --- |
-| Run and audit a local Core graph | [Local durable Core pipeline](local-core.md) | Actual shipped stage, adapters, filesystem journals/artifact and negative checks; no project compiler, Forge, remote Buster or deployment. |
+| Run and audit a local Core graph | [Local durable Core pipeline](local-core.md) | Actual shipped stage, adapters, filesystem journals/artifact, same-run local telemetry and negative checks; no project compiler, Forge, remote Buster or deployment. |
 | Compile a complete first project | [Materialize and compile a first project](#materialize-and-compile-a-first-project) | Real local compiler and resolver; no platform admission, adapter activation, agent execution, or delivery. |
 | Wait, approval, and resume | [Rehearse Human Approval and Resume](wait-resume.md) | Complete inputs, host prerequisites, and ordered local rehearsal; no successful full local lifecycle evidence. The required deployment run remains open. |
 | Run a Buster suite with a fixture, matrix, and report | [Run a Buster Suite](buster-suite.md) | Use that guide's declared local and deployment checks. |

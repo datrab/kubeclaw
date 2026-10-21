@@ -5,7 +5,7 @@ Audience: reader, operator, plugin author, maintainer, documentation owner
 Owner: documentation architecture
 Evidence: package.json; packaging/runtime/package-ownership.json; packaging/runtime/roles; skills/common/plugin-runtime; skills/nova; skills/worker; skills/buster; skills/prism; contracts; charts; scripts
 Applies to: current repository product and platform surfaces
-Last verified: source and contract inspection on 2026-09-19
+Last verified: source and contract inspection on 2026-09-19; inventory-boundary paragraph refreshed 2026-10-21 only; family-row depth labels not requalified
 
 ## Purpose
 
@@ -161,11 +161,22 @@ The pipeline does not require them when another supported component supplies the
 | SUR-EXT-10 | Core and Foundation changes | [Extension decision guide](extend/README.md) | [Plugin foundation](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation) | Partial |
 | SUR-EXT-11 | Installed extension packages and registrations | [Plugin catalogue](extend/plugin-catalogue/README.md) | [Installed package manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
 
-## Known Depth Limits
+## Inventory Boundaries
 
-An indexed row is a known documentation obligation.
-It must not disappear because a detailed page is absent.
+This page maps public surface families; its labels describe guide depth, not a
+claim that a family row enumerates every leaf field or proves runtime readiness.
+Use the current [CLI reference](reference/cli.md), [schema authorities](reference/schemas.md),
+[SDK exports](reference/sdk-exports.md), [plugin catalogue](extend/plugin-catalogue/README.md),
+[recursive plugin configuration](reference/plugin-configuration.md),
+[platform surface inventory](reference/platform-surfaces-generated.md), and
+[workflow inventory](reference/workflows.md) for their discovered source-bound
+entries. Their individual scope and limits still apply; a link from this map
+does not independently certify exhaustive reconciliation across those inventories.
 
-The reference does not yet enumerate every schema, error code, event, protocol, store, endpoint, SDK export, or command flag.
-The operator journey does not yet include a maintained first pipeline input.
-Use the [Current Status](status/current.md) page before you make a support or readiness claim.
+The [first-project exercise](use/workflows/README.md#materialize-and-compile-a-first-project)
+provides complete project and compiled graph inputs, but deliberately stops
+before runtime admission. The [local Core journey](use/workflows/local-core.md)
+provides complete platform/explicit-graph inputs and real local run, audit,
+artifact and file-telemetry observations. Neither claims a completed eight-stage
+implementation/deployment project. Use [Current Status](status/current.md) for
+remaining product and execution boundaries before making a readiness claim.

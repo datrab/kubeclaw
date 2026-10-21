@@ -122,11 +122,28 @@ an environment whose source/tool prerequisites have not been qualified.
 > **Source — ownership records and generator selection**
 >
 > Claim: page metadata supplies ownership/dependencies; generators select their owned outputs; check modes compare the derived result instead of making an authored page authoritative product input.
-> Implementation: `scripts/docs-governance.mjs`, `pages` metadata and generator selection, lines 85–108; output/check/generate branch, lines 124–143. `scripts/docs-generate.mjs`, `stableWriteMap`, lines 131–154, selects reference outputs. `scripts/docs-tree-boundary.mjs`, `main`, lines 904–936, selects byte comparison or tree output writing.
-> Contract: the six metadata fields and source dependencies feed the generated page map; classification and the immutable baseline feed the tree model. A map row or selected output is not evidence of complete source discovery.
-> Validation: no generator, checker, mutation test, or reader task execution for this statement.
-> Checkout identity, SHA-256: governance `a4a44fdb62fb8a963e1e7aa84fdacf41edfab06282e31938bda412252ea18502`; reference generator `c83c5653177b9b0a56326b0e315c409dc3c814c95d37dd53933402a2288aa718`; tree checker `a432a90ab447e4f9b944fae829aca7841eaad61493bc59fba629d7d2c3610a92`. These identify current file bytes, not claimed committed revisions.
-> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. The locators do not admit those effects or prove any generated result current.
+> Implementation snapshot: `80178cbaea15b80393d370269a5b6225e9fd7129`. These links locate the inspected functions, not a saved generation result.
+>
+> [Page metadata and ownership](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L94-L120).
+>
+> [Map output and check/write branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-governance.mjs#L145-L164).
+>
+> [Selected reference outputs](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-generate.mjs#L151-L183).
+>
+> [Tree output and comparison branches](https://github.com/datrab/kubeclaw/blob/80178cbaea15b80393d370269a5b6225e9fd7129/scripts/docs-tree-boundary.mjs#L927-L954).
+>
+> Contract: metadata owns page dependencies; classification and the immutable baseline own the tree model. Neither proves complete source discovery.
+>
+> Validation for these locators: source comparison only, not successful reference generation or product execution.
+>
+> Governance snapshot SHA-256: `a7a194f1cbc8b6796bb3f33ab0121b950c9327c59afb00d30aac1d4d338c4a96`.
+>
+> Reference generator snapshot SHA-256: `aad4c1a16b693443bdd5ff1f663f59659c1a5da74efb62e65ae0b049f74a500e`.
+>
+> Tree checker snapshot SHA-256: `ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52`.
+>
+> These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.
+> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.
 
 Inspect every generated diff and require exit zero before the next step.
 Generators can write earlier files before a later failure. Retain the first
