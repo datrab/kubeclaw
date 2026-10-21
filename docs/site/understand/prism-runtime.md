@@ -38,7 +38,7 @@ The benefit is that a model response cannot silently become a durable design rev
 
 ```mermaid
 flowchart LR
-    Nova[Nova pipeline] -->|design request or approved-baseline request| Control[Prism Control]
+    NovaIn[Nova pipeline caller] -->|design request or approved-baseline request| Control[Prism Control]
     User[Tailscale user] --> Studio[Prism Studio]
     Studio -->|session and user API| Control
     Control --> DB[(PostgreSQL)]
@@ -46,7 +46,7 @@ flowchart LR
     Control -->|durable agent job| Agent[Prism Agent Bridge]
     Agent --> Gateway[OpenClaw gateway]
     Gateway --> Model[Managed model route]
-    Agent -->|bound execution outcome or startup diagnostic| Control
+    Agent -->|attempt outcome| Control
     Gateway -->|agent tool invocation| Tools[OpenClaw Prism tools]
     Tools -->|fenced design set or revision commit| Control
     Control -->|bound attempt| Worker[Native Prism Worker]
@@ -55,7 +55,7 @@ flowchart LR
     Control -->|acquire and quarantine| Ingestion[Ingestion service]
     Adapter[Pipeline adapter library] --> Buster[Buster visual plan]
     Adapter --> Forge[Forge assignments]
-    Control -->|approved baseline| Nova
+    Control -->|approved baseline| NovaOut[Nova pipeline baseline receiver]
 ```
 
 **Text alternative to the diagram**
@@ -64,7 +64,7 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 
 | From | Relationship | To |
 | --- | --- | --- |
-| Nova pipeline | Directed connection — design request or approved-baseline request | Prism Control |
+| Nova pipeline caller | Directed connection — design request or approved-baseline request | Prism Control |
 | Tailscale user | Directed connection | Prism Studio |
 | Prism Studio | Directed connection — session and user API | Prism Control |
 | Prism Control | Directed connection | PostgreSQL |
@@ -72,7 +72,7 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism Control | Directed connection — durable agent job | Prism Agent Bridge |
 | Prism Agent Bridge | Directed connection | OpenClaw gateway |
 | OpenClaw gateway | Directed connection | Managed model route |
-| Prism Agent Bridge | Directed connection — bound execution outcome or startup diagnostic | Prism Control |
+| Prism Agent Bridge | Directed connection — attempt outcome: bound Worker receipt or startup diagnostic | Prism Control |
 | OpenClaw gateway | Directed connection — agent tool invocation | OpenClaw Prism tools |
 | OpenClaw Prism tools | Directed connection — fenced design set or revision commit | Prism Control |
 | Prism Control | Directed connection — bound attempt | Native Prism Worker |
@@ -81,10 +81,10 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Prism Control | Directed connection — acquire and quarantine | Ingestion service |
 | Pipeline adapter library | Directed connection | Buster visual plan |
 | Pipeline adapter library | Directed connection | Forge assignments |
-| Prism Control | Directed connection — approved baseline | Nova pipeline |
+| Prism Control | Directed connection — approved baseline | Nova pipeline baseline receiver |
 
 
-Text version: Nova sends a design request to Control. A user reaches Studio through the Tailscale ingress. Studio proxies the user API to Control. Control owns PostgreSQL records and the artifact volume. Model-driven jobs go through the Agent Bridge and OpenClaw. The bridge reports its bounded execution outcome separately from the design commit made by an OpenClaw Prism tool. A completed execution receipt alone is not a committed design result. Deterministic operations go to the native Worker. The Worker reads and writes artifacts through Control. The optional Ingestion service acquires untrusted corpus content. The pipeline adapter converts a published baseline handoff into Buster and Forge inputs.
+Text version: The two Nova nodes show the request and baseline-handoff roles of the same pipeline caller, not separate Nova services. Nova sends a design request to Control. A user reaches Studio through the Tailscale ingress. Studio proxies the user API to Control. Control owns PostgreSQL records and the artifact volume. Model-driven jobs go through the Agent Bridge and OpenClaw. The bridge reports its bounded execution outcome separately from the design commit made by an OpenClaw Prism tool. A completed execution receipt alone is not a committed design result. Deterministic operations go to the native Worker. The Worker reads and writes artifacts through Control. The optional Ingestion service acquires untrusted corpus content. The pipeline adapter converts a published baseline handoff into Buster and Forge inputs.
 
 The two result paths have separate admission checks. The [bridge submits its
 Worker outcome to the job finish route](https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-job-runner.mjs#L27-L44).
