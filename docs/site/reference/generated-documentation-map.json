@@ -3132,7 +3132,7 @@
       "status": "implemented for the Nova implementation stage",
       "audience": "pipeline operator, Forge maintainer, plugin author, security reviewer",
       "owner": "Forge maintainers",
-      "appliesTo": "`kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path; separate `kubeclaw.generate.blueprint-sync` package section",
+      "appliesTo": "`kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path; separate `kubeclaw.generate.blueprint-sync` package section; Git workspace adapter `kubeclaw.git-workspace:git`",
       "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "skills/nova/plugins/implementation-agent",

@@ -1249,6 +1249,10 @@ producer and consumers as a contract change. Run
 verify both positive and mismatch/unverifiable/path-denial results before
 activation. A passing static check is never image-build or deployment proof.
 
-Source: [complete stage, reports and outcome branches](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L1-L60); [complete stage, reports and outcome branches (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L61-L120); [complete stage, reports and outcome branches (continued 3)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L121-L146),
+Source: [complete stage, reports and outcome branches](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L1-L60).
+
+[complete stage, reports and outcome branches (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L61-L120).
+
+[complete stage, reports and outcome branches (continued 3)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/stage.ts#L121-L146),
 [Dockerfile matching implementation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/dockerfile.ts#L1-L60); [Dockerfile matching implementation (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/src/dockerfile.ts#L61-L95),
 and [registration and capabilities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/delivery-lint/plugin.json#L1-L22).

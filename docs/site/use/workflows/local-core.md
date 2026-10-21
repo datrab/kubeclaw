@@ -122,7 +122,7 @@ The helper creates:
 `kubeclaw.delivery-lint` and `git.repository.read` only for `Dockerfile`.
 Adapter configuration fixes the disposable repository and its exact Git HEAD.
 The artifact budget is 64 KiB per blob with 100 metadata records and 1 MiB total
-configured store capacity. No credential or secret value is generated.
+configured store capacity. The helper generates no credential or secret value.
 
 ## 2. Validate and execute the actual product
 

@@ -199,8 +199,8 @@ commits its own durable state; the local receipt is not controller authority.
 Regular invocations assert the current resource fence; cancellation combines
 invocation, adapter shutdown and timeout signals. `shutdown` aborts owned work.
 Cancellation does not prove that a POST or private message had no effect.
-No general compensate, erase-delivery, refresh-retention or authenticated human
-extension operation is implemented by this adapter.
+This adapter implements no general compensate, erase-delivery, refresh-retention or authenticated human
+extension operation.
 
 Implementation: [adapter state machine](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/nova/plugins/demo-handoff/src/adapter.ts),
 [cross-stage binding](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/nova/plugins/demo-handoff/src/binding.ts),

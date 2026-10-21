@@ -92,7 +92,7 @@ agreement. The original snapshot must record
 `effectAuditVersion: coordinator-mode.v1`. Older mode-ambiguous history is
 unverifiable by this reader; changing a stored marker is not migration.
 
-Only terminal succeeded, failed or cancelled source runs are accepted. A
+The adapter accepts only terminal succeeded, failed or cancelled source runs. A
 waiting, reopened, blocked, incomplete, stale-head or unresolved-effect source
 is not completed report authority. Failed/cancelled completed history can be
 reported honestly; reporting it never converts its outcome to success.
@@ -248,7 +248,7 @@ publication.
    result with an in-memory success or fabricated historical run.
 4. Verify both successful report artifacts and negative stale/foreign/changed
    source, uncited or incomplete output, changed store response, and uncertain
-   dispatch behavior appropriate to the changed boundary. Keep source-run
+   dispatch behavior at the changed boundary. Keep source-run
    outcome and report-attempt outcome separate.
 5. Update this guide, recursive owning input/config references, source-bound
    complexity assignment and relevant contract checks. Use the common

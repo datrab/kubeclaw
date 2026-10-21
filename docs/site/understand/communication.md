@@ -702,7 +702,7 @@ The payload is exactly `{message: object}`; extra wrapper keys reject. The
 message must be a plain JSON object, finite and acyclic, depth at most 64, with
 non-empty keys at most 128 characters, no control characters and no
 `__proto__`, `constructor` or `prototype`. The UTF-8 byte limit applies to
-`JSON.stringify({message})`, not just one message field. No semantic redaction
+`JSON.stringify({message})`, not one isolated message field. No semantic redaction
 is applied: publisher storage and receiver must be authorized for message content.
 
 Before resolving the signing Secret or sending, the adapter appends a

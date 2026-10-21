@@ -5,7 +5,7 @@ Audience: pipeline operator, Forge maintainer, plugin author, security reviewer
 Owner: Forge maintainers
 Evidence: skills/nova/plugins/implementation-agent; skills/common/plugins/runtime-dispatch; skills/common/plugins/git-workspace; tests/verification/reliability/forge-workspace.test.mts; tests/verification/reliability/forge-lock-wait.test.mts; skills/nova/plugins/blueprint-sync
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Applies to: `kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path; separate `kubeclaw.generate.blueprint-sync` package section
+Applies to: `kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path; separate `kubeclaw.generate.blueprint-sync` package section; Git workspace adapter `kubeclaw.git-workspace:git`
 Last verified: source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Purpose And Authority
@@ -265,3 +265,153 @@ agent proof. Removing this stage does not revert committed control files.
 
 Source: [complete sync, commit, state, artifact and repair sequence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/blueprint-sync/src/stage.ts#L1-L60); [complete sync, commit, state, artifact and repair sequence (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/blueprint-sync/src/stage.ts#L61-L64),
 [registration and authority](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/blueprint-sync/plugin.json#L1-L25).
+
+## Git Workspace Adapter: Complete Mutation Surface
+
+`kubeclaw.git-workspace:git` provides five capabilities with eight supported
+operation combinations. The Forge flow above is one consumer, not the whole
+adapter API. Core grants and resource locks remain separate for workspace
+create/remove, commit, merge and sync. The [per-plugin dependency matrix](../use/plugins.md)
+owns remote URL/authentication authority and the empty child environment;
+package activation is not proof of remote reachability or credentials.
+
+### Configuration and ownership
+
+All eight configuration fields are required: `allowedRepositoryRoots`,
+`workspaceRoot`, `gitExecutable`, `authorName`, `authorEmail`, `maxExecutionMs`,
+`maxOutputBytes`, and `terminationGraceMs`. There is no adapter
+fallback to ambient Git author identity. Schema maximums are one hour per Git
+command, 16 MiB combined output, and 60 seconds termination grace. The
+[recursive configuration reference](../reference/plugin-configuration.md)
+supplies field types and constraints. Repository roots and executable must be
+existing absolute canonical non-symlink paths; activation creates workspaceRoot
+if needed and then checks its canonical directory identity. That creation is an
+activation side effect. Executable type is checked there, not a successful Git
+launch; `ready()` is empty.
+
+The adapter asserts a fence only for non-confidential invocation. Core owns
+resource/grant admission; canonical root checks do not grant a new capability.
+Workspace creation writes a private, synchronized owner record containing the
+complete `runtime-workspace.v1` reference and Core attempt identity. Later
+operations **when supplied** a workspaceReference verify its exact protected
+owner record and attempt. Do not claim that a bare direct request must carry
+one: removal and workspace operations allow omission. Forge's normal protocol
+supplies the reference and additional source checks described above.
+
+### Actual operations, inputs and results
+
+| Capability / operation | Inputs and external result |
+| --- | --- |
+| `git.workspace.create` / `create` | Resource is canonical repository root; optional payload repositoryRoot must agree. workspacePath is a new descendant of configured workspaceRoot; branch and baseRef select worktree identity. Optional approvedSource pins the accepted revision. Runs worktree add, resolves its HEAD, records owner; returns workspace, sourceRevision and workspaceReference. |
+| `git.workspace.remove` / `remove` | Resource/repositoryRoot agree; workspacePath must be below workspaceRoot, never the root itself. Optional branch is deleted after worktree removal. Optional reference verifies repository/path/branch/attempt. Returns removed (whether path existed) and branchRemoved (whether branch was requested). Removal uses force and is not a backup of dirty work. |
+| `git.commit` / `commit` | Resource names an authorized repository/workspace; paths are explicitly scoped and message is bounded. Adds and commits only those paths, then resolves sourceRevision. Optional expectedParent requires an owned reference and checks HEAD before and commit parent after; approvedSource also verifies accepted source and resulting transition. Returns Git result plus sourceRevision. |
+| `git.merge` / `merge` | Resource names the destination's **current checkout**; the adapter resolves sourceRef once to a commit. Optional sourceRevision must match that commit. Runs merge --no-edit --no-ff of the resolved ID and returns Git result plus destination sourceRevision. It does not switch to a payload target branch. |
+| `git.sync` / `sync_paths` | ref plus non-empty paths; resolves ref once to an immutable tree, then synchronizes only requested literal paths. Returns synced entries (created/updated) and missing paths. Equal content with matching executable mode is unchanged and omitted from synced. This operation itself creates no commit. |
+| `git.sync` / `fetch` | remote defaults to origin; runs fetch --prune against that named remote. Returns Git exitCode/signal/stdout/stderr, not a sourceRevision or proof of any expected branch. Fetch can update/prune remote-tracking refs. |
+| `git.sync` / `rebase` | upstreamRef selects the rebase base of the authorized current checkout. Returns Git result; does not return a new sourceRevision or implement an automatic conflict decision/abort procedure. Existing commits can be rewritten. |
+| `git.sync` / `push` | remote defaults to origin; localRef and remoteRef produce the single explicit localRef:remoteRef refspec, with porcelain output. Returns Git result, not a remote receipt/status-query contract. A lost response can follow remote acceptance. |
+
+For ordinary workspace operations the canonical resource directory must be an
+allowed repository descendant or inside workspaceRoot. If a reference is
+supplied, non-merge operations require its workspacePath; merge instead
+requires its repositoryRoot and sourceRef equal its branch. This is an owner
+binding, not a general repository-discovery policy.
+
+Branch/remote/base tokens, slash-separated refs, commit messages and scoped
+paths reject their respective option/control/ref-expression injections. Commit
+paths cannot traverse a symlink. The runner uses fixed argv, no shell,
+`core.hooksPath=/dev/null`, disabled commit signing, configured author identity
+and empty environment. These controls do not sandbox Git against everything
+its OS identity or selected repository configuration can access.
+
+### Source approval and partial effects
+
+For create, sync_paths, commit and merge, the adapter parses supplied approvedSource
+against the active run and repository. It checks current source HEAD, declared
+architecture ref/revision and cleanliness. Commit disables the dirty-working-tree
+rejection generally; its add/commit calls still select only declared paths.
+The adapter verifies reviewed file modes/bytes where the operation
+requires them. Source transition checks require the resulting first parent to
+be the accepted source and reviewed control files to remain unchanged. Forge's
+expectedParent and pinned merge revision checks add attempt-workspace and exact
+commit bindings. A source-less call does not gain approval by being a valid Git
+operation. Fetch/rebase/push do not invoke those approved-source verification
+helpers; do not infer approval semantics from an unused approvedSource field.
+
+sync_paths performs literal ls-tree/show/checkout against its resolved tree.
+Only successful lookup with no entry means missing. Invalid ref, non-blob,
+abort, timeout or output failure is an error, not a missing deliverable. Files
+copied before a later error remain copied: this is not a multi-file transaction.
+A copied Git symlink remains a Git object/path outcome, not permission to
+follow an escaping filesystem path. Blueprint Sync separately commits returned
+changes and can request repair for missing files; use its section above.
+
+### Failure and safe continuation
+
+| Trigger | Effect and safe action |
+| --- | --- |
+| Invalid configuration, noncanonical/outside path, existing workspace destination, unsafe token/path/message or symlink | `GIT_CONFIG_*`, `GIT_PATH_*`, `GIT_WORKSPACE_EXISTS`, `GIT_VALUE_INVALID`, `GIT_PATHS_INVALID` or `GIT_SYMLINK_DENIED`; reject the affected call. Correct the exact declaration/root; unchanged retry is not repair. Activation can already have created workspaceRoot. |
+| Owner/reference mismatch, moved expected parent/merge source, stale approval or changed reviewed bytes/mode | `GIT_WORKSPACE_*`, `GIT_MERGE_*`, `REVIEW_SUBJECT_STALE` or `SOURCE_APPROVAL_*`; stop integration and preserve refs/owner/approval. Freeze a new authorized candidate through Nova instead of relabelling the old proof. Some checks run after mutation and do not roll it back. |
+| Git returns nonzero, including merge/rebase conflict or remote refusal | `GIT_COMMAND_FAILED` includes exit/signal and at most 4,096 stderr characters. No successful adapter result exists. Preserve the repository/index/operation state and inspect the actual failure. The adapter supplies no conflict resolver or rebase abort/continue operation; the repository owner must establish a reviewed recovery path before a new pipeline attempt. |
+| Execution/output limit or caller abort | `GIT_TIMEOUT`, `GIT_OUTPUT_LIMIT_EXCEEDED` or `ADAPTER_CANCELLED`. Termination is local process handling, not rollback or proof that push failed remotely. Reconcile exact refs and any remote acceptance before retry. |
+| Later sync step, commit verification, branch deletion, owner persistence or report consumer fails | Earlier copied paths, commits, worktree creation/removal or remote effects can remain. Keep effect receipts, Git refs and owner data; do not repeat the whole sequence as though it were atomic. |
+
+The runner bounds **each Git command**, not the entire multi-command operation.
+It tracks active children, sends process-group SIGTERM on abort/timeout/limit,
+then SIGKILL after configured grace when the leader is still active. Shutdown
+denies new launches, signals active children and waits for their settlement.
+This is not the common CommandRunner's `/proc` descendant-acknowledgement or a
+hard cgroup containment proof. Do not infer orphan reaping, rolled-back Git
+state, or completed external cleanup from leader exit or a timeout alone.
+
+There is no adapter-local retry loop, durable remote receipt store, resume
+cursor or compensation. Git repositories/refs/worktrees and private owner
+records survive; Core owns mutation request/receipt/recovery authority. Retain
+those with source/approval artifacts through interrupted or pinned runs. Normal
+Forge removal is explicit and attempt-owned; disabling this adapter does not
+remove worktrees, undo merges, delete owner records or reverse a push. Follow
+the [plugin lifecycle](../use/plugins.md) and [effect recovery](../extend/effectful-plugin.md)
+before replacement, retry or owner-authorized retirement. Never blindly repeat
+an accepted push with unknown outcome.
+
+### Change and verification
+
+Extend an operation only with matching capability vocabulary/grants, dispatch,
+argument validation, ownership/source checks, result consumers and tests. New
+remote behavior needs an explicit credential and reconciliation contract, not
+ambient shell/environment access. Keep pathspec literals, explicit commit
+selection and source-transition checks in both positive and negative fixtures.
+Run `npm test --prefix skills/common/plugins/git-workspace`: the maintained
+suite covers real disposable Git repositories, a local bare remote for
+fetch/push/rebase, scoped commit/merge/workspace behavior, denial, cancellation,
+time/output limits, and sync partial/missing/literal-path cases. A valid local
+fetch returns exit0; an invalid sync ref must throw, whereas a valid tree with
+an absent requested path returns missing. These fixtures prove those local
+contracts, not an external Git host, live authentication or deployed recovery.
+Compile the selected provider and least grants, verify exact result/ref/owner
+observations in a controlled repository, and drain pinned work before changing
+configuration or activating incompatible package bytes.
+
+> [plugin.json](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/plugin.json#L1-L23)
+
+> [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/schemas/config.schema.json#L1-L30)
+
+> [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/adapter.ts#L1-L27)
+
+> [src/operations.ts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/operations.ts#L1-L60)
+
+> [src/operations.ts (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/operations.ts#L61-L120)
+
+> [src/operations.ts (continued 3)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/operations.ts#L121-L126)
+
+> [src/review-source.ts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/review-source.ts#L1-L60)
+
+> [src/runner.ts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/runner.ts#L1-L60)
+
+> [src/runner.ts (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/runner.ts#L61-L75)
+
+> [src/values.ts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/values.ts#L1-L60)
+
+> [src/values.ts (continued 2)](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/values.ts#L61-L110)
+
+> [src/workspace-ownership.ts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/git-workspace/src/workspace-ownership.ts#L1-L34)

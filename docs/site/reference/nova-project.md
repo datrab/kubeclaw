@@ -360,7 +360,7 @@ or suffix matches: no empty/dot/traversal segment, backslash, control, or colon.
 Duplicates inside a block or across substeps are invalid. The serve Dockerfile
 is required in the declaration only when this module owns its exact path or a
 parent prefix; a non-null API spec must be declared. This check validates a
-declaration, not whether the declared deliverable was implemented or built.
+declaration, not whether implementation or build produced the declared deliverable.
 
 Standalone validation stores `{moduleId, passed, failures}` in namespace
 `kubeclaw.preflight-contract`, resource `preflight-contract:<moduleId>`. A missing
@@ -482,5 +482,9 @@ run a controlled project before activation. Do not replace evidence checks
 with caller-provided counts.
 
 Source: [configuration and publication](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/stage.ts#L1-L19),
-[complete evidence selection and reduction](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L1-L60); [complete evidence selection and reduction (continued 2)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L61-L120); [complete evidence selection and reduction (continued 3)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L121-L164),
+[complete evidence selection and reduction](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L1-L60).
+
+[complete evidence selection and reduction (continued 2)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L61-L120).
+
+[complete evidence selection and reduction (continued 3)](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/summary.ts#L121-L164),
 and [review compatibility and governor identity](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/project-summary/src/review-semantics.ts#L1-L51).

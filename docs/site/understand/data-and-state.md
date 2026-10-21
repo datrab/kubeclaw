@@ -1076,8 +1076,14 @@ remote backup or restore exercise.
 
 > **Source evidence:**
 > [Legacy locale ordering and explicit portable UTF-16 code-unit key ordering](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugin-runtime/sdk/src/values.ts#L45-L63).
-> [Adapter encoding, read selection, verification and metadata-before-blob publication](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L38-L98); [Adapter encoding, read selection, verification and metadata-before-blob publication (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L99-L159); [Adapter encoding, read selection, verification and metadata-before-blob publication (continued 3)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L160-L173).
-> [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L39-L99); [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L100-L106).
+> [Adapter encoding, read selection, verification and metadata-before-blob publication](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L38-L98).
+
+> [Adapter encoding, read selection, verification and metadata-before-blob publication (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L99-L159).
+
+> [Adapter encoding, read selection, verification and metadata-before-blob publication (continued 3)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/common/plugins/artifact-store/src/adapter.ts#L160-L173).
+> [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L39-L99).
+
+> [Maintained tests preserve legacy and portable checkpoints and reject same-byte relabeling (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs#L100-L106).
 
 ## Encryption is a separate boundary
 
@@ -1104,7 +1110,19 @@ row do not replace that protection. If the destination or its key-recovery
 policy is unknown, record that limit and stop an unattended off-host transfer;
 do not label the group encrypted.
 
-Source: [Prism supplied-byte publication](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/prism/storage/artifacts.ts#L1-L61); [Prism supplied-byte publication (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/prism/storage/artifacts.ts#L62-L68), [Prism dump and artifact group](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/files/prism-backup.sh#L98-L138), and [PostgreSQL recovery archive](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L11-L55); [PostgreSQL recovery archive (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L56-L100); [PostgreSQL recovery archive (continued 3)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L101-L140); [PostgreSQL recovery archive (continued 4)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L141-L196). The family-specific writers linked in the matrix define their record and blob encodings; none of these statements verifies a deployed storage provider.
+Source: [Prism supplied-byte publication](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/prism/storage/artifacts.ts#L1-L61).
+
+[Prism supplied-byte publication (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/skills/prism/storage/artifacts.ts#L62-L68).
+
+[Prism dump and artifact group](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/files/prism-backup.sh#L98-L138).
+
+[PostgreSQL recovery archive](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L11-L55).
+
+[PostgreSQL recovery archive (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L56-L100).
+
+[PostgreSQL recovery archive (continued 3)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L101-L140).
+
+[PostgreSQL recovery archive (continued 4)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/postgresql-recovery.sh#L141-L196). The family-specific writers linked in the matrix define their record and blob encodings; none of these statements verifies a deployed storage provider.
 
 ## Backup Groups
 
@@ -1199,7 +1217,19 @@ or offline receipt proves neither Kubernetes/CSI durability nor a complete
 live restore. Stop before cluster install/cutover without the owners' bound
 provisioning, security, verification and rollback procedure.
 
-Source: [offline conversion](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L11-L46); [offline conversion (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L47-L85); [offline conversion (continued 3)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L86-L109), [selected version](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/versions.json#L96-L114), [persistence policy](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/my-values/infra/redis-values.yaml#L1-L29), and [verification fixture](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/tests/verification/reliability/redis-migration.test.mts#L1-L61); [verification fixture (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/tests/verification/reliability/redis-migration.test.mts#L62-L86). These are inspected implementation and fixture contracts, not an execution result from this page.
+Source: [offline conversion](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L11-L46).
+
+[offline conversion (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L47-L85).
+
+[offline conversion (continued 3)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/scripts/redis-prepare-migration.sh#L86-L109).
+
+[selected version](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/versions.json#L96-L114).
+
+[persistence policy](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/my-values/infra/redis-values.yaml#L1-L29).
+
+[verification fixture](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/tests/verification/reliability/redis-migration.test.mts#L1-L61).
+
+[verification fixture (continued 2)](https://github.com/datrab/kubeclaw/blob/1e60f5d34c9a599a334a414987a754c95dc3543f/tests/verification/reliability/redis-migration.test.mts#L62-L86). These are inspected implementation and fixture contracts, not an execution result from this page.
 
 ## Restore Decision Rules
 

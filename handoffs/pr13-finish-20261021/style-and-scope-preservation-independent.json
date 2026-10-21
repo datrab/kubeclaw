@@ -1,0 +1,597 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "comparisonBase": "7a3a9839af307e91b2ef05e7de0f1d2036073106",
+  "status": "PASS_BOUNDED_STYLE_AND_ORIGINAL_SCOPE_PRESERVATION",
+  "styleFiles": [
+    {
+      "path": "docs/site/extend/deep-guides/demo-handoff.md",
+      "sha256": "1d5e58a771bed49c7f368ad43ebc983a59d8c0e804520cc5880f046a743a0e27",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/extend/deep-guides/reports.md",
+      "sha256": "df2209e3867165364e89e7e7aa1d1c46bf26e8ec47a9221276dfd65c5f29c0fc",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/extend/lint.md",
+      "sha256": "3cb803be65a88f7e742e37ee3602526648d4e7dbcdc9407f334fd4f1f40a0b28",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/reference/nova-project.md",
+      "sha256": "95a4f241b276ad604cae43f38965bb055a5a63cbdf760138feb06eb8021e60f0",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/archviewer.md",
+      "sha256": "0f60687ababb15bd3a622cfe06a49216088176415bd4bb69fe440462e7e1598b",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "sha256": "89605e8e262b22ceabc8fa0a2becae7bef0c4e8051a4e3513fd5985501cb9eaf",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/understand/data-and-state.md",
+      "sha256": "2a2c5442bd88eaf53b7be31d97007351d4157ae1274773a4d50430ce3c2f428e",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    },
+    {
+      "path": "docs/site/use/workflows/local-core.md",
+      "sha256": "ff88b4ca9d2c0047f8f4acceb90dd39508d36e1ee314a6087bd1719e35415801",
+      "allLinkTargetsSequenceUnchanged": true,
+      "allCodeDiagramBlocksUnchanged": true,
+      "headingsUnchanged": true
+    }
+  ],
+  "checks": [
+    {
+      "command": "Independent complete exact diff of eight named pages against7a3a9839",
+      "exitCode": 0,
+      "observation": "Only active/precise phrasing and Source-link sentence splitting; admission/limits/uncertainty/privacy unchanged"
+    },
+    {
+      "command": "Exact owning docs-publication checkLanguage function applied unchanged to eight named pages",
+      "exitCode": 0,
+      "observation": "8pages, zero findings; same metadata/prose exclusion and sentence/vague/passive rules, no waiver"
+    },
+    {
+      "command": "Compare every Markdown URL in order, all headings and complete fenced code/diagram blocks to7a",
+      "exitCode": 0,
+      "observation": "Identical on all8pages"
+    },
+    {
+      "command": "git diff --check7a -- docs/site",
+      "exitCode": 0,
+      "observation": "PASS"
+    }
+  ],
+  "reusedIndependentReports": [
+    "handoffs/pr13-finish-20261021/platform-corrections-independent-review.md",
+    "handoffs/pr13-finish-20261021/http-package-sections-independent-review.md",
+    "handoffs/pr13-finish-20261021/source-pin-and-guide-independent-review.md",
+    "handoffs/pr13-finish-20261021/six-guide-independent-review.md",
+    "handoffs/pr13-finish-20261021/package-section-metadata-independent-review.md",
+    "handoffs/pr13-finish-20261021/workflow-parent-smallfix-preservation.json"
+  ],
+  "recordScopePreservation": [
+    {
+      "recordId": "AP09.3-ready-worker-topics-20261020",
+      "gateIds": [],
+      "requirementIds": [
+        "WKC-001",
+        "WKC-003",
+        "WKC-004",
+        "WKC-005",
+        "WKC-006",
+        "WKC-007",
+        "WKC-008",
+        "WKC-009",
+        "WKC-010",
+        "WKC-012",
+        "WKC-013"
+      ],
+      "affectedPages": [
+        "docs/site/understand/worker-core.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09.7-ready-platform-topics-20261020",
+      "gateIds": [
+        "A97-02",
+        "A97-04"
+      ],
+      "requirementIds": [
+        "SPC-004",
+        "SPC-005",
+        "SPC-006",
+        "SPC-007",
+        "INF-001",
+        "INF-002",
+        "INF-003",
+        "INF-004",
+        "INF-005",
+        "INF-006",
+        "INF-007",
+        "INF-008",
+        "INF-009",
+        "INF-010",
+        "INF-011",
+        "SEC-001",
+        "SEC-002",
+        "SEC-003",
+        "SEC-004",
+        "SEC-005",
+        "SEC-006",
+        "SEC-007"
+      ],
+      "affectedPages": [
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09.7-ready-data-topics-20261020",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-002",
+        "COM-006",
+        "COM-007",
+        "DAT-002",
+        "DAT-003",
+        "DAT-007",
+        "TEL-001",
+        "TEL-004",
+        "TEL-005",
+        "TEL-006",
+        "TEL-007"
+      ],
+      "affectedPages": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-closeout-runtime-20261020",
+      "gateIds": [],
+      "requirementIds": [
+        "ARC-003",
+        "SPC-010",
+        "DAT-008",
+        "WKC-002",
+        "WKC-011",
+        "WKC-014"
+      ],
+      "affectedPages": [
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-compiler-import-provider-diagnosis-20261021",
+      "gateIds": [
+        "A98-06"
+      ],
+      "requirementIds": [
+        "NVC-002",
+        "NVC-003",
+        "PLG-006",
+        "PLG-008",
+        "OPR-006"
+      ],
+      "affectedPages": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-selected-model-gateway-20261021",
+      "gateIds": [
+        "A97-03"
+      ],
+      "requirementIds": [
+        "INF-012"
+      ],
+      "affectedPages": [
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-install-maintenance-project-entry-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-003",
+        "OPR-008",
+        "CFG-003",
+        "ENT-005"
+      ],
+      "affectedPages": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-communication-complete-contracts-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-003",
+        "COM-004",
+        "COM-005",
+        "COM-012"
+      ],
+      "affectedPages": [
+        "docs/site/understand/communication.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-private-routes-complete-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-009"
+      ],
+      "affectedPages": [
+        "docs/site/understand/communication.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-complete-state-content-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "DAT-001",
+        "DAT-004",
+        "DAT-005",
+        "DAT-009"
+      ],
+      "affectedPages": [
+        "docs/site/understand/data-and-state.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-specialists-whole-gate-20261021",
+      "gateIds": [
+        "A97-09"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/understand/archviewer.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-registry-data-path-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "COM-010"
+      ],
+      "affectedPages": [
+        "docs/site/understand/communication.md",
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-litellm-complete-data-contract-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "DAT-006"
+      ],
+      "affectedPages": [
+        "docs/site/understand/data-and-state.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-complete-static-reader-search-20261021",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "affectedPages": [
+        "docs/site/extend/lint.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "scopeDecision": "PRIOR_CONTENT_PRESERVED_CURRENT_ARTIFACT_REVALIDATION_REQUIRED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "CURRENT_RENDERED_NOT_RENEWED",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance.",
+        "Fresh source-coherent rendered/search/viewport evidence required before renewing this aggregate artifact-dependent record."
+      ]
+    },
+    {
+      "recordId": "AP09-complete-responsive-reader-layout-20261021",
+      "gateIds": [
+        "A912-07"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/understand/worker-core.md"
+      ],
+      "scopeDecision": "PRIOR_CONTENT_PRESERVED_CURRENT_ARTIFACT_REVALIDATION_REQUIRED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "CURRENT_RENDERED_NOT_RENEWED",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance.",
+        "Fresh source-coherent rendered/search/viewport evidence required before renewing this aggregate artifact-dependent record."
+      ]
+    },
+    {
+      "recordId": "AP09-complete-source-backed-diagrams-20261021",
+      "gateIds": [
+        "A912-06"
+      ],
+      "requirementIds": [
+        "PUB-005"
+      ],
+      "affectedPages": [
+        "docs/site/extend/lint.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/worker-core.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance.",
+        "Diagram source blocks remain identical; rendered SVG/browser evidence must follow new current artifact checkpoint."
+      ]
+    },
+    {
+      "recordId": "AP09-whole-platform-discovery-and-drift-20261021",
+      "gateIds": [
+        "A97-01",
+        "A97-12"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-whole-store-contract-20261021",
+      "gateIds": [
+        "A97-06"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/understand/data-and-state.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-whole-trust-and-spiffe-contract-20261021",
+      "gateIds": [
+        "A97-08"
+      ],
+      "requirementIds": [
+        "COM-011"
+      ],
+      "affectedPages": [
+        "docs/site/understand/communication.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "AP09-whole-dependency-decision-traces-20261021",
+      "gateIds": [
+        "A97-10"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/understand/communication.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "A99-02-whole-content-20261021",
+      "gateIds": [
+        "A99-02"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "A99-03-whole-content-20261021",
+      "gateIds": [
+        "A99-03"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "A99-05-whole-content-20261021",
+      "gateIds": [
+        "A99-05"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    },
+    {
+      "recordId": "A99-01-whole-recursive-input-content-20261021",
+      "gateIds": [
+        "A99-01"
+      ],
+      "requirementIds": [],
+      "affectedPages": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "scopeDecision": "PRIOR_SOURCE_AND_SEMANTIC_READER_SCOPE_PRESERVED",
+      "sourceAccuracy": "PASS_PRESERVATION_ONLY",
+      "readerUsability": "PASS_SEMANTIC_PRESERVATION_ONLY",
+      "quality": "PASS_PRESERVATION_ONLY",
+      "limits": [
+        "Only original accepted scope; appended package sections depend on their separate independent reviews; no new gates or broader full-page acceptance."
+      ]
+    }
+  ],
+  "limits": [
+    "Eight named Markdown style deltas only; concurrently appearing Forge Git-workspace appendix and generated-map changes excluded",
+    "Current complete rendered171Reader/search/browser checkpoint not accepted; parent owns renewed aggregate artifact observations",
+    "Existing release knip stop and failed publisher maintained Core fixture remain; no runtime/live/deployed proof",
+    "No new gate/requirement acceptance or blanket all-record/full-page/package-depth approval; parent must bind stable approved hashes to committed source before register renewal"
+  ],
+  "openIssues": []
+}
