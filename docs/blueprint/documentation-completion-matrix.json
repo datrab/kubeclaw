@@ -89,7 +89,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -166,7 +166,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947",
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
@@ -258,6 +258,22 @@
             "docs/blueprint/acceptance-evidence/vendor-archive-refresh-20261021/vendor-refresh-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
+          ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
           ]
         }
       ]
@@ -977,7 +993,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1160,13 +1176,29 @@
             "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
             "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/checks.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/understand/data-and-state.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473"
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1355,9 +1387,25 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "22d46485dc8fc2818805fb7946acae0e0479a947"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-reader-operators-20261020",
@@ -1634,7 +1682,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1871,13 +1919,30 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md",
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1981,9 +2046,25 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-reviewed-reference-20261020",
@@ -2124,7 +2205,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2246,13 +2327,29 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2397,13 +2494,29 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -2539,13 +2652,29 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/understand/data-and-state.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -2656,13 +2785,29 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -2847,9 +2992,26 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md",
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -3068,7 +3230,7 @@
     },
     {
       "id": "AP09-complete-public-cli-20261020",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "/root/review_example_publication",
       "reviewer": "/root/review_example_publication/review_cli_complete",
       "gateIds": [],
@@ -3167,9 +3329,25 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "322ec12435c7fd5915a35213cd9d5a0986a81fc4"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
@@ -3479,7 +3657,7 @@
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -3568,9 +3746,25 @@
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
             "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
@@ -4099,7 +4293,7 @@
     },
     {
       "id": "AP09-complete-state-content-20261021",
-      "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 state-final-review",
       "gateIds": [],
@@ -4257,7 +4451,26 @@
       "evidence": [
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
         "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json"
-      ]
+      ],
+      "impactReviews": [
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/understand/data-and-state.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
+        }
+      ],
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
     },
     {
       "id": "AP09-decision-record-content-20261021",
@@ -4335,7 +4548,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -4412,6 +4625,7 @@
         "scripts/runtime-tool-locks.mjs",
         "scripts/scan-runtime-images.sh",
         "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/docs-source-freshness.test.mjs",
         "scripts/tests/vendor-external-helm-authorities.test.mjs",
         "scripts/vendor-external-helm-authorities.mjs",
         "scripts/versions.mjs",
@@ -4523,9 +4737,25 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-specialists-whole-gate-20261021",
@@ -4645,7 +4875,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -4831,9 +5061,26 @@
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-artifact-review.json",
             "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/api-flow-final-pin-proof.json"
           ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md",
+            "scripts/docs-generate.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4"
     },
     {
       "id": "AP09-registry-data-path-20261021",
@@ -5715,6 +5962,519 @@
         "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/plugins-complete-review.json",
         "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/generated-closeout-scope.json",
         "docs/blueprint/acceptance-evidence/api-flow-configuration-fix-20261021/final-check-results.json"
+      ]
+    },
+    {
+      "id": "AP09-litellm-complete-data-contract-20261021",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "author": "Nova /root documentation author and correction coordinator",
+      "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
+      "gateIds": [],
+      "requirementIds": [
+        "DAT-006"
+      ],
+      "pages": [
+        "docs/site/understand/data-and-state.md",
+        "docs/site/use/recovery.md",
+        "docs/site/understand/pipeline-dependencies.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/pvc.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/prism/files/prism-backup.sh",
+        "charts/prism/templates/backup.yaml",
+        "charts/prism/templates/ingestion.yaml",
+        "charts/prism/templates/jobs.yaml",
+        "charts/prism/templates/postgresql.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.yaml",
+        "contracts/pipeline-test-gate/v1/src/types.ts",
+        "docker/Dockerfile.buster-runtime",
+        "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/manifest.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-upstream-manifest.json",
+        "docs/status/open-issues.json",
+        "gitops/platform/litellm/resources.yaml",
+        "gitops/platform/registry-local/resources.yaml",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/loki.yaml",
+        "gitops/platform/values/postgresql.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "gitops/platform/values/redis.yaml",
+        "my-values/buster-values.yaml",
+        "my-values/infra/litellm-config.yaml",
+        "my-values/infra/litellm-deployment.yaml",
+        "my-values/infra/postgresql-values.yaml",
+        "my-values/infra/redis-values.yaml",
+        "my-values/infra/registry-local.yaml",
+        "my-values/infra/registry-mirror.yaml",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "scripts/postgresql-recovery.sh",
+        "scripts/redis-prepare-migration.sh",
+        "scripts/registry-client-config.mjs",
+        "scripts/render-postgresql-recovery.mjs",
+        "skills/buster/engine/test-gates/artifacts.ts",
+        "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/buster/engine/test-gates/security-scan-runtime.ts",
+        "skills/buster/engine/test-gates/terminal-workspace.ts",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugins/artifact-store/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/config.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/run-root.ts",
+        "skills/nova/core/observability/reconciler.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/test-gates/production.ts",
+        "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "skills/nova/core/test-gates/remote-result-import.ts",
+        "skills/nova/pipeline.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/storage/index.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "tests/fixtures/litellm-database/provenance.json",
+        "tests/verification/deployment/postgresql-recovery-native.mts",
+        "tests/verification/deployment/prism-backup.test.mts",
+        "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+        "tests/verification/reliability/redis-migration.test.mts",
+        "versions.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)"
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "docs reference check passed (6032 local links, 3284 local anchors, 8317 repository path refs, 31887 pinned source links)"
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "documentation publication passed (167 pages, 51 plugins)"
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "documentation governance passed (167 pages mapped)"
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole LiteLLM PostgreSQL schema/migration authority, credentials/encryption inputs, pool/precedence/startup, upgrade, retention/capacity and backup/restore verification. Both reported revisions and four registry platform digest chains inspected; unsupported image-layer equality claim removed.",
+      "limits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "No filesystem-layer equality, publisher signature, application image execution, decryption round trip, migration success or live restore claimed."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/finished-reader-topics-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-whole-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json"
+      ]
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "author": "Nova /root documentation author and correction coordinator",
+      "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-003",
+        "PUB-009"
+      ],
+      "pages": [
+        "docs/site/reference/documentation-site.md",
+        "docs/site/README.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/extend/plugin-catalogue/README.md"
+      ],
+      "sources": [
+        ".github/workflows/docs-checks.yaml",
+        ".github/workflows/pipeline-reliability.yaml",
+        "contracts/telemetry/v1/catalog.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/platform/prism.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/documentation-route-registry.json",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/use/recovery.md",
+        "package.json",
+        "packaging/runtime/package-ownership.json",
+        "scripts/build-native-worker-nri.mjs",
+        "scripts/build-plugin-sandbox.mjs",
+        "scripts/check-core-architecture-guides.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/gitops-bundle.mjs",
+        "scripts/gitops-continuous.mjs",
+        "scripts/gitops-owner.mjs",
+        "scripts/gitops.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/nova/core/effects/identity.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/lifecycle/recovery-state.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/lifecycle/wait-request.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/review/package.json",
+        "skills/nova/plugins/review/src/stage.ts",
+        "skills/prism/package.json",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/storage/index.ts",
+        "skills/prism/studio/playwright.config.mjs",
+        "skills/prism/studio/vite.config.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
+        "tests/verification/deployment/gitops-release.test.mjs",
+        "tests/verification/deployment/prism-native-runtime.test.mjs",
+        "tests/verification/reliability/external-effect-recovery.test.mts",
+        "tests/verification/reliability/lifecycle.test.mts",
+        "tests/verification/reliability/worker-native-launcher.test.mts"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)"
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "docs reference check passed (6032 local links, 3284 local anchors, 8317 repository path refs, 31887 pinned source links)"
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "documentation publication passed (167 pages, 51 plugins)"
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "documentation governance passed (167 pages mapped)"
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole repository links/anchors/version-bound code evidence and canonical-versus-legacy reader navigation.71 platform bindings now point to explicit inspected source revisions and appropriate implementation ranges.",
+      "limits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "No rendered website routes, HTTP redirects, code preview widget, search or browser/accessibility result implied."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/finished-reader-topics-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-whole-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json"
+      ]
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "author": "Nova /root documentation author and correction coordinator",
+      "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-008",
+        "QUA-009"
+      ],
+      "pages": [
+        "docs/site/status/acceptance.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/testing.md",
+        "docs/site/extend/platform/README.md"
+      ],
+      "sources": [
+        ".github/workflows/auto-promote-runtime.yaml",
+        ".github/workflows/build-images.yaml",
+        ".github/workflows/build-ops-mcp.yaml",
+        ".github/workflows/dependency-updates.yaml",
+        ".github/workflows/docs-checks.yaml",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/promote-runtime.yaml",
+        ".github/workflows/publish-image-receipts.yaml",
+        ".github/workflows/release-security.yaml",
+        ".github/workflows/remediation-native.yaml",
+        ".github/workflows/role-images.yaml",
+        ".github/workflows/rollback-runtime.yaml",
+        ".github/workflows/update-checks.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "contracts/pipeline-observability/v1/go/go.mod",
+        "contracts/pipeline-observability/v1/go/go.sum",
+        "contracts/prism/v1/package.json",
+        "contracts/telemetry/v1/catalog.json",
+        "contracts/telemetry/v1/tests/contracts.test.mjs",
+        "docker/Dockerfile.buster-gateway",
+        "docker/Dockerfile.prism-agent",
+        "docker/archviewer.nginx.conf",
+        "docs/site/extend/platform/prism.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/use/recovery.md",
+        "go.mod",
+        "ops/pod/package.json",
+        "package-lock.json",
+        "package.json",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/nova.json",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+        "scripts/bootstrap-prism-tests.sh",
+        "scripts/build-native-worker-nri.mjs",
+        "scripts/build-plugin-sandbox.mjs",
+        "scripts/build-runtime-role-bundle.mjs",
+        "scripts/build-v2-plugins.mjs",
+        "scripts/check-ap08-effectful-guide.mjs",
+        "scripts/check-ap08-minimal-plugin.mjs",
+        "scripts/check-core-architecture-guides.mjs",
+        "scripts/check-erasable-typescript.mjs",
+        "scripts/check-runtime-package-ownership.mjs",
+        "scripts/check-runtime-role-manifests.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/gitops-bundle.mjs",
+        "scripts/gitops-continuous.mjs",
+        "scripts/gitops-owner.mjs",
+        "scripts/gitops.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/native-worker-node-preflight.mjs",
+        "scripts/package-agent-skill-bundle.sh",
+        "scripts/prepare-native-worker-pools.mjs",
+        "scripts/prepare-reliability-services.sh",
+        "scripts/reliability-tests.mjs",
+        "scripts/render-native-worker-node.mjs",
+        "scripts/run-lint-report.mjs",
+        "scripts/runtime-tool-locks.mjs",
+        "scripts/scan-runtime-images.sh",
+        "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/verify-plugin-packages.mjs",
+        "scripts/versions.mjs",
+        "skills/buster/engine/BOUNDARIES.md",
+        "skills/buster/engine/package.json",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/sdk/package.json",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugin-runtime/sdk/tsconfig.build.json",
+        "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-observer/package.json",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+        "skills/common/plugins/state-store/src/adapter.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/nova/core/effects/identity.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/lifecycle/recovery-state.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/lifecycle/wait-request.ts",
+        "skills/nova/core/state/file-mutex.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/plugins/blueprint-sync/plugin.json",
+        "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/lint/package.json",
+        "skills/nova/plugins/review/package.json",
+        "skills/nova/plugins/review/src/stage.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/integration/engine-capture-retention.mts",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/openclaw-plugin/index.test.mjs",
+        "skills/prism/openclaw-plugin/package.json",
+        "skills/prism/package.json",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/server/control.ts",
+        "skills/prism/server/database-roles.ts",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/storage/index.ts",
+        "skills/prism/studio/playwright.config.mjs",
+        "skills/prism/studio/vite.config.ts",
+        "skills/prism/tests/native/operation-http.mts",
+        "skills/prism/tests/native/operation-journal.mts",
+        "skills/prism/tests/native/worker-harness.mts",
+        "skills/worker/core/BOUNDARIES.md",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+        "tests/verification/contracts/check-nova-journal-scale.mts",
+        "tests/verification/contracts/check-pipeline-observability-contracts.mts",
+        "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+        "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
+        "tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs",
+        "tests/verification/contracts/check-prism-postgres-transactions.mts",
+        "tests/verification/contracts/check-production-receipt-attestation.mjs",
+        "tests/verification/deployment/gitops-release.test.mjs",
+        "tests/verification/deployment/native-worker-node.test.mjs",
+        "tests/verification/deployment/prism-native-runtime.test.mjs",
+        "tests/verification/integration/registry-local-gc.test.mjs",
+        "tests/verification/reliability/archviewer-native.test.mjs",
+        "tests/verification/reliability/external-effect-recovery.test.mts",
+        "tests/verification/reliability/lifecycle.test.mts",
+        "tests/verification/reliability/project-recovery-version.test.mjs",
+        "tests/verification/reliability/worker-native-launcher.test.mts",
+        "tests/verification/reliability/worker-native-scope-live.mts",
+        "tools/native-worker-nri/go.mod",
+        "tools/ops-mcp/package.json",
+        "tools/ops-mcp/src/authentication.mjs",
+        "tools/ops-mcp/src/config.mjs",
+        "tools/ops-mcp/test/kubernetes.test.mjs",
+        "tools/ops-mcp/test/local.test.mjs",
+        "tools/ops-mcp/test/policy_contract_test.py",
+        "tsconfig.base.json",
+        "versions.json"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-check.mjs",
+          "exitCode": 0,
+          "observation": "architecture presentation check passed (9 diagrams, 57 evidence boxes, 172 code links)\noperations evidence check passed (20 evidence boxes, 202 code links)\ndocs check passed (167 active markdown files)"
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "docs reference check passed (6032 local links, 3284 local anchors, 8317 repository path refs, 31887 pinned source links)"
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "documentation publication passed (167 pages, 51 plugins)"
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "documentation governance passed (167 pages mapped)"
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole authored Extension Developer and Platform/Core Developer reader paths: selection, local teaching journeys, host lifecycle boundaries, capability/event changes, Forge/Echo integration, GitOps and retained-state/change tasks. Current Source provenance corrected; declared deployment limits remain explicit.",
+      "limits": [
+        "Source-backed documentation and reader-contract acceptance only; no whole gate/global API inventory/generator/drift or rendered/live execution qualification.",
+        "Reader-contract review is not executed full deployed multi-persona workflow acceptance."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidence": [
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/finished-reader-topics-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-whole-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
+        "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json"
       ]
     }
   ],
@@ -11162,7 +11922,7 @@
         "scripts/postgresql-recovery.sh",
         "scripts/redis-prepare-migration.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-content-source-reader-quality-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -11201,7 +11961,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -11249,7 +12009,8 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
-      "closureDecision": {
+      "completionRecord": "AP09-litellm-complete-data-contract-20261021",
+      "previousClosureDecision": {
         "verdict": "NOT_READY",
         "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
         "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
@@ -21337,7 +22098,7 @@
       "pageOwner": null,
       "readerTask": "Links, Anker und revisionsgebundene Codebelege",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-content-source-reader-quality-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -21363,12 +22124,13 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L386",
-      "closureDecision": {
+      "completionRecord": "AP09-complete-publication-reference-navigation-20261021",
+      "previousClosureDecision": {
         "verdict": "FAIL",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- PUB-003 FAIL: full reference command exits 1; real current reader links include three dead Helm field anchors in understand/buster-namespace-controller.md. Many additional reports are scanner handling of Unicode line-range locators and historical captured trees, so do not call all diagnostics actual broken files. Built output route/asset/source-range verification also remains unestablished. documentation-site.md publisher SHA c5eeab7... and locators 713/831/993 are stale against current publisher SHA 4aeb4cca... and actual generate/check/build positions 780/898/1060.",
@@ -21631,7 +22393,7 @@
       "pageOwner": null,
       "readerTask": "Keine parallelen widersprüchlichen Altpfade",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-content-source-reader-quality-PASS",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -21657,12 +22419,13 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L392",
-      "closureDecision": {
+      "completionRecord": "AP09-complete-publication-reference-navigation-20261021",
+      "previousClosureDecision": {
         "verdict": "FAIL",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- PUB-009 FAIL: active plugin-catalogue/README.md:22 still exposes docs/blueprint/AP08-catalogue-guidance.json and an AP work-package identifier to readers; boundary checker confirms. Source-link authority can legitimately point to code, but readers should not need internal AP history. No exhaustive old-tree parity/deletion review performed.",
@@ -23370,7 +24133,7 @@
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-content-source-reader-quality-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -23400,7 +24163,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -23448,7 +24211,8 @@
       ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L427",
-      "closureDecision": {
+      "completionRecord": "AP09-complete-developer-reader-contracts-20261021",
+      "previousClosureDecision": {
         "verdict": "FAIL",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- QUA-008 — Leserprobe Extension Developer: FAIL. SA FAIL / RU FAIL / Q PASS for sampled teaching structure. Minimal plugin tutorial/advanced effect paths have real previous positive scoped checks. However the central extension testing route specifies the wrong current host release, and its linked supported same-ID replacement route omits mutually exclusive discovered package roots. Actual registry construction rejects duplicate IDs before activation, so add-new-before-disable-old is not a complete usable replacement procedure. Historical AP08 PASS cannot cover these current whole-route defects. F2/F5.",
@@ -23469,7 +24233,7 @@
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-content-source-reader-quality-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -23499,7 +24263,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -23580,7 +24344,8 @@
         "report": "/home/node/Documents/Codex/a98-evidence/ap98-finding-evidence-reconciliation/report.md",
         "scope": "Remove only closed authored defect identities; do not set requirement accepted or waive wider/manual/execution/generated-content proof."
       },
-      "closureDecision": {
+      "completionRecord": "AP09-complete-developer-reader-contracts-20261021",
+      "previousClosureDecision": {
         "verdict": "FAIL",
         "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
         "reason": "- QUA-009 — Leserprobe Platform/Core Developer: FAIL. SA FAIL / RU FAIL / Q PASS for sampled route organization. Router now exists and many component-specific paths are strong; however capability introduction/activation/retirement and full Forge/Echo host/model/lost-response tasks are explicitly not supplied, and manual Ops promotion instructions misstate direct-main versus PR authority. This is materially incomplete supported developer workflow, not a requirement that missing product recovery become implemented first. F3.",
@@ -37783,12 +38548,12 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
-      "acceptedRequirements": 195,
+      "securedSourceRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "acceptedRequirements": 200,
       "acceptedGates": 13,
-      "newRequirementsThisCampaign": 36,
+      "newRequirementsThisCampaign": 41,
       "newGatesThisCampaign": 2,
-      "nextWork": "Continue whole ready-topic reviews; resolve actual global discovery/generation, workflow and rendered publication gaps without broadening mechanical maintenance acceptance.",
+      "nextWork": "61 content obligations and76 gates remain open. Continue actual global API/configuration discovery/generation fixes, supported executable workflow tasks and rendered publication/reader validation. Reuse completed whole-topic reviews; do not count bounded metadata or source-purpose checks as missing whole gates.",
       "codeCandidate": "Core fixed-module receipt plus five exact dependent role propagations independently PASS.58/58 documentation roles and52/52 custody/publication tests PASS; whole global discovery still blocked by495unknown outputs. Code candidate6abafbbc.",
       "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
