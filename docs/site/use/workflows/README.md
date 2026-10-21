@@ -3,9 +3,9 @@
 Status: workflow task index; full wait/resume lifecycle and deployment execution open
 Audience: pipeline authors and operators
 Owner: product integration maintainers
-Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md
+Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md
 Applies to: pipeline workflow selection; each guide states its contracts and execution prerequisites
-Last verified: 2026-10-20; first-project local compilation and greeting assertion; other journey boundaries stated separately; no full project execution or deployment evidence
+Last verified: 2026-10-20; first-project local compilation and greeting assertion; other journey boundaries stated separately; no full project execution or deployment evidence; task routing source-checked 2026-10-21
 
 Use these guides to bind a pipeline task to its inputs, durable state, result
 authority, and cleanup. A **wait** is a persisted request for a later decision.
@@ -20,6 +20,9 @@ new stage attempt; it does not change the result of the earlier attempt.
 | Run a Buster suite with a fixture, matrix, and report | [Run a Buster Suite](buster-suite.md) | Use that guide's declared local and deployment checks. |
 | Prepare and release a Kubernetes fixture | [Prepare and Release a Kubernetes Fixture](kubernetes-fixture.md) | Separates local plan validation from deployed fixture lifecycle. |
 | Deliver a demo and request human acceptance | [Deliver a Demo](../demo-delivery.md#canonical-demo-delivery-procedure) | Local contract rehearsal and explicit live-delivery prerequisites. |
+
+| Diagnose an uncertain external effect | [Lost Responses and Uncertain Effects](../diagnose.md#lost-responses-and-uncertain-effects), then [Pipeline State Recovery](../recovery.md#pipeline-state-recovery) | Preserve stopped-writer raw state before audit; match the original request, resource and receipt through an authorized owner read. Stop while the outcome or supported reconciliation path remains unknown. |
+| Activate, replace, or remove a plugin | [Canonical Plugin Lifecycle Procedure](../plugins.md#canonical-plugin-lifecycle-procedure) | Separate package discovery, configuration/grant admission, actual activation/result, drain and retained state. The procedure routes OpenClaw and Codex hosts to their own controls; no generic install/remove CLI or deployed proof is implied. |
 
 ## Materialize and compile a first project
 

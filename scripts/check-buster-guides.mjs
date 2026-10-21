@@ -47,7 +47,7 @@ const specifications = [
   },
   {
     file: 'docs/site/use/workflows/buster-suite.md', minimumLinks: 6, revision,
-    additionalRevisions: ['d271cf712e1f882c0c64e0c6d9e8a5cd36f18508', '5de04728653e7b4c350850e5fbeb6218b25ba5c3'],
+    additionalRevisions: ['d271cf712e1f882c0c64e0c6d9e8a5cd36f18508', '5de04728653e7b4c350850e5fbeb6218b25ba5c3', '4dc3ff5829f3298a4d04148216e4e7da9b20c49b'],
     required: ['## Supported Execution Paths', '## Before You Start', '## 1. Start From The Maintained Example',
       'buster-fixture-matrix-report.pipeline.json', '## 2. Make The Decision Explicit',
       '## 3. Link Outputs Instead Of Sharing Paths', '## 4. Resolve Before You Run',

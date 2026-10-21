@@ -3,10 +3,10 @@
 Status: Nova v2 and OpenClaw agent-observability v1 producers are active; retained telemetry v1 has no active runtime producer or consumer
 Audience: runtime developer, observer author, operator, security reviewer
 Owner: observability maintainers
-Evidence: skills/nova/core/telemetry; skills/common/plugins/openclaw-agent-observer; contracts/agent-observability/v1; skills/common/plugins/telemetry-observer; skills/common/plugins/telemetry-store; skills/common/plugins/redis-transport; contracts/telemetry/v1
+Evidence: skills/common/plugins/notification-observer; skills/nova/core/telemetry; skills/common/plugins/openclaw-agent-observer; contracts/agent-observability/v1; skills/common/plugins/telemetry-observer; skills/common/plugins/telemetry-store; skills/common/plugins/redis-transport; contracts/telemetry/v1
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, OpenClaw agent-observability ingress v1, and retained telemetry v1 assets
-Last verified: contract, runtime, plugin, chart configuration, and focused-test inspection on 2026-09-21
+Last verified: contract, runtime, plugin, chart configuration, and focused-test inspection on 2026-09-21; notification package section source/test checked 2026-10-21 only; original other-scope dates unchanged; no deployed notification claim
 Scoped source correction: 2026-10-21 against `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; agent projection/host-ingress catalogues reconciled; no deployed end-to-end delivery claim.
 
 ## Purpose
@@ -1634,3 +1634,129 @@ Do not claim that this activates v1 in the runtime.
 - [Deployment and Trust](deployment-and-trust.md) separates evidence from logs, metrics, and transport.
 - [Contracts](../extend/contracts.md) explains observer authoring and checkpoints.
 - [Back up and recover](../use/recovery.md) gives the operator recovery sequence.
+
+## Notification Observer: Lifecycle Summaries and Artifact Previews
+
+`kubeclaw.notification-observer` consumes committed events; it does not create
+stage outcomes, approve a run, or fetch an artifact body. Its two registrations
+have separate activation, grants, delivery attempts and checkpoints. Select the
+exact registration and an `operator.request` provider in the platform; grant
+that registration its intended operator target. The selected messaging provider
+owns endpoint configuration, credentials and transport receipts. A notification
+receipt is not stage success or human acceptance.
+
+### Configuration and lifecycle projection
+
+Both registrations use the same closed config schema. `target` is a nonempty
+string when present; the schema does not require it, but publishing without a
+nonempty target throws `NOTIFICATION_TARGET_INVALID`. There is no default
+target. For `notifications`, optional `pipelineLabel` and `modelLabel` are
+1–256 characters. `stageLabels` maps at most 256 stage IDs (1–512 characters)
+to labels of 1–256 characters. `maxMessageChars` is an integer from 256 to
+8,192; omission selects 8,192. `suppressEventTypes` contains at most 64 unique
+nonempty strings of at most 128 characters. Exact type membership suppresses
+the lifecycle callback before target validation or any capability invocation;
+this is intentional nonpublication, not proof that a receiver accepted a message.
+
+For each nonsuppressed subscribed event, `notifications` publishes this display
+projection:
+
+- Original `type`, `eventId`, `runId`, nullable `stageId`, and optional string
+  `occurredAt` retain event correlation, not a new lifecycle identity.
+- `severity` is `success` for run/stage success, `error` for run/stage failure,
+  `info` for starts and skipped stages, and `warning` for blocked, cancelled,
+  retrying, waiting and orchestrator-required events.
+- `title` names the lifecycle outcome. A stage title uses its configured label
+  or title-cased stage ID; a string `payload.agentRole` adds a title-cased role
+  prefix. Stage success reads “passed”. The combined title is at most 512
+  characters.
+- `summary` selects `payload.summary ?? payload.message`, then falls back to
+  the title if the selected value is not a nonempty string. It preserves tabs,
+  line feeds and carriage returns, replaces other ASCII control characters with
+  spaces, and truncates to `maxMessageChars` including the final ellipsis.
+- `reasonCode` takes the first non-nullish value among `payload.reasonCode`,
+  `payload.reason_code` and `payload.reason.code`; it accepts a nonempty string,
+  normalizes controls and bounds it to 256 characters, otherwise emits null.
+- `fields` contains Run ID, Stage when present, and the configured Model when
+  present. `footer` combines the bounded pipeline label (default `KubeClaw
+  Pipeline`) and run ID. Labels normalize ASCII control characters to spaces.
+
+These are bounded display strings, **not a secret-redaction guarantee** for
+free-text summaries or labels. The callback does not run the source file's
+unused recursive `sanitize` helper. Keep secrets out of producer summaries and
+configuration; retain the complete original diagnostic under its proper journal
+access controls rather than forwarding it as notification text.
+
+> **Source evidence — configuration and lifecycle shaping**
+>
+> [The closed config schema fixes optional fields and limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/schemas/config.schema.json#L1-L23).
+>
+> [Target validation and the two distinct text normalizers](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L48-L69).
+>
+> [Reason selection and stage/title/field presentation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L82-L118).
+>
+> [Lifecycle output construction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L119-L145).
+
+### Artifact preview projection
+
+`preview-delivery` receives `artifact.created` and publishes
+`type: preview.artifact.available`. It preserves `eventId`, `runId`, nullable
+`stageId`, and the event identity's `artifactId` or null. Its nested `artifact`
+contains only `artifactId` (512-character bound), `digest` (256), `mediaType`
+(256) and `logicalName` (512), with missing or invalid strings represented as
+null. A non-array object at `payload.artifact` supplies these values; otherwise
+the callback uses the event payload itself. The nested artifact ID falls back
+to the identity when its payload value is nullish. Both IDs can therefore differ;
+this callback does not establish artifact integrity or fetch authorization.
+
+Extra metadata and artifact body fields do not enter this projection. The
+callback neither reads the blob nor verifies its digest. Use the canonical
+artifact reference, producer identity and authorized artifact store for those
+checks. Lifecycle-only options (`suppressEventTypes`, labels and
+`maxMessageChars`) do not affect `preview-delivery`, despite the shared config
+schema. Its target still needs its own configuration and grant.
+
+> [The preview projection and shared publish request show the exact metadata allowlist and operator.target resource](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L146-L173).
+>
+> [Only the lifecycle callback applies suppression and presentation options](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/src/observer.ts#L174-L199).
+
+### Failure, recovery and changes
+
+Both callbacks await `operator.request` with `operation: publish` and resource
+`{type: operator.target, canonicalId: target}`; neither catches provider errors
+or owns a private retry queue. Missing target, denied grant, rejected payload,
+secret resolution failure, timeout or transport failure propagates to the
+observer attempt. Follow [observer delivery, checkpoints and recovery](#observer-delivery-checkpoints-and-recovery)
+and the [failure matrix](#failure-and-recovery-matrix): preserve the canonical
+event and original delivery/effect/receipt identities, inspect the selected
+provider's receipt for a lost acknowledgement, and repair that binding before
+owned recovery. Do not resend with a new identity to clear an uncertain result
+or hand-edit a checkpoint. Best effort is not a delivery-success assertion.
+
+The package stores no notification history itself. Core owns delivery journals
+and the checkpoint (`sequence`, nullable `eventId`); the selected provider owns
+its separate retained delivery state. Removing an observer does not authorize
+deleting canonical events or a provider's receipts. Drain and preserve the
+owning runtime's state through the supported lifecycle procedure before changing
+activation or target authority.
+
+For a change, update the exact callback, shared config/checkpoint schema and
+manifest subscriptions/policy together when their contracts change. Keep the
+two output contracts and grants separate. Check the selected messaging parser
+and actual transport formatter for added keys, bounds and presentation changes;
+a formatter may shorten the display further. Run from the package directory:
+
+```sh
+npm test
+```
+
+The suite checks lifecycle parity, bounded summaries, suppression and preview
+metadata filtering; its local HTTP fixture activates the actual notification,
+operator-messaging, network-http and secret-resolver chain, drains real file
+journals, checks three messages and checkpoints, and verifies a second drain
+sends none. It also checks package boundaries. This fixture does not demonstrate
+a deployed receiver, process-crash recovery or an exhausted-retry scenario.
+Retain the generic [observer/sink change checklist](#add-an-observer-or-sink)
+for those additional obligations when changing delivery behavior.
+
+> [The local fixture checks real delivery, checkpoint deduplication and authoritative audit before owned cleanup](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/tests/live-function.test.ts#L104-L141).
