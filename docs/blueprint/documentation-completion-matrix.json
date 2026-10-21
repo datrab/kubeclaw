@@ -7690,6 +7690,71 @@
         "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
       ],
       "openIssues": []
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "revision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+      "author": "Nova /root documentation author and implementation coordinator",
+      "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
+      "verdict": "PASS",
+      "requirementIds": [
+        "PUB-006"
+      ],
+      "gateIds": [
+        "A912-10"
+      ],
+      "pages": [
+        "docs/site/reference/documentation-site.md",
+        "docs/site/README.md",
+        "docs/site/use/recovery.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sources": [
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-observations.json",
+        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/browser-harness-and-provenance.json",
+        "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/committed-output-observation.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json"
+      ],
+      "summary": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json"
+      },
+      "checks": [
+        {
+          "command": "Actual retained Chromium151/Playwright1.62.1 static-offline-layout-qa source with local portable fonts/libraries",
+          "exitCode": 0,
+          "observation": "Same actual ef68977e reader artifact/manifestSHA2ec1f19d3f0d73bdcad69059b25ee3d252078c0eb91bd71d6398a3ba48c54738.501checks=167pages×320/768/1440;CSSloaded,nohorizontal pageoverflow;1275tables/765codeblocks/603callouts/27staticMermaid blocks perviewport retained.0findings/0externalnetwork attempts."
+        },
+        {
+          "command": "Actual file:// critical role/native-keyboard fallback journeys with appJavaScript/network disabled,touch-nohover,reducedmotion and forcedcolors",
+          "exitCode": 0,
+          "observation": "Operator,plugin,platform,pipeline task routes×3widths retain readable prerequisites/commands/limits;nativeTab+Enter skip,focused-linkEnter navigation,Space disclosures.3noJSsearch notices/native-navfall backs.12optionalJSlocal-file search questions expectedTop3.27journey/search observations PASS;no product command executed."
+        },
+        {
+          "command": "Retained committed build/hash/Source verification and84-test original regressions, reused because production inputs unchanged",
+          "exitCode": 0,
+          "observation": "Whole A91209 proof preserved:167canonical/176HTML/179digests/36698localtargets/14401Source locators;currentreader files/outputhashes independentlymatched. No redundant rebuild/test of unchanged code."
+        }
+      ],
+      "limits": [
+        "Static browser/navigation/read-action-selection acceptance only, not execution of recovery/plugin/platform/pipeline product commands.",
+        "No fresh-person user study or human screenreader trial; no PUB007/A91208 acceptance.",
+        "Mermaid remains static code plus text alternative; no rendered visual interpretation or A91206/A91207 promotion from DOM metrics.",
+        "Whole PUB006/A91210 only; all other runtime/globalAPI/hosting/publication boundaries preserved."
+      ],
+      "openIssues": []
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -23508,19 +23573,28 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L389",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- PUB-006 NOT_READY: current output route is static Markdown with no interactive architecture view. Optional interaction is not required merely to close an item. However a current successful output build and actual static/offline fallback task verification were not established here; do not infer a rendered/no-script PASS from Markdown source alone.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+        "reason": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+        "completionRecord": "AP09-complete-static-offline-fallback-20261021"
+      },
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- PUB-006 NOT_READY: current output route is static Markdown with no interactive architecture view. Optional interaction is not required merely to close an item. However a current successful output build and actual static/offline fallback task verification were not established here; do not infer a rendered/no-script PASS from Markdown source alone.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-complete-static-offline-fallback-20261021"
     },
     {
       "id": "PUB-007",
@@ -28340,11 +28414,19 @@
       "id": "A912-10",
       "passCondition": "Kritische Aufgaben bleiben ohne JavaScript, externe Netzwerkverbindung, Hover oder Farbe verständlich; optionale Interaktivität besitzt statischen Fallback.",
       "automaticFailure": "Inhalt existiert ausschließlich in Clientzustand oder Tooltip.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "closureHistory": [],
+      "completionRecord": "AP09-complete-static-offline-fallback-20261021",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+        "reason": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+        "completionRecord": "AP09-complete-static-offline-fallback-20261021"
+      }
     },
     {
       "id": "A912-11",
@@ -39800,45 +39882,40 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
-      "acceptedRequirements": 201,
-      "acceptedGates": 15,
-      "newRequirementsThisCampaign": 42,
-      "newGatesThisCampaign": 4,
-      "nextWork": "Review existing actual no-JS/static/offline reader fallback against whole PUB-006 before new feature work; then remaining publication preview/diagram/accessibility boundaries and global build-runtime-role-bundle.mjs:74. Refresh stale Helm language through its owner once global input coverage permits.60contents/74gates remain unwaived.",
-      "codeCandidate": "ef68977e; typedSource locators/full commits, metadata-header owner fix withall167headers, complete actual primary-source/built-HTML check.84/84tests PASS.",
+      "securedSourceRevision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+      "acceptedRequirements": 202,
+      "acceptedGates": 16,
+      "newRequirementsThisCampaign": 43,
+      "newGatesThisCampaign": 5,
+      "nextWork": "Same-revision build-read code previews (PUB004/A91205) and actual rendered diagrams with source/owner/text alternatives (PUB005/A91206) remain unimplemented or unaccepted. Inspect owning representation before implementation; keep user-approved reader layout. Global build-runtime-role-bundle.mjs:74 and three stale Helm phrases remain open.59contents/73gates unwaived.",
+      "codeCandidate": "Unchanged ef68977e reader artifact;no production code/allowlist/nativepurpose changes for evidence-only fallback closeout.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
-      "publication": "Whole PUB002/A91204/A91209 accepted:167canonical pages;12reader questions×3widths top3;176HTML/179hashes/36698localtargets;14401Source locators/3723objects including118upstream files/11repos. No all-semantic/human-screenreader/hosting claim.",
-      "scope": "201/261contents,15/89gates. Negative/historical evidence preserved; Source projection separate from product effects.",
+      "publication": "Whole PUB002/PUB006/A91204/A91209/A91210 accepted.501offline static page×width checks;4criticalrolejourneys×3widths;12local-file offline search questions.27journey/search observations,0findings/0external requests. No humanScreenReader/rendereddiagram/freshuser/livehosting claim.",
+      "scope": "202/261contents,16/89gates. Source projection and local reader fallback kept separate from live product effects.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
-        "result": "Clean whole A91209 Source/Reader/Quality verdict and narrow 21-record changed-Source impact verdict.",
-        "limit": "Earlier facts/limits preserved for changed boundaries only, not broader historical/runtime/hosting approval."
+        "report": "docs/blueprint/acceptance-evidence/static-offline-fallback-20261021/independent-closeout-review.json",
+        "result": "Clean wholePUB006/A91210 Source/Reader/Quality verdict, actual browser/output hashes matched and critical task prose inspected.",
+        "limit": "Not broader historical, product execution, freshperson/screenreader or rendereddiagram/layoutgate approval."
       },
       "checks": [
         {
-          "command": "node scripts/docs-check-refs.mjs",
+          "command": "Actual retained Chromium151/Playwright1.62.1 static-offline-layout-qa source with local portable fonts/libraries",
           "exitCode": 0,
-          "observation": "6032local links,3284local anchors,8334repository paths,31892pinned Source links checked in repository."
+          "observation": "Same actual ef68977e reader artifact/manifestSHA2ec1f19d3f0d73bdcad69059b25ee3d252078c0eb91bd71d6398a3ba48c54738.501checks=167pages×320/768/1440;CSSloaded,nohorizontal pageoverflow;1275tables/765codeblocks/603callouts/27staticMermaid blocks perviewport retained.0findings/0externalnetwork attempts."
         },
         {
-          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs",
+          "command": "Actual file:// critical role/native-keyboard fallback journeys with appJavaScript/network disabled,touch-nohover,reducedmotion and forcedcolors",
           "exitCode": 0,
-          "observation": "Actual committed candidateef68977e:167pages,176HTML,179byte hashes,36698local link/anchor/asset/script targets;12reader queries/167canonical index PASS."
+          "observation": "Operator,plugin,platform,pipeline task routes×3widths retain readable prerequisites/commands/limits;nativeTab+Enter skip,focused-linkEnter navigation,Space disclosures.3noJSsearch notices/native-navfall backs.12optionalJSlocal-file search questions expectedTop3.27journey/search observations PASS;no product command executed."
         },
         {
-          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "command": "Retained committed build/hash/Source verification and84-test original regressions, reused because production inputs unchanged",
           "exitCode": 0,
-          "observation": "All176actual digest-verified HTML files;14401unique Source links,3723objects. Local Git actual full commits/types/regular modes/blobbytes or tree objects;118upstream primary files fetched directly over fixed HTTPS full-commit routes across11repos. All requested line/Markdown-anchor bounds valid;0stderr."
-        },
-        {
-          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs",
-          "exitCode": 0,
-          "observation": "84/84PASS including actual missing/symlink/type/range/revision/origin negative controls, primary-byte fragment caching, digest-consistent broken rendered fragment/script, and all167real metadata headers."
+          "observation": "Whole A91209 proof preserved:167canonical/176HTML/179digests/36698localtargets/14401Source locators;currentreader files/outputhashes independentlymatched. No redundant rebuild/test of unchanged code."
         }
       ]
     }
