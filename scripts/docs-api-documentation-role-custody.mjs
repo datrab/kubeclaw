@@ -1840,7 +1840,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "795996240c13104846d4c05b22aac786fab6cf98efba41f9f6cfc88c0ca60b2b",
+    "factsDigest": "6b19575df5e2c693272e200942a49c0236cbba6dc55a278709a943b623086505",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -1943,7 +1943,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "4a66e071b00308324b2e518911e3eb2f2886a7688e0fcd5c2807a3316db60425",
+    "factsDigest": "eb1576887e0cf2e9799e850d2b8e78070b022f1067fe29016f26ac4c97749416",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -6150,12 +6150,12 @@ const reviewedRootSelectedCompilerRecipe=frozenRecipes({
 });
 const reviewedSdkGeneratorRecipe=frozenRecipes({
   "source": "scripts/docs-generate.mjs",
-  "sourceSha256": "a53639f5f4ebe5acd3178d0ddfa8e1f1fb9cc1ce4dd5119cac93584a19ec90f9",
+  "sourceSha256": "6613603360000ba2c50777ab6c6c83c2f58f5b8af1cff5a9439a8ecad9a89e95",
   "importSyntax": "import { generateSdkReference } from './docs-sdk-reference.mjs';",
   "importSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12",
   "targetSourceSha256": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
   "owner": "stableWriteMap",
-  "ownerSyntaxSha256": "00701486613a3d64569d250570a45df3a5390e17b9bdec7ccb4e2810e94548a6",
+  "ownerSyntaxSha256": "6a764bda19b0dddc21740070f779af1c20e5df231ee1ba31d71ec2619b313192",
   "callSyntax": "generateSdkReference({ root, revision: sourceRevision })",
   "callSha256": "a0cc7099f51ec4b07ba83d39237ddaa8ca33916145c8e15ac55a213790897a53",
   "resultSlots": {
