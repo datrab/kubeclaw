@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -20,17 +20,19 @@
         "docs/site/understand/codex-integration.md"
       ],
       "sources": [
-        "scripts/docs-publication.mjs",
-        "scripts/check-capability-drift.mjs",
-        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
-        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
-        "skills/nova/core/execution/authorization.ts",
-        "skills/nova/core/execution/context.ts",
-        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "charts/ops-pod/templates/rbac.yaml",
         "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
         "contracts/pipeline-worker-core/v1/src/validation.ts",
-        "charts/ops-pod/templates/rbac.yaml",
-        "plugins/kubeclaw-ops/.codex-plugin/plugin.json"
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "scripts/check-capability-drift.mjs",
+        "scripts/docs-publication.mjs",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/context.ts"
       ],
       "checks": [
         {
@@ -67,6 +69,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -138,12 +145,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -170,6 +185,8 @@
       "sources": [
         "docs/README.md",
         "docs/blueprint/05-decision-record-catalogue.md",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/site/README.md",
@@ -237,6 +254,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -431,12 +453,20 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -478,61 +508,63 @@
         "docs/site/extend/README.md"
       ],
       "sources": [
-        "packaging/runtime/roles/nova.json",
-        "packaging/runtime/roles/buster.json",
-        "packaging/runtime/roles/prism.json",
-        "skills/nova/pipeline.ts",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/site/understand/request-state-recovery.md",
-        "skills/nova/project/cli.ts",
-        "skills/nova/project/compiler.ts",
-        "skills/nova/project/source.ts",
-        "skills/nova/core/execution/graph.ts",
-        "skills/nova/core/execution/graph-build.ts",
-        "skills/nova/core/execution/pipeline-loop.ts",
-        "skills/nova/core/execution/runner.ts",
-        "skills/nova/core/execution/stage-executor.ts",
-        "skills/nova/core/execution/context.ts",
-        "skills/nova/core/execution/lease.ts",
-        "skills/nova/core/lifecycle/reducer.ts",
-        "skills/nova/core/lifecycle/recovery.ts",
-        "skills/nova/core/lifecycle/recovery-state.ts",
-        "skills/nova/core/lifecycle/repair-budget.ts",
-        "skills/nova/core/lifecycle/repair-authorization.ts",
-        "skills/nova/core/lifecycle/wait-request.ts",
-        "skills/nova/core/execution/engine-run.ts",
-        "skills/nova/core/execution/engine-admin.ts",
-        "skills/nova/core/execution/engine-snapshots.ts",
-        "skills/nova/core/execution/effect-recovery.ts",
-        "skills/nova/plugins/prism-design/src/stage.ts",
-        "skills/common/plugins/operator-messaging/src/payload.ts",
-        "skills/nova/core/effects/durable-invocation.ts",
-        "skills/nova/core/execution/artifact-checkpoints.ts",
-        "skills/nova/core/execution/run-mutation.ts",
-        "skills/nova/core/state/journal.ts",
-        "skills/nova/core/telemetry/audit.ts",
-        "skills/nova/core/telemetry/observers.ts",
-        "skills/nova/core/telemetry/observer-delivery.ts",
-        "skills/nova/core/test-gates/remote-dispatch.ts",
-        "skills/nova/core/test-gates/dispatch-operation.ts",
-        "skills/nova/core/test-gates/remote-result-import.ts",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
-        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
-        "skills/common/plugin-runtime/foundation/registry/digest.ts",
-        "skills/common/plugin-runtime/foundation/registry/build.ts",
-        "skills/common/plugin-runtime/foundation/registry/schema.ts",
-        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
-        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
-        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
-        "skills/common/plugin-runtime/foundation/registry/activation.ts",
-        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
-        "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
-        "skills/common/plugin-runtime/foundation/packages/install.ts",
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
         "skills/common/plugin-runtime/foundation/isolation/runner.ts",
         "skills/common/plugin-runtime/foundation/isolation/session.ts",
-        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
-        "skills/nova/core/execution/authorization.ts",
+        "skills/common/plugin-runtime/foundation/packages/install.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/digest.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugins/operator-messaging/src/payload.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
         "skills/nova/core/execution/adapter-startup.ts",
-        "skills/nova/core/execution/engine-runtime.ts"
+        "skills/nova/core/execution/artifact-checkpoints.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/execution/graph.ts",
+        "skills/nova/core/execution/lease.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/execution/run-mutation.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/lifecycle/recovery-state.ts",
+        "skills/nova/core/lifecycle/recovery.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/lifecycle/repair-authorization.ts",
+        "skills/nova/core/lifecycle/repair-budget.ts",
+        "skills/nova/core/lifecycle/wait-request.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/test-gates/dispatch-operation.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/core/test-gates/remote-result-import.ts",
+        "skills/nova/pipeline.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/source.ts"
       ],
       "checks": [
         {
@@ -584,6 +616,11 @@
           "command": "Independent source/reader review of28 named requirements",
           "exitCode": 0,
           "observation": "Each PASS;63 local file targets exist and19 local Markdown anchors resolve."
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -663,7 +700,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revisionHistory": [
+        {
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedFiles": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        }
+      ]
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
@@ -814,7 +861,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -836,33 +883,35 @@
         "docs/site/understand/worker-core.md"
       ],
       "sources": [
-        "contracts/pipeline-worker-core/v1/src/types.ts",
         "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
         "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+        "contracts/pipeline-worker-core/v1/src/types.ts",
         "contracts/pipeline-worker-core/v1/src/validation.ts",
-        "skills/worker/core/worker/local-runtime.ts",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "scripts/docs-check-refs.mjs",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/server/native-worker-execution.ts",
         "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/local-runtime.ts",
         "skills/worker/core/worker/log-decoder.ts",
         "skills/worker/core/worker/native-attempt-executor.ts",
-        "skills/worker/core/worker/native-supervisor-authority.ts",
-        "skills/worker/core/worker/native-worker-launcher.c",
-        "skills/worker/core/worker/native-worker-process.ts",
-        "skills/worker/core/worker/native-process-control.ts",
-        "skills/worker/core/worker/native-control-channel.ts",
-        "skills/worker/core/worker/native-output-spool.ts",
-        "skills/worker/core/worker/native-resource-pool.ts",
-        "skills/worker/core/worker/resource-reservations.ts",
-        "skills/worker/core/worker/native-resource-observation.ts",
-        "skills/worker/core/worker/native-resource-scope.ts",
-        "skills/worker/core/worker/ownership-store.ts",
-        "skills/worker/core/worker/ownership-state.ts",
-        "skills/worker/core/worker/native-worker-ownership.ts",
         "skills/worker/core/worker/native-attempt-journal.ts",
         "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/native-process-control.ts",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
         "skills/worker/core/worker/native-result.ts",
-        "skills/prism/server/native-worker-execution.ts",
-        "skills/prism/config/native-worker.ts",
-        "scripts/docs-check-refs.mjs"
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/worker/core/worker/native-worker-process.ts",
+        "skills/worker/core/worker/ownership-state.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "skills/worker/core/worker/resource-reservations.ts"
       ],
       "checks": [
         {
@@ -894,6 +943,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -975,12 +1029,20 @@
             "docs/site/understand/worker-core.md"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1034,6 +1096,8 @@
         "docker/Dockerfile.nova",
         "docker/archviewer.nginx.conf",
         "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "gitops/platform/values/alloy.yaml",
@@ -1123,6 +1187,11 @@
           "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -1193,12 +1262,20 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
           "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+          "changedFiles": [
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -1223,35 +1300,37 @@
         "docs/site/understand/deployment-and-trust.md"
       ],
       "sources": [
-        "skills/nova/core/test-gates/remote-dispatch.ts",
-        "skills/nova/core/test-gates/remote-result-import.ts",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/prism/templates/networkpolicy.yaml",
+        "contracts/agent-observability/v1/src/constants.ts",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "gitops/platform/values/prometheus.yaml",
+        "my-values/infra/redis-values.yaml",
+        "scripts/check-platform-specialist-guides.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/redis-prepare-migration.sh",
         "skills/buster/engine/test-gates/remote-plan-service.ts",
-        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
         "skills/common/plugins/redis-transport/src/adapter.ts",
         "skills/common/plugins/redis-transport/src/exchange.ts",
         "skills/common/plugins/redis-transport/src/stream-identity.ts",
-        "scripts/redis-prepare-migration.sh",
-        "my-values/infra/redis-values.yaml",
-        "skills/nova/core/state/journal.ts",
-        "skills/nova/core/execution/engine-snapshots.ts",
-        "skills/nova/core/effects/journal.ts",
-        "skills/worker/core/worker/native-attempt-journal.ts",
-        "skills/worker/core/worker/ownership-store.ts",
-        "skills/worker/core/worker/native-output-spool.ts",
-        "skills/nova/core/telemetry/observers.ts",
-        "skills/nova/core/execution/runner.ts",
         "skills/common/plugins/telemetry-observer/src/observer.ts",
         "skills/common/plugins/telemetry-store/src/adapter.ts",
-        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
-        "contracts/agent-observability/v1/src/constants.ts",
-        "charts/kubeclaw/templates/configmap-gateway.yaml",
-        "gitops/platform/values/prometheus.yaml",
-        "scripts/lib/docs-markdown-anchors.mjs",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/core/test-gates/remote-result-import.ts",
         "skills/prism/tests/artifact-durability.test.mts",
-        "scripts/generate-telemetry-contracts.mjs",
-        "scripts/check-platform-specialist-guides.mjs",
-        "charts/prism/templates/networkpolicy.yaml",
-        "scripts/docs-check-refs.mjs"
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-control-channel.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/ownership-store.ts"
       ],
       "checks": [
         {
@@ -1273,6 +1352,11 @@
           "command": "Remote result import decisions",
           "exitCode": 0,
           "observation": "7 decisions passed; trust/evidence checked before import."
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -1399,11 +1483,21 @@
           ]
         }
       ],
-      "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473"
+      "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedFiles": [
+            "docs/site/understand/deployment-and-trust.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        }
+      ]
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1431,6 +1525,8 @@
         "charts/kubeclaw/files/config/knip.json",
         "docker/nova-tools/package-lock.json",
         "docker/nova-tools/package.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/site/reference/generated-documentation-map.json",
@@ -1509,6 +1605,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -1707,6 +1808,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -2973,7 +3082,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2996,6 +3105,8 @@
         "docs/site/product-surfaces.md"
       ],
       "sources": [
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-publication-manifest.json",
@@ -3045,6 +3156,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -3222,12 +3338,20 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -3246,43 +3370,45 @@
         "docs/site/understand/worker-core.md"
       ],
       "sources": [
-        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
-        "packaging/runtime/roles/nova.json",
-        "packaging/runtime/roles/buster.json",
-        "packaging/runtime/roles/prism.json",
         "charts/kubeclaw/templates/archviewer.yaml",
-        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
         "charts/kubeclaw/templates/deployment.yaml",
-        "docker/archviewer.nginx.conf",
-        "docker/Dockerfile.archviewer",
-        "tests/verification/deployment/archviewer-policy-provider.test.mjs",
-        "skills/common/plugins/artifact-store/src/adapter.ts",
-        "skills/common/plugin-runtime/sdk/src/values.ts",
-        "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
-        "skills/nova/core/execution/artifact-checkpoints.ts",
-        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "charts/kubeclaw/values.yaml",
+        "contracts/agent-observability/v1/src/constants.ts",
         "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
         "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+        "contracts/pipeline-worker-core/v1/src/types.ts",
         "contracts/pipeline-worker-core/v1/src/validation.ts",
-        "skills/worker/core/worker/native-result.ts",
-        "skills/worker/core/worker/native-attempt-recovery.ts",
-        "skills/worker/core/worker/native-worker-ownership.ts",
-        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
-        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
-        "contracts/agent-observability/v1/src/constants.ts",
+        "docker/Dockerfile.archviewer",
         "docker/Dockerfile.nova",
-        "skills/common/plugins/agent-observability/src/observers.ts",
+        "docker/archviewer.nginx.conf",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "my-values/nova-values.yaml",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
         "scripts/docs-platform-surface-inventory.mjs",
-        "skills/nova/core/execution/stage-executor.ts",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/tests/buster-lease-receiver.test.mjs",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugins/agent-observability/src/observers.ts",
+        "skills/common/plugins/artifact-store/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/nova/core/execution/artifact-checkpoints.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
         "skills/nova/core/execution/engine-runtime.ts",
         "skills/nova/core/execution/pipeline-loop.ts",
         "skills/nova/core/execution/run-decisions.ts",
-        "skills/nova/core/execution/engine-run.ts",
-        "skills/nova/core/execution/engine-admin.ts",
-        "my-values/nova-values.yaml",
-        "charts/kubeclaw/templates/configmap-gateway.yaml",
-        "scripts/lib/docs-markdown-anchors.mjs",
-        "scripts/tests/buster-lease-receiver.test.mjs"
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-result.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "tests/verification/deployment/archviewer-policy-provider.test.mjs",
+        "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs"
       ],
       "checks": [
         {
@@ -3304,6 +3430,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -3395,6 +3526,14 @@
             "docs/site/understand/worker-core.md"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -3849,7 +3988,7 @@
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
-      "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -3860,16 +3999,18 @@
         "docs/site/understand/components-and-authority.md"
       ],
       "sources": [
-        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
-        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
-        "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
         "contracts/agent-observability/v1/src/constants.ts",
         "contracts/agent-observability/v1/src/routing.ts",
-        "packaging/runtime/roles/nova.json",
+        "contracts/agent-observability/v1/tests/validation.test.ts",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
         "packaging/runtime/roles/prism.json",
         "scripts/lib/docs-markdown-anchors.mjs",
-        "contracts/agent-observability/v1/tests/validation.test.ts"
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts"
       ],
       "checks": [
         {
@@ -3881,6 +4022,11 @@
           "command": "Independent architecture-map source/reader/quality and previous-record impact review",
           "exitCode": 0,
           "observation": "Whole ARC006 all3aspects PASS;12local destinations resolve,exact writer/index/routing and stream constants compared."
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -3895,11 +4041,21 @@
         "No fullcommunication/telemetry/publication gate inferred."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "revisionHistory": [
+        {
+          "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+          "changedFiles": [
+            "docs/site/understand/components-and-authority.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        }
+      ]
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -3913,6 +4069,8 @@
       "sources": [
         "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
         "contracts/pipeline-test-gate/v1/src/index.ts",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-tree-classification.json",
@@ -3960,6 +4118,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -4007,6 +4170,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -4463,7 +4634,7 @@
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
-      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -4480,6 +4651,8 @@
         "charts/kubeclaw/templates/configmap-gateway.yaml",
         "charts/kubeclaw/values.yaml",
         "docker/Dockerfile.nova",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "my-values/infra/litellm-config.yaml",
@@ -4502,6 +4675,11 @@
           "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -4553,6 +4731,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
           "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+          "changedFiles": [
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -5535,7 +5721,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -5567,6 +5753,8 @@
         "contracts/prism/v1/package.json",
         "contracts/telemetry/v1/tests/contracts.test.mjs",
         "docker/archviewer.nginx.conf",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-tree-baseline.json",
@@ -5742,6 +5930,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -5898,6 +6091,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -6299,7 +6500,7 @@
     },
     {
       "id": "AP09-registry-data-path-20261021",
-      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root authored guide and selected registry profile correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
       "gateIds": [],
@@ -6333,6 +6534,8 @@
         "docker/Dockerfile.buster-runtime",
         "docker/archviewer.nginx.conf",
         "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "gitops/platform/bootstrap/registry-local.yaml",
@@ -6462,6 +6665,11 @@
           "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -6489,6 +6697,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
           "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+          "changedFiles": [
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -7274,7 +7490,7 @@
     },
     {
       "id": "AP09-litellm-complete-data-contract-20261021",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -7302,6 +7518,8 @@
         "contracts/pipeline-test-gate/v1/src/types.ts",
         "docker/Dockerfile.buster-runtime",
         "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-registry/manifest.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/litellm-upstream-manifest.json",
         "docs/status/open-issues.json",
@@ -7388,6 +7606,11 @@
           "command": "node scripts/docs-governance.mjs --check",
           "exitCode": 0,
           "observation": "documentation governance passed (167 pages mapped)"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -7408,11 +7631,21 @@
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/scope.json",
         "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/check-results.json"
+      ],
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedFiles": [
+            "docs/site/understand/pipeline-dependencies.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        }
       ]
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -7430,6 +7663,8 @@
         ".github/workflows/docs-checks.yaml",
         ".github/workflows/pipeline-reliability.yaml",
         "contracts/telemetry/v1/catalog.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-tree-classification.json",
@@ -7552,6 +7787,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -7630,6 +7870,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -7949,7 +8197,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -8129,6 +8377,8 @@
       "sources": [
         "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
@@ -8228,6 +8478,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8326,12 +8581,24 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/understand/components-and-authority.md",
+            "docs/site/understand/deployment-and-trust.md",
+            "docs/site/understand/pipeline-dependencies.md",
+            "docs/site/understand/security-and-trust.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -8346,6 +8613,8 @@
         ".github/workflows/docs-checks.yaml",
         "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/committed-search-observation.json",
         "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json",
         "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json",
@@ -8412,6 +8681,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8471,6 +8745,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     },
@@ -8853,7 +9135,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -8870,6 +9152,8 @@
         ".github/workflows/docs-checks.yaml",
         "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/checked-observations.json",
         "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-axe-observations.json",
@@ -8986,6 +9270,11 @@
           "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
           "exitCode": 0,
           "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams×3widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -9028,6 +9317,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
           "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         }
       ]
     }
@@ -41173,24 +41470,24 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+      "securedSourceRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
       "acceptedRequirements": 203,
       "acceptedGates": 17,
       "newRequirementsThisCampaign": 44,
       "newGatesThisCampaign": 6,
-      "nextWork": "Continue API copier original-producer custody at build-runtime-role-bundle.mjs:91; eight incomplete diagram Source proofs, humanAT/fresh-reader/workflow and three generated Helm prose limits remain.58contents/72gates open.",
-      "codeCandidate": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6: source-bound10standaloneDocvalidators retain read edges, exact internal classification954additions/2965oldunchanged, oneASTreceipt renewal63same;54tree+30custody tests/64roles PASS. Tree3926files clean. Three stale governance metadata fields and two installer links repaired.",
+      "nextWork": "Finish active bundle identity reader/comparison Source procedure found missing by the separate images diagram review; then other six incomplete diagram proofs. GlobalAPI copier91, three generatedHelm prose limits, humanAT/fresh-reader/workflows remain open.58contents/72gates open.",
+      "codeCandidate": "c0584fc0: source-backed optionalmirror/BuildKit routing, SPIFFEWorker versus HMACnonceDB, environment-mapped secretresolution, and declaration-only Prism packaging. FourchangeddiagramSourcefixes independentlyclean. Current167-page reader177HTML/209hashes/27freshSVGs/1692excerpts/14464SourceLinks PASS.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
       "publication": "Registered static SVG diagrams with explicit reader questions,owner,hashes,visible text alternatives;27fresh render matches and 209output hashes.501page+81diagram+27fallback+9axe checks. No whole semantic, humanAT or runtime approval.",
-      "scope": "203/261contents,17/89gates; no new count from tree/metadata correction.",
+      "scope": "203/261contents,17/89gates; no new count from four scoped diagram corrections.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
-        "result": "PASS narrow eleven-record tree/metadata/receipt preservation.",
-        "limit": "Historical HTML/search/browser c958eb59 evidence retained; no fresh browser, whole diagram/API, humanAT, hosting or live-runtime acceptance."
+        "report": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "result": "PASS narrow nineteen-record diagram/metadata/classification preservation.",
+        "limit": "Fresh12widthchecks applyonlytofourchangeddiagrams. Earlier501page/81diagram/27fallback/9Axe observations stayhistoricalbaseline; no fresh wholebrowser/humanAT/live/globalAPIapproval."
       },
       "checks": [
         {
@@ -41209,7 +41506,7 @@
           "observation": "91/91+7/7PASS;2precise native receipt renewals/60unchanged/2newDocroles;isolated lock source-input separately accounted. Root package/lock unchanged. Scoped semantic corrections independently clean."
         }
       ],
-      "diagramSourceProgress": "19/27 individual diagrams supported in documented pinned-source scope. Six system and two service edge proofs remain incomplete; wholePUB005/A91206 NOT_READY. Corpus generation and CAS links corrected; mirror readiness/client routing and external CSI boundaries corrected; broad capacity failures and authority-map Prism activation NOT_READY retained. Buster16edges supported by separate unchanged-source review.",
+      "diagramSourceProgress": "20/27 individual diagrams supported in documented pinned Source scope. WholeONE authority map14connections SourcePASS. Five system diagrams and two service diagrams remain incomplete; wholePUB005/A91206 NOT_READY.",
       "globalApiBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED scripts/build-runtime-role-bundle.mjs:91 fs.readFileSync(source). Copied source/dependency/native/caller API input purpose remains unqualified. Rawbyte/mode/link observations are notAPI approval. Three stale generatedHelm phrases remain."
     }
   },
