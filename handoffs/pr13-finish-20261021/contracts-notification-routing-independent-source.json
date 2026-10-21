@@ -4,11 +4,19 @@
   "candidateSha256": {
     "docs/site/reference/contracts.md": "12b033270df858c2a6adb4f1ce160c447dc075f54dfb05f806e5a1458df7384e",
     "docs/site/understand/telemetry.md": "d3dcaaca4eddebe51582429da2bd459deb5b6087fbac2e7decd01315a73caad8",
-    "docs/site/use/workflows/README.md": "75201fbf70ea860e2a358f9a36b6100a6b544f5f216a8c8680a07f50d054fad8",
+    "docs/site/use/workflows/README.md": "70f31ea0fc50ef12181a13bfa14489287cfa44246f4643b9097241108826151b",
     "docs/site/use/workflows/buster-suite.md": "4cb1553b8425f3d9335a68e86028df85ab165585a0c2465437a558935892a70c",
     "scripts/check-buster-guides.mjs": "2860f7a14d6430843b4122382a461c9d291dd083c8a3a86c90ca8c8858518278"
   },
   "verdict": "SOURCE_CONTENT_PASS",
   "reader": "PENDING",
-  "aggregateAcceptance": false
+  "aggregateAcceptance": false,
+  "correction": "Independent workflow reviewer found blank line separating table; removed, reread continuous8row table PASS. Supersedes eb265a54 portal bytes only; no Reader accepted for that snapshot.",
+  "parentCompatibilityTests": {
+    "tests": 39,
+    "pass": 39,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 82953.755632
+  }
 }

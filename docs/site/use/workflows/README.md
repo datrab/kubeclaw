@@ -20,7 +20,6 @@ new stage attempt; it does not change the result of the earlier attempt.
 | Run a Buster suite with a fixture, matrix, and report | [Run a Buster Suite](buster-suite.md) | Use that guide's declared local and deployment checks. |
 | Prepare and release a Kubernetes fixture | [Prepare and Release a Kubernetes Fixture](kubernetes-fixture.md) | Separates local plan validation from deployed fixture lifecycle. |
 | Deliver a demo and request human acceptance | [Deliver a Demo](../demo-delivery.md#canonical-demo-delivery-procedure) | Local contract rehearsal and explicit live-delivery prerequisites. |
-
 | Diagnose an uncertain external effect | [Lost Responses and Uncertain Effects](../diagnose.md#lost-responses-and-uncertain-effects), then [Pipeline State Recovery](../recovery.md#pipeline-state-recovery) | Preserve stopped-writer raw state before audit; match the original request, resource and receipt through an authorized owner read. Stop while the outcome or supported reconciliation path remains unknown. |
 | Activate, replace, or remove a plugin | [Canonical Plugin Lifecycle Procedure](../plugins.md#canonical-plugin-lifecycle-procedure) | Separate package discovery, configuration/grant admission, actual activation/result, drain and retained state. The procedure routes OpenClaw and Codex hosts to their own controls; no generic install/remove CLI or deployed proof is implied. |
 
