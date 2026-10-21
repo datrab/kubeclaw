@@ -1,0 +1,355 @@
+[
+  {
+    "id": "A911-03-REF-007-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent read-only topic review PASS: separate Nova/Buster grants, plugin declarations, worker profile and resource capabilities, Kubernetes RBAC and Codex interface metadata; clear non-translation and safe denial decisions. Canonical page agrees with generator.",
+    "gateIds": [
+      "A911-03"
+    ],
+    "requirementIds": [
+      "REF-007"
+    ]
+  },
+  {
+    "id": "AP09.1-ready-topics-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "docs/site/reference/generated-documentation-map.json",
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+    "gateIds": [],
+    "requirementIds": [
+      "GOV-001",
+      "GOV-003",
+      "GOV-004",
+      "GOV-008",
+      "ENT-001",
+      "ENT-002",
+      "ENT-003",
+      "ENT-004",
+      "DEC-001",
+      "STA-001",
+      "STA-002"
+    ]
+  },
+  {
+    "id": "Reviewed-corrections-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "docs/site/reference/generated-documentation-map.json"
+    ],
+    "summary": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+    "gateIds": [],
+    "requirementIds": [
+      "SPC-001",
+      "CFG-006",
+      "FLW-011",
+      "EXT-005",
+      "EXT-006",
+      "CFG-016",
+      "GOV-006"
+    ]
+  },
+  {
+    "id": "AP09-reader-operators-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent topic acceptance for OPR-001, OPR-002, OPR-004, OPR-005, OPR-007, OPR-009, OPL-002; whole-gate acceptance only for explicitly reviewed A98-01, A98-05, A98-07.",
+    "gateIds": [
+      "A98-01",
+      "A98-05",
+      "A98-07"
+    ],
+    "requirementIds": [
+      "OPR-001",
+      "OPR-002",
+      "OPR-004",
+      "OPR-005",
+      "OPR-007",
+      "OPR-009",
+      "OPL-002"
+    ]
+  },
+  {
+    "id": "AP09-reader-developers-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent topic acceptance for DEV-001, DEV-003, DEV-004, DEV-006, DEV-009, EXT-001, EXT-002, EXT-003, EXT-004, EXT-009, CDV-001, CDV-002, CDV-004, CDV-011; whole-gate acceptance only for explicitly reviewed A910-02.",
+    "gateIds": [
+      "A910-02"
+    ],
+    "requirementIds": [
+      "DEV-001",
+      "DEV-003",
+      "DEV-004",
+      "DEV-006",
+      "DEV-009",
+      "EXT-001",
+      "EXT-002",
+      "EXT-003",
+      "EXT-004",
+      "EXT-009",
+      "CDV-001",
+      "CDV-002",
+      "CDV-004",
+      "CDV-011"
+    ]
+  },
+  {
+    "id": "AP09-reviewed-configuration-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent PASS for CFG-001, CFG-002, CFG-015, CFG-017. No whole-gate acceptance inferred from narrower requirements.",
+    "gateIds": [],
+    "requirementIds": [
+      "CFG-001",
+      "CFG-002",
+      "CFG-015",
+      "CFG-017"
+    ]
+  },
+  {
+    "id": "AP09-reviewed-reference-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent PASS for REF-001, REF-008, REF-009, REF-017, REF-018. No whole-gate acceptance inferred from narrower requirements.",
+    "gateIds": [],
+    "requirementIds": [
+      "REF-001",
+      "REF-008",
+      "REF-009",
+      "REF-017",
+      "REF-018"
+    ]
+  },
+  {
+    "id": "AP09-reviewed-maintenance-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent PASS for MNT-013, MNT-016. No whole-gate acceptance inferred from narrower requirements.",
+    "gateIds": [],
+    "requirementIds": [
+      "MNT-013",
+      "MNT-016"
+    ]
+  },
+  {
+    "id": "AP09-reviewed-publication-navigation-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent navigation-only acceptance for PUB-001 and A912-02; all canonical pages reachable through meaningful role/task links in at most three decisions. Reviewed sources and pages unchanged since baseline.",
+    "gateIds": [
+      "A912-02"
+    ],
+    "requirementIds": [
+      "PUB-001"
+    ]
+  },
+  {
+    "id": "AP09-closeout-config-reference-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent sourceAccuracy/readerUsability/quality PASS for CFG-004, CFG-005, CFG-008, CFG-018, REF-015. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+    "gateIds": [],
+    "requirementIds": [
+      "CFG-004",
+      "CFG-005",
+      "CFG-008",
+      "CFG-018",
+      "REF-015"
+    ]
+  },
+  {
+    "id": "AP09-closeout-developer-maintenance-20261020",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Independent sourceAccuracy/readerUsability/quality PASS for DEV-005, DEV-008, EXT-007, EXT-008, CDV-005, OPL-003, OPL-004, PLG-004, PLG-012, GOV-005, GOV-007. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+    "gateIds": [],
+    "requirementIds": [
+      "DEV-005",
+      "DEV-008",
+      "EXT-007",
+      "EXT-008",
+      "CDV-005",
+      "OPL-003",
+      "OPL-004",
+      "PLG-004",
+      "PLG-012",
+      "GOV-005",
+      "GOV-007"
+    ]
+  },
+  {
+    "id": "AP09-decision-record-content-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Whole rationale, recorded alternatives, consequences and supersession obligation; unknown approval remains explicit and independent of implementation.",
+    "gateIds": [],
+    "requirementIds": [
+      "DEC-002"
+    ]
+  },
+  {
+    "id": "AP09-documentation-agent-maintenance-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-publication.mjs",
+      "scripts/docs-reader/renderer.mjs",
+      "scripts/docs-reader/source-links.mjs"
+    ],
+    "summary": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+    "gateIds": [],
+    "requirementIds": [
+      "MNT-017"
+    ]
+  },
+  {
+    "id": "AP09-complete-platform-change-content-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Whole effect-format/identity/recovery change path, capability/event introduction, Forge/Echo integration and selected GitOps generation/ownership/security/upgrade tasks.",
+    "gateIds": [],
+    "requirementIds": [
+      "CDV-003",
+      "CDV-007",
+      "CDV-010",
+      "CDV-012"
+    ]
+  },
+  {
+    "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Whole mechanical generated plugin facts, roles/packages/registrations and plugin-registration drift implementation: all51 manifests/inventory rows/package pages,67 pipeline registrations,2 OpenClaw extensions and1 Codex plugin; separate editorial guidance and actual discovery/comparison mechanisms audited.",
+    "gateIds": [],
+    "requirementIds": [
+      "MNT-002",
+      "MNT-007",
+      "MNT-012"
+    ]
+  },
+  {
+    "id": "AP09-complete-publication-reference-navigation-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Whole repository links/anchors/version-bound code evidence and canonical-versus-legacy reader navigation.71 platform bindings now point to explicit inspected source revisions and appropriate implementation ranges.",
+    "gateIds": [],
+    "requirementIds": [
+      "PUB-003",
+      "PUB-009"
+    ]
+  },
+  {
+    "id": "AP09-complete-developer-reader-contracts-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "scripts/docs-publication.mjs"
+    ],
+    "summary": "Whole authored Extension Developer and Platform/Core Developer reader paths: selection, local teaching journeys, host lifecycle boundaries, capability/event changes, Forge/Echo integration, GitOps and retained-state/change tasks. Current Source provenance corrected; declared deployment limits remain explicit.",
+    "gateIds": [],
+    "requirementIds": [
+      "QUA-008",
+      "QUA-009"
+    ]
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-api-documentation-role-custody.mjs",
+      "scripts/docs-publication.mjs",
+      "scripts/docs-reader/renderer.mjs",
+      "scripts/docs-reader/source-links.mjs"
+    ],
+    "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+    "gateIds": [],
+    "requirementIds": [
+      "PUB-002"
+    ]
+  },
+  {
+    "id": "AP09-search-reader-gate-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-api-documentation-role-custody.mjs",
+      "scripts/docs-reader/renderer.mjs"
+    ],
+    "summary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+    "gateIds": [
+      "A912-04"
+    ],
+    "requirementIds": []
+  },
+  {
+    "id": "AP09-rendered-source-bounds-gate-20261021",
+    "priorRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+    "changedFiles": [
+      ".github/workflows/docs-checks.yaml",
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-api-documentation-role-custody.mjs",
+      "scripts/docs-publication.mjs",
+      "scripts/docs-reader/renderer.mjs",
+      "scripts/docs-reader/source-links.mjs"
+    ],
+    "summary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+    "gateIds": [
+      "A912-09"
+    ],
+    "requirementIds": []
+  },
+  {
+    "id": "AP09-complete-static-offline-fallback-20261021",
+    "priorRevision": "27697506234b1c33252fd7fe2acfb746c909f49f",
+    "changedFiles": [
+      "docs/site/reference/documentation-site.md",
+      "scripts/docs-publication.mjs",
+      "scripts/docs-reader/renderer.mjs"
+    ],
+    "summary": "Whole PUB-006/A912-10: actual local-file reader keeps critical content/instructions, navigation, native disclosures and explicit search fallback usable without JavaScript, external network, hover or normal color palette. Optional local search works offline. Architecture interaction remains optional, not invented for acceptance.",
+    "gateIds": [
+      "A912-10"
+    ],
+    "requirementIds": [
+      "PUB-006"
+    ]
+  }
+]

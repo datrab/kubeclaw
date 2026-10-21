@@ -1,0 +1,907 @@
+{
+  "schemaVersion": "kubeclaw-reader-artifact.v1",
+  "revision": "912bbbd441f345f23890a1d1f8e976acfdc05f2c",
+  "pageCount": 167,
+  "outputs": [
+    {
+      "path": "decisions/acceptance.html",
+      "sha256": "5ed414791ec623e61f2683398d04b4e1492e1ed0b15c542f2701e418200814aa",
+      "bytes": 20634
+    },
+    {
+      "path": "decisions/core-and-plugins.html",
+      "sha256": "8e583989a6a7a321dab1d83e8f932bdb02b5cfd20b02d6205227434b2777b71f",
+      "bytes": 67955
+    },
+    {
+      "path": "decisions/echo.html",
+      "sha256": "de4e65f3f4aacd5e25d56339ddcba725e69bea35011236313098c8fde7790891",
+      "bytes": 48157
+    },
+    {
+      "path": "decisions/implementation.html",
+      "sha256": "fe9654d50ff3210895c4440e7ba781e989a8050cecede83a9daebaf2ec57bdd5",
+      "bytes": 31050
+    },
+    {
+      "path": "decisions/prism.html",
+      "sha256": "3e5cbbd1a72be7db47a1f72b7fe97c70f366a370d8cf81da660feabea98b1f3a",
+      "bytes": 31061
+    },
+    {
+      "path": "decisions/README.html",
+      "sha256": "975587c0aa4e72f40adb8a5f050039240ddd2442982d8701715bb9020d18ddfe",
+      "bytes": 20584
+    },
+    {
+      "path": "decisions/runtime-and-operations.html",
+      "sha256": "b2c69375ee820f9cb22900b191e7f2b9f82ad3d6ec1dedb0bef5d972c71f304a",
+      "bytes": 56134
+    },
+    {
+      "path": "decisions/test-gate.html",
+      "sha256": "f0e469159c320db82dd5efce8e7e941a82ebde94e770f2b4510170f3338df172",
+      "bytes": 103774
+    },
+    {
+      "path": "extend/buster.html",
+      "sha256": "c2a31878b38b066e9c4723069c7af972582894bbd4bf2f012958e1f88342d0db",
+      "bytes": 79210
+    },
+    {
+      "path": "extend/contracts.html",
+      "sha256": "a529eaa5b265b79ec1407d77d6f991068451c3ad7dbda7cfcf64038d2b7d3abb",
+      "bytes": 45221
+    },
+    {
+      "path": "extend/developer-handbook.html",
+      "sha256": "af9a1c73eebc61d95619841857143dbd2e3dd6f7320a14c10332a52c91baaf8d",
+      "bytes": 504334
+    },
+    {
+      "path": "extend/documentation-maintenance.html",
+      "sha256": "23993c60b4724c1de8820aabfe5448e90feab48f8e116d3a77449693f0d49047",
+      "bytes": 67471
+    },
+    {
+      "path": "extend/effectful-plugin.html",
+      "sha256": "b236ba3776ccb29257850eb6028132036cc46ee5296558b13ba6e5f98f6565fb",
+      "bytes": 39020
+    },
+    {
+      "path": "extend/examples/index.html",
+      "sha256": "01d3d16aa2d1e22020a04909227b92445217ebf1ad0b3c5471e5bbf0588ff648",
+      "bytes": 17519
+    },
+    {
+      "path": "extend/examples/minimal-stage/index.html",
+      "sha256": "c5aaabc92342ed5f2522f2bb517b82b1aa54ee099504074a2dc4b315e58528db",
+      "bytes": 17773
+    },
+    {
+      "path": "extend/examples/minimal-stage/schemas/index.html",
+      "sha256": "22cd955a2f5b95b45bf16445b3cf2c46bbebceb7dca2a53d01e5d24fcaa857a8",
+      "bytes": 18051
+    },
+    {
+      "path": "extend/examples/minimal-stage/src/index.html",
+      "sha256": "dfcf70a0caa8a95b4a7116f8f7252ae64dce9d42e23ff2be50e53ca42f1f542c",
+      "bytes": 17905
+    },
+    {
+      "path": "extend/examples/minimal-stage/tests/index.html",
+      "sha256": "8f3c5f5793693967e064f53dbd5acbb58eaa69d2727fdad6ff36e5d15ba4920f",
+      "bytes": 17921
+    },
+    {
+      "path": "extend/first-plugin.html",
+      "sha256": "269a00a711a946c8c32ff2941053665ebce7c86719bb34cf85723e3b33152c88",
+      "bytes": 40347
+    },
+    {
+      "path": "extend/host-and-engine.html",
+      "sha256": "cc88a67f71a91476707263acf23bd6d50adf4a057a1ead26e6b32df7c6759f36",
+      "bytes": 50549
+    },
+    {
+      "path": "extend/lint.html",
+      "sha256": "3f564aa94169d76a742fb75407ff2a6972202e9800d7eebeb7596b1b263e397d",
+      "bytes": 99186
+    },
+    {
+      "path": "extend/nova.html",
+      "sha256": "95689f2c0f99bffc762546804903968594335ee186165b9b173733ea4d807bd2",
+      "bytes": 47646
+    },
+    {
+      "path": "extend/platform/buster.html",
+      "sha256": "1a7a066a30a56579e6d16dd4c9336ab0afa0c0d177145bc94b7422d4821893fa",
+      "bytes": 40433
+    },
+    {
+      "path": "extend/platform/prism.html",
+      "sha256": "c42fcf95567c33cbf170d6d96b7c35e6bfffb7de2c6c09b037a20ae13e4f1268",
+      "bytes": 209907
+    },
+    {
+      "path": "extend/platform/README.html",
+      "sha256": "e2d3e12962da3f4d4395431b206a96b1c5ab0bdd603b0288ea3b18decba01f23",
+      "bytes": 106688
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-agent-observer.html",
+      "sha256": "8b766291615ab761cea10b6ff0270b8e9280847d8f46ab4fcb9423ceb77e37c9",
+      "bytes": 26749
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-ops.html",
+      "sha256": "bf753eeda870ba8f876bbb7927a7aa72e9ded17c53495462043a9463ad7e76ec",
+      "bytes": 23553
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-prism.html",
+      "sha256": "5dbef059222183dbe7860ebcc13a805c36d0b782084b83ff18aa4476dbb26d8f",
+      "bytes": 24181
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.agent-observability.html",
+      "sha256": "ddf3818678da1671f0c49c4b26ba755a638edf7f5cb3d469afb23e23c03abb5a",
+      "bytes": 30718
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.api-flow.html",
+      "sha256": "d81b00874a1b07d2abcf5d60c0560b42228316b6ef544cb5075929782939d3d2",
+      "bytes": 27044
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+      "sha256": "a13037b9c3aaaef74a3e0e5c764350cc0c4c8416bae11c7d9b6d01660a2b344f",
+      "bytes": 26671
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.artifact-store.html",
+      "sha256": "b3578e29f82a1a32f2b21f3bd73fe6df028ce051fb58a86027f35304bb71e679",
+      "bytes": 26176
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.axe.html",
+      "sha256": "da00947256dab33e5cd16f36be92625cd051113e7057a9a4fa5fa45cdfb7756e",
+      "bytes": 27068
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+      "sha256": "4f017c8139b4b133ebd07e0b060c8af1d2f5a0bf0b8272bdfa2a8bb8eda4a681",
+      "bytes": 26075
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+      "sha256": "bc39c8fc2612e51a2c038aa2c444776309a2f39555de665c7e9a5416ee8c156c",
+      "bytes": 26869
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.case-study.html",
+      "sha256": "40ae4a31016dc1c7174d7a86001e8ef8b1ed5c916f32004a02b6929e9e8338df",
+      "bytes": 26122
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.command-runner.html",
+      "sha256": "e523a01e52596b4c27ecd407bdddbeeed20d366caab64bebb8833c3f90a6f635",
+      "bytes": 26603
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.container-build.html",
+      "sha256": "14dd649bd8bb8248d546bdd8867d470aaaad15294c9ef3bbe9312af787257268",
+      "bytes": 26700
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+      "sha256": "f27dd62eb90e8c2983e852a68a64d9e4de690b6a2582cd0e56b09b4ce3acc7eb",
+      "bytes": 27037
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+      "sha256": "aafecc51c2a8a371b6984a1d8c2c77fc91b065e196cba7947d7d335948375bd5",
+      "bytes": 26079
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+      "sha256": "898b0e0c49a1076d63746ada470036e14bc7ad9ac286f1bd94df4f12c9d8a94a",
+      "bytes": 27162
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+      "sha256": "4ef6673ce6be3e83d277d1c416d8ca9fa190fd20fa99dca02866584ce68964f1",
+      "bytes": 34621
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.direct-command.html",
+      "sha256": "d28c4b46f0ab5ac9fffab5357c1442cda71e80d6fe5168e37d98b68d8cf7ed69",
+      "bytes": 30675
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.git-workspace.html",
+      "sha256": "751d306a29c15442cace300faede80131f6868536befdc5b13887183ff987ba9",
+      "bytes": 26913
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.http.html",
+      "sha256": "7631e7296a295ea092c6eec60e44a29735361314e5be52add1787b64a16fd6c4",
+      "bytes": 26994
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.human-approval.html",
+      "sha256": "c1b4bdf6d400ee358f0862c600e9c8ce9e8d9beeb4d9bf296aa16150c764cff8",
+      "bytes": 30105
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+      "sha256": "942d92bd87b1904e5d121faba7e5ce2b4c452b32c673ebc47b321255c91cb7e9",
+      "bytes": 26741
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.junit-report.html",
+      "sha256": "bad22a9b38eea4bce35a7ea96497de32ca92e39af5110b046167f85d04166ae3",
+      "bytes": 25287
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+      "sha256": "33367592aa6d7aa033b49ccb5ee708a0c5a4908ab6898ae3ef23f704c302d331",
+      "bytes": 27931
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.lighthouse.html",
+      "sha256": "7acbff87c83d5b3f242676a39193dee2f51fbcf492dab57192461507ef3c05b1",
+      "bytes": 27486
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.lint.html",
+      "sha256": "cf136fb90134acb121fecc4d98379c88c3127f78dfe3306c65fa94a21e512eb7",
+      "bytes": 32919
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.network-http.html",
+      "sha256": "9d550400ddeb15cdd6ab7ca2ec327115dab106b79a8d6c4e349e71d3596fdcdc",
+      "bytes": 26387
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.notification-observer.html",
+      "sha256": "11ae624f6316992b5822b8fa4408de75b552ed96cb90fb4a824a5f67c4cf3cc0",
+      "bytes": 31159
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.openapi.html",
+      "sha256": "6d4085d6c837e34a82d6026580ad26c41444f2d3f9e4229fe87fe1a532b6ff07",
+      "bytes": 27154
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+      "sha256": "d3c237b6ab94822511e174e3d47a9442f4fa59f381f4fcf4e3c10fa9738e9155",
+      "bytes": 26314
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+      "sha256": "e58e25d6a064bcb77b93462121a0e12c3fbde3c8e86f15c2aa5adc22cca6ed01",
+      "bytes": 26200
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+      "sha256": "433e0d131144a96916b4cf24e86a9e8ec6c3b03288a95163ae551fb88bc96761",
+      "bytes": 29144
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.playwright.html",
+      "sha256": "4d39715a31636be1547c179af788d062bb73ec0ae9275f2c295923ee9bf3efd9",
+      "bytes": 27518
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+      "sha256": "083811c22c574952e0a99990de4d4507dac445674206447c2162c7df28e2945d",
+      "bytes": 28982
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.prism-design.html",
+      "sha256": "26dff868937e2f2f84010eeac4874036c1c64f220aea1f95c31a926125d08ee3",
+      "bytes": 26099
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.project-summary.html",
+      "sha256": "db351e5f00edadee2b3cb26669de6e36ba61f8db2817f5a527b590e6878d63fd",
+      "bytes": 26293
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.redis-transport.html",
+      "sha256": "c7c660ceab6fbe041a5a4dba7a081d0c1e891fdc54ea5f1769bc37ff29b4e18d",
+      "bytes": 29276
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+      "sha256": "6bbd2b179ba6029a9e45d1cc37e129736f845075957840112327ad8fe8564c94",
+      "bytes": 28783
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+      "sha256": "a4a7e8556ed30c47e1cac936b0b029c774916f0b5a1de019252fb93c2caff975",
+      "bytes": 26245
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.review.html",
+      "sha256": "3ef9f2db5f603cc115e27fe7192bee567336ea286aecce9f65b87c80e12c54a4",
+      "bytes": 49944
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+      "sha256": "abec6ea442a7f41db63c2b4f7e312bd23e136fee230b138935c33789594936a9",
+      "bytes": 28391
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+      "sha256": "2591bc73f4c44a9ce2948ae403eb37471324fad1fadd699a8fc7efc2fb3362c5",
+      "bytes": 25651
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.security-providers.html",
+      "sha256": "91849690c4ee5af2b6bb4db70044b673985f201b2e87b345daa04eae9c6610c2",
+      "bytes": 40312
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.size-budget.html",
+      "sha256": "30874113604c0b4d27b811fe42e219c1a190dbdcf72be35b07d156a33b83f490",
+      "bytes": 27253
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.state-store.html",
+      "sha256": "dcbd5d0677bdd9bb8df04ed945cebf205de317c9a0efd8c33902f69044d7bf1f",
+      "bytes": 25950
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+      "sha256": "a48952e00e309e82493bd2572d26f5ddf41df478ecab9f160f1fa069e449e8c3",
+      "bytes": 26851
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+      "sha256": "9bf6416b5f8f72f17f0744d21d125a3a5376083d7e88cee0d98799058ba711dc",
+      "bytes": 26953
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+      "sha256": "7a170a31d4a307094d47aded49ac86c25c940456b4a0961ab7203b2ca769ab86",
+      "bytes": 26190
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+      "sha256": "9a3ab433ccecb626b7e7053aef5bd023cf75d547cf831181bb1900cc0b5964e5",
+      "bytes": 26596
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.visual.html",
+      "sha256": "743e3e48f82da1f0a71d5d364a9922f92b31e4432986c9f76aa8f3cadc28ef4c",
+      "bytes": 27532
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.wait-store.html",
+      "sha256": "3cccd7e2c8c5de8d32b2ff536520e5b2ebda4a985251f8984ed3d808c0adc391",
+      "bytes": 25928
+    },
+    {
+      "path": "extend/plugin-catalogue/README.html",
+      "sha256": "a1e69fc3142d702e0f40380d52d917dad211a2de5a35dc6786d471cd62f4423f",
+      "bytes": 23311
+    },
+    {
+      "path": "extend/README.html",
+      "sha256": "76ac81a760a9f4cd1b92a3d3ec11a22d8910797dc14e791b8e20bc391450c26e",
+      "bytes": 126325
+    },
+    {
+      "path": "extend/testing.html",
+      "sha256": "d4b84db4d14c50991184c79ca0526f16281c480e124a977c7392d2065d5434e5",
+      "bytes": 59054
+    },
+    {
+      "path": "index.html",
+      "sha256": "3df49f04ba93c8496ba4b54a0f9cb81dc7a07dfca3e3ac4bf1a91961587443c8",
+      "bytes": 299
+    },
+    {
+      "path": "product-surfaces.html",
+      "sha256": "a52a1d5c83fa69f1ba76711a7c9669b0a801892d3606cdc7b9dbd7dd715af8de",
+      "bytes": 51785
+    },
+    {
+      "path": "reader.css",
+      "sha256": "255968dcc0b465e1192492ac199698c173713c6b9987be14cd6200930bf713f0",
+      "bytes": 4424
+    },
+    {
+      "path": "reader.js",
+      "sha256": "a7ff5a0437d008d8f05d71d6a9e37541dbe96f4a4edc824b740449c51f50ae4d",
+      "bytes": 3952
+    },
+    {
+      "path": "README.html",
+      "sha256": "e358c74a019ffac2daaf4bcd8e92d97ed3efc0e149c44b1e7e2ef01d4d27562b",
+      "bytes": 22266
+    },
+    {
+      "path": "reference/api-object-updates.html",
+      "sha256": "57a949c791de72ba9db9262b5f0a3f7d9612f5f3498f72d764370b88cc75da73",
+      "bytes": 42778
+    },
+    {
+      "path": "reference/buster-error-codes.html",
+      "sha256": "48d47d74eb8f7148353a9202452f54edc2c2447a0ae8a44765cf0b7b441146e6",
+      "bytes": 726287
+    },
+    {
+      "path": "reference/buster-namespace-lease.html",
+      "sha256": "0e236301742f47ab423053d640d52d8dced5fa16d1f00a047f47b99f91cfcf23",
+      "bytes": 71722
+    },
+    {
+      "path": "reference/buster-provider-configuration.html",
+      "sha256": "561b0bbf088f66b04c1be1426826391f12a73978241196c0994394a23e77ed9c",
+      "bytes": 81779
+    },
+    {
+      "path": "reference/buster-runtime-configuration.html",
+      "sha256": "1259ca2a3ac4a3bdd7032bb16af2415913cec24c171441eb08e04c165ec10cd6",
+      "bytes": 72804
+    },
+    {
+      "path": "reference/buster-suites.html",
+      "sha256": "cd84be07792f9635ca189e1fed694fc4e036b9c534459a894ad70af052e786b1",
+      "bytes": 97908
+    },
+    {
+      "path": "reference/capabilities.html",
+      "sha256": "27a4afe416e368b7578611b9d6ed84ff43a1fc20bccfd1041e12cfeeec0fee1c",
+      "bytes": 96752
+    },
+    {
+      "path": "reference/cli.html",
+      "sha256": "0d3a47886ffff7ff8b39b7871548df7870e37e6cc41cfbdd1ace25c7c3b50a6e",
+      "bytes": 166039
+    },
+    {
+      "path": "reference/configuration-change-impact.html",
+      "sha256": "a74e48e295b6da9413bff00132f48581ced6f5fdd3960891e9e7952d3eba3e4a",
+      "bytes": 160102
+    },
+    {
+      "path": "reference/configuration-compatibility.html",
+      "sha256": "832c9ed3f9ae3058744a2d5d044a10e4c19c90fe8c83fd305babf26f26d2e1b8",
+      "bytes": 39275
+    },
+    {
+      "path": "reference/configuration-errors.html",
+      "sha256": "e294c7388a22bd17960b5cbf20a6719676ae54baf76faaf661943ce183bd1b40",
+      "bytes": 47293
+    },
+    {
+      "path": "reference/configuration-precedence.html",
+      "sha256": "fbe04b9cee62e1bb02eaf4a30ff047d2e8742020b3d1c4f76fb923482ff5f712",
+      "bytes": 119754
+    },
+    {
+      "path": "reference/configuration.html",
+      "sha256": "2d0986096bca88599aacbd0d4e8b2d086f226f58a84e204f7a56a373427ec2a7",
+      "bytes": 38541
+    },
+    {
+      "path": "reference/contracts.html",
+      "sha256": "f4a45ca69131dcb5e49314a2a784ed4081d65de0241a46d6241ecccee0218cfe",
+      "bytes": 45900
+    },
+    {
+      "path": "reference/documentation-governance.html",
+      "sha256": "5bac4a954c28b94056686babe379e104c0ad02678fe8d21e03e187e8fbadfd9a",
+      "bytes": 29528
+    },
+    {
+      "path": "reference/documentation-site.html",
+      "sha256": "60f0cac9b17c8af2d6c0aed0dde1a367c23ec73235cfdce5316f4f16cffae8a7",
+      "bytes": 42494
+    },
+    {
+      "path": "reference/endpoints.html",
+      "sha256": "12f56df5d165a6b532a4ecde57a56c534451323e7e138118bbfcb39a7703644a",
+      "bytes": 95654
+    },
+    {
+      "path": "reference/environment-variables.html",
+      "sha256": "ced34a5666dd9f3da6a1fb51166eb5165728075914f82e4fef3fed16b9b753ec",
+      "bytes": 1718016
+    },
+    {
+      "path": "reference/errors.html",
+      "sha256": "b497e9bbc903c9747007e61c0de5db28624e554d25c1c6758132ef4cfb694cbd",
+      "bytes": 43900
+    },
+    {
+      "path": "reference/events.html",
+      "sha256": "e0e0dea4bdebcdd6f40fd3bac17264700f686b22cc3ea34bb3b4fa7cf7f9cea1",
+      "bytes": 49592
+    },
+    {
+      "path": "reference/glossary.html",
+      "sha256": "f6aea205d7bc0341c86ea6c5c82cff0b43156d98121be5e72bb85e8240a28c04",
+      "bytes": 67453
+    },
+    {
+      "path": "reference/helm-values.html",
+      "sha256": "e6e7d141a9741f65c0efb49fd32a749018cf3dc08c20638c8537e6836d4a1881",
+      "bytes": 17659738
+    },
+    {
+      "path": "reference/host-and-prism-configuration.html",
+      "sha256": "87bfc2222d0889ef244384c4bd2cb197c064f6d3f9b8479cabf3a57186669c43",
+      "bytes": 55705
+    },
+    {
+      "path": "reference/images-and-digests.html",
+      "sha256": "21583ef2c64bccc0f0d095ebf52225a630ea361f1e8ded18beef2cfc874997a1",
+      "bytes": 62259
+    },
+    {
+      "path": "reference/lint-policy-generated.html",
+      "sha256": "959afcdf5e2bd7972ff270bff2d4c47dbf6472cc88a6a53807feecd8eef835f4",
+      "bytes": 74151
+    },
+    {
+      "path": "reference/lint-policy.html",
+      "sha256": "e6504fe94b0dd0dea1ab5c072abb4be056b96b56462c8681bae0d975f5a6a920",
+      "bytes": 91775
+    },
+    {
+      "path": "reference/lint-rules.html",
+      "sha256": "1e15311c450c2da81bbd1adf2cbe584a34c5aeae233f8e89eba180a09a333f71",
+      "bytes": 71280
+    },
+    {
+      "path": "reference/nova-project.html",
+      "sha256": "6dcc8ca195bb367062b958fcea8a13d87106fe3eb6e49f98c4efa647269eddbd",
+      "bytes": 87642
+    },
+    {
+      "path": "reference/pipeline-definition.html",
+      "sha256": "c7d5fe53dfeda12cedff1bee1bd781bce6fb869281999b2f9aeb1ab6e1a9a71d",
+      "bytes": 52405
+    },
+    {
+      "path": "reference/pipeline-json.html",
+      "sha256": "657cb7ab31ce907f0c71cbfd6248154a5a80476275a4c0a24c11b999797b0448",
+      "bytes": 61584
+    },
+    {
+      "path": "reference/pipeline-platform.html",
+      "sha256": "f22f3210f74c1460b6d8e5184b289400dffa1fc39ec3cdb1848c143fd3b109b7",
+      "bytes": 69782
+    },
+    {
+      "path": "reference/platform-surfaces-generated.html",
+      "sha256": "555ffc6b7d410bf46ff93cccb035a93bf933ee5c2bb5225926b94effc28e3fd2",
+      "bytes": 552950
+    },
+    {
+      "path": "reference/plugin-configuration.html",
+      "sha256": "36f5073e7def1503dae0f0474550fde867cae23d5b72c77a309660fe8f5a1912",
+      "bytes": 1818325
+    },
+    {
+      "path": "reference/project-pipeline-publication.html",
+      "sha256": "c3a8e050cc0c8bc3779801030f1d90222c0432a0730d8ef66bf5cd22a3e1d099",
+      "bytes": 143930
+    },
+    {
+      "path": "reference/README.html",
+      "sha256": "a0f1c33858f9acd9de8e61cfa5935a35362a3143e34a740001f80511448c8fdc",
+      "bytes": 25751
+    },
+    {
+      "path": "reference/roles-and-package-ownership.html",
+      "sha256": "74a17bc81eb139036de3be5718534dd7e7452a6274d87d9c65cf51f017d9b4e3",
+      "bytes": 87176
+    },
+    {
+      "path": "reference/schemas.html",
+      "sha256": "ed10aa35c0cdf40d5115053d810d88edfd4db5a6f1e8407db1821635a9790d0b",
+      "bytes": 80322
+    },
+    {
+      "path": "reference/sdk-exports.html",
+      "sha256": "2fd45d3304a4e0c2401717599377aa22ffc3cc72f631940803b72a36c05c0657",
+      "bytes": 1011010
+    },
+    {
+      "path": "reference/sdk.html",
+      "sha256": "e963d7583861223aed27abe0a30265a27a02f57a9d3e2932c742f596c26bafc6",
+      "bytes": 80600
+    },
+    {
+      "path": "reference/secrets.html",
+      "sha256": "583cbf83a310639c1bce7b98438df15354ba0d8c3f1e989583fbe9cb952414e0",
+      "bytes": 410510
+    },
+    {
+      "path": "reference/service-routing.html",
+      "sha256": "94dc0e727b401815175deb2959cf9ecc69dd7c2e0284577cac6aa27b615814fa",
+      "bytes": 40025
+    },
+    {
+      "path": "reference/stores-and-retention.html",
+      "sha256": "60aeb719171d0adf29277ee17248214c9612aaf6921ce37944f1094bcc5d7c04",
+      "bytes": 52722
+    },
+    {
+      "path": "reference/verification-commands.html",
+      "sha256": "6165c0b72388cfee96cf8da3b6ec8b22f5cb25ce7040cda10c4d9fefe72b9069",
+      "bytes": 23375
+    },
+    {
+      "path": "reference/worker-profiles-and-roles.html",
+      "sha256": "339d55b505b4f060704faad1109e1bd166c6154e55db2bf7c7c66d0064ad1d35",
+      "bytes": 50523
+    },
+    {
+      "path": "reference/workflows.html",
+      "sha256": "3254bec390d024949dbd09d04a35d4945ae9265daa99f71d0f59a0c0b8457a38",
+      "bytes": 138317
+    },
+    {
+      "path": "search-index.js",
+      "sha256": "db02c2e969d4efc2074ed7675f69a9e7c957873e3588a0967f0c0e44140de50c",
+      "bytes": 21651335
+    },
+    {
+      "path": "search.html",
+      "sha256": "ad07b12d1a1d7a2cba1ffa53c4a24886f0f7bd43748d045f91cfeeaf8c6ebb0b",
+      "bytes": 16251
+    },
+    {
+      "path": "source-previews.json",
+      "sha256": "09a0c1bd4255876a9af890740e3add0c760de032b16fd91b4137fccc14e828f5",
+      "bytes": 1047367
+    },
+    {
+      "path": "status/acceptance.html",
+      "sha256": "f9c631a429c921460e37c7abb61519d78e17e3a5f6f4cd4f8b5dde4f11789ccf",
+      "bytes": 56679
+    },
+    {
+      "path": "status/current.html",
+      "sha256": "5f031aa4c07ea3f51ae01c4cec4f3480ae510bc4c90c0c483410c026f8d937d0",
+      "bytes": 20742
+    },
+    {
+      "path": "status/open-issues.html",
+      "sha256": "ff40e6e6faf0f12682f1b45b9f1ddcf34687b16d9dbc925032352237f73f6198",
+      "bytes": 133868
+    },
+    {
+      "path": "status/roadmap.html",
+      "sha256": "ead4747d20378868a373e0ab522c499061ba0e3c02dda2dd9a47e1f8f2f52e48",
+      "bytes": 32386
+    },
+    {
+      "path": "understand/archviewer.html",
+      "sha256": "32aed86d5c2f686506d1d75090c6c8aadd8194a320b19e46d703b83ea7d96634",
+      "bytes": 41710
+    },
+    {
+      "path": "understand/buster-namespace-controller.html",
+      "sha256": "8b444b5a5bd47fb66e6e2a06ce56020aed0308f7177610c80947caa1242bb966",
+      "bytes": 66891
+    },
+    {
+      "path": "understand/buster.html",
+      "sha256": "6d9df9583e13c2192935ff86cb462a5d602f7cbe831f96323674382f5c324ede",
+      "bytes": 55824
+    },
+    {
+      "path": "understand/codex-integration.html",
+      "sha256": "de4a193ac16d88caa349306f0dc071de5517157b4a79ba8750932cc6a11d348a",
+      "bytes": 56193
+    },
+    {
+      "path": "understand/communication.html",
+      "sha256": "5520007c7440087916474e39d5d09cf9ddd548ef6685fabcaeb0c882e207de40",
+      "bytes": 390800
+    },
+    {
+      "path": "understand/components-and-authority.html",
+      "sha256": "aad60bacce73910057649780231a3649ccbc3bbffc94d4dddfc50227e0be7f26",
+      "bytes": 166781
+    },
+    {
+      "path": "understand/data-and-state.html",
+      "sha256": "fa39ca52bdf35a2c851a03feb00d311849bfd9a3ae11fdb7f617befa4b0e1527",
+      "bytes": 379621
+    },
+    {
+      "path": "understand/deployment-and-trust.html",
+      "sha256": "154d0bc51d89fcd9edefbb5af0e65972870d8d18ee5cff3883ec53546101d656",
+      "bytes": 107067
+    },
+    {
+      "path": "understand/echo.html",
+      "sha256": "53d6b92add3169891cf5db3d24ffae622034b797afef1fe73e40f83f6352fcbe",
+      "bytes": 63459
+    },
+    {
+      "path": "understand/forge.html",
+      "sha256": "6cb6ce690be4d8577da12132326ed9a94845b8d79ae5afe81867e0dd221f7454",
+      "bytes": 65184
+    },
+    {
+      "path": "understand/nova-core.html",
+      "sha256": "9cbc82a00b1b81d3234463d04df656b7e1364833d4f611cc44f2e8c931b2b357",
+      "bytes": 427510
+    },
+    {
+      "path": "understand/openclaw.html",
+      "sha256": "3e15f68f2fba79f5eab3f431510398a0b1eee2691f8720d20f38ea459840c53d",
+      "bytes": 73744
+    },
+    {
+      "path": "understand/ops-mcp.html",
+      "sha256": "6263b664c7cbe5cb9632f903288ac0ccbd345d23bc8d5670fe996a1f613be8f8",
+      "bytes": 88741
+    },
+    {
+      "path": "understand/pipeline-dependencies.html",
+      "sha256": "bc82b750672a2e1e89688f429cd496933b97548997c6290a0d74683b8417af3b",
+      "bytes": 77096
+    },
+    {
+      "path": "understand/platform-and-operations.html",
+      "sha256": "94eab6fb3becdb87861d5c681fb2d98b7f7548536a5537c4b8e8f711f4e0cbf5",
+      "bytes": 227117
+    },
+    {
+      "path": "understand/plugin-runtime.html",
+      "sha256": "6e04afef2e356f731c03c5f8a6466edd6cdf0255005c729aaee770802308ac70",
+      "bytes": 298850
+    },
+    {
+      "path": "understand/prism-data.html",
+      "sha256": "d7fa8bd03c535fa804c10839aeebf970ac80364d1d0920083be2fd2b926e318b",
+      "bytes": 340032
+    },
+    {
+      "path": "understand/prism-runtime.html",
+      "sha256": "9bb86c717c42dd929847a875edfb32d3e969968694d443c523a6faf8ae592db1",
+      "bytes": 211488
+    },
+    {
+      "path": "understand/prism.html",
+      "sha256": "5c43b8fd29d7fbe0a83bb58600f46baa8b07770771a3c3d10637a557bd3b9bb1",
+      "bytes": 79899
+    },
+    {
+      "path": "understand/README.html",
+      "sha256": "dcf26926075da1835328f8c7a30c3443a0a295f705835f467b161cd97280c825",
+      "bytes": 56123
+    },
+    {
+      "path": "understand/request-state-recovery.html",
+      "sha256": "379f24ad6b10cd1fe9fb82696870aa8615fb5e4b732b1bdc542246b0e013060e",
+      "bytes": 94429
+    },
+    {
+      "path": "understand/request-to-result.html",
+      "sha256": "47192c2ae3c53a84be3b7d4f0df524979bd880785ce03d7cce599a9cdb072269",
+      "bytes": 17461
+    },
+    {
+      "path": "understand/security-and-trust.html",
+      "sha256": "f45aa59bc11aed430bfe1b81f1a48e9843fa286b14493c3f6022d839cfef62a9",
+      "bytes": 193996
+    },
+    {
+      "path": "understand/telemetry.html",
+      "sha256": "717f9aa0c95d708e3142025a99e40b7044028c055ed07d615aaa6312014117b1",
+      "bytes": 291907
+    },
+    {
+      "path": "understand/worker-core.html",
+      "sha256": "12104dd61c0197dfa6d2aba4cac0dbb97aaede2f1088a7190a90a09a58382ed3",
+      "bytes": 102291
+    },
+    {
+      "path": "understand/worker-trust.html",
+      "sha256": "3bc289fba9d7d926829fa55f81bc506988cd9db8f189d4ee22ebb6960c7fe9f3",
+      "bytes": 66939
+    },
+    {
+      "path": "use/capacity.html",
+      "sha256": "0811896635161557ab423607685bade03b969761837809d20524b9b075100a6a",
+      "bytes": 140924
+    },
+    {
+      "path": "use/demo-delivery.html",
+      "sha256": "cd12ca1e4e63ca73bd6a1bfbef6e1bf00c1e7dab57ca5fbe405e29bbbbbdfc85",
+      "bytes": 33087
+    },
+    {
+      "path": "use/diagnose.html",
+      "sha256": "bb6f5be2e3a17f2efdc2e5c0df2cf19247c4c0410abe8b3d09ecc58c27e686af",
+      "bytes": 278445
+    },
+    {
+      "path": "use/install.html",
+      "sha256": "3edd49b76374db8e489da8e65f3d8268da087c4bafed5eea21b25ad679643c81",
+      "bytes": 144694
+    },
+    {
+      "path": "use/maintenance.html",
+      "sha256": "3fcfbd0ce62e7f5367519a73d751c38bc79c8c4c9e70be5c2f786bf1e5d921b3",
+      "bytes": 148075
+    },
+    {
+      "path": "use/operate.html",
+      "sha256": "e3fb7f2eec47cf10b864b9f57df77877b3a66f034eb69c5c91c4e51b3f774315",
+      "bytes": 99089
+    },
+    {
+      "path": "use/plugins.html",
+      "sha256": "1909fc05c342846f5aebf434c933770492c13b341a3a0f3528d6e89e7c663fc1",
+      "bytes": 693775
+    },
+    {
+      "path": "use/prism-studio.html",
+      "sha256": "37d429ab9874dd5c32d016f6c0e4e5387268565da30e70dbaedfc864b821df67",
+      "bytes": 592842
+    },
+    {
+      "path": "use/quickstart.html",
+      "sha256": "672eaf23571039308d8cc0f919ed7c7c8258a01775c5dad8dddc35f885076e5b",
+      "bytes": 26589
+    },
+    {
+      "path": "use/README.html",
+      "sha256": "d1ae89ebe20292502382eafe0e8990a1d95195b036c51bf3ce0b227da3ff006c",
+      "bytes": 30766
+    },
+    {
+      "path": "use/recovery.html",
+      "sha256": "1c66db306677c19e84f77e5335ee7f82045b4215eddb5a2fd8458a59e48d5bb6",
+      "bytes": 120924
+    },
+    {
+      "path": "use/worker-trust.html",
+      "sha256": "ca6f4c665e5567550cc67470aa9eab32b53594abf22058196d47dd560b85147c",
+      "bytes": 90821
+    },
+    {
+      "path": "use/workflows/buster-suite.html",
+      "sha256": "e70985143e64b6dc79afa9e50c4ac1c64b8ce2919fcc5090c3fa14768eb07d85",
+      "bytes": 62552
+    },
+    {
+      "path": "use/workflows/examples/index.html",
+      "sha256": "56ea62c8c6dea7f9a7bb6d085fb46199e872d43ad656862ada4a3ab15bf04e3d",
+      "bytes": 17665
+    },
+    {
+      "path": "use/workflows/kubernetes-fixture.html",
+      "sha256": "3a50a3a7ae9712c268027f571b30fcbfab6f62af2e0e254e18366189b4a96ae1",
+      "bytes": 27312
+    },
+    {
+      "path": "use/workflows/README.html",
+      "sha256": "e1e62aaa6b75f88f01f61a13123f41535450f59c033e59ce057a6a8ce1ff9f51",
+      "bytes": 30722
+    },
+    {
+      "path": "use/workflows/wait-resume.html",
+      "sha256": "8a6c49e7e51dd3e716498e21dc1901123fde0a8004ccaf7710eeaf593f1ba43d",
+      "bytes": 112025
+    },
+    {
+      "path": "use/workflows/wait-resume/index.html",
+      "sha256": "56d427d1ebb1ce01b0c2865e7f1246695371585084e2a7e74d5d23b05479acba",
+      "bytes": 17533
+    }
+  ]
+}

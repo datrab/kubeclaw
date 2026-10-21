@@ -1,0 +1,60 @@
+{
+  "observations": [
+    {
+      "width": 320,
+      "route": "reference/documentation-site.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 320,
+      "route": "extend/README.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 320,
+      "route": "understand/nova-core.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 768,
+      "route": "reference/documentation-site.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 768,
+      "route": "extend/README.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 768,
+      "route": "understand/nova-core.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 1440,
+      "route": "reference/documentation-site.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 1440,
+      "route": "extend/README.html",
+      "expandedPreview": true,
+      "violations": 0
+    },
+    {
+      "width": 1440,
+      "route": "understand/nova-core.html",
+      "expandedPreview": true,
+      "violations": 0
+    }
+  ],
+  "findings": [],
+  "limit": "Automated axe on nine expanded preview pages; not human screenreader or whole-site accessibility acceptance."
+}

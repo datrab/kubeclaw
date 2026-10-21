@@ -1,0 +1,48 @@
+{
+  "revision": "912bbbd441f345f23890a1d1f8e976acfdc05f2c",
+  "scope": "Actual committed source-preview build and original Source/reader checks. Only wholePUB004 proposed; all-six-field A91205, humanScreenReader and diagramvisual gates not inferred.",
+  "checks": {
+    "preview-committed-build.log": {
+      "exitCode": 0,
+      "sha256": "548b4a6bbdc8b211b9e9e294ebedb94393de490d5fe5ed44b5f2c27de41e3ba5",
+      "observation": "built 167 publication pages for 912bbbd441f345f23890a1d1f8e976acfdc05f2c\n"
+    },
+    "preview-committed-artifact.json": {
+      "exitCode": 0,
+      "sha256": "0432717311d1335834430e650e4558f6e5a3dea79457aceb8650176704782f4f",
+      "observation": "{\"selectedPages\":167,\"htmlPages\":176,\"localLinks\":36698,\"verifiedOutputDigests\":180}\n"
+    },
+    "preview-committed-search.json": {
+      "exitCode": 0,
+      "sha256": "0fbb88b646b0d6b1f9db71ea572f05d4a55cad2eb1a3354f12276377a34fd425",
+      "observation": "{\n  \"indexedCanonicalPages\": 167,\n  \"internalArtifacts\": 0,\n  \"readerQuestionsPassed\": 12,\n  \"observed\": [\n    {\n      \"query\": \"disaster recovery\",\n      \"expectedRoute\": \"use/recovery.html\",\n      \"observedTopThree\": [\n        \"use/recovery.html\",\n        \"understand/data-and-state.html\",\n        \"status/open-issues.html\"\n      ]\n    },\n    {\n      \"query\": \"backup restore\",\n      \"expectedRoute\": \"use/recovery.html\",\n      \"observedTopThree\": [\n        \"use/recovery.html\",\n        \"understand/data-and-state.html\",\n        \"understand/prism-data.html\"\n      ]\n    },\n    {\n      \"query\": \"install platform\",\n      \"expectedRoute\": \"use/install.html\",\n      \"observedTopThree\": [\n        \"use/install.html\",\n        \"status/roadmap.html\",\n        \"reference/pipeline-platform.html\"\n      ]\n    },\n    {\n      \"query\": \"troubleshoot incident\",\n      \"expectedRoute\": \"use/diagnose.html\",\n      \"observedTopThree\": [\n        \"use/diagnose.html\"\n      ]\n    },\n    {\n      \"query\": \"create first plugin\",\n      \"expectedRoute\": \"extend/first-plugin.html\",\n      \"observedTopThree\": [\n        \"extend/first-plugin.html\",\n        \"use/plugins.html\",\n        \"reference/plugin-configuration.html\"\n      ]\n    },\n    {\n      \"query\": \"change core\",\n      \"expectedRoute\": \"extend/developer-handbook.html\",\n      \"observedTopThree\": [\n        \"extend/developer-handbook.html\",\n        \"understand/nova-core.html\",\n        \"extend/platform/buster.html\"\n      ]\n    },\n    {\n      \"query\": \"settings overrides\",\n      \"expectedRoute\": \"reference/configuration-precedence.html\",\n      \"observedTopThree\": [\n        \"reference/configuration-precedence.html\",\n        \"decisions/test-gate.html\",\n        \"reference/helm-values.html\"\n      ]\n    },\n    {\n      \"query\": \"package ownership\",\n      \"expectedRoute\": \"reference/roles-and-package-ownership.html\",\n      \"observedTopThree\": [\n        \"reference/roles-and-package-ownership.html\",\n        \"understand/plugin-runtime.html\",\n        \"extend/developer-handbook.html\"\n      ]\n    },\n    {\n      \"query\": \"first pipeline compile\",\n      \"expectedRoute\": \"use/workflows/README.html\",\n      \"observedTopThree\": [\n        \"use/workflows/README.html\",\n        \"extend/first-plugin.html\",\n        \"reference/pipeline-json.html\"\n      ]\n    },\n    {\n      \"query\": \"remove plugins\",\n      \"expectedRoute\": \"use/plugins.html\",\n      \"observedTopThree\": [\n        \"use/plugins.html\",\n        \"understand/openclaw.html\",\n        \"extend/lint.html\"\n      ]\n    },\n    {\n      \"query\": \"prism studio\",\n      \"expectedRoute\": \"use/prism-studio.html\",\n      \"observedTopThree\": [\n        \"use/prism-studio.html\",\n        \"extend/platform/prism.html\",\n        \"understand/prism-runtime.html\"\n      ]\n    },\n    {\n      \"query\": \"minimumLinePercent\",\n      \"expectedRoute\": \"reference/plugin-configuration.html\",\n      \"observedTopThree\": [\n        \"reference/plugin-configuration.html\",\n        \"extend/plugin-catalogue/kubeclaw.coverage-budget.html\",\n        \"reference/buster-provider-configuration.html\"\n      ]\n    }\n  ]\n}\n"
+    },
+    "preview-committed-excerpts.json": {
+      "exitCode": 0,
+      "sha256": "4828fe7b7da2cb682bedd901d28acf539bc6e4952ee184f3071e19449783ee86",
+      "observation": "{\n  \"pages\": 167,\n  \"sourceBoxes\": 393,\n  \"boxesWithPreviews\": 390,\n  \"excerpts\": 1660,\n  \"uniqueSourceObjects\": 874,\n  \"limit\": \"Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred.\"\n}\n"
+    }
+  },
+  "sourceSummary": {
+    "htmlPages": 176,
+    "uniqueVerifiedLinks": 14419,
+    "uniqueSourceObjects": 3726,
+    "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+  },
+  "upstreamSourceObjects": 118,
+  "upstreamRepositories": 11,
+  "fullSourceExitCode": 0,
+  "sourceStderr": "",
+  "previewStderr": "",
+  "primarySourceProofSha256": "0902a59b3d0dd158ad6763b2da63391008d825545738759695435578143e3b56",
+  "previewReceiptSha256": "09a0c1bd4255876a9af890740e3add0c760de032b16fd91b4137fccc14e828f5",
+  "readerManifestSha256": "93e067ee98b787d0899de7369ec9172f84f80f8ac3ab59bec0c3356d7db85fcb",
+  "originalTests": "88/88 original custody/publication/Argo/reader/Source/preview regressions PASS;7/7 workflow-trust tests PASS. Source code review clean; exact4receiptrenewals/56unchanged/2newDocPurposes,6actualpurposeguardsPASS. Details precommit-observations.json.",
+  "manualVisualInspection": "Parent inspected actual320px documentation-site expanded source screenshot: summaryfocusoutline/path/range,40-charrevision/source-link and readable bounded-scroll code inside same originalSourcebox. No redesign; this is not everydiagram/all-page humanvisual approval.",
+  "limits": [
+    "Code excerpt and matching immutable-source link, not semantic correctness or execution of every cited implementation.",
+    "Existing source-box claim/contract/test/limits are preserved; missing six-field authoring is not fabricated. No A91205 acceptance from this proof.",
+    "CRLF normalized toLF for display; rawsource hash separatelyretained.",
+    "GlobalAPI bundle-copier74 andthreeunchangedHelmphrases remainopen."
+  ]
+}
