@@ -1,6 +1,12 @@
 {{- define "kubeclaw.registryContainer" -}}
 {{- $root := .root -}}
 {{- $container := deepCopy .container -}}
+{{- if $root.Values.busterRuntimeStartupFix -}}
+  {{- if ne $root.Values.agentRole "buster" -}}{{- fail "busterRuntimeStartupFix is restricted to the Buster role" -}}{{- end -}}
+  {{- if or $container.command $container.args -}}{{- fail "busterRuntimeStartupFix cannot replace a custom runtime command" -}}{{- end -}}
+  {{- $_ := set $container "command" (list "/usr/bin/tini" "--" "/bin/sh" "/etc/buster-startup/launcher.sh") -}}
+  {{- $_ := set $container "volumeMounts" (append ($container.volumeMounts | default list) (dict "name" "buster-runtime-startup" "mountPath" "/etc/buster-startup" "readOnly" true)) -}}
+{{- end -}}
 {{- $settings := $root.Values.runtimeInfrastructure -}}
 {{- range $key, $_ := $settings -}}{{- if not (has $key (list "registry" "dockerHubMirror" "localRegistry")) -}}{{- fail (printf "unknown runtimeInfrastructure field %s" $key) -}}{{- end -}}{{- end -}}
 {{- range $name, $client := dict "registry" $settings.registry "dockerHubMirror" $settings.dockerHubMirror -}}

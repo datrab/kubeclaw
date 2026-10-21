@@ -1,0 +1,14 @@
+{{- if .Values.busterRuntimeStartupFix }}
+{{- if ne .Values.agentRole "buster" }}
+{{- fail "busterRuntimeStartupFix is restricted to the Buster role" }}
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-runtime-startup
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+data:
+  launcher.sh: |
+{{ .Files.Get "files/buster-runtime-launcher.sh" | indent 4 }}
+{{- end }}
