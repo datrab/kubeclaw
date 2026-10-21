@@ -1,0 +1,132 @@
+{
+  "uniqueVerifiedLinks": 45,
+  "uniqueSourceObjects": 14,
+  "primarySources": [
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "kind": "blob",
+      "gitObject": "e1d78565e3d8ca49bfa3141deeadbeab184c0800",
+      "bytes": 12103,
+      "sha256": "760a82838ffce8fbf2a29f17914a1395b5dbaac61b71742155e378f962ccaee3"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+      "kind": "blob",
+      "gitObject": "3a37766a057eaa2b1bafee3ec5d247851151eba5",
+      "bytes": 2130,
+      "sha256": "405866681db66cc38aa8b9018cfdb18bff2fd6a56137ee39632b9eebd808b62d"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "kind": "blob",
+      "gitObject": "1f043f95e28a4de59b3f6868209aa857dbe2009a",
+      "bytes": 24873,
+      "sha256": "5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "charts/kubeclaw/values.yaml",
+      "kind": "blob",
+      "gitObject": "3df4916342a026c6ddd8975f9231a28b7b17d519",
+      "bytes": 18721,
+      "sha256": "6c01336c19d20edc4a99528d115f9f2a9a69a8536cd60ccd65994622d0ca3ad3"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/demo-credentials.go",
+      "kind": "blob",
+      "gitObject": "066d25526051d1e0f3287f20e580bd44d47a1cd0",
+      "bytes": 8928,
+      "sha256": "170356e6abad1547a973b34211fea24a10ad51e00a93906bce3bee12b6f78f26"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/demo-product.go",
+      "kind": "blob",
+      "gitObject": "0cd737eb2163a3946073fdf56d92ee3a8a2f9b5b",
+      "bytes": 17019,
+      "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "kind": "blob",
+      "gitObject": "8312aea898b5bd6497043c4e12315beb3c2128e6",
+      "bytes": 8667,
+      "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/demo-readiness.go",
+      "kind": "blob",
+      "gitObject": "07eaf36881de13d0ab38484b9c8df7595c3de714",
+      "bytes": 14838,
+      "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/demo-retention.go",
+      "kind": "blob",
+      "gitObject": "fbd6dfe42a28ef6d0bdfa1b5f4f439b19b4c4093",
+      "bytes": 1632,
+      "sha256": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/exposure-generation.go",
+      "kind": "blob",
+      "gitObject": "82e8ae27b98d070dd15ed7ad1f544c66dc9f0d42",
+      "bytes": 5180,
+      "sha256": "063922ee15724270e88a63edd93e1817330804f04aebce448204f8baf5ee1fea"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/main_test.go",
+      "kind": "blob",
+      "gitObject": "1247373d142fb96eaca374c5a86a42050a46047d",
+      "bytes": 35564,
+      "sha256": "0006d84a5753bb50ac16c2d7cd05ace3cd53c373590cb99043740261edc62d7c"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "cmd/buster-namespace-controller/main.go",
+      "kind": "blob",
+      "gitObject": "f5500795690047de69011d517971a2db4213c7d0",
+      "bytes": 73929,
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "file": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "kind": "blob",
+      "gitObject": "840e81a1aa6f536b32c0b3d4da5b8c0c64ddeace",
+      "bytes": 43221,
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833"
+    },
+    {
+      "repository": "datrab/kubeclaw",
+      "revision": "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7",
+      "file": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "kind": "blob",
+      "gitObject": "1f043f95e28a4de59b3f6868209aa857dbe2009a",
+      "bytes": 24873,
+      "sha256": "5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8"
+    }
+  ]
+}

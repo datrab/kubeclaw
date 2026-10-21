@@ -6,7 +6,7 @@ Owner: buster
 Evidence: charts/kubeclaw/templates/buster-namespace-lease-crd.yaml; charts/kubeclaw/templates/buster-namespace-controller.yaml; charts/kubeclaw/templates/buster-namespace-fence.yaml; cmd/buster-namespace-controller; skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
 Evidence revision: `be78787633d774e9fd2a2ff401311499a555156d`
 Applies to: Kubernetes-backed Buster fixtures, dedicated demo credentials and preview retention
-Last verified: local source and contract inspection on 2026-10-10
+Last verified: local source and contract inspection on 2026-10-10; diagram provisioning/cleanup boundaries rechecked against the same pinned source on 2026-10-21; no live cluster observation
 
 ## Why a fixture requests a lease
 
@@ -103,15 +103,18 @@ flowchart TD
     Fixture[Fixture validates request and manifest] --> DryRun[Server dry-run and lease apply]
     DryRun --> Policy[Controller checks identity and operator policy]
     Policy --> Provision[Namespace safeguards, grants and Secrets]
-    Provision --> NamespaceReady[Namespace phase Ready]
+    Provision --> Initial[Initial credential and exposure reconciliation]
+    Initial --> NamespaceReady[Namespace phase Ready]
     NamespaceReady --> Workload[Fixture deploys and tests workload]
-    NamespaceReady --> Optional[Credential and exposure reconciliation]
-    Optional --> Verified[Trusted readiness handoff verifies live sources]
+    NamespaceReady -->|later reconciliation| Optional[Credential and exposure reconciliation]
+    Optional -.->|separate optional producer request| Verified[Trusted readiness handoff verifies live sources]
     Verified --> Retained[Committed retention and signed human decisions]
     NamespaceReady --> Cleanup[Expiry or explicit lease deletion]
     Retained --> Cleanup
     Cleanup --> Fence[Ownership and version fences]
-    Fence --> Removed[Owned namespace removed, finalizer cleared]
+    Fence -->|owned or already absent| Removed[Owned namespace absent after successful cleanup]
+    Removed -->|explicit lease deletion only| Cleared[Lease finalizer cleared]
+    Fence -.->|ownership mismatch during explicit deletion; preserve namespace| Cleared
 ```
 
 **Text alternative to the diagram**
@@ -123,15 +126,18 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Fixture validates request and manifest | Directed connection | Server dry-run and lease apply |
 | Server dry-run and lease apply | Directed connection | Controller checks identity and operator policy |
 | Controller checks identity and operator policy | Directed connection | Namespace safeguards, grants and Secrets |
-| Namespace safeguards, grants and Secrets | Directed connection | Namespace phase Ready |
+| Namespace safeguards, grants and Secrets | Directed connection | Initial credential and exposure reconciliation |
+| Initial credential and exposure reconciliation | Directed connection | Namespace phase Ready |
 | Namespace phase Ready | Directed connection | Fixture deploys and tests workload |
-| Namespace phase Ready | Directed connection | Credential and exposure reconciliation |
-| Credential and exposure reconciliation | Directed connection | Trusted readiness handoff verifies live sources |
+| Namespace phase Ready | Directed connection — later reconciliation | Credential and exposure reconciliation |
+| Credential and exposure reconciliation | Dotted relationship — separate optional producer request | Trusted readiness handoff verifies live sources |
 | Trusted readiness handoff verifies live sources | Directed connection | Committed retention and signed human decisions |
 | Namespace phase Ready | Directed connection | Expiry or explicit lease deletion |
 | Committed retention and signed human decisions | Directed connection | Expiry or explicit lease deletion |
 | Expiry or explicit lease deletion | Directed connection | Ownership and version fences |
-| Ownership and version fences | Directed connection | Owned namespace removed, finalizer cleared |
+| Ownership and version fences | Directed connection — owned or already absent | Owned namespace absent after successful cleanup |
+| Owned namespace absent after successful cleanup | Directed connection — explicit lease deletion only | Lease finalizer cleared |
+| Ownership and version fences | Dotted relationship — ownership mismatch during explicit deletion; preserve namespace | Lease finalizer cleared |
 
 
 The diagram answers who owns each handoff. The controller can fail during policy,
@@ -140,6 +146,28 @@ the next reconciliation reads current state. A successful lease apply alone does
 not prove namespace readiness. [Fixture preparation](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L692-L734)
 and [controller reconciliation](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L251-L316)
 are the source authority for this sequence.
+
+Initial provisioning calls credential and exposure reconciliation before publishing
+namespace `Ready`; either call returning an error prevents that publication.
+Pending or disabled credential/exposure observations can still coexist with
+namespace `Ready`. Later ready-lease reconciliation repeats those calls. The
+readiness handoff is a separate, optional authenticated producer request, not an
+automatic result of namespace readiness. Human product decisions use another
+separately authenticated endpoint.
+
+> **Source evidence — provisioning and cleanup boundaries**
+>
+> **Claim:** Initial credential/exposure calls precede `Ready`; expiry cleanup does not clear the lease finalizer, whereas explicit lease deletion may clear it after successful owned cleanup or an ownership mismatch that preserves the other namespace.
+>
+> **Implementation:** [Initial provisioning](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L594-L672), [later reconciliation](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L337-L383), [expiry](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L319-L335), and [explicit deletion](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L704-L718).
+>
+> **Contract or setting:** [UID/resourceVersion-fenced finalizer removal](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L147-L162) and [namespace delete preconditions and observed absence](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L188-L198).
+>
+> **Test evidence:** [Ownership mismatch preserves the namespace but permits lease finalizer removal](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main_test.go#L243-L274). This is an inspected test, not a newly observed cluster result.
+>
+> **Revision:** `be78787633d774e9fd2a2ff401311499a555156d`
+>
+> **Limit:** Owned deletion waits for observed absence; API failures or the bounded wait timing out do not establish cleanup completion. TTL expiry retains the lease and its finalizer. Product decisions, readiness, effective permissions and successful cleanup still need their own environment observations.
 
 ## Choose a request and keep its authority stable
 
@@ -370,7 +398,8 @@ and more status storage. The controller caps history at 128 receipts. Historical
 approval rationale is not recorded separately. Reconsider the storage shape if
 another durable authority preserves immutable receipts and exact subject binding.
 
-Expiry first publishes `Expired`, then deletes only an owned namespace. Explicit
+Expiry first publishes `Expired`, then deletes only an owned namespace. It retains
+the lease and its finalizer. Explicit
 delete fences cleanup, proves namespace ownership, removes lease-scoped egress
 policy and uses namespace deletion preconditions and removes the finalizer after deletion completes. A namespace ownership
 mismatch stops deletion of that namespace, but the controller can remove the

@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Separate expiry cleanup from lease finalizer removal",
+      "body": "The combined cleanup path incorrectly ends both expiry and explicit deletion with \u201cfinalizer cleared.\u201d At the pinned revision, expireLease publishes Expired and calls deleteOwnedNamespace without removing the finalizer or deleting the lease. Only reconcileDeletedLease removes the finalizer, and it can do so on namespace ownership mismatch without deleting that namespace. Split these outcomes in the diagram and text alternative. deleteNamespaceCAS does wait for an observed 404, so successful owned namespace deletion itself is supported; failures or its two-minute timeout must not imply completion.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/buster-namespace-controller.md",
+        "line": 114
+      }
+    },
+    {
+      "title": "[P2] Show initial credential and exposure reconciliation before Ready",
+      "body": "The Ready \u2192 credential/exposure reconciliation edge omits a material prerequisite of initial Ready. In pinned main.go, provisionLease calls ensureTestCredentials and ensurePreviewExposure before publishing Ready; an error from either prevents that publication. reconcileReadyLease repeats both operations later. Show the initial calls before Ready and label the later edge as repeated reconciliation, preserving the distinction that pending credential/exposure observations can coexist with namespace Ready.",
+      "priority": "P2",
+      "confidence": 0.97,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/buster-namespace-controller.md",
+        "line": 108
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "NOT_READY for the scoped namespace-controller diagram: its cleanup endpoint conflates expiry with explicit deletion, and its ordering hides credential/exposure calls required before initial Ready. The fixture validation/apply, policy/provisioning, Ready-to-workload, deadline-to-cleanup, and ownership/version-fence dependencies are supported. Readiness verification and subsequent product decisions are optional, separately authenticated producer handoffs, as the surrounding prose explains; they are not automatic reconciliation steps. Their summarized dependencies are supported when read with that prose. This verdict covers only this diagram against be78787633d774e9fd2a2ff401311499a555156d; it grants no broader publication, runtime, API, or human acceptance. Read-only source inspection only; no tests or execution.",
+  "overall_confidence": 0.97
+}

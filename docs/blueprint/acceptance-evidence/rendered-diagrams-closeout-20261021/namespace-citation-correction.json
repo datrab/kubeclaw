@@ -1,0 +1,1 @@
+{"observation":"Primary source verifier rejected newly authored range L188-L201: file ends line198. Corrected to188-198; inspected test range extended243-274 to include its final assertion. Prior semantic review is not line-bounds proof; unchanged semantic verdict reused only for graph/text claims."}
