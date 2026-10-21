@@ -387,16 +387,14 @@ busterApiEgress: []
 
 busterNamespaceBroker:
   enabled: false
-  # Grants the agent ServiceAccount permission to request ephemeral test
-  # namespaces through BusterNamespaceLease CRs. Buster gets this permission
-  # whenever broker mode is enabled. Other roles, such as Nova E2E, must opt in
-  # explicitly and still do not receive namespace/workload authority.
+  # Legacy configuration keys retained for older values files. They no longer
+  # grant other agents any API/Secret access. Only the Buster role can receive
+  # a lease-client binding; all other cluster operations go through the Ops MCP.
   leaseClient:
     enabled: false
     verificationRead:
       enabled: false
-      # Existing operator namespace; shared by the scoped RBAC and agent probe.
-      # The agent release does not create or own this namespace or Secret.
+      # Retired verification scopes are ignored; no RBAC or credential is created.
       tailscaleOperatorNamespace: tailscale
       tailscaleOAuthSecretName: operator-oauth
   # Opt-in trusted Nova runtime only; same-container code is not isolated by this mount.
