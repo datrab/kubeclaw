@@ -47,7 +47,13 @@ test('published acknowledgment limits reach real HTTP client, assigned child and
     }
     const control = f.loadControlServerConfig(f.capture, credentials);
     const envelope = await agentAttempt({ id: randomUUID(), fence: randomUUID(), expires_at: new Date(Date.now() + control.agentLauncher.attemptLifetimeMs), request_digest: digest, request: {} }, 'assigned-agent', control);
-    assert.equal(envelope.operation.inputSchemaId, 'prism-agent-job.v3');
+    // This published generation carries the selected WorkerCore policy; v3 is the original no-policy arm.
+    assert.ok(control.workerCore);
+    assert.equal(envelope.operation.inputSchemaId, 'prism-agent-job.v4');
+    assert.deepEqual(envelope.operation.values.workerCore, JSON.parse(JSON.stringify(control.workerCore)));
+    const originalEnvelope = await agentAttempt({ id: randomUUID(), fence: randomUUID(), expires_at: new Date(Date.now() + control.agentLauncher.attemptLifetimeMs), request_digest: digest, request: {} }, 'assigned-agent', { ...control, workerCore: undefined });
+    assert.equal(originalEnvelope.operation.inputSchemaId, 'prism-agent-job.v3');
+    assert.equal(Object.hasOwn(originalEnvelope.operation.values, 'workerCore'), false);
     assert.equal(envelope.operation.values.maximumArtifactAcknowledgmentBytes, maximumArtifactAcknowledgmentBytes);
     assert.equal(envelope.operation.values.terminationGraceMs, maximumArtifactAcknowledgmentBytes / 8);
     assert.deepEqual(envelope.limits, control.agentLauncher.limits);
