@@ -14885,7 +14885,7 @@
               "expression": "`Buster guides verified: ${specifications.length} pages, ${suites.length} suites, ${providerCount} providers, ${sourceLinks} pinned links, ${checkedSources.size} revision-bound source files, ${Object.keys(requirementMarkers).length} requirements.`"
             }
           ],
-          "factsDigest": "91f2366441d1650c83a01bc0279952600f5b6bbcbb63c086a6ef7394c36f91dd"
+          "factsDigest": "e2e65135374728343fe5c8838988d61cc23dd4ee1f646e03865e795d6edbb3c7"
         }
       ],
       "roleConsumerEvidence": {
@@ -15505,7 +15505,7 @@
               "expression": "`AP09.6/9.7 guides passed (${specifications.length} pages, ${sourceLinkCount} pinned source links, ${checkedSources.size} source files, ${opsTools.length} Ops tools)\\n`"
             }
           ],
-          "factsDigest": "37d10092797b25b4cfc0376fa6effd50c44bec8d2fc6cfaf51669308288a51d0"
+          "factsDigest": "513ed26c0e7f6a665b2580ecbe51b68e0f4801a2401d54388988df08b0e1c50a"
         }
       ],
       "roleConsumerEvidence": {
@@ -68207,7 +68207,8 @@
       "scripts/docs-status.mjs",
       "scripts/docs-tree-boundary.mjs",
       "scripts/docs-yaml-field-authorities.mjs",
-      "scripts/docs-yaml-inventory.mjs"
+      "scripts/docs-yaml-inventory.mjs",
+      "scripts/docs-plugin-complexity.mjs"
     ],
     "qualificationRequiredSources": [
       "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs"
@@ -69141,7 +69142,7 @@
       {
         "source": "scripts/check-platform-specialist-guides.mjs",
         "semanticClass": "finite-repository-modules",
-        "sourceSha256": "9f7b8f23fef60e0bcba5bf1dac855e808c26090488ad70ee2927e5681d26da1b",
+        "sourceSha256": "21128593eeb12542fd6d3e8631459d31bbf8eab6fb0b78dd38cf1c60b0a3c368",
         "operations": [
           {
             "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
@@ -69161,6 +69162,10 @@
           {
             "path": "scripts/docs-lint-policy-reference.mjs",
             "sha256": "e7c01dff95b2c87df7d1cef6378c330d7f82a67687d4e02783c8d74c09ede191"
+          },
+          {
+            "path": "scripts/docs-source-evidence-pin.mjs",
+            "sha256": "7949bcbfd4df89e9bb43e1e887608910e4755782a3a1b12d7de2a911d559a724"
           }
         ]
       },

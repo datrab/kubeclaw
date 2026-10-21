@@ -119,9 +119,9 @@ Text version: humans enter through an operator or application boundary. Nova del
 >
 > **Implementation:** [Complete adapter resolution path](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/src/adapter.ts#L3-L19)
 >
-> **Contract:** [Selected plugin and configuration schema](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/plugin.json) describes the adapter registration; it does not grant Kubernetes Secret API access.
+> **Contract:** [Selected plugin and configuration schema](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/plugin.json#L1-L19) describes the adapter registration; it does not grant Kubernetes Secret API access.
 >
-> **Test:** [Secret resolver local-function test](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/tests/live-function.test.ts) Source inspected; not executed for this correction.
+> **Test:** [Secret resolver local-function test](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/tests/live-function.test.ts#L7-L41) Source inspected; not executed for this correction.
 >
 > **Checked revision:** `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`.
 >
@@ -207,7 +207,7 @@ SPIRE uses the namespace and ServiceAccount name to derive the workload identity
 >
 > [The KubeClaw ServiceAccount disables automatic token mounting by default](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/serviceaccount.yaml#L1-L10).
 >
-> [The selected Nova values enable token mounting and verification reads](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L76-L85).
+> [The selected Nova values enable token mounting and verification reads](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L80-L89).
 > [The lease-client Role permits lease operations and Deployment and Service reads](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L16-L29).
 > [Verification adds Pod reads and access to the named Tailscale IngressClass](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L57-L65).
 > [A separate Role permits GET for only the configured OAuth Secret in the configured operator namespace](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L80-L96).
@@ -249,7 +249,7 @@ The configured peer relationships include these paths:
 > matching](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L14-L73).
 > [Its downstream transport uses SDS and replaces forwarded certificate identity](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-worker-trust.yaml#L138-L197).
 >
-> [The Prism policies select the same application callers and protected ports](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L24-L59).
+> [The Prism policies select the same application callers and protected ports](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L24-L59).
 
 ### Rotation and failure behavior
 
@@ -318,13 +318,14 @@ and stops if that source is absent.
 > **Source evidence — Secret consumers outside the shared helper**
 >
 > [Prism creates separate database-role and runtime relationship secrets and
-> verifies every required key without printing values](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/deploy.sh#L1639-L1681).
+> verifies every required key without printing values](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/scripts/deploy.sh#L1621-L1663).
 > [Prism workloads select role-specific database and runtime keys](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/workloads.yaml#L86-L125).
 > [Product-decision configuration requires a separate signer, CA, explicit
 > audience, and short-lived projected token](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/_product-decisions.tpl#L1-L49).
 >
-> [Nova values select separate bundle, gateway, provider, Discord, Git,
-> Archviewer, Buster, and source-attestation Secret keys](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L31-L89).
+> [Nova values select gateway, provider, Discord and Git Secret keys](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L31-L89).
+> [Bundle authentication has its own selected Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L1-L30).
+> [Archviewer, Buster and source-attestation material use separate named references](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L91-L138).
 > [The Ops Pod mounts the bearer separately, gives the optional GitHub token only
 > to Codex](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L49-L76),
 > and [gives the Tailscale authkey only to its sidecar](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L113-L135).
@@ -371,7 +372,7 @@ It does not enumerate the environment and it does not accept an environment-vari
 >
 > [Secret setup creates or repairs the source-attestation key pair and applies it as one Kubernetes Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/setup-secrets.sh#L610-L646).
 >
-> [Nova receives the private key from the source-attestation Secret](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L125-L130), while [Buster receives its public key](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L96-L101).
+> [Nova receives the private key from the source-attestation Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L129-L134), while [Buster receives its public key](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L96-L101).
 >
 > [The secret resolver maps bounded logical names to environment values and fails closed for all other requests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/secret-resolver/src/adapter.ts#L3-L22).
 
@@ -434,12 +435,12 @@ boundary does not silently expand another.
 > bounded world egress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L15-L74).
 > [It separately selects Nova-to-Buster egress and Buster-from-Nova ingress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L121-L157).
 > [Prism policy ties Control, Worker, test runner, Nova, agent, database, and
-> ingestion callers to exact ports](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L24-L59).
-> [Worker ingress selects Control alone](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L73-L81), and
+> ingestion callers to exact ports](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L24-L59).
+> [Worker ingress selects Control alone](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L73-L81), and
 > [Worker application authorization accepts only the configured Control SVID](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/worker-service.ts#L56-L58).
 > [The selected policy also permits Nova and Buster lease-client API egress](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/network-policies.yaml#L366-L380).
 > [The Studio ingress allow selects only the Tailscale proxy that owns the Prism
-> parent resource](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L123-L133).
+> parent resource](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L126-L136).
 >
 > [The lease-client role grants lease operations and read-only Deployment and
 > Service visibility, not general workload creation](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/rbac.yaml#L1-L45).
@@ -458,8 +459,8 @@ Important negative checks are:
 
 > **Source evidence — policy boundary**
 >
-> [Prism applies default deny, DNS, and explicit Control application paths](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L1-L59).
-> [Separate policies restrict Studio, Worker, and the OpenClaw agent](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/networkpolicy.yaml#L61-L110).
+> [Prism applies default deny, DNS, and explicit Control application paths](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L1-L59).
+> [Separate policies restrict Studio, Worker, and the OpenClaw agent](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/prism/templates/networkpolicy.yaml#L61-L113).
 >
 > [The platform policy separates cluster-wide default deny and DNS from namespace-specific routes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/cilium-cluster-policies.yaml#L31-L90).
 

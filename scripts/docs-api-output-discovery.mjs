@@ -156,7 +156,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/check-platform-specialist-guides.mjs",
     "semanticClass": "finite-repository-modules",
-    "recipeSha256": "1a39c77b1e82bedca9893d1dbb45a40a0c3c3b2c232544426c61200b1d8612b4"
+    "recipeSha256": "ba5bed8dfebe54e98f4efd968ff36660e521bce322dec18af14524c63261f1d2"
   },
   {
     "source": "scripts/docs-configuration-inventory.mjs",

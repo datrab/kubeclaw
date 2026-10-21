@@ -258,15 +258,15 @@ PostgreSQL or the artifact store.
 >
 > [The mirror names Docker Hub as its only upstream](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L1-L55) and [exposes its bounded Service on port 5000](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L56-L94).
 >
-> [The generated gateway separates OpenAI OAuth from the LiteLLM embedding client](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75).
-> [The agent block fixes the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L77-L108).
+> [The generated gateway separates OpenAI OAuth from the LiteLLM embedding client](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L28-L79).
+> [The agent block fixes the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L81-L128).
 >
 > [LiteLLM maps the one public model name to Vertex project and location](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-config.yaml#L1-L14), and [its Deployment mounts the Google identity](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-deployment.yaml#L35-L75).
 >
-> [Nova selects its enabled Discord bot identity, channel, and allowed users](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L38-L58).
+> [Nova selects its enabled Discord bot identity, channel, and allowed users](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L38-L59).
 > [Buster selects a different enabled channel and execution approver](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L41-L65).
 >
-> [The rendered Discord block applies token indirection, user rules, mention behavior, session binding, and execution approvers](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L180-L232).
+> [The rendered Discord block applies token indirection, user rules, mention behavior, session binding, and execution approvers](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L200-L252).
 >
 > [Alloy discovers and processes node log streams](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L30-L79) and [sends them to the exact Loki push URL](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L80-L101).
 >
@@ -314,7 +314,7 @@ agent/model/tool execution after admission.
 Protocol builders and strict result definitions are the field authority:
 [implementation input/completion](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/implementation-agent/src/protocol.ts#L1-L59),
 [Echo request](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/protocol.ts#L62-L75),
-[Echo output](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/echo-review-contract.ts#L64-L137),
+[Echo output](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/echo-review-contract.ts#L64-L124); [Echo output (continued 2)](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/echo-review-contract.ts#L125-L137),
 [verification contract](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/echo-review-verification-contract.ts#L5-L35),
 [scaled review](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/scalable-review-jobs.ts#L157-L165),
 [scaled verification](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/scalable-review-verification.ts#L292-L305),
@@ -432,7 +432,7 @@ fails transport admission before operation/result binding; the matrix does not
 prove that SPIRE issued these identities or that a deployed proxy enforced them.
 
 Source: [selected Prism profile](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/my-values/prism-values.yaml#L35-L40),
-[selected Nova profile](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/my-values/nova-values.yaml#L118-L121),
+[selected Nova profile](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L118-L121),
 [identity defaults](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/values.yaml#L75-L84),
 [Control identity and accepted clients](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/templates/configmap-worker-trust.yaml#L9-L38),
 [Worker, Control and Agent upstream SANs](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/templates/configmap-worker-trust.yaml#L80-L130),
@@ -523,7 +523,7 @@ and [historical admission selection](https://github.com/datrab/kubeclaw/blob/a72
 
 ### Core invocation and isolation contracts
 
-The complete typed field authority is the [SDK runtime interface](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/runtime.ts#L21-L111)
+The complete typed field authority is the [SDK runtime interface](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/runtime.ts#L21-L81); [SDK runtime interface (continued 2)](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/runtime.ts#L82-L111)
 and its [generated contract definitions](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L110-L163).
 They distinguish the following messages rather than treating every call as an
 untyped request:
@@ -595,7 +595,7 @@ A cleanup acknowledgement without terminal proof leaves dispatch unresolved.
 
 Source: [cleanup budget and invocation ownership](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/execution/adapter-startup.ts#L106-L140),
 [single-use timeout and lifecycle rules](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/execution/adapter-invocation-phase.ts#L25-L60),
-and [validating result branches](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L609-L675).
+and [validating result branches](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L609-L669); [validating result branches (continued 2)](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L670-L675).
 
 ### Observer ordering, retries and restart
 
@@ -633,9 +633,9 @@ Source: [telemetry policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5
 | Restart after completion but before checkpoint | Recover the completed delivery and commit the checkpoint without executing the observer again. |
 | Restart after started/failed delivery | Recover the highest attempted number; remaining retries use the same logical delivery. An exhausted budget remains exhausted. Invalid event order, provenance, checkpoint or delivery transitions stop recovery rather than silently reset history. |
 
-Source: [delivery record, ordering and failure policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observers.ts#L41-L108),
+Source: [delivery record, ordering and failure policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observers.ts#L41-L101); [delivery record, ordering and failure policy (continued 2)](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observers.ts#L102-L108),
 [deadline, abort and lease](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observer-delivery.ts#L8-L44),
-and [restart validation](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observer-recovery.ts#L13-L83).
+and [restart validation](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observer-recovery.ts#L13-L73); [restart validation (continued 2)](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observer-recovery.ts#L74-L83).
 
 ### Redis
 
@@ -718,8 +718,8 @@ Source: [Argo private Ingress](https://github.com/datrab/kubeclaw/blob/f88a8c5c5
 [Prism Service](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/prism/templates/services.yaml#L1-L6),
 [Prism private Ingress](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/prism/templates/services.yaml#L38-L47),
 [selected Prism route](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/my-values/prism-values.yaml#L32-L40),
-[Archviewer Ingress and proxy policy](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/kubeclaw/templates/archviewer.yaml#L22-L79),
-[selected presentation container](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/my-values/nova-values.yaml#L154-L188),
+[Archviewer Ingress and proxy policy](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/archviewer.yaml#L22-L79),
+[selected presentation container](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L154-L188),
 [Basic auth and health exception](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/docker/archviewer.nginx.conf#L1-L21),
 [Ops outbound sidecar](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/ops-pod/templates/workload.yaml#L113-L135),
 and [disabled default and SOCKS contract](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/charts/ops-pod/values.yaml#L37-L46).
@@ -844,7 +844,7 @@ Source: [invoker policy and bounds](https://github.com/datrab/kubeclaw/blob/f88a
 [URL and release checks](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L237-L280),
 [owner and generation identity](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/skills/buster/engine/test-gates/exposure-generation.ts#L1-L21),
 [controller routing specification](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1199-L1232),
-[readiness and off handling](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1234-L1305),
+[readiness and off handling](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1234-L1294); [readiness and off handling (continued 2)](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1295-L1305),
 and [Ingress and reported URL](https://github.com/datrab/kubeclaw/blob/f88a8c5c56adc2098d73804c85c6f41d7d7a239f/cmd/buster-namespace-controller/main.go#L1347-L1399).
 
 ### Git, OCI, BuildKit, And Tailscale
@@ -911,18 +911,18 @@ release/result identity; do not relabel it as the earlier successful artifact.
 Keep unavailable old digests blocked instead of retrying pulls indefinitely.
 A Docker Hub mirror hit cannot reconstruct privately built missing content.
 
-Source: [direct storage template](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/my-values/infra/registry-local.yaml#L1-L106).
+Source: [direct storage template](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/my-values/infra/registry-local.yaml#L1-L61); [direct storage template (continued 2)](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/my-values/infra/registry-local.yaml#L62-L106).
 [Direct renderer admission](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/scripts/render-registry-local.mjs#L21-L49) rejects the ephemeral predecessor.
 [GitOps selected workload and ports](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/gitops/platform/registry-local/resources.yaml#L1-L53) define the nonpersistent profile.
 [Argo source selection](https://github.com/datrab/kubeclaw/blob/d7f822c3cddd97e637aeca47f1cd49e87164ff87/scripts/argocd-self-management.mjs#L145-L158) chooses that separate directory.
 
 > **Source evidence — content and route wiring**
 >
-> [The Buster runtime starts rootless BuildKit with generated registry configuration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/buster-runtime-entrypoint.sh#L1-L38).
+> [The Buster runtime starts rootless BuildKit with generated registry configuration](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/docker/buster-runtime-entrypoint.sh#L1-L38).
 >
 > [One generator produces node, BuildKit, and runtime registry client settings from the selected endpoints](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104).
 >
-> [Archviewer demonstrates a private Tailscale Ingress whose Cilium rule binds the exact owning proxy](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/archviewer.yaml#L22-L53).
+> [Archviewer demonstrates a private Tailscale Ingress whose Cilium rule binds the exact owning proxy](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/archviewer.yaml#L26-L81).
 
 ### Prism Ingestion, Providers, And State
 
@@ -1101,18 +1101,18 @@ record.
 
 > **Source evidence — full showcase bindings**
 >
-> [The role workload receives exact Git, Redis, LiteLLM, and gateway configuration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L1278-L1300).
-> [It renders the selected provider routes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L1301-L1343).
-> [It turns selected dependencies into readiness inputs](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L1365-L1388).
+> [The role workload receives exact Git, Redis, LiteLLM, and gateway configuration](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1350-L1372).
+> [It renders the selected provider routes](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1373-L1415).
+> [It turns selected dependencies into readiness inputs](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1437-L1460).
 >
 > [The registry contract creates separate writable-registry and Docker Hub mirror settings for BuildKit and nodes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/registry-client-config.mjs#L57-L104).
 >
-> [Nova's selected capability routes bind Buster and Prism to their protected endpoints](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/nova-values.yaml#L82-L112).
+> [Nova's selected capability routes bind Buster and Prism to their protected endpoints](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L86-L116).
 >
 > [Control stores the design request before returning waiting state](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/control-server.ts#L202-L240).
 > [The durable agent store binds claim, fence, and non-replay outcome](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/control/agent-jobs.ts#L31-L65).
 >
-> [The Buster entrypoint starts rootless BuildKit only after it writes selected registry configuration](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/buster-runtime-entrypoint.sh#L4-L61).
+> [The Buster entrypoint starts rootless BuildKit only after it writes selected registry configuration](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/docker/buster-runtime-entrypoint.sh#L4-L61).
 
 ## Dependency Failure Traces To An Operator Decision
 

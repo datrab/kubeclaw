@@ -47,6 +47,7 @@ function publicRoute(item) {
 
 function checksFor(page) {
   const checks = ['npm run docs:governance:check', 'npm run docs:publication:check', 'npm run docs:check:refs'];
+  if (page.startsWith('docs/site/extend/deep-guides/')) checks.unshift('npm run docs:plugin-complexity:check');
   if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
   if (configurationPages.has(page) || generatedReferencePages.has(page)) {
     checks.unshift('npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations');
@@ -71,6 +72,7 @@ function checksFor(page) {
 }
 
 function contentKind(page, text) {
+  if (page === 'docs/site/extend/deep-guides/README.md') return 'generated';
   if (page === platformInventoryPage || metadata(text, 'Generator') || generatedReferencePages.has(page)) return 'generated';
   if (page === 'docs/site/status/open-issues.md'
     || page === 'docs/site/reference/capabilities.md'
@@ -101,6 +103,7 @@ const pages = walk(siteRoot)
     const evidence = values.Evidence.split(';').map((value) => value.trim());
     const generator = metadata(text, 'Generator')
       ?? (page === platformInventoryPage ? platformInventoryGenerator
+        : page === 'docs/site/extend/deep-guides/README.md' ? 'scripts/docs-plugin-complexity.mjs'
         : generatedReferencePages.has(page) ? 'scripts/docs-generate.mjs' : null);
     return {
       page,

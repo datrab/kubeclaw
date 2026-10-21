@@ -1,0 +1,2341 @@
+{
+  "schemaVersion": "documentation-plugin-complexity.v1",
+  "owner": "plugin-foundation",
+  "scope": {
+    "roots": [
+      "skills/**/plugin.json",
+      "skills/**/openclaw.plugin.json",
+      "plugins/**/.codex-plugin/plugin.json"
+    ],
+    "classification": "Complex if any multi-registration,recursive nested/conditional configuration or explicitly source-bound external-effect/persistence/host-extension signal applies. No word count,package count or test result implies completeness.",
+    "acceptanceBoundary": "Canonical guide assignment and structural checks do not certify guide depth. Missing content needs an independent full topic review before A910-07/08/09/13 acceptance."
+  },
+  "schemaAuthorities": {
+    "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json"
+  },
+  "packages": [
+    {
+      "id": "kubeclaw-agent-observer",
+      "manifest": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "canonicalGuide": "docs/site/understand/openclaw.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/openclaw-agent-observer/README.md",
+            "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/openclaw-agent-observer/README.md",
+            "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": true,
+          "reason": "Host tool/hook/skill integration has independent registration,activation and removal semantics outside the pipeline registry.",
+          "sources": [
+            "skills/common/plugins/openclaw-agent-observer/README.md",
+            "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/openclaw-agent-observer/README.md": "70562cb03464e32946b91b0a166d91e8fb253c7f0df8bcf6efa749965aa8cb35",
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+        "skills/common/plugins/openclaw-agent-observer/src/config.ts": "1617f4937214a1b601b66d2525309a780c9202e54666a4ac3ff9135e3216297c",
+        "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts": "4957fc2f8b2dab174f7aaa7cac5ddc94ae42ea3cf83caf2b414553396a0b5719",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96",
+        "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts": "58976e1ae44055663149b4cd830f593e2fdebb41705413c88f99e858722cbab0",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts": "02a054facf3ca13ab0d875b1380c52a585362d96d5138b842f7bd026a03fcf6b",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-values.ts": "7514c3213f914e60b91e5139e6c624c7c289fdc26b1351786a8ee287caeaa911",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts": "a800b92606e0c803ae51867c7625ae5610169e23b2074b54d69f58e5f0d6f3aa",
+        "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts": "67444a5a791b2e408b53f3d166afce85937131890aba036b0037e42d9c78c774",
+        "skills/common/plugins/openclaw-agent-observer/src/plugin-api.ts": "848f5e17e9b474c8e7b27908d0ed65a1600cba50c4e6633c4108eb4f5bbd1581",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts": "cc49831a1ff6eef51642fd47a0e4a1d00d6ad6bb6337c09f709d7cfd5a5f46da",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts": "63ff685537b415cbe5a67c4b8d4ada42241ef2187fc278ec75ec403855763ac8",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts": "8f974830cf10d931410d6bd1f23b4782aa8988b96baba13f4172a3b9f85d4a5d",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw-ops",
+      "manifest": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+      "canonicalGuide": "docs/site/understand/ops-mcp.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
+          ]
+        },
+        "internalExtension": {
+          "applies": true,
+          "reason": "Host tool/hook/skill integration has independent registration,activation and removal semantics outside the pipeline registry.",
+          "sources": [
+            "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json": "906bd92fc84b1ea15e3e76c8b39d8262d0cbaa5458c9923478233660521ff1e5",
+        "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md": "52a7329b7176b69c98ca46069d1147e0dc242a6f812ac4efdceba0c86a8cc530",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw-prism",
+      "manifest": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "canonicalGuide": "docs/site/understand/prism-runtime.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/prism/openclaw-plugin/README.md",
+            "skills/prism/openclaw-plugin/index.mjs"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/prism/openclaw-plugin/README.md",
+            "skills/prism/openclaw-plugin/index.mjs"
+          ]
+        },
+        "internalExtension": {
+          "applies": true,
+          "reason": "Host tool/hook/skill integration has independent registration,activation and removal semantics outside the pipeline registry.",
+          "sources": [
+            "skills/prism/openclaw-plugin/README.md",
+            "skills/prism/openclaw-plugin/index.mjs"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/prism/openclaw-plugin/README.md": "48eb6362bc55e2dec68324b49d66f4a3069d2c00955664e5fe48aa6c3be0db05",
+        "skills/prism/openclaw-plugin/index.mjs": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e",
+        "skills/prism/openclaw-plugin/openclaw.plugin.json": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.agent-observability",
+      "manifest": "skills/common/plugins/agent-observability/plugin.json",
+      "canonicalGuide": "docs/site/understand/telemetry.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/agent-observability/README.md",
+            "skills/common/plugins/agent-observability/src/observers.ts",
+            "skills/common/plugins/agent-observability/src/observers.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/agent-observability/README.md",
+            "skills/common/plugins/agent-observability/src/observers.ts",
+            "skills/common/plugins/agent-observability/src/observers.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (observer); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/agent-observability/README.md",
+            "skills/common/plugins/agent-observability/src/observers.ts",
+            "skills/common/plugins/agent-observability/src/observers.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/agent-observability/README.md": "587baf990dd55b551e27ea93cc923b5365445f6a38f306f9cb0fb0a7abbb365a",
+        "skills/common/plugins/agent-observability/plugin.json": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+        "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+        "skills/common/plugins/agent-observability/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+        "skills/common/plugins/agent-observability/src/observers.ts": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.api-flow",
+      "manifest": "skills/buster/plugins/api-flow/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/api-flow/README.md",
+            "skills/buster/plugins/api-flow/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/api-flow/README.md",
+            "skills/buster/plugins/api-flow/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/api-flow/README.md",
+            "skills/buster/plugins/api-flow/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/api-flow/README.md": "fdb4520d8d9a12e25a79787a5f2dd219a5bbc98d95ef0c22c204ee82d668a55e",
+        "skills/buster/plugins/api-flow/plugin.json": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+        "skills/buster/plugins/api-flow/schemas/config.schema.json": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc",
+        "skills/buster/plugins/api-flow/schemas/flow.schema.json": "b4b30b26fbc0719f8438cb422124a1898691dd3b05af47d010d786b1400d76aa",
+        "skills/buster/plugins/api-flow/src/provider.js": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.architecture-validator",
+      "manifest": "skills/nova/plugins/architecture-validator/plugin.json",
+      "canonicalGuide": "docs/site/understand/echo.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/architecture-validator/README.md",
+            "skills/nova/plugins/architecture-validator/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/nova/plugins/architecture-validator/README.md",
+            "skills/nova/plugins/architecture-validator/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/architecture-validator/README.md",
+            "skills/nova/plugins/architecture-validator/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/architecture-validator/README.md": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2",
+        "skills/nova/plugins/architecture-validator/plugin.json": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+        "skills/nova/plugins/architecture-validator/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+        "skills/nova/plugins/architecture-validator/schemas/input.schema.json": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+        "skills/nova/plugins/architecture-validator/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/architecture-validator/src/output.ts": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+        "skills/nova/plugins/architecture-validator/src/protocol.ts": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+        "skills/nova/plugins/architecture-validator/src/stage.ts": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.artifact-store",
+      "manifest": "skills/common/plugins/artifact-store/plugin.json",
+      "canonicalGuide": "docs/site/understand/data-and-state.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/artifact-store/README.md",
+            "skills/common/plugins/artifact-store/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/artifact-store/README.md",
+            "skills/common/plugins/artifact-store/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/artifact-store/README.md",
+            "skills/common/plugins/artifact-store/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/artifact-store/README.md": "7151e61fd08387cba2f06f05f32bdc1ddfe0fa11c4e9fe0aba978ca86bb6ffb5",
+        "skills/common/plugins/artifact-store/plugin.json": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+        "skills/common/plugins/artifact-store/schemas/config.schema.json": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+        "skills/common/plugins/artifact-store/src/adapter.ts": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.axe",
+      "manifest": "skills/buster/plugins/axe/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/axe/README.md",
+            "skills/buster/plugins/axe/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/axe/README.md",
+            "skills/buster/plugins/axe/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/axe/README.md",
+            "skills/buster/plugins/axe/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/axe/README.md": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a",
+        "skills/buster/plugins/axe/plugin.json": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+        "skills/buster/plugins/axe/schemas/config.schema.json": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d",
+        "skills/buster/plugins/axe/src/provider.js": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.blueprint-sync",
+      "manifest": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "canonicalGuide": "docs/site/understand/forge.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/blueprint-sync/README.md",
+            "skills/nova/plugins/blueprint-sync/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/blueprint-sync/README.md",
+            "skills/nova/plugins/blueprint-sync/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/blueprint-sync/README.md",
+            "skills/nova/plugins/blueprint-sync/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/blueprint-sync/README.md": "8d7826178378bd3fe2a9f368744f784e3003655eb48297e3b4782be57a94d9e4",
+        "skills/nova/plugins/blueprint-sync/plugin.json": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+        "skills/nova/plugins/blueprint-sync/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+        "skills/nova/plugins/blueprint-sync/schemas/input.schema.json": "a32c6626b0da18a21ef666d7692f87c53f75cd582471751da650fe5a0ae773fa",
+        "skills/nova/plugins/blueprint-sync/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/blueprint-sync/src/stage.ts": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.buster-quality-gate",
+      "manifest": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "canonicalGuide": "docs/site/understand/buster.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/buster-quality-gate/README.md",
+            "skills/nova/plugins/buster-quality-gate/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/nova/plugins/buster-quality-gate/README.md",
+            "skills/nova/plugins/buster-quality-gate/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/buster-quality-gate/README.md",
+            "skills/nova/plugins/buster-quality-gate/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/buster-quality-gate/README.md": "81f3cf942b15fc8a091eb34b9009dadb14cb4c8211febfa391b23b13a19862f6",
+        "skills/nova/plugins/buster-quality-gate/plugin.json": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+        "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5",
+        "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json": "2d6fb0f0178d3b361d417a74303fe04c188a353114735e5809a8abd35fbd34f7",
+        "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/buster-quality-gate/src/protocol.ts": "9f85b213f272e143dbc7a9736666054941b4d21c231afdbfc07b8e539c907711",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.case-study",
+      "manifest": "skills/nova/plugins/case-study/plugin.json",
+      "canonicalGuide": "docs/site/extend/deep-guides/reports.md",
+      "coverageNote": "Package-specific shared evidence authority and separate review/Markdown config,input/output,parser,bounds,error,state and change/removal contracts; narrative remains an unverified draft.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/case-study/README.md",
+            "skills/nova/plugins/case-study/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/case-study/README.md",
+            "skills/nova/plugins/case-study/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/case-study/README.md",
+            "skills/nova/plugins/case-study/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/case-study/README.md": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56",
+        "skills/nova/plugins/case-study/plugin.json": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+        "skills/nova/plugins/case-study/schemas/config.schema.json": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+        "skills/nova/plugins/case-study/schemas/input.schema.json": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+        "skills/nova/plugins/case-study/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/case-study/src/protocol.ts": "3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6",
+        "skills/nova/plugins/case-study/src/stage.ts": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.command-runner",
+      "manifest": "skills/common/plugins/command-runner/plugin.json",
+      "canonicalGuide": "docs/site/understand/worker-core.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/command-runner/README.md",
+            "skills/common/plugins/command-runner/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/common/plugins/command-runner/README.md",
+            "skills/common/plugins/command-runner/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/command-runner/README.md",
+            "skills/common/plugins/command-runner/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/command-runner/README.md": "0aa9d5c701c7c521d6eb580646130c65f8cf2d2bcf8078ba3a5d5c64d5097d2f",
+        "skills/common/plugins/command-runner/plugin.json": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+        "skills/common/plugins/command-runner/schemas/config.schema.json": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6",
+        "skills/common/plugins/command-runner/src/adapter.ts": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b",
+        "skills/common/plugins/command-runner/src/cgroup.ts": "163b671691e314418a9c2c28a1b7bdbfe84e04e5162409e98607ff29d64f36da",
+        "skills/common/plugins/command-runner/src/execution.ts": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0",
+        "skills/common/plugins/command-runner/src/process-facts.ts": "d6220a90dc0cf14612e1e693c5ac708f3783d9d0d10fc6d451f052259a95742a",
+        "skills/common/plugins/command-runner/src/process-group.ts": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002",
+        "skills/common/plugins/command-runner/src/runner.ts": "3cf07ec2c39b3caa50419c48ce49119d37491abb83398d637d400f06ebf5e2ad",
+        "skills/common/plugins/command-runner/src/types.ts": "b6c616b30b31e0eab97685c9698674579cfac2762b43657536f08eb5ea70e3e7",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.container-build",
+      "manifest": "skills/buster/plugins/container-build/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/container-build/README.md",
+            "skills/buster/plugins/container-build/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/container-build/README.md",
+            "skills/buster/plugins/container-build/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/container-build/README.md",
+            "skills/buster/plugins/container-build/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/container-build/README.md": "9f717d5483450ff8aa9e01f95694bbe54165b6ee18f0014ece1fa6de77a892d3",
+        "skills/buster/plugins/container-build/plugin.json": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+        "skills/buster/plugins/container-build/schemas/config.schema.json": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9",
+        "skills/buster/plugins/container-build/src/provider.js": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.coverage-budget",
+      "manifest": "skills/buster/plugins/coverage-budget/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": false,
+          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "sources": [
+            "skills/buster/plugins/coverage-budget/README.md",
+            "skills/buster/plugins/coverage-budget/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/coverage-budget/README.md",
+            "skills/buster/plugins/coverage-budget/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/coverage-budget/README.md",
+            "skills/buster/plugins/coverage-budget/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/coverage-budget/README.md": "2a8f2e52e59f5ee7be788636a86a36a0fa37306d65fc273caacf84494e47c217",
+        "skills/buster/plugins/coverage-budget/plugin.json": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+        "skills/buster/plugins/coverage-budget/schemas/config.schema.json": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f",
+        "skills/buster/plugins/coverage-budget/src/provider.js": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.delivery-lint",
+      "manifest": "skills/nova/plugins/delivery-lint/plugin.json",
+      "canonicalGuide": "docs/site/extend/lint.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/delivery-lint/README.md",
+            "skills/nova/plugins/delivery-lint/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/nova/plugins/delivery-lint/README.md",
+            "skills/nova/plugins/delivery-lint/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/delivery-lint/README.md",
+            "skills/nova/plugins/delivery-lint/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/delivery-lint/README.md": "6ff50abaa584bcad2bd2be83034d06a30d3653e8e903bb40a8ebbfdabf5998a3",
+        "skills/nova/plugins/delivery-lint/plugin.json": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+        "skills/nova/plugins/delivery-lint/schemas/config.schema.json": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+        "skills/nova/plugins/delivery-lint/schemas/input.schema.json": "57a650703fe82e66f611097bf32652425a70d4be8ee5cd6cc63788f983a65ce4",
+        "skills/nova/plugins/delivery-lint/schemas/result.schema.json": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+        "skills/nova/plugins/delivery-lint/src/dockerfile.ts": "189011bb0e9f89f2144c1ed883a746b5937b662d39d8b484ee9f4e88d9149849",
+        "skills/nova/plugins/delivery-lint/src/stage.ts": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.demo-auth-smoke",
+      "manifest": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/demo-auth-smoke/README.md",
+            "skills/buster/plugins/demo-auth-smoke/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/demo-auth-smoke/README.md",
+            "skills/buster/plugins/demo-auth-smoke/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/demo-auth-smoke/README.md",
+            "skills/buster/plugins/demo-auth-smoke/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/demo-auth-smoke/README.md": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631",
+        "skills/buster/plugins/demo-auth-smoke/plugin.json": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+        "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e",
+        "skills/buster/plugins/demo-auth-smoke/src/protocol.js": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+        "skills/buster/plugins/demo-auth-smoke/src/provider.js": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.demo-handoff",
+      "manifest": "skills/nova/plugins/demo-handoff/plugin.json",
+      "canonicalGuide": "docs/site/extend/deep-guides/demo-handoff.md",
+      "coverageNote": "Package-specific authored stage,adapter,artifact,grant,durable-intent,lost-response,failure and change guide; local/live journey remains in Deliver a Demo.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/demo-handoff/README.md",
+            "skills/nova/plugins/demo-handoff/src/candidate.ts",
+            "skills/nova/plugins/demo-handoff/src/delivery.ts",
+            "skills/nova/plugins/demo-handoff/src/ready.ts",
+            "skills/nova/plugins/demo-handoff/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/demo-handoff/README.md",
+            "skills/nova/plugins/demo-handoff/src/candidate.ts",
+            "skills/nova/plugins/demo-handoff/src/delivery.ts",
+            "skills/nova/plugins/demo-handoff/src/ready.ts",
+            "skills/nova/plugins/demo-handoff/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter,stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/demo-handoff/README.md",
+            "skills/nova/plugins/demo-handoff/src/candidate.ts",
+            "skills/nova/plugins/demo-handoff/src/delivery.ts",
+            "skills/nova/plugins/demo-handoff/src/ready.ts",
+            "skills/nova/plugins/demo-handoff/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/demo-handoff/README.md": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0",
+        "skills/nova/plugins/demo-handoff/plugin.json": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+        "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+        "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json": "20ef1065dadcf3236d091621eee86a81157f52dd9aca1b7f3535187aa09d3b13",
+        "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json": "0c23e4a13b585c3c1acde7410fed759f034c05f90b2202664bcac9dc5e1010c9",
+        "skills/nova/plugins/demo-handoff/schemas/empty.schema.json": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+        "skills/nova/plugins/demo-handoff/schemas/ready.schema.json": "5b61a49b5383f4d4c1b3227104e136ef0119383ec4c9d456658c20df136dcbb0",
+        "skills/nova/plugins/demo-handoff/schemas/result.schema.json": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "skills/nova/plugins/demo-handoff/src/binding.ts": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+        "skills/nova/plugins/demo-handoff/src/candidate.ts": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+        "skills/nova/plugins/demo-handoff/src/controller-client.ts": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+        "skills/nova/plugins/demo-handoff/src/delivery.ts": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+        "skills/nova/plugins/demo-handoff/src/protocol.ts": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+        "skills/nova/plugins/demo-handoff/src/ready.ts": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.direct-command",
+      "manifest": "skills/buster/plugins/direct-command/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/direct-command/README.md",
+            "skills/buster/plugins/direct-command/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/direct-command/README.md",
+            "skills/buster/plugins/direct-command/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/direct-command/README.md",
+            "skills/buster/plugins/direct-command/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/direct-command/README.md": "6e1ec48fd7d145c7ab3cc9aff1c48c46c99a6ca07745a96535fa4d5bb4d3f4f9",
+        "skills/buster/plugins/direct-command/plugin.json": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+        "skills/buster/plugins/direct-command/schemas/config.schema.json": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+        "skills/buster/plugins/direct-command/src/provider.js": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.git-workspace",
+      "manifest": "skills/common/plugins/git-workspace/plugin.json",
+      "canonicalGuide": "docs/site/understand/forge.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/git-workspace/README.md",
+            "skills/common/plugins/git-workspace/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/git-workspace/README.md",
+            "skills/common/plugins/git-workspace/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/git-workspace/README.md",
+            "skills/common/plugins/git-workspace/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/git-workspace/README.md": "605ae890a2fa87b4f23faf9f8a66b939de009efbcbc322d6f2bc7e724d16a778",
+        "skills/common/plugins/git-workspace/plugin.json": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+        "skills/common/plugins/git-workspace/schemas/config.schema.json": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+        "skills/common/plugins/git-workspace/src/adapter.ts": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7",
+        "skills/common/plugins/git-workspace/src/operations.ts": "52562707281edf7bf484ee214a02034b74300bed8502c8ff465ceca50739c6a5",
+        "skills/common/plugins/git-workspace/src/review-source.ts": "18eb4b6dc7d8118f9ad96dfb48379fd89f361d71a9b55a1d777a030bab10fe1b",
+        "skills/common/plugins/git-workspace/src/runner.ts": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb",
+        "skills/common/plugins/git-workspace/src/values.ts": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a",
+        "skills/common/plugins/git-workspace/src/workspace-ownership.ts": "af98b1c9b1ff29623e4c5369d8ccdac837940866987e3a8c649d8a8f97aededc",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.http",
+      "manifest": "skills/buster/plugins/http/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/http/README.md",
+            "skills/buster/plugins/http/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/http/README.md",
+            "skills/buster/plugins/http/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/http/README.md",
+            "skills/buster/plugins/http/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/http/README.md": "d1e5043fc7de143d939eac59d9472ccd230fbe54e745ceb628b820d7bd759105",
+        "skills/buster/plugins/http/plugin.json": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+        "skills/buster/plugins/http/schemas/config.schema.json": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+        "skills/buster/plugins/http/src/provider.js": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.human-approval",
+      "manifest": "skills/nova/plugins/human-approval/plugin.json",
+      "canonicalGuide": "docs/site/use/workflows/wait-resume.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/human-approval/README.md",
+            "skills/nova/plugins/human-approval/src/stage.ts",
+            "skills/nova/plugins/human-approval/src/architecture-approval.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/human-approval/README.md",
+            "skills/nova/plugins/human-approval/src/stage.ts",
+            "skills/nova/plugins/human-approval/src/architecture-approval.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/human-approval/README.md",
+            "skills/nova/plugins/human-approval/src/stage.ts",
+            "skills/nova/plugins/human-approval/src/architecture-approval.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/human-approval/README.md": "39f9c6805d61be22d45bc3d5709499dae9977e7c4dee1fb1e75ac8e3dd6e537f",
+        "skills/nova/plugins/human-approval/plugin.json": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+        "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json": "028c18b6829fba9b2acfd72e197558d87ae14e7a56e9fbf6b16add6c7c5bc3ab",
+        "skills/nova/plugins/human-approval/schemas/config.schema.json": "45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581",
+        "skills/nova/plugins/human-approval/schemas/input.schema.json": "f4c7e20a48803202f36269ff3b04d3d8b4b4cea8dfdad4816fdddd5c063b3e2f",
+        "skills/nova/plugins/human-approval/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/human-approval/src/approval.ts": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+        "skills/nova/plugins/human-approval/src/architecture-approval.ts": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+        "skills/nova/plugins/human-approval/src/stage.ts": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.implementation-agent",
+      "manifest": "skills/nova/plugins/implementation-agent/plugin.json",
+      "canonicalGuide": "docs/site/understand/forge.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/implementation-agent/README.md",
+            "skills/nova/plugins/implementation-agent/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/implementation-agent/README.md",
+            "skills/nova/plugins/implementation-agent/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/implementation-agent/README.md",
+            "skills/nova/plugins/implementation-agent/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/implementation-agent/README.md": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a",
+        "skills/nova/plugins/implementation-agent/plugin.json": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+        "skills/nova/plugins/implementation-agent/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+        "skills/nova/plugins/implementation-agent/schemas/input.schema.json": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+        "skills/nova/plugins/implementation-agent/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+        "skills/nova/plugins/implementation-agent/src/repair-evidence.ts": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+        "skills/nova/plugins/implementation-agent/src/stage.ts": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "skills/nova/plugins/implementation-agent/src/workspace.ts": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.junit-report",
+      "manifest": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": false,
+          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "sources": [
+            "skills/buster/plugins/junit-report-adapter/README.md",
+            "skills/buster/plugins/junit-report-adapter/src/adapter.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/junit-report-adapter/README.md",
+            "skills/buster/plugins/junit-report-adapter/src/adapter.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (report-adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/junit-report-adapter/README.md",
+            "skills/buster/plugins/junit-report-adapter/src/adapter.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/junit-report-adapter/README.md": "012b7603d9ff50ed2299576c94031c9c69d7359bf05a40bc3811f9e3adfe5cdf",
+        "skills/buster/plugins/junit-report-adapter/plugin.json": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77",
+        "skills/buster/plugins/junit-report-adapter/src/adapter.js": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.kubernetes-fixture",
+      "manifest": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/kubernetes-fixture/README.md",
+            "skills/buster/plugins/kubernetes-fixture/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/kubernetes-fixture/README.md",
+            "skills/buster/plugins/kubernetes-fixture/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/kubernetes-fixture/README.md",
+            "skills/buster/plugins/kubernetes-fixture/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/kubernetes-fixture/README.md": "30cbdad838949b74272a02f1712169a5c1ec4856015ab024ece60ad2cce10e37",
+        "skills/buster/plugins/kubernetes-fixture/plugin.json": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+        "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443",
+        "skills/buster/plugins/kubernetes-fixture/src/provider.js": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.lighthouse",
+      "manifest": "skills/buster/plugins/lighthouse/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/lighthouse/README.md",
+            "skills/buster/plugins/lighthouse/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/lighthouse/README.md",
+            "skills/buster/plugins/lighthouse/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/lighthouse/README.md",
+            "skills/buster/plugins/lighthouse/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/lighthouse/README.md": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca",
+        "skills/buster/plugins/lighthouse/plugin.json": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+        "skills/buster/plugins/lighthouse/schemas/config.schema.json": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958",
+        "skills/buster/plugins/lighthouse/src/provider.js": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.lint",
+      "manifest": "skills/nova/plugins/lint/plugin.json",
+      "canonicalGuide": "docs/site/extend/lint.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/lint/README.md",
+            "skills/nova/plugins/lint/src/stage.ts",
+            "skills/nova/plugins/lint/src/stage.ts",
+            "skills/nova/plugins/lint/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/lint/README.md",
+            "skills/nova/plugins/lint/src/stage.ts",
+            "skills/nova/plugins/lint/src/stage.ts",
+            "skills/nova/plugins/lint/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter,stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/lint/README.md",
+            "skills/nova/plugins/lint/src/stage.ts",
+            "skills/nova/plugins/lint/src/stage.ts",
+            "skills/nova/plugins/lint/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/lint/README.md": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c",
+        "skills/nova/plugins/lint/plugin.json": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+        "skills/nova/plugins/lint/schemas/adapter-config.schema.json": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24",
+        "skills/nova/plugins/lint/schemas/config.schema.json": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+        "skills/nova/plugins/lint/schemas/input.schema.json": "b5d3f14f5971057c8a5a81471b857b6f92ee9ac106b9cb1947441a5c96c4a84b",
+        "skills/nova/plugins/lint/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/lint/src/adapter.ts": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "skills/nova/plugins/lint/src/candidate.ts": "cb87e62587a7bad9f2d63a305870e85bdbf439440e02e4dfed5d91475ba6560e",
+        "skills/nova/plugins/lint/src/engine/architecture-tools.ts": "42720f0013e983cf28b693f2cd709b3fec3470c45ec1637d832eff7430fd0d03",
+        "skills/nova/plugins/lint/src/engine/constants.ts": "03e18f020b7e416463dc333c06d7ad24628e5105fa5ee10a457e364baa7bf058",
+        "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts": "7a97ff6e62bc9e431c7dd1c8123bad9afa36fb797f0891edf879924ea5429cbc",
+        "skills/nova/plugins/lint/src/engine/discovery.ts": "ef94db8bda63eb74abe47cefabea3f3b64ef1e8848b868f61bb885059e8e4b16",
+        "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts": "00caab4a144b1f76962249f6bc2098424540efd644686154eeeeb62e6ae8e9bb",
+        "skills/nova/plugins/lint/src/engine/execution.ts": "9aa2e64b50e9a9f7bb3bf1d181860f772c70dfc9c4ce058f376e4d56f2a675f4",
+        "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts": "1a0e06f7bcb937839a43e5025e47831a173661240d9cce91125df3f3ff7ce317",
+        "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts": "559229928d17cd3eff2c201eae78e705eb36b4d5c9f231a15faab2b917b00a9d",
+        "skills/nova/plugins/lint/src/engine/go-tools.ts": "2ca058762435596a50dcddecc8e33a65d6f5638aa01bbe74140bd7d89b808d3d",
+        "skills/nova/plugins/lint/src/engine/helm-render.ts": "acafef0f53da08c16d9836dea2f243999bd9fdd347220d47c68310191b0ffb2c",
+        "skills/nova/plugins/lint/src/engine/index.ts": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214",
+        "skills/nova/plugins/lint/src/engine/kubeconform-tool.ts": "b7b24ece9566c430c480795b916f094faed7dbb372520b58da3b5a99ff56a0fc",
+        "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts": "16709307fb3b7b954902e20d3e8c7a8485ff4cd2160ac7944b8904a9ae7e6608",
+        "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts": "c449ee445791ed4c7e3e2fde96139bb46e1407e6898d4ab698203314f0a70171",
+        "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts": "a09beb82bd8db595e9467dcfe61bfa4bdaa07a09e8828dd83fda01f72150b002",
+        "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts": "70b9625b994b9d210734941fdfd6cb6b663dbd5b4dd20db9ded0a144af8dfc4e",
+        "skills/nova/plugins/lint/src/engine/lint-governance.ts": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145",
+        "skills/nova/plugins/lint/src/engine/linux-process-group.ts": "83696b7511173f21e5af38f238758fc087afc0b3d84d8c62017aefa3527e6ea2",
+        "skills/nova/plugins/lint/src/engine/openapi-tool.ts": "5bf93fd93ea7e29019ea77fab78eeb365715c57504013ad82526d4db32dc9c61",
+        "skills/nova/plugins/lint/src/engine/output.ts": "cb405a9b8166ff3c6ea08d26a2eede788c0b3cbd007f06a5c09aef7340b7903c",
+        "skills/nova/plugins/lint/src/engine/parsers.ts": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638",
+        "skills/nova/plugins/lint/src/engine/paths.ts": "c84ba218c0185216e3e6eb1b4e348015e60833a761059f6388f0166eee347b83",
+        "skills/nova/plugins/lint/src/engine/policy-paths.ts": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+        "skills/nova/plugins/lint/src/engine/policy-patterns.ts": "7403829fae95019d046086f596f58035dae315c1b3def61e9849565b1c06584e",
+        "skills/nova/plugins/lint/src/engine/policy-validation.ts": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e",
+        "skills/nova/plugins/lint/src/engine/policy-version.ts": "6324eb9a75f6151eaede8fae9ec4c48c61f2fe8265e4be64ec9fd6ce90db1d24",
+        "skills/nova/plugins/lint/src/engine/policy.ts": "9b48e0b8de2714bde16f58a667ac9356ec2b8a8f9ccd364673000dec076feb53",
+        "skills/nova/plugins/lint/src/engine/process-termination.ts": "47199969a22d1415bee97247400c9dfaf33ea843a41e5b68d13646febda59ed9",
+        "skills/nova/plugins/lint/src/engine/process.ts": "81320777e32a2af656cbb6f22903918d8c8a48074c0e33f47b4ae87b7bfeaca3",
+        "skills/nova/plugins/lint/src/engine/report-contract.ts": "9ef2cb385b805842b777c64add79c947c3844edd768733ebef31c312d2bb0fac",
+        "skills/nova/plugins/lint/src/engine/report.ts": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b",
+        "skills/nova/plugins/lint/src/engine/terraform-tools.ts": "b189a72a067325eca719e5c3a2c863aa8b8401938b590e258dc67fcc2ef9978c",
+        "skills/nova/plugins/lint/src/engine/tool-registry-core.ts": "766fba947b149d80b78789743b65d0e427804ae08e39f47d862f5163a583203d",
+        "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts": "4c1e54233cc2af3e0e110937433c6258923f6d15d7a991317d7a07add38ba577",
+        "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts": "85b1c25c238682acce0fcea59ceea75ba1b2d7aa91f95a8308194a0602cbd184",
+        "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts": "6148c63c63ab2b8ad4fa258790e95bb89121d4e844969b7a91020f6803527de5",
+        "skills/nova/plugins/lint/src/engine/tool-registry.ts": "3e49b2dfecee85df614db7d2e89e9f1087ef31c412cf0dfecc7959c220d2fa28",
+        "skills/nova/plugins/lint/src/engine/tool-summary.ts": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904",
+        "skills/nova/plugins/lint/src/request.ts": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+        "skills/nova/plugins/lint/src/stage.ts": "87145aaf9cf42a78e5a9ad076b2d6c3799861bf0e78576076feb07c9c273c5e8",
+        "skills/nova/plugins/lint/src/support/optional-absence.ts": "09944ef955b43f0d1bd2e33ceed7d1655c1fc0bff100fc9c7e8053651b84a7d4",
+        "skills/nova/plugins/lint/src/support/value-boundary.ts": "d5982b5b79fce71aa8c61bfabbf5fc233c1afc3b73414f9df6f316c6439a16e0",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.network-http",
+      "manifest": "skills/common/plugins/network-http/plugin.json",
+      "canonicalGuide": "docs/site/understand/buster.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/network-http/README.md",
+            "skills/common/plugins/network-http/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/common/plugins/network-http/README.md",
+            "skills/common/plugins/network-http/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/network-http/README.md",
+            "skills/common/plugins/network-http/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/network-http/README.md": "10b1f89e246820bff951b8a95ba671c7f71b65e1cd00395ef908c700892e66a6",
+        "skills/common/plugins/network-http/plugin.json": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+        "skills/common/plugins/network-http/schemas/config.schema.json": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+        "skills/common/plugins/network-http/src/adapter.ts": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.notification-observer",
+      "manifest": "skills/common/plugins/notification-observer/plugin.json",
+      "canonicalGuide": "docs/site/understand/telemetry.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/notification-observer/README.md",
+            "skills/common/plugins/notification-observer/src/observer.ts",
+            "skills/common/plugins/notification-observer/src/observer.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/notification-observer/README.md",
+            "skills/common/plugins/notification-observer/src/observer.ts",
+            "skills/common/plugins/notification-observer/src/observer.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (observer); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/notification-observer/README.md",
+            "skills/common/plugins/notification-observer/src/observer.ts",
+            "skills/common/plugins/notification-observer/src/observer.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/notification-observer/README.md": "64235a03c137827e4ef3db5cfa0313374a46f470bf91a86fbb7335fd8d99d52f",
+        "skills/common/plugins/notification-observer/plugin.json": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+        "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+        "skills/common/plugins/notification-observer/schemas/config.schema.json": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+        "skills/common/plugins/notification-observer/src/observer.ts": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.openapi",
+      "manifest": "skills/buster/plugins/openapi/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/openapi/README.md",
+            "skills/buster/plugins/openapi/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/openapi/README.md",
+            "skills/buster/plugins/openapi/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/openapi/README.md",
+            "skills/buster/plugins/openapi/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/openapi/README.md": "afc989c4127027ad0f66ec95dea04953020f688b231427a77dff0714c9b1159a",
+        "skills/buster/plugins/openapi/plugin.json": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+        "skills/buster/plugins/openapi/schemas/config.schema.json": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29",
+        "skills/buster/plugins/openapi/src/provider.js": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "skills/buster/plugins/openapi/src/schema-support.js": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.openclaw-agent-events",
+      "manifest": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "canonicalGuide": "docs/site/understand/openclaw.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/openclaw-agent-events/README.md",
+            "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/common/plugins/openclaw-agent-events/README.md",
+            "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/openclaw-agent-events/README.md",
+            "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/openclaw-agent-events/README.md": "72403574cdae0eedc8995e2ba75af81ca940effcd34a16e73425a60dbe45fb48",
+        "skills/common/plugins/openclaw-agent-events/plugin.json": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5",
+        "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe",
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7",
+        "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.operator-messaging",
+      "manifest": "skills/common/plugins/operator-messaging/plugin.json",
+      "canonicalGuide": "docs/site/use/workflows/wait-resume.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/operator-messaging/README.md",
+            "skills/common/plugins/operator-messaging/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/operator-messaging/README.md",
+            "skills/common/plugins/operator-messaging/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/operator-messaging/README.md",
+            "skills/common/plugins/operator-messaging/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/operator-messaging/README.md": "84e6525da379f33bdd2a3543881737b6e14568f66297544548df2f35a1b25ed7",
+        "skills/common/plugins/operator-messaging/plugin.json": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563",
+        "skills/common/plugins/operator-messaging/schemas/config.schema.json": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4",
+        "skills/common/plugins/operator-messaging/schemas/payload.schema.json": "55bb4a333433f20da21a337830d7084bef0212651613d76f996defb93119744f",
+        "skills/common/plugins/operator-messaging/src/adapter.ts": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+        "skills/common/plugins/operator-messaging/src/config.ts": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1",
+        "skills/common/plugins/operator-messaging/src/delivery-projection.ts": "8a9b796faeb8e4decc083deebc7624212798ade8e7243aa54b770b0250f40529",
+        "skills/common/plugins/operator-messaging/src/delivery-records.ts": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc",
+        "skills/common/plugins/operator-messaging/src/discord-payload.ts": "6473d2b2e902e7df43c6c45a5ab9f4bd7201d447a1c06482026f4cb3891c74b8",
+        "skills/common/plugins/operator-messaging/src/discord-receipt.ts": "8a02118800371d9d3318739cb0def5dc6ae6c3b6d634bf0793c924cafce77384",
+        "skills/common/plugins/operator-messaging/src/payload.ts": "c38da612f8ccf13fad4cf2ede6c37f1f9607f960c200ef3185914eca17766f17",
+        "skills/common/plugins/operator-messaging/src/receiver.ts": "3701e839cc513812a790a4a794ebdd2dc71bf56ab1def0854250c38494cf3ab1",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.pipeline-review",
+      "manifest": "skills/nova/plugins/pipeline-review/plugin.json",
+      "canonicalGuide": "docs/site/extend/deep-guides/reports.md",
+      "coverageNote": "Package-specific shared evidence authority and separate review/Markdown config,input/output,parser,bounds,error,state and change/removal contracts; narrative remains an unverified draft.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/pipeline-review/README.md",
+            "skills/nova/plugins/pipeline-review/src/stage.ts",
+            "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/pipeline-review/README.md",
+            "skills/nova/plugins/pipeline-review/src/stage.ts",
+            "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter,stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/pipeline-review/README.md",
+            "skills/nova/plugins/pipeline-review/src/stage.ts",
+            "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/pipeline-review/README.md": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+        "skills/nova/plugins/pipeline-review/plugin.json": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+        "skills/nova/plugins/pipeline-review/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+        "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+        "skills/nova/plugins/pipeline-review/schemas/input.schema.json": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+        "skills/nova/plugins/pipeline-review/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+        "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+        "skills/nova/plugins/pipeline-review/src/protocol.ts": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+        "skills/nova/plugins/pipeline-review/src/stage.ts": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.playwright",
+      "manifest": "skills/buster/plugins/playwright/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/playwright/README.md",
+            "skills/buster/plugins/playwright/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/playwright/README.md",
+            "skills/buster/plugins/playwright/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/playwright/README.md",
+            "skills/buster/plugins/playwright/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/playwright/README.md": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346",
+        "skills/buster/plugins/playwright/plugin.json": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+        "skills/buster/plugins/playwright/schemas/config.schema.json": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+        "skills/buster/plugins/playwright/src/provider.js": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.preflight-contract",
+      "manifest": "skills/nova/plugins/preflight-contract/plugin.json",
+      "canonicalGuide": "docs/site/reference/nova-project.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/preflight-contract/README.md",
+            "skills/nova/plugins/preflight-contract/src/stage.ts",
+            "skills/nova/plugins/preflight-contract/src/source-stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/nova/plugins/preflight-contract/README.md",
+            "skills/nova/plugins/preflight-contract/src/stage.ts",
+            "skills/nova/plugins/preflight-contract/src/source-stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/preflight-contract/README.md",
+            "skills/nova/plugins/preflight-contract/src/stage.ts",
+            "skills/nova/plugins/preflight-contract/src/source-stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/preflight-contract/README.md": "59edb208e51d04f8c675d23583aab236c1ecd2d7e23938acb99424d4d6c48da6",
+        "skills/nova/plugins/preflight-contract/plugin.json": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+        "skills/nova/plugins/preflight-contract/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+        "skills/nova/plugins/preflight-contract/schemas/input.schema.json": "eaf263b43e77b55cdeadf0d009e89186f28d4a50672e7f358a9106d0561758dc",
+        "skills/nova/plugins/preflight-contract/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json": "f1f1be9585ad9a70d3a2b9fdb43b3a56179f1bf230440c109878d6749271bb44",
+        "skills/nova/plugins/preflight-contract/src/declarations.ts": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+        "skills/nova/plugins/preflight-contract/src/source-stage.ts": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+        "skills/nova/plugins/preflight-contract/src/stage.ts": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.prism-design",
+      "manifest": "skills/nova/plugins/prism-design/plugin.json",
+      "canonicalGuide": "docs/site/understand/prism-runtime.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/prism-design/README.md",
+            "skills/nova/plugins/prism-design/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/prism-design/README.md",
+            "skills/nova/plugins/prism-design/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/prism-design/README.md",
+            "skills/nova/plugins/prism-design/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/prism-design/README.md": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac",
+        "skills/nova/plugins/prism-design/plugin.json": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+        "skills/nova/plugins/prism-design/schemas/config.schema.json": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+        "skills/nova/plugins/prism-design/schemas/input.schema.json": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+        "skills/nova/plugins/prism-design/schemas/result.schema.json": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+        "skills/nova/plugins/prism-design/src/architecture.ts": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f",
+        "skills/nova/plugins/prism-design/src/archive.ts": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e",
+        "skills/nova/plugins/prism-design/src/stage.ts": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.project-summary",
+      "manifest": "skills/nova/plugins/project-summary/plugin.json",
+      "canonicalGuide": "docs/site/reference/nova-project.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/project-summary/README.md",
+            "skills/nova/plugins/project-summary/src/stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/project-summary/README.md",
+            "skills/nova/plugins/project-summary/src/stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/project-summary/README.md",
+            "skills/nova/plugins/project-summary/src/stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/project-summary/README.md": "b04bfca11bc047ccfecab442c0dd6631a16dd93bca4ccb5f691cef6acf901f26",
+        "skills/nova/plugins/project-summary/plugin.json": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+        "skills/nova/plugins/project-summary/schemas/config.schema.json": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+        "skills/nova/plugins/project-summary/schemas/input.schema.json": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+        "skills/nova/plugins/project-summary/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/project-summary/src/review-semantics.ts": "a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104",
+        "skills/nova/plugins/project-summary/src/stage.ts": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+        "skills/nova/plugins/project-summary/src/summary.ts": "bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.redis-transport",
+      "manifest": "skills/common/plugins/redis-transport/plugin.json",
+      "canonicalGuide": "docs/site/understand/telemetry.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/redis-transport/README.md",
+            "skills/common/plugins/redis-transport/src/adapter.ts",
+            "skills/common/plugins/redis-transport/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/redis-transport/README.md",
+            "skills/common/plugins/redis-transport/src/adapter.ts",
+            "skills/common/plugins/redis-transport/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/redis-transport/README.md",
+            "skills/common/plugins/redis-transport/src/adapter.ts",
+            "skills/common/plugins/redis-transport/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/redis-transport/README.md": "6522f6dc211b28863facf7296a42e50cf8607e36c418e65e013e94a5b667bcc0",
+        "skills/common/plugins/redis-transport/plugin.json": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843",
+        "skills/common/plugins/redis-transport/schemas/config.schema.json": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875",
+        "skills/common/plugins/redis-transport/src/adapter.ts": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01",
+        "skills/common/plugins/redis-transport/src/exchange.ts": "c7ef23ecf720650c8c7415a0aee11120a8972406df7e1ef4a0886f9e2e804569",
+        "skills/common/plugins/redis-transport/src/resp.ts": "2f5af011407659a9e3af4d21b6f9b5ec8042f63cc5f8be7b4a423fbbe108d7ea",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts": "a2657ab33a2833771bda44c8b2ef1904900a26c6773f7ba839f36a35da571167",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.remote-test-gate",
+      "manifest": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "canonicalGuide": "docs/site/understand/buster.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/remote-test-gate/README.md",
+            "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+            "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/remote-test-gate/README.md",
+            "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+            "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/remote-test-gate/README.md",
+            "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+            "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/remote-test-gate/README.md": "d3dbc1c4911286b1a7ffa0812d1cca86f6e4e0842da9dc82ce6db1eb83112331",
+        "skills/nova/plugins/remote-test-gate/plugin.json": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+        "skills/nova/plugins/remote-test-gate/schemas/config.schema.json": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47",
+        "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json": "767de53403900e5b72e8f35bb6d238eed5a889b6cb9141fb18b1ce56aef8461d",
+        "skills/nova/plugins/remote-test-gate/src/adapter.ts": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+        "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+        "skills/nova/plugins/remote-test-gate/src/demo-source-links.ts": "de4808cd82d0e5c0dad7157289388ed72b7249b1fc21cd78987a1d9a701b7fd7",
+        "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.repository-adapter",
+      "manifest": "skills/nova/plugins/repository-adapter/plugin.json",
+      "canonicalGuide": "docs/site/understand/echo.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/repository-adapter/README.md",
+            "skills/nova/plugins/repository-adapter/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/nova/plugins/repository-adapter/README.md",
+            "skills/nova/plugins/repository-adapter/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/repository-adapter/README.md",
+            "skills/nova/plugins/repository-adapter/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/repository-adapter/README.md": "e0d8e4885ec3f72abdeebf8f6d1b8f94618e7f4bb69bb24f91809195b9da8138",
+        "skills/nova/plugins/repository-adapter/plugin.json": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+        "skills/nova/plugins/repository-adapter/schemas/config.schema.json": "f41b62a39c7f0dd5f959e94807d8bb60352fc4bbdab28929214c9199106978a2",
+        "skills/nova/plugins/repository-adapter/src/adapter.ts": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+        "skills/nova/plugins/repository-adapter/src/repository-file.ts": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+        "skills/nova/plugins/repository-adapter/src/revision-parsers.ts": "de1770df42f8bcb5451b9b23cfa539c1f7d8fc0716d105e389ce95309a8fd295",
+        "skills/nova/plugins/repository-adapter/src/revision-reader.ts": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.review",
+      "manifest": "skills/nova/plugins/review/plugin.json",
+      "canonicalGuide": "docs/site/understand/echo.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/nova/plugins/review/README.md",
+            "skills/nova/plugins/review/src/stage.ts",
+            "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/nova/plugins/review/README.md",
+            "skills/nova/plugins/review/src/stage.ts",
+            "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (stage); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/nova/plugins/review/README.md",
+            "skills/nova/plugins/review/src/stage.ts",
+            "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/nova/plugins/review/README.md": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67",
+        "skills/nova/plugins/review/plugin.json": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+        "skills/nova/plugins/review/schemas/config.schema.json": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+        "skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json": "af9b378497f3767feea7c073f6135b7a6ba522f8d900dc94e7c3d187cbab7466",
+        "skills/nova/plugins/review/schemas/input.schema.json": "178399b3b8e27d28082b415c4101ef9213aad0e0b486238e0ef2348e9a52c71c",
+        "skills/nova/plugins/review/schemas/repository-audit-config.schema.json": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+        "skills/nova/plugins/review/schemas/repository-audit-input.schema.json": "f95e29e1e8dc9d9116f0be4b4713cdaf70826b455f4e3f9dd69d9055e4e02f8a",
+        "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json": "a27a9d28800f6b7ec185603422885a1c68d0c24bfae447d5c0a426d97ec185e1",
+        "skills/nova/plugins/review/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+        "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json": "54a7aece36f7f2336dae2b395b5fbe329bd3f03e4c5d9d88f75ea794b8d469a7",
+        "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json": "21ed8d2186fa9cfcc112edbd4a37306bf3d13cee92e0d74fefef67b47f492c3f",
+        "skills/nova/plugins/review/schemas/review-policy.v1.schema.json": "4cfb503e7a6b5a41d0cd6abfb5b6915b2898768c4cd99a965a057975c3af040e",
+        "skills/nova/plugins/review/schemas/review-policy.v2.schema.json": "d143ded923151da7f3174083b819cb8eefec0c5ef787b9b2ab593a259699a491",
+        "skills/nova/plugins/review/schemas/review-report.v1.schema.json": "434a420494ed0e04b91a6eb9fa642f819aebf74397faa17f7a15fac7500ddfd0",
+        "skills/nova/plugins/review/schemas/review-report.v2.schema.json": "4ce40c81ab1e80bcf95195898509532ecfb2b40db97d2d16809b79dd5a13980b",
+        "skills/nova/plugins/review/schemas/review-report.v3.schema.json": "81406f36efb1cb45393b61059c32e800429c9cbc5b19c6709a9e470c54cb87b2",
+        "skills/nova/plugins/review/src/echo-context-request-parser.ts": "694d0ead231697dbe8a000233148cd4957493fc34963e4f91b0efbf403339a7d",
+        "skills/nova/plugins/review/src/echo-evidence-verification.ts": "e3320cb9d930bc08618206458181fb67d12c2dfd0ddf521cf6912eb46a9de435",
+        "skills/nova/plugins/review/src/echo-review-contract.ts": "67193f1308ba53eab12c8f280cc4a03a7897289c54147921fe61561b09a684e6",
+        "skills/nova/plugins/review/src/echo-review-parser.ts": "c950a64aa12b6bcf24503a63a4dbed3dc8d128d105d26eb83f7cc311987d0cda",
+        "skills/nova/plugins/review/src/echo-review-verification-contract.ts": "3cb15e75b870e32689e10ee6dee92efa2fb2d0c2cf76f4b4a896d2258afd0802",
+        "skills/nova/plugins/review/src/echo-review-verification-parser.ts": "bd6d4e3f6e6274e0767a22fe72b7ad32703fb4d5e4edb840712c8be34d7b3341",
+        "skills/nova/plugins/review/src/protocol.ts": "3daf94d3d8f68696311299e6e005186f6adbf21c808e74410dbf9eea333c5bf7",
+        "skills/nova/plugins/review/src/repository-audit-cache.ts": "36b4b8fd50e520cc3e1f7a9b5ace2f230fb77811c386cce1261dc7ee10441ef5",
+        "skills/nova/plugins/review/src/repository-audit-results.ts": "4ffacf9710170425772503821d2d90d69da2e44d2e03212cb40fd2566efe1db9",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+        "skills/nova/plugins/review/src/repository-revalidation-contract.ts": "a502528b1f5e703d408de0f5233f9eef9ca5da7fe6f9e9b449892192f5c19b32",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+        "skills/nova/plugins/review/src/repository-review-profile.ts": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+        "skills/nova/plugins/review/src/review-bundle-bounds.ts": "5f295ba96fd54b113a368c587ed72e507f13b04d87cc338313b3db9069e250af",
+        "skills/nova/plugins/review/src/review-bundle-contract.ts": "c3c8ecf218f696e0b1f1336ac5741b66d57f4f80cd36df8da9e9bb901c0ed580",
+        "skills/nova/plugins/review/src/review-bundle-parser.ts": "0a86087762ed1b8596ab8d6b98ce268df2904a57bd8759f275754a7a31229024",
+        "skills/nova/plugins/review/src/review-bundle-snapshot.ts": "2dd6e61e53aa9d49f254b277727f7bed17fcfab286ff614b22a2ed3ea6f4586e",
+        "skills/nova/plugins/review/src/review-bundle-values.ts": "27940d8d993c6d6f4eac2d2cc1e97ec8a6c2c40ba4da62f7e9e8b3f220c93426",
+        "skills/nova/plugins/review/src/review-cluster-contract.ts": "b54db562320062abe8ec681378bfbe596f210c69070d6cd99dfe4668c19cda6d",
+        "skills/nova/plugins/review/src/review-cluster-identity.ts": "493ce9b17bf529debacd38044efe775ce93416746b939ea6cf2fd15966da5497",
+        "skills/nova/plugins/review/src/review-cluster-ranking.ts": "22161b2e623c2168deecd632adc91f62028ce349703f1b952159d387dae38a26",
+        "skills/nova/plugins/review/src/review-clustering.ts": "e04f41b6f18cef3cd4e6f1b701a36642e473a40177ec50030de5715fce1b2749",
+        "skills/nova/plugins/review/src/review-completion.ts": "97e8c27f88068ac95535225afbdaaf95549571f0b5824699e987d6a1d9379781",
+        "skills/nova/plugins/review/src/review-content-cache.ts": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+        "skills/nova/plugins/review/src/review-context-authority.ts": "fb2d7041de70b18beb8e094cb26bc33b9ba5a1cd9fba202fcc5d40e62b57ff8b",
+        "skills/nova/plugins/review/src/review-context-candidates.ts": "27ed8d2b310a7e2f4684f916afe1a6aa8afaf8518cab7fadb9d506037c66a9c5",
+        "skills/nova/plugins/review/src/review-context-production.ts": "0dce14f6fdfc22978cfc22d55527cdd0babf84baa54757ada507b089ecd98717",
+        "skills/nova/plugins/review/src/review-context-selection.ts": "087aef0af489f28cfe3166401e48458405584e47362e0c6c3baeade940c87b38",
+        "skills/nova/plugins/review/src/review-coverage.ts": "0c2e95eba29dc2760ad91285feddca5224444ab95337947129403098e1c07e5b",
+        "skills/nova/plugins/review/src/review-evaluation-metadata.ts": "0dc381b467b0949e6f5c48b8274a5997292c9825ded0b834bea677cb1901086c",
+        "skills/nova/plugins/review/src/review-evidence-authority.ts": "96e4749b53b38ed4f54d46df102182bacd177a54953e85672ec13e5e444cfa63",
+        "skills/nova/plugins/review/src/review-evidence-encoding.ts": "cf706b3f25bd4293e3b7b7f7a0f41b427024d31f1689d6d536b7ec149dec2e93",
+        "skills/nova/plugins/review/src/review-execution-settings.ts": "77eea575842e24901db60b4fa38e2239b00110df4e599ac0e76acc9a88ea8678",
+        "skills/nova/plugins/review/src/review-fact-extractors.ts": "dc63fb5f67948db547c255b66dcf20374b306bcbae3c58521d6aaaa27ed470a1",
+        "skills/nova/plugins/review/src/review-finding-governance.ts": "2467daabc95ab9ad8f089857f4fbb09dd0a7945c122be20f6bfa8a57bc2f62e0",
+        "skills/nova/plugins/review/src/review-governor-decision.ts": "e24ce83007525a05ce698cd311cd018d03d3553915673b0bff47eb2173c58508",
+        "skills/nova/plugins/review/src/review-governor-history.ts": "c4d57e25b8c73b97c79adb7a0d5b446d3e226ff0a62af19da0c2b5b93f39a292",
+        "skills/nova/plugins/review/src/review-governor.ts": "9c34eb3615facd279f4da2661a5f15018b60ef20c8367f25d7390a4204344f7f",
+        "skills/nova/plugins/review/src/review-graph.ts": "ee492bcafb667f304607a39b9e90eb57da69ff92e9512880d7ab8c593b9ff2f9",
+        "skills/nova/plugins/review/src/review-hard-limits.ts": "93009f0054d57f2f02aef50a146aa3d146595640d2ee5f07220d1889ef0ea04d",
+        "skills/nova/plugins/review/src/review-import-scanner.ts": "dca02be0f29d4b8eed478e6910b5431fdaea4b93da11b7232355c13354bb134a",
+        "skills/nova/plugins/review/src/review-import-syntax.ts": "514fc3b02d15c902293778ecf077d02eb428e8784d1677e6cf35ea3ed58135bd",
+        "skills/nova/plugins/review/src/review-invariants.ts": "7a63e531e4c8ecb7b531194b743718492bfdc4ebaa363ce8043a6a16a06b2d05",
+        "skills/nova/plugins/review/src/review-inventory-lookup.ts": "abd77f489bb6e5e4ecad801995ce9d0cf88b852f96626d0d2c731a72c1ee6670",
+        "skills/nova/plugins/review/src/review-json.ts": "fd24726bdb4733caccd6092715ebff91c507b4865d2de843eee6d0ec1df9e1d6",
+        "skills/nova/plugins/review/src/review-local-aliases.ts": "bd4958b47307905920bc7182795badc499885e493f459c74f113dd68fa776bc6",
+        "skills/nova/plugins/review/src/review-map-artifacts.ts": "88e55c81174ea25ab19f789728c8c9d617fb5f2fe71c5e0cb4fa890b9ae3911a",
+        "skills/nova/plugins/review/src/review-ordering.ts": "61bc8cf0f2a44527ad18559827794c72e3d0dc589b82499a78a9f38e728c4e10",
+        "skills/nova/plugins/review/src/review-phase-admission.ts": "5f57c09d10ffc77d11b7cf7c853951cbf936423b73490c4f75e0fdef17332ad7",
+        "skills/nova/plugins/review/src/review-policy-contract.ts": "3dd3337e85c6e27f0b8ad1cf953448468bc67c22b927c4f09f7cdf008b6e70a2",
+        "skills/nova/plugins/review/src/review-policy-parser.ts": "24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb",
+        "skills/nova/plugins/review/src/review-policy-profiles.ts": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67",
+        "skills/nova/plugins/review/src/review-policy-resolver.ts": "c05b626889142e5cf8bd8b9c30446c9bef87b3a7ac5d9dd10799ff769c9dc0ad",
+        "skills/nova/plugins/review/src/review-preparation.ts": "1977321e91e90e628ac149ef93704038bf4a728103ce27d6458fa82b60a691f2",
+        "skills/nova/plugins/review/src/review-prompt-budget.ts": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a",
+        "skills/nova/plugins/review/src/review-proposal-preflight.ts": "3acc5aa16a2ea8b95507916bfb0bf8db5966481d40c0e21a4269bbc401b02a2d",
+        "skills/nova/plugins/review/src/review-reducer.ts": "75f9fdb7d97894886e26dd54d6b245c16744116888fcbf2e99aed41dcabb3392",
+        "skills/nova/plugins/review/src/review-reduction-state.ts": "60d43dd3513e2c9770ed262a5e87d91316081983f00487557403cbcc18c3d46c",
+        "skills/nova/plugins/review/src/review-repair-batch.ts": "e79f7b2eb9308eb433cb33f60b13540c6c16a1611b523eddc5b3ed63e5a61059",
+        "skills/nova/plugins/review/src/review-report-builder.ts": "9dfc7a524561c9d02da6d3fa85985d03834a34560807950cabcfab4d27fc10d8",
+        "skills/nova/plugins/review/src/review-report-contract.ts": "28a76f5eb111741263ab88438a2fc7f9ca0e60e77ccc1f3b7f0bff081fd6f522",
+        "skills/nova/plugins/review/src/review-report-encoding.ts": "64b604ae4f25b3825e68527b30ad9093b9f6eda7b72fe1b227a914f0b0acae5f",
+        "skills/nova/plugins/review/src/review-report-flow.ts": "0769c1c76b65f88c6647adabcb5fc965e89980d431db30dfce2bf263063be6b4",
+        "skills/nova/plugins/review/src/review-report-storage.ts": "2ac682bb07057feeec977c9b1446339f65555bf14977a2dbe1644cbaff72c4e5",
+        "skills/nova/plugins/review/src/review-repository.ts": "02725152678d2b150d4e44dee7182b1b767e52d7cec4272d71c0f66c740e4169",
+        "skills/nova/plugins/review/src/review-runtime-attestation.ts": "1154397de55d1e27dcb291d060e36fcc7ce95cc0ae8d79c9b755f1ed4157f43d",
+        "skills/nova/plugins/review/src/review-scale-slicing.ts": "2c3926caebaa29cff3044486cd5f56415bcd0c54127b9b65857d888a86c63262",
+        "skills/nova/plugins/review/src/review-semantic-flow.ts": "1bfd35614a35c1063eda4c44f6b7256d5bf38ae3141f67348276baf6d7b07452",
+        "skills/nova/plugins/review/src/review-semantics.ts": "653f853d511c6955e3c44cc0db3ddf62e6e12321f791d0d427f4137747b75008",
+        "skills/nova/plugins/review/src/review-slicing.ts": "4a3bc2bceb55c0a05774f2d07d05813a010e6280eea9a4c9ad0750e58188bfae",
+        "skills/nova/plugins/review/src/review-snapshot-inventory.ts": "0198ab891853c1dbe061bd2ef081d2c6625b02447de90296d8d7cccbb82164c4",
+        "skills/nova/plugins/review/src/review-stage-input.ts": "e68ca5e004df3567de6a84e5486791a435f4c7ccd1756a6ed79365f81aca564c",
+        "skills/nova/plugins/review/src/review-stage-result.ts": "f1e97b73fffcc52ad783fa77b1d5a0e6907bf33869dd659f34bd969fba089ac0",
+        "skills/nova/plugins/review/src/review-stage-verification.ts": "d88dc67ae2c703d10057467064a7d56bf12c6ffc3b6b7bd629ee2e2c247994cd",
+        "skills/nova/plugins/review/src/review-test-relations.ts": "62c9e6db1171d4a28b6f88119362f57a1154633ae5b2ad014506e429459b5426",
+        "skills/nova/plugins/review/src/review-verdict-policy.ts": "a999675b9e6bf2d704f07aa8df339250a86d04b166b1a1b5d9cd65a376f2d5b3",
+        "skills/nova/plugins/review/src/review-verification-reconciliation.ts": "b2d8f81a7dfb695abfa03253142b3829aa1f8ca1009597343c1abfa6f822bb00",
+        "skills/nova/plugins/review/src/review-verified-findings.ts": "f02530f3acf50325854eaac7b77790177364e255770e9eee4457859a4226587a",
+        "skills/nova/plugins/review/src/review-verifier.ts": "673c969e165888d52d90068fb227c0330d70527c7ea574b20385f4db81bf1f20",
+        "skills/nova/plugins/review/src/scalable-review-compiler.ts": "9ab253c3605ac971385e4d4787da26669f9623ff50dcc30b6fe0a250301329a9",
+        "skills/nova/plugins/review/src/scalable-review-execution.ts": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88",
+        "skills/nova/plugins/review/src/scalable-review-jobs.ts": "727d9042c598be9920c15c11e7c1aab20ca4bdfcb2f0a41f4b30860296fc9c90",
+        "skills/nova/plugins/review/src/scalable-review-topology.ts": "e8bdf3721245ef58ae25891dc90c776b580973355f9d9946bd71eaf4956b4c0e",
+        "skills/nova/plugins/review/src/scalable-review-types.ts": "075703db30e3ae27a53b306a8a7916a10dc6ab0e29d460b0631c2ebce97e8f96",
+        "skills/nova/plugins/review/src/scalable-review-verification-evidence.ts": "23e712559f40c75beaa25cdb95cd8fea1bbd8b59e157bcfbf60f9ae038581d23",
+        "skills/nova/plugins/review/src/scalable-review-verification.ts": "d06f9d7524d75b61ac8cd6493418f4689d0fd5883d10a93390393f7df320034d",
+        "skills/nova/plugins/review/src/simplification-contract.ts": "02b979eb33a1af0018dc592975e155ac1ab3fd90c1c91d6e54ba6fd4bfa1ca62",
+        "skills/nova/plugins/review/src/simplification-fact-producer.ts": "8b50db4716f53cd4cca472d0c52ff1da2d49d7d1921ebf2751f57801831a207f",
+        "skills/nova/plugins/review/src/simplification-manifest.ts": "332141613dbcdc22d945d610de83553475a72b2524f7abe87398ff8b7761f7ae",
+        "skills/nova/plugins/review/src/simplification-miner.ts": "9859a85740834da159dc21caa1fef2f96460a389d46f599b86f57a439ed9b635",
+        "skills/nova/plugins/review/src/simplification-parser.ts": "e6d8edeb8bb90c75c6b99dbfec47025ced51b139555bf8f5ee27724d46e92850",
+        "skills/nova/plugins/review/src/simplification-registry.ts": "04e1049839f794cdddc7836fa1f6b8dde35d008cbd1abffc5612268d41e40026",
+        "skills/nova/plugins/review/src/stage.ts": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+        "skills/nova/plugins/review/src/verification-protocol.ts": "e348f736e76125c89d10b0ac6b2d1d86f0ace2109ca94f8d3dce3c98aabe4185",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.runtime-dispatch",
+      "manifest": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "canonicalGuide": "docs/site/understand/openclaw.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/runtime-dispatch/README.md",
+            "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/runtime-dispatch/README.md",
+            "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/runtime-dispatch/README.md",
+            "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/runtime-dispatch/README.md": "8d35a3f4317061a91daa80dba389e3a4e453052e815ffce9db7a5c23875e8f47",
+        "skills/common/plugins/runtime-dispatch/plugin.json": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+        "skills/common/plugins/runtime-dispatch/schemas/config.schema.json": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+        "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+        "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts": "70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+        "skills/common/plugins/runtime-dispatch/src/result-persistence.ts": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+        "skills/common/plugins/runtime-dispatch/src/workspace-target.ts": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.secret-resolver",
+      "manifest": "skills/common/plugins/secret-resolver/plugin.json",
+      "canonicalGuide": "docs/site/understand/security-and-trust.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": false,
+          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "sources": [
+            "skills/common/plugins/secret-resolver/README.md",
+            "skills/common/plugins/secret-resolver/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/common/plugins/secret-resolver/README.md",
+            "skills/common/plugins/secret-resolver/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/secret-resolver/README.md",
+            "skills/common/plugins/secret-resolver/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/secret-resolver/README.md": "20d8c301684dad82c2c43cb192e134baddcfcb187d7c121f1dc7e4d686520964",
+        "skills/common/plugins/secret-resolver/plugin.json": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347",
+        "skills/common/plugins/secret-resolver/schemas/config.schema.json": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+        "skills/common/plugins/secret-resolver/src/adapter.ts": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.security-providers",
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/security-providers/README.md",
+            "skills/buster/plugins/security-providers/src/headers.js",
+            "skills/buster/plugins/security-providers/src/dependency.js",
+            "skills/buster/plugins/security-providers/src/image.js",
+            "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/security-providers/README.md",
+            "skills/buster/plugins/security-providers/src/headers.js",
+            "skills/buster/plugins/security-providers/src/dependency.js",
+            "skills/buster/plugins/security-providers/src/image.js",
+            "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/security-providers/README.md",
+            "skills/buster/plugins/security-providers/src/headers.js",
+            "skills/buster/plugins/security-providers/src/dependency.js",
+            "skills/buster/plugins/security-providers/src/image.js",
+            "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+            "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/security-providers/README.md": "97f0db9adda62d1b15cfa518816547b15ad66b1c38f35010c75d6d5797f5cd20",
+        "skills/buster/plugins/security-providers/plugin.json": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+        "skills/buster/plugins/security-providers/schemas/dependency.schema.json": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4",
+        "skills/buster/plugins/security-providers/schemas/headers.schema.json": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191",
+        "skills/buster/plugins/security-providers/schemas/image.schema.json": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+        "skills/buster/plugins/security-providers/src/common.js": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+        "skills/buster/plugins/security-providers/src/database-evidence.js": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57",
+        "skills/buster/plugins/security-providers/src/dependency.js": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+        "skills/buster/plugins/security-providers/src/headers.js": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "skills/buster/plugins/security-providers/src/image.js": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+        "skills/buster/plugins/security-providers/src/kubernetes-policy.js": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+        "skills/buster/plugins/security-providers/src/kubernetes-runtime.js": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.size-budget",
+      "manifest": "skills/buster/plugins/size-budget/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": false,
+          "reason": "This package parses supplied evidence or resolves confidential environment data; it does not own a network/process mutation. Adjacent storage/runtime effects stay with the caller.",
+          "sources": [
+            "skills/buster/plugins/size-budget/README.md",
+            "skills/buster/plugins/size-budget/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/size-budget/README.md",
+            "skills/buster/plugins/size-budget/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/size-budget/README.md",
+            "skills/buster/plugins/size-budget/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/size-budget/README.md": "9cab80aae3f14c2c1dac300c3875ffa561dda4e64bdec0bfcec530e1e1ceb7a4",
+        "skills/buster/plugins/size-budget/plugin.json": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+        "skills/buster/plugins/size-budget/schemas/config.schema.json": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894",
+        "skills/buster/plugins/size-budget/src/provider.js": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.state-store",
+      "manifest": "skills/common/plugins/state-store/plugin.json",
+      "canonicalGuide": "docs/site/understand/data-and-state.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/state-store/README.md",
+            "skills/common/plugins/state-store/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/state-store/README.md",
+            "skills/common/plugins/state-store/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/state-store/README.md",
+            "skills/common/plugins/state-store/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/state-store/README.md": "f3cb1eff736094a1fdcab144000f4f700c76fd5107160ca1e5a7a5317ebce028",
+        "skills/common/plugins/state-store/plugin.json": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+        "skills/common/plugins/state-store/schemas/config.schema.json": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+        "skills/common/plugins/state-store/src/adapter.ts": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.tailscale-exposure",
+      "manifest": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/tailscale-exposure/README.md",
+            "skills/buster/plugins/tailscale-exposure/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/tailscale-exposure/README.md",
+            "skills/buster/plugins/tailscale-exposure/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/tailscale-exposure/README.md",
+            "skills/buster/plugins/tailscale-exposure/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/tailscale-exposure/README.md": "7fcb51b8fb8d22dddab78d9e5aa09abe37f547aa8385e0e9d22cfcfcf88db4df",
+        "skills/buster/plugins/tailscale-exposure/plugin.json": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+        "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.telemetry-observer",
+      "manifest": "skills/common/plugins/telemetry-observer/plugin.json",
+      "canonicalGuide": "docs/site/understand/telemetry.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/telemetry-observer/README.md",
+            "skills/common/plugins/telemetry-observer/src/observer.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/telemetry-observer/README.md",
+            "skills/common/plugins/telemetry-observer/src/observer.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (observer); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/telemetry-observer/README.md",
+            "skills/common/plugins/telemetry-observer/src/observer.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/telemetry-observer/README.md": "921d2ddf474987a9d2417171cf0bad32d409cf961e76ecaa963d84fe70941133",
+        "skills/common/plugins/telemetry-observer/plugin.json": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+        "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+        "skills/common/plugins/telemetry-observer/schemas/config.schema.json": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+        "skills/common/plugins/telemetry-observer/src/observer.ts": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.telemetry-store",
+      "manifest": "skills/common/plugins/telemetry-store/plugin.json",
+      "canonicalGuide": "docs/site/understand/telemetry.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/telemetry-store/README.md",
+            "skills/common/plugins/telemetry-store/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/telemetry-store/README.md",
+            "skills/common/plugins/telemetry-store/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/telemetry-store/README.md",
+            "skills/common/plugins/telemetry-store/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/telemetry-store/README.md": "86528774651ce1cc75349470f02ce8c1ac9dfa6610c98211b74e74a27f67e503",
+        "skills/common/plugins/telemetry-store/plugin.json": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848",
+        "skills/common/plugins/telemetry-store/schemas/config.schema.json": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8",
+        "skills/common/plugins/telemetry-store/src/adapter.ts": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+        "skills/common/plugins/telemetry-store/src/projection.ts": "b570c21e64b262cb12edb0f92c94fd7643f3c7bfadcbcb63da7d999aba415f31",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.transport-publisher",
+      "manifest": "skills/common/plugins/transport-publisher/plugin.json",
+      "canonicalGuide": "docs/site/understand/communication.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/transport-publisher/README.md",
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/transport-publisher/README.md",
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/transport-publisher/README.md",
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/transport-publisher/README.md": "92a62894d0171bc3ea702f18fd4d7ae16d0842e8e7e8353401b6b4333a70b839",
+        "skills/common/plugins/transport-publisher/plugin.json": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+        "skills/common/plugins/transport-publisher/schemas/config.schema.json": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+        "skills/common/plugins/transport-publisher/schemas/publish.schema.json": "8e8b5ae0b5d434ca945fd1b0ed6365934d67c00e045c61bccbc5f35df8d4fd73",
+        "skills/common/plugins/transport-publisher/schemas/receipt.schema.json": "8795863128e337e4c0cce3c64cc9122bbbb245ade722e387a6ace77ec45da36f",
+        "skills/common/plugins/transport-publisher/src/adapter.ts": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.visual",
+      "manifest": "skills/buster/plugins/visual/plugin.json",
+      "canonicalGuide": "docs/site/reference/buster-suites.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/buster/plugins/visual/README.md",
+            "skills/buster/plugins/visual/src/provider.js"
+          ]
+        },
+        "persistence": {
+          "applies": false,
+          "reason": "No package-owned durable replay journal is claimed. Attempt evidence and external resources remain with the Buster/controller or calling runtime owner; inspect that adjacent lifecycle.",
+          "sources": [
+            "skills/buster/plugins/visual/README.md",
+            "skills/buster/plugins/visual/src/provider.js"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (test-provider); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/buster/plugins/visual/README.md",
+            "skills/buster/plugins/visual/src/provider.js"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/buster/plugins/visual/README.md": "96654f60f76342f316b001db5e94b9a730938bed691808f729f3ce970cc95ac4",
+        "skills/buster/plugins/visual/plugin.json": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+        "skills/buster/plugins/visual/schemas/config.schema.json": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da",
+        "skills/buster/plugins/visual/src/browser-identity.js": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+        "skills/buster/plugins/visual/src/provider.js": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    },
+    {
+      "id": "kubeclaw.wait-store",
+      "manifest": "skills/common/plugins/wait-store/plugin.json",
+      "canonicalGuide": "docs/site/use/workflows/wait-resume.md",
+      "coverageNote": "Existing specialist guide owns this package; package-specific function/config/input/state/failure/change coverage requires independent depth review, not inferred from assignment.",
+      "criteria": {
+        "externalEffects": {
+          "applies": true,
+          "reason": "Registration implementation reaches brokered external operations or host service requests; caller grants and result/effect authority remain separate.",
+          "sources": [
+            "skills/common/plugins/wait-store/README.md",
+            "skills/common/plugins/wait-store/src/adapter.ts"
+          ]
+        },
+        "persistence": {
+          "applies": true,
+          "reason": "Package owns or emits durable artifacts,delivery/checkpoint records,source commits or store mutations; these are not erased by removing the registration.",
+          "sources": [
+            "skills/common/plugins/wait-store/README.md",
+            "skills/common/plugins/wait-store/src/adapter.ts"
+          ]
+        },
+        "internalExtension": {
+          "applies": false,
+          "reason": "Uses existing pipeline registry registration classes (adapter); no additional host hook,Worker engine or runtime-role class is introduced by this package.",
+          "sources": [
+            "skills/common/plugins/wait-store/README.md",
+            "skills/common/plugins/wait-store/src/adapter.ts"
+          ]
+        }
+      },
+      "sourceBindings": {
+        "skills/common/plugins/wait-store/README.md": "1e950161e573a8dfe0ae3700bce649c16e7935a833702d9032992bb75e6ea5f3",
+        "skills/common/plugins/wait-store/plugin.json": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+        "skills/common/plugins/wait-store/schemas/config.schema.json": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+        "skills/common/plugins/wait-store/src/adapter.ts": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+      }
+    }
+  ]
+}

@@ -4,7 +4,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { generatedCodeInventory } from './docs-lint-policy-reference.mjs';
+import { verifySourceEvidencePin } from './docs-source-evidence-pin.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const specifications = [
@@ -107,6 +109,80 @@ const specifications = [
   ]],
 ];
 
+// Finite per-page revision roster: existing unchanged scoped evidence plus
+// independently source-inspected current excerpts. A new revision needs review.
+const reviewedPageSourceRevisions = {
+  "docs/site/reference/platform-surfaces-generated.md": [
+    "7994a51e16bc752357c3a801190b12b7d6a191a4"
+  ],
+  "docs/site/extend/lint.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/reference/lint-policy.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/reference/lint-rules.md": [
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/understand/forge.md": [
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/understand/echo.md": [
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/understand/openclaw.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/understand/codex-integration.md": [
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/understand/ops-mcp.md": [
+    "54a535b6046bc54e9aeeebee9c4cd24388477115",
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
+  ],
+  "docs/site/understand/archviewer.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+    "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7"
+  ],
+  "docs/site/understand/communication.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+    "a721a6e69aef5900002cef1dca3d1272f7903009",
+    "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
+    "f88a8c5c56adc2098d73804c85c6f41d7d7a239f"
+  ],
+  "docs/site/understand/data-and-state.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+    "1e60f5d34c9a599a334a414987a754c95dc3543f",
+    "ebcc04066d42c94b4a4e0fc85e3393dae3d61f78",
+    "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7"
+  ],
+  "docs/site/understand/telemetry.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+    "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7"
+  ],
+  "docs/site/understand/platform-and-operations.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+    "7994a51e16bc752357c3a801190b12b7d6a191a4",
+    "d7f822c3cddd97e637aeca47f1cd49e87164ff87"
+  ],
+  "docs/site/understand/security-and-trust.md": [
+    "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10"
+  ]
+};
+
+// Existing independently reviewed operator invocations, not maintained source
+// copies. Keep the language/body roster exact; new examples require review.
+const reviewedOperatorInvocationBlocks = new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"]);
+
 let sourceLinkCount = 0;
 const checkedSources = new Set();
 for (const [file, minimumLinks, markers] of specifications) {
@@ -117,14 +193,18 @@ for (const [file, minimumLinks, markers] of specifications) {
     ?? source.match(/^Source revision: `([0-9a-f]{40})`$/mu)
     ?? source.match(/^Last verified: generated from revision `([0-9a-f]{40})`$/mu);
   assert(revisionMatch, `${file} does not declare one explicit inspected evidence revision`);
-  const revision = revisionMatch[1];
+  assert(reviewedPageSourceRevisions[file].includes(revisionMatch[1]),
+    `${file} declares an unreviewed baseline evidence revision`);
   for (const marker of markers) assert(source.includes(marker), `${file} lacks ${marker}`);
 
   if (file.startsWith('docs/site/understand/')) {
-    const languages = [...source.matchAll(/^```([^\n]*)$/gmu)]
-      .map(match => match[1].trim().toLowerCase()).filter(Boolean);
-    assert(languages.every(language => language === 'mermaid'),
-      `${file} copies maintained source instead of linking to it`);
+    for (const [, language, body] of source.matchAll(/^```([^\n]*)\n([\s\S]*?)^```/gmu)) {
+      if (language.trim().toLowerCase() === 'mermaid') continue;
+      assert(file === 'docs/site/understand/data-and-state.md'
+        && language.trim().toLowerCase() === 'bash'
+        && reviewedOperatorInvocationBlocks.has(createHash('sha256').update(body).digest('hex')),
+      `${file} copies maintained source or adds an unreviewed operator invocation`);
+    }
   }
 
   const links = [...source.matchAll(
@@ -136,26 +216,14 @@ for (const [file, minimumLinks, markers] of specifications) {
 
   for (const match of links) {
     const [, linkRevision, repositoryPath, firstValue, lastValue] = match;
-    assert.equal(linkRevision, revision, `${file} uses another revision for ${repositoryPath}`);
-    const pinned = execFileSync('git', ['-C', root, 'show', `${revision}:${repositoryPath}`],
-      { encoding: 'utf8' });
-    const checkedSourceId = `${revision}:${repositoryPath}`;
-    if (!checkedSources.has(checkedSourceId)) {
-      const currentPath = path.join(root, repositoryPath);
-      assert(fs.existsSync(currentPath), `linked source is absent: ${repositoryPath}`);
-      assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
-        `${repositoryPath} changed after ${revision}; inspect and repin AP09.6/9.7`);
-      checkedSources.add(checkedSourceId);
-    }
-    if (!firstValue) continue;
-    const first = Number(firstValue);
-    const last = Number(lastValue ?? firstValue);
-    const lineCount = pinned.split('\n').length;
-    assert(first >= 1 && last >= first && last <= lineCount,
-      `${file} has an invalid line range for ${repositoryPath}`);
-    if (file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md')) {
-      assert(last - first <= 60, `${file} has an evidence range wider than 60 lines for ${repositoryPath}`);
-    }
+    verifySourceEvidencePin(root, {
+      page: file, revision: linkRevision, source: repositoryPath,
+      first: firstValue, last: lastValue ?? firstValue,
+      allowedRevisions: reviewedPageSourceRevisions[file],
+      requireRange: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md'),
+      maximumSpan: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md') ? 60 : Infinity,
+    });
+    checkedSources.add(`${linkRevision}:${repositoryPath}`);
   }
 
   if (file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md')) {
@@ -324,7 +392,9 @@ for (const required of [
   'operator logs lack an explicit OAuth rejection',
   'redis-stream-after.json',
   'redis-nova-audit-after.json',
-  'kubectl create -f - <<EOF',
+  'kubectl create -o json -f - > "$EVIDENCE_DIR/litellm-policy-created.json" <<EOF',
+  'litellm-policy-frozen.json',
+  'CREATE identity unavailable; stop',
   'litellm-readiness-during-fault-before.json',
   'litellm-pods-during-fault-after.json',
   'observation: "bounded-upstream-failure"',
@@ -346,6 +416,8 @@ for (const step of referenceTrace.steps) {
 const roadmap = fs.readFileSync(path.join(root, 'docs/site/status/roadmap.md'), 'utf8');
 assert(roadmap.includes('## Joined Showcase Acceptance Harness'),
   'roadmap omits the joined showcase harness limit');
+execFileSync(process.execPath, ['--test', path.join(root, 'scripts/tests/docs-source-evidence-pin.test.mjs')],
+  { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024 });
 execFileSync(process.execPath, [path.join(root, 'scripts/docs-platform-surface-inventory.mjs'), '--check'],
   { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 execFileSync(process.execPath, [path.join(root, 'scripts/platform-surface-source-discovery.mjs'), '--self-test'],

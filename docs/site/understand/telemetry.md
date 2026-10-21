@@ -348,9 +348,9 @@ host, port, and password as environment variables.
 | `hookTimeoutMs` | `OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS` | `1000` | Bounds each OpenClaw hook callback. |
 
 > [The resolver defines configuration precedence and validation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/config.ts#L83-L112).
-> [The Buster gateway entry supplies the active values](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L262-L311).
+> [The Buster gateway entry supplies the active values](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/configmap-gateway.yaml#L282-L331).
 > [The Pod obtains Redis host, port, and password from values and the configured
-> Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L1282-L1299).
+> Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1354-L1371).
 
 #### Sensitive data and evidence limit
 

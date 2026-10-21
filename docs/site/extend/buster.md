@@ -268,7 +268,7 @@ capability:
 - [manifest, input ports, and retry claim](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/plugin.json#L1-L23);
 - [strict configuration schema](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/schemas/config.schema.json#L1-L8);
 - [provider implementation](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/src/provider.js#L49-L98);
-- [pass, fail, duplicate-input, combine, and malformed-input test](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/tests/live-function.test.ts#L9-L36);
+- [pass, fail, duplicate-input, combine, and malformed-input test](https://github.com/datrab/kubeclaw/blob/399d775e8efa7b54267af98d04463d6480e63684/skills/buster/plugins/coverage-budget/tests/live-function.test.ts#L9-L51);
 - [Buster role selection](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/buster.json#L23-L46).
 
 Coverage budget is not selected by a shipped suite template. A project declaration

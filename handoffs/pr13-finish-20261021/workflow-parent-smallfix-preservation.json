@@ -1,0 +1,51 @@
+{
+  "reviewer": "/root/workflow_acceptance",
+  "baseRevision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+  "reviewedChange": [
+    "docs/site/reference/pipeline-json.md: lint known-field and unknown-member semantics",
+    "docs/site/understand/buster-namespace-controller.md: same-destination link label",
+    "scripts/check-buster-guides.mjs: namespace-controller additional f99 source revision"
+  ],
+  "preservedGateIds": [
+    "A99-02",
+    "A99-03",
+    "A99-05"
+  ],
+  "preservedRecordIds": [
+    "AP09-closeout-config-reference"
+  ],
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "checks": [
+    {
+      "command": "Independent exact pipeline-json diff/source review",
+      "exitCode": 0,
+      "observation": "Only false closed-lint assertion replaced with exact known-field validation and ignored-unknown-key warning. No field/default/bound/selection/publication semantics changed."
+    },
+    {
+      "command": "Actual loadPipelineLintDeclaration with extra lint key in fresh temporary .swarm",
+      "exitCode": 0,
+      "observation": "Known fields accepted; unrecognizedPolicy key omitted from projected result; no external effects."
+    },
+    {
+      "command": "git diff --exit-code f99aecbb00cb399b46dfbbeb3ddb375fba6218e7 -- charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "exitCode": 0,
+      "observation": "Full current CRD exactly equals added permitted immutable revision."
+    },
+    {
+      "command": "Independent Buster guard implementation review",
+      "exitCode": 0,
+      "observation": "Additional revision limited to namespace-controller spec; whole current source byte equality,line ranges and required-content checks retained."
+    }
+  ],
+  "summary": "Preserve prior whole PASS scopes A99-02/03/05 and prior AP09-closeout-config-reference scope for its pipeline-json intersection. The exact corrected lint paragraph is independently source/reader/quality PASS; all unrelated prior reviewed scope remains unchanged. Namespace link-label retains same target. Buster check remains red at actual stale values.yaml; no aggregate Buster/example/whole A99-01/07/11 acceptance conferred.",
+  "limits": [
+    "Narrow change-impact preservation only; does not manufacture missing prior full-scope review or broaden existing accepted scope.",
+    "No global generator/publication/live or all workflow example check green claim."
+  ],
+  "openIssues": [],
+  "verdict": "PASS"
+}

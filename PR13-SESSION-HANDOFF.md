@@ -1,4 +1,13 @@
-# PR13 session reset — 2026-10-21
+# PR13 continuation — 2026-10-21
+
+## Active finish-all request — 2026-10-21
+
+- User explicitly requires reviewing all finished material and continuing until every remaining point is complete. Do not stop after checkpoints.
+- Current review batch: 16 additional whole gates and COM-011/TEL-003 independently accepted. Working register candidate now 35/89 gates and 206/261 requirements; not yet committed because affected aggregate Reader records need fresh output checks. Three more whole communication/telemetry gates and requirements are independently ready for final integration; no overall or release approval. Detailed topic records/reports: `handoffs/pr13-finish-20261021/`.
+- Finite tree/test custody metadata repaired at `7e006461`, independently reviewed; 7/7 controls including two new warm-cache revocation negatives PASS. Existing five affected reader records narrowly preserved.
+- Finite inert runtime-bundle copy helper independently accepted and pushed at `47d17498`; 37/37 controls PASS including actual resource-shaped counterexamples. Transitive source/closure/module/compiler bindings have now been independently reviewed and renewed. Fresh owning generation remains to be run. Do not replace it with a general exemption or apply/loaded-code claim.
+- Completed source corrections, dynamic 51-package classification (49 complex; not depth acceptance), two package-specific guides, and real local durable Core CLI journey with success/blocked/admission/audit/artifact/cleanup. Four new canonical pages and one exact helper asset explicitly registered. Source-pin repair whole specialist checker PASS including 43 mutations; documentation and 14 publication controls PASS at 171 pages. Remaining: actual owning config/SDK generation, Reader rebuild and affected-scope preservation, further whole-guide depth gaps and remaining acceptance.
+- Existing runtime configuration stop remains; no receipt changes, validator bypass, AP10 deletion or blanket final approval.
 
 ## Current continuation — 2026-10-21 diagram closeout
 

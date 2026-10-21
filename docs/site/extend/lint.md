@@ -884,7 +884,7 @@ the rollout if the deployed imports and module bytes do not belong to the same
 reviewed change.
 
 > **Delivery evidence:** [The ConfigMap enumerates each delivered lint file](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-swarm-config.yaml#L16-L49).
-> [The init container owns both explicit copy stages](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L634-L695).
+> [The init container owns both explicit copy stages](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L706-L767).
 
 The adapter also accepts separate invocations concurrently. Until discovery
 diagnostics and native caches have tested per-invocation isolation, schedule one

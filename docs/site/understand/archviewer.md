@@ -76,11 +76,11 @@ dedicated private publication route or auth volume.
 >
 > [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/archviewer.nginx.conf#L1-L19).
 >
-> [The current chart validates the provider and renders the private Service, Ingress, and selected policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L5-L80).
+> [The current chart validates the provider and renders the private Service, Ingress, and selected policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L5-L65); [The current chart validates the provider and renders the private Service, Ingress, and selected policy (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L66-L80).
 >
 > [The current values default to Cilium](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L529-L539).
 >
-> [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L1644-L1652).
+> [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1716-L1724).
 
 ## Publication And Lifecycle
 
@@ -121,11 +121,11 @@ release receipt before deployment.
 
 > **Source evidence — current lab wiring**
 >
-> [The Nova values enable the private access resources](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L87-L92).
+> [The Nova values enable the private access resources](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L91-L96).
 >
-> [They separately define the actual sidecar and read-only workspace mount](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L147-L182).
+> [They separately define the actual sidecar and read-only workspace mount](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L151-L186).
 >
-> [Nova startup creates the directory but does not publish a document](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L417-L430).
+> [Nova startup creates the directory but does not publish a document](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L454-L467).
 
 ## Failure And Recovery
 

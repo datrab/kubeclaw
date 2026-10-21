@@ -39,6 +39,11 @@ result-authority, capability, or namespace-controller changes.
 Use [Extend Lint](lint.md) for lint policy, rules, tools, targets, baselines,
 Kubernetes policy packs, report validation, and their proof requirements.
 
+Use the [package deep-guide index](deep-guides/README.md) to find each package's
+canonical behavior and change guide. Its classification is not a content-depth
+or activation approval. The [demo handoff guide](deep-guides/demo-handoff.md)
+explains candidate, private delivery, and readiness as separate authorities.
+
 A smaller change has fewer trust, recovery, packaging, and maintenance consequences.
 However, configuration cannot create behavior that no installed component supplies.
 

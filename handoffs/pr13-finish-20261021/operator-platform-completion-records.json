@@ -1,0 +1,429 @@
+[
+  {
+    "id": "AP09-whole-platform-discovery-and-drift-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A97-01",
+      "A97-12"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/understand/platform-and-operations.md",
+      "docs/site/reference/platform-surfaces-generated.md",
+      "docs/site/reference/endpoints.md"
+    ],
+    "sources": [
+      "scripts/docs-platform-surface-inventory.mjs",
+      "scripts/check-platform-surface-drift-mutations.mjs",
+      "docs/config/platform-surface-map.json",
+      "docs/generated/inventory/platform-surfaces.json",
+      "charts/kubeclaw/values.yaml",
+      "charts/prism/values.yaml",
+      "charts/ops-pod/values.yaml",
+      "my-values/nova-values.yaml",
+      "my-values/buster-values.yaml",
+      "gitops/platform/values/redis.yaml",
+      "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "contracts/agent-observability/v1/src/constants.ts",
+      "skills/prism/server/agent-bridge.mjs",
+      "tools/ops-mcp/src/server.mjs"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/docs-platform-surface-inventory.mjs --check",
+        "exitCode": 0,
+        "observation": "Current discovery:498dependency signals,171resources,42secrets,72endpoints,65outbound,75stores,56events,8Ops tools; no live deployment claim."
+      },
+      {
+        "command": "node scripts/check-platform-surface-drift-mutations.mjs",
+        "exitCode": 0,
+        "observation": "43source mutations/17fixture paths passed exact expected DOC_DRIFT assertions; bulk-sync and identity-only map bypass rejected; isolated temporary source tree."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "Complete required/conditional/optional dependency map follows actual consumers and selected readiness; independent discovery and red-on-source-change checks inspected, not fixed counts. Reused unchanged accepted dependency explanations."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Pages: understand/platform-and-operations.md (Required/Conditional/Optional Systems; Runtime Dependency Contracts), reference/platform-surfaces-generated.md. Sources: docs/generated/inventory/platform-surfaces.json, docs/config/platform-surface-map.json, scripts/docs-platform-surface-inventory.mjs, charts/{kubeclaw,prism,ops-pod}, my-values, gitops/platform. Fresh inventory discovery check reconciles498 dependency signals/171resources, including enabled/conditional/optional distinctions. Pipeline authority is explicitly separated from showcase readiness. No missing-dependency claim inferred from a fixed count.",
+    "limits": [
+      "No guarantee that all future source syntax is supported; new independent parser routes need qualification.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-whole-store-contract-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A97-06"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/understand/data-and-state.md",
+      "docs/site/use/recovery.md"
+    ],
+    "sources": [
+      "docs/generated/inventory/platform-surfaces.json",
+      "skills/nova/core/state/journal.ts",
+      "skills/nova/core/state/file-mutex.ts",
+      "skills/worker/core/worker/native-attempt-journal.ts",
+      "skills/prism/storage/artifacts.ts",
+      "skills/prism/control/agent-jobs.ts",
+      "charts/prism/files/prism-backup.sh",
+      "scripts/postgresql-recovery.sh",
+      "gitops/platform/values/redis.yaml",
+      "gitops/platform/values/postgresql.yaml",
+      "gitops/platform/values/loki.yaml",
+      "gitops/platform/values/prometheus.yaml"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/docs-platform-surface-inventory.mjs --check",
+        "exitCode": 0,
+        "observation": "Current discovery:498dependency signals,171resources,42secrets,72endpoints,65outbound,75stores,56events,8Ops tools; no live deployment claim."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "Reused accepted complete DAT001\u2013009 scoped reviews including corrected LiteLLM PostgreSQL and generic JSON encoding; whole authority/schema/writer/reader/fencing/retention/capacity/backup/restore/loss/retirement task mapping inspected."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Pages: understand/data-and-state.md (Complete Store Matrix, Backup Groups, Restore Decision Rules, Encryption, Failure/Recovery), use/recovery.md. Sources: platform inventory75stores; skills/nova/core/state, skills/worker/core/native, skills/buster/engine, skills/prism/control and storage, charts/prism/files/prism-backup.sh, scripts/postgresql-recovery.sh, gitops/platform/values/{redis,postgresql,loki,prometheus}. Reuse full accepted DAT001\u2013009 reviews, including corrected LiteLLM PostgreSQL and generic JSON artifact contracts. Authority/writers/readers/fencing/retention/capacity/backup/restore/corruption/loss/retirement are distinguished, and absent restore coverage stops explicitly rather than pretending full-platform recoverability.",
+    "limits": [
+      "No full-platform restore, accepted RTO/RPO or executed recovery claimed; unsupported paths have explicit stop and follow-up boundaries.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-whole-trust-and-spiffe-contract-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A97-08"
+    ],
+    "requirementIds": [
+      "COM-011"
+    ],
+    "pages": [
+      "docs/site/understand/security-and-trust.md",
+      "docs/site/understand/deployment-and-trust.md",
+      "docs/site/understand/communication.md",
+      "docs/site/reference/secrets.md",
+      "docs/site/use/worker-trust.md"
+    ],
+    "sources": [
+      "skills/worker/core/worker/trust.ts",
+      "skills/nova/core/execution/authorization.ts",
+      "skills/nova/core/test-gates/source-snapshot.ts",
+      "skills/prism/control/session.ts",
+      "skills/prism/control/product-decisions.ts",
+      "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "charts/kubeclaw/templates/serviceaccount.yaml",
+      "charts/kubeclaw/templates/rbac.yaml",
+      "charts/prism/templates/networkpolicy.yaml",
+      "charts/ops-pod/templates/network.yaml",
+      "charts/ops-pod/templates/rbac.yaml",
+      "charts/ops-pod/templates/workload.yaml",
+      "my-values/infra/spire-values.yaml",
+      "my-values/setup-secrets.sh"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/docs-platform-surface-inventory.mjs --check",
+        "exitCode": 0,
+        "observation": "Current discovery:498dependency signals,171resources,42secrets,72endpoints,65outbound,75stores,56events,8Ops tools; no live deployment claim."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "Reused accepted SEC001\u2013007. Independently checked exact SPIFFE URI, loopback proxy and allowlist, issuer/listener/rotation/recovery, session/CSRF versus workload identity, capability grants, Secret ownership, negative network expectation and digest/provenance/mutable-image limits."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Pages: understand/security-and-trust.md and deployment-and-trust.md; reference/secrets.md; use/worker-trust.md. Sources: skills/worker/core/worker/trust.ts17\u201352, skills/nova/core/execution/authorization.ts, source-snapshot.ts, my-values/infra/spire-values.yaml, charts/kubeclaw/templates/{configmap-worker-trust,serviceaccount,rbac}.yaml, charts/prism/templates/networkpolicy.yaml, charts/ops-pod/templates/{network,rbac,workload}.yaml, my-values/setup-secrets.sh. Reuse accepted SEC001\u2013007; independently checked SPIFFE exact allowlist plus loopback proxy proof, session/CSRF versus workload identity, capability grants, default-deny enforcement limit, secret rotation, digest-versus-provenance distinctions and mutable Ops Tailscale exception. Render intent is not live enforcement. Correctly asks for positive and negative controls without asserting they ran.",
+    "limits": [
+      "COM011 preservation after planned communication model/mention correction: compare diff and confirm SPIFFE section664\u2013678 and security cross-referenced contract unchanged before carrying acceptance forward.",
+      "No live SPIRE/CNI/ACL enforcement or credential rotation claimed.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-whole-dependency-decision-traces-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A97-10"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/understand/communication.md",
+      "docs/site/use/workflows/examples/request-trace-success.json",
+      "docs/site/use/workflows/examples/request-trace-redis-unavailable.json"
+    ],
+    "sources": [
+      "skills/prism/control/agent-jobs.ts",
+      "docker/buster-runtime-entrypoint.sh",
+      "scripts/registry-client-config.mjs",
+      "skills/nova/core/execution/engine-run.ts",
+      "skills/nova/plugins/demo-handoff/plugin.json"
+    ],
+    "checks": [
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "communication.md979\u20131135 full target success and Redis/PostgreSQL/registry-BuildKit/Tailscale/LiteLLM/Git failures followed through original durable owner, uncertainty reconciliation, bounded retry and safe operator decision."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Page: understand/communication.md979\u20131135 and linked request-trace-success.json/request-trace-redis-unavailable.json. Sources: skills/nova/core/execution, skills/nova/plugins/demo-handoff, skills/buster/engine/test-gates, skills/prism/control/agent-jobs.ts, docker/buster-runtime-entrypoint.sh, registry client configuration. Full showcase target trace follows every owner and durable identity through separate human acceptance; explicitly target/contract-only, not observed success. Redis, both PostgreSQL owners, registry/BuildKit, Tailscale, LiteLLM/provider, and exact Git revision failures end in classified narrow repair, uncertain-outcome reconciliation and original identity. The model/Discord row errors below do not alter the inspected ordered success/failure trace.",
+    "limits": [
+      "Contract/target trace is not observed live execution.",
+      "Other communication model/Discord rows remain separately open COM001/COM008/A9705; confirm ordered traces preserved after those edits.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-whole-install-and-readiness-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A98-03",
+      "A98-04"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/use/install.md",
+      "docs/site/use/operate.md",
+      "docs/site/use/worker-trust.md"
+    ],
+    "sources": [
+      "scripts/deploy.sh",
+      "versions.json",
+      "scripts/updates/release-configuration.mjs",
+      "charts/kubeclaw/templates/deployment.yaml",
+      "scripts/generate-operator-task-registry.mjs",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/generate-operator-task-registry.mjs --check",
+        "exitCode": 0,
+        "observation": "13canonical operator tasks current."
+      },
+      {
+        "command": "node tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"",
+        "exitCode": 0,
+        "observation": "phase12,v2Deployment=true,legacyWorkerAbsent=true,deterministicSuiteRuntime=true; source verification only."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "Reused complete OPR003/OPR004 review. Existing-cluster start, frozen authority, host/storage/DNS/identity before first mutation, release/trust safe stops, four distinct process/Service/dependency/functional observations and narrow failure recovery inspected."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Page: use/install.md20\u2013133,176\u2013293,395\u2013613 and probe cleanup; use/worker-trust.md prerequisite stop. Sources: scripts/deploy.sh, versions.json, release selection verifier, charts/kubeclaw/templates/deployment.yaml, worker-trust verifier and receipts. Reuse accepted OPR003 installation complete review. Supported start is an existing cluster, not bare host installation; host/API/storage/DNS/identity/independent access precede mutation; exact context/kubeconfig is frozen. Release configuration knip mismatch and trust lifecycle/denial-proof gaps stop before even the disposable mutation. No manual hidden successful deployment is claimed. Page: use/operate.md15\u201392; use/install.md1317\u20131442. Sources: scripts/deploy.sh smoke-agent and chart health implementation, operator task registry. Reuse OPR004; independently followed process rollout, ready Service EndpointSlice, dependency smoke and functional transaction, with separate domain success/human acceptance. Failure stops at the first layer; neither Running nor200 substitutes for business readiness.",
+    "limits": [
+      "Current release knip and trust lifecycle/denial-proof gaps explicitly stop before mutation; no completed installation or operational approval claimed.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-whole-upgrade-and-retirement-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A98-08",
+      "A98-09"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/use/maintenance.md",
+      "docs/site/use/recovery.md",
+      "docs/site/reference/configuration-change-impact.md"
+    ],
+    "sources": [
+      "scripts/deploy.sh",
+      "versions.json",
+      "charts/prism/templates/jobs.yaml",
+      "charts/prism/values.yaml",
+      "skills/prism/storage/migrations/001_prism.sql",
+      "scripts/updates/release-configuration.mjs"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/generate-operator-task-registry.mjs --check",
+        "exitCode": 0,
+        "observation": "13canonical operator tasks current."
+      },
+      {
+        "command": "node tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"",
+        "exitCode": 0,
+        "observation": "phase12,v2Deployment=true,legacyWorkerAbsent=true,deterministicSuiteRuntime=true; source verification only."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "Reused complete OPR008 review; inspected empty supported-pair matrix, preflight/order/health/first-new-format-write boundary and rollback/forward-repair decision; retirement exports, exact resource/provider identities, complete external exclusion and retained audit/backup reader obligations."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Page: use/maintenance.md28\u201364,521\u20131174, use/recovery.md and reference/configuration-change-impact.md. Sources: versions.json, scripts/deploy.sh, release image/code receipts and selectors, charts/prism migration hook, skills/prism/db migrations and runtime readers. Reuse OPR008 review. Empty supported old/new pair table explicitly forbids an upgrade claim. Conditional future supported sequence includes backup/isolated restore, source/schema/image identity, dependency and migration order, compatibility and first-new-format-write irreversible boundary, four-level health, abort, forward repair and retained evidence. No image rollback promised after incompatible writes. Page: use/maintenance.md108\u2013128,1403\u20131678; use/recovery.md. Sources: scripts/deploy.sh teardown cases and cleanup_leftover_pvcs, chart PVC keep policies, external owner boundaries. Reuse OPR008 review. Ownership inventory includes Kubernetes, external exposure/access/secrets/registry/Git/backup resources; independent final export and restore proof precede deletion; full external exclusion and namespace/PVC/PV/provider identities are required for name-based destructive commands. No generic external cleanup or UID-atomic delete is claimed. Audit/recovery readers and retention survive workload deletion; unknown identity/revocation/provisioning prevents broad teardown.",
+    "limits": [
+      "No supported upgrade old/new pair currently recorded; same-release verification/redeployment is not an upgrade.",
+      "No universal external cleanup or UID-atomic broad deletion: missing owner qualification stops destructive operation.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-whole-studio-demo-journey-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [
+      "A98-12"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/use/prism-studio.md",
+      "docs/site/use/demo-delivery.md",
+      "docs/site/use/operate.md"
+    ],
+    "sources": [
+      "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs",
+      "skills/nova/plugins/demo-handoff/plugin.json",
+      "skills/nova/project/compiler.ts",
+      "skills/nova/project/cli.ts",
+      "skills/nova/project/demo.ts",
+      "skills/prism/control/agent-jobs.ts",
+      "skills/prism/server/control-server.ts"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/generate-operator-task-registry.mjs --check",
+        "exitCode": 0,
+        "observation": "13canonical operator tasks current."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "Reused complete OPR010 Studio review and independently walked full Demo reader journey: locked clean source/tools, exact local contract expectations, separate human decision, failure/abort/wait-resume limitations, uncertain receipt and provider-owned cleanup; unavailable steps have owners/follow-up."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Pages: use/prism-studio.md, use/demo-delivery.md entire procedure. Sources: skills/prism/control, server, studio and tests; skills/nova/plugins/prism-design, demo-handoff tests/compiler.test.mjs, skills/nova/project/{compiler,cli,demo}.ts. Reuse accepted OPR010 Studio review plus fresh Demo reader walk-through. Local sample state is explicitly temporary; Nova notification boundary unavailable; fixed local contract rehearsal starts from clean locked source/tools, states exact expected TAP, rejects fixtures as production, preserves OpenSSL failure historically, separates human decision, cancellation/wait/resume limitations, uncertain receipt reconciliation and provider-owned cleanup. Complete intended journey is explained with unavailable steps/owners/follow-up conditions. No successful live delivery is required or claimed.",
+    "limits": [
+      "No end-to-end live Studio/demo success; local sample and rehearsal remain fixture-only, real notification/provider/release/decision/cleanup gaps explicit.",
+      "Historical OpenSSL prerequisite failure preserved as failure; no new package-test execution claimed.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "Documentation authors and correction coordinator",
+    "reviewer": "/root/operator_acceptance",
+    "gateIds": [],
+    "requirementIds": [
+      "TEL-003"
+    ],
+    "pages": [
+      "docs/site/understand/telemetry.md"
+    ],
+    "sources": [
+      "skills/common/plugins/telemetry-observer/plugin.json",
+      "skills/common/plugins/notification-observer/plugin.json",
+      "skills/common/plugins/agent-observability/plugin.json",
+      "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+      "contracts/agent-observability/v1/src/constants.ts",
+      "skills/nova/core/telemetry/observers.ts",
+      "skills/nova/core/telemetry/observer-recovery.ts"
+    ],
+    "checks": [
+      {
+        "command": "node --test tests/verification/reliability/observer-recovery.test.mts tests/verification/integration/telemetry-store-projection.test.mts",
+        "exitCode": 0,
+        "observation": "2/2passed; bounded observer recovery/checkpoints and real-file projection/fencing; no external sink execution."
+      },
+      {
+        "command": "Independent read-only Source/Reader/Quality topic review and unchanged scoped completionRecord impact inspection",
+        "exitCode": 0,
+        "observation": "All5shipped observer registrations and exact subscriptions compared:27telemetry lifecycle types with4omissions;12namespaced domain types; direct host producer/no-repository-consumer route; inactive retained assets. Manifest availability is not activation/delivery."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "All5shipped observer registrations and exact subscriptions compared:27telemetry lifecycle types with4omissions;12namespaced domain types; direct host producer/no-repository-consumer route; inactive retained assets. Manifest availability is not activation/delivery.",
+    "limits": [
+      "TEL002 active projected-envelope and per-type v1 payload catalogue remain separate incomplete scope; no whole A9707 acceptance.",
+      "After telemetry correction, bounded diff review must confirm this existing producer/consumer/subscription/authority catalogue preserved.",
+      "Listed documentation scope only; no live deployment, release or product approval. RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json remains a stop.",
+      "Parallel custody-metadata and negative-test corrections do not alter reviewed named product-source claims; changes to those sources or reader claims require bounded impact review. Unrelated whole-source generator/source-pin failures are not passed checks here."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  }
+]

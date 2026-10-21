@@ -451,7 +451,7 @@ for every nested value and its exact defaults, and
 values through rendered environment to runtime. The operator configuration is
 checked before the lease request can grant access or copy Secrets. A request
 cannot override that policy. [Controller configuration](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L132-L197)
-and [shipped broker values](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/charts/kubeclaw/values.yaml#L381-L441) establish this boundary.
+and [shipped broker values](https://github.com/datrab/kubeclaw/blob/399d775e8efa7b54267af98d04463d6480e63684/charts/kubeclaw/values.yaml#L382-L442) establish this boundary.
 
 Before an operator policy or image change, inspect active leases and retain the
 previous effective values. Render the candidate chart and verify CRD identity,

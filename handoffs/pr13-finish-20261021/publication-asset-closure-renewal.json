@@ -1,0 +1,144 @@
+{
+  "source": "scripts/lib/docs-publication-assets.mjs",
+  "sourceSha256": "baee930b4134a3d98b86387971b51ae72657933e1b1e1f1ee014294cc7baa4cf",
+  "old": {
+    "source": "scripts/lib/docs-publication-assets.mjs",
+    "kind": "selected-operative-definition",
+    "purpose": "Ranges reviewed for operative purpose/import/CLI/fixture custody; omitted source is NOT independently qualified.",
+    "units": [
+      {
+        "symbol": "ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "startLine": 1,
+        "endLine": 1,
+        "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "symbol": "ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "startLine": 2,
+        "endLine": 2,
+        "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "symbol": "files",
+        "kind": "FirstStatement",
+        "startLine": 6,
+        "endLine": 24,
+        "syntaxSha256": "cf37f4a1a9693848faba6ae68c65508caccdba4baacef6139142a60f5c5aa532"
+      },
+      {
+        "symbol": "publicationPages",
+        "kind": "FunctionDeclaration",
+        "startLine": 26,
+        "endLine": 61,
+        "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
+      },
+      {
+        "symbol": "publicationAssets",
+        "kind": "FunctionDeclaration",
+        "startLine": 63,
+        "endLine": 81,
+        "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+      },
+      {
+        "symbol": "copyPublicationAssets",
+        "kind": "FunctionDeclaration",
+        "startLine": 83,
+        "endLine": 89,
+        "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
+      }
+    ],
+    "ranges": [
+      {
+        "startLine": 1,
+        "endLine": 89,
+        "sha256": "b904dfed995284e2c589e42e777f7747f529a8f4ef2c592e719e03ce4f794f22"
+      }
+    ],
+    "initialization": [
+      {
+        "kind": "ImportDeclaration",
+        "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "kind": "ImportDeclaration",
+        "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "kind": "FirstStatement",
+        "syntaxSha256": "cf37f4a1a9693848faba6ae68c65508caccdba4baacef6139142a60f5c5aa532"
+      }
+    ]
+  },
+  "record": {
+    "source": "scripts/lib/docs-publication-assets.mjs",
+    "kind": "selected-operative-definition",
+    "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added local-Core example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt.",
+    "units": [
+      {
+        "symbol": "ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "startLine": 1,
+        "endLine": 1,
+        "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "symbol": "ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "startLine": 2,
+        "endLine": 2,
+        "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "symbol": "files",
+        "kind": "FirstStatement",
+        "startLine": 6,
+        "endLine": 25,
+        "syntaxSha256": "d8b9100d25073170802954564cd2e145ba04432f74e40a4fce9eb7245c4243e6"
+      },
+      {
+        "symbol": "publicationPages",
+        "kind": "FunctionDeclaration",
+        "startLine": 27,
+        "endLine": 62,
+        "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
+      },
+      {
+        "symbol": "publicationAssets",
+        "kind": "FunctionDeclaration",
+        "startLine": 64,
+        "endLine": 82,
+        "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+      },
+      {
+        "symbol": "copyPublicationAssets",
+        "kind": "FunctionDeclaration",
+        "startLine": 84,
+        "endLine": 90,
+        "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
+      }
+    ],
+    "ranges": [
+      {
+        "startLine": 1,
+        "endLine": 90,
+        "sha256": "fdbd8d4cc4499accfcf919bedb880b9f6b177198d2474ba7bd44d6ca1e7c7354"
+      }
+    ],
+    "initialization": [
+      {
+        "kind": "ImportDeclaration",
+        "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "kind": "ImportDeclaration",
+        "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "kind": "FirstStatement",
+        "syntaxSha256": "d8b9100d25073170802954564cd2e145ba04432f74e40a4fce9eb7245c4243e6"
+      }
+    ]
+  }
+}

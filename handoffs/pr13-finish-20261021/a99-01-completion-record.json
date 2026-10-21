@@ -1,0 +1,78 @@
+{
+  "id": "A99-01-whole-recursive-input-content-20261021",
+  "revision": "47d17498d379cd1f7826444df8187a72231c1111",
+  "author": "PR13 documentation contributors; parent lint-wording correction",
+  "reviewer": "/root/workflow_acceptance",
+  "gateIds": [
+    "A99-01"
+  ],
+  "requirementIds": [],
+  "pages": [
+    "docs/site/reference/pipeline-json.md",
+    "docs/site/reference/pipeline-definition.md",
+    "docs/site/reference/nova-project.md",
+    "docs/site/reference/workflows.md",
+    "docs/site/reference/buster-suites.md",
+    "docs/site/reference/buster-provider-configuration.md"
+  ],
+  "sources": [
+    "skills/nova/core/test-gates/pipeline.ts",
+    "skills/nova/core/test-gates/types.ts",
+    "skills/nova/core/test-gates/resolver.ts",
+    "skills/nova/project/compiler.ts",
+    "skills/nova/project/source.ts",
+    "skills/nova/project/coverage.ts",
+    "skills/nova/project/demo.ts",
+    "skills/nova/core/execution/graph-build.ts",
+    "skills/nova/core/execution/graph-repair-budget.ts",
+    "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+    "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+    "contracts/pipeline-test-gate/v1/src/coverage.ts",
+    "scripts/docs-product-pipeline-reference.mjs"
+  ],
+  "checks": [
+    {
+      "command": "Independent full recursive pipeline field/reference review plus targeted lint correction re-review",
+      "exitCode": 0,
+      "observation": "Crosschecked root/scope/lint projection,all NodeDeclaration members,dependency/input/condition/evidence/limits/matrix variants,suite selection/override/localization,coverage/graph/project fields,identity/default/precedence/bounds/validation and delegated provider config. Existing current source review reused; current type/parser reinspection found no additional material gap."
+    },
+    {
+      "command": "Actual loadPipelineLintDeclaration in new temporary .swarm with unrecognized lint member",
+      "exitCode": 0,
+      "observation": "Known fields returned,unknown field accepted and omitted. Corrected prose now exactly matches receiving loader rather than falsely calling lint closed."
+    },
+    {
+      "command": "node scripts/docs-product-pipeline-reference.mjs schema",
+      "exitCode": 0,
+      "observation": "Generated recursive interface/compiler sections current."
+    },
+    {
+      "command": "node scripts/docs-product-pipeline-reference.mjs workflow",
+      "exitCode": 0,
+      "observation": "Generated compiler/reachable-source section current."
+    },
+    {
+      "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+      "exitCode": 0,
+      "observation": "Actual resolution10nodes/2links; digest3bdbfe8cf273589f5c48222f5601015d0c072228ed74a99a5efd0a04af42b55a."
+    },
+    {
+      "command": "git diff -- reference pipeline-json,pipeline-definition,nova-project,workflows pages",
+      "exitCode": 0,
+      "observation": "No worktree changes to reviewed A99-01 pages relative to selected47d revision."
+    }
+  ],
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "summary": "Whole A99-01 recursive public pipeline input/reference content PASS after correcting the sole established semantic defect (unknown lint members are ignored,not rejected). Current authored field semantics and generated source/schema declarations jointly cover supported recursive variants,conditions,identities,defaults,bounds and validation with canonical provider configuration delegation. Resolved historical FAIL is not retained as an open defect.",
+  "limits": [
+    "Documentation/source/actual local resolver acceptance; no project/provider/deployment execution or whole global generation/publication acceptance.",
+    "No new whole FLW catalogue requirement is added; existing accepted recursive-input scopes reused without re-counting.",
+    "Maintained full runtime journeys,all-example acceptance and representative drift mutations remain separate gates; this record does not accept A99-06/07/08/11/12/13."
+  ],
+  "openIssues": [],
+  "verdict": "PASS"
+}

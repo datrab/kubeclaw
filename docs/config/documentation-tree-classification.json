@@ -10971,6 +10971,14 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/config/documentation-plugin-complexity.json",
+      "class": "internal-documentation-input",
+      "purpose": "Source-bound editorial complexity criteria and canonical guide assignments, not product runtime configuration or depth acceptance.",
+      "originalPath": "docs/config/documentation-plugin-complexity.json",
+      "expectedPath": "docs/config/documentation-plugin-complexity.json",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/config/documentation-publication-manifest.json",
       "class": "internal-documentation-input",
       "purpose": "Generated positive publication authority from explicit canonical classifications; owner scripts/docs-publication.mjs.",
@@ -30027,6 +30035,30 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/extend/deep-guides/README.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Source-bound package classification and canonical deep-guide ownership index.",
+      "originalPath": "docs/site/extend/deep-guides/README.md",
+      "expectedPath": "docs/site/extend/deep-guides/README.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/extend/deep-guides/demo-handoff.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Package-specific demo handoff behavior, configuration, failure and change guide.",
+      "originalPath": "docs/site/extend/deep-guides/demo-handoff.md",
+      "expectedPath": "docs/site/extend/deep-guides/demo-handoff.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/extend/deep-guides/reports.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Package-specific source-bound case study and pipeline review behavior, state and change guide.",
+      "originalPath": "docs/site/extend/deep-guides/reports.md",
+      "expectedPath": "docs/site/extend/deep-guides/reports.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/extend/developer-handbook.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -31347,6 +31379,14 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/site/use/workflows/examples/local-core.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published runnable local Core journey using shipped stage and adapters, durable state and bounded cleanup.",
+      "originalPath": "docs/site/use/workflows/examples/local-core.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/local-core.mjs",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -31368,6 +31408,14 @@
       "purpose": "Published, user-facing KubeClaw documentation.",
       "originalPath": "docs/site/use/workflows/kubernetes-fixture.md",
       "expectedPath": "docs/site/use/workflows/kubernetes-fixture.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/local-core.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Maintained local durable Core CLI success, rejection, audit, artifact and owned cleanup journey.",
+      "originalPath": "docs/site/use/workflows/local-core.md",
+      "expectedPath": "docs/site/use/workflows/local-core.md",
       "introducedAfterBaseline": true
     },
     {

@@ -62,6 +62,21 @@
       "canonicalUrl": "/extend/contracts.html"
     },
     {
+      "sourcePath": "docs/site/extend/deep-guides/README.md",
+      "route": "/extend/deep-guides/README.html",
+      "canonicalUrl": "/extend/deep-guides/README.html"
+    },
+    {
+      "sourcePath": "docs/site/extend/deep-guides/demo-handoff.md",
+      "route": "/extend/deep-guides/demo-handoff.html",
+      "canonicalUrl": "/extend/deep-guides/demo-handoff.html"
+    },
+    {
+      "sourcePath": "docs/site/extend/deep-guides/reports.md",
+      "route": "/extend/deep-guides/reports.html",
+      "canonicalUrl": "/extend/deep-guides/reports.html"
+    },
+    {
       "sourcePath": "docs/site/extend/developer-handbook.md",
       "route": "/extend/developer-handbook.html",
       "canonicalUrl": "/extend/developer-handbook.html"
@@ -830,6 +845,11 @@
       "sourcePath": "docs/site/use/workflows/kubernetes-fixture.md",
       "route": "/use/workflows/kubernetes-fixture.html",
       "canonicalUrl": "/use/workflows/kubernetes-fixture.html"
+    },
+    {
+      "sourcePath": "docs/site/use/workflows/local-core.md",
+      "route": "/use/workflows/local-core.html",
+      "canonicalUrl": "/use/workflows/local-core.html"
     },
     {
       "sourcePath": "docs/site/use/workflows/wait-resume.md",

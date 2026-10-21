@@ -1,0 +1,341 @@
+[
+  {
+    "id": "A99-02-whole-content-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "PR13 documentation contributors",
+    "reviewer": "/root/workflow_acceptance",
+    "gateIds": [
+      "A99-02"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/reference/nova-project.md",
+      "docs/site/reference/pipeline-json.md",
+      "docs/site/reference/workflows.md",
+      "docs/site/understand/nova-core.md"
+    ],
+    "sources": [
+      "skills/nova/project/compiler.ts",
+      "skills/nova/project/source.ts",
+      "skills/nova/project/coverage.ts",
+      "skills/nova/project/demo.ts",
+      "skills/nova/core/test-gates/resolver.ts",
+      "skills/nova/core/execution/engine-snapshots.ts"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/docs-product-pipeline-reference.mjs schema",
+        "exitCode": 0,
+        "observation": "Current recursive interface/compiler sections; bounded freshness not content self-approval."
+      },
+      {
+        "command": "node scripts/docs-product-pipeline-reference.mjs workflow",
+        "exitCode": 0,
+        "observation": "Current compiler declaration/reachable-import section."
+      },
+      {
+        "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+        "exitCode": 0,
+        "observation": "10nodes/2links resolved; source/plan identity and negative resolution assertions PASS."
+      },
+      {
+        "command": "node scripts/check-core-architecture-guides.mjs",
+        "exitCode": 0,
+        "observation": "3pages/52requirements/227pins/125currentfiles PASS; independent content review separately."
+      },
+      {
+        "command": "Independent source/reader/quality inspection at 0e35889a",
+        "exitCode": 0,
+        "observation": "Whole named gate obligations reviewed against current sources; report tmp/pr13-finish-20261021/workflow-developer-acceptance.md."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Compile order,normalization,defaults,registry snapshot,role resolution,matrix/dependency/gate and immutable identity semantics complete.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "A99-03-whole-content-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "PR13 documentation contributors",
+    "reviewer": "/root/workflow_acceptance",
+    "gateIds": [
+      "A99-03"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/reference/pipeline-json.md",
+      "docs/site/reference/nova-project.md",
+      "docs/site/extend/contracts.md",
+      "docs/site/extend/plugin-catalogue/README.md",
+      "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md"
+    ],
+    "sources": [
+      "skills/nova/core/test-gates/resolver.ts",
+      "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "skills/buster/engine/test-gates/provider-loader.ts",
+      "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "skills/buster/engine/test-gates/report-finalizer.ts"
+    ],
+    "checks": [
+      {
+        "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+        "exitCode": 0,
+        "observation": "10nodes/2links resolved; source/plan identity and negative resolution assertions PASS."
+      },
+      {
+        "command": "node scripts/check-ap08-advanced-guides.mjs",
+        "exitCode": 0,
+        "observation": "4pages/94pins;21Nova stages,6adapters,17Buster tests,2fixtures,1report,12suites."
+      },
+      {
+        "command": "node scripts/check-extension-class-drift.mjs",
+        "exitCode": 0,
+        "observation": "Current registration class/index contracts; not activation behavior."
+      },
+      {
+        "command": "Independent source/reader/quality inspection at 0e35889a",
+        "exitCode": 0,
+        "observation": "Whole named gate obligations reviewed against current sources; report tmp/pr13-finish-20261021/workflow-developer-acceptance.md."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Stage/plugin/provider/fixture/report/artifact selection distinguishes package,global registration and consumer-facing identities; ambiguity/invalid selection explicit.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "A99-04-whole-content-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "PR13 documentation contributors",
+    "reviewer": "/root/workflow_acceptance",
+    "gateIds": [
+      "A99-04"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/understand/nova-core.md",
+      "docs/site/use/operate.md",
+      "docs/site/use/workflows/wait-resume.md",
+      "docs/site/extend/effectful-plugin.md"
+    ],
+    "sources": [
+      "skills/nova/core/execution/effect-recovery.ts",
+      "skills/nova/core/execution/graph-repair-budget.ts",
+      "skills/nova/core/lifecycle/repair-budget.ts",
+      "skills/nova/core/lifecycle/repair-authorization.ts",
+      "skills/nova/core/execution/run-decisions.ts",
+      "skills/nova/core/lifecycle/recovery-state.ts"
+    ],
+    "checks": [
+      {
+        "command": "node scripts/check-core-architecture-guides.mjs",
+        "exitCode": 0,
+        "observation": "3pages/52requirements/227pins/125currentfiles PASS; independent content review separately."
+      },
+      {
+        "command": "node scripts/check-ap08-effectful-guide.mjs",
+        "exitCode": 0,
+        "observation": "Actual effect ordering,deduplication,failed receipt reuse,receipt recovery,cancellation PASS; memory journals."
+      },
+      {
+        "command": "Independent source/reader/quality inspection at 0e35889a",
+        "exitCode": 0,
+        "observation": "Whole named gate obligations reviewed against current sources; report tmp/pr13-finish-20261021/workflow-developer-acceptance.md."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Retry/repair/wait-resume/cancellation/restart/recovery authority,budgets,deadlines,idempotency,persistence and stop boundaries complete.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance.",
+      "No supported external cancellation CLI or generic uncertain-effect reconciliation/result import; truthful product limitations remain explicit."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "A99-05-whole-content-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "PR13 documentation contributors",
+    "reviewer": "/root/workflow_acceptance",
+    "gateIds": [
+      "A99-05"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/reference/project-pipeline-publication.md",
+      "docs/site/reference/pipeline-json.md",
+      "docs/site/reference/nova-project.md"
+    ],
+    "sources": [
+      "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "skills/nova/core/test-gates/pipeline.ts",
+      "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+      "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+      "skills/nova/project/legacy-import.ts",
+      "skills/nova/project/legacy-import-cli.ts"
+    ],
+    "checks": [
+      {
+        "command": "node --test tests/skills/nova/project_setup/scaffold-publication.test.mjs",
+        "exitCode": 0,
+        "observation": "4passed/0failed/0skipped; interrupted writer,mixed publication,corruption,concurrent publishers."
+      },
+      {
+        "command": "node tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+        "exitCode": 0,
+        "observation": "10nodes/2links resolved; source/plan identity and negative resolution assertions PASS."
+      },
+      {
+        "command": "Independent source/reader/quality inspection at 0e35889a",
+        "exitCode": 0,
+        "observation": "Whole named gate obligations reviewed against current sources; report tmp/pr13-finish-20261021/workflow-developer-acceptance.md."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Complete authoring pair writer/reader,pointer commit,immutable generation,atomicity,locks/concurrency,loose/legacy compatibility,corruption,republish and safe unsupported repair boundaries.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance.",
+      "Atomic local publication does not prove durability of every external filesystem; malformed loose progress/immutable corruption have explicit unsupported repair boundaries."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "A910-01-whole-content-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "PR13 documentation contributors",
+    "reviewer": "/root/workflow_acceptance",
+    "gateIds": [
+      "A910-01"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/extend/developer-handbook.md"
+    ],
+    "sources": [
+      "package.json",
+      "package-lock.json",
+      "skills/common/plugin-runtime/sdk/package.json",
+      "scripts/build-plugin-sandbox.mjs",
+      "scripts/bootstrap-prism-tests.sh",
+      ".github/workflows/pipeline-reliability.yaml",
+      "ops/pod/package.json",
+      "tools/ops-mcp/package.json",
+      "go.mod",
+      "tools/native-worker-nri/go.mod"
+    ],
+    "checks": [
+      {
+        "command": "Independent clean-checkout procedure source review",
+        "exitCode": 0,
+        "observation": "Exact Node24,locked dev install/cache,absolute GNU flock,C launcher,baseline and route tools/services/credentials/stop conditions verified in current sources; no clean install executed."
+      },
+      {
+        "command": "Independent source/reader/quality inspection at 0e35889a",
+        "exitCode": 0,
+        "observation": "Whole named gate obligations reviewed against current sources; report tmp/pr13-finish-20261021/workflow-developer-acceptance.md."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "Clean-checkout preparation fully specifies toolchains,services,credentials,local dependencies,locked installation and baseline checks with expected results and safe-stop boundaries.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  },
+  {
+    "id": "A910-11-whole-content-20261021",
+    "revision": "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
+    "author": "PR13 documentation contributors",
+    "reviewer": "/root/workflow_acceptance",
+    "gateIds": [
+      "A910-11"
+    ],
+    "requirementIds": [],
+    "pages": [
+      "docs/site/extend/developer-handbook.md",
+      "docs/site/extend/platform/README.md",
+      "docs/site/extend/platform/buster.md",
+      "docs/site/extend/platform/prism.md"
+    ],
+    "sources": [
+      "package.json",
+      "skills/prism/package.json",
+      "skills/common/plugin-runtime/sdk/package.json",
+      "scripts/reliability-tests.mjs",
+      "tools/ops-mcp/package.json",
+      "tools/ops-mcp/test/policy_contract_test.py",
+      ".github/workflows/pipeline-reliability.yaml",
+      ".github/workflows/remediation-native.yaml"
+    ],
+    "checks": [
+      {
+        "command": "Independent component change-to-check route source review",
+        "exitCode": 0,
+        "observation": "Nova,Worker,Buster,Prism,Registry,SDK,telemetry,Charts/GitOps,Ops MCP,UI have distinct source-backed smallest complete chains,prerequisites/results/cleanup boundaries; accepted DEV/CDV records reused only unchanged content."
+      },
+      {
+        "command": "node scripts/check-core-architecture-guides.mjs",
+        "exitCode": 0,
+        "observation": "3pages/52requirements/227pins/125currentfiles PASS; independent content review separately."
+      },
+      {
+        "command": "node scripts/check-ap08-advanced-guides.mjs",
+        "exitCode": 0,
+        "observation": "4pages/94pins;21Nova stages,6adapters,17Buster tests,2fixtures,1report,12suites."
+      },
+      {
+        "command": "Independent source/reader/quality inspection at 0e35889a",
+        "exitCode": 0,
+        "observation": "Whole named gate obligations reviewed against current sources; report tmp/pr13-finish-20261021/workflow-developer-acceptance.md."
+      }
+    ],
+    "review": {
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS"
+    },
+    "summary": "All specified component-change routes explain distinct smallest complete chains,tools/credentials,expected outcomes,error/skip interpretation,activation/evidence class and cleanup.",
+    "limits": [
+      "Documentation/source acceptance only; no live deployment,production/provider execution,release,clean installation or platform restore newly certified.",
+      "Already accepted catalogue requirements are not re-counted; no unrelated FLW requirement or whole package acceptance."
+    ],
+    "openIssues": [],
+    "verdict": "PASS"
+  }
+]

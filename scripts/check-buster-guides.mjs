@@ -23,7 +23,7 @@ const specifications = [
   {
     file: 'docs/site/understand/buster-namespace-controller.md', minimumLinks: 6,
     revision: 'be78787633d774e9fd2a2ff401311499a555156d',
-    additionalRevisions: ['f99aecbb00cb399b46dfbbeb3ddb375fba6218e7'],
+    additionalRevisions: ['f99aecbb00cb399b46dfbbeb3ddb375fba6218e7', '399d775e8efa7b54267af98d04463d6480e63684'],
     required: ['## Why a fixture requests a lease', '## From request to workload',
       '## Choose a request and keep its authority stable', '## Access and credential boundaries',
       '## Read each observation at its own level', '## Preview ownership and verified readiness',
@@ -34,6 +34,7 @@ const specifications = [
   },
   {
     file: 'docs/site/reference/buster-suites.md', minimumLinks: 25, revision,
+    additionalRevisions: ['fe58209941f6aa597cc3e942959cf86906e451a4', '36adbf27e408e8c3f429a09d0dd1c5de94c33694'],
     required: ['## Why The Suite Model Uses These Rules', '## Common Node Rules', '## Complete Test-Scope Syntax', '### Suite selection',
       '### Test and fixture node', '### Concurrency and matrix rules', '### Coverage policy',
       '## Suite Inventory', '## 1. Unit Suite',
@@ -74,6 +75,7 @@ const specifications = [
   {
     file: 'docs/site/extend/buster.md', minimumLinks: 12,
     revision: 'bcf032f241b432bf920baa9ee5f727947921447d',
+    additionalRevisions: ['399d775e8efa7b54267af98d04463d6480e63684'],
     required: ['## Suite Templates', '## Implement A Test Provider',
       '## Build A Test Provider End To End', '## Implement A Report Adapter',
       '## Common Failures', '## Verification'],
@@ -86,6 +88,7 @@ const specifications = [
   },
   {
     file: 'docs/site/reference/buster-provider-configuration.md', minimumLinks: 20, revision,
+    additionalRevisions: ['cf549b0238c89db00cc392dadbab40199777a6d7'],
     required: ['## How To Read The Tables', '## `kubeclaw.api-flow@1`',
       '## `kubeclaw.openapi@1`', '## `kubeclaw.api-flow-document@1`',
       '## Maintenance Rule'],

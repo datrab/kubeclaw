@@ -83,7 +83,7 @@ explicit pressure boundary, not durable storage.
 >
 > [The Prism host manifest declares both tools and its only configuration field](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
 >
-> [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
+> [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
 >
 > [The event adapter schema defines the hook allowlist and queue limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49).
 >
@@ -143,7 +143,7 @@ Gateway bearer token used by the general adapter.
 >
 > [The runner launches one claimed OpenClaw job and reports all failures to Control](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/agent-job-runner.mjs#L16-L46).
 >
-> [Nova selects the Prism runtime capability provider and its authenticated dispatch port](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L105-L112).
+> [Nova selects the Prism runtime capability provider and its authenticated dispatch port](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/my-values/nova-values.yaml#L109-L116).
 >
 > [The Prism Envoy listener requires a client certificate and exact SPIFFE identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
 
