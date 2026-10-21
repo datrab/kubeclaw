@@ -339,6 +339,7 @@
       "commandAndActionRefs": [
         "bash scripts/check-built-runtime-image.sh \"$ROLE\" \"$IMAGE",
         "bash scripts/prepare-image-build-runner.sh",
+        "node scripts/diagnose-image-build-failure.mjs",
         "node scripts/updates/runtime-inputs.mjs",
         "node scripts/versions.mjs --check",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",

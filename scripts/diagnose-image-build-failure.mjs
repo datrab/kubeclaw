@@ -17,8 +17,10 @@ try {
 // GitHub's public check annotation remains useful when the binary .dockerbuild
 // artifact cannot be downloaded. Keep the full log locally and bound only the
 // annotation, escaping workflow-command delimiters rather than altering logs.
-// Percent/CR/LF escaping can triple the wire size; reserve room for that too.
-const maximumBytes = 12_000;
+// Public check annotations truncate messages at 4 KB. Retain the final 3 KB
+// so the actual terminal error is visible, not just the start of a longer tail.
+// Percent/CR/LF escaping can triple the workflow-command wire size.
+const maximumBytes = 3_000;
 const input = fs.openSync(file, 'r');
 let tail;
 try {
