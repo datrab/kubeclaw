@@ -1,0 +1,86 @@
+{
+  "verdict": "NOT_PASS_MATERIAL_FINDING_AWAITING_AUTHOR_CORRECTION",
+  "candidateFiles": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/docs-api-output-role-classification.mjs",
+      "sha256": "7d0722128de06685ffd334516c01432ef3a7e4fc018c68fb55f2db04918856f9",
+      "lines": 875
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/tests/docs-api-utility-declarations.test.mjs",
+      "sha256": "d7fc666906c596407527cdd214bcf46233fab164d2f6e01d25872a583b53dbf6",
+      "lines": 94
+    }
+  ],
+  "coverage": {
+    "classifier": "Complete875lines including immutable4profiles, receiver/input inference, alias/type/shape handling, sink selection, private receipts, cache guards and terminal role enforcement",
+    "newOwningTest": "Complete94lines",
+    "primaryUtilities": [
+      "scripts/observability-retirement/files.mjs",
+      "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "skills/common/plugins/runtime-dispatch/src/result-persistence.ts"
+    ],
+    "actualCallers": [
+      "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "skills/nova/core/test-gates/pipeline.ts"
+    ],
+    "actualConsumer": "docs-api-output-discovery.mjs1583\u20131656 and1882\u20131916",
+    "priorStaticSourceComparison": "All20previouslyreviewed Source hashes unchanged; independent primary reads above, bounded downstream static-purpose reuse only"
+  },
+  "finding": {
+    "id": "UTILITY_WRITER_NAMESPACE_SINK_LOSS",
+    "severity": "material",
+    "location": "classifier430\u2013437; supported callable resolution483\u2013495 not reused by native writer sink selection",
+    "observed": "Both writers named imports yield one UNKNOWN sink. Namespace-dot, finite-string, alias, destructuring and opaque namespace calls yield no sink/role.12cases total.",
+    "impact": "Source-owned public writer capabilities fail to retain output observations across these call forms. Empty roles bypass unknown-role rejection and argv-only caller text can take discovery earlycontinue at1598. This is source/caller/consumer proof, not an executed whole-owner falsegreen claim.",
+    "correction": "Use bounded existing callable/symbol architecture for exact Source-owned capabilities, preserve UNKNOWN for unresolved/mutated namespace escapes, and add genuine sink-census plus role negatives for these forms. No generic interpreter or nonAPI waiver."
+  },
+  "tests": [
+    {
+      "command": "env -u SWARM_CONFIG -u NODE_ENV node --test scripts/tests/docs-api-utility-declarations.test.mjs",
+      "result": "terminal0;21pass0fail0skip"
+    },
+    {
+      "command": "env -u SWARM_CONFIG -u NODE_ENV node --test --test-name-pattern='closed bundle writer retains|changed or escaping bundle writers|an operation receipt cannot forge' scripts/tests/api-output-custody.test.mjs",
+      "result": "terminal0;3pass0fail0skip"
+    }
+  ],
+  "artifacts": {
+    "four-utility-independent-owning.stdout": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-independent-owning.stdout",
+      "sha256": "e1f6f0b08361a24ee6dc4baa8d37b740a0a02e96d27da2c7b0674ad1abe092b4"
+    },
+    "four-utility-independent-owning.stderr": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-independent-owning.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "four-utility-independent-private.stdout": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-independent-private.stdout",
+      "sha256": "a8f46dbb22e3ee9cb3757f446bd3aee5d6ce5312e779644fa3ed91f41b82febf"
+    },
+    "four-utility-independent-private.stderr": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-independent-private.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "four-utility-namespace-probe.mjs": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-namespace-probe.mjs",
+      "sha256": "e8d20565ddc50b098741ba50ba32f44704d179847c9dd5aa321fa364ad5ef34c"
+    },
+    "four-utility-namespace-probe.json": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-namespace-probe.json",
+      "sha256": "069de9b5390c034c9aa0d96efff765b68d4cf09f3a6ccc44bdb4fa7b88a9e16a"
+    },
+    "four-utility-independent-source-comparison.json": {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-independent-source-comparison.json",
+      "sha256": "05fc7de32179f262b6cb96e557719ca037992d1be2bafd5ece10bd7940241225"
+    }
+  },
+  "limits": [
+    "Only analyzer/test harness evaluated; all product writer Source inert AST input",
+    "No current owner/graph/acquisition/native/module/API execution or aggregate census PASS",
+    "No main or frozen author candidate edits; test PASS does not negate confirmed counterexample",
+    "No second verified material finding; no blanket semantic or record renewal"
+  ]
+}

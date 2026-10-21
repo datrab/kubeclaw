@@ -1,0 +1,66 @@
+{
+  "status": "FROZEN_CORRECTION_AUTHOR_CANDIDATE_PENDING_INDEPENDENT_REREVIEW",
+  "supersedes": "four-utility-repair-frozen.json",
+  "preservedPriorBytes": "four-utility-pre-namespace-fix/",
+  "files": [
+    {
+      "target": "scripts/docs-api-output-role-classification.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12",
+      "bytes": 141940,
+      "lines": 920
+    },
+    {
+      "target": "scripts/tests/docs-api-utility-declarations.test.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/tests/docs-api-utility-declarations.test.mjs",
+      "sha256": "d175eb7cb3773cb6ac977d2290a86d34990146551df2a5bad3a38b119e8de8b6",
+      "bytes": 15058,
+      "lines": 141
+    }
+  ],
+  "checks": [
+    {
+      "command": "env -u SWARM_CONFIG -u NODE_ENV node --test scripts/tests/docs-api-utility-declarations.test.mjs",
+      "exit": 0,
+      "passed": 26,
+      "skipped": 0,
+      "log": "four-utility-namespace-owning-terminal.txt"
+    },
+    {
+      "command": "env -u SWARM_CONFIG -u NODE_ENV node --test --test-name-pattern='closed bundle writer retains|changed or escaping bundle writers|an operation receipt cannot forge' scripts/tests/api-output-custody.test.mjs",
+      "exit": 0,
+      "passed": 3,
+      "skipped": 0,
+      "log": "four-utility-namespace-private-controls-terminal.txt"
+    },
+    {
+      "command": "node --check scripts/docs-api-output-role-classification.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node four-utility-namespace-probe.mjs",
+      "exit": 0,
+      "observation": "All original12 AST cases retain sinks and UNKNOWN roles; finite5 per writer include native sink; opaque retains unknown-output-function.",
+      "log": "four-utility-namespace-probe-terminal.json"
+    }
+  ],
+  "boundaries": [
+    "Off-tree only, no main or production registry writes.",
+    "Copied product Source is inert AST; no product module evaluation/API apply/native owner/current DATA acquisition.",
+    "Exact four utility declaration records/receiver selectors, private WeakSet receipts and all caller payload API/UNKNOWN boundaries unchanged.",
+    "No self-acceptance/global census/runtime/gate acceptance."
+  ],
+  "additionalRegression": {
+    "candidateCommand": "env -u SWARM_CONFIG -u NODE_ENV node --test scripts/tests/api-output-custody.test.mjs",
+    "candidateExit": 1,
+    "candidatePassed": 20,
+    "candidateFailed": 10,
+    "candidateLog": "four-utility-namespace-custody-regression.txt",
+    "priorExactClassifierSamePartialHarnessExit": 1,
+    "priorPassed": 20,
+    "priorFailed": 10,
+    "priorLog": "four-utility-namespace-prior-custody-regression.txt",
+    "sameExactFailureNames": true,
+    "meaning": "Nine ENOENT source-fixture prerequisites plus one missing validator-format facts assertion; same exact failure set with original pre-correction candidate in isolated duplicate harness. NOT whole-suite PASS."
+  }
+}

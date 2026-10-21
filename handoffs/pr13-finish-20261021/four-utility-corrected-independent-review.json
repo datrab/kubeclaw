@@ -1,0 +1,90 @@
+{
+  "verdict": "PASS_BOUNDED_CORRECTED_FOUR_UTILITY_SOURCE_AND_AST_CONTROLS",
+  "candidateFiles": [
+    {
+      "target": "scripts/docs-api-output-role-classification.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/docs-api-output-role-classification.mjs",
+      "sha256": "400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12",
+      "bytes": 141940,
+      "lines": 920
+    },
+    {
+      "target": "scripts/tests/docs-api-utility-declarations.test.mjs",
+      "candidate": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/tests/docs-api-utility-declarations.test.mjs",
+      "sha256": "d175eb7cb3773cb6ac977d2290a86d34990146551df2a5bad3a38b119e8de8b6",
+      "bytes": 15058,
+      "lines": 141
+    }
+  ],
+  "closedFinding": "UTILITY_WRITER_NAMESPACE_SINK_LOSS",
+  "remainingMaterialFindings": [],
+  "coverageAndAssessment": "# Independent corrected four-utility review\n\n**PASS for the bounded coherent corrected classifier/test scope. No remaining material finding in this scope.** This supersedes the old candidate rejection only for the exact successor hashes below; the old counterexample remains valid at old bytes.\n\n## Source and consumer coverage\n\nReused the previous complete875-line classifier, four complete utility Sources and actual caller/discovery-consumer review only for unchanged exact portions. Read the complete correction patch, complete corrected cache/module/writer-identity/namespace/escape/sink functions, adjacent callable/symbol/declaration/class resolution and private-projection/terminal role checks; read the complete141-line owning test. Public writers retain API capability rather than a generic non-API payload role. Domain readers still require downstream domain validation. No AUTHOR call receipt becomes payload authority.\n\nFinite call recovery reuses callable identity and exact Source/export capability metadata; spelling in an unrelated module is insufficient. Namespace aliases/literal members are selected. Opaque members, mutations, callbacks, containers, returns and stored capabilities conservatively retain UNKNOWN. This is sink custody, not runtime interpretation or permission.\n\nCache assessment: acquired Source bytes/canonical physical identity are checked before role and sink cache entrypoints. Change clears cached AST/parameter/operation results; no additional product modules are discovered/evaluated. Previously acquired private writer changes retain explicit CLOSED_WRITER hard STOP. Utility profiles/selected operations/private WeakSet provenance remain required; public arguments remain API or UNKNOWN. No generic resolver/absence/entire-graph freshness claim follows.\n\n## Independent actual results\n\n- Owning26/26PASS,0fail,0skip, terminal0.\n- Existing private closed-projection/changed-escaping/forged-receipt controls3/3PASS,0fail,0skip, terminal0.\n- Original12namespace/named/alias/destructure/opaque counterexamples rerun: everycase retains sink/UNKNOWN; terminal0.\n- Additional18independent AST-only cases: bothwriters parenthesizedmember, computeddestructuring, arrayescape, bind/apply, returnednamespace, spreadnamespace, storedmember, warmcallerAPI\u2192UNKNOWN; terminal0.\n\nOwning controls additionally verify warm changed receiver exports, allfour changed exact utility Sources, changed selected journal dependency facts, registry deletion/role downgrade, forged receipts, unrelated operation renewal and non-generic private changed writer rejection. Only analyzer/test harness code evaluated; product Sources remain inert.\n\n## Broader failed harness retained\n\nAuthor broader30-test partial harness remains **NOT PASS:20pass10fail exit1**. Read both preserved terminal logs and independently compared ten exact failure names: identical for prior candidate in same partial harness (nine absent fixture paths and one missing validator-format fact assertion). This is not an independently executed whole regression PASS and does not eliminate those failures.\n\n## Integration limits\n\nNo main/register edits, current DATA acquisition, owner graph/census generation, native execution, scanned-module evaluation or API/apply/runtime authority performed/granted. Current graph/selectedSource/facts qualifications remain future guarded observations; no automatic ordinary/native receipt or existing-record renewal. Parent owns integration/final source bindings.\n\n## Frozen inputs and evidence\n\n- `/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/docs-api-output-role-classification.mjs` \u2014 SHA256 `400affe1cb7a07c69e397e0509bb994f7f44376687038f802830b63daf452b12`.\n- `/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-repair-candidate/scripts/tests/docs-api-utility-declarations.test.mjs` \u2014 SHA256 `d175eb7cb3773cb6ac977d2290a86d34990146551df2a5bad3a38b119e8de8b6`.\n",
+  "independentTerminals": {
+    "owning": {
+      "exit": 0,
+      "pass": 26,
+      "fail": 0,
+      "skip": 0
+    },
+    "private": {
+      "exit": 0,
+      "pass": 3,
+      "fail": 0,
+      "skip": 0
+    },
+    "originalProbe": {
+      "exit": 0,
+      "cases": 12
+    },
+    "extraProbe": {
+      "exit": 0,
+      "cases": 18
+    }
+  },
+  "broaderHarness": {
+    "status": "NOT_PASS_20PASS10FAIL",
+    "sameExactFailureNames": [
+      "Worker resource schema generator receipts retain schema inputs and reject refreshed API output",
+      "actual reached validator format and schema installation authority is present in finite facts",
+      "auxiliary Python receipts distinguish AST, policy-probe and JSON-RPC metadata from API writers",
+      "bundle facade construction binds all three role values without qualifying source copies or imports",
+      "historical environment roots classify only bound operations and retain current executable source facts",
+      "native historical from selector really follows external root, not scanner checkout identity",
+      "native replay root selector preserves explicit external and empty-string nullish cases",
+      "six native replay recipes bind archive, overlay, caller and exact loader branches without fixture exclusion",
+      "source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer",
+      "two source-bound resolver terminals classify only source-location metadata"
+    ],
+    "scope": "Author terminal logs read/comparison only; no independent broad rerun"
+  },
+  "artifacts": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-independent-owning.stdout",
+      "sha256": "e0ff8fd557112ee98d1e32455b13ad7a165fc569551acd3c06ac210be7ed49c1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-independent-owning.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-independent-private.stdout",
+      "sha256": "8df2f938ea9dd01edbe8b76659b6f99880fd9eb800996de4137cdcbe2c38537d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-independent-private.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-independent-original-probe.json",
+      "sha256": "a40d5ecf294b23847f26fda2a8922988d824d863b095e2ad2075882099616ef3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-extra-probe.mjs",
+      "sha256": "096f6f9045acd0df1fcfe30f6f73478ec2fe052b69fd3c1cbbb2db5ac5795135"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/four-utility-corrected-extra-probe.json",
+      "sha256": "c9bec38477ce6983e23ca9e2d9c83eb001dd180b6187a369abd08308e9db04c2"
+    }
+  ]
+}
