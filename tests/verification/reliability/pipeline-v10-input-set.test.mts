@@ -1609,3 +1609,84 @@ test('versioned v10 expected delivery binds original full release and receiving 
  restored.capture.close();
  assert.throws(() => receive(expected, restored.capture, services, 'buster-runtime', pkg), /CAPTURE_CLOSED/);
 });
+
+
+test('installed v10 full source uses real staged v2 output and rejects missing foreign code and restored controls without activation', async t => {
+  const { execFileSync } = await import('node:child_process');
+  const { pathToFileURL } = await import('node:url');
+  const { stagePipelineV10BootSource } = await import('../../../scripts/updates/pipeline-generation.mjs');
+  const root = tree(t), code = path.join(root, 'installed-role');
+  execFileSync(process.execPath, [path.join(repository, 'scripts/build-runtime-role-bundle.mjs'), 'buster', code,
+    'a'.repeat(40), 'config-v10-installed-source', '2026-10-21T00:00:00Z'], { cwd: repository, stdio: 'pipe' });
+  const receiptBytes = fs.readFileSync(path.join(code, 'manifest.json')), receipt = JSON.parse(receiptBytes.toString());
+  const config = path.join(code, 'skills/packages/plugin-foundation/config');
+  const installed = await import(pathToFileURL(path.join(config, 'pipeline-boot.mjs')).href);
+  const original = capture(root, replacements); t.after(original.capture.close);
+  const document = JSON.parse(rootBytes.toString()), serviceInstanceId = 'fixture.service.buster-runtime';
+  const services = ['buster-preparation', 'buster-runtime'].map(callerId => ({ role: 'buster', callerId, serviceInstanceId,
+    bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === serviceInstanceId)
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) }));
+  const stage = fs.mkdtempSync(path.join(root, 'stage-'));
+  await stagePipelineV10BootSource(stage, original.capture, services, receiptBytes, config);
+  const expectedFile = path.join(stage, 'expected/buster-runtime/expected-delivery.json');
+  const system = path.join(stage, 'system');
+  const run = (composition: any[] = services, packageRoot = code) => installed.capturePipelineV10BootSource(
+    expectedFile, system, 'buster-runtime', packageRoot, receipt.runtimeSurface, composition);
+  const positive = () => {
+    const observed = run();
+    try {
+      observed.assertCurrent();
+      assert.equal(observed.sourceMemberCount, original.capture.members.length);
+      assert.equal(observed.inputGenerationSha256, original.capture.inputGenerationSha256);
+      assert.equal(observed.activationAllowed, false);
+      assert.throws(() => installed.assertPipelineBootCapture(observed, 'buster-runtime'), /VERIFIED_CAPTURE_REQUIRED/);
+    } finally { observed.close(); }
+    assert.throws(observed.assertCurrent, /BOOT_SOURCE_CLOSED/);
+    observed.close();
+  };
+  positive();
+  // A and B are distinct original selected tuples, never current-value refill.
+  const other = document.bindings.find((b: any) => b.role === 'buster' && b.owner === 'buster-engine'
+    && document.bindings.some((v: any) => v.role === 'buster' && v.owner === 'worker-core' && v.instanceId === b.instanceId)
+    && b.instanceId !== serviceInstanceId && b.profileId !== services[0]!.bindings.find((v: any) => v.owner === 'buster-engine').profileId);
+  assert.ok(other);
+  const servicesB = ['buster-preparation', 'buster-runtime'].map(callerId => ({ role: 'buster', callerId, serviceInstanceId: other.instanceId,
+    bindings: document.bindings.filter((b: any) => b.role === 'buster' && b.instanceId === other.instanceId)
+      .map(({ owner, instanceId, profileId }: any) => ({ owner, instanceId, profileId })) }));
+  const stageB = fs.mkdtempSync(path.join(root, 'stage-B-'));
+  await stagePipelineV10BootSource(stageB, original.capture, servicesB, receiptBytes, config);
+  const expectedB = path.join(stageB, 'expected/buster-runtime/expected-delivery.json');
+  const capturedB = installed.capturePipelineV10BootSource(expectedB, path.join(stageB, 'system'),
+    'buster-runtime', code, receipt.runtimeSurface, servicesB);
+  try {
+    capturedB.assertCurrent();
+    assert.equal(capturedB.selection.serviceInstanceId, other.instanceId);
+    assert.equal(capturedB.activationAllowed, false);
+  } finally { capturedB.close(); }
+  assert.throws(() => installed.capturePipelineV10BootSource(expectedB, system, 'buster-runtime', code,
+    receipt.runtimeSurface, services), /EXPECTED_DELIVERY_MISMATCH/);
+  positive();
+  const missing = path.join(system, 'schemas/browser/axe.task.schema.json'), bytes = fs.readFileSync(missing);
+  fs.unlinkSync(missing); assert.throws(() => run(), { code: 'ENOENT' });
+  fs.writeFileSync(missing, bytes, { mode: 0o444 }); positive();
+  const foreign = structuredClone(services); foreign[1]!.bindings[0]!.profileId = 'foreign-profile';
+  assert.throws(() => run(foreign), /BINDING_MISMATCH/); positive();
+  const expected = fs.readFileSync(expectedFile), altered = JSON.parse(expected.toString());
+  altered.generationDigest = 'sha256:' + '0'.repeat(64);
+  fs.chmodSync(expectedFile, 0o644);
+  fs.writeFileSync(expectedFile, JSON.stringify(altered)); fs.chmodSync(expectedFile, 0o444);
+  assert.throws(() => run(), /EXPECTED_DELIVERY_MISMATCH/);
+  fs.chmodSync(expectedFile, 0o644); fs.writeFileSync(expectedFile, expected);
+  fs.chmodSync(expectedFile, 0o444); positive();
+  const held = run();
+  fs.chmodSync(missing, 0o644); fs.appendFileSync(missing, ' ');
+  assert.throws(held.assertCurrent, /INPUT_CHANGED/); held.close();
+  fs.writeFileSync(missing, bytes); fs.chmodSync(missing, 0o444); positive();
+  // Correct content is insufficient if any original member is writable.
+  fs.chmodSync(missing, 0o666); assert.throws(() => run(), /FILE_NOT_TRUSTED/);
+  fs.chmodSync(missing, 0o444); positive();
+  const module = path.join(config, 'pipeline-boot.mjs'), moduleBytes = fs.readFileSync(module);
+  fs.appendFileSync(module, '\n// installed code mutant\n');
+  assert.throws(() => run(), /READBACK_MISMATCH/);
+  fs.writeFileSync(module, moduleBytes); positive();
+});

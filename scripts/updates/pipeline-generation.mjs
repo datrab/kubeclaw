@@ -156,6 +156,26 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
           inputSource.declared.capture, services, service.callerId, hash(packageBytes));
       }
     }
+    if (inputSource.rootSchemaVersion === 'pipeline-entry.v10') {
+      // Exercise the real installed reader on the distinct physical v2 layout,
+      // not only an in-memory wire. No v1 output/verified Swarm capture or
+      // publication is authorized by this staged source observation.
+      const { capturePipelineV10BootSource } = await import(pathToFileURL(path.join(directory, 'pipeline-boot.mjs')).href);
+      const parent = path.dirname(output);
+      if (fs.realpathSync(parent) !== parent || !fs.lstatSync(parent).isDirectory()) throw new Error('PIPELINE_GENERATION_PARENT_INVALID');
+      stage = fs.mkdtempSync(path.join(parent, '.pipeline-stage-'));
+      await stagePipelineV10BootSource(stage, inputCapture, services, packageBytes, directory);
+      for (const service of services) {
+        const captured = capturePipelineV10BootSource(path.join(stage, 'expected', service.callerId, 'expected-delivery.json'),
+          path.join(stage, 'system'), service.callerId, packageRoot, receipt.runtimeSurface, services);
+        try { captured.assertCurrent(); inputCapture.assertCurrent(); }
+        finally { captured.close(); }
+      }
+      // Installed source readback does not implement Swarm/runtime.v2/startup
+      // authorization. Continue through the ORIGINAL direct source preflights
+      // below; their unconditional v10 denial remains intact. No v1 output.
+
+    }
     const captures = [], selections = [];
     for (const service of services) {
       const capture = captureSwarmSettings(path.join(authorRoot, 'pipeline.config.json'), service);
@@ -220,6 +240,33 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
     for (const { fd } of observations) if (fd !== undefined) fs.closeSync(fd);
     if (stage) fs.rmSync(stage, { recursive: true, force: true });
   }
+}
+
+/** Shared physical v2 output route, used by the real role materializer before
+ * source admission. It only stages bytes: no publisher or activation grant.
+ */
+export async function stagePipelineV10BootSource(stage, inputs, services, packageBytes, installedConfigDirectory) {
+  services = structuredClone(services);
+  packageBytes = Buffer.from(packageBytes);
+  if (!path.isAbsolute(stage) || path.resolve(stage) !== stage || fs.realpathSync(stage) !== stage
+    || !fs.lstatSync(stage).isDirectory()) throw new Error('PIPELINE_GENERATION_PARENT_INVALID');
+  const { createPipelineV10ImageReceipt, createPipelineV10ServiceSelection,
+    createBusterV10SelectedOwnerProjection, createPipelineV10ExpectedDelivery } =
+    await import(pathToFileURL(path.join(installedConfigDirectory, 'pipeline-generation.ts')).href);
+  const image = createPipelineV10ImageReceipt(inputs, services, hash(packageBytes));
+  for (const member of inputs.members) write(stage, `system/${member.relativePath}`, inputs.read(member.relativePath));
+  write(stage, 'system/package-receipt.json', packageBytes);
+  write(stage, 'system/image-receipt.json', jsonBytes(image));
+  for (const service of services) {
+    const selection = createPipelineV10ServiceSelection(inputs, service, hash(packageBytes));
+    write(stage, `system/selections/${service.callerId}.json`, jsonBytes(selection));
+    if (selection.role === 'buster') write(stage, `system/selections/${service.callerId}.buster.json`,
+      jsonBytes(createBusterV10SelectedOwnerProjection(inputs, selection)));
+    write(stage, `expected/${service.callerId}/expected-delivery.json`,
+      jsonBytes(createPipelineV10ExpectedDelivery(inputs, services, service.callerId, hash(packageBytes))));
+  }
+  inputs.assertCurrent();
+  sealDirectories(stage);
 }
 
 /** Exact install identity supplied by the release renderer, never inferred from a Pod name. */

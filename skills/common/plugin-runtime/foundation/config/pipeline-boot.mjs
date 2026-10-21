@@ -11,6 +11,7 @@ import { verifyInstalledRuntimeBundle } from './runtime-bundle-receipt.mjs';
 import { captureBusterStartupFile } from './buster-startup-file.mjs';
 import { createBusterStartupHandoff } from './buster-startup.ts';
 import { restoreBusterSourceClosure } from './buster-source-replay.mjs';
+import { capturePipelineMaterializerInputSource } from './pipeline-v10-input-set.ts';
 
 const SYSTEM_ROOT = '/etc/kubeclaw/config';
 const RECEIPT_LIMIT = 65536; // Closed provenance-wire bound, not an operational policy default.
@@ -470,4 +471,92 @@ export function receivePipelineV10BootSource(wires, inputs, services, callerId, 
   if (selection.role !== 'buster' && wires.owner !== null) throw new Error('PIPELINE_V10_BOOT_OWNER_UNEXPECTED');
   inputs.assertCurrent();
   return Object.freeze({ expected, image, selection, owner, activationAllowed: false });
+}
+
+
+/** Observe a distinct full-input v10 release at its physical installed boundary.
+ * This is SOURCE readback, not a Swarm capture or startup authorization: it is
+ * deliberately absent from verifiedCaptures. The real materializer uses it on
+ * staged v2 output while productive source/runtime admission remains closed.
+ * Caller composition is held separately; no received wire selects authority.
+ */
+export function capturePipelineV10BootSource(expectedFile, systemRoot, callerId, packageRoot, runtimeSurface, services) {
+  services = structuredClone(services);
+  for (const directory of [systemRoot, packageRoot]) {
+    if (typeof directory !== 'string' || !path.isAbsolute(directory) || path.resolve(directory) !== directory
+      || fs.realpathSync(directory) !== directory) throw new Error('PIPELINE_BOOT_IDENTITY_INVALID');
+  }
+  if (typeof expectedFile !== 'string' || !path.isAbsolute(expectedFile) || path.resolve(expectedFile) !== expectedFile
+    || fs.realpathSync(expectedFile) !== expectedFile || typeof runtimeSurface !== 'string'
+    || !path.isAbsolute(runtimeSurface) || !callers.includes(callerId) || !Array.isArray(services)) {
+    throw new Error('PIPELINE_BOOT_IDENTITY_INVALID');
+  }
+  const service = services.find(value => value?.callerId === callerId);
+  if (!service) throw new Error('PIPELINE_EXPECTED_DELIVERY_CALLER_REQUIRED');
+  const observations = [], directories = new Set();
+  let inputs, isClosed = false;
+  const close = () => {
+    if (isClosed) return;
+    isClosed = true;
+    inputs?.close();
+    for (const { fd } of observations) if (fd !== undefined) fs.closeSync(fd);
+  };
+  const directory = file => {
+    if (!directories.has(file)) { trustedDirectory(file, observations, 0o755); directories.add(file); }
+  };
+  const read = (file, maximum = PACKAGE_RECEIPT_LIMIT) => readTrusted(file, observations, maximum, 0o444);
+  const assertCurrent = () => {
+    if (isClosed) throw new Error('PIPELINE_V10_BOOT_SOURCE_CLOSED');
+    inputs.assertCurrent();
+    for (const { file, fd, before } of observations) {
+      if ((fd !== undefined && !same(before, fs.fstatSync(fd, { bigint: true }))) || !same(before, fs.lstatSync(file, { bigint: true }))) {
+        throw new Error('PIPELINE_BOOT_RECEIPT_CHANGED');
+      }
+    }
+  };
+  try {
+    directory(systemRoot); directory(path.dirname(expectedFile)); directory(path.join(systemRoot, 'selections'));
+    const expected = JSON.parse(read(expectedFile, RECEIPT_LIMIT));
+    const packageBytes = read(path.join(systemRoot, 'package-receipt.json'));
+    const packageDigest = sha256(packageBytes), receipt = JSON.parse(packageBytes);
+    verifyInstalledRuntimeBundle(receipt, packageRoot, service.role, runtimeSurface, observations);
+    const source = capturePipelineMaterializerInputSource(path.join(systemRoot, 'config'));
+    inputs = source.declared?.capture;
+    if (source.rootSchemaVersion !== 'pipeline-entry.v10' || !inputs) throw new Error('PIPELINE_V10_BOOT_SOURCE_REQUIRED');
+    // Retain physical trust and descriptors for EVERY original input, including
+    // unselected schemas/packages. A matching seven-file projection is not v10.
+    for (const member of inputs.members) {
+      const file = path.join(systemRoot, member.relativePath);
+      let parent = path.dirname(file);
+      const parents = [];
+      while (parent !== systemRoot) { parents.push(parent); parent = path.dirname(parent); }
+      for (const ancestor of parents.reverse()) directory(ancestor);
+      const bytes = read(file, Number.MAX_SAFE_INTEGER);
+      if (bytes.byteLength !== member.byteLength || sha256(bytes) !== `sha256:${member.sha256}`) {
+        throw new Error('PIPELINE_GENERATION_CHANGED');
+      }
+    }
+    const image = JSON.parse(read(path.join(systemRoot, 'image-receipt.json')));
+    const selection = JSON.parse(read(path.join(systemRoot, 'selections', `${callerId}.json`)));
+    const owner = service.role === 'buster'
+      ? JSON.parse(read(path.join(systemRoot, 'selections', `${callerId}.buster.json`))) : null;
+    const received = receivePipelineV10BootSource({ expected, image, selection, owner }, inputs, services, callerId, packageDigest);
+    const foundation = receipt.packages.find(record => record.id === 'plugin-foundation');
+    const sdk = receipt.packages.find(record => record.id === 'plugin-sdk');
+    if (fs.realpathSync(fileURLToPath(import.meta.url)) !== path.join(packageRoot, foundation.target, 'config/pipeline-boot.mjs')) {
+      throw new Error('PIPELINE_READER_RESOLUTION_MISMATCH');
+    }
+    for (const asset of swarmReaderAssets) {
+      const expectedAsset = asset.name === 'registry-digest.ts' ? path.join(packageRoot, foundation.target, 'registry/digest.ts')
+        : asset.name === 'registry-errors.ts' ? path.join(packageRoot, foundation.target, 'registry/errors.ts')
+        : asset.name === 'sdk-values.ts' ? path.join(packageRoot, sdk.target, 'src/values.ts')
+        : path.join(packageRoot, foundation.target, 'config', asset.name);
+      if (fs.realpathSync(fileURLToPath(swarmReaderAssetLocations[asset.name])) !== expectedAsset) throw new Error('PIPELINE_READER_RESOLUTION_MISMATCH');
+      const bytes = readTrusted(new URL(swarmReaderAssetLocations[asset.name]), observations, Number.MAX_SAFE_INTEGER);
+      if (sha256(bytes) !== asset.digest || bytes.byteLength !== asset.byteLength) throw new Error('PIPELINE_READER_CHANGED');
+    }
+    assertCurrent();
+    return Object.freeze({ ...received, inputGenerationSha256: inputs.inputGenerationSha256,
+      sourceMemberCount: inputs.members.length, installedPackageRoot: packageRoot, assertCurrent, close });
+  } catch (error) { close(); throw error; }
 }
