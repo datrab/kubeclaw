@@ -44,6 +44,8 @@
         "probes",
         "shutdown",
         "serviceAccount",
+        "busterRuntimeStartupFix",
+        "busterApiEgress",
         "busterNamespaceBroker",
         "commands",
         "swarmConfig",
