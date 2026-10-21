@@ -6,8 +6,8 @@ The package imports only the public plugin SDK. It contains no Nova/core imports
 
 ## Configuration and input
 
-The registration uses the closed schemas in `schemas/`. Configuration controls
-the report namespace. Input identifies the module, repository path, declared
+The registration uses the closed schemas in `schemas/`. Configuration is the closed empty object. The report namespace is fixed to
+`kubeclaw.delivery-lint`. Input identifies the module, repository path, declared
 Dockerfile, and optional static delivery destination. Paths are read through
 `git.repository.read`; the package never opens the repository directly.
 

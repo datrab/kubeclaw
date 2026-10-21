@@ -8,12 +8,13 @@
   "sourceFilesWithErrors": ["skills/buster/plugins/size-budget/src/provider.js"],
   "errorPrefixes": ["SIZE_BUDGET_"],
   "additionalErrors": [],
+  "suiteSection": "12. Size Budget Suite",
   "documents": {
-    "userGuide": "docs/architecture/pipeline-test-gate-size-budget-user-guide.md",
-    "operatorGuide": "docs/architecture/pipeline-test-gate-size-budget-operator-guide.md",
-    "configurationReference": "docs/architecture/pipeline-test-gate-size-budget-configuration-reference.md",
-    "errorReference": "docs/architecture/pipeline-test-gate-size-budget-error-reference.md",
-    "securityModel": "docs/architecture/pipeline-test-gate-size-budget-security-model.md"
+    "userGuide": "docs/site/reference/buster-suites.md",
+    "operatorGuide": "docs/site/reference/buster-suites.md",
+    "configurationReference": "docs/site/reference/buster-provider-configuration.md",
+    "errorReference": "docs/site/reference/buster-error-codes.md",
+    "securityModel": "docs/site/reference/buster-suites.md"
   },
   "operatorFields": []
 }

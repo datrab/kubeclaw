@@ -1,0 +1,29 @@
+import subprocess,json,hashlib
+from pathlib import Path
+from datetime import datetime,timezone
+P=Path(__file__).resolve().parent;E=P.parents[2];R=E/'finish-20261017/ci-green/repo'
+REV='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9';OLD='c559e97960a89a0f80487483addb91d2e6e4527d'
+def git(*a):return subprocess.check_output(['git',*a],cwd=R)
+def blob(rev,p):
+ r=subprocess.run(['git','show',rev+':'+p],cwd=R,capture_output=True)
+ return r.stdout if r.returncode==0 else None
+def sha(b):return hashlib.sha256(b).hexdigest() if b is not None else None
+def save(n,d):(P/n).write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+def bind(p):return {'path':str(p),'sha256':sha(p.read_bytes())}
+fx='docs/blueprint/AP09-acceptance-fixtures.json';mp='docs/site/reference/generated-documentation-map.json'
+fixtures=json.loads(blob(REV,fx));mapping=json.loads(blob(REV,mp));pages={p['page']:p for p in mapping['pages']}
+rows=[]
+for family in fixtures['mutationTests']:
+ for variant in family['variants']:
+  src=variant['sourceAuthority'];before=blob(OLD,src);now=blob(REV,src)
+  expected=[]
+  for page in variant['expectedPages']:
+   row=pages.get(page);text=blob(REV,page)
+   expected.append({'page':page,'sha256':sha(text),'exists':text is not None,'owner':row.get('owner') if row else None,'route':row.get('route') if row else None,'directSourceDependency':src in row.get('sourceDependencies',[]) if row else False,'sourceDependencies':row.get('sourceDependencies',[]) if row else [],'checks':row.get('checks',[]) if row else []})
+  # Follow actual Git rename/deletion events, not a count of tests or inferred loss.
+  events=git('log','--format=commit %H','--name-status','--diff-filter=DR','--find-renames',OLD+'..'+REV,'--',src).decode()
+  rows.append({'family':family['kind'],'variant':variant['id'],'source':src,'sourceOldSHA256':sha(before),'sourceCurrentSHA256':sha(now),'sourceChangedSinceA91109ReviewedRevision':before!=now,'sourcePresent':now is not None,'actualDeletionRenameEvents':events,'expectedPages':expected,'constructor':variant['constructor'],'diagnostic':family['diagnosticCode'],'gate':family['command'],'actualMutationEvidence':'not established by this passive census','removeRenameQualification':'open; drift change/remove is not automatically a positive migrated output/owner/link proof'})
+ledger={'utc':datetime.now(timezone.utc).isoformat(),'acceptanceId':'A911-10','criterion':'Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.','scope':'All preregistered source surfaces, expected pages, current map ownership and actual Git removal/rename events since c559. Passive exact committed-byte census only; no discovery/generation/native replay.','reviewedBaseline':OLD,'publishedRevision':REV,'authorities':{fx:sha(blob(REV,fx)),mp:sha(blob(REV,mp))},'families':len(fixtures['mutationTests']),'variants':len(rows),'rows':rows,'summary':{'changedSources':sorted(set(r['source'] for r in rows if r['sourceChangedSinceA91109ReviewedRevision'])),'absentSources':sorted(set(r['source'] for r in rows if not r['sourcePresent'])),'actualRemovalRenameEvents':[r['variant'] for r in rows if r['actualDeletionRenameEvents']],'missingExpectedPages':sorted(set(p['page'] for r in rows for p in r['expectedPages'] if not p['exists'])),'ownerlessExpectedPages':sorted(set(p['page'] for r in rows for p in r['expectedPages'] if not p['owner'])),'missingDirectSourceBindings':[{'variant':r['variant'],'source':r['source'],'page':p['page']} for r in rows for p in r['expectedPages'] if not p['directSourceDependency']]},'limits':['Missing direct dependency may have a legitimate transitive owner/generator; not an automatic defect verdict.','No change since c559 proves no new source loss in that interval, not completeness of older source coverage.','Registered 84 mutation evidence and distinct Source/Reader/Quality decisions remain open; this receipt grants no gate PASS.'],'formalAcceptance':False,'canonicalWrites':False,'targetExecutions':0}
+save('source-transition-ledger.json',ledger)
+print(json.dumps(ledger['summary'],ensure_ascii=False,indent=2))
+print('families',ledger['families'],'variants',ledger['variants'])

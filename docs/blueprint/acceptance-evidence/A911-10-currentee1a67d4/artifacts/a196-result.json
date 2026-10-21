@@ -1,0 +1,429 @@
+{
+  "source": "scripts/generate-buster-provider-reference.mjs",
+  "priorExpected": "9b623dbf0088d5e8f5ccc38e6960a3bccde03fdab26e1b08310a929bdde4f479",
+  "scope": "Existing unchanged original fact derivation over two isolated provider-generator source texts; no generator/runtime execution, no broad authority repin.",
+  "before": {
+    "facts": [
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "111350145048e8e99fd4ad10be79917020ad702c7388ae18868b4cc848534a27"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "20227afe28191a250fbb6fa0695197e9a17b587e238232c4202a243fd26f0728"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "47e9211cd4be8e483caa3564ff42cdcbee34fe799fcdcf9145d90c894600872f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "5751a90a3d7b2663869f0f3f5d97c7693895a1bee19cbbb9abe1af4ad857515e"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "cc12a2768c177f8a18538dc0f20296b89dd23f40204a29d9c6530fe3cfc2d2dc"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "d18e28421ce5f00341cf8e9064a584a3ce7bafae1b509611df9a464f3e4a280f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "de5e092c13e5f9be5d544c337385f0b0520760c43bfdff9097362bb18cdc2cfc"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "df706485037b7d0bd4585afca129b9e98eefe2807b7fae2041ea245779219fe8"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "choiceIds",
+        "sha256": "10001866bba65a6ba414fa818e05a2ada3fba0745935b887873c498f50a745bc"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "containerBuild",
+        "sha256": "94608aeabfab4337980e9a6f30c5422b69153d3bc6e0bc7a54f7438a4d921bb1"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "containerRows",
+        "sha256": "97c416747c4721752991213e92b76d3b209f0c9ae4d0ba883b38497f2423d532"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "flow",
+        "sha256": "7bbe5fc9e835b2c9e4eac452b376591f9c6a1ae03a195a219a3ade3c6e33c8d8"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "flowFile",
+        "sha256": "74706050c4f0da2c99ac8ee93dba61ac125a5d335d074a52f6c86a9c464b3e2f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "lines",
+        "sha256": "c03561aae562b443e010c870b5f99160a4a98d03c69ef648426d34f2f56bb78d"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "nextChoiceId",
+        "sha256": "1609eee681fa5836154dd30e2c897c8f359aa2ea28ff539fccb9d7dfd1b9fe17"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "output",
+        "sha256": "9d0f26008ce67305fc0a21b702ff41c53d3fc8c5f58ba8ef257099be885b87e5"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "pluginRoot",
+        "sha256": "18a805269201bae829da150da78e8312cc2b3e567acb86c55f2939c4a2bc7c4b"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "providers",
+        "sha256": "e143c0d801db2538187a4065fd446648eef4b914001e8d48eed34cfdb176dfa8"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "revision",
+        "sha256": "047e71d4d5a2353113fba4ef6ce810d382f0f0b9fc6ec7e835871009eb8efe0f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "root",
+        "sha256": "171af69e78c4704196279ae6a1407f37fab86a37f3de987fed75de4803cae113"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "sources",
+        "sha256": "242ae17ff78a43f481935e659119886439cda7c7f2b5f2282f78810420efc989"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "target",
+        "sha256": "d4e0abe23a6cf99356e1d4dc52b89336048db2652e0cc781a4b9c66ebac63837"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ForOfStatement",
+        "symbol": "<operation>",
+        "sha256": "0e24abe39f844e5b83116ca59e8322cb84ad81b3b8d720666a8c1ede2f7218a7"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ForOfStatement",
+        "symbol": "<operation>",
+        "sha256": "51d5a17bc90f6c551b5470c4a8bb88d83a9361b059c1e1e27a2d04f4196ea17e"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "appendContract",
+        "sha256": "13c6f7771268e4919e811e4adb19d8758cf6ff7eca7c31dba67c1819b6466b2b"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "collect",
+        "sha256": "ec577e9505d51c072804c7cd8b09cb382e4c6ddfc3b9ebf560a24bc7a8bb95e3"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "resolvePointer",
+        "sha256": "4cc565e0363d859247509fbc05b27dfe4002df9854a0356e92e3f9fcf0ea634a"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "ruleText",
+        "sha256": "024ca3edcf0f1fddeeadbcbb0057ca4bbb1e3cb79f594657eeb70c6849e629e9"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "typeText",
+        "sha256": "76c17add4e0961caf8cf745868eee1d476e43aed3ac3b66a89543fc3622509c3"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "variants",
+        "sha256": "8c9cddd9a08fe91265eac77a3e9b040f288059ce8de3ac0f8f9140abbec0bd09"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "IfStatement",
+        "symbol": "<operation>",
+        "sha256": "9a92e57defc856b660215b1b384354001f900d4ff7b631fb7c520246e4d8a13f"
+      }
+    ],
+    "digest": "9b623dbf0088d5e8f5ccc38e6960a3bccde03fdab26e1b08310a929bdde4f479"
+  },
+  "after": {
+    "facts": [
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "20227afe28191a250fbb6fa0695197e9a17b587e238232c4202a243fd26f0728"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "276a06bf7298ef578ae72cb373b5237c0c4b4c4a2a9584dcbd16e2fd882b58b3"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "47e9211cd4be8e483caa3564ff42cdcbee34fe799fcdcf9145d90c894600872f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "5751a90a3d7b2663869f0f3f5d97c7693895a1bee19cbbb9abe1af4ad857515e"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "bbb2ee94ddb01f133bee42a6524dfff2763f3503a71683623cfe7089ed110229"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "cc12a2768c177f8a18538dc0f20296b89dd23f40204a29d9c6530fe3cfc2d2dc"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "cec40c3fc2b0eaf98e27afb19fd7f2d815ed8701082e2d3f3caf423885aa1228"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "d18e28421ce5f00341cf8e9064a584a3ce7bafae1b509611df9a464f3e4a280f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "de5e092c13e5f9be5d544c337385f0b0520760c43bfdff9097362bb18cdc2cfc"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ExpressionStatement",
+        "symbol": "<operation>",
+        "sha256": "df706485037b7d0bd4585afca129b9e98eefe2807b7fae2041ea245779219fe8"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "choiceIds",
+        "sha256": "10001866bba65a6ba414fa818e05a2ada3fba0745935b887873c498f50a745bc"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "containerBuild",
+        "sha256": "94608aeabfab4337980e9a6f30c5422b69153d3bc6e0bc7a54f7438a4d921bb1"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "containerRows",
+        "sha256": "97c416747c4721752991213e92b76d3b209f0c9ae4d0ba883b38497f2423d532"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "flow",
+        "sha256": "7c2f994e34f597b6109b0fbde91055177b81bd311c267f301d0921bb3d3b15f9"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "flowFile",
+        "sha256": "74706050c4f0da2c99ac8ee93dba61ac125a5d335d074a52f6c86a9c464b3e2f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "lines",
+        "sha256": "85dc9fcf879a0d5ad2c55b66e2ac9c6d279eb6163c681dc463b6e740dc7f597c"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "nextChoiceId",
+        "sha256": "1609eee681fa5836154dd30e2c897c8f359aa2ea28ff539fccb9d7dfd1b9fe17"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "output",
+        "sha256": "9d0f26008ce67305fc0a21b702ff41c53d3fc8c5f58ba8ef257099be885b87e5"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "pluginRoot",
+        "sha256": "18a805269201bae829da150da78e8312cc2b3e567acb86c55f2939c4a2bc7c4b"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "providers",
+        "sha256": "e143c0d801db2538187a4065fd446648eef4b914001e8d48eed34cfdb176dfa8"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "revision",
+        "sha256": "a4b48ce2566a8416e6672e86f7f1e62fcc46e310918b931843b58316cbc19e4a"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "revisionArgument",
+        "sha256": "48ae3c039c7649d1591a4766dabe409d5a26ba21e36c3871c5ca2fd7bd826d1c"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "revisionType",
+        "sha256": "5163cd5c120f634e469e4cd4e544ebcbebd75cbe6c669d8e824289a3e751feed"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "root",
+        "sha256": "171af69e78c4704196279ae6a1407f37fab86a37f3de987fed75de4803cae113"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "sources",
+        "sha256": "242ae17ff78a43f481935e659119886439cda7c7f2b5f2282f78810420efc989"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "storedRevision",
+        "sha256": "14f32c7d672747379a781f4d381d41444f1686b9ac46b8dc368832fa61d1a3ac"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FirstStatement",
+        "symbol": "target",
+        "sha256": "d4e0abe23a6cf99356e1d4dc52b89336048db2652e0cc781a4b9c66ebac63837"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ForOfStatement",
+        "symbol": "<operation>",
+        "sha256": "0e24abe39f844e5b83116ca59e8322cb84ad81b3b8d720666a8c1ede2f7218a7"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "ForOfStatement",
+        "symbol": "<operation>",
+        "sha256": "23149736c7d4cbdbfc8a7855ef7b161e8d261dc3e4fb674b68b22ae04e21d657"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "appendContract",
+        "sha256": "13c6f7771268e4919e811e4adb19d8758cf6ff7eca7c31dba67c1819b6466b2b"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "collect",
+        "sha256": "ec577e9505d51c072804c7cd8b09cb382e4c6ddfc3b9ebf560a24bc7a8bb95e3"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "pinnedJson",
+        "sha256": "76e9c917bc8faa4dd9e82f70db201ed6b01dcecff4808824835f2de86c014230"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "resolvePointer",
+        "sha256": "4cc565e0363d859247509fbc05b27dfe4002df9854a0356e92e3f9fcf0ea634a"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "ruleText",
+        "sha256": "024ca3edcf0f1fddeeadbcbb0057ca4bbb1e3cb79f594657eeb70c6849e629e9"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "typeText",
+        "sha256": "76c17add4e0961caf8cf745868eee1d476e43aed3ac3b66a89543fc3622509c3"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "FunctionDeclaration",
+        "symbol": "variants",
+        "sha256": "8c9cddd9a08fe91265eac77a3e9b040f288059ce8de3ac0f8f9140abbec0bd09"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "IfStatement",
+        "symbol": "<operation>",
+        "sha256": "9a92e57defc856b660215b1b384354001f900d4ff7b631fb7c520246e4d8a13f"
+      },
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "kind": "TryStatement",
+        "symbol": "<operation>",
+        "sha256": "767b52ce9198538a046859535ff195079f85f247a64f6cb8f8c684acacaf9149"
+      }
+    ],
+    "digest": "03fb50e9f1eba280821189311f0e34ed452a4439d38b608d0e3332c365f52935"
+  }
+}

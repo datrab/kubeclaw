@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/errors.html"></head><body><main>
+<h1 id="errors-and-safe-diagnostic-routing">Errors and Safe Diagnostic Routing</h1>
+<p>Status: bounded reference; discovery limitations stated below
+Audience: operator, developer, plugin author, maintainer
+Owner: documentation; named components own diagnostic and delivery semantics
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/errors.ts">skills/common/plugin-runtime/foundation/registry/errors.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/stage-executor.ts">skills/nova/core/execution/stage-executor.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/attempt-executor.ts">skills/worker/core/worker/attempt-executor.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/phase-deadline.ts">skills/worker/core/worker/phase-deadline.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/worker-service.ts">skills/prism/server/worker-service.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/generate-buster-error-reference.mjs">scripts/generate-buster-error-reference.mjs</a>
+Applies to: the named diagnostic representations, families and current source boundaries below
+Last verified: 2026-10-15; current source behavior checked; no live diagnostic or recovery executed</p>
+<h2 id="start-with-the-first-owning-boundary">Start with the first owning boundary</h2>
+<p>An error tells you where a boundary rejected or lost confidence in work. It
+does not, by itself, prove that no external action occurred. A timeout can
+follow a completed remote action whose acknowledgement was lost. A failed
+result can also retain cleanup work that has not finished.</p>
+<p>Use this page when you have a code, reason, failed result or HTTP error:</p>
+<ol>
+<li>Preserve the first diagnostic and its cause chain, exact target, time window
+and non-secret run/attempt/job/effect identity. Keep partial output too.</li>
+<li>Identify the representation in the table below. Do not search only the
+beginning of the human message.</li>
+<li>Select the owning component and its detailed procedure. Establish whether
+work was rejected, accepted, completed, or remains uncertain before retry.</li>
+<li>Stop if the owner, terminal receipt, cleanup or target identity cannot be
+established. Preserve the current state for the responsible component owner.</li>
+</ol>
+<p>A terminal receipt is the durable record of an operation's final outcome.
+A cause chain preserves the underlying failure even when another component
+wraps or translates it. Neither a success-shaped HTTP response nor a closed
+connection replaces the owning operation's bound result and cleanup evidence.
+For the incident setup and independently reachable administration conditions,
+use <a href="../use/diagnose.html">Diagnose</a>. For retained-state procedures, use
+<a href="../use/recovery.html">Recovery</a>; this hub does not authorize a reset or replay.</p>
+<h2 id="identify-the-representation">Identify the representation</h2>
+<table>
+<thead>
+<tr>
+<th>What you received</th>
+<th>Stable identity</th>
+<th>Preserve with it</th>
+<th>Interpretation limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foundation <code>RegistryError</code></td>
+<td>Its <code>code</code> property, not necessarily its message prefix</td>
+<td><code>details</code>, message, package/registration/source identity</td>
+<td>A type name or valid schema does not grant a capability or activate a package</td>
+</tr>
+<tr>
+<td>Colon-qualified message</td>
+<td>Exact owning prefix and its source-defined suffix rule</td>
+<td>Complete original message and cause</td>
+<td>A colon does not universally mean the same kind of parameter across components</td>
+</tr>
+<tr>
+<td>Nova <code>stage-result.v2</code></td>
+<td><code>outcome</code> plus lower-case <code>reason.code</code></td>
+<td><code>reason.message</code>, run/stage/attempt and original error</td>
+<td>A translated <code>retry</code> reason is not proof that repeating the external action is safe</td>
+</tr>
+<tr>
+<td>HTTP JSON error or readiness response</td>
+<td>Status, exact JSON <code>error</code>, responding service and route</td>
+<td>Target/time, response, request/operation identity with secrets removed</td>
+<td>Not-ready is not a completed attempt result; a transport failure can leave work uncertain</td>
+</tr>
+<tr>
+<td>Worker terminal result</td>
+<td>Bound result state and its <code>error.code</code>/message</td>
+<td>Claim/generation, attempt identity, resources, evidence and cleanup</td>
+<td>Progress and log text are not terminal authority</td>
+</tr>
+<tr>
+<td>Buster provider assertion failure</td>
+<td>Normal test outcome and findings</td>
+<td>Executed/skipped case evidence and provider result</td>
+<td>A failed assertion is not automatically an engine exception or unavailable authority</td>
+</tr>
+<tr>
+<td>External dependency error</td>
+<td>Dependency-specific code and underlying cause</td>
+<td>Selected dependency/version/endpoint and operation identity</td>
+<td>No global KubeClaw meaning or universal retry rule is inferred</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — typed identity and result translation:</strong>
+<a href="../../../skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L38">RegistryError / RegistryErrorCode</a> (<code>skills/common/plugin-runtime/foundation/registry/errors.ts:1–38</code>, current-checkout SHA-256 <code>148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25</code>). <a href="../../../skills/nova/core/execution/stage-executor.ts#L128-L141">StageExecutor failure translation and result event</a> (<code>skills/nova/core/execution/stage-executor.ts:128–141</code>, current-checkout SHA-256 <code>4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb</code>).</p>
+<h2 id="choose-the-owner-and-detailed-reference">Choose the owner and detailed reference</h2>
+<p>The following is a finite routing index, not an exhaustive code catalogue.
+Use the exact emitting site for the condition and the detailed page for its
+procedure; do not copy one component's recovery rule to a similar prefix.</p>
+<table>
+<thead>
+<tr>
+<th>Owner / namespace</th>
+<th>First boundary to establish</th>
+<th>Detailed route</th>
+<th>Retry condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foundation <code>REGISTRY_*</code></td>
+<td>Canonical package files, schema, trust, enabled registration and capability selection</td>
+<td><a href="configuration-errors.html">Configuration errors</a>, <a href="../use/plugins.html">plugin use</a></td>
+<td>Correct the owning rejection; do not widen unrelated grants or bypass trust</td>
+</tr>
+<tr>
+<td>Platform / project / graph / plan</td>
+<td>Exact artifact/version and loader/compiler/resolver condition</td>
+<td><a href="configuration.html">Configuration</a>, <a href="configuration-errors.html">configuration errors</a></td>
+<td>Invalid unchanged input must be corrected; compiled input is not execution proof</td>
+</tr>
+<tr>
+<td>Nova run, effect, wait and recovery</td>
+<td>Original run/graph/package/effect identity and durable state</td>
+<td><a href="../understand/nova-core.html">Nova failure families</a>, <a href="../use/diagnose.html">diagnosis</a></td>
+<td>Reconcile uncertain accepted effects before starting a replacement</td>
+</tr>
+<tr>
+<td>Buster engine/provider/remote result</td>
+<td>Stored job, request key, provider result, cleanup and evidence-import state</td>
+<td><a href="buster-error-codes.html">Buster error codes</a>, <a href="../understand/buster.html">Buster recovery</a></td>
+<td>Use the same existing job/import authority; evidence import failure is not a reason to rerun tests</td>
+</tr>
+<tr>
+<td>Worker <code>WORKER_*</code> and phase families</td>
+<td>Envelope, phase, claim expiry, termination and cleanup</td>
+<td><a href="../understand/worker-core.html">Worker Core</a>, <a href="worker-profiles-and-roles.html">worker profiles</a></td>
+<td>Unsettled work fences new execution; a timeout alone does not prove quiescence</td>
+</tr>
+<tr>
+<td>Prism <code>PRISM_*</code>, service readiness and operation state</td>
+<td>Exact responding service, native readiness, profile/budget and durable operation binding</td>
+<td><a href="../understand/prism-runtime.html">Prism runtime</a>, <a href="host-and-prism-configuration.html">host configuration</a></td>
+<td>Restore required authority without bypassing replay protection or native reconciliation</td>
+</tr>
+<tr>
+<td>Observer <code>OBSERVER_*</code> / <code>REQUIRED_OBSERVER_*</code></td>
+<td>Actual subscription, delivery attempts, sink receipt and checkpoint</td>
+<td><a href="events.html">Events and delivery</a>, <a href="../understand/telemetry.html">telemetry</a></td>
+<td>Use bounded policy and retained identities; do not advance checkpoints manually</td>
+</tr>
+<tr>
+<td>Audit <code>AUDIT_*</code> and journal failures</td>
+<td>Correct event file/run, possible acquisition changes, chain integrity</td>
+<td><a href="events.html#audit-acquisition-can-change-the-journal">Audit acquisition</a></td>
+<td>Preserve original evidence before deciding retry; no unchanged-byte assumption</td>
+</tr>
+<tr>
+<td>OpenClaw Redis transport</td>
+<td>Exact typed transport-policy or dependency error</td>
+<td><a href="../understand/telemetry.html">Telemetry</a>, <a href="environment-variables.html">environment</a></td>
+<td>Correct the actual dependency/transport condition; do not disable protection to hide the failure</td>
+</tr>
+<tr>
+<td>Dependency / unknown component</td>
+<td>Original cause and actual owner, not a guessed family</td>
+<td><a href="../use/diagnose.html">Diagnosis</a></td>
+<td>Stop until the operation's outcome and supported recovery are known</td>
+</tr>
+</tbody>
+</table>
+<p>The Buster code page remains the owner of its generated mechanical rows. Its
+current generator selects engine JS/TS and plugin <code>src</code> JS/TS, excludes tests
+and declarations, and follows supported finite local constructions. That scope
+is not a global Core, Prism, Worker, Go, C, Python or shell error inventory.
+This hub is authored routing and consequence explanation, not another copied
+Buster code table or a new generator output.</p>
+<p><strong>Source — bounded Buster discovery:</strong>
+<a href="../../../scripts/generate-buster-error-reference.mjs#L15-L69">productionFiles / stableCode / valuesFor</a> (<code>scripts/generate-buster-error-reference.mjs:15–69</code>, current-checkout SHA-256 <code>83a7b3d025d684b0ebf321362885aaf0094a709efb8dca3a3765539a6f934000</code>).</p>
+<h2 id="dynamic-families-and-detail-parameters">Dynamic families and detail parameters</h2>
+<p>A stable family can be constructed from a finite prefix/suffix set. Preserve
+that construction and the call site: a list of uppercase string literals can
+miss typed codes, translated reasons and interpolated families.</p>
+<table>
+<thead>
+<tr>
+<th>Exact family / parameters</th>
+<th>Actual trigger and phase</th>
+<th>Effect and safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WORKER_ATTEMPT_INPUT_{BYTE_LIMIT,NODE_LIMIT,DEPTH_LIMIT,TYPE_INVALID,CYCLE}</code></td>
+<td><code>preflightJson</code> checks the constructor envelope with the <code>WORKER_ATTEMPT_INPUT</code> prefix</td>
+<td>Correct the rejected representation and retain the exact limit/detail. This check precedes that executor's operation; do not generalize that ordering to result checks</td>
+</tr>
+<tr>
+<td><code>WORKER_RESULT_{BYTE_LIMIT,NODE_LIMIT,DEPTH_LIMIT,TYPE_INVALID,CYCLE}</code></td>
+<td>The same helper checks the specialist result after operation and again after optional result finalization</td>
+<td>Work can already have happened. Preserve result/attempt/cleanup evidence; changing input and rerunning is not a substitute for resolving the original outcome</td>
+</tr>
+<tr>
+<td><code>${phase}_TIMEOUT</code></td>
+<td>Deadline helper reaches the named phase limit; non-maintenance claim expiry can instead emit <code>WORKER_CLAIM_EXPIRED</code></td>
+<td>Find the actual phase call and its settlement/termination evidence before deciding retry</td>
+</tr>
+<tr>
+<td><code>WORKER_PHASE_UNRESOLVED:${phase}</code></td>
+<td>Aborted work does not settle within the drain interval, or a later phase is already fenced</td>
+<td>Quiescence is unproved. Reconcile owned work; do not treat cancellation as a successful kill</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_BUDGET_NOT_ACCEPTED:{cpuTimeMs,maximumMemoryBytes,maximumTasks}</code></td>
+<td>Budget is not requested, or a new unrecovered attempt exceeds the host maximum</td>
+<td>Correct producer envelope/policy. Recovery status affects the comparison; do not raise host policy inside the Worker to force acceptance</td>
+</tr>
+<tr>
+<td><code>SECURE_REDIS_TRANSPORT_POLICY_VIOLATION</code> / <code>MISSING_DEPENDENCY</code></td>
+<td>Typed transport-policy or dependency constructor</td>
+<td>Preserve code/details/dependency/cause separately from the English message; neither is a successful delivery</td>
+</tr>
+</tbody>
+</table>
+<p>In the JSON preflight, <code>TYPE_INVALID</code> covers unsupported representations such
+as non-plain objects or accessor/non-enumerable properties. <code>CYCLE</code> is the
+helper's diagnostic for repeated object identity in its traversal; do not
+infer a different serializer's behavior from that label. Size/node/depth
+checks apply at their actual caller, not at a universal product boundary.</p>
+<p><strong>Source — the two real preflight callers and finite suffixes:</strong>
+<a href="../../../skills/worker/core/worker/attempt-executor.ts#L144-L183">preflightJson</a> (<code>skills/worker/core/worker/attempt-executor.ts:144–183</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>). <a href="../../../skills/worker/core/worker/attempt-executor.ts#L218-L223">constructor input preflight</a> (<code>skills/worker/core/worker/attempt-executor.ts:218–223</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>). <a href="../../../skills/worker/core/worker/attempt-executor.ts#L421-L425">post-operation result preflight</a> (<code>skills/worker/core/worker/attempt-executor.ts:421–425</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>). <a href="../../../skills/worker/core/worker/attempt-executor.ts#L538-L543">post-finalization result preflight</a> (<code>skills/worker/core/worker/attempt-executor.ts:538–543</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>).</p>
+<p><strong>Source — timeout, unresolved work and native budget conditions:</strong>
+<a href="../../../skills/worker/core/worker/phase-deadline.ts#L17-L54">WorkerPhaseDeadline settlement, expiry and timeout rules</a> (<code>skills/worker/core/worker/phase-deadline.ts:17–54</code>, current-checkout SHA-256 <code>13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456</code>). <a href="../../../skills/prism/server/native-worker-execution.ts#L28-L40">native profile and budget acceptance</a> (<code>skills/prism/server/native-worker-execution.ts:28–40</code>, current-checkout SHA-256 <code>c6618f0f1dfdf61b2c2a126700f3aded99519b20a7ce3b553f21c27f53f3a406</code>). <a href="../../../skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts#L7-L43">RedisTransportPolicyError / MissingDependencyError</a> (<code>skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts:7–43</code>, current-checkout SHA-256 <code>cc49831a1ff6eef51642fd47a0e4a1d00d6ad6bb6337c09f709d7cfd5a5f46da</code>).</p>
+<h2 id="translation-changes-the-readers-decision">Translation changes the reader's decision</h2>
+<p><code>StageExecutor</code> turns an <code>EFFECT_OUTCOME_UNRESOLVED</code> or <code>EFFECT_RECOVERY_*</code>
+message into outcome <code>blocked</code>, reason <code>core.effect_reconciliation_required</code>,
+empty artifacts and the preserved original message. Other failures can become
+<code>core.attempt_cancelled</code>, <code>core.attempt_timed_out</code> or
+<code>core.plugin_runtime_failed</code>. The result is then recorded as an attempt event;
+a result's reason and the event's type are different fields.</p>
+<p>Do not erase the first error when a wrapper translates it. In particular,
+<code>core.effect_reconciliation_required</code> means the original effect must be
+reconciled, not that no effect occurred. The Worker also promotes unsettled
+phase/execution state to <code>WORKER_PHASE_UNRESOLVED</code> unless termination itself
+failed; the original fault context remains part of its diagnostic.</p>
+<p><strong>Source — unresolved work overrides a misleading terminal interpretation:</strong>
+<a href="../../../skills/worker/core/worker/attempt-executor.ts#L573-L582">termination and unresolved result mapping</a> (<code>skills/worker/core/worker/attempt-executor.ts:573–582</code>, current-checkout SHA-256 <code>2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42</code>).</p>
+<p>Readiness is a separate boundary. The selected Prism worker returns HTTP 503
+and <code>PRISM_NATIVE_RECONCILIATION_REQUIRED</code> while native readiness is false.
+In HMAC mode, a failed nonce-database check returns HTTP 503 and
+<code>PRISM_NONCE_DATABASE_UNAVAILABLE</code>. HMAC is a shared-secret authentication
+mechanism. This readiness probe checks nonce-table availability only; it does
+not authenticate a request or consume its nonce. Separate per-request
+authentication verifies HMAC and consumes the nonce to reject replayed requests.
+These readiness errors
+do not describe a successful attempt result or authorize bypassing replay
+checks. A ready service can still reject a later envelope or budget.</p>
+<p><strong>Source — actual readiness and dispatch branches:</strong>
+<a href="../../../skills/prism/server/worker-service.ts#L72-L93">serveReadiness / dispatchAttempt</a> (<code>skills/prism/server/worker-service.ts:72–93</code>, current-checkout SHA-256 <code>90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4</code>).</p>
+<p><strong>Source — availability probe versus per-request authentication:</strong>
+<a href="../../../skills/prism/server/worker-readiness.ts#L8-L10">checkWorkerNonceTable availability-only query</a> (<code>skills/prism/server/worker-readiness.ts:8–10</code>, current-checkout SHA-256 <code>b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e</code>). <a href="../../../skills/prism/server/worker-readiness.ts#L87-L103">WorkerNonceDatabase.run / check / authenticate</a> (<code>skills/prism/server/worker-readiness.ts:87–103</code>, current-checkout SHA-256 <code>b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e</code>). <a href="../../../skills/prism/server/internal-auth.ts#L26-L49">PostgresNonceStore.consume conflict detection</a> (<code>skills/prism/server/internal-auth.ts:26–49</code>, current-checkout SHA-256 <code>e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72</code>). <a href="../../../skills/prism/server/internal-auth.ts#L52-L87">verifyInternalRequest signature and replay rejection</a> (<code>skills/prism/server/internal-auth.ts:52–87</code>, current-checkout SHA-256 <code>e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72</code>). <a href="../../../skills/prism/server/worker-service.ts#L55-L60">actual worker request authentication before dispatch</a> (<code>skills/prism/server/worker-service.ts:55–60</code>, current-checkout SHA-256 <code>90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4</code>).</p>
+<h2 id="diagnose-uncertainty-before-retry">Diagnose uncertainty before retry</h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>First distinction</th>
+<th>Preserve / next decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schema or trust rejection</td>
+<td>Which validator/owner rejected which exact bytes?</td>
+<td>Input/version/package identity and error details; correct only that authority</td>
+</tr>
+<tr>
+<td>Timeout, disconnected client or lost acknowledgement</td>
+<td>Was work accepted, and does a terminal receipt exist?</td>
+<td>Original request key/job/effect/attempt; reconcile before a new submission</td>
+</tr>
+<tr>
+<td>Report or evidence import failed</td>
+<td>Did execution already finish while import remained incomplete?</td>
+<td>Original result and evidence digests/import state; repair import, not test execution</td>
+</tr>
+<tr>
+<td>Cleanup or termination unresolved</td>
+<td>Can the current owner prove all owned work stopped?</td>
+<td>Native scope/process/claim, cleanup and fault evidence; keep new admission fenced</td>
+</tr>
+<tr>
+<td>Normal failed assertion</td>
+<td>Did the required test actually execute and produce findings?</td>
+<td>Executed/skipped/missing case data; do not hide an engine failure as a finding</td>
+</tr>
+<tr>
+<td>Unknown external error</td>
+<td>Which dependency and operation own it?</td>
+<td>Full first cause and selected version/target; unsupported recovery stays explicit</td>
+</tr>
+</tbody>
+</table>
+<p>For an interrupted diagnostic, retain the first error and partial output
+before deciding another attempt. For audit specifically, do not assume the
+journal stayed byte-identical: use the <a href="events.html#audit-acquisition-can-change-the-journal">audit acquisition conditions</a>,
+including the correctly bound inactive-copy rule when originals must be retained.</p>
+<p>Expected completion of diagnosis is an identified owner and cause class, a
+supported next action with its stop condition, and the bound evidence needed
+to prove recovery and cleanup. A new green status without those identities
+does not resolve the original uncertain operation.</p>
+<h2 id="coverage-and-maintenance-limits">Coverage and maintenance limits</h2>
+<p>This page covers the selected current Foundation, Nova, Worker, Prism,
+Buster-generator and OpenClaw transport sources above. Product-wide emitting,
+wrapping, HTTP and result-translation paths across every language and package
+have not all been discovered. Dynamic families need their complete callers,
+parameters and effect states; a string count is not that proof. Unknown
+external codes and unsupported recovery routes remain owned by the relevant
+component, not silently assigned a generic retry rule.</p>
+<p>Use <a href="../extend/documentation-maintenance.html">Documentation maintenance</a> when
+an error's code, trigger, representation, owner or retry behavior changes.
+Keep generated facts separate from authored interpretation; update the affected
+reader route as well as the exact source identity. The existing Buster generator
+does not generate this central hub. We ran no extractor, diagnostic, audit, restart,
+retry, repair or live recovery command for this page.</p>
+</main></body></html>

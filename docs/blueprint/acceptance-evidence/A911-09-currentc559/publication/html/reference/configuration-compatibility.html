@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/configuration-compatibility.html"></head><body><main>
+<h1 id="configuration-compatibility">Configuration Compatibility</h1>
+<p>Status: current support reference
+Audience: operator, maintainer, plugin author
+Owner: configuration-owning components
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.schema.json">skills/common/plugin-runtime/foundation/config/platform.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-snapshots.ts">skills/nova/core/execution/engine-snapshots.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json">contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json">contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json</a>
+Applies to: current readers and retained durable versions
+Last verified: 2026-09-21 at source revision <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<h2 id="support-meanings">Support meanings</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Author</td>
+<td>A current tool creates this version for new work.</td>
+</tr>
+<tr>
+<td>Read</td>
+<td>A current tool validates and consumes this version.</td>
+</tr>
+<tr>
+<td>Recover only</td>
+<td>Current code reads the version to continue retained state but does not create it for a new run.</td>
+</tr>
+<tr>
+<td>Reject</td>
+<td>The current boundary fails rather than guessing or translating it.</td>
+</tr>
+</tbody>
+</table>
+<p>Compatibility is per artifact. A process that can read an older snapshot does
+not imply that its current project input, plugin packages, or worker result can
+be mixed with that snapshot.</p>
+<h2 id="current-map">Current map</h2>
+<table>
+<thead>
+<tr>
+<th>Artifact/contract</th>
+<th>New authoring</th>
+<th>Current read</th>
+<th>Conditions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pipeline-platform.v2</code></td>
+<td>Author</td>
+<td>Read</td>
+<td>Exact version only; closed schema. There is no version fallback or field translation.</td>
+</tr>
+<tr>
+<td><code>nova-project.v2</code></td>
+<td>Author</td>
+<td>Read</td>
+<td>Exact version only. Current CLI requires explicit architecture and Blueprint declarations.</td>
+</tr>
+<tr>
+<td><code>pipeline-definition.v2</code></td>
+<td>Author</td>
+<td>Read</td>
+<td>Exact version only; plugin-owned <code>config</code>/<code>input</code> must match the installed registration schemas.</td>
+</tr>
+<tr>
+<td><code>.swarm/pipeline.json</code></td>
+<td>Author</td>
+<td>Read</td>
+<td>Current structural declaration has no root schema-version field. Compatibility is determined by loader fields, suite/provider contract IDs, registration schemas, resolver policy, and coupled generation.</td>
+</tr>
+<tr>
+<td><code>.swarm/progress.json</code> version 1</td>
+<td>Author through scaffold</td>
+<td>Read by project setup and explicit import tooling</td>
+<td>It is project authoring state, not a resumable Core snapshot.</td>
+</tr>
+<tr>
+<td><code>published-json-pair.v1</code></td>
+<td>Author</td>
+<td>Read</td>
+<td>Exact manifest/member shape, generation digest, and byte equality.</td>
+</tr>
+<tr>
+<td><code>run-snapshot.v4</code></td>
+<td>Author</td>
+<td>Read/recover</td>
+<td>Current format; includes runtime-dispatch and cache semantic profiles.</td>
+</tr>
+<tr>
+<td><code>run-snapshot.v3</code></td>
+<td>No new authoring</td>
+<td>Recover only</td>
+<td>Requires its runtime-dispatch profile; has no cache profile.</td>
+</tr>
+<tr>
+<td><code>run-snapshot.v1</code> / <code>v2</code></td>
+<td>No new authoring</td>
+<td>Recover only</td>
+<td>Must not contain newer semantic profile fields. Original runtime/package compatibility remains required.</td>
+</tr>
+<tr>
+<td><code>execution-graph-snapshot.v3</code></td>
+<td>Author</td>
+<td>Read/recover</td>
+<td>Current portable JSON digest ordering.</td>
+</tr>
+<tr>
+<td><code>execution-graph-snapshot.v2</code></td>
+<td>No new authoring</td>
+<td>Recover only</td>
+<td>Recovery rebuilds using the stored version before digest comparison.</td>
+</tr>
+<tr>
+<td><code>worker-attempt-envelope/result/profile.v3</code></td>
+<td>Author for native Prism</td>
+<td>Read</td>
+<td>Uses native-attempt-tree resources and Linux tasks. Producer, worker, and result versions must agree.</td>
+</tr>
+<tr>
+<td>Worker v2 envelope/result/profile</td>
+<td>Author for current Prism agent launcher</td>
+<td>Read</td>
+<td>Uses resource capability/budget v1 and <code>maximumProcesses</code>; unavailable measurement is explicit.</td>
+</tr>
+<tr>
+<td>Worker v1 retained records</td>
+<td>No new authoring</td>
+<td>Read where the v1 contract path is selected</td>
+<td>No resource-accounting fields may be inferred. Do not turn absence into zero.</td>
+</tr>
+<tr>
+<td><code>worker-protocol.v1</code></td>
+<td>Author</td>
+<td>Read</td>
+<td>Exact protocol value in current worker versions.</td>
+</tr>
+<tr>
+<td>Prism native pool policy schema <code>1</code></td>
+<td>Host preparation</td>
+<td>Read</td>
+<td>Exact role, node, digest, paths, and positive aggregate limits; actual cgroup must match.</td>
+</tr>
+<tr>
+<td>Compact swarm profile <code>standard</code></td>
+<td>Shipped test/runtime authoring</td>
+<td>Read only by callers of the expander</td>
+<td>Exact feature/tuning assertions; unknown profiles/paths reject. Not a pipeline-platform version.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-pins-a-nova-run">What pins a Nova run</h2>
+<p>Run recovery checks more than a schema version:</p>
+<ul>
+<li>pipeline ID and normalized graph digest,</li>
+<li>registry snapshot and its dependency-identity format,</li>
+<li>exact package set, versions, and content digests,</li>
+<li>effective providers, grants, adapters, active adapters, observers, and
+isolation configuration,</li>
+<li>runtime-dispatch and cache semantic profiles where the snapshot version
+contains them,</li>
+<li>project compiler source/report/semantic selections reconstructed from the
+stored graph.</li>
+</ul>
+<p>A current parser can therefore read a stored snapshot but still reject the
+current runtime as incompatible. This is deliberate: reading bytes is not
+authority to reinterpret a running workflow.</p>
+<h2 id="contract-id-compatibility">Contract-ID compatibility</h2>
+<p>Stage types, provider <code>uses</code>, suite <code>uses</code>, worker engine contracts, and
+capability providers are versioned identities. Selection is exact. Installing
+a newer package does not redirect an older contract ID unless that package
+still registers and implements it. Configuration schema defaults are part of
+the selected registration version and do not backfill stored effective values.</p>
+<p>For <code>.swarm/pipeline.json</code>, retain the suite template digest and resolved
+provider package/content digests in the resolved plan. The same authored JSON
+can resolve differently if the registry or operator resolver policy changes;
+the plan digest makes that difference visible.</p>
+<h2 id="unsupported-combinations">Unsupported combinations</h2>
+<ul>
+<li>A v3 native profile with v2 <code>maximumProcesses</code> budgets.</li>
+<li>A v2 agent profile presented to a worker that advertises only its v3 digest.</li>
+<li>A changed graph supplied to an existing run ID.</li>
+<li>A changed platform authority or unapproved package set during recovery.</li>
+<li>One member from each of two <code>.swarm</code> publication generations.</li>
+<li>A compact <code>swarm.config.json</code> passed as <code>--platform</code>.</li>
+<li>A project test declaration passed to the Core <code>--pipeline</code> flag.</li>
+<li>A chart value assumed to be effective without schema validation, rendering,
+rollout, and process readiness.</li>
+</ul>
+<h2 id="change-procedure">Change procedure</h2>
+<p>Before changing a versioned configuration or package:</p>
+<ol>
+<li>Inventory active runs and retained worker attempts that use the old version.</li>
+<li>Keep the old executable and configuration available until those records are
+terminal or proved recoverable by the intended release.</li>
+<li>Validate the new authoring input and compile/resolve it without effects.</li>
+<li>Start new work under a new run/plan/profile digest as applicable.</li>
+<li>Prove recovery separately from new-run success.</li>
+</ol>
+<p>Do not edit retained snapshots, plan digests, profile digests, or publication
+manifests to declare compatibility.</p>
+<blockquote>
+<p><strong>Source evidence — retained version handling</strong></p>
+<p><strong>Claim:</strong> Current Nova authors run snapshot v4 but validates v1–v4 under version-specific fields, and graph recovery preserves the stored v2/v3 digest algorithm before comparison.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L75-L109">snapshot versions and checks</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L68-L73">stored graph version comparison</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L515-L529">current graph contract</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json#L113-L160">current native worker profile contract</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/tests/worker-service.test.mts#L120-L151">historical worker fixture test</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node --test skills/prism/tests/worker-service.test.mts</code> against implementation revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code>: six tests passed, exit zero. These tests establish the stated local rejection behavior; they do not establish a supported live upgrade or rollback pair.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<p><strong>Limit:</strong> Source compatibility does not prove that an older deployment image, external provider, or off-host backup remains available.</p>
+</blockquote>
+</main></body></html>

@@ -1,0 +1,1964 @@
+{
+  "routes": {
+    "/": {
+      "page": "docs/site/README.md",
+      "owner": "documentation",
+      "sourceDependencies": [
+        "packaging/runtime/package-ownership.json"
+      ],
+      "sha256": "2de7f176f88e506296527893f456760566a8679b221a93042c7ebee32a729897"
+    },
+    "/decisions/": {
+      "page": "docs/site/decisions/README.md",
+      "owner": "platform-architecture",
+      "sourceDependencies": [
+        "packaging/runtime/package-ownership.json"
+      ],
+      "sha256": "533940c396d62234ecf7b743d2d2b8b33aa52ae92da3f5e3cf3f9bdb73ef3d1c"
+    },
+    "/decisions/acceptance/": {
+      "page": "docs/site/decisions/acceptance.md",
+      "owner": "platform-maintainers",
+      "sourceDependencies": [
+        "scripts/docs-status.mjs",
+        " tests/verification/contracts/check-production-receipt-attestation.mjs"
+      ],
+      "sha256": "864571a768072172f76248e1fa16625810fb88c079ff856ad49c8cce5d15b25e"
+    },
+    "/decisions/core-and-plugins/": {
+      "page": "docs/site/decisions/core-and-plugins.md",
+      "owner": "KubeClaw maintainers",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        " packaging/runtime/roles/nova.json"
+      ],
+      "sha256": "0e02f53cbe3474c860cae536c1014f87676f1fb365029941a0a4a38bf3366f3e"
+    },
+    "/decisions/echo/": {
+      "page": "docs/site/decisions/echo.md",
+      "owner": "review-plugin maintainers",
+      "sourceDependencies": [
+        "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        " skills/nova/plugins/review/src/review-governor-decision.ts",
+        " skills/nova/plugins/review/src/repository-audit-stage.ts"
+      ],
+      "sha256": "37a1904bdac312f978e484ebac9ee4ee8cca283b78ec108eba635e4eda877f4d"
+    },
+    "/decisions/implementation/": {
+      "page": "docs/site/decisions/implementation.md",
+      "owner": "platform maintainers",
+      "sourceDependencies": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        " skills/worker/core/worker/native-worker-launcher.c",
+        " cmd/buster-namespace-controller/demo-product.go"
+      ],
+      "sha256": "21ff344ca1507ae8d22a374de9d0fecb009404371e5fa1f10f0d8505c7775bfb"
+    },
+    "/decisions/prism/": {
+      "page": "docs/site/decisions/prism.md",
+      "owner": "Prism maintainers",
+      "sourceDependencies": [
+        "skills/prism/domain/index.ts",
+        " skills/prism/corpus/index.ts",
+        " spikes/prism/postgres-retrieval/verify.mjs"
+      ],
+      "sha256": "0dd275b4aceb066bc662256f42ac31626efbb029dad55405ad0ed215d139d156"
+    },
+    "/decisions/runtime-and-operations/": {
+      "page": "docs/site/decisions/runtime-and-operations.md",
+      "owner": "platform maintainers",
+      "sourceDependencies": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        " packaging/runtime/roles/prism.json",
+        " scripts/docs-publication.mjs"
+      ],
+      "sha256": "d0f6f35afb05af56d2e4d4adc96926e17dbe369c5bc0533ed5aaa83daa053ec3"
+    },
+    "/decisions/test-gate/": {
+      "page": "docs/site/decisions/test-gate.md",
+      "owner": "KubeClaw maintainers",
+      "sourceDependencies": [
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        " contracts/pipeline-test-gate/v1/src/index.ts"
+      ],
+      "sha256": "280f35e2d318793477b4ebc5170fcf157570019e8e9ddacf91d1628ff5a9b471"
+    },
+    "/extend/": {
+      "page": "docs/site/extend/README.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/common/plugin-runtime/foundation/registry",
+        " packaging/runtime/roles",
+        " packaging/runtime/package-ownership.json"
+      ],
+      "sha256": "6348ee643de064af6c0be4387d943ba3478d58c7a5514d99b6897badceca70ba"
+    },
+    "/extend/buster/": {
+      "page": "docs/site/extend/buster.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " contracts/pipeline-test-gate/v1/suites",
+        " skills/nova/core/test-gates/resolver.ts",
+        " skills/buster/engine/test-gates/provider-loader.ts",
+        " skills/buster/engine/test-gates/runner.ts",
+        " skills/buster/engine/test-gates/report-adapter-runtime.ts"
+      ],
+      "sha256": "a5f78cfe2f56796e0c78f8e2c6f098848aa1fd67eb965e0ba58e2d390eba203e"
+    },
+    "/extend/contracts/": {
+      "page": "docs/site/extend/contracts.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/common/plugin-runtime/foundation/registry/build.ts",
+        " skills/nova/core/execution/stage-executor.ts",
+        " skills/nova/core/telemetry/observers.ts",
+        " skills/buster/engine/test-gates/provider-loader.ts",
+        " skills/buster/engine/test-gates/report-adapter-runtime.ts"
+      ],
+      "sha256": "e061b3b4b240792af39731c64d59ec9454fd6ed8918680f2e3ae2782b4f54d20"
+    },
+    "/extend/developer-handbook/": {
+      "page": "docs/site/extend/developer-handbook.md",
+      "owner": "developer experience maintainers",
+      "sourceDependencies": [
+        "package.json",
+        " package-lock.json",
+        " tsconfig.base.json",
+        " packaging/runtime/package-ownership.json",
+        " versions.json",
+        " .github/workflows",
+        " skills/nova/core",
+        " skills/worker/core",
+        " skills/buster/engine",
+        " skills/prism",
+        " tools/ops-mcp",
+        " scripts"
+      ],
+      "sha256": "45be993fe6a2931e39e29ba05e5033a2b7e6915558f2f8c899c9a0daac39b528"
+    },
+    "/extend/documentation-maintenance/": {
+      "page": "docs/site/extend/documentation-maintenance.md",
+      "owner": "documentation",
+      "sourceDependencies": [
+        "scripts/docs-governance.mjs",
+        " scripts/docs-generate.mjs",
+        " scripts/docs-inventory.mjs",
+        " scripts/docs-configuration-inventory.mjs",
+        " scripts/check-configuration-cli-drift.mjs",
+        " scripts/check-configuration-drift-mutations.mjs",
+        " scripts/docs-platform-surface-inventory.mjs",
+        " scripts/docs-publication.mjs",
+        " scripts/docs-tree-boundary.mjs",
+        " scripts/docs-parity-transition.mjs",
+        " docs/config/documentation-tree-classification.json",
+        " docs/config/documentation-tree-baseline.json",
+        " docs/site/reference/documentation-route-registry.json",
+        " package.json",
+        " .github/workflows/docs-checks.yaml"
+      ],
+      "sha256": "d89e688917a6fd721033996c5d6ea2078cab10d4c5d7caf79e6e6ddb62d4a315"
+    },
+    "/extend/effectful-plugin/": {
+      "page": "docs/site/extend/effectful-plugin.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        " skills/nova/core/effects/coordinator.ts",
+        " skills/nova/core/effects/journal.ts",
+        " skills/nova/core/execution/effect-recovery.ts",
+        " skills/common/plugins/state-store/src/adapter.ts",
+        " skills/common/plugin-runtime/sdk/src/runtime.ts"
+      ],
+      "sha256": "b46cca5cc2e42985a69c496914b545680506266b3bcade2c1ce1afdc69bcadf3"
+    },
+    "/extend/first-plugin/": {
+      "page": "docs/site/extend/first-plugin.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "docs/site/extend/examples/minimal-stage",
+        " package.json",
+        " skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " packaging/runtime/roles/nova.json"
+      ],
+      "sha256": "9d07db73ed53163140e31424ae42b616032ad653f951b5da43912a2e1c90fc43"
+    },
+    "/extend/host-and-engine/": {
+      "page": "docs/site/extend/host-and-engine.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        " skills/prism/openclaw-plugin/openclaw.plugin.json",
+        " plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        " charts/ops-pod",
+        " skills/worker/core/worker/attempt-executor.ts",
+        " contracts/pipeline-worker-core/v1/src/types.ts",
+        " packaging/runtime/roles"
+      ],
+      "sha256": "77649597017ebc98dd53f56d22b1725b3dc5e5416cdf14bab7f7c09c0800ea7b"
+    },
+    "/extend/lint/": {
+      "page": "docs/site/extend/lint.md",
+      "owner": "lint",
+      "sourceDependencies": [
+        "skills/nova/plugins/lint/plugin.json",
+        " skills/nova/plugins/lint/src",
+        " skills/nova/plugins/lint/tests",
+        " charts/kubeclaw/files/config"
+      ],
+      "sha256": "c57c08ef38153d5adceec947cdccc545722d18438a253bb02096f50a8c881ab1"
+    },
+    "/extend/nova/": {
+      "page": "docs/site/extend/nova.md",
+      "owner": "nova",
+      "sourceDependencies": [
+        "packaging/runtime/roles/nova.json",
+        " skills/nova/core/execution/stage-executor.ts",
+        " skills/nova/core/execution/adapters.ts",
+        " skills/nova/core/telemetry/observers.ts",
+        " skills/nova/plugins/lint/plugin.json",
+        " skills/nova/plugins/lint/src/stage.ts",
+        " skills/nova/plugins/lint/src/adapter.ts",
+        " skills/nova/plugins/lint/src/engine/policy-version.ts"
+      ],
+      "sha256": "e0a70347fd87e601e04208349dde7e991f6806793274c2c906ac372503e40703"
+    },
+    "/extend/platform/": {
+      "page": "docs/site/extend/platform/README.md",
+      "owner": "developer experience maintainers; each component owner retains implementation authority",
+      "sourceDependencies": [
+        "package.json",
+        " skills/prism/package.json",
+        " skills/nova/core/lifecycle/reducer.ts",
+        " skills/nova/core/effects/durable-invocation.ts",
+        " skills/worker/core/worker/native-resource-pool.ts",
+        " skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        " skills/prism/storage/index.ts",
+        " .github/workflows/pipeline-reliability.yaml",
+        " .github/workflows/docs-checks.yaml"
+      ],
+      "sha256": "f595d9c712e57e4a95d29a87969a500868b7e9ab5e133d9a3ab89a71fd048cc1"
+    },
+    "/extend/platform/buster/": {
+      "page": "docs/site/extend/platform/buster.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1",
+        " skills/nova/core/test-gates/resolver.ts",
+        " skills/buster/engine/test-gates",
+        " cmd/buster-namespace-controller"
+      ],
+      "sha256": "25ddc521b4fce0e2a57c29e204f2398fdc284c4b5e3829421d923e8ae5208246"
+    },
+    "/extend/platform/prism/": {
+      "page": "docs/site/extend/platform/prism.md",
+      "owner": "Prism maintainers",
+      "sourceDependencies": [
+        "skills/prism",
+        " contracts/prism/v1",
+        " tests/verification/contracts"
+      ],
+      "sha256": "9c7b43487328edd95695c7581468b768f21d538dd2d7e429aa62e6a9ec6badeb"
+    },
+    "/extend/plugin-catalogue/": {
+      "page": "docs/site/extend/plugin-catalogue/README.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "sha256": "469273487351d2a175cb37037a28b89894faad115dac772707f2d0f8410584ea"
+    },
+    "/extend/plugin-catalogue/kubeclaw-agent-observer/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        " skills/common/plugins/openclaw-agent-observer/README.md"
+      ],
+      "sha256": "c39c469b268d480fe259e32d633c7cdfbbcc361d12539de977cbc4c3302f8a32"
+    },
+    "/extend/plugin-catalogue/kubeclaw-ops/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        " plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
+      ],
+      "sha256": "affbdbe5acf0bd3025cd7de2bf14e86ce5fb8bcfd086d17ecce057c0d02e204e"
+    },
+    "/extend/plugin-catalogue/kubeclaw-prism/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        " skills/prism/openclaw-plugin/README.md"
+      ],
+      "sha256": "27e0457d84cee6d35044a67770bd19aec20f40bdafc470eeb8ab362992b0e235"
+    },
+    "/extend/plugin-catalogue/kubeclaw.agent-observability/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/agent-observability/plugin.json",
+        " skills/common/plugins/agent-observability/README.md"
+      ],
+      "sha256": "250cfbeffaa10d85db8f2536367bc0f3880b78b1962fd82aa03915d775567d39"
+    },
+    "/extend/plugin-catalogue/kubeclaw.api-flow/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/api-flow/plugin.json",
+        " skills/buster/plugins/api-flow/README.md"
+      ],
+      "sha256": "a125e257f3fb8723d850397f3d51334921f05f7fc2db970ef57572cbd61f0860"
+    },
+    "/extend/plugin-catalogue/kubeclaw.architecture-validator/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/architecture-validator/plugin.json",
+        " skills/nova/plugins/architecture-validator/README.md"
+      ],
+      "sha256": "99457ece884d83be928028c399234964bd0d35bba415a08a64552e276b441cb0"
+    },
+    "/extend/plugin-catalogue/kubeclaw.artifact-store/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/artifact-store/plugin.json",
+        " skills/common/plugins/artifact-store/README.md"
+      ],
+      "sha256": "122e450b32aa2a7627d65c24c064f7507d9b9fd9d50189800eb015deae35d03a"
+    },
+    "/extend/plugin-catalogue/kubeclaw.axe/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/axe/plugin.json",
+        " skills/buster/plugins/axe/README.md"
+      ],
+      "sha256": "74761c42a7763f960cef4ed498c54ddfe08483e8aa5234b4f8d68117b551a676"
+    },
+    "/extend/plugin-catalogue/kubeclaw.blueprint-sync/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/blueprint-sync/plugin.json",
+        " skills/nova/plugins/blueprint-sync/README.md"
+      ],
+      "sha256": "f99edcc88c7b5bda9df347c441c58185864a94a4d3982f1ae9edd4cc465d9abd"
+    },
+    "/extend/plugin-catalogue/kubeclaw.buster-quality-gate/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/buster-quality-gate/plugin.json",
+        " skills/nova/plugins/buster-quality-gate/README.md"
+      ],
+      "sha256": "57b609b705a42246d7dd9d4b1766103a4c1e4cc741049fdab19b848c0ddb0205"
+    },
+    "/extend/plugin-catalogue/kubeclaw.case-study/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/case-study/plugin.json",
+        " skills/nova/plugins/case-study/README.md"
+      ],
+      "sha256": "f3450a13f22200b6ee70a2b24e4718358a8e494516accd709dcbda00c0540793"
+    },
+    "/extend/plugin-catalogue/kubeclaw.command-runner/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/command-runner/plugin.json",
+        " skills/common/plugins/command-runner/README.md"
+      ],
+      "sha256": "6038bbe032f12bcf5d64c46b68d01e4239664dff56af570d378ca805b7e28bf3"
+    },
+    "/extend/plugin-catalogue/kubeclaw.container-build/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/container-build/plugin.json",
+        " skills/buster/plugins/container-build/README.md"
+      ],
+      "sha256": "cf2e39c7fb5eb0010b6177e62309506821e0cc0d68cb5b92adf40fc37ebe73d7"
+    },
+    "/extend/plugin-catalogue/kubeclaw.coverage-budget/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        " skills/buster/plugins/coverage-budget/README.md"
+      ],
+      "sha256": "db0958031e2fc3704adb365b28ebc50b1faf7a235b3777ef4013a3542812624c"
+    },
+    "/extend/plugin-catalogue/kubeclaw.delivery-lint/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/delivery-lint/plugin.json",
+        " skills/nova/plugins/delivery-lint/README.md"
+      ],
+      "sha256": "f3d217612443deb901809428b7fd92589c299e052b426b2e3d9c0f953821dc65"
+    },
+    "/extend/plugin-catalogue/kubeclaw.demo-auth-smoke/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        " skills/buster/plugins/demo-auth-smoke/README.md"
+      ],
+      "sha256": "fab15e8ee594ebe9b13e29691c5239becd4549321a2e4671b092d2db908ed8f8"
+    },
+    "/extend/plugin-catalogue/kubeclaw.demo-handoff/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/demo-handoff/plugin.json",
+        " skills/nova/plugins/demo-handoff/README.md"
+      ],
+      "sha256": "4d1e58373ef473401c959c45c5259fe47ad58a59d023ee6d0b246062089948ad"
+    },
+    "/extend/plugin-catalogue/kubeclaw.direct-command/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/direct-command/plugin.json",
+        " skills/buster/plugins/direct-command/README.md"
+      ],
+      "sha256": "f65da73dd8bda5f2f3f8593e15c007a6444a867ea624e316092523a5a0a6f7b9"
+    },
+    "/extend/plugin-catalogue/kubeclaw.git-workspace/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/git-workspace/plugin.json",
+        " skills/common/plugins/git-workspace/README.md"
+      ],
+      "sha256": "e871dd9bb3e0931d1aeabddd7dd28dc4de02b6a41615f5ed4ae5751b875c458c"
+    },
+    "/extend/plugin-catalogue/kubeclaw.http/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/http/plugin.json",
+        " skills/buster/plugins/http/README.md"
+      ],
+      "sha256": "26511103f84c999ca1de4bee151d2bd0bc18726dc2d4b92d969b40eab58d81dc"
+    },
+    "/extend/plugin-catalogue/kubeclaw.human-approval/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/human-approval/plugin.json",
+        " skills/nova/plugins/human-approval/README.md"
+      ],
+      "sha256": "82ad7825c0b6e199c327e2af7f41d2dcff0a199297b03e51f9e49a25813f7da7"
+    },
+    "/extend/plugin-catalogue/kubeclaw.implementation-agent/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        " skills/nova/plugins/implementation-agent/README.md"
+      ],
+      "sha256": "59178a2048004ed0dea30fbf6f9c1eab170165e5529eef672eda312fe2a9cae9"
+    },
+    "/extend/plugin-catalogue/kubeclaw.junit-report/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        " skills/buster/plugins/junit-report-adapter/README.md"
+      ],
+      "sha256": "644b6a368fff6c554eda53a42f256204547f3e24c9b1df11b40af85a69b8c865"
+    },
+    "/extend/plugin-catalogue/kubeclaw.kubernetes-fixture/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        " skills/buster/plugins/kubernetes-fixture/README.md"
+      ],
+      "sha256": "6249bc825dfab85074174d87c90e3a8e297d9e2d4c5026ae72e942c12d90a9dc"
+    },
+    "/extend/plugin-catalogue/kubeclaw.lighthouse/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/lighthouse/plugin.json",
+        " skills/buster/plugins/lighthouse/README.md"
+      ],
+      "sha256": "a90981137ea8755d0ab2c4c96835a990d3eba7b5f77f89472f5385a5eed446a2"
+    },
+    "/extend/plugin-catalogue/kubeclaw.lint/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/lint/plugin.json",
+        " skills/nova/plugins/lint/README.md"
+      ],
+      "sha256": "e92fddec78da9602dcb99a022c80a2f53a955bf3584feb774d391d53f8107037"
+    },
+    "/extend/plugin-catalogue/kubeclaw.network-http/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/network-http/plugin.json",
+        " skills/common/plugins/network-http/README.md"
+      ],
+      "sha256": "1714379f8d3d9340d24c619fa5b3ea99e8b53ebe29ea477454c7f15d792752df"
+    },
+    "/extend/plugin-catalogue/kubeclaw.notification-observer/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/notification-observer/plugin.json",
+        " skills/common/plugins/notification-observer/README.md"
+      ],
+      "sha256": "21f189902ff376aae5b122c25552009a7143a71e0e6730071fd352c7be324938"
+    },
+    "/extend/plugin-catalogue/kubeclaw.openapi/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/openapi/plugin.json",
+        " skills/buster/plugins/openapi/README.md"
+      ],
+      "sha256": "b5c797dcbc2bac1c7a446a31931e7e131be45441e73f02f75819f20c78997428"
+    },
+    "/extend/plugin-catalogue/kubeclaw.openclaw-agent-events/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-events/plugin.json",
+        " skills/common/plugins/openclaw-agent-events/README.md"
+      ],
+      "sha256": "dded9cc203fb5c5f41651a1ace35b654a27e5fcf1cd99387a08375538d0c5e6c"
+    },
+    "/extend/plugin-catalogue/kubeclaw.operator-messaging/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/operator-messaging/plugin.json",
+        " skills/common/plugins/operator-messaging/README.md"
+      ],
+      "sha256": "29df8fde9ffc8595b4cd89d3740b3dfa0e8ad947c4395d532781dc70b86db24c"
+    },
+    "/extend/plugin-catalogue/kubeclaw.pipeline-review/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/pipeline-review/plugin.json",
+        " skills/nova/plugins/pipeline-review/README.md"
+      ],
+      "sha256": "f8dc5a53dcd82be374495c0cd391e51cbe0ea38c39bf53a75001c1dffe75fe03"
+    },
+    "/extend/plugin-catalogue/kubeclaw.playwright/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/playwright/plugin.json",
+        " skills/buster/plugins/playwright/README.md"
+      ],
+      "sha256": "c552051955d8162786d4bef000cc05e8c27b592d44b12c4a662922245c67949c"
+    },
+    "/extend/plugin-catalogue/kubeclaw.preflight-contract/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/preflight-contract/plugin.json",
+        " skills/nova/plugins/preflight-contract/README.md"
+      ],
+      "sha256": "08e517ad45dd4a43d0607488686b9756a29dc0274e31499397385c3466c99f6f"
+    },
+    "/extend/plugin-catalogue/kubeclaw.prism-design/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/prism-design/plugin.json",
+        " skills/nova/plugins/prism-design/README.md"
+      ],
+      "sha256": "928f9c5e5b84d5dd90d49cb389d43a88c47e6a73aadc862dbba5c4f093f07139"
+    },
+    "/extend/plugin-catalogue/kubeclaw.project-summary/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/project-summary/plugin.json",
+        " skills/nova/plugins/project-summary/README.md"
+      ],
+      "sha256": "58c91854ea33b1e886df9875426afe0599957f10d90b9601baac9d4770ed2683"
+    },
+    "/extend/plugin-catalogue/kubeclaw.redis-transport/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/redis-transport/plugin.json",
+        " skills/common/plugins/redis-transport/README.md"
+      ],
+      "sha256": "aea988e352ed0ce14ed22ff8e2c50a397bca8a80398b787a2f955a1c4813ffa3"
+    },
+    "/extend/plugin-catalogue/kubeclaw.remote-test-gate/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/remote-test-gate/plugin.json",
+        " skills/nova/plugins/remote-test-gate/README.md"
+      ],
+      "sha256": "cd05cd96e1d09960f1c2b2356c0fcd4a3c0b2390ed22704cea6ad2def265f72d"
+    },
+    "/extend/plugin-catalogue/kubeclaw.repository-adapter/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/repository-adapter/plugin.json",
+        " skills/nova/plugins/repository-adapter/README.md"
+      ],
+      "sha256": "e310ee92b62ea1b6fce6d4b0e381d1b5a8c5f8251be5b12138489e6c51429ff6"
+    },
+    "/extend/plugin-catalogue/kubeclaw.review/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/nova/plugins/review/plugin.json",
+        " skills/nova/plugins/review/README.md"
+      ],
+      "sha256": "4b95deb6d40f40eb2fb0584be6827a72779952abf3bfc7185e30d22be27209b2"
+    },
+    "/extend/plugin-catalogue/kubeclaw.runtime-dispatch/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        " skills/common/plugins/runtime-dispatch/README.md"
+      ],
+      "sha256": "8fe623844d847562a2001ca4780ffd89711df39fbb6d8f8388630590b2b971b6"
+    },
+    "/extend/plugin-catalogue/kubeclaw.secret-resolver/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/secret-resolver/plugin.json",
+        " skills/common/plugins/secret-resolver/README.md"
+      ],
+      "sha256": "a70c8de38db5c0b0bc25e80b6d6950cf7019de3e3157e42ea340c0c7439f51e1"
+    },
+    "/extend/plugin-catalogue/kubeclaw.security-providers/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/security-providers/plugin.json",
+        " skills/buster/plugins/security-providers/README.md"
+      ],
+      "sha256": "4c3692f8a79955a22aa448594703eba627bf02c37fa6bf81e5270e9b68e7adbf"
+    },
+    "/extend/plugin-catalogue/kubeclaw.size-budget/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/size-budget/plugin.json",
+        " skills/buster/plugins/size-budget/README.md"
+      ],
+      "sha256": "c7d30c9b82365b9c03dd52b0ab4d008a385bd7c3a3560e48ce0c24de2275acd7"
+    },
+    "/extend/plugin-catalogue/kubeclaw.state-store/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/state-store/plugin.json",
+        " skills/common/plugins/state-store/README.md"
+      ],
+      "sha256": "6a485c692eea5e302e2a2d972d92b45c43b9adac83a68286fd85a9828de455ff"
+    },
+    "/extend/plugin-catalogue/kubeclaw.tailscale-exposure/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        " skills/buster/plugins/tailscale-exposure/README.md"
+      ],
+      "sha256": "5fa49b7028934ab9a319ec1e4f7ec5dade7e8584df6ac60e1229861d9d8951ab"
+    },
+    "/extend/plugin-catalogue/kubeclaw.telemetry-observer/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        " skills/common/plugins/telemetry-observer/README.md"
+      ],
+      "sha256": "d65cf87f56ebaf0b0bb712ae78cf7fc3a292ceec616a08058d57547274b25cf0"
+    },
+    "/extend/plugin-catalogue/kubeclaw.telemetry-store/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/telemetry-store/plugin.json",
+        " skills/common/plugins/telemetry-store/README.md"
+      ],
+      "sha256": "25d27e2fd1dc75745b0e6655e28a3e0b3afa7176fad5916cf27f32a2540e6030"
+    },
+    "/extend/plugin-catalogue/kubeclaw.transport-publisher/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/transport-publisher/plugin.json",
+        " skills/common/plugins/transport-publisher/README.md"
+      ],
+      "sha256": "22a005e721862db71bc33074af824d970d035b5b627d8f852d2e3cc1fdb179b8"
+    },
+    "/extend/plugin-catalogue/kubeclaw.visual/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/buster/plugins/visual/plugin.json",
+        " skills/buster/plugins/visual/README.md"
+      ],
+      "sha256": "4acec9d8fd047ad241dc463d145b1fea8dad9867b83b7dc64146c8c1602bc627"
+    },
+    "/extend/plugin-catalogue/kubeclaw.wait-store/": {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugins/wait-store/plugin.json",
+        " skills/common/plugins/wait-store/README.md"
+      ],
+      "sha256": "7b02e28e3ac7afe7c926f26b6beb5a662f3cd4f18a90996d4665e59938d2595b"
+    },
+    "/extend/testing/": {
+      "page": "docs/site/extend/testing.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "scripts/verify-plugin-packages.mjs",
+        " skills/common/plugin-runtime/foundation/registry",
+        " packaging/runtime/roles"
+      ],
+      "sha256": "5bd174d5805a74753ce8ef0ef2e747b21a586c609adaf90bd44f4fa80063a39c"
+    },
+    "/product-surfaces/": {
+      "page": "docs/site/product-surfaces.md",
+      "owner": "documentation architecture",
+      "sourceDependencies": [
+        "package.json",
+        " packaging/runtime/package-ownership.json",
+        " packaging/runtime/roles",
+        " skills/common/plugin-runtime",
+        " skills/nova",
+        " skills/worker",
+        " skills/buster",
+        " skills/prism",
+        " contracts",
+        " charts",
+        " scripts"
+      ],
+      "sha256": "c8da865cd37de451478cd85aa9b7f8f935db3b42f9188c145362f3a0c058757b"
+    },
+    "/reference/": {
+      "page": "docs/site/reference/README.md",
+      "owner": "documentation",
+      "sourceDependencies": [
+        "scripts/docs-generate.mjs",
+        " scripts/docs-publication.mjs"
+      ],
+      "sha256": "be817131c12a4c58b592c14189812704f1f2cb09acf8b2ee6e38fbfa9239800f"
+    },
+    "/reference/api-object-updates/": {
+      "page": "docs/site/reference/api-object-updates.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        " charts/gitops/templates/applications.yaml"
+      ],
+      "sha256": "79fba7526353f900dbc22e87ada41c2bfa17c7883f6a25e4b2e405e4779c35d1"
+    },
+    "/reference/buster-error-codes/": {
+      "page": "docs/site/reference/buster-error-codes.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "scripts/generate-buster-error-reference.mjs"
+      ],
+      "sha256": "db2cb8053f9a16ca269cc093143e1703bc7d5518104072dbf41020ea77e0920f"
+    },
+    "/reference/buster-provider-configuration/": {
+      "page": "docs/site/reference/buster-provider-configuration.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "scripts/generate-buster-provider-reference.mjs",
+        " skills/buster/plugins/api-flow/schemas/config.schema.json",
+        " skills/buster/plugins/api-flow/schemas/flow.schema.json",
+        " skills/buster/plugins/axe/schemas/config.schema.json",
+        " skills/buster/plugins/container-build/schemas/config.schema.json",
+        " skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+        " skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+        " skills/buster/plugins/direct-command/schemas/config.schema.json",
+        " skills/buster/plugins/http/schemas/config.schema.json",
+        " skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+        " skills/buster/plugins/lighthouse/schemas/config.schema.json",
+        " skills/buster/plugins/openapi/schemas/config.schema.json",
+        " skills/buster/plugins/playwright/schemas/config.schema.json",
+        " skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+        " skills/buster/plugins/security-providers/schemas/headers.schema.json",
+        " skills/buster/plugins/security-providers/schemas/image.schema.json",
+        " skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+        " skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+        " skills/buster/plugins/size-budget/schemas/config.schema.json",
+        " skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+        " skills/buster/plugins/visual/schemas/config.schema.json"
+      ],
+      "sha256": "61a83b12f519fe6e9249ef96233a57dd886ccd2b8704abb27c606d8817b4a8c5"
+    },
+    "/reference/buster-runtime-configuration/": {
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "skills/buster/engine/test-gates/production.ts"
+      ],
+      "sha256": "2e9e821d6ca4880b82d8017273c452cd65938c3d838a4c9806beb6fd6b57a03a"
+    },
+    "/reference/buster-suites/": {
+      "page": "docs/site/reference/buster-suites.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1/suites",
+        " skills/buster/plugins"
+      ],
+      "sha256": "70e0d24fa3fc633dfa292c47705ed45e33dade9c3b396143daa404e3bbc2e4f1"
+    },
+    "/reference/capabilities/": {
+      "page": "docs/site/reference/capabilities.md",
+      "owner": "plugin-foundation",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        " skills/buster/engine/test-gates/remote-plan-service.ts"
+      ],
+      "sha256": "63a002841557c1167f9bafb6d719813be05b1eb78f587575977cc8a4dec54c06"
+    },
+    "/reference/cli/": {
+      "page": "docs/site/reference/cli.md",
+      "owner": "platform-operations",
+      "sourceDependencies": [
+        "docs/generated/inventory/deploy-script.json",
+        " docs/generated/inventory/configuration-runtime-inputs.json",
+        " scripts/docs-generate.mjs"
+      ],
+      "sha256": "7fc45725595a46ae7c695ec42f4462407b9e2afbfa8c365751649bdbfcc59513"
+    },
+    "/reference/configuration-change-impact/": {
+      "page": "docs/site/reference/configuration-change-impact.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        " skills/nova/core/execution/engine-runtime.ts",
+        " skills/nova/core/execution/engine-run.ts",
+        " skills/nova/core/execution/adapters.ts",
+        " skills/nova/core/execution/adapter-startup.ts",
+        " skills/nova/core/effects/coordinator.ts",
+        " skills/nova/core/effects/durable-invocation.ts",
+        " skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        " skills/nova/project/recovery.ts",
+        " skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        " skills/prism/server/control-config.ts",
+        " skills/prism/config/native-worker.ts",
+        " skills/prism/control/product-decisions.ts",
+        " charts/kubeclaw/values.yaml",
+        " charts/kubeclaw/templates/deployment.yaml",
+        " charts/prism/values.schema.json",
+        " charts/prism/templates/workloads.yaml",
+        " charts/prism/templates/_product-decisions.tpl",
+        " charts/gitops/templates/applications.yaml"
+      ],
+      "sha256": "c8e9a84b585bd96eb0d8e095e8a6188980f8a0584adbd7cca396f8a16e91854e"
+    },
+    "/reference/configuration-compatibility/": {
+      "page": "docs/site/reference/configuration-compatibility.md",
+      "owner": "configuration-owning components",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        " skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/nova/core/execution/engine-snapshots.ts",
+        " contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+        " contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json"
+      ],
+      "sha256": "402adee124a8e498e3c88c7e78a1cb8c3e15295e9cd7cf048c426f610303aae1"
+    },
+    "/reference/configuration-errors/": {
+      "page": "docs/site/reference/configuration-errors.md",
+      "owner": "configuration-owning components",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/nova/project/compiler.ts",
+        " skills/nova/core/execution/graph-build.ts",
+        " skills/nova/core/test-gates/pipeline.ts",
+        " skills/nova/core/test-gates/resolver.ts",
+        " skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        " skills/prism/server/worker-config.ts"
+      ],
+      "sha256": "5eb9efa3b4bf7382415664fbd76bfe33d49a9700c953caa8adac75d91b324c2c"
+    },
+    "/reference/configuration-precedence/": {
+      "page": "docs/site/reference/configuration-precedence.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        " skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+        " skills/common/plugins/openclaw-agent-observer/src/config.ts",
+        " skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/nova/core/execution/engine-runtime.ts",
+        " skills/nova/core/test-gates/resolver.ts",
+        " tests/verification/e2e/support/platform-config.ts",
+        " tests/verification/e2e/support/config-profiles/standard.json",
+        " tests/verification/e2e/real-run-workspace.mjs",
+        " charts/kubeclaw/values.yaml",
+        " charts/kubeclaw/templates/deployment.yaml",
+        " charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        " charts/kubeclaw/templates/_helpers.tpl",
+        " charts/prism/values.schema.json",
+        " charts/prism/ci-values.yaml",
+        " charts/prism/templates/_product-decisions.tpl",
+        " charts/prism/templates/workloads.yaml",
+        " charts/gitops/templates/applications.yaml"
+      ],
+      "sha256": "2f002e12766479b159c91f62f19b8c5e910bc00b8106187e2bbf055089793637"
+    },
+    "/reference/configuration/": {
+      "page": "docs/site/reference/configuration.md",
+      "owner": "documentation; consumer semantics belong to the named component",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        " skills/common/plugin-runtime/foundation/registry/schema.ts",
+        " skills/nova/project/cli.ts",
+        " skills/prism/server/control-config.ts",
+        " scripts/docs-configuration-inventory.mjs"
+      ],
+      "sha256": "b779bbae77574e89dcb6399a83e8205eb3d7ac5d8945eb204e56758f1bdd2cb9"
+    },
+    "/reference/contracts/": {
+      "page": "docs/site/reference/contracts.md",
+      "owner": "documentation; named contract and store components own behavior",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/nova/core/execution/engine-snapshots.ts",
+        " contracts/prism/v1/src/index.ts",
+        " contracts/delivery-manifest/v3/src/index.ts",
+        " skills/common/plugin-runtime/foundation/observability/record-retirement.ts"
+      ],
+      "sha256": "19a463b5730eb27e00e7336e71ec557fdf8ab3bd004cd1b796511138408d0a52"
+    },
+    "/reference/documentation-governance/": {
+      "page": "docs/site/reference/documentation-governance.md",
+      "owner": "documentation",
+      "sourceDependencies": [
+        "scripts/docs-governance.mjs",
+        " scripts/docs-publication.mjs",
+        " scripts/docs-status.mjs",
+        " docs/status/open-issues.json"
+      ],
+      "sha256": "4e42d0ff9e96f8a27b6591deeff4d9beb89947d445b275465ee65a61f88d74b6"
+    },
+    "/reference/documentation-site/": {
+      "page": "docs/site/reference/documentation-site.md",
+      "owner": "documentation",
+      "sourceDependencies": [
+        "scripts/docs-publication.mjs",
+        " scripts/lib/docs-publication-assets.mjs",
+        " scripts/lib/docs-publication-links.mjs",
+        " scripts/docs-governance.mjs",
+        " scripts/docs-check-refs.mjs",
+        " scripts/check-site-reader-boundary.mjs",
+        " docs/config/documentation-tree-classification.json",
+        " docs/site/reference/documentation-route-registry.json",
+        " package.json",
+        " .github/workflows/docs-checks.yaml"
+      ],
+      "sha256": "3864d851b55e42311a942146320a9d7ccceab9eacf546c93c636826ba7b0cb87"
+    },
+    "/reference/endpoints/": {
+      "page": "docs/site/reference/endpoints.md",
+      "owner": "the source component listed for each route or connection",
+      "sourceDependencies": [
+        "docs/generated/inventory/platform-surfaces.json",
+        " scripts/docs-platform-surface-inventory.mjs"
+      ],
+      "sha256": "0c00d0128b4735fa130f2bb144dd3c3aa88c6656cbb2e46e4c3aabb368ac2f27"
+    },
+    "/reference/environment-variables/": {
+      "page": "docs/site/reference/environment-variables.md",
+      "owner": "platform-operations",
+      "sourceDependencies": [
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        " scripts/docs-configuration-inventory.mjs",
+        " scripts/docs-generate.mjs"
+      ],
+      "sha256": "f9bc4d6ef829979606a2fdc7d12c72da36eedf7a6d86514abd0bfedc01d91ab0"
+    },
+    "/reference/errors/": {
+      "page": "docs/site/reference/errors.md",
+      "owner": "documentation; named components own diagnostic and delivery semantics",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        " skills/nova/core/execution/stage-executor.ts",
+        " skills/worker/core/worker/attempt-executor.ts",
+        " skills/worker/core/worker/phase-deadline.ts",
+        " skills/prism/server/worker-service.ts",
+        " scripts/generate-buster-error-reference.mjs"
+      ],
+      "sha256": "de9682946fb2f1e5fc1f7738b9575c704af8fbc3ace4641fa9d548695305bd68"
+    },
+    "/reference/events/": {
+      "page": "docs/site/reference/events.md",
+      "owner": "documentation; named components own diagnostic and delivery semantics",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/nova/core/execution/runner.ts",
+        " skills/nova/core/telemetry/observers.ts",
+        " skills/nova/core/telemetry/observer-delivery.ts",
+        " skills/nova/core/state/journal.ts",
+        " skills/nova/core/telemetry/audit.ts",
+        " contracts/agent-observability/v1/src/constants.ts"
+      ],
+      "sha256": "b1a84798ae2ac4b778c1382d31ec1cad6c07c02539247caf876b1f061cef0f37"
+    },
+    "/reference/glossary/": {
+      "page": "docs/site/reference/glossary.md",
+      "owner": "documentation",
+      "sourceDependencies": [
+        "docs/site/understand/components-and-authority.md",
+        " docs/site/understand/request-state-recovery.md",
+        " docs/site/understand/deployment-and-trust.md",
+        " my-values/infra/spire-values.yaml",
+        " charts/prism/templates/configmap-worker-trust.yaml",
+        " skills/worker/core/worker/trust.ts",
+        " skills/prism/server/internal-auth.ts",
+        " skills/prism/server/control-server.ts",
+        " skills/prism/control/agent-jobs.ts",
+        " skills/prism/engine/render-operation.ts",
+        " skills/nova/plugins/prism-design/src/stage.ts",
+        " skills/nova/core/execution/engine-run.ts"
+      ],
+      "sha256": "5ad457b77e66176c01ee5899ef46823d22bc499ba2a84ae2781a55f4cdad4e4a"
+    },
+    "/reference/helm-values/": {
+      "page": "docs/site/reference/helm-values.md",
+      "owner": "platform-operations",
+      "sourceDependencies": [
+        "docs/generated/inventory/configuration-values.json",
+        " scripts/docs-configuration-inventory.mjs",
+        " scripts/docs-generate.mjs"
+      ],
+      "sha256": "384ca13e30b38b32651cb99444f8d4ead4380a9c4cdd6e2fbfc8a5eec45a560d"
+    },
+    "/reference/host-and-prism-configuration/": {
+      "page": "docs/site/reference/host-and-prism-configuration.md",
+      "owner": "platform operations and Prism",
+      "sourceDependencies": [
+        "charts/kubeclaw/files/config/swarm.config.json",
+        " tests/verification/e2e/support/platform-config.ts",
+        " charts/prism/values.yaml",
+        " charts/prism/values.schema.json",
+        " skills/prism/server/control-config.ts",
+        " skills/prism/server/worker-config.ts",
+        " skills/prism/config/native-worker.ts"
+      ],
+      "sha256": "9620cde067243a73b53ba3c30eb3e31bb0e931129370339c9ec6ad801c46179c"
+    },
+    "/reference/images-and-digests/": {
+      "page": "docs/site/reference/images-and-digests.md",
+      "owner": "documentation; release owners select artifacts and workload owners verify deployment",
+      "sourceDependencies": [
+        "versions.json",
+        " .github/workflows/build-images.yaml",
+        " .github/workflows/build-ops-mcp.yaml",
+        " scripts/updates/deployment-release.mjs",
+        " scripts/updates/oci-image-identity.mjs",
+        " scripts/updates/code-release.mjs"
+      ],
+      "sha256": "a9898258dab79f1bd217713f17b7af9e51630beac6bd7b10e72c03d87bfe9d0e"
+    },
+    "/reference/lint-policy-generated/": {
+      "page": "docs/site/reference/lint-policy-generated.md",
+      "owner": "lint",
+      "sourceDependencies": [
+        "scripts/docs-lint-policy-reference.mjs",
+        "charts/kubeclaw/files/config/lint-policy.json",
+        " charts/kubeclaw/files/config/lint-baseline.json",
+        " charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        " versions.json",
+        " docker/nova-tools/package.json",
+        " docker/nova-tools/package-lock.json",
+        " charts/kubeclaw/files/config/eslint.config.mjs",
+        " charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+        " charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+        " charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+        " charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+        " charts/kubeclaw/files/config/.semgrep.yml",
+        " skills/nova/plugins/lint/src",
+        " scripts/run-lint-report.mjs"
+      ],
+      "sha256": "a312a9123bc811eb8de01c67f8f79b6b7c440496fd3846d6d3c936005196fdbf"
+    },
+    "/reference/lint-policy/": {
+      "page": "docs/site/reference/lint-policy.md",
+      "owner": "lint",
+      "sourceDependencies": [
+        "charts/kubeclaw/files/config/lint-policy.json",
+        " charts/kubeclaw/files/config/lint-baseline.json",
+        " charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        " skills/nova/plugins/lint/src/engine"
+      ],
+      "sha256": "41eb67193888f1892a2a93fdb566a7a576bca7ec091192762a2c2b9da703a7f7"
+    },
+    "/reference/lint-rules/": {
+      "page": "docs/site/reference/lint-rules.md",
+      "owner": "lint",
+      "sourceDependencies": [
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        " charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+        " charts/kubeclaw/files/config/.semgrep.yml",
+        " charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        " skills/nova/plugins/lint/src/engine"
+      ],
+      "sha256": "a49c80eea48d18e52778d2a4f3ca37bedb4f1b28db66afbb88451540b2497e27"
+    },
+    "/reference/nova-project/": {
+      "page": "docs/site/reference/nova-project.md",
+      "owner": "Nova project compiler",
+      "sourceDependencies": [
+        "skills/nova/project/compiler.ts",
+        " skills/nova/project/source.ts",
+        " skills/nova/project/coverage.ts",
+        " skills/nova/project/demo.ts",
+        " skills/nova/project/cli.ts"
+      ],
+      "sha256": "7f67c50891bf658696ec62827368f5889bbbf053a468c2056d730275fef5b4cf"
+    },
+    "/reference/pipeline-definition/": {
+      "page": "docs/site/reference/pipeline-definition.md",
+      "owner": "Nova Core",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/nova/core/execution/graph-build.ts",
+        " skills/nova/core/execution/pipeline-loop.ts"
+      ],
+      "sha256": "79506eb8308fd016f8e1ed1a6e7a707046558a6b257bfcf84f8a61b05275f13e"
+    },
+    "/reference/pipeline-json/": {
+      "page": "docs/site/reference/pipeline-json.md",
+      "owner": "Nova test-plan resolver and project setup",
+      "sourceDependencies": [
+        "skills/nova/core/test-gates/pipeline.ts",
+        " skills/nova/core/test-gates/types.ts",
+        " skills/nova/core/test-gates/resolver.ts",
+        " skills/common/plugin-runtime/foundation/config/published-pair.ts"
+      ],
+      "sha256": "6a2c64f775deb58cef4f6d63d196fda32bf6456840ab24a90567ade1fb94d407"
+    },
+    "/reference/pipeline-platform/": {
+      "page": "docs/site/reference/pipeline-platform.md",
+      "owner": "plugin runtime and Nova Core",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        " skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/nova/core/execution/engine-runtime.ts",
+        " skills/nova/core/execution/engine-admin.ts",
+        " skills/nova/core/execution/engine-snapshots.ts",
+        " skills/nova/core/execution/engine-run.ts",
+        " skills/nova/core/lifecycle/wait-request.ts",
+        " skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        " skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        " skills/common/plugin-runtime/foundation/registry/activation.ts",
+        " skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        " skills/common/plugin-runtime/foundation/registry/digest.ts",
+        " skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        " skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        " skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+        " skills/nova/core/execution/adapter-startup.ts"
+      ],
+      "sha256": "1703b5d462e2a09aa1dafeaa94d96d1a901e510665b88a9321c16d8c39f0c43e"
+    },
+    "/reference/platform-surfaces-generated/": {
+      "page": "docs/site/reference/platform-surfaces-generated.md",
+      "owner": "platform maintainers",
+      "sourceDependencies": [
+        "docs/generated/inventory/platform-surfaces.json",
+        " docs/config/platform-surface-map.json"
+      ],
+      "sha256": "eabbef2a02c754c3a7dc43c42ad4970e22bce26c77cd3b90b091313e6fdb33ae"
+    },
+    "/reference/plugin-configuration/": {
+      "page": "docs/site/reference/plugin-configuration.md",
+      "owner": "configuration source owners listed for each schema",
+      "sourceDependencies": [
+        "docs/generated/inventory/configuration-schemas.json",
+        " scripts/docs-configuration-inventory.mjs"
+      ],
+      "sha256": "67adcc096aec1281a8de5de37192a718251cc9fe6182881de01d9338430007ec"
+    },
+    "/reference/project-pipeline-publication/": {
+      "page": "docs/site/reference/project-pipeline-publication.md",
+      "owner": "Nova project setup",
+      "sourceDependencies": [
+        "skills/nova/project_setup/tools/progress-scaffold.ts",
+        " skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        " skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        " skills/nova/core/test-gates/pipeline.ts"
+      ],
+      "sha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf"
+    },
+    "/reference/roles-and-package-ownership/": {
+      "page": "docs/site/reference/roles-and-package-ownership.md",
+      "owner": "runtime packaging, Nova, Buster, Prism, and Worker Core maintainers",
+      "sourceDependencies": [
+        "charts/kubeclaw/templates/deployment.yaml",
+        " charts/kubeclaw/values.yaml",
+        " packaging/runtime/external-capabilities.json",
+        " packaging/runtime/package-ownership.json",
+        " packaging/runtime/roles/buster.json",
+        " packaging/runtime/roles/nova.json",
+        " packaging/runtime/roles/prism.json",
+        " scripts/build-runtime-role-bundle.mjs",
+        " scripts/check-runtime-role-manifests.mjs",
+        " skills/buster/engine/remote-plan-cli.ts",
+        " skills/buster/engine/test-gates/production.ts",
+        " skills/buster/engine/test-gates/remote-plan-http.ts",
+        " skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        " skills/buster/engine/test-gates/remote-plan-service.ts",
+        " skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        " skills/common/plugin-runtime/foundation/config/platform.ts",
+        " skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        " skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        " skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        " skills/nova/core/cli.ts",
+        " skills/nova/core/execution/engine-runtime.ts",
+        " skills/nova/project/cli.ts",
+        " skills/nova/project/legacy-import-cli.ts",
+        " skills/nova/project/recovery.ts",
+        " skills/prism/config/native-worker.ts",
+        " skills/prism/engine/index.ts",
+        " skills/prism/engine/worker-binding.ts",
+        " skills/prism/runtime.ts",
+        " skills/prism/server/internal-auth.ts",
+        " skills/prism/server/native-worker-execution.ts",
+        " skills/prism/server/native-worker-host.ts",
+        " skills/prism/server/worker-config.ts",
+        " skills/prism/server/worker.ts",
+        " skills/worker/core/worker/native-attempt-executor.ts",
+        " skills/worker/core/worker/native-attempt-journal.ts",
+        " skills/worker/core/worker/native-pool-policy.ts",
+        " skills/worker/core/worker/native-result.ts",
+        " skills/worker/core/worker/native-runtime-identity.ts",
+        " skills/worker/core/worker/native-supervisor-authority.ts",
+        " skills/worker/core/worker/native-worker-launcher.c",
+        " skills/worker/core/worker/native-worker-process.ts",
+        " skills/worker/core/worker/trust.ts",
+        " tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+        " tests/verification/contracts/check-prism-runtime-role.mts"
+      ],
+      "sha256": "be3e8aa7faa7f5f7f30fdcb6c6ca982d67834c5faeab2e78e504510d1ba17741"
+    },
+    "/reference/schemas/": {
+      "page": "docs/site/reference/schemas.md",
+      "owner": "documentation; consumer semantics belong to the named component",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        " skills/common/plugin-runtime/foundation/registry/schema.ts",
+        " scripts/docs-configuration-inventory.mjs",
+        " contracts/pipeline-worker-core/v1/schemas",
+        " charts/prism/values.schema.json",
+        " skills/nova/project/compiler.ts"
+      ],
+      "sha256": "d12b634601a17fd221b8e5ea53097dc08a2a7ece5f998eec11c9354c67b00b41"
+    },
+    "/reference/sdk-exports/": {
+      "page": "docs/site/reference/sdk-exports.md",
+      "owner": "documentation automation",
+      "sourceDependencies": [
+        "scripts/docs-sdk-reference.mjs",
+        "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+        " skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        " skills/nova/core/execution/graph.ts",
+        " skills/nova/core/execution/graph-build.ts",
+        " skills/nova/core/effects/dependency-identity.ts",
+        " skills/nova/core/execution/adapter-invocation-phase.ts",
+        " skills/nova/core/execution/adapter-support.ts",
+        " skills/nova/core/effects/coordinator.ts",
+        " skills/nova/core/effects/contracts.ts",
+        " skills/nova/core/effects/journal.ts",
+        " skills/nova/core/effects/durable-invocation.ts",
+        " skills/nova/core/effects/dependency-journal.ts",
+        " skills/nova/core/effects/resource-acquisition.ts",
+        " skills/nova/core/effects/memory-locks.ts",
+        " skills/nova/core/execution/lease.ts",
+        " skills/nova/core/execution/authorization.ts",
+        " skills/nova/core/execution/engine-snapshots.ts",
+        " skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        " skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+        " skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        " skills/nova/plugins/review/src/repository-audit-cache.ts",
+        " skills/nova/plugins/review/src/review-content-cache.ts",
+        " skills/buster/engine/test-gates/provider-child.mjs",
+        " skills/buster/engine/test-gates/provider-loader.ts",
+        " skills/buster/engine/test-gates/runner.ts",
+        " contracts/pipeline-test-gate/v1/src/validation.ts",
+        " contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        " contracts/pipeline-test-gate/v1/src/types.ts",
+        " scripts/generate-plugin-sdk-types.mjs",
+        " skills/buster/engine/test-gates/provider-capabilities.ts",
+        " skills/buster/engine/test-gates/report-adapter-child.mjs",
+        " skills/buster/engine/test-gates/report-adapter-runtime.ts",
+        " skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/common/plugin-runtime/foundation/registry/schema.ts",
+        " skills/common/plugin-runtime/sdk/package.json",
+        " skills/common/plugin-runtime/sdk/src/artifact-json.ts",
+        " skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        " skills/common/plugin-runtime/sdk/src/index.ts",
+        " skills/common/plugin-runtime/sdk/src/review-cache-profile.ts",
+        " skills/common/plugin-runtime/sdk/src/review-subject.ts",
+        " skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+        " skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+        " skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
+        " skills/common/plugin-runtime/sdk/src/runtime.ts",
+        " skills/common/plugin-runtime/sdk/src/source-approval.ts",
+        " skills/common/plugin-runtime/sdk/src/source-preflight.ts",
+        " skills/common/plugin-runtime/sdk/src/source-revision.ts",
+        " skills/common/plugin-runtime/sdk/src/testing/index.ts",
+        " skills/common/plugin-runtime/sdk/src/values.ts",
+        " skills/common/plugin-runtime/sdk/tests/values.test.ts",
+        " skills/common/plugin-runtime/sdk/tsconfig.build.json",
+        " skills/common/plugins/artifact-store/src/adapter.ts",
+        " skills/nova/core/effects/identity.ts",
+        " skills/nova/core/execution/adapter-startup.ts",
+        " skills/nova/core/execution/adapters.ts",
+        " skills/nova/core/execution/context.ts",
+        " tests/verification/reliability/sdk-json-portable.test.mts",
+        " tests/verification/reliability/source-snapshot-version.test.mjs"
+      ],
+      "sha256": "3fd41541a5edec25f3c04b0bed300f754bbc362f7091216fd0456f37e2f37e8a"
+    },
+    "/reference/sdk/": {
+      "page": "docs/site/reference/sdk.md",
+      "owner": "documentation automation",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/sdk/package.json",
+        " skills/common/plugin-runtime/sdk/src/index.ts",
+        " skills/common/plugin-runtime/sdk/src/values.ts",
+        " skills/common/plugin-runtime/sdk/src/runtime.ts",
+        " skills/common/plugin-runtime/sdk/src/source-revision.ts",
+        " skills/common/plugin-runtime/sdk/src/review-subject.ts",
+        " skills/common/plugin-runtime/sdk/src/source-preflight.ts",
+        " skills/common/plugin-runtime/sdk/src/source-approval.ts",
+        " skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " scripts/docs-sdk-semantics.mjs"
+      ],
+      "sha256": "ad21a7489d35cda9f6909bddd7ada365314749debe1f5720625eb14f8566e633"
+    },
+    "/reference/secrets/": {
+      "page": "docs/site/reference/secrets.md",
+      "owner": "platform-security",
+      "sourceDependencies": [
+        "docs/generated/inventory/secret-setup.json",
+        " docs/generated/inventory/configuration-runtime-inputs.json",
+        " scripts/docs-generate.mjs"
+      ],
+      "sha256": "ad53c64093bb936c9a576f5671f8cb1109bea040e1e0c87e636c89f7480a5717"
+    },
+    "/reference/service-routing/": {
+      "page": "docs/site/reference/service-routing.md",
+      "owner": "platform networking",
+      "sourceDependencies": [
+        "charts/kubeclaw/templates/service.yaml",
+        " charts/prism/templates/services.yaml",
+        " charts/ops-pod/templates/workload.yaml",
+        " scripts/docs-kubernetes-core-receiver-contracts.mjs"
+      ],
+      "sha256": "3cf144a2d33a11150fe2e133c2b89b172010e4826882bb60d9ecea2711ecd339"
+    },
+    "/reference/stores-and-retention/": {
+      "page": "docs/site/reference/stores-and-retention.md",
+      "owner": "documentation; named contract and store components own behavior",
+      "sourceDependencies": [
+        "skills/nova/core/execution/run-root.ts",
+        " skills/nova/core/effects/journal.ts",
+        " skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        " skills/buster/engine/test-gates/remote-plan-service.ts",
+        " skills/prism/storage/artifacts.ts",
+        " charts/prism/files/prism-backup.sh",
+        " docs/site/use/recovery.md"
+      ],
+      "sha256": "d1b106592236737450c9a255088d167242d4ffd76f64726c4dc8f29d6fec9394"
+    },
+    "/reference/verification-commands/": {
+      "page": "docs/site/reference/verification-commands.md",
+      "owner": "platform-maintainers",
+      "sourceDependencies": [
+        "docs/generated/inventory/deploy-script.json",
+        " scripts/docs-generate.mjs"
+      ],
+      "sha256": "05e3c641e33aef0160ab5fe68d6a09d775d7813ba569fbebb0bfc76e95dfc4ec"
+    },
+    "/reference/worker-profiles-and-roles/": {
+      "page": "docs/site/reference/worker-profiles-and-roles.md",
+      "owner": "worker core and Prism",
+      "sourceDependencies": [
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+        " skills/worker/core/worker/local-runtime.ts",
+        " skills/worker/core/worker/native-pool-policy.ts",
+        " skills/prism/engine/worker-envelope.ts",
+        " skills/prism/server/agent-attempt.ts"
+      ],
+      "sha256": "486591423840e29af09468c746010ddb298558ebda2482526365377a8181ad85"
+    },
+    "/reference/workflows/": {
+      "page": "docs/site/reference/workflows.md",
+      "owner": "platform-maintainers",
+      "sourceDependencies": [
+        "docs/generated/inventory/workflows.json",
+        " scripts/docs-generate.mjs"
+      ],
+      "sha256": "0280269e57663e4cf11da185f31bf19e1cc176def25c7e8edeb8310845351615"
+    },
+    "/status/acceptance/": {
+      "page": "docs/site/status/acceptance.md",
+      "owner": "platform operator",
+      "sourceDependencies": [
+        ".github/workflows/remediation-native.yaml",
+        " tests/verification/contracts/check-production-receipt-attestation.mjs"
+      ],
+      "sha256": "41a1985bd0b2198e7139e0a83729d00880a27af4b350c7431c1a3d38b4f0c3b7"
+    },
+    "/status/current/": {
+      "page": "docs/site/status/current.md",
+      "owner": "platform-architecture",
+      "sourceDependencies": [
+        "packaging/runtime/roles/nova.json",
+        " packaging/runtime/roles/buster.json",
+        " packaging/runtime/roles/prism.json"
+      ],
+      "sha256": "fdcfec3fbd9e58551706f53422015f1b4a5210f598bb957080fca4763060740f"
+    },
+    "/status/open-issues/": {
+      "page": "docs/site/status/open-issues.md",
+      "owner": "platform-maintainers",
+      "sourceDependencies": [
+        "docs/status/open-issues.json"
+      ],
+      "sha256": "dcc36e3a791348b2d5e0c75a38b0bca841592634fa814bbd42383f94d94ff1fb"
+    },
+    "/status/roadmap/": {
+      "page": "docs/site/status/roadmap.md",
+      "owner": "platform-maintainers",
+      "sourceDependencies": [
+        "docs/status/open-issues.json",
+        " packaging/runtime/package-ownership.json",
+        " skills/nova/plugins/lint/src/adapter.ts",
+        " skills/nova/plugins/lint/src/engine/discovery.ts",
+        " skills/nova/plugins/lint/src/engine/execution.ts",
+        " charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        " charts/kubeclaw/templates/deployment.yaml"
+      ],
+      "sha256": "d59cfcc4cae16e8c63b9c2b27cadc51c720aae142ff0a4be5cf3fb511da84368"
+    },
+    "/understand/": {
+      "page": "docs/site/understand/README.md",
+      "owner": "platform architecture",
+      "sourceDependencies": [
+        "packaging/runtime/roles",
+        " skills/nova/core",
+        " skills/worker/core"
+      ],
+      "sha256": "18c4d77cbc3fe86d86b9cea83b53f904c5e995a7470102c95aef97d8bde626c7"
+    },
+    "/understand/archviewer/": {
+      "page": "docs/site/understand/archviewer.md",
+      "owner": "Archviewer maintainers",
+      "sourceDependencies": [
+        "docker/Dockerfile.archviewer",
+        " docker/archviewer.nginx.conf",
+        " charts/kubeclaw/templates/archviewer.yaml",
+        " tests/verification/reliability/archviewer-native.test.mjs"
+      ],
+      "sha256": "0903437f7b9e2969acefc5a3bede392ea50d22d6b6befdd9749ff39e277ac7e1"
+    },
+    "/understand/buster-namespace-controller/": {
+      "page": "docs/site/understand/buster-namespace-controller.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        " charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        " charts/kubeclaw/templates/buster-namespace-fence.yaml",
+        " cmd/buster-namespace-controller",
+        " skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+      ],
+      "sha256": "19470c761603de9c6c12461910d0a608977c5fe5ee09854a787b5e999f9c26f0"
+    },
+    "/understand/buster/": {
+      "page": "docs/site/understand/buster.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "skills/nova/core/test-gates",
+        " skills/buster/engine/test-gates",
+        " contracts/pipeline-test-gate/v1"
+      ],
+      "sha256": "b76ade231221dd1386d052c33060a3b28067744362b04919e874f52cc0ad8cc3"
+    },
+    "/understand/codex-integration/": {
+      "page": "docs/site/understand/codex-integration.md",
+      "owner": "Codex integration maintainers",
+      "sourceDependencies": [
+        "plugins/kubeclaw-ops",
+        " .agents/plugins/marketplace.json",
+        " charts/ops-pod",
+        " tools/ops-mcp"
+      ],
+      "sha256": "cb44700851c43e37cee504cf9bf22043598fc7a217a6a5f45daf544c92c53b9b"
+    },
+    "/understand/communication/": {
+      "page": "docs/site/understand/communication.md",
+      "owner": "runtime and platform maintainers",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1",
+        " contracts/pipeline-worker-core/v1",
+        " skills/nova/core",
+        " skills/worker/core",
+        " skills/common/plugins/redis-transport",
+        " charts/kubeclaw",
+        " charts/prism",
+        " tests/verification/reliability"
+      ],
+      "sha256": "2ea5706d05942d5604c1a83bb86a9dd5f50fbe2fcf8138821b1b500dbba19320"
+    },
+    "/understand/components-and-authority/": {
+      "page": "docs/site/understand/components-and-authority.md",
+      "owner": "platform architecture",
+      "sourceDependencies": [
+        "skills/nova/core",
+        " skills/worker/core",
+        " packaging/runtime/roles"
+      ],
+      "sha256": "25ab8aa8215bb83765aed04d8d5d700a62d2f52aa791452a1c2dc74f2f691803"
+    },
+    "/understand/data-and-state/": {
+      "page": "docs/site/understand/data-and-state.md",
+      "owner": "state-owning component maintainers",
+      "sourceDependencies": [
+        "skills/nova/core",
+        " skills/worker/core",
+        " skills/buster/engine",
+        " skills/prism",
+        " charts/prism",
+        " gitops/platform",
+        " scripts/postgresql-recovery.sh",
+        " scripts/redis-prepare-migration.sh"
+      ],
+      "sha256": "31ecaea3f860b629ca20fa51b86052d03ad936fa0af0147c703d477e3b4b08c1"
+    },
+    "/understand/deployment-and-trust/": {
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "owner": "platform architecture and operations",
+      "sourceDependencies": [
+        "packaging/runtime/roles",
+        " charts/kubeclaw",
+        " charts/prism"
+      ],
+      "sha256": "c8d0d18350d14d3b726752f1f52450b24f7d687483175eb06d0178665c7d6037"
+    },
+    "/understand/echo/": {
+      "page": "docs/site/understand/echo.md",
+      "owner": "Echo maintainers",
+      "sourceDependencies": [
+        "skills/nova/plugins/review/src",
+        " skills/nova/plugins/review/schemas",
+        " skills/nova/plugins/review/tests"
+      ],
+      "sha256": "7f915b01b5c028d6561dd8d89bbcf2515515ea4189c3eec87a39865639a3ffce"
+    },
+    "/understand/forge/": {
+      "page": "docs/site/understand/forge.md",
+      "owner": "Forge maintainers",
+      "sourceDependencies": [
+        "skills/nova/plugins/implementation-agent",
+        " skills/common/plugins/runtime-dispatch",
+        " skills/common/plugins/git-workspace",
+        " tests/verification/reliability/forge-workspace.test.mts",
+        " tests/verification/reliability/forge-lock-wait.test.mts"
+      ],
+      "sha256": "a151f8524a0cbc41642a8ebf813cb1a15844bee1749a3a13e964447aba97bd49"
+    },
+    "/understand/nova-core/": {
+      "page": "docs/site/understand/nova-core.md",
+      "owner": "Nova maintainers",
+      "sourceDependencies": [
+        "skills/nova/project",
+        " skills/nova/core",
+        " skills/common/plugin-runtime"
+      ],
+      "sha256": "1300af85e4772fe87b431cabef63e6c5eb7f26c2e93ae1343e29cb885c75a712"
+    },
+    "/understand/openclaw/": {
+      "page": "docs/site/understand/openclaw.md",
+      "owner": "OpenClaw integration maintainers",
+      "sourceDependencies": [
+        "skills/prism/openclaw-plugin",
+        " skills/common/plugins/openclaw-agent-observer",
+        " skills/common/plugins/openclaw-agent-events",
+        " skills/common/plugins/runtime-dispatch"
+      ],
+      "sha256": "146b83fc4cb5cfa331924839140ff3cbd7830780226f5f4377569629e53f89a2"
+    },
+    "/understand/ops-mcp/": {
+      "page": "docs/site/understand/ops-mcp.md",
+      "owner": "Ops MCP maintainers",
+      "sourceDependencies": [
+        "tools/ops-mcp/src",
+        " tools/ops-mcp/test",
+        " charts/ops-pod",
+        " scripts/deploy-ops-pod.sh"
+      ],
+      "sha256": "ef368af6d2ec5d29576948457cce87dd2f696d03d8b7d2ccce0c3441eb8231ff"
+    },
+    "/understand/pipeline-dependencies/": {
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "owner": "platform architecture and pipeline owners",
+      "sourceDependencies": [
+        "packaging/runtime/roles",
+        " skills/nova/core",
+        " skills/common/plugins/redis-transport",
+        " skills/buster/engine",
+        " charts/kubeclaw",
+        " charts/prism"
+      ],
+      "sha256": "21cf81a455c1f1d43eb877d977df578fef9c60930c08a2832f2febe2b8242f05"
+    },
+    "/understand/platform-and-operations/": {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "owner": "platform architecture and operations",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        " scripts/platform-services.mjs",
+        " charts/ops-pod",
+        " gitops/platform",
+        " my-values/infra"
+      ],
+      "sha256": "e76fffd0eacba02fb40acf11400bd0748cd2c77e71a846f323d0bc6794cbd607"
+    },
+    "/understand/plugin-runtime/": {
+      "page": "docs/site/understand/plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/common/plugin-runtime/foundation",
+        " skills/nova/core/execution",
+        " skills/nova/core/state/plugins.ts",
+        " tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        " tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+        " tests/verification/contracts/check-plugin-system-v2-phase11.mts"
+      ],
+      "sha256": "a3573238196c6d241e2ab174d3c01d72e45b31c7807d251502eafc478f3f14fc"
+    },
+    "/understand/prism-data/": {
+      "page": "docs/site/understand/prism-data.md",
+      "owner": "Prism maintainers",
+      "sourceDependencies": [
+        "contracts/prism/v1",
+        " skills/prism",
+        " charts/prism"
+      ],
+      "sha256": "d07d7d2503c8f5e4386ec26ac1cfed81c897ef5ed4e2a40484a86d214ac82ab8"
+    },
+    "/understand/prism-runtime/": {
+      "page": "docs/site/understand/prism-runtime.md",
+      "owner": "Prism maintainers",
+      "sourceDependencies": [
+        "skills/prism",
+        " contracts/prism/v1",
+        " charts/prism",
+        " my-values/prism-agent-values.yaml"
+      ],
+      "sha256": "9ec2d9abdd470c9c9f80205214654d50ae2ec30331c2dcfd6ce36fccdc3cfa1a"
+    },
+    "/understand/prism/": {
+      "page": "docs/site/understand/prism.md",
+      "owner": "Prism maintainers",
+      "sourceDependencies": [
+        "skills/prism",
+        " contracts/prism/v1",
+        " skills/nova/plugins/prism-design"
+      ],
+      "sha256": "74e962ea9b06da85ad1058458b07c9cce2b204f7f00896008dbaa7939c11f471"
+    },
+    "/understand/request-state-recovery/": {
+      "page": "docs/site/understand/request-state-recovery.md",
+      "owner": "Nova Core",
+      "sourceDependencies": [
+        "skills/nova/project/compiler.ts",
+        " skills/nova/core/execution",
+        " skills/nova/core/lifecycle"
+      ],
+      "sha256": "21c9bd88ec28e46b6632d125ee2c29f7eefdb54ed6ff143a818b1332ccbe3325"
+    },
+    "/understand/request-to-result/": {
+      "page": "docs/site/understand/request-to-result.md",
+      "owner": "Nova Core",
+      "sourceDependencies": [
+        "docs/site/understand/request-state-recovery.md"
+      ],
+      "sha256": "19b0b458e5c73d9573cbc61bc899b8d26d28bfa5bd25482cd7189eca48504d1c"
+    },
+    "/understand/security-and-trust/": {
+      "page": "docs/site/understand/security-and-trust.md",
+      "owner": "platform security and runtime maintainers",
+      "sourceDependencies": [
+        "my-values/infra/spire-values.yaml",
+        " charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        " charts/prism/templates/networkpolicy.yaml",
+        " skills/nova/core/execution/authorization.ts",
+        " my-values/setup-secrets.sh",
+        " skills/nova/core/test-gates/source-snapshot.ts"
+      ],
+      "sha256": "a6bf024534a78d4738417d9aa7070b4e2343c1f7b4f2e56cf4b6fc5184ba04d4"
+    },
+    "/understand/telemetry/": {
+      "page": "docs/site/understand/telemetry.md",
+      "owner": "observability maintainers",
+      "sourceDependencies": [
+        "skills/nova/core/telemetry",
+        " skills/common/plugins/openclaw-agent-observer",
+        " contracts/agent-observability/v1",
+        " skills/common/plugins/telemetry-observer",
+        " skills/common/plugins/telemetry-store",
+        " skills/common/plugins/redis-transport",
+        " contracts/telemetry/v1"
+      ],
+      "sha256": "84f9e58f79d254523e85952a8e035003179ba997ac8ae6ffd2a001486bd2a23d"
+    },
+    "/understand/worker-core/": {
+      "page": "docs/site/understand/worker-core.md",
+      "owner": "Worker Core maintainers",
+      "sourceDependencies": [
+        "contracts/pipeline-worker-core/v1",
+        " skills/worker/core",
+        " skills/prism/server/native-worker-execution.ts",
+        " tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
+        " tests/verification/reliability"
+      ],
+      "sha256": "f982a9197869c3aa1a9b3af8bb06a526ef911543821dc4833740c06fe18c96ed"
+    },
+    "/understand/worker-trust/": {
+      "page": "docs/site/understand/worker-trust.md",
+      "owner": "Worker Core and platform operations",
+      "sourceDependencies": [
+        "skills/worker/core/worker/trust.ts",
+        " charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        " charts/prism/templates/configmap-worker-trust.yaml"
+      ],
+      "sha256": "3c565e86c9591c8506ac74031731eb2818f738a62ee0770c0c05dfb4dc57e0e6"
+    },
+    "/use/": {
+      "page": "docs/site/use/README.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        " skills/nova/core/cli.ts",
+        " skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json"
+      ],
+      "sha256": "a55dd3d685ac8bfa61749ffddb97f99a375ff033d3a18d2b5bfefdd02a503f99"
+    },
+    "/use/capacity/": {
+      "page": "docs/site/use/capacity.md",
+      "owner": "platform operations and each named data owner",
+      "sourceDependencies": [
+        "charts/prism/files/prism-backup.sh",
+        " charts/prism/templates/backup.yaml",
+        " charts/prism/templates/ingestion.yaml",
+        " charts/prism/templates/jobs.yaml",
+        " charts/prism/values.yaml",
+        " gitops/platform/values/loki.yaml",
+        " gitops/platform/values/prometheus.yaml",
+        " gitops/platform/values/redis.yaml",
+        " my-values/infra/postgresql-recovery.yaml",
+        " my-values/infra/redis-values.yaml",
+        " scripts/compact-buster-job.mjs",
+        " scripts/native-worker-node-capacity.mjs",
+        " scripts/observability-retirement-plan.mjs",
+        " scripts/observability-retirement/dispatch.mjs",
+        " scripts/observability-retirement/operator-authority.mjs",
+        " scripts/postgresql-recovery.sh",
+        " scripts/retire-admission.mjs",
+        " scripts/retire-attempt-result.mjs",
+        " scripts/retire-nova-dispatch.mjs",
+        " scripts/retire-operator-request.mjs",
+        " scripts/retire-telemetry.mjs",
+        " skills/buster/engine/test-gates/remote-plan-compaction.ts",
+        " skills/buster/engine/test-gates/remote-plan-service.ts",
+        " skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+        " skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        " skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        " skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+        " skills/nova/core/state/read-run-evidence.ts",
+        " skills/prism/config/native-worker.ts",
+        " skills/prism/engine/execution-cache.ts",
+        " skills/prism/server/control-server.ts",
+        " skills/prism/server/ingestion.ts",
+        " skills/prism/server/native-worker-execution.ts",
+        " skills/prism/server/worker-config.ts",
+        " skills/prism/server/worker-lifecycle.ts",
+        " skills/prism/tests/engine-cache.test.mts",
+        " skills/prism/tests/worker-ingress-capacity.test.mts",
+        " skills/worker/core/worker/native-pool-policy.ts",
+        " tests/verification/deployment/prism-ingestion-resources.test.mjs",
+        " versions.json"
+      ],
+      "sha256": "14ee2ebd8cf443b0f12e2b774c3e8d1d7ea59afd04dda52c66b72cfd0f54e971"
+    },
+    "/use/demo-delivery/": {
+      "page": "docs/site/use/demo-delivery.md",
+      "owner": "product operations",
+      "sourceDependencies": [
+        "skills/nova/plugins/demo-handoff/tests",
+        " skills/nova/project/demo.ts"
+      ],
+      "sha256": "1b72efed3d07d535844a06983963fcb2d5a1c6c391650d39b26d3c82285be4fe"
+    },
+    "/use/diagnose/": {
+      "page": "docs/site/use/diagnose.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        " skills/nova/core/telemetry/audit.ts"
+      ],
+      "sha256": "5bc06556def06f1edb61193867ea499c9c407f092ffe7530e817d91d5e55853b"
+    },
+    "/use/install/": {
+      "page": "docs/site/use/install.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        " docs/generated/inventory/deploy-script.json"
+      ],
+      "sha256": "8ff7e0d41674ab6a725c0ae091af8fe57c77a55b5c17794853eb904a5d7debed"
+    },
+    "/use/maintenance/": {
+      "page": "docs/site/use/maintenance.md",
+      "owner": "release engineering and platform operations",
+      "sourceDependencies": [
+        "versions.json",
+        " releases/ops-images.json",
+        " scripts/deploy.sh"
+      ],
+      "sha256": "6d933108edebac9353a8282e6e4a5075be5dd1428c08013a232e1635eed28535"
+    },
+    "/use/operate/": {
+      "page": "docs/site/use/operate.md",
+      "owner": "Nova Core and platform operations",
+      "sourceDependencies": [
+        "skills/nova/project/cli.ts",
+        " skills/nova/core/cli.ts",
+        " skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        " skills/nova/core/execution/engine-snapshots.ts",
+        " skills/nova/core/execution/engine-run.ts"
+      ],
+      "sha256": "aa713a0462cf8b4781831c2021f3f96fa4e4a263806c27350247d7aa5366f745"
+    },
+    "/use/plugins/": {
+      "page": "docs/site/use/plugins.md",
+      "owner": "platform configuration owner",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        " skills/common/plugin-runtime/foundation/registry/activation.ts",
+        " skills/common/plugin-runtime/foundation/packages/install.ts"
+      ],
+      "sha256": "1d931d0bd9eb5b9d32a331f8e6a9727b17518c68717002232fe7c3d5765205ea"
+    },
+    "/use/prism-studio/": {
+      "page": "docs/site/use/prism-studio.md",
+      "owner": "Prism maintainers",
+      "sourceDependencies": [
+        "skills/prism",
+        " skills/nova/plugins/prism-design",
+        " charts/prism",
+        " charts/kubeclaw",
+        " scripts/deploy.sh"
+      ],
+      "sha256": "38363484ab8d86f4dc08cf1dad9150c6ff07ce5ad6166a9193a536aa9f17d2b1"
+    },
+    "/use/quickstart/": {
+      "page": "docs/site/use/quickstart.md",
+      "owner": "platform operations",
+      "sourceDependencies": [
+        "package.json",
+        " scripts/deploy.sh"
+      ],
+      "sha256": "50c41894bf68f7bd7712781715456989f2da67ab0df352ce336260f5be37667e"
+    },
+    "/use/recovery/": {
+      "page": "docs/site/use/recovery.md",
+      "owner": "platform operations and data owners",
+      "sourceDependencies": [
+        "charts/prism/files/prism-backup.sh",
+        " scripts/postgresql-recovery.sh",
+        " docs/status/open-issues.json"
+      ],
+      "sha256": "d29614a617da4c95c7764986890f80a9f4ab00bb1c8f8ca58385f03dd81e4ad9"
+    },
+    "/use/worker-trust/": {
+      "page": "docs/site/use/worker-trust.md",
+      "owner": "platform operations and workload-identity owner",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        " tests/verification/live/worker-trust-cluster-e2e.sh"
+      ],
+      "sha256": "a70940e54909612ecc41246e7900c3c4e910119ee09e12b83b3eda1255168315"
+    },
+    "/use/workflows/": {
+      "page": "docs/site/use/workflows/README.md",
+      "owner": "product integration maintainers",
+      "sourceDependencies": [
+        "docs/site/use/workflows/wait-resume.md",
+        " docs/site/use/workflows/buster-suite.md",
+        " docs/site/use/workflows/kubernetes-fixture.md",
+        " docs/site/use/demo-delivery.md"
+      ],
+      "sha256": "5db7037bea825e2c75922af8dda38007f102de6ab5e05c15b692a1d0383d864f"
+    },
+    "/use/workflows/buster-suite/": {
+      "page": "docs/site/use/workflows/buster-suite.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1/examples",
+        " skills/nova/core/test-gates/resolver.ts",
+        " skills/buster/engine/test-gates",
+        " skills/buster/plugins"
+      ],
+      "sha256": "d51440e40ca7dc78215e0a3f91d4a0a86ba83c3b3c9ec5303c010f1e18c7e32e"
+    },
+    "/use/workflows/kubernetes-fixture/": {
+      "page": "docs/site/use/workflows/kubernetes-fixture.md",
+      "owner": "buster",
+      "sourceDependencies": [
+        "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        " skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+      ],
+      "sha256": "c210323194a2c63056b4804684a100d593b7bcfdbc955a81a3b55695fa2bc540"
+    },
+    "/use/workflows/wait-resume/": {
+      "page": "docs/site/use/workflows/wait-resume.md",
+      "owner": "product integration maintainers; platform operations owns execution access",
+      "sourceDependencies": [
+        "skills/nova/plugins/human-approval",
+        " skills/nova/core/execution",
+        " skills/common/plugins/wait-store",
+        " skills/common/plugins/operator-messaging"
+      ],
+      "sha256": "b515a4e36f998bc6ac5b2abcbcc90d069e7ece867c461f7ce192d6036f30cbc7"
+    }
+  },
+  "missingHistoricalRoutes": [],
+  "changedPublishedOwners": [],
+  "missingDeclaredSourcePaths": []
+}

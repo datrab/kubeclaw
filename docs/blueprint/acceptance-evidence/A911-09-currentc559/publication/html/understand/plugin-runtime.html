@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/plugin-runtime.html"></head><body><main>
+<h1 id="plugin-runtime-from-package-bytes-to-bounded-execution">Plugin Runtime: From Package Bytes To Bounded Execution</h1>
+<p>Status: implemented design; host-kernel acceptance remains environment-specific
+Audience: platform developer, plugin author, security engineer, operator
+Owner: plugin-runtime maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation">skills/common/plugin-runtime/foundation</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution">skills/nova/core/execution</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/state/plugins.ts">skills/nova/core/state/plugins.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts/check-plugin-system-v2-registry.mjs">tests/verification/contracts/check-plugin-system-v2-registry.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs">tests/verification/contracts/check-plugin-system-v2-capability-security.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts/check-plugin-system-v2-phase11.mts">tests/verification/contracts/check-plugin-system-v2-phase11.mts</a>
+Evidence revision: <code>4f089958db97a551f406c157d774bda143a38946</code>
+Applies to: <code>pipeline-plugin-v2</code>, <code>pipeline-platform.v2</code>, and the current Nova plugin host
+Last verified: source and contract inspection on 2026-09-19</p>
+<h2 id="purpose">Purpose</h2>
+<p>A plugin package contains code, but the presence of code does not give it authority.
+The runtime moves a package through a sequence of narrower decisions:</p>
+<ol>
+<li>The operator places exact package bytes in an installation root.</li>
+<li>Discovery reads the manifest and records the package identity without importing code.</li>
+<li>Registry construction validates references and assigns each public name to one owner.</li>
+<li>Platform policy selects registrations, providers, configuration, and grants.</li>
+<li>Activation checks the bytes again before it loads an executable export.</li>
+<li>Each invocation receives a time-limited lease and only its required grants.</li>
+<li>Core owns durable state, effects, recovery, and final lifecycle decisions.</li>
+</ol>
+<p>This page explains that complete path. It focuses on runtime behavior and safety.
+<a href="../extend/contracts.html">Extension Contracts</a> explains how an author selects one of the five registration contracts.
+<a href="deployment-and-trust.html">Deployment and Trust</a> explains the surrounding workload and network controls.</p>
+<h2 id="the-runtime-in-one-view">The Runtime In One View</h2>
+<pre><code class="language-mermaid">flowchart LR
+    A[Installed package bytes] --&gt; B[Inert discovery]
+    B --&gt; C[Validated registry snapshot]
+    C --&gt; D[Enabled registration set]
+    D --&gt; E[Provider and grant resolution]
+    E --&gt; F[Configuration validation]
+    F --&gt; G[Integrity recheck and import audit]
+    G --&gt; H[Activation]
+    H --&gt; I[Lease-bound invocation]
+    I --&gt; J[Core-owned effects, events, and state]
+    J --&gt; K[Durable recovery record]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Installed package bytes</td>
+<td>Directed connection</td>
+<td>Inert discovery</td>
+</tr>
+<tr>
+<td>Inert discovery</td>
+<td>Directed connection</td>
+<td>Validated registry snapshot</td>
+</tr>
+<tr>
+<td>Validated registry snapshot</td>
+<td>Directed connection</td>
+<td>Enabled registration set</td>
+</tr>
+<tr>
+<td>Enabled registration set</td>
+<td>Directed connection</td>
+<td>Provider and grant resolution</td>
+</tr>
+<tr>
+<td>Provider and grant resolution</td>
+<td>Directed connection</td>
+<td>Configuration validation</td>
+</tr>
+<tr>
+<td>Configuration validation</td>
+<td>Directed connection</td>
+<td>Integrity recheck and import audit</td>
+</tr>
+<tr>
+<td>Integrity recheck and import audit</td>
+<td>Directed connection</td>
+<td>Activation</td>
+</tr>
+<tr>
+<td>Activation</td>
+<td>Directed connection</td>
+<td>Lease-bound invocation</td>
+</tr>
+<tr>
+<td>Lease-bound invocation</td>
+<td>Directed connection</td>
+<td>Core-owned effects, events, and state</td>
+</tr>
+<tr>
+<td>Core-owned effects, events, and state</td>
+<td>Directed connection</td>
+<td>Durable recovery record</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: the host starts with operator-installed bytes. It reads data before it executes code. It then validates global ownership, resolves policy, validates configuration, checks integrity, and activates only the selected runtime surfaces. An invocation can use external authority only through a valid lease and a matching grant. Core records the result and the recovery facts.</p>
+<p>This order is a safety property. The runtime must know <em>which bytes</em>, <em>which owner</em>, and <em>which authority</em> before plugin code can run.</p>
+<blockquote>
+<p><strong>Source evidence — the complete preparation order</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L29-L50"><code>prepareRuntime()</code> performs discovery, registry construction, enablement, grant resolution, configuration validation, and activation in that order</a>.</p>
+</blockquote>
+<h2 id="four-identities-that-must-not-be-confused">Four Identities That Must Not Be Confused</h2>
+<p>The system uses related identities for different questions.</p>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Question that it answers</th>
+<th>Can it change without the others changing?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Package ID</td>
+<td>Which logical plugin package owns this code?</td>
+<td>No for the same logical package. A different ID is a different owner.</td>
+</tr>
+<tr>
+<td>Package version</td>
+<td>Which compatibility release did the author declare?</td>
+<td>Yes. A version can change with new bytes. Bytes can also change incorrectly without a version change.</td>
+</tr>
+<tr>
+<td>Content digest</td>
+<td>Which exact package paths and bytes did the host inspect?</td>
+<td>It changes when a path or file content changes.</td>
+</tr>
+<tr>
+<td>Registration ID</td>
+<td>Which stage, observer, adapter, test provider, or report adapter inside the package is this?</td>
+<td>Yes. One package can own many registrations.</td>
+</tr>
+</tbody>
+</table>
+<p>A global runtime registration name uses <code>package-id:registration-id</code>.
+A stage also owns a globally unique stage type because pipeline definitions select a stage by type.
+Test providers additionally own a unique contract ID.
+Report adapters are different: more than one adapter can support the same format, so a resolved plan must select an exact adapter identity.</p>
+<p>The package version communicates author intent. It does not prove byte identity.
+The digest binds the actual package tree. It does not prove who published the bytes.
+Trust evidence supplies the separate policy decision about the source.</p>
+<p><strong>Why use separate identities:</strong> one overloaded version string cannot safely answer ownership, compatibility, integrity, and registration-selection questions.</p>
+<p><strong>Cost:</strong> snapshots and diagnostic records carry more identity fields. That cost makes recovery and audit decisions explicit.</p>
+<blockquote>
+<p><strong>Source evidence — identity contracts</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L410-L448">The manifest contract fixes the API version, validates a semantic package version, and declares the five registration arrays</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L874-L930">Package and registration provenance bind source, trust evidence, canonical path, surface, and registration ID</a>.</p>
+</blockquote>
+<h2 id="runtime-roles-and-their-authority">Runtime Roles And Their Authority</h2>
+<p>The plugin system is shared, but each role uses only the surfaces that it owns.</p>
+<table>
+<thead>
+<tr>
+<th>Runtime role</th>
+<th>Uses</th>
+<th>Owns</th>
+<th>Must not own</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plugin Foundation</td>
+<td>Discovery, validation, registry, configuration, isolation, and package functions</td>
+<td>Mechanism and fail-closed checks</td>
+<td>Pipeline scheduling or product policy</td>
+</tr>
+<tr>
+<td>Nova Core</td>
+<td>Stages, observers, and capability adapters</td>
+<td>Graph execution, leases, lifecycle state, effects, and recovery records</td>
+<td>Specialist judgment inside a stage</td>
+</tr>
+<tr>
+<td>Buster</td>
+<td>Test providers and report adapters</td>
+<td>Test-plan execution and evidence interpretation</td>
+<td>Nova run lifecycle</td>
+</tr>
+<tr>
+<td>Platform operator</td>
+<td>Installation roots, trust roots, provider choices, grants, active adapters, observer configuration, and isolation root</td>
+<td>Which code and authority can enter a runtime</td>
+<td>Project stage logic</td>
+</tr>
+<tr>
+<td>Pipeline author</td>
+<td>Installed stage types and stage input/configuration</td>
+<td>Desired project workflow within admitted choices</td>
+<td>Installation, trust, provider choice, or grant expansion</td>
+</tr>
+<tr>
+<td>Plugin registration</td>
+<td>Its declared function and namespaced data</td>
+<td>Returned contract value and requested operations</td>
+<td>Direct canonical lifecycle transitions or undeclared authority</td>
+</tr>
+</tbody>
+</table>
+<p>This split lets Foundation stay role-neutral. Nova can use the same package facts without making Foundation understand stage scheduling. Buster can use provider registrations without giving a test provider Nova authority.</p>
+<blockquote>
+<p><strong>Source evidence — role-neutral boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/BOUNDARIES.md#L1-L5">Foundation explicitly excludes pipeline policy and worker or specialist execution meaning</a>.</p>
+</blockquote>
+<h2 id="discovery-reads-data-not-executable-code">Discovery Reads Data, Not Executable Code</h2>
+<p>Discovery accepts one or more operator-configured installation roots.
+It performs these steps:</p>
+<ol>
+<li>Resolve every installation and trusted root with <code>realpath</code>.</li>
+<li>Reject a missing root, a non-directory, or two configured paths that resolve to the same root.</li>
+<li>Inspect direct child directories only.</li>
+<li>Keep a child only when it contains <code>plugin.json</code>.</li>
+<li>Sort candidates to make discovery order stable.</li>
+<li>Resolve each package directory with <code>realpath</code> and reject a repeated canonical package path.</li>
+<li>Parse and freeze the manifest.</li>
+<li>Calculate a content digest.</li>
+<li>Establish provenance and trust scope from operator policy.</li>
+</ol>
+<p>Discovery does not import a registration module. A malicious module cannot run only because the package appears below an installation root.</p>
+<p>The direct-child rule is important. Nested packages do not appear automatically.
+A directory without <code>plugin.json</code> is not a plugin package.
+Symlink aliases cannot create two logical copies of one package because canonical paths are compared.</p>
+<p><strong>Rejected alternative:</strong> recursive search would make an unrelated nested directory part of the runtime by accident. It would also make precedence depend on filesystem layout.</p>
+<p><strong>Failure behavior:</strong> discovery stops for the complete runtime when a root, manifest, digest, duplicate path, or trust decision is invalid. It does not return a partial trusted set.</p>
+<blockquote>
+<p><strong>Source evidence — deterministic inert discovery</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/discovery.ts#L13-L137">Root canonicalization, direct-child selection, sorting, manifest parsing, digest calculation, and provenance creation are one discovery flow</a>.</p>
+</blockquote>
+<h2 id="manifest-schema-and-path-admission">Manifest, Schema, And Path Admission</h2>
+<p>The manifest is a closed JSON object. Unknown manifest fields fail validation.
+Its <code>apiVersion</code> must be exactly <code>pipeline-plugin-v2</code>.
+At least one registration array must contain an entry.</p>
+<p>Each registration declares inert metadata:</p>
+<ul>
+<li>a local registration ID;</li>
+<li>a package-relative module path;</li>
+<li>an exported function name;</li>
+<li>the schemas and contract fields for that registration type;</li>
+<li>required capabilities, where the surface supports capabilities.</li>
+</ul>
+<p>The registry resolves every module and schema path below the canonical package root.
+An absolute path, <code>..</code> escape, symlink escape, missing target, directory target, or other outside reference fails admission.
+Schema documents are parsed as JSON and checked as JSON Schema 2020-12 before their validators are compiled.</p>
+<p>Each schema document has its own <code>$id</code> namespace and its own validator lifetime.
+Two packages can use the same schema <code>$id</code> because their validators remain in different snapshot scopes.
+Arbitrary cross-package <code>$ref</code> resolution is not supported.
+The runtime keeps both a validator that does not add defaults and a resolver that adds schema defaults to a structured clone.</p>
+<p><strong>Why schemas belong to the snapshot:</strong> a later registry build must not change how an existing run validates its input or result.</p>
+<p><strong>Important limit:</strong> manifest and schema admission proves structure. It does not prove that the export exists, that code has no import-time effects, or that the function behaves correctly. Activation handles export and import checks later.</p>
+<blockquote>
+<p><strong>Source evidence — path and schema admission</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/build.ts#L33-L70">Registry construction resolves referenced files by canonical path and requires each target to remain a file inside its package</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/schema.ts#L62-L116">Manifest parsing and per-document schema compilation fail with structured registry errors</a>.</p>
+</blockquote>
+<h2 id="integrity-and-provenance">Integrity And Provenance</h2>
+<p>The package digest is SHA-256 over every regular file in the package tree.
+The digest input includes the relative path length, relative path, byte length, and file bytes.
+Files are sorted before hashing. Symlinks are forbidden.
+This means a renamed file changes the digest even when its content does not change.</p>
+<p>The trust decision has two paths:</p>
+<ul>
+<li>A package below a trusted built-in root receives <code>trusted_first_party</code> scope and <code>builtin_allowlist</code> evidence.</li>
+<li>Any other package must match an allowed source digest or a verified attestation. It receives <code>isolated_external</code> scope.</li>
+</ul>
+<p>An attestation digest is evidence that an operator-selected verifier accepted an attestation.
+The runtime does not treat the package content digest as a publisher signature.
+The trust record keeps the verifier, method, verification time, source reference, canonical path, and resolution time.</p>
+<p><strong>Why built-in and external trust differ:</strong> first-party packages can run in the host process after import checks. External stages and observers must cross an operating-system isolation boundary.</p>
+<p><strong>Cost:</strong> the operator must maintain digest or attestation policy and retain exact old package bytes for recoverable runs.</p>
+<blockquote>
+<p><strong>Source evidence — digest and trust decision</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/digest.ts#L6-L27">The digest covers sorted paths and bytes and rejects symlinks</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/discovery.ts#L62-L103">Discovery maps built-in roots, digest allowlists, and verified attestations to distinct provenance records</a>.</p>
+</blockquote>
+<h2 id="external-package-installation">External Package Installation</h2>
+<p>Installation is an operator action. The installer accepts an already local, bundled source tree. It does not download a package.</p>
+<p>Before publication, it verifies:</p>
+<ul>
+<li>the actor appears in the operator allowlist;</li>
+<li>the canonical source is not empty and is not a local or file reference;</li>
+<li>the source digest or attestation matches policy;</li>
+<li>file count and total size remain below configured limits;</li>
+<li>there are no symlinks, unusual file types, <code>node_modules</code>, or package lifecycle scripts;</li>
+<li>every bundled JavaScript or TypeScript file has valid syntax;</li>
+<li>the manifest, references, schemas, and registry rules are valid;</li>
+<li>the expected content digest matches;</li>
+<li>the external package contains no capability adapter.</li>
+</ul>
+<p>The installer copies files to a private staging directory, validates the copy again, and then publishes it with a rename.
+The installed directory name includes a safe package ID, package version, and digest prefix.
+If the exact target already exists with the same digest, installation is idempotent.
+A different digest at that target is a conflict.</p>
+<p>The installer does not execute lifecycle scripts or imports.
+Syntax checks do not prove module resolution, export shape, or runtime behavior.
+The final rename gives atomic visibility. The implementation does not claim a power-loss durability guarantee for installation.</p>
+<blockquote>
+<p><strong>Source evidence — install admission and publication</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L218">External installation enforces authority, source trust, package limits, bundled dependencies, syntax checks, double validation, and rename publication</a>.</p>
+</blockquote>
+<h2 id="registry-construction-and-global-ownership">Registry Construction And Global Ownership</h2>
+<p>Discovery returns packages. Registry construction turns them into a single ownership snapshot.</p>
+<p>The snapshot contains maps for packages, stages, observers, adapters, capability providers, test providers, test-provider contracts, report adapters, report formats, and compiled schemas.</p>
+<p>The build rejects these conflicts:</p>
+<table>
+<thead>
+<tr>
+<th>Conflict</th>
+<th>Reason for rejection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repeated package ID</td>
+<td>Two packages would claim one logical owner.</td>
+</tr>
+<tr>
+<td>Repeated <code>package-id:registration-id</code></td>
+<td>One registration lookup would have two results.</td>
+</tr>
+<tr>
+<td>Repeated stage type</td>
+<td>A pipeline stage type must have one owner.</td>
+</tr>
+<tr>
+<td>Repeated test-provider contract ID</td>
+<td>Buster must resolve one provider contract without discovery-order precedence.</td>
+</tr>
+<tr>
+<td>Repeated port name in one test provider</td>
+<td>The provider input or output would be ambiguous.</td>
+</tr>
+<tr>
+<td>Unsupported evidence default</td>
+<td>A plan could request evidence that the provider did not declare.</td>
+</tr>
+</tbody>
+</table>
+<p>Multiple adapters may declare the same capability. Multiple report adapters may declare the same report format.
+The registry keeps these candidates because policy or the resolved Buster plan must make the exact selection later.
+Discovery order never resolves this ambiguity.</p>
+<p>The final snapshot uses read-only map and set wrappers, freezes nested registration data, and records a deterministic snapshot digest.
+The snapshot digest covers package versions and digests plus the stable registration ownership facts.</p>
+<p><strong>Rejected alternative:</strong> “first package wins” would make authority depend on directory order. The current design turns ambiguity into an explicit error or selection task.</p>
+<blockquote>
+<p><strong>Source evidence — build and freeze</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/build.ts#L183-L220">The builder validates global ownership and constructs every registry index</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/build.ts#L223-L317">Package, registration, stage, and provider-contract conflicts fail before snapshot creation</a>.</p>
+</blockquote>
+<h2 id="compatibility-is-explicit-and-conservative">Compatibility Is Explicit And Conservative</h2>
+<p>The current host accepts only <code>pipeline-plugin-v2</code> manifests.
+It does not infer compatibility from a close version number.
+Registration input, output, configuration, checkpoints, provider contracts, and report contract versions carry their own schema or contract identity.</p>
+<p>For an existing run, package version and digest are pinned in the run snapshot.
+Recovery compares the current package set and runtime configuration with that snapshot.
+Without an explicit administrative package-upgrade chain, a version or digest mismatch stops recovery.
+An upgrade record must form an exact chain from the stored identity to the current identity and must keep the package ID and API version.</p>
+<p>This policy prefers a safe stop over an automatic reinterpretation of durable state.
+The rejected alternative is “use the newest compatible-looking package.” That choice could run recovery with bytes that never produced the stored records.</p>
+<blockquote>
+<p><strong>Source evidence — compatibility during recovery</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L23-L66">Recovery verifies the package set, runtime configuration, pinned versions and digests, and every explicit upgrade edge</a>.</p>
+</blockquote>
+<h2 id="selection-is-separate-from-installation">Selection Is Separate From Installation</h2>
+<p>An installed package is only available for selection. It is not automatically active.</p>
+<p>Nova enables:</p>
+<ul>
+<li>the owner of each stage type present in the pipeline definition;</li>
+<li>every observer named in platform configuration;</li>
+<li>every adapter listed in <code>activeAdapters</code>;</li>
+<li>each adapter that provides a capability required by one of those registrations;</li>
+<li>providers required by those adapters, until no new dependency is found.</li>
+</ul>
+<p>An enabled registration must exist.
+A provider mapping must name an installed adapter that declares the capability.
+A required capability without a selected provider fails.
+If multiple providers exist and the operator did not select one, resolution reports ambiguity rather than choosing by order.
+An adapter dependency cycle fails before activation.</p>
+<p><strong>Why selection is separate:</strong> installation answers “may these bytes be considered?”
+Selection answers “does this runtime need this registration?”
+This prevents unused installed code from gaining runtime authority.</p>
+<blockquote>
+<p><strong>Source evidence — explicit and transitive selection</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L44-L50">Nova derives the initial enabled set from configured stages, observers, and adapters</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L217">Capability resolution adds provider dependencies, rejects missing or ambiguous providers, and detects adapter cycles</a>.</p>
+</blockquote>
+<h2 id="capabilities-and-grants">Capabilities And Grants</h2>
+<p>A capability is a named class of external authority, such as reading an artifact, calling an HTTP origin, executing a command, or resolving a secret.
+A registration declaration states what it needs.
+An adapter declaration states what it can provide.
+Platform policy selects the provider and gives each registration bounded constraints.
+All three statements must agree.</p>
+<p>The current vocabulary defines the allowed operation names, resource types, and required constraint fields for each capability.
+Unknown capabilities fail admission.
+The platform can never grant core-only capabilities to a plugin.
+These capabilities include lifecycle mutation, scheduler advance, canonical event mutation, and registry mutation.</p>
+<p>The resolver rejects:</p>
+<ul>
+<li>a missing grant for a declared requirement;</li>
+<li>a grant for a capability that the registration did not request;</li>
+<li>a grant for a disabled registration;</li>
+<li>an unknown or core-only capability;</li>
+<li>an invalid provider;</li>
+<li>invalid, empty, repeated, relative, or non-canonical constraint values.</li>
+</ul>
+<p>At invocation time, the host checks the exact operation, resource type, canonical resource identity, and capability-specific constraints.
+For example, HTTP uses canonical origins, command execution uses an exact executable plus an allowed working root, and secret access uses an allowed secret name.
+<code>secrets.read</code> also uses the confidential effect path, which keeps its result out of the normal durable effect record.</p>
+<p>There is no wildcard syntax. A value such as <code>*</code> is only the literal string
+<code>*</code>; it does not expand authority. Some resource families use an explicit
+hierarchy rule. A state namespace can be equal to or below an allowed
+namespace. A repository path or working directory must remain below a
+canonical allowed root. A <code>kubernetes.exposure</code> namespace requires the exact
+allowed prefix or that prefix followed by <code>-</code>. All other rows below use exact
+equality unless the row states a prefix rule.</p>
+<p>The following table gives the complete resource-matching model.</p>
+<table>
+<thead>
+<tr>
+<th>Capability family</th>
+<th>Resource match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>report.evidence.read</code></td>
+<td>The run ID must equal one item in <code>allowedRunIds</code>.</td>
+</tr>
+<tr>
+<td><code>state.read</code>, <code>state.append</code></td>
+<td>The namespace must equal an allowed namespace or be below it.</td>
+</tr>
+<tr>
+<td><code>artifacts.read</code>, <code>artifacts.write</code>, <code>test.plan.evidence</code>, <code>demo.handoff</code></td>
+<td>The request payload namespace must equal one item in <code>allowedNamespaces</code>.</td>
+</tr>
+<tr>
+<td><code>runtime.dispatch</code></td>
+<td>The canonical agent ID must equal one item in <code>allowedAgents</code>.</td>
+</tr>
+<tr>
+<td><code>git.repository.read</code></td>
+<td>The repository-relative path must remain below an allowed prefix. Root-wide operations use the exact <code>.</code> identity.</td>
+</tr>
+<tr>
+<td><code>git.workspace.create</code>, <code>git.workspace.remove</code></td>
+<td>The existing repository must remain below an allowed root. The potential workspace path must remain below an allowed workspace root.</td>
+</tr>
+<tr>
+<td><code>git.commit</code>, <code>git.merge</code>, <code>git.sync</code></td>
+<td>The canonical existing repository or workspace must remain below an allowed root.</td>
+</tr>
+<tr>
+<td><code>network.http</code></td>
+<td>The parsed HTTP or HTTPS origin must equal one item in <code>allowedOrigins</code>.</td>
+</tr>
+<tr>
+<td><code>secrets.read</code></td>
+<td>The secret name must equal one item in <code>allowedNames</code>.</td>
+</tr>
+<tr>
+<td><code>command.execute</code></td>
+<td>The executable must match exactly. The canonical working directory must remain below an allowed root.</td>
+</tr>
+<tr>
+<td><code>container.build</code></td>
+<td>Repository, scratch, context, and Dockerfile paths must stay in their allowed relationship. The platform must match exactly.</td>
+</tr>
+<tr>
+<td><code>kubernetes.fixture</code></td>
+<td>The namespace prefix must match exactly. A prepare manifest must remain below an allowed workspace root.</td>
+</tr>
+<tr>
+<td><code>kubernetes.exposure</code></td>
+<td>The namespace must equal an allowed prefix or start with that prefix plus <code>-</code>.</td>
+</tr>
+<tr>
+<td><code>lint.execute</code></td>
+<td>Project ID must match. Working and policy paths must remain below their separate allowed roots.</td>
+</tr>
+<tr>
+<td><code>test.plan.execute</code></td>
+<td>The resource and payload repository must resolve to the same existing path below an allowed root.</td>
+</tr>
+<tr>
+<td><code>operator.receipt</code>, <code>operator.request</code>, <code>transport.publish</code></td>
+<td>The target must equal one item in <code>allowedTargets</code>.</td>
+</tr>
+<tr>
+<td><code>signal.wait</code></td>
+<td>The signal type and authorized issuer ID must each match their own allowlist.</td>
+</tr>
+<tr>
+<td><code>telemetry.emit</code></td>
+<td>The event identity must start with an allowed event prefix.</td>
+</tr>
+<tr>
+<td><code>agent.events.subscribe</code></td>
+<td>The source must equal one item in <code>allowedSources</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why declaration and grant are both required:</strong> a manifest is an author request, not operator permission. A broad platform grant must also not give an undeclared power to a registration.</p>
+<blockquote>
+<p><strong>Source evidence — vocabulary and denial rules</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L37-L127">The capability vocabulary defines 28 plugin-facing capabilities and four permanently core-only capabilities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts#L130-L197">Constraint validation requires exact fields and canonical paths, prefixes, and origins</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/authorization.ts#L39-L130">Nova checks the resource-specific constraint again for every capability invocation</a>.</p>
+</blockquote>
+<h2 id="configuration-ownership-and-precedence">Configuration Ownership And Precedence</h2>
+<p>Configuration comes from two authorities.</p>
+<p>The platform file owns installation roots, trust policy, provider choices, grants, and runtime configuration.
+Runtime configuration includes adapters, observers, isolation, storage, time limits, effect locks, and administrative issuers.
+The pipeline definition owns the selected stage types and each stage's configuration and input.</p>
+<p>Relative installation, trusted, storage, and isolation paths resolve against the platform configuration file directory.
+The platform schema is closed. Unknown top-level fields fail validation.
+The loader reports every schema or format rejection as
+<code>PLATFORM_CONFIG_INVALID</code> and includes the canonical file and validator detail.</p>
+<p>Each registration owns its configuration schema:</p>
+<ul>
+<li>a configured stage must exist, be enabled, and accept its stage configuration;</li>
+<li>an enabled observer or adapter receives its configured object, or an empty object when no object is present;</li>
+<li>an unknown configured observer or adapter fails;</li>
+<li>a test-provider configuration resolves through the provider contract and records the configuration-schema digest;</li>
+<li>schema defaults are added only by a dedicated resolver that clones the input first.</li>
+</ul>
+<p>There is no hidden merge of arbitrary project and platform objects.
+The pipeline cannot select trust roots, providers, or grants.
+The platform cannot silently replace a stage type's registration-owned schema.</p>
+<p>Nova stores the effective runtime configuration in <code>run-snapshot.json</code> so that
+recovery can compare the same provider, grant, adapter, observer, and isolation
+choices. The snapshot keeps the configured values; this path does not redact
+configuration and it does not produce a separate sanitized “effective config”
+view. A configuration must therefore contain secret references, such as names
+used through <code>secrets.read</code>, and not secret values. Registration schemas can
+reject unwanted fields, but the host does not infer which arbitrary field is
+sensitive.</p>
+<p>This stored configuration is a deliberate subset, not a copy of the complete
+platform file. It contains <code>providers</code>, <code>grants</code>, <code>adapters</code>,
+<code>activeAdapters</code>, <code>observers</code>, and optional <code>isolation</code>. Package provenance
+separately records the selected package identity and its trust evidence. The
+graph snapshot separately retains each stage configuration and input. The
+snapshot configuration does not include installation roots, trusted roots,
+external trust policy, the platform <code>schemaVersion</code>, <code>storageRoot</code>,
+<code>shutdownTimeoutMs</code>, <code>effectLockTtlMs</code>, <code>orchestratorIssuerId</code>, or
+<code>administrativeDecisionIssuers</code>. Recovery uses the current platform values at
+those boundaries unless a separate durable record binds the relevant identity.
+The snapshot comparison cannot by itself detect a change to an omitted field.
+An operator must therefore review these changes as recovery and security
+changes, not as harmless host tuning.</p>
+<blockquote>
+<p><strong>Source evidence — configuration boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28">The platform type lists every host-owned configuration family</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L30-L70">The loader validates the closed platform schema and resolves its host paths relative to the configuration file</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/configuration.ts#L28-L121">Registration-owned validators reject missing owners and invalid stage, observer, adapter, and test-provider values</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L23-L42">Runtime preparation defines the exact platform-configuration subset that enters the immutable run record</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph.ts#L13-L19">The graph snapshot retains its nodes as complete stage definitions</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L446-L468">The stage-definition contract includes registration-owned <code>config</code> and <code>input</code></a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L123-L134">The immutable registry record retains effective provider, grant, adapter, observer, isolation, package, and stage-owner choices</a>.</p>
+</blockquote>
+<h2 id="import-audit-is-an-admission-check-not-the-runtime-sandbox">Import Audit Is An Admission Check, Not The Runtime Sandbox</h2>
+<p>Before trusted first-party code enters the host process, activation runs every stage, observer, and adapter export in each enabled package through a separate audit process.
+It performs the audit between two package-digest checks.</p>
+<p>The audit process:</p>
+<ul>
+<li>runs with Node permission mode and read access only;</li>
+<li>blocks filesystem writes, subprocess creation, workers, sockets, DNS, HTTP, timers, <code>fetch</code>, and WebSocket construction;</li>
+<li>blocks selected process-global operations;</li>
+<li>records global values, working directory, environment, process title, and umask before import;</li>
+<li>imports the module and verifies that the named export is a function;</li>
+<li>rejects detected changes to those recorded process and global values;</li>
+<li>has a 30-second host timeout.</li>
+</ul>
+<p>The second digest check detects package changes that occur during the audit window.</p>
+<p>This audit finds a broad set of import-time side effects. It is not proof that later function execution is harmless. Trusted code executes in the host process after activation and must still use the capability context for external operations.</p>
+<p><strong>Why audit all runtime exports in an enabled package:</strong> an enabled package is the integrity unit. Auditing only one selected export could leave an unaudited sibling module inside the same admitted byte identity.</p>
+<blockquote>
+<p><strong>Source evidence — import admission</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137">Activation checks package integrity, audits trusted imports, and checks integrity again before any import</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs#L9-L121">The audit child blocks side-effect APIs and verifies the requested export and process-global state</a>.</p>
+</blockquote>
+<h2 id="activation-is-fail-closed">Activation Is Fail-Closed</h2>
+<p>Activation receives an immutable snapshot and an enabled registration set.
+It does not activate every installed package.</p>
+<p>For trusted first-party registrations, it imports the module and requires the named export to be a function.
+For external stages and observers, it creates an invocation wrapper that starts an isolated child only when the host invokes the registration.
+An external invocation must receive a bounded plugin context.</p>
+<p>External capability adapters are rejected.
+An adapter can have startup state, readiness, dependency calls, cleanup, and shutdown behavior. A one-call isolated wrapper cannot preserve those semantics safely.
+The current runtime therefore requires a future persistent isolated adapter host before it can support external adapters.</p>
+<p>Adapter startup is transactional. Dependencies start first. Every selected
+adapter must activate and become ready before the runtime publishes the adapter
+set. The host races each factory and <code>ready()</code> call against the platform-owned
+<code>shutdownTimeoutMs</code>. A timeout reports
+<code>ADAPTER_START_TIMEOUT:&lt;adapter-id&gt;:activate</code> or
+<code>ADAPTER_START_TIMEOUT:&lt;adapter-id&gt;:ready</code> and aborts that adapter's lifecycle
+signal. Revoked contexts cannot acquire new capability authority.</p>
+<p>A readiness failure first revokes that adapter's lifecycle signal and awaits
+its shutdown. Only after this cleanup settles does the failure reach the outer
+startup handler. Its rollback revokes the remaining started contexts and
+attempts shutdown in reverse startup order. Both cleanup paths start a timer that aborts the shutdown signal,
+but they continue to await the shutdown promise. If an adapter ignores that
+signal and never settles, startup can remain pending indefinitely after its
+factory or readiness timeout. Pending failed-readiness cleanup can prevent the
+outer rollback from starting indefinitely. The earlier adapters' contexts have
+not yet been revoked by that rollback. The runtime still exposes no partial adapter set.
+This transaction does not reverse an external effect that a service already
+accepted.</p>
+<p>The separate <code>AdapterRuntime.shutdown()</code> method races its wait against a host
+deadline and can return <code>ADAPTER_SHUTDOWN_TIMEOUT</code>. That return does not prove
+that adapter cleanup or the pending startup settled. Keep new admission closed
+and retain the adapter identity, configuration digest, timeout phase, elapsed
+time, and cleanup diagnostics. Plugin-runtime maintainers and the adapter owner
+must establish remaining resource ownership and reconcile uncertain effects
+before retry. Use the <a href="../use/plugins.html#3-activate-and-prove-health">operator plugin lifecycle procedure</a>.
+This startup-cleanup limit can be removed only when the host bounds both failed
+readiness teardown and rollback independently of adapter cooperation, with
+checks for an adapter that ignores abort and never settles.</p>
+<p><strong>Rejected alternative:</strong> returning a partially activated registry would make behavior depend on which asynchronous import failed first. The caller receives either the complete selected registry or an error.</p>
+<blockquote>
+<p><strong>Source evidence — activation modes and current boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100">Activation selects direct import or isolated invocation from trust scope and rejects external adapters</a>.</p>
+<p><strong>Claim:</strong> Factory and readiness waits have timeout races; failed-start cleanup can remain pending after its abort timer. Pending failed-readiness cleanup prevents the outer rollback from revoking the remaining started contexts.</p>
+<p><strong>Implementation:</strong> The starter <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L25-L61">orders dependencies and attempts rollback on failure</a>. It <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L100-L103">races factory activation and revokes timed-out contexts</a>. It <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L144-L165">awaits failed-readiness teardown and rollback directly</a>. The runtime <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L43-L49">publishes only a complete started set</a> and <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L74-L86">separately races normal shutdown against a deadline</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.schema.json#L95-L95"><code>shutdownTimeoutMs</code> is a positive platform-owned integer</a>. The <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-support.ts#L15-L18">startup helper races the operation against rejection</a>.</p>
+<p><strong>Test evidence:</strong> The contract fixture <a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs#L448-L474">uses stalled readiness with a shutdown that settles</a>. This page records no executed result for that fixture.</p>
+<p><strong>Revision:</strong> <code>4f089958db97a551f406c157d774bda143a38946</code></p>
+<p><strong>Limit:</strong> The fixture does not establish bounded failed-start cleanup when shutdown ignores abort. No live cleanup outcome is established here.</p>
+</blockquote>
+<h2 id="invocation-leases">Invocation Leases</h2>
+<p>Activation says that a function can exist in the runtime.
+A lease says that one invocation can use its context now.</p>
+<p>An invocation lease binds:</p>
+<ul>
+<li>a unique lease ID;</li>
+<li>the run, stage, and attempt identity;</li>
+<li>exact registration provenance;</li>
+<li>its grants;</li>
+<li>wall-time, memory, and CPU limits;</li>
+<li>issue and expiry times;</li>
+<li>active or revoked status.</li>
+</ul>
+<p>The context checks the lease before a capability call, event emission, or state access.
+Expiry uses a strict boundary: the lease is invalid at or after <code>expiresAt</code>.
+Revocation is permanent and idempotent.
+Core revokes the lease when an attempt finishes and aborts the related signal on cancellation or timeout.</p>
+<p>A plugin must not retain the context and use it after completion.
+Possession of an old JavaScript object does not preserve authority because every operation checks the live lease object.</p>
+<blockquote>
+<p><strong>Source evidence — lease contract and enforcement</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L942-L1011">The contract binds attempt, registration, grants, limits, time, and revocation facts</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/lease.ts#L6-L35"><code>RevocableLease</code> denies revoked, invalid, and expired contexts and records permanent revocation</a>.</p>
+</blockquote>
+<h2 id="isolation-for-external-stages-and-observers">Isolation For External Stages And Observers</h2>
+<p>Each external invocation gets a new process boundary.
+The host resolves the package and module to canonical paths and requires the module to remain inside the package.
+It verifies that the argument and contract can be serialized before launch.</p>
+<p>The isolated child receives:</p>
+<ul>
+<li>read access to the trusted child loader and the package tree;</li>
+<li>no native Node add-ons;</li>
+<li>a V8 heap limit derived from the lease;</li>
+<li>a native supervisor with resource and syscall limits;</li>
+<li>a dedicated cgroup-v2 child with a page-aligned memory limit and disabled swap;</li>
+<li>a line-framed JSON protocol for invocation, capability requests, events, results, and errors.</li>
+</ul>
+<p>The child does not receive direct capability implementations.
+It sends a capability request to the parent. The parent calls the same bounded context that trusted code uses.
+This keeps grants and resource matching in the trusted host.</p>
+<p>The protocol limits a line to 256 KiB and buffered output to 1 MiB.
+It limits serialized values to 1 MiB, stderr to 64 KiB, and concurrent pending requests to 64.
+A result is not accepted while capability or event requests remain pending.</p>
+<p>Cancellation or wall-time expiry starts termination with <code>SIGTERM</code>.
+After one second, the host kills the cgroup tree and sends <code>SIGKILL</code>.
+After another second without process closure, the session reports a cleanup timeout.
+The cgroup cleanup also checks whether the kernel recorded an out-of-memory kill.</p>
+<p><strong>Host prerequisites:</strong> this path needs the built native launcher and Linux x86-64 syscall support.
+It also needs Landlock, seccomp, readable process-child information, and a correctly delegated cgroup-v2 subtree.
+A protocol test alone does not prove those kernel controls on a deployment host.</p>
+<blockquote>
+<p><strong>Source evidence — process and protocol boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/runner.ts#L16-L58">The isolation runner creates the cgroup, starts the native supervisor with limited reads and no add-ons, and always closes the cgroup</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165">The session bounds messages, routes capabilities through the parent context, rejects undrained work, and escalates process termination</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L13-L59">The cgroup controller validates delegation, applies an exact memory ceiling, disables swap, kills the full group, and detects OOM termination</a>.</p>
+</blockquote>
+<h2 id="plugin-state-ownership">Plugin State Ownership</h2>
+<p>Plugin state is not a mutable private file owned by plugin code.
+Nova stores it as an append-only journal.</p>
+<p>Each journal instance is bound to exact registration provenance.
+Its namespace has the fixed form <code>plugin.&lt;package-id&gt;.&lt;registration-id&gt;</code>.
+An entry contains a monotonic sequence, optional attempt identity, entry type, optional entry-schema version, idempotency key, time, and JSON payload.</p>
+<p>The host rejects:</p>
+<ul>
+<li>an entry for another namespace;</li>
+<li>an entry whose provenance differs from the journal owner;</li>
+<li>a sequence that does not match journal order;</li>
+<li>reuse of an idempotency key with different content.</li>
+</ul>
+<p>Reuse of the same idempotency key with the same content returns the existing entry.
+Readers reconstruct current meaning by projecting the append-only entries.</p>
+<p>The registration provenance includes the package digest. A replacement package cannot silently become the writer of the old registration's state.
+An explicit upgrade must define how the new identity interprets or replaces that state.</p>
+<p><strong>Why append-only state:</strong> a crash cannot leave an in-place object half updated, and recovery can explain how a state was derived. The cost is retention and projection work.</p>
+<blockquote>
+<p><strong>Source evidence — state ownership and idempotency</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/plugins.ts#L12-L140"><code>PluginStateJournal</code> binds one namespace to one registration provenance and enforces sequence and idempotency</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1155-L1177">The canonical state-entry contract fixes its ownership and replay fields</a>.</p>
+</blockquote>
+<h2 id="effects-and-durable-authority">Effects And Durable Authority</h2>
+<p>A plugin asks for an effect through a capability adapter. It does not mark the effect complete by changing lifecycle state.
+Nova creates an effect identity, checks the grant, records intent, invokes the selected adapter, and records a receipt.
+Resource locks and fencing tokens prevent an expired owner from acting as the current owner of the same resource.</p>
+<p>This separation matters during a crash.
+A retry can inspect durable intent and a receipt.
+It does not assume that a missing in-memory return value means that no external action occurred.
+Confidential capability results use a separate path and do not enter the normal durable payload record.</p>
+<p>The plugin runtime therefore contains two different lease concepts:</p>
+<ul>
+<li>an invocation lease limits one plugin call;</li>
+<li>a fenced resource lock coordinates an external resource across calls and recovery.</li>
+</ul>
+<p>They solve different problems and must not be treated as interchangeable.</p>
+<blockquote>
+<p><strong>Source evidence — durable effect ownership</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L53-L87">Nova constructs the effect journal and resource-lock manager and records requested, accepted, completed, and failed effect facts</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L1140-L1153">The contract requires monotonically fenced resource locks with active, released, or expired state</a>.</p>
+</blockquote>
+<h2 id="replacement-disablement-and-removal">Replacement, Disablement, And Removal</h2>
+<p>Replacement is not an in-place overwrite.
+A new package has a new digest and a digest-specific installation directory.
+New runtime preparation can select it, but an existing run remains pinned to its original package identities and configuration.</p>
+<p>A safe replacement sequence is:</p>
+<ol>
+<li>Install and admit the new bytes as a separate immutable package identity.</li>
+<li>Stop new selection of the old registration.</li>
+<li>Drain active invocations, observer delivery, adapter work, and recoverable runs that still need the old identity.</li>
+<li>Record any explicit package upgrade decision that permits a blocked run to use the new identity.</li>
+<li>Move or transform registration-owned state only through an owner-defined procedure.</li>
+<li>Keep old bytes while a journal, checkpoint, snapshot, or recovery decision can still reference them.</li>
+<li>Remove the old package only after those references and external resources are retired.</li>
+</ol>
+<p>Disablement means that policy no longer enables a registration. It does not delete bytes or durable state.
+Removal moves one direct installation-root child to a private trash directory and deletes the tombstone.
+The removal function rejects paths outside the direct installation root.</p>
+<p>The caller owns authorization and drain checks. The removal function does not inspect active runs, state journals, external credentials, or resources.
+Removal is therefore a final filesystem action, not a complete lifecycle manager.</p>
+<blockquote>
+<p><strong>Source evidence — removal boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234"><code>removeInstalledPackage()</code> accepts only a direct installation-root child and performs rename-before-delete</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L28-L66">Run recovery refuses silent byte replacement and permits only an exact recorded upgrade chain</a>.</p>
+</blockquote>
+<h2 id="failure-and-recovery-map">Failure And Recovery Map</h2>
+<p>Registry failures use a stable <code>RegistryError.code</code> value and a frozen detail object.
+The current error vocabulary is:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Codes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Root and package admission</td>
+<td><code>REGISTRY_ROOT_INVALID</code>, <code>REGISTRY_MANIFEST_INVALID</code>, <code>REGISTRY_PACKAGE_DUPLICATE</code>, <code>REGISTRY_PACKAGE_UNTRUSTED</code></td>
+</tr>
+<tr>
+<td>Package integrity and references</td>
+<td><code>REGISTRY_PACKAGE_INTEGRITY_MISMATCH</code>, <code>REGISTRY_REFERENCE_FORBIDDEN</code>, <code>REGISTRY_REFERENCE_MISSING</code></td>
+</tr>
+<tr>
+<td>Ownership</td>
+<td><code>REGISTRY_STAGE_OWNER_CONFLICT</code>, <code>REGISTRY_REGISTRATION_CONFLICT</code>, <code>REGISTRY_TEST_PROVIDER_CONTRACT_CONFLICT</code>, <code>REGISTRY_REGISTRATION_MISSING</code></td>
+</tr>
+<tr>
+<td>Provider policy</td>
+<td><code>REGISTRY_ADAPTER_PROVIDER_CONFLICT</code>, <code>REGISTRY_CAPABILITY_PROVIDER_INVALID</code>, <code>REGISTRY_CAPABILITY_PROVIDER_MISSING</code>, <code>REGISTRY_CAPABILITY_PROVIDER_AMBIGUOUS</code>, <code>REGISTRY_ADAPTER_CYCLE</code></td>
+</tr>
+<tr>
+<td>Capability policy</td>
+<td><code>REGISTRY_CAPABILITY_FORBIDDEN</code>, <code>REGISTRY_CAPABILITY_UNKNOWN</code>, <code>REGISTRY_CAPABILITY_CONSTRAINT_INVALID</code>, <code>REGISTRY_CAPABILITY_DENIED</code>, <code>REGISTRY_CAPABILITY_UNREQUESTED</code></td>
+</tr>
+<tr>
+<td>Import, activation, and values</td>
+<td><code>REGISTRY_EXECUTOR_INVALID</code>, <code>REGISTRY_IMPORT_SIDE_EFFECT</code>, <code>REGISTRY_ACTIVATION_FAILED</code>, <code>REGISTRY_RESULT_INVALID</code></td>
+</tr>
+</tbody>
+</table>
+<p>The import-audit child also uses three internal protocol markers.
+<code>REGISTRY_IMPORT_AUDIT_MODULE_REQUIRED</code> means that the parent omitted the
+module path. <code>REGISTRY_IMPORT_AUDIT_EXPORT_REQUIRED</code> means that it omitted the
+export name. <code>REGISTRY_IMPORT_AUDIT_OK</code> is the bounded success marker; it is not
+an error. The parent converts a missing marker, invalid output, timeout, or
+child failure into the public import or activation failure.</p>
+<p>The package installer uses these exact admission codes:</p>
+<table>
+<thead>
+<tr>
+<th>Boundary</th>
+<th>Codes</th>
+<th>Safe response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operator and source</td>
+<td><code>PLUGIN_INSTALL_OPERATOR_UNAUTHORIZED</code>, <code>PLUGIN_INSTALL_CANONICAL_SOURCE_INVALID</code>, <code>PLUGIN_INSTALL_SOURCE_DIGEST_UNTRUSTED</code>, <code>PLUGIN_INSTALL_ATTESTATION_UNVERIFIED</code></td>
+<td>Use an authorized operator and one immutable, policy-approved source identity.</td>
+</tr>
+<tr>
+<td>Package tree</td>
+<td><code>PLUGIN_INSTALL_FILE_COUNT_LIMIT</code>, <code>PLUGIN_INSTALL_SIZE_LIMIT</code>, <code>PLUGIN_INSTALL_FILE_TYPE_FORBIDDEN</code>, <code>PLUGIN_INSTALL_SYMLINK_FORBIDDEN</code>, <code>PLUGIN_INSTALL_DEPENDENCIES_MUST_BE_BUNDLED</code></td>
+<td>Rebuild the bundle within declared limits. Do not relax traversal or file-type checks for one package.</td>
+</tr>
+<tr>
+<td>Executable content</td>
+<td><code>PLUGIN_INSTALL_SCRIPTS_FORBIDDEN</code>, <code>PLUGIN_INSTALL_MODULE_FORMAT_INVALID</code>, <code>PLUGIN_INSTALL_MODULE_INVALID</code>, <code>PLUGIN_INSTALL_EXTERNAL_ADAPTER_UNSUPPORTED</code></td>
+<td>Remove lifecycle scripts, use supported bundled modules, correct syntax, or use a supported external stage or observer surface.</td>
+</tr>
+<tr>
+<td>Publication</td>
+<td><code>PLUGIN_INSTALL_DIGEST_MISMATCH</code>, <code>PLUGIN_INSTALL_TARGET_CONFLICT</code></td>
+<td>Recalculate the immutable package identity or select the already installed identical target. Never overwrite conflicting bytes.</td>
+</tr>
+</tbody>
+</table>
+<p>Removal adds <code>PLUGIN_REMOVE_OUTSIDE_INSTALLATION_ROOT</code>. It protects the final
+filesystem action from an incorrect or nested target.</p>
+<p>External-stage and external-observer isolation uses the following exact groups:</p>
+<table>
+<thead>
+<tr>
+<th>Boundary</th>
+<th>Codes</th>
+<th>Safe response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host prerequisites</td>
+<td><code>ISOLATION_SANDBOX_NOT_BUILT</code>, <code>ISOLATION_CGROUP_REQUIRED</code>, <code>ISOLATION_CGROUP_ROOT_INVALID</code>, <code>ISOLATION_CGROUP_NOT_DELEGATED</code>, <code>ISOLATION_PAGE_SIZE_UNAVAILABLE</code>, <code>ISOLATION_PAGE_SIZE_INVALID</code>, <code>ISOLATION_MEMORY_LIMIT_INVALID</code></td>
+<td>Provision and verify the host. Do not run the external package directly in the trusted host as a fallback.</td>
+</tr>
+<tr>
+<td>Scope setup and cleanup</td>
+<td><code>ISOLATION_CGROUP_SETUP_FAILED</code>, <code>ISOLATION_CGROUP_SETUP_CLEANUP_FAILED</code>, <code>ISOLATION_CGROUP_LIMIT_MISMATCH</code>, <code>ISOLATION_CGROUP_CLEANUP_FAILED</code>, <code>ISOLATION_CLEANUP_FAILED</code>, <code>ISOLATION_TREE_TERMINATION_FAILED</code>, <code>ISOLATION_PROCESS_CLEANUP_TIMEOUT</code></td>
+<td>Stop admission, retain diagnostics, and prove tree termination before another invocation.</td>
+</tr>
+<tr>
+<td>Package and surface</td>
+<td><code>ISOLATION_MODULE_OUTSIDE_PACKAGE</code>, <code>ISOLATION_EXPORT_INVALID</code>, <code>ISOLATION_SURFACE_UNSUPPORTED</code>, <code>ISOLATION_PIPE_FAILED</code></td>
+<td>Correct the admitted package path, export, supported surface, or host pipe. Do not widen the package root.</td>
+</tr>
+<tr>
+<td>JSON boundaries</td>
+<td><code>ISOLATION_INVOCATION_NOT_SERIALIZABLE</code>, <code>ISOLATION_INVOCATION_TOO_LARGE</code>, <code>ISOLATION_RESPONSE_NOT_SERIALIZABLE</code>, <code>ISOLATION_RESPONSE_TOO_LARGE</code>, <code>ISOLATION_RESULT_NOT_SERIALIZABLE</code>, <code>ISOLATION_RESULT_TOO_LARGE</code></td>
+<td>Keep the invocation, each host response, and the final result inside the JSON and one-mebibyte boundary. A circular value, a top-level undefined result, or an oversized encoded message cannot cross the process boundary.</td>
+</tr>
+<tr>
+<td>Framed protocol</td>
+<td><code>ISOLATION_PROTOCOL_INIT_REQUIRED</code>, <code>ISOLATION_PROTOCOL_INVALID_MESSAGE</code>, <code>ISOLATION_PROTOCOL_INVALID_JSON</code>, <code>ISOLATION_PROTOCOL_INVALID_UTF8</code>, <code>ISOLATION_PROTOCOL_INPUT_LIMIT</code>, <code>ISOLATION_PROTOCOL_LINE_LIMIT</code>, <code>ISOLATION_PROTOCOL_OUTPUT_LIMIT</code>, <code>ISOLATION_PROTOCOL_TRUNCATED</code></td>
+<td>Terminate the child and correct its protocol implementation. Do not accept a partial message or result.</td>
+</tr>
+<tr>
+<td>Relayed requests</td>
+<td><code>ISOLATION_PROTOCOL_CAPABILITY_INVALID</code>, <code>ISOLATION_PROTOCOL_EVENT_INVALID</code>, <code>ISOLATION_RPC_LIMIT</code>, <code>ISOLATION_RPC_NOT_DRAINED</code>, <code>ISOLATION_SESSION_CLOSED</code></td>
+<td>Reject the request or result. The child must finish all bounded capability and event calls before it returns.</td>
+</tr>
+<tr>
+<td>Child outcome</td>
+<td><code>ISOLATED_PLUGIN_CANCELLED</code>, <code>ISOLATED_PLUGIN_TIMEOUT</code>, <code>ISOLATED_PLUGIN_STDERR_LIMIT</code>, <code>ISOLATED_PLUGIN_MEMORY_LIMIT</code>, <code>ISOLATED_PLUGIN_FAILED</code>, <code>ISOLATED_PLUGIN_EXITED</code></td>
+<td>Preserve the controlled attempt outcome. Retry only through Nova policy and only after effect reconciliation when external work can exist.</td>
+</tr>
+</tbody>
+</table>
+<p><code>REGISTRY_SCHEMA_NOT_COMPILED</code> identifies an internal lookup for a schema that
+the admitted snapshot did not compile. Registry construction or configuration
+validation stops; the runtime must not continue with an unvalidated value.</p>
+<p><code>REGISTRY_ADAPTER_PROVIDER_CONFLICT</code> belongs to the declared public type.
+The current resolver does not emit it.
+It uses missing, invalid, ambiguous, and cycle codes for active provider failures.</p>
+<p>Installation errors use the <code>PLUGIN_INSTALL_*</code> family.
+They distinguish actor, source, attestation, digest, file, size, syntax, script, dependency, adapter, and target failures.
+Removal uses <code>PLUGIN_REMOVE_OUTSIDE_INSTALLATION_ROOT</code> for its path boundary.</p>
+<p>Isolation errors distinguish setup from execution.
+<code>ISOLATION_*</code> reports host, cgroup, protocol, serialization, and cleanup failures.
+<code>ISOLATED_PLUGIN_*</code> reports cancellation, timeout, stderr limit, plugin failure, exit, and memory-limit outcomes.
+State and recovery use <code>PLUGIN_STATE_*</code> and <code>RECOVERY_*</code> families.
+Their suffix identifies the failed ownership, sequence, idempotency, package, graph, or configuration invariant.</p>
+<blockquote>
+<p><strong>Source evidence — registry error vocabulary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L37">The typed registry error list is the source for public registry admission and activation codes</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L234">The installer throws bounded operator, trust, tree, syntax, adapter, digest, and publication diagnostics</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165">The isolation session defines protocol, RPC, child-outcome, and cleanup diagnostics</a>.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Representative failure</th>
+<th>Safe result</th>
+<th>Recovery owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Root discovery</td>
+<td>Invalid root or canonical alias</td>
+<td>No package set</td>
+<td>Operator fixes installation roots.</td>
+</tr>
+<tr>
+<td>Trust</td>
+<td>Unknown digest or invalid attestation</td>
+<td>Package remains untrusted</td>
+<td>Operator changes bytes or approved trust policy.</td>
+</tr>
+<tr>
+<td>Manifest</td>
+<td>Invalid JSON, unknown field, wrong API version</td>
+<td>Package is not admitted</td>
+<td>Package author fixes and republishes bytes.</td>
+</tr>
+<tr>
+<td>References</td>
+<td>Missing file or package escape</td>
+<td>Registry build stops</td>
+<td>Package author fixes the package tree.</td>
+</tr>
+<tr>
+<td>Ownership</td>
+<td>Duplicate ID, stage type, or provider contract</td>
+<td>No snapshot</td>
+<td>Operator removes the conflict or author renames the surface.</td>
+</tr>
+<tr>
+<td>Capability policy</td>
+<td>Unknown capability, missing provider, excess grant, cycle</td>
+<td>No granted registry</td>
+<td>Operator fixes providers and grants.</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td>Missing owner or schema rejection</td>
+<td>No activation</td>
+<td>Pipeline author or operator fixes the owning configuration.</td>
+</tr>
+<tr>
+<td>Integrity</td>
+<td>Digest differs after discovery or audit</td>
+<td>No activation</td>
+<td>Operator restores the exact bytes and investigates mutation.</td>
+</tr>
+<tr>
+<td>Import audit</td>
+<td>Side effect, timeout, or invalid export</td>
+<td>No trusted import</td>
+<td>Author makes imports inert and exports the required function.</td>
+</tr>
+<tr>
+<td>Adapter startup</td>
+<td>Dependency, readiness, or timeout failure; cleanup can remain pending</td>
+<td>Failed readiness revokes that adapter's context; pending cleanup delays outer rollback and revocation of the other started contexts. No partial adapter set is published.</td>
+<td>Operator stops admission and checks config and dependencies; runtime and adapter owners establish cleanup and reconcile effects before retry.</td>
+</tr>
+<tr>
+<td>External launch</td>
+<td>Missing sandbox or cgroup delegation</td>
+<td>Invocation does not start</td>
+<td>Host operator provisions and verifies kernel prerequisites.</td>
+</tr>
+<tr>
+<td>External protocol</td>
+<td>Oversize, malformed, truncated, or undrained message</td>
+<td>Child is terminated</td>
+<td>Author fixes protocol behavior; operator retains diagnostics.</td>
+</tr>
+<tr>
+<td>Invocation</td>
+<td>Expired or revoked lease</td>
+<td>Capability and state calls fail</td>
+<td>Core decides retry, wait, repair, or final failure.</td>
+</tr>
+<tr>
+<td>Recovery</td>
+<td>Package, config, graph, or provenance mismatch</td>
+<td>Recovery stops before execution</td>
+<td>Operator restores pinned inputs or supplies an authorized upgrade.</td>
+</tr>
+<tr>
+<td>Removal</td>
+<td>Package is outside the direct installation root</td>
+<td>No deletion</td>
+<td>Caller resolves the exact admitted package and repeats drain checks.</td>
+</tr>
+</tbody>
+</table>
+<p>These failures are intentionally fail-closed.
+The runtime does not keep a partly valid registry or silently reduce requested authority.
+An operator can remove a missing optional plugin from the selected configuration.
+Once selected, it must pass the complete admission path.</p>
+<h2 id="what-the-runtime-guarantees">What The Runtime Guarantees</h2>
+<p>The implemented design provides these source-level guarantees:</p>
+<ul>
+<li>discovery does not import executable registration modules;</li>
+<li>exact package bytes have a deterministic digest;</li>
+<li>the runtime records trust scope and trust evidence separately from integrity;</li>
+<li>global ownership conflicts stop registry creation;</li>
+<li>provider choice and grants are explicit;</li>
+<li>the platform cannot grant an undeclared capability;</li>
+<li>the pipeline cannot expand platform authority;</li>
+<li>trusted imports pass a bounded side-effect audit before host import;</li>
+<li>external stages and observers use a per-invocation operating-system boundary;</li>
+<li>invocation authority expires and can be permanently revoked;</li>
+<li>plugin state is append-only, idempotent, and registration-owned;</li>
+<li>existing runs remain pinned to their package and configuration facts;</li>
+<li>removal cannot target an arbitrary nested or outside path.</li>
+</ul>
+<p>These guarantees do not mean that every deployment host has passed live kernel checks.
+They also do not make plugin code logically correct.
+Contract tests prove runtime behavior in their test environments. A deployment must separately verify cgroup delegation, Landlock, seccomp, process cleanup, filesystem permissions, and retained package bytes.</p>
+<blockquote>
+<p><strong>Source evidence — focused verification</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-registry.mjs#L1-L323">Registry tests exercise schema validation, grants, duplicate roots, digest mutation, import side effects, and invalid exports</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs#L1-L466">Capability-security tests exercise unrequested grants, invalid constraints, ambiguous providers, adapter cycles, and core-only capabilities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-phase11.mts#L1-L297">External-package and isolation tests cover operator authority, source identity, package trust, cancellation, crash behavior, and the external-adapter rejection</a>.</p>
+</blockquote>
+<h2 id="a-practical-trace">A Practical Trace</h2>
+<p>When a pipeline contains stage type <code>example.build</code>, follow this trace:</p>
+<ol>
+<li>Find the package root below an installation root.</li>
+<li>Confirm that its frozen manifest declares <code>example.build</code> on one stage registration.</li>
+<li>Confirm the package ID, version, digest, source, trust scope, and trust evidence.</li>
+<li>Find <code>example.build</code> in the registry stage map and record its registration provenance.</li>
+<li>Confirm that no other package claimed the stage type.</li>
+<li>List its required capabilities.</li>
+<li>For each capability, identify the exact selected adapter and its transitive dependencies.</li>
+<li>Confirm that platform policy grants only the declared capability and valid resource constraints.</li>
+<li>Validate the stage configuration through its package-owned schema.</li>
+<li>Check whether trust scope selects direct or isolated activation.</li>
+<li>At invocation, inspect the attempt identity, lease expiry, limits, and grants.</li>
+<li>Follow each requested effect to its durable intent, selected adapter, receipt, and resource fence.</li>
+<li>Follow emitted events and plugin state to their registration-owned namespaces.</li>
+<li>At recovery, compare the stored registry and configuration facts with the current runtime before executing more code.</li>
+</ol>
+<p>If any step has no unique answer, stop there. The runtime is designed to turn ambiguity into a diagnostic instead of guessing.</p>
+<h2 id="related-reading">Related Reading</h2>
+<ul>
+<li><a href="components-and-authority.html">Components and Authority</a> places the plugin runtime inside the complete platform.</li>
+<li><a href="request-state-recovery.html">Request, State, and Recovery</a> follows Nova lifecycle decisions around plugin execution.</li>
+<li><a href="../extend/contracts.html">Extension Contracts</a> compares stage, observer, capability adapter, test-provider, and report-adapter contracts.</li>
+<li><a href="../extend/README.html">Plugin Selection Guide</a> routes an author to the correct extension path.</li>
+<li><a href="deployment-and-trust.html">Deployment and Trust</a> adds workload identity, network, and storage boundaries.</li>
+<li><a href="../reference/capabilities.html">Plugin Capabilities</a> lists the generated capability vocabulary and registration declarations.</li>
+</ul>
+</main></body></html>

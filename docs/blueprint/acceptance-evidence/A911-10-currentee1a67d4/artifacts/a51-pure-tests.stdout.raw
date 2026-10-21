@@ -1,0 +1,18 @@
+✔ unchanged route and new additions retain known routes (0.962085ms)
+✔ rename cannot erase the known route even with a regenerated map (1.376436ms)
+✔ removal cannot erase the last known route (0.188075ms)
+✔ rename or removal with an owned active successor and reason is allowed (0.135664ms)
+✔ retained old owner cannot substitute for successor ownership (0.190005ms)
+✔ dangling redirect, chain, and loop are refused (0.256736ms)
+✔ redirect cannot leave the old route active as a second authority (0.171595ms)
+✔ duplicate routes and redirects are refused (0.235186ms)
+✔ empty migration reasons cannot silently acknowledge historical loss (0.234836ms)
+✔ unknown pre-registry routes are not invented (0.202146ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.952274

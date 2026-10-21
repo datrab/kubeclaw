@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/worker-trust.html"></head><body><main>
+<h1 id="worker-trust">Worker Trust</h1>
+<p>Status: implemented; live cluster proof pending
+Audience: architecture reader, maintainer, security reviewer
+Owner: Worker Core and platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core/worker/trust.ts">skills/worker/core/worker/trust.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/configmap-worker-trust.yaml">charts/kubeclaw/templates/configmap-worker-trust.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/configmap-worker-trust.yaml">charts/prism/templates/configmap-worker-trust.yaml</a>
+Evidence revision: <code>8da6157b77247dcbdf209ef12f491f0b92ca858a</code>
+Applies to: current supported release
+Last verified: source checks on 2026-09-01</p>
+<h2 id="purpose">Purpose</h2>
+<p>Worker Trust protects traffic between KubeClaw workers.</p>
+<p>SPIFFE identifies each Kubernetes workload. SPIRE issues short-lived
+X.509-SVIDs. Envoy uses those certificates for mutual TLS.</p>
+<p>Worker Core checks the verified identity after Envoy accepts the connection.</p>
+<p>Envoy does not replace the OpenClaw gateway. It protects selected internal
+worker routes; agent-session traffic on port <code>18789</code> uses a separate route.</p>
+<h2 id="security-layers">Security Layers</h2>
+<p>Worker Trust uses four independent layers.</p>
+<ol>
+<li>SPIRE attests the Kubernetes workload.</li>
+<li>Envoy authenticates and encrypts the connection.</li>
+<li>Worker Core checks the exact allowed identity.</li>
+<li>NetworkPolicy limits the permitted pods and ports.</li>
+</ol>
+<p>Nova-to-Buster source transfer adds a fifth layer. Nova signs the source metadata
+with Ed25519. Buster verifies that signature before execution.</p>
+<h2 id="identity-format">Identity Format</h2>
+<p>Each production identity has this format:</p>
+<pre><code class="language-text">spiffe://kubeclaw.internal/ns/&lt;namespace&gt;/sa/&lt;service-account&gt;
+</code></pre>
+<p>SPIRE reads the namespace and ServiceAccount from the pod. A workload cannot
+select an unrelated identity through an environment variable.</p>
+<p>The SPIRE registration selector also requires the pod label
+<code>kubeclaw.dev/worker-trust: &quot;true&quot;</code>. The label makes a pod eligible for the
+default KubeClaw registration rule. It does not grant access by itself. The
+ServiceAccount-derived SPIFFE ID and each destination allowlist still decide
+which route the workload can use.</p>
+<h2 id="protected-routes">Protected Routes</h2>
+<table>
+<thead>
+<tr>
+<th>Caller</th>
+<th>Destination</th>
+<th>Security</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova</td>
+<td>Buster plan and legacy routes</td>
+<td>SPIFFE mTLS and exact Nova identity.</td>
+</tr>
+<tr>
+<td>Nova</td>
+<td>Prism OpenClaw agent</td>
+<td>SPIFFE mTLS and exact Nova identity.</td>
+</tr>
+<tr>
+<td>Prism control</td>
+<td>Prism OpenClaw agent</td>
+<td>SPIFFE mTLS and exact control identity.</td>
+</tr>
+<tr>
+<td>Prism OpenClaw agent</td>
+<td>Prism control</td>
+<td>SPIFFE mTLS and exact agent identity.</td>
+</tr>
+<tr>
+<td>Prism control</td>
+<td>Prism worker</td>
+<td>SPIFFE mTLS and exact control identity.</td>
+</tr>
+<tr>
+<td>Prism worker</td>
+<td>Prism control</td>
+<td>SPIFFE mTLS and exact worker identity.</td>
+</tr>
+<tr>
+<td>Prism test runner</td>
+<td>Prism control</td>
+<td>SPIFFE mTLS and exact runner identity.</td>
+</tr>
+</tbody>
+</table>
+<p>Prism Studio uses the application Service on port <code>8080</code>. It does not use the
+worker mTLS route.</p>
+<h2 id="proxy-pattern">Proxy Pattern</h2>
+<p>The application calls a local Envoy listener with HTTP. Envoy sends mTLS to the
+destination Envoy listener.</p>
+<p>The destination Envoy verifies the caller URI SAN. It replaces any supplied
+forwarded-certificate header with verified certificate data.</p>
+<p>Worker Core accepts that header only from a loopback proxy connection.</p>
+<p>For a Buster plan request, the concrete path is:</p>
+<pre><code class="language-text">Nova -&gt; 127.0.0.1:28891 -&gt; Nova Envoy -&gt; SPIFFE mTLS
+     -&gt; agent-buster:18891 -&gt; Buster Envoy -&gt; 127.0.0.1:28891 -&gt; Buster runtime
+</code></pre>
+<p>The Buster Service targets the Envoy port. It does not target the runtime port.
+The runtime remains reachable on the pod network for kubelet health probes;
+NetworkPolicy denies workload ingress to that port.</p>
+<h3 id="exact-listener-and-service-boundaries">Exact listener and Service boundaries</h3>
+<p>The following addresses have different owners. A client must not substitute a
+runtime address for a proxy address.</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Owner and use</th>
+<th>Exposure rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>127.0.0.1:28891</code> in Nova</td>
+<td>Nova Envoy egress for Buster plan requests.</td>
+<td>Nova processes can call this loopback address. Envoy sends the request to Buster with mTLS.</td>
+</tr>
+<tr>
+<td><code>0.0.0.0:18891</code> in Buster</td>
+<td>Buster Envoy mTLS ingress.</td>
+<td>The Buster Service targets the named Envoy port <code>buster-plan</code>.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:28891</code> in Buster</td>
+<td>Buster plan runtime, named <code>plan-runtime</code>.</td>
+<td>Kubelet probes and the colocated Envoy can reach it. No Service may target the runtime ports.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:28080</code> in Nova</td>
+<td>Nova Envoy egress for the Prism agent.</td>
+<td>Nova dispatch enters the protected Prism path here.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:28080</code> in a Prism agent or worker</td>
+<td>Envoy egress to Prism Control.</td>
+<td>The colocated process calls this address; Envoy verifies the Control identity.</td>
+</tr>
+<tr>
+<td><code>0.0.0.0:18082</code> in the Prism agent</td>
+<td>Envoy mTLS ingress for Nova, Prism Control, and the isolated test runner.</td>
+<td>Envoy forwards an admitted request to the local agent bridge on <code>127.0.0.1:18080</code>.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:18081</code> in Prism Control</td>
+<td>Envoy egress to a Prism worker.</td>
+<td>Control uses it for authenticated worker calls.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:18080</code> in Prism Control and workers</td>
+<td>Envoy egress back to Prism Control.</td>
+<td>The local role determines the destination cluster; the port is not a public listener.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:18443</code> in the live test runner</td>
+<td>Envoy egress to Prism Control.</td>
+<td>The runner uses this isolated path for positive and negative trust checks.</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:18444</code> in the live test runner</td>
+<td>Envoy egress to the Prism agent.</td>
+<td>The runner uses this address to test the protected agent route without opening a public listener.</td>
+</tr>
+</tbody>
+</table>
+<p>Kubernetes limits container port names to 15 characters. The names
+<code>buster-plan</code> and <code>plan-runtime</code> fit that limit and also show the security
+boundary: one port belongs to Envoy, and one belongs to the application. The
+Service selects <code>buster-plan</code>, never the numeric runtime listener.</p>
+<p>Envoy does not proxy the OpenClaw gateway route on port <code>18789</code>. That route
+continues to use the OpenClaw gateway contract and its separate network rules.</p>
+<p>On HTTP ingress, Envoy uses <code>SANITIZE_SET</code>. It removes any caller-supplied
+forwarded-certificate value and writes identity data from the verified TLS
+certificate. Worker Core then requires a loopback source, exactly one SPIFFE URI,
+and an exact allowlist match. This sequence prevents a remote caller from
+asserting its own trusted identity in a header.</p>
+<p>Admission occurs three times for a reason. First, the SPIRE selector and
+ServiceAccount decide whether a pod can receive an identity. Second, the
+destination Envoy accepts only the URI SANs configured for that listener.
+Third, Worker Core compares the verified URI with the application allowlist.
+The first check limits identity issuance, the second limits entry to a route,
+and the third limits the operation after TLS termination. A configuration error
+in one layer does not turn either of the other layers into an allow rule.</p>
+<blockquote>
+<p><strong>Source evidence — listeners cannot bypass trust</strong></p>
+<p><strong>Claim:</strong> The selected production route exposes Buster Envoy through the
+Service and keeps the plan runtime behind the sidecar. Prism uses distinct
+loopback egress listeners for Control, worker, agent, and test-runner calls.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/charts/kubeclaw/templates/configmap-worker-trust.yaml#L20-L130">KubeClaw Envoy listener and identity rules</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/my-values/buster-values.yaml#L74-L131">Buster Service and runtime port selection</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/charts/prism/templates/configmap-worker-trust.yaml#L40-L203">Prism Control and worker listeners</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/charts/prism/templates/configmap-worker-trust.yaml#L204-L261">isolated test-runner listeners</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/worker/core/worker/trust.ts#L17-L51">Worker Core header and loopback checks</a>.</p>
+<p><strong>Limit:</strong> A rendered manifest proves the intended wiring. Only the live
+positive and negative checks prove the wiring of a running cluster.</p>
+</blockquote>
+<h2 id="nova-to-buster-provenance">Nova-to-Buster Provenance</h2>
+<p>Nova signs canonical source-snapshot metadata. The signature covers the Git
+revision, tree, archive digest, archive size, repository, stage, and authority.</p>
+<p>Buster verifies the signature and archive digest before it accepts the job.</p>
+<p>The <code>pipeline-test-gate-source-attestation</code> Secret holds the Ed25519 keypair.
+Nova receives the private key and Buster receives the public key. The private
+key must not enter Buster, logs, evidence, or generated configuration.</p>
+<p>Nova removes the <code>attestation</code> field, serializes the remaining snapshot with
+canonical JSON, and prefixes the bytes with the domain separator
+<code>kubeclaw-source-snapshot-v1\0</code>. The separator prevents the same signature from
+being interpreted as a signature for another message format. Buster verifies
+the authority, revision, tree, archive digest, archive size, repository, stage,
+and signature before it extracts or executes source.</p>
+<blockquote>
+<p><strong>Source evidence — source bytes and key direction</strong></p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-test-gate/v1/src/remote.ts#L61-L75">The source-snapshot contract constructs the exact signed bytes</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/my-values/buster-values.yaml#L90-L104">the deployment gives Buster only the public key</a>.</p>
+</blockquote>
+<p>This signature does not depend on GitHub artifact attestations. It does not
+create public supply-chain provenance.</p>
+<h2 id="current-provenance-limit">Current Provenance Limit</h2>
+<p>Nova-to-Prism uses SPIFFE-authenticated mTLS. Prism-to-Nova also uses the current
+application contracts.</p>
+<p>No Prism-to-Nova durable signature exists today. These Prism paths do not have
+a durable Ed25519 artifact signature. Do not describe the Prism result as
+signed artifact provenance.</p>
+<p>Worker Core defines the neutral <code>worker-trust-envelope.v1</code> format for signed
+request or artifact digests. It binds the kind, issuer, audience, purpose,
+subject digest, context digest, issue time, expiry, nonce, key ID, algorithm,
+and signature. Verification requires the expected issuer, audience, and purpose;
+valid time bounds; an Ed25519 key; and a valid signature. The current Prism path
+does not create or verify this envelope.</p>
+<blockquote>
+<p><strong>Source evidence — the neutral envelope is a contract, not a Prism claim</strong></p>
+<p><strong>Contract:</strong> <a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-worker-core/v1/src/types.ts#L10-L25">Envelope fields</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-worker-core/v1/src/trust.ts#L7-L43">signature and verification rules</a>.</p>
+<p><strong>Limit:</strong> A reusable contract does not prove that a product path uses it.</p>
+</blockquote>
+<h2 id="leased-prism-namespaces">Leased Prism Namespaces</h2>
+<p>Nova stays in the operator namespace. Prism can run in a leased namespace.</p>
+<p>Prism therefore configures Nova's namespace separately. Prism uses the release
+namespace only for Prism identities.</p>
+<p>This separation prevents a leased Prism release from expecting a nonexistent
+Nova identity in the lease.</p>
+<h2 id="fail-closed-result">Fail-Closed Result</h2>
+<p>A protected route becomes unavailable when SPIRE, CSI, SDS, or peer validation
+fails.</p>
+<p>A missing client certificate fails the TLS handshake. A wrong SVID also fails
+the TLS handshake.</p>
+<p>A forged identity header cannot replace the verified certificate identity.</p>
+<h2 id="human-identity">Human Identity</h2>
+<p>Keycloak can provide human sign-in, roles, groups, and external-client tokens.</p>
+<p>Keycloak does not replace SPIFFE workload identity. It also does not replace
+artifact signatures.</p>
+<h2 id="verification-model">Verification Model</h2>
+<p>Worker Trust uses three proof levels:</p>
+<ol>
+<li>Contract tests verify parsers, signatures, schemas, and negative cases.</li>
+<li>Helm rendering verifies identities, ports, sidecars, and NetworkPolicies.</li>
+<li>Live tests verify real SPIRE, SVIDs, mTLS, workloads, and denials.</li>
+</ol>
+<p>Each level proves different properties. A source test cannot prove the running
+cluster.</p>
+<h2 id="read-more">Read More</h2>
+<ul>
+<li><a href="deployment-and-trust.html">Deployment and Trust</a> explains the complete workload, network, storage, and failure-domain model.</li>
+<li><a href="../use/worker-trust.html">Operate Worker Trust</a> gives the deployment and proof procedure.</li>
+<li><a href="worker-core.html">Worker Core</a> explains how the worker uses the authenticated
+channel after admission.</li>
+</ul>
+</main></body></html>

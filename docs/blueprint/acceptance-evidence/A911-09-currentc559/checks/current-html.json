@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-17T10:04:01.290041+00:00",
+  "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "command": [
+    "python3",
+    "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py",
+    "--repo",
+    "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo",
+    "--revision",
+    "c559e97960a89a0f80487483addb91d2e6e4527d",
+    "--output",
+    "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/publication",
+    "--publication-root",
+    "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/sdk-provenance-v3/root/.tmp/docs-publication",
+    "--publication-receipt",
+    "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/sdk-authored-owner-correction-v1/current-production/actual-build-result.json"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"pageCount\": 166, \"htmlCount\": 166, \"excludedProbe\": true, \"formalAcceptance\": false}\n",
+  "stderr": "",
+  "adapterSha256": "a9dd0a36c4a766ed0f8026b6a636bed9aa3da1f7bac249644914c71d1b9f932d",
+  "reusedIndependentReview": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/adapter-review.json",
+  "noAdapterChanges": true,
+  "formalAcceptance": false
+}

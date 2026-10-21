@@ -34,6 +34,8 @@ assert.ok(lint('environment.mjs', 'const value = process.env.VALUE ?? "default";
 assert.ok(lint('environment.mjs', 'const value = process.env.VALUE ?? "default";\n').includes('discipline/no-env-default'));
 assert.deepEqual(lint('dynamic.mjs', 'export async function load(name) { return import(name); }\n'), ['discipline/no-dynamic-module-loading']);
 assert.deepEqual(lint('swallowed.mjs', 'export function read() { try { return parse(); } catch { return null; } }\n'), ['discipline/no-swallowed-error']);
+assert.deepEqual(lint('handled.mjs', 'export function read() { try { return parse(); } catch (error) { throw new Error("parse failed", { cause: error }); } }\n'), []);
+assert.deepEqual(lint('intentional.mjs', 'export function read() { try { return parse(); } catch { /* INTENTIONAL_NONCRITICAL(cache_miss): absence starts a refresh */ return null; } }\n'), []);
 assert.ok(lint('NotKebab.mjs', 'export const value = 1;\n').includes('discipline/filename-case'));
 
 console.log(JSON.stringify({ ok: true, suite: 'eslint-discipline-rules' }));

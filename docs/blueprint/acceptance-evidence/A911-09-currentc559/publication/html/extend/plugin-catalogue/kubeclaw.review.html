@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/plugin-catalogue/kubeclaw.review.html"></head><body><main>
+<h1 id="kubeclawreview">kubeclaw.review</h1>
+<p>Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/plugin.json">skills/nova/plugins/review/plugin.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/plugins/review/README.md">skills/nova/plugins/review/README.md</a>
+Applies to: pipeline-plugin-v2; package 1.0.0
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.</p>
+<h2 id="purpose">Purpose</h2>
+<p>Run review, repository audit, and repository revalidation stages.</p>
+<h2 id="when-to-use-it">When To Use It</h2>
+<p>Use it when the graph needs the full installed review lifecycle.</p>
+<h2 id="when-not-to-use-it">When Not To Use It</h2>
+<p>Do not use it for the narrower pipeline-review contract.</p>
+<h2 id="most-important-limit">Most Important Limit</h2>
+<p>Each stage has a distinct type and must appear at the correct graph point.</p>
+<p>The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/README.md">Package guide</a></li>
+<li><a href="../contracts.html">Shared extension contracts</a></li>
+<li><a href="../testing.html#use-a-proof-ladder">Proof and failure exercises</a></li>
+<li><a href="../testing.html#install-and-activate-by-surface">Install and activate</a></li>
+<li><a href="../testing.html#update-or-replace">Update or replace</a></li>
+<li><a href="../testing.html#disable-safely">Disable safely</a></li>
+<li><a href="../testing.html#remove-and-inspect-remaining-state">Remove and inspect remaining state</a></li>
+<li><a href="../host-and-engine.html">Host and engine boundaries</a></li>
+</ul>
+<h2 id="package-reference">Package Reference</h2>
+<ul>
+<li>Host: <code>pipeline-runtime</code>.</li>
+<li>Package identity: <code>kubeclaw.review@1.0.0</code>.</li>
+<li>Runtime-role manifest inclusion: <code>nova</code></li>
+<li>Manifest: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json">skills/nova/plugins/review/plugin.json</a></li>
+</ul>
+<h2 id="boundaries">Boundaries</h2>
+<ul>
+<li>The manifest declares extension identity and requested authority.</li>
+<li>Nova and Buster apply the selection rules for each declared surface.</li>
+<li>Platform grants or resolved plans supply authority separately from package code.</li>
+<li>Pipeline Core keeps canonical lifecycle authority.</li>
+<li>The package cannot use undeclared capabilities.</li>
+</ul>
+<h2 id="registration-summary">Registration Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>ID</th>
+<th>Public contract or type</th>
+<th>Module</th>
+<th>Export</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stage</td>
+<td><code>review</code></td>
+<td><code>kubeclaw.decision.review</code></td>
+<td><code>src/stage.ts</code></td>
+<td><code>execute</code></td>
+</tr>
+<tr>
+<td>stage</td>
+<td><code>repository-audit</code></td>
+<td><code>kubeclaw.audit.repository-review</code></td>
+<td><code>src/repository-audit-stage.ts</code></td>
+<td><code>executeRepositoryAudit</code></td>
+</tr>
+<tr>
+<td>stage</td>
+<td><code>repository-revalidation</code></td>
+<td><code>kubeclaw.audit.repository-review-revalidation</code></td>
+<td><code>src/repository-revalidation-stage.ts</code></td>
+<td><code>executeRepositoryRevalidation</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stage-review">stage: review</h2>
+<p>Public identifier: <code>kubeclaw.decision.review</code>.
+Global registration ID: <code>kubeclaw.review:review</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>runtime.dispatch</code>, <code>git.repository.read</code>, <code>artifacts.read</code>, <code>artifacts.write</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/config.schema.json">schemas/config.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>reviewSemanticEncoding</code> (constant; optional; value <code>review-semantics.utf16-v1</code>)</li>
+<li><code>reportArtifactEncoding</code> (constant; optional; value <code>kubeclaw-json.utf16.v1</code>)</li>
+<li><code>agent</code> (string; required; minLength <code>1</code>)</li>
+<li><code>profile</code> (enumeration; optional; default <code>&quot;gate&quot;</code>; allowed <code>[&quot;gate&quot;,&quot;lean&quot;,&quot;audit&quot;]</code>)</li>
+<li><code>policy</code> (object; optional)</li>
+</ul>
+<p>Input schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/input.schema.json">schemas/input.schema.json</a></p>
+<p>Result schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/result.schema.json">schemas/result.schema.json</a></p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>review</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>kubeclaw.decision.review</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/stage.ts</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>execute</code></td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;runtime.dispatch&quot;,&quot;git.repository.read&quot;,&quot;artifacts.read&quot;,&quot;artifacts.write&quot;]</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/config.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputSchema</code></td>
+<td><code>schemas/input.schema.json</code></td>
+</tr>
+<tr>
+<td><code>resultSchema</code></td>
+<td><code>schemas/result.schema.json</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stage-repository-audit">stage: repository-audit</h2>
+<p>Public identifier: <code>kubeclaw.audit.repository-review</code>.
+Global registration ID: <code>kubeclaw.review:repository-audit</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>runtime.dispatch</code>, <code>git.repository.read</code>, <code>artifacts.read</code>, <code>artifacts.write</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/repository-audit-config.schema.json">schemas/repository-audit-config.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>agent</code> (string; required; minLength <code>1</code>)</li>
+<li><code>reviewerModel</code> (string; required; minLength <code>1</code>)</li>
+<li><code>reviewerRuntime</code> (enumeration; optional; default <code>&quot;subagent&quot;</code>; allowed <code>[&quot;acp&quot;,&quot;subagent&quot;]</code>)</li>
+<li><code>reviewerAgentId</code> (string; optional; default <code>&quot;codex&quot;</code>; minLength <code>1</code>)</li>
+<li><code>reviewerThinking</code> (string; optional; default <code>&quot;high&quot;</code>; minLength <code>1</code>)</li>
+<li><code>profile</code> (enumeration; optional; default <code>&quot;audit&quot;</code>; allowed <code>[&quot;gate&quot;,&quot;lean&quot;,&quot;audit&quot;]</code>)</li>
+<li><code>policy</code> (object; optional)</li>
+</ul>
+<p>Input schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/repository-audit-input.schema.json">schemas/repository-audit-input.schema.json</a></p>
+<p>Result schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/result.schema.json">schemas/result.schema.json</a></p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>repository-audit</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>kubeclaw.audit.repository-review</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/repository-audit-stage.ts</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>executeRepositoryAudit</code></td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;runtime.dispatch&quot;,&quot;git.repository.read&quot;,&quot;artifacts.read&quot;,&quot;artifacts.write&quot;]</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/repository-audit-config.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputSchema</code></td>
+<td><code>schemas/repository-audit-input.schema.json</code></td>
+</tr>
+<tr>
+<td><code>resultSchema</code></td>
+<td><code>schemas/result.schema.json</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stage-repository-revalidation">stage: repository-revalidation</h2>
+<p>Public identifier: <code>kubeclaw.audit.repository-review-revalidation</code>.
+Global registration ID: <code>kubeclaw.review:repository-revalidation</code>. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.</p>
+<p>Required capabilities: <code>runtime.dispatch</code>, <code>git.repository.read</code>, <code>artifacts.read</code>, <code>artifacts.write</code></p>
+<p>Provided capabilities: None.</p>
+<p>Configuration schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/repository-audit-config.schema.json">schemas/repository-audit-config.schema.json</a></p>
+<p>Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):</p>
+<ul>
+<li><code>agent</code> (string; required; minLength <code>1</code>)</li>
+<li><code>reviewerModel</code> (string; required; minLength <code>1</code>)</li>
+<li><code>reviewerRuntime</code> (enumeration; optional; default <code>&quot;subagent&quot;</code>; allowed <code>[&quot;acp&quot;,&quot;subagent&quot;]</code>)</li>
+<li><code>reviewerAgentId</code> (string; optional; default <code>&quot;codex&quot;</code>; minLength <code>1</code>)</li>
+<li><code>reviewerThinking</code> (string; optional; default <code>&quot;high&quot;</code>; minLength <code>1</code>)</li>
+<li><code>profile</code> (enumeration; optional; default <code>&quot;audit&quot;</code>; allowed <code>[&quot;gate&quot;,&quot;lean&quot;,&quot;audit&quot;]</code>)</li>
+<li><code>policy</code> (object; optional)</li>
+</ul>
+<p>Input schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json">schemas/repository-revalidation-input.schema.json</a></p>
+<p>Result schema: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/schemas/result.schema.json">schemas/result.schema.json</a></p>
+<p>Declared manifest facts:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Exact declared value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>repository-revalidation</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>kubeclaw.audit.repository-review-revalidation</code></td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>src/repository-revalidation-stage.ts</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td><code>executeRepositoryRevalidation</code></td>
+</tr>
+<tr>
+<td><code>requiredCapabilities</code></td>
+<td><code>[&quot;runtime.dispatch&quot;,&quot;git.repository.read&quot;,&quot;artifacts.read&quot;,&quot;artifacts.write&quot;]</code></td>
+</tr>
+<tr>
+<td><code>configSchema</code></td>
+<td><code>schemas/repository-audit-config.schema.json</code></td>
+</tr>
+<tr>
+<td><code>inputSchema</code></td>
+<td><code>schemas/repository-revalidation-input.schema.json</code></td>
+</tr>
+<tr>
+<td><code>resultSchema</code></td>
+<td><code>schemas/result.schema.json</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="failure-behavior">Failure Behavior</h2>
+<p>The stage freezes source and policy, verifies proposed findings, and stores immutable reports. Repository-audit jobs have recovery checkpoints; revalidation does not promise per-finding resume. Local tests do not prove live reviewer quality.</p>
+<p>Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the <a href="../../use/plugins.html#3-activate-and-prove-health">startup stop rules</a>.</p>
+<h2 id="package-checks">Package Checks</h2>
+<p>Recorded local command result on 2026-09-16: <code>unavailable</code>.</p>
+<p>The command reached a persistent-path check, but BusyBox flock has no required --timeout option.</p>
+<p>Run the package command:</p>
+<pre><code class="language-bash">npm test --prefix skills/nova/plugins/review
+</code></pre>
+<p>Package test files found: 57. This is file discovery, not an executed test count.</p>
+<p>Exact package test script (run from the package directory):</p>
+<pre><code class="language-text">npm run test:cluster &amp;&amp; npm run schema:check &amp;&amp; node tests/repository-review-profile.unit.test.mjs &amp;&amp; node tests/review-prompt-budget.unit.test.mjs &amp;&amp; node tests/review-quality-corpus.unit.test.mjs &amp;&amp; node tests/review-snapshot-inventory.unit.test.mjs &amp;&amp; node tests/review-map-artifacts.unit.test.mjs &amp;&amp; node tests/review-fact-extractors.unit.test.mjs &amp;&amp; node tests/review-graph.unit.test.mjs &amp;&amp; node tests/review-scale-slicing.unit.test.mjs &amp;&amp; node tests/scalable-review-topology.unit.test.mjs &amp;&amp; node tests/scalable-review-jobs.unit.test.mjs &amp;&amp; node tests/scalable-review-verification.unit.test.mjs &amp;&amp; node tests/review-content-cache.unit.test.mjs &amp;&amp; node tests/scalable-review-compiler.unit.test.mjs &amp;&amp; node tests/review-governor.unit.test.mjs &amp;&amp; node tests/review-report-contract.unit.test.mjs &amp;&amp; node tests/review-report-builder.unit.test.mjs &amp;&amp; node tests/simplification-contract.unit.test.mjs &amp;&amp; node tests/simplification-miner.unit.test.mjs &amp;&amp; node tests/simplification-manifest.unit.test.mjs &amp;&amp; node tests/review-bundle-contract.unit.test.mjs &amp;&amp; node tests/review-bundle-snapshot.unit.test.mjs &amp;&amp; node tests/review-context-selection.unit.test.mjs &amp;&amp; node tests/review-context-production.unit.test.mjs &amp;&amp; node tests/review-slicing.unit.test.mjs &amp;&amp; node tests/echo-review-output.unit.test.mjs &amp;&amp; node tests/echo-review-verification.unit.test.mjs &amp;&amp; node tests/review-proposal-preflight.unit.test.mjs &amp;&amp; node tests/review-verification-reconciliation.unit.test.mjs &amp;&amp; node tests/review-verdict-policy.unit.test.mjs &amp;&amp; node tests/review-verified-findings.unit.test.mjs &amp;&amp; node tests/review-policy-contract.unit.test.mjs &amp;&amp; node tests/review-invariants.unit.test.mjs &amp;&amp; node tests/review-policy-resolver.unit.test.mjs &amp;&amp; node tests/review-policy-profiles.unit.test.mjs &amp;&amp; node tests/review-reducer.unit.test.mjs &amp;&amp; node tests/review-decision-matrix.unit.test.mjs &amp;&amp; node tests/review-contract-parity.unit.test.mjs &amp;&amp; node tests/review-evaluation-metadata.unit.test.mjs &amp;&amp; node tests/review-stage-input.unit.test.mjs &amp;&amp; node tests/review-stage-verification.unit.test.mjs &amp;&amp; node tests/protocol.unit.test.mjs &amp;&amp; node tests/stage.unit.test.mjs &amp;&amp; node tests/live-function.test.ts &amp;&amp; node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs &amp;&amp; node tests/package-boundary.test.mjs &amp;&amp; node tests/remediation.test.mjs &amp;&amp; node tests/repository-review-io.test.ts &amp;&amp; npm run test:coverage
+</code></pre>
+<p>Local package checks do not prove live host or cluster readiness.
+The result above states the exact local limit. Run the package command in the target environment before activation.</p>
+<h2 id="source-evidence">Source Evidence</h2>
+<ul>
+<li>Manifest: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/plugin.json">skills/nova/plugins/review/plugin.json</a></li>
+<li>Package implementation guide: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/README.md">skills/nova/plugins/review/README.md</a></li>
+<li>Module for <code>review</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/src/stage.ts">src/stage.ts</a></li>
+<li>Module for <code>repository-audit</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/src/repository-audit-stage.ts">src/repository-audit-stage.ts</a></li>
+<li>Module for <code>repository-revalidation</code>: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/src/repository-revalidation-stage.ts">src/repository-revalidation-stage.ts</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs">skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs">skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/live-function.test.ts">skills/nova/plugins/review/tests/live-function.test.ts</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/package-boundary.test.mjs">skills/nova/plugins/review/tests/package-boundary.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/protocol.unit.test.mjs">skills/nova/plugins/review/tests/protocol.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/remediation.test.mjs">skills/nova/plugins/review/tests/remediation.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs">skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs">skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/repository-review-io.test.ts">skills/nova/plugins/review/tests/repository-review-io.test.ts</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs">skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs">skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs">skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs">skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs">skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs">skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-context-production.unit.test.mjs">skills/nova/plugins/review/tests/review-context-production.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs">skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs">skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-coverage.test.mts">skills/nova/plugins/review/tests/review-coverage.test.mts</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs">skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs">skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs">skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs">skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs">skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs">skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs">skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-governor.unit.test.mjs">skills/nova/plugins/review/tests/review-governor.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-graph.unit.test.mjs">skills/nova/plugins/review/tests/review-graph.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-invariants.unit.test.mjs">skills/nova/plugins/review/tests/review-invariants.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs">skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs">skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs">skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs">skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs">skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs">skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs">skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-reducer.unit.test.mjs">skills/nova/plugins/review/tests/review-reducer.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs">skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs">skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-report-encoding.test.mjs">skills/nova/plugins/review/tests/review-report-encoding.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs">skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-slicing.unit.test.mjs">skills/nova/plugins/review/tests/review-slicing.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs">skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs">skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs">skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs">skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs">skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs">skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs">skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs">skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs">skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs">skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs">skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs">skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs">skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs">skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs</a></li>
+<li>Test: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/plugins/review/tests/stage.unit.test.mjs">skills/nova/plugins/review/tests/stage.unit.test.mjs</a></li>
+</ul>
+</main></body></html>

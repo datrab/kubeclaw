@@ -1,7 +1,7 @@
 # Anonymous HTTP lab registry. Render through scripts/render-registry-local.mjs.
 # Storage class/capacity MUST be supplied explicitly; do not apply this template.
 # RWOP needs a supporting CSI provisioner. Never substitute RWO: it allows
-# concurrent writer/GC Pods on the same node. See docs/operations/registry-clients.md.
+# concurrent writer/GC Pods on the same node. See docs/site/understand/platform-and-operations.md#writable-local-oci-registry.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

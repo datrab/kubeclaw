@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Keep durable-records.ts blob contents caller-qualified",
+      "body": "The refreshed receipt for `skills/common/plugin-runtime/foundation/observability/durable-records.ts` renews a blanket `non-api` classification for arbitrary blob bytes. The production artifact-store adapter serializes `request.payload.value` and passes those bytes to `FileDurableBlobStore.put`, then exposes the parsed value through artifact reads. Hashing, size limits and content-addressed storage establish integrity, not the root's purpose; this path accepts arbitrary JSON, including API roots. Treat this as a caller-qualified capability and retain unknown/API classification until the selected artifact producer and downstream consumer establish the actual content contract.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/docs-api-producer-adapter-authorities.json",
+        "line": 17739
+      }
+    },
+    {
+      "title": "[P2] Qualify gitops-rollback.mjs against its actual selected inputs",
+      "body": "The refreshed `scripts/gitops-rollback.mjs` receipt claims its manifest writes are covered by the offline adapter, but `discoverTransformedApiOutputs` exercises continuous rendering with synthetic groups, naming and config and records outputs under `gitops-continuous.mjs`. It does not acquire the rollback-selected historical bundle, current production config, historical release values or rollback caller. The original rollback writes actual Argo API manifests derived from those inputs. Scope and byte-equality checks do not establish correspondence with the adapter's synthetic outputs. Add a source-bound rollback adapter/input mapping, or leave this operation NOT_READY rather than renewing API-adapted coverage.",
+      "priority": "P2",
+      "confidence": 0.9,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/docs-api-producer-adapter-authorities.json",
+        "line": 16168
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Partition 5 decisions: scripts/generate-buster-provider-reference.mjs PASS: the selected stdout is a fixed-path write confirmation; schema-derived Markdown remains a separate publication. scripts/prepare-native-worker-pools.mjs PASS: selected values are fixed controller tokens or validated numeric limits consumed by kernel cgroup files; failures reject incompatible policy/pools. scripts/updates/select-runtime-deployment.mjs PASS: numeric run identifiers produce a fixed GitHub Actions output frame consumed by auto-promote-runtime.yaml; remote receipts and local release state affect selection, not the frame's native purpose. scripts/retire-operator-request.mjs PASS: selected stdout contains only newlyProjected/releasedBytes from delivery projection; scope, retained journals, snapshot and store authority govern the mutation. skills/nova/core/execution/engine-snapshots.ts PASS: publication constructs and validates run-snapshot.v4, atomically links it, and recovery reads and validates that native envelope. skills/common/plugin-runtime/foundation/observability/durable-delivery.ts NOT_READY: its generic writer role is appropriately conditional, but complete qualification of external callers, persisted payloads and later publications remains unproven; internal admission failure branches also persist quarantined external bytes. skills/common/plugin-runtime/foundation/observability/durable-records.ts NOT_READY: arbitrary artifact payloads reach the selected blob write without caller-specific root qualification. scripts/gitops-rollback.mjs NOT_READY: stderr is diagnostic, but actual selected historical/current inputs are not closed by the synthetic continuous-render adapter. These decisions concern only listed receipt refreshes and selected native/API consumer closure. No producers, tests, cluster operations or live checks were executed; no broad registry, gate, host-lifecycle or communication acceptance is implied. Classification does not qualify runtime bytes, mutable inputs or effects.",
+  "overall_confidence": 0.87
+}

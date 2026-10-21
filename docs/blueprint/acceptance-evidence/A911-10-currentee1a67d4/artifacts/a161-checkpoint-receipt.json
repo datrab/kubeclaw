@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-17T12:24:43.348089+00:00",
+  "state": "REVIEWED_PROVIDER_PROVENANCE_CORRECTION_PUSHED_BOTH_REFS_VERIFIED",
+  "commit": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+  "base": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "tree": "a9562066bce91e51aa1f05efb6814bb964f060d3",
+  "files": {
+    "scripts/generate-buster-provider-reference.mjs": "078c8598fba6dd875e2e802c0620caf7201747b75ba8c1c3efd49ce998681273",
+    "scripts/docs-api-producer-adapter-authorities.json": "45142ed4c13c57c02ffb5298218a7a5bf0b30b7705b177b393233833db90ba57",
+    "docs/site/reference/buster-provider-configuration.md": "47b562aa81bd9c15bffc32d466b3605bb831abd917e4a03982356a525e28e016",
+    "docs/site/reference/generated-documentation-map.json": "9fcb9f79d982254e9c4e57d02bb85860013ed1610fb8d92c4936fe95813ae8b6"
+  },
+  "remoteHeads": {
+    "refs/heads/checkpoint/pr13-documentation-overhaul": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+    "refs/heads/docs/documentation-overhaul": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120"
+  },
+  "remoteVerified": true,
+  "ciHEADUnchanged": "d4c0a624d737bd212cb8611fa7b8f7510143b567",
+  "ciIndexSHA256Unchanged": "e33d804d851d1b4ac04b4bf9a28104852be8f45fc78bf12aef98fdfe4c8cd00e",
+  "originalDirtyPathsPreserved": 24,
+  "packageReview": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/package-review.json",
+    "sha256": "28e5649c280cd09389067ad0ec94ea66ea2dd725ee15a5b6c6451de1f414a462"
+  },
+  "actual": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json",
+    "sha256": "4cbb7eb91f3ce1862e311a2949729d408741b59773172294a349e0fd52b185da"
+  },
+  "currentPackage": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/current-package-result.json",
+    "sha256": "2e07f9c1feaa75181cdc4f75f712161bbb17aa1041d989b0c52a44441101a826"
+  },
+  "checkpointMethod": "git-checkpoint.py invariant reused for exact external candidate: source helper cannot snapshot canonical frozen stale source. NormalFF temporary index against fetched remote; no real checkout/index writes.",
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "fullCurrentGovernancePASS": false,
+  "ciGreen": false
+}

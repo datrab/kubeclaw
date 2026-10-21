@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py", line 14, in <module>
+    raise RuntimeError("Evidence adapter refuses optimized Python; validation must remain enabled")
+RuntimeError: Evidence adapter refuses optimized Python; validation must remain enabled

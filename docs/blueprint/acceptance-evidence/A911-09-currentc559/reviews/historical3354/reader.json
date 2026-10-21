@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS — A911-09 reader role at 3354d2d1e641e8332326d0a1641f459b2d494c62. The supplied production HTML and linked published JSON let the reader identify owners and the safe update procedure without a manual inventory. GOV-005/MNT-001: manifests, schemas and registers own mechanical facts; authored guidance owns explanations, and the generated map derives ownership from page metadata. MNT-016: contributors update the owning inputs rather than generated pages; supplied preservation evidence supports that boundary. MNT-015: documentation and source component owners maintain generated-fact routes, while plugin-foundation maintains catalogue guidance. MNT-017: the maintenance page explains prerequisites, generator selection, mapped checks, failure stops and retained evidence. The 53 changed verification fields reconcile derived metadata with its owning pages without creating another manual authority. This is the assigned reader verdict, not formal ledger acceptance, whole-site link acceptance, SDK completeness, deployment validation or overall AP09 acceptance. No commands or nested reviews were run.",
+  "overall_confidence": 0.88
+}

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS for the bounded Source/native consumer and manifest INPUT metadata review. Complete helper sources and selected callers support the consumer classifications. Native serialization validation precedes the manifest-consumer skip; auxiliary approvals require unknown role, canonical complete source, and exact selected operation/expression matches. The metadata does not qualify selected external manifests, credentials, dependencies, runtime effects, or live success. No actionable defect found. No helpers or tests were executed; broader generator and runtime gates remain unproven.",
+  "overall_confidence": 0.88
+}

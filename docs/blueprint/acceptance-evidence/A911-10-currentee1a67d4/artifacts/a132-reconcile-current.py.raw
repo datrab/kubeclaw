@@ -1,0 +1,26 @@
+import subprocess,json,hashlib,difflib
+from pathlib import Path
+P=Path(__file__).resolve().parent;R=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo');F=P/'current-fixture';V='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9';PAGE='docs/site/reference/buster-provider-configuration.md';MAP='docs/site/reference/generated-documentation-map.json';SCRIPT='scripts/generate-buster-provider-reference.mjs';AUTH='scripts/docs-api-producer-adapter-authorities.json'
+def g(*a):return subprocess.check_output(['git',*a],cwd=R)
+def sha(b):return hashlib.sha256(b).hexdigest()
+oldmapbytes=g('show',V+':'+MAP);oldmap=json.loads(oldmapbytes);generated=json.loads((F/MAP).read_text());deltas=json.loads((P/'actual-governance-map-delta.json').read_text());assert all(set(x['fields'])<={'lastVerified','owner'} for x in deltas)
+# Keep pre-existing unrelated metadata exact, never broad-regenerate/repin them.
+providerold=next(x for x in oldmap['pages'] if x['page']==PAGE);providernew=next(x for x in generated['pages'] if x['page']==PAGE)
+assert {k:v for k,v in providerold.items() if k!='lastVerified'}=={k:v for k,v in providernew.items() if k!='lastVerified'}
+old=providerold['lastVerified'];new=providernew['lastVerified'];assert oldmapbytes.count(json.dumps(old).encode())==1
+narrow=oldmapbytes.replace(json.dumps(old).encode(),json.dumps(new).encode());assert len(narrow)!=0
+newpage=(F/PAGE).read_bytes();baselinepage=g('show',V+':'+PAGE);originaltables=[l for l in baselinepage.decode().splitlines() if l.startswith('|')];assert originaltables==[l for l in newpage.decode().splitlines() if l.startswith('|')]
+checks=[]
+for label,page,mapbytes in [('published-baseline',baselinepage,oldmapbytes),('narrow-provider-successor',newpage,narrow)]:
+ (F/PAGE).write_bytes(page);(F/MAP).write_bytes(mapbytes)
+ r=subprocess.run(['node','scripts/docs-governance.mjs','--check'],cwd=F,capture_output=True,text=True,timeout=60)
+ for ext,text in [('stdout',r.stdout),('stderr',r.stderr)]:(P/(label+'-governance.'+ext)).write_text(text)
+ assert r.returncode!=0 and 'stale' in r.stderr,(label,r.returncode,r.stderr[:1000])
+ checks.append({'id':label,'exitCode':r.returncode,'expected':'pre-existing stale map; no new broad clean claim','stderrSHA256':sha(r.stderr.encode())})
+(F/PAGE).write_bytes(newpage);(F/MAP).write_bytes(narrow);(P/'candidate'/MAP).write_bytes(narrow)
+package={}
+for file in [SCRIPT,AUTH,PAGE,MAP]:
+ b=(P/'candidate'/file).read_bytes();package[file]=sha(b);(P/(Path(file).name+'.diff')).write_text(''.join(difflib.unified_diff(g('show',V+':'+file).decode().splitlines(True),b.decode().splitlines(True),fromfile='before/'+file,tofile='after/'+file)))
+facts=json.loads((P/'authority-impact/result.json').read_text())
+result={'publishedBaseline':V,'state':'EXACT_FOUR_FILE_PROVIDER_CORRECTION_READY_FOR_PACKAGE_REVIEW_EXISTING_MAP_DRIFT_PRESERVED','scope':'Real current JSON inputs equal historical3cf; exact source-pinned generator passed current write+noarg check. Tables unchanged. Only provider map.lastVerified changed;44existing unrelated metadata deltas not adopted.','files':package,'tableLinesUnchanged':len(originaltables),'baselineAndSuccessorChecks':checks,'preExistingMapDifferences':len(deltas)-1,'preExistingDifferencesEvidence':str(P/'actual-governance-map-delta.json'),'authorityDelta':{'source':SCRIPT,'before':facts['before']['digest'],'after':facts['after']['digest'],'baselineReproduced':True,'onlyOneOperationUpdated':True},'sourceImpact':'New local Git cat-file/show reads on exact consumed schema/manifest inputs; inherited noarg caller uses existing page pin and still checks exact bytes. Same output path, same provider fields, unchanged owner/route. Non-API wrote diagnostic remains same; one exact newly derived native-operation digest must be reviewed, not blanket repin.','formalAcceptance':False,'canonicalWrites':False,'ciDirtyMutation':False,'fullCurrentGovernancePASS':False,'remaining':'Independent coherent4file package impact and actual evidence review; then normalFF isolated-index WIP checkpoint preserving accepted1/12 and all dirty state. A91110 semantic scope and distinct full gate decisions remain open.'}
+(P/'current-package-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'state':result['state'],'preservedUnrelatedMapDeltas':result['preExistingMapDifferences'],'files':package},indent=2))

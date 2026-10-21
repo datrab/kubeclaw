@@ -1,0 +1,46 @@
+{
+  "scope": "Documentation Source/output-role reconciliation only; not runtime or content/gate acceptance",
+  "completedConsumerCount": 20,
+  "sourceBaseline": "5de04728653e7b4c350850e5fbeb6218b25ba5c3",
+  "sourceRoles": {
+    "A": [
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/docs-api-output-role-classification.mjs",
+      "scripts/docs-api-python-output-adapter.py"
+    ],
+    "B": [
+      "scripts/docs-api-product-scope.mjs",
+      "scripts/docs-api-receiver-coverage.mjs",
+      "scripts/docs-api-reference.mjs",
+      "scripts/docs-api-schema-authorities.mjs",
+      "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+      "scripts/docs-prometheus-selected-receiver-contracts.mjs"
+    ],
+    "C": [
+      "scripts/docs-configuration-inventory.mjs",
+      "scripts/docs-inventory.mjs",
+      "scripts/docs-local-helm-authorities.mjs",
+      "scripts/docs-runtime-consumer-contracts.mjs",
+      "scripts/docs-yaml-field-authorities.mjs"
+    ],
+    "D": [
+      "scripts/docs-generate-core.mjs",
+      "scripts/docs-generate.mjs",
+      "scripts/docs-governance.mjs",
+      "scripts/docs-platform-surface-inventory.mjs",
+      "scripts/docs-publication.mjs"
+    ]
+  },
+  "closure": "A classifier/Python PASS; discovery completed by discovery-effects-review. B7PASS,C4PASS plus config completed by configuration-import-closure-review,D5PASS. Earlier NOT_READY scopes preserved.",
+  "checks": [
+    "56/56actual role receipts pass in28284ms before final literal checksum extension; final exact receipt validation follows",
+    "45/45public/custody controls pass",
+    "22/22focused custody tests include final checksum negative controls;5reader-language tests pass"
+  ],
+  "limits": [
+    "No product API effect/runtime execution qualification or deployment permission",
+    "Global generator still fails at actual Python live-check diagnostic role",
+    "No requirement or gate acceptance inferred from these Source-only reviews"
+  ]
+}

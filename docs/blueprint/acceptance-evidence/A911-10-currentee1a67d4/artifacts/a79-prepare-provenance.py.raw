@@ -1,0 +1,32 @@
+import subprocess,json,hashlib
+from pathlib import Path
+P=Path(__file__).resolve().parent;R=P.parents[2]/'finish-20261017/ci-green/repo';C=P/'provenance-correction-v1';C.mkdir();script='scripts/generate-buster-provider-reference.mjs';s=subprocess.check_output(['git','show','b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9:'+script],cwd=R).decode()
+s=s.replace("import assert from 'node:assert/strict';","import assert from 'node:assert/strict';\nimport { execFileSync } from 'node:child_process';")
+s=s.replace("const revision = '3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f';",'''const revisionArgument = process.argv.find((argument) => argument.startsWith('--revision='));
+const revision = revisionArgument?.slice('--revision='.length) ?? '3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f';
+assert(/^[a-f0-9]{40}$/u.test(revision), 'BUSTER_PROVIDER_SOURCE_REVISION: supply a full lowercase source commit');
+
+// Historical source links must describe these exact current inputs, not merely
+// an older schema at the same path. A new schema requires its committed source.
+function pinnedJson(relativePath) {
+  const current = fs.readFileSync(path.join(root, relativePath), 'utf8');
+  let pinned;
+  try {
+    pinned = execFileSync('git', ['show', `${revision}:${relativePath}`], {
+      cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+  } catch {
+    throw new Error(`BUSTER_PROVIDER_SOURCE_REVISION: missing committed source ${revision}:${relativePath}`);
+  }
+  assert.equal(current, pinned,
+    `BUSTER_PROVIDER_SOURCE_REVISION: current input differs from ${revision}:${relativePath}; commit the source and supply --revision=<commit>`);
+  return JSON.parse(current);
+}''')
+s=s.replace("const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));","const manifest = pinnedJson(path.posix.join('skills/buster/plugins', pluginName, 'plugin.json'));")
+s=s.replace("schema: JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'))","schema: pinnedJson(file)")
+s=s.replace("const flow = JSON.parse(fs.readFileSync(path.join(root, flowFile), 'utf8'));","const flow = pinnedJson(flowFile);")
+s=s.replace("'Last verified: generated from current provider schemas on 2026-09-19'","`Last verified: generated from exact committed provider inputs ${revision}`")
+s=s.replace("'Change a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write`.'","'Change and commit a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`. '")
+p=C/script;p.parent.mkdir(parents=True);p.write_text(s)
+(C/'proposal.json').write_text(json.dumps({'primaryGate':'A911-10','criterionDependency':'without silent historical false claim after source Removal/Rename','source':'b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9','file':script,'sha256':hashlib.sha256(s.encode()).hexdigest(),'effects':'Adds bounded local git show of provider manifests/schema JSON at explicit pinned commit; no shell/network/runtime import. Source provenance refusal precedes output write. Default old revision retained only if all current inputs still exact. New source requires explicit committed revision.','sourceChanges':'External candidate only; no canonical or dirtyCI mutation.','formalAcceptance':False},indent=2)+'\n')

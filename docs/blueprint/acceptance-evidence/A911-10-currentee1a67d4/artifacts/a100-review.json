@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "P1: Supply a bounded Removal/Rename proof beyond the unchanged-source census",
+      "body": "All supplied source hashes are unchanged and every removal/rename event list is empty, so this census provides no instance of the transition A911-10 requires. Current page existence and ownership cannot demonstrate removal or migration of references, incoming links, redirects, ownership, or historical claims after a transition. The explicit open qualification is accurate, but leaves acceptance unsupported. Define a finite targeted removal case and rename case with fixed before/after expectations and evidence for those outcomes; keep execution pending authorization. This does not require the separate A91111 all84 exercise and must preserve A91109 registered1/12.",
+      "priority": "P1",
+      "confidence": 0.99,
+      "category": "test_gap",
+      "code_location": {
+        "file_path": "audit.py",
+        "line": 23
+      }
+    },
+    {
+      "title": "P2: Resolve the workflows semantic mismatch before selecting acceptance targets",
+      "body": "The relation report reduces unresolved cases to missing literal-path reachability, but the supplied workflows page establishes a stronger, concrete mismatch: it documents GitHub Actions inventory, not product pipeline contracts, compiler stage types, progress contracts, or compiler workflow selection. Those four preregistered variants therefore lack a demonstrated semantic acceptance target in this audit, regardless of whether a link could be added. Record this scope mismatch explicitly and establish the intended source-to-output binding and removal/rename assertions. If the registered target needs correction, handle that as an explicit reviewed fixture change; alternate pages found by the census do not authorize silently replacing expectedPages. Conversely, the other null relations alone do not establish defects without checking legitimate generated/transitive bindings.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "test_gap",
+      "code_location": {
+        "file_path": "resolve.py",
+        "line": 28
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The artifacts accurately disclaim acceptance and are useful passive inventories, but they do not complete the requested acceptance audit: no transition outcome is evidenced, no finite targeted proof is specified, and the workflows semantic mismatch remains undiagnosed. Missing direct dependencies and bounded link-search failures are not independently defects. No project execution, fixture rewrite, all84 requirement, or change to A91109 registered1/12 is warranted by this inspection.",
+  "overall_confidence": 0.97
+}

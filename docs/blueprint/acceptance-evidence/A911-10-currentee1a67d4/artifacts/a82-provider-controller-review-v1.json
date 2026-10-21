@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Fix the source checkout path relative to the controller",
+      "body": "At the supplied repository location, `P.parents[2]` already resolves to `.../efficiency-20261015/finish-20261017`. Appending `finish-20261017/ci-green/repo` therefore duplicates the `finish-20261017` directory. The first `git ls-tree` call will fail because its working directory does not identify the intended source checkout, preventing all seven checks. Resolve the checkout as `P.parents[2]/'ci-green/repo'` for this layout, or accept an explicit source-checkout path.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "bug",
+      "code_location": {
+        "file_path": "run-provider-transition.py",
+        "line": 5
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The controller resolves the source checkout incorrectly in the supplied directory layout, blocking the bounded inspection. Review was based on the complete supplied controller and generator; local shell inspection was unavailable because the sandbox failed to initialize. No project code was executed or files modified.",
+  "overall_confidence": 0.96
+}

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/schemas.html"></head><body><main>
+<h1 id="schema-authorities-and-interpretation">Schema Authorities and Interpretation</h1>
+<p>Status: bounded reference; discovery limitations stated below
+Audience: operator, project author, plugin author, maintainer
+Owner: documentation; consumer semantics belong to the named component
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/build.ts">skills/common/plugin-runtime/foundation/registry/build.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/registry/schema.ts">skills/common/plugin-runtime/foundation/registry/schema.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-configuration-inventory.mjs">scripts/docs-configuration-inventory.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-worker-core/v1/schemas">contracts/pipeline-worker-core/v1/schemas</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/values.schema.json">charts/prism/values.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/compiler.ts">skills/nova/project/compiler.ts</a>
+Applies to: the named schema, registration, embedded and executable authorities catalogued below
+Last verified: 2026-10-15; source behavior checked from current files; no validation or deployment run</p>
+<h2 id="choose-an-authority-not-a-file-suffix">Choose an authority, not a file suffix</h2>
+<p>A schema describes what a value may contain. The actual validator determines
+which document, definitions, defaults and additional semantic checks apply.
+A file called <code>*.schema.json</code> is not proof that runtime loads it. Conversely,
+a compiler can enforce a public input contract without a separate schema file.</p>
+<ol>
+<li>For a configuration value, start with <a href="configuration.html">Configuration</a>
+and the family-specific generated field table.</li>
+<li>For a stage input/result or observer checkpoint, find the exact registration
+and schema path in the catalogue below.</li>
+<li>For Worker, chart, API or Nova input, use its distinct authority row and
+consumer. Do not substitute the plugin-config validator.</li>
+</ol>
+<p>Identify an authority by <strong>path + embedded JSON pointer or symbol + declared
+version/dialect + actual consuming caller</strong>. Shared files can serve multiple
+registrations; those are different caller edges, not duplicate contracts.</p>
+<h2 id="registered-configuration-authorities">Registered configuration authorities</h2>
+<p>The existing <a href="plugin-configuration.html">Plugin configuration</a> reference owns
+recursive registered configuration fields. Its selector includes the platform
+schema and string or inline-object <code>configSchema</code> registrations beneath the
+three common/Nova/Buster plugin roots. An inline schema is identified by its
+manifest and pointer, not by an invented standalone file. It is not a global
+catalogue of all input, result, checkpoint, chart or host contracts.</p>
+<p><strong>Source — config selection and package-local acquisition:</strong>
+<a href="../../../scripts/docs-configuration-inventory.mjs#L3073-L3103">registeredSchemaAuthorities</a> (<code>scripts/docs-configuration-inventory.mjs:3073–3103</code>, current-checkout SHA-256 <code>f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c</code>). <a href="../../../skills/common/plugin-runtime/foundation/registry/build.ts#L30-L70">validateRegistrationFiles / assertPackageFile</a> (<code>skills/common/plugin-runtime/foundation/registry/build.ts:30–70</code>, current-checkout SHA-256 <code>c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867</code>).</p>
+<h2 id="stage-input-result-and-checkpoint-catalogue">Stage input, result, and checkpoint catalogue</h2>
+<p>The following finite registration set contains <strong>47 declaration references to
+37 distinct files</strong>, outside the registered <code>configSchema</code> path set. The
+survey selected 49 regular manifests under <code>skills/{common,nova,buster}/plugins</code>
+and checked their declared schema keys. These are observed counts for that
+source boundary, not an expected product total or a completion test.</p>
+<table>
+<thead>
+<tr>
+<th>Registration field</th>
+<th>Actual consumer</th>
+<th>Exact value checked</th>
+<th>Operational boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inputSchema</code></td>
+<td>Nova <code>validatePipelineDefinitionAgainstRegistry</code></td>
+<td>Each authored stage input against its installed owner</td>
+<td>Input shape does not prove capability grant or stage success</td>
+</tr>
+<tr>
+<td><code>resultSchema</code></td>
+<td><code>StageExecutor.execute</code></td>
+<td>Returned stage result before it is recorded</td>
+<td>A declared result schema is not a successful execution</td>
+</tr>
+<tr>
+<td><code>checkpointSchema</code></td>
+<td><code>ObserverRuntime.#commitCheckpoint</code></td>
+<td>Only <code>{sequence,eventId}</code> from the checkpoint</td>
+<td>Not the complete journal envelope or arbitrary observer callback state</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source — actual callers:</strong>
+<a href="../../../skills/nova/core/execution/runner.ts#L40-L46">validatePipelineDefinitionAgainstRegistry</a> (<code>skills/nova/core/execution/runner.ts:40–46</code>, current-checkout SHA-256 <code>9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6</code>). <a href="../../../skills/nova/core/execution/stage-executor.ts#L35-L48">StageExecutor.execute</a> (<code>skills/nova/core/execution/stage-executor.ts:35–48</code>, current-checkout SHA-256 <code>4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb</code>). <a href="../../../skills/nova/core/telemetry/observers.ts#L51-L58">ObserverRuntime.#commitCheckpoint</a> (<code>skills/nova/core/telemetry/observers.ts:51–58</code>, current-checkout SHA-256 <code>b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd</code>).</p>
+<p>Each schema link opens the current source. Each declaration link identifies
+its manifest pointer and exact registration ID. Module selection is package-local;
+installation, trust, grants and activation are separate. When <code>$id</code> or a
+version marker is absent, none is invented from the filename. Root pointer
+<code>/</code> here means the document itself; local <code>$defs</code> remain dependent definitions.</p>
+<table>
+<thead>
+<tr>
+<th>Exact authority (document root)</th>
+<th>Declared identity / dialect</th>
+<th>Registration and declaration pointer</th>
+<th>Actual consumer route</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../../skills/common/plugins/agent-observability/schemas/checkpoint.schema.json"><code>skills/common/plugins/agent-observability/schemas/checkpoint.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/common/plugins/agent-observability/plugin.json#L37">ingester</a> <code>/observers/0/checkpointSchema</code><br><a href="../../../skills/common/plugins/agent-observability/plugin.json#L62">evidence</a> <code>/observers/1/checkpointSchema</code></td>
+<td><code>checkpointSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/common/plugins/notification-observer/schemas/checkpoint.schema.json"><code>skills/common/plugins/notification-observer/schemas/checkpoint.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/common/plugins/notification-observer/plugin.json#L39">notifications</a> <code>/observers/0/checkpointSchema</code><br><a href="../../../skills/common/plugins/notification-observer/plugin.json#L60">preview-delivery</a> <code>/observers/1/checkpointSchema</code></td>
+<td><code>checkpointSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json"><code>skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/common/plugins/telemetry-observer/plugin.json#L52">telemetry</a> <code>/observers/0/checkpointSchema</code></td>
+<td><code>checkpointSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/architecture-validator/schemas/input.schema.json"><code>skills/nova/plugins/architecture-validator/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/architecture-validator/plugin.json#L18">architecture</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/architecture-validator/schemas/result.schema.json"><code>skills/nova/plugins/architecture-validator/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/architecture-validator/plugin.json#L19">architecture</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/blueprint-sync/schemas/input.schema.json"><code>skills/nova/plugins/blueprint-sync/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/blueprint-sync/plugin.json#L19">sync</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/blueprint-sync/schemas/result.schema.json"><code>skills/nova/plugins/blueprint-sync/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/blueprint-sync/plugin.json#L20">sync</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/buster-quality-gate/schemas/input.schema.json"><code>skills/nova/plugins/buster-quality-gate/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/buster-quality-gate/plugin.json#L18">quality</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/buster-quality-gate/schemas/result.schema.json"><code>skills/nova/plugins/buster-quality-gate/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/buster-quality-gate/plugin.json#L19">quality</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/case-study/schemas/input.schema.json"><code>skills/nova/plugins/case-study/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/case-study/plugin.json#L17">case-study</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/case-study/schemas/result.schema.json"><code>skills/nova/plugins/case-study/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/case-study/plugin.json#L18">case-study</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/delivery-lint/schemas/input.schema.json"><code>skills/nova/plugins/delivery-lint/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/delivery-lint/plugin.json#L16">delivery-lint</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/delivery-lint/schemas/result.schema.json"><code>skills/nova/plugins/delivery-lint/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/delivery-lint/plugin.json#L17">delivery-lint</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/demo-handoff/schemas/candidate.schema.json"><code>skills/nova/plugins/demo-handoff/schemas/candidate.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/demo-handoff/plugin.json#L16">candidate</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/demo-handoff/schemas/delivery.schema.json"><code>skills/nova/plugins/demo-handoff/schemas/delivery.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/demo-handoff/plugin.json#L29">delivery</a> <code>/stages/1/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/demo-handoff/schemas/ready.schema.json"><code>skills/nova/plugins/demo-handoff/schemas/ready.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/demo-handoff/plugin.json#L42">ready</a> <code>/stages/2/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/demo-handoff/schemas/result.schema.json"><code>skills/nova/plugins/demo-handoff/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/demo-handoff/plugin.json#L17">candidate</a> <code>/stages/0/resultSchema</code><br><a href="../../../skills/nova/plugins/demo-handoff/plugin.json#L30">delivery</a> <code>/stages/1/resultSchema</code><br><a href="../../../skills/nova/plugins/demo-handoff/plugin.json#L43">ready</a> <code>/stages/2/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/human-approval/schemas/architecture-input.schema.json"><code>skills/nova/plugins/human-approval/schemas/architecture-input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/human-approval/plugin.json#L32">architecture-approval</a> <code>/stages/1/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/human-approval/schemas/input.schema.json"><code>skills/nova/plugins/human-approval/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/human-approval/plugin.json#L16">approval</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/human-approval/schemas/result.schema.json"><code>skills/nova/plugins/human-approval/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/human-approval/plugin.json#L17">approval</a> <code>/stages/0/resultSchema</code><br><a href="../../../skills/nova/plugins/human-approval/plugin.json#L33">architecture-approval</a> <code>/stages/1/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/implementation-agent/schemas/input.schema.json"><code>skills/nova/plugins/implementation-agent/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/implementation-agent/plugin.json#L21">implementation</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/implementation-agent/schemas/result.schema.json"><code>skills/nova/plugins/implementation-agent/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/implementation-agent/plugin.json#L22">implementation</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/lint/schemas/input.schema.json"><code>skills/nova/plugins/lint/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/lint/plugin.json#L17">pre-check</a> <code>/stages/0/inputSchema</code><br><a href="../../../skills/nova/plugins/lint/plugin.json#L31">full</a> <code>/stages/1/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/lint/schemas/result.schema.json"><code>skills/nova/plugins/lint/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/lint/plugin.json#L18">pre-check</a> <code>/stages/0/resultSchema</code><br><a href="../../../skills/nova/plugins/lint/plugin.json#L32">full</a> <code>/stages/1/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/pipeline-review/schemas/input.schema.json"><code>skills/nova/plugins/pipeline-review/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/pipeline-review/plugin.json#L17">review</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/pipeline-review/schemas/result.schema.json"><code>skills/nova/plugins/pipeline-review/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/pipeline-review/plugin.json#L18">review</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/preflight-contract/schemas/input.schema.json"><code>skills/nova/plugins/preflight-contract/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/preflight-contract/plugin.json#L16">validate</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/preflight-contract/schemas/result.schema.json"><code>skills/nova/plugins/preflight-contract/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/preflight-contract/plugin.json#L17">validate</a> <code>/stages/0/resultSchema</code><br><a href="../../../skills/nova/plugins/preflight-contract/plugin.json#L30">source</a> <code>/stages/1/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/preflight-contract/schemas/source-input.schema.json"><code>skills/nova/plugins/preflight-contract/schemas/source-input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/preflight-contract/plugin.json#L29">source</a> <code>/stages/1/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/prism-design/schemas/input.schema.json"><code>skills/nova/plugins/prism-design/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/prism-design/plugin.json#L5">design</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/prism-design/schemas/result.schema.json"><code>skills/nova/plugins/prism-design/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/prism-design/plugin.json#L5">design</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/project-summary/schemas/input.schema.json"><code>skills/nova/plugins/project-summary/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/project-summary/plugin.json#L16">summary</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/project-summary/schemas/result.schema.json"><code>skills/nova/plugins/project-summary/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/project-summary/plugin.json#L17">summary</a> <code>/stages/0/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/input.schema.json"><code>skills/nova/plugins/review/schemas/input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/review/plugin.json#L18">review</a> <code>/stages/0/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/repository-audit-input.schema.json"><code>skills/nova/plugins/review/schemas/repository-audit-input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/review/plugin.json#L33">repository-audit</a> <code>/stages/1/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json"><code>skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/review/plugin.json#L48">repository-revalidation</a> <code>/stages/2/inputSchema</code></td>
+<td><code>inputSchema</code>; consumer table above</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/result.schema.json"><code>skills/nova/plugins/review/schemas/result.schema.json</code></a> <code>/</code></td>
+<td><code>no $id</code>; <code>https://json-schema.org/draft/2020-12/schema</code></td>
+<td><a href="../../../skills/nova/plugins/review/plugin.json#L19">review</a> <code>/stages/0/resultSchema</code><br><a href="../../../skills/nova/plugins/review/plugin.json#L34">repository-audit</a> <code>/stages/1/resultSchema</code><br><a href="../../../skills/nova/plugins/review/plugin.json#L49">repository-revalidation</a> <code>/stages/2/resultSchema</code></td>
+<td><code>resultSchema</code>; consumer table above</td>
+</tr>
+</tbody>
+</table>
+<p>The 37 documents contain 17 <code>$ref</code> occurrences in this finite set. Their traced
+targets are same-file <code>providerPlan</code> / <code>sliceBudget</code> definitions or bundled
+plugin-system <code>artifactRef</code> / <code>stageResult</code> definitions. The registry installs
+that bundled contract for isolated referenced-document validation. This does
+not imply arbitrary network fetching, or that each <code>$defs</code> member is a separate
+public input. Static target existence alone does not prove recursive semantics.</p>
+<h2 id="other-authority-kinds-and-version-selection">Other authority kinds and version selection</h2>
+<p>A <strong>custom resource definition (CRD)</strong> is a Kubernetes
+<code>CustomResourceDefinition</code>: it declares the schema of an additional API
+resource. <strong>Common Expression Language (CEL)</strong> rules attached to that schema
+express object constraints for API-server admission—whether the API server
+can accept a create or update. Admission is not controller reconciliation: the Buster
+controller separately reads a lease's <code>spec</code> and <code>status</code> and acts on it.
+These are different consumers, not two names for the same validation step.
+For this lease, the chart condition, installed API group/version, and the
+receiving API server's support for those rules still apply; no live validation
+or controller run is demonstrated here.</p>
+<p><strong>Source — declared admission rules and separate lease consumer:</strong>
+<a href="../../../charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L1-L44">conditional CRD, templated version and schema-attached rules</a> (<code>charts/kubeclaw/templates/buster-namespace-lease-crd.yaml:1–44</code>, current-checkout SHA-256 <code>5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8</code>). <a href="../../../cmd/buster-namespace-controller/main.go#L252-L268">lease spec/status reconciliation branch</a> (<code>cmd/buster-namespace-controller/main.go:252–268</code>, current-checkout SHA-256 <code>c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624</code>). <a href="../../../cmd/buster-namespace-controller/main.go#L1569-L1575">versioned lease API path</a> (<code>cmd/buster-namespace-controller/main.go:1569–1575</code>, current-checkout SHA-256 <code>c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Authority / reader route</th>
+<th>Source identity and consumer</th>
+<th>Version and interpretation boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json">worker-v1</a></td>
+<td><a href="../../../contracts/pipeline-worker-core/v1/src/validation.ts#L23-L30">validator / checkPipelineWorkerCoreContract</a>; <a href="../../../contracts/pipeline-worker-core/v1/src/types.ts#L262-L274">PipelineWorkerCoreDefinition</a>; <a href="../../../skills/worker/core/worker/attempt-executor.ts#L188-L203">attempt version dispatch / evidence/log/result validation</a></td>
+<td>Base/retained v1; selected dispatch still exists; older does not automatically mean deprecated.</td>
+</tr>
+<tr>
+<td><a href="../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json">worker-v2</a></td>
+<td><a href="../../../contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts#L10-L17">checkWorkerResourceContractV2 / validateWorkerResourceContractV2</a>; <a href="../../../skills/worker/core/worker/attempt-executor.ts#L188-L190">version dispatch</a></td>
+<td>Selected v2 resource branch; process accounting and additional relation checks.</td>
+</tr>
+<tr>
+<td><a href="../../../contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json">worker-v3</a></td>
+<td><a href="../../../contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts#L10-L17">checkWorkerResourceContractV3 / validateWorkerResourceContractV3</a>; <a href="../../../skills/worker/core/worker/attempt-executor.ts#L188-L190">version dispatch</a>; <a href="../../../skills/prism/server/worker-service.ts#L84-L94">worker admission</a></td>
+<td>Native v3 resource branch; task accounting and Prism admission, not v2 process semantics.</td>
+</tr>
+<tr>
+<td><a href="../../../charts/prism/values.schema.json">prism-chart-values</a></td>
+<td><a href="../../../charts/prism/Chart.yaml#L1-L6">chart identity</a>; <a href="../../../tests/verification/deployment/prism-product-decisions.test.mjs#L17-L25">render / invalid-value test declaration</a></td>
+<td>Helm chart-root input; rendered templates and external Helm validation are separate from plugin registry validation.</td>
+</tr>
+<tr>
+<td><a href="../../../charts/kubeclaw/templates/buster-namespace-lease-crd.yaml">buster-lease-crd</a> <code>spec.versions[0].schema.openAPIV3Schema</code></td>
+<td><a href="../../../cmd/buster-namespace-controller/main.go#L25-L30">leasePlural / reconciliation / lease API path</a></td>
+<td>Conditional broker + buster role; templated API group/version. API server owns OpenAPI/CEL admission; controller reconciliation is separate.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/project/compiler.ts">nova-project-v2-validator</a> <code>object/text/id/absolute/strings / compileProject</code></td>
+<td><a href="../../../skills/nova/project/cli.ts#L30-L39">project JSON acquisition / compileProject</a></td>
+<td>Executable closed input validation, not an invented project.schema.json; helper-built graph has its own validation.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/src/echo-review-verification-contract.ts">review-verification-inline</a> <code>echoReviewVerificationOutputSchema</code></td>
+<td><a href="../../../skills/nova/plugins/review/src/scalable-review-verification.ts#L296-L303">outputContract / parseEchoReviewVerificationDispatchResponse</a>; <a href="../../../skills/nova/plugins/review/src/echo-review-verification-parser.ts#L108-L123">parseEchoReviewVerificationOutput / parseEchoReviewVerificationDispatchResponse</a></td>
+<td>Embedded outputContract plus manual response parser; generated companion equality not established.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/src/review-bundle-contract.ts">review-bundle-inline</a> <code>reviewBundleSchema, portableReviewBundleSchema</code></td>
+<td><a href="../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L5-L41">rendered/additional outputs and --check branch</a></td>
+<td>Embedded legacy/portable source objects; generator maintains two companions. Runtime version selection/parity not fully traced.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/src/review-policy-contract.ts">review-policy-inline</a> <code>REVIEW_POLICY_SCHEMA_VERSION / reviewPolicySchema</code></td>
+<td>Embedded source object; runtime selection not fully traced</td>
+<td>Source version is v2; old v1 retention/deprecation and resolver parity are unresolved.</td>
+</tr>
+</tbody>
+</table>
+<p>For Worker definitions select the exact <code>$defs</code> entry (for example
+<code>workerProfile</code>, <code>workerAttemptEnvelope</code> or <code>workerAttemptResult</code>) and then
+its actual version-dispatch path. The schema filename's directory <code>v1</code> does
+not override a document or record's v2/v3 contract identity. Read
+<a href="worker-profiles-and-roles.html">Worker profiles and roles</a> and
+<a href="configuration-compatibility.html">Configuration compatibility</a> before changing
+resources or recovering a retained record.</p>
+<p>The Buster lease CRD is not plain JSON Schema: its chart conditions, templated
+identity and CEL expressions remain part of the authority. Source presence
+proves neither successful Helm rendering nor API admission. Nova project
+helper closure and embedded review generation/parser equivalence also need
+separate validation; we ran no command for this catalogue.</p>
+<h2 id="interpret-nested-constraints-and-defaults">Interpret nested constraints and defaults</h2>
+<p>Start from the consuming root and follow every selected branch. A valid leaf
+is not enough if its parent, alternative or relationship rejects the object.</p>
+<table>
+<thead>
+<tr>
+<th>Construct</th>
+<th>Reading rule</th>
+<th>Common mistake to avoid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>properties</code>, <code>required</code>, <code>additionalProperties</code></td>
+<td>Read together at each object level; requiredness belongs to that object/branch</td>
+<td>Treating every listed property as required or permitting unknown siblings</td>
+</tr>
+<tr>
+<td><code>items</code>, <code>prefixItems</code>, maps</td>
+<td>Follow item/tuple/map-value constraints and cardinality, including nested objects</td>
+<td>Checking only the container type</td>
+</tr>
+<tr>
+<td><code>$ref</code> / <code>$defs</code></td>
+<td>Resolve the actual document namespace and exact pointer, retaining repeated/cyclic relationships</td>
+<td>Flattening a reference into a field name or assuming network resolution</td>
+</tr>
+<tr>
+<td><code>allOf</code>, <code>anyOf</code>, <code>oneOf</code></td>
+<td>Combine constraints according to the actual validator; <code>oneOf</code> requires exactly one valid alternative</td>
+<td>Combining all alternatives into a permissive union</td>
+</tr>
+<tr>
+<td><code>if</code> / <code>then</code> / <code>else</code></td>
+<td>Evaluate the condition before selecting the applicable dependent constraints</td>
+<td>Applying both branches or treating a condition as a default</td>
+</tr>
+<tr>
+<td><code>not</code> and forbidden combinations</td>
+<td>Preserve negation and branch polarity</td>
+<td>Reporting a forbidden required-field pattern as a positive requirement</td>
+</tr>
+<tr>
+<td>dependent rules / cross-field checks</td>
+<td>Trace both presence relationships and executable semantic checks</td>
+<td>Accepting individually valid fields whose relationship is invalid</td>
+</tr>
+<tr>
+<td><code>default</code>, examples, deprecation</td>
+<td>Distinguish annotations from actual resolver mutation, fallback, migration and version policy</td>
+<td>Treating an example as permission, or an older filename as deprecated</td>
+</tr>
+<tr>
+<td>bounds, format, enum and pattern</td>
+<td>Preserve exact type/unit/range/format enforcement at the selected validator</td>
+<td>Converting missing numbers to zero or weakening a string to make it load</td>
+</tr>
+</tbody>
+</table>
+<p>Registered document validation uses an immutable schema and isolated validators.
+The ordinary route does not insert defaults. Provider <strong>resolve</strong> clones input
+and uses a default-inserting validator. Neither route changes grants, selects
+an installed provider or promises runtime success. Platform and manual
+validators have separate behavior; do not transfer this rule to Helm or CRDs.</p>
+<p><strong>Source — validator/default boundary:</strong>
+<a href="../../../skills/common/plugin-runtime/foundation/registry/schema.ts#L84-L113">validateReferencedSchema</a> (<code>skills/common/plugin-runtime/foundation/registry/schema.ts:84–113</code>, current-checkout SHA-256 <code>eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557</code>).</p>
+<p>The generated recursive config tables distinguish supported relationships and
+explicit unsupported controls. Their <code>flattenSchema</code> implementation handles
+its declared recursive forms and rejects unsupported keyword/reference routes;
+that is not a universal interpreter for every schema language.</p>
+<p><strong>Source — recursive table meaning:</strong>
+<a href="../../../scripts/docs-configuration-inventory.mjs#L4429-L4466">flattenSchema — unsupported controls, references and cycles</a> (<code>scripts/docs-configuration-inventory.mjs:4429–4466</code>, current-checkout SHA-256 <code>f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c</code>). <a href="../../../scripts/docs-configuration-inventory.mjs#L4486-L4509">flattenSchema — recursive children, alternatives, conditions, negation and definitions</a> (<code>scripts/docs-configuration-inventory.mjs:4486–4509</code>, current-checkout SHA-256 <code>f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c</code>).</p>
+<p>For a field task, keep a record of the root path/pointer, parent object, selected
+conditional branch, referenced target, exact validator and default operation.
+Then use the existing <a href="plugin-configuration.html">field tables</a> or
+<a href="buster-provider-configuration.html">provider fields</a>, not a copied field list here.
+If a keyword/reference or consumer is unresolved, retain that limitation instead
+of omitting the rule or substituting a simpler parser.</p>
+<h2 id="coverage-and-unresolved-authorities">Coverage and unresolved authorities</h2>
+<p>The following <strong>12 named companions</strong> were found beyond configuration and the
+37 registration files. Their source and manual/generated consumer relationships
+are distinct; no direct schema-loading or recursive parity claim follows solely
+from a filename. No companion is labelled obsolete without version evidence.</p>
+<table>
+<thead>
+<tr>
+<th>Named companion</th>
+<th>Actual source route</th>
+<th>Remaining interpretation boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../../skills/buster/plugins/api-flow/schemas/flow.schema.json"><code>skills/buster/plugins/api-flow/schemas/flow.schema.json</code></a></td>
+<td><a href="../../../skills/buster/plugins/api-flow/src/provider.js#L44-L70">readFlow / validateStep</a></td>
+<td>Current source reads selected flow file and checks version/keys/steps manually; no direct loading of this JSON schema proved.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/common/plugins/operator-messaging/schemas/payload.schema.json"><code>skills/common/plugins/operator-messaging/schemas/payload.schema.json</code></a></td>
+<td><a href="../../../skills/common/plugins/operator-messaging/src/payload.ts#L93-L108">parsePayload / assertRequest</a></td>
+<td>Runtime manual bounded parser and named JSON test reference are different evidence. Not automatically test-only schema or proven runtime JSON loader parity.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/common/plugins/transport-publisher/schemas/publish.schema.json"><code>skills/common/plugins/transport-publisher/schemas/publish.schema.json</code></a></td>
+<td><a href="../../../skills/common/plugins/transport-publisher/src/adapter.ts#L132-L151">publicationBody</a></td>
+<td>Actual capability payload is manually checked. Direct JSON schema loading and parity not established.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/common/plugins/transport-publisher/schemas/receipt.schema.json"><code>skills/common/plugins/transport-publisher/schemas/receipt.schema.json</code></a></td>
+<td><a href="../../../skills/common/plugins/transport-publisher/src/adapter.ts#L154-L191">validateResponse / retained publication receipt</a></td>
+<td>Receipt/manual response checks and file declaration do not establish full recursive equivalence.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json"><code>skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json</code></a></td>
+<td><a href="../../../skills/nova/plugins/review/scripts/generate-verification-schema.mjs#L5-L21">source object -&gt; output / --check</a></td>
+<td>No generation/parity command executed.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-bundle.v1.schema.json"><code>skills/nova/plugins/review/schemas/review-bundle.v1.schema.json</code></a></td>
+<td><a href="../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L5-L21">reviewBundleSchema / rendered output</a></td>
+<td>Legacy number is not automatic deprecated status.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-bundle.v2.schema.json"><code>skills/nova/plugins/review/schemas/review-bundle.v2.schema.json</code></a></td>
+<td><a href="../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L24-L41">portableReviewBundleSchema / additional</a></td>
+<td>No parity or execution proof.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-policy.v1.schema.json"><code>skills/nova/plugins/review/schemas/review-policy.v1.schema.json</code></a></td>
+<td>Version/consumer relationship not established</td>
+<td>Current constant v2 is insufficient to infer all old consumers absent; retain unresolved applicability.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-policy.v2.schema.json"><code>skills/nova/plugins/review/schemas/review-policy.v2.schema.json</code></a></td>
+<td>Version/consumer relationship not established</td>
+<td>Current in-source schema object has same version marker; no exact generated schema equality or resolver path acceptance inferred.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-report.v1.schema.json"><code>skills/nova/plugins/review/schemas/review-report.v1.schema.json</code></a></td>
+<td>Version/consumer relationship not established</td>
+<td>No absence or deprecation assertion from basename. Outside registration selector; requires source owner version-mapping follow-up.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-report.v2.schema.json"><code>skills/nova/plugins/review/schemas/review-report.v2.schema.json</code></a></td>
+<td><a href="../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L24-L27">report source object acquisition</a></td>
+<td>Current report validator accepts declared/portable versions; exact JSON companion parity not proved.</td>
+</tr>
+<tr>
+<td><a href="../../../skills/nova/plugins/review/schemas/review-report.v3.schema.json"><code>skills/nova/plugins/review/schemas/review-report.v3.schema.json</code></a></td>
+<td><a href="../../../skills/nova/plugins/review/scripts/generate-bundle-schema.mjs#L24-L41">portable report output</a></td>
+<td>No generated-byte parity or runtime exercise performed.</td>
+</tr>
+</tbody>
+</table>
+<p>Manifest <code>schemaId</code> values add a different identity layer: 29 declarations in
+this survey refer to six logical provider input/output artifact IDs, not six
+schema files. The remaining producer/consumer validation relationships are
+not all established. Do not interpret an artifact ID as a config schema path.</p>
+<p>The finite source boundary covered named manifests beneath the three plugin
+roots, named schema candidates and literal CRD/OpenAPI declarations under
+<code>charts</code>, the three named Worker schemas, and named Nova project/embedded
+review validator entrypoints. It did not cover every other contracts root,
+telemetry/API/event authority, host/Codex plugin root, tools/ops/packaging source,
+dynamic registration or arbitrary embedded TS/JS schema expression. Pruned
+<code>tests</code>, <code>test</code>, <code>fixtures</code>, build and dependency directories delimit traversal;
+that does not prove that a shipped example or test-derived public interface is
+irrelevant. Applicability must be established for each such source.</p>
+<h2 id="validate-diagnose-and-change-the-right-contract">Validate, diagnose, and change the right contract</h2>
+<ol>
+<li>Identify the exact input/output kind and its consuming caller; record the
+path, pointer, version, package identity and non-secret diagnostic.</li>
+<li>Read the complete selected constraints and actual default/manual checks.</li>
+<li>Use that family's existing validation instructions. Schema syntax or a
+test declaration is not an observed validator result, deployment, or API admission.</li>
+<li>On failure retain the first schema path/error pointer and original input.
+Use <a href="configuration-errors.html">Configuration errors</a>. Fix the owning value or
+consumer relationship; do not remove the rejecting condition.</li>
+<li>For a change, follow <a href="configuration-compatibility.html">Compatibility</a> and
+<a href="configuration-change-impact.html">Change impact</a>. A new file version does
+not migrate retained records, running package snapshots or controller state.</li>
+</ol>
+<p><code>REGISTRY_RESULT_INVALID</code> names a failed referenced value; determine whether
+that caller was checking configuration, input, result or checkpoint before
+editing it. <code>REGISTRY_MANIFEST_INVALID</code> can mean the schema itself is invalid.
+Neither error licenses bypassing strict validation.</p>
+<p>This catalogue is authored navigation, not a new generated schema inventory.
+The config generator does not currently emit this hub. See
+<a href="../extend/documentation-maintenance.html">Documentation maintenance</a> for
+source-owned generation/check prerequisites and partial-write recovery. Real
+recursive equivalence, current-byte drift rejection, intended add/change/remove
+coverage, clean reproduction and reader validation remain separate work. We ran no
+schema/parser/compiler, product, Helm or API validation for this page.</p>
+</main></body></html>

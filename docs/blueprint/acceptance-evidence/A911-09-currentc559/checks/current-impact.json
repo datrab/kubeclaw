@@ -1,0 +1,24 @@
+{
+  "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "priorRevision": "3354d2d1e641e8332326d0a1641f459b2d494c62",
+  "changedPaths": [
+    "docs/site/reference/generated-documentation-map.json",
+    "docs/site/reference/sdk.md"
+  ],
+  "unchangedOwningInputs": {
+    "scripts/tests/docs-publication-assets.test.mjs": "94b4a2b00bd44de2375568735b886e033595c25ec1b0ac863419baa427f3daf8",
+    "scripts/tests/docs-publication-links.test.mjs": "a40a4a5657ad58b20b23629ab7c917cc22702a06c78a56c634f7bf9e7c1895a7",
+    "scripts/lib/docs-publication-assets.mjs": "19145f895da111cadfa0588ec4611b2ff6fa63c14def304929c8c4d655b56ef3",
+    "scripts/lib/docs-publication-links.mjs": "7e73aec54f5ca370dea96c1b8332e55b5c38bf86a846052cc2534f40c5d6d019",
+    "scripts/docs-governance.mjs": "f4b2becf892abbb172dc26eeb51e93722a75bb06851c475175eba380d927970c",
+    "scripts/docs-publication.mjs": "47ad9844d56539c488a03dc6a0775155d4432de3326c4b698b57745d0dd264e2",
+    "scripts/docs-generate.mjs": "c83c5653177b9b0a56326b0e315c409dc3c814c95d37dd53933402a2288aa718",
+    "scripts/docs-sdk-reference.mjs": "0b9a68256214b05289a60355a536526bcfca823c0d95cf763ba5c461a0921b1a",
+    "scripts/docs-sdk-semantics.mjs": "90f99449e46f59d04b6c55b158086bc575569920c107d374accde70da92f2d56",
+    "docs/blueprint/AP08-catalogue-guidance.json": "ade0f81c0fdd239e3bfc4b99ed3c988600bcae1c591362f27c0219da316562c6",
+    "docs/config/documentation-publication-manifest.json": "d6d7501265067a9ba6acee4992bced4f715453d19398ed182a060a3bf4ccd5d2",
+    "docs/config/documentation-tree-classification.json": "4835764a2d57764008f96a8b68f090a5f36488bddc0a0a10e15c826c59dc961d"
+  },
+  "reuse": "14 actual helper cases and original six governance preservation/tamper cases retain their actual execution revisions. Only sdk.md authored owner/prose and its derived owner field changed; current original generator/check and actual production/HTML were rerun because affected. No whole-SDK or whole-site acceptance inferred.",
+  "formalAcceptance": false
+}

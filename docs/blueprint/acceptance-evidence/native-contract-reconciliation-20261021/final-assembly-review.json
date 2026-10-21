@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS for the conservative registry assembly. All eight reports, including NOT_READY decisions in overall explanations, agree with scope.json's 48 PASS and 13 NOT_READY Sources. All 27 contracts belonging to NOT_READY Sources explicitly declare unknown and preserve previouslyDeclaredRole. The 106 digest renewals introduce no Source, selector, or basis domains; PASS labels reference the corresponding partitions. Existing API-root precedence and blocking unknown admission remain intact, and removing api-adapted status grants no replacement authority. Runtime inputs, bytes, effects, actual manifest coverage, and external blobs remain unqualified where reported. No global/content/gate acceptance or approval of unreconstructed selectors is implied. Prism page metadata was outside this review. No tests or producers were run.",
+  "overall_confidence": 0.91
+}

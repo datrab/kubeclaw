@@ -1,0 +1,12 @@
+{
+  "primaryGate": "A911-10",
+  "criterionDependency": "without silent historical false claim after source Removal/Rename",
+  "source": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "file": "scripts/generate-buster-provider-reference.mjs",
+  "sha256": "e9aa08dca92a386456b863f2c9da3557340c07d82321c3f2660ba18ad4f607f3",
+  "effects": "Adds bounded local git show of provider manifests/schema JSON at explicit pinned commit; no shell/network/runtime import. Source provenance refusal precedes output write. Default old revision retained only if all current inputs still exact. New source requires explicit committed revision.",
+  "sourceChanges": "External candidate only; no canonical or dirtyCI mutation.",
+  "formalAcceptance": false,
+  "additionalDependency": "Existing scripts/check-buster-guides.mjs:189 invokes generator without args. Read valid stored evidence pin for noarg check; exact JSON validation still mandatory, never blind pin refresh.",
+  "reviewFindingCorrection": "Actual git cat-file -t requires commit object before any schema read/output write. Tree-object negative fixture added; valid immutable noarg header fallback kept."
+}

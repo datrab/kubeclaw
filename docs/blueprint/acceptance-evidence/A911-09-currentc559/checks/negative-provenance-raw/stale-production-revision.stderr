@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py", line 215, in <module>
+    args=ap.parse_args();PUBLICATION_ROOT=args.publication_root;PUBLICATION_RECEIPT=args.publication_receipt;assert re.fullmatch(r"[a-f0-9]{40}",args.revision);REVISION=args.revision;run(args.repo,args.output)
+                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/current3354-gate-decision-v1/production-html-adapter-v1/render-production-output.py", line 102, in run
+    assert proof['exitCode'] == 0 and proof['revision'] == REVISION
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

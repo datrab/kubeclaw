@@ -1,0 +1,20 @@
+import subprocess,json,re,hashlib
+from pathlib import Path
+P=Path(__file__).resolve().parent;R=P.parents[2]/'finish-20261017/ci-green/repo';REV='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9'
+def g(*a):return subprocess.check_output(['git',*a],cwd=R)
+ledger=json.loads((P/'source-transition-ledger.json').read_text());sources={r['source'] for r in ledger['rows']};mapping=json.loads(g('show',REV+':docs/site/reference/generated-documentation-map.json'));records=[];cache={}
+def source(rev,p):
+ if (rev,p) not in cache:
+  r=subprocess.run(['git','show',rev+':'+p],cwd=R,capture_output=True);cache[rev,p]=r.stdout if not r.returncode else None
+ return cache[rev,p]
+for page in mapping['pages']:
+ text=g('show',REV+':'+page['page']).decode()
+ for m in re.finditer(r'https://github\.com/datrab/kubeclaw/blob/([0-9a-f]{40})/([^\s)<>`#]+)(?:#L(\d+)(?:-L(\d+))?)?',text):
+  rev,p,lo,hi=m.groups()
+  if p not in sources:continue
+  historical=source(rev,p);current=source(REV,p)
+  lines=len(historical.splitlines()) if historical is not None else None
+  valid=lines is not None and (lo is None or (1<=int(lo)<=int(hi or lo)<=lines))
+  records.append({'page':page['page'],'url':m.group(0),'source':p,'pinnedRevision':rev,'pinnedSourceExists':historical is not None,'pinnedRangeValid':valid,'pinnedSourceSHA256':hashlib.sha256(historical).hexdigest() if historical is not None else None,'currentSourceSHA256':hashlib.sha256(current).hexdigest() if current is not None else None,'exactFullSourceEquality':historical==current,'limit':'Different full-file bytes require semantic impact inspection; never automatically stale/false.'})
+result={'revision':REV,'scope':'All committed166page GitHub blob citations to28registered source surfaces. Actual Git blob and historical line-range resolution, not execution or semantic acceptance.','citationOccurrences':len(records),'sourcesWithPinnedCitations':len(set(r['source'] for r in records)),'records':records,'brokenCitations':[r for r in records if not r['pinnedSourceExists'] or not r['pinnedRangeValid']],'differentPinnedSourceOccurrences':sum(not r['exactFullSourceEquality'] for r in records),'sourcesWithoutPinnedCitation':sorted(sources-set(r['source'] for r in records)),'formalAcceptance':False}
+(P/'pinned-source-link-resolution.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='records'},indent=2))

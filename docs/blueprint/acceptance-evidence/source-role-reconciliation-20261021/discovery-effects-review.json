@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS: whole scripts/docs-api-output-discovery.mjs documentation output-role scope, incorporating the previously resolved scopes and this inspection of remaining renderer initialization, selected children, staging/archive helpers, installer parsing and caller mappings. Selected routes produce discovery data and local artifacts, not product API submissions. PostgreSQL preflight is omitted; registry GC constructs YAML; GitOps evaluates selected functions; infrastructure uses helm template with exact post-renderer arguments and credential-leak guards. Source, input, hash and archive guards remain intact. Staging can download verified archives and write local caches. Deployment, external executable/image identity, native isolation and runtime outcomes remain unproven. No actionable defect found; no tests or renderers executed.",
+  "overall_confidence": 0.88
+}

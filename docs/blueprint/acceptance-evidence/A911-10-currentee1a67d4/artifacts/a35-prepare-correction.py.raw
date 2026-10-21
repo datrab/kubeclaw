@@ -1,0 +1,110 @@
+import subprocess,json,hashlib
+from pathlib import Path
+B=Path(__file__).resolve().parent;ROOT=B.parent.parent/'ci-green/repo';P=B/'correction-v1';R=P/'repo';R.mkdir(parents=True,exist_ok=True)
+# ROOT is explicitly bound, not inferred from a stale checkout.
+ROOT=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo')
+def put(p,t):
+ f=R/p;f.parent.mkdir(parents=True,exist_ok=True);f.write_text(t)
+def git(*a):return subprocess.check_output(['git',*a],cwd=ROOT)
+REV='af792991b9bad92b43b6e1f52832a02ca71a5256';MAP='docs/site/reference/generated-documentation-map.json'
+raw=git('show',REV+':'+MAP);pages=json.loads(raw)['pages']
+original=(ROOT/'scripts/docs-governance.mjs').read_text();put('scripts/docs-governance.mjs',original)
+subprocess.run(['git','init','-q'],cwd=R,check=True)
+subprocess.run(['git','add','scripts/docs-governance.mjs'],cwd=R,check=True)
+subprocess.run(['git','-c','user.name=Nova','-c','user.email=nova@openclaw.local','commit','-qm','review baseline: exact original governance source'],cwd=R,check=True)
+baseline={'schemaVersion':'kubeclaw-published-route-baseline.v1','sourceRevision':REV,'sourceMapPath':MAP,'sourceMapSHA256':hashlib.sha256(raw).hexdigest(),'boundary':'Known committed documentation map; not evidence of external serving or routes before the first registry. Do not advance this baseline to hide route removals.','pages':[{k:p[k] for k in ['page','route','owner']} for p in pages]}
+text=json.dumps(baseline,ensure_ascii=False,indent=2)+'\n';put('docs/config/documentation-published-route-baseline.json',text);digest=hashlib.sha256(text.encode()).hexdigest()
+put('scripts/lib/docs-route-continuity.mjs',r'''import assert from 'node:assert/strict';
+
+// The committed map is a known-route boundary, not a claim that every route
+// was externally served. Earlier unknown routes must not be fabricated.
+export function assertRouteContinuity(baseline, pages, registry) {
+  assert.equal(baseline.schemaVersion, 'kubeclaw-published-route-baseline.v1', 'Invalid published-route baseline');
+  assert(Array.isArray(baseline.pages), 'Published-route baseline needs pages');
+  assert.equal(registry.schemaVersion, 'kubeclaw-documentation-routes.v1', 'Invalid route registry');
+  assert(Array.isArray(registry.redirects), 'Route registry needs redirects');
+  const nonempty = (value) => typeof value === 'string' && value.trim().length > 0;
+  const active = new Map();
+  for (const page of pages) {
+    assert(nonempty(page.page) && nonempty(page.route) && nonempty(page.owner), 'Current route needs a page and owner');
+    assert(!active.has(page.route), `Duplicate active route: ${page.route}`);
+    active.set(page.route, page);
+  }
+  const redirects = new Map();
+  for (const redirect of registry.redirects) {
+    assert(nonempty(redirect.from) && nonempty(redirect.to) && nonempty(redirect.reason), 'Redirect needs from, to, and reason');
+    assert(!redirects.has(redirect.from), `Duplicate redirect source: ${redirect.from}`);
+    assert(!active.has(redirect.from), `Redirect source is still an active route: ${redirect.from}`);
+    assert(active.has(redirect.to), `Redirect target is not an active route: ${redirect.to}`);
+    redirects.set(redirect.from, redirect);
+  }
+  const seen = new Set();
+  for (const page of baseline.pages) {
+    assert(nonempty(page.page) && nonempty(page.route) && nonempty(page.owner), 'Baseline route needs a page and owner');
+    assert(!seen.has(page.route), `Duplicate baseline route: ${page.route}`);
+    seen.add(page.route);
+    assert(active.has(page.route) || redirects.has(page.route),
+      `Published route disappeared without a redirect: ${page.route} (${page.page}, previous owner: ${page.owner})`);
+  }
+}
+''')
+# Preserve the existing validation and output schema. The new check applies in
+# both generate and check modes, before an output can erase the old route.
+new=original.replace("import fs from 'node:fs';", "import fs from 'node:fs';\nimport { createHash } from 'node:crypto';\nimport { assertRouteContinuity } from './lib/docs-route-continuity.mjs';")
+needle="const output = `${JSON.stringify({"
+insert="""// Pinned once to the published af792991 map. A new snapshot is not an
+// automatic escape hatch for a removed route; changing this pin needs review.
+const baselinePath = path.join(root, 'docs/config/documentation-published-route-baseline.json');
+const baselineBytes = fs.readFileSync(baselinePath);
+if (createHash('sha256').update(baselineBytes).digest('hex') !== 'DIGEST') {
+  throw new Error('Published-route baseline bytes changed; do not repin to hide route loss.');
+}
+assertRouteContinuity(JSON.parse(baselineBytes), pages, routeRegistry);
+
+""".replace('DIGEST',digest)
+assert needle in new;new=new.replace(needle,insert+needle);put('scripts/docs-governance.mjs',new)
+put('scripts/tests/docs-route-continuity.test.mjs',r'''import test from 'node:test';
+import assert from 'node:assert/strict';
+import { assertRouteContinuity } from '../lib/docs-route-continuity.mjs';
+const old = { page: 'docs/site/old.md', route: '/old/', owner: 'old owner' };
+const next = { page: 'docs/site/new.md', route: '/new/', owner: 'new owner' };
+const baseline = { schemaVersion: 'kubeclaw-published-route-baseline.v1', pages: [old] };
+const registry = (redirects = []) => ({ schemaVersion: 'kubeclaw-documentation-routes.v1', redirects });
+const redirect = { from: '/old/', to: '/new/', reason: 'Renamed; successor owns the maintained content.' };
+test('unchanged route and new additions retain known routes', () => {
+  assert.doesNotThrow(() => assertRouteContinuity(baseline, [old, next], registry()));
+});
+test('rename cannot erase the known route even with a regenerated map', () => {
+  assert.throws(() => assertRouteContinuity(baseline, [next], registry()), /Published route disappeared/);
+});
+test('removal cannot erase the last known route', () => {
+  assert.throws(() => assertRouteContinuity(baseline, [], registry()), /Published route disappeared/);
+});
+test('rename or removal with an owned active successor and reason is allowed', () => {
+  assert.doesNotThrow(() => assertRouteContinuity(baseline, [next], registry([redirect])));
+});
+test('retained old owner cannot substitute for successor ownership', () => {
+  assert.throws(() => assertRouteContinuity(baseline, [{ ...next, owner: '  ' }], registry([redirect])), /needs a page and owner/);
+});
+test('dangling redirect, chain, and loop are refused', () => {
+  for (const redirects of [[redirect], [redirect, { from: '/new/', to: '/old/', reason: 'cycle' }]]) {
+    assert.throws(() => assertRouteContinuity(baseline, [], registry(redirects)), /Redirect target/);
+  }
+});
+test('redirect cannot leave the old route active as a second authority', () => {
+  assert.throws(() => assertRouteContinuity(baseline, [old, next], registry([redirect])), /still an active route/);
+});
+test('duplicate routes and redirects are refused', () => {
+  assert.throws(() => assertRouteContinuity(baseline, [old, old], registry()), /Duplicate active route/);
+  assert.throws(() => assertRouteContinuity(baseline, [next], registry([redirect, redirect])), /Duplicate redirect/);
+});
+test('empty migration reasons cannot silently acknowledge historical loss', () => {
+  assert.throws(() => assertRouteContinuity(baseline, [next], registry([{ ...redirect, reason: ' ' }])), /reason/);
+});
+test('unknown pre-registry routes are not invented', () => {
+  assert.doesNotThrow(() => assertRouteContinuity(baseline, [old], registry()));
+});
+''')
+manifest={'primaryGate':'A911-10','criterionDependency':'Historical published route / redirect / successor ownership; no source-family or all-gate acceptance.','publishedBaseline':REV,'baselineSHA256':digest,'files':{p.relative_to(R).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in R.rglob('*') if p.is_file() and '.git' not in p.parts},'effectScope':'Node builtins only. Read existing baseline JSON; no new subprocess/network/deployment effects. Tests import only new pure validator. Integration governance reads existing catalogue/task inputs and writes only existing generated map in generate mode.','limits':['Declarative route/ownership check only; no HTTP redirect service added or claimed.','Source removal/rename, current links/anchors and semantic historical rationale remain separate obligations.','Known baseline is pinned to af792991, not a replacement of original c559/c48 gate evidence.','No canonical changes, no CI dirty changes, no source release or formal gate acceptance.']}
+(P/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'proposal':str(P),'files':list(manifest['files']),'baselineSHA256':digest},indent=2))

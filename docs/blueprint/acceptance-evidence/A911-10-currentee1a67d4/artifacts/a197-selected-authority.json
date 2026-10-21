@@ -1,0 +1,31 @@
+{
+  "source": "scripts/generate-buster-provider-reference.mjs",
+  "sink": "console.log",
+  "expression": "`wrote ${path.relative(root, target)}`",
+  "role": "non-api",
+  "basis": "original-source-bound-diagnostic-text",
+  "operations": [
+    {
+      "source": "scripts/generate-buster-provider-reference.mjs",
+      "selectors": [
+        {
+          "expression": "`wrote ${path.relative(root, target)}`"
+        }
+      ],
+      "factsDigest": "9b623dbf0088d5e8f5ccc38e6960a3bccde03fdab26e1b08310a929bdde4f479"
+    }
+  ],
+  "roleConsumerEvidence": {
+    "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+    "source": "scripts/generate-buster-provider-reference.mjs",
+    "sink": "console.log",
+    "expression": "`wrote ${path.relative(root, target)}`",
+    "consumer": "The declared Buster provider-reference documentation destination is reported after publication.",
+    "evidence": [
+      {
+        "source": "scripts/generate-buster-provider-reference.mjs",
+        "expression": "`wrote ${path.relative(root, target)}`"
+      }
+    ]
+  }
+}

@@ -195,7 +195,7 @@ generiert. Paketbuild wurde nicht als ausgeführt behauptet.
 
 README vorhanden, aber allgemeines fail-closed/all-completed, Retrygrenzen und
 Transportfehlerweitergabe gelten nicht für alle drei Stages (AUDIT-001/003/004).
-[Scalabilityplan](../../architecture/echo-review-scalability-plan.md) beschreibt
+[Scalabilityplan](../../_legacy-source/architecture/echo-review-scalability-plan.md) beschreibt
 Scope-/Incompletegarantien, die an Originalgegenstellen widerlegt sind. Historische
 Phase7-Architektur ist für heutige Auditstage/Reportv2 unvollständig. Inhaltliches
 high-confidence bei Simplification ist von heuristischer Erkennung zu trennen.

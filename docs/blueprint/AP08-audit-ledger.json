@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "ap08-extension-audit-ledger.v1",
+  "inventory": "docs/blueprint/generated/ap08-extension-inventory.json",
+  "statusOrder": [
+    "pending",
+    "source-reviewed",
+    "content-written",
+    "locally-verified",
+    "reader-accepted"
+  ],
+  "defaultStatus": "content-written",
+  "records": [
+    {"id":"kubeclaw-agent-observer","status":"locally-verified"},
+    {"id":"kubeclaw-prism","status":"locally-verified"},
+    {"id":"kubeclaw.api-flow","status":"locally-verified"},
+    {"id":"kubeclaw.command-runner","status":"locally-verified"},
+    {"id":"kubeclaw.container-build","status":"locally-verified"},
+    {"id":"kubeclaw.coverage-budget","status":"locally-verified"},
+    {"id":"kubeclaw.direct-command","status":"locally-verified"},
+    {"id":"kubeclaw.git-workspace","status":"locally-verified"},
+    {"id":"kubeclaw.http","status":"locally-verified"},
+    {"id":"kubeclaw.junit-report","status":"locally-verified"},
+    {"id":"kubeclaw.kubernetes-fixture","status":"locally-verified"},
+    {"id":"kubeclaw.network-http","status":"locally-verified"},
+    {"id":"kubeclaw.openapi","status":"locally-verified"},
+    {"id":"kubeclaw.redis-transport","status":"locally-verified"},
+    {"id":"kubeclaw.repository-adapter","status":"locally-verified"},
+    {"id":"kubeclaw.secret-resolver","status":"locally-verified"},
+    {"id":"kubeclaw.tailscale-exposure","status":"locally-verified"},
+    {"id":"kubeclaw.telemetry-observer","status":"locally-verified"}
+  ]
+}

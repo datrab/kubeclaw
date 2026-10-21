@@ -1,7 +1,7 @@
 # Central Cilium installation values for the kubeclaw cluster.
 #
 # Cilium is cluster infrastructure. Namespace/project policy belongs with the
-# workload that owns the namespace; see docs/ops/cilium-networking.md.
+# workload that owns the namespace; see docs/site/understand/platform-and-operations.md.
 namespaceOverride: cilium
 
 operator:

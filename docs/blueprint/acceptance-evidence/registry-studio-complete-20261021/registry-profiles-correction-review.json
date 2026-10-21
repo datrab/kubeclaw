@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Reconcile the remaining dependency contracts with both registry profiles",
+      "body": "The new profile table correctly distinguishes the deployments, but this endpoint row still unconditionally promises ReadWriteOncePod storage and a Recreate writer. The linked dependency reference also describes `registry-local` as retained storage with delete disabled (`docs/site/understand/platform-and-operations.md:389`), and its recovery row assumes a retained registry (`:313`). The Argo-selected workload actually has no persistent volume and enables deletion (`gitops/platform/registry-local/resources.yaml:21\u201325`); its Application selects that directory (`gitops/platform/bootstrap/registry-local.yaml:16`). Operators following these contracts can therefore choose recovery or maintenance based on storage that does not exist. Qualify these statements by profile and link the ephemeral-loss stop/rebuild/new-release procedure from the dependency recovery guidance. Both profiles must remain within A97-02; the accurate new table alone does not reconcile the contradictory contracts.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 225
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "WHOLE COM-010: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. The new registry table and loss/rebuild boundaries match the renderer, selected bootstrap and manifests, but unconditional retained-storage claims remain in the canonical endpoint catalogue and linked dependency/recovery contracts. A97-02 remains NOT_READY for its full dependency scope, including both registry profiles.\n\nWHOLE OPR-010: sourceAccuracy PASS; readerUsability PASS; quality PASS at the source-documentation level. Preserve the existing full journey scope, including correct-revision approval, preview, publication/export/handoff and stale/concurrent recovery. Documented unsupported routes and runtime prerequisites remain limitations, not successful browser or live evidence.\n\nImpact audit: preserve AP09.7-ready-data-topics-20261020 acceptance for COM-002/006/007, DAT-002/003/007 and TEL-001/004/005/006/007; AP09-selected-model-gateway-20261021 for INF-012 and A97-03; AP09-communication-complete-contracts-20261021 for COM-003/004/005/012; and AP09-private-routes-complete-20261021 for COM-009. The remaining defect concerns COM-010 and the registry portion of A97-02; those accepted scopes are neither narrowed nor globally revoked.\n\nChecker receipt changes excluded. Read-only inspection only; no tests, product execution, rendered UI, native or live acceptance claimed. No whole-package acceptance asserted.",
+  "overall_confidence": 0.94
+}

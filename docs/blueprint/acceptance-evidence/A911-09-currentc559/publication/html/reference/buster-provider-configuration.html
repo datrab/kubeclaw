@@ -1,0 +1,2275 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/buster-provider-configuration.html"></head><body><main>
+<h1 id="buster-provider-configuration">Buster Provider Configuration</h1>
+<p>Status: generated reference
+Audience: pipeline author, operator, test maintainer
+Owner: buster
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/generate-buster-provider-reference.mjs">scripts/generate-buster-provider-reference.mjs</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/api-flow/schemas/config.schema.json">skills/buster/plugins/api-flow/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/api-flow/schemas/flow.schema.json">skills/buster/plugins/api-flow/schemas/flow.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/axe/schemas/config.schema.json">skills/buster/plugins/axe/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/container-build/schemas/config.schema.json">skills/buster/plugins/container-build/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/coverage-budget/schemas/config.schema.json">skills/buster/plugins/coverage-budget/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json">skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/direct-command/schemas/config.schema.json">skills/buster/plugins/direct-command/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/http/schemas/config.schema.json">skills/buster/plugins/http/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json">skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/lighthouse/schemas/config.schema.json">skills/buster/plugins/lighthouse/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/openapi/schemas/config.schema.json">skills/buster/plugins/openapi/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/playwright/schemas/config.schema.json">skills/buster/plugins/playwright/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/schemas/dependency.schema.json">skills/buster/plugins/security-providers/schemas/dependency.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/schemas/headers.schema.json">skills/buster/plugins/security-providers/schemas/headers.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/schemas/image.schema.json">skills/buster/plugins/security-providers/schemas/image.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json">skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json">skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/size-budget/schemas/config.schema.json">skills/buster/plugins/size-budget/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json">skills/buster/plugins/tailscale-exposure/schemas/config.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/plugins/visual/schemas/config.schema.json">skills/buster/plugins/visual/schemas/config.schema.json</a>
+Evidence revision: <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>
+Applies to: complete JSON configuration contracts for all shipped Buster test providers
+Last verified: generated from current provider schemas on 2026-09-19</p>
+<h2 id="how-to-read-the-tables">How To Read The Tables</h2>
+<p>A dotted name is an object path. <code>[]</code> identifies each array item. <code>{}</code> identifies
+each value in a map. “Required” means that the immediate parent always requires
+the field. “Conditional” means that a <code>oneOf</code> or <code>anyOf</code> choice introduces the
+field. The selected choice can require it, while another valid choice can omit
+it. “Optional” means that no applicable schema rule requires it. Read the choice
+rules after the table to learn which branch applies. The JSON Schema remains the validation
+authority. This page makes that authority visible; it does not replace it.</p>
+<p>The generator records types, defaults, constants, allowed values, numeric and
+size limits, patterns, uniqueness, and closed-object rules. It intentionally does
+not invent a default when the schema has none.</p>
+<h2 id="kubeclawapi-flow1"><code>kubeclaw.api-flow@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>flowFile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>maximumResponseBytes</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 1048576; minimum 1; maximum 16777216</td>
+</tr>
+<tr>
+<td><code>maximumSteps</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 64; minimum 1; maximum 256</td>
+</tr>
+<tr>
+<td><code>requestTimeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 10000; minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawaxe1"><code>kubeclaw.axe@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>default []; maximum items 128</td>
+</tr>
+<tr>
+<td><code>acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[0-9]{4}-[0-9]{2}-[0-9]{2}$&quot;</td>
+</tr>
+<tr>
+<td><code>acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>acceptances[].route</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 1024; pattern &quot;^/(?!/)[^?#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>acceptances[].rule</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256</td>
+</tr>
+<tr>
+<td><code>acceptances[].selector</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 512</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]*$&quot;</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>default []; maximum items 64; unique items</td>
+</tr>
+<tr>
+<td><code>exclude[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>minimum length 1; maximum length 512</td>
+</tr>
+<tr>
+<td><code>profileFile</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>profiles</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>default [&quot;desktop&quot;,&quot;mobile&quot;]; minimum items 1; maximum items 16; unique items</td>
+</tr>
+<tr>
+<td><code>profiles[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]*$&quot;</td>
+</tr>
+<tr>
+<td><code>routes</code></td>
+<td>Required</td>
+<td>array</td>
+<td>minimum items 1; maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>routes[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 1024; pattern &quot;^/(?!/)[^?#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>default [&quot;wcag2a&quot;,&quot;wcag2aa&quot;]; minimum items 1; maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>tags[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>minimum length 1; maximum length 128</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 30000; minimum 1000; maximum 120000</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^https?://&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-1">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawcontainer-build1"><code>kubeclaw.container-build@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>buildContext</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>definition</code></td>
+<td>Required</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>definition.buildArgs</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32; property name pattern &quot;^[A-Za-z_][A-Za-z0-9_]*$&quot;</td>
+</tr>
+<tr>
+<td><code>definition.buildArgs{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>maximum length 4096</td>
+</tr>
+<tr>
+<td><code>definition.dockerfile</code></td>
+<td>Conditional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>definition.target</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>definition.template</code></td>
+<td>Conditional</td>
+<td>schema choice</td>
+<td>constant &quot;node-static@1&quot;</td>
+</tr>
+<tr>
+<td><code>definition.type</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;dockerfile&quot;; constant &quot;template&quot;</td>
+</tr>
+<tr>
+<td><code>outputName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>platform</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^linux/[a-z0-9_+-]+(?:/[a-z0-9._+-]+)?$&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-2">Choice And Dependency Rules</h3>
+<ul>
+<li>At <code>definition</code>, satisfy exactly one of 2 schema choices.
+<ul>
+<li>Choice 1: requires <code>type</code>, <code>dockerfile</code> and constrains <code>type</code> to value <code>&quot;dockerfile&quot;</code> and constrains <code>dockerfile</code> and constrains <code>target</code> and constrains <code>buildArgs</code>.</li>
+<li>Choice 2: requires <code>type</code>, <code>template</code> and constrains <code>type</code> to value <code>&quot;template&quot;</code> and constrains <code>template</code> to value <code>&quot;node-static@1&quot;</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="kubeclawcoverage-budget1"><code>kubeclaw.coverage-budget@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/coverage-budget/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>combine</code></td>
+<td>Optional</td>
+<td>boolean</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>minimumLinePercent</code></td>
+<td>Optional</td>
+<td>number</td>
+<td>minimum 0; maximum 100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-3">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawdemo-auth-smoke1"><code>kubeclaw.demo-auth-smoke@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assertions</code></td>
+<td>Required</td>
+<td>array</td>
+<td>minimum items 1; maximum items 16</td>
+</tr>
+<tr>
+<td><code>assertions[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>assertions[].equals</code></td>
+<td>Required</td>
+<td>boolean or number or string</td>
+<td>maximum length 2048</td>
+</tr>
+<tr>
+<td><code>assertions[].pointer</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>cookieName</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>loginPath</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>passwordKey</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>protectedPath</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>protocol</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;json-session.v1&quot;</td>
+</tr>
+<tr>
+<td><code>usernameKey</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>usernamePointer</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-4">Choice And Dependency Rules</h3>
+<ul>
+<li>At <code>assertions[].equals</code>, satisfy exactly one of 3 schema choices.
+<ul>
+<li>Choice 1: applies its listed field constraints.</li>
+<li>Choice 2: applies its listed field constraints.</li>
+<li>Choice 3: applies its listed field constraints.</li>
+</ul>
+</li>
+</ul>
+<h2 id="kubeclawdependency-scan-trivy1"><code>kubeclaw.dependency-scan-trivy@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/dependency.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policy</code></td>
+<td>Required</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 128</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].findingId</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256; pattern &quot;^[A-Za-z0-9._:@/-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>policy.profile</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;strict-v1&quot;</td>
+</tr>
+<tr>
+<td><code>projectDirectory</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1000; maximum 900000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-5">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawdirect-command1"><code>kubeclaw.direct-command@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/direct-command/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>args</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 256</td>
+</tr>
+<tr>
+<td><code>args[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 4096</td>
+</tr>
+<tr>
+<td><code>artifacts</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 8</td>
+</tr>
+<tr>
+<td><code>artifacts[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>artifacts[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>artifacts[].mediaType</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;application/octet-stream&quot;, &quot;application/x-tar&quot;, &quot;application/gzip&quot;, &quot;application/vnd.kubeclaw.build-output.tar&quot;, &quot;application/vnd.kubeclaw.checked-kubernetes-yaml&quot;, &quot;application/vnd.kubeclaw.size-budget-baseline+json&quot;</td>
+</tr>
+<tr>
+<td><code>artifacts[].path</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>coverage</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 8</td>
+</tr>
+<tr>
+<td><code>coverage[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>coverage[].format</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;lcov&quot;</td>
+</tr>
+<tr>
+<td><code>coverage[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>coverage[].mediaType</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;text/lcov&quot;</td>
+</tr>
+<tr>
+<td><code>coverage[].path</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>environment</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 64; property name pattern &quot;^[A-Za-z_][A-Za-z0-9_]*$&quot;</td>
+</tr>
+<tr>
+<td><code>environment{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>maximum length 4096</td>
+</tr>
+<tr>
+<td><code>executable</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>reports</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 16</td>
+</tr>
+<tr>
+<td><code>reports[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>reports[].format</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;junit&quot;</td>
+</tr>
+<tr>
+<td><code>reports[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>reports[].mediaType</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;application/junit+xml&quot;, &quot;application/xml&quot;, &quot;text/xml&quot;</td>
+</tr>
+<tr>
+<td><code>reports[].path</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>resultMode</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;junit-required&quot;, &quot;exit-code&quot;</td>
+</tr>
+<tr>
+<td><code>workingDirectory</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-6">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawhttp1"><code>kubeclaw.http@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/http/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accept</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>default &quot;<em>/</em>&quot;; minimum length 1; maximum length 512; pattern &quot;^[^\r\n]+$&quot;</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>expectedContentType</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 128; pattern &quot;^[a-z0-9!#$&amp;^<em>.+-]+/[a-z0-9!#$&amp;^</em>.+-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>expectedStatuses</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>minimum items 1; maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>expectedStatuses[]</code></td>
+<td>Each array item</td>
+<td>integer</td>
+<td>minimum 100; maximum 599</td>
+</tr>
+<tr>
+<td><code>expectedText</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096</td>
+</tr>
+<tr>
+<td><code>maximumResponseBytes</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 1048576; minimum 1; maximum 16777216</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>default &quot;GET&quot;; values &quot;GET&quot;, &quot;HEAD&quot;</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^/(?!/)&quot;</td>
+</tr>
+<tr>
+<td><code>requestTimeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 10000; minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-7">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawimage-scan-trivy1"><code>kubeclaw.image-scan-trivy@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/image.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policy</code></td>
+<td>Required</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 128</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].findingId</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256; pattern &quot;^[A-Za-z0-9._:@/-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>policy.profile</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;strict-v1&quot;</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1000; maximum 900000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-8">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawkubernetes-fixture1"><code>kubeclaw.kubernetes-fixture@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>image.digest</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^sha256:[a-f0-9]{64}$&quot;</td>
+</tr>
+<tr>
+<td><code>image.reference</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^[A-Za-z0-9.-]+(?::[0-9]{1,5})?/[a-z0-9]+(?:[._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$&quot;</td>
+</tr>
+<tr>
+<td><code>namespacePrefix</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 42; pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,40}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>readinessTimeoutSeconds</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 3600</td>
+</tr>
+<tr>
+<td><code>retention</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>retention.mode</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values &quot;delete&quot;, &quot;retain&quot;</td>
+</tr>
+<tr>
+<td><code>retention.seconds</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 60; maximum 604800</td>
+</tr>
+<tr>
+<td><code>secretReferences</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>secretReferences[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 253; pattern &quot;^[A-Za-z0-9._-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>servicePort</code></td>
+<td>Required</td>
+<td>integer</td>
+<td>minimum 1; maximum 65535</td>
+</tr>
+<tr>
+<td><code>serviceTargetPort</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 65535</td>
+</tr>
+<tr>
+<td><code>testCredentials</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>testCredentials.mode</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;generate&quot;</td>
+</tr>
+<tr>
+<td><code>testCredentials.secretName</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-9">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawkubernetes-policy-security1"><code>kubeclaw.kubernetes-policy-security@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policy</code></td>
+<td>Required</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 128</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].findingId</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256; pattern &quot;^[A-Za-z0-9._:@/-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>policy.profile</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;strict-v1&quot;</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1000; maximum 300000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-10">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawkubernetes-runtime-security1"><code>kubeclaw.kubernetes-runtime-security@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policy</code></td>
+<td>Required</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 128</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].findingId</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256; pattern &quot;^[A-Za-z0-9._:@/-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>policy.profile</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;strict-v1&quot;</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1000; maximum 300000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-11">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawlighthouse1"><code>kubeclaw.lighthouse@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/lighthouse/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>default []; maximum items 128</td>
+</tr>
+<tr>
+<td><code>acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>acceptances[].audit</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256</td>
+</tr>
+<tr>
+<td><code>acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[0-9]{4}-[0-9]{2}-[0-9]{2}$&quot;</td>
+</tr>
+<tr>
+<td><code>acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>acceptances[].route</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 1024; pattern &quot;^/(?!/)[^?#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>budget</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]*$&quot;</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]*$&quot;</td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]*$&quot;</td>
+</tr>
+<tr>
+<td><code>purpose</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;performance&quot;, &quot;seo&quot;, &quot;best-practices&quot;</td>
+</tr>
+<tr>
+<td><code>routes</code></td>
+<td>Required</td>
+<td>array</td>
+<td>minimum items 1; maximum items 16; unique items</td>
+</tr>
+<tr>
+<td><code>routes[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 1024; pattern &quot;^/(?!/)[^?#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>runs</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values 1, 3, 5</td>
+</tr>
+<tr>
+<td><code>settingsFile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 120000; minimum 10000; maximum 180000</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^https?://&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-12">Choice And Dependency Rules</h3>
+<ul>
+<li>At <code>root</code>, if it constrains <code>purpose</code> to value <code>&quot;performance&quot;</code>, then it constrains <code>runs</code> to values <code>3</code>, <code>5</code> and default <code>3</code>.</li>
+<li>At <code>root</code>, if it constrains <code>purpose</code> to values <code>&quot;seo&quot;</code>, <code>&quot;best-practices&quot;</code>, then it constrains <code>runs</code> to value <code>1</code> and default <code>1</code> and forbids <code>budget</code>.</li>
+</ul>
+<h2 id="kubeclawopenapi1"><code>kubeclaw.openapi@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>maximumResponseBytes</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 1048576; minimum 1; maximum 16777216</td>
+</tr>
+<tr>
+<td><code>operations</code></td>
+<td>Conditional</td>
+<td>array or schema choice</td>
+<td>No additional scalar limit in the schema.; minimum items 1; maximum items 128</td>
+</tr>
+<tr>
+<td><code>operations[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>operations[].body</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>operations[].cleanup</code></td>
+<td>Optional</td>
+<td>boolean</td>
+<td>default false</td>
+</tr>
+<tr>
+<td><code>operations[].expectedStatuses</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>minimum items 1; maximum items 16; unique items</td>
+</tr>
+<tr>
+<td><code>operations[].expectedStatuses[]</code></td>
+<td>Each array item</td>
+<td>integer</td>
+<td>minimum 100; maximum 599</td>
+</tr>
+<tr>
+<td><code>operations[].headers</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>operations[].headers{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>maximum length 4096</td>
+</tr>
+<tr>
+<td><code>operations[].operationId</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 128</td>
+</tr>
+<tr>
+<td><code>operations[].pathParameters</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>operations[].pathParameters{}</code></td>
+<td>Each map value</td>
+<td>boolean or number or string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>operations[].query</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>operations[].query{}</code></td>
+<td>Each map value</td>
+<td>boolean or number or string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>requestTimeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 10000; minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>specFile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Conditional</td>
+<td>array or schema choice</td>
+<td>No additional scalar limit in the schema.; minimum items 1; maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>tags[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>minimum length 1; maximum length 128</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-13">Choice And Dependency Rules</h3>
+<ul>
+<li>At <code>root</code>, satisfy one or more of 2 schema choices.
+<ul>
+<li>Choice 1: requires <code>operations</code> and constrains <code>operations</code>.</li>
+<li>Choice 2: requires <code>tags</code> and constrains <code>tags</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="kubeclawplaywright1"><code>kubeclaw.playwright@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/playwright/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>configFile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>minimumExecutedTests</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 0; maximum 100000</td>
+</tr>
+<tr>
+<td><code>projectDirectory</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024; pattern &quot;^(?:\.|(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+)$&quot;</td>
+</tr>
+<tr>
+<td><code>requiredTests</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 10000; unique items</td>
+</tr>
+<tr>
+<td><code>requiredTests[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 600000; minimum 1000; maximum 3600000</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^https?://&quot;</td>
+</tr>
+<tr>
+<td><code>workers</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 64</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-14">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawsecurity-headers1"><code>kubeclaw.security-headers@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/headers.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>paths</code></td>
+<td>Required</td>
+<td>array</td>
+<td>minimum items 1; maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>paths[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^/(?!/)&quot;</td>
+</tr>
+<tr>
+<td><code>policy</code></td>
+<td>Required</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 128</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].expiresAt</code></td>
+<td>Required</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].findingId</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 256; pattern &quot;^[A-Za-z0-9._:@/-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>policy.acceptances[].reason</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 8; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>policy.profile</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;strict-v1&quot;</td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;web-https-v1&quot;, &quot;api-http-v1&quot;</td>
+</tr>
+<tr>
+<td><code>requestTimeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>rules</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>rules.add</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 32</td>
+</tr>
+<tr>
+<td><code>rules.add[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>rules.add[].header</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 128; pattern &quot;^[a-z0-9-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>rules.add[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 128; pattern &quot;^[a-z0-9.-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>rules.add[].kind</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;present&quot;, &quot;equals&quot;, &quot;contains&quot;, &quot;hsts-min-age&quot;</td>
+</tr>
+<tr>
+<td><code>rules.add[].severity</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;critical&quot;, &quot;high&quot;, &quot;medium&quot;, &quot;low&quot;, &quot;info&quot;</td>
+</tr>
+<tr>
+<td><code>rules.add[].value</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+<tr>
+<td><code>rules.remove</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>rules.remove[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>maximum length 128; pattern &quot;^[a-z0-9.-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>rules.replace</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 32</td>
+</tr>
+<tr>
+<td><code>rules.replace[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>rules.replace[].header</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 128; pattern &quot;^[a-z0-9-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>rules.replace[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>maximum length 128; pattern &quot;^[a-z0-9.-]+$&quot;</td>
+</tr>
+<tr>
+<td><code>rules.replace[].kind</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;present&quot;, &quot;equals&quot;, &quot;contains&quot;, &quot;hsts-min-age&quot;</td>
+</tr>
+<tr>
+<td><code>rules.replace[].severity</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>values &quot;critical&quot;, &quot;high&quot;, &quot;medium&quot;, &quot;low&quot;, &quot;info&quot;</td>
+</tr>
+<tr>
+<td><code>rules.replace[].value</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>minimum length 1; maximum length 1024</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-15">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawsize-budget1"><code>kubeclaw.size-budget@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>format</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values &quot;auto&quot;, &quot;file&quot;, &quot;tar&quot;, &quot;tar-gzip&quot;</td>
+</tr>
+<tr>
+<td><code>largestFiles</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 100</td>
+</tr>
+<tr>
+<td><code>matchingFiles</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 32</td>
+</tr>
+<tr>
+<td><code>matchingFiles[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>matchingFiles[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>matchingFiles[].maximumBytes</code></td>
+<td>Required</td>
+<td>integer</td>
+<td>minimum 0; maximum 9007199254740991</td>
+</tr>
+<tr>
+<td><code>matchingFiles[].pattern</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 512</td>
+</tr>
+<tr>
+<td><code>matchingFiles[].requireMatch</code></td>
+<td>Optional</td>
+<td>boolean</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>maximumFileCount</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 0; maximum 100000</td>
+</tr>
+<tr>
+<td><code>maximumGrowthBytes</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 0; maximum 9007199254740991</td>
+</tr>
+<tr>
+<td><code>maximumGrowthPercent</code></td>
+<td>Optional</td>
+<td>number</td>
+<td>minimum 0; maximum 1000000</td>
+</tr>
+<tr>
+<td><code>maximumTotalBytes</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 0; maximum 9007199254740991</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-16">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawtailscale-exposure1"><code>kubeclaw.tailscale-exposure@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>hostname</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>pattern &quot;^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$&quot;</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 1024; pattern &quot;^/(?:[^/?#\r\n][^?#\r\n]*)?$&quot;</td>
+</tr>
+<tr>
+<td><code>readinessTimeoutSeconds</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 3600</td>
+</tr>
+<tr>
+<td><code>retentionMode</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values &quot;release&quot;, &quot;await-readiness&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-17">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawvisual1"><code>kubeclaw.visual@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/visual/schemas/config.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>comparisonProfile</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>default &quot;strict-v1&quot;; values &quot;strict-v1&quot;, &quot;balanced-v1&quot;</td>
+</tr>
+<tr>
+<td><code>endpointName</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 64; pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]*$&quot;</td>
+</tr>
+<tr>
+<td><code>manifestFile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>masks</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 64</td>
+</tr>
+<tr>
+<td><code>masks[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>masks[].selectors</code></td>
+<td>Required</td>
+<td>array</td>
+<td>minimum items 1; maximum items 32; unique items</td>
+</tr>
+<tr>
+<td><code>masks[].selectors[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>minimum length 1; maximum length 512</td>
+</tr>
+<tr>
+<td><code>masks[].target</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>overrides</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>overrides.maximumDifferencePercent</code></td>
+<td>Optional</td>
+<td>number</td>
+<td>minimum 0; maximum 100</td>
+</tr>
+<tr>
+<td><code>overrides.pixelThreshold</code></td>
+<td>Optional</td>
+<td>number</td>
+<td>minimum 0; maximum 1</td>
+</tr>
+<tr>
+<td><code>overrides.uncertaintyMarginPercent</code></td>
+<td>Optional</td>
+<td>number</td>
+<td>minimum 0; maximum 100</td>
+</tr>
+<tr>
+<td><code>profileFile</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096; pattern &quot;^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$&quot;</td>
+</tr>
+<tr>
+<td><code>targets</code></td>
+<td>Required</td>
+<td>array</td>
+<td>minimum items 1; maximum items 64; unique items</td>
+</tr>
+<tr>
+<td><code>targets[]</code></td>
+<td>Each array item</td>
+<td>string</td>
+<td>pattern &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$&quot;</td>
+</tr>
+<tr>
+<td><code>timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>default 30000; minimum 1000; maximum 120000</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>maximum length 2048; pattern &quot;^https?://&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-18">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="kubeclawapi-flow-document1"><code>kubeclaw.api-flow-document@1</code></h2>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/flow.schema.json">Validation schema</a></p>
+</blockquote>
+<p><strong>Root rule:</strong> Unknown top-level fields are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Exact field path</th>
+<th>Presence</th>
+<th>Type</th>
+<th>Schema rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cleanup</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 256</td>
+</tr>
+<tr>
+<td><code>cleanup[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>cleanup[].body</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect.bodyContains</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect.contentType</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect.json</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect.messageContains</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect.minimumMessages</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 64</td>
+</tr>
+<tr>
+<td><code>cleanup[].expect.status</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 100; maximum 599</td>
+</tr>
+<tr>
+<td><code>cleanup[].extract</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32; property name pattern &quot;^[A-Za-z][A-Za-z0-9_]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>cleanup[].extract{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>cleanup[].headers</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>cleanup[].headers{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096</td>
+</tr>
+<tr>
+<td><code>cleanup[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[a-z][a-z0-9-]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>cleanup[].messages</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 64</td>
+</tr>
+<tr>
+<td><code>cleanup[].method</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values &quot;DELETE&quot;, &quot;GET&quot;, &quot;HEAD&quot;, &quot;OPTIONS&quot;, &quot;PATCH&quot;, &quot;POST&quot;, &quot;PUT&quot;</td>
+</tr>
+<tr>
+<td><code>cleanup[].path</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048; pattern &quot;^/(?!/)[^#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>cleanup[].protocol</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>constant &quot;websocket&quot;</td>
+</tr>
+<tr>
+<td><code>cleanup[].timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Required</td>
+<td>schema choice</td>
+<td>constant &quot;kubeclaw.api-flow.v1&quot;</td>
+</tr>
+<tr>
+<td><code>setup</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 256</td>
+</tr>
+<tr>
+<td><code>setup[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>setup[].body</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>setup[].expect</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>setup[].expect.bodyContains</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>setup[].expect.contentType</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>setup[].expect.json</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>setup[].expect.messageContains</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>setup[].expect.minimumMessages</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 64</td>
+</tr>
+<tr>
+<td><code>setup[].expect.status</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 100; maximum 599</td>
+</tr>
+<tr>
+<td><code>setup[].extract</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32; property name pattern &quot;^[A-Za-z][A-Za-z0-9_]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>setup[].extract{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>setup[].headers</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>setup[].headers{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096</td>
+</tr>
+<tr>
+<td><code>setup[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[a-z][a-z0-9-]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>setup[].messages</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 64</td>
+</tr>
+<tr>
+<td><code>setup[].method</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values &quot;DELETE&quot;, &quot;GET&quot;, &quot;HEAD&quot;, &quot;OPTIONS&quot;, &quot;PATCH&quot;, &quot;POST&quot;, &quot;PUT&quot;</td>
+</tr>
+<tr>
+<td><code>setup[].path</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048; pattern &quot;^/(?!/)[^#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>setup[].protocol</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>constant &quot;websocket&quot;</td>
+</tr>
+<tr>
+<td><code>setup[].timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>steps</code></td>
+<td>Required</td>
+<td>array</td>
+<td>maximum items 256</td>
+</tr>
+<tr>
+<td><code>steps[]</code></td>
+<td>Each array item</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>steps[].body</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>steps[].expect</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>no unknown fields</td>
+</tr>
+<tr>
+<td><code>steps[].expect.bodyContains</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>steps[].expect.contentType</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>steps[].expect.json</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>steps[].expect.messageContains</code></td>
+<td>Optional</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>steps[].expect.minimumMessages</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 64</td>
+</tr>
+<tr>
+<td><code>steps[].expect.status</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 100; maximum 599</td>
+</tr>
+<tr>
+<td><code>steps[].extract</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32; property name pattern &quot;^[A-Za-z][A-Za-z0-9_]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>steps[].extract{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+<tr>
+<td><code>steps[].headers</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 32</td>
+</tr>
+<tr>
+<td><code>steps[].headers{}</code></td>
+<td>Each map value</td>
+<td>string</td>
+<td>minimum length 1; maximum length 4096</td>
+</tr>
+<tr>
+<td><code>steps[].id</code></td>
+<td>Required</td>
+<td>string</td>
+<td>pattern &quot;^[a-z][a-z0-9-]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>steps[].messages</code></td>
+<td>Optional</td>
+<td>array</td>
+<td>maximum items 64</td>
+</tr>
+<tr>
+<td><code>steps[].method</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>values &quot;DELETE&quot;, &quot;GET&quot;, &quot;HEAD&quot;, &quot;OPTIONS&quot;, &quot;PATCH&quot;, &quot;POST&quot;, &quot;PUT&quot;</td>
+</tr>
+<tr>
+<td><code>steps[].path</code></td>
+<td>Required</td>
+<td>string</td>
+<td>minimum length 1; maximum length 2048; pattern &quot;^/(?!/)[^#\r\n]*$&quot;</td>
+</tr>
+<tr>
+<td><code>steps[].protocol</code></td>
+<td>Optional</td>
+<td>schema choice</td>
+<td>constant &quot;websocket&quot;</td>
+</tr>
+<tr>
+<td><code>steps[].timeoutMs</code></td>
+<td>Optional</td>
+<td>integer</td>
+<td>minimum 1; maximum 300000</td>
+</tr>
+<tr>
+<td><code>variables</code></td>
+<td>Optional</td>
+<td>object</td>
+<td>maximum entries 64; property name pattern &quot;^[A-Za-z][A-Za-z0-9_]{0,63}$&quot;</td>
+</tr>
+<tr>
+<td><code>variables{}</code></td>
+<td>Each map value</td>
+<td>boolean or number or string</td>
+<td>No additional scalar limit in the schema.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choice-and-dependency-rules-19">Choice And Dependency Rules</h3>
+<ul>
+<li>The schema declares no <code>oneOf</code>, <code>anyOf</code>, or dependent-required rule.</li>
+</ul>
+<h2 id="maintenance-rule">Maintenance Rule</h2>
+<p>Change a schema first. Then run <code>node scripts/generate-buster-provider-reference.mjs --write</code>.
+Review the changed paths and limits as a contract change. The reference freshness gate
+rejects a stale file and rejects a provider that is absent from this inventory.</p>
+</main></body></html>

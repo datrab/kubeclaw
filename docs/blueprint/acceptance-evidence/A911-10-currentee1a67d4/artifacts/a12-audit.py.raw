@@ -1,0 +1,48 @@
+import hashlib,json,subprocess,re
+from pathlib import Path
+from datetime import datetime,timezone
+BASE=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015')
+ROOT=BASE/'finish-20261017/ci-green/repo'; OUT=Path(__file__).resolve().parent
+REV='af792991b9bad92b43b6e1f52832a02ca71a5256'; MAP='docs/site/reference/generated-documentation-map.json';REG='docs/site/reference/documentation-route-registry.json'
+def git(*a):return subprocess.check_output(['git',*a],cwd=ROOT)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def save(n,d):
+ p=OUT/n;p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');return {'path':str(p),'sha256':sha(p.read_bytes())}
+def blob(rev,p):
+ b=git('show',rev+':'+p);return json.loads(b),sha(b)
+revs=git('log','--first-parent','--reverse','--format=%H',REV,'--',MAP).decode().splitlines()
+snapshots=[];ever={};transitions=[];last={}
+for revision in revs:
+ doc,digest=blob(revision,MAP);pages={p['route']:p for p in doc['pages']}
+ assert len(pages)==len(doc['pages'])
+ reg,rdigest=blob(revision,REG); redirects={r['from']:r for r in reg['redirects']}
+ changes=[]
+ for route,p in last.items():
+  if route not in pages:changes.append({'kind':'removed-route','route':route,'previousPage':p,'redirect':redirects.get(route)})
+  elif pages[route]['owner']!=p['owner']:changes.append({'kind':'changed-owner','route':route,'from':p['owner'],'to':pages[route]['owner']})
+  elif pages[route]['page']!=p['page']:changes.append({'kind':'changed-page-same-route','route':route,'from':p['page'],'to':pages[route]['page']})
+ transitions.extend(dict(revision=revision,**x) for x in changes)
+ for route,p in pages.items():ever.setdefault(route,{'firstObservedRevision':revision,'firstPage':p})
+ snapshots.append({'revision':revision,'mapSHA256':digest,'registrySHA256':rdigest,'pageCount':len(pages),'changes':changes})
+ last=pages
+published,pubsha=blob(REV,MAP);reg,regsha=blob(REV,REG)
+current={}
+for p in sorted((ROOT/'docs/site').rglob('*.md')):
+ rel=p.relative_to(ROOT/'docs/site').as_posix();text=p.read_text();md={}
+ for f in ['Owner','Evidence','Generator']:
+  m=re.search('^'+f+r': (.+)$',text,re.M);md[f]=m.group(1) if m else None
+ route='/' if rel=='README.md' else '/'+(rel[:-9] if rel.endswith('/README.md') else rel[:-3]+'/')
+ assert route not in current,(route,p)
+ current[route]={'page':p.relative_to(ROOT).as_posix(),'owner':md['Owner'],'sourceDependencies':list(dict.fromkeys(([md['Generator']] if md['Generator'] else [])+(md['Evidence'].split(';') if md['Evidence'] else []))),'sha256':sha(p.read_bytes())}
+redirects={r['from']:r for r in reg['redirects']}
+missing=[{'route':r,**v,'currentRedirect':redirects.get(r)} for r,v in ever.items() if r not in current]
+owner_changes=[{'route':p['route'],'publishedOwner':p['owner'],'currentOwner':current[p['route']]['owner']} for p in published['pages'] if p['route'] in current and p['owner']!=current[p['route']]['owner']]
+missing_deps=[]
+for r,p in current.items():
+ for dep in p['sourceDependencies']:
+  dep=dep.strip();local=dep.split('#')[0]
+  if local and not re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:',local) and not (ROOT/local).exists():missing_deps.append({'route':r,'page':p['page'],'declaredDependency':dep})
+refs=[save('historical-route-transitions.json',{'method':'Complete first-parent committed map-changing history, not proof of actual external deployment. Pre-registry routes remain unknown.','snapshots':snapshots,'transitions':transitions}),save('current-route-census.json',{'routes':current,'missingHistoricalRoutes':missing,'changedPublishedOwners':owner_changes,'missingDeclaredSourcePaths':missing_deps})]
+result={'utc':datetime.now(timezone.utc).isoformat(),'acceptanceId':'A911-10','criterionDependency':'Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.','publishedRevision':REV,'publishedMapSHA256':pubsha,'registrySHA256':regsha,'committedMapSnapshots':len(snapshots),'everObservedRoutes':len(ever),'currentRoutes':len(current),'historicalRemovedRoutes':[x for x in transitions if x['kind']=='removed-route'],'currentlyMissingHistoricalRoutes':missing,'currentOwnerChanges':owner_changes,'missingDeclaredSourcePaths':missing_deps,'evidence':refs,'methodLimit':'Passive Git/blob/filesystem audit only. First-parent publication lineage, not all merged histories or proof a URL was externally served. No source remove/rename execution, link/anchor or semantic acceptance.','gateState':'not-accepted','formalIndependentDecision':False,'canonicalWrites':False,'sourceRuntimeChanges':False,'nextAction':'If no actual historical route loss, protect this observed published baseline against future silent loss; prove rename/removal with changed route registry, current links and current ownership plus original source-family mutations. Never invent pre-registry URLs.'}
+save('receipt.json',result)
+print(json.dumps({k:v for k,v in result.items() if k not in ['missingDeclaredSourcePaths','evidence']},ensure_ascii=False,indent=2));print('missingDeclaredSourcePaths',len(missing_deps))

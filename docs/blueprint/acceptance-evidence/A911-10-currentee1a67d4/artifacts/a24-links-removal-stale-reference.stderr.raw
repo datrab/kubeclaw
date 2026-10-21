@@ -1,0 +1,4 @@
+docs reference check failed:
+- docs/site/README.md links to missing local path: [Current reference](new.md#successor-details)
+
+Intentional exclusions: docs/archive/**, docs/_legacy-source/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.

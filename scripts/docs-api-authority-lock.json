@@ -1,0 +1,39 @@
+{
+  "customResources": {
+    "argoproj": {
+      "chart": "argo-cd",
+      "chartKey": "argocd",
+      "version": "10.8.0"
+    },
+    "cilium": {
+      "chart": "cilium",
+      "chartKey": "cilium",
+      "crds": {
+        "CiliumClusterwideNetworkPolicy": {
+          "compressedSha256": "a099921debd30fb11619fdac8b3d3ee9f2b28c0302a0a2674da425ccb8f22725",
+          "compressedSize": 52549,
+          "contentSha256": "ae65e44fdee9da399cb7257a8464f197bea5270fdc213f6343700309c39abad6",
+          "path": "scripts/vendor/api-authorities/ae65e44fdee9da399cb7257a8464f197bea5270fdc213f6343700309c39abad6.yaml.gz",
+          "source": "https://raw.githubusercontent.com/cilium/cilium/v1.20.1/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumclusterwidenetworkpolicies.yaml"
+        },
+        "CiliumNetworkPolicy": {
+          "compressedSha256": "b1ec72616d49d7ba59ae600c23a51d94d33b87011417af08812d6c74f251f9ed",
+          "compressedSize": 52459,
+          "contentSha256": "62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76",
+          "path": "scripts/vendor/api-authorities/62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76.yaml.gz",
+          "source": "https://raw.githubusercontent.com/cilium/cilium/v1.20.1/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnetworkpolicies.yaml"
+        }
+      },
+      "version": "1.20.1"
+    }
+  },
+  "kubernetes": {
+    "compressedSha256": "18490bca3cabfffbc5d28b3d3643d26440d7aed6e070387591ad92b837a4a80d",
+    "compressedSize": 277432,
+    "contentSha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
+    "path": "scripts/vendor/api-authorities/483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446.json.gz",
+    "source": "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.35.0/api/openapi-spec/swagger.json",
+    "version": "v1.35.0"
+  },
+  "version": 1
+}

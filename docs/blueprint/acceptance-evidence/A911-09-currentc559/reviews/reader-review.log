@@ -1,0 +1,15 @@
+autoreview target: commit
+branch: detached
+engine: codex
+model: gpt-6.1-sol
+tools: on
+web_search: off
+ref: c559e97960a89a0f80487483addb91d2e6e4527d
+bundle: 882561 chars
+codex thread: 01a14956-5667-7452-b5d0-9359ca09692e
+codex turn started
+{"findings":[],"overall_correctness":"patch is correct","overall_explanation":"PASS — A911-09 reader assessment at c559e97960a89a0f80487483addb91d2e6e4527d, based only on supplied sources and captured outputs. GOV-005: published guidance distinguishes authored explanations from generated facts. MNT-001: metadata owns the routing information; the downloadable map derives it without a second manual inventory. MNT-016: generator output selection preserves the separate authored SDK page; catalogue explanations come from maintained guidance inputs. MNT-015: the SDK page and published map consistently assign explanation review to SDK maintainers (plugin-foundation), separately from documentation automation. MNT-017: maintenance instructions identify owning inputs, generator/check paths, prerequisites, failure stops, partial-write recovery and independent review. The changed owner matches the source metadata and resolves the reader's routing task without copying generated facts. No actionable defect is introduced by this change. This decision does not establish deployment, browser behavior, whole-site links, SDK completeness or overall acceptance. Report persistence and remaining independent decisions precede formal acceptance; final 261/89 reconciliation and native/P17/fullGo obligations remain at their own scopes. No commands were executed or files modified.","overall_confidence":0.93}
+codex usage: input_tokens=244228 cached_input_tokens=14464 output_tokens=326 reasoning_output_tokens=46
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.93)
+PASS — A911-09 reader assessment at c559e97960a89a0f80487483addb91d2e6e4527d, based only on supplied sources and captured outputs. GOV-005: published guidance distinguishes authored explanations from generated facts. MNT-001: metadata owns the routing information; the downloadable map derives it without a second manual inventory. MNT-016: generator output selection preserves the separate authored SDK page; catalogue explanations come from maintained guidance inputs. MNT-015: the SDK page and published map consistently assign explanation review to SDK maintainers (plugin-foundation), separately from documentation automation. MNT-017: maintenance instructions identify owning inputs, generator/check paths, prerequisites, failure stops, partial-write recovery and independent review. The changed owner matches the source metadata and resolves the reader's routing task without copying generated facts. No actionable defect is introduced by this change. This decision does not establish deployment, browser behavior, whole-site links, SDK completeness or overall acceptance. Report persistence and remaining independent decisions precede formal acceptance; final 261/89 reconciliation and native/P17/fullGo obligations remain at their own scopes. No commands were executed or files modified.

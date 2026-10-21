@@ -1,0 +1,64 @@
+{
+  "publishedBaseline": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "state": "EXACT_FOUR_FILE_PROVIDER_CORRECTION_READY_FOR_PACKAGE_REVIEW_EXISTING_MAP_DRIFT_PRESERVED",
+  "scope": "Real current JSON inputs equal historical3cf; exact source-pinned generator passed current write+noarg check. Tables unchanged. Only provider map.lastVerified changed;54existing unrelated metadata deltas not adopted.",
+  "files": {
+    "scripts/generate-buster-provider-reference.mjs": "078c8598fba6dd875e2e802c0620caf7201747b75ba8c1c3efd49ce998681273",
+    "scripts/docs-api-producer-adapter-authorities.json": "45142ed4c13c57c02ffb5298218a7a5bf0b30b7705b177b393233833db90ba57",
+    "docs/site/reference/buster-provider-configuration.md": "47b562aa81bd9c15bffc32d466b3605bb831abd917e4a03982356a525e28e016",
+    "docs/site/reference/generated-documentation-map.json": "9fcb9f79d982254e9c4e57d02bb85860013ed1610fb8d92c4936fe95813ae8b6"
+  },
+  "tableLinesUnchanged": 342,
+  "baselineAndSuccessorChecks": [
+    {
+      "id": "published-baseline",
+      "exitCode": 1,
+      "expected": "pre-existing stale map; no new broad clean claim",
+      "stderrSHA256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3"
+    },
+    {
+      "id": "narrow-provider-successor",
+      "exitCode": 1,
+      "expected": "pre-existing stale map; no new broad clean claim",
+      "stderrSHA256": "068ff8dea3ffa82d4628dff4e6a39a64657b728d003298cc2543f3709e908ce3"
+    }
+  ],
+  "preExistingMapDifferences": 54,
+  "preExistingDifferencesEvidence": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-governance-map-delta.json",
+  "authorityDelta": {
+    "source": "scripts/generate-buster-provider-reference.mjs",
+    "before": "9b623dbf0088d5e8f5ccc38e6960a3bccde03fdab26e1b08310a929bdde4f479",
+    "after": "7b0e7c528c9fc69d65529ad01dc619a58be53f89327478fb05d831242fdc9fcc",
+    "baselineReproduced": true,
+    "onlyOneOperationUpdated": true
+  },
+  "sourceImpact": "New local Git cat-file/show reads on exact consumed schema/manifest inputs; inherited noarg caller uses existing page pin and still checks exact bytes. Same output path, same provider fields, unchanged owner/route. Non-API wrote diagnostic remains same; one exact newly derived native-operation digest must be reviewed, not blanket repin.",
+  "formalAcceptance": false,
+  "canonicalWrites": false,
+  "ciDirtyMutation": false,
+  "fullCurrentGovernancePASS": false,
+  "remaining": "Independent coherent4file package impact and actual evidence review; then normalFF isolated-index WIP checkpoint preserving accepted1/12 and all dirty state. A91110 semantic scope and distinct full gate decisions remain open.",
+  "changedOutputChecks": [
+    {
+      "id": "current-provider-write",
+      "exitCode": 0,
+      "stdoutSHA256": "37a19e22275574bbe0b3e5f8931c5fd958870ab099d3190c9c6b2591a0f35982",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "current-provider-noarg-check",
+      "exitCode": 0,
+      "stdoutSHA256": "a5e8c9100279cd0f9a06ae7948319429eb30aa18ab641f6d3ceff0dedab8956c",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "previousMutationReceipt": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v3/actual-result.json",
+    "sha256": "4cbb7eb91f3ce1862e311a2949729d408741b59773172294a349e0fd52b185da"
+  },
+  "sourceImpactWhitespaceOnly": {
+    "beforeSHA256": "e9aa08dca92a386456b863f2c9da3557340c07d82321c3f2660ba18ad4f607f3",
+    "afterSHA256": "078c8598fba6dd875e2e802c0620caf7201747b75ba8c1c3efd49ce998681273",
+    "difference": "Only1trailing ASCII space removed from maintenance instruction literal; all executable statements, inputs/source-pin/caller semantics and emitted provider rows identical. Prior15case receipt is v3 exactscope; current4review never claims rerun15 at newbytes."
+  }
+}

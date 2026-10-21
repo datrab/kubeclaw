@@ -7,14 +7,14 @@ Nova is the orchestrator. Buster is the sandboxed tester. Redis carries task, co
 ## Start here
 
 - [Documentation home](docs/README.md)
-- [Getting started](docs/getting-started/README.md)
-- [Architecture](docs/architecture/README.md)
-- [Deployment](docs/deployment/README.md)
-- [Pipeline](docs/pipeline/README.md)
-- [Operator guides](docs/operators/README.md)
-- [Developer guides](docs/developers/README.md)
-- [Reference](docs/reference/README.md)
-- [Decision records](docs/decisions/README.md)
+- [Getting started](docs/site/use/quickstart.md)
+- [Architecture](docs/site/understand/README.md)
+- [Deployment](docs/site/use/install.md)
+- [Pipeline](docs/site/understand/request-to-result.md)
+- [Operator handbook](docs/site/use/README.md)
+- [Developer handbook](docs/site/extend/README.md)
+- [Reference](docs/site/reference/README.md)
+- [Decision records](docs/site/decisions/README.md)
 
 ## 5-Minute Verification Quickstart
 
@@ -31,7 +31,7 @@ Expected result: the deployment truth command prints JSON with all checks passed
 ## Live Cluster Path
 
 For deployments managed through Git and Argo CD, use the
-[continuous GitOps setup](docs/deployment/continuous-gitops.md). After the one-time
+[GitOps operation guide](docs/site/use/maintenance.md#gitops-operation). After the one-time
 handover, successful image builds propose deployment PRs automatically and Argo
 rolls out merged releases without commands on the control node.
 
@@ -43,7 +43,7 @@ fail with no `latest` fallback. Preview the actual deployment values without
 contacting the cluster using `./scripts/deploy.sh render nova` (or `buster`,
 `prism`; add `code` for a Nova/Buster bundle render). The earlier bare Helm
 examples are chart development renders, not controlled release deployment.
-See [release selection and overlays](docs/operations/runtime-versions-and-images.md).
+See [release selection and upgrades](docs/site/use/maintenance.md#prepare-a-release-change).
 
 Then use the live operator path:
 
@@ -60,7 +60,7 @@ Run the Worker Trust production proof after Nova, Buster, and Prism are ready:
 npm run verify:worker-core:trust:live
 ```
 
-See the [Worker Trust runbook](docs/operations/worker-trust-runbook.md) for
+See the [Worker Trust procedure](docs/site/use/worker-trust.md) for
 prerequisites, expected evidence, negative cases, and recovery.
 
 This requires a real Kubernetes/K3s cluster, Helm, kubectl, Docker for local image verification, selected secrets, and the k3s registry configuration when the Buster Kubernetes suite must pull from `registry-local`. A complete clean-cluster quickstart is not source-verified yet and remains an open deployment gap.

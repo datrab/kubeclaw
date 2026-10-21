@@ -1,0 +1,3483 @@
+{
+  "sourceRevision": "ed0480ee073c5e9ab4de15201fb1b8d5df10ac73",
+  "totalOutputOccurrences": 1478,
+  "unqualifiedOccurrences": 577,
+  "unqualifiedSources": 223,
+  "unqualified": [
+    {
+      "source": "contracts/prism/v1/scripts/generate-validators.mjs",
+      "line": 77,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "09e86510b7343a49321a49ee6f0b3aca4013bc8d96087f56e9f6862f7fbdc1c7"
+    },
+    {
+      "source": "scripts/ap08-extension-inventory.mjs",
+      "line": 297,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "scripts/ap08-extension-inventory.mjs",
+      "line": 305,
+      "sink": "console.error",
+      "expressionSha256": "e787358af8ad3520f00ee51ce099aa78a546ed61d84098d96deaea7d0e6a2dd0"
+    },
+    {
+      "source": "scripts/ap08-review-scope.mjs",
+      "line": 76,
+      "sink": "console.log",
+      "expressionSha256": "2e115210e05ad10756b2bf0de666782978bb7cf3ae46a7e5231ec4873a8c04dc"
+    },
+    {
+      "source": "scripts/ap08-review-scope.mjs",
+      "line": 80,
+      "sink": "console.log",
+      "expressionSha256": "1232dc6426576b6737eb838f8ae471d367c3a0beaa4bf6cb589edb2662032081"
+    },
+    {
+      "source": "scripts/argocd-self-management.mjs",
+      "line": 220,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f6e6caa22736d69e58a04c3fa414f81072f74fb7bb15a7325e15b78281f8e0b4"
+    },
+    {
+      "source": "scripts/build-runtime-role-bundle.mjs",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "scripts/bundle-override-values.mjs",
+      "line": 10,
+      "sink": "process.stdout.write",
+      "expressionSha256": "3b7eff53a8b979f5f8f643a2b09b756543355d339984e28a3ce95230aced51a8"
+    },
+    {
+      "source": "scripts/bundle-values-field.mjs",
+      "line": 12,
+      "sink": "process.stdout.write",
+      "expressionSha256": "ab8d07d9bd9f02962156059a6fdb335621530aa87361125eeaac9f2579d45ef2"
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "line": 21,
+      "sink": "return",
+      "expressionSha256": "6f27717931e4e4cc1051d7e5a2bbe0adf41823bba94115805832175ea64bc582"
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "line": 26,
+      "sink": "process.stdout.write",
+      "expressionSha256": "6e0cbaddb0c986d7099cab4ada3a2a7f580719a00317b4aee61d682b880bc887"
+    },
+    {
+      "source": "scripts/check-ap08-choice-guide.mjs",
+      "line": 141,
+      "sink": "console.error",
+      "expressionSha256": "a033969cde1f6d1ce989703a00642dce64d79852bd715c32d8b77df1c3b4d8db"
+    },
+    {
+      "source": "scripts/check-ap08-minimal-plugin.mjs",
+      "line": 176,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "17151272d949308c1636ff229fcd45b7976144217eb121c8429fec7b69133ea7"
+    },
+    {
+      "source": "scripts/check-ap08-minimal-plugin.mjs",
+      "line": 179,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "01a36337980083ce9924c1bee78de5b45c23f817176838882ff509b464edbdf2"
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "line": 48,
+      "sink": "console.log",
+      "expressionSha256": "2baa8a3185fed075a95b594bcc15b6d464ca6b74e9a70e20e12e3954c8889e0b"
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "line": 72,
+      "sink": "console.log",
+      "expressionSha256": "f953930a0549ace0a207a5764a4ff72c9cdac14698518319b54d0c9643524eb3"
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "line": 73,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "line": 78,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0faa287c38d88e784c34a467d4ef3dfd7bfaf66ed282aea87cf79e2e60ece652"
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "line": 82,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-drift.mjs",
+      "line": 14,
+      "sink": "console.error",
+      "expressionSha256": "3ca06ee64aca8c3d35c606cc85a03a92a78f86db41a4a084d754e73e11322645"
+    },
+    {
+      "source": "scripts/check-capability-drift.mjs",
+      "line": 18,
+      "sink": "process.stdout.write",
+      "expressionSha256": "c7f04e2e8bd410f58d00c6abc9d9a614c7785027382d80734e8055178d6d183c"
+    },
+    {
+      "source": "scripts/check-capability-drift.mjs",
+      "line": 19,
+      "sink": "process.stderr.write",
+      "expressionSha256": "1d6dc13f9e3a16001096b2a93e6c65e8fe254cbfdcafd0df0481e12661f8b2d6"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 33,
+      "sink": "console.log",
+      "expressionSha256": "b8fc988741634b1593bebd51e3a360a4dd4f9bbc9ab269364d91f46c2ca6df79"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 61,
+      "sink": "console.log",
+      "expressionSha256": "bf7515d30f864697fb5027f86db1dfbb8941011c5a96b59c20d81e088a600841"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4a8de824206b134c92f63a3e37182e907146986623912332aa56e998ee5d969e"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 72,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 75,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e2b6b76891f10f48b7cc26dd140709ed14bcd00171c7e90085a7d26a9927bcf4"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "line": 81,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-policy-drift.mjs",
+      "line": 25,
+      "sink": "console.error",
+      "expressionSha256": "1cbcc2083edfcd823b8f3ec2141efce4980acb5c7ce1a7fdc4da5db9f11085ef"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "line": 51,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f5dc5da56313269759d55899cd53589b97effd0e937d53a3792d7a75a4fb4a67"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "line": 65,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4a8de824206b134c92f63a3e37182e907146986623912332aa56e998ee5d969e"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift.mjs",
+      "line": 54,
+      "sink": "console.error",
+      "expressionSha256": "82c18436ef4d51376053e0b8157c8870097438349d9981586659d9ff7def1134"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift.mjs",
+      "line": 56,
+      "sink": "console.log",
+      "expressionSha256": "79385db2bd7b45b0c820f3e6c953ad2bee419a053cbfa3cc2925ea9181a3992c"
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift.mjs",
+      "line": 57,
+      "sink": "console.error",
+      "expressionSha256": "63ef788150bfa5048f23f87e04127b99d89e11bf2f6c74363262f63cb8d52373"
+    },
+    {
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "line": 32,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e481a34397b8578fb092fb75600cd1ded244487e8d3097a942140f4d17b4e416"
+    },
+    {
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "line": 36,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "670ac9e1fb65c566f93e3a8259378bcf92f71c3964b82b0445d676074309903f"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "line": 34,
+      "sink": "console.log",
+      "expressionSha256": "5df2c9fe72f74a482b3b049df7935a68c3bda7f9313eaf7144cfd5d899e0f775"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "line": 55,
+      "sink": "console.log",
+      "expressionSha256": "17387fdedd2a5fab555ce8d360579acf69415fa50145a2e9f3e52d70bff61362"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "line": 56,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "line": 66,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift.mjs",
+      "line": 45,
+      "sink": "console.error",
+      "expressionSha256": "41bc4a140b22442fb186c999bcf55baa63f6c2ca23fefb56a3a16ec676521a83"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift.mjs",
+      "line": 47,
+      "sink": "console.log",
+      "expressionSha256": "1eb0cf56dc434e6b135e087b6dbb7499fec7a2b10f33ed8ec8e38e0b51c4f639"
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift.mjs",
+      "line": 48,
+      "sink": "console.error",
+      "expressionSha256": "56d8660caf9f6202afee10054b6f7655be5abf54467664b31e2d31d69dc1370e"
+    },
+    {
+      "source": "scripts/check-configuration-cli-drift.mjs",
+      "line": 14,
+      "sink": "process.stdout.write",
+      "expressionSha256": "e4315711b1fd26bad2b27e9faa9b7e513754dca564d0d187ef949ddfae75ada5"
+    },
+    {
+      "source": "scripts/check-configuration-cli-drift.mjs",
+      "line": 15,
+      "sink": "process.stderr.write",
+      "expressionSha256": "bbb0f54b9d879d5811e8f439e9a0cd1ea6b2006beda465276240595e13d8e9fe"
+    },
+    {
+      "source": "scripts/check-configuration-cli-drift.mjs",
+      "line": 161,
+      "sink": "console.log",
+      "expressionSha256": "664b9647ce21a0a9dad320cbe93ba306a5974e6fd8b5f44aeb9ca79aad37ce7b"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b2e4282835175ee12b3fd8127a6627ec0d8df0f6054e252d427eb68f49229255"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 65,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "75abd1f28bbdfea0bd31907b48806fa6c1ba3f2668ffa25f351e72a1dd78b347"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 66,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b2e4282835175ee12b3fd8127a6627ec0d8df0f6054e252d427eb68f49229255"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 80,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b2e4282835175ee12b3fd8127a6627ec0d8df0f6054e252d427eb68f49229255"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 154,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1fc7b8d997ca8eff88ef0dd0b0e52834cb92e599c26bd52afa42c2dc1de310ac"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 155,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b2e4282835175ee12b3fd8127a6627ec0d8df0f6054e252d427eb68f49229255"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 164,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d67e2e944994496c8d8ec76eed0cf9f09679448d584b532bebf941852a37f5ed"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 165,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1b395124fb79fcaa2159f968688b9be36b0c649553e8c9aebcd563f52bb03f29"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 210,
+      "sink": "console.log",
+      "expressionSha256": "c298fca0f88673bcf6bb58fc37bca71ac7b595dc394bbd2f80f27c8b18aaf4bb"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 212,
+      "sink": "console.log",
+      "expressionSha256": "196705faacec266afdbfa6523aa2f51da76d838851fedc36e0b0d5f0f3b84306"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 219,
+      "sink": "console.log",
+      "expressionSha256": "6a58b973d7b46515c351b7b21ab90ca5c0ec91fe24b35f842147cff006767f48"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 228,
+      "sink": "console.log",
+      "expressionSha256": "197327a6cc67990bfa2cea273a7c8e09a5599b6035c4a12904b00bb4cf183318"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 260,
+      "sink": "console.log",
+      "expressionSha256": "e2e631b3786ad8cd3476cd88a2c61b292367a6e52e4a6e7834f11330dd69a1c6"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 264,
+      "sink": "console.log",
+      "expressionSha256": "434a119180f0e3206a19b9ec5684c980f7d5306e52461a2e5778454a3faff71f"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 273,
+      "sink": "console.log",
+      "expressionSha256": "68b13d14bf4633c22ad702b78cca03fe77836b98045555aecb05768c420d77ab"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 923,
+      "sink": "console.log",
+      "expressionSha256": "0c94d2d7509a9478222efab9ef670b2bd43a59a552089f93080933b724ab0a3d"
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "line": 1282,
+      "sink": "console.log",
+      "expressionSha256": "74005a5c0a1b2ecfb6847058ede7b80d2ab0ea25c4f8edbebd1fa4201f5099ed"
+    },
+    {
+      "source": "scripts/check-contract-drift-mutations.mjs",
+      "line": 52,
+      "sink": "console.log",
+      "expressionSha256": "22d8f56c8ac9b500b9ccfdb1ed558ad489ba8a0fd8a1aa208129116047d57339"
+    },
+    {
+      "source": "scripts/check-contract-drift-mutations.mjs",
+      "line": 73,
+      "sink": "console.log",
+      "expressionSha256": "f953930a0549ace0a207a5764a4ff72c9cdac14698518319b54d0c9643524eb3"
+    },
+    {
+      "source": "scripts/check-contract-drift-mutations.mjs",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-contract-drift-mutations.mjs",
+      "line": 83,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-contract-drift.mjs",
+      "line": 48,
+      "sink": "console.error",
+      "expressionSha256": "900458170fb63c16f595f6c5f201408f3f73892158d33c017ff2d65e745acf2c"
+    },
+    {
+      "source": "scripts/check-contract-drift.mjs",
+      "line": 51,
+      "sink": "console.error",
+      "expressionSha256": "5da87573a2471ede1c8d2ad5e46b71c6ddafca586b9cbb6ba34ca2398469663d"
+    },
+    {
+      "source": "scripts/check-erasable-typescript.mjs",
+      "line": 20,
+      "sink": "console.log",
+      "expressionSha256": "ad5ded7fa4ded5748fc750151ded4c7dfaa75f367afc62607096ac6f9ffe9c90"
+    },
+    {
+      "source": "scripts/check-error-code-drift-mutations.mjs",
+      "line": 51,
+      "sink": "console.log",
+      "expressionSha256": "f953930a0549ace0a207a5764a4ff72c9cdac14698518319b54d0c9643524eb3"
+    },
+    {
+      "source": "scripts/check-error-code-drift-mutations.mjs",
+      "line": 52,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-error-code-drift.mjs",
+      "line": 17,
+      "sink": "process.stdout.write",
+      "expressionSha256": "c7f04e2e8bd410f58d00c6abc9d9a614c7785027382d80734e8055178d6d183c"
+    },
+    {
+      "source": "scripts/check-error-code-drift.mjs",
+      "line": 18,
+      "sink": "process.stderr.write",
+      "expressionSha256": "1d6dc13f9e3a16001096b2a93e6c65e8fe254cbfdcafd0df0481e12661f8b2d6"
+    },
+    {
+      "source": "scripts/check-error-code-drift.mjs",
+      "line": 19,
+      "sink": "console.error",
+      "expressionSha256": "9b83ac8659fef834a725b5fcbf2bea62380818d1c2589ef3cae1c0cf7db9aa8d"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 34,
+      "sink": "console.log",
+      "expressionSha256": "9dc3b965f8e607e767bb3c1f81f9a21e791220a542adad82c60b2f8316c6d11b"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 54,
+      "sink": "console.log",
+      "expressionSha256": "9ce4e5cc7cef3f7d789e8eb822ccc141c452f6049a44f4db1df9c6a1a6bbf60c"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 55,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 65,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 70,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e0ffa8aed18803e493e49cd61ab63fcb7bbc3abc007935ff15a9fd253a68c886"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 79,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e5514ae5e01a2e08878b84e8df504e82f5e4dde3b87277f2d4d3a48166f67a4f"
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "line": 87,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-extension-class-drift.mjs",
+      "line": 26,
+      "sink": "console.error",
+      "expressionSha256": "f78e2a445e9fb2ce415242ed1fbef3c88ef13a9e8c11ab67981f0b8949e6bda6"
+    },
+    {
+      "source": "scripts/check-extension-class-drift.mjs",
+      "line": 30,
+      "sink": "console.error",
+      "expressionSha256": "505e06098d05fe809164d1e70fbeed9803b5235e768048f5a02421f7583069d9"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 34,
+      "sink": "console.log",
+      "expressionSha256": "79a44929de7d417026423b0d8b1b41e46a8daee235a7e7d3b00cd07e9b025a37"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 54,
+      "sink": "console.log",
+      "expressionSha256": "9fd428a1cbcc9c5da6b3174a873a520043a53c7d82dd0859dab0be14ffde4257"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 55,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 65,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 70,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6d182f13f90cb6afe658bf4082a44d7e6f7d91497464418b32ade64e363cfaa8"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 79,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e5514ae5e01a2e08878b84e8df504e82f5e4dde3b87277f2d4d3a48166f67a4f"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "line": 87,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift.mjs",
+      "line": 34,
+      "sink": "console.error",
+      "expressionSha256": "f78e2a445e9fb2ce415242ed1fbef3c88ef13a9e8c11ab67981f0b8949e6bda6"
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift.mjs",
+      "line": 38,
+      "sink": "console.error",
+      "expressionSha256": "66adf02046ebb36b0b5e546dd114080ba118dadd42c54b7a84936bf49c00b7e3"
+    },
+    {
+      "source": "scripts/check-monitoring.mjs",
+      "line": 83,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3eb4d506618520be467db59eafd44d43852c74eeed92a59bb0720bfff19a5d11"
+    },
+    {
+      "source": "scripts/check-operator-task-registry.mjs",
+      "line": 385,
+      "sink": "console.log",
+      "expressionSha256": "ff503e8191737ac80dfec096437d3a2584b0a9c3a08b64663eadca02665052c0"
+    },
+    {
+      "source": "scripts/check-platform-services.mjs",
+      "line": 73,
+      "sink": "console.log",
+      "expressionSha256": "675527ce6bdfca54cb5142e1f1a636968b45f6b3c11b37062be86c5884103ce1"
+    },
+    {
+      "source": "scripts/check-platform-specialist-guides.mjs",
+      "line": 381,
+      "sink": "process.stdout.write",
+      "expressionSha256": "f81e85647a6b699de15ccc7426b1364fa48fc01838740c06b0e813d83df9f6b0"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 333,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b911de89c58afbf8a8079b5dbab0b68b1ea36b7475714091934aff806c74ab5e"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 344,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b771ce8b0b08ca48b84309dd34cf5a1136e7198cd8fdaff32709efb204640b55"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 359,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7443a632dc59d6b6ea65c42b8f005b54de1fc3e45ad13b3590e195d5683f3053"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 369,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b2e4282835175ee12b3fd8127a6627ec0d8df0f6054e252d427eb68f49229255"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 378,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b625f58d4bf5538364339330680339aa1b33008e4695585a3ae4cb56914f31e2"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 384,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f4b262d1aa74a619f78779fea82f70dfb336144a5f777bb1ef5e1fdcd9326699"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 390,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f5061e634e6b49a0374c6b136a4e7ec5906f6dfae2d9a612abac1de1dfda1813"
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "line": 391,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0362b96228eb329c7aac09fef4d95f3f45ce38d954dd711c04ee9cd2d5913deb"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 33,
+      "sink": "console.log",
+      "expressionSha256": "a3b06de879171e802822e3b81484b7510f589a27f85a565c23efb8342f5daa72"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 53,
+      "sink": "console.log",
+      "expressionSha256": "5a78ff05e164643ef9ef4e7b33d08d5e91d9ba4d0ef54e766671cfec3b2bc613"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 54,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 71,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f5dc5da56313269759d55899cd53589b97effd0e937d53a3792d7a75a4fb4a67"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 78,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 83,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "659b14791514ae19eeb1dfd148491afae7c26668617288b4f2fa85691f5f4b77"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "line": 88,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift.mjs",
+      "line": 46,
+      "sink": "console.error",
+      "expressionSha256": "1936c6371d8e67d695cc9f69250acc8baf81536cbd787235d3e7a8dad35b49e4"
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift.mjs",
+      "line": 50,
+      "sink": "console.error",
+      "expressionSha256": "743e647213ec4cd7c1f24861caf588b22ac67f1deddf7327626d97e8aa64545b"
+    },
+    {
+      "source": "scripts/check-prism-guides.mjs",
+      "line": 266,
+      "sink": "console.log",
+      "expressionSha256": "8cfdab8952a79b1dd5356995c46364f9e8e7cb6c9316ef84170264b3c8080740"
+    },
+    {
+      "source": "scripts/check-progress-contract-drift-mutations.mjs",
+      "line": 35,
+      "sink": "console.log",
+      "expressionSha256": "b9e021ac8e4a99fe1c6ac9abbe0b7a51b9b6d9c0304eed12121f772d97b88d34"
+    },
+    {
+      "source": "scripts/check-progress-contract-drift-mutations.mjs",
+      "line": 56,
+      "sink": "console.log",
+      "expressionSha256": "b720e03fec8fb230832eb24305f57d4ed4399e8cffd5858800bfb287a16cb706"
+    },
+    {
+      "source": "scripts/check-progress-contract-drift-mutations.mjs",
+      "line": 57,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-progress-contract-drift-mutations.mjs",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 34,
+      "sink": "console.log",
+      "expressionSha256": "b4d917d83fab9dfab6b0824b561c4ff5c272d7fe5ddff09d8c6494812a3cde80"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 54,
+      "sink": "console.log",
+      "expressionSha256": "557454c94c31fea973ce7a92e3deb70ac696eb02ede0de2650235d792ad119c0"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 55,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 65,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 70,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2b77761c21669fa8096e05b88e374d5144e36a4c2ef8b2d2637bc089fa508f38"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 79,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e5514ae5e01a2e08878b84e8df504e82f5e4dde3b87277f2d4d3a48166f67a4f"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "line": 87,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift.mjs",
+      "line": 33,
+      "sink": "console.error",
+      "expressionSha256": "f78e2a445e9fb2ce415242ed1fbef3c88ef13a9e8c11ab67981f0b8949e6bda6"
+    },
+    {
+      "source": "scripts/check-provider-registration-drift.mjs",
+      "line": 37,
+      "sink": "console.error",
+      "expressionSha256": "bc7c2dc226ba9000cb86ee1887852a3bc4baaaba606e0b3ca850fda81b5af655"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 33,
+      "sink": "console.log",
+      "expressionSha256": "a3b06de879171e802822e3b81484b7510f589a27f85a565c23efb8342f5daa72"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 53,
+      "sink": "console.log",
+      "expressionSha256": "9ca2364ff4ec0e4827c6511bb3ed27aaaa12786f9146b4cc1135e94746c431e7"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 54,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "35f4639042b12dc28e757b3612a850d35d2298772cf08d3411b3650571141fc4"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 72,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 76,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "dd3defba7d0658614e22309f813271a3731f6591c2c0adbaa9cd7357855c09a1"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 81,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e5514ae5e01a2e08878b84e8df504e82f5e4dde3b87277f2d4d3a48166f67a4f"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 84,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "659b14791514ae19eeb1dfd148491afae7c26668617288b4f2fa85691f5f4b77"
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "line": 89,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-report-registration-drift.mjs",
+      "line": 29,
+      "sink": "console.error",
+      "expressionSha256": "f78e2a445e9fb2ce415242ed1fbef3c88ef13a9e8c11ab67981f0b8949e6bda6"
+    },
+    {
+      "source": "scripts/check-report-registration-drift.mjs",
+      "line": 33,
+      "sink": "console.error",
+      "expressionSha256": "7f607698d2d231317125c5777b12b4a4097bc30c55994defcc8791a7f420175b"
+    },
+    {
+      "source": "scripts/check-schema-drift-mutations.mjs",
+      "line": 34,
+      "sink": "console.log",
+      "expressionSha256": "0f54979e1b1367b0c61a49f8aec63d223659fdcfa090d8a730a7797acbf7fd61"
+    },
+    {
+      "source": "scripts/check-schema-drift-mutations.mjs",
+      "line": 55,
+      "sink": "console.log",
+      "expressionSha256": "f953930a0549ace0a207a5764a4ff72c9cdac14698518319b54d0c9643524eb3"
+    },
+    {
+      "source": "scripts/check-schema-drift-mutations.mjs",
+      "line": 56,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-schema-drift-mutations.mjs",
+      "line": 65,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/check-sdk-contract-mutation-constructors.mjs",
+      "line": 38,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "116e90397c22815284f707868a027de11ac623b43da0e471417fa4611b0657ff"
+    },
+    {
+      "source": "scripts/check-sdk-contract-mutation-constructors.mjs",
+      "line": 66,
+      "sink": "console.log",
+      "expressionSha256": "cae3bb2dbcbf3f3b2af8ba1cb5efcda94e21952539aec37b91d1902f0046ad45"
+    },
+    {
+      "source": "scripts/check-sdk-contract-mutation-constructors.mjs",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "116e90397c22815284f707868a027de11ac623b43da0e471417fa4611b0657ff"
+    },
+    {
+      "source": "scripts/check-suite-migration-workflow.mjs",
+      "line": 459,
+      "sink": "console.error",
+      "expressionSha256": "7796f6a805bf734e04ae500e1e472790e1438184c66c16bbe77cefa2cbe36a60"
+    },
+    {
+      "source": "scripts/check-suite-migration-workflow.mjs",
+      "line": 460,
+      "sink": "console.error",
+      "expressionSha256": "a033969cde1f6d1ce989703a00642dce64d79852bd715c32d8b77df1c3b4d8db"
+    },
+    {
+      "source": "scripts/check-suite-migration-workflow.mjs",
+      "line": 463,
+      "sink": "console.log",
+      "expressionSha256": "13ca3ad39496a2025cae556d0e08a8d67526793c0ac77570d37d1a8646225993"
+    },
+    {
+      "source": "scripts/check-workflow-drift-mutations.mjs",
+      "line": 38,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ab6b61ccc101280ebacc79e0cf1dec774c96ffc014710c41c2500aeb4e37ec24"
+    },
+    {
+      "source": "scripts/check-workflow-drift-mutations.mjs",
+      "line": 63,
+      "sink": "console.log",
+      "expressionSha256": "f953930a0549ace0a207a5764a4ff72c9cdac14698518319b54d0c9643524eb3"
+    },
+    {
+      "source": "scripts/check-workflow-drift-mutations.mjs",
+      "line": 64,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c5bd91baeb77d04e70b59cd7d3735d9059107c3c81f021462ea366fe70b54ab0"
+    },
+    {
+      "source": "scripts/docs-ap09-mutation-fixture.mjs",
+      "line": 109,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "70d8e3b4a318e3a7dfcb08cbbdaebb5400187d89405d30e72bf44ff2a758cb46"
+    },
+    {
+      "source": "scripts/docs-ap09-mutation-fixture.mjs",
+      "line": 113,
+      "sink": "process.stdout.write",
+      "expressionSha256": "c7f04e2e8bd410f58d00c6abc9d9a614c7785027382d80734e8055178d6d183c"
+    },
+    {
+      "source": "scripts/docs-product-pipeline-reference.mjs",
+      "line": 128,
+      "sink": "return",
+      "expressionSha256": "60b7543ecc1fb4ea8f69a31e4923836ffc8d2c017b104a1c93f9ba58ce73b129"
+    },
+    {
+      "source": "scripts/docs-product-pipeline-reference.mjs",
+      "line": 138,
+      "sink": "console.error",
+      "expressionSha256": "836e51e99fdd5ff611ab1434ae9f6633a4e6fc129f80ffd2b741551a491f51aa"
+    },
+    {
+      "source": "scripts/docs-product-pipeline-reference.mjs",
+      "line": 139,
+      "sink": "console.log",
+      "expressionSha256": "0f8f86d0302de6beaca55fa7c7565412c7c26ce124b1327e07bb559fb21957eb"
+    },
+    {
+      "source": "scripts/docs-product-pipeline-reference.mjs",
+      "line": 141,
+      "sink": "console.error",
+      "expressionSha256": "32650a3eddd78bdc4b26b2d5852142caf582c4ea9934b5154f954c13023c1f2a"
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "line": 272,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "line": 281,
+      "sink": "console.log",
+      "expressionSha256": "9eff05939ace02b61d4cd004f6021386ff4792ecdd5e70721a58c163b782979e"
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "line": 282,
+      "sink": "console.log",
+      "expressionSha256": "eda6e92f29153241ad7789a4d121c95f71c2d719c85b95952cc3fe6e022af8d0"
+    },
+    {
+      "source": "scripts/generate-buster-error-reference.mjs",
+      "line": 1200,
+      "sink": "console.log",
+      "expressionSha256": "091dbb2b6b6ed308a89afdf84a35308473086d92fbc114599d3c08ea2301488c"
+    },
+    {
+      "source": "scripts/generate-buster-error-reference.mjs",
+      "line": 1205,
+      "sink": "console.log",
+      "expressionSha256": "bbbf86e509782b7ebaafdd266fa5280a7340c1aae66073dc06d6b19df81b5b64"
+    },
+    {
+      "source": "scripts/generate-buster-provider-reference.mjs",
+      "line": 265,
+      "sink": "console.log",
+      "expressionSha256": "0cc030c66446c6f0feab86f18326cc9a166553bac8b18f1a77e9ae68421e16b0"
+    },
+    {
+      "source": "scripts/generate-knip-config.mjs",
+      "line": 235,
+      "sink": "console.error",
+      "expressionSha256": "1e9cf406911ec1b07463400ebdff657b4efc776fa8c5ac432706e3f3a088a631"
+    },
+    {
+      "source": "scripts/generate-local-helm-authorities.mjs",
+      "line": 925,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e0ee8bb50685e05fa0f47ed04203ae953fdfd055f5bd2892ea186504254f8c3a"
+    },
+    {
+      "source": "scripts/generate-operator-task-registry.mjs",
+      "line": 62,
+      "sink": "console.log",
+      "expressionSha256": "27bcb4e7f00026a1f981da04b078cc920b89e29e508d04888bad16a7f4845bec"
+    },
+    {
+      "source": "scripts/generate-operator-task-registry.mjs",
+      "line": 66,
+      "sink": "console.log",
+      "expressionSha256": "93840e3a6d92824a90771fb962f31b8fb5059e5f86a2ae855e1feb327d315620"
+    },
+    {
+      "source": "scripts/generate-real-e2e-visual-baseline.mjs",
+      "line": 13,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cc5d19b39dc34f7357681c54859f6c30f87dc880d279ceee1c22f8f2dbc0acb6"
+    },
+    {
+      "source": "scripts/generate-telemetry-contracts.mjs",
+      "line": 38,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "line": 103,
+      "sink": "kubectl-request",
+      "expressionSha256": "ee185137a857dd4812687a2af43656ee21080c5a8620b765e0b04e500d448531"
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "line": 99,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5fb2d2fb2fa495578eef418599218178ab13276c12245f30bb1f849fdb91d769"
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "line": 107,
+      "sink": "process.stderr.write",
+      "expressionSha256": "b6e60f18b6e8e205c6434adfed272783475ffb3b111fe7f1e65a9ffebab0b070"
+    },
+    {
+      "source": "scripts/gitops-owner.mjs",
+      "line": 15,
+      "sink": "kubectl-request",
+      "expressionSha256": "41b2d943275eeca6890a7b166b03dba038f331ed764ac0c58e4e0f7591232f84"
+    },
+    {
+      "source": "scripts/gitops-owner.mjs",
+      "line": 31,
+      "sink": "process.stderr.write",
+      "expressionSha256": "b6e60f18b6e8e205c6434adfed272783475ffb3b111fe7f1e65a9ffebab0b070"
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "bc6023b5401fb241ac42cac1b38236ed833fffa636cdd90eea114f28803f3174"
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "line": 66,
+      "sink": "process.stderr.write",
+      "expressionSha256": "b6e60f18b6e8e205c6434adfed272783475ffb3b111fe7f1e65a9ffebab0b070"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 190,
+      "sink": "kubectl-request",
+      "expressionSha256": "c54c283a1a9b3ab79e14a0b0bb9586efad9199a899a59491f76cfcc2567c8f7a"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 181,
+      "sink": "process.stdout.write",
+      "expressionSha256": "82f70bf815ab59b777f9587d0eca4480a60c973edd05940528794a6fe5fc201d"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 198,
+      "sink": "process.stdout.write",
+      "expressionSha256": "b9dcc08599bfbc121866ea96d8fc0e461a23fe53c4d6446bda51886c14ff48cd"
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "line": 202,
+      "sink": "process.stderr.write",
+      "expressionSha256": "b6e60f18b6e8e205c6434adfed272783475ffb3b111fe7f1e65a9ffebab0b070"
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "line": 63,
+      "sink": "console.log",
+      "expressionSha256": "a6559e9381fc0c620af0293c01c134c970aabd58472a71c49c6069a22ddf7953"
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "line": 44,
+      "sink": "console.log",
+      "expressionSha256": "16eead72e20cb5ed5d7667cf16dfbd596bbd661d0f0a83cbb71894cd503f951b"
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "line": 29,
+      "sink": "kubectl-request",
+      "expressionSha256": "d6f8662f5425bebc8522615bc29ced62338b6e6b78947095b62cd70df16acd43"
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "line": 46,
+      "sink": "process.stdout.write",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "line": 47,
+      "sink": "process.stdout.write",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "line": 53,
+      "sink": "console.error",
+      "expressionSha256": "3d8ea2be476be42f249b358449e0f530e68045bbe133ce6993980dc11ec4449f"
+    },
+    {
+      "source": "scripts/lint-baseline-prune.mjs",
+      "line": 57,
+      "sink": "process.stdout.write",
+      "expressionSha256": "373f92645f8c90ac115f7c55c4c616b9b807b0f1bca0999314e71c41e878a354"
+    },
+    {
+      "source": "scripts/lint-baseline-update.mjs",
+      "line": 75,
+      "sink": "process.stdout.write",
+      "expressionSha256": "2df051e3847e26f4ddcc84846206e8f88626065405962a5ddb0e19c79ab55a4e"
+    },
+    {
+      "source": "scripts/observability-retirement-plan.mjs",
+      "line": 138,
+      "sink": "process.stdout.write",
+      "expressionSha256": "adea748dff1fa7aa710557826680df0b6367e1b76047173d9d7771517901844d"
+    },
+    {
+      "source": "scripts/plugin-system-inventory.mjs",
+      "line": 182,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cea23dd4b87e8b00d19fb9ccaaef93e97353c7353e2070f3baf05aeb3995dff4"
+    },
+    {
+      "source": "scripts/plugin-system-inventory.mjs",
+      "line": 188,
+      "sink": "console.log",
+      "expressionSha256": "cf9309568c97aa09a116141c13b25013bf6d1879c0cc1a5d57e474c0cb697553"
+    },
+    {
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 102,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "15206e23e35611451038fafaa514d9670162cfbf0c2e1cdeb121f5cef61f745c"
+    },
+    {
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 107,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "61ece704f8e9e3e131df5ced80d8a323754db3e2681c0765b3b3be36978540a8"
+    },
+    {
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 108,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "15206e23e35611451038fafaa514d9670162cfbf0c2e1cdeb121f5cef61f745c"
+    },
+    {
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 122,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "15206e23e35611451038fafaa514d9670162cfbf0c2e1cdeb121f5cef61f745c"
+    },
+    {
+      "source": "scripts/recover-openclaw-audit-input.mjs",
+      "line": 70,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "73e1dd8c8970e2389ce021593afb65b2830714eb8abe0cbcbc0f65453046faa9"
+    },
+    {
+      "source": "scripts/registry-client-config.mjs",
+      "line": 111,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c38c5d8dc263c6ee51a40f34a2a38dc86d9889b117e68fd8a3f3da8ea92fea1d"
+    },
+    {
+      "source": "scripts/render-kubernetes-api-probe.mjs",
+      "line": 39,
+      "sink": "process.stdout.write",
+      "expressionSha256": "381761c3c1be4ddc9be548809c0ccd12b88c7073f297aff25971a1ce92590b87"
+    },
+    {
+      "source": "scripts/render-litellm-deployment.mjs",
+      "line": 22,
+      "sink": "process.stdout.write",
+      "expressionSha256": "351fe233594a4693b1a78d2115e9b1c4aef0cbcfd3fa5665aaf66d4dcf85dea6"
+    },
+    {
+      "source": "scripts/render-postgresql-recovery.mjs",
+      "line": 128,
+      "sink": "process.stdout.write",
+      "expressionSha256": "100ae5c941f23bb8b15f5fc20e00b690e36b581ce59f923e3201a2f0ca10b52b"
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "line": 68,
+      "sink": "process.stdout.write",
+      "expressionSha256": "100ae5c941f23bb8b15f5fc20e00b690e36b581ce59f923e3201a2f0ca10b52b"
+    },
+    {
+      "source": "scripts/retire-attempt-result.mjs",
+      "line": 70,
+      "sink": "process.stdout.write",
+      "expressionSha256": "c734a944ccdfe7bf9c0ae7d301cdae6c0612000f22db72a0afe3312d82795c81"
+    },
+    {
+      "source": "scripts/retire-nova-dispatch.mjs",
+      "line": 106,
+      "sink": "process.stdout.write",
+      "expressionSha256": "c6fc5b2716c0392f0cefd0ab1fcede62e381106c59086f15b4aebec50531c8b8"
+    },
+    {
+      "source": "scripts/retire-operator-request.mjs",
+      "line": 89,
+      "sink": "console.log",
+      "expressionSha256": "1d67ba8bbcb508193fc2746b6a9e20a9d18b06ceefa2bafb6e7e1932e0872462"
+    },
+    {
+      "source": "scripts/runtime-tool-locks.mjs",
+      "line": 51,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c63cb7cb30206bf21cfcea5322abbdd99aa387e8ef23d52b5d5ed5e783696389"
+    },
+    {
+      "source": "scripts/runtime-tool-locks.mjs",
+      "line": 76,
+      "sink": "console.error",
+      "expressionSha256": "c9de069231f9760e90e4174c49ebd9109add6dda8961d2a48a1e85fded87bff7"
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "line": 41,
+      "sink": "console.log",
+      "expressionSha256": "9cf66eed8e6e1ccc784882d525fe9494a1435f6885c2e9fcdc8ee5d927695944"
+    },
+    {
+      "source": "scripts/updates/check-upstream-refresh.mjs",
+      "line": 20,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "04ce925129eaa368e8d05e41ae56eb9a184283cb6f3af1f0a3dfa85f98b4b47b"
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "line": 177,
+      "sink": "process.stdout.write",
+      "expressionSha256": "94965e8ad1d270d07bdc9671045180b63f5a9e6f89cbc3a33d32de0bd1d4fbdd"
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "line": 195,
+      "sink": "process.stdout.write",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "scripts/updates/materialize-release.mjs",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7890efa294d4353a8dc1dc412c4a1a8c79dc07ad15ae5f396bd0391295fe8124"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 140,
+      "sink": "console.log",
+      "expressionSha256": "7658e7362c3ed3a8f26cac6fc0433a1db6bd5036288608757ec7123fe98cff70"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 151,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "76c20567d2c17e732350193285b45b1c5ae3c3f1657d9df3657c13b5fa8ef6e5"
+    },
+    {
+      "source": "scripts/updates/refresh-versions.mjs",
+      "line": 155,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6a51ddcefa4893947f332b1388fdf8ed1ffbba7b2d9e4eafc774172a26003c7d"
+    },
+    {
+      "source": "scripts/updates/release-images.mjs",
+      "line": 29,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1138342219c7430e781a0516e15a213680d5eda5333fea4c0074b77a0674a7d2"
+    },
+    {
+      "source": "scripts/updates/select-runtime-deployment.mjs",
+      "line": 63,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ce7d2a1c093c21271fcc8f8505ef193c2bd221fe0dfe8287afcb5d866652e4e4"
+    },
+    {
+      "source": "scripts/updates/verify-release-source.mjs",
+      "line": 29,
+      "sink": "console.log",
+      "expressionSha256": "462ab12f98cad54a24ccf58f41ff485b0f64c8be63e5e125af4ee5184d76f73a"
+    },
+    {
+      "source": "scripts/updates/verify-release-source.mjs",
+      "line": 47,
+      "sink": "console.log",
+      "expressionSha256": "7d96576da66d58f4e1de3eaeaed4c4c1c6862fee655a97eeb01a43e9ca9c79e8"
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "line": 217,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a1ed1e1a1c454d79f073bcfa328c2d1349dd60627379208a5f03d37d9a731444"
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "line": 220,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "277089d91c0bdf4f2e6862ba7e4a07605119431f5d13f726dd352b06f1b206a9"
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "line": 260,
+      "sink": "console.log",
+      "expressionSha256": "94b99d748a8b019f5a3c2c258f8938465ec7ee98fd079cbcb960ab1fd6de24a9"
+    },
+    {
+      "source": "scripts/versions.mjs",
+      "line": 181,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d67e2e944994496c8d8ec76eed0cf9f09679448d584b532bebf941852a37f5ed"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "line": 36,
+      "sink": "return",
+      "expressionReceipt": "not supplied by classifier",
+      "basis": "resolved-collection-elements"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 155,
+      "sink": "return",
+      "expressionSha256": "46bc8620f6cf277b7f4d85b5159c724b8e78335c133a137b1607dee7d10018fd"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 686,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6e0ed04782075d73bde45690767a6f12726cce82437aea7102c24ba77dd99b01"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner.ts",
+      "line": 298,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c09f3ad2021578f4d1df2b6b6f6bacaf16b1a01d056a1eafeff641cb26ad475c"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner.ts",
+      "line": 1263,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "6f70b828c296a1e64e65748ccb00e77e9c028ab804920ef5c61b72c8a7b9edf6"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner.ts",
+      "line": 1283,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4913477414f79978ac67b1c453de52c613085dc04481ca1d16e6b5036edf70bb"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 86,
+      "sink": "file-stream.write",
+      "expressionSha256": "277089d91c0bdf4f2e6862ba7e4a07605119431f5d13f726dd352b06f1b206a9"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 91,
+      "sink": "file-stream.write",
+      "expressionSha256": "277089d91c0bdf4f2e6862ba7e4a07605119431f5d13f726dd352b06f1b206a9"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 111,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "05b3abf2579a5eb66403cd78be557fd860633a1fe2103c7642030defe32c657f"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 49,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "basis": "enforced-original-key-preserving-canonical-serialization"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 144,
+      "sink": "file-stream.write",
+      "expressionSha256": "277089d91c0bdf4f2e6862ba7e4a07605119431f5d13f726dd352b06f1b206a9"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 239,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "41d22f9bbdbed9c244746743280808ec70363e2984ca2da5027cc712fff83454"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 173,
+      "sink": "file-stream.write",
+      "expressionSha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "basis": "enforced-original-key-preserving-canonical-serialization"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 388,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 427,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4ba69735ca53765ed6a709edb56c6ea236b7193a3b29a6b390c346f0f4340e4e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 435,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4ba69735ca53765ed6a709edb56c6ea236b7193a3b29a6b390c346f0f4340e4e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 506,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4ba69735ca53765ed6a709edb56c6ea236b7193a3b29a6b390c346f0f4340e4e"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 546,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 633,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 669,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 796,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 290,
+      "sink": "file-stream.write",
+      "expressionSha256": "c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 108,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 171,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 218,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+      "line": 121,
+      "sink": "process.stdout.write",
+      "expressionSha256": "b172e7cdb295dad85b2f453ebf161311d3c2ff001afac50746b5cdeb570d4366"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "line": 70,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "42208500a1f5176e41a3120824ef0542afe249a373b464e3e249946216163339"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "line": 88,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "572e3461a300ded1300c87b4cc47c5a418946063e3ea1cbc549cac691d3f3ef0"
+    },
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "line": 97,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "572e3461a300ded1300c87b4cc47c5a418946063e3ea1cbc549cac691d3f3ef0"
+    },
+    {
+      "source": "skills/nova/core/execution/engine-snapshots.ts",
+      "line": 113,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0122a12109f1eff49b78cddb2e26ef0ebf8a8804ecb06d1d0e94afb3a8a88b54"
+    },
+    {
+      "source": "skills/nova/core/observability/reconciler.ts",
+      "line": 350,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "16a0eeb0791b6c92451fd284dd9f599e0a7dbe7f6ebea6e2d2d06c7f74aec112"
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+      "line": 40,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+    },
+    {
+      "source": "skills/nova/project/cli.ts",
+      "line": 41,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2f05310eaf7b77b6787b9cc66d6907a9eed96731968cdfe418a1f64cf7de3f7e"
+    },
+    {
+      "source": "skills/nova/project/legacy-import-cli.ts",
+      "line": 24,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3c3c69405d6153c22b86c647fe2292443fa15ef14876324896f94c8a166c8fad"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 119,
+      "sink": "console.log",
+      "expressionSha256": "5669d4dcf5531ba62797b549ab2a73074af4a620f67d78b989ca1ed866050136"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 120,
+      "sink": "console.log",
+      "expressionSha256": "014bc33b8333335661154316d689690046aae36be805bca357dd2433e533216c"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 141,
+      "sink": "console.log",
+      "expressionSha256": "644e3e6d871994a25dccf4d133b34399cdfc105cf9373cd91c0ee99b44e29ff1"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 143,
+      "sink": "console.log",
+      "expressionSha256": "c7f8aa1be468193bbedad2bcaad02733ede050bed374e1e48c7c58a91026eaa2"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 144,
+      "sink": "console.log",
+      "expressionSha256": "5daf1293f8db991bb423c08567491dc2dfdfa3c2e13ddb89c0a5424816de1206"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 159,
+      "sink": "console.log",
+      "expressionSha256": "7415d71656b6a107366e4c42c34cb548b09b6d6835af1ec67921097d02413de4"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 171,
+      "sink": "console.error",
+      "expressionSha256": "c213fbc7ff4c0230af0ee367eda07d47420d78132e4c7441b58d80c3aa8fce45"
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "line": 142,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "f4c0a8445fe8fe29a9a93f203035608f3f8242075e065b6ae96aa6960aef9f24"
+    },
+    {
+      "source": "skills/prism/integration/engine-cache-capture.mts",
+      "line": 31,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "6e1a69ffa4e6c1ddc22a49a9f3afcbf0b23d234d64a95807651666ad44dd33c1"
+    },
+    {
+      "source": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+      "line": 27,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "f1105eb6f68172913ab84c63c711862f7e6495cf76ba7cd0600769df12664f81"
+    },
+    {
+      "source": "skills/prism/server/agent-bridge.mjs",
+      "line": 32,
+      "sink": "console.error",
+      "expressionSha256": "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178"
+    },
+    {
+      "source": "skills/prism/server/agent-bridge.mjs",
+      "line": 36,
+      "sink": "console.error",
+      "expressionSha256": "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178"
+    },
+    {
+      "source": "skills/prism/server/bootstrap-database.ts",
+      "line": 15,
+      "sink": "process.stderr.write",
+      "expressionSha256": "87b6bbe5584b6fe52f31b44ae200b64cde56e2ba77294f293bbf32376b1d9943"
+    },
+    {
+      "source": "skills/prism/server/control-server.ts",
+      "line": 924,
+      "sink": "console.error",
+      "expressionSha256": "a24e45030e4302867578af8a9d25388452c8d92d654f171fa9130da55b3cf681"
+    },
+    {
+      "source": "skills/prism/server/ingestion.ts",
+      "line": 20,
+      "sink": "console.error",
+      "expressionSha256": "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178"
+    },
+    {
+      "source": "skills/prism/server/ingestion.ts",
+      "line": 77,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "277089d91c0bdf4f2e6862ba7e4a07605119431f5d13f726dd352b06f1b206a9"
+    },
+    {
+      "source": "skills/prism/server/native-worker-host.ts",
+      "line": 33,
+      "sink": "process.stdout.write",
+      "expressionSha256": "77563d8ca3a51ec8d54f53ffae5734748441b527c4076d3c9b28d82c1a84c125"
+    },
+    {
+      "source": "skills/prism/tests/worker-http-cancellation.native.mts",
+      "line": 40,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4d08c1a641fad4df1081db13befe139f206db1b2ff05fbb198039023cc7f09e1"
+    },
+    {
+      "source": "skills/prism/tests/worker-process-shutdown.native.mts",
+      "line": 44,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4d08c1a641fad4df1081db13befe139f206db1b2ff05fbb198039023cc7f09e1"
+    },
+    {
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "line": 169,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4ba69735ca53765ed6a709edb56c6ea236b7193a3b29a6b390c346f0f4340e4e"
+    },
+    {
+      "source": "tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+      "line": 26,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "tests/verification/contracts/check-junit-executed-required.mts",
+      "line": 116,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5341c293c5afc81e734cd30e9e4ff17bdafb7229ce02526b19e97a835dbb2d27"
+    },
+    {
+      "source": "tests/verification/contracts/check-junit-executed-required.mts",
+      "line": 120,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1ac773ce5b9e3aa9054a9f9a46009a55dfb2682ccbab9cd58eae90450b86ba88"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+      "line": 51,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4970a32250afbdf0efa60fca3ca4a51ce47d721734cdfcf654bc48bcfdb170f3"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-committed-source-snapshot.mts",
+      "line": 55,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e5d14e894773a8a7f0e35e80eff0dbf06406a31ee5b590c3f897b9656a76fa88"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "line": 138,
+      "sink": "console.log",
+      "expressionSha256": "7994425bd807d314ed4b9bc26bc3072cfd737ea60e2636292c5e2ae2b83a1d06",
+      "basis": "unsupported-runtime-imported-constructor"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "line": 57,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e56291c16948357d1168058fa3e1cd07a992df90a061e4a8135b6b0d36a1e1c3"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "line": 107,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "99c053f428020649425e887887573115b5b59f1d484eba359a137c6d23a92d5b"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "line": 119,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7c363609485a9e59f8610fc63b148ae8678831c902706d0961ab0357bd6e7b4f"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "line": 156,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "98a5df56a37afddc41bb331bba3b865ae6aa6e6efa476a31059d3dd4a35103a4"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "line": 201,
+      "sink": "process.stdout.write",
+      "expressionSha256": "d4fe5bd876331e1eacae54ca9d4c345d9b528776015fce8eafaf674598bfe8a5"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 100,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "fdbea43f7bfd5c0e08ea217c339289f80040c1bf3f59d6bbc12959fe254d14d8"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 140,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ecd5b8c281320b982b6ebc34dfbbf577cb67e1529b1b16832ea6e08e2bd7f94"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 175,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "66fcc47ba1048993521236e9f7487a95b242281397affa01c3e967df52e21307"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 181,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "fdbea43f7bfd5c0e08ea217c339289f80040c1bf3f59d6bbc12959fe254d14d8"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 184,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0630a8e95d2b6f488429ac6bf17ba67a3ca1436feb48651d493d9ef4ed112ce3"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 197,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7fda5b13782285b175faec0504372cb3d6ac8f953b51a2f2ecd2a71555727733"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 203,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "97513aea2f5aa650aac21c5a14296ae7a1191bce01bb2eb8e9f26249adc7302e"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 204,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "97513aea2f5aa650aac21c5a14296ae7a1191bce01bb2eb8e9f26249adc7302e"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 208,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e465ee2748da4397082d381c4ef2abe1018a456ca7755432cae33e80f9fd28bf"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 214,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ecd5b8c281320b982b6ebc34dfbbf577cb67e1529b1b16832ea6e08e2bd7f94"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 216,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "fcc555637d12f514c40feb56a3b77793aa41e4b96b1144f54a4b8af0d7d6a3e7"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 221,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "310c231c85719fb25d23291665d324bb52c15d0d57699578b8b99635de803432"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 228,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ecd5b8c281320b982b6ebc34dfbbf577cb67e1529b1b16832ea6e08e2bd7f94"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 257,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "66fcc47ba1048993521236e9f7487a95b242281397affa01c3e967df52e21307"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 266,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "66fcc47ba1048993521236e9f7487a95b242281397affa01c3e967df52e21307"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 272,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e57738db9738e483c8e9476c74e09648d3d84ed0ad059162892d7790441d73d8"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 277,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5699647f90f75c7805982f77cbb8e4e047743982ada9e40ec84e710d88433b2b"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 282,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7fde95e77e1d190b8d4342b1701ab7ab9b1f5fb358e99c3f60874eb92ff34dd0"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 287,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "507ac9872a8709caf5611ac96e92a153241724724ab608e80ae6f152700d73c1"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 290,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cc6232cefc689ddc8ce38de143f0d5455b331df256f5eb8895e9f6133d9e0b69"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 297,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ecd5b8c281320b982b6ebc34dfbbf577cb67e1529b1b16832ea6e08e2bd7f94"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 301,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "57664ed5cf3f31ed8adff559ca04efc146514dd41d3e38d829bae46cb67309b5"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 309,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "009fd8e34b2e30bf694f4383a03db756f25d0812782b8b3daa04f02b8ce930e5"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 312,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ecd5b8c281320b982b6ebc34dfbbf577cb67e1529b1b16832ea6e08e2bd7f94"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 316,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "65c0578e30567669ede38cfe8ce9c55fab77a70127b3fc69164fb02c856758d6"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 327,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e66d8d62765a72cc77b161ee080bbcbcc87282b711b2935538960514298646ae"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 337,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9bba9204c58adbb50863a56304405c758fd64ed234a7944a4878c3f378288684"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 346,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3bc021a1452cb9aef54d31517f34fbe660ab96dcf4f14e1f8629d1d835105832"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 362,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "aeeef10670a1bb7a9f398069c36c3a70383d748324655e7e55524bec5419655e"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "line": 26,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "bf603eaf6d16d85d32be1507685896c926f769fa79370cadbd2ce8bfce874699"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts",
+      "line": 290,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ee762eb6c1088845e2fe8ec5f49acced9fe4cbfef4eaaf7cb147e1b0466c46a"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts",
+      "line": 399,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ab1c4f1947b3623f1094a61420ba4bb91d1e0c0f04c75512d03766811a9bbe9d"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "line": 468,
+      "sink": "console.log",
+      "expressionSha256": "343e272c65e0cacf36e1343c2a6063f1d602dacdaed49683f55438817fd4d6c3",
+      "basis": "unsupported-runtime-imported-constructor"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "line": 42,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "97feec7e5bab31dd847d390933bc7dd5838944f4a379715ed723b7e41151f1b5"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "line": 141,
+      "sink": "console.error",
+      "expressionSha256": "3a645d1f40c9beb11245f51b7b0fc183bc61fdb911525775def415b0c4641cb3"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "line": 43,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0be536b63a20cbb42bab2330cdbb1cd799489451fe2801e14a714b3df75c8ae5"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "line": 47,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f875551faf38e557e29c4a35b90c957fb94d02e0d1951539645324a031eee7ff"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "line": 135,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "656fdb3142d3a9f8c6c8edd4895945bad9f8f51c2ebfa906b759f9a964533d40"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "line": 143,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "12c88e0b04dc2be1c44606a94700b8ef7d4e2e9dda69ed531f2da936fbcde800"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "line": 148,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "12c88e0b04dc2be1c44606a94700b8ef7d4e2e9dda69ed531f2da936fbcde800"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "line": 37,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "line": 169,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "98423dd07669f6d242bb281ac6f77fad238dc39dbd25ff967dfe514067299eb5"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "line": 15,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7e2767fe7b84f2dc15073a88f80dc3568990c110a107a806f021b7ef6532ed6b"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "line": 16,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a0c2f82ec6ef89611813cf08506abda10f2a29c8b718c2facd9626b4b8a19265"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "line": 17,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "826abe579f3bc928124c1da3451ece904ca9e1da46af2889a9f7b5f63a932f78"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-size-budget-parity.mts",
+      "line": 9,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5f499a8839f3017339d560d0a3456a48d61f2b5172a2b1ea33aaa805b8db2993"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-size-budget-parity.mts",
+      "line": 10,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "81df23b73efdca774443c6adea7dd8e2cebafce4a9cd8492214c50760f5ac853"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "line": 102,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "53c3d827e84f2221ebc61e1b543de9e611c3179df640652eb08427bdffbc26d4",
+      "basis": "unsupported-runtime-imported-constructor"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "line": 2165,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cf08eb0a96e624edf99da77e1e92fc34b4432e057832c335c77c235ce2775152"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-test-provider-registry.mts",
+      "line": 59,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f827e12a2db3fbace984b473de55928f70cd80979e38633e646eea4eb11cf914"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1da7b536e07114304977ab65cbdc44243872ea0a7f324049536f843efa87c7de"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-unit-parity-ledger.mjs",
+      "line": 57,
+      "sink": "console.log",
+      "expressionSha256": "4caa904da2b809452047d71d5c493ba5e1ce875064b9638d2e19cfab5dbe7a3a"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+      "line": 16,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+      "line": 23,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0296e2e7cbf8b3b59751839c9e13c20e5c462e436e5a24ec8231985938e9004f"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+      "line": 31,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0296e2e7cbf8b3b59751839c9e13c20e5c462e436e5a24ec8231985938e9004f"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+      "line": 33,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0296e2e7cbf8b3b59751839c9e13c20e5c462e436e5a24ec8231985938e9004f"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "line": 25,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "974520a9e21b8d01f99fbba4bbc3f796ac01981f60a706a347d751299dce0e5e"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+      "line": 260,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+      "line": 287,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+      "line": 296,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "dde8f6dec75beec4cc0ee94f925046af17428c61a538ce78f7b8e19f2b44fd7e"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+      "line": 299,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "859cde24f40eef7373311f406eb88b83d373bba1e2c782170e97a0a6ccfca28d"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+      "line": 286,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "52d157d2b0f7d19ad7af89db35164136aa57f04fe9dc8d690f17c71cff9128f7"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+      "line": 345,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "870a71e7fc988911c0f893c9b280b90ecc910acfd0ca47ce31bfaaa2d82df156"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+      "line": 354,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "8a69429a0808c79ca5d1ddf38cc3768b1552f2c0522656088894f111a5640ea1"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+      "line": 409,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d25be3aaf4c1c350a3f09f4acca065641087e2e9497afb1892c7cc5c8f29ebc6"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 61,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "22811744f1bfc56062ec22f5c93b301fb9b30a30f7bc68504a27c8ddf0165c92"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 68,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "98dd3fe64b12d34b2a54eae161f31756e2b02cfa793ba9a18bce37a6d9c5e372"
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 75,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c2a87ead59762a2ace2c3755f3b7c0b8e1a7ce39bafe1dbab37dae2aa06d10ae"
+    },
+    {
+      "source": "tests/verification/contracts/check-project-compiler.mts",
+      "line": 31,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "01754a5506c1c79431f4a3f72e24ad151b18a691f2ac1a726646f85dab55fec6"
+    },
+    {
+      "source": "tests/verification/contracts/check-project-compiler.mts",
+      "line": 173,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5b04b335cadeea4cb3f19ddee40bf9579692355e68bc25b174c9fb57da0c5bff"
+    },
+    {
+      "source": "tests/verification/contracts/check-project-compiler.mts",
+      "line": 194,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d315b88dd7e01c897ddf3fd08f58c3b501498f56817ccb32fb97abae797b04c1"
+    },
+    {
+      "source": "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+      "line": 84,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2c1ffe2ec2ed902a19fda7f3692d524ba061137856c5abd1926532e0f8caaee4"
+    },
+    {
+      "source": "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+      "line": 131,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cb37483e74e616b55bfe827031578256494097254abbec1bdcd29704692b723d"
+    },
+    {
+      "source": "tests/verification/deployment/check-deployment-truth.mjs",
+      "line": 1110,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7075d6010f3449ef585c799cd1f0e2224a4314716ad23a026041463855e2e142"
+    },
+    {
+      "source": "tests/verification/deployment/native-worker-node.test.mjs",
+      "line": 32,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cefe2cae7b82b720d4303bf2dc4acc766eb1995fc46f05af32e6e37f44f6df49"
+    },
+    {
+      "source": "tests/verification/deployment/native-worker-node.test.mjs",
+      "line": 54,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c070b7568fa17ae698dd066743582304ec745781961bea6d71abaf6953220bce"
+    },
+    {
+      "source": "tests/verification/deployment/prism-release-evidence.test.mjs",
+      "line": 35,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "adbb00b1bab89954366cc585f840bfc2f1ec5c565f0ee098641835f2dc504c73"
+    },
+    {
+      "source": "tests/verification/e2e/nova-a11y-production-preflight.mts",
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d3b33f7173a1a4b77899af71cab3e5e09025c5ef4c8832a6ce467968835fce2e"
+    },
+    {
+      "source": "tests/verification/e2e/nova-e2e-production-preflight.mts",
+      "line": 7,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "76f673bd1e877b61150a019221ea30ee32a4552b3119dd13a4484496f495485d"
+    },
+    {
+      "source": "tests/verification/e2e/nova-http-production-preflight.mts",
+      "line": 47,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4567954ce3e63386113a56feee62ab98f686cd38a8168fb50d950df9aeef711c"
+    },
+    {
+      "source": "tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts",
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b2b5a3cb1950fa619397560a3bb1fcf6a61e061eb1c5842069d1561cc293983e"
+    },
+    {
+      "source": "tests/verification/e2e/nova-lighthouse-production-preflight.mts",
+      "line": 37,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a50950f10ad70a197149b3196c8e1bd90d434b534fdc1405b0e53b816ee729e7"
+    },
+    {
+      "source": "tests/verification/e2e/nova-security-production-preflight.mts",
+      "line": 8,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed1bf0d5a4821729fba9b85374b9500f875d8d9321fd5953eeab2856caaa6dff"
+    },
+    {
+      "source": "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+      "line": 54,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "314d56afbdf722ff26e1d967278b6708752001f4fde2d807a3f97cacfc3f9166"
+    },
+    {
+      "source": "tests/verification/e2e/nova-visual-production-preflight.mts",
+      "line": 13,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4ffee2607072f272d91d6db2edb3a712d3479de3b5ea08ff4981893de20fd889"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+      "line": 145,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2c1ffe2ec2ed902a19fda7f3692d524ba061137856c5abd1926532e0f8caaee4"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+      "line": 886,
+      "sink": "process.stderr.write",
+      "expressionSha256": "b4f883fd435585a7faddd8de4ddad20208fca05636492dcee70749abd4bf3edd"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+      "line": 1100,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c315d072398ae9d65b52b94e51494ce4f4750c9143919ef33f69b339d8b17c0b"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+      "line": 1380,
+      "sink": "process.stdout.write",
+      "expressionSha256": "76cdd601389cce80e58dd5756a134ca1e4d2fa3d919af9c4b1154310a0db115e"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "line": 371,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "adea748dff1fa7aa710557826680df0b6367e1b76047173d9d7771517901844d"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "line": 1855,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9460e2296768ff0b000b9e688cb8c92295be467035ce27cda776b1a4f6f06168"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "line": 2060,
+      "sink": "process.stdout.write",
+      "expressionSha256": "9d2eca47a1308a4c18172f8fc673edf8f7d7960295d39e3a8f3e8bfd5494d9ba"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "line": 2071,
+      "sink": "process.stdout.write",
+      "expressionSha256": "3ffefabf676f447260cc9029a88b09f9389ff125e918d30cd1c954b81e37a72a"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "line": 2077,
+      "sink": "process.stdout.write",
+      "expressionSha256": "eb4c7b258c6f6424bb32c92159fb1478da78dfb344651c6bc5d391213d8be2cf"
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "line": 2086,
+      "sink": "process.stderr.write",
+      "expressionSha256": "b9cdb8a414117e89d3367a5a4e98d288a9b8a2231c6cb3d38ac4775bb8da6ce8"
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary.test.mjs",
+      "line": 22,
+      "sink": "console.log",
+      "expressionSha256": "e967b259ad4acbb6661bdcd9b0aae688aca88981733c0cd7cf8961f6199fcd55"
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-public-types-independent.test.mjs",
+      "line": 20,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c4bfb05b9baf42c8067afe50cff52e8bd03ed8d39eb563b35d739e0edfcaa648"
+    },
+    {
+      "source": "tests/verification/integration/registry-local-gc.test.mjs",
+      "line": 29,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0b7331f6a48aea84e05e5dd9d9f0dab2ae12b7271a547e7c42713956ca86482a"
+    },
+    {
+      "source": "tests/verification/live/prism-production-failures.mjs",
+      "line": 6,
+      "sink": "kubectl-request",
+      "expressionSha256": "c6839b7d4ee132ef304a97c7852c72e8489d37652073086ca2fba1f5daf575dd"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+      "line": 21,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f3400e372b7b8d902078df366e875ac5ddff84e5ae26e2cde7a742445ee56fba"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+      "line": 25,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a60da2c7bf19de5ef4170bfaff8fd5cf857eeae585730ef223a9657f87ceab3c"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+      "line": 28,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+      "line": 32,
+      "sink": "console.log",
+      "expressionSha256": "fea7f8ff9a1654f5da77c3b22f7b0c9949492df954ad6a4b515e8a712e3b39ca"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs",
+      "line": 12,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7a8ffea7b958fb714f6c438e3263cc90c690be44eb2ac56ff22229df28c427aa"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs",
+      "line": 51,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs",
+      "line": 80,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-independent.test.mjs",
+      "line": 13,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d5c50d4bc98b41804eafa8144cb86fa944e6bc3132a0597d7c2de62ff69a77ff"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-independent.test.mjs",
+      "line": 54,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-independent.test.mjs",
+      "line": 66,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "67cacc1f2db19c733b14de225e5dcb13794316be4ff25081de2a7c13bc24bca8"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-independent.test.mjs",
+      "line": 90,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "eabac2d0280647d06d0226055b2d0e4e43b7c16dc6cedc3118265f9acadb69eb"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-independent.test.mjs",
+      "line": 117,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed90e72ada432837a583ba0439642a23119fb134fdd1c15c6c762aadceb3777b"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-result.test.mjs",
+      "line": 16,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3c0e3c264eef10399cd5a8ee4d67def090ea08995d19246ca3e11484f7b0b5fa"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-result.test.mjs",
+      "line": 17,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "28a8477ec316f664558c9c621f0e1c77d4f3fb3205ee0133271c492bc4ed5203"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-result.test.mjs",
+      "line": 22,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c93f1771fc4014e5a079118f5eeee0a775fd430d73b5f5bf6dc0d7ae6cb812d1"
+    },
+    {
+      "source": "tests/verification/reliability/admin-repair.test.mjs",
+      "line": 109,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "25854c9da52b043bd00864d94838556922c34b41f5367a6fd8a3ec25a64d2b21"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 114,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1ac3bdd832e776fe340550a4330fde91c812dcc79aeb116bf4b7f9ae275c1fca"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 122,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 131,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ecf754c49f34261fd3b32e08fc09551ee75653541f28fc44b2e4d5045eebf663"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 134,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1ac3bdd832e776fe340550a4330fde91c812dcc79aeb116bf4b7f9ae275c1fca"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 134,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "accd42750f65f30a438cbad72330d0f90c694d8e7d6ce95ef07a211835107316"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 175,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1cb93c7eaa40f45fc13c701bff8c4fb507fe196e24c80c51401f293953d8c851"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 177,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ecf754c49f34261fd3b32e08fc09551ee75653541f28fc44b2e4d5045eebf663"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 179,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ecf754c49f34261fd3b32e08fc09551ee75653541f28fc44b2e4d5045eebf663"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 259,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1ac3bdd832e776fe340550a4330fde91c812dcc79aeb116bf4b7f9ae275c1fca"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 268,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4ee4b3f47bbf14775841091c1f9bdf185829d5e71485ebac03d1649606f14b31"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 360,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c6b0b22729844e173d70c1c330e16e5a94e6b2f2080927a8f9f6412c02f874d2"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 363,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "b372c3ec0be962ea6059dbbffdb67f68ae3bcc391173a9c6881d1e2247eb49ca"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 367,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d3418f13e19dffb3296306e5e73e177786ffea2105adeeba5614f1455cfea9d4"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 369,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d3418f13e19dffb3296306e5e73e177786ffea2105adeeba5614f1455cfea9d4"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 375,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "c6b0b22729844e173d70c1c330e16e5a94e6b2f2080927a8f9f6412c02f874d2"
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "line": 378,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d3418f13e19dffb3296306e5e73e177786ffea2105adeeba5614f1455cfea9d4"
+    },
+    {
+      "source": "tests/verification/reliability/archviewer-native.test.mjs",
+      "line": 19,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "338af5d1bf5572b096e37b637cccccafa7b354ce4e68ce24766e45758a2f6418"
+    },
+    {
+      "source": "tests/verification/reliability/archviewer-native.test.mjs",
+      "line": 29,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "af0fb0ced6d55ae4f10ff960ad55daa38ff15aa492620bd1bbabf39417e45e35"
+    },
+    {
+      "source": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+      "line": 21,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2c6e68e969714bce8d7437ed3371bba688a211823eecdb6f05d8c10b70f3387b"
+    },
+    {
+      "source": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 31,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7a2a423ad9e6d3ae206d3bcde40866aac97f83a72e24819b21d7e2ec9edc99dc"
+    },
+    {
+      "source": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 35,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3797416fddfb320b8cbd68607de2e3d42fcd9986fa2f972563ce6c44bdb2641d"
+    },
+    {
+      "source": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 55,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "11005e413550ba43a360b2b329a7465bf8fcb7802ee90f104eea24c445f08b7a"
+    },
+    {
+      "source": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "line": 60,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3797416fddfb320b8cbd68607de2e3d42fcd9986fa2f972563ce6c44bdb2641d"
+    },
+    {
+      "source": "tests/verification/reliability/audit-projection.test.mts",
+      "line": 25,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3b3a558793d6b42d5804ac6444c0f2bdbbf2f365571dcfe4743d1c002396cc71"
+    },
+    {
+      "source": "tests/verification/reliability/blob-budget.test.mts",
+      "line": 13,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "385e46cdc537fbad019ce269952e7f8ff631d205173fccbeb266d812c116adba"
+    },
+    {
+      "source": "tests/verification/reliability/blob-budget.test.mts",
+      "line": 15,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "385e46cdc537fbad019ce269952e7f8ff631d205173fccbeb266d812c116adba"
+    },
+    {
+      "source": "tests/verification/reliability/blob-budget.test.mts",
+      "line": 31,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "29d0c5ca13fa5c9bfd4fd72ae038ae7043dc077c4a701623ead62782ab8f294a"
+    },
+    {
+      "source": "tests/verification/reliability/blob-budget.test.mts",
+      "line": 32,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "385e46cdc537fbad019ce269952e7f8ff631d205173fccbeb266d812c116adba"
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "line": 21,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "da71f0fcb8efa06d3d5f865949628751c515ce2e255bf745591884878d6ab335"
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4731842f22100d6c74a3dc73251553eca9c55408bb8dbd93e17e52016d98b36c"
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1947628e82e9a705a71d325f15c390a694e168f14f7308f7c4df6988d188cbcd"
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-independent.test.mjs",
+      "line": 17,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ae37cbae3666d3f0e04a82c83b7962163127596f8485b685daf098a5f0615adb"
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-independent.test.mjs",
+      "line": 37,
+      "sink": "console.log",
+      "expressionSha256": "0b5c82a5594490b42a821f515dfbd7badc7274d497c7364cb83c76f7b90daeea"
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-independent.test.mjs",
+      "line": 20,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "ec654fac9599f62e79e2706abef23dfb7c07c08185aa86db4d8695f0b718d1b3"
+    },
+    {
+      "source": "tests/verification/reliability/buster-fixture-journal.test.mts",
+      "line": 23,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2e9b5cefa056885959f4397bc702734688f89e3e3b5ddaf7d6c798136bf6ebc8"
+    },
+    {
+      "source": "tests/verification/reliability/buster-fixture-journal.test.mts",
+      "line": 85,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d1c180036621e06c50b417987f54fc0dc10096bfd02a97f9b0bb0bb33c358a0e"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 23,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "06c9527c727ae91f1bfe18ff12bc8dbb17aabcc477cd54de559dd98ac5dabb26"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 172,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 181,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a2fa0a2e71c3293adc10c63e1a09cb323eddc3d048f8431614c5c6f9b439aeca"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 183,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 222,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 301,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9471101696ab204ce9e277ec4b8fc8d04b6a68ca6de264970beab5564872330c"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 312,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "02dafe8eb29076800077e32e5ddef49244d26c2c762b48014d92acf9c13a3d4e"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 316,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9471101696ab204ce9e277ec4b8fc8d04b6a68ca6de264970beab5564872330c"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 318,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0c90e2cd4c75cd254c56c91eec7368bffdb02fb68cd156f29e78bd140bd8eeca"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 321,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "02dafe8eb29076800077e32e5ddef49244d26c2c762b48014d92acf9c13a3d4e"
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "line": 324,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1724f97be790bfb322420a810bfe0e3bee63de73d9cb4ffecff518b4de2c2852"
+    },
+    {
+      "source": "tests/verification/reliability/decisions-and-snapshots.test.mts",
+      "line": 43,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "50ab3c794e6a46f140ed9fb90c635a876b8afabba1e7b91740f95619827961df"
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "line": 23,
+      "sink": "console.log",
+      "expressionSha256": "e967b259ad4acbb6661bdcd9b0aae688aca88981733c0cd7cf8961f6199fcd55"
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "line": 34,
+      "sink": "console.log",
+      "expressionSha256": "e967b259ad4acbb6661bdcd9b0aae688aca88981733c0cd7cf8961f6199fcd55"
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "line": 44,
+      "sink": "console.log",
+      "expressionSha256": "e967b259ad4acbb6661bdcd9b0aae688aca88981733c0cd7cf8961f6199fcd55"
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "line": 54,
+      "sink": "console.log",
+      "expressionSha256": "e967b259ad4acbb6661bdcd9b0aae688aca88981733c0cd7cf8961f6199fcd55"
+    },
+    {
+      "source": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+      "line": 27,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2d5dbd9f608af8d46f978dd51458176f87400a55e915de2226fcd56404340c47"
+    },
+    {
+      "source": "tests/verification/reliability/effect-identity-version.test.mts",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f6ef6c991c4ade7f61ec780069200270d637075568cf7c797d62b238af3b8785"
+    },
+    {
+      "source": "tests/verification/reliability/effect-identity-version.test.mts",
+      "line": 90,
+      "sink": "process.stdout.write",
+      "expressionSha256": "1bfde07ca07e792d65fbe938a9b5a503adef3f82517d1652fde9c61098947e09"
+    },
+    {
+      "source": "tests/verification/reliability/forge-lock-wait.test.mts",
+      "line": 74,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e6972a57191956794811a80483808dc80430ac9a9ec90503bad94bf91ef167e7"
+    },
+    {
+      "source": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "line": 33,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 46,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "06c9527c727ae91f1bfe18ff12bc8dbb17aabcc477cd54de559dd98ac5dabb26"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 160,
+      "sink": "console.log",
+      "expressionSha256": "0b9dab269f89140f006b2d6d032bb1653b411e4783ac781ab4d4baec5d6d0590",
+      "basis": "unsupported-runtime-imported-constructor"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 217,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "fe539d76541e41ead55f755d57d7db9b33ac91809bc3a3b790e7eae136328683"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 219,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5aab7283c68d555ee2d6380ac2ce8954ec07ec1537f6e149db7ddbbee797239e"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 275,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "462c85ce55b051c980bc775a9996f60d67e723ff524a0724998158fb926c38fc"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 298,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "462c85ce55b051c980bc775a9996f60d67e723ff524a0724998158fb926c38fc"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 316,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6a51ddcefa4893947f332b1388fdf8ed1ffbba7b2d9e4eafc774172a26003c7d"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 346,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "8c2ebdea93de18c58aeea8694ce13f7d16a778390f49d4b7bbca7905ddecff6d"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 351,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 367,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7d3a0835338ffa76b262a07fef2ba84e9fad01c5e44683667ce502224ad8110a"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 370,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "8026005e3416608da689c09cf7e70a81b0ec0600763c9603805cd9cf261dbb04"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 376,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1a10a6591bfeb732a6b42508b3f64ff77c6e4f7c9c4892672421bf396cfc4e71"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 383,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ca9ab9e551e73af2567a239a73a20a2b3bbb01228772caa033aed8ceea4c6414"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "397f361ee8727fb51654e96cbaaeaa2d2f19554100edb3fe3d0f5e7161a3cc07"
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+      "line": 64,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9cc4424f507d56c61ebbd5b26da198882551017ab066f0d213bda9e888931a62"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ea817837f7f8a7f1b2972342319da50a4b7f6634b15ee88bf3cab1a695751808",
+      "basis": "enforced-original-key-preserving-canonical-serialization"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 56,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ea817837f7f8a7f1b2972342319da50a4b7f6634b15ee88bf3cab1a695751808",
+      "basis": "enforced-original-key-preserving-canonical-serialization"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 59,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f2be87f183a406a4d60b8f9654511c5183d0f43da93c76c343398dc07e7c1220"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 94,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ea817837f7f8a7f1b2972342319da50a4b7f6634b15ee88bf3cab1a695751808",
+      "basis": "enforced-original-key-preserving-canonical-serialization"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 100,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ea817837f7f8a7f1b2972342319da50a4b7f6634b15ee88bf3cab1a695751808",
+      "basis": "enforced-original-key-preserving-canonical-serialization"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 103,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0d3d0f2cdccd3c8f4c15d87913f46144a27d03f3a73b6b21ea34116593903dd5"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 118,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "560068bf2286966379b85523a6eea6c011bdb64fc6aadf4319d1e53978015b09"
+    },
+    {
+      "source": "tests/verification/reliability/observability-replay.test.mjs",
+      "line": 123,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0d3d0f2cdccd3c8f4c15d87913f46144a27d03f3a73b6b21ea34116593903dd5"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 76,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cd14096dfaf28be0263a193ca180175d285149540f4e62f6818153cd527139f9"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 124,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "632498c349acc61c56fb338c638e81eb9e6105cf82fd4ecafb6d2fea95d1e3eb"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 126,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "8afdcb767a70b7d01683736fb68f7f9ebeaf86d547538be98212e121986a81fb"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 192,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4886cf0315b457ec01825ac3c7d9e635ff9363f0df8ae09fa1fd5a0feeecb538"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 224,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1e1a6fbe6d0be460bb2681715a1366cd5d5d141025e9c22e7308ceeb9019ed76"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 260,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "940505763d6e41ad1e0fa544517748b934da93cbb4f5136a2f65a71452ed390a"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 268,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d67e2e944994496c8d8ec76eed0cf9f09679448d584b532bebf941852a37f5ed"
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "line": 273,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/observer-recovery.test.mts",
+      "line": 36,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "8bc070b3fa2c7bea420c08d7db8b01db1eba939a2d7041f34c49854ab42b8b7f",
+      "basis": "unsupported-runtime-imported-constructor"
+    },
+    {
+      "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 75,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "462c85ce55b051c980bc775a9996f60d67e723ff524a0724998158fb926c38fc"
+    },
+    {
+      "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 85,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6057749146cadc851184d06bf0eb8bc8ccf0a62e746b8afc92a056b0ed14bbc4"
+    },
+    {
+      "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 90,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "64a4d4781cb0ac767ea95c90ea19639efc17a695020c4e93067c4319c24fa3d0"
+    },
+    {
+      "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 187,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "caaa179533229ee0e1a107d4f15436ea853366223826b265a945dd1ec7af0896"
+    },
+    {
+      "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+      "line": 190,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/prism-native-startup.test.mts",
+      "line": 24,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f1234d75178d892a133a410355a5a990cf75d2f33eba25d575943d4df632f3a4"
+    },
+    {
+      "source": "tests/verification/reliability/prism-native-startup.test.mts",
+      "line": 43,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e90b738c19dff35c5059e8fafbec20ff6a87b823ea84f8e692af19be49e43d60"
+    },
+    {
+      "source": "tests/verification/reliability/redis-durability.test.mts",
+      "line": 27,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9bf62db0f97b6922cb718efdd21bef6fde3a2663c89f7595ad470a300c6882cf"
+    },
+    {
+      "source": "tests/verification/reliability/repair-budget-recovery.test.mjs",
+      "line": 41,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "68649ae368a9e1c7506fa52d984c26475c44b78f954f623b7208362f296a7f78"
+    },
+    {
+      "source": "tests/verification/reliability/repair-budget-recovery.test.mjs",
+      "line": 42,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "dfef86bd3235e353973a03bef75d7bc34eef178b770561a98e66398b09a17b42"
+    },
+    {
+      "source": "tests/verification/reliability/repair-budget-recovery.test.mjs",
+      "line": 63,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "7267ef6b1d1f13e1795af6176a27f0dae8221b22e27beab20df12f78ff7c9695"
+    },
+    {
+      "source": "tests/verification/reliability/repair-budget-recovery.test.mjs",
+      "line": 94,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "06c9a1dda7ae33d315237eddb74243613bf47b65c308e281750b12c081e9a768"
+    },
+    {
+      "source": "tests/verification/reliability/repair-budget-recovery.test.mjs",
+      "line": 95,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5ea6e34427e658550d2a445c69e5ba8f1c31bcc9b8b784694561e17bfdfe1c71"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 66,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ba4442b559f487c9c7fdd95310989ebebbc7d7ccbedc72ba3b10514d0877000b"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 67,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 75,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d6087b0ffc18ecce8b9ddcd41c1622c6037c92e562830a872858554f12e01a5f"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 80,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a2071fd1d1e2d310e9cd2994524bb09c6d3161abb331adeafedb9b0f533d6089"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 82,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e6f242559b4120d007e00de3095f93c2db40fc625f6b261056bd28a93a64ba7d"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 90,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "1b263661c8d47a17af418041770afa3a44ea82ab5e89d057dd854f2fd4fc0407"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 92,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 106,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "910401ead4805652dc8c030433bac0629d3bd2756c0dd61426c1e6d568eb442a"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 108,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 127,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a8603de21015fa29d89018065518054a62ee08fc94b77a89834a4ca6268b0eb1"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 127,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2d4b33eb870fcb0329bc73827c0eabc28c710cd38d45841d9797c76ce28e431f"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 137,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "8c2ebdea93de18c58aeea8694ce13f7d16a778390f49d4b7bbca7905ddecff6d"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 139,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "05eeed25005d4e9a0b616baff29c82adc5c106f100ffea0d89c06b412d9d803e"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 145,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "05eeed25005d4e9a0b616baff29c82adc5c106f100ffea0d89c06b412d9d803e"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 145,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a8603de21015fa29d89018065518054a62ee08fc94b77a89834a4ca6268b0eb1"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 149,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2cec18668ec98486d8f1b9bb7db3a40300acb095a7997062812e40c3399338bc"
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "line": 151,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+      "line": 85,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a99032905665829c8212974c49e81269a675e1318b8bfe8851b50657fa5f2958"
+    },
+    {
+      "source": "tests/verification/reliability/review-candidate.test.mts",
+      "line": 28,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "tests/verification/reliability/review-evidence-compiler-recovery.test.mjs",
+      "line": 21,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "173213b4c1580cf2440763fac57744e3ac4e2a5bc3eddd885e3ac654d2c2e7ef"
+    },
+    {
+      "source": "tests/verification/reliability/review-report-compiler-recovery.test.mjs",
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f9920528a3b59cc93798330545a4f4431085600d4c5b73e98857924902ce19ab"
+    },
+    {
+      "source": "tests/verification/reliability/review-report-corruption-independent.test.mjs",
+      "line": 21,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "41f0c27c00e8018f7715b5f50f67b5b54c229c1b843a014152785d9005f58fde"
+    },
+    {
+      "source": "tests/verification/reliability/review-report-locales.test.mjs",
+      "line": 11,
+      "sink": "process.stdout.write",
+      "expressionSha256": "6274a03d9825dc4c4a4360b846e6aacff9545c352d7dc86be0443e0bfa31ae05"
+    },
+    {
+      "source": "tests/verification/reliability/review-report-locales.test.mjs",
+      "line": 60,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "0c81d03c412b52d26805ea90968c9e54a44ae3d5c7c2e91471644b283b4ea619"
+    },
+    {
+      "source": "tests/verification/reliability/review-report-locales.test.mjs",
+      "line": 77,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "30df67783cf2793c96db99caa330a9239d1b552ed4392945e4831ebe2d9ec3d0"
+    },
+    {
+      "source": "tests/verification/reliability/sdk-json-portable.test.mts",
+      "line": 30,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "bdaf26bd89cf8c7eca2f6be254f3e29d9aa8ad74f4cca795474e862c4e085835"
+    },
+    {
+      "source": "tests/verification/reliability/source-identity-version.test.mjs",
+      "line": 19,
+      "sink": "process.stdout.write",
+      "expressionSha256": "5a44c8abbad6f495ce39a00655fda1e048e6e7c0ec3c4742dfeb4118cce1610d"
+    },
+    {
+      "source": "tests/verification/reliability/source-snapshot-version.test.mjs",
+      "line": 36,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "e7ccda825d2dfd2187ac98dec4f28b7f31158004df4ddc3c37095db0133fcdf9"
+    },
+    {
+      "source": "tests/verification/reliability/source-snapshot-version.test.mjs",
+      "line": 44,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d67e2e944994496c8d8ec76eed0cf9f09679448d584b532bebf941852a37f5ed"
+    },
+    {
+      "source": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 104,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d67e2e944994496c8d8ec76eed0cf9f09679448d584b532bebf941852a37f5ed"
+    },
+    {
+      "source": "tests/verification/reliability/telemetry-retirement.test.mjs",
+      "line": 106,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "a7e58a51c108e90e4e7131fd6850500ca0341624092203e3c636566fad46cae5"
+    },
+    {
+      "source": "tests/verification/reliability/worker-deadline.test.mts",
+      "line": 99,
+      "sink": "native-file-writer-call",
+      "expressionSha256": "4b21889ebd86e607314abaf6c15589110b14e4a5c65cef2ce98bbbc17cd0949b"
+    },
+    {
+      "source": "tests/verification/reliability/worker-native-journal.test.mts",
+      "line": 95,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d1c180036621e06c50b417987f54fc0dc10096bfd02a97f9b0bb0bb33c358a0e"
+    },
+    {
+      "source": "tests/verification/reliability/worker-observation-durability.test.mts",
+      "line": 113,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d12f555ca6af4af207ca1ffae798f64cd9c803c32edcf526ded12d400175667e"
+    },
+    {
+      "source": "tests/verification/reliability/worker-ownership-store.test.mts",
+      "line": 102,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "efa00074c00ec24d30fe683bf9f74431754f06af8df354b1760df69102af80a3"
+    },
+    {
+      "source": "tests/verification/reliability/project-source-fixture.mjs",
+      "line": 15,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "791fcbfafd1d396eda41bd3b5ef385ab03e61b995bd2544c02690bb11bef14e1"
+    },
+    {
+      "source": "tests/verification/e2e/checkpoints.mjs",
+      "line": 686,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "f39592393ef0859cb196a52693d2cea00fb2df784b3c04ae54aa7cadb8e562f8"
+    },
+    {
+      "source": "tests/verification/e2e/failure-scenarios.mjs",
+      "line": 1500,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "506b98ea4f72e545b095aba8f1410043c8eaf26d5f72042b5ec8042b620922a7"
+    },
+    {
+      "source": "tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "line": 134,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "3dbc04bdec56134e6b35f64fbd04741bc159738e9ba0bd76503355ca4a62639b"
+    },
+    {
+      "source": "tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "line": 135,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "722d37e853aaf8e78a756191e1c04cc3c5e428273c0eebad4db2b3d9917558c4"
+    },
+    {
+      "source": "tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "line": 136,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9471101696ab204ce9e277ec4b8fc8d04b6a68ca6de264970beab5564872330c"
+    },
+    {
+      "source": "tests/verification/e2e/real-run-workspace.mjs",
+      "line": 630,
+      "sink": "return",
+      "expressionSha256": "bcc83827272fe4cb0accf30eb9e06a975f80f1ab05b447999ac5b74f09e3b73b"
+    },
+    {
+      "source": "tests/verification/e2e/real-run-workspace.mjs",
+      "line": 118,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2c1ffe2ec2ed902a19fda7f3692d524ba061137856c5abd1926532e0f8caaee4"
+    },
+    {
+      "source": "tests/verification/e2e/real-run-workspace.mjs",
+      "line": 123,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "source": "tests/verification/e2e/real-run-workspace.mjs",
+      "line": 1571,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "4db1143387bed3836eebb4ee4e9c0e9fa83bb48f2ca84d343bc65c1c434d2596"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 125,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "667b564eb7130565ccb6000cd19983f5d41c518e0f3c3e54ac8eadd29335fedc"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 141,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 142,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 143,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    {
+      "source": "tests/verification/e2e/manifest-lint-production.mts",
+      "line": 12,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2c1ffe2ec2ed902a19fda7f3692d524ba061137856c5abd1926532e0f8caaee4"
+    },
+    {
+      "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "406fb04b5f895140af5afcaa4f0a3500d6104dfd4f166143854d9ef01fedff51"
+    },
+    {
+      "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+      "line": 50,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "406fb04b5f895140af5afcaa4f0a3500d6104dfd4f166143854d9ef01fedff51"
+    },
+    {
+      "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+      "line": 60,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d199480dcfaf4a815c32d3209bb8e3caad5bbd64a1aec88720bf55ec92c54c48"
+    },
+    {
+      "source": "tests/verification/e2e/malformed-output-publisher.mjs",
+      "line": 133,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "d45e7b859848a0385ff25579e36070e6c467e7bbe445ceeed4035ae89594ca42"
+    },
+    {
+      "source": "tests/verification/e2e/bounded-output-capture.mjs",
+      "line": 162,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6c87f68371b28954707ebb92afee7ccffb74c6f71ec8fea8a98cf6104289585b"
+    },
+    {
+      "source": "tests/verification/e2e/bounded-output-capture.mjs",
+      "line": 164,
+      "sink": "process.stdout.write",
+      "expressionSha256": "3530247291cf86cf1d1ec3836e08d2cd9e96d75db2ee8ca88e89263513295d46"
+    },
+    {
+      "source": "tests/verification/e2e/bounded-output-capture.mjs",
+      "line": 169,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "6c87f68371b28954707ebb92afee7ccffb74c6f71ec8fea8a98cf6104289585b"
+    },
+    {
+      "source": "tests/verification/e2e/bounded-output-capture.mjs",
+      "line": 171,
+      "sink": "process.stderr.write",
+      "expressionSha256": "3530247291cf86cf1d1ec3836e08d2cd9e96d75db2ee8ca88e89263513295d46"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "line": 17,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "2bf8de73f39c62c9a5cb1d1a850b0775001c137ee9e046a61042a300dd1af78d"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "line": 26,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "9ae28a71c7faf720ec63aace374fc3583ef817b645dd924aa69422695c1154bd"
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-historical.mjs",
+      "line": 15,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5d6a0a993a998d708ccb9388e9ae702fb982df189ad4423564cc6c1095773006"
+    },
+    {
+      "source": "tests/verification/reliability/fixtures/forge-runtime.mts",
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "cc6232cefc689ddc8ce38de143f0d5455b331df256f5eb8895e9f6133d9e0b69"
+    },
+    {
+      "source": "tests/verification/reliability/repair-identity-historical.mjs",
+      "line": 52,
+      "sink": "return",
+      "expressionSha256": "04d55887da2b3a0f91674ef1359c510f5812df4bee2814953aa5bfa2a5cbd6f6"
+    },
+    {
+      "source": "tests/verification/reliability/repair-identity-historical.mjs",
+      "line": 41,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "5d6a0a993a998d708ccb9388e9ae702fb982df189ad4423564cc6c1095773006"
+    },
+    {
+      "source": "tests/verification/reliability/worker-deadline-fixture.mts",
+      "line": 26,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1"
+    },
+    {
+      "source": "tests/verification/reliability/worker-deadline-fixture.mts",
+      "line": 32,
+      "sink": "fs.writeFileSync",
+      "expressionSha256": "70e74c49524bbcd78aa3e9ff82a1555c5cd8c252261ab72c3a383c41eebb2e36"
+    }
+  ],
+  "qualification": "diagnostic inventory only; no content/gate/runtime acceptance; subsequent candidate receipt refreshes remain independently reviewed work"
+}

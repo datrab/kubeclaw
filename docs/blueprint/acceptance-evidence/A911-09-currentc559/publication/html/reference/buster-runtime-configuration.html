@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/buster-runtime-configuration.html"></head><body><main>
+<h1 id="buster-runtime-configuration">Buster Runtime Configuration</h1>
+<p>Status: implemented, with installation-specific values required
+Audience: platform operator and Buster maintainer
+Owner: buster
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/production.ts">skills/buster/engine/test-gates/production.ts</a>
+Evidence revision: <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>
+Applies to: <code>buster-remote-plan-runtime.v1</code>
+Last verified: loader, service, and capability runtime inspection on 2026-09-19</p>
+<h2 id="purpose-and-boundary">Purpose and Boundary</h2>
+<p>This file configures the Buster HTTP service and the authority that it can give
+to test providers. It is operator configuration. A project cannot change it
+through <code>pipeline.json</code>.</p>
+<p>The project declaration says what a test wants to do. Nova policy limits the
+resolved plan. The Buster runtime file decides which capabilities exist on this
+installation and applies service-side limits. A project value can be lower than
+an operator limit. It cannot raise an operator limit or enable a capability.</p>
+<p>The production loader accepts a JSON file path and a separate environment map.
+It returns an in-process runtime object. The repository does not currently ship
+a standalone configuration schema or a general Buster administration CLI.
+Therefore, use this reference with the loader verification command. Do not
+assume that an unknown JSON field is rejected: the current loader reads known
+fields but does not perform a closed root-object check.</p>
+<blockquote>
+<p><strong>Claim:</strong> The production loader constructs one authenticated, durable Buster
+service from an operator JSON file, environment secrets, a trusted package
+registry, service limits, and explicit capability blocks.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/production.ts#L116-L422">The production loader reads JSON, secrets, the package registry, service limits, and capability blocks</a>.</p>
+<p><strong>Contract or setting:</strong> <code>buster-remote-plan-runtime.v1</code> is the exact root
+version. <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-runtime.ts#L6-L72">The HTTP runtime validates its listener and performs recovery before it listens</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/tests/verification/contracts/check-pipeline-remote-runtime-config.mts#L12-L153">The configuration check covers authentication, source keys, isolation, capability requirements, and HTTP policy</a>.
+The direct configuration check could not complete in the documentation
+environment on 2026-09-19 because that environment has no <code>/usr/bin/tar</code>.
+It stopped at that explicit host prerequisite; it did not report a product
+assertion failure.</p>
+<p><strong>Revision:</strong> <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>.</p>
+<p><strong>Limit:</strong> Loader construction proves configuration parsing. It does not
+prove that BuildKit, Kubernetes, browsers, scanners, the registry, or a target
+endpoint works.</p>
+</blockquote>
+<h2 id="load-order-and-precedence">Load Order and Precedence</h2>
+<ol>
+<li>The loader resolves the runtime file itself to a real path. Relative paths
+in the file resolve from its containing directory.</li>
+<li>It reads <code>KUBECLAW_BUILD_REVISION</code> and named secrets from the supplied
+environment. Secret values do not come from JSON.</li>
+<li>It loads <code>platformConfig</code>, discovers installed packages, applies package
+trust, and builds one immutable registry snapshot.</li>
+<li>It validates root service limits and each configured capability block.</li>
+<li>It creates durable stores, the execution service, and the HTTP runtime.</li>
+<li><code>start()</code> recovers durable jobs before it opens the listener.</li>
+</ol>
+<p>JSON does not override environment secret values. Environment values do not
+override numeric or policy fields in JSON. Code defaults apply only where this
+page states a default. A provider plan cannot override any value on this page.</p>
+<h2 id="required-environment">Required Environment</h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Requirement</th>
+<th>Reason and security effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KUBECLAW_BUILD_REVISION</code></td>
+<td>Required; 40–64 lower-case hexadecimal characters</td>
+<td>Binds every result to the Worker/Buster build that executed it. Do not use a branch name or an invented value.</td>
+</tr>
+<tr>
+<td>Name in <code>tokenEnvironmentVariable</code></td>
+<td>Required when <code>trustedPeerSpiffeIds</code> is absent</td>
+<td>Supplies the bearer token. The JSON stores only its variable name, so the secret does not enter configuration source control.</td>
+</tr>
+<tr>
+<td>Name in <code>sourceAttestationPublicKeyEnvironmentVariable</code></td>
+<td>Required; must differ from the token variable</td>
+<td>Supplies the trusted Nova Ed25519 public key. Buster uses it to verify source attestations.</td>
+</tr>
+<tr>
+<td>Registry variable names</td>
+<td>Required only when their corresponding registry fields are present</td>
+<td>Supply registry username and password as a pair. The loader rejects an incomplete pair.</td>
+</tr>
+</tbody>
+</table>
+<p>Use either a bearer token or trusted peer SPIFFE IDs for HTTP client identity.
+When <code>trustedPeerSpiffeIds</code> exists, the loader does not read
+<code>tokenEnvironmentVariable</code>. TLS material and peer identity must still be
+provided by the deployment path that terminates the connection correctly.</p>
+<h2 id="root-service-fields">Root Service Fields</h2>
+<p>All byte, time, count, and concurrency values are safe integers. Unless a row
+states otherwise, their minimum is 1 and the loader has no maximum. Choose a
+maximum that fits available storage or memory; absence of a loader maximum does
+not make an unbounded value safe.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Required; exact <code>buster-remote-plan-runtime.v1</code></td>
+<td>Selects this loader contract.</td>
+</tr>
+<tr>
+<td><code>platformConfig</code></td>
+<td>Required path</td>
+<td>Plugin-platform file. Relative paths resolve from the runtime file. It supplies installation roots and package trust.</td>
+</tr>
+<tr>
+<td><code>host</code></td>
+<td>Required non-empty string</td>
+<td>Listener address. Binding a non-loopback address exposes the service to the configured network. Pair it with authenticated transport.</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>Required; integer 0–65535</td>
+<td>Listener port. <code>0</code> asks the operating system for a port and is useful for tests, not stable service discovery.</td>
+</tr>
+<tr>
+<td><code>tokenEnvironmentVariable</code></td>
+<td>Required unless SPIFFE peers are configured</td>
+<td>Name of the bearer-token variable. It must match <code>[A-Z][A-Z0-9_]*</code>.</td>
+</tr>
+<tr>
+<td><code>trustedPeerSpiffeIds[]</code></td>
+<td>Optional; 1–32 non-empty strings</td>
+<td>Allowed authenticated peer identities. Its presence selects peer authentication instead of bearer token loading.</td>
+</tr>
+<tr>
+<td><code>sourceAttestationPublicKeyEnvironmentVariable</code></td>
+<td>Required variable name</td>
+<td>Selects the Nova source-attestation public key. It cannot be the token variable.</td>
+</tr>
+<tr>
+<td><code>trustedSourceAuthority</code></td>
+<td>Required non-empty string</td>
+<td>Exact authority expected in a signed source snapshot. It must agree with Nova's configured source authority.</td>
+</tr>
+<tr>
+<td><code>stateRoot</code></td>
+<td>Required path</td>
+<td>Durable job, result, and evidence records. Keep it on private persistent storage.</td>
+</tr>
+<tr>
+<td><code>runtimeRoot</code></td>
+<td>Required path</td>
+<td>Attempt workspaces and extracted source. Give Buster exclusive ownership and enough temporary capacity.</td>
+</tr>
+<tr>
+<td><code>tarExecutable</code></td>
+<td>Required path to an existing file</td>
+<td>GNU-compatible archive program used for listing and safe extraction. The service resolves the real file at startup.</td>
+</tr>
+<tr>
+<td><code>maximumArchiveBytes</code></td>
+<td>Required positive integer</td>
+<td>Maximum compressed source archive accepted into the store.</td>
+</tr>
+<tr>
+<td><code>maximumExtractedBytes</code></td>
+<td>Required positive integer</td>
+<td>Maximum total file bytes accepted after archive expansion. It limits decompression amplification.</td>
+</tr>
+<tr>
+<td><code>maximumResultBytes</code></td>
+<td>Required positive integer</td>
+<td>Maximum stored result object and maximum result returned by the HTTP runtime.</td>
+</tr>
+<tr>
+<td><code>maximumResultStoreBytes</code></td>
+<td>Required positive integer</td>
+<td>Aggregate capacity reserved for result objects. Admission rejects work when the reservation cannot fit.</td>
+</tr>
+<tr>
+<td><code>maximumRequestBytes</code></td>
+<td>Required positive integer</td>
+<td>HTTP request-body limit. It must be large enough for an accepted job and source archive.</td>
+</tr>
+<tr>
+<td><code>maximumResponseBytes</code></td>
+<td>Required positive integer</td>
+<td>General HTTP response limit. Evidence and result endpoints also apply their object-specific limits.</td>
+</tr>
+<tr>
+<td><code>shutdownTimeoutMs</code></td>
+<td>Required positive integer</td>
+<td>Time allowed for listener closure and service shutdown before connections are forced closed.</td>
+</tr>
+<tr>
+<td><code>maximumActiveJobs</code></td>
+<td>Default 2</td>
+<td>Maximum jobs executing at one time.</td>
+</tr>
+<tr>
+<td><code>maximumQueuedJobs</code></td>
+<td>Default 16</td>
+<td>Maximum admitted jobs waiting for execution.</td>
+</tr>
+<tr>
+<td><code>maximumConcurrentAttempts</code></td>
+<td>Default 64</td>
+<td>Maximum total attempt weight that one submitted plan can request. A plan above it is rejected.</td>
+</tr>
+<tr>
+<td><code>allowedCapabilities[]</code></td>
+<td>Required array; empty is valid</td>
+<td>Exact capability IDs that Buster can grant. A provider manifest and the job grant must also allow each capability.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="minimal-root-configuration">Minimal Root Configuration</h2>
+<p>This minimal file starts an authenticated service without executable provider
+capabilities. It is useful for validating storage, authentication, source
+attestation, package discovery, recovery, and HTTP readiness. It cannot execute
+a test plan because <code>allowedCapabilities</code> is empty.</p>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: &quot;buster-remote-plan-runtime.v1&quot;,
+  &quot;platformConfig&quot;: &quot;./platform.json&quot;,
+  &quot;host&quot;: &quot;127.0.0.1&quot;,
+  &quot;port&quot;: 8080,
+  &quot;tokenEnvironmentVariable&quot;: &quot;BUSTER_V2_TOKEN&quot;,
+  &quot;sourceAttestationPublicKeyEnvironmentVariable&quot;: &quot;BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY&quot;,
+  &quot;trustedSourceAuthority&quot;: &quot;nova:production&quot;,
+  &quot;stateRoot&quot;: &quot;./state&quot;,
+  &quot;runtimeRoot&quot;: &quot;./runs&quot;,
+  &quot;tarExecutable&quot;: &quot;/usr/bin/tar&quot;,
+  &quot;maximumArchiveBytes&quot;: 8388608,
+  &quot;maximumResultBytes&quot;: 16777216,
+  &quot;maximumResultStoreBytes&quot;: 67108864,
+  &quot;maximumExtractedBytes&quot;: 33554432,
+  &quot;maximumRequestBytes&quot;: 16777216,
+  &quot;maximumResponseBytes&quot;: 16777216,
+  &quot;shutdownTimeoutMs&quot;: 5000,
+  &quot;recordLimits&quot;: {
+    &quot;maximumRecords&quot;: 1000,
+    &quot;maximumBytes&quot;: 67108864,
+    &quot;maximumRecordBytes&quot;: 16777216
+  },
+  &quot;allowedCapabilities&quot;: []
+}
+</code></pre>
+<p>The paths <code>platform.json</code>, <code>state</code>, and <code>runs</code> resolve from the directory that
+contains this file. The platform file must be a valid <code>pipeline-platform.v2</code>
+document with trusted Buster package roots. The numeric values above are an
+example capacity plan, not production recommendations.</p>
+<p>First run the loader contract check from the KubeClaw repository root:</p>
+<pre><code class="language-text">node tests/verification/contracts/check-pipeline-remote-runtime-config.mts
+</code></pre>
+<p>This check constructs and starts the minimal runtime. It therefore needs the
+exact <code>/usr/bin/tar</code> path used by its controlled fixture. The broader registered
+runtime check is <code>npm run verify:test-gate:remote-runtime</code>; it has the same
+archive-tool prerequisite in the current fixture.</p>
+<p>For an actual service, inject the token and public key through the deployment's
+secret mechanism. Set the build revision to the exact deployed Git revision:</p>
+<pre><code class="language-text">export KUBECLAW_BUILD_REVISION=&quot;&lt;40-to-64-character-lowercase-hex-revision&gt;&quot;
+export BUSTER_V2_TOKEN=&quot;&lt;at-least-32-character-random-token&gt;&quot;
+export BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY=&quot;&lt;PEM-encoded-Nova-Ed25519-public-key&gt;&quot;
+node skills/buster/engine/remote-plan-cli.ts --config &quot;&lt;buster-runtime.json&gt;&quot;
+</code></pre>
+<p>Replace each bracketed value; do not type the brackets. The CLI prints one
+<code>buster-remote-runtime-ready.v1</code> JSON object with the bound host and port after
+durable recovery finishes. It then remains in the foreground. From another
+process, check readiness:</p>
+<pre><code class="language-text">curl --fail --show-error &quot;http://127.0.0.1:8080/readyz&quot;
+</code></pre>
+<h3 id="start-one-nova-remote-gate-request">Start one Nova remote-gate request</h3>
+<p>The Buster service command above owns its <code>--config</code> option. Nova has a
+separate command that submits one prepared gate request to that service:</p>
+<pre><code class="language-text">node skills/nova/core/test-gates/remote-gate-cli.ts \
+  --config &quot;&lt;nova-runtime.json&gt;&quot; \
+  --job &quot;&lt;job.json&gt;&quot; \
+  --timeout-ms &quot;300000&quot;
+</code></pre>
+<p>The Nova command requires all three value-taking options. <code>--config</code> selects
+the Nova remote-gate runtime configuration. <code>--job</code> selects a JSON request
+that contains the source identity, resolved plan, grants, concurrency limit,
+and submission time. <code>--timeout-ms</code> sets the positive whole-number deadline
+passed to gate execution. A missing value, a missing option, zero, a negative
+number, or a fractional timeout fails before Nova loads the runtime.</p>
+<p>This command consumes an already prepared request. It does not resolve a test
+plan, add capabilities, or repair grants. A passed process exit means that the
+returned remote stage result has outcome <code>passed</code>; other outcomes set a
+non-zero exit status.</p>
+<blockquote>
+<p><strong>Source evidence — Nova remote-gate command</strong></p>
+<p><strong>Claim:</strong> The command requires the configuration, job, and positive timeout
+values, then passes the parsed request and timeout to one gate execution.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-gate-cli.ts#L9-L37">argument and request handling</a></p>
+<p><strong>Revision:</strong> <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code></p>
+</blockquote>
+<p>For the minimal file, the response must have HTTP 200, <code>ready: true</code>, and code
+<code>BUSTER_READY</code>. Use HTTPS and the deployed address when <code>tls</code> or a network
+service exposes Buster. Send <code>SIGTERM</code> or <code>SIGINT</code> to the foreground CLI for a
+graceful stop. Preserve its final error output if shutdown fails.</p>
+<blockquote>
+<p><strong>Source evidence — service entry point</strong></p>
+<p><strong>Claim:</strong> The CLI accepts exactly <code>--config &lt;file&gt;</code>, starts recovery before
+it prints the ready record, waits for <code>SIGINT</code> or <code>SIGTERM</code>, and then invokes
+graceful runtime shutdown.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/remote-plan-cli.ts#L1-L27">The Buster CLI owns the load, start, signal, and stop sequence</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-http.ts#L84-L103">The readiness route returns <code>BUSTER_READY</code> only when recovery and configured dependency readiness succeed</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts#L188-L262">The runtime test verifies recovery-before-listen, liveness, readiness, dependency failure, and shutdown behavior</a>. The registered check reached its declared <code>/usr/bin/tar</code> prerequisite and stopped because the documentation environment does not contain that path on 2026-09-19.</p>
+<p><strong>Revision:</strong> <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>.</p>
+<p><strong>Limit:</strong> An empty capability list proves only the service boundary. It
+cannot admit an executable provider grant.</p>
+</blockquote>
+<p>The service also rejects archives with unsafe paths or types, more than 200,000
+entries, or excessive expanded bytes. These archive rules are fixed code
+limits, not configuration fields.</p>
+<h3 id="durable-record-limits">Durable record limits</h3>
+<p><code>recordLimits</code> is required.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recordLimits.maximumRecords</code></td>
+<td>Yes</td>
+<td>Maximum durable records in the store.</td>
+</tr>
+<tr>
+<td><code>recordLimits.maximumBytes</code></td>
+<td>Yes</td>
+<td>Maximum aggregate record bytes.</td>
+</tr>
+<tr>
+<td><code>recordLimits.maximumRecordBytes</code></td>
+<td>Yes</td>
+<td>Maximum bytes in one record. It must permit the largest accepted job record.</td>
+</tr>
+</tbody>
+</table>
+<p>Set the record and result capacities together. A large request limit is not
+useful when a single durable record cannot store the accepted job. Capacity
+failure is an admission error, not a failed quality assertion.</p>
+<h3 id="dependency-readiness-and-tls">Dependency readiness and TLS</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dependencyReadiness.maximumExecutionMs</code></td>
+<td>Optional block; positive integer</td>
+<td>BuildKit readiness command timeout. When the block is absent, the service uses 1000 ms.</td>
+</tr>
+<tr>
+<td><code>dependencyReadiness.maximumOutputBytes</code></td>
+<td>Optional block; positive integer</td>
+<td>BuildKit readiness output limit. When the block is absent, the service uses 65536 bytes.</td>
+</tr>
+<tr>
+<td><code>tls.keyPath</code></td>
+<td>Required when <code>tls</code> exists</td>
+<td>Private-key file. The loader resolves its real path and reads it at startup.</td>
+</tr>
+<tr>
+<td><code>tls.certificatePath</code></td>
+<td>Required when <code>tls</code> exists</td>
+<td>Certificate file. The runtime passes both byte buffers to the HTTP server.</td>
+</tr>
+</tbody>
+</table>
+<p>BuildKit readiness is active only when <code>container.build</code> is allowed. The
+service refuses new work when that dependency check fails. Other capability
+dependencies fail during their own admission or execution; the root readiness
+endpoint does not probe all browsers, scanners, clusters, or target services.</p>
+<h2 id="capability-blocks">Capability Blocks</h2>
+<p>A capability can be present in an installed provider and still be unavailable.
+The ID must be in <code>allowedCapabilities</code>, and the matching block below must be
+present when the loader requires it. This two-part rule prevents package
+installation from silently granting host or network authority.</p>
+<h3 id="direct-command-commandexecute">Direct command: <code>command.execute</code></h3>
+<p><code>directCommand</code> is required when <code>command.execute</code> is allowed.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>executableCatalog</code></td>
+<td>Required non-empty string map</td>
+<td>Maps stable project names to operator-approved executables. Project configuration selects a name, not a path.</td>
+</tr>
+<tr>
+<td><code>executableSearchPath[]</code></td>
+<td>Required; 1–32 strings</td>
+<td>PATH directories exposed to a command.</td>
+</tr>
+<tr>
+<td><code>runtimeReadRoots[]</code></td>
+<td>Required; 1–32 strings</td>
+<td>Host roots that the isolated process can read for runtimes and shared libraries.</td>
+</tr>
+<tr>
+<td><code>maximumOutputBytes</code></td>
+<td>Required</td>
+<td>Combined bounded process output.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code></td>
+<td>Required</td>
+<td>Hard command duration.</td>
+</tr>
+<tr>
+<td><code>maximumProcesses</code></td>
+<td>Required</td>
+<td>Process-count limit.</td>
+</tr>
+<tr>
+<td><code>maximumMemoryBytes</code></td>
+<td>Required</td>
+<td>Memory limit.</td>
+</tr>
+<tr>
+<td><code>maximumCpuMillis</code></td>
+<td>Required</td>
+<td>CPU-time limit.</td>
+</tr>
+<tr>
+<td><code>terminationGraceMs</code></td>
+<td>Required</td>
+<td>Grace between cooperative termination and forced termination.</td>
+</tr>
+<tr>
+<td><code>cgroupRoot</code></td>
+<td>Required for strong isolation unless sampling is explicitly allowed</td>
+<td>Cgroup root used for process, memory, and CPU enforcement.</td>
+</tr>
+<tr>
+<td><code>allowSampledProcessLimit</code></td>
+<td>Default <code>false</code></td>
+<td>Allows the weaker sampled-process fallback when no cgroup root exists. Use only as an explicit risk acceptance.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="container-build-containerbuild">Container build: <code>container.build</code></h3>
+<p><code>containerBuild</code> is required when <code>container.build</code> is allowed.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>buildctlExecutable</code></td>
+<td>Required path</td>
+<td>BuildKit client executable.</td>
+</tr>
+<tr>
+<td><code>buildkitHost</code></td>
+<td>Required string</td>
+<td>BuildKit endpoint used by <code>buildctl</code>.</td>
+</tr>
+<tr>
+<td><code>registryBaseUrl</code></td>
+<td>Required absolute HTTP(S) origin</td>
+<td>Registry API origin used for manifest verification.</td>
+</tr>
+<tr>
+<td><code>registryReference</code></td>
+<td>Required host[:port]</td>
+<td>Registry name placed in immutable image references. It must equal the URL host for health access.</td>
+</tr>
+<tr>
+<td><code>repositoryPrefix</code></td>
+<td>Required string</td>
+<td>Namespace below the registry for test images.</td>
+</tr>
+<tr>
+<td><code>allowedPlatforms[]</code></td>
+<td>Required; 1–32 strings</td>
+<td>Platforms a project can request.</td>
+</tr>
+<tr>
+<td><code>allowedBuildArguments[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Non-secret build-argument names that a project can use.</td>
+</tr>
+<tr>
+<td><code>maximumLogBytes</code></td>
+<td>Required</td>
+<td>Build log limit.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code></td>
+<td>Required</td>
+<td>Build and verification duration limit.</td>
+</tr>
+<tr>
+<td><code>maximumManifestBytes</code></td>
+<td>Required</td>
+<td>Registry manifest response limit.</td>
+</tr>
+<tr>
+<td><code>registryUsernameEnvironmentVariable</code>, <code>registryPasswordEnvironmentVariable</code></td>
+<td>Optional pair</td>
+<td>Names of HTTPS registry credential variables. Both or neither must exist.</td>
+</tr>
+</tbody>
+</table>
+<p>The registry health probe under <code>networkHttp</code> reuses this registry endpoint and
+credential pair. Credential use requires HTTPS. An anonymous HTTP lab registry
+can use an unsupported scan-access record, but it is not a secure
+production credential path.</p>
+<h3 id="kubernetes-fixture-kubernetesfixture">Kubernetes fixture: <code>kubernetes.fixture</code></h3>
+<p><code>kubernetesFixture</code> is required when <code>kubernetes.fixture</code> is allowed.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubectlExecutable</code></td>
+<td>Required path</td>
+<td>Kubernetes client executable.</td>
+</tr>
+<tr>
+<td><code>controllerNamespace</code></td>
+<td>Required string</td>
+<td>Namespace of the lease controller.</td>
+</tr>
+<tr>
+<td><code>leaseApiGroup</code>, <code>leaseApiVersion</code></td>
+<td>Required strings</td>
+<td>API identity of the deployment lease.</td>
+</tr>
+<tr>
+<td><code>allowedNamespacePrefixes[]</code></td>
+<td>Required; 1–32</td>
+<td>Namespace prefixes that a project can request.</td>
+</tr>
+<tr>
+<td><code>allowedRegistryPrefixes[]</code></td>
+<td>Required; 1–32</td>
+<td>Immutable image registry/repository prefixes accepted by the broker.</td>
+</tr>
+<tr>
+<td><code>allowedSecretReferences[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Existing source secrets that a fixture can request.</td>
+</tr>
+<tr>
+<td><code>allowedStorageClasses[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Explicit storage classes accepted in checked manifests.</td>
+</tr>
+<tr>
+<td><code>allowDefaultStorageClass</code></td>
+<td>Required Boolean</td>
+<td>Whether a PVC can omit its storage class.</td>
+</tr>
+<tr>
+<td><code>maximumManifestBytes</code></td>
+<td>Required</td>
+<td>Checked-manifest limit.</td>
+</tr>
+<tr>
+<td><code>maximumResources</code></td>
+<td>Required</td>
+<td>Maximum Kubernetes objects in one request.</td>
+</tr>
+<tr>
+<td><code>maximumPersistentVolumeClaimBytes</code></td>
+<td>Required</td>
+<td>Maximum one-claim storage request.</td>
+</tr>
+<tr>
+<td><code>maximumPersistentVolumeTotalBytes</code></td>
+<td>Required</td>
+<td>Maximum storage across the fixture.</td>
+</tr>
+<tr>
+<td><code>maximumRetentionSeconds</code></td>
+<td>Required</td>
+<td>Upper bound for a retained deployment lease.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code></td>
+<td>Required</td>
+<td>Fixture capability duration.</td>
+</tr>
+<tr>
+<td><code>pollIntervalMs</code></td>
+<td>Default 1000; runtime range 50–10000</td>
+<td>Lease observation interval in milliseconds.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tailscale-exposure-kubernetesexposure">Tailscale exposure: <code>kubernetes.exposure</code></h3>
+<p><code>tailscaleExposure</code> is required when <code>kubernetes.exposure</code> is allowed.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubectlExecutable</code></td>
+<td>Required path</td>
+<td>Kubernetes client executable.</td>
+</tr>
+<tr>
+<td><code>controllerNamespace</code></td>
+<td>Required string</td>
+<td>Namespace of the exposure controller.</td>
+</tr>
+<tr>
+<td><code>leaseApiGroup</code>, <code>leaseApiVersion</code></td>
+<td>Required strings</td>
+<td>Exposure lease API identity.</td>
+</tr>
+<tr>
+<td><code>allowedNamespacePrefixes[]</code></td>
+<td>Required; 1–32</td>
+<td>Deployment namespaces that exposure can use.</td>
+</tr>
+<tr>
+<td><code>allowedHostSuffixes[]</code></td>
+<td>Required; 1–32</td>
+<td>DNS suffixes that a produced endpoint must use.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code></td>
+<td>Required</td>
+<td>Exposure and handoff duration.</td>
+</tr>
+<tr>
+<td><code>pollIntervalMs</code></td>
+<td>Default 1000; runtime minimum 10</td>
+<td>Lease observation interval. It cannot exceed <code>maximumExecutionMs</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="http-and-shared-network-networkhttp">HTTP and shared network: <code>network.http</code></h3>
+<p><code>networkHttp</code> is required when <code>network.http</code> is allowed.
+Its nested field names are <code>allowedOrigins[]</code>, <code>allowedHostSuffixes[]</code>,
+<code>allowedPorts[]</code>, <code>allowedMethods[]</code>, <code>allowedRequestHeaders[]</code>,
+<code>maximumRequestBytes</code>, <code>maximumResponseBytes</code>, <code>maximumExecutionMs</code>,
+<code>allowWebSocket</code>, and <code>registryHealth</code>. The table uses fully qualified names so
+that a reader cannot confuse these fields with fields in another policy object.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>networkHttp.allowedOrigins[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Exact direct origins permitted by operator policy.</td>
+</tr>
+<tr>
+<td><code>networkHttp.allowedHostSuffixes[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Permitted target suffixes, normally for internal services.</td>
+</tr>
+<tr>
+<td><code>networkHttp.allowedPorts[]</code></td>
+<td>Required; 1–32 unique integers, range 1–65535</td>
+<td>Target ports.</td>
+</tr>
+<tr>
+<td><code>networkHttp.allowedMethods[]</code></td>
+<td>Default <code>GET</code>, <code>HEAD</code>; when present 1–32 strings</td>
+<td>Methods exposed by the capability. The runtime rejects names outside its supported method set.</td>
+</tr>
+<tr>
+<td><code>networkHttp.allowedRequestHeaders[]</code></td>
+<td>Optional; 1–32 strings</td>
+<td>Request headers that providers can send.</td>
+</tr>
+<tr>
+<td><code>networkHttp.maximumRequestBytes</code></td>
+<td>Defaults to <code>maximumResponseBytes</code></td>
+<td>Request body and WebSocket message limit.</td>
+</tr>
+<tr>
+<td><code>networkHttp.maximumResponseBytes</code></td>
+<td>Required</td>
+<td>Response-body limit.</td>
+</tr>
+<tr>
+<td><code>networkHttp.maximumExecutionMs</code></td>
+<td>Required</td>
+<td>One network operation limit.</td>
+</tr>
+<tr>
+<td><code>networkHttp.allowWebSocket</code></td>
+<td>Default <code>false</code></td>
+<td>Enables WebSocket operations for providers such as API flow.</td>
+</tr>
+<tr>
+<td><code>networkHttp.registryHealth</code></td>
+<td>Optional; exact <code>true</code></td>
+<td>Adds the configured container registry as a health target. It requires <code>containerBuild</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>An empty origin and suffix policy does not mean open network access. A target
+can also arrive through a typed fixture input whose authority the runner checks.</p>
+<h3 id="browser-axe-browseraxe">Browser Axe: <code>browser.axe</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowedOrigins[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Direct browser origins.</td>
+</tr>
+<tr>
+<td><code>allowedBrowsers[]</code></td>
+<td>Required; 1–32</td>
+<td>Browser families allowed by policy. Provider support is Chromium, Firefox, and WebKit.</td>
+</tr>
+<tr>
+<td><code>browserExecutables</code></td>
+<td>Optional map with only <code>chromium</code>, <code>firefox</code>, <code>webkit</code></td>
+<td>Absolute executable paths. Each configured path must exist and be executable.</td>
+</tr>
+<tr>
+<td><code>maximumCombinations</code>, <code>maximumConcurrency</code></td>
+<td>Required</td>
+<td>Limits profile/route products and parallel browser work.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code>, <code>maximumResultBytes</code></td>
+<td>Required</td>
+<td>Runtime and result limits.</td>
+</tr>
+<tr>
+<td><code>maximumScreenshots</code>, <code>maximumScreenshotBytes</code></td>
+<td>Required</td>
+<td>Failure screenshot count and byte limits.</td>
+</tr>
+</tbody>
+</table>
+<p><code>browserAxe</code> is required when <code>browser.axe</code> is allowed.</p>
+<h3 id="lighthouse-browserlighthouse">Lighthouse: <code>browser.lighthouse</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowedOrigins[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Direct target origins.</td>
+</tr>
+<tr>
+<td><code>chromeExecutable</code></td>
+<td>Required absolute executable path</td>
+<td>Chrome/Chromium binary; it must exist and be executable.</td>
+</tr>
+<tr>
+<td><code>maximumRuns</code></td>
+<td>Required</td>
+<td>Maximum repeated measurements.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code>, <code>maximumResultBytes</code></td>
+<td>Required</td>
+<td>Runtime and report limits.</td>
+</tr>
+</tbody>
+</table>
+<p><code>browserLighthouse</code> is required when <code>browser.lighthouse</code> is allowed.</p>
+<h3 id="visual-browser-browservisual">Visual browser: <code>browser.visual</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowedOrigins[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Direct target origins.</td>
+</tr>
+<tr>
+<td><code>allowedBrowsers[]</code>, <code>browserExecutables</code></td>
+<td>Required family list; executable map optional</td>
+<td>Same executable validation as Axe. Exact browser identity remains part of baseline compatibility.</td>
+</tr>
+<tr>
+<td><code>maximumCombinations</code>, <code>maximumConcurrency</code></td>
+<td>Required</td>
+<td>Target/profile product and parallel browser limits.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code>, <code>maximumResultBytes</code></td>
+<td>Required</td>
+<td>Runtime and result limits.</td>
+</tr>
+<tr>
+<td><code>maximumScreenshotBytes</code></td>
+<td>Required</td>
+<td>Limit for one captured image.</td>
+</tr>
+<tr>
+<td><code>maximumMasksPerCombination</code></td>
+<td>Required</td>
+<td>Maximum dynamic-region masks in one comparison.</td>
+</tr>
+</tbody>
+</table>
+<p><code>browserVisual</code> is required when <code>browser.visual</code> is allowed.</p>
+<h3 id="playwright-browserplaywright">Playwright: <code>browser.playwright</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowedOrigins[]</code></td>
+<td>Default empty; maximum 32</td>
+<td>Direct target origins.</td>
+</tr>
+<tr>
+<td><code>allowedTargetPorts[]</code></td>
+<td>Required; 1–32 unique ports</td>
+<td>Endpoint ports accepted by policy.</td>
+</tr>
+<tr>
+<td><code>playwrightExecutable</code>, <code>sandboxExecutable</code></td>
+<td>Required paths</td>
+<td>Controlled Playwright entry point and process sandbox.</td>
+</tr>
+<tr>
+<td><code>runtimeNodeModules</code>, <code>browsersPath</code></td>
+<td>Required paths</td>
+<td>Read-only runtime package and browser installation locations.</td>
+</tr>
+<tr>
+<td><code>readOnlyRoots[]</code></td>
+<td>Required; 1–32</td>
+<td>Additional runtime roots available inside isolation.</td>
+</tr>
+<tr>
+<td><code>maximumWorkers</code></td>
+<td>Required</td>
+<td>Maximum project-requested Playwright workers.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code>, <code>maximumOutputBytes</code>, <code>maximumResultBytes</code></td>
+<td>Required</td>
+<td>Duration, process output, and JSON result limits.</td>
+</tr>
+<tr>
+<td><code>maximumArtifactBytes</code>, <code>maximumArtifactFiles</code></td>
+<td>Required</td>
+<td>Total Playwright evidence limits.</td>
+</tr>
+<tr>
+<td><code>maximumProcesses</code>, <code>maximumMemoryBytes</code>, <code>maximumCpuMillis</code></td>
+<td>Required</td>
+<td>Attempt resource limits.</td>
+</tr>
+<tr>
+<td><code>terminationGraceMs</code></td>
+<td>Required</td>
+<td>Grace before forced process termination.</td>
+</tr>
+<tr>
+<td><code>cgroupRoot</code></td>
+<td>Required non-empty path</td>
+<td>Strong process accounting and enforcement root. No sampled fallback exists for this block.</td>
+</tr>
+<tr>
+<td><code>runAsUid</code>, <code>runAsGid</code></td>
+<td>Required positive integers</td>
+<td>Unprivileged identity used by the sandbox.</td>
+</tr>
+</tbody>
+</table>
+<p><code>browserPlaywright</code> is required when <code>browser.playwright</code> is allowed.</p>
+<h3 id="security-scan-securityscan">Security scan: <code>security.scan</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trivyExecutable</code></td>
+<td>Required path</td>
+<td>Trivy executable.</td>
+</tr>
+<tr>
+<td><code>allowedRegistryPrefixes[]</code></td>
+<td>Required; 1–32</td>
+<td>Image reference prefixes permitted for scanning.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code>, <code>maximumOutputBytes</code></td>
+<td>Required</td>
+<td>Scanner duration and output limits.</td>
+</tr>
+<tr>
+<td><code>cacheDirectory</code></td>
+<td>Required path</td>
+<td>Operator-maintained Trivy database cache.</td>
+</tr>
+<tr>
+<td><code>databasePolicy.maximumVulnerabilityAgeMs</code></td>
+<td>Default 172800000; required when <code>databasePolicy</code> exists</td>
+<td>Maximum vulnerability database age; runtime maximum 30 days.</td>
+</tr>
+<tr>
+<td><code>databasePolicy.maximumJavaAgeMs</code></td>
+<td>Default 604800000; required when <code>databasePolicy</code> exists</td>
+<td>Maximum Java database age; runtime maximum 30 days.</td>
+</tr>
+<tr>
+<td><code>databasePolicy.maximumDatabaseBytes</code></td>
+<td>Default 8589934592; required when <code>databasePolicy</code> exists</td>
+<td>Maximum database footprint; runtime maximum 32 GiB.</td>
+</tr>
+<tr>
+<td><code>registry.registryBaseUrl</code>, <code>registry.registryReference</code></td>
+<td>Required when <code>registry</code> exists</td>
+<td>Scanner registry origin and matching host.</td>
+</tr>
+<tr>
+<td><code>registry.registryUsernameEnvironmentVariable</code>, <code>registry.registryPasswordEnvironmentVariable</code></td>
+<td>Optional pair for parsing; required for HTTPS scan access</td>
+<td>Names of scanner credential variables.</td>
+</tr>
+<tr>
+<td><code>registry.registryCaFile</code></td>
+<td>Optional path</td>
+<td>Additional registry CA file, resolved from the runtime-file directory.</td>
+</tr>
+</tbody>
+</table>
+<p><code>securityScan</code> is required when <code>security.scan</code> is allowed. HTTP registry scan
+configuration creates an unsupported-access record instead of receiving credentials.
+Use HTTPS with credentials for the supported authenticated path.</p>
+<h3 id="kubernetes-runtime-security-kubernetesruntime-security">Kubernetes runtime security: <code>kubernetes.runtime-security</code></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required/default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubectlExecutable</code></td>
+<td>Required path</td>
+<td>Kubernetes client executable.</td>
+</tr>
+<tr>
+<td><code>controllerNamespace</code>, <code>leaseApiGroup</code></td>
+<td>Required strings</td>
+<td>Broker namespace and lease API authority.</td>
+</tr>
+<tr>
+<td><code>allowedNamespacePrefixes[]</code></td>
+<td>Required; 1–32</td>
+<td>Namespaces that runtime observation can inspect.</td>
+</tr>
+<tr>
+<td><code>maximumExecutionMs</code>, <code>maximumOutputBytes</code></td>
+<td>Required</td>
+<td>Observation duration and output limits.</td>
+</tr>
+<tr>
+<td><code>maximumObservationAgeMs</code></td>
+<td>Required</td>
+<td>Maximum age of controller-produced runtime evidence.</td>
+</tr>
+<tr>
+<td><code>pollIntervalMs</code></td>
+<td>Default 1000; runtime range 10–10000</td>
+<td>Observation polling interval. <code>maximumObservationAgeMs</code> cannot be lower than it.</td>
+</tr>
+</tbody>
+</table>
+<p><code>kubernetesRuntimeSecurity</code> is required when
+<code>kubernetes.runtime-security</code> is allowed.</p>
+<p>The capability constructors apply these runtime defaults and tighter ranges
+after the production loader parses the JSON. <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/network-http-runtime.ts#L155-L177">HTTP derives request limits and
+defaults to GET and HEAD</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L443-L503">The Kubernetes fixture defaults polling and bounds its interval</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/trivy-database.ts#L7-L47">The database policy owns its age and byte defaults and maxima</a>.</p>
+<h2 id="safe-configuration-procedure">Safe Configuration Procedure</h2>
+<ol>
+<li>Start with <code>allowedCapabilities: []</code> and valid root service, storage,
+authentication, source-attestation, and platform fields.</li>
+<li>Set <code>KUBECLAW_BUILD_REVISION</code>, the source public key, and either the token or
+peer identity configuration in the service environment.</li>
+<li>Run
+<code>node tests/verification/contracts/check-pipeline-remote-runtime-config.mts</code>
+from the repository root. Stop on the first <code>BUSTER_REMOTE_CONFIG_*</code>,
+authentication, source, or isolation error.</li>
+<li>Add one capability ID and its complete block. Run its implementation check.</li>
+<li>Verify the real dependency in a disposable environment before production
+use. The suite reference gives the exact command and prerequisite.</li>
+<li>Start the service with
+<code>node skills/buster/engine/remote-plan-cli.ts --config &quot;&lt;buster-runtime.json&gt;&quot;</code>.
+Query <code>/readyz</code> and confirm it reports <code>BUSTER_READY</code>. Record the runtime
+revision, registry snapshot, file digest, and deployment revision.</li>
+<li>Submit one bounded canary through Nova. Confirm terminal result import and
+cleanup before increasing concurrency or enabling another capability.</li>
+</ol>
+<p>Do not add a capability only because a plugin is installed. Do not put secret
+values in the JSON file. Do not make a broad network suffix, registry prefix,
+namespace prefix, read root, executable catalogue, or secret allowlist to avoid
+a validation error. Each allowlist is an authority boundary.</p>
+<h2 id="failure-recovery-and-change-control">Failure, Recovery, and Change Control</h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Meaning</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loader rejects a field</td>
+<td>File value, path, secret, or conditional block is invalid.</td>
+<td>Correct the file or environment. Do not start with a partially built runtime.</td>
+</tr>
+<tr>
+<td>Readiness says <code>BUSTER_NOT_BOOTSTRAPPED</code></td>
+<td>Durable recovery has not completed.</td>
+<td>Keep the service out of traffic and inspect recovery/store errors.</td>
+</tr>
+<tr>
+<td>Readiness says <code>BUSTER_DEPENDENCY_UNAVAILABLE</code></td>
+<td>Configured BuildKit readiness failed.</td>
+<td>Repair BuildKit access. Do not treat this as a project test failure.</td>
+</tr>
+<tr>
+<td>Submission says capability denied</td>
+<td>The plan grant is absent from the provider contract or operator allowlist.</td>
+<td>Check all three authorities. Do not broaden the operator list until the provider need is reviewed.</td>
+</tr>
+<tr>
+<td>Store capacity rejects admission</td>
+<td>Durable proof cannot fit.</td>
+<td>Preserve existing data, adjust retention/capacity, then submit a new operation if necessary.</td>
+</tr>
+<tr>
+<td>Shutdown times out</td>
+<td>Active work or persistence did not reach a safe boundary in time.</td>
+<td>Preserve state and logs. On restart, let recovery inspect durable records before new admission.</td>
+</tr>
+</tbody>
+</table>
+<p>A change to package roots or trust can change the registry snapshot and make an
+already resolved plan incompatible. A change to capability policy can make a
+later submission fail even when project configuration did not change. Roll out
+these changes with a new recorded configuration digest and canary. Keep old
+state until all jobs accepted under the old deployment have terminal records
+and imported evidence.</p>
+<h2 id="related-references">Related References</h2>
+<ul>
+<li><a href="../understand/buster.html">Buster architecture</a> explains the service and
+execution sequence.</li>
+<li><a href="buster-suites.html">Buster suites and providers</a> explains project fields and
+live proof commands.</li>
+<li><a href="buster-provider-configuration.html">Provider configuration</a> lists every
+project-controlled provider field. Those fields do not replace this operator
+policy.</li>
+<li><a href="../use/workflows/buster-suite.html">Run and diagnose a Buster suite</a> explains
+supported submission, observation, recovery, cleanup, and evidence.</li>
+</ul>
+</main></body></html>

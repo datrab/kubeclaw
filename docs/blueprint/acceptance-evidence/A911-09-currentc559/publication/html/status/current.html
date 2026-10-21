@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/status/current.html"></head><body><main>
+<h1 id="current-platform-status">Current Platform Status</h1>
+<p>Status: current implementation status with separate live-acceptance limits
+Audience: operator, plugin author, architecture reader
+Owner: platform-architecture
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles/nova.json">packaging/runtime/roles/nova.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles/buster.json">packaging/runtime/roles/buster.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/packaging/runtime/roles/prism.json">packaging/runtime/roles/prism.json</a>
+Applies to: current repository roles and documented product boundaries
+Last verified: 2026-09-17; no live environment result is available</p>
+<h2 id="where-to-find-current-work">Where to find current work</h2>
+<p>This page is a source-reviewed snapshot. It is not a live service dashboard.
+The <code>Last verified</code> field states its evidence limit. Runtime health, availability,
+and successful delivery need the environment checks in <a href="acceptance.html">live acceptance</a>.</p>
+<p>The <a href="open-issues.html">open-issues view</a> comes from the canonical machine-readable register.
+Update <code>docs/status/open-issues.json</code>, then run <code>npm run docs:status:generate</code>.
+The generated page contains the remaining implementation work and its completion criteria.
+It separates current implementation issues from later additions to their scope.</p>
+<p><a href="acceptance.html">Live acceptance</a> records environment prerequisites, procedures and expected results.
+A local finding closure does not assert that those procedures ran.
+The <a href="../decisions/README.html">decision index</a> explains enduring constraints and their authority.</p>
+<h2 id="status-authority">Status Authority</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Authority</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What does repository source implement?</td>
+<td>This page and linked implementation sources</td>
+<td>Source-backed behavior at the verified revision</td>
+</tr>
+<tr>
+<td>Which implementation work remains open?</td>
+<td><code>docs/status/open-issues.json</code> through <a href="open-issues.html">open issues</a></td>
+<td>Current technical gaps with stable IDs</td>
+</tr>
+<tr>
+<td>What work is planned?</td>
+<td><a href="roadmap.html">Roadmap</a></td>
+<td>Intended work, not current behavior</td>
+</tr>
+<tr>
+<td>Did the system pass in a real environment?</td>
+<td><a href="acceptance.html">Live acceptance</a></td>
+<td>Recorded procedure, environment, and result</td>
+</tr>
+<tr>
+<td>Why does a constraint exist?</td>
+<td><a href="../decisions/README.html">Decision records</a></td>
+<td>Decision authority, reason, and supersession</td>
+</tr>
+</tbody>
+</table>
+<p>Update the machine-readable issue register before its generated page. Do not add
+a second issue list to an architecture or operator page. A closed source issue
+does not close its separate live-acceptance gate.</p>
+<h2 id="source-backed-runtime-boundaries">Source-backed runtime boundaries</h2>
+<ul>
+<li>Nova owns the pipeline lifecycle and dispatches bounded work.</li>
+<li>Worker Core provides common mechanics below specialist engines.</li>
+<li>Nova, Buster and Prism each have a runtime-role manifest.</li>
+<li>Prism has an implemented native execution path; it is not merely a design outside the role inventory.</li>
+<li>Buster's remaining native-runner and fixture-lifetime integration belongs to the open issues.</li>
+<li>Forge and Echo are dispatched specialists. A registered package does not prove activation or reachability.</li>
+<li>Plugin API v2 is the extension contract. This does not imply that every runtime and deployment path has completed live acceptance.</li>
+</ul>
+<p>These statements describe repository sources. They do not confirm a deployed cluster, successful operator delivery or product acceptance.
+Use the issue-specific code references and acceptance gates before making a stronger claim.</p>
+</main></body></html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/workflows.html"></head><body><main>
+<h1 id="workflow-inventory">Workflow Inventory</h1>
+<p>Status: generated reference
+Audience: maintainer, developer
+Owner: platform-maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/generated/inventory/workflows.json">docs/generated/inventory/workflows.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-generate.mjs">scripts/docs-generate.mjs</a>
+Applies to: repository automation
+Last verified: generated from current inventory</p>
+<h2 id="summary">Summary</h2>
+<p>This page lists product GitHub Actions workflows, their triggers, path filters, jobs, schedules, and command/action references. Use it when deployment, images, tests, skills, plugins, or CI behavior change.</p>
+<!-- BEGIN GENERATED: source-backed reference -->
+<p>Generated from: <code>.github/workflows/auto-promote-runtime.yaml</code>, <code>.github/workflows/build-images.yaml</code>, <code>.github/workflows/build-ops-mcp.yaml</code>, <code>.github/workflows/dependency-updates.yaml</code>, <code>.github/workflows/docs-checks.yaml</code>, <code>.github/workflows/pipeline-reliability.yaml</code>, <code>.github/workflows/promote-runtime.yaml</code>, <code>.github/workflows/publish-image-receipts.yaml</code>, <code>.github/workflows/release-security.yaml</code>, <code>.github/workflows/remediation-native.yaml</code>, <code>.github/workflows/role-images.yaml</code>, <code>.github/workflows/rollback-runtime.yaml</code>, <code>.github/workflows/update-checks.yaml</code></p>
+<h2 id="workflows">Workflows</h2>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Triggers</th>
+<th>Path filters</th>
+<th>Schedules</th>
+<th>Jobs</th>
+<th>Commands/actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.github/workflows/auto-promote-runtime.yaml</code> (Publish production deployment)</td>
+<td><code>workflow_run</code></td>
+<td></td>
+<td></td>
+<td><code>publish</code></td>
+<td><code>node scripts/updates/select-runtime-deployment.mjs</code><br><code>npm ci --ignore-scripts --no-audit --no-fund</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code><br><code>workflows: [Build Runtime Images And Skill Bundles]</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/build-images.yaml</code> (Build Runtime Images And Skill Bundles)</td>
+<td><code>push</code>, <code>workflow_dispatch</code></td>
+<td></td>
+<td></td>
+<td><code>update-policy</code>, <code>reliability</code>, <code>detect-build-inputs</code>, <code>build</code>, <code>bundle-skills</code>, <code>prism-live-acceptance</code>, <code>preserve-receipts</code></td>
+<td><code>bash scripts/deploy.sh prism-e2e</code><br><code>bash scripts/prepare-image-build-runner.sh</code><br><code>node scripts/updates/code-release.mjs dist &quot;$GITHUB_SHA&quot; &quot;$GITHUB_REPOSITORY</code><br><code>node scripts/updates/runtime-inputs.mjs</code><br><code>npm ci --ignore-scripts</code><br><code>npm run plugin-system:sandbox:build</code><br><code>uses: ./.github/workflows/pipeline-reliability.yaml</code><br><code>uses: ./.github/workflows/publish-image-receipts.yaml</code><br><code>uses: ./.github/workflows/update-checks.yaml</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code><br><code>uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede</code><br><code>uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a</code><br><code>uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f</code><br><code>uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302</code><br><code>uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/build-ops-mcp.yaml</code> (Build Ops Images)</td>
+<td><code>pull_request</code>, <code>push</code>, <code>workflow_dispatch</code></td>
+<td><code>versions.json</code><br><code>scripts/versions.mjs</code><br><code>scripts/scan-runtime-images.sh</code><br><code>tools/ops-mcp/**</code><br><code>my-values/infra/**</code><br><code>scripts/*cilium*</code><br><code>examples/cilium/**</code><br><code>ops/pod/**</code><br><code>charts/ops-pod/**</code><br><code>scripts/deploy-ops-pod.sh</code><br><code>.github/workflows/build-ops-mcp.yaml</code></td>
+<td></td>
+<td><code>validate</code>, <code>publish</code>, <code>preserve-receipts</code></td>
+<td><code>bash ops/pod/test-image.sh &quot;$TEST_IMAGE</code><br><code>bash scripts/scan-runtime-images.sh &quot;$IMAGE</code><br><code>bash tools/ops-mcp/test-image.sh &quot;$TEST_IMAGE</code><br><code>node scripts/versions.mjs --check</code><br><code>uses: ./.github/workflows/publish-image-receipts.yaml</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38</code><br><code>uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code><br><code>uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a</code><br><code>uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f</code><br><code>uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302</code><br><code>uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/dependency-updates.yaml</code> (Dependency updates)</td>
+<td><code>schedule</code>, <code>workflow_dispatch</code></td>
+<td></td>
+<td><code>15 4 * * *</code></td>
+<td><code>renovate</code></td>
+<td><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/pipeline-reliability.yaml</code> (Pipeline reliability)</td>
+<td><code>pull_request</code>, <code>workflow_call</code></td>
+<td></td>
+<td></td>
+<td><code>core-reliability</code>, <code>reliability-tests</code>, <code>native-reliability</code>, <code>service-reliability</code>, <code>browser-reliability</code>, <code>security-reliability</code>, <code>prism-postgres-reliability</code></td>
+<td><code>bash scripts/prepare-reliability-services.sh</code><br><code>node --test tests/verification/deployment/reliability-groups.test.mjs</code><br><code>node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs</code><br><code>node node_modules/playwright/cli.js install --with-deps chromium</code><br><code>node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4</code><br><code>node scripts/reliability-tests.mjs services</code><br><code>node tests/verification/contracts/check-pipeline-remote-real-provider.mts</code><br><code>node tests/verification/contracts/check-prism-postgres-transactions.mts</code><br><code>node tests/verification/contracts/check-project-compiler.mts</code><br><code>npm ci --ignore-scripts</code><br><code>npm run plugin-system:sandbox:build</code><br><code>npm run typecheck:skills</code><br><code>npm run verify:reliability:contracts</code><br><code>npm run versions:check</code><br><code>npm test --prefix skills/buster/plugins/${{ matrix.provider }}</code><br><code>npm test --workspace @kubeclaw/plugin-security-providers</code><br><code>sudo apt-get -o Acquire::Retries=3 update &amp;&amp; sudo apt-get -o Acquire::Retries=3 install -y nginx redis-server</code><br><code>sudo apt-get update &amp;&amp; sudo apt-get install -y shellcheck shfmt</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/promote-runtime.yaml</code> (Promote image release)</td>
+<td><code>workflow_dispatch</code></td>
+<td></td>
+<td></td>
+<td><code>prepare</code></td>
+<td><code>npm ci --ignore-scripts --no-audit --no-fund</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/publish-image-receipts.yaml</code> (Preserve image release receipts)</td>
+<td><code>workflow_call</code></td>
+<td></td>
+<td></td>
+<td><code>preserve</code></td>
+<td><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/release-security.yaml</code> (Release security rescan)</td>
+<td><code>schedule</code>, <code>workflow_dispatch</code></td>
+<td></td>
+<td><code>45 5 * * *</code></td>
+<td><code>scan</code></td>
+<td><code>node scripts/updates/scan-releases.mjs</code><br><code>node scripts/versions.mjs --check</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/remediation-native.yaml</code> (Native remediation acceptance)</td>
+<td><code>pull_request</code>, <code>workflow_call</code></td>
+<td><code>skills/**</code><br><code>scripts/**</code><br><code>contracts/**</code><br><code>tests/**</code><br><code>tools/ops-mcp/**</code><br><code>spikes/prism/puck-adapter/**</code><br><code>charts/kubeclaw/files/config/knip.json</code><br><code>package.json</code><br><code>package-lock.json</code><br><code>versions.json</code><br><code>.github/workflows/remediation-native.yaml</code></td>
+<td></td>
+<td><code>static</code>, <code>inputs</code>, <code>postgres</code>, <code>studio</code>, <code>supervisor</code></td>
+<td><code>node node_modules/playwright/cli.js install --with-deps chromium</code><br><code>node skills/prism/tests/native/postgres-suite.mts transactions</code><br><code>node skills/prism/tests/native/postgres-suite.mts worker-readiness</code><br><code>npm ci --ignore-scripts</code><br><code>npm run knip:check</code><br><code>npm run test:corpus-pool --workspace @kubeclaw/prism</code><br><code>npm run test:review-operations</code><br><code>npm run test:studio-remediation --workspace @kubeclaw/prism</code><br><code>npm run typecheck:integration</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/role-images.yaml</code> (Role image acceptance)</td>
+<td><code>pull_request</code>, <code>workflow_dispatch</code></td>
+<td></td>
+<td></td>
+<td><code>inputs</code>, <code>image</code></td>
+<td><code>bash scripts/check-built-runtime-image.sh &quot;$ROLE&quot; &quot;$IMAGE</code><br><code>bash scripts/prepare-image-build-runner.sh</code><br><code>node scripts/updates/runtime-inputs.mjs</code><br><code>node scripts/versions.mjs --check</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a</code><br><code>uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/rollback-runtime.yaml</code> (Roll back production deployment)</td>
+<td><code>workflow_dispatch</code></td>
+<td></td>
+<td></td>
+<td><code>prepare</code></td>
+<td><code>node scripts/gitops-rollback.mjs &quot;https://github.com/$GITHUB_REPOSITORY.git&quot; &quot;$ROLLBACK_TARGET&quot; &gt; &quot;$RUNNER_TEMP/rollback.json</code><br><code>node scripts/updates/verify-release-source.mjs</code><br><code>npm ci --ignore-scripts --no-audit --no-fund</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/update-checks.yaml</code> (Update policy acceptance)</td>
+<td><code>pull_request</code>, <code>workflow_call</code></td>
+<td></td>
+<td></td>
+<td><code>policy</code>, <code>envoy</code>, <code>upstream-checksums</code></td>
+<td><code>bash tests/verification/deployment/check-envoy-image.sh &quot;$(node -p 'require(&quot;./versions.json&quot;).infrastructure.envoy')</code><br><code>node scripts/updates/check-upstream-refresh.mjs</code><br><code>node scripts/updates/verify-release-source.mjs</code><br><code>npm ci --ignore-scripts --no-audit --no-fund</code><br><code>uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803</code><br><code>uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444</code><br><code>uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4</code></td>
+</tr>
+</tbody>
+</table>
+<!-- END GENERATED -->
+<h2 id="drift-guardrails">Drift Guardrails</h2>
+<table>
+<thead>
+<tr>
+<th>Guardrail</th>
+<th>Protected surface</th>
+<th>Failure signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run docs:check:generated</code></td>
+<td>generated inventory and generated reference pages</td>
+<td>stale <code>docs/generated/inventory/*.json</code> or stale generated reference Markdown</td>
+</tr>
+<tr>
+<td><code>npm run docs:check:refs</code></td>
+<td>local Markdown links and cited repository paths</td>
+<td>missing doc, script, workflow, chart, config, test, skill, plugin, or root file path</td>
+</tr>
+<tr>
+<td><code>npm run docs:check:coverage</code></td>
+<td>documentation topic-map consistency</td>
+<td>missing active docs referenced by the topic map or vague topic-map weakness language</td>
+</tr>
+<tr>
+<td><code>git diff --check</code></td>
+<td>whitespace hygiene in changed files</td>
+<td>trailing whitespace or conflict-marker-like whitespace errors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="maintenance-notes">Maintenance Notes</h2>
+<ul>
+<li>Regenerate this page with <code>npm run docs:inventory &amp;&amp; npm run docs:generate</code> after workflow files change.</li>
+<li>Keep workflow path filters broad enough to catch documented runtime drift. Prefer catching drift over saving a small amount of CI time.</li>
+<li>If a workflow command changes, update the human docs only when the changed command affects a documented operator/developer procedure.</li>
+</ul>
+<h2 id="generated-from">Generated from</h2>
+<ul>
+<li><code>../generated/inventory/workflows.json</code></li>
+<li><code>../../scripts/docs-generate.mjs</code></li>
+</ul>
+</main></body></html>

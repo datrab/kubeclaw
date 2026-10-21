@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "PASS: the whole selected native diagnostic Source and consumer classification is sufficiently constrained. The unchanged 66-line script uses Secret/StatefulSet GETs and server-dry-run apply; its selected outputs are human diagnostics and a fixed four-field projection. The new guard binds canonical source bytes, function, expression and operation fingerprints, rejects positive API roles, and prevents registry-only refreshes from admitting changed constructors or commands. No actionable defect found. This assessment does not qualify external executable identity, live output, cluster effects or runtime success. Tests and the live script were not executed; communication prose was excluded.",
+  "overall_confidence": 0.92
+}

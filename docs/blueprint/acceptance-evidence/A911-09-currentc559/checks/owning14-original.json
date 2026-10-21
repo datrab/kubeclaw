@@ -1,0 +1,31 @@
+{
+  "utc": "2026-10-17T09:31:45.298027+00:00",
+  "baseRevision": "3ce93755af970f300b869566907663dd76458e7d",
+  "reviewExitCode": 0,
+  "testCommand": [
+    "/usr/local/bin/node",
+    "--test",
+    "scripts/tests/docs-publication-assets.test.mjs",
+    "scripts/tests/docs-publication-links.test.mjs"
+  ],
+  "testExitCode": 0,
+  "changed": {
+    "docs/config/documentation-tree-classification.json": {
+      "beforeSha256": "c992e815f652e8b1007e2ce6ee604cf1933e4b61936151f164a76d76d1cd8bb3",
+      "afterSha256": "4835764a2d57764008f96a8b68f090a5f36488bddc0a0a10e15c826c59dc961d"
+    },
+    "scripts/docs-publication.mjs": {
+      "beforeSha256": "38f2a9696e9d2c7aa69c6e0c0f34c8af7174bfd02f74d916c10c140e90830d53",
+      "afterSha256": "47ad9844d56539c488a03dc6a0775155d4432de3326c4b698b57745d0dd264e2"
+    },
+    "scripts/lib/docs-publication-assets.mjs": {
+      "beforeSha256": "c930b8710a03c58f61b2fab0beda06a7d12dd0fde456ea4d1507c586bf458f65",
+      "afterSha256": "19145f895da111cadfa0588ec4611b2ff6fa63c14def304929c8c4d655b56ef3"
+    },
+    "scripts/tests/docs-publication-assets.test.mjs": {
+      "beforeSha256": "806414115958609e3342f08ddf54c47dcd46b307f081a006f80b79eb83cbc5fa",
+      "afterSha256": "94b4a2b00bd44de2375568735b886e033595c25ec1b0ac863419baa427f3daf8"
+    }
+  },
+  "scope": "Only4 independently reviewed source changes in external existing fixed tree. No generation yet. No CI/canonical writes or AP acceptance."
+}

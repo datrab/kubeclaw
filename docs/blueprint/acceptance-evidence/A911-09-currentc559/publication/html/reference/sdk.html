@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/sdk.html"></head><body><main>
+<h1 id="plugin-sdk-reference">Plugin SDK reference</h1>
+<p>Status: current SDK API reference
+Audience: plugin author, runtime maintainer
+Owner: SDK maintainers (plugin-foundation)
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/package.json">skills/common/plugin-runtime/sdk/package.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/index.ts">skills/common/plugin-runtime/sdk/src/index.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/values.ts">skills/common/plugin-runtime/sdk/src/values.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/runtime.ts">skills/common/plugin-runtime/sdk/src/runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/source-revision.ts">skills/common/plugin-runtime/sdk/src/source-revision.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/review-subject.ts">skills/common/plugin-runtime/sdk/src/review-subject.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/source-preflight.ts">skills/common/plugin-runtime/sdk/src/source-preflight.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/sdk/src/source-approval.ts">skills/common/plugin-runtime/sdk/src/source-approval.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-sdk-semantics.mjs">scripts/docs-sdk-semantics.mjs</a>
+Applies to: current private workspace SDK entrypoints and plugin-system v2 contracts
+Last verified: 2026-10-12; source and bounded pure JSON checks</p>
+<p>The plugin SDK is the shared contract between a pipeline plugin and its runtime. Use it to type a stage, observer, capability adapter, test provider or report adapter. Use its helpers to preserve exact JSON bytes and source identity. The SDK does not activate a package, issue a capability grant, start an agent or provide a database.</p>
+<p>A <strong>capability</strong> is a named operation that the runtime permits a plugin to request. A <strong>lease</strong> is the current, revocable authority for one invocation. An <strong>artifact</strong> is stored output with an exact byte digest and producer identity. A <strong>digest</strong> is a SHA-256 hash of selected bytes; equal digests do not prove equal authority.</p>
+<p>The SDK maintainers (plugin-foundation) own this authored explanation and review its product-contract claims. Documentation automation owns the separate generated export inventory. Evidence: source-checked against <code>586f1f558a673c4df51c0afb9ea535c814b933b1</code>. The bounded JSON unit check is listed below. Examples that call capabilities are source-only; no activation, provider process, external effect or live deployment is claimed.</p>
+<h2 id="find-the-contract-you-need">Find the contract you need</h2>
+<p>The <a href="sdk-exports.html">complete export and field inventory</a> gives every exported type, helper, constant and testing function. Each entry has its consumer meaning, compiler-discovered shape, source, schema constraints where applicable, and a source-only example. Read that entry before relying on an optional field or an unfamiliar helper.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Entry or section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Implement a stage or observer</td>
+<td><a href="sdk-exports.html#plugininvocationcontext"><code>PluginInvocationContext</code></a>, <a href="sdk-exports.html#stageresult"><code>StageResult</code></a>, <a href="sdk-exports.html#observerhandler"><code>ObserverHandler</code></a></td>
+</tr>
+<tr>
+<td>Implement a capability adapter</td>
+<td><a href="sdk-exports.html#adapterfactory"><code>AdapterFactory</code></a>, <a href="sdk-exports.html#adapterinstance"><code>AdapterInstance</code></a>, <a href="sdk-exports.html#adapterinvocation"><code>AdapterInvocation</code></a>, <a href="sdk-exports.html#adapteractivationcontext"><code>AdapterActivationContext</code></a></td>
+</tr>
+<tr>
+<td>Implement a test provider</td>
+<td><a href="sdk-exports.html#testproviderfactory"><code>TestProviderFactory</code></a>, <a href="sdk-exports.html#testproviderinstance"><code>TestProviderInstance</code></a>, <a href="sdk-exports.html#testproviderexecutioncontext"><code>TestProviderExecutionContext</code></a></td>
+</tr>
+<tr>
+<td>Parse a test report</td>
+<td><a href="sdk-exports.html#reportadapterfunction"><code>ReportAdapterFunction</code></a>, <a href="sdk-exports.html#reportadapterinput"><code>ReportAdapterInput</code></a>, <a href="sdk-exports.html#reportadapteroutput"><code>ReportAdapterOutput</code></a></td>
+</tr>
+<tr>
+<td>Serialize or hash data</td>
+<td><a href="#json-and-digest-rules">JSON and digest rules</a></td>
+</tr>
+<tr>
+<td>Read exact artifact bytes</td>
+<td><a href="#artifact-byte-verification">Artifact-byte verification</a></td>
+</tr>
+<tr>
+<td>Select source, preflight and approval</td>
+<td><a href="#source-selection-and-approval">Source selection and approval</a></td>
+</tr>
+<tr>
+<td>Preserve an old encoding</td>
+<td><a href="#version-and-absence-rules">Version and absence rules</a></td>
+</tr>
+<tr>
+<td>Add a testing exhaustiveness check</td>
+<td><a href="#testing-entrypoint">Testing entrypoint</a></td>
+</tr>
+</tbody>
+</table>
+<p>For package layout, manifest registration, activation and disablement, use <a href="../extend/contracts.html">extension contracts</a> and the <a href="../extend/README.html">Extend entry</a>. This page owns SDK API behavior; those pages own the extension task. The <a href="../extend/developer-handbook.html">developer handbook</a> explains the contributor change/check route.</p>
+<h2 id="package-and-import-boundary">Package and import boundary</h2>
+<p><code>@kubeclaw/plugin-sdk</code> is a private workspace package. Its package manifest exports exactly <code>.</code> and <code>./testing</code>. The main entrypoint exports contracts, values, runtime helpers, source helpers and selected runtime interfaces. The testing entrypoint exports <code>assertNever</code> only. Do not assume that a source file is a supported package subpath.</p>
+<pre><code class="language-ts">import {
+  PLUGIN_API_VERSION,
+  portableJson,
+  sha256Text,
+  type PluginInvocationContext,
+  type StageResult,
+} from '@kubeclaw/plugin-sdk';
+import { assertNever } from '@kubeclaw/plugin-sdk/testing';
+</code></pre>
+<p>The package points to TypeScript source in this workspace. Its build configuration emits declarations, not a separate JavaScript SDK implementation. Use the repository's supported Node/TypeScript setup; do not assume this private package is published for installation from a registry.</p>
+<p><code>PLUGIN_API_VERSION</code> is <code>pipeline-plugin-v2</code>. It is the manifest API token, not a package version, transport encoding or artifact version. <code>ProviderInvocationV1</code>, <code>ProviderResultV1</code>, <code>ReportAdapterResultV1</code>, <code>ReportCountsV1</code>, <code>ReportCaseV1</code> and <code>FindingV1</code> belong to <code>@kubeclaw/pipeline-test-gate-contract</code>. SDK callback signatures refer to them, but the SDK does not re-export them as named types.</p>
+<p>The public <code>CapabilityInvocation</code> is the readonly interface selected by the main entrypoint's explicit type export. A generated contract with the same name is not the public named shape. <code>AdapterInvocation</code> reaches the fenced/confidential variants and <code>AdapterResourceFence</code>, but those three support declarations are not named exports from the main entrypoint. Use the union and its discriminator instead of importing an internal support type. <code>PluginSystemV2.capabilityInvocation</code> refers to the generated, mutable <code>CapabilityInvocation</code> with a string index of <code>any</code>, not the same-named public readonly runtime interface. The <a href="sdk-exports.html#reachable-support-types">qualified support closure</a> preserves that separate declaration and all reachable KubeClaw callback types without adding named SDK exports.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>The manifest selects two TypeScript entrypoints; explicit runtime type exports determine the public invocation shape.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/index.ts#L1-L33">Main exports</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/testing/index.ts#L1-L3">testing export</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime.ts#L22-L66">runtime interfaces</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/package.json#L1-L16">Package exports</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/tsconfig.build.json#L1-L21">declaration build</a></td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td>Compiler enumeration of both actual entrypoints is a documentation fact check; it does not execute plugin code.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>Import visibility and type discovery do not prove module activation or a live plugin run.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="from-plugin-request-to-adapter-result">From plugin request to adapter result</h2>
+<ol>
+<li>The registry validates a plugin manifest and its referenced schemas. A registration names the module, exported function, schemas and required capabilities. An adapter registration also declares the capabilities it provides.</li>
+<li>The runtime supplies a <code>PluginContext</code> contract and wraps it in <code>PluginInvocationContext</code>. The contract carries a lease, resolved input/configuration and visible artifact references. Optional producer profiles remain explicit data.</li>
+<li>A plugin calls <code>context.invoke(capability, request)</code>. The runtime checks its active lease, the capability grant and the capability's constraints. For a tagged runtime dispatch request, it also validates the closed invocation schema. The request's <code>resource.canonicalId</code> has capability-specific meaning; it is not always a relative path.</li>
+<li>The adapter runtime chooses the granted provider. For an ordinary durable effect, the effect coordinator owns request identity, the journal, resource locking and receipts. A repeated idempotency key must still match the original request and payload. The adapter receives an <code>AdapterInvocation</code>, not an arbitrary unadmitted payload.</li>
+<li>The adapter checks cancellation and, for a nonconfidential invocation, the current fence before the external effect. A <strong>fence</strong> rejects work whose lock is no longer current. The adapter returns a record; the coordinator determines durable completion and the runtime returns the completed result.</li>
+</ol>
+<p>A typed object does not create permission. The SDK interfaces provide no authorization shortcut. A plugin's <code>emit</code> also requires an active lease, its own <code>plugin.&lt;pluginId&gt;.</code> event namespace and the current run ID. <code>artifact(id)</code> returns only a visible reference, or <code>undefined</code>; it also checks the lease.</p>
+<p>This source-only stage fragment has no external effect. It returns the passed variant with the required empty artifact list:</p>
+<pre><code class="language-ts">import type { PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
+
+export async function execute(context: PluginInvocationContext): Promise&lt;StageResult&gt; {
+  return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [] };
+}
+</code></pre>
+<p>The fragment alone does not register or activate the stage. A manifest, matching schemas and the runtime's supported execution route are still required. For other outcomes, use the <a href="sdk-exports.html#stageresult">StageResult entry</a>: failure/continuation variants have different required fields.</p>
+<h3 id="adapter-lifecycle-and-cleanup">Adapter lifecycle and cleanup</h3>
+<p><code>AdapterFactory</code> can return an instance directly or through a Promise. Core starts required adapter dependencies first, calls the factory, then calls <code>ready()</code>. A dependency cycle, missing provider, factory rejection or readiness failure stops startup. Core rolls back started instances and aborts their lifecycle controllers. It bounds activation and readiness with the configured shutdown timeout.</p>
+<p>Implement <code>ready</code>, <code>invoke</code> and <code>shutdown</code>. <code>receipt</code> is optional and can return <code>undefined</code> when the adapter cannot find an earlier external result. Do not turn an uncertain external outcome into a new effect merely because a caller rejected or lost its response.</p>
+<p>In <code>AdapterInvocation</code>, <code>confidential: true</code> excludes <code>lock</code> and <code>fence</code>. The other variant requires both and permits absent or false <code>confidential</code>. Confidential invocation is a separate core path; it is not permission for an adapter to ignore its grants or cancellation.</p>
+<p><code>AdapterActivationContext.invoke</code> and <code>invokeConfidential</code> use dependency grants. <code>AdapterDependencyOptions.signal</code> joins the lifecycle and parent signals. A supplied <code>deliveryId</code> must be a nonblank string of at most 512 UTF-16 code units and requires a parent invocation. It is not an observer-delivery ID.</p>
+<p>Optional <code>withCleanup</code> gives the current adapter invocation one bounded cleanup phase. It does not extend capability grants. Core rejects cleanup without a current parent owned by that adapter. Cleanup receives its own signal; lifecycle revocation still applies. Await cleanup and honor its signal. There is no SDK-wide promise that cleanup rolls back every external effect.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>Runtime methods enforce lease/grant/namespace boundaries; adapter startup and dependency calls retain lifecycle, cancellation and cleanup ownership.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/execution/context.ts#L34-L80">Plugin context methods</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/execution/adapter-startup.ts#L57-L98">adapter dependency calls</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/execution/adapter-startup.ts#L127-L142">cleanup ownership</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/execution/adapters.ts#L47-L63">adapter runtime result handling</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime.ts#L22-L117">SDK runtime methods and variants</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/nova/core/effects/identity.ts#L20-L48">effect identity comparison</a></td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td>Source-only for this invocation sequence. No provider or external capability was called for this page.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>These interfaces and source checks do not prove live timeout, rollback or exactly-once external execution.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="typescript-shapes-and-schema-checks">TypeScript shapes and schema checks</h2>
+<p>The generated contracts come from the owning plugin-system v2 JSON Schema. The product generator compiles a wrapper called <code>PluginSystemV2</code> and appends the two frozen current profile constants. Its exported auxiliary <code>PluginManifest1</code> expresses the nonempty-registration alternatives; it is not a complete manifest by itself.</p>
+<p>TypeScript cannot express every runtime constraint. A string alias such as <code>NamespacedId</code> does not check a pattern or maximum length. A number member does not enforce integer or minimum rules. Some generated open shapes use <code>any</code>; strict JSON serializers can reject values that those types accept. <code>EffectReceipt</code> needs conditional status rules, and <code>StageResult</code> needs outcome-specific fields. Read the schema rows and consumer explanation together.</p>
+<p>The <a href="sdk-exports.html">inventory</a> preserves recursive rules, including required arrays, enums/constants, patterns, bounds, references and conditional branches. Parent <code>required</code> arrays determine presence. Follow <code>$ref</code> to its target. An absent <code>default</code> means that the schema declares no default; it does not establish a fallback in a separate consumer.</p>
+<p>Registry <code>parsePluginManifest</code> parses JSON and applies the manifest validator. <code>validateContractValue</code> validates a named canonical definition; its profile cases first apply strict profile parsing. Referenced schemas have separate <code>validate</code> and <code>resolve</code> paths: <code>validate</code> does not apply defaults, while <code>resolve</code> clones the input and uses its schema defaults. This is foundation behavior, not a validator automatically attached to each SDK type.</p>
+<p>JSON Schema <code>minLength</code>/<code>maxLength</code> measure Unicode code points. Runtime string <code>.length</code> and <code>.slice</code> measure UTF-16 code units. For example, 512 emoji meet the <code>EffectDeliveryId</code> schema maximum of 512 code points but occupy 1024 code units and fail the adapter dependency runtime maximum. Result-file paths have a separate UTF-8 byte limit. Do not substitute one measurement for another.</p>
+<p>Schema acceptance also does not prove a resource exists, a path is contained, a graph is acyclic or a producer is authorized. The component that owns that boundary must perform its additional checks.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>Types are generated from schema; runtime validation and default resolution are separate operations.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/scripts/generate-plugin-sdk-types.mjs#L1-L33">Type generation</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/schema.ts#L66-L86">manifest validation</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/schema.ts#L90-L117">referenced schema resolution</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/foundation/registry/schema.ts#L133-L148">canonical validation</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L5-L1178">Plugin-system schema definitions</a> and the narrow definition/field rows in the <a href="sdk-exports.html">inventory</a></td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td>Source-only for schema validation; no validator success is inferred from a TypeScript signature.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>A valid shape is not proof of authorization, filesystem containment or successful activation.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="json-and-digest-rules">JSON and digest rules</h2>
+<p>A <strong>canonical JSON codec</strong> gives one serialized text for the same accepted data under its ordering rules. The SDK has two codecs because existing stored identities must keep their original bytes.</p>
+<p><code>canonicalJson</code> is the legacy codec. It sorts object keys with JavaScript <code>localeCompare</code>; collation can differ between locales. Preserve this codec where an untagged historical identity uses it. <code>portableJson</code> sorts keys by UTF-16 code units with <code>&lt;</code> and <code>&gt;</code> comparisons. Its ordering is independent of locale. It is not a claim of compliance with an unrelated JSON canonicalization standard.</p>
+<p>Both codecs accept:</p>
+<ul>
+<li><code>null</code>, strings and booleans;</li>
+<li>finite numbers, with negative zero serialized as <code>0</code>;</li>
+<li>plain records with <code>Object.prototype</code> or null prototype;</li>
+<li>dense arrays with the standard <code>Array.prototype</code>;</li>
+<li>enumerable own data properties whose values remain inside this same domain.</li>
+</ul>
+<p>They reject unsupported values instead of silently dropping or converting them. They do not call accessors, <code>toJSON</code> or proxy traps. Repeated references to the same object are permitted when they do not form a cycle. Object keys are sorted; array order stays unchanged. These serializers do not normalize Unicode.</p>
+<table>
+<thead>
+<tr>
+<th>Rejection</th>
+<th>Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NaN, Infinity or negative Infinity</td>
+<td><code>CANONICAL_JSON_NUMBER_INVALID</code></td>
+</tr>
+<tr>
+<td>undefined, function, symbol, BigInt or another unsupported scalar</td>
+<td><code>CANONICAL_JSON_VALUE_UNSUPPORTED</code></td>
+</tr>
+<tr>
+<td>Proxy</td>
+<td><code>CANONICAL_JSON_PROXY_UNSUPPORTED</code></td>
+</tr>
+<tr>
+<td>A cycle on the current traversal path</td>
+<td><code>CANONICAL_JSON_CYCLE</code></td>
+</tr>
+<tr>
+<td>A nonplain object or nonstandard array prototype</td>
+<td><code>CANONICAL_JSON_PROTOTYPE_INVALID</code></td>
+</tr>
+<tr>
+<td>Symbol keys, hidden properties, accessors or missing/nonenumerable array entries</td>
+<td><code>CANONICAL_JSON_PROPERTY_INVALID</code></td>
+</tr>
+<tr>
+<td>Array keys/count inconsistent with a dense standard array, including extra entries</td>
+<td><code>CANONICAL_JSON_ARRAY_INVALID</code></td>
+</tr>
+</tbody>
+</table>
+<p>The exact first error depends on the first failed check. A sparse array can fail the key-count check or the data-property check. Do not require one error for every malformed array.</p>
+<h3 id="a-safe-local-example">A safe local example</h3>
+<p>This complete example uses only pure SDK values. Use Node.js 24 and the existing workspace dependencies. Follow <a href="../extend/developer-handbook.html#prepare-a-clean-checkout">Prepare a clean checkout</a> for the repository preparation route. Run this example from the prepared repository root. This pure-value exercise does not prove a fresh lockfile install or completion of the full developer bootstrap. Save it as <code>sdk-json-example.ts</code> inside that workspace so the private package can resolve. Run <code>node sdk-json-example.ts</code>, then remove only that example file when finished. It makes no capability call and writes no product state.</p>
+<pre><code class="language-ts">import assert from 'node:assert/strict';
+import { canonicalJson, portableJson, sha256Text } from '@kubeclaw/plugin-sdk';
+
+const value = { Z: 1, a: [null, true], 'é': 2 };
+const portable = portableJson(value);
+assert.equal(portable, '{&quot;Z&quot;:1,&quot;a&quot;:[null,true],&quot;é&quot;:2}');
+assert.equal(sha256Text(portable), sha256Text('{&quot;Z&quot;:1,&quot;a&quot;:[null,true],&quot;é&quot;:2}'));
+assert.throws(() =&gt; portableJson({ omitted: undefined }), /CANONICAL_JSON_VALUE_UNSUPPORTED/);
+// The legacy ordering depends on the current locale. Do not relabel these bytes.
+const legacy = canonicalJson(value);
+console.log({ portable, legacy });
+</code></pre>
+<p>The expected portable string and rejection above are source-checked. This displayed example passed twice on Node.js 24.21.0 in an isolated local checkout with copied existing dependencies. Those runs do not prove a fresh locked installation or the full developer bootstrap. The existing SDK JSON regression below was also executed locally. The printed legacy string is deliberately not assigned a universal cross-locale expectation.</p>
+<p><code>sha256Text</code> hashes text as UTF-8. <code>sha256Bytes</code> hashes the exact <code>Uint8Array</code>. Both return <code>sha256:</code> followed by 64 lowercase hex digits. Neither helper selects a JSON codec, inserts a version marker or validates producer authority. Choose the bytes first. JavaScript string length is not UTF-8 byte size.</p>
+<p>The legacy codec's source comment records the reason for retaining it: those bytes already identify durable artifacts and effect payloads. A portable ordering requires a separately versioned change. The cost is that historical identity verification can depend on the original locale-sensitive serialization. Do not claim that attaching a new tag repairs old evidence.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>Both codecs enforce a strict JSON domain; only object-key ordering differs. Hashes apply to exact UTF-8 text or supplied bytes.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/values.ts#L34-L97">Codecs and rejection checks</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/values.ts#L99-L105">hash helpers</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/values.ts#L49-L54">Portable encoding token and key order</a></td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/tests/values.test.ts#L1-L30">SDK JSON regression</a>: locally passed with <code>node skills/common/plugin-runtime/sdk/tests/values.test.ts</code>.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>The bounded check covers JSON domain and expected bytes, not live artifact storage, all host locales or producer authorization.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="version-and-absence-rules">Version and absence rules</h2>
+<p>A missing tag means the owner retains historical behavior. It does not mean “select the newest encoding.” Present <code>undefined</code> is not always equivalent to omission. For strict JSON serialization, <code>undefined</code> is invalid even before a profile parser compares its value.</p>
+<table>
+<thead>
+<tr>
+<th>Contract</th>
+<th>Explicit current selection</th>
+<th>Absence and rejection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Portable artifact/reference encoding</td>
+<td><code>encoding: 'kubeclaw-json.utf16.v1'</code></td>
+<td>An untagged artifact preserves original historical bytes. A different explicit encoding fails; never recanonicalize it and keep its old digest.</td>
+</tr>
+<tr>
+<td>Review/source identity</td>
+<td><code>identityEncoding: 'kubeclaw-json.utf16.v1'</code></td>
+<td>For dense plain-JSON records, omission uses legacy <code>canonicalJson</code>; an own different value, including undefined, fails. Ordinary property lookup can select an inherited portable tag; an inherited unknown tag is not rejected and selects legacy. See the local-parser limits below.</td>
+</tr>
+<tr>
+<td>Runtime dispatch profile</td>
+<td><code>{schemaVersion:'runtime-dispatch-profile.v1', encoding:'json-utf16-v1'}</code></td>
+<td>Historical absence preserves the legacy producer. Exact finite profile only; no inferred fallback.</td>
+</tr>
+<tr>
+<td>Review cache profile</td>
+<td><code>{schemaVersion:'review-cache-profile.v1', recordVersion:'review-content-cache.v2', encoding:'json-utf16-v1'}</code></td>
+<td>Historical absence preserves review-content-cache.v1 and its original effect operations. Other transport/artifact versions imply nothing.</td>
+</tr>
+<tr>
+<td>Run snapshots</td>
+<td>v3 requires runtime profile; v4 requires runtime and cache profiles</td>
+<td>Read the selected snapshot schema. An absent cache member in the v3 shape does not select the current cache producer.</td>
+</tr>
+</tbody>
+</table>
+<p>The artifact/identity token <code>kubeclaw-json.utf16.v1</code> and profile encoding value <code>json-utf16-v1</code> are different exact strings. Use the exported constants and current profile values at their own boundaries.</p>
+<p><code>parseRuntimeDispatchProfile</code> and <code>parseReviewCacheProfile</code> compare the complete portable serialization to their generated constants. Extra fields, missing fields or unknown versions fail. Strict JSON rejection can occur before the profile-specific error.</p>
+<p><code>withRuntimeDispatchProfile(request, undefined)</code> returns the original request without validating it. With a profile, it validates the profile and strict JSON request, rejects an already-owned top-level profile key, and returns a shallow frozen copy. It does not deep-freeze payload or check dispatch operation/resource.</p>
+<p><code>runtimeDispatchProfileFields</code> first validates strict JSON. Missing own profile key returns <code>{}</code>. If a profile is present and a supplied capability is not <code>runtime.dispatch</code>, it rejects. With the capability argument omitted, that capability check does not run. Core also validates the tagged invocation schema: operation must be <code>dispatch</code> and resource type must be <code>runtime.agent</code>. A nested payload key with the same name is ordinary data.</p>
+<p><code>reviewCacheProfileFromContext</code> validates strict JSON of the whole context before checking the own profile key. Missing key returns <code>undefined</code>. Present undefined, null or malformed data does not select historical absence.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>Profiles are independent, explicit finite contracts; helper omission paths differ from present malformed values.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts#L1-L30">Runtime profile helpers</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/review-cache-profile.ts#L1-L17">cache profile helpers</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/review-subject.ts#L22-L26">review identity selection</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L6-L27">Finite profiles and tagged invocation condition</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L47-L67">run snapshot shapes</a></td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/tests/verification/reliability/source-snapshot-version.test.mjs#L20-L61">Original snapshot/identity cases</a> were inspected, not executed for this page.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>A parser checks finite data; it does not establish a live producer, cache hit or transport completion.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="artifact-byte-verification">Artifact-byte verification</h2>
+<p><code>verifiedArtifactJsonText(response, expected)</code> verifies the producer's original text. Use a <code>get_json_bytes</code> response, not a response that contains only a parsed value. A parsed object alone cannot preserve the original byte order or whitespace.</p>
+<p>The helper checks these boundaries in order:</p>
+<ol>
+<li>Require <code>artifact-json-bytes.v1</code>, a string <code>jsonBytes</code>, its UTF-8 byte size and its SHA-256 digest to agree with the response.</li>
+<li>Parse the original bytes. Compare portable serialization of the parsed value with <code>response.value</code>.</li>
+<li>Compare the complete returned artifact reference with <code>expected</code>, including namespace, ID, media type, producer, digest, size and optional encoding. Also bind reference digest/size to response digest/size.</li>
+<li>If encoding exists, require the portable tag and require the original bytes to equal portable serialization. If encoding is absent, retain the verified original historical text without recanonicalizing it.</li>
+<li>Return the original <code>jsonBytes</code> string.</li>
+</ol>
+<p>A self-consistent different producer reference is not equal to the expected reference even when both producers wrote identical bytes. This helper checks reference equality, not a general trust policy. It neither calls a capability nor validates the application's value schema. Invalid JSON parsing and strict JSON-domain errors also propagate.</p>
+<p><code>readBoundArtifact</code> adds the current run, <code>application/json</code> and a maximum size of 4,194,304 bytes before requesting <code>artifacts.read/get_json_bytes</code>. It verifies binding and returns the parsed value by a TypeScript cast. It does not guarantee that the value is a record at runtime. The source approval helpers then impose their own artifact namespace, ID, stage, attempt and subject rules.</p>
+<p>This source-only call requires a real runtime context with the <code>artifacts.read</code> grant and an expected visible reference:</p>
+<pre><code class="language-ts">const value = await readBoundArtifact(expectedRef, context);
+</code></pre>
+<p>Do not substitute a model-generated reference or an arbitrary same-digest artifact. If binding fails, stop and inspect the expected reference and stored original bytes. Do not “repair” the digest by reserializing the parsed object. The artifact-store adapter selects exact references and preserves the historical codec on untagged writes; explicitly tagged writes use portable JSON.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>Verification binds original bytes, parsed value and full expected reference without recanonicalizing untagged artifacts.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/artifact-json.ts#L1-L20">Byte verifier</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/source-approval.ts#L9-L19">bound artifact reader</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/artifact-store/src/adapter.ts#L78-L114">store byte read and codec selection</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L564-L577">Artifact reference fields</a></td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/tests/verification/reliability/sdk-json-portable.test.mts#L33-L79">Exact reference and cross-locale artifact cases</a> were inspected, not executed for this page.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>Pure byte checks are not proof of producer authorization, value-schema acceptance or live storage durability.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-selection-and-approval">Source selection and approval</h2>
+<h3 id="select-an-implementation-revision">Select an implementation revision</h3>
+<p><code>resolveSourceRevision</code> requires exactly one defined selector: <code>revision</code> or <code>sourceStageId</code>. An explicit revision must be 40 or 64 lowercase hexadecimal characters. It causes no artifact read. The stage selector filters visible artifacts to the current run, selected stage, implementation namespace and <code>implementation:</code> ID prefix. It chooses the latest attempt and requires exactly one artifact at that attempt.</p>
+<p>The helper reads exact bound bytes and requires <code>status: 'ready_for_testing'</code> with a valid <code>sourceRevision</code>. It does not fall back to ambient Git HEAD when a result is absent or ambiguous.</p>
+<p><code>resolveImplementationRevisions(stageId, context)</code> also selects the earliest attempt. Its <code>headBefore</code> becomes <code>base</code>; the latest committed candidate becomes <code>head</code>. With one artifact, the helper reads it once. Both values must match the revision grammar. This preserves the first implementation baseline across repairs.</p>
+<h3 id="capture-and-verify-a-review-subject">Capture and verify a review subject</h3>
+<p><code>parseReviewSource</code> selects project, absolute repository root, architecture reference and unique safe relative paths. It sorts a copied path list. For dense plain-JSON input, text excludes NUL/CR/LF and has a 4096-UTF-16-code-unit maximum, and paths exclude absolute paths, backslashes and empty/dot/parent segments. There must be 1–128 paths. The parser returns only its declared source fields; it does not read Git.</p>
+<p>A dense array has a value at every index. Here, plain-JSON input means data records without inherited contract fields, custom prototypes, getters or proxies. The local parser is not strict validation of arbitrary unknown objects. Required values can be inherited. Only an own <code>identityEncoding</code> is guarded; a truthy inherited tag is copied into an own output field, even when unknown. <code>Array.some</code> skips holes, so a one-hole paths array passes and becomes <code>[undefined]</code>. Require dense plain-JSON input before relying on the safe-path description. Getters and proxy traps can execute during local property reads. This is why the input precondition matters.</p>
+<p><code>captureReviewSubject</code> calls <code>git.repository.read</code> to freeze clean HEAD and the architecture reference. It reads the selected regular files at the architecture revision, verifies their returned path/mode/content digest/UTF-8 size, and binds current run plus input digest. It then verifies repository freshness again. The file content is architecture-revision content, not an implied copy of current HEAD.</p>
+<p><code>parseReviewSubject</code> verifies run/revision/digest fields and ordered file content. It checks the unsigned subject digest with the selected identity codec and returns the original subject. It does not contact Git. <code>verifyReviewSubject</code> adds clean-HEAD and architecture-reference checks. Optional <code>expectedSourceRevision</code> changes only the expected current source HEAD, not the architecture revision.</p>
+<p>These helpers read repository data through a granted capability; they do not commit, modify source or approve a design. Capability errors propagate. A stale subject requires a newly selected/captured subject at the intended revisions, not a rewritten digest on old content.</p>
+<h3 id="require-preflight-and-bound-approval">Require preflight and bound approval</h3>
+<p>A <strong>source binding</strong> names the selected preflight stage and input digest, with optional selected review stage and explicit identity codec. It is selection data, not an approval token. <code>parseSourceBinding</code> checks enumerable own string keys, not hidden/symbol keys or inherited properties, and returns the original reference. Its required fields can be inherited. Only an own encoding is guarded; an inherited unknown encoding can pass. A present <code>reviewStageId: undefined</code> also passes this parser, although it is outside strict JSON. Use trusted dense plain-JSON input and the owning contract; this helper is not a general unknown-input validator.</p>
+<p><code>sourcePreflight</code> selects the latest unique <code>source-preflight</code> artifact from the binding's stage and current run. It requires <code>source-preflight.v1</code> and <code>outcome: 'passed'</code>, parses the subject, and checks identity codec, input digest and returned contract digest. It returns the binding, subject and contract. Missing, failed or mismatched preflight is a rejection; an unrelated ancestor is not a fallback.</p>
+<p><code>approvedSource(context, expected)</code> uses that preflight. If its binding names a review stage, the matching report must pass and refer to the same subject. A report with findings needs a human approval that names the exact report digest/stage and same subject. With no expected binding, the helper searches the visible current-run architecture report/approval artifacts. If neither exists it returns <code>undefined</code>; an approval without a report fails. Multiple producer stages or tied latest attempts are ambiguous.</p>
+<p>The helper then follows a bound blueprint synchronization result and implementation results for the same subject. A synchronization result for a different subject does not advance the revision. Matching synchronization must bind the old revision, repository and architecture. Implementation lineage must have one next edge per revision and no cycle. This function does not itself prove the current worktree equals the returned revision; use the caller's separate repository verification where its task requires it.</p>
+<table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claim</td>
+<td>Source selection uses exact current-run artifacts; subject capture binds architecture file bytes; preflight and approval preserve explicit selection and subject lineage.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/source-revision.ts#L6-L49">Revision selection</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/review-subject.ts#L28-L49">source/subject parsing</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/review-subject.ts#L51-L84">capture/freshness</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/source-preflight.ts#L13-L39">preflight</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/source-approval.ts#L29-L96">approval and lineage</a></td>
+</tr>
+<tr>
+<td>Contract or setting</td>
+<td><code>ReviewSource</code>, <code>ReviewSubject</code> and <code>SourceBinding</code> entries in the <a href="sdk-exports.html">inventory</a> define the local source helper contract, separate from plugin-system generated types.</td>
+</tr>
+<tr>
+<td>Test evidence</td>
+<td>Source-only for approval/preflight/capture; artifact/identity regression sources were inspected, not run as a live approval workflow.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td><code>586f1f558a673c4df51c0afb9ea535c814b933b1</code></td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>Correct artifact selection does not establish a universal trust decision, a commit operation or current repository freshness beyond checks the specific helper performs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="workspace-and-agent-task-helpers">Workspace and agent-task helpers</h2>
+<p><code>RuntimeWorkspaceReference</code> is the Git adapter's workspace record. <code>parseRuntimeWorkspace</code> requires its seven declared enumerable string keys, version, path/branch text bounds of 4096 UTF-16 code units, revision and exact canonical owner equality. It returns the original object. It does not normalize paths or verify repository containment, branch existence or the protected owner file. Those are adjacent runtime checks.</p>
+<p><code>runtimeWorkspaceGeneration(owner, scope)</code> hashes legacy canonical JSON of owner, repository root and branch, then returns only the 64 hex digits. <code>runtimeWorkspaceOwnerFile(workspacePath)</code> hashes that exact text into a relative owner-file name. Neither creates a workspace or reads/writes its owner record. Different textual paths can hash differently even when a filesystem resolves them to the same place. The hash applies to supplied UTF-8 bytes, without normalization. Distinct lone-surrogate strings can encode to the same replacement bytes and therefore have the same owner-file name. It is not a universal text-uniqueness guarantee.</p>
+<p><code>buildRuntimeAgentTask(payload, resultFile)</code> builds instruction text and serializes the payload once. It limits the result-file path to 2048 UTF-8 bytes and instructs atomic temporary-file/rename output. It does not write a file, validate path containment or validate the agent's response. The instructions state that runtime/core owns invocation identity and session evidence; the agent returns only declared result fields. The helper uses native <code>JSON.stringify</code>, not strict <code>portableJson</code>: undefined/function/symbol object fields are omitted, corresponding array entries become null, and nonfinite numbers become null. Enumerable getters and <code>toJSON</code> can execute during serialization and can transform the output or throw. Cycles and BigInt can throw. Use trusted, already-JSON data when these executable object effects are not intended. The instruction text does not freeze the original payload. JSON serialization errors propagate.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime-workspace.ts#L4-L32">workspace helpers</a>, <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts#L1-L25">agent-task text and path check</a>. These statements are source-only and do not prove protected workspace admission or agent execution.</p>
+<h2 id="convenience-values-are-not-validators">Convenience values are not validators</h2>
+<table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>Selection and absence</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selectDefinedValue</code></td>
+<td>First reader result other than null/undefined; otherwise last result; no readers returns undefined</td>
+<td>false, zero and empty text are accepted. Later readers do not execute after selection.</td>
+</tr>
+<tr>
+<td><code>selectTruthyValue</code></td>
+<td>First truthy reader result; otherwise last result; no readers returns undefined</td>
+<td>false, zero, empty text, NaN, null and undefined are skipped.</td>
+</tr>
+<tr>
+<td><code>selectPresentValue</code></td>
+<td>First nonempty string, otherwise empty text</td>
+<td>Whitespace-only text is accepted; no trim occurs.</td>
+</tr>
+<tr>
+<td><code>arrayValue</code></td>
+<td>Input array by reference, otherwise a new empty array when native classification succeeds</td>
+<td>No element validation; the generic type is a cast. Revoked proxies throw TypeError during <code>Array.isArray</code>.</td>
+</tr>
+<tr>
+<td><code>objectRecord</code></td>
+<td>Truthy non-array object by reference, otherwise a new empty object</td>
+<td>Class instances/live proxies/accessors can pass; revoked proxies throw during native classification. Not strict JSON validation.</td>
+</tr>
+<tr>
+<td><code>textValue</code></td>
+<td>String unchanged, otherwise empty text</td>
+<td>No conversion, trimming or parsing.</td>
+</tr>
+</tbody>
+</table>
+<p>Reader exceptions propagate from both reader-based selectors. <code>OptionalAbsenceReader&lt;T&gt;</code> is synchronous; it does not wait for an asynchronous absence check. <code>ValueRecord</code> is permissive and uses <code>any</code>; do not substitute it for a stronger owning contract.</p>
+<p><code>redactStructuredValue</code> replaces sensitive-key values with <code>[redacted]</code>, limits arrays/object entries to 1000. It retains a 65,536-UTF-16-code-unit text prefix and appends <code>[truncated]</code> (65,547 output units) and returns <code>[truncated]</code> beyond depth 16. The sensitive-key match includes authorization, cookie, password, secret, token, API-key and credential forms. This is a bounded presentation helper, not comprehensive secret detection. Object enumeration can execute getters or proxy traps. Do not pass hostile executable objects or assume a nonmatching value is safe to publish.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/values.ts#L4-L32">selectors and casts</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/values.ts#L107-L128">bounded redaction</a>. The exhaustive <a href="sdk-exports.html">inventory</a> gives each helper's exact signature and source-only example.</p>
+<h2 id="test-providers-and-report-adapters">Test providers and report adapters</h2>
+<p>Test provider factories receive <code>ProviderInvocationV1</code> and return <code>TestProviderInstance</code>. <code>execute</code> receives the invocation plus <code>TestProviderExecutionContext</code> and resolves to <code>ProviderResultV1</code>; optional <code>cleanup</code> resolves to void. The context gives the cancellation signal, workspace root, output logging and granted capability invocation. Its request shape does not carry a runtime dispatch profile. Logging output is not the provider result. Read the <a href="sdk-exports.html#callback-contract-rules">callback contract rules</a> for its nested fields and required/optional schema rules. Buster applies separate result admission checks: counts must sum to total, passed cannot contain failed tests. Evidence IDs and paths must be unique, and evidence types/report formats must match registration. A report must refer to declared test-report evidence; artifact outputs must refer to declared evidence IDs. The configured serialized result budget measures UTF-8 bytes. <code>providerDetails</code> uses the extra common E2E schema and exact schema digest only for <code>kubeclaw.playwright@1</code> or a details object naming <code>kubeclaw.e2e-result.v1</code>. Its case IDs and status totals must agree. The generated callback section gives the complete selected E2E fields and validators. These checks run in Buster, not in a TypeScript type.</p>
+<p>The capability broker joins provider/call cancellation, limits pending requests and rejects duplicate request IDs. The SDK's context type does not grant arbitrary host access or prove that a declared <code>retrySafe</code> provider can repeat every external action. Register explicit evidence defaults and honor cleanup/cancellation in the actual provider.</p>
+<p>A report adapter is a parser, not a capability adapter. <code>ReportAdapterInput</code> contains bytes, media type and case/finding limits; no invoke context is included. <code>ReportAdapterOutput</code> requires counts, duration, cases, findings and truncation/omitted-count fields from the test-gate contract. Buster adds adapter provenance and the source artifact; the callback must not manufacture those owner fields.</p>
+<p>The <a href="sdk-exports.html#callback-contract-rules">callback contract rules</a> contain the recursively resolved provider invocation, provider result and report result schemas, including nested input/output/evidence/finding/case fields. Read required arrays, union variants, bounds and referenced definitions together. These owning rules do not become SDK named exports.</p>
+<p>After Buster adds provenance, report validation also requires outcome counts to sum to total and case IDs to be unique. For complete lists, omittedCaseCount must be zero and the list length and each outcome count must match the report totals. For truncated lists, omittedCaseCount must be positive, listed plus omitted must equal total, and listed outcomes cannot exceed exact totals. At report and case level, findingsTruncated must be true exactly when omittedFindingCount is positive. These are semantic validator rules, not TypeScript checks. Source: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/validation.ts#L100-L145">report semantic validation</a>.</p>
+<p>Buster verifies report media type, bytes, digest, package snapshot and result contract. It rejects output arrays above the selected count limits. <code>ReportAdapterLimits</code> has no SDK defaults and contains no process, memory or timeout fields; those belong to the wider report runtime configuration.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/runtime.ts#L119-L184">provider/report callback types</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/provider-capabilities.ts#L3-L44">provider capability broker</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/report-adapter-child.mjs#L21-L40">report input wrapper</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/buster/engine/test-gates/report-adapter-runtime.ts#L269-L320">result binding and limits</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/contracts/pipeline-test-gate/v1/src/types.ts#L342-L375">required report fields</a>. These are source-only statements; no provider or report child was started for this page.</p>
+<h2 id="testing-entrypoint">Testing entrypoint</h2>
+<p><code>assertNever(value: never): never</code> is the only export from <code>@kubeclaw/plugin-sdk/testing</code>. Use it in the default branch of an exhaustive discriminated-union switch. It always throws <code>Unexpected contract variant: &lt;JSON&gt;</code>. It does not validate an unknown runtime value. If typing is bypassed, <code>JSON.stringify</code> can itself fail on cycles or BigInt before the intended error.</p>
+<pre><code class="language-ts">import { assertNever } from '@kubeclaw/plugin-sdk/testing';
+type Choice = {kind:'yes'} | {kind:'no'};
+function selected(choice: Choice): boolean {
+  switch (choice.kind) {
+    case 'yes': return true;
+    case 'no': return false;
+    default: return assertNever(choice);
+  }
+}
+</code></pre>
+<p>This is a source-only example, not a testing framework or live plugin harness. Source: <a href="https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugin-runtime/sdk/src/testing/index.ts#L1-L3">assertNever</a>.</p>
+<h2 id="error-handling-and-retry-boundary">Error handling and retry boundary</h2>
+<table>
+<thead>
+<tr>
+<th>Error family</th>
+<th>Meaning and next check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CANONICAL_JSON_*</code></td>
+<td>Input is outside the strict JSON domain. Remove unsupported values only according to the owning contract; never silently drop evidence fields.</td>
+</tr>
+<tr>
+<td><code>RUNTIME_DISPATCH_PROFILE_INVALID</code>, <code>RUNTIME_DISPATCH_PROFILE_ALREADY_BOUND</code>, <code>RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID</code></td>
+<td>Wrong finite profile, duplicate top-level binding or profile on another capability. Check explicit run selection and request metadata.</td>
+</tr>
+<tr>
+<td><code>REVIEW_CACHE_PROFILE_INVALID</code></td>
+<td>Present cache profile is not the exact current finite contract. Do not fall back to historical absence.</td>
+</tr>
+<tr>
+<td><code>ARTIFACT_JSON_BYTES_UNBOUND</code>, <code>ARTIFACT_JSON_VALUE_UNBOUND</code>, <code>ARTIFACT_JSON_REFERENCE_UNBOUND</code>, <code>ARTIFACT_JSON_ENCODING_INVALID</code></td>
+<td>Original bytes, parsed value, full expected reference or explicit encoding disagrees. Stop; inspect producer/reference/original bytes.</td>
+</tr>
+<tr>
+<td><code>SOURCE_IMPLEMENTATION_ARTIFACT_MISSING_OR_AMBIGUOUS</code>, <code>SOURCE_IMPLEMENTATION_ARTIFACT_CORRUPT</code>, <code>SOURCE_IMPLEMENTATION_REVISION_INVALID</code>, <code>SOURCE_IMPLEMENTATION_BASE_INVALID</code></td>
+<td>Selected implementation result is absent, tied, corrupt or has invalid head/base data. Inspect same-run selected-stage artifacts, not ambient HEAD.</td>
+</tr>
+<tr>
+<td><code>SOURCE_REVISION_SELECTION_INVALID</code>, <code>SOURCE_REVISION_INVALID</code></td>
+<td>Exactly-one selector or explicit revision grammar failed. Fix selection input before retry.</td>
+</tr>
+<tr>
+<td><code>REVIEW_IDENTITY_ENCODING_INVALID</code>, <code>REVIEW_SOURCE_INVALID</code>, <code>REVIEW_SUBJECT_INVALID</code>, <code>REVIEW_SUBJECT_FILE_INVALID</code>, <code>REVIEW_SUBJECT_DIGEST_INVALID</code></td>
+<td>Source/subject identity or file evidence failed. Check codec selection, ordered paths and exact file bytes.</td>
+</tr>
+<tr>
+<td><code>REVIEW_REPOSITORY_IDENTITY_INVALID</code>, <code>REVIEW_SOURCE_BYTES_INVALID</code>, <code>REVIEW_SUBJECT_STALE</code></td>
+<td>Git capability response or current revisions disagree. Recheck selected repository and references; capture a new subject when intended source changes.</td>
+</tr>
+<tr>
+<td><code>SOURCE_PREFLIGHT_BINDING_INVALID</code>, <code>SOURCE_PREFLIGHT_REQUIRED</code>, <code>SOURCE_PREFLIGHT_FAILED</code>, <code>SOURCE_PREFLIGHT_INPUT_MISMATCH</code></td>
+<td>Selected immutable preflight is not available, passed or bound to this input. Do not select an unrelated result.</td>
+</tr>
+<tr>
+<td><code>SOURCE_APPROVAL_ARTIFACT_INVALID</code>, <code>SOURCE_APPROVAL_ARTIFACT_CORRUPT</code>, <code>SOURCE_APPROVAL_AMBIGUOUS</code>, <code>SOURCE_APPROVAL_REQUIRED</code>, <code>SOURCE_APPROVAL_BINDING_INVALID</code></td>
+<td>Artifact admission/bytes, unique selection or exact report/approval binding failed. Preserve selected evidence and inspect the specific relationship.</td>
+</tr>
+<tr>
+<td><code>SOURCE_APPROVAL_SYNC_BINDING_INVALID</code>, <code>SOURCE_APPROVAL_IMPLEMENTATION_INVALID</code>, <code>SOURCE_APPROVAL_LINEAGE_AMBIGUOUS</code></td>
+<td>Source advancement is invalid, forked or cyclic. Resolve the actual lineage; do not choose an arbitrary edge.</td>
+</tr>
+<tr>
+<td><code>RUNTIME_WORKSPACE_REFERENCE_INVALID</code>, <code>RUNTIME_WORKSPACE_OWNER_MISMATCH</code></td>
+<td>Workspace shape/text/revision or attempt owner disagrees. This is not a signal to overwrite the protected owner record.</td>
+</tr>
+<tr>
+<td><code>RUNTIME_RESULT_FILE_PATH_TOO_LONG</code></td>
+<td>UTF-8 result path exceeds 2048 bytes. Select a shorter supported path; the helper has not written a file.</td>
+</tr>
+</tbody>
+</table>
+<p>Errors from reader callbacks, JSON parsing/stringifying, Node crypto or capability implementations can also propagate. Do not expect every rejection to have an SDK-prefixed code. Async helpers can reject after a read capability has run; a Promise rejection does not establish that every downstream operation had no effect.</p>
+<p>Pure serialization and local parsing have no intended external mutation. Capability-backed reads can involve the runtime's own effect/journal path. The adapter invocation path can perform external effects. Before retrying an uncertain external outcome, inspect its original idempotency identity and receipt. A fresh key is a new effect, not recovery of the old one. Use the owning component's recovery procedure rather than a universal SDK retry loop.</p>
+<h2 id="maintain-this-reference">Maintain this reference</h2>
+<p>The canonical explanation is this page. Documentation tooling generates the export/field inventory; do not edit it by hand. Documentation tooling uses the actual package export map and TypeScript compiler, then joins separately authored consumer explanations with source dependencies. A new, removed or renamed export, a missing explanation or changed bound semantic source must fail the check. Hash equality is a drift guard, not proof of explanation quality.</p>
+<p>When an API changes, review its caller, provider, validator, schema and tests. Update its consumer meaning, optional/absence behavior, errors, side effects and version limits together. Do not refresh a source digest without reading the affected behavior. The SDK's own type generator remains responsible for product contract declarations; the documentation inventory does not replace it or execute product modules.</p>
+<p>Run the read-only reference check from the repository root:</p>
+<pre><code class="language-bash">npm run docs:sdk:check
+</code></pre>
+<p>Exit zero means that the inventory and export page match the current discovered surface and bound consumer explanations. A source or output drift error stops the check. Review the named source and its consumer behavior before updating the explanation or regenerating; do not edit the generated page to conceal drift. This check does not activate plugins or prove live capability behavior.</p>
+</main></body></html>

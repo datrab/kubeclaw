@@ -1,0 +1,1540 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/use/install.html"></head><body><main>
+<h1 id="plan-and-install">Plan and Install</h1>
+<p>Status: source-backed deployment path; current runtime selection is absent, so a new runtime installation must stop before mutation
+Audience: Kubernetes platform operator, security operator
+Owner: platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/deploy.sh">scripts/deploy.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/generated/inventory/deploy-script.json">docs/generated/inventory/deploy-script.json</a>
+Applies to: current selected runtime release
+Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available</p>
+<h2 id="objective">Objective</h2>
+<p>Prepare one KubeClaw environment without hiding a missing platform dependency.
+Finish with ready workloads, smoke results, and an independent recovery route.</p>
+<p>This procedure does not install a host, K3s, a storage driver, or a
+<a href="https://www.cni.dev/docs/">CNI (Container Networking Interface)</a> implementation.
+CNI defines how the container runtime calls network plugins to connect containers.
+It starts with an existing Kubernetes cluster.</p>
+<h2 id="canonical-install-and-preflight-procedure">Canonical Install and Preflight Procedure</h2>
+<!-- operator-task: install-preflight -->
+<p>This page is the sole authority for <code>install-preflight</code>. Run it from the
+administration machine with one dedicated absolute <code>&lt;kubeconfig-path&gt;</code> bound to
+one exact <code>&lt;context&gt;</code>. The supported start state is an existing Kubernetes
+cluster with independently recoverable API and host access. <code>scripts/deploy.sh</code>,
+the selected release receipts, Helm values, and the named cluster/storage
+authorities are the implementation and configuration sources.</p>
+<p>Before any cluster mutation, complete <a href="#planning-record">Planning Record</a>,
+<a href="#supported-versions">Supported Versions</a>, the
+<a href="maintenance.html#acquire-a-reviewed-runtime-selection">reviewed release checkout</a>,
+<a href="#bind-cluster-authority">Bind Cluster Authority</a>,
+<a href="#select-configuration">Select Configuration</a>, the read-only
+<a href="#prerequisites">Prerequisites</a>, <a href="#preflight-without-mutation">Preflight Without Mutation</a>,
+<a href="#check-authority-for-the-selected-scope">Check authority for the selected scope</a>,
+and <a href="#prepare-independent-access">Prepare Independent Access</a>, in that order.
+Before the first mutation, also complete the linked Worker Trust
+<a href="worker-trust.html#prepare-the-production-receipt-authority">receipt-authority preparation</a>
+and <a href="worker-trust.html#3-check-the-live-execution-boundary">live-execution boundary check</a>,
+including qualified denial observations paired with reachable positive controls.
+The current verifier does not provide the durable-request and resource-identity
+evidence required for safe reconciliation and cleanup. If the intended result
+is a completed installation or operational approval, stop before the disposable
+probe even with Prism selected. Keep the read-only plan and wait for the owning
+operators to resolve lifecycle capture and denial observation; do not deploy
+first and discover these limits later.
+Every source, release-selection, render, access, and read-only dependency gate
+must pass. An absent runtime selection stops this installation here, including
+the disposable probe. Only then run <a href="#prove-dns-and-disposable-storage">Prove DNS and disposable storage</a>.
+That probe is the first controlled cluster mutation. It creates only the exact
+disposable resources declared there. After its cleanup succeeds, use
+<a href="#install-in-dependency-order">Install in Dependency Order</a>. Stop and retain
+the exact failed command before correcting an input. Do not continue with a
+partial dependency set.</p>
+<p>Final proof requires the selected release identity, four readiness levels from
+the <a href="operate.html#canonical-start-readiness-and-observation-procedure">canonical readiness procedure</a>,
+functional smoke results, an independent administration check, cleanup of any
+approved probes, and the evidence listed at the end of this page.
+Select Prism before mutation and read the <a href="#select-prism-and-check-the-trust-boundary">profile and trust boundary</a>.
+The implemented live trust exercise requires Prism. A selection without Prism
+cannot currently complete that final proof.</p>
+<h2 id="supported-topology-and-limits">Supported Topology and Limits</h2>
+<p>The repository deploys one application namespace plus separate identity namespaces.
+It can also deploy a separate Ops Pod namespace.</p>
+<p>The default application namespace is <code>kubeclaw</code>.
+SPIRE uses <code>spire-server</code> and <code>spire-system</code>.
+The default Ops Pod namespace is <code>kubeclaw-ops</code>.</p>
+<p>The deployment path can install these components:</p>
+<ul>
+<li>SPIRE and its <a href="https://kubernetes.io/docs/concepts/storage/volumes/#csi">CSI (Container Storage Interface)</a> driver. CSI defines how Kubernetes uses external volume drivers; SPIRE uses its driver to deliver the workload-identity socket to Pods.</li>
+<li>Redis, PostgreSQL, and LiteLLM.</li>
+<li>Nova and Buster role deployments.</li>
+<li>Prism and its PostgreSQL, Control, Studio, Worker, and agent workloads.</li>
+<li>The Tailscale operator for the complete showcase baseline.</li>
+</ul>
+<p>The deployment path does not establish these platform services:</p>
+<ul>
+<li>Host operating system and K3s installation.</li>
+<li>CNI installation or a CNI migration.</li>
+<li>StorageClass creation and external backup storage.</li>
+<li>An <a href="https://opencontainers.org/about/overview/">OCI (Open Container Initiative)</a> registry or BuildKit client configuration for production use. OCI defines container image and distribution formats; the registry stores and serves those images.</li>
+<li>Argo CD ownership transfer for existing Helm resources.</li>
+<li>Independent host, KVM, or SSH administration.</li>
+</ul>
+<p>Stop if the environment depends on an item in the second list and no operator owns it.</p>
+<table>
+<thead>
+<tr>
+<th>Platform layer</th>
+<th>Repository role</th>
+<th>Required operator proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host and K3s</td>
+<td>Existing prerequisite</td>
+<td>Independent login, API recovery, version, and restart procedure</td>
+</tr>
+<tr>
+<td>CNI</td>
+<td>Existing cluster dependency; Flannel and Cilium are separate architecture choices</td>
+<td>Selected implementation, DNS, policy enforcement, and rollback path</td>
+</tr>
+<tr>
+<td>Argo CD</td>
+<td>Optional deployment owner</td>
+<td>Repository access, tracking mode, revision, health, and exclusive ownership</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Existing StorageClass and CSI</td>
+<td>Binding, reclaim behavior, capacity, snapshot or backup, and restore</td>
+</tr>
+<tr>
+<td>Redis and PostgreSQL</td>
+<td>Required showcase data services</td>
+<td>Authentication, TLS where selected, persistence, capacity, backup, migration, and restore</td>
+</tr>
+<tr>
+<td>Registry, mirror, and BuildKit</td>
+<td>Required showcase services</td>
+<td>Authenticated push, uncached pull, cache behavior, storage, isolation, and garbage collection</td>
+</tr>
+<tr>
+<td>DNS and Tailscale</td>
+<td>Required showcase access and exposure layers</td>
+<td>Positive and negative identity checks plus independent recovery</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Optional platform evidence layer</td>
+<td>Metric retention, log delivery, dashboard access, capacity, and recovery</td>
+</tr>
+<tr>
+<td>SPIRE</td>
+<td>Required showcase workload-identity service</td>
+<td>Server persistence, agents, CSI, <a href="../reference/glossary.html#svid">SVID</a> issuance, and expiry ownership</td>
+</tr>
+</tbody>
+</table>
+<p>An SVID (SPIFFE Verifiable Identity Document) is a workload credential. On these
+deployed paths, it is a short-lived X.509 certificate that contains the workload's
+SPIFFE identity. Successful identity verification does not grant application
+permission; the receiving application's allowlist must also permit that identity.</p>
+<p>Use the <a href="maintenance.html#gitops-operation">GitOps operation</a> when Argo owns deployment.
+Use <a href="maintenance.html#registry-and-buildkit-maintenance">Registry and BuildKit maintenance</a> for client preparation.</p>
+<p>Helm and Argo must not manage the same resource at the same time.
+Complete an explicit ownership transfer before enabling reconciliation.</p>
+<blockquote>
+<p><strong>Source evidence — deployment ownership</strong></p>
+<p><strong>Claim:</strong> <code>setup</code> owns application namespace creation, Helm repository preparation, and optional Secret preparation. <code>infra</code> owns the ordered identity and stateful-service deployment.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L878-L903"><code>cmd_setup()</code> creates the namespace and prepares chart repositories</a>.
+It then <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L921-L947">selects the configured Secret setup</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L1101-L1140"><code>cmd_infra()</code> runs the stateful preflight and installs SPIRE</a>.
+It next <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L1143-L1160">installs the selected Redis and PostgreSQL services</a> and <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L1166-L1185">the optional LiteLLM service</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L37-L64">Deployment variables select the namespace, optional components, Secret mode, and partial-infrastructure behavior</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/check-deployment-truth.mjs#L41-L69">The deployment truth check reads the deploy script and checks immutable-image and network-policy safety</a>. The check passed on 2026-09-16. It does not represent a cluster deployment.</p>
+<p><strong>Revision:</strong> Deployment source checked at <code>2a8558d795054d25aa4b72dbdc296c9321ba38f6</code>; unchanged test and release sources at <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code>.</p>
+<p><strong>Limit:</strong> These commands do not install or prove the host, K3s, CNI, durable storage, or independent external access.</p>
+</blockquote>
+<h2 id="execution-locations">Execution Locations</h2>
+<p>Use two separate administration locations.</p>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Purpose</th>
+<th>Required access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Existing administration machine</td>
+<td>First install, cluster recovery, and lockout recovery</td>
+<td>Repository, <code>kubectl</code>, <code>helm</code>, Node.js, npm, Go for source checks, and cluster bootstrap rights</td>
+</tr>
+<tr>
+<td>Ops Pod</td>
+<td>Routine observation and reviewed Git changes</td>
+<td>Running cluster, its PVCs, and configured observer rights</td>
+</tr>
+</tbody>
+</table>
+<p>The Ops Pod is not an independent recovery path.
+It depends on cluster scheduling, networking, DNS, storage, and the API.</p>
+<p>Keep the existing host or KVM path before installation.
+<a href="../status/open-issues.html#independent-recovery-outside-the-ops-pod-is-unproved">Independent recovery outside the Ops Pod</a> tracks the missing proof.</p>
+<h2 id="planning-record">Planning Record</h2>
+<p>Create an operator record before any mutation.
+Record these values:</p>
+<table>
+<thead>
+<tr>
+<th>Subject</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source</td>
+<td>Full repository commit and clean-worktree result</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>Runtime selection file and every selected image digest</td>
+</tr>
+<tr>
+<td>Cluster</td>
+<td>Absolute dedicated kubeconfig path, exact context, independently supplied API server and <code>kube-system</code> namespace UID, Kubernetes version, nodes, and CNI</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>StorageClass, binding mode, reclaim policy, free capacity, and backup destination</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Cluster DNS, service ranges, egress route, Tailnet owner, and recovery route</td>
+</tr>
+<tr>
+<td>Identity</td>
+<td>Cluster administrator, SPIRE owner, service-account owner, and emergency credential owner</td>
+</tr>
+<tr>
+<td>Trust verification</td>
+<td>Approved isolated target, data/agent owner, resource cleanup owner, and the live verifier's retained-identity and cleanup procedure</td>
+</tr>
+<tr>
+<td>Production receipts</td>
+<td>Production-operator signing owner, external private-key path, fixed trusted-public-key installation, independently approved fingerprint, and key qualification result</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>Existing PVCs, databases, queues, journals, artifacts, and their owners</td>
+</tr>
+<tr>
+<td>Change</td>
+<td>Maintenance window, rollback owner, evidence directory, and stop decision owner</td>
+</tr>
+</tbody>
+</table>
+<p>Do not invent capacity values.
+<a href="../status/open-issues.html#combined-node-and-disk-capacity-is-not-fully-budgeted-and-measured">Combined node and disk capacity</a> tracks the missing proof.</p>
+<h2 id="supported-versions">Supported Versions</h2>
+<p>Use the <a href="README.html#version-and-tool-boundary">shared version rules</a>.
+This procedure has no accepted Kubernetes or K3s compatibility range.
+Record the actual server, kubectl, and Helm versions and obtain platform-owner acceptance before the first mutation.
+Use only the selected runtime receipt and generated values for workload images.</p>
+<h2 id="bind-cluster-authority">Bind Cluster Authority</h2>
+<p><code>scripts/deploy.sh</code> invokes <code>kubectl</code> and Helm without a context argument. The
+script therefore inherits <code>KUBECONFIG</code> and its current context; its command
+interface has no context flag
+(<a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L7-L35">command interface</a>;
+<a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L878-L903">raw cluster clients in setup</a>).
+Do not rely on the user's default kubeconfig or on printing its current context.</p>
+<p>Obtain the following values from the platform authority through a channel
+independent of the kubeconfig being tested: a dedicated kubeconfig file, its
+exact context name, the expected API server URL, the existing
+<code>kube-system</code> namespace UID, and the application and Prism namespace names. Start a new restricted shell in
+<code>&lt;repository-root&gt;</code>, replace every placeholder, and keep that same shell for
+the entire procedure:</p>
+<pre><code class="language-bash">set -euo pipefail
+umask 077
+export KUBECONFIG=&quot;&lt;kubeconfig-path&gt;&quot;
+export EXPECTED_CONTEXT=&quot;&lt;context&gt;&quot;
+export EXPECTED_CLUSTER_SERVER=&quot;&lt;cluster-server&gt;&quot;
+export EXPECTED_KUBE_SYSTEM_UID=&quot;&lt;kube-system-uid&gt;&quot;
+export NAMESPACE=&quot;&lt;namespace&gt;&quot;
+export PRISM_NAMESPACE=&quot;&lt;prism-namespace&gt;&quot;
+for target_namespace in &quot;$NAMESPACE&quot; &quot;$PRISM_NAMESPACE&quot;; do
+  test &quot;${#target_namespace}&quot; -le 63
+  [[ $target_namespace =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]] || exit 1
+done
+case &quot;$KUBECONFIG&quot; in /*) ;; *) printf '%s\n' 'KUBECONFIG must be absolute' &gt;&amp;2; exit 1 ;; esac
+test -f &quot;$KUBECONFIG&quot; &amp;&amp; test ! -L &quot;$KUBECONFIG&quot;
+chmod 600 -- &quot;$KUBECONFIG&quot;
+kubectl config use-context &quot;$EXPECTED_CONTEXT&quot; &gt;/dev/null
+chmod 400 -- &quot;$KUBECONFIG&quot;
+
+assert_cluster_binding() {
+  test &quot;$(kubectl config current-context)&quot; = &quot;$EXPECTED_CONTEXT&quot; &amp;&amp;
+  test &quot;$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')&quot; = &quot;$EXPECTED_CLUSTER_SERVER&quot; &amp;&amp;
+  test &quot;$(kubectl get namespace kube-system -o jsonpath='{.metadata.uid}')&quot; = &quot;$EXPECTED_KUBE_SYSTEM_UID&quot;
+}
+bound_kubectl() {
+  assert_cluster_binding || { printf '%s\n' 'CLUSTER_BINDING_MISMATCH' &gt;&amp;2; return 1; }
+  env KUBECONFIG=&quot;$KUBECONFIG&quot; kubectl &quot;$@&quot;
+}
+bound_helm() {
+  assert_cluster_binding || { printf '%s\n' 'CLUSTER_BINDING_MISMATCH' &gt;&amp;2; return 1; }
+  env KUBECONFIG=&quot;$KUBECONFIG&quot; helm &quot;$@&quot;
+}
+bound_deploy() {
+  assert_cluster_binding || { printf '%s\n' 'CLUSTER_BINDING_MISMATCH' &gt;&amp;2; return 1; }
+  env KUBECONFIG=&quot;$KUBECONFIG&quot; NAMESPACE=&quot;$NAMESPACE&quot; PRISM_NAMESPACE=&quot;$PRISM_NAMESPACE&quot; ./scripts/deploy.sh &quot;$@&quot;
+}
+readonly KUBECONFIG EXPECTED_CONTEXT EXPECTED_CLUSTER_SERVER EXPECTED_KUBE_SYSTEM_UID NAMESPACE PRISM_NAMESPACE
+assert_cluster_binding
+printf 'context=%s\nserver=%s\nkube-system-uid=%s\nnamespace=%s\nprism-namespace=%s\n' \
+  &quot;$EXPECTED_CONTEXT&quot; &quot;$EXPECTED_CLUSTER_SERVER&quot; &quot;$EXPECTED_KUBE_SYSTEM_UID&quot; &quot;$NAMESPACE&quot; &quot;$PRISM_NAMESPACE&quot;
+</code></pre>
+<p>Expected observation: <code>use-context</code> succeeds, the assertion exits zero, and
+the five printed values exactly match the independently supplied record.
+<code>&lt;namespace&gt;</code> is the application namespace; <code>&lt;prism-namespace&gt;</code> is the Prism
+namespace. Use the same name for both when Prism shares the application
+namespace. Both must be Kubernetes namespace names: 1 to 63 lowercase letters,
+digits, or hyphens, starting and ending with a letter or digit. The exported
+read-only values bind raw script clients as well as the wrappers.
+The script otherwise <a href="https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L81-L98">defaults <code>NAMESPACE</code> to <code>kubeclaw</code> and <code>PRISM_NAMESPACE</code>
+to <code>NAMESPACE</code></a>.
+From this point onward, use only <code>bound_kubectl</code>, <code>bound_helm</code>, and
+<code>bound_deploy</code> from this shell for every cluster read or mutation on this page.
+The read-only kubeconfig prevents an accidental context rewrite after binding.</p>
+<p>Stop on an absent or symbolic-link kubeconfig, unknown context, server
+mismatch, UID mismatch, certificate or authentication failure, or
+<code>CLUSTER_BINDING_MISMATCH</code>. Do not repair the user's default kubeconfig and do
+not retry a mutating command. Obtain or repair the dedicated file through the
+platform authority, independently confirm the expected server and UID, rerun
+this entire section in a new shell, and then restart preflight. If a mutation
+had already begun, preserve its output and inspect only the recorded target
+before selecting recovery or rollback.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Run these read-only checks from <code>&lt;repository-root&gt;</code> on the administration machine:</p>
+<pre><code class="language-bash">assert_cluster_binding
+git status --short
+git rev-parse HEAD
+node --version
+npm --version
+helm version
+bound_kubectl version
+bound_kubectl get nodes -o wide
+bound_kubectl get storageclass
+bound_kubectl cluster-info
+bound_kubectl -n kube-system get pods
+bound_kubectl -n kube-system get service kube-dns --ignore-not-found
+bound_kubectl -n kube-system get endpointslice -l k8s-app=kube-dns
+</code></pre>
+<p>Expected observations:</p>
+<ul>
+<li>The worktree has no unreviewed change.</li>
+<li>The checkout commit equals the accepted <code>&lt;selection-commit&gt;</code> from
+<a href="maintenance.html#obtain-and-verify-the-selected-checkout">release acquisition</a>,
+or its explicitly approved documentation-only successor. Receipt source
+commits remain separately recorded and checked.</li>
+<li>Every required node reports <code>Ready</code>.</li>
+<li>The selected StorageClass and its owned provisioner exist.</li>
+<li>The API responds through the intended context; the DNS Service has ready
+endpoints. This does not yet prove a Pod can resolve a name.</li>
+<li>Every required authorization check prints <code>yes</code>.</li>
+</ul>
+<p>Stop for any unexpected context, missing node, unknown StorageClass, missing
+DNS endpoint or unowned existing data. The complete scope and ownership
+checks follow; these initial observations do not yet authorize mutation.</p>
+<h2 id="select-configuration">Select Configuration</h2>
+<p>Repository values are examples and public defaults.
+Private operator values must use separate files.</p>
+<p>Use these references before editing values:</p>
+<ul>
+<li><a href="../reference/environment-variables.html">Environment Variables</a>.</li>
+<li><a href="../reference/helm-values.html">Helm Values</a>.</li>
+<li><a href="../reference/secrets.html">Secrets</a>.</li>
+<li><a href="maintenance.html#version-authorities">Version Authorities</a>.</li>
+</ul>
+<p>The effective order for runtime role values is:</p>
+<ol>
+<li>Chart defaults.</li>
+<li>Source-bound generated release values.</li>
+<li>Private operator overlay.</li>
+<li>Supported command overrides.</li>
+</ol>
+<p>The release materializer reads the role-specific <code>my-values</code> file and binds its
+images and code bundle to the selected release before it writes the generated
+values. That repository file is therefore an input to step 2. The deploy script
+does not apply it again as a separate override.
+<a href="https://github.com/datrab/kubeclaw/blob/f0995c544af41dcd5de5990820bc2c4e97bdafe3/scripts/updates/materialize-release.mjs#L23-L40">Release value construction</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/f0995c544af41dcd5de5990820bc2c4e97bdafe3/scripts/deploy.sh#L1409-L1417">the deploy script's values order</a>
+define these stages.</p>
+<p>Do not select a different image in a private overlay.
+Image identity belongs to the reviewed release receipt.</p>
+<h3 id="select-prism-and-check-the-trust-boundary">Select Prism and check the trust boundary</h3>
+<p><code>KUBECLAW_DEPLOY_PRISM</code> selects whether the deploy script includes Prism.
+Unset or empty selects the default <code>true</code>. The script accepts <code>true</code>, <code>1</code>,
+<code>yes</code>, <code>on</code>, and <code>enabled</code>, or <code>false</code>, <code>0</code>, <code>no</code>, <code>off</code>, and <code>disabled</code>,
+without regard to letter case. Other nonempty values do not enable Prism and
+are not validated as errors. Use exactly <code>true</code> or <code>false</code> here to avoid that
+ambiguity. <code>&lt;prism-selection&gt;</code> is your reviewed choice:</p>
+<pre><code class="language-bash">export KUBECLAW_DEPLOY_PRISM=&quot;&lt;prism-selection&gt;&quot;
+case &quot;$KUBECLAW_DEPLOY_PRISM&quot; in true|false) ;; *) exit 1 ;; esac
+readonly KUBECLAW_DEPLOY_PRISM
+printf 'prism-selection=%s\n' &quot;$KUBECLAW_DEPLOY_PRISM&quot;
+</code></pre>
+<p>Record that value with the selected release and render digests. Keep it for
+render, setup, deployment, status, and smoke. To change it, start a new bound
+shell and repeat the read-only planning and preflight checks.</p>
+<table>
+<thead>
+<tr>
+<th>Selection</th>
+<th>Implemented deployment behavior</th>
+<th>Final trust proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>true</code></td>
+<td>Render and install Prism as well as Nova and Buster; include its selected namespace, Secrets, storage, and health checks.</td>
+<td>Follow the complete <a href="worker-trust.html#canonical-worker-trust-procedure">Worker Trust procedure</a>, whose start state requires Nova, Buster, and Prism.</td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td>Render and install Nova and Buster; skip Prism installation and its separate namespace creation. This does not uninstall an existing Prism release.</td>
+<td>The current live verifier has no route for this selection. Component smoke and source checks cannot replace positive and negative live trust proof.</td>
+</tr>
+</tbody>
+</table>
+<p>For a selection without Prism, the exact blocked step is
+<a href="#6-prove-worker-trust">Prove Worker Trust</a>. Before the disposable probe or any
+namespace, Secret, or workload mutation, stop if the intended result requires
+a completed installation or operational release approval. Keep the reviewed
+configuration and read-only evidence. Platform operations and the
+workload-identity owner must resolve this boundary. They can select the complete
+profile through a new reviewed plan, or maintain a verifier for the reduced
+profile. Do not enable Prism only to obtain a test result, disable trust,
+broaden allowlists, or admit work with an unverified trust boundary.</p>
+<p>This is a verification limit, not a prohibition on the implemented reduced
+deployment choice. An explicitly approved isolated deployment can follow the
+selected deployment steps, but must remain recorded as incomplete and must not
+receive operational work. To remove the limit, the owners must provide a
+maintained reduced-profile procedure and verifier that name the selected
+identities and paths, prove authorized access and paired denials (including
+plaintext, wrong SVID, and forged forwarded identity), verify source signing
+where used, and verify test-resource cleanup. Retain an actual successful live
+result for the exact release and cluster before declaring that installation
+complete. No such reduced-profile result is established here.</p>
+<blockquote>
+<p><strong>Source evidence — Prism selection and live verification</strong></p>
+<p><strong>Claim:</strong> Prism can be omitted from deployment, but the current live verifier requires its Control and Worker deployments.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/d68da902c174574d1186ffd4a3ff29e95b63474e/scripts/deploy.sh#L96-L98">The default selection</a>, <a href="https://github.com/datrab/kubeclaw/blob/d68da902c174574d1186ffd4a3ff29e95b63474e/scripts/deploy.sh#L964-L972">accepted boolean spellings</a>, and <a href="https://github.com/datrab/kubeclaw/blob/d68da902c174574d1186ffd4a3ff29e95b63474e/scripts/deploy.sh#L1684-L1687">the Prism function's early return</a> control selection. Even an explicit <code>render prism</code> calls that guarded function. <a href="https://github.com/datrab/kubeclaw/blob/d68da902c174574d1186ffd4a3ff29e95b63474e/scripts/deploy.sh#L2965-L2987">The <code>all</code> and <code>status</code> branches also condition Prism work</a>.</p>
+<p><strong>Contract or setting:</strong> <code>KUBECLAW_DEPLOY_PRISM</code> is exported in the bound shell; the <a href="https://github.com/datrab/kubeclaw/blob/d68da902c174574d1186ffd4a3ff29e95b63474e/tests/verification/live/worker-trust-cluster-e2e.sh#L69-L84">live verifier always waits for and inspects all four deployments</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/d68da902c174574d1186ffd4a3ff29e95b63474e/tests/verification/live/worker-trust-cluster-e2e.sh#L190-L199">The live verifier declares its positive and negative paths</a>. No live result for either selection is established here.</p>
+<p><strong>Revision:</strong> <code>d68da902c174574d1186ffd4a3ff29e95b63474e</code>.</p>
+<p><strong>Limit:</strong> These source paths establish selection and the verifier's prerequisites; it does not establish live trust or a reduced-profile verifier.</p>
+</blockquote>
+<p>The application and Prism namespaces are already exported and read-only in
+the bound shell. Inspect those exact targets without changing either value:</p>
+<pre><code class="language-bash">assert_cluster_binding
+bound_kubectl get namespace &quot;$NAMESPACE&quot; --ignore-not-found
+bound_kubectl get namespace &quot;$PRISM_NAMESPACE&quot; --ignore-not-found
+</code></pre>
+<p>The last command may return no namespace before the first setup.
+It must not return an unexpected environment with the same name.</p>
+<h2 id="preflight-without-mutation">Preflight Without Mutation</h2>
+<p>Complete <a href="worker-trust.html#prepare-the-production-receipt-authority">production-receipt authority preparation</a>
+on this administration machine, and identify the current
+<a href="worker-trust.html#3-check-the-live-execution-boundary">live-execution boundary</a>.
+Missing or unqualified signing authority forbids the first probe or workload
+mutation. A qualified keypair does not remove the verifier's lifecycle or denial
+proof limits. Both owner procedures must be qualified before mutation for a
+complete installation; resolving lifecycle capture alone is insufficient.</p>
+<p>This section makes no cluster change. First complete the canonical
+<a href="quickstart.html#locked-dependency-installation">Locked Dependency Installation</a>
+in this disposable checkout. Install Go and make <code>go</code> available on <code>PATH</code>;
+the configuration inventory uses it to inspect Go producers. The repository
+does not declare an accepted Go version range. Record the observed version before
+running the source checks:</p>
+<pre><code class="language-bash">command -v go
+go version
+npm run versions:check
+npm run docs:check:generated
+npm run verify:prism:deploy-script
+node tests/verification/deployment/check-deployment-truth.mjs --source-root &quot;$PWD&quot;
+</code></pre>
+<p>On 2026-10-09, <code>npm run verify:prism:deploy-script</code> passed at revision <code>e3fa70c3fe3a1a4a32af503201a19e0b5df14c61</code> with Node.js <code>v24.21.0</code>.
+It checks workflow YAML, the deployment contract, and deployment-script syntax.
+This local result does not establish successful cluster deployment.
+Run every source check above for your selected checkout and stop on a nonzero exit.</p>
+<p>Render each selected role before mutation:</p>
+<pre><code class="language-bash">bound_deploy render nova
+bound_deploy render buster
+if [[ $KUBECLAW_DEPLOY_PRISM == true ]]; then
+  bound_deploy render prism
+fi
+</code></pre>
+<p>Runtime rendering requires <code>releases/runtime-images.json</code> and its generated values.
+The current source revision does not contain that runtime selection.</p>
+<p>If the selection is absent, stop before any cluster mutation, including the
+DNS and storage probe, namespace creation, and Secret setup.
+Complete <a href="maintenance.html#acquire-a-reviewed-runtime-selection">release acquisition</a>
+and resume from its accepted clean selection checkout. That task names the
+workflow inputs, receipt checks, permissions, PR/merge boundary and local checks.
+Never invent the file or substitute mutable image tags.</p>
+<p>Treat rendered output as sensitive configuration.
+Review images, Secrets, service accounts, PVCs, ports, and network policies.</p>
+<p>Complete <a href="maintenance.html#prepare-the-client-projections">client preparation</a>
+from the reviewed Buster render. If a new node configuration is required, the
+platform owner must supply its installation, cold-pull, and rollback procedure
+before this installation can proceed. Complete
+<a href="#check-authority-for-the-selected-scope">Check authority for the selected scope</a>
+against the exact rendered configuration before the first probe mutation. Local projection generation does not
+prove node readiness.</p>
+<p>Stop if the selected release is absent, client preparation or node prerequisites
+are incomplete, or the render changes an unowned resource.</p>
+<h2 id="check-authority-for-the-selected-scope">Check authority for the selected scope</h2>
+<p>Authorization means that the API permits this identity to perform a verb on a
+resource in a scope. A namespaced grant applies to one namespace; a
+cluster-scoped grant applies to resources such as namespaces or PVs. A PV
+(PersistentVolume) represents the storage backing a PVC (PersistentVolumeClaim,
+which requests that storage). Permission in the application namespace does not
+establish permission in the probe, Prism, SPIRE or Tailscale namespaces.
+<a href="https://kubernetes.io/docs/reference/kubectl/generated/kubectl_auth/kubectl_auth_can-i/"><code>auth can-i</code> checks the particular verb, resource and scope</a>.
+It does not prove admission, quota, node capacity or provider permission.</p>
+<p>Before the first namespace creation, the platform/security owner must approve
+an authorization plan for the exact selected release and private overlays.
+Use the following inventory to prepare it. Include every selected rendered
+kind, Helm hook and optional branch; remove a row only when its operation is
+not selected and record that reason. Inspect the role renders below, the
+selected infrastructure chart install <strong>and</strong> upgrade renders, and the
+<code>infra</code> manifests before approving it. The chart staging and offline render
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/infrastructure-release.mjs#L32-L44">check both installation and upgrade before deployment</a>.
+SPIRE chart versions and values, application and Prism names, Secret source
+namespace, Tailscale namespace and native-node policy must match the plan.
+Never use an unreviewed default namespace to fill a missing plan entry.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Resources and verbs to include</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial discovery and binding</td>
+<td><code>get</code> named namespaces, nodes, DNS Service, StorageClass and Argo CRD; <code>list</code> nodes, StorageClasses, kube-system Pods and DNS EndpointSlices</td>
+<td>Cluster; <code>kube-system</code> for DNS/Pods</td>
+</tr>
+<tr>
+<td>Disposable probe</td>
+<td>Namespace <code>create</code>, named <code>get</code>, <code>delete</code>, <code>list</code>, <code>watch</code>; Pod and PVC <code>get</code>, <code>list</code>, <code>watch</code>, <code>create</code> for single-object creation; event <code>list</code>; Pod log <code>get</code>; named StorageClass/PV <code>get</code>, PV <code>list</code>/<code>watch</code> for observation</td>
+<td>Exact future probe namespace; namespaces/StorageClass/PVs are cluster-scoped</td>
+</tr>
+<tr>
+<td>Namespace and Secret setup</td>
+<td>Namespace <code>get</code>, <code>create</code>, <code>patch</code>; Secret <code>get</code>, <code>list</code>, <code>create</code>, <code>patch</code> including key checks/copy</td>
+<td>Application, separately selected Prism and Tailscale namespaces; source Secret <code>get</code> in <code>SRC_NS</code> (default <code>default</code>) when copy is selected</td>
+</tr>
+<tr>
+<td>Helm release storage, waits and atomic cleanup</td>
+<td>Secret <code>get</code>, <code>list</code>, <code>create</code>, <code>update</code>, <code>patch</code>, <code>delete</code>; workload/Pod/Job <code>get</code>, <code>list</code>, <code>watch</code>; <code>get</code>, <code>create</code>, <code>update</code>, <code>patch</code>, <code>delete</code> for each selected chart resource and hook</td>
+<td>Every selected release namespace; cluster scope for cluster-scoped chart resources</td>
+</tr>
+<tr>
+<td>Selected chart/manifests</td>
+<td>Deployments, StatefulSets, DaemonSets, ReplicaSets, Jobs, CronJobs, Pods, Services, ConfigMaps, Secrets, ServiceAccounts, PVCs, Ingresses, NetworkPolicies, CiliumNetworkPolicies, PodDisruptionBudgets and Roles/RoleBindings as actually rendered</td>
+<td>Their rendered namespaces; includes <code>spire-server</code>, <code>spire-system</code> and selected Tailscale namespace</td>
+</tr>
+<tr>
+<td>Identity, broker and admission resources</td>
+<td>Selected ClusterRoles/ClusterRoleBindings, CRDs, CSIDrivers, IngressClasses, ValidatingAdmissionPolicies/Bindings, webhook configurations and SPIRE custom resources; each rendered object's apply/Helm verbs</td>
+<td>Actual cluster or namespaced scope from the rendered kind; RBAC <code>bind</code>/<code>escalate</code> or equivalent existing grants must authorize the selected role contents</td>
+</tr>
+<tr>
+<td>Imperative ownership guards</td>
+<td>Named Argo CRD <code>get</code>; Application <code>list</code> across <strong>all namespaces</strong> if that CRD exists; Deployment, StatefulSet and CronJob <code>list</code> in every target runtime namespace, even when the Argo CRD is absent</td>
+<td>Cluster discovery; application and Prism namespaces</td>
+</tr>
+<tr>
+<td>Reconciliation, rollout and smoke</td>
+<td>Deployment/Service <code>get</code>, Deployment <code>patch</code> for selected reconciliations/restart; Pod <code>get</code>/<code>list</code>/<code>watch</code>, Pod log <code>get</code>, Pod exec <code>create</code>; Job/StatefulSet/CronJob observations and selected hook resources</td>
+<td>Application and Prism namespaces</td>
+</tr>
+<tr>
+<td>Native-worker host preflight</td>
+<td>Named Node <code>get</code>, node <code>proxy</code> subresource <code>get</code> for kubelet <code>configz</code>, plus separately owned host/pool files and independent node access</td>
+<td>Selected native node, not a Pod in the administration namespace</td>
+</tr>
+<tr>
+<td>Provider disposition</td>
+<td>Read-only backing-volume lookup and provisioner reconciliation/cancellation authority</td>
+<td>Selected storage provider account, granted by its owner outside Kubernetes RBAC</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/my-values/setup-secrets.sh#L313-L339">actual Secret setup reads/copies from its selected source</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/deploy.sh#L1120-L1135">infra applies SPIRE namespace policies before its chart installs</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/native-worker-node-preflight.mjs#L26-L52">native preflight reads the Node and kubelet</a>
+explain why those authorities are separate. Verify custom-resource availability
+and the selected platform owner's RBAC/admission decision before proceeding.
+A CRD that will be installed later is not proof that today's identity can create
+its instances. Do not install a CRD or grant permission as part of this check.</p>
+<p>Choose the future probe name now. Define <code>&lt;authorization-plan-file&gt;</code> as a
+private, reviewed UTF-8 file outside Git, with one space-separated row
+<code>VERB RESOURCE SCOPE</code> per permitted operation from the table. <code>RESOURCE</code> is
+Kubernetes' plural API resource name, optionally qualified by its API group,
+or <code>resource/name</code> for a named check. Subresources use <code>pods/log</code>, <code>pods/exec</code>
+or <code>nodes/proxy</code>. <code>SCOPE</code> is an exact namespace, <code>cluster</code>, or <code>all-namespaces</code>.
+Include distinct rows for distinct verbs; no wildcard grants or blank rows.
+The owner must confirm its completeness against the selected manifests and
+script branches before providing it. Record the owner, plan digest, selected
+render digests and provider observation procedure in the planning record.
+If that inventory or any prerequisite authority is unavailable, stop here.</p>
+<pre><code class="language-bash">export PREFLIGHT_NAMESPACE=&quot;kubeclaw-preflight-&lt;unique-id&gt;&quot;
+export PREFLIGHT_AUTHORIZATION_PLAN=&quot;&lt;authorization-plan-file&gt;&quot;
+test &quot;${#PREFLIGHT_NAMESPACE}&quot; -le 63
+[[ $PREFLIGHT_NAMESPACE =~ ^kubeclaw-preflight-[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]] || exit 1
+test -f &quot;$PREFLIGHT_AUTHORIZATION_PLAN&quot; &amp;&amp; test -s &quot;$PREFLIGHT_AUTHORIZATION_PLAN&quot; &amp;&amp;
+  test ! -L &quot;$PREFLIGHT_AUTHORIZATION_PLAN&quot; || exit 1
+require_authority() {
+  local verb=&quot;$1&quot; resource=&quot;$2&quot; scope=&quot;$3&quot; result
+  local subresource_flags=()
+  case &quot;$resource&quot; in
+    pods/log|pods/exec|nodes/proxy)
+      subresource_flags=(--subresource=&quot;${resource#*/}&quot;); resource=&quot;${resource%/*}&quot; ;;
+  esac
+  case &quot;$scope&quot; in
+    cluster) result=&quot;$(bound_kubectl auth can-i &quot;$verb&quot; &quot;$resource&quot; &quot;${subresource_flags[@]}&quot;)&quot; || return 1 ;;
+    all-namespaces) result=&quot;$(bound_kubectl auth can-i &quot;$verb&quot; &quot;$resource&quot; &quot;${subresource_flags[@]}&quot; --all-namespaces)&quot; || return 1 ;;
+    *) result=&quot;$(bound_kubectl auth can-i &quot;$verb&quot; &quot;$resource&quot; &quot;${subresource_flags[@]}&quot; -n &quot;$scope&quot;)&quot; || return 1 ;;
+  esac
+  test &quot;$result&quot; = yes || { printf 'AUTHORITY_DENIED: %s %s %s\n' &quot;$verb&quot; &quot;$resource&quot; &quot;$scope&quot; &gt;&amp;2; return 1; }
+}
+while IFS= read -r auth_row || [[ -n $auth_row ]]; do
+  read -r auth_verb auth_resource auth_scope auth_extra &lt;&lt;&lt; &quot;$auth_row&quot;
+  test -n &quot;$auth_verb&quot; &amp;&amp; test -n &quot;$auth_resource&quot; &amp;&amp; test -n &quot;$auth_scope&quot; &amp;&amp; test -z &quot;$auth_extra&quot; || exit 1
+  [[ $auth_verb =~ ^(get|list|watch|create|update|patch|delete|bind|escalate)$ ]] || exit 1
+  [[ $auth_resource =~ ^[a-z0-9./-]+$ ]] || exit 1
+  [[ $auth_scope =~ ^[a-z0-9-]+$ ]] || exit 1
+  require_authority &quot;$auth_verb&quot; &quot;$auth_resource&quot; &quot;$auth_scope&quot; || exit 1
+done &lt; &quot;$PREFLIGHT_AUTHORIZATION_PLAN&quot;
+# These probe reads are required regardless of which runtime options are selected.
+for auth_verb in get list watch create delete; do require_authority &quot;$auth_verb&quot; namespaces cluster; done
+for auth_resource in pods persistentvolumeclaims; do
+  for auth_verb in get list watch create; do require_authority &quot;$auth_verb&quot; &quot;$auth_resource&quot; &quot;$PREFLIGHT_NAMESPACE&quot;; done
+done
+require_authority list events &quot;$PREFLIGHT_NAMESPACE&quot;
+require_authority get pods/log &quot;$PREFLIGHT_NAMESPACE&quot;
+require_authority get persistentvolumes cluster
+require_authority list persistentvolumes cluster
+require_authority watch persistentvolumes cluster
+require_authority get storageclasses.storage.k8s.io cluster
+require_authority get customresourcedefinitions.apiextensions.k8s.io/applications.argoproj.io cluster
+argo_application_crd=&quot;$(bound_kubectl get crd applications.argoproj.io --ignore-not-found -o name)&quot;
+if [[ -n $argo_application_crd ]]; then
+  require_authority list applications.argoproj.io all-namespaces
+else
+  printf '%s\n' 'ARGO_APPLICATION_CRD_ABSENT: optional Argo ownership is unavailable'
+fi
+for owner_namespace in &quot;$NAMESPACE&quot; &quot;$PRISM_NAMESPACE&quot;; do
+  for owner_resource in deployments.apps statefulsets.apps cronjobs.batch; do
+    require_authority list &quot;$owner_resource&quot; &quot;$owner_namespace&quot;
+  done
+  assert_cluster_binding
+  node scripts/gitops-owner.mjs &quot;$owner_namespace&quot; '*'
+done
+sha256sum &quot;$PREFLIGHT_AUTHORIZATION_PLAN&quot;
+</code></pre>
+<p>Expected observation: each required check succeeds with <code>yes</code>; both ownership
+checks exit zero. The exact <a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/gitops-owner.mjs#L14-L26">ownership guard lists all Applications and checks
+retained workload metadata</a>.
+This catches an Application outside <code>argocd</code> and workloads retained after an
+Application was deleted. It runs here before probe/setup/infra effects because
+<a href="https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/deploy.sh#L1419-L1429">role rendering returns before the later guard</a>.
+The deployment script repeats the guard for both agents and the Prism and
+Prism-agent releases; passing it now does not waive a later conflict.
+A successfully empty named CRD lookup is optional absence. A denied lookup,
+malformed Application annotation, claimed namespace or retained ownership is
+a stop. Do not remove metadata to make the check pass. Follow the
+<a href="maintenance.html#gitops-operation">GitOps ownership boundary</a> instead.</p>
+<p>Check the actual named StorageClass again in the probe preparation below.
+Permission for any existing namespace is not a substitute for the future probe
+namespace's grants. Those grants must already return <code>yes</code> before creation;
+repeat them after creation to detect a changed authorization policy. Provider
+lookup authority must already have a named owner and an approved exact command.
+Neither namespace creation nor a successful Kubernetes <code>can-i</code> grants access to
+the provider. Retain the plan and sanitized outcomes; never save Secret contents.</p>
+<h2 id="prepare-independent-access">Prepare Independent Access</h2>
+<p>Before setup, prove that the administration machine can reach the cluster API.
+Record a second route to the host or control plane.</p>
+<p>Do not count Tailscale inside the target cluster as the only second route.
+A CNI or cluster failure can remove that route.</p>
+<p>The optional Ops Pod supports routine operations after cluster readiness.
+The <a href="../understand/platform-and-operations.html#ops-pod-tool-policy-is-not-kubernetes-authority">platform boundary</a> explains the optional Ops Pod. Treat its installation and credentials as a separate administrative surface.</p>
+<p><a href="../status/open-issues.html#automated-host-bootstrap-and-restore-prerequisites-are-incomplete">Automated host bootstrap and restore</a> tracks the missing prerequisites.</p>
+<h2 id="prove-dns-and-disposable-storage">Prove DNS and disposable storage</h2>
+<p>Complete every earlier nonmutating gate before this probe. The runtime
+selection and every selected role render must pass; a failure forbids probe
+creation. This probe is the first cluster mutation. It creates one unique namespace, one
+PVC, and one Pod. The cluster administrator authorizes those resources. The
+StorageClass controller owns provisioning, and cluster DNS owns name
+resolution. Run it from the bound administration shell.</p>
+<p>The probe uses the digest-pinned Alpine-based Node.js image recorded as
+<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/versions.json#L28-L29"><code>OPS_NODE_BASE</code> in <code>versions.json</code></a>.
+The repository also uses that value as
+<a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/ops/pod/Dockerfile#L1-L3">the Ops image build input</a>.
+Its BusyBox <code>nslookup</code> client is the DNS probe. A successful probe establishes
+availability and execution of this pinned image on the node that ran the Pod.
+With <a href="https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy"><code>imagePullPolicy: IfNotPresent</code></a>, the node can use a cached image.
+This result does not prove an uncached registry pull, registry reachability,
+availability on other nodes, or availability of later workload images. Use the platform owner's
+<a href="maintenance.html#install-and-prove-the-selected-clients">node/client qualification</a>
+for the separate per-node uncached-pull proof.</p>
+<p>Choose <code>&lt;unique-id&gt;</code> and the future probe namespace during authorization
+preflight, not after mutation. <code>&lt;storage-request&gt;</code> is a positive Kubernetes
+quantity accepted by the selected class and quota, such as <code>64Mi</code> when the
+storage owner supports it. A UID is an object's unique identity; reusing its
+name creates a different object. Keep the bound shell and its identity record
+through capture and cleanup. <code>&lt;evidence-dir&gt;</code> is a new private directory
+outside Git. Do not use a production namespace for this probe.</p>
+<p>Before creation, the storage owner must provide the exact provider lookup and
+reconciliation procedure. It must cover a bound PV <strong>and</strong> a Pending claim
+whose controller may still allocate storage without a PV visible in the API.
+A CSI <code>volumeHandle</code> identifies the provider asset when present. For another
+provisioner, the owner supplies that identity from its own records. A missing
+PV does not prove that no backing asset was allocated. If the owner cannot
+identify or reconcile in-progress provisioning, stop before this probe.
+A <code>Delete</code> reclaim policy requests provisioner deletion; it is not a deletion
+receipt. A <code>Retain</code> or unknown policy requires a separately approved exact
+provider cleanup procedure, so stop this default probe before claim creation.</p>
+<p>Before the first namespace CREATE, the platform and storage owners must enforce
+exclusive ownership for the complete probe lifetime. It must prevent namespace,
+Pod and PVC creation, deletion or replacement by competing administrators,
+controllers or desired-state changes. The approved original CREATE operations and initial storage allocation and
+binding remain permitted within the owned procedure. Exclude competing changes
+to the recorded PVC/PV binding or provider asset, and unowned objects or
+configuration changes. A Pending claim that binds during reconciliation needs
+fresh owner clearance before deletion. An unexpected changed binding or
+replacement requires owner reconciliation; never change the approved baseline
+to make cleanup pass. Keep this exclusion through each dependent mutation,
+reconciliation, namespace deletion, and the final independent Kubernetes and
+provider disposition checks. Confirm that it still applies before each write.
+A shell variable or UID comparison does not enforce this exclusion.
+Check that the current namespace UID equals the original creating UID before
+PVC and Pod creation. A precheck is non-atomic; if the owner cannot enforce
+that complete lifetime exclusion, stop creation and retain evidence.</p>
+<p>Every <code>probe_snapshot</code> and event/log read first writes a new private directory
+under <code>observations</code>. It retains the command, UTC time, reason, complete output,
+stderr and actual exit status, including failed reads. The root-level files are
+latest working copies for <code>probe_field</code>; they are not the historical record.
+Each guarded <code>probe_capture</code> also keeps its output, stderr, exit, completion
+state result and all working files in a new <code>captures</code> directory, even when capture
+stops early. The indexes identify each attempt. <code>PROBE_CAPTURE_STATUS=complete</code> is set only
+after every required local write, copy, index, permission and terminal output
+operation succeeds. The API command exit remains in its observation even if
+local retention fails; <code>PROBE_RETENTION_STATUS</code> reports retention separately.
+<code>PROBE_COMMAND_STATUS</code> is the command's actual exit, or <code>not-run</code> when local
+preparation fails before invocation. Open output files before invoking the
+command, so a local open failure cannot become an apparent API exit. Seal the
+original command receipt before copying it to the working files. If local retention cannot write the exit
+file, keep the partial attempt and the shell's known status;
+this is incomplete evidence and forbids cleanup. Each latest working file is published from a unique private staging file with
+mode 0600. This permits repeated capture and polling with GNU or BusyBox tools,
+while historical receipts stay read-only. Directory or symbolic-link working
+targets stop publication. Every staging copy, mode change and exact-path rename
+must succeed. Retain a failed staging file with the incomplete attempt; do not
+reuse it. Keep exclusive ownership of this private evidence directory through
+capture and cleanup, so another writer cannot replace these checked paths.
+Read-only historical file modes prevent accidental overwrite; retain these
+directories with the audit owner. On an
+interrupted shell or failed local copy, retain even an incomplete attempt and
+stop cleanup until the owner reconciles it. Do not rerun preparation in the
+same evidence directory or overwrite any previous attempt.</p>
+<pre><code class="language-bash">export PREFLIGHT_STORAGE_CLASS=&quot;&lt;storage-class&gt;&quot;
+export PREFLIGHT_STORAGE_REQUEST=&quot;&lt;storage-request&gt;&quot;
+export PREFLIGHT_EVIDENCE_DIR=&quot;&lt;evidence-dir&gt;&quot;
+PREFLIGHT_IMAGE=&quot;$(node -e '
+const value = require(&quot;./versions.json&quot;).buildArgs.OPS_NODE_BASE;
+if (!/^[^@]+@sha256:[a-f0-9]{64}$/.test(value)) process.exit(1);
+process.stdout.write(value);
+')&quot; || exit 1
+export PREFLIGHT_IMAGE
+: &quot;${PREFLIGHT_NAMESPACE:?Complete the authorization preflight first}&quot;
+test -n &quot;$PREFLIGHT_STORAGE_CLASS&quot; &amp;&amp; test -n &quot;$PREFLIGHT_STORAGE_REQUEST&quot;
+test ! -e &quot;$PREFLIGHT_EVIDENCE_DIR&quot;
+mkdir -m 0700 &quot;$PREFLIGHT_EVIDENCE_DIR&quot;
+readonly PREFLIGHT_NAMESPACE PREFLIGHT_STORAGE_CLASS PREFLIGHT_STORAGE_REQUEST PREFLIGHT_IMAGE PREFLIGHT_EVIDENCE_DIR
+PREFLIGHT_NAMESPACE_UID=''
+PREFLIGHT_PVC_UID=''
+PREFLIGHT_POD_UID=''
+PREFLIGHT_PV_NAME=''
+PREFLIGHT_PV_UID=''
+PREFLIGHT_PROVIDER_ASSET_ID=''
+PROBE_CAPTURE_STATUS=not-run
+PROBE_RUN_STATUS=not-run
+mkdir -m 0700 &quot;$PREFLIGHT_EVIDENCE_DIR/observations&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/captures&quot;
+# Publish a writable latest copy without changing the sealed source receipt.
+probe_working_copy() {
+  local source=&quot;$1&quot; destination=&quot;$2&quot; staging
+  [[ -f $source &amp;&amp; ! -L $source ]] || return 1
+  [[ ! -L $destination &amp;&amp; ( ! -e $destination || -f $destination ) ]] || return 1
+  staging=&quot;$(mktemp &quot;$PREFLIGHT_EVIDENCE_DIR/.working.XXXXXX&quot;)&quot; || return 1
+  cp -T -- &quot;$source&quot; &quot;$staging&quot; || return 1
+  chmod 0600 -- &quot;$staging&quot; || return 1
+  [[ ! -L $destination &amp;&amp; ( ! -e $destination || -f $destination ) ]] || return 1
+  mv -f -T -- &quot;$staging&quot; &quot;$destination&quot; || return 1
+}
+# Each read owns new output, stderr and exit files before the working copy changes.
+probe_observe() {
+  local file=&quot;$1&quot; status observation output_fd stderr_fd
+  PROBE_RETENTION_STATUS=failed
+  PROBE_COMMAND_STATUS=not-run
+  shift
+  observation=&quot;$(mktemp -d &quot;$PREFLIGHT_EVIDENCE_DIR/observations/read.XXXXXX&quot;)&quot; || return 1
+  date -u +%Y-%m-%dT%H:%M:%SZ &gt; &quot;$observation/time.txt&quot; || return 1
+  printf '%s\n' &quot;${PROBE_CAPTURE_REASON:-initial preparation}&quot; &gt; &quot;$observation/reason.txt&quot; || return 1
+  printf '%q ' &quot;$@&quot; &gt; &quot;$observation/command.txt&quot; || return 1
+  printf '\n' &gt;&gt; &quot;$observation/command.txt&quot; || return 1
+  exec {output_fd}&gt; &quot;$observation/output&quot; || return 1
+  if exec {stderr_fd}&gt; &quot;$observation/stderr&quot;; then :; else
+    exec {output_fd}&gt;&amp;- || return 1
+    return 1
+  fi
+  if &quot;$@&quot; &gt;&amp;&quot;$output_fd&quot; 2&gt;&amp;&quot;$stderr_fd&quot;; then status=0; else status=$?; fi
+  PROBE_COMMAND_STATUS=&quot;$status&quot;
+  exec {output_fd}&gt;&amp;- || return 1
+  exec {stderr_fd}&gt;&amp;- || return 1
+  printf '%s\n' &quot;$status&quot; &gt; &quot;$observation/exit&quot; || return 1
+  chmod -R a-w -- &quot;$observation&quot; || return 1
+  probe_working_copy &quot;$observation/output&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/$file&quot; || return 1
+  probe_working_copy &quot;$observation/stderr&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/$file.stderr&quot; || return 1
+  probe_working_copy &quot;$observation/exit&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/$file.exit&quot; || return 1
+  printf '%s\t%s\t%s\n' &quot;$observation&quot; &quot;$file&quot; &quot;$status&quot; &gt;&gt; &quot;$PREFLIGHT_EVIDENCE_DIR/observation-index.tsv&quot; || return 1
+  PROBE_RETENTION_STATUS=complete
+  return &quot;$status&quot;
+}
+probe_snapshot() {
+  local resource=&quot;$1&quot; name=&quot;$2&quot; file=&quot;$3&quot; namespace=&quot;${4:-}&quot; status
+  local arguments=(get &quot;$resource&quot; &quot;$name&quot; --ignore-not-found -o json)
+  [[ -z $namespace ]] || arguments+=(-n &quot;$namespace&quot;)
+  if probe_observe &quot;$file&quot; bound_kubectl &quot;${arguments[@]}&quot;; then return 0; else status=$?; fi
+  printf 'PROBE_READ_FAILED: %s/%s\n' &quot;$resource&quot; &quot;$name&quot; &gt;&amp;2 || return 1
+  return &quot;$status&quot;
+}
+probe_field() {
+  node - &quot;$PREFLIGHT_EVIDENCE_DIR/$1&quot; &quot;$2&quot; &lt;&lt;'NODE'
+const fs = require('node:fs');
+const bytes = fs.readFileSync(process.argv[2], 'utf8');
+let value = bytes.trim() ? JSON.parse(bytes) : null;
+for (const field of process.argv[3].split('.')) value = value?.[field];
+process.stdout.write(value === undefined || value === null ? '' : String(value));
+NODE
+}
+probe_field_equals() {
+  local observed
+  observed=&quot;$(probe_field &quot;$1&quot; &quot;$2&quot;)&quot; || return 1
+  test &quot;$observed&quot; = &quot;$3&quot;
+}
+probe_created_uid() {
+  node - &quot;$PREFLIGHT_EVIDENCE_DIR/$1&quot; &quot;$2&quot; &quot;$3&quot; &quot;${4:-}&quot; &lt;&lt;'NODE'
+const fs = require('node:fs');
+const [file, kind, name, namespace] = process.argv.slice(2);
+const object = JSON.parse(fs.readFileSync(file, 'utf8'));
+if (object.apiVersion !== 'v1' || object.kind !== kind || object.metadata?.name !== name
+  || (object.metadata.namespace ?? '') !== namespace
+  || typeof object.metadata.uid !== 'string' || !object.metadata.uid
+  || object.metadata.deletionTimestamp) throw new Error('CREATING_RESPONSE_REQUIRED');
+process.stdout.write(object.metadata.uid);
+NODE
+}
+probe_capture_state() {
+  PROBE_CAPTURE_STATUS=failed
+  probe_snapshot namespace &quot;$PREFLIGHT_NAMESPACE&quot; namespace.json || return 1
+  SNAPSHOT_NAMESPACE_UID=&quot;$(probe_field namespace.json metadata.uid)&quot; || return 1
+  if [[ -n $PREFLIGHT_NAMESPACE_UID &amp;&amp; $SNAPSHOT_NAMESPACE_UID != &quot;$PREFLIGHT_NAMESPACE_UID&quot; ]]; then
+    printf '%s\n' 'PROBE_NAMESPACE_IDENTITY_CHANGED_OR_ABSENT' &gt;&amp;2; return 1
+  fi
+  if [[ -n $SNAPSHOT_NAMESPACE_UID &amp;&amp; -z $PREFLIGHT_NAMESPACE_UID ]]; then
+    printf '%s\n' 'PROBE_NAMESPACE_CREATING_IDENTITY_UNKNOWN' &gt;&amp;2; return 1
+  fi
+  probe_snapshot pod dependency-probe pod.json &quot;$PREFLIGHT_NAMESPACE&quot; || return 1
+  probe_snapshot pvc dependency-probe pvc.json &quot;$PREFLIGHT_NAMESPACE&quot; || return 1
+  probe_snapshot storageclass &quot;$PREFLIGHT_STORAGE_CLASS&quot; storageclass.json || return 1
+  local observed_pvc_uid observed_pv_name observed_pv_uid observed_pod_uid
+  observed_pod_uid=&quot;$(probe_field pod.json metadata.uid)&quot; || return 1
+  if [[ -n ${PREFLIGHT_POD_UID:-} &amp;&amp; $observed_pod_uid != &quot;$PREFLIGHT_POD_UID&quot; ]]; then
+    printf '%s\n' 'PROBE_POD_IDENTITY_CHANGED_OR_ABSENT' &gt;&amp;2; return 1
+  fi
+  if [[ -n $observed_pod_uid &amp;&amp; -z $PREFLIGHT_POD_UID ]]; then
+    printf '%s\n' 'PROBE_POD_CREATING_IDENTITY_UNKNOWN' &gt;&amp;2; return 1
+  fi
+  observed_pvc_uid=&quot;$(probe_field pvc.json metadata.uid)&quot; || return 1
+  observed_pv_name=&quot;$(probe_field pvc.json spec.volumeName)&quot; || return 1
+  if [[ -n $PREFLIGHT_PVC_UID &amp;&amp; $observed_pvc_uid != &quot;$PREFLIGHT_PVC_UID&quot; ]]; then
+    printf '%s\n' 'PROBE_PVC_IDENTITY_CHANGED_OR_ABSENT' &gt;&amp;2; return 1
+  fi
+  if [[ -n $PREFLIGHT_PV_NAME &amp;&amp; $observed_pv_name != &quot;$PREFLIGHT_PV_NAME&quot; ]]; then
+    printf '%s\n' 'PROBE_PV_BINDING_CHANGED' &gt;&amp;2; return 1
+  fi
+  if [[ -n $observed_pvc_uid &amp;&amp; -z $PREFLIGHT_PVC_UID ]]; then
+    printf '%s\n' 'PROBE_PVC_CREATING_IDENTITY_UNKNOWN' &gt;&amp;2; return 1
+  fi
+  PREFLIGHT_PV_NAME=&quot;$observed_pv_name&quot;
+  PREFLIGHT_PROVISIONER=&quot;$(probe_field storageclass.json provisioner)&quot; || return 1
+  PREFLIGHT_RECLAIM_POLICY=&quot;$(probe_field storageclass.json reclaimPolicy)&quot; || return 1
+  if [[ -n $PREFLIGHT_PV_NAME ]]; then
+    probe_snapshot pv &quot;$PREFLIGHT_PV_NAME&quot; pv.json || return 1
+    observed_pv_uid=&quot;$(probe_field pv.json metadata.uid)&quot; || return 1
+    test -n &quot;$observed_pv_uid&quot; || return 1
+    if [[ -n $PREFLIGHT_PV_UID &amp;&amp; $observed_pv_uid != &quot;$PREFLIGHT_PV_UID&quot; ]]; then return 1; fi
+    probe_field_equals pv.json spec.claimRef.namespace &quot;$PREFLIGHT_NAMESPACE&quot; || return 1
+    probe_field_equals pv.json spec.claimRef.name dependency-probe || return 1
+    probe_field_equals pv.json spec.claimRef.uid &quot;$PREFLIGHT_PVC_UID&quot; || return 1
+    PREFLIGHT_PV_UID=&quot;$observed_pv_uid&quot;
+    PREFLIGHT_RECLAIM_POLICY=&quot;$(probe_field pv.json spec.persistentVolumeReclaimPolicy)&quot; || return 1
+    local observed_asset
+    observed_asset=&quot;$(probe_field pv.json spec.csi.volumeHandle)&quot; || return 1
+    if [[ -n $PREFLIGHT_PROVIDER_ASSET_ID &amp;&amp; $observed_asset != &quot;$PREFLIGHT_PROVIDER_ASSET_ID&quot; ]]; then return 1; fi
+    PREFLIGHT_PROVIDER_ASSET_ID=&quot;$observed_asset&quot;
+  else
+    printf '%s\n' 'NO_PV_VISIBLE: provider allocation is not established' &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/pv-state.txt&quot; || return 1
+  fi
+  probe_observe events.txt bound_kubectl -n &quot;$PREFLIGHT_NAMESPACE&quot; get events \
+    --sort-by=.metadata.creationTimestamp || return 1
+  if node - &quot;$PREFLIGHT_EVIDENCE_DIR/pod.json&quot; &lt;&lt;'NODE'
+const fs = require('node:fs');
+const bytes = fs.readFileSync(process.argv[2], 'utf8');
+const pod = bytes.trim() ? JSON.parse(bytes) : null;
+const state = pod?.status?.containerStatuses?.find(item =&gt; item.name === 'probe')?.state;
+process.exit(state?.running || state?.terminated ? 0 : 1);
+NODE
+  then
+    printf '%s\n' 'ATTEMPTING: log read outcome follows in probe.log.exit' &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt&quot; || return 1
+    probe_observe probe.log bound_kubectl -n &quot;$PREFLIGHT_NAMESPACE&quot; logs pod/dependency-probe || return 1
+    printf '%s\n' 'AVAILABLE: log read succeeded' &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt&quot; || return 1
+  else
+    rm -f -- &quot;$PREFLIGHT_EVIDENCE_DIR/probe.log&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/probe.log.stderr&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/probe.log.exit&quot; || return 1
+    printf '%s\n' 'NOT_AVAILABLE: Pod absent or probe container has not started' &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt&quot; || return 1
+  fi
+  printf '%s\n' &quot;namespace_uid=$PREFLIGHT_NAMESPACE_UID&quot; &quot;observed_namespace_uid=$SNAPSHOT_NAMESPACE_UID&quot; \
+    &quot;pod_uid=$PREFLIGHT_POD_UID&quot; &quot;pvc_uid=$PREFLIGHT_PVC_UID&quot; &quot;pv_name=$PREFLIGHT_PV_NAME&quot; &quot;pv_uid=$PREFLIGHT_PV_UID&quot; \
+    &quot;provisioner=$PREFLIGHT_PROVISIONER&quot; &quot;provider_asset_id=$PREFLIGHT_PROVIDER_ASSET_ID&quot; \
+    &quot;reclaim_policy=$PREFLIGHT_RECLAIM_POLICY&quot; &quot;run_status=$PROBE_RUN_STATUS&quot; \
+    &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/identities.txt&quot; || return 1
+  PROBE_CAPTURE_STATUS=state-checked
+}
+probe_capture() {
+  local capture status capture_file
+  PROBE_CAPTURE_STATUS=failed
+  PROBE_CAPTURE_REASON=&quot;${1:?Supply the observation or recovery decision}&quot;
+  capture=&quot;$(mktemp -d &quot;$PREFLIGHT_EVIDENCE_DIR/captures/capture.XXXXXX&quot;)&quot; || return 1
+  date -u +%Y-%m-%dT%H:%M:%SZ &gt; &quot;$capture/time.txt&quot; || return 1
+  printf '%s\n' &quot;$PROBE_CAPTURE_REASON&quot; &gt; &quot;$capture/reason.txt&quot; || return 1
+  if probe_capture_state &gt; &quot;$capture/output&quot; 2&gt; &quot;$capture/stderr&quot;; then status=0; else status=$?; fi
+  PROBE_CAPTURE_STATUS=failed
+  printf '%s\n' &quot;$status&quot; &gt; &quot;$capture/exit&quot; || return 1
+  printf '%s\n' &quot;state-exit-$status; retention completion requires successful wrapper return&quot; &gt; &quot;$capture/status.txt&quot; || return 1
+  mkdir -m 0700 &quot;$capture/working-files&quot; || return 1
+  for capture_file in &quot;$PREFLIGHT_EVIDENCE_DIR&quot;/*; do
+    [[ ! -L $capture_file ]] || return 1
+    [[ -f $capture_file ]] || continue
+    probe_working_copy &quot;$capture_file&quot; &quot;$capture/working-files/${capture_file##*/}&quot; || return 1
+  done
+  printf '%s\t%s\t%s\n' &quot;$capture&quot; state-recorded &quot;$status&quot; &gt;&gt; &quot;$PREFLIGHT_EVIDENCE_DIR/capture-index.tsv&quot; || return 1
+  chmod -R a-w -- &quot;$capture&quot; || return 1
+  cat -- &quot;$capture/output&quot; || return 1
+  cat -- &quot;$capture/stderr&quot; &gt;&amp;2 || return 1
+  [[ $status == 0 ]] || return &quot;$status&quot;
+  printf '%s\n' complete &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/capture-status.txt&quot; || return 1
+  PROBE_CAPTURE_STATUS=complete
+  return 0
+}
+
+assert_cluster_binding
+probe_snapshot storageclass &quot;$PREFLIGHT_STORAGE_CLASS&quot; storageclass-before.json
+PREFLIGHT_PROVISIONER=&quot;$(probe_field storageclass-before.json provisioner)&quot;
+test -n &quot;$PREFLIGHT_PROVISIONER&quot;
+probe_field_equals storageclass-before.json reclaimPolicy Delete
+probe_snapshot namespace &quot;$PREFLIGHT_NAMESPACE&quot; namespace-before.json
+probe_field_equals namespace-before.json metadata.uid ''
+for auth_resource in pods persistentvolumeclaims; do
+  for auth_verb in get list watch create; do require_authority &quot;$auth_verb&quot; &quot;$auth_resource&quot; &quot;$PREFLIGHT_NAMESPACE&quot;; done
+done
+require_authority get pods/log &quot;$PREFLIGHT_NAMESPACE&quot;
+require_authority list events &quot;$PREFLIGHT_NAMESPACE&quot;
+if probe_observe namespace-create.json bound_kubectl create namespace &quot;$PREFLIGHT_NAMESPACE&quot; -o json; then
+  if PREFLIGHT_NAMESPACE_UID=&quot;$(probe_created_uid namespace-create.json Namespace &quot;$PREFLIGHT_NAMESPACE&quot;)&quot;; then
+    readonly PREFLIGHT_NAMESPACE_UID
+    PROBE_RUN_STATUS=namespace-created
+  else PROBE_RUN_STATUS=namespace-creating-response-invalid; fi
+else PROBE_RUN_STATUS=&quot;namespace-create-uncertain-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS&quot;; fi
+printf '%s\n' &quot;$PROBE_RUN_STATUS&quot; &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/run-status.txt&quot; || exit 1
+
+</code></pre>
+<p>Proceed to claim/Pod creation only when <code>PROBE_RUN_STATUS=namespace-created</code>
+and <code>PREFLIGHT_NAMESPACE_UID</code> came from the retained successful CREATE response.
+The <code>-o json</code> response is one Namespace object, not the ordinary
+<code>namespace/&lt;name&gt; created</code> message. A later GET is an observation and must never
+supply the creating UID. Invalid JSON, a missing UID, wrong kind/name/namespace,
+a failed local retention operation, or a denied/lost response stops creation.
+Run the guarded capture below for evidence only. Keep all uncertain resources.
+The cluster owner must reconcile the authenticated creating audit record and
+original response, not approve today's same-name object's UID. The owner must
+supply a maintained identity-safe recovery procedure before any further write;
+this page has no generic command to adopt unknown original identities.</p>
+<p>The same rule applies separately to the PVC and Pod. Each single-object CREATE
+response establishes only that object's original UID, which becomes read-only.
+No multi-object apply response or partial output is treated as a complete
+creating receipt. PVC creation can succeed before Pod creation fails. Preserve each
+attempt and do not repeat creation to hide that partial result. A present
+object without creating proof stops complete capture and cleanup; successful
+absence is only an observation, not proof of no earlier provider allocation.</p>
+<h3 id="run-the-probe-and-capture-every-outcome">Run the probe and capture every outcome</h3>
+<p>The block creates resources only with the known creating namespace UID and
+owner-enforced lifetime exclusion. Otherwise it captures observations and makes
+no further write. Every creation or wait attempt retains its output and actual
+exit separately from local retention failure. A wait failure does not remove
+resources. Stop on a partial or uncertain creation result.</p>
+<pre><code class="language-bash">if [[ $PROBE_RUN_STATUS == namespace-created &amp;&amp; -n $PREFLIGHT_NAMESPACE_UID ]]; then
+assert_cluster_binding
+for auth_resource in pods persistentvolumeclaims; do
+  for auth_verb in get list watch create; do
+    require_authority &quot;$auth_verb&quot; &quot;$auth_resource&quot; &quot;$PREFLIGHT_NAMESPACE&quot; || PROBE_RUN_STATUS=authorization-changed
+  done
+done
+require_authority get pods/log &quot;$PREFLIGHT_NAMESPACE&quot; || PROBE_RUN_STATUS=authorization-changed
+require_authority list events &quot;$PREFLIGHT_NAMESPACE&quot; || PROBE_RUN_STATUS=authorization-changed
+if [[ $PROBE_RUN_STATUS == namespace-created ]]; then
+probe_snapshot namespace &quot;$PREFLIGHT_NAMESPACE&quot; namespace-before-pvc.json || PROBE_RUN_STATUS=namespace-read-failed
+if [[ $PROBE_RUN_STATUS == namespace-created ]] &amp;&amp; probe_field_equals namespace-before-pvc.json metadata.uid &quot;$PREFLIGHT_NAMESPACE_UID&quot;; then
+if probe_observe pvc-create.json bound_kubectl -n &quot;$PREFLIGHT_NAMESPACE&quot; create -f - -o json &lt;&lt;EOF
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dependency-probe
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: ${PREFLIGHT_STORAGE_CLASS}
+  resources:
+    requests:
+      storage: ${PREFLIGHT_STORAGE_REQUEST}
+EOF
+then
+  if PREFLIGHT_PVC_UID=&quot;$(probe_created_uid pvc-create.json PersistentVolumeClaim dependency-probe &quot;$PREFLIGHT_NAMESPACE&quot;)&quot;; then
+    readonly PREFLIGHT_PVC_UID
+    PROBE_RUN_STATUS=pvc-created
+  else PROBE_RUN_STATUS=pvc-creating-response-invalid; fi
+else PROBE_RUN_STATUS=&quot;pvc-create-uncertain-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS&quot;; fi
+if [[ $PROBE_RUN_STATUS == pvc-created ]]; then
+probe_snapshot namespace &quot;$PREFLIGHT_NAMESPACE&quot; namespace-before-pod.json || PROBE_RUN_STATUS=namespace-read-failed
+if [[ $PROBE_RUN_STATUS == pvc-created ]] &amp;&amp; probe_field_equals namespace-before-pod.json metadata.uid &quot;$PREFLIGHT_NAMESPACE_UID&quot;; then
+probe_snapshot pvc dependency-probe pvc-before-pod.json &quot;$PREFLIGHT_NAMESPACE&quot; || PROBE_RUN_STATUS=pvc-read-failed
+if [[ $PROBE_RUN_STATUS == pvc-created ]] &amp;&amp; probe_field_equals pvc-before-pod.json metadata.uid &quot;$PREFLIGHT_PVC_UID&quot;; then
+if probe_observe pod-create.json bound_kubectl -n &quot;$PREFLIGHT_NAMESPACE&quot; create -f - -o json &lt;&lt;EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dependency-probe
+spec:
+  restartPolicy: Never
+  dnsPolicy: ClusterFirst
+  securityContext:
+    fsGroup: 1000
+    seccompProfile: {type: RuntimeDefault}
+  containers:
+    - name: probe
+      image: ${PREFLIGHT_IMAGE}
+      imagePullPolicy: IfNotPresent
+      command: [&quot;/bin/sh&quot;, &quot;-ec&quot;]
+      args:
+        - &gt;-
+          command -v nslookup;
+          nslookup kubernetes.default.svc.cluster.local;
+          printf '%s\n' kubeclaw-storage-probe &gt; /probe/value;
+          sync;
+          test &quot;\$(cat /probe/value)&quot; = kubeclaw-storage-probe;
+          printf '%s\n' DNS_AND_STORAGE_PROBE_PASSED
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities: {drop: [&quot;ALL&quot;]}
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+      volumeMounts:
+        - {name: probe, mountPath: /probe}
+  volumes:
+    - name: probe
+      persistentVolumeClaim: {claimName: dependency-probe}
+EOF
+then
+  if PREFLIGHT_POD_UID=&quot;$(probe_created_uid pod-create.json Pod dependency-probe &quot;$PREFLIGHT_NAMESPACE&quot;)&quot;; then
+    readonly PREFLIGHT_POD_UID
+    PROBE_RUN_STATUS=created
+  else PROBE_RUN_STATUS=pod-creating-response-invalid; fi
+else PROBE_RUN_STATUS=&quot;pod-create-uncertain-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS&quot;; fi
+else PROBE_RUN_STATUS=pvc-identity-changed; fi
+else PROBE_RUN_STATUS=namespace-identity-changed; fi
+fi
+if [[ $PROBE_RUN_STATUS == created ]]; then
+  if probe_observe pvc-wait.stdout bound_kubectl -n &quot;$PREFLIGHT_NAMESPACE&quot; wait pvc/dependency-probe \
+    --for=jsonpath='{.status.phase}'=Bound --timeout=180s; then PROBE_RUN_STATUS=pvc-bound
+  else PROBE_RUN_STATUS=&quot;pvc-wait-failed-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS&quot;; fi
+fi
+if [[ $PROBE_RUN_STATUS == pvc-bound ]]; then
+  if probe_observe pod-wait.stdout bound_kubectl -n &quot;$PREFLIGHT_NAMESPACE&quot; wait pod/dependency-probe \
+    --for=jsonpath='{.status.phase}'=Succeeded --timeout=180s; then PROBE_RUN_STATUS=pod-succeeded
+  else PROBE_RUN_STATUS=&quot;pod-wait-failed-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS&quot;; fi
+fi
+else PROBE_RUN_STATUS=namespace-identity-changed; fi
+fi
+fi
+printf '%s\n' &quot;$PROBE_RUN_STATUS&quot; &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/run-status.txt&quot; || exit 1
+if probe_capture &quot;capture after creation or wait result&quot;; then :
+else
+  printf '%s\n' 'CAPTURE_FAILED: retain resources and recover read authority' &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/capture-status.txt&quot; || exit 1
+fi
+</code></pre>
+<p>Expected success: <code>run-status.txt</code> says <code>pod-succeeded</code>; capture is <code>complete</code>;
+the recorded claim is <code>Bound</code>, PV identity and provider asset are known, the
+PV's actual reclaim policy is <code>Delete</code>, and the last line of <code>probe.log</code> is
+<code>DNS_AND_STORAGE_PROBE_PASSED</code>. Verify that result explicitly:</p>
+<pre><code class="language-bash">test &quot;$PROBE_RUN_STATUS&quot; = pod-succeeded
+test &quot;$PROBE_CAPTURE_STATUS&quot; = complete
+probe_field_equals pvc.json status.phase Bound
+test -n &quot;$PREFLIGHT_PVC_UID&quot; &amp;&amp; test -n &quot;$PREFLIGHT_PV_UID&quot;
+test &quot;$PREFLIGHT_RECLAIM_POLICY&quot; = Delete
+test &quot;$(tail -n 1 &quot;$PREFLIGHT_EVIDENCE_DIR/probe.log&quot;)&quot; = DNS_AND_STORAGE_PROBE_PASSED
+</code></pre>
+<p>Skip this success-only block on failure; continue with recovery below. It
+must not replace capture or delete failure evidence.</p>
+<h3 id="recover-an-early-or-partial-probe-failure">Recover an early or partial probe failure</h3>
+<table>
+<thead>
+<tr>
+<th>Captured state</th>
+<th>Exact safe next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Namespace creating response failed or invalid</td>
+<td>Run the guarded <code>probe_capture</code> call above. Preserve <code>namespace-create.*</code> and named-read exits. A present namespace with no known creating UID stays untouched. Cluster owner reconciles the create request, checks its audit record and confirms the creating identity; do not adopt its UID from a later name lookup.</td>
+</tr>
+<tr>
+<td>PVC or Pod creation failed, partial or uncertain</td>
+<td>Successful empty named snapshots establish API absence of that object. Retain the other present object and its UID. Send the retained creating response or uncertain request result and PVC/Pod state to the cluster/storage owners before any retry or cleanup. An absent Pod has no required log stream.</td>
+</tr>
+<tr>
+<td>PVC Pending, unbound or binding timed out</td>
+<td><code>pvc.json</code>, <code>storageclass.json</code> and <code>events.txt</code> show the exact claim UID, conditions and provisioner. No PV name or provider ID is assumed. Storage owner reconciles that claim with provisioner operations and identifies any allocated asset before authorizing cleanup. Do not call <code>get pv</code> with an empty name.</td>
+</tr>
+<tr>
+<td>Pod Pending, Failed, image pull or mount failure</td>
+<td>Read captured Pod status and events. Capture logs only when the probe container has actually started. No started container is recorded as <code>NOT_AVAILABLE</code>, not as a successful DNS/storage result. Resolve the named scheduler, registry, mount or DNS owner; do not substitute a different image or class merely to pass.</td>
+</tr>
+<tr>
+<td>Capture denied, API failure, changed namespace/Pod/PVC/PV identity</td>
+<td>The corresponding <code>.exit</code>/<code>.stderr</code> files identify the failed observation. Keep the namespace, claim and any volume. Restore the bound read authority through the platform owner, then repeat <code>probe_capture &quot;read authority repaired; owner permits observation&quot;</code> in the guarded form. Keep all previous observation and capture directories. Never interpret a denied read as absence or run deletion from stale snapshots.</td>
+</tr>
+<tr>
+<td>PV visible but provider ID, reclaim policy or provider lookup is unknown</td>
+<td>Retain all objects. Storage owner supplies the provisioner-specific asset identity and cleanup/disposition procedure. A missing CSI handle is not evidence of an empty volume.</td>
+</tr>
+</tbody>
+</table>
+<p>Recovery never proceeds to installation on a failed probe. Repeating the
+probe requires a corrected owned prerequisite, complete cleanup/disposition of
+the previous run, a new namespace name and a new evidence directory. Keep the
+old failure record.</p>
+<h3 id="clean-only-the-owned-probe-namespace">Clean only the owned probe namespace</h3>
+<p>Before deletion, the cluster and storage owners must reconcile the current
+captured state and approve cleanup of this exact disposable namespace. The
+storage owner supplies a private <code>&lt;probe-cleanup-clearance-json&gt;</code> outside Git,
+with these fields: <code>namespaceUID</code>, <code>pvcUID</code> (the original creating UIDs),
+<code>pvUID</code> (the first observed bound PV UID, or empty for an unbound claim), <code>providerAssetId</code> (the known
+asset, or empty only after an owned provider reconciliation proves no allocated
+asset), <code>safeToDeleteNamespace: true</code>, <code>approvedBy</code>, and <code>reconciliationReceipt</code>.
+The receipt identifies the provider lookup, any in-progress allocation and its
+cancellation/quiescence result, and the asset's current disposition. Verify the
+owner's approval through the independent planning-record authority; checking
+JSON shape is not authentication of that approval. This applies to a Pending
+PVC too. Without that reconciliation, keep the namespace and escalate using
+the exact claim UID; there is no universal provider cleanup command.</p>
+<p>Cleanup requires independently authenticated creating provenance for every
+created namespace, Pod and PVC, and the still-enforced lifetime exclusion.
+Unknown creating identities, including a present object after a failed CREATE
+response, forbid this default cleanup. The storage owner must authenticate the
+first observed PV UID, original PVC binding and provider asset against its
+provisioning record before approving them; a GET alone is not PV provenance.
+Keep these identities and the approved binding immutable. A new binding,
+replacement PV or different provider asset requires a new owner reconciliation,
+not a changed baseline or automatic approval.</p>
+<p>Use the same bound shell. Capture again before matching the approval, because
+a Pending claim can bind while the owners investigate. If identities changed
+or a previously unbound claim acquired a PV, obtain a new clearance. For a
+non-CSI PV, the approved <code>providerAssetId</code> supplies the external identity;
+for a CSI PV it must agree with the observed handle.</p>
+<pre><code class="language-bash"># Empty stdout is API absence; a nonempty response must be the exact named object.
+probe_disposition_uid() {
+  node - &quot;$PREFLIGHT_EVIDENCE_DIR/$1&quot; &quot;$2&quot; &quot;$3&quot; &quot;${4:-}&quot; &lt;&lt;'NODE'
+const fs = require('node:fs');
+const [file, kind, name, namespace] = process.argv.slice(2);
+const bytes = fs.readFileSync(file, 'utf8');
+if (!bytes.trim()) process.exit(0);
+const object = JSON.parse(bytes);
+if (object?.apiVersion !== 'v1' || object?.kind !== kind || object.metadata?.name !== name
+  || (object.metadata.namespace ?? '') !== namespace
+  || typeof object.metadata.uid !== 'string' || !object.metadata.uid) {
+  throw new Error('PROBE_DISPOSITION_RESPONSE_INVALID');
+}
+process.stdout.write(object.metadata.uid);
+NODE
+}
+export PREFLIGHT_CLEANUP_CLEARANCE=&quot;&lt;probe-cleanup-clearance-json&gt;&quot;
+if probe_capture &quot;owner-approved cleanup recapture&quot;; then :; else printf '%s\n' 'RETAIN_PROBE: capture incomplete' &gt;&amp;2; exit 1; fi
+test &quot;$PROBE_CAPTURE_STATUS&quot; = complete
+test -n &quot;$PREFLIGHT_NAMESPACE_UID&quot;
+test &quot;$SNAPSHOT_NAMESPACE_UID&quot; = &quot;$PREFLIGHT_NAMESPACE_UID&quot;
+if [[ -n $PREFLIGHT_PV_NAME ]]; then
+  test -n &quot;$PREFLIGHT_PV_UID&quot; || exit 1
+else
+  test -z &quot;$PREFLIGHT_PV_UID&quot; || exit 1
+fi
+test -s &quot;$PREFLIGHT_CLEANUP_CLEARANCE&quot; &amp;&amp; test ! -L &quot;$PREFLIGHT_CLEANUP_CLEARANCE&quot;
+export PREFLIGHT_NAMESPACE_UID PREFLIGHT_PVC_UID PREFLIGHT_PV_UID PREFLIGHT_PROVIDER_ASSET_ID
+node - &quot;$PREFLIGHT_CLEANUP_CLEARANCE&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json&quot; &lt;&lt;'NODE'
+const fs = require('node:fs');
+const clearance = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+for (const [field, env] of [['namespaceUID', 'PREFLIGHT_NAMESPACE_UID'],
+  ['pvcUID', 'PREFLIGHT_PVC_UID'], ['pvUID', 'PREFLIGHT_PV_UID']]) {
+  if (typeof clearance[field] !== 'string' || clearance[field] !== process.env[env]) {
+    throw new Error('PROBE_CLEARANCE_IDENTITY_MISMATCH:' + field);
+  }
+}
+if (clearance.safeToDeleteNamespace !== true || !clearance.approvedBy || !clearance.reconciliationReceipt
+  || typeof clearance.providerAssetId !== 'string'
+  || (clearance.pvUID &amp;&amp; !clearance.providerAssetId)
+  || (process.env.PREFLIGHT_PROVIDER_ASSET_ID &amp;&amp; clearance.providerAssetId !== process.env.PREFLIGHT_PROVIDER_ASSET_ID)) {
+  throw new Error('PROBE_PROVIDER_RECONCILIATION_REQUIRED');
+}
+fs.writeFileSync(process.argv[3], JSON.stringify({apiVersion: 'v1', kind: 'DeleteOptions',
+  preconditions: {uid: clearance.namespaceUID}}) + '\n', {flag: 'wx', mode: 0o600});
+NODE
+PREFLIGHT_PROVIDER_ASSET_ID=&quot;$(node -e 'process.stdout.write(JSON.parse(require(&quot;node:fs&quot;).readFileSync(process.argv[1], &quot;utf8&quot;)).providerAssetId)' &quot;$PREFLIGHT_CLEANUP_CLEARANCE&quot;)&quot;
+probe_working_copy &quot;$PREFLIGHT_CLEANUP_CLEARANCE&quot; &quot;$PREFLIGHT_EVIDENCE_DIR/cleanup-clearance.json&quot; || exit 1
+assert_cluster_binding
+if probe_observe delete.stdout bound_kubectl delete --raw &quot;/api/v1/namespaces/$PREFLIGHT_NAMESPACE&quot; \
+  -f &quot;$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json&quot;; then :; else exit 1; fi
+if probe_observe delete-wait.stdout bound_kubectl wait --for=delete &quot;namespace/$PREFLIGHT_NAMESPACE&quot; \
+  --timeout=180s; then :; else exit 1; fi
+probe_snapshot namespace &quot;$PREFLIGHT_NAMESPACE&quot; namespace-after.json || exit 1
+AFTER_NAMESPACE_UID=&quot;$(probe_disposition_uid namespace-after.json Namespace &quot;$PREFLIGHT_NAMESPACE&quot;)&quot; || exit 1
+if [[ -n $AFTER_NAMESPACE_UID ]]; then
+  printf '%s\n' 'RETAIN_PROBE: namespace still present or replaced; owner reconciliation required' &gt;&amp;2
+  exit 1
+fi
+if [[ -n $PREFLIGHT_PV_NAME ]]; then
+  for attempt in $(seq 1 60); do
+    probe_snapshot pv &quot;$PREFLIGHT_PV_NAME&quot; pv-after.json || exit 1
+    AFTER_PV_UID=&quot;$(probe_disposition_uid pv-after.json PersistentVolume &quot;$PREFLIGHT_PV_NAME&quot;)&quot; || exit 1
+    [[ -n $AFTER_PV_UID ]] || break
+    if [[ $AFTER_PV_UID != &quot;$PREFLIGHT_PV_UID&quot; ]]; then
+      printf '%s\n' 'RETAIN_PROBE: PV identity changed; owner reconciliation and restored exclusion required' &gt;&amp;2
+      exit 1
+    fi
+    sleep 2
+  done
+  if [[ -n $AFTER_PV_UID ]]; then
+    printf '%s\n' 'RETAIN_PROBE: recorded PV still present after polling; owner reconciliation required' &gt;&amp;2
+    exit 1
+  fi
+fi
+printf '%s\n' 'namespace absent in recorded read; recorded PV absent or no PV binding recorded; provider proof still required' \
+  &gt; &quot;$PREFLIGHT_EVIDENCE_DIR/kubernetes-disposition.txt&quot; || exit 1
+</code></pre>
+<p>The raw DELETE sends a <a href="https://kubernetes.io/docs/reference/kubernetes-api/definitions/delete-options-v1-meta/">UID precondition</a>
+to the API, so a different namespace with the same name must not be deleted.
+That precondition does not freeze namespace membership, PVC binding or provider
+operations. The complete owned exclusion window remains required through the
+final independent Kubernetes and provider disposition checks.
+<a href="https://github.com/kubernetes/kubectl/blob/v0.34.0/pkg/cmd/delete/delete.go#L275-L307"><code>kubectl</code> accepts a single local request-body file for raw DELETE</a>.
+The local raw-request interface was checked with kubectl <code>v1.34.11</code> against
+an isolated HTTP fixture; this is not a supported-cluster-version or live
+delete result. The platform owner must confirm that the selected client supports
+these exact flags before the probe. There is no PV deletion command in this
+block. A namespace deletion failure or
+timeout is not permission to force deletion or strip finalizers. Preserve the
+exact exit and snapshots; let the named cluster/storage owner reconcile
+finalizers and provider operations before another write. The deletion body is
+created once; on a failed/uncertain delete, retain it and its receipt rather
+than rerunning this block as a fresh deletion attempt.</p>
+<p>Each nonempty post-delete PV observation must retain the original recorded UID.
+A replacement UID stops this block at its first observation, even if that
+replacement later disappears. Keep the original approval and all replacement
+stdout, stderr and exits. The cluster and storage owners must reconcile the
+identity violation and restore the exclusion before further action. Never
+change the recorded UID or treat later absence as reconciliation. A malformed
+or denied read, a present/replaced namespace, or exhausted original-PV polling
+also stops without a successful Kubernetes disposition record.</p>
+<p>The disposition file states only the recorded API observations. No recorded PV
+binding does not exclude an intermediate unseen binding or provider allocation.
+It cannot prove continuous absence or backing-asset deletion.</p>
+<p>After Kubernetes observations, the storage owner must run the approved exact
+provider lookup for <code>PREFLIGHT_PROVIDER_ASSET_ID</code>, or the recorded claim-based
+reconciliation when no asset ever existed. Save the sanitized command, time,
+exit status and result as <code>provider-disposition.txt</code> in the evidence directory.
+Only that owner can prove provider absence and that provisioning will not later
+create an orphan. Unknown provider disposition leaves the probe incomplete.
+Retain the image digest, class/request, approval, all creating and observed UIDs,
+API snapshots, events, logs or explicit no-log state, commands/exits and both
+Kubernetes and provider disposition records. Do not remove the evidence directory.
+A failed probe remains failed after cleanup; correct its cause and rerun with
+new identities before installing workloads.</p>
+<h2 id="install-in-dependency-order">Install in Dependency Order</h2>
+<h3 id="1-create-namespace-and-secrets">1. Create Namespace and Secrets</h3>
+<p><code>infra</code> requires the SPIRE namespaces to exist; <code>setup</code> creates only the
+application namespace. Create the application and identity namespaces explicitly after preflight
+succeeds. When Prism is selected and has a separate namespace, create that exact namespace too:</p>
+<pre><code class="language-bash">namespace_manifests=&quot;$(mktemp -d)&quot;
+trap 'rm -rf -- &quot;$namespace_manifests&quot;' EXIT
+bound_kubectl create namespace &quot;$NAMESPACE&quot; --dry-run=client -o yaml \
+  &gt; &quot;$namespace_manifests/application.yaml&quot;
+bound_kubectl create namespace spire-server --dry-run=client -o yaml \
+  &gt; &quot;$namespace_manifests/spire-server.yaml&quot;
+bound_kubectl create namespace spire-system --dry-run=client -o yaml \
+  &gt; &quot;$namespace_manifests/spire-system.yaml&quot;
+bound_kubectl apply -f &quot;$namespace_manifests/application.yaml&quot;
+bound_kubectl apply -f &quot;$namespace_manifests/spire-server.yaml&quot;
+bound_kubectl apply -f &quot;$namespace_manifests/spire-system.yaml&quot;
+if [[ $KUBECLAW_DEPLOY_PRISM == true &amp;&amp; $PRISM_NAMESPACE != &quot;$NAMESPACE&quot; ]]; then
+  bound_kubectl create namespace &quot;$PRISM_NAMESPACE&quot; --dry-run=client -o yaml \
+    &gt; &quot;$namespace_manifests/prism.yaml&quot;
+  bound_kubectl apply -f &quot;$namespace_manifests/prism.yaml&quot;
+fi
+rm -rf -- &quot;$namespace_manifests&quot;
+trap - EXIT
+bound_kubectl get namespace &quot;$NAMESPACE&quot; spire-server spire-system
+if [[ $KUBECLAW_DEPLOY_PRISM == true &amp;&amp; $PRISM_NAMESPACE != &quot;$NAMESPACE&quot; ]]; then
+  bound_kubectl get namespace &quot;$PRISM_NAMESPACE&quot;
+fi
+</code></pre>
+<p>Expected observation: each apply reports <code>created</code>, <code>configured</code>, or
+<code>unchanged</code>, and the final command reports each selected namespace <code>Active</code>.
+Stop if the binding assertion fails or an existing
+namespace has another owner or policy.</p>
+<p>Interactive installation:</p>
+<pre><code class="language-bash">export KUBECLAW_RUN_SECRET_SETUP=true
+export KUBECLAW_SECRET_SETUP_MODE=interactive
+bound_deploy setup
+</code></pre>
+<p>Noninteractive installation must pre-create or copy every required Secret.
+Then use:</p>
+<pre><code class="language-bash">export KUBECLAW_RUN_SECRET_SETUP=true
+export KUBECLAW_SECRET_SETUP_MODE=noninteractive
+bound_deploy setup
+</code></pre>
+<p>Expected observation: <code>setup</code> reports the namespace and Helm repositories as ready.
+Secret setup must report no missing required value.</p>
+<p>Do not replace <code>setup</code> with <code>secrets</code> on a new administration machine.
+The <code>secrets</code> command prepares Secrets but does not prepare Helm repositories.</p>
+<p>Never save Secret contents in the change record.
+Record names, key names, owners, and creation times only.</p>
+<h3 id="2-install-infrastructure">2. Install Infrastructure</h3>
+<pre><code class="language-bash">bound_deploy infra
+</code></pre>
+<p>The command installs SPIRE before protected workloads.
+It then installs Redis and selected stateful services.
+It applies network policies after the service setup.</p>
+<p>Expected observation: every selected Helm operation and rollout completes.
+The command fails closed by default.</p>
+<p>Do not set <code>ALLOW_PARTIAL_INFRA=true</code> for acceptance.
+That option changes required failures into warnings during diagnosis.</p>
+<h3 id="3-verify-infrastructure">3. Verify Infrastructure</h3>
+<p>Observe the infrastructure installed in step 2. Nova, Buster and Prism are
+installed in the following steps. Run the comprehensive status command only
+in <a href="#7-record-the-first-verification">Record the First Verification</a>, after all
+selected workloads are installed.</p>
+<pre><code class="language-bash">bound_helm list -n &quot;$NAMESPACE&quot;
+bound_kubectl -n &quot;$NAMESPACE&quot; get pods,svc,pvc
+bound_kubectl -n spire-server get pods
+bound_kubectl -n spire-system get pods
+</code></pre>
+<p>Expected observation: selected infrastructure releases are listed, their
+workloads run, PVCs bind, and SPIRE agents are ready. Each read must succeed;
+a failed API or Helm read is a stop, not an empty inventory.</p>
+<p>Check events before continuing:</p>
+<pre><code class="language-bash">bound_kubectl -n &quot;$NAMESPACE&quot; get events --sort-by=.metadata.creationTimestamp
+</code></pre>
+<p>Stop for recurring mount, scheduling, image, DNS, or readiness failures.</p>
+<h3 id="4-install-nova-and-buster">4. Install Nova and Buster</h3>
+<pre><code class="language-bash">bound_deploy agents
+bound_deploy smoke-agent nova
+bound_deploy smoke-agent buster
+</code></pre>
+<p>The deploy command uses atomic Helm upgrades.
+It waits for both role deployments.</p>
+<p>The smoke commands check the gateway, startup state, readiness, skills, and runtime configuration.</p>
+<blockquote>
+<p><strong>Source evidence — role readiness</strong></p>
+<p><strong>Claim:</strong> A role deployment renders the selected immutable release before mutation. It uses an atomic Helm change, waits for readiness, and supports a role-specific smoke check.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L1419-L1455"><code>deploy_agent()</code> renders, applies an atomic upgrade, and waits for the selected role</a>. <a href="https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L1557-L1580"><code>cmd_smoke_agent()</code> checks the deployed gateway and runtime health</a>.</p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/updates/materialize-release.mjs#L5-L40">The release materializer binds role values to the selected runtime receipt and code bundle</a>.</p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/deployment-release.test.mjs#L48-L80">The deployment release test exercises render and fail-closed selection paths</a>. No recent result is available for that test. The deployment truth check passed on 2026-09-16. The Prism deployment source check passed on 2026-10-09 at <code>e3fa70c3fe3a1a4a32af503201a19e0b5df14c61</code>. No live Prism deployment is established.</p>
+<p><strong>Revision:</strong> Deployment source checked at <code>2a8558d795054d25aa4b72dbdc296c9321ba38f6</code>; unchanged test and release sources at <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code>.</p>
+<p><strong>Limit:</strong> Source tests do not prove image pulls, scheduling, dependencies, or readiness in the target cluster.</p>
+</blockquote>
+<h3 id="5-install-prism-when-selected">5. Install Prism When Selected</h3>
+<p>Run this step only when <code>KUBECLAW_DEPLOY_PRISM=true</code>. With <code>false</code>, proceed to
+the explicit verification boundary in step 6; do not create Prism resources.</p>
+<p>Complete the <a href="prism-studio.html#deploy-prism">Prism deployment phase</a>: render,
+platform and Secret setup, deployment, and status and smoke checks. Do not
+continue to Worker Trust until the selected-checkout source checks and these
+deployment and health checks pass. The deployment phase does not require a Nova
+approval wait or a Studio design session.</p>
+<p>After installation and Worker Trust verification, use
+<a href="prism-studio.html#the-complete-studio-journey">the complete Studio journey</a> for
+human design and approval. That later phase requires a successful Nova
+architecture dispatch and its durable <code>prism.approval.resolved</code> wait. Stop if
+the dispatch result is missing or uncertain; do not invent a project or wait to
+complete installation.</p>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/skills/nova/plugins/prism-design/src/stage.ts#L21-L34">Prism stage dispatches the architecture before it creates the approval
+wait</a>.
+This is source evidence; no live dispatch result is established here.</p>
+<h3 id="6-prove-worker-trust">6. Prove Worker Trust</h3>
+<p>With <code>KUBECLAW_DEPLOY_PRISM=false</code>, stop here and record this step as blocked
+by the <a href="#select-prism-and-check-the-trust-boundary">reduced-profile verification limit</a>.
+Do not run the full-profile verifier against missing Prism workloads or record
+the installation as complete. The stop before first mutation applies when
+completed installation or operational approval is required.</p>
+<p>With <code>KUBECLAW_DEPLOY_PRISM=true</code>, verify that Nova, Buster, Prism Control, and
+Prism Worker meet the linked procedure's start state.
+Use the <a href="worker-trust.html#canonical-worker-trust-procedure">canonical Worker Trust procedure</a>.
+Run all three source checks there for the selected checkout and stop on the
+first actual nonzero exit. The recorded local Prism source check passed; it does
+not prove live trust. The current live command's retained-request and cleanup
+limit blocks complete verification even for this full profile. Follow its
+<a href="worker-trust.html#3-check-the-live-execution-boundary">pre-execution stop</a>;
+do not run the live command until the owners supply the maintained evidence and
+reconciliation path described there. Final proof still requires both positive
+and negative live trust results, a separate signed Nova unit production receipt,
+and resolved request/resource cleanup. The live verifier accepts fetch errors,
+non-2xx responses and direct TLS timeouts in its negative probes; success JSON
+alone does not prove denial. Unreachable endpoints, timeouts and HTTP 5xx results
+are inconclusive. Before the first probe or workload mutation for complete
+installation, the workload-identity owner must qualify the maintained
+<a href="worker-trust.html#required-results-and-cleanup-observations">denial-observation procedure</a>,
+including actual peer or authorization rejection paired with a reachable positive
+control for each negative route. Resolving lifecycle capture alone does not
+remove this stop. None of these results can be replaced by source or smoke
+checks. Do not claim live peer authorization or complete installation without
+all those results.</p>
+<h3 id="7-record-the-first-verification">7. Record the First Verification</h3>
+<p>Record complete installation only after all required trust checks pass. For an
+approved isolated deployment without Prism, retain the same observations with
+the blocked trust step and no operational approval.</p>
+<p>Capture these nonsecret outputs in <code>&lt;evidence-dir&gt;</code>:</p>
+<pre><code class="language-bash">git rev-parse HEAD
+bound_deploy status
+bound_helm list -n &quot;$NAMESPACE&quot;
+bound_kubectl -n &quot;$NAMESPACE&quot; get pods,svc,pvc -o wide
+bound_kubectl -n &quot;$NAMESPACE&quot; get events --sort-by=.metadata.creationTimestamp
+</code></pre>
+<p>Also record each image from Pod status.
+Compare its <code>imageID</code> with the selected digest.</p>
+<h2 id="failed-first-installation">Failed First Installation</h2>
+<p>Use this order after the first failing command:</p>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Check</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API or authorization error</td>
+<td>Current context and <code>kubectl auth can-i</code></td>
+<td>Correct the context or obtain the required operator right</td>
+</tr>
+<tr>
+<td>Pod remains Pending</td>
+<td>Events, node selectors, taints, requests, PVC binding</td>
+<td>Correct capacity or scheduling before retry</td>
+</tr>
+<tr>
+<td>PVC remains Pending</td>
+<td>StorageClass, binding mode, provisioner events</td>
+<td>Repair storage outside KubeClaw</td>
+</tr>
+<tr>
+<td><code>ImagePullBackOff</code></td>
+<td>Selected digest and <code>ghcr-secret</code></td>
+<td>Repair pull identity; do not replace the digest</td>
+</tr>
+<tr>
+<td>Init container fails</td>
+<td>Init logs, code bundle commit, Secret mounts</td>
+<td>Correct the named input and redeploy the affected role</td>
+</tr>
+<tr>
+<td>SPIFFE mount fails</td>
+<td>CSI driver and SPIRE agents</td>
+<td>Repair identity infrastructure before agents</td>
+</tr>
+<tr>
+<td>Readiness fails</td>
+<td>Pod logs, dependency endpoints, runtime health</td>
+<td>Repair the first failing dependency</td>
+</tr>
+<tr>
+<td>Helm reports pending operation</td>
+<td>Helm status and local Helm owners</td>
+<td>Finish or roll back the existing operation first</td>
+</tr>
+</tbody>
+</table>
+<p>Use <a href="diagnose.html">Observe and Diagnose</a> for evidence commands and symptom details.</p>
+<h2 id="recovery-and-rollback">Recovery and Rollback</h2>
+<p>Do not run <code>teardown-all</code> to repair a failed first install.
+It destroys the namespace and its retained state.</p>
+<p>For a failed atomic agent upgrade, inspect Helm history:</p>
+<pre><code class="language-bash">bound_helm history agent-nova -n &quot;$NAMESPACE&quot;
+bound_helm history agent-buster -n &quot;$NAMESPACE&quot;
+</code></pre>
+<p>Use a Helm rollback only when the previous release matches current data formats.
+Do not roll back a database after an incompatible migration.</p>
+<p>For a platform access failure, leave the cluster-dependent Ops Pod path.
+Use the previously recorded host or control-plane route.</p>
+<p>If the cluster itself is absent, stop here.
+The repository has no complete host bootstrap procedure.</p>
+<h2 id="cleanup">Cleanup</h2>
+<p>Remove only temporary DNS, storage, or access probes through the platform
+procedure that created them, and verify their exact names are absent. Keep
+failed workload resources until their events, logs, Helm state, PVC ownership,
+and recovery decision are retained. Do not use <code>teardown</code>, <code>teardown-all</code>, or a
+broad namespace deletion as first-install cleanup. After a successful install,
+remove restricted temporary files and credentials from the administration
+machine while retaining non-secret hashes and command output.</p>
+<h2 id="product-boundary">Product Boundary</h2>
+<p>This procedure establishes a source-backed installation path. It does not prove
+that a target cluster is production-ready. A live installation still needs a
+recorded deployment, independent recovery exercise, capacity result, and
+security verification for that exact cluster. See
+<a href="../status/acceptance.html">Operational and Live Acceptance</a>.</p>
+<h2 id="evidence-to-retain">Evidence to Retain</h2>
+<ul>
+<li>Source commit and selected release manifests.</li>
+<li>Private overlay digest, without secret values.</li>
+<li>Context, namespaces, cluster version, CNI, and StorageClass facts.</li>
+<li>Rendered manifests in protected storage.</li>
+<li>Helm history, Pod image IDs, events, and smoke output.</li>
+<li>Failed output and the successful retry as separate records.</li>
+<li>Independent access owner and the last successful access check.</li>
+</ul>
+</main></body></html>

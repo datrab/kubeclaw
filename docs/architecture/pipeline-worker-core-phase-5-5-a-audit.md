@@ -87,4 +87,4 @@ TypeScript contract package.
 
 Phases 5.5-B through 5.5-D now use these contracts. The complete extraction is
 recorded in
-[pipeline-worker-core-phase-5-5-audit.md](pipeline-worker-core-phase-5-5-audit.md).
+[pipeline-worker-core-phase-5-5-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md).

@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Distinguish the ephemeral GitOps registry from the retained lab profile",
+      "body": "The whole COM-010 path omits a materially different active deployment profile. `scripts/argocd-self-management.mjs:145-155` selects `gitops/platform/registry-local/resources.yaml`, whose Deployment has no persistent volume and uses `registry:2`; its Service also exposes NodePort 30051. This differs from the retained, pinned registry in `my-values/infra/registry-local.yaml`. The linked Pipeline Dependencies page describes retained storage and one-writer replacement without identifying this exception, while this page's recovery advice assumes retained digests can be restored. Under the GitOps profile, Pod replacement can lose every published manifest and layer. Document both selected paths, their endpoints and retention boundaries, and the resulting rebuild/restore and consumer-pull recovery requirements.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 858
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "WHOLE COM-010: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. The canonical communication page and linked dependency/platform/maintenance material do not distinguish the active ephemeral GitOps registry from the retained direct-deployment profile. This changes image lifetime and failure recovery, so the complete obligation cannot pass.\nWHOLE OPR-010: sourceAccuracy PASS; readerUsability PASS; quality PASS for the documented source-level operator journey. The guide covers project admission, rounds, selection, revision, preview, evaluation, exact approval, rendering/publication/export and Nova handoff, including stale, concurrent and uncertain outcomes. Unsupported browser recovery, missing runtime selection and notification incompatibility are explicitly identified as limits, not successful journeys.\nImpact: the identified COM-010 gap does not revoke previously accepted communication or PrismStudio scopes; the citation reconciliation alone grants no whole-content acceptance. Read-only source inspection only: no tests, product execution, rendered UI, native/runtime or live acceptance, global qualification, or whole-package gate acceptance is asserted.",
+  "overall_confidence": 0.87
+}

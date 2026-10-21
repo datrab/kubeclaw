@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/endpoints.html"></head><body><main>
+<h1 id="endpoint-and-connection-reference">Endpoint And Connection Reference</h1>
+<p>Status: generated reference
+Audience: operator, security operator, developer
+Owner: the source component listed for each route or connection
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/docs/generated/inventory/platform-surfaces.json">docs/generated/inventory/platform-surfaces.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/docs-platform-surface-inventory.mjs">scripts/docs-platform-surface-inventory.mjs</a>
+Applies to: discovered inbound routes and outbound network calls in shipped runtime sources
+Last verified: generated from revision <code>6fa4830a48244d29655104a5be58957d5fa87d2f</code></p>
+<h2 id="purpose">Purpose</h2>
+<p>Use this page to identify which component accepts or starts a network request. An endpoint is an inbound route. An outbound connection is a call that a KubeClaw component starts. Keeping these directions separate prevents an operator from opening the wrong boundary.</p>
+<!-- BEGIN GENERATED: source-backed reference -->
+<p>Generated from: <code>docs/generated/inventory/platform-surfaces.json</code></p>
+<h2 id="inbound-endpoints">Inbound Endpoints</h2>
+<table>
+<thead>
+<tr>
+<th>Method and path</th>
+<th>Role or class</th>
+<th>Activation and exclusions</th>
+<th>Implementation authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ANY /*</code></td>
+<td><code>static-spa-fallback</code><br><code>server-static-fallback</code><br><code>fallback</code></td>
+<td>active: static response fallback when pathname is not &quot;/health&quot; and pathname is not &quot;/ready&quot; and pathname does not start with &quot;/v1/&quot;<br>Excludes: <code>exact:/health</code>, <code>exact:/ready</code>, <code>prefix:/v1/*</code></td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/studio-request.ts#L137-L137"><code>skills/prism/server/studio-request.ts:137</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /bootstrap</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/worker-service.ts#L97-L97"><code>skills/prism/server/worker-service.ts:97</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /health</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L20-L20"><code>skills/prism/server/agent-bridge.mjs:20</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /health</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L143-L143"><code>skills/prism/server/control-server.ts:143</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /health</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/ingestion.ts#L62-L62"><code>skills/prism/server/ingestion.ts:62</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /health</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/studio-request.ts#L134-L134"><code>skills/prism/server/studio-request.ts:134</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /health</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/worker-service.ts#L96-L96"><code>skills/prism/server/worker-service.ts:96</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /healthz</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/tools/ops-mcp/src/server.mjs#L520-L520"><code>tools/ops-mcp/src/server.mjs:520</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /mcp</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/tools/ops-mcp/src/server.mjs#L527-L527"><code>tools/ops-mcp/src/server.mjs:527</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /ready</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L20-L20"><code>skills/prism/server/agent-bridge.mjs:20</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /ready</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L145-L145"><code>skills/prism/server/control-server.ts:145</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /ready</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/ingestion.ts#L62-L62"><code>skills/prism/server/ingestion.ts:62</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /ready</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/studio-request.ts#L134-L134"><code>skills/prism/server/studio-request.ts:134</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /ready</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/worker-service.ts#L32-L32"><code>skills/prism/server/worker-service.ts:32</code></a></td>
+</tr>
+<tr>
+<td><code>ANY /v1/*</code></td>
+<td><code>prefix</code></td>
+<td>active: pathname starts with &quot;/v1/&quot; and the handler forwards the request</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/studio-request.ts#L137-L137"><code>skills/prism/server/studio-request.ts:137</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE /v1/acquisitions/{acquisitionId:[a-f0-9]{64}}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/ingestion.ts#L63-L63"><code>skills/prism/server/ingestion.ts:63</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE /v1/plan-jobs/{jobId:[^/?#]+}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L156-L156"><code>skills/buster/engine/test-gates/remote-plan-http.ts:156</code></a></td>
+</tr>
+<tr>
+<td><code>GET /bootstrapz</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L92-L92"><code>skills/buster/engine/test-gates/remote-plan-http.ts:92</code></a></td>
+</tr>
+<tr>
+<td><code>GET /healthz</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L88-L88"><code>skills/buster/engine/test-gates/remote-plan-http.ts:88</code></a></td>
+</tr>
+<tr>
+<td><code>GET /readyz</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L97-L97"><code>skills/buster/engine/test-gates/remote-plan-http.ts:97</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/agent-jobs/{agentJobId:[0-9a-f-]+}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L280-L280"><code>skills/prism/server/control-server.ts:280</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/agent/jobs/{jobId:[0-9a-f-]+}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: pathname starts with &quot;/v1/agent/jobs&quot;</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-job-routes.ts#L16-L16"><code>skills/prism/server/agent-job-routes.ts:16</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/artifacts/{artifactId:sha256:[a-f0-9]{64}}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L914-L914"><code>skills/prism/server/control-server.ts:914</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/corpus/search</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L844-L844"><code>skills/prism/server/control-server.ts:844</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/documents/{documentId:[0-9a-f-]+}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L389-L389"><code>skills/prism/server/control-server.ts:389</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/documents/{documentId:[0-9a-f-]+}/revisions</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L392-L392"><code>skills/prism/server/control-server.ts:392</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/internal/artifacts/{artifactId:sha256:[a-f0-9]{64}}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/internal-artifacts.ts#L32-L32"><code>skills/prism/server/internal-artifacts.ts:32</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/{jobId:[^/?#]+}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L156-L156"><code>skills/buster/engine/test-gates/remote-plan-http.ts:156</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/{jobId:[^/?#]+}/evidence/{digest:(?:sha256%3A|sha256:)[a-f0-9]{64}}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L136-L136"><code>skills/buster/engine/test-gates/remote-plan-http.ts:136</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/{jobId:[^/?#]+}/results/{digest:(?:sha256%3A|sha256:)[a-f0-9]{64}}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L146-L146"><code>skills/buster/engine/test-gates/remote-plan-http.ts:146</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/preferences</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L906-L906"><code>skills/prism/server/control-server.ts:906</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/product-decisions</code></td>
+<td><code>static</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L52-L52"><code>skills/prism/server/product-decisions.ts:52</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/product-decisions/operator</code></td>
+<td><code>static</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L80-L80"><code>skills/prism/server/product-decisions.ts:80</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/product-decisions/subjects</code></td>
+<td><code>static</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L49-L49"><code>skills/prism/server/product-decisions.ts:49</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/projects</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L282-L282"><code>skills/prism/server/control-server.ts:282</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/projects/{projectId:[0-9a-f-]+}/brief</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L286-L286"><code>skills/prism/server/control-server.ts:286</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/projects/{projectId:[0-9a-f-]+}/directions</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L346-L346"><code>skills/prism/server/control-server.ts:346</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/acquisitions</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/ingestion.ts#L69-L69"><code>skills/prism/server/ingestion.ts:69</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/design-sets</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L243-L243"><code>skills/prism/server/control-server.ts:243</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/jobs/{jobId:[0-9a-f-]+}/finish</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: pathname starts with &quot;/v1/agent/jobs&quot;</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-job-routes.ts#L16-L16"><code>skills/prism/server/agent-job-routes.ts:16</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/jobs/claim</code></td>
+<td><code>static</code></td>
+<td>active: pathname starts with &quot;/v1/agent/jobs&quot;</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-job-routes.ts#L12-L12"><code>skills/prism/server/agent-job-routes.ts:12</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/revisions</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L265-L265"><code>skills/prism/server/control-server.ts:265</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/approvals</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L521-L521"><code>skills/prism/server/control-server.ts:521</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/artifacts</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L799-L799"><code>skills/prism/server/control-server.ts:799</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/attempts</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/worker-service.ts#L33-L33"><code>skills/prism/server/worker-service.ts:33</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/baselines</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L567-L567"><code>skills/prism/server/control-server.ts:567</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/corpus</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L810-L810"><code>skills/prism/server/control-server.ts:810</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-product/decisions</code></td>
+<td><code>static</code></td>
+<td>conditional: requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-product.go#L335-L335"><code>cmd/buster-namespace-controller/demo-product.go:335</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-product/status</code></td>
+<td><code>static</code></td>
+<td>conditional: requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-product.go#L335-L335"><code>cmd/buster-namespace-controller/demo-product.go:335</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-product/subjects</code></td>
+<td><code>static</code></td>
+<td>conditional: requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-product.go#L335-L335"><code>cmd/buster-namespace-controller/demo-product.go:335</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-ready</code></td>
+<td><code>static</code></td>
+<td>conditional: requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness.go#L133-L133"><code>cmd/buster-namespace-controller/demo-readiness.go:133</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-ready/status</code></td>
+<td><code>static</code></td>
+<td>conditional: requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness.go#L133-L133"><code>cmd/buster-namespace-controller/demo-readiness.go:133</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/design-set</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L24-L24"><code>skills/prism/server/agent-bridge.mjs:24</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/directions/{directionId:[0-9a-f-]+}/feedback</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L367-L367"><code>skills/prism/server/control-server.ts:367</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/directions/{directionId:[0-9a-f-]+}/select</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L380-L380"><code>skills/prism/server/control-server.ts:380</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/dispatch</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L23-L23"><code>skills/prism/server/agent-bridge.mjs:23</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/dispatch</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L174-L174"><code>skills/prism/server/control-server.ts:174</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/documents</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L325-L325"><code>skills/prism/server/control-server.ts:325</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/documents/{documentId:[0-9a-f-]+}/engine</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L422-L422"><code>skills/prism/server/control-server.ts:422</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/documents/{documentId:[0-9a-f-]+}/operations</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L409-L409"><code>skills/prism/server/control-server.ts:409</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/documents/{documentId:[0-9a-f-]+}/revisions/{revisionId:[0-9a-f-]+}/restore</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L399-L399"><code>skills/prism/server/control-server.ts:399</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/internal/artifacts/{artifactId:sha256:[a-f0-9]{64}}</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/internal-artifacts.ts#L32-L32"><code>skills/prism/server/internal-artifacts.ts:32</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/plan-jobs</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/remote-plan-http.ts#L129-L129"><code>skills/buster/engine/test-gates/remote-plan-http.ts:129</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/preferences</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L894-L894"><code>skills/prism/server/control-server.ts:894</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/product-decisions</code></td>
+<td><code>static</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L56-L56"><code>skills/prism/server/product-decisions.ts:56</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/product-decisions/{productDecisionId:[0-9a-f-]{36}}/recover</code></td>
+<td><code>anchored-regex</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L64-L64"><code>skills/prism/server/product-decisions.ts:64</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/projects</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L292-L292"><code>skills/prism/server/control-server.ts:292</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/projects/{projectId:[0-9a-f-]+}/directions</code></td>
+<td><code>anchored-regex</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L346-L346"><code>skills/prism/server/control-server.ts:346</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/revise</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L24-L24"><code>skills/prism/server/agent-bridge.mjs:24</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/session</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L152-L152"><code>skills/prism/server/control-server.ts:152</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/session</code></td>
+<td><code>static</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L94-L94"><code>skills/prism/server/product-decisions.ts:94</code></a></td>
+</tr>
+<tr>
+<td><code>PUT /v1/preferences/policy</code></td>
+<td><code>static</code></td>
+<td>active: handler matcher and HTTP method match</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L888-L888"><code>skills/prism/server/control-server.ts:888</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="services-ports-and-ingress">Services, Ports, And Ingress</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Exposure</th>
+<th>Port or backend</th>
+<th>Activation</th>
+<th>Implementation authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ingress/argocd/argocd</code></td>
+<td>class=<code>tailscale</code><br>route=<code>default backend</code><br>host/path=<code>not applicable</code></td>
+<td>service=<code>argocd-server:80</code><br>TLS hosts: <code>argocd</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/my-values/infra/argocd-tailscale-ingress.yaml#L8-L8"><code>my-values/infra/argocd-tailscale-ingress.yaml:8</code></a></td>
+</tr>
+<tr>
+<td><code>Ingress/kubeclaw/agent-nova-archviewer</code></td>
+<td>class=<code>tailscale</code><br>route=<code>default backend</code><br>host/path=<code>not applicable</code></td>
+<td>service=<code>agent-nova-archviewer:3456</code><br>TLS hosts: <code>nova-architecture</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/archviewer.yaml#L28-L28"><code>charts/kubeclaw/templates/archviewer.yaml:28</code></a></td>
+</tr>
+<tr>
+<td><code>Ingress/kubeclaw/prism-studio</code></td>
+<td>class=<code>tailscale</code><br>route=<code>default backend</code><br>host/path=<code>not applicable</code></td>
+<td>service=<code>prism-studio:80</code><br>TLS hosts: <code>prism-studio</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/services.yaml#L45-L45"><code>charts/prism/templates/services.yaml:45</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw-ops/codex-ops</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>None</code></td>
+<td><code>TCP health:8080 -&gt; 8080</code></td>
+<td>active: the selected Ops profile uses the chart default tailscale.enabled=false</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/ops-pod/templates/workload.yaml#L11-L11"><code>charts/ops-pod/templates/workload.yaml:11</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-buster</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP bridge:18790 -&gt; bridge</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/service.yaml#L4-L4"><code>charts/kubeclaw/templates/service.yaml:4</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-buster</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP buster-plan:18891 -&gt; buster-plan</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/service.yaml#L4-L4"><code>charts/kubeclaw/templates/service.yaml:4</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-buster</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP gateway:18789 -&gt; gateway</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/service.yaml#L4-L4"><code>charts/kubeclaw/templates/service.yaml:4</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-nova-archviewer</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP http:3456 -&gt; archviewer</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/archviewer.yaml#L14-L14"><code>charts/kubeclaw/templates/archviewer.yaml:14</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-nova</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP bridge:18790 -&gt; bridge</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/service.yaml#L4-L4"><code>charts/kubeclaw/templates/service.yaml:4</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-nova</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP gateway:18789 -&gt; gateway</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/service.yaml#L4-L4"><code>charts/kubeclaw/templates/service.yaml:4</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/agent-prism</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP gateway:8080 -&gt; prism-dispatch</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/kubeclaw/templates/service.yaml#L4-L4"><code>charts/kubeclaw/templates/service.yaml:4</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/litellm</code></td>
+<td>type=<code>NodePort</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP http:4000 -&gt; 4000</code><br>nodePort=<code>30050</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/gitops/platform/litellm/resources.yaml#L67-L67"><code>gitops/platform/litellm/resources.yaml:67</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/litellm</code></td>
+<td>type=<code>NodePort</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP http:4000 -&gt; 4000</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/my-values/infra/litellm-deployment.yaml#L86-L86"><code>my-values/infra/litellm-deployment.yaml:86</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/prism-control-internal</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP mtls:8443 -&gt; worker-trust</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/services.yaml#L16-L16"><code>charts/prism/templates/services.yaml:16</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/prism-control</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:8080 -&gt; 8080</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/services.yaml#L10-L10"><code>charts/prism/templates/services.yaml:10</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/prism-postgresql</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:5432 -&gt; &lt;none&gt;</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/postgresql.yaml#L76-L76"><code>charts/prism/templates/postgresql.yaml:76</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/prism-studio</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:80 -&gt; 8080</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/services.yaml#L3-L3"><code>charts/prism/templates/services.yaml:3</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/prism-worker-internal</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP mtls:8443 -&gt; worker-trust</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/services.yaml#L28-L28"><code>charts/prism/templates/services.yaml:28</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/prism-worker</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:8080 -&gt; 8080</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/charts/prism/templates/services.yaml#L22-L22"><code>charts/prism/templates/services.yaml:22</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/registry-local</code></td>
+<td>type=<code>NodePort</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:5001 -&gt; 5000</code><br>nodePort=<code>30051</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/gitops/platform/registry-local/resources.yaml#L41-L41"><code>gitops/platform/registry-local/resources.yaml:41</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/registry-local</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:5001 -&gt; 5000</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/my-values/infra/registry-local.yaml#L96-L96"><code>my-values/infra/registry-local.yaml:96</code></a></td>
+</tr>
+<tr>
+<td><code>Service/kubeclaw/registry-mirror</code></td>
+<td>type=<code>ClusterIP</code><br>clusterIP=<code>&lt;assigned-by-cluster&gt;</code></td>
+<td><code>TCP &lt;unnamed&gt;:5000 -&gt; 5000</code></td>
+<td>active: selected rendered profile</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/my-values/infra/registry-mirror.yaml#L84-L84"><code>my-values/infra/registry-mirror.yaml:84</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="outbound-connections">Outbound Connections</h2>
+<table>
+<thead>
+<tr>
+<th>Method and target</th>
+<th>Caller</th>
+<th>Provider or base</th>
+<th>Activation</th>
+<th>Implementation authority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DELETE {&quot;/apis/networking.k8s.io/v1/namespaces/&quot;+c.namespace+&quot;/networkpolicies/&quot;+busterE2EEgressPolicyName(item)}</code></td>
+<td><code>deleteBusterE2EEgressPolicy</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L919-L919"><code>cmd/buster-namespace-controller/main.go:919</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE {path}</code></td>
+<td><code>deleteLegacyRunnerAccess</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L997-L997"><code>cmd/buster-namespace-controller/main.go:997</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE {resource}</code></td>
+<td><code>deleteOwnedExposure</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/exposure-generation.go#L91-L91"><code>cmd/buster-namespace-controller/exposure-generation.go:91</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE /api/v1/namespaces/{namespaceName}</code></td>
+<td><code>deleteNamespaceCAS</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L194-L194"><code>cmd/buster-namespace-controller/demo-readiness-lifecycle.go:194</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE /api/v1/namespaces/{namespaceName}</code></td>
+<td><code>deleteNamespace</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L1432-L1432"><code>cmd/buster-namespace-controller/main.go:1432</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE /v1/acquisitions/{acquisition.quarantineDigest.slice(7)}</code></td>
+<td><code>handle</code></td>
+<td><code>outbound-http</code><br><code>{ingestionUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L835-L835"><code>skills/prism/server/control-server.ts:835</code></a></td>
+</tr>
+<tr>
+<td><code>DELETE /v1/plan-jobs/{jobId}</code></td>
+<td><code>cancel</code></td>
+<td><code>outbound-http</code><br><code>{endpoint}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/core/test-gates/remote-dispatch.ts#L166-L166"><code>skills/nova/core/test-gates/remote-dispatch.ts:166</code></a></td>
+</tr>
+<tr>
+<td><code>DYNAMIC {configuredUrl}</code></td>
+<td><code>invoke</code></td>
+<td><code>dynamic-provider-http</code><br><code>buster-network-http</code><br><code>network.http</code></td>
+<td>active: an admitted Buster network.http request passes configured URL, method, origin, port, header, and size policy</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/network-http-runtime.ts#L245-L245"><code>skills/buster/engine/test-gates/network-http-runtime.ts:245</code></a></td>
+</tr>
+<tr>
+<td><code>DYNAMIC {configuredUrl}</code></td>
+<td><code>performRequest</code></td>
+<td><code>dynamic-provider-http</code><br><code>common-network-http-adapter</code><br><code>network.http</code></td>
+<td>active: an activated common network.http adapter request passes configured capability, URL, method, origin, header, fence, and size policy</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/common/plugins/network-http/src/adapter.ts#L60-L60"><code>skills/common/plugins/network-http/src/adapter.ts:60</code></a></td>
+</tr>
+<tr>
+<td><code>GET {kubernetesApiPath}</code></td>
+<td><code>kubeRequest</code></td>
+<td><code>dynamic-provider-http</code><br><code>ops-mcp-kubernetes-client</code><br><code>kubernetes-api</code><br><code>{configuredKubernetesApiOrigin}</code></td>
+<td>active: an authenticated Ops MCP read selects a validated Kubernetes API path and uses the configured HTTPS origin, projected token, and CA</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/tools/ops-mcp/src/kubernetes.mjs#L26-L26"><code>tools/ops-mcp/src/kubernetes.mjs:26</code></a></td>
+</tr>
+<tr>
+<td><code>GET {path}</code></td>
+<td><code>ensureTestCredentials</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-credentials.go#L49-L49"><code>cmd/buster-namespace-controller/demo-credentials.go:49</code></a></td>
+</tr>
+<tr>
+<td><code>GET {resource}</code></td>
+<td><code>ensureOwnedExposure</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/exposure-generation.go#L38-L38"><code>cmd/buster-namespace-controller/exposure-generation.go:38</code></a></td>
+</tr>
+<tr>
+<td><code>GET {resourcePath}</code></td>
+<td><code>runtimeSecurityStatus</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L559-L559"><code>cmd/buster-namespace-controller/main.go:559</code></a></td>
+</tr>
+<tr>
+<td><code>GET /api/v1/namespaces/{c.namespace}/secrets/{name}</code></td>
+<td><code>copySecrets</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L1407-L1407"><code>cmd/buster-namespace-controller/main.go:1407</code></a></td>
+</tr>
+<tr>
+<td><code>GET /api/v1/namespaces/{namespace}</code></td>
+<td><code>verifyReadyNamespace</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-sources.go#L15-L15"><code>cmd/buster-namespace-controller/demo-readiness-sources.go:15</code></a></td>
+</tr>
+<tr>
+<td><code>GET /api/v1/namespaces/{namespace}/secrets/{name}</code></td>
+<td><code>verifyReadySecret</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-sources.go#L93-L93"><code>cmd/buster-namespace-controller/demo-readiness-sources.go:93</code></a></td>
+</tr>
+<tr>
+<td><code>GET /api/v1/namespaces/{namespaceName}</code></td>
+<td><code>legacyNamespaceOwned</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L725-L725"><code>cmd/buster-namespace-controller/main.go:725</code></a></td>
+</tr>
+<tr>
+<td><code>GET /api/v1/namespaces/{namespaceName}/endpoints/{serviceName}</code></td>
+<td><code>previewServiceReady</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L1293-L1293"><code>cmd/buster-namespace-controller/main.go:1293</code></a></td>
+</tr>
+<tr>
+<td><code>GET /api/v1/namespaces/{namespaceName}/services/{serviceName}</code></td>
+<td><code>previewServiceReady</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L1290-L1290"><code>cmd/buster-namespace-controller/main.go:1290</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases</code></td>
+<td><code>productHandler</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: BUSTER_PRODUCT_ENABLED=true; the selected profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-product.go#L373-L373"><code>cmd/buster-namespace-controller/demo-product.go:373</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases</code></td>
+<td><code>reconcileAll</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L222-L222"><code>cmd/buster-namespace-controller/main.go:222</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>commitProduct</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: BUSTER_PRODUCT_ENABLED=true; the selected profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-product.go#L266-L266"><code>cmd/buster-namespace-controller/demo-product.go:266</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>patchLeaseStatus</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L84-L84"><code>cmd/buster-namespace-controller/demo-readiness-lifecycle.go:84</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>verifyCommittedReady</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-sources.go#L72-L72"><code>cmd/buster-namespace-controller/demo-readiness-sources.go:72</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>readDemoReady</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness.go#L179-L179"><code>cmd/buster-namespace-controller/demo-readiness.go:179</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>assertExposureCurrent</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/exposure-generation.go#L23-L23"><code>cmd/buster-namespace-controller/exposure-generation.go:23</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>ensureFinalizer</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L743-L743"><code>cmd/buster-namespace-controller/main.go:743</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}/status</code></td>
+<td><code>ensureTestCredentials</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-credentials.go#L38-L38"><code>cmd/buster-namespace-controller/demo-credentials.go:38</code></a></td>
+</tr>
+<tr>
+<td><code>GET /apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{exposure.IngressName}</code></td>
+<td><code>verifyReadyIngress</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-sources.go#L34-L34"><code>cmd/buster-namespace-controller/demo-readiness-sources.go:34</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/agent/jobs/{payload.jobId}</code></td>
+<td><code>createServer handler</code></td>
+<td><code>outbound-http</code><br><code>{process.env.PRISM_CONTROL_URL || 'http://127.0.0.1:28080'}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L26-L26"><code>skills/prism/server/agent-bridge.mjs:26</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/internal/artifacts/{artifact.contentDigest}</code></td>
+<td><code>read</code></td>
+<td><code>outbound-http</code><br><code>{validated origin}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/worker-artifacts.ts#L36-L36"><code>skills/prism/server/worker-artifacts.ts:36</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/{jobId}</code></td>
+<td><code>status</code></td>
+<td><code>outbound-http</code><br><code>{endpoint}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/core/test-gates/remote-dispatch.ts#L162-L162"><code>skills/nova/core/test-gates/remote-dispatch.ts:162</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/{jobId}/evidence/{contentDigest}</code></td>
+<td><code>evidence</code></td>
+<td><code>outbound-http</code><br><code>{endpoint}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/core/test-gates/remote-dispatch.ts#L173-L173"><code>skills/nova/core/test-gates/remote-dispatch.ts:173</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v1/plan-jobs/{jobId}/results/{contentDigest}</code></td>
+<td><code>result</code></td>
+<td><code>outbound-http</code><br><code>{endpoint}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/core/test-gates/remote-dispatch.ts#L186-L186"><code>skills/nova/core/test-gates/remote-dispatch.ts:186</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v2/{repository.split('/').map(encodeURIComponent).join('/')}/manifests/{digest}</code></td>
+<td><code>verifyContainerManifest</code></td>
+<td><code>outbound-http</code><br><code>{baseUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/container-build-runtime.ts#L121-L121"><code>skills/buster/engine/test-gates/container-build-runtime.ts:121</code></a></td>
+</tr>
+<tr>
+<td><code>GET /v2/{repository.split('/').map(encodeURIComponent).join('/')}/manifests/{digestFromMetadata(metadata)}</code></td>
+<td><code>invoke</code></td>
+<td><code>outbound-http</code><br><code>{baseUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/engine/test-gates/container-build-runtime.ts#L257-L257"><code>skills/buster/engine/test-gates/container-build-runtime.ts:257</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH {patchPath}</code></td>
+<td><code>createOrPatch</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L1497-L1497"><code>cmd/buster-namespace-controller/main.go:1497</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH {resource}</code></td>
+<td><code>ensureOwnedExposure</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/exposure-generation.go#L63-L63"><code>cmd/buster-namespace-controller/exposure-generation.go:63</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>removeFinalizerCAS</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L161-L161"><code>cmd/buster-namespace-controller/demo-readiness-lifecycle.go:161</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}</code></td>
+<td><code>ensureFinalizer</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L754-L754"><code>cmd/buster-namespace-controller/main.go:754</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}/status</code></td>
+<td><code>ensureTestCredentials</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-credentials.go#L78-L78"><code>cmd/buster-namespace-controller/demo-credentials.go:78</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}/status</code></td>
+<td><code>commitProduct</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: BUSTER_PRODUCT_ENABLED=true; the selected profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-product.go#L308-L308"><code>cmd/buster-namespace-controller/demo-product.go:308</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}/status</code></td>
+<td><code>patchLeaseStatus</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L113-L113"><code>cmd/buster-namespace-controller/demo-readiness-lifecycle.go:113</code></a></td>
+</tr>
+<tr>
+<td><code>PATCH /apis/{leaseApiGroup}/{leaseApiVersion}/namespaces/{controllerNamespace}/busternamespaceleases/{leaseName}/status</code></td>
+<td><code>commitDemoReady</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness.go#L258-L258"><code>cmd/buster-namespace-controller/demo-readiness.go:258</code></a></td>
+</tr>
+<tr>
+<td><code>POST {base}</code></td>
+<td><code>ensureOwnedExposure</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/exposure-generation.go#L52-L52"><code>cmd/buster-namespace-controller/exposure-generation.go:52</code></a></td>
+</tr>
+<tr>
+<td><code>POST {createPath}</code></td>
+<td><code>createOrPatch</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L1489-L1489"><code>cmd/buster-namespace-controller/main.go:1489</code></a></td>
+</tr>
+<tr>
+<td><code>POST /api/v1/namespaces</code></td>
+<td><code>ensureNamespace</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/main.go#L785-L785"><code>cmd/buster-namespace-controller/main.go:785</code></a></td>
+</tr>
+<tr>
+<td><code>POST /api/v1/namespaces/{namespaceName}/secrets</code></td>
+<td><code>ensureTestCredentials</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>active: the deployed namespace controller executes this Kubernetes API client path</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-credentials.go#L63-L63"><code>cmd/buster-namespace-controller/demo-credentials.go:63</code></a></td>
+</tr>
+<tr>
+<td><code>POST /apis/authentication.k8s.io/v1/tokenreviews</code></td>
+<td><code>authenticateTransport</code></td>
+<td><code>kubernetes-api</code><br><code>buster-namespace-controller</code><br><code>kubernetes-api</code><br><code>{in-cluster Kubernetes API}</code></td>
+<td>conditional: the Buster demo-readiness listener is enabled; the selected profile leaves it disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/cmd/buster-namespace-controller/demo-readiness.go#L118-L118"><code>cmd/buster-namespace-controller/demo-readiness.go:118</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/acquisitions</code></td>
+<td><code>handle</code></td>
+<td><code>outbound-http</code><br><code>{ingestionUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L816-L816"><code>skills/prism/server/control-server.ts:816</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/design-sets</code></td>
+<td><code>execute</code></td>
+<td><code>outbound-http</code><br><code>{config?.controlUrl || process.env.PRISM_CONTROL_URL || &quot;http://127.0.0.1:28080&quot;}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/openclaw-plugin/index.mjs#L55-L55"><code>skills/prism/openclaw-plugin/index.mjs:55</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/jobs/{job.id}/finish</code></td>
+<td><code>runOne</code></td>
+<td><code>outbound-http</code><br><code>{controlUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-job-runner.mjs#L44-L44"><code>skills/prism/server/agent-job-runner.mjs:44</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/jobs/claim</code></td>
+<td><code>runOne</code></td>
+<td><code>outbound-http</code><br><code>{controlUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-job-runner.mjs#L28-L28"><code>skills/prism/server/agent-job-runner.mjs:28</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/revisions</code></td>
+<td><code>execute</code></td>
+<td><code>outbound-http</code><br><code>{config?.controlUrl || process.env.PRISM_CONTROL_URL || &quot;http://127.0.0.1:28080&quot;}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/openclaw-plugin/index.mjs#L78-L78"><code>skills/prism/openclaw-plugin/index.mjs:78</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/attempts</code></td>
+<td><code>runNativePrismOperation</code></td>
+<td><code>outbound-http</code><br><code>{config.workerUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/control/native-operation.ts#L25-L25"><code>skills/prism/control/native-operation.ts:25</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/attempts</code></td>
+<td><code>requestWorkerResult</code></td>
+<td><code>outbound-http</code><br><code>{config.workerUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/control/worker-operation-transport.ts#L10-L10"><code>skills/prism/control/worker-operation-transport.ts:10</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/attempts</code></td>
+<td><code>runWorker</code></td>
+<td><code>outbound-http</code><br><code>{config.workerUrl}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/control-server.ts#L130-L130"><code>skills/prism/server/control-server.ts:130</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-product/decisions</code></td>
+<td><code>reconcile</code></td>
+<td><code>outbound-http</code><br><code>{config}</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L35-L35"><code>skills/prism/server/product-decisions.ts:35</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-product/status</code></td>
+<td><code>reconcile</code></td>
+<td><code>outbound-http</code><br><code>{config}</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L34-L34"><code>skills/prism/server/product-decisions.ts:34</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-product/subjects</code></td>
+<td><code>authorizedProductRoute</code></td>
+<td><code>outbound-http</code><br><code>{options.config}</code></td>
+<td>conditional: control.productDecisions.enabled=true; the selected Prism profile leaves product decisions disabled</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/product-decisions.ts#L50-L50"><code>skills/prism/server/product-decisions.ts:50</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-ready</code></td>
+<td><code>post</code></td>
+<td><code>outbound-https</code><br><code>{configured demo-ready controller HTTPS origin}</code></td>
+<td>conditional: the kubeclaw.demo-handoff adapter is activated with a validated /v1/demo-ready endpoint; the selected Nova profile does not enable readyClient by default</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/demo-handoff/src/controller-client.ts#L22-L22"><code>skills/nova/plugins/demo-handoff/src/controller-client.ts:22</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/demo-ready/status</code></td>
+<td><code>post</code></td>
+<td><code>outbound-https</code><br><code>{configured demo-ready controller HTTPS origin}</code></td>
+<td>conditional: the kubeclaw.demo-handoff adapter is activated with a validated /v1/demo-ready endpoint; the selected Nova profile does not enable readyClient by default</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/demo-handoff/src/controller-client.ts#L22-L22"><code>skills/nova/plugins/demo-handoff/src/controller-client.ts:22</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/dispatch</code></td>
+<td><code>dispatch</code></td>
+<td><code>outbound-http</code><br><code>{process.env.PRISM_CONTROL_URL || 'http://127.0.0.1:28080'}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/agent-bridge.mjs#L14-L14"><code>skills/prism/server/agent-bridge.mjs:14</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/internal/artifacts/{contentDigest}</code></td>
+<td><code>upload</code></td>
+<td><code>outbound-http</code><br><code>{origin}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/prism/server/worker-artifacts.ts#L45-L45"><code>skills/prism/server/worker-artifacts.ts:45</code></a></td>
+</tr>
+<tr>
+<td><code>POST /v1/plan-jobs</code></td>
+<td><code>submit</code></td>
+<td><code>outbound-http</code><br><code>{endpoint}</code></td>
+<td>active: the source reaches an HTTP call with this statically resolved target and method</td>
+<td><a href="https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/core/test-gates/remote-dispatch.ts#L158-L158"><code>skills/nova/core/test-gates/remote-dispatch.ts:158</code></a></td>
+</tr>
+</tbody>
+</table>
+<!-- END GENERATED -->
+<h2 id="trust-health-and-failure-meaning">Trust, Health, And Failure Meaning</h2>
+<ul>
+<li>A route record proves that the shipped source registers or handles the path. It does not prove public reachability. Service, ingress, network policy, identity, and authorization settings determine reachability and access.</li>
+<li>A health or readiness route reports only the checks implemented at its linked source. It does not prove that a complete user workflow succeeds.</li>
+<li>An outbound record proves a possible call site and its activation condition. It does not prove that DNS, credentials, policy, or the remote service are available.</li>
+<li>The generated inventory does not infer undocumented authentication or retry behavior. Follow the implementation link and the relevant operational procedure before you expose, retry, or disable a connection.</li>
+</ul>
+<h2 id="checks">Checks</h2>
+<p><code>npm run docs:drift:endpoint:check</code> detects endpoint and outbound-connection drift. The platform mutation suite proves that changed route and dependency facts cannot keep the generated reference green.</p>
+<h2 id="generated-from">Generated From</h2>
+<ul>
+<li><code>../generated/inventory/platform-surfaces.json</code></li>
+<li><code>../../scripts/docs-platform-surface-inventory.mjs</code></li>
+<li><code>../../scripts/docs-generate.mjs</code></li>
+</ul>
+</main></body></html>

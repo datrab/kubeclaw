@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Source/native consumer PASS for this selected receipt update. The complete checker retains one fixed repository dynamic import of capability-vocabulary.ts; its runtime closure uses node:path and errors.ts, with the SDK import type-only. Capability IDs feed documentation assertions and a terminal JSON diagnostic, while assertion, import, filesystem, and git failures propagate to callers. Package and CI callers use its exit status without publishing its JSON as API output. Compared with the old receipt's Source bytes, only the citation revision changed. Both refreshed hashes match, and the hardcoded recipe binding preserves independent authorization. This does not qualify runtime effects, establish checker execution success, approve generated output or content, or resolve other unknown/API boundaries. No tests or product code were executed.",
+  "overall_confidence": 0.96
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "case": "release source cannot fall back to behavioral evidence",
+    "exitCode": 1,
+    "rejected": true,
+    "source": "versions.json"
+  },
+  {
+    "case": "unrelated behavioral source cannot acquire release revision",
+    "exitCode": 1,
+    "rejected": true,
+    "source": "skills/common/plugin-runtime/foundation/registry/build.ts"
+  }
+]

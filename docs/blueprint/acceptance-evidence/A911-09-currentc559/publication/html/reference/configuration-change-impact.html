@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/reference/configuration-change-impact.html"></head><body><main>
+<h1 id="configuration-change-impact">Configuration Change Impact</h1>
+<p>Status: current operational reference
+Audience: operator, maintainer
+Owner: platform operations
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-snapshots.ts">skills/nova/core/execution/engine-snapshots.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-runtime.ts">skills/nova/core/execution/engine-runtime.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/engine-run.ts">skills/nova/core/execution/engine-run.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/adapters.ts">skills/nova/core/execution/adapters.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/execution/adapter-startup.ts">skills/nova/core/execution/adapter-startup.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/effects/coordinator.ts">skills/nova/core/effects/coordinator.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/effects/durable-invocation.ts">skills/nova/core/effects/durable-invocation.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.ts">skills/common/plugin-runtime/foundation/config/platform.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/platform.schema.json">skills/common/plugin-runtime/foundation/config/platform.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/project/recovery.ts">skills/nova/project/recovery.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/foundation/config/published-pair.ts">skills/common/plugin-runtime/foundation/config/published-pair.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/server/control-config.ts">skills/prism/server/control-config.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/config/native-worker.ts">skills/prism/config/native-worker.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism/control/product-decisions.ts">skills/prism/control/product-decisions.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/values.yaml">charts/kubeclaw/values.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/kubeclaw/templates/deployment.yaml">charts/kubeclaw/templates/deployment.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/values.schema.json">charts/prism/values.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/workloads.yaml">charts/prism/templates/workloads.yaml</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism/templates/_product-decisions.tpl">charts/prism/templates/_product-decisions.tpl</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/gitops/templates/applications.yaml">charts/gitops/templates/applications.yaml</a>
+Applies to: current configuration families
+Last verified: 2026-09-21 at source revision <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code>
+Helm section verified: 2026-10-10 at source revision <code>ec2a42ed215a2fa7dbd3172ef70ef446084963a9</code>; other families retain the evidence revisions below.
+ConfigMap consumption section verified: 2026-10-10 against Kubernetes source revision <code>66452049f3d692768c39c797b21b793dce80314e</code>.
+Platform timeout section verified: 2026-10-10 at source revision <code>fe426bd75db277b04cf405cc2057063b75fa0a1d</code>.</p>
+<h2 id="impact-classes">Impact classes</h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hot</td>
+<td>The documented consumer watches or reads the value for each operation. Do not assume this class without an explicit watcher/read path.</td>
+</tr>
+<tr>
+<td>Restart</td>
+<td>A process captures the value at startup; roll only the affected workload after validation.</td>
+</tr>
+<tr>
+<td>Recreate consumer</td>
+<td>Reload validated configuration and construct fresh consumer objects. The CLI does this on a new invocation; another caller must perform its own reload and recreation.</td>
+</tr>
+<tr>
+<td>New run</td>
+<td>Existing Nova run snapshots pin the graph, package set, or recorded runtime configuration subset. When a change violates those pins, continue with the original inputs and use the changed configuration only for a new identity. Platform timeout capture is a separate boundary, explained below.</td>
+</tr>
+<tr>
+<td>Republish</td>
+<td>The <code>.swarm</code> authoring pair must be validated and atomically published together.</td>
+</tr>
+<tr>
+<td>Host prepare + restart</td>
+<td>Root-owned capacity/identity or cgroup state must be reconciled before the worker restarts and reports ready.</td>
+</tr>
+<tr>
+<td>Data procedure</td>
+<td>A persistent format, location, identity, or credential transition needs its component's explicit backup/restore or rotation procedure. Editing config alone is insufficient.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="change-matrix">Change matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Required class</th>
+<th>Why and checks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pipeline-platform.v2</code> package roots, trust, providers, grants, adapters, observers, isolation</td>
+<td>New run</td>
+<td>Recovery compares the recorded effective runtime and pinned packages. Validate registrations and grants; retain the prior file for active runs.</td>
+</tr>
+<tr>
+<td>Platform <code>storageRoot</code></td>
+<td>New run + data procedure if state must move</td>
+<td>The new path selects another store; the loader does not copy run state. Verify durability, permissions, capacity, backup, and restore before cutover.</td>
+</tr>
+<tr>
+<td>Platform <code>shutdownTimeoutMs</code> or <code>effectLockTtlMs</code></td>
+<td>Recreate consumer; use a new CLI invocation or restart the owning process if it loads configuration only at startup</td>
+<td>Existing objects keep captured values. These two settings are absent from the recorded runtime configuration subset; a timeout-only change does not itself require a new run ID in that comparison. Apply the stop, drain, and recovery checks below.</td>
+</tr>
+<tr>
+<td><code>nova-project.v2</code> root, module, coverage, agent, lint, source, final, or demo fields</td>
+<td>New run</td>
+<td>Compiler output or source binding can change the graph digest. Compile first and compare the recorded digest.</td>
+</tr>
+<tr>
+<td><code>pipeline-definition.v2</code> field</td>
+<td>New run</td>
+<td>Recovery verifies pipeline ID and normalized graph digest.</td>
+</tr>
+<tr>
+<td><code>.swarm/progress.json</code> or <code>.swarm/pipeline.json</code></td>
+<td>Republish; then new resolved plan/run where consumed</td>
+<td>The two files are one generation. Re-run scaffold checks and plan resolution. Never hand-update one current copy.</td>
+</tr>
+<tr>
+<td>Provider schema/config, suite selection, coverage, matrix, limits</td>
+<td>Republish + new resolved plan/run</td>
+<td>Plan digest, provider config digest, links, coverage, or node identities can change.</td>
+</tr>
+<tr>
+<td>Plugin package content/version</td>
+<td>New run by default</td>
+<td>Registry snapshot pins package version/content digest. An active run accepts only its recorded package or an explicitly governed supported package transition.</td>
+</tr>
+<tr>
+<td>KubeClaw or Prism image digest</td>
+<td>Restart; new run for any pipeline component used by that run</td>
+<td>Workload executable bytes change. Render manifests, check digest pinning, and preserve a drain path.</td>
+</tr>
+<tr>
+<td>Helm resources, probes, replicas, service account, volumes</td>
+<td>Rollout for a changed pod template; scale for a changed replica count</td>
+<td>Classify the rendered receiver. Replicas are a Deployment setting; the other named pod fields can change its template. Check disruption budget, storage attachment, native worker replica constraint, and readiness.</td>
+</tr>
+<tr>
+<td><a href="#configmap-consumption">ConfigMap-backed startup configuration</a></td>
+<td>Restart</td>
+<td>Current services do not promise a live reload. Use a template checksum/generation to prove rollout.</td>
+</tr>
+<tr>
+<td>Secret-backed environment value</td>
+<td>Restart + credential rotation procedure</td>
+<td>Existing processes retain their environment. Coordinate old/new acceptance to avoid loss of access; do not print the credential.</td>
+</tr>
+<tr>
+<td>File-mounted signing key/CA/token</td>
+<td>Restart unless its loader explicitly rereads for every action</td>
+<td>Prism product authority captures configuration and key at composition. Coordinate controller trust before removing the old credential.</td>
+</tr>
+<tr>
+<td>Prism service URL, timeout, ingress limit, trust ID</td>
+<td>Restart</td>
+<td>Loaders capture one startup snapshot. Validate URL/number form and peer policy before rollout.</td>
+</tr>
+<tr>
+<td>Prism native pool limits, paths, node identity, policy digest</td>
+<td>Host prepare + restart</td>
+<td>Worker verifies a root-owned policy and actual cgroup state at readiness. Drain attempts, prepare the host, then restart the pinned worker.</td>
+</tr>
+<tr>
+<td>Prism database or artifact storage location/size</td>
+<td>Data procedure + restart</td>
+<td>Persistent stores are independent. Prove backup, restore, ownership, and application connectivity. A values edit does not move data.</td>
+</tr>
+<tr>
+<td>GitOps values source</td>
+<td>Restart/rollout when the rendered workload changes</td>
+<td>The controller reconciles declared Git state. Manual live edits are temporary and should not be the recorded change.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configmap-consumption">ConfigMap consumption</h2>
+<p>A successful ConfigMap update changes the API object. It does not prove that a
+container has read the new value. First identify how the container consumes it:
+a full directory mount, a <code>subPath</code> mount, an environment variable, or a
+separate API client. An application that reads a file only at startup still
+requires its documented restart, even when the mounted file changes.</p>
+<p>The following mechanisms describe Kubernetes v1.35.0. The Kubelet setting
+<code>configMapAndSecretChangeDetectionStrategy</code> selects its ConfigMap manager;
+a different server or Kubelet version needs its own verification.
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet.go#L650-L669">manager selection</a></p>
+<table>
+<thead>
+<tr>
+<th>Manager</th>
+<th>How a Kubelet read obtains the object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Get</td>
+<td>Each manager read makes an API GET. It is not a continuous file or process refresh. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/configmap/configmap_manager.go#L65-L67">direct read</a></td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>Reads can use a local cached object. The default time to live is one minute; the Node-provided TTL can override it. An expired or errored entry triggers a fetch. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/configmap/configmap_manager.go#L110-L131">TTL and cache construction</a>; <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L132-L154">Node TTL override</a></td>
+</tr>
+<tr>
+<td>Watch</td>
+<td>Reads use the object populated by a list/watch cache. A read waits up to one second for initial synchronization and returns an error if synchronization fails. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/watch_based_manager.go#L310-L337">initial synchronization and cache read</a></td>
+</tr>
+</tbody>
+</table>
+<p>For Cache, a failed refresh can return the previous cached object when one
+exists. A successful fetch with an older resource version does not replace
+that object. A NotFound result updates the cached result to absence. Thus a
+cache read is not proof that the API is reachable or that the latest edit has
+arrived. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L176-L205">refresh and retained cache result</a></p>
+<p>The cache manager adds a reference on the first registration of a Pod, or
+when an updated Pod introduces a new ConfigMap reference. It does not
+invalidate every existing reference on each Pod update. When the last
+reference is removed, it removes the cached item. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L117-L128">last reference removal</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L223-L251">reference changes on registration</a>
+The Watch manager stops watching an object after it observes <code>immutable: true</code>.
+Use a new ConfigMap identity for changed immutable data and verify the new
+consumer before retiring the old one. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/watch_based_manager.go#L338-L358">immutable watch stop</a></p>
+<h3 id="directory-mounts-and-subpath">Directory mounts and subPath</h3>
+<p>The ConfigMap volume plugin requests repeated setup. The volume manager marks
+mounted volumes for another setup when their plugin requires it. This makes a
+later payload refresh possible; it does not provide a fixed delivery deadline.
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/configmap/configmap.go#L81-L83">ConfigMap remount requirement</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/volumemanager/cache/actual_state_of_world.go#L800-L821">volume remount marker</a></p>
+<p>On a payload change, the atomic writer writes a new timestamped directory and
+applies permissions. On Linux, it publishes that directory by renaming the
+<code>..data</code> symbolic link. The files visible to the container point through this
+link. Later reads that resolve the updated path can reach the new payload.
+An application must still read and accept that content. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L467-L483">visible symbolic links</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L189-L211">new directory and permissions</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L213-L244">platform-specific publication</a></p>
+<p>Publication can partially succeed: after changing the link, creating visible
+links, removing obsolete links, or deleting the old directory can fail.
+An error therefore does not prove that all visible files retained their old
+content. Inspect the actual mounted path and Kubelet errors before retrying
+or deciding that a rollback succeeded. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L247-L264">errors after publication</a></p>
+<p>For a Linux <code>subPath</code> mount, the Kubelet resolves the symbolic links, opens the
+selected path and binds that opened file into the container. Inference from
+this mount path: changing the parent volume's <code>..data</code> link does not retarget
+that existing bind mount. Recreate the consumer mount through its supported
+workload procedure when new content is required. Do not use a wait period as
+proof that a <code>subPath</code> file refreshed. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/subpath/subpath_linux.go#L175-L226">resolved path and opened-file bind mount</a></p>
+<h3 id="environment-variables">Environment variables</h3>
+<p><code>envFrom.configMapRef</code> and <code>env.valueFrom.configMapKeyRef</code> read <code>data</code>, not
+<code>binaryData</code>. The Kubelet reuses one fetched ConfigMap within an environment
+construction call. A missing optional object is skipped; a missing selected
+key is skipped only when that key reference is optional. Other fetch errors
+stop environment construction. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L774-L802">ConfigMap environment source</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L867-L893">selected ConfigMap key</a></p>
+<p>The Kubelet processes <code>envFrom</code> first. Later sources can replace the same name,
+and explicit <code>env</code> entries can replace values supplied by <code>envFrom</code>. It passes
+the resulting key/value list in the new container configuration. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L961-L967">explicit entries and constructed environment</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L652-L656">environment passed to runtime options</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kuberuntime/kuberuntime_container.go#L343-L347">runtime option construction</a> An API edit
+does not rewrite the environment of an already running container through this
+path. Recreate the container through its workload procedure and check the
+resulting application behavior. <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L772-L774">environment source precedence</a> <a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kuberuntime/kuberuntime_container.go#L396-L405">container environment configuration</a></p>
+<blockquote>
+<p><strong>Source evidence — ConfigMap consumption</strong></p>
+<p><strong>Claim:</strong> Manager reads, volume publication, Linux subPath mounts and container environment construction have different update boundaries.</p>
+<p><strong>Implementation:</strong> The pinned links above identify the responsible Kubelet, volume writer and runtime configuration paths.</p>
+<p><strong>Contract or setting:</strong> <code>configMapAndSecretChangeDetectionStrategy</code>, Pod ConfigMap volume references, <code>subPath</code>, <code>envFrom</code> and <code>env.valueFrom</code>.</p>
+<p><strong>Test evidence:</strong> This section includes no Kubelet, mounted-file, container environment or live refresh exercise.</p>
+<p><strong>Check status:</strong> Pinned original source bytes and the stated branches were inspected on 2026-10-10. This is source evidence, not a cluster result.</p>
+<p><strong>Revision:</strong> <code>66452049f3d692768c39c797b21b793dce80314e</code></p>
+<p><strong>Limit:</strong> Cache propagation, volume setup, the actual container mount and application reload must all succeed. No end-to-end update deadline is established here.</p>
+</blockquote>
+<h2 id="platform-timeout-capture-and-recovery">Platform timeout capture and recovery</h2>
+<p>The platform loader validates one file, resolves its paths, and freezes the
+loaded configuration. A file edit does not modify the object already passed
+to a running execution. The adapter runtime and effect coordinator receive
+their timeout values when <code>createAdapterRuntime</code> constructs them.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Accepted value and default</th>
+<th>Consumer effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shutdownTimeoutMs</code></td>
+<td>The schema requires an integer of at least 1 millisecond, with no maximum or platform-loader fallback. Use 1–2,147,483,647 milliseconds for the Node timers.</td>
+<td>Sets activation/readiness wait limits, invocation cleanup deadlines, and the normal runtime shutdown deadline. Larger schema-valid values become a 1 ms timer delay. Failed-start cleanup has a separate abort-only limit, explained below. Existing runtime objects retain their captured value.</td>
+</tr>
+<tr>
+<td><code>effectLockTtlMs</code></td>
+<td>Optional integer from 60,000 to 86,400,000 milliseconds. When absent, the effect coordinator receives 300,000 milliseconds.</td>
+<td>The coordinator passes the duration to durable-effect lock acquisition and renewal. Its renewal interval also derives from this captured duration.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="timer-range-and-stop-condition">Timer range and stop condition</h3>
+<p>Stop before recreating a consumer if <code>shutdownTimeoutMs</code> is outside
+1–2,147,483,647 milliseconds. Passing platform validation does not prove that
+the timer preserves the requested delay. The current schema has no maximum;
+the adapter passes the captured value directly to Node's <code>setTimeout</code>.
+Node changes a delay above 2,147,483,647 to 1 millisecond. A larger configured
+allowance can therefore sharply shorten a wait, shutdown deadline, or timed
+abort signal. Timer scheduling does not guarantee an exact elapsed duration.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96">shutdown schema</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L84">shutdown timer consumer</a>,
+and <a href="https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args">Node.js 24.21.0 timer behavior</a>.</p>
+<p>On 2026-10-10, the unchanged platform loader accepted <code>2147483648</code>.
+An isolated synthetic adapter's normal shutdown then rejected with
+<code>ADAPTER_SHUTDOWN_TIMEOUT</code> after about 1.9 ms on Node.js <code>v24.21.0</code>, which
+reported the overflow and 1 ms delay. A separate <code>2147483647</code> boundary check
+accepted the value and completed a synthetic readiness operation before the
+timer; the timer was cleared. The full long delay was not measured. Pending
+synthetic work was released. These checks did not execute a pipeline recovery,
+live adapter, or external operation.</p>
+<p>If the proposed delay is outside this range, retain the previous valid
+configuration and ask the runtime and platform configuration maintainers to
+resolve the input. Do not treat a successful schema check as approval to
+restart. A future loader or consumer guard must be checked at the boundary and
+above it; this reference does not claim such a guard already exists.</p>
+<h3 id="deadline-and-cleanup-outcomes">Deadline and cleanup outcomes</h3>
+<p>These limits do not all enforce the same outcome. Activation and readiness
+waits, invocation cleanup, and normal runtime shutdown race their operation
+against a rejecting deadline. The host can stop waiting when that deadline
+expires; this does not prove that the adapter has stopped its work.
+Failed-readiness teardown, startup rollback, and cleanup of an adapter that
+activates after its deadline instead send a timed abort signal and await the
+adapter's shutdown promise. If the adapter ignores the signal and never
+settles, that cleanup can wait indefinitely. The readiness failure reaches
+the caller only after its teardown settles.</p>
+<p>Keep new work stopped and retain the adapter identity, timeout, unresolved
+effects, and observed shutdown result. An elapsed timer or a runtime shutdown
+timeout does not prove completed cleanup. Follow the
+<a href="../understand/plugin-runtime.html#activation-is-fail-closed">adapter startup and shutdown limits</a>
+before deciding whether recovery is safe.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-support.ts#L15-L18">startup wait deadlines</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L144-L165">failed-readiness teardown and rollback</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-support.ts#L20-L25">late-activation cleanup</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-invocation-phase.ts#L38-L53">invocation cleanup deadline</a>,
+and <a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L86">normal runtime shutdown deadline</a>.</p>
+<p>Process capture is different from persisted recovery authority. The recorded
+runtime configuration contains <code>providers</code>, <code>grants</code>, <code>adapters</code>,
+<code>activeAdapters</code>, <code>observers</code>, and optional <code>isolation</code>. It excludes both
+timeout fields. Recovery compares that subset and the pinned package set,
+versions, and content digests. It checks the pipeline graph separately.
+A timeout-only edit therefore does not cause a runtime-configuration mismatch
+in this comparison.</p>
+<p>Recovery prepares runtime authority from the supplied platform configuration
+and keeps the existing run ID. If its other recovery checks allow execution,
+it creates fresh adapter/effect objects from that platform, with its current
+timeouts. The CLI loads the selected platform file for its invocation. Thus a
+later recovery invocation can select different timing for the same identity;
+the stored snapshot does not restore the original values of these two fields.
+This is not a promise that recovery will succeed. Terminal runs, waits,
+unresolved effects, graph changes, and package/configuration drift still have
+their own stop conditions.</p>
+<p>Keep these distinctions when planning a timeout change:</p>
+<ol>
+<li>Preserve the previous platform file, its digest, and the two effective
+timeout values. Validate the proposed file and record the new values,
+including the fallback for an absent <code>effectLockTtlMs</code>. Check the shutdown
+timer range above even when platform validation succeeds. Stop on overflow.</li>
+<li>Before recreating the consumer, stop new work and drain active work through
+the <a href="../use/operate.html#canonical-run-control-procedure">run-control procedure</a>.
+Stop the change if effects or attempts remain unresolved. A shorter shutdown
+allowance can end a deadline-controlled wait sooner or send a failed-start
+cleanup abort sooner. It cannot force an uncooperative adapter to stop.
+A changed lock duration can change effect timing. Do not use a restart to
+bypass those conditions.</li>
+<li>If an interrupted run must retain its original timing, supply the preserved
+platform values when following the recovery procedure. Do not depend on its
+snapshot to recover them. If changed timing is intentional, assess its effect
+on cleanup and locks before using the changed file.</li>
+<li>Reload the selected configuration and recreate its consumers at the supported
+execution boundary. Verify the selected file and effective values and retain
+the resulting run and effect evidence.</li>
+</ol>
+<p>Starting a new run after draining is a conservative operational choice when
+timing changes could affect unfinished work. It is not an implemented new-ID
+requirement caused solely by either platform timeout. This exception does not
+apply to stage <code>execution.timeoutMs</code>, which is part of the pinned graph, or to
+timeout values inside adapter configuration, which is part of the recorded
+runtime subset.</p>
+<blockquote>
+<p><strong>Source evidence — platform timeouts and persisted authority</strong></p>
+<p><strong>Claim:</strong> The loader validates platform timeout fields. Consumers capture them, but recovery excludes them from its runtime-configuration comparison. Recovery constructs consumers with the supplied platform and existing run ID after its other checks.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.ts#L51-L70">platform validation and frozen load</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L29-L41">prepared configuration subset</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L28-L42">persisted configuration and package comparison</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L68-L73">graph comparison</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-run.ts#L56-L69">recovery preparation and retained identity</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L75-L87">effect check and consumer construction</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/cli.ts#L48-L60">CLI platform load and recovery selection</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L100-L119">Adapter startup and invocation cleanup capture</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L144-L164">readiness and failed-start cleanup</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L84">adapter shutdown deadline</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/coordinator.ts#L12-L31">effect-coordinator duration capture</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L39-L45">lock acquisition duration</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L103-L109">lock renewal and interval</a>.</p>
+</li>
+</ul>
+<p><strong>Contract or setting:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L18">required shutdown field</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96">timeout types and bounds</a>.</li>
+</ul>
+<p><strong>Test evidence:</strong> On 2026-10-10, Node.js <code>v24.21.0</code> ran 11 isolated assertions with a synthetic local plugin. They exercised the pinned loader, runtime preparation, snapshot writer, and package/graph verifiers. All passed. The recorded subset omitted both timeout fields. Changed shutdown, changed lock duration, both changed, and absent lock duration passed those authority checks without rewriting the stored snapshot. Changed adapter configuration and changed stage execution timeout rejected at their respective pin checks. Invalid timeout bounds rejected at the platform loader.</p>
+<p><strong>Revision:</strong> <code>fe426bd75db277b04cf405cc2057063b75fa0a1d</code></p>
+<p><strong>Limit:</strong> The local checks did not execute a pipeline or resume/recover it under changed timeouts. Consumer capture and recovery handoff were checked from source. No adapter deadline, live effect, lock renewal, drain, readiness, or external operation was exercised.</p>
+</blockquote>
+<h2 id="helm-render-and-runtime-impact">Helm render and runtime impact</h2>
+<p>Compare effective rendered resources before selecting a restart. A values-file
+edit can produce the same manifest because an earlier map entry remains or a
+template selects a fallback. A changed manifest can also affect a Service,
+ConfigMap, Secret reference, or replica count without changing every pod.
+The <a href="configuration-precedence.html#helm-collection-precedence">Helm collection rules</a>
+explain how the values reach the template.</p>
+<p>There are three separate checks:</p>
+<ol>
+<li><strong>Helm render:</strong> Helm merges inputs, validates the complete effective values,
+and runs template guards. Stop on a schema or template error. For example,
+Prism rejects an empty <code>imagePullSecrets</code> list and empty or <code>Always</code> image
+pull policies before producing a successful render. A restart cannot repair
+this rejected input.</li>
+<li><strong>Kubernetes admission and reconciliation:</strong> The API must accept each rendered
+resource. The responsible controller must then reconcile it. Helm render
+cannot prove that referenced Secrets, storage, nodes, or capacity exist.
+An Argo CD Application rendered by the GitOps chart is still a declaration;
+it is not proof that its resources were applied.</li>
+<li><strong>Runtime readiness:</strong> New processes must load their environment and files,
+pass their readiness checks, and complete the bounded operation required by
+their component procedure. A changed pod template or a running pod alone
+does not prove that the intended value reached its runtime consumer.</li>
+</ol>
+<p>The following effects follow from current local templates and loaders. The
+render observations were checked locally; controller actions and runtime
+effects were not executed on a cluster.</p>
+<table>
+<thead>
+<tr>
+<th>Effective change</th>
+<th>Rendered receiver and required effect</th>
+<th>Failure or unchanged-result boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KubeClaw <code>extraEnv</code> changes or becomes <code>[]</code></td>
+<td>The <code>kubeclaw</code> container's pod-template environment changes. Once applied, the Deployment needs replacement pods for the new environment.</td>
+<td><code>[]</code> removes only entries supplied through <code>extraEnv</code>; it preserves environment entries emitted elsewhere by the template. Existing processes retain their startup environment.</td>
+</tr>
+<tr>
+<td>KubeClaw <code>nodeSelector</code> overlay becomes <code>{}</code></td>
+<td>Earlier selector keys remain in the pod template. This edit alone can leave scheduling unchanged.</td>
+<td>An empty later map does not request removal. Compare the rendered template before assigning a rollout.</td>
+</tr>
+<tr>
+<td>KubeClaw <code>nodeSelector</code> overlay becomes <code>null</code></td>
+<td>In the checked ordered-file case, Helm removes the mapping and the template omits the selector. If the applied template changes, replacement pods use the remaining scheduling constraints.</td>
+<td>Removal does not prove that a node can run the pod. Do not reuse this removal request for a schema that requires the field.</td>
+</tr>
+<tr>
+<td>KubeClaw nested resource map changes one request</td>
+<td>Later supplied keys replace their earlier values; unspecified keys remain. A changed request is part of the pod template.</td>
+<td>The local example changed CPU to <code>444m</code> and retained memory at <code>701Mi</code>; it did not check cluster capacity or resource admission.</td>
+</tr>
+<tr>
+<td>KubeClaw <code>gateway.url</code> becomes empty</td>
+<td>The rendered <code>OPENCLAW_GATEWAY_URL</code> selects <code>http://127.0.0.1:&lt;gateway.port&gt;</code>. A changed environment field requires new pods.</td>
+<td>The local render at port <code>19003</code> selected <code>http://127.0.0.1:19003</code>. It did not disable the destination or check gateway connectivity.</td>
+</tr>
+<tr>
+<td>KubeClaw <code>swarmConfigJson</code>, <code>semgrepConfigYaml</code>, or <code>eslintConfigMjs</code> becomes empty</td>
+<td>The rendered swarm ConfigMap contains the corresponding checked-in file. Its checksum is part of the pod template; a changed payload changes that checksum.</td>
+<td>Empty does not remove the file. An identical fallback payload can leave the checksum unchanged. The persistent-file rules below still determine what init copies.</td>
+</tr>
+<tr>
+<td>Prism <code>imagePullSecrets</code> changes to a valid nonempty list</td>
+<td>The list is emitted in each application Deployment pod template. Replacement pods use the selected references.</td>
+<td>Render validates names and array shape, not registry credentials or Secret existence. The whole list must satisfy its minimum and item contracts.</td>
+</tr>
+<tr>
+<td>Prism enabled <code>control.productDecisions.operators</code> changes to a valid list</td>
+<td>The control pod template contains a configuration checksum and the JSON operator list in <code>PRISM_PRODUCT_OPERATORS</code>. Control loads the list and signing key at composition. A changed authority requires a control restart.</td>
+<td>Validate uniqueness, maximum size, the enabled minimum, all dependent settings, and credential rotation conditions first. Schema-valid operators do not prove a working signing authority.</td>
+</tr>
+<tr>
+<td>Existing-Secret reference or data changes</td>
+<td>A changed name/key in a pod template requires new pods. A data-only edit to the same Secret does not change that reference; environment consumers need an explicit rollout under the rotation procedure.</td>
+<td>A synthetic local reference proved only the selected name/key. Neither Secret availability nor hot credential reload was established.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configmap-payload-and-persistent-startup-files">ConfigMap payload and persistent startup files</h3>
+<p>The KubeClaw init script copies <code>swarm.config.json</code> from the rendered ConfigMap
+to the configuration volume on each init execution. Before creating the runtime
+copy, it removes any authored top-level <code>discord_webhook_url</code> from that
+persistent source. It then creates the runtime copy and inserts
+<code>discord_webhook_url</code> only from a nonempty <code>DISCORD_WEBHOOK</code> environment value.
+With an empty environment value, the runtime copy has no webhook URL, even if
+the rendered ConfigMap contained one. Rendering that ConfigMap or expanding a
+compact configuration therefore does not prove the final startup value.
+This is a startup action, not a file watcher.</p>
+<p>Source: <a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L627-L633">copy and webhook removal</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L673-L675">runtime copy and environment insertion</a>.</p>
+<p>The same script treats <code>.semgrep.yml</code> and <code>eslint.config.mjs</code> differently. It
+copies them from the ConfigMap only if the target file is absent or
+<code>OVERRIDE_SWARM_CONFIG</code> is <code>true</code>. Helm sets that environment value from
+<code>swarmConfig.overrideOnRestart</code>, whose checked-in value is <code>false</code>. An existing
+policy file can therefore remain after a checksum-triggered restart even when
+the ConfigMap has changed. The script copies that retained file into the runtime
+directory. Follow <a href="lint-policy.html#deployment-and-persistent-config-precedence">lint policy delivery and effective-digest checks</a>
+to inspect or replace these files. Preserve local policy edits before enabling
+replacement. Do not delete the persistent volume to force an update.</p>
+<p>The charts contain selected checksum paths, not a promise that every external
+ConfigMap or Secret edit triggers a rollout. KubeClaw hashes its gateway and
+swarm ConfigMap templates. Prism hashes enabled product-decision configuration
+and selected SPIFFE trust payloads. Inspect the exact affected annotation and
+pod template. If neither changes, use the consumer's documented restart or
+rotation procedure when startup-captured data has changed.
+Use the <a href="../use/maintenance.html#render-and-compare">maintenance render comparison</a>
+before applying resources and the <a href="../use/maintenance.html#canonical-rotation-procedure">credential rotation procedure</a>
+when credentials change.</p>
+<blockquote>
+<p><strong>Source evidence — Helm changes at receiver boundaries</strong></p>
+<p><strong>Claim:</strong> KubeClaw emits collection changes into pod fields and hashes selected ConfigMaps, but init preserves existing Semgrep/ESLint policies unless replacement is enabled. Prism Control captures authority inputs at startup; rendering does not prove live reload.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L19-L40">KubeClaw template and checksum fields</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395">environment collection</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442">resource receiver</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662">selector receiver</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L627-L648">persistent swarm/policy copy conditions</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L673-L681">runtime copies and webhook insertion</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1156-L1157">override environment selection</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L32-L50">Prism checksums and pull-secret receiver</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L16-L27">operator environment receiver</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-config.ts#L63-L72">Control startup snapshot</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/product-decisions.ts#L23-L34">operator validation and signing-key load</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L64">GitOps desired revision and reconciliation settings</a>.</p>
+</li>
+</ul>
+<p><strong>Contract or setting:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L469-L474">policy replacement default</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28">Prism image-policy schema</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L94-L109">pull-secret list schema</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150">operator collection constraints</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258">enabled operator minimum</a>.</li>
+</ul>
+<p><strong>Test evidence:</strong> On 2026-10-10, isolated Helm 3.22.0 checks asserted the rendered environment, selector, resource map, URL, file payloads, and synthetic Secret reference. See <a href="configuration-precedence.html#helm-collection-precedence">Configuration precedence</a>. Prism schema-negative cases exited one as expected. The init copy rules and startup capture were checked from source, not through a running pod.</p>
+<p><strong>Revision:</strong> <code>ec2a42ed215a2fa7dbd3172ef70ef446084963a9</code></p>
+<p><strong>Limit:</strong> These Helm checks did not execute API admission, Argo CD reconciliation, scheduling, pod replacement, persistent-volume initialization, runtime readiness, credential rotation, or rollback. Follow the affected component's procedure before applying a change.</p>
+</blockquote>
+<h2 id="safe-change-sequence">Safe change sequence</h2>
+<ol>
+<li>Classify the changed field by its actual consumer and use
+<a href="configuration-precedence.html">Configuration precedence</a>.</li>
+<li>Preserve the old source, digest, rendered manifest, and required secret
+references. Back up persistent state before a data procedure.</li>
+<li>Run schema and semantic checks. For project changes, compile to a new path.
+For Helm changes, render before applying.</li>
+<li>Confirm stop conditions: active effects, waits, worker attempts, unavailable
+capacity, incompatible snapshots, or a missing old credential.</li>
+<li>Apply through the canonical source. Publish coupled files together.</li>
+<li>Roll or start the required new run; do not mutate an existing run to make it
+accept a new digest.</li>
+<li>Verify readiness, effective non-secret values, identities, and one bounded
+operation. Retain evidence that identifies the source revision.</li>
+</ol>
+<p>“Restart” does not mean delete retained storage. “New run” does not mean reuse
+an old run ID. “Republish” does not mean copy two files sequentially.</p>
+<h2 id="rollback-boundary">Rollback boundary</h2>
+<p>Configuration rollback is safe only while the older executable, package,
+schema, credential, and state format remain supported. Before rollback, check
+whether new work wrote data that the old release cannot read. Nova recovery
+uses the original graph and runtime authority; restoring old configuration is
+necessary but not sufficient if packages or durable records changed.</p>
+<p>For uncertain external effects, inspect effect receipts and run evidence before
+retrying. A timeout does not prove that an external operation did not happen.</p>
+<blockquote>
+<p><strong>Source evidence — pinned recovery and startup capture</strong></p>
+<p><strong>Claim:</strong> Nova recovery rejects graph, recorded runtime configuration, and package drift. Coupled project files commit as one generation. Prism Control captures one environment snapshot at composition.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L28-L72">graph and runtime recovery checks</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L113">coupled publication commit</a>.</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L67-L72">Control startup snapshot</a>.</li>
+</ul>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L75-L109">run snapshot versions and integrity</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/reliability/project-recovery-version.test.mjs#L18-L31">project graph drift rejection</a>; <a href="https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/reliability/isolation-session.test.mjs#L101-L114">runtime isolation drift rejection</a></p>
+<p><strong>Check status:</strong> On 2026-10-09, Node.js <code>v24.21.0</code> ran <code>node --test tests/verification/reliability/project-recovery-version.test.mjs tests/verification/reliability/isolation-session.test.mjs</code> against implementation revision <code>c8987b18b450bc27571d5037cb6ce3fb26e0cbd0</code>: all 18 tests passed, exit zero. <code>npm run plugin-system:sandbox:build</code> built the native sandbox. A temporary PRoot file binding supplied util-linux <code>flock</code> 2.42.3 at <code>/usr/bin/flock</code>. A checkout without the native binary, or with BusyBox locking, does not meet these test prerequisites. No deployed worker or live migration was exercised.</p>
+<p><strong>Revision:</strong> <code>1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de</code></p>
+<p><strong>Limit:</strong> Local checks cannot choose a maintenance window or prove that an external dependency honors a credential overlap period.</p>
+</blockquote>
+<h2 id="service-exposure-changes">Service exposure changes</h2>
+<p>Before changing a Service type or port, identify the selected producer and the
+stored Service. The <a href="service-routing.html">Service routes and diagnosis</a> reference
+explains active and ignored chart overrides, endpoint selection, and the
+required network owner. It also separates API allocation from DNS, forwarding,
+and external provider work. Changing values alone does not prove that a route
+works or that previous external resources have been removed.</p>
+<h2 id="pvc-reclamation-and-retained-data">PVC reclamation and retained data</h2>
+<p>A PersistentVolumeClaim (PVC), also called a storage claim in this section,
+is an API request for storage. A PersistentVolume (PV) records the selected
+volume. The storage provisioner is the controller that requests volume creation
+or deletion from a driver. Container Storage Interface (CSI) is the protocol
+between Kubernetes storage components and that driver. Server Message Block
+(SMB) is the network file-sharing protocol used by the selected SMB driver.
+A finalizer is an object cleanup marker: Kubernetes delays object deletion until
+the responsible controller removes the marker. It does not itself erase data.
+The steps below distinguish these API objects and controllers from the actual
+files on the storage server.</p>
+<p>KubeClaw stores role configuration and workspaces on separate claims. Prism
+uses claims for PostgreSQL and artifacts. Their default chart values leave
+<code>storageClass</code> empty, and their templates omit <code>storageClassName</code> for that value.
+The stored claim can therefore receive the cluster default class. This differs
+from an explicitly empty API <code>storageClassName</code>, which requests no class.
+The configured SMB Application selects chart 1.20.0, but it does not select a
+class for all these claims. The actual default class and driver remain unknown
+until the operator reads the cluster objects.
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/values.yaml#L279-L289">role defaults</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/templates/pvc.yaml#L14-L48">role claim templates</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/values.yaml#L53-L63">Prism defaults</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/postgresql.yaml#L62-L72">database claim</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/workloads.yaml#L217-L230">artifact claim</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/bootstrap/csi-driver-smb.yaml#L12-L20">SMB chart selection</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/plugin/pkg/admission/storage/storageclass/setdefault/admission.go#L80-L119">default-class admission</a>.</p>
+<p>For an omitted class, Kubernetes recognizes the exact value <code>&quot;true&quot;</code> in either
+<code>storageclass.kubernetes.io/is-default-class</code> or its beta annotation. Among
+matching classes it selects the newest creation timestamp, then the ascending
+class name for a timestamp tie. No default leaves this selection unresolved;
+a list or claim-update error stops that attempt. The binding controller can
+assign a subsequently available default. Read the stored class and its
+<code>provisioner</code> before relying on a driver contract.
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/storageclass.go#L40-L70">default selection</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/storageclass.go#L76-L85">annotation values</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L967-L992">later claim assignment</a>.</p>
+<p>Role configuration/workspace and Prism artifact/backup PVCs carry Helm
+<code>keep</code> and Argo <code>Prune=false,Delete=false</code> annotations. The database claim
+template carries the Argo annotations. Ordinary release removal therefore does
+not select the explicit PVC retirement route below. Inspect the rendered object,
+its workload and the intended GitOps operation before retiring storage.
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/templates/pvc.yaml#L8-L10">role claim retention</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/templates/pvc.yaml#L34-L36">workspace retention</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/workloads.yaml#L220-L224">artifact retention</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/jobs.yaml#L63-L74">backup retention</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/postgresql.yaml#L62-L72">database template</a>.</p>
+<p>A claim is an API request for storage. A PersistentVolume (PV) records the
+selected storage and its reclaim policy. Removing <code>kubernetes.io/pvc-protection</code>
+allows claim deletion only after the protection controller finds no qualifying
+Pod use. It does not reclaim the PV or erase server data. After the bound claim
+is absent, the PV controller checks the claim identity, records <code>Released</code> and
+selects the PV's reclaim policy. <code>Retain</code> performs no reclaim operation.
+For an external CSI driver, <code>Delete</code> leaves the driver operation to its
+provisioner. A failed claim lookup or phase write stops that reconciliation;
+an existing <code>Failed</code> phase remains visible.
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/pvcprotection/pvc_protection_controller.go#L257-L275">PVC protection</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L605-L640">claim lookup</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L641-L658">claim UID comparison</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L660-L687">release and reclaim</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1180-L1223">policy dispatch</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1499-L1512">external deleter handoff</a>.
+For the general storage lifecycle, see the upstream
+<a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaiming">reclaiming explanation</a>.</p>
+<h3 id="a-previously-bound-claim-loses-its-binding">A previously bound claim loses its binding</h3>
+<p>A previously bound claim can become <code>Lost</code> when its <code>spec.volumeName</code> is empty
+or its PV is absent from the controller cache. The controller reports
+<code>ClaimLost</code>. If the PV exists but refers to another claim UID, it reports
+<code>ClaimMisbound</code> and marks the claim <code>Lost</code>. A PV without a claim reference can
+instead be bound again to the existing claim; a failed write leaves that repair
+for a later reconciliation. These observations do not establish the state of
+the underlying data. Retain both object identities and ask the storage owner
+to inspect the volume before creating replacement storage or attempting recovery.
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L499-L516">missing bound name or PV</a>,
+<a href="https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L527-L555">repair and claim UID mismatch</a>.</p>
+<h3 id="selected-smb-deletion-route">Selected SMB deletion route</h3>
+<p>The following table applies only to the default external-provisioner v6.0.0
+and SMB driver v1.20.0 selected by SMB chart 1.20.0. An image override or a
+different PV driver requires its own source contract.
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/values.yaml#L1-L14">chart image defaults</a></p>
+<p>The provisioner library checks its PV ownership, <code>Released</code> phase, <code>Delete</code>
+policy and configured finalizer guard. It calls CSI <code>DeleteVolume</code> before
+requesting PV deletion and removing its own finalizer when configured.
+The CSI request uses the PV handle, resolved secrets and a timeout. When its
+VolumeAttachment lister exists, any matching attachment or list error blocks
+the request. Credential-fetch failure can still yield a request without secrets.
+An error emits <code>VolumeFailedDelete</code>; the queue retries according to its configured
+failed-delete threshold. Zero has no threshold stop; a nonzero threshold stops
+rate-limited requeue when reached. A successful driver call followed by an API
+error can leave server work complete and cause another driver call.
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1153-L1199">ownership and sync</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1284-L1320">deletion guard</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1621-L1681">driver call before API cleanup</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1034-L1049">retry threshold</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1286-L1311">CSI request</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1314-L1347">credential reference</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1348-L1380">credential lookup and failure</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1383-L1402">attachment check</a>.</p>
+<p>PV <code>Retain</code> and SMB <code>onDelete: Retain</code> are different controls. The first prevents
+the reclaim operation. The second can return success from the SMB operation
+while keeping the directory. An empty SMB <code>onDelete</code> uses the driver's internal default member. For the
+pinned v1.20.0 implementation this member remains empty, as explained below. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L185-L209">effective policy and secrets gate</a></p>
+<table>
+<thead>
+<tr>
+<th>SMB input</th>
+<th>Directory effect and recovery boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No secrets, or effective <code>onDelete: Retain</code></td>
+<td>Returns success without deleting the subdirectory. Subsequent PV removal does not prove data erasure. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L256-L261">no-action return</a></td>
+</tr>
+<tr>
+<td>Secrets and effective <code>onDelete: Archive</code></td>
+<td>Mounts the share and renames the directory to <code>archived-&lt;subdirectory&gt;</code>. If <code>removeArchivedVolumePath</code> is enabled, it first removes an earlier archive. A later rename error can leave that earlier archive lost. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L211-L234">archive branch</a></td>
+</tr>
+<tr>
+<td>Secrets and another non-Retain policy</td>
+<td>Removes the subdirectory. The driver provides no rollback for removed data. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L235-L254">removal branch</a></td>
+</tr>
+<tr>
+<td>Unparseable nonempty handle, or completed handle in the in-process deletion cache</td>
+<td>Can return success without new directory work. Even a no-directory-work success caches the handle, so a later call with secrets can still skip directory work. A cached response is not durable proof of data recovery. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L150-L165">handle checks</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L190-L200">cache check</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L256-L261">cached completion including no-action</a></td>
+</tr>
+</tbody>
+</table>
+<p>Mount, rename and removal errors propagate. Deferred unmount failure is logged
+without changing the completed RPC result. Inspect the server state after an
+error or interrupted response before deciding what can safely repeat.
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L202-L209">deferred unmount</a></p>
+<h3 id="selected-smb-mount-failures">Selected SMB mount failures</h3>
+<p>For a claim actually backed by SMB v1.20.0, a workload mount follows binding
+and uses the PV handle, source, subdirectory and node-stage credentials.
+The staging target is the path on the node where the driver first mounts the
+share. The later <code>NodePublish</code> operation makes that staged mount available at
+the workload's target path. Inspecting the staging target therefore differs from
+checking whether the container can use its own mount.
+A readable existing staging mount can be reused. An unreadable staging target
+can be unmounted and still return its read error. A new share mount runs through
+a 110-second wait that does not cancel the mount worker on timeout. The staging
+call then releases its lock; this means a timeout can leave mount work running.
+Check the current staging target and driver work before retrying. The separate
+NodePublish step binds that staging path into the container, with read-only intent
+when requested. <code>Bound</code> and a successful mount do not verify application data or
+establish a backup.
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L137-L193">staging inputs and lock</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L267-L296">staging and mount result</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L463-L477">existing-target check</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/util/util.go#L40-L57">timeout worker</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L75-L106">container publication</a>.
+The continuing-worker outcome is an inference from the timeout wrapper and
+staging lock, not an executed failure or a claim that every timeout leaves a mount.</p>
+<h3 id="discover-the-selected-smb-runtime-inputs">Discover the selected SMB runtime inputs</h3>
+<p>KubeClaw's optional bootstrap Application selects chart 1.20.0 in <code>kube-system</code>;
+its values set only <code>controller.replicas: 1</code>. This Application records configured intent. It does not prove installation
+or prove which driver a claim selects.
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/bootstrap/csi-driver-smb.yaml#L13-L28">Application selection</a>,
+<a href="https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/values/csi-driver-smb.yaml#L1-L3">bootstrap values</a>.</p>
+<p>For this conditional branch, first establish <code>spec.csi.driver: smb.csi.k8s.io</code>
+on the recorded PV. A different driver needs its owner's procedure. The chart's
+controller has <code>csi-provisioner</code> and <code>smb</code> containers sharing the CSI socket;
+the Linux node DaemonSet has <code>smb</code> and <code>node-driver-registrar</code> containers.
+Use the controller for deletion and the node Pod on the workload's actual node
+for mount failures. The registrar is not the mount worker.
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-controller.yaml#L69-L90">controller socket and containers</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-controller.yaml#L141-L177">controller driver</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-node.yaml#L71-L123">node registration and driver</a>.</p>
+<p>Determine the deletion inputs from the retained PV and selected controller:</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Effective selection in the pinned implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spec.csi.volumeHandle</code></td>
+<td>Split at <code>#</code>: source, subdirectory, optional UUID, optional fourth <code>onDelete</code> segment. Fewer than two segments cannot be parsed. The fourth segment, when nonempty, wins at deletion. Read this handle, not the current StorageClass <code>onDelete</code>, for an existing volume. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L537-L558">handle parser</a></td>
+</tr>
+<tr>
+<td>Empty handle policy</td>
+<td><code>DeleteVolume</code> falls back to <code>defaultOnDeletePolicy</code>. The binary accepts <code>--default-ondelete-policy</code> with an empty default and passes it in <code>DriverOptions</code>, but <code>NewDriver</code> does not copy that option to its internal member. The member therefore remains empty in this pinned implementation, even if that flag is supplied. Empty policy enters the removal branch when secrets exist. Do not interpret the argument as an effective Retain policy. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/cmd/smbplugin/main.go#L50-L51">flags</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/cmd/smbplugin/main.go#L79-L99">option passed</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/smb.go#L127-L170">complete constructor</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L185-L189">fallback and removal</a></td>
+</tr>
+<tr>
+<td><code>removeArchivedVolumePath</code></td>
+<td>Read <code>--remove-archived-volume-path</code> in the controller <code>smb</code> arguments. If absent with the original binary entrypoint, its default is <code>true</code>; <code>NewDriver</code> copies this option. The selected chart emits neither this flag nor the default-policy flag. An overridden command, wrapper or unknown image requires its own contract; stop until supplied. <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/cmd/smbplugin/main.go#L50-L51">flag default</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/smb.go#L127-L140">member assignment</a>, <a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-controller.yaml#L148-L153">selected arguments</a></td>
+</tr>
+</tbody>
+</table>
+<p>Creation validates StorageClass <code>onDelete</code> against empty, Delete, Retain and
+Archive, without case sensitivity. Creation stores Retain or Archive in the
+handle. Deletion parses an existing handle directly; it does not repeat that
+validation. Thus another nonempty handle policy can also enter removal.
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L498-L506">creation validation and override</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/smb.go#L288-L296">accepted values</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L430-L440">handle encoding</a>.</p>
+<p>Record credential <strong>references</strong>, never Secret contents:</p>
+<ul>
+<li>Deletion first uses both PV annotations
+<code>volume.kubernetes.io/provisioner-deletion-secret-name</code> and
+<code>volume.kubernetes.io/provisioner-deletion-secret-namespace</code>, when both keys
+exist. Nonempty values select that reference; both empty mean no secrets.
+One empty value does not fall back to the StorageClass. If either key is
+absent, the provisioner consults the PV's StorageClass. A missing class or
+claim reference can leave deletion without secrets.
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1314-L1347">annotation precedence</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1348-L1379">class and claim fallback</a>.</li>
+<li>In that fallback, <code>csi.storage.k8s.io/provisioner-secret-name</code> and
+<code>csi.storage.k8s.io/provisioner-secret-namespace</code> select the pair. Only if the
+operation-specific pair is absent does the <code>csi.storage.k8s.io/secret-name</code>
+and <code>csi.storage.k8s.io/secret-namespace</code> default pair apply. Duplicate
+deprecated/current keys, incomplete pairs and empty supplied values are
+errors, not a winner. The name template supports <code>${pv.name}</code>, <code>${pvc.name}</code> and
+<code>${pvc.namespace}</code> from the PV name and claimRef. The namespace template
+supports <code>${pv.name}</code> and <code>${pvc.namespace}</code>, but not <code>${pvc.name}</code>. The deletion fallback
+constructs no PVC annotations; the provisioner cannot resolve an annotation token there.
+Stop if the provisioner cannot resolve the reference. Lookup failure can still leave
+deletion without secrets; a valid reference does not prove credentials were
+supplied. <a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1713-L1757">pair validation</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1778-L1794">default-pair selection</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1796-L1817">namespace resolution</a>,
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1819-L1846">name resolution</a>.</li>
+<li>For these persistent PVC volumes, node staging uses the already resolved PV
+<code>spec.csi.nodeStageSecretRef</code>, independently of deletion annotations.
+Provisioning resolves <code>csi.storage.k8s.io/node-stage-secret-name</code> and
+<code>csi.storage.k8s.io/node-stage-secret-namespace</code> with the same default-pair rules;
+a later StorageClass change does not change the stored PV reference. The
+SMB node receives request secrets. Its volume-context <code>secretName</code> and
+<code>secretNamespace</code> lookup is conditional on inline ephemeral volumes; it is
+not the credential fallback for this PVC route.
+<a href="https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L722-L753">provisioning references</a>,
+<a href="https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L195-L220">staging request and conditional lookup</a>.</li>
+</ul>
+<h3 id="diagnose-before-changing-cleanup">Diagnose before changing cleanup</h3>
+<p>The storage owner performs this read-only investigation from an approved
+cluster context from an independent administration host. First complete
+<a href="../use/install.html#bind-cluster-authority">Bind Cluster Authority</a> and
+<a href="../use/install.html#prepare-independent-access">Prepare Independent Access</a>.
+It requires permission to read the named PVC and PV,
+StorageClasses, CSINodes, cluster-wide Pod discovery, VolumeAttachments,
+controller configuration and logs.
+Use the retained PVC/PV record when the claim is already absent. Do not print
+Secret values. Stop if access fails or the claim/PV UID cannot be established.
+Use <code>kubectl</code> compatible with the target cluster. In the commands below,
+<code>&lt;context&gt;</code> is the approved cluster context, <code>&lt;namespace&gt;</code> and <code>&lt;claim&gt;</code> are the
+recorded claim identity, <code>&lt;pv&gt;</code> comes from its <code>spec.volumeName</code>, and <code>&lt;class&gt;</code>
+comes from the stored claim or PV. If <code>spec.volumeName</code> is empty, stop before
+the PV commands and investigate the lost binding described above. Do not run
+the class lookup for an empty class name. <code>&lt;driver-namespace&gt;</code>, <code>&lt;driver-pod&gt;</code> and <code>&lt;container&gt;</code> identify the
+selected provisioner or driver, not an assumed SMB installation. <code>&lt;start-time&gt;</code>
+is the incident's recorded RFC3339 start time. These reads have not been run
+against a deployed instance as part of this source verification.</p>
+<ol>
+<li>Record the claim namespace, name, UID, deletion timestamp, finalizers,
+<code>spec.volumeName</code>, <code>storageClassName</code>, phase and events. Match the PV claim
+reference by namespace, name and UID; a reused name is a different lifetime.
+Read the claim with <code>kubectl --context &lt;context&gt; -n &lt;namespace&gt; get pvc &lt;claim&gt; -o yaml</code>
+and its current use/events with <code>kubectl --context &lt;context&gt; -n &lt;namespace&gt; describe pvc &lt;claim&gt;</code>.
+A NotFound result uses the retained record; it does not prove data deletion.</li>
+<li>Record the PV UID, reclaim policy, phase, finalizers, CSI driver and handle.
+Read the selected StorageClass and actual provisioner/driver images. Apply
+the table only when those versions match; otherwise stop at the selected
+implementation boundary and obtain its contract from the storage owner.
+Use <code>kubectl --context &lt;context&gt; get pv &lt;pv&gt; -o yaml</code> and, for a nonempty
+class, <code>kubectl --context &lt;context&gt; get storageclass &lt;class&gt; -o yaml</code>.
+For the selected SMB branch, use the discovery steps below. A chart tag
+alone does not establish the running binary or the selected claim driver.</li>
+<li>Inspect Pod claim use, VolumeAttachments and current controller errors.
+Distinguish protection waiting, missing credentials, server mount failure,
+and a successful driver call followed by failed API cleanup. Retain the
+non-secret deletion-credential reference and effective SMB policy/options.
+Read attachments with <code>kubectl --context &lt;context&gt; get volumeattachments -o yaml</code>
+and match <code>spec.source.persistentVolumeName</code> to the recorded PV.
+Read the selected component's incident logs with
+<code>kubectl --context &lt;context&gt; -n &lt;driver-namespace&gt; logs &lt;driver-pod&gt; -c &lt;container&gt; --since-time=&lt;start-time&gt;</code>.</li>
+<li>For an actual SMB PV, identify the workload Pod from the claim's describe
+output and read <code>kubectl --context &lt;context&gt; -n &lt;namespace&gt; get pod &lt;workload-pod&gt; -o yaml</code>.
+<code>&lt;workload-pod&gt;</code> is a Pod that uses this claim; record its UID, volume claim
+name and <code>spec.nodeName</code>. If no node is assigned, stop the node-mount route.
+Read <code>kubectl --context &lt;context&gt; get csinode &lt;node&gt; -o yaml</code> and match the
+PV driver in <code>spec.drivers</code>; <code>&lt;node&gt;</code> is that recorded workload node.
+List candidate Pods with <code>kubectl --context &lt;context&gt; get pods -A -o wide</code>.
+For the selected chart, inspect <code>csi-smb-controller</code> Pods and
+<code>csi-smb-node</code> Pods on that node, then verify them through the next read.
+Names alone are not evidence of driver identity.</li>
+<li>Read each candidate with
+<code>kubectl --context &lt;context&gt; -n &lt;driver-namespace&gt; get pod &lt;driver-pod&gt; -o yaml</code>.
+Match the <code>smb</code> argument <code>--drivername</code> to the PV driver. Match controller
+<code>csi-provisioner</code> and <code>smb</code> CSI socket arguments, environment and shared
+volume; match the node registrar socket to the node <code>smb</code> socket. Record
+Pod UID, node, ownerReferences, each container's name, image, command and
+args, and <code>status.containerStatuses</code> name, imageID, state and restartCount.
+Compare the original chart container names and arguments linked above.
+Do not select an unrelated sidecar's logs. For deletion retain both
+<code>csi-provisioner</code> and controller <code>smb</code> logs; for staging retain node <code>smb</code>
+logs. Use the timestamped log command in step 3 with each named container.
+If a Pod restarted, also read
+<code>kubectl --context &lt;context&gt; -n &lt;driver-namespace&gt; logs &lt;driver-pod&gt; -c &lt;container&gt; --previous --since-time=&lt;start-time&gt;</code>.
+A missing previous log is an evidence gap. Unknown image digest, wrapper,
+mismatched driver, inaccessible Pod or ambiguous controller selection
+requires a stop and the platform owner's deployment record. Confirm the
+recorded imageIDs correspond to the original versions before applying
+their defaults. Record all candidate controllers if leadership is unknown;
+do not infer the request recipient from one healthy Pod.</li>
+<li>Use the runtime-input table and credential-reference rules above to record
+the effective handle policy, archive-removal flag and both credential
+references. Preserve uncertainty about lookup success separately from
+reference selection. Do not fetch Secrets to resolve that uncertainty.</li>
+<li>Have the storage owner check the actual share and archive path through the
+approved storage process. For mount timeout, Kubernetes object reads and
+container logs do not prove the mount worker stopped or show the current
+staging mount. KubeClaw supplies no supported host/process inspection
+procedure for that proof. Stop before retry, restart, unmount or deletion
+until the node/storage owner supplies an approved read-only inspection
+procedure and timestamped observations: node and driver Pod/image identity,
+exact stagingTargetPath correlated to the incident volume handle, current
+mount source/target/options in the correct mount namespace, and remaining
+mount-worker/process state. Obtain the exact path from a recorded CSI
+request or the owner's kubelet evidence; do not guess it from the PV name.
+The owner must also observe the original and <code>archived-&lt;subdirectory&gt;</code>
+locations on the actual share after uncertain deletion. Missing logs or an
+absent API object prove neither worker termination nor erasure. Platform
+operations owns the missing host inspection procedure; the storage owner
+owns share observations. Resumption requires those inputs and an explicit
+owner determination that no conflicting work remains and the proposed
+action preserves retained data. Do not remove finalizers or delete retained data
+to force convergence. A directory on the same share is not an independent
+backup. Use the <a href="../use/recovery.html#nonnegotiable-rules">recovery procedure</a> and its
+isolated-target checks; stop before cutover when application recovery is
+unavailable or unverified.</li>
+</ol>
+<p>Keep the object identities, policies, image versions, event/log timestamps and
+server observations with the backup evidence. This investigation creates no
+cluster resources and needs no cluster cleanup. Protect retained evidence as
+operational data. The source contracts do not prove an executed deletion,
+erasure, backup or restored application. Platform operations owns any missing
+selected-driver contract; closing that gap requires pinned branch coverage and
+an isolated test with the actual driver, policies, credentials and application
+reader before destructive cleanup can be approved.</p>
+</main></body></html>

@@ -1,0 +1,497 @@
+[
+  {
+    "page": "docs/site/extend/plugin-catalogue/README.md",
+    "fields": {
+      "lastVerified": {
+        "before": "generated during publication",
+        "after": "generated source listing only; package checks and their limits are recorded on each package page"
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+    "fields": {
+      "lastVerified": {
+        "before": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
+        "after": "source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks."
+      }
+    }
+  },
+  {
+    "page": "docs/site/reference/buster-provider-configuration.md",
+    "fields": {
+      "lastVerified": {
+        "before": "generated from current provider schemas on 2026-09-19",
+        "after": "generated from exact committed provider inputs 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f"
+      }
+    }
+  },
+  {
+    "page": "docs/site/reference/capabilities.md",
+    "fields": {
+      "lastVerified": {
+        "before": "generated during publication",
+        "after": "generated source listing only; package checks and their limits are recorded on each package page"
+      }
+    }
+  },
+  {
+    "page": "docs/site/reference/sdk.md",
+    "fields": {
+      "owner": {
+        "before": "documentation automation",
+        "after": "SDK maintainers (plugin-foundation)"
+      }
+    }
+  }
+]

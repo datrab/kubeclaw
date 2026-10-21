@@ -1,0 +1,1668 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/telemetry.html"></head><body><main>
+<h1 id="telemetry-events-delivery-and-evidence">Telemetry: Events, Delivery, and Evidence</h1>
+<p>Status: Nova v2 and OpenClaw agent-observability v1 producers are active; retained telemetry v1 has no active runtime producer or consumer
+Audience: runtime developer, observer author, operator, security reviewer
+Owner: observability maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/telemetry">skills/nova/core/telemetry</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/openclaw-agent-observer">skills/common/plugins/openclaw-agent-observer</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/agent-observability/v1">contracts/agent-observability/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/telemetry-observer">skills/common/plugins/telemetry-observer</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/telemetry-store">skills/common/plugins/telemetry-store</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/redis-transport">skills/common/plugins/redis-transport</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/telemetry/v1">contracts/telemetry/v1</a>
+Evidence revision: <code>569f7b4933d4859cc67c80ddf40d5154ffd95ce5</code>
+Applies to: Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, OpenClaw agent-observability ingress v1, and retained telemetry v1 assets
+Last verified: contract, runtime, plugin, chart configuration, and focused-test inspection on 2026-09-21</p>
+<h2 id="purpose">Purpose</h2>
+<p>Telemetry answers what the system observed. It does not get permission to
+change what the pipeline decided.</p>
+<p>In the Nova path, Nova first commits a canonical event to its run journal. An observer can then
+receive that event, redact it, and send a projection to a file store, Redis, an
+operator channel, or another granted adapter. If a sink fails, the canonical
+event still exists. Recovery restarts delivery from a verified checkpoint.</p>
+<p>This order is deliberate. It prevents a dashboard, transport, or notification
+service from becoming a second pipeline state machine.</p>
+<h2 id="two-contract-families-and-one-host-ingress-contract">Two Contract Families And One Host Ingress Contract</h2>
+<p>The repository contains two telemetry contract families and one separate
+OpenClaw host-ingress contract. Nova v2 and host ingress have active producers,
+but they do not join into one end-to-end path.</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Status</th>
+<th>Runtime producer and consumer</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova v2 events and observer delivery</td>
+<td>Active</td>
+<td>Nova Core, plugin contexts, Observer Runtime, activated observer plugins, and selected adapters</td>
+<td>Canonical runtime events and their controlled delivery</td>
+</tr>
+<tr>
+<td><code>agent-observability</code> ingress v1</td>
+<td>Active producer on the Buster OpenClaw host</td>
+<td><code>kubeclaw-agent-observer</code> writes Redis; no repository consumer reads these streams</td>
+<td>Bounded copies of OpenClaw hooks, runtime events, and model-usage diagnostics</td>
+</tr>
+<tr>
+<td><code>contracts/telemetry/v1</code> flat envelope</td>
+<td>Retained asset</td>
+<td>None found in repository runtime code</td>
+<td>Compatibility material for possible external readers; schema and generated-type checks only</td>
+</tr>
+</tbody>
+</table>
+<p>Do not confuse the two v1 names. Agent-observability v1 is a live Redis writer.
+Telemetry v1 is the inactive retained asset described below. Do not describe
+telemetry v1 schemas as the live ingestion contract. Their <code>cursor</code>,
+timestamps, source, authority strings, quarantine bundles, and generated types
+do not create a running service. No v1-to-v2 adapter exists.</p>
+<blockquote>
+<p><strong>Source evidence — the version boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/telemetry/v1/README.md#L1-L7">The retained v1 README defines its inactive runtime status and limits</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/agent-observability/v1/src/constants.ts#L1-L47">The active agent-observability contract fixes its schema, source, stream
+names, event types, and absolute event-size ceiling</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L656">The active SDK defines lifecycle and plugin-domain event envelopes</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L657-L672">It defines observer delivery and checkpoint contracts separately</a>.</p>
+</blockquote>
+<h3 id="what-the-retained-v1-asset-contains">What the retained v1 asset contains</h3>
+<p>The retained catalog names 53 event types. Each type has one source payload
+schema and one generated flat event schema. The bundle directory adds 16 schema
+documents for archives, manifests, evidence exports, logs, health, and related
+read models. The content manifest binds 132 delivered files by byte count and
+SHA-256. Generated TypeScript and Go models are part of that set.</p>
+<p>These counts describe repository assets only. They do not prove that a service
+emits, accepts, stores, orders, or queries any v1 event. The schema accepts a
+nullable cursor, but no current consumer enforces its proposed
+<code>project/run/sequence</code> meaning. <code>source</code> and <code>authority</code> fields also do not
+authenticate a sender.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/telemetry/v1/catalog.json#L1-L28">The retained catalog is the complete 53-type source list</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/telemetry/v1/README.md#L26-L36">The retained contract describes its generated 132-file content manifest</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/telemetry/v1/contract-manifest.json#L1-L23">The manifest states the compatibility rules and binds each listed file by
+byte count and SHA-256</a>.</p>
+</blockquote>
+<h2 id="active-data-path">Active Data Path</h2>
+<pre><code class="language-mermaid">flowchart LR
+    Producer[Nova Core or granted plugin] --&gt; Journal[Canonical events.jsonl]
+    Journal --&gt; Runtime[Observer Runtime]
+    Runtime --&gt; Delivery[Observer delivery v2]
+    Delivery --&gt; Observer[Activated observer]
+    Observer --&gt; Adapter[Granted adapter]
+    Adapter --&gt; Sink[File store, Redis, or operator service]
+    Runtime --&gt; Attempts[Delivery journal]
+    Runtime --&gt; Checkpoint[Checkpoint journal]
+    Journal --&gt; Audit[Redacted audit projection]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova Core or granted plugin</td>
+<td>Directed connection</td>
+<td>Canonical events.jsonl</td>
+</tr>
+<tr>
+<td>Canonical events.jsonl</td>
+<td>Directed connection</td>
+<td>Observer Runtime</td>
+</tr>
+<tr>
+<td>Observer Runtime</td>
+<td>Directed connection</td>
+<td>Observer delivery v2</td>
+</tr>
+<tr>
+<td>Observer delivery v2</td>
+<td>Directed connection</td>
+<td>Activated observer</td>
+</tr>
+<tr>
+<td>Activated observer</td>
+<td>Directed connection</td>
+<td>Granted adapter</td>
+</tr>
+<tr>
+<td>Granted adapter</td>
+<td>Directed connection</td>
+<td>File store, Redis, or operator service</td>
+</tr>
+<tr>
+<td>Observer Runtime</td>
+<td>Directed connection</td>
+<td>Delivery journal</td>
+</tr>
+<tr>
+<td>Observer Runtime</td>
+<td>Directed connection</td>
+<td>Checkpoint journal</td>
+</tr>
+<tr>
+<td>Canonical events.jsonl</td>
+<td>Directed connection</td>
+<td>Redacted audit projection</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: Nova Core or a granted plugin appends an event to the canonical
+journal. Observer Runtime filters it by an installed subscription. It records
+each delivery attempt, invokes the observer with a bounded lease, and writes a
+checkpoint only after success. The observer invokes a granted adapter. The sink
+stores a projection. Audit is rebuilt directly from the canonical journal.</p>
+<p>The active path has six authority boundaries:</p>
+<ol>
+<li>The producer owns event meaning.</li>
+<li>The Nova journal owns canonical order and durable presence.</li>
+<li>The observer registration owns subscription and failure policy.</li>
+<li>Observer Runtime owns attempt and checkpoint state.</li>
+<li>The adapter owns transport-specific durability and limits.</li>
+<li>The sink owns query and retention, but not pipeline lifecycle.</li>
+</ol>
+<h3 id="openclaw-agent-observability-v1-path">OpenClaw agent-observability v1 path</h3>
+<p>This second active path does not enter Nova's journal or Observer Runtime. The
+current chart enables it only for the Buster OpenClaw role.</p>
+<pre><code class="language-mermaid">flowchart LR
+    Hooks[12 OpenClaw hooks] --&gt; Normalize[JSON-safe v1 normalization]
+    Events[OpenClaw runtime events] --&gt; Normalize
+    Usage[model.usage diagnostic] --&gt; Normalize
+    Normalize --&gt; Dedupe[Bounded in-memory dedupe]
+    Dedupe --&gt; Queues[Control or payload queue]
+    Queues --&gt; Redis[Two Redis streams]
+    Queues --&gt;|control write exhausted| DLQ[Redis dead-letter stream]
+    Redis --&gt; Missing[No repository stream consumer]
+    DLQ --&gt; Missing
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12 OpenClaw hooks</td>
+<td>Directed connection</td>
+<td>JSON-safe v1 normalization</td>
+</tr>
+<tr>
+<td>OpenClaw runtime events</td>
+<td>Directed connection</td>
+<td>JSON-safe v1 normalization</td>
+</tr>
+<tr>
+<td>model.usage diagnostic</td>
+<td>Directed connection</td>
+<td>JSON-safe v1 normalization</td>
+</tr>
+<tr>
+<td>JSON-safe v1 normalization</td>
+<td>Directed connection</td>
+<td>Bounded in-memory dedupe</td>
+</tr>
+<tr>
+<td>Bounded in-memory dedupe</td>
+<td>Directed connection</td>
+<td>Control or payload queue</td>
+</tr>
+<tr>
+<td>Control or payload queue</td>
+<td>Directed connection</td>
+<td>Two Redis streams</td>
+</tr>
+<tr>
+<td>Control or payload queue</td>
+<td>Directed connection — control write exhausted</td>
+<td>Redis dead-letter stream</td>
+</tr>
+<tr>
+<td>Two Redis streams</td>
+<td>Directed connection</td>
+<td>No repository stream consumer</td>
+</tr>
+<tr>
+<td>Redis dead-letter stream</td>
+<td>Directed connection</td>
+<td>No repository stream consumer</td>
+</tr>
+</tbody>
+</table>
+<p>The extension registers 12 hooks. It also subscribes to six OpenClaw runtime
+streams and to the <code>model.usage</code> diagnostic. It converts accepted input to
+<code>AgentObservabilityIngressEventV1</code>. The envelope contains <code>v: 1</code>, the fixed
+source <code>openclaw.plugin.agent-observer</code>, a producer timestamp, optional
+correlation identity, and a type-specific payload. Tool events are the only
+events that require both <code>tool_call_id</code> and <code>model_call_id</code>. Other identity
+fields can be absent, so a Redis reader must not assume that <code>run_id</code> exists.</p>
+<p>The normalizer accepts plain JSON values, dates, and errors. It rejects
+accessors and proxies, converts circular references to <code>[Circular]</code>, and limits
+traversal to depth 256, 2,621,440 nodes, and a 5 MiB normalization ceiling. The
+configured 3 MiB serialized-event check is stricter and runs before queue
+admission. These checks protect the process from unsafe object traversal. They
+do not remove confidential content.</p>
+<p>Two in-memory controls reduce duplicate writes:</p>
+<ul>
+<li>a runtime event with <code>runId</code>, <code>stream</code>, and <code>seq</code> uses their SHA-256 value for
+60-second deduplication; this map holds at most 10,000 entries;</li>
+<li>an LLM-output event with <code>model_call_id</code> uses a canonical content digest for
+a 10-second hook/runtime pairing window; this map also holds at most 10,000
+entries.</li>
+</ul>
+<p>Other events have no deduplication key. Both maps disappear when the process
+restarts. Redis uses <code>XADD *</code>, not an idempotency key, so a restart or a replay
+can create another entry.</p>
+<table>
+<thead>
+<tr>
+<th>Redis stream</th>
+<th>Event types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pipeline:agent-observability:payload:v1</code></td>
+<td><code>openclaw.llm.input</code>, <code>openclaw.llm.output</code>, <code>openclaw.tool.started</code>, <code>openclaw.tool.finished</code></td>
+</tr>
+<tr>
+<td><code>pipeline:agent-observability:control:v1</code></td>
+<td><code>openclaw.agent.ended</code>, the three <code>openclaw.subagent.*</code> types, <code>openclaw.model.started</code>, <code>openclaw.model.ended</code>, <code>openclaw.model.usage</code>, <code>openclaw.session.started</code>, <code>openclaw.session.ended</code></td>
+</tr>
+<tr>
+<td><code>pipeline:agent-observability:deadletter:v1</code></td>
+<td>A failed control entry plus failure time, source stream, error text, and original serialized data</td>
+</tr>
+</tbody>
+</table>
+<p>The writer has one control queue and one payload queue. The configured limit is
+100 events in each queue. Control has priority. A full queue or an event larger
+than 3 MiB is dropped before Redis. Control writes get three attempts with
+100 ms and 200 ms waits under the configured 1,000 ms delay ceiling. Payload
+writes get one attempt. Each command has a 5,000 ms timeout. After the final
+control failure, the writer tries one write to the dead-letter stream. A failed
+dead-letter write drops the record. All three streams use approximate <code>MAXLEN</code>:
+10,000 for control and payload, and 1,000 for dead letters.</p>
+<p>The repository has no <code>XREAD</code>, consumer group, acknowledgement, checkpoint, or
+replay implementation for these three stream names. The mapping from ingress
+types to possible telemetry types is descriptive data; no current service
+performs that promotion. Therefore, a successful <code>XADD</code> proves only that Redis
+accepted one bounded projection. It does not prove that a consumer processed
+the event. An external consumer must define its own start position,
+acknowledgement, idempotency, retention, and recovery contract before this path
+can support end-to-end evidence.</p>
+<blockquote>
+<p><strong>Source evidence — OpenClaw producer path</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L240-L268">The extension registers hooks and its runtime-event subscription</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L269-L308">It also registers status, self-test, and service lifecycle</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L67-L90">Normalization extracts optional correlation identities</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L126-L166">constructs and validates the v1 event before queue admission</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts#L32-L79">The in-memory dedupe rules and their 10,000-entry bounds are explicit</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/agent-observability/v1/src/complexity.ts#L1-L28">The contract fixes depth and node limits from the 5 MiB absolute
+ceiling</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/agent-observability/v1/src/routing.ts#L14-L29">Routing assigns four raw-content types to the payload stream and all other
+ingress types to control</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts/agent-observability/v1/src/validation.ts#L225-L244">Validation permits optional identity fields but requires tool and model-call
+identity for tool events</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L122-L155">Queue admission, event-size rejection, and control-first selection are in the
+Redis writer</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L201-L231">The writer applies bounded retries and command timeouts</a>,
+then <a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L234-L264">records a drop and makes the one dead-letter attempt for control
+data</a>.</p>
+</blockquote>
+<h4 id="exact-deployed-configuration">Exact deployed configuration</h4>
+<p>Configuration from a hook overrides service configuration. Service
+configuration overrides registration configuration. The merged plugin value
+then overrides the matching environment variable. The Buster chart supplies
+all required non-secret values in the OpenClaw entry and supplies the Redis
+host, port, and password as environment variables.</p>
+<table>
+<thead>
+<tr>
+<th>Plugin key</th>
+<th>Environment fallback</th>
+<th>Deployed value</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_ENABLED</code></td>
+<td><code>true</code></td>
+<td>Starts Redis output and diagnostic subscription.</td>
+</tr>
+<tr>
+<td><code>redisHost</code></td>
+<td><code>REDIS_HOST</code></td>
+<td>chart Redis host</td>
+<td>Selects the Redis service.</td>
+</tr>
+<tr>
+<td><code>redisPort</code></td>
+<td><code>REDIS_PORT</code></td>
+<td>chart value, default <code>6379</code></td>
+<td>Selects the Redis port.</td>
+</tr>
+<tr>
+<td><code>redisUsername</code></td>
+<td><code>REDIS_USERNAME</code></td>
+<td>unset</td>
+<td>Uses password-only Redis authentication.</td>
+</tr>
+<tr>
+<td><code>redisPassword</code></td>
+<td><code>REDIS_PASSWORD</code></td>
+<td>Secret value</td>
+<td>Authenticates the Redis connection.</td>
+</tr>
+<tr>
+<td><code>redisTls</code></td>
+<td><code>REDIS_TLS</code></td>
+<td>unset, therefore <code>false</code></td>
+<td>Does not add TLS in this profile.</td>
+</tr>
+<tr>
+<td><code>redisNetworkIsolation</code></td>
+<td><code>REDIS_NETWORK_ISOLATION</code></td>
+<td><code>isolated</code></td>
+<td>Satisfies the extension's secure-transport policy with the password.</td>
+</tr>
+<tr>
+<td><code>maxEventBytes</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES</code></td>
+<td><code>3145728</code></td>
+<td>Drops a normalized event above 3 MiB; the contract hard ceiling is 5 MiB.</td>
+</tr>
+<tr>
+<td><code>maxQueuePerStream</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_MAX_QUEUE_PER_STREAM</code></td>
+<td><code>100</code></td>
+<td>Bounds each in-memory queue separately.</td>
+</tr>
+<tr>
+<td><code>redisCommandTimeoutMs</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_REDIS_COMMAND_TIMEOUT_MS</code></td>
+<td><code>5000</code></td>
+<td>Bounds each <code>XADD</code>.</td>
+</tr>
+<tr>
+<td><code>streamMaxLen</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_STREAM_MAXLEN</code></td>
+<td><code>10000</code></td>
+<td>Sets approximate control and payload stream length.</td>
+</tr>
+<tr>
+<td><code>deadLetterMaxLen</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_DEADLETTER_MAXLEN</code></td>
+<td><code>1000</code></td>
+<td>Sets approximate dead-letter stream length.</td>
+</tr>
+<tr>
+<td><code>controlWriteMaxAttempts</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_MAX_ATTEMPTS</code></td>
+<td><code>3</code></td>
+<td>Retries control writes only.</td>
+</tr>
+<tr>
+<td><code>controlWriteRetryBaseMs</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_BASE_MS</code></td>
+<td><code>100</code></td>
+<td>Starts exponential retry delay.</td>
+</tr>
+<tr>
+<td><code>controlWriteRetryMaxMs</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_MAX_MS</code></td>
+<td><code>1000</code></td>
+<td>Caps each retry delay.</td>
+</tr>
+<tr>
+<td><code>hookPriority</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_HOOK_PRIORITY</code></td>
+<td><code>-100</code></td>
+<td>Registers the observer early in hook order.</td>
+</tr>
+<tr>
+<td><code>hookTimeoutMs</code></td>
+<td><code>OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS</code></td>
+<td><code>1000</code></td>
+<td>Bounds each OpenClaw hook callback.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/config.ts#L83-L112">The resolver defines configuration precedence and validation</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L262-L311">The Buster gateway entry supplies the active values</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L1282-L1299">The Pod obtains Redis host, port, and password from values and the configured
+Secret</a>.</p>
+</blockquote>
+<h4 id="sensitive-data-and-evidence-limit">Sensitive data and evidence limit</h4>
+<p>LLM input can contain the prompt, system prompt, history, and provider request.
+LLM output can contain the complete response and history. Tool events can carry
+parameters, results, and errors. Error normalization can include a stack. The
+producer does not apply semantic or field-name redaction to these values. Redis
+and any external consumer must therefore be treated as authorized for raw agent
+content. Queue bounds and JSON normalization are not privacy controls.</p>
+<p>The status method exposes queue and drop counters, written counts, retry and
+dead-letter counts, the last error, and whether a Redis client object exists.
+<code>connected: true</code> does not prove a successful command or a consumer. A host
+restart loses the counters and both queues. No metric exporter persists them.
+If later configuration disables the extension, the flush loop stops. Existing
+queued entries remain only in memory. A later enabled event can schedule them,
+but stopping the service while disabled loses them. Configuration-resolution
+and normalization failures produce one warning per failure class outside the
+writer counters, so the counters are not a complete received-event total.
+Repository tests exercise normalization and writer behavior with controlled
+clients. They do not prove delivery through a deployed OpenClaw host, Redis
+persistence, or downstream consumption.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L54-L91">LLM payload construction retains raw prompts, responses, histories, and
+metadata</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L94-L124">Tool and agent-end construction retains parameters, results, histories, and
+errors</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L129-L147">The status and counter surface reports process-local writer state</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L170-L199">The flush loop runs only while configuration remains enabled and reschedules
+only under that condition</a>.</p>
+</blockquote>
+<h2 id="active-event-catalog">Active Event Catalog</h2>
+<h3 id="lifecycle-events">Lifecycle events</h3>
+<p>Nova Core owns the complete closed list of lifecycle event types.</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Event types</th>
+<th>Producer</th>
+<th>Meaning and primary consumer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run</td>
+<td><code>run.created</code>, <code>run.started</code>, <code>run.resumed</code>, <code>run.waiting</code>, <code>run.paused</code>, <code>run.succeeded</code>, <code>run.failed</code>, <code>run.blocked</code>, <code>run.cancelled</code></td>
+<td>Pipeline runner and administrative continuation</td>
+<td>Run frontier and terminal status; recovery, audit, observers</td>
+</tr>
+<tr>
+<td>Stage</td>
+<td><code>stage.scheduled</code>, <code>stage.started</code>, <code>stage.waiting</code>, <code>stage.retrying</code>, <code>stage.skipped</code>, <code>stage.succeeded</code>, <code>stage.failed</code>, <code>stage.blocked</code>, <code>stage.cancelled</code></td>
+<td>Pipeline loop and administrative repair</td>
+<td>Stage lifecycle and consumed attempts; recovery, audit, observers</td>
+</tr>
+<tr>
+<td>Attempt</td>
+<td><code>attempt.created</code>, <code>attempt.dispatched</code>, <code>attempt.completed</code>, <code>attempt.timed_out</code>, <code>attempt.cancelled</code></td>
+<td>Stage executor</td>
+<td>Exact attempt lifecycle and result boundary; recovery, artifact reconciliation, observers</td>
+</tr>
+<tr>
+<td>Effect</td>
+<td><code>effect.requested</code>, <code>effect.accepted</code>, <code>effect.completed</code>, <code>effect.failed</code></td>
+<td>Effect Coordinator bridge</td>
+<td>External side-effect audit; effect recovery and audit. Observer-owned effect events are intentionally not re-observed.</td>
+</tr>
+<tr>
+<td>Artifact</td>
+<td><code>artifact.created</code></td>
+<td>Artifact checkpoint recorder after a verified adapter response</td>
+<td>Durable artifact reference and producer binding; later stages, recovery, audit</td>
+</tr>
+<tr>
+<td>Wait</td>
+<td><code>wait.created</code>, <code>wait.resolved</code>, <code>orchestrator.required</code></td>
+<td>Lifecycle reducer, signal path, and orchestrator boundary</td>
+<td>Durable pause, exact resume signal, or required external decision</td>
+</tr>
+</tbody>
+</table>
+<p>Each lifecycle event has the same envelope fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Exactly <code>lifecycle-event.v2</code>.</td>
+</tr>
+<tr>
+<td><code>eventId</code></td>
+<td>New opaque event identity. Current Nova producers use <code>event:&lt;UUID&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>sequence</code></td>
+<td>Positive append position in the canonical event journal.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>One value from the closed list above.</td>
+</tr>
+<tr>
+<td><code>identity</code></td>
+<td>Always <code>runId</code>; optionally stage, attempt, effect, wait, or artifact ID as relevant.</td>
+</tr>
+<tr>
+<td><code>occurredAt</code></td>
+<td>Producer timestamp. It does not override journal sequence.</td>
+</tr>
+<tr>
+<td><code>causationId</code></td>
+<td>Prior decision, attempt, delivery, or signal identity when the producer has one; otherwise null.</td>
+</tr>
+<tr>
+<td><code>payload</code></td>
+<td>Event-specific portable JSON. Meaning belongs to the producer path.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — lifecycle production</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L605-L645">The SDK contract contains the full closed list and common envelope fields</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/runner.ts#L49-L78">The pipeline runner assigns the journal sequence and writes run, stage, and attempt events through one append function</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-runtime.ts#L53-L59">The effect bridge emits bounded effect facts but excludes effects created by observer delivery to prevent a feedback loop</a>.</p>
+</blockquote>
+<h3 id="plugin-domain-events">Plugin domain events</h3>
+<p><code>plugin-domain-event.v2</code> uses the same event identity, sequence, timestamp,
+causation, and JSON payload model. Its <code>type</code> is an open string, and it adds the
+exact registration provenance of the producer.</p>
+<p>A stage plugin emits through its leased invocation context. Nova supplies the
+producer provenance and uses the attempt ID as causation. An adapter can emit
+through Adapter Runtime. An observer can also emit a domain event, but events
+that describe its adapter effects are excluded from later observer delivery.</p>
+<p>An open event type is an extension point, not permission to invent an
+unversioned contract. A producer must document the type, payload fields,
+sensitive fields, subscribers, compatibility rule, and removal plan before a
+consumer relies on it.</p>
+<blockquote>
+<p><strong>Source evidence — domain event authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L646-L656">The SDK requires producer provenance on every plugin domain event</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/stage-executor.ts#L82-L97">Stage emission assigns canonical sequence, producer provenance, attempt causation, and the supplied type and payload</a>.</p>
+</blockquote>
+<h2 id="producer-and-consumer-matrix">Producer and Consumer Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Producer</th>
+<th>Canonical authority</th>
+<th>Direct consumers</th>
+<th>Subscription or filter</th>
+<th>Delivery and sink</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lifecycle v2 event</td>
+<td>Nova runner, loop, executor, effect bridge, wait/resume, or administrative repair</td>
+<td>Hash-verified <code>events.jsonl</code></td>
+<td>Recovery projections, artifact recorder, audit reader, Observer Runtime</td>
+<td>Recovery selects run and known types; observers require exact registered type</td>
+<td>Observer policy controls retries; selected adapter controls sink</td>
+</tr>
+<tr>
+<td>Plugin domain v2 event</td>
+<td>Granted stage, adapter, or observer context; Nova assigns provenance and sequence</td>
+<td>Same <code>events.jsonl</code></td>
+<td>Observer Runtime, audit, domain-specific readers</td>
+<td>Exact subscription string; effect-loop exclusion applies</td>
+<td>Same observer and adapter path</td>
+</tr>
+<tr>
+<td>Observer delivery v2</td>
+<td>Observer Runtime</td>
+<td>Delivery is not lifecycle authority; source event remains authority</td>
+<td>One activated observer registration</td>
+<td>Registry grant plus exact event-type subscription</td>
+<td>Direct in-process invocation under a revocable lease and timeout</td>
+</tr>
+<tr>
+<td>Delivery attempt record</td>
+<td>Observer Runtime</td>
+<td>Recovery authority for delivery attempts</td>
+<td>Observer recovery</td>
+<td>Exact observer ID, event ID, and attempt number</td>
+<td>Local hash-chained <code>observer-deliveries.jsonl</code></td>
+</tr>
+<tr>
+<td>Observer checkpoint v2</td>
+<td>Observer Runtime after successful delivery</td>
+<td>Recovery frontier for one observer and run</td>
+<td>Observer recovery</td>
+<td>Registration provenance, run ID, sequence, event ID</td>
+<td>Local hash-chained <code>observer-checkpoints.jsonl</code></td>
+</tr>
+<tr>
+<td>Telemetry envelope v2</td>
+<td>Telemetry observer</td>
+<td>Projection only</td>
+<td><code>telemetry.emit</code> adapter</td>
+<td>Observer subscriptions in the active platform configuration</td>
+<td>File telemetry store or Redis telemetry adapter</td>
+</tr>
+<tr>
+<td>Audit v1 projection</td>
+<td>Audit reader</td>
+<td>Projection only; includes source record hash and journal head</td>
+<td>CLI caller or operator</td>
+<td>One run ID</td>
+<td>Returned JSON; not written as a second authority by this reader</td>
+</tr>
+<tr>
+<td>Agent-observability ingress v1</td>
+<td>Buster OpenClaw extension</td>
+<td>OpenClaw host input is the source; the Redis copy is a projection</td>
+<td>No repository stream consumer</td>
+<td>Hook registration, runtime-stream mapping, or <code>model.usage</code> diagnostic</td>
+<td>In-memory queue, then control or payload Redis stream</td>
+</tr>
+<tr>
+<td>Agent-observability dead letter</td>
+<td>Same extension after a control write exhausts retries</td>
+<td>Failure copy only</td>
+<td>No repository stream consumer</td>
+<td>Control events only</td>
+<td>One best-effort <code>XADD</code> to the bounded dead-letter stream</td>
+</tr>
+<tr>
+<td>Retained telemetry v1 event</td>
+<td>No active repository runtime producer</td>
+<td>None in current runtime</td>
+<td>No active repository runtime consumer</td>
+<td>Not applicable</td>
+<td>Schema generation and tests only</td>
+</tr>
+</tbody>
+</table>
+<p>The plugin manifest declares what an observer can subscribe to. The platform
+configuration decides whether that registration is enabled and granted. A
+manifest on disk does not prove activation or a reachable sink.</p>
+<h3 id="shipped-observer-registrations">Shipped observer registrations</h3>
+<p>The repository ships five observer registrations. This table is an available
+registration catalog. A deployment activates only the entries selected in its
+platform configuration.</p>
+<table>
+<thead>
+<tr>
+<th>Registration</th>
+<th>Exact subscriptions</th>
+<th>Capability and policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubeclaw.telemetry-observer:telemetry</code></td>
+<td>All lifecycle types listed above except <code>run.resumed</code>, <code>run.waiting</code>, <code>run.paused</code>, and <code>stage.scheduled</code></td>
+<td><code>telemetry.emit</code>; at least once, per run, best effort, 5 attempts, 1,000 ms backoff, 10,000 ms timeout</td>
+</tr>
+<tr>
+<td><code>kubeclaw.notification-observer:notifications</code></td>
+<td><code>run.started</code>, the four terminal run events, <code>stage.started</code>, the five terminal stage events including <code>stage.skipped</code>, <code>stage.retrying</code>, <code>stage.waiting</code>, and <code>orchestrator.required</code></td>
+<td><code>operator.request</code>; at least once, per run, best effort, 5 attempts, 1,000 ms backoff, 10,000 ms timeout</td>
+</tr>
+<tr>
+<td><code>kubeclaw.notification-observer:preview-delivery</code></td>
+<td><code>artifact.created</code></td>
+<td><code>operator.request</code>; same delivery policy</td>
+</tr>
+<tr>
+<td><code>kubeclaw.agent-observability:ingester</code></td>
+<td>The 12 OpenClaw domain types <code>agent-end</code>, <code>llm-input</code>, <code>llm-output</code>, <code>subagent-spawned</code>, <code>subagent-delivery-target</code>, <code>subagent-ended</code>, <code>before-tool-call</code>, <code>after-tool-call</code>, <code>model-call-started</code>, <code>model-call-ended</code>, <code>session-start</code>, and <code>session-end</code>, each prefixed with <code>plugin.kubeclaw.openclaw-agent-events.</code></td>
+<td><code>telemetry.emit</code>; at least once, per run, best effort, 5 attempts, 1,000 ms backoff, 10,000 ms timeout</td>
+</tr>
+<tr>
+<td><code>kubeclaw.agent-observability:evidence</code></td>
+<td><code>agent-end</code>, <code>subagent-delivery-target</code>, <code>subagent-ended</code>, <code>model-call-ended</code>, and <code>session-end</code> under the same prefix</td>
+<td><code>artifacts.write</code>; same delivery policy</td>
+</tr>
+</tbody>
+</table>
+<p>The telemetry observer does not receive the four omitted lifecycle types unless
+its manifest changes. The event still remains canonical in Nova. This difference
+is important when a sink is used for dashboards: absence from that sink does not
+mean the run or scheduler did not emit the event.</p>
+<p>This Nova v2 path is different from the direct OpenClaw-to-Redis path above.
+OpenClaw Agent Events is the only shipped production <em>pipeline adapter</em> that constructs the
+12 named plugin-domain types. It normalizes an accepted host hook, changes
+underscores to hyphens, and emits under its fixed plugin prefix. The two agent
+observers are its declared consumers. Other plugins can use the open domain
+event API, but no additional fixed production type catalog was found at this
+revision.</p>
+<blockquote>
+<p><strong>Source evidence — shipped producer and consumers</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/plugin.json#L6-L50">The telemetry observer manifest contains its exact 27 subscriptions and bounded best-effort policy</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/notification-observer/plugin.json#L6-L59">The notification manifest separates lifecycle notifications from artifact preview delivery</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/agent-observability/plugin.json#L6-L65">The agent-observability manifest declares both the 12-event telemetry consumer and the five-event evidence consumer</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L52-L82">The OpenClaw adapter derives only the fixed prefixed type from an admitted hook name</a>.</p>
+</blockquote>
+<h2 id="identity-and-correlation">Identity and Correlation</h2>
+<p>The current v2 model uses several identities for different questions.</p>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Answers</th>
+<th>Stability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>runId</code></td>
+<td>Which pipeline run owns this fact?</td>
+<td>Stable across the complete run.</td>
+</tr>
+<tr>
+<td><code>stageId</code></td>
+<td>Which graph stage does it concern?</td>
+<td>Stable inside the pinned graph.</td>
+</tr>
+<tr>
+<td><code>attemptId</code> and attempt number</td>
+<td>Which bounded execution produced it?</td>
+<td>Stable for replay of that attempt.</td>
+</tr>
+<tr>
+<td><code>effectId</code></td>
+<td>Which external effect does it describe?</td>
+<td>Stable with the effect request.</td>
+</tr>
+<tr>
+<td><code>eventId</code></td>
+<td>Which canonical event is this?</td>
+<td>Unique event identity.</td>
+</tr>
+<tr>
+<td><code>sequence</code></td>
+<td>Where is it in the canonical journal?</td>
+<td>Monotonic in one event journal.</td>
+</tr>
+<tr>
+<td><code>causationId</code></td>
+<td>Which decision or operation directly caused it?</td>
+<td>Producer-selected from an existing stable identity.</td>
+</tr>
+<tr>
+<td><code>deliveryId</code></td>
+<td>Which observer and event pair is being delivered?</td>
+<td><code>delivery:&lt;observerId&gt;:&lt;eventId&gt;</code>; stable across retries.</td>
+</tr>
+</tbody>
+</table>
+<p>There is no separate global trace ID in the active v2 event envelope. <code>runId</code>
+is the broad correlation key. The optional identities and <code>causationId</code> provide
+the narrower chain. A sink must not claim cross-run or cross-producer total
+ordering from timestamps.</p>
+<h2 id="ordering-and-deduplification">Ordering and Deduplification</h2>
+<h3 id="canonical-order">Canonical order</h3>
+<p><code>events.jsonl</code> is one append-only file per run root. <code>FileJournal</code> assigns the
+next record sequence under an append lock. Event producers receive that same
+next sequence. This gives one canonical order for records in that file.</p>
+<p>The contract does not promise a total order across different run roots, hosts,
+or external sinks. <code>occurredAt</code> can be useful for a display, but clock time does
+not outrank the journal sequence.</p>
+<h3 id="at-least-once-delivery">At-least-once delivery</h3>
+<p>Observer delivery is at least once around crashes. Runtime records <code>started</code>
+before invocation and <code>completed</code> after success. A crash can occur after a sink
+accepted a request but before Nova recorded completion. Recovery can send the
+same stable delivery again.</p>
+<p>The observer uses a stable delivery ID. Adapter effect keys remain stable for
+normal observer retries. The special operator-messaging path separates the
+stable logical key from the physical execution attempt, so a retry can execute
+again while the sink can still recognize the logical request.</p>
+<p>Sinks must treat an exact repeated idempotency key and payload as the same
+delivery. A conflicting payload under that key is corruption or a producer bug,
+not a new event.</p>
+<blockquote>
+<p><strong>Source evidence — stable delivery</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observer-delivery.ts#L15-L43">Observer delivery derives a stable delivery ID and stable adapter keys from observer and event identity</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport/src/adapter.ts#L14-L20">Redis performs deduplication and stream append in one Lua operation and returns the original stream entry ID on replay</a>.</p>
+</blockquote>
+<h2 id="redaction-and-sensitive-data">Redaction and Sensitive Data</h2>
+<p>Redaction happens at projection boundaries. It does not make the canonical
+journal safe for secrets. Producers must not put credentials into event
+identity or payload fields.</p>
+<p>The telemetry observer applies the SDK structured-value redactor before it
+invokes <code>telemetry.emit</code>. The file telemetry store validates a bounded,
+accessor-free JSON snapshot and applies a second field-name redaction. It covers
+authorization, cookies, passwords, secrets, tokens, API keys, credentials,
+private keys, access keys, connection strings, and selected direct personal-data
+names. The audit reader recursively redacts a smaller credential-name pattern.</p>
+<p>These rules are defense in depth, not data classification. A secret stored
+under an innocent key such as <code>value</code> can pass a name-based rule. A plugin must
+remove or summarize sensitive values at the producer boundary.</p>
+<table>
+<thead>
+<tr>
+<th>Boundary</th>
+<th>Redacts</th>
+<th>Does not guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telemetry observer envelope</td>
+<td>Structured identity and payload through SDK redaction</td>
+<td>Removal of an unknown sensitive field name</td>
+</tr>
+<tr>
+<td>File telemetry projection</td>
+<td>Protected and selected personal field names after safe JSON snapshot</td>
+<td>Semantic recognition of secrets in free text</td>
+</tr>
+<tr>
+<td>Audit projection</td>
+<td>Credential-like field names in identity and payload</td>
+<td>That original <code>events.jsonl</code> contains no secrets</td>
+</tr>
+<tr>
+<td>Redis adapter</td>
+<td>No additional semantic redaction</td>
+<td>Confidentiality without <code>rediss:</code> and correct network policy</td>
+</tr>
+<tr>
+<td>OpenClaw agent-observability v1</td>
+<td>No semantic or field-name redaction; only bounded JSON normalization</td>
+<td>Removal of prompts, histories, model output, tool data, metadata, error text, or stack content</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — projection safety</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-observer/src/observer.ts#L7-L29">The telemetry observer creates a v2 envelope and redacts event identity and payload before adapter invocation</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-store/src/projection.ts#L3-L62">The file telemetry projection rejects unsafe object shapes and applies bounded
+structured traversal</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-store/src/projection.ts#L63-L94">It rejects invalid scalar values and redacts protected field names</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/audit.ts#L6-L27">The audit reader rebuilds from the verified journal, redacts identity and payload, and binds its digest to record hashes and journal head</a>.</p>
+</blockquote>
+<h2 id="observer-delivery-checkpoints-and-recovery">Observer Delivery, Checkpoints, and Recovery</h2>
+<h3 id="admission">Admission</h3>
+<p>Observer Runtime reads registrations from the immutable registry snapshot. It
+delivers only when the registration is enabled by a grant and the event type is
+listed in <code>subscriptions</code>. Observer Runtime validates configuration and
+checkpoint values through the schemas declared by that registration.</p>
+<p>Effect lifecycle events produced by observer attempts are excluded. Without
+this rule, sending telemetry could produce effect telemetry, which could invoke
+the same observer again without a natural end.</p>
+<h3 id="attempt-sequence">Attempt sequence</h3>
+<p>For each subscribed event:</p>
+<ol>
+<li>Skip it when the observer/run checkpoint already covers its sequence.</li>
+<li>Record a <code>started</code> delivery attempt.</li>
+<li>Invoke the observer under its configured timeout and a 256 MiB lease limit.</li>
+<li>Record <code>completed</code> on success or <code>failed</code> with an error string.</li>
+<li>Retry up to <code>maxAttempts</code>, waiting <code>backoffMs</code> between attempts.</li>
+<li>Commit the checkpoint only after successful delivery.</li>
+</ol>
+<p>The checkpoint never moves backward. The same sequence with another event ID is
+a conflict. Recovery validates checkpoints and delivery transitions against the
+canonical event journal and current registration before it resumes.</p>
+<h3 id="required-and-best-effort-policy">Required and best-effort policy</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Exhausted delivery</th>
+<th>Effect on later events</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>required</code></td>
+<td>Observer Runtime throws and fails the host operation</td>
+<td>Delivery stops; the host cannot claim the required sink completed</td>
+</tr>
+<tr>
+<td><code>best-effort</code></td>
+<td>Failure is returned in the drain result</td>
+<td>Later events for the same observer and run are blocked during that drain; other runs and observers can continue</td>
+</tr>
+</tbody>
+</table>
+<p>Best-effort does not mean silent loss. The failed attempt remains in the
+delivery journal, and its checkpoint does not advance.</p>
+<blockquote>
+<p><strong>Source evidence — recovery behavior</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observers.ts#L70-L106">Observer Runtime filters subscriptions, enforces checkpoints, applies required or best-effort policy, retries, and checkpoints only after success</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observer-recovery.ts#L71-L82">Recovery validates attempt transitions and rebuilds the maximum attempt and completed-delivery sets</a>.</p>
+</blockquote>
+<h2 id="sink-contracts">Sink Contracts</h2>
+<h3 id="file-telemetry-store">File telemetry store</h3>
+<p>The file adapter owns stream <code>telemetry/plugin-events</code>. It uses the stable
+adapter idempotency key, redacts a bounded JSON snapshot, and returns whether it
+appended a new record plus its sequence.</p>
+<p>Defaults are:</p>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Default</th>
+<th>Failure behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One record</td>
+<td>1,048,576 bytes</td>
+<td>Reject with <code>TELEMETRY_RECORD_SIZE_EXCEEDED</code></td>
+</tr>
+<tr>
+<td>Record count</td>
+<td>100,000</td>
+<td>Reject when the durable store is full</td>
+</tr>
+<tr>
+<td>Whole store</td>
+<td>256 MiB</td>
+<td>Reject when the durable store is full</td>
+</tr>
+<tr>
+<td>JSON depth</td>
+<td>64</td>
+<td>Reject the record</td>
+</tr>
+<tr>
+<td>JSON nodes</td>
+<td>100,000</td>
+<td>Reject the record</td>
+</tr>
+</tbody>
+</table>
+<p>The store does not silently rotate records. A full required sink applies
+backpressure through Observer Runtime. An operator must add capacity or execute
+owner-authorized retirement.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/telemetry-store/src/adapter.ts#L5-L42">The file adapter declares the defaults, stream, operation checks, idempotent append, and size-error mapping</a>.</p>
+</blockquote>
+<h3 id="redis-telemetry-adapter">Redis telemetry adapter</h3>
+<p>The Redis adapter accepts only <code>telemetry.emit</code>, operation <code>append</code>, and resource
+type <code>telemetry.event</code>. It resolves the password through <code>secrets.read</code>, rejects
+payloads above 1 MiB, and uses <code>redis:</code> or <code>rediss:</code> with a bounded timeout.</p>
+<p>Each target has a stream identity under the configured prefix. The Lua command
+uses approximate <code>MAXLEN</code>, so Redis can temporarily retain more than the target.
+The dedup key expires after <code>dedupTtlMs</code>. These two settings are independent:
+stream retention does not prove dedup retention, and dedup retention does not
+prove the stream entry still exists.</p>
+<p>A connection failure, timeout, malformed reply, full Redis instance, or missing
+secret fails the adapter call. Observer policy then decides whether the host
+fails closed or records a best-effort failure.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport/src/adapter.ts#L28-L87">The adapter validates URL, prefix, MAXLEN, dedup TTL, timeout, secret, payload size, operation, and returned stream ID</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport/src/exchange.ts#L5-L36">The network exchange supports plain or TLS Redis, AUTH, cancellation, timeout, and bounded reply decoding</a>.</p>
+</blockquote>
+<h2 id="evidence-redis-logs-and-metrics">Evidence, Redis, Logs, and Metrics</h2>
+<p>These records can describe the same operation, but they answer different
+questions.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>What it can prove</th>
+<th>What it cannot prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Canonical lifecycle event</td>
+<td>Nova committed a lifecycle fact at a verified journal position</td>
+<td>That an external side effect completed unless a verified receipt supports it</td>
+</tr>
+<tr>
+<td>Effect receipt</td>
+<td>The selected adapter recorded the exact terminal effect result under its idempotency key</td>
+<td>That a dashboard or notification received a copy</td>
+</tr>
+<tr>
+<td>Artifact reference plus verified bytes</td>
+<td>Exact content, size, media type, producer, and digest</td>
+<td>That the artifact changed pipeline state without the corresponding lifecycle record</td>
+</tr>
+<tr>
+<td>Buster remote result digest and receipt</td>
+<td>The returned bytes match the bound result and job identities checked by Nova; the receipt is a deterministic integrity binding, not an asymmetric signature</td>
+<td>Independent proof of the producer's identity, or that Nova imported it, unless Nova's journal records the import path</td>
+</tr>
+<tr>
+<td>Redis stream entry</td>
+<td>A configured adapter appended one projection and received a stream ID</td>
+<td>Canonical lifecycle order, indefinite retention, or successful downstream consumption</td>
+</tr>
+<tr>
+<td>Observer delivery and checkpoint</td>
+<td>Nova attempted delivery and, after success, advanced one observer/run frontier</td>
+<td>Business success inside a sink beyond the sink's adapter contract</td>
+</tr>
+<tr>
+<td>Runtime log</td>
+<td>Diagnostic text from one process or tool</td>
+<td>Complete event order, identity binding, or durable product state by itself</td>
+</tr>
+<tr>
+<td>Metric sample</td>
+<td>An aggregate or measurement at one observation time</td>
+<td>Which exact event or artifact caused the value, unless labels and retained evidence bind it</td>
+</tr>
+<tr>
+<td>Audit projection</td>
+<td>A redacted, digest-bound view of canonical events for one run</td>
+<td>The complete effect, artifact, Worker, or database store</td>
+</tr>
+</tbody>
+</table>
+<p>Logs and metrics remain useful because they expose latency, pressure, resource
+use, and failures that do not belong in a lifecycle payload. Keep them separate
+from authority. A missing metric must not change a run to failed, and a green
+dashboard must not change a failed run to succeeded.</p>
+<p>For the same reason, restore Redis and monitoring after the owning journals and
+databases. Rebuild their projections from verified sources when the sink
+contract permits replay.</p>
+<h2 id="deployed-metrics-and-log-path">Deployed Metrics and Log Path</h2>
+<p>The optional monitoring stack is a second observability path. It does not
+consume <code>lifecycle-event.v2</code>, <code>plugin-domain-event.v2</code>, the file telemetry
+store, or Redis streams in the repository configuration.</p>
+<pre><code class="language-mermaid">flowchart LR
+    Metrics[Chart-provided metric endpoints] --&gt;|Prometheus scrape| Prom[(Prometheus TSDB)]
+    CRI[Container stdout and stderr in CRI files] --&gt;|node-local file read| Alloy[Alloy]
+    Alloy --&gt;|CRI parse and HTTP push| Loki[(Loki)]
+    Prom --&gt; Grafana[Grafana]
+    Loki --&gt; Grafana
+    Events[Nova canonical events] --&gt; Observers[Observer delivery]
+    Observers --&gt; FileRedis[File store or Redis]
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chart-provided metric endpoints</td>
+<td>Directed connection — Prometheus scrape</td>
+<td>Prometheus TSDB</td>
+</tr>
+<tr>
+<td>Container stdout and stderr in CRI files</td>
+<td>Directed connection — node-local file read</td>
+<td>Alloy</td>
+</tr>
+<tr>
+<td>Alloy</td>
+<td>Directed connection — CRI parse and HTTP push</td>
+<td>Loki</td>
+</tr>
+<tr>
+<td>Prometheus TSDB</td>
+<td>Directed connection</td>
+<td>Grafana</td>
+</tr>
+<tr>
+<td>Loki</td>
+<td>Directed connection</td>
+<td>Grafana</td>
+</tr>
+<tr>
+<td>Nova canonical events</td>
+<td>Directed connection</td>
+<td>Observer delivery</td>
+</tr>
+<tr>
+<td>Observer delivery</td>
+<td>Directed connection</td>
+<td>File store or Redis</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: the Prometheus Operator stack discovers and scrapes the metric
+targets created by its chart, including Kubernetes and node exporters. The
+checked repository does not define a KubeClaw <code>ServiceMonitor</code>, <code>PodMonitor</code>,
+application <code>/metrics</code> endpoint, recording rule, alert rule, remote-write
+target, or event-to-metric bridge. Therefore, a Prometheus sample cannot prove
+that Nova emitted or delivered one lifecycle event.</p>
+<p>Kubernetes writes container standard output and standard error to node CRI log
+files. One Alloy DaemonSet per node discovers Pods on that node, calculates the
+CRI file path, parses the CRI framing, and pushes entries to Loki. Grafana has
+Prometheus as the chart data source and adds Loki at
+<code>http://loki.monitoring.svc.cluster.local:3100</code>. A Grafana query is a read path;
+it does not acknowledge Nova observer delivery.</p>
+<h3 id="labels-and-correlation">Labels and correlation</h3>
+<p>The Alloy relabel path sets these Loki labels from Kubernetes discovery:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app</code></td>
+<td>First non-empty application name label, <code>app</code> label, controller name, or Pod name</td>
+</tr>
+<tr>
+<td><code>instance</code></td>
+<td>First non-empty instance label</td>
+</tr>
+<tr>
+<td><code>component</code></td>
+<td>First non-empty component label</td>
+</tr>
+<tr>
+<td><code>node_name</code></td>
+<td>Pod node name</td>
+</tr>
+<tr>
+<td><code>namespace</code></td>
+<td>Pod namespace</td>
+</tr>
+<tr>
+<td><code>job</code></td>
+<td><code>namespace/app</code></td>
+</tr>
+<tr>
+<td><code>pod</code></td>
+<td>Pod name</td>
+</tr>
+<tr>
+<td><code>container</code></td>
+<td>Container name</td>
+</tr>
+</tbody>
+</table>
+<p>The repository config adds no external Loki labels. It does not parse Nova JSON
+to promote <code>runId</code>, <code>stageId</code>, <code>attemptId</code>, <code>eventId</code>, or <code>deliveryId</code> to Loki
+labels. Those values are searchable only when the process wrote them in its log
+body. The active Nova event/observer path keeps them as structured envelope
+fields. Prometheus labels come from the selected chart's rendered scrape
+objects; this repository values file adds no KubeClaw correlation labels.</p>
+<h3 id="selection-sampling-dropping-and-redaction">Selection, sampling, dropping, and redaction</h3>
+<p>There is no probabilistic sampling in the checked Nova observers, Prometheus
+values, Alloy pipeline, or Loki values. Selection still occurs:</p>
+<ul>
+<li>an observer receives only exact event types in its registration;</li>
+<li>Prometheus retains only discovered scrape targets and successful samples;</li>
+<li>Alloy selects Pods on its own node and files that match the calculated CRI
+paths;</li>
+<li>kubelet can rotate a source log before Alloy reads it;</li>
+<li>Loki expires stored entries after 720 hours;</li>
+<li>Prometheus expires samples after 15 days or earlier when storage pressure
+prevents ingestion.</li>
+</ul>
+<p>Alloy has no <code>stage.drop</code>, rate limit, tenant split, or content-redaction stage
+in the repository configuration. It forwards the log body after CRI parsing.
+Therefore, application logs must already exclude secrets. The structured
+telemetry observer and file sink redaction rules do not protect CRI logs. Loki
+authentication is disabled in the checked values; network and deployment
+boundaries must restrict its HTTP endpoint.</p>
+<h3 id="retention-backpressure-and-failure">Retention, backpressure, and failure</h3>
+<table>
+<thead>
+<tr>
+<th>Boundary</th>
+<th>Retention or buffer</th>
+<th>Pressure or failure behavior</th>
+<th>Evidence limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prometheus scrape</td>
+<td>Scrape interval and target buffering belong to the rendered upstream chart; local retention is 15 days on 20 GiB</td>
+<td>A failed scrape creates a gap. This repository does not route scrape failure back to Nova.</td>
+<td>Source values do not prove which targets are live or that a sample reached TSDB.</td>
+</tr>
+<tr>
+<td>CRI source</td>
+<td>Kubelet-managed node files</td>
+<td>Rotation can remove unread bytes. The repository does not set kubelet log limits.</td>
+<td>Alloy cannot recover bytes that no longer exist.</td>
+</tr>
+<tr>
+<td>Alloy position and send path</td>
+<td>Node-local position files under <code>/var/lib/kubeclaw-alloy</code>; library queues/retries use rendered chart defaults</td>
+<td>Loki or network failure delays forwarding until collector buffering/retry limits are reached. No product operation waits for it.</td>
+<td>The source values do not state an accepted maximum outage or prove zero loss.</td>
+</tr>
+<tr>
+<td>Loki</td>
+<td>720 hours on a 20 GiB, single-replica filesystem store</td>
+<td>Ingestion/query/storage failure makes logs incomplete or unavailable. No replication, canary, gateway, chunk cache, or result cache is enabled.</td>
+<td>Retention configuration does not prove capacity for 720 hours.</td>
+</tr>
+<tr>
+<td>Grafana</td>
+<td>5 GiB UI state</td>
+<td>Data-source failure returns query errors. Dashboards do not become product authority.</td>
+<td>Grafana health does not prove fresh Prometheus samples or Loki entries.</td>
+</tr>
+</tbody>
+</table>
+<p>During a collector outage, keep one collector per node. Do not start Promtail
+and Alloy together because duplicate ingestion can result. Alloy imports the
+legacy Promtail position file only when its own positions do not exist. If
+Alloy fails after cutover, stop it before re-enabling Promtail and inspect both
+position sets. Readiness of either collector is not end-to-end log evidence.</p>
+<blockquote>
+<p><strong>Source evidence — optional monitoring</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/prometheus.yaml#L3-L50">Prometheus retains 15 days on 20 GiB and Grafana uses a 5 GiB volume plus the
+Loki data source</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/loki.yaml#L1-L33">Loki is one unauthenticated filesystem-backed replica with 720-hour retention
+and no caches, gateway, or canary</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L1-L29">Alloy uses a node-local position directory, imports legacy Promtail positions,
+and disables usage reporting</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L30-L45">Its discovery is restricted to the current node and CRI parsing forwards to
+Loki</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L47-L98">The relabel rules create the <code>app</code>, <code>instance</code>, <code>component</code>, <code>node_name</code>,
+<code>namespace</code>, <code>job</code>, <code>pod</code>, and <code>container</code> labels</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L100-L130">File discovery constructs CRI paths and Loki write sends to the in-cluster
+push endpoint without external labels</a>.</p>
+</blockquote>
+<h3 id="why-event-telemetry-and-platform-monitoring-are-separate">Why event telemetry and platform monitoring are separate</h3>
+<p><strong>Accepted approach:</strong> Nova keeps exact lifecycle and domain events in its own
+recoverable journal and treats external sinks as projections. The optional
+monitoring stack keeps infrastructure samples and process logs. This preserves
+pipeline decisions when monitoring is absent. Its cost is that operators must
+correlate two paths, and the repository has no automatic event-to-metric or
+event-to-log completeness proof. The historical reason beyond the implemented
+authority boundary is not recorded; the explanation is an inference.</p>
+<p>Reconsider the separation if the project adds an authenticated, bounded bridge
+with explicit correlation, redaction, cardinality, retention, and failure
+semantics. Do not make pipeline completion depend on Grafana, Loki, or
+Prometheus availability unless that new dependency has a recovery contract.</p>
+<h2 id="retention-capacity-and-backpressure">Retention, Capacity, and Backpressure</h2>
+<p>There is no single telemetry retention policy in the runtime. Each layer has a
+different bound and response.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Capacity or retention control</th>
+<th>When pressure reaches the limit</th>
+<th>Data-loss meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Canonical event journal</td>
+<td>Filesystem capacity; no automatic age or count retention</td>
+<td>Append fails and Nova cannot safely continue mutation</td>
+<td>Authority is preserved up to the last committed record; new progress stops</td>
+</tr>
+<tr>
+<td>Delivery and checkpoint journals</td>
+<td>Filesystem capacity; bounded retries; no automatic retirement</td>
+<td>Attempt or checkpoint append fails; required path fails closed</td>
+<td>Canonical source remains; delivery recovery cannot advance</td>
+</tr>
+<tr>
+<td>Observer invocation</td>
+<td><code>timeoutMs</code>, <code>maxAttempts</code>, <code>backoffMs</code>, 256 MiB lease declaration</td>
+<td>Abort, retry, then required failure or best-effort blocked run</td>
+<td>Sink may have accepted a lost-ACK attempt; stable identity permits deduplication</td>
+</tr>
+<tr>
+<td>File telemetry store</td>
+<td>Record bytes, record count, total bytes, depth, node count</td>
+<td>Reject append; never rotate silently</td>
+<td>Projection is incomplete; canonical event remains</td>
+</tr>
+<tr>
+<td>Redis stream</td>
+<td>Approximate <code>MAXLEN</code> per stream</td>
+<td>Old entries trim during append</td>
+<td>Projection history can disappear by policy; Nova state does not</td>
+</tr>
+<tr>
+<td>Redis dedup</td>
+<td><code>dedupTtlMs</code> per key</td>
+<td>Key expires</td>
+<td>A replay outside the window can create another stream entry</td>
+</tr>
+<tr>
+<td>Redis server</td>
+<td><code>maxmemory 1gb</code>, <code>noeviction</code>, 20 GiB PVC in selected production values</td>
+<td>New write fails instead of evicting state</td>
+<td>Backpressure reaches observer policy; existing stream and dedup state remains</td>
+</tr>
+<tr>
+<td>OpenClaw host queues</td>
+<td>100 control and 100 payload entries in process memory</td>
+<td>New event is dropped; control remains first in flush order</td>
+<td>Restart loses all queued events and counters; no replay source exists here</td>
+</tr>
+<tr>
+<td>OpenClaw control/payload streams</td>
+<td>Approximate <code>MAXLEN</code> 10,000 per stream</td>
+<td>Redis trims old entries during later writes</td>
+<td>No repository consumer, acknowledgement, or checkpoint proves consumption</td>
+</tr>
+<tr>
+<td>OpenClaw dead-letter stream</td>
+<td>Approximate <code>MAXLEN</code> 1,000</td>
+<td>Old failure copies trim; a failed DLQ write drops the new copy</td>
+<td>The original OpenClaw hook is not recoverable from Nova's journal</td>
+</tr>
+<tr>
+<td>Audit result</td>
+<td>Caller memory/output and journal acquisition</td>
+<td>Read fails or caller cannot retain output</td>
+<td>No new lifecycle/audit entry; journal acquisition can repair an incomplete tail and create/open append-lock metadata (see audit caveat below)</td>
+</tr>
+<tr>
+<td>Retained v1 files</td>
+<td>Repository source retention only</td>
+<td>Removal can break unknown external readers</td>
+<td>No current repository runtime effect; external use must be assessed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pressure-propagation">Pressure propagation</h3>
+<p>A required sink propagates pressure in this order:</p>
+<p><code>sink limit -&gt; adapter error -&gt; observer retries -&gt; required observer failure -&gt; host operation fails</code></p>
+<p>A best-effort sink uses this order:</p>
+<p><code>sink limit -&gt; adapter error -&gt; observer retries -&gt; failed delivery record -&gt; same observer/run blocks for this drain</code></p>
+<p>Neither path deletes or rewrites the canonical event. This costs disk space and
+can stop work, but it preserves an exact recovery point.</p>
+<p>The adapters do not send a built-in capacity alert. The deployment's monitoring
+layer must alert on filesystem space, journal growth, sink rejection, observer
+failure, Redis memory, Redis persistence, stream length, and checkpoint age.
+Until the operator configures and tests that integration, a bounded rejection
+is the enforced safety mechanism. The operator owns early warning.</p>
+<h3 id="retirement">Retirement</h3>
+<p>Do not delete canonical events while recovery, audit, effects, artifacts, waits,
+or observer checkpoints still refer to them. Do not delete a sink record merely
+because its stream trimmed another copy. Retirement needs the domain owner's
+fence, selected identities, a reference check, and a durable receipt or
+tombstone when the store supports it.</p>
+<p>The current Nova event and observer journals have no automatic retirement
+implementation. Plan filesystem capacity for the full operational retention
+window and copy required evidence to an independent backup before deletion.</p>
+<h2 id="audit-is-a-projection">Audit Is a Projection</h2>
+<p><strong>Before using audit:</strong> the projection adds no new canonical lifecycle or
+audit entry, but journal acquisition is <strong>not byte-preserving or write-free</strong>.
+<code>readPipelineAudit</code> constructs <code>FileJournal</code>. Its constructor prepares the
+parent directory and uses the stable <code>events.jsonl.append-lock</code> file through
+<code>FileMutex</code>, which opens the lock file and invokes <code>/usr/bin/flock</code> before
+loading the journal. This can create/open lock metadata even when there is no
+tail to repair. The parent-directory preparation is expected to be a no-op when the
+event file already exists; it is still part of the constructor path.</p>
+<p>When the existing journal is neither empty nor terminated by a line feed
+(LF), the loader opens it for writing, truncates it to the last LF
+(<strong>possibly zero bytes</strong>), and calls <code>fsync</code> before parsing the remaining
+chain and hashes. Empty or LF-terminated bytes do not need this tail
+truncation, but the lock path still applies. This is limited incomplete-tail
+handling, not a general corrupt-journal recovery guarantee: invalid committed
+records can still fail validation after these physical effects.</p>
+<p><code>AUDIT_JOURNAL_MISSING</code> is raised before journal construction if <code>events.jsonl</code>
+is absent; this audit path does not create the missing event journal.
+<code>AUDIT_RUN_MISSING</code> is raised only after construction and filtering, so a
+failed audit for a missing run can already have acquired the lock and repaired
+an incomplete tail. No new entry and an early CLI return do not mean no writes.</p>
+<p>If original bytes must be retained, preserve the first diagnostic and original
+evidence before using audit. Use a correctly bound <strong>inactive copy</strong> of the
+run root for inspection rather than the sole retained original; audit can
+modify that copy too. Retain the original run identity and journal binding,
+do not redirect an active run to the copy, and do not combine output from
+different journal heads. There is no read-only or no-record flag in this audit
+route that bypasses journal construction, and no alternative parser or command
+is asserted to have equivalent behavior here.</p>
+<p><strong>Source — current acquisition and effect boundaries (2026-10-15; no audit
+command executed):</strong>
+<a href="../../../skills/nova/core/telemetry/audit.ts#L15-L27">readPipelineAudit</a> (<code>skills/nova/core/telemetry/audit.ts:15–27</code>, current-checkout SHA-256 <code>59eb49b7c0e2e430b38c53572edb5d7563724957996bd2dfda261fe1a1569bfd</code>). <a href="../../../skills/nova/core/state/journal.ts#L30-L42">FileJournal constructor</a> (<code>skills/nova/core/state/journal.ts:30–42</code>, current-checkout SHA-256 <code>25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf</code>). <a href="../../../skills/nova/core/state/journal.ts#L59-L81">recoverIncompleteTail / load</a> (<code>skills/nova/core/state/journal.ts:59–81</code>, current-checkout SHA-256 <code>25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf</code>). <a href="../../../skills/nova/core/state/file-mutex.ts#L8-L24">FileMutex.withLock</a> (<code>skills/nova/core/state/file-mutex.ts:8–24</code>, current-checkout SHA-256 <code>d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c</code>). <a href="../../../skills/nova/core/cli.ts#L48-L54">audit CLI branch</a> (<code>skills/nova/core/cli.ts:48–54</code>, current-checkout SHA-256 <code>09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787</code>).</p>
+<p><code>audit</code> reads <code>events.jsonl</code>, filters one run, retains the event ID, sequence,
+type, redacted identity, time, causation, redacted payload, and source record
+hash, and then binds the projection to the journal head with a digest.</p>
+<p>This makes the output useful for diagnosis and review. It does not make the
+output a replacement journal. It excludes effect-receipt blobs, snapshots,
+artifacts, observer delivery attempts, and other stores unless their facts were
+also represented by events.</p>
+<p>If the audit command is interrupted, retain the first diagnostic and partial
+output before deciding whether to retry. Do not assume that journal bytes are
+unchanged. If original bytes must be retained, retry only against the
+correctly bound inactive copy described above, not the sole retained original.
+Keep the original run identity and journal binding, and do not merge partial
+audit output from different runs or journal heads.</p>
+<h2 id="failure-and-recovery-matrix">Failure and Recovery Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Preserved authority</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observer is not activated</td>
+<td>Canonical event journal</td>
+<td>Correct activation and grants. Do not advance a checkpoint manually.</td>
+</tr>
+<tr>
+<td>Observer times out</td>
+<td>Event, attempt record, stable delivery ID</td>
+<td>Let the configured policy retry. Check the sink for a lost acknowledgment before manual action.</td>
+</tr>
+<tr>
+<td>Required observer exhausts attempts</td>
+<td>Canonical event and failed delivery history</td>
+<td>Repair the sink or configuration, preserve journals, and restart owned recovery.</td>
+</tr>
+<tr>
+<td>Best-effort observer fails</td>
+<td>Canonical event and failed delivery history</td>
+<td>Other observers can continue. Repair this observer; replay from its last valid checkpoint.</td>
+</tr>
+<tr>
+<td>Checkpoint conflicts with event ID</td>
+<td>Event journal and conflicting checkpoint evidence</td>
+<td>Stop delivery. Restore or investigate the checkpoint journal; do not select one by timestamp.</td>
+</tr>
+<tr>
+<td>Redis dedup key expired</td>
+<td>Canonical event and any retained stream entry</td>
+<td>Consumer deduplicates by event/delivery identity, or operator accepts policy-defined duplicate projection.</td>
+</tr>
+<tr>
+<td>Redis stream trimmed old entry</td>
+<td>Nova event journal</td>
+<td>Replay only through the observer path when policy and sink allow it. A checkpoint may need an owner-approved rewind procedure; do not edit it casually.</td>
+</tr>
+<tr>
+<td>OpenClaw host queue is full or the event is too large</td>
+<td>No durable copy exists in this path; process counters and a warning remain until restart</td>
+<td>Reduce event content or writer pressure. Do not claim recovery; the producer has no queue replay source.</td>
+</tr>
+<tr>
+<td>OpenClaw payload-stream write fails</td>
+<td>No durable copy exists; the writer makes one attempt</td>
+<td>Repair Redis for later events. The failed payload event cannot be replayed by this extension.</td>
+</tr>
+<tr>
+<td>OpenClaw control-stream writes exhaust retries</td>
+<td>A dead-letter copy can exist if its single write succeeds</td>
+<td>Inspect <code>droppedWriteFailureControl</code>, <code>deadLetterWritten</code>, <code>deadLetterFailed</code>, and Redis directly. No repository consumer processes the DLQ.</td>
+</tr>
+<tr>
+<td>OpenClaw host restarts with queued events</td>
+<td>Redis retains only entries that completed <code>XADD</code>; memory queues, dedupe maps, and counters are lost</td>
+<td>Treat the gap as unrecoverable unless another independent source retained the original host events.</td>
+</tr>
+<tr>
+<td>File sink is full</td>
+<td>Nova event journal and prior sink records</td>
+<td>Add capacity or execute verified retirement. Required observers remain failed closed.</td>
+</tr>
+<tr>
+<td>Canonical event journal is corrupt</td>
+<td>No trustworthy projection can repair it</td>
+<td>Stop mutation and restore the complete Nova run group from verified backup.</td>
+</tr>
+<tr>
+<td>Retained v1 schema changes</td>
+<td>No current runtime effect</td>
+<td>Regenerate manifest/types, run contract tests, and assess external readers. It does not update v2 runtime automatically.</td>
+</tr>
+<tr>
+<td>Prometheus scrape fails</td>
+<td>Product journals and the last retained samples</td>
+<td>Repair discovery, endpoint, or network access. Do not infer product failure or replay a lifecycle action.</td>
+</tr>
+<tr>
+<td>Alloy cannot push to Loki</td>
+<td>Product journals, CRI files not yet rotated, and collector positions</td>
+<td>Preserve positions and source files. Restore Loki/network service. Do not run a second collector concurrently.</td>
+</tr>
+<tr>
+<td>Loki volume is full or corrupt</td>
+<td>Product journals and any surviving CRI files</td>
+<td>Stop relying on log queries, preserve the volume, and restore Loki separately. There is no repository-tested log replay or restore.</td>
+</tr>
+<tr>
+<td>Grafana cannot query a data source</td>
+<td>The underlying Prometheus or Loki store can still be healthy</td>
+<td>Check the data source directly, then Grafana configuration and credentials. Dashboard health is not a sink acknowledgement.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="change-guide">Change Guide</h2>
+<h3 id="add-a-lifecycle-event">Add a lifecycle event</h3>
+<ol>
+<li>Add the type to the SDK contract and generated schema source.</li>
+<li>Define the exact producer and lifecycle commit point.</li>
+<li>Define identity and causation fields.</li>
+<li>Keep the payload portable, bounded, and free of secrets.</li>
+<li>Update recovery and audit readers when the event changes state meaning.</li>
+<li>Update artifact, effect, or wait projections when they consume the event.</li>
+<li>Add exact observer subscriptions and compatibility tests.</li>
+<li>Test restart before and after the event commit.</li>
+</ol>
+<h3 id="add-a-plugin-domain-event">Add a plugin domain event</h3>
+<ol>
+<li>Choose a namespaced and versioned event type.</li>
+<li>Document the producer registration and payload schema.</li>
+<li>State whether replay of the same attempt can emit it again.</li>
+<li>Define sensitive fields and producer-side minimization.</li>
+<li>Add subscribers only after the producer contract is stable.</li>
+<li>Test unknown consumers, duplicate delivery, and removal.</li>
+</ol>
+<h3 id="add-an-observer-or-sink">Add an observer or sink</h3>
+<ol>
+<li>Select exact subscriptions. Avoid a broad event set without a use case.</li>
+<li>Choose <code>required</code> only when pipeline progress must depend on delivery.</li>
+<li>Set bounded timeout, attempts, and backoff.</li>
+<li>Use stable delivery identity for every external effect.</li>
+<li>Define redaction before transport.</li>
+<li>Define record, store, queue, and retention limits.</li>
+<li>Define full-store behavior. Never default to silent loss.</li>
+<li>Test lost acknowledgment, restart, duplicate input, corrupted checkpoint,
+exhausted retries, cancellation, and shutdown.</li>
+<li>Document how to retire its records and remove the observer without deleting
+canonical events.</li>
+</ol>
+<h3 id="change-retained-v1">Change retained v1</h3>
+<p>Treat v1 as a delivered compatibility asset. Update the catalog and source
+schemas, regenerate all event and bundle schemas plus Go and TypeScript types,
+and run the manifest and cross-language tests. Assess external users first.
+Do not claim that this activates v1 in the runtime.</p>
+<h3 id="change-openclaw-agent-observability-v1">Change OpenClaw agent-observability v1</h3>
+<ol>
+<li>Change the source contract under <code>contracts/agent-observability/v1</code> first.</li>
+<li>Keep hook, event type, payload validator, and control/payload routing in one
+consistent change.</li>
+<li>Run the extension contract-sync step and reject a generated-source diff.</li>
+<li>Define which identity is required and how a duplicate is recognized.</li>
+<li>Classify raw sensitive fields before you add or promote them.</li>
+<li>Set event, queue, command, retry, stream, and dead-letter limits in the
+Buster gateway configuration.</li>
+<li>Add a consumer only with explicit authentication, start position,
+acknowledgement, checkpoint, replay, idempotency, and retirement behavior.</li>
+<li>Test queue overflow, oversized content, restart, disabled configuration,
+payload-write failure, exhausted control retry, and dead-letter failure.</li>
+<li>Verify the installed Buster host and Redis path. Local package tests do not
+prove this live route.</li>
+</ol>
+<h2 id="verification-map-and-evidence-limits">Verification Map and Evidence Limits</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Repository evidence</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v2 envelope and event types</td>
+<td>SDK schema generation and type checks</td>
+<td>Types alone do not prove a configured observer</td>
+</tr>
+<tr>
+<td>Canonical order and corruption detection</td>
+<td>FileJournal and Nova recovery tests</td>
+<td>Does not prove target-volume power-loss behavior</td>
+</tr>
+<tr>
+<td>Observer attempts, checkpoints, required/best-effort policy</td>
+<td>Nova observer and recovery tests</td>
+<td>Does not prove an external sink's availability</td>
+</tr>
+<tr>
+<td>Telemetry observer redaction</td>
+<td>Telemetry-observer parity and live-function tests</td>
+<td>Field-name rules cannot detect every semantic secret</td>
+</tr>
+<tr>
+<td>File sink bounds and durability</td>
+<td>Telemetry-store package and live-function tests</td>
+<td>Does not provide off-node backup or automatic retention</td>
+</tr>
+<tr>
+<td>Redis lost-ACK and dedup behavior</td>
+<td>Redis transport package, durability, and migration tests</td>
+<td>Dedup remains bounded by configured TTL; cluster storage acceptance is separate</td>
+</tr>
+<tr>
+<td>OpenClaw agent-observability v1</td>
+<td>Contract tests plus extension config, normalization, queue, retry, and package tests</td>
+<td>No deployed-host, Redis-persistence, stream-consumer, acknowledgement, checkpoint, replay, or end-to-end completeness proof</td>
+</tr>
+<tr>
+<td>Retained v1 schemas and generated languages</td>
+<td><code>generate-telemetry-contracts.mjs --check</code> and v1 contract tests</td>
+<td>No runtime service, producer, consumer, authorization, or ordering implementation</td>
+</tr>
+<tr>
+<td>Prometheus/Grafana values</td>
+<td>Upstream chart render and deployment checks verify declared PVCs, Secret, port, and retention</td>
+<td>No live scrape, alert, dashboard, or application-metric completeness proof</td>
+</tr>
+<tr>
+<td>CRI → Alloy → Loki</td>
+<td>Alloy config validation and chart render verify discovery, parsing, labels, positions, and push URL</td>
+<td>No live proof that every container line reached Loki or remained queryable for 720 hours</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-guides">Related Guides</h2>
+<ul>
+<li><a href="data-and-state.html">Data and State</a> explains storage, backup groups, and deletion.</li>
+<li><a href="nova-core.html">Nova Core</a> explains event-driven lifecycle recovery.</li>
+<li><a href="plugin-runtime.html">Plugin Runtime</a> explains observer admission, grants, and activation.</li>
+<li><a href="deployment-and-trust.html">Deployment and Trust</a> separates evidence from logs, metrics, and transport.</li>
+<li><a href="../extend/contracts.html">Contracts</a> explains observer authoring and checkpoints.</li>
+<li><a href="../use/recovery.html">Back up and recover</a> gives the operator recovery sequence.</li>
+</ul>
+</main></body></html>

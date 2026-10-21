@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-untriaged.v1",
+  "status": "untriaged",
+  "source": {
+    "originalPath": "docs/operators/README.md",
+    "legacyPath": "docs/_legacy-source/operators/README.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "89b6ddbeba0ea1bae5a848741f6728ba6964b112",
+    "extractionDigest": "204b6976c9ec05d7357636c5a1897b672861e2cf7599e37c0a08e82d95728b58"
+  }
+}

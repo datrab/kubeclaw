@@ -1,0 +1,15 @@
+{
+  "base": "b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9",
+  "commit": "ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120",
+  "tree": "a9562066bce91e51aa1f05efb6814bb964f060d3",
+  "files": {
+    "scripts/generate-buster-provider-reference.mjs": "078c8598fba6dd875e2e802c0620caf7201747b75ba8c1c3efd49ce998681273",
+    "scripts/docs-api-producer-adapter-authorities.json": "45142ed4c13c57c02ffb5298218a7a5bf0b30b7705b177b393233833db90ba57",
+    "docs/site/reference/buster-provider-configuration.md": "47b562aa81bd9c15bffc32d466b3605bb831abd917e4a03982356a525e28e016",
+    "docs/site/reference/generated-documentation-map.json": "9fcb9f79d982254e9c4e57d02bb85860013ed1610fb8d92c4936fe95813ae8b6"
+  },
+  "packageReview": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/provenance-correction-v4/package-review.json",
+    "sha256": "28e5649c280cd09389067ad0ec94ea66ea2dd725ee15a5b6c6451de1f414a462"
+  }
+}

@@ -362,21 +362,7 @@ append_code_bundle_override_file() {
   local auth_secret="${5:-}"
   local auth_key="${6:-token}"
 
-  cat >>"$output_path" <<EOF
-codeBundle:
-  enabled: true
-  archiveUrl: "$archive_url"
-  expectedCommit: "$expected_commit"
-  contractVersion: "$contract_version"
-EOF
-
-  if [[ -n $auth_secret ]]; then
-    cat >>"$output_path" <<EOF
-  auth:
-    existingSecret: "$auth_secret"
-    existingSecretKey: "$auth_key"
-EOF
-  fi
+  node "$REPO_DIR/scripts/bundle-override-values.mjs" "$archive_url" "$expected_commit" "$contract_version" "$auth_secret" "$auth_key" >>"$output_path" || return 1
 }
 
 yaml_trim_scalar() {
@@ -897,7 +883,7 @@ cmd_setup() {
   info "Next: ./deploy.sh infra && ./deploy.sh agents"
 
   header "Node Registry Configuration"
-  info "Configure Buster runtimeInfrastructure.registry explicitly; see docs/operations/registry-clients.md."
+  info "Configure Buster runtimeInfrastructure.registry explicitly; see docs/site/understand/platform-and-operations.md#writable-local-oci-registry."
   info "Generate and review node config separately; deployment does not install host registry configuration."
   warn "A registry Service or hostname in registries.yaml does not prove an uncached CRI pull."
 
@@ -1352,11 +1338,11 @@ deploy_agent() {
     bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
 
     if [[ -z $bundle_auth_secret ]]; then
-      bundle_auth_secret="$(bundle_values_field "$values_file" "$private_values" auth existingSecret)"
+      bundle_auth_secret="$(bundle_values_field "$values_file" "$private_values" auth existingSecret)" || return 1
     fi
     if [[ -z $bundle_auth_key || $bundle_auth_key == "token" ]]; then
       local values_auth_key=""
-      values_auth_key="$(bundle_values_field "$values_file" "$private_values" auth existingSecretKey)"
+      values_auth_key="$(bundle_values_field "$values_file" "$private_values" auth existingSecretKey)" || return 1
       if [[ -n $values_auth_key ]]; then
         bundle_auth_key="$values_auth_key"
       fi
@@ -1369,7 +1355,7 @@ deploy_agent() {
       fi
       info "Selected ${role} code bundle commit: ${bundle_expected_commit}" >&2
     fi
-    if [[ -z $bundle_archive_url ]]; then bundle_archive_url="$(bundle_values_field "$values_file" "$private_values" archiveUrl)"; fi
+    if [[ -z $bundle_archive_url ]]; then bundle_archive_url="$(bundle_values_field "$values_file" "$private_values" archiveUrl)" || return 1; fi
     if [[ -z $bundle_archive_url ]]; then
       if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit" "$image_repo")"; then
         bundle_archive_url=""
@@ -1394,14 +1380,14 @@ deploy_agent() {
   fi
 
   if [[ -n $override_file && $mode == "code" ]]; then
-    append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"
+    append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key" || { rm -f "$override_file"; return 1; }
   fi
 
   helm_args=(--values "$values_file")
   if [[ -n $private_values ]]; then helm_args+=(--values "$private_values"); fi
   if [[ "$role" == buster && -n "$private_values" ]]; then
     local runtime_resources
-    runtime_resources="$(node "$REPO_DIR/scripts/buster-resource-overlay.mjs" "$values_file" "$private_values")"
+    runtime_resources="$(node "$REPO_DIR/scripts/buster-resource-overlay.mjs" "$values_file" "$private_values")" || { [[ -z $override_file ]] || rm -f "$override_file"; return 1; }
     if [[ -n "$runtime_resources" ]]; then helm_args+=(--set-json "$runtime_resources"); fi
   fi
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
@@ -1691,11 +1677,11 @@ cmd_prism() {
   prism_bundle_auth_key="$(bundle_env_for_role prism auth_key)"
   prism_bundle_archive_url="$(bundle_env_for_role prism archive_url)"
   if [[ -z $prism_bundle_auth_secret ]]; then
-    prism_bundle_auth_secret="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecret)"
+    prism_bundle_auth_secret="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecret)" || return 1
   fi
   if [[ -z $prism_bundle_auth_key || $prism_bundle_auth_key == "token" ]]; then
     local prism_values_auth_key=""
-    prism_values_auth_key="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecretKey)"
+    prism_values_auth_key="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecretKey)" || return 1
     if [[ -n $prism_values_auth_key ]]; then
       prism_bundle_auth_key="$prism_values_auth_key"
     fi
@@ -1707,7 +1693,7 @@ cmd_prism() {
     fi
     info "Selected Prism code bundle commit: ${prism_bundle_expected_commit}" >&2
   fi
-  if [[ -z $prism_bundle_archive_url ]]; then prism_bundle_archive_url="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" archiveUrl)"; fi
+  if [[ -z $prism_bundle_archive_url ]]; then prism_bundle_archive_url="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" archiveUrl)" || return 1; fi
   if [[ -z $prism_bundle_archive_url ]]; then
     prism_bundle_archive_url="$(default_bundle_archive_url prism "$prism_bundle_expected_commit" "$prism_agent_image_repo")" || true
   fi
@@ -1734,7 +1720,7 @@ cmd_prism() {
   prism_bundle_override="$(mktemp)"
   append_code_bundle_override_file "$prism_bundle_override" \
     "$prism_bundle_archive_url" "$prism_bundle_expected_commit" \
-    "$prism_bundle_contract_version" "$prism_bundle_auth_secret" "$prism_bundle_auth_key"
+    "$prism_bundle_contract_version" "$prism_bundle_auth_secret" "$prism_bundle_auth_key" || { rm -f "$prism_bundle_override"; return 1; }
   local agent_values=(-f "$PRISM_AGENT_VALUES_FILE")
   [[ -z $PRISM_AGENT_VALUES_OVERLAY ]] || agent_values+=(-f "$PRISM_AGENT_VALUES_OVERLAY")
   agent_values+=(-f "$prism_bundle_override" --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1")

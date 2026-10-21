@@ -1,0 +1,2036 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/data-and-state.html"></head><body><main>
+<h1 id="data-and-state-what-must-survive">Data and State: What Must Survive</h1>
+<p>Status: implemented with stated retention and disaster-recovery limits
+Audience: platform operator, runtime developer, data owner, incident responder
+Owner: state-owning component maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core">skills/nova/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/worker/core">skills/worker/core</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine">skills/buster/engine</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism">skills/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism">charts/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/gitops/platform">gitops/platform</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/postgresql-recovery.sh">scripts/postgresql-recovery.sh</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/scripts/redis-prepare-migration.sh">scripts/redis-prepare-migration.sh</a>
+Evidence revision: <code>13bff0a18a64e74f2cbbaa1978e746fcdeff0c10</code>
+Applies to: current file stores, Prism PostgreSQL, LiteLLM PostgreSQL, Redis, and content-addressed artifacts
+Last verified: code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20</p>
+<h2 id="purpose">Purpose</h2>
+<p>KubeClaw keeps several kinds of state. They do not have equal authority.
+A Nova event can decide whether a run completed. A Redis entry can deliver a
+copy of that event, but it cannot make the decision. A PostgreSQL row can refer
+to an artifact, but it does not contain the artifact bytes.</p>
+<p>This page explains which data must survive, where it is stored, who can write
+it, and how to recover it. It also states where the repository does not provide
+automatic retention or complete disaster recovery.</p>
+<p>The design uses one rule throughout the platform:</p>
+<blockquote>
+<p><strong>Restore the owner before its projections.</strong></p>
+<p>A projection can be rebuilt only when its authoritative source still exists.
+Do not use a cache, log, metric, Redis stream, or observer sink to invent
+missing lifecycle state.</p>
+</blockquote>
+<h2 id="the-ownership-model">The Ownership Model</h2>
+<p>Three terms prevent unsafe recovery decisions.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authority</td>
+<td>The record that can change or prove product state.</td>
+<td>Nova's hash-verified event journal.</td>
+</tr>
+<tr>
+<td>Durable support</td>
+<td>Data that the authority refers to and needs for replay.</td>
+<td>An effect result blob or Prism artifact.</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td>A copy for delivery, search, display, or diagnosis.</td>
+<td>A Redis telemetry stream or generated audit view.</td>
+</tr>
+</tbody>
+</table>
+<p>A durable support object is not optional merely because it is not the main
+record. If a journal points to a digest-addressed blob, the record and the blob
+form one recovery group.</p>
+<h2 id="complete-store-matrix">Complete Store Matrix</h2>
+<p>The physical locations below are paths inside the configured volume or service.
+The deployment can mount those roots at different host paths.</p>
+<p>Buster remote results bind a content digest and receipt. The source snapshot
+has a separate Ed25519 attestation; do not treat it as a result signature.</p>
+<blockquote>
+<p><strong>Source evidence — result and source identities</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L416-L429">Remote results carry a digest and receipt</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L385-L401">Source snapshots carry the distinct Ed25519 attestation</a>.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Store</th>
+<th>Schema or format</th>
+<th>Physical location</th>
+<th>Writer and reader</th>
+<th>Consistency and protection</th>
+<th>Retention, capacity, migration, and recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova run snapshot</td>
+<td><code>run-snapshot.v4</code> with graph, registry, dispatch profile, review-cache profile, and SHA-256 digest</td>
+<td><code>&lt;storageRoot&gt;/runs/v2-&lt;sha256(runId)&gt;/run-snapshot.json</code></td>
+<td>Nova creates it once; recovery and evidence readers validate it</td>
+<td>Private file, temporary file, <code>fsync</code>, no-replace hard link, directory <code>fsync</code></td>
+<td>No automatic expiry or size quota. Keep it with the complete run root. Versions v1-v4 are readable, but automatic semantic migration is not provided.</td>
+</tr>
+<tr>
+<td>Nova canonical events</td>
+<td>Hash-chained JSON Lines containing <code>lifecycle-event.v2</code> and <code>plugin-domain-event.v2</code></td>
+<td><code>&lt;runRoot&gt;/events.jsonl</code></td>
+<td>Nova Core and granted plugin contexts append; scheduler recovery, audit, artifact recovery, and observers read</td>
+<td>One append lock, monotonic file sequence, previous-record hash, durable append; an incomplete final line is truncated</td>
+<td>No automatic expiry or compaction. Restore before resume. A broken chain, rewind, replacement, or divergent prefix stops recovery.</td>
+</tr>
+<tr>
+<td>Nova resume signals</td>
+<td>Hash-chained <code>resume-signal.v2</code> records</td>
+<td><code>&lt;runRoot&gt;/signals.jsonl</code></td>
+<td>The resume entry writes; wait validation and run recovery read. The CLI reads an operator-supplied JSON file</td>
+<td>Append is serialized. Validation checks the schema, wait ID, signal type, matching issuer fields, wait expiry, and issue time. The signal has no nonce or signature; matching issuer fields do not authenticate the caller. <code>wait.resolved</code> prevents reuse of a resolved wait.</td>
+<td>No expiry-based file deletion or count quota. Protect access to the CLI and run files. Back up and restore with the run. An invalid signal stops resume. Retire only with the complete terminal run.</td>
+</tr>
+<tr>
+<td>Nova administrative decisions</td>
+<td>Hash-chained <code>administrative-reopen.v2</code> records</td>
+<td><code>&lt;runRoot&gt;/administrative-decisions.jsonl</code></td>
+<td>A supplied authentication callback identifies a new decision's operator or administrator; reopen and repair recovery read it</td>
+<td>Mutation is serialized. The callback principal must match the actor and configured issuer. Decision ID and idempotency key detect conflicting replay. Recovery verifies pinned packages, graph, and blocked state. There is no expected-journal-head field. The causal lifecycle event records application.</td>
+<td>No automatic expiry or capacity quota. Back up with events. Stop on corruption, conflicting replay, or invalid recovered state. A recorded identical decision can continue without calling authentication again. Do not reconstruct a decision from an event. Retire with the complete terminal run and its audit obligation.</td>
+</tr>
+<tr>
+<td>Nova effects and large results</td>
+<td>Hash-chained effect records; result references use <code>effect-result-reference.v1</code></td>
+<td><code>&lt;runRoot&gt;/effects.jsonl</code>; blobs under <code>&lt;runRoot&gt;/effect-results/sha256/&lt;prefix&gt;/&lt;hash&gt;.json</code></td>
+<td>Effect Coordinator writes; recovery and evidence readers read</td>
+<td>Idempotency key, request/receipt conflict checks, append lock, content digest and byte-count verification</td>
+<td>Results at or below 64 KiB remain inline. Larger JSON results use immutable digest paths. No garbage collector exists; back up the journal and result tree together.</td>
+</tr>
+<tr>
+<td>Nova observer delivery state</td>
+<td><code>observer-checkpoint.v2</code> and <code>observer-delivery-record.v2</code>, each in a hash-chained journal</td>
+<td><code>&lt;runRoot&gt;/observer-checkpoints.jsonl</code>; <code>&lt;runRoot&gt;/observer-deliveries.jsonl</code></td>
+<td>Observer Runtime writes and replays</td>
+<td>Checkpoint binds observer provenance, run, event sequence, and event ID; delivery journal retains each started/completed/failed attempt</td>
+<td>Retain with the event journal until all required recovery and audit obligations end. Deleting it can cause redelivery. There is no automatic retirement in Nova Core.</td>
+</tr>
+<tr>
+<td>Nova resource locks</td>
+<td>Durable lock-manager records</td>
+<td><code>&lt;storageRoot&gt;/resource-locks</code></td>
+<td>Effect Coordinator acquires and releases; recovery validates</td>
+<td>Fencing tokens and configured lock TTL; lock state does not replace an effect receipt</td>
+<td>Restore with Nova state. A lock timeout is not proof that an external effect did not occur. Reconcile the effect before retry.</td>
+</tr>
+<tr>
+<td>Nova remote dispatch</td>
+<td>Durable records for <code>nova-remote-plan-dispatch.v1</code>, interruption facts, and projected dispatch receipts; source archives are digest-addressed blobs</td>
+<td><code>&lt;remoteStateRoot&gt;/dispatch/records/store.json</code>; <code>&lt;remoteStateRoot&gt;/dispatch/blobs/sha256/...</code></td>
+<td>Nova persists before HTTP submission; dispatch, reconnect, import-retention, and operator projection tools read</td>
+<td>Durable-record writer lock, idempotency key and payload digest; archive digest and byte count; run/import fences are required before compaction</td>
+<td>Limits for records, record bytes, total metadata, one archive, and total archive bytes come from the remote-gate configuration. No age expiry. Back up record and blob roots together. Missing or changed blobs block dispatch/recovery. Projection can remove inline archive bytes only after verified import authority; delete the remaining record only with the run.</td>
+</tr>
+<tr>
+<td>Nova remote result import</td>
+<td><code>nova-test-gate-import.v2</code> pending/complete records, execution graphs, result and decision digests; evidence is digest-addressed</td>
+<td><code>&lt;remoteStateRoot&gt;/imports/records/store.json</code>; <code>&lt;remoteStateRoot&gt;/imports/blobs/sha256/...</code></td>
+<td>Nova importer writes; verified-output, execution-graph, dispatch-compaction, and later gate readers read</td>
+<td>The store reserves a pending record before evidence, checks the complete job/source/result/decision identity, writes immutable blobs, then performs a digest-guarded transition to complete</td>
+<td>Evidence-per-job and store-wide byte limits plus durable-record limits apply. No age expiry. Back up with dispatch and the run. A pending record is recoverable; a digest mismatch or absent blob blocks import. Retain completed authority while a lifecycle decision, report, or dispatch projection refers to it.</td>
+</tr>
+<tr>
+<td>Nova observability reconciliation</td>
+<td><code>nova-observability-plan.v1</code>, durable attempt/evidence/closure records, bounded raw-ingress quarantine, and hash-chained <code>nova-observability-reconciliation.v1</code> decisions</td>
+<td><code>&lt;runRoot&gt;/observability/reconciliation-plan.json</code>; <code>attempts/</code>; <code>admission/</code>; <code>reconciliation.jsonl</code></td>
+<td>Nova saves the plan; Worker observation import and recovery reconciler write; completion and recovery readers consume</td>
+<td>Atomic durable plan write; durable-record locks and digests; exact run/plan/node/attempt identities; reconciliation journal ordering. Import completes only after completeness checks.</td>
+<td>Embedded limits are 100,000 evidence objects and results, 10 GiB evidence, 1 GiB metadata, 1,000,000 admission records, 4 GiB admission data, and 1 GiB quarantine. No automatic retirement. Back up the complete observability directory with the run. Corruption or unresolved quarantine blocks an observability-required result; retire only after imported lifecycle authority and evidence retention are proved.</td>
+</tr>
+<tr>
+<td>Wait adapter records</td>
+<td><code>wait-value.v1</code> containing validated <code>wait-request.v2</code> objects</td>
+<td><code>&lt;waitRoot&gt;/records/store.json</code>, stream <code>waits/all</code></td>
+<td>A plugin with <code>signal.wait</code> creates or reads; approval flows and operators read</td>
+<td>Durable-record writer lock, idempotency key, payload digest, and invocation fence; the canonical run event and signal journal remain the resume authority</td>
+<td>Defaults: 1 MiB per entry, 100,000 records, 256 MiB total; no automatic expiry even after <code>expiresAt</code>. Back up with the run and delivery store. Corruption blocks lookup; loss can prevent safe operator action but does not erase the canonical wait event. Retire only after the wait is resolved and the run/effect/delivery proof is retained.</td>
+</tr>
+<tr>
+<td>Operator-message delivery</td>
+<td>Notification request, reservation, terminal receipt or failure, and optional compacted projection records</td>
+<td><code>&lt;deliveryRoot&gt;/records/store.json</code>, one <code>notifications/&lt;target&gt;</code> stream per target</td>
+<td>Operator-messaging adapter writes; retry, receipt lookup, handoff, and retirement tools read</td>
+<td>Durable-record lock and payload digest; stable logical delivery ID; attempt-specific reservation; digest-guarded terminal transition. A possible lost acknowledgement blocks retry unless the receiver supports receipt lookup.</td>
+<td>Defaults: 100,000 records and 256 MiB total; target payload defaults to 64 KiB and cannot exceed 1 MiB. No age expiry. Back up with effects and waits. Corruption or loss makes an external result uncertain. Compact the request only under run, wait, effect, and terminal-receipt fences; retire only after the operator decision is durably imported.</td>
+</tr>
+<tr>
+<td>Worker ownership</td>
+<td><code>worker-ownership-store.v2</code>; a guarded v1-to-v2 read conversion exists</td>
+<td><code>&lt;ownershipRoot&gt;/owners.json</code></td>
+<td>Trusted native supervisor writes and reads</td>
+<td>Host and boot identity, claim generation, compare-and-swap revision, private durable write, record and byte limits</td>
+<td>Terminal identities remain reserved against stale work. No automatic deletion. A different host or unproved legacy host stops admission.</td>
+</tr>
+<tr>
+<td>Worker attempt journal</td>
+<td><code>native-attempt-journal.v1</code> in the common durable-record store plus immutable blobs</td>
+<td><code>&lt;journalRoot&gt;/metadata/records/store.json</code>; <code>&lt;journalRoot&gt;/data/blobs/sha256/...</code></td>
+<td>Native supervisor writes; restart recovery and result readers read</td>
+<td>Private root mode <code>0700</code>; envelope/result digest, exact attempt identity, idempotency key, global admission lock, per-attempt fence</td>
+<td>Admission reserves input, output, result, metadata, and state capacity before work. Limits cover records, state bytes, total bytes, input, output, and result. No automatic retirement is implemented.</td>
+</tr>
+<tr>
+<td>Worker original output</td>
+<td>Two raw byte files</td>
+<td><code>&lt;journalRoot&gt;/outputs/&lt;attempt-key&gt;/stdout</code> and <code>stderr</code></td>
+<td>Native host capture writes; journal sealing and recovery read</td>
+<td>Directory <code>0700</code>, files <code>0600</code>, no-follow exclusive creation, append and <code>fsync</code>; combined byte limit; SHA-256 checked on read</td>
+<td>Output is never silently truncated or rotated. Keep it through result sealing and any audit period. Cleanup requires proven terminal ownership.</td>
+</tr>
+<tr>
+<td>Buster remote job authority</td>
+<td>Stored plan job, status, result, completion intent/receipt, source snapshot, and inline source archive until verified compaction</td>
+<td><code>&lt;stateRoot&gt;/records/store.json</code>; result blobs below <code>&lt;stateRoot&gt;/results/blobs/sha256/...</code></td>
+<td>Nova dispatch client and Buster HTTP service write through bounded stores; status/result/import paths read</td>
+<td>Job ID, request digest, plan digest, source archive digest and attestation, status transition rules, result digest and receipt binding</td>
+<td>Admission reserves result liability. Completed-job compaction is explicit and keeps source, result, and evidence authority. These file stores are not replicated databases. Back up a quiesced state root.</td>
+</tr>
+<tr>
+<td>Buster local attempts</td>
+<td>Per-job workspace, durable attempt records, closure records, fixture journal, evidence, and report-adapter delivery state</td>
+<td><code>&lt;runtimeRoot&gt;/&lt;sha256(jobId)&gt;/</code>; attempts below <code>observability/attempts</code>; evidence below <code>artifacts/</code></td>
+<td>Buster Engine and Worker Core write; restart recovery and evidence readers read</td>
+<td>Durable records, idempotency keys, bounded state and result sizes, attempt and claim identity</td>
+<td>Limits come from runner admission and the resolved plan. Preserve unresolved attempts. Terminal cleanup removes the extracted repository only after the retained set is known.</td>
+</tr>
+<tr>
+<td>Buster evidence and reports</td>
+<td>Immutable evidence bytes plus <code>ArtifactRefV1</code>, attempt/node results, normalized report results</td>
+<td><code>&lt;artifactRoot&gt;/sha256/...</code>; temporary collection under <code>&lt;artifactRoot&gt;/.staging</code></td>
+<td>Providers stage files; Buster verifies and publishes; report adapters and Nova read by reference</td>
+<td>Containment checks, file and byte limits, media type, content digest, size, evidence ID, and result digest with receipt binding</td>
+<td>Raw evidence and normalized report facts can both be required. There is no repository-wide automatic garbage collector or remote backup scheduler. Preserve referenced objects with results.</td>
+</tr>
+<tr>
+<td>Prism relational authority</td>
+<td><code>prism</code> schema and the ordered migration journal; 17 forward migrations</td>
+<td>Prism PostgreSQL data volume; database <code>prism</code> in the Prism chart</td>
+<td><code>prism_migrator</code> owns schema changes; <code>prism_runtime</code> reads and changes product rows; read-only role observes</td>
+<td>Transactions, row and advisory locks, uniqueness, foreign keys, compare-and-swap frontiers, separate credentials</td>
+<td>Stores projects, requests, rounds, documents, revisions, directions, approvals, baselines, corpus, preferences, operations, jobs, nonces, and decisions. Forward-only migrations run once by filename. No automatic row-retention scheduler exists.</td>
+</tr>
+<tr>
+<td>Prism artifacts</td>
+<td>Content-addressed bytes</td>
+<td>Prism artifact PVC at <code>/var/lib/prism/artifacts</code>, objects below digest-derived paths</td>
+<td>Control and ingestion publish; Control, Worker, renderer, and backup read</td>
+<td>Temporary file, content digest, hard-link no-replace publication, file and directory <code>fsync</code>, no-follow reads</td>
+<td>Default PVC request is 100 GiB. The chart keeps the PVC on removal. There is no automatic garbage collector. Database and artifacts form one backup group.</td>
+</tr>
+<tr>
+<td>Prism acquisition quarantine</td>
+<td>Raw acquired bytes named by SHA-256 digest</td>
+<td>Ingestion Pod <code>emptyDir</code> at <code>/quarantine</code>, limited to 4 GiB</td>
+<td>Ingestion writes and reads; Control receives verified bytes and requests deletion</td>
+<td>Digest naming prevents conflicting content under one name. This is one-Pod temporary state; it has no cross-Pod lock, replication, or durable-volume fence.</td>
+<td>TTL defaults to 1 hour and is clamped to 1 minute–1 day; the reaper runs at most once a minute. Successful publication requests immediate removal. There is no backup or restore: Pod loss discards quarantine and the caller must reacquire. A missing or changed object blocks publication. Retire by the successful DELETE or TTL reaper, never as a substitute for database/artifact publication.</td>
+</tr>
+<tr>
+<td>Prism derived data</td>
+<td>Text-search vector, embeddings, previews, retrieval and other rebuildable views</td>
+<td>PostgreSQL and artifact store, depending on object</td>
+<td>Prism services derive; search and Studio consume</td>
+<td>Derived data stays bound to source and model evidence where implemented</td>
+<td>Rebuild after authority is restored. Current vector search has no approximate index or automatic re-embedding migration. Rebuild duration has no accepted RTO.</td>
+</tr>
+<tr>
+<td>LiteLLM relational authority</td>
+<td>Schema and migrations owned by the pinned LiteLLM image</td>
+<td>Managed PostgreSQL database <code>litellm</code>, on its own PostgreSQL PVC</td>
+<td>LiteLLM writes and reads; PostgreSQL recovery job dumps and restores</td>
+<td>Database credentials from <code>postgresql-secrets</code>; LiteLLM master and optional salt keys remain a separate credential authority</td>
+<td>Contains keys, permissions, budgets, stored model configuration, and encrypted credentials. It is not a cache. The repository does not own its SQL migrations. Upgrade only with the pinned application/database compatibility procedure.</td>
+</tr>
+<tr>
+<td>Redis transport state</td>
+<td>Streams with <code>idempotency_key</code> and JSON <code>payload</code>; dedup keys map stable publication keys to stream entry IDs</td>
+<td>Standalone Redis, AOF on its PVC</td>
+<td>Selected adapters and host observers write; configured external consumers read</td>
+<td>Password authentication; Lua performs dedup lookup, <code>XADD</code>, and dedup-key set as one server operation; AOF <code>appendfsync always</code>; <code>noeviction</code></td>
+<td>Stream <code>MAXLEN</code> is approximate and per stream. Dedup TTL is finite. The production values use 1 GiB Redis memory and a 20 GiB PVC. AOF-aware migration preserves absolute expiry. Redis is not lifecycle authority.</td>
+</tr>
+<tr>
+<td>Generic artifact adapter</td>
+<td>Immutable canonical or portable JSON records</td>
+<td><code>&lt;artifactRoot&gt;/records/store.json</code>; blobs below <code>&lt;artifactRoot&gt;/blobs/sha256/...</code></td>
+<td>Granted <code>artifacts.write</code> callers publish; later stages read declared references</td>
+<td>Namespace and resource checks, encoding, digest, size, metadata admission before immutable blob publication</td>
+<td>Defaults: 16 MiB per artifact, 100,000 records, a 256 MiB metadata-store ceiling, and a separate 256 MiB blob-store ceiling. A lifecycle checkpoint in Nova binds the reference to its producer. No global deletion policy exists.</td>
+</tr>
+<tr>
+<td>Telemetry sink records</td>
+<td>Redacted <code>telemetry-envelope.v2</code> projections in a durable record store or Redis stream</td>
+<td>File sink: <code>&lt;root&gt;/records/store.json</code>; Redis sink: configured stream prefix</td>
+<td>Telemetry observer writes through <code>telemetry.emit</code>; sink-specific readers consume</td>
+<td>Stable delivery idempotency, size/depth/node limits, structured redaction, store or Redis durability</td>
+<td>Diagnostic projection only. File defaults are 100,000 records, 256 MiB total, and 1 MiB per record. Redis uses configured MAXLEN and dedup TTL. See <a href="telemetry.html">Telemetry</a>.</td>
+</tr>
+<tr>
+<td>OpenClaw configuration and host state</td>
+<td><code>openclaw.json</code>, <code>swarm.config.json</code>, host SQLite state, plugin installation/cache state, startup verification logs, and other OpenClaw-owned files</td>
+<td>Per-agent config PVC mounted at <code>/home/node/.openclaw</code>; default 10 GiB</td>
+<td>Init setup and OpenClaw startup doctor can change it while the gateway is stopped; OpenClaw gateway reads and writes at runtime; health checks read selected files</td>
+<td>One replica is required. The PVC is <code>ReadWriteOnce</code> and retained by Helm and Argo CD. Startup doctor is the only declared schema repair path; the repository does not define record-level fencing for upstream OpenClaw files.</td>
+<td>No repository-owned TTL, quota below PVC size, backup job, or tested restore. Back up while the gateway and doctor are stopped. Corrupt SQLite/config can prevent startup; restore the matched config group or use the pinned OpenClaw doctor, not manual row edits. Retire after external credentials and required session/audit evidence are handled.</td>
+</tr>
+<tr>
+<td>Agent workspace and Git checkout</td>
+<td>Workspace files, memory, project files, and checked-out Git repository</td>
+<td>Per-agent workspace PVC mounted at <code>/home/node/.openclaw/workspace</code>; default 20 GiB</td>
+<td>Workspace init seeds files; OpenClaw and tools change them; Git init/update and pipeline readers consume</td>
+<td>One replica and <code>ReadWriteOnce</code>; init preserves existing files unless <code>overrideOnRestart</code> is true. Git commit/tree identity, not the mutable checkout, is pipeline source authority.</td>
+<td>No automatic expiry, quota below PVC size, backup, or restore. Back up separately from config and record the Git remote/commit. Corruption or loss removes mutable memory and edits; recloning restores only committed Git data. Retire only after exporting required uncommitted work and memory.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="source-discovered-store-identities">Source-discovered store identities</h3>
+<p>The <a href="../reference/platform-surfaces-generated.html#state-and-cache-names">generated platform surface inventory</a>
+finds path names and volume identities in current source. A name such as
+<code>store.json</code> is not one global store. Its source and configured root select the
+owner. The tables below classify every discovered identity and connect it to a
+complete operating contract. A repeated literal appears once for each distinct
+meaning.</p>
+<p>The four classes have strict meanings:</p>
+<ul>
+<li><strong>Persistent authority</strong> must survive while it owns a decision, recovery
+frontier, referenced bytes, backup, or diagnostic history.</li>
+<li><strong>Ephemeral state</strong> supports one bounded operation. Loss cancels or repeats
+that operation; it must not be used as completion evidence.</li>
+<li><strong>Cache</strong> can be rebuilt from a separate authority. Loss costs time, not
+product truth.</li>
+<li><strong>Inactive/library-only</strong> has no current production composition. Its source
+contract does not prove deployed state.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Discovered identity</th>
+<th>Class</th>
+<th>Contract alias</th>
+<th>Exact meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>${hash.slice(2)}.json</code></td>
+<td>Persistent authority</td>
+<td><code>S02</code></td>
+<td>Nova effect result above the inline limit</td>
+</tr>
+<tr>
+<td><code>administrative-decisions.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova authenticated reopen decisions</td>
+</tr>
+<tr>
+<td><code>effects.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova external-effect requests and receipts</td>
+</tr>
+<tr>
+<td><code>events.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova canonical lifecycle and domain events</td>
+</tr>
+<tr>
+<td><code>locks.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova resource-lock transition journal</td>
+</tr>
+<tr>
+<td><code>observer-checkpoints.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova observer recovery frontier</td>
+</tr>
+<tr>
+<td><code>observer-deliveries.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova observer attempt history</td>
+</tr>
+<tr>
+<td><code>reconciliation.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova or imported-attempt reconciliation decisions; the configured root selects the owner</td>
+</tr>
+<tr>
+<td><code>signals.jsonl</code></td>
+<td>Persistent authority</td>
+<td><code>S01</code></td>
+<td>Nova resume inputs validated against the wait; caller authentication is outside this file contract</td>
+</tr>
+<tr>
+<td><code>claim.json</code></td>
+<td>Persistent authority</td>
+<td><code>S03</code></td>
+<td>One resource-lock claim</td>
+</tr>
+<tr>
+<td><code>owner.json</code></td>
+<td>Persistent authority</td>
+<td><code>S03</code></td>
+<td>One resource-lock owner record</td>
+</tr>
+<tr>
+<td><code>resource-locks</code></td>
+<td>Persistent authority</td>
+<td><code>S03</code></td>
+<td>Root for Nova resource locks</td>
+</tr>
+<tr>
+<td><code>effect-results</code></td>
+<td>Persistent authority</td>
+<td><code>S02</code></td>
+<td>Root for digest-addressed large effect results</td>
+</tr>
+<tr>
+<td><code>graph-snapshot.json</code></td>
+<td>Inactive/library-only</td>
+<td><code>S20</code></td>
+<td>Rejected split-snapshot name; current Nova does not write it</td>
+</tr>
+<tr>
+<td><code>registry-snapshot.json</code></td>
+<td>Inactive/library-only</td>
+<td><code>S20</code></td>
+<td>Rejected split-snapshot name; current Nova does not write it</td>
+</tr>
+<tr>
+<td><code>run-snapshot.json</code></td>
+<td>Persistent authority</td>
+<td><code>S04</code></td>
+<td>Immutable Nova starting state</td>
+</tr>
+<tr>
+<td><code>dispatch</code></td>
+<td>Persistent authority</td>
+<td><code>S05</code></td>
+<td>Nova remote job and source-archive state</td>
+</tr>
+<tr>
+<td><code>imports</code></td>
+<td>Persistent authority</td>
+<td><code>S05</code></td>
+<td>Nova verified result-import state</td>
+</tr>
+<tr>
+<td><code>reconciliation-plan.json</code></td>
+<td>Persistent authority</td>
+<td><code>S06</code></td>
+<td>Expected Nova observability attempts</td>
+</tr>
+<tr>
+<td><code>admission.json</code></td>
+<td>Persistent authority</td>
+<td><code>S06</code></td>
+<td>Bounded observability ingress and quarantine state</td>
+</tr>
+<tr>
+<td><code>attempt-store.json</code></td>
+<td>Persistent authority</td>
+<td><code>S06</code></td>
+<td>Durable attempt, result, evidence, and closure metadata</td>
+</tr>
+<tr>
+<td><code>attempts</code></td>
+<td>Persistent authority</td>
+<td><code>S06</code></td>
+<td>Configured Nova or Buster durable-attempt root</td>
+</tr>
+<tr>
+<td><code>observability/attempts</code></td>
+<td>Persistent authority</td>
+<td><code>S06</code></td>
+<td>Required attempt-projection root for a run</td>
+</tr>
+<tr>
+<td><code>blob-budget</code></td>
+<td>Persistent authority</td>
+<td><code>S07</code></td>
+<td>Lock and budget fence for a configured durable blob store</td>
+</tr>
+<tr>
+<td><code>blobs</code></td>
+<td>Persistent authority</td>
+<td><code>S07</code></td>
+<td>Digest-addressed bytes below a configured active store</td>
+</tr>
+<tr>
+<td><code>records</code></td>
+<td>Persistent authority</td>
+<td><code>S07</code></td>
+<td>Directory that contains a configured durable record store</td>
+</tr>
+<tr>
+<td><code>store.json</code></td>
+<td>Persistent authority</td>
+<td><code>S07</code></td>
+<td>Configured durable records; the root and stream define the owner</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td>Persistent authority</td>
+<td><code>S08</code></td>
+<td>Worker or Buster fixture record metadata root</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Persistent authority</td>
+<td><code>S08</code></td>
+<td>Worker or Buster fixture digest-addressed blob root</td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Persistent authority</td>
+<td><code>S08</code></td>
+<td>Worker original stdout and stderr root</td>
+</tr>
+<tr>
+<td><code>owners.json</code></td>
+<td>Persistent authority</td>
+<td><code>S08</code></td>
+<td>Worker native-process ownership authority</td>
+</tr>
+<tr>
+<td><code>results</code></td>
+<td>Persistent authority</td>
+<td><code>S09</code></td>
+<td>Buster remote result blob root</td>
+</tr>
+<tr>
+<td><code>test-attempts</code></td>
+<td>Persistent authority</td>
+<td><code>S09</code></td>
+<td>Buster per-attempt workspace; owned attempt cleanup removes reproducible checkouts but retains scratch and evidence</td>
+</tr>
+<tr>
+<td><code>.kubeclaw-playwright-${executionId}.json</code></td>
+<td>Ephemeral state</td>
+<td><code>S10</code></td>
+<td>Playwright JSON handoff file, deleted in <code>finally</code></td>
+</tr>
+<tr>
+<td><code>config.json</code></td>
+<td>Ephemeral state</td>
+<td><code>S10</code></td>
+<td>Two independent temporary credential files: Docker authentication for container build and registry authentication for Trivy; each provider deletes its owned file or directory</td>
+</tr>
+<tr>
+<td><code>metadata.json</code></td>
+<td>Ephemeral state</td>
+<td><code>S10</code></td>
+<td>Temporary BuildKit result metadata, deleted with its directory</td>
+</tr>
+<tr>
+<td><code>ephemeral:buildkit-cache</code></td>
+<td>Cache</td>
+<td><code>S11</code></td>
+<td>Rootless BuildKit cache in the container writable layer</td>
+</tr>
+<tr>
+<td><code>outbox.json</code></td>
+<td>Inactive/library-only</td>
+<td><code>S12</code></td>
+<td>Implemented producer-outbox class with no production constructor found</td>
+</tr>
+<tr>
+<td><code>openclaw/state</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Per-agent OpenClaw configuration and host state</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-buster-config</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Buster OpenClaw config volume</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-buster-runtime-state</code></td>
+<td>Persistent authority</td>
+<td><code>S09</code></td>
+<td>Buster job, attempt, evidence, and receipt volume</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-buster-workspace</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Buster mutable workspace and checkout</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-nova-config</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Nova OpenClaw config volume</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-nova-workspace</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Nova mutable workspace and checkout</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-prism-config</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Prism OpenClaw config volume</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/agent-prism-workspace</code></td>
+<td>Persistent authority</td>
+<td><code>S13</code></td>
+<td>Prism mutable workspace and checkout</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/prism-artifacts</code></td>
+<td>Persistent authority</td>
+<td><code>S14</code></td>
+<td>Prism content-addressed artifact authority</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/prism-backups</code></td>
+<td>Persistent authority</td>
+<td><code>S14</code></td>
+<td>Locally retained Prism recovery groups</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/data-prism-postgresql-0</code></td>
+<td>Persistent authority</td>
+<td><code>S21</code></td>
+<td>Prism relational authority for projects, revisions, operations, jobs, approvals, preferences, and corpus state</td>
+</tr>
+<tr>
+<td><code>helm:litellm-postgresql/data</code></td>
+<td>Persistent authority</td>
+<td><code>S15</code></td>
+<td>LiteLLM relational product data</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/litellm-postgresql-backup</code></td>
+<td>Persistent authority</td>
+<td><code>S15</code></td>
+<td>Scheduled LiteLLM PostgreSQL recovery dumps and verification state</td>
+</tr>
+<tr>
+<td><code>helm:redis/data</code></td>
+<td>Persistent authority</td>
+<td><code>S16</code></td>
+<td>Redis transport, dedupe, and pending delivery state</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/registry-local-data</code></td>
+<td>Persistent authority</td>
+<td><code>S17</code></td>
+<td>Local OCI blobs and manifests not copied elsewhere</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw/registry-mirror-cache</code></td>
+<td>Cache</td>
+<td><code>S17</code></td>
+<td>Rebuildable Docker Hub pull-through cache</td>
+</tr>
+<tr>
+<td><code>helm:prometheus/data</code></td>
+<td>Persistent authority</td>
+<td><code>S18</code></td>
+<td>Retained metric samples only</td>
+</tr>
+<tr>
+<td><code>helm:loki/data</code></td>
+<td>Persistent authority</td>
+<td><code>S18</code></td>
+<td>Retained log copies only</td>
+</tr>
+<tr>
+<td><code>helm:grafana/data</code></td>
+<td>Persistent authority</td>
+<td><code>S18</code></td>
+<td>Grafana UI and dashboard state only</td>
+</tr>
+<tr>
+<td><code>host:alloy/positions</code></td>
+<td>Persistent authority</td>
+<td><code>S18</code></td>
+<td>Node-local log collection cursor</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw-ops/codex-ops-tailscale</code></td>
+<td>Persistent authority</td>
+<td><code>S19</code></td>
+<td>Sensitive Ops device state; tailnet control remains external authority</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw-ops/home-codex-ops-0</code></td>
+<td>Persistent authority</td>
+<td><code>S22</code></td>
+<td>Codex home, configuration, credentials, and tool state for the Ops Pod</td>
+</tr>
+<tr>
+<td><code>pvc:kubeclaw-ops/workspace-codex-ops-0</code></td>
+<td>Persistent authority</td>
+<td><code>S22</code></td>
+<td>Mutable Ops workspace and checked-out diagnostic material</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complete-operating-contracts-for-the-aliases">Complete operating contracts for the aliases</h3>
+<p>Each alias answers the full operating question set: authority and data, writer,
+reader, consistency or fencing, retention, capacity, backup, restore,
+corruption, loss, and retirement. An alias applies only with the exact meaning
+in the identity table.</p>
+<table>
+<thead>
+<tr>
+<th>Alias and class</th>
+<th>Authority, data, writer, and reader</th>
+<th>Consistency and fencing</th>
+<th>Retention and capacity</th>
+<th>Backup and restore</th>
+<th>Corruption, loss, and retirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>S01</code> Persistent authority</td>
+<td>Nova owns hash-chained decisions, events, effects, observer state, locks, signals, and reconciliation. Owned Nova writers append; recovery, audit, scheduler, and observer readers verify.</td>
+<td>One file lock, monotonic sequence, prior-record hash, durable append, and domain identity fences.</td>
+<td>No age expiry or compaction. Filesystem capacity is the bound; append stops when durability cannot be promised.</td>
+<td>Stop run mutation. Copy and restore the complete run group. Verify every chain and referenced object before recovery.</td>
+<td>A bad committed hash, replacement, or missing prefix stops mutation. Loss can make lifecycle or an external outcome unknowable. Retire only a terminal run after effect, wait, observer, artifact, audit, and legal references end.</td>
+</tr>
+<tr>
+<td><code>S02</code> Persistent authority</td>
+<td>Nova Effect Coordinator writes large JSON results by digest; effect recovery and evidence readers hydrate them.</td>
+<td>Private temporary write, <code>fsync</code>, no-replace publication, byte count, and SHA-256 bind bytes to the receipt.</td>
+<td>Results above 64 KiB use this tree. There is no age expiry, quota, or garbage collector.</td>
+<td>Copy with <code>effects.jsonl</code>; restore both before replay and verify every referenced digest.</td>
+<td>Missing or changed bytes invalidate the receipt and block replay. Never invent the result. Retire only when no retained effect record refers to it.</td>
+</tr>
+<tr>
+<td><code>S03</code> Persistent authority</td>
+<td>Nova's lock manager writes lock owner and claim state; Effect Coordinator and recovery read it.</td>
+<td>Writer lock, claim generation, fencing token, and TTL separate current ownership from stale work.</td>
+<td>No automatic retirement is documented. Filesystem capacity is the outer bound.</td>
+<td>Stop effects and restore with the Nova storage group; then reconcile effects before lock reuse.</td>
+<td>Corruption or loss removes ownership proof, not the external effect. Stop and reconcile; do not treat timeout as non-execution. Retire after the protected effect is terminal and retained receipts make the lock unnecessary.</td>
+</tr>
+<tr>
+<td><code>S04</code> Persistent authority</td>
+<td>Nova writes one immutable <code>run-snapshot.json</code> that contains the graph and registry; execution and recovery validate it.</td>
+<td>SHA-256 identity, private temporary file, synchronized no-replace publication, and directory synchronization.</td>
+<td>One file per run; no automatic expiry or explicit quota.</td>
+<td>Back up with the run journals. Restore privately and verify the digest before any event replay.</td>
+<td>A mismatch or missing snapshot blocks resume. Do not rebuild it from the current registry. Retire only with the complete terminal run.</td>
+</tr>
+<tr>
+<td><code>S05</code> Persistent authority</td>
+<td>Nova remote dispatch owns accepted job/source state; import owns pending and complete result/evidence state. Their dispatch, reconnect, import, and retention readers consume it.</td>
+<td>Durable-record locks, idempotency and payload digests, content-addressed blobs, import fences, and digest-guarded state transitions.</td>
+<td>Configured record, record-byte, blob, archive, job-evidence, and store-wide limits apply. There is no age expiry.</td>
+<td>Fence remote dispatch/import. Back up each record root with its blob root and the run. Restore and verify source, job, result, decision, and evidence digests.</td>
+<td>Missing blobs or conflicts block dispatch/import. Loss can remove the only accepted remote proof. Compact only after verified import authority; retire with the owning run after all references end.</td>
+</tr>
+<tr>
+<td><code>S06</code> Persistent authority</td>
+<td>Nova or Buster owns expected attempt plans, admission/quarantine, attempts, evidence, results, and closure state. Worker import, gate completion, recovery, and evidence readers consume it.</td>
+<td>Durable file locks and writes, exact run/plan/node/attempt identity, content digests, bounded quarantine, and ordered reconciliation decisions.</td>
+<td>The active composition supplies record, metadata, evidence, result, quarantine, and pending-age limits. No general age-based retirement exists.</td>
+<td>Stop admission and import. Copy the complete observability root. Restore it with the run/job and verify the plan, records, blobs, and reconciliation journal.</td>
+<td>Corruption, overflow, unresolved quarantine, or loss blocks an observability-required result. Retire only after canonical import and every evidence obligation are proved.</td>
+</tr>
+<tr>
+<td><code>S07</code> Persistent authority</td>
+<td>The configured adapter or service owns typed records and digest-addressed blobs. Its granted writer writes; declared domain, recovery, and later-stage readers read. The generic class owns no global data.</td>
+<td>Per-store writer lock, idempotency key, payload digest, immutable blob digest, and configured record/blob budgets.</td>
+<td>Every constructor supplies maximum record count, record bytes, total metadata, object bytes, and blob bytes. No common age expiry exists.</td>
+<td>Fence the owning writer. Back up that configured root and its referring authority together. Restore into an empty private root and verify records plus blobs.</td>
+<td>A replay conflict, digest mismatch, missing blob, or invalid budget stops the owner. Loss has the impact of that configured domain. Retire only through that owner's reference and terminal-state rules.</td>
+</tr>
+<tr>
+<td><code>S08</code> Persistent authority</td>
+<td>Worker Core or the Buster fixture journal owns accepted input, result, state, blobs, output, and native ownership. The trusted supervisor writes; restart and result readers read.</td>
+<td>Private roots, record locks, host/boot/claim generation, compare-and-swap revision, digests, exclusive output files, and synchronized writes.</td>
+<td>Admission reserves input, output, result, state, metadata, record, and total-byte liability. There is no automatic age retirement.</td>
+<td>Stop admission and the native process. Copy ownership, metadata, data, and outputs together. Restore only to a proved host boundary and validate ownership before replay.</td>
+<td>Corruption or loss removes safe process/result proof. Keep admission closed; never infer completion from a process exit alone. Retire only after terminal ownership and imported result/evidence are proved.</td>
+</tr>
+<tr>
+<td><code>S09</code> Persistent authority</td>
+<td>Buster owns remote jobs, source snapshots, statuses, results, receipts, local attempts, and evidence. Buster services write; Nova import, status, recovery, and report readers consume.</td>
+<td>Job/request/plan/source/result digests, status rules, durable-record locks, attempt identity, and completion receipt bind transitions.</td>
+<td>Admission reserves configured result, evidence, record, and store liability inside the 64 GiB runtime PVC. No automatic age deletion exists.</td>
+<td>Stop remote admission, execution, and compaction. Copy the complete state and runtime roots. Restore and reconcile incomplete attempts before exposing status.</td>
+<td>Corruption or loss can make a job or external result uncertain. Stop import and redispatch until reconciled. Use verified compaction; retire only after Nova import and evidence retention end.</td>
+</tr>
+<tr>
+<td><code>S10</code> Ephemeral state</td>
+<td>One Buster provider writes a temporary report, overlay, credential, or result-metadata file; that provider reads it during the same bounded invocation.</td>
+<td>Contained paths, private modes where credentials exist, unique execution directories, process/cgroup limits, and <code>finally</code> cleanup. These files have no cross-process transaction fence.</td>
+<td>Invocation time, output, result, artifact, file-count, process, memory, and CPU limits apply. Workspace or container ephemeral capacity is the outer bound.</td>
+<td>Do not back up or restore. Repeat the whole provider invocation from its accepted source and plan after the owner proves that no external effect remains uncertain.</td>
+<td>Missing or corrupt temporary files fail that attempt. Handled completion, error, or cancellation runs owned cleanup. Abrupt process or Pod loss can leave files. Remove such files only inside the proved inactive attempt root; never treat them as retained results.</td>
+</tr>
+<tr>
+<td><code>S11</code> Cache</td>
+<td>Rootless <code>buildkitd</code> writes its local content and build cache; BuildKit reads it during later builds. Buster consumes only verified build output.</td>
+<td>One daemon owns the root. Content digests detect addressed-object change, but the cache is not a result receipt.</td>
+<td>It shares the Pod's 8 GiB ephemeral-storage request and 60 GiB limit; no dedicated quota or age policy exists.</td>
+<td>Do not back up. Replace the Pod and rebuild from retained source and registry inputs.</td>
+<td>Corruption or Pod loss removes acceleration and can fail an active build, not an accepted prior result. Retire by stopping submissions and replacing the Pod.</td>
+</tr>
+<tr>
+<td><code>S12</code> Inactive/library-only</td>
+<td><code>FileProducerOutbox</code> can hold unacknowledged producer records, but no production constructor was found at this revision.</td>
+<td>The class has a durable-store lock, record digest, acknowledgement identity, and compaction method. These are library properties, not deployed guarantees.</td>
+<td>A caller must supply record and byte limits. No active caller supplies them.</td>
+<td>No production backup or restore contract applies. A future caller must define one before activation.</td>
+<td>Do not diagnose a running outbox from this file name. If activated later, corruption, loss, and retirement rules must be documented with its concrete root and consumer.</td>
+</tr>
+<tr>
+<td><code>S13</code> Persistent authority</td>
+<td>OpenClaw, init, startup doctor, tools, and Git operations own agent config/workspace files. The gateway and pipeline readers consume them.</td>
+<td>One replica, <code>ReadWriteOnce</code>, retained claims, stopped-gateway doctor rule, and Git commit/tree identity for committed source. Upstream OpenClaw files have no repository record fence.</td>
+<td>Config defaults to 10 GiB and workspace to 20 GiB. No inner quota or TTL exists.</td>
+<td>Scale the agent to zero. Back up the matched config/workspace pair plus independent Secret and Git identities. Restore privately, run the pinned doctor, and verify the exact checkout.</td>
+<td>Corruption can stop startup; loss removes host state, memory, or uncommitted work. Reclone restores only committed Git data. Retire after exporting needed work, handling session/audit evidence, and revoking credentials.</td>
+</tr>
+<tr>
+<td><code>S14</code> Persistent authority</td>
+<td>Prism owns digest-addressed artifacts; the backup job owns immutable recovery groups. Control, ingestion, Worker, renderer, backup, and restore readers use them.</td>
+<td>Artifacts use temporary writes, digest paths, no-replace publication, and file/directory synchronization. Backup groups use checksums, metadata, and atomic complete-group publication.</td>
+<td>Artifacts and backups each request 100 GiB. Claims are retained. No automatic garbage collection or backup expiry exists.</td>
+<td>Fence migrations and administrative deletion. Restore one verified database-and-artifact group into isolated targets and validate application references before cutover.</td>
+<td>A missing referenced artifact or invalid group keeps Prism isolated. Keep the last verified group. Retire objects only after all database, baseline, report, and recovery references end.</td>
+</tr>
+<tr>
+<td><code>S15</code> Persistent authority</td>
+<td>LiteLLM owns models, keys, budgets, permissions, and encrypted configuration in its PostgreSQL database. LiteLLM writes and reads; the recovery job dumps and restores.</td>
+<td>PostgreSQL transactions and the pinned application's migrations protect rows; database and encryption credentials are separate authorities.</td>
+<td>Direct profile is 20 GiB; GitOps profile is 1 GiB. The recovery policy limits dump size and retained backup bytes. Checked-in YAML selects no row-retention policy; effective LiteLLM settings can enable cleanup of aged diagnostic and accounting rows. See <a href="#litellm-row-retention">row retention</a>.</td>
+<td>Fence LiteLLM writes. Restore roles and an empty database, restore one verified dump, supply the matched keys, and validate real encrypted data before cutover.</td>
+<td>Corruption, missing keys, or incompatible schema blocks service. Do not overwrite encrypted values. Retire only under LiteLLM data policy after backup and credential obligations end.</td>
+</tr>
+<tr>
+<td><code>S16</code> Persistent authority</td>
+<td>Redis owns transport streams, pending entries, and finite dedup state; publishers write and configured consumers read. It never owns Nova lifecycle truth.</td>
+<td>Authentication, Lua atomic dedup plus <code>XADD</code>, AOF policy in the direct profile, and <code>noeviction</code>.</td>
+<td>Stream <code>MAXLEN</code>, dedup TTL, 1 GiB memory, and selected PVC profile bound retention. Direct PVC is 20 GiB; GitOps PVC is 2 GiB with chart-default persistence details.</td>
+<td>Pause all publishers. Use the AOF-aware migration procedure, restore in isolation, and verify streams, pending entries, expiry, restart, and lost-ack behavior before client cutover.</td>
+<td>Corruption or loss removes delivery and dedup history. Recover from Redis when required, then replay only from canonical owners. Retire after publishers and consumers no longer depend on the stream or dedup window.</td>
+</tr>
+<tr>
+<td><code>S17</code> Persistent authority or cache as mapped</td>
+<td>The local registry owns OCI blobs/manifests that have no other retained copy. The mirror owns only rebuildable upstream cache. Registry processes write; BuildKit and runtimes read.</td>
+<td>One replica and single-writer PVC policy in the direct local profile; OCI digests verify content. The GitOps local profile is ephemeral.</td>
+<td>Local capacity has no default and no automatic retention. Mirror is 5 GiB and permits cache deletion.</td>
+<td>Fence pushes and garbage collection before local-registry backup. Restore empty storage and verify API, manifest, layer, and real pull. Recreate an empty mirror instead of restoring it.</td>
+<td>Missing layers or digest mismatch block that image. Mirror loss only causes upstream pulls. Retire local content after release and rollback references end; retire cache after clients move.</td>
+</tr>
+<tr>
+<td><code>S18</code> Persistent authority</td>
+<td>Prometheus owns retained samples, Loki owns retained log copies, Grafana owns UI state, and Alloy owns its local read cursor. None owns product decisions.</td>
+<td>Each product owns its store consistency. One intended Alloy collector per node prevents duplicate cursor ownership.</td>
+<td>Prometheus: 15 days/20 GiB. Loki: 720 hours/20 GiB. Grafana: 5 GiB. Alloy host path has no declared quota.</td>
+<td>No repository-tested backup or restore exists. Use product snapshot boundaries or stop writers. Restore data stores before Grafana; restore positions only with known source-file cutover.</td>
+<td>Loss creates diagnostic gaps, duplicates, or lost dashboards, never product-state changes. Retire only after incident/retention obligations and safe collector cutover.</td>
+</tr>
+<tr>
+<td><code>S19</code> Persistent authority</td>
+<td>The Ops Tailscale sidecar writes local device state; Tailscale control remains identity authority. Operators and the sidecar consume it.</td>
+<td>One sidecar and <code>ReadWriteOnce</code>; no repository record fence. <code>TS_AUTH_ONCE</code> permits reuse.</td>
+<td>1 GiB, no local TTL or cleanup automation.</td>
+<td>Treat copies as secrets. The repository has no tested restore; prefer revocation and a new authentication after loss.</td>
+<td>Corruption or cloning can create identity ambiguity. Never mount one copy to concurrent devices. Retire by revoking the device, handling the auth Secret, and deleting the PVC.</td>
+</tr>
+<tr>
+<td><code>S20</code> Inactive/library-only</td>
+<td>Current Nova stores graph and registry inside <code>run-snapshot.json</code>. It checks that the two unsupported split filenames do not exist before first publication; no current writer or reader uses their content.</td>
+<td>File absence is an admission guard. There is no consistency or fencing contract for content under either name.</td>
+<td>No retention or capacity contract applies because supported execution rejects their presence.</td>
+<td>Do not back up or restore them as current state. Restore only the verified combined run snapshot.</td>
+<td>If either file exists at new-run creation, Nova reports that the run already exists and stops. Preserve it for investigation, then recover through the supported run group; do not migrate its bytes by inference.</td>
+</tr>
+<tr>
+<td><code>S21</code> Persistent authority</td>
+<td>Prism PostgreSQL owns projects, revisions, operations, agent jobs, approvals, preferences, corpus metadata, and worker nonces. Control and Worker write under their application contracts; migration, backup, restore, and application readers consume it.</td>
+<td>PostgreSQL transactions, row and advisory locks, unique keys, revision compare-and-swap, job fences, and the migration history order conflicting changes.</td>
+<td>The selected chart requests 100 GiB and retains the claim. Application retention is owner-specific; there is no general row-expiry service.</td>
+<td>Stop Prism mutations and agent admission. Restore one verified database-and-artifact group, run the pinned migrations, verify Control and Worker reads, then reconcile nonterminal operations before reopening admission.</td>
+<td>Corruption, an unmatched artifact group, or lost fencing state keeps Prism read-only or offline. Do not reconstruct current revisions or jobs from artifacts. Retire only after product, audit, backup, and legal references end.</td>
+</tr>
+<tr>
+<td><code>S22</code> Persistent authority</td>
+<td>The Ops StatefulSet owns one home claim and one workspace claim. Codex and operator tools write configuration, credentials, caches, checkouts, and diagnostic work; the same single Pod reads them. These claims do not own pipeline lifecycle or cluster truth.</td>
+<td>One StatefulSet ordinal and <code>ReadWriteOnce</code> prevent concurrent attachment in the supported profile. Files inside have tool-specific consistency; the repository defines no cross-file transaction or fencing contract.</td>
+<td>Home requests 2 GiB; workspace uses the configured persistence size. Neither claim has an age policy, automatic compaction, or repository-tested quota below its PVC size.</td>
+<td>Stop the Ops Pod before a consistent copy. Protect credentials separately, record the checked-out revision, and restore into the same single-owner boundary. After restore, prove Codex configuration and an authorized read-only Ops query; do not infer cluster recovery from restored local files.</td>
+<td>Corruption can remove operator configuration or make a checkout misleading, but it cannot rewrite cluster authority. Recreate disposable caches and checkouts from verified sources; recover credentials from their external authority. Retire only after exporting required incident evidence, revoking credentials, and proving no recovery procedure depends on the workspace.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — temporary and inactive identities</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/browser-playwright-runtime.ts#L102-L120">Playwright creates its report and related temporary paths, consumes the report,
+and removes them in <code>finally</code></a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/container-build-runtime.ts#L226-L278">Container build creates temporary metadata and registry credentials and removes
+their directory in <code>finally</code></a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/security-scan-runtime.ts#L220-L262">Security scan creates and removes a private temporary registry credential
+directory</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/terminal-workspace.ts#L1-L19">Terminal workspace cleanup removes only reproducible input copies and keeps
+scratch, evidence, artifacts, observability, records, and logs</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/runner.ts#L1727-L1739">Attempt cleanup removes its copied repository unless a successful fixture must
+remain active</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L333-L392">The producer-outbox class implements append, acknowledgement, and compaction,
+but does not establish an active composition</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L100-L120">Current snapshot publication rejects the unsupported split filenames and writes
+only the combined run snapshot</a>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Source evidence — the common file-store guarantees</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/state/journal.ts#L21-L80">The file journal validates and hash-chains records under its file lock</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/state/journal.ts#L136-L195">Its append and refresh paths synchronize writes and truncate only an incomplete final line</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L56-L115">The durable-record store enforces per-record, record-count, and total-byte limits and uses idempotency plus payload digests</a>.</p>
+<p><strong>Reason:</strong> These stores favor an explicit stop over silent state loss. A full
+store reduces availability, but it does not evict the proof needed for replay.</p>
+</blockquote>
+<h3 id="deployment-and-operations-stores">Deployment and operations stores</h3>
+<p>These stores do not use the Nova record format. Some are caches or operator
+workspaces. They still need an explicit loss and retirement rule.</p>
+<table>
+<thead>
+<tr>
+<th>Store and authority</th>
+<th>Data, writer, and reader</th>
+<th>Consistency, lock, or fence</th>
+<th>Retention and capacity</th>
+<th>Backup, restore, corruption, loss, and retirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buster runtime PVC; Buster is authority for remote jobs and attempt evidence</td>
+<td><code>agent-buster-runtime-state</code>, 64 GiB, <code>ReadWriteOnce</code>; Buster writes plan jobs and run state under <code>/var/lib/buster-v2</code>, and Buster recovery reads them</td>
+<td>The chart requires one Buster service writer. Buster record and attempt fences protect product state.</td>
+<td>No automatic age deletion. Buster admission and evidence limits apply inside the volume; the PVC size is the outer limit.</td>
+<td>Stop Buster admission before a volume copy. Restore Buster authority and verify jobs and evidence before admitting work. Corrupt records stop recovery. Retire this state only by the Buster rules above.</td>
+</tr>
+<tr>
+<td>Rootless BuildKit cache; replaceable accelerator, not authority</td>
+<td>The colocated <code>buildkitd</code> writes <code>/home/builder/.local/share/buildkit</code>; Buster submits builds through its Unix socket. That path is not one of the declared volume mounts, so the cache is in the container writable layer.</td>
+<td>One BuildKit process owns the root. Content digests validate addressed objects but do not make cache content a result receipt.</td>
+<td>No project cleanup age is set. The cache shares the Pod's ephemeral-storage budget: an 8 GiB request and 60 GiB limit cover all container ephemeral storage, not a dedicated cache quota. Pod replacement removes the cache.</td>
+<td>Do not back up or restore it as authority. On corruption or loss, replace the Pod and rebuild only when source plus required external registry objects remain available. Stop BuildKit before any diagnostic copy. Retire by stopping submissions and replacing the Pod; preserve Buster records separately.</td>
+</tr>
+<tr>
+<td>Writable local OCI registry; registry filesystem is image-blob authority for images not copied elsewhere</td>
+<td><code>registry-local-data</code>; registry writes blobs/manifests under <code>/var/lib/registry</code>; BuildKit pushes and runtimes pull</td>
+<td>One replica, <code>Recreate</code>, and <code>ReadWriteOncePod</code> prevent simultaneous writers in the direct profile. OCI digests detect changed content. The Argo-adopted profile is different and has no PVC.</td>
+<td>Storage class and capacity have no default in the direct template and must be rendered explicitly. Delete and upload purging are disabled there. No automatic retention exists. The Argo-adopted registry is ephemeral.</td>
+<td>Fence pushes and garbage collection before a storage snapshot. Restore into an empty compatible registry and verify <code>/v2/</code>, manifest digest, and a real pull. Missing layers or digest mismatch make the image unavailable. The repository has no registry backup or tested restore. Retire a manifest only after every release and rollback reference is absent.</td>
+</tr>
+<tr>
+<td>Docker Hub pull-through mirror; cache only</td>
+<td><code>registry-mirror-cache</code>, 5 GiB <code>ReadWriteOnce</code>; registry proxy writes cached Docker Hub content; BuildKit or node clients read only when separately configured</td>
+<td>One deployment writer; upstream and local content digests validate objects. There is no product transaction or consumer fence.</td>
+<td>Cache deletion is enabled; eviction behavior belongs to the upstream registry implementation. The PVC is the capacity bound.</td>
+<td>Backup is unnecessary for correctness. Stop the mirror before copying if warm-cache preservation matters. On corruption or loss, recreate the empty cache and verify an upstream pull. Existing locally built images are unaffected. Delete the cache only after clients no longer point at it.</td>
+</tr>
+<tr>
+<td>Prometheus time-series database; diagnostic authority for retained samples only</td>
+<td>Prometheus scrapes discovered metric endpoints and writes a 20 GiB <code>ReadWriteOnce</code> volume; Prometheus and Grafana query it</td>
+<td>The Prometheus server and its TSDB own append/WAL consistency. Samples do not fence product state.</td>
+<td>Configured retention is 15 days, also bounded by 20 GiB. No project-specific sampling rule or remote-write copy is configured.</td>
+<td>The repository supplies no backup or restore procedure. A consistent TSDB snapshot needs the running Prometheus API or a stopped writer; a raw live PVC copy is not claimed safe. Corruption/loss removes metric history but must not change product decisions. Retire after dashboards and incident obligations no longer require the period.</td>
+</tr>
+<tr>
+<td>Grafana state; dashboard/UI configuration authority, never metric or log authority</td>
+<td>Grafana writes plugins, dashboard state, and its internal database to a 5 GiB PVC; users and Grafana read it; Prometheus and Loki remain the data sources</td>
+<td>One chart-managed Grafana instance owns its internal state. The external <code>prometheus-grafana</code> Secret owns administrator credentials.</td>
+<td>No repository-defined row retention or capacity alert; PVC size is 5 GiB.</td>
+<td>No repository backup or tested restore exists. Restore a consistent Grafana data copy and the independent admin Secret, then verify both data sources. Loss removes saved UI state, not Prometheus or Loki data. Retire only after exporting required dashboards and revoking access.</td>
+</tr>
+<tr>
+<td>Loki log store; diagnostic authority for retained log copies</td>
+<td>Monolithic Loki writes TSDB schema-v13 indexes and chunks to a 20 GiB filesystem PVC; Grafana queries it; Alloy pushes</td>
+<td>One replica and one retained StatefulSet claim; Loki owns index/chunk consistency. It does not fence CRI logs or product state.</td>
+<td>Retention is 720 hours and maximum query length is 721 hours. Capacity is 20 GiB. Caches, gateway, canary, and replication are disabled.</td>
+<td>The repository supplies no backup or restore test. Stop or use a Loki-consistent snapshot before copying. Index/chunk corruption or loss removes queryable logs; source container logs may already be rotated. Restore Loki before Grafana queries, but after product authority. Retire only after retention and incident requirements end.</td>
+</tr>
+<tr>
+<td>Alloy positions; local collection cursor, not log authority</td>
+<td>Each node's Alloy DaemonSet reads CRI files and writes positions below host path <code>/var/lib/kubeclaw-alloy</code>; on first start it can import <code>/run/promtail/positions.yaml</code></td>
+<td>One intended collector per node. A position orders reads for one file; it does not coordinate with Loki acceptance. The Promtail-to-Alloy cutover must prevent two collectors.</td>
+<td>Host-path capacity has no declared quota or expiry. Kubelet controls source-log rotation.</td>
+<td>No backup is required for product correctness. Preserving positions reduces duplicates. Loss causes reread or gaps depending on remaining CRI files; inspect timestamps and Loki before resetting. Retire Promtail positions only after Alloy has imported them and fresh logs are queryable; retire Alloy positions only when collection on that node ends.</td>
+</tr>
+<tr>
+<td>Ops home and workspace PVCs; operator-owned tool state</td>
+<td>StatefulSet claim templates provide 2 GiB for <code>/home/node</code> and the configured size, default 20 GiB, for <code>/workspace</code>; Codex writes both and an operator reads them</td>
+<td>One StatefulSet replica and <code>ReadWriteOnce</code>; no application record lock or fencing protocol is declared</td>
+<td>No TTL, internal quota, backup job, or automatic cleanup. PVC size is the only repository limit.</td>
+<td>Stop the Codex container before backup or restore. Corruption or loss can remove credentials cached by the tool, working files, and uncommitted edits, but cannot be used to reconstruct cluster authority. Export required work before retiring the release.</td>
+</tr>
+<tr>
+<td>Ops Tailscale state; device identity support</td>
+<td>Optional 1 GiB <code>ReadWriteOnce</code> PVC at <code>/var/lib/tailscale</code>; the Tailscale sidecar writes device state and reads its separate <code>authkey</code> Secret</td>
+<td>One sidecar writer. <code>TS_AUTH_ONCE=true</code> reuses state; there is no project-level record fence. Tailnet control remains external authority.</td>
+<td>No local TTL or cleanup automation. Capacity is 1 GiB.</td>
+<td>Treat a copy as sensitive identity material. The repository has no backup/restore test. On loss or corruption, revoke the old device when possible and authenticate a new one; do not clone one state volume into concurrent Pods. Retire by revoking the tailnet device, deleting the auth Secret as policy permits, and then deleting the PVC.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — deployment store contracts</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/pvc.yaml#L1-L48">The agent chart creates retained config and workspace claims with configured
+access modes and sizes</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/buster-runtime-pvc.yaml#L1-L21">The Buster state claim enforces one writer and <code>ReadWriteOnce</code></a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/buster-runtime-entrypoint.sh#L7-L34">The runtime starts rootless BuildKit with an explicit state root</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/docker/Dockerfile.buster-runtime#L127-L148">The image sets that root below the builder home directory</a>,
+while <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/buster-values.yaml#L145-L174">the deployment mounts only the workspace, Buster state, credentials,
+and cgroup subtree and declares its shared ephemeral-storage budget</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-local.yaml#L1-L34">The direct registry requires an explicit <code>ReadWriteOncePod</code> claim and disables
+deletion and upload purging</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/registry-local/resources.yaml#L1-L36">The GitOps registry profile is explicitly ephemeral</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/registry-mirror.yaml#L14-L55">The mirror has a 5 GiB claim and Docker Hub proxy endpoint</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/prometheus.yaml#L3-L50">Prometheus retains 15 days on 20 GiB, while Grafana uses 5 GiB and an external
+administrator Secret</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/loki.yaml#L1-L33">Loki uses one filesystem-backed 20 GiB replica with 720-hour retention</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/alloy.yaml#L8-L29">Alloy stores positions on the node and imports the legacy Promtail position
+file</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/ops-pod/templates/workload.yaml#L137-L176">The Ops workload defines its two claim templates and optional Tailscale state
+claim</a>.</p>
+</blockquote>
+<h3 id="why-these-stores-remain-separate">Why these stores remain separate</h3>
+<p><strong>Accepted approach:</strong> each component keeps the state that it can validate. A
+digest-addressed blob store is paired with its owning record store, while caches
+and diagnostic stores remain replaceable. The benefit is a clear corruption
+boundary and a small writer set. The cost is a multi-part backup order and no
+single platform transaction. The repository does not record the original
+historical reason for every PVC choice; this explanation is an inference from
+the implemented ownership and validation rules.</p>
+<p>Reconsider the split if a supported multi-writer deployment, an off-node backup
+service, or an accepted cross-store transaction protocol becomes available.
+Do not merge stores only to reduce PVC count: first preserve writer fencing,
+digest verification, independent retention, and the restore order in this page.</p>
+<h2 id="nova-run-state">Nova Run State</h2>
+<h3 id="one-run-one-immutable-starting-point">One run, one immutable starting point</h3>
+<p>Nova converts a valid run ID into a SHA-256 directory key. This prevents the run
+ID from becoming a filesystem path. A verified legacy directory can still be
+read, but Nova accepts it only when its event file contains the requested run ID.</p>
+<p>Before execution, Nova writes one snapshot that binds the graph, package bytes,
+registrations, grants, selected providers, and effective runtime configuration.
+Recovery compares current inputs with that snapshot. It does not silently
+replace a package or graph because a newer copy is installed.</p>
+<blockquote>
+<p><strong>Source evidence — run identity and snapshots</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/run-root.ts#L62-L76">Run-root selection validates the ID, uses a SHA-256 path, and verifies a legacy directory through its journal</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L75-L121">Snapshot publication writes a private temporary file, synchronizes it, links it without replacement, and synchronizes the directory</a>.</p>
+</blockquote>
+<h3 id="journal-commit-boundary">Journal commit boundary</h3>
+<p>A complete newline-terminated, synchronized record is committed. The next
+record contains its predecessor hash. A crash during the final line can leave
+bytes without a newline; startup truncates only that tail. It does not repair a
+bad hash, a changed committed prefix, or a removed journal.</p>
+<p>The journal sequence is global to the file. Event <code>sequence</code> is assigned from
+the same append position. Readers can therefore recover per-run order from the
+canonical journal. Timestamps describe when a producer observed an event; they
+do not override sequence.</p>
+<h3 id="effects-and-referenced-results">Effects and referenced results</h3>
+<p>An external effect moves through requested, accepted, and completed records.
+The idempotency key binds exact request content and exact receipt content.
+Results larger than 64 KiB are stored once under their SHA-256 digest. Replay
+checks both byte count and digest before it hydrates the receipt.</p>
+<p>This split keeps the append journal small. It also creates a strict backup rule:
+never restore <code>effects.jsonl</code> without its referenced <code>effect-results</code> tree.</p>
+<blockquote>
+<p><strong>Source evidence — effect persistence</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/journal.ts#L13-L25">The effect journal stores request, acceptance, receipt, and content-addressed large-result references</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/journal.ts#L146-L205">Large results use private temporary files, immutable publication, directory synchronization, size checks, and digest checks</a>.</p>
+</blockquote>
+<h3 id="signals-administrative-decisions-and-remote-gates">Signals, administrative decisions, and remote gates</h3>
+<p>A resume signal and an administrative reopen decision are independent inputs.
+Nova retains each input in its own hash-chained journal. The event journal then
+records the lifecycle transition that applied it. Keep both sides. The input
+records what was submitted; the event records what the state machine committed.
+For resume, issuer-field validation is not caller authentication. Protect the
+entry point and its file inputs. For a new administrative decision, the caller
+must supply an authentication callback that establishes the matching principal.
+An identical recorded decision is a replay and does not call that callback again.</p>
+<p>Remote test execution has two more stores. Dispatch records preserve the exact
+job and committed source archive before any network call. Import records first
+reserve the job and decision, then store verified evidence, and only then move
+to <code>complete</code>. This order makes a crash recoverable without claiming that a
+partly downloaded result passed. A completed import can authorize removal of an
+inline dispatch archive, but only while the retained Git source, import record,
+result, evidence, run snapshot, and journal head still match.</p>
+<p>Observability reconciliation is also product state when a gate requires its
+evidence. Nova saves the expected attempt plan, bounded ingress/quarantine,
+attempt results and evidence, and every reconciliation decision. Do not group
+this directory with optional Prometheus or Loki data.</p>
+<blockquote>
+<p><strong>Source evidence — Nova control stores</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L58-L117">Run entry points open separate decision, event, and signal journals and reject
+a signal after the event journal records wait resolution</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L137-L144">Resume validation checks wait and issuer fields, expiry, and issue time</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L543-L555">The signal contract contains no nonce or signature</a>, and
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/cli.ts#L60-L67">the CLI reads the supplied JSON file</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-admin.ts#L57-L67">Administrative replay and authentication check decision identity and callback principal</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-admin.ts#L69-L86">Application checks the recovered stage and terminal run state</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/production.ts#L87-L121">Remote production composition gives dispatch and import distinct roots and
+bounded record/blob stores</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch-store.ts#L27-L71">Dispatch persists the validated job before its archive and verifies that blob
+on every load</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-result-import.ts#L154-L199">Import reserves pending state before blobs and makes a digest-guarded terminal
+transition only after all evidence is stored</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/observability/reconciler.ts#L338-L395">Nova persists the reconciliation plan and constructs bounded attempt,
+admission, and journal stores during recovery</a>.</p>
+</blockquote>
+<h3 id="wait-and-operator-message-projections">Wait and operator-message projections</h3>
+<p>The wait adapter makes a <code>wait-request.v2</code> discoverable outside the event
+journal. The operator-message adapter retains the exact outbound request and an
+attempt reservation before transport. It then replaces the reservation with a
+receipt or a bounded failure. These stores support human interaction, but they
+do not own the lifecycle decision. A lost acknowledgement without receiver
+lookup leaves delivery uncertain, so retry stops instead of sending another
+unbound message.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/wait-store/src/adapter.ts#L141-L200">The wait adapter validates identity and issuer, applies bounded store defaults,
+and uses idempotent append</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/wait-store/src/adapter.ts#L202-L240">Wait create and read use the <code>waits/all</code> stream and preserve the original
+idempotency key</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/config.ts#L45-L104">Operator-message configuration bounds target payloads, records, and total
+delivery bytes</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/delivery-records.ts#L31-L57">The delivery store reserves before transport and blocks an uncertain retry
+when receiver receipt lookup is absent</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/operator-messaging/src/delivery-records.ts#L60-L88">A terminal receipt uses a digest-guarded transition and resolves a concurrent
+accepted result</a>.</p>
+</blockquote>
+<h2 id="worker-state">Worker State</h2>
+<p>Worker Core keeps two related authorities. The attempt journal proves the exact
+accepted input and sealed result. The ownership store proves which native
+process scope the supervisor controls. Neither record alone proves the other.</p>
+<p>Admission calculates conservative liability before it accepts an envelope:
+input bytes, maximum output, maximum result, metadata allowance, pending
+reservations, current retained bytes, and state-write allowance. It rejects new
+work when the total can exceed <code>maximumTotalBytes</code>.</p>
+<p>The output spool preserves original stdout and stderr. It rejects the write that
+would cross the combined maximum. It does not truncate old output to admit new
+bytes. The sealed result is immutable for the accepted identity.</p>
+<blockquote>
+<p><strong>Source evidence — Worker durability and capacity</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-journal.ts#L18-L77">The attempt journal binds accepted envelopes and retained state to exact claim
+and attempt identity</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-journal.ts#L78-L131">It validates process completion and sealed-result transitions</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-journal.ts#L162-L183">Admission counts retained bytes and outstanding reservations before it writes the accepted envelope</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/ownership-store.ts#L50-L109">The ownership store validates host, boot, owner, and generation identity</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/ownership-store.ts#L110-L169">Its transitions apply revision checks and configured record and byte limits</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-output-spool.ts#L13-L68">The output spool uses private files, exclusive no-follow creation, bounded append, and per-write synchronization</a>.</p>
+</blockquote>
+<p>For lifecycle transitions, corruption cases, and restart decisions, read
+<a href="worker-core.html#attempt-journal-and-commit-boundaries">Worker Core</a>.</p>
+<h2 id="buster-state">Buster State</h2>
+<p>Buster separates five things that have similar roles:</p>
+<ol>
+<li>The resolved plan says what must run.</li>
+<li>The committed source snapshot says which source can run.</li>
+<li>Durable admission says that Buster accepted storage liability.</li>
+<li>Attempt records and evidence say what each provider did.</li>
+<li>Nova verifies the result digest and bound receipt before its one-time import.</li>
+</ol>
+<p>Evidence bytes are content addressed. Buster verifies containment, declared file
+identity, count, total bytes, media type, size, and digest before publication.
+Report adapters read retained evidence and add bounded normalized facts. They do
+not replace the original evidence.</p>
+<p>Automatic age-based deletion is not implemented. Completed remote jobs have an
+explicit compaction contract. Compaction can remove an inline repository archive
+only after it verifies the retained Git source and all referenced result
+artifacts. It keeps a receipt of that decision.</p>
+<blockquote>
+<p><strong>Source evidence — Buster stores</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L52-L111">The remote job store configures bounded records and content-addressed result
+blobs</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L112-L164">Admission validates and reserves the accepted job before execution</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-service.ts#L337-L370">Execution derives one SHA-256 job directory under <code>runtimeRoot</code> and separates its workspace, artifacts, and observability roots</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/runner.ts#L667-L726">Runner construction separates artifact, observability, attempt, admission, and report-adapter roots and rejects overlapping trust roots</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/artifacts.ts#L24-L83">Evidence staging enforces containment, duplicate-file rejection, count, and byte limits before immutable storage</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/test-gates/remote-plan-compaction.ts#L90-L149">Remote compaction verifies the completed job, source identity, archive digest, and retained result artifacts</a>.</p>
+</blockquote>
+<p>The full record and failure flow is in <a href="buster.html#4-durable-admission-and-state">Buster architecture</a>.</p>
+<h2 id="postgresql-owners">PostgreSQL Owners</h2>
+<h3 id="prism-postgresql">Prism PostgreSQL</h3>
+<p>Prism owns its schema. The <code>prism_migrator</code> role applies the ordered SQL files
+inside one transaction and one advisory lock. The runtime role receives data
+permissions but does not own schema changes. This separation prevents a normal
+service process from changing the database structure.</p>
+<p>Prism keeps product history instead of overwriting it. A new design revision,
+preference event, approval, and baseline are separate records. Transactions and
+frontier checks prevent a late worker result from becoming current after its
+input changed.</p>
+<p>The complete table, migration, lock, and transaction model is in
+<a href="prism-data.html">Prism data architecture</a>. That page is the detailed authority;
+this page defines how Prism fits the platform-wide recovery order.</p>
+<h3 id="prism-artifacts">Prism artifacts</h3>
+<p>Prism writes artifact bytes before it creates a database reference. Therefore,
+a database dump followed by a copy of the immutable artifact superset is a valid
+group: an extra unreferenced object is possible, but a referenced object should
+already exist. Administrative deletion must not run during this copy.</p>
+<p>The chart requests 100 GiB each for artifacts and backups. It does not delete old
+backup groups automatically. It fails a new backup when retained bytes leave too
+little capacity. This behavior protects the last verified copy but requires an
+operator-owned retention decision.</p>
+<blockquote>
+<p><strong>Source evidence — Prism ownership and backup</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/storage/index.ts#L21-L74">Prism migration uses one reserved connection, a transaction, an advisory lock, ownership checks, and a filename journal</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/storage/artifacts.ts#L8-L67">The artifact store publishes digest-addressed files without replacement and verifies every read</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/files/prism-backup.sh#L58-L117">The backup program dumps the database, copies immutable artifacts, writes checksums and metadata, and publishes the complete group atomically</a>.</p>
+</blockquote>
+<h3 id="prism-acquisition-quarantine">Prism acquisition quarantine</h3>
+<p>Ingestion holds acquired bytes in a 4 GiB <code>emptyDir</code> before publication. It
+names the file with the content digest. Control verifies that digest, publishes
+the durable artifact and relational record, and then requests quarantine
+deletion. The reaper removes old files even if Control never returns. The
+configured one-hour TTL is clamped to a minimum of one minute and a maximum of
+one day.</p>
+<p>This store is intentionally disposable. The benefit is that unaccepted remote
+content does not enter the durable artifact PVC. The cost is that a Pod restart
+or TTL expiry can discard an acquisition before publication. Recovery is a new
+bounded acquisition, not file restore. Reconsider <code>emptyDir</code> only if the product
+requires recovery of in-flight acquisitions; that change also needs ownership,
+encryption, capacity, and cleanup rules for hostile input.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/ingestion.ts#L12-L20">Ingestion clamps the TTL and reaps digest-named files</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/server/ingestion.ts#L21-L79">It writes an acquired object before returning its digest</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/prism/templates/ingestion.yaml#L22-L39">The chart mounts a 4 GiB quarantine-only <code>emptyDir</code> and passes the configured
+TTL</a>.</p>
+</blockquote>
+<h3 id="litellm-postgresql">LiteLLM PostgreSQL</h3>
+<p>LiteLLM has a separate database, owner, secret set, backup, and restore path.
+<code>STORE_MODEL_IN_DB=True</code> enables database-backed model configuration. The
+database also holds virtual-key permissions, budgets, and accounting records.
+These rows are product data. Do not group this database with Prism.</p>
+<p>The pinned LiteLLM application owns the SQL schema and its migrations. KubeClaw
+deploys and protects the service but must not invent a local schema migration.
+The production values request a 20 GiB standalone PostgreSQL PVC. A logical
+backup includes schema, rows, owners, and access-control lists. It does not
+include login passwords, Kubernetes Secrets, provider accounts, or the
+LiteLLM master and salt keys. Recover those through their separate authority.</p>
+<p>The recovery policy requests a backup every 15 minutes, checks every 5 minutes,
+sets a two-hour maximum age, permits 64 GiB per dump, and reserves 100 GiB with a
+90 GiB retained-data ceiling. Configuration defines these objectives. It does
+not prove a live recovery time. The recovery script does not automatically
+delete completed backup groups or upload them off-node.</p>
+<blockquote>
+<p><strong>Source evidence — LiteLLM persistence</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-deployment.yaml#L21-L50">The deployment enables database-backed model storage and obtains database and encryption settings from Secrets</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/postgresql-values.yaml#L1-L19">The production PostgreSQL values select the LiteLLM database, external Secret, standalone mode, and 20 GiB persistent volume</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L56-L95">The recovery script validates the source and publishes a custom-format dump
+with checksums and metadata</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L101-L129">Verification checks the file set, checksums, selected application and
+credential binding, version, age, and archive</a>.
+<a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L141-L156">Restore rejects the source server and a nonempty target, then uses one
+error-stopping transaction</a>.</p>
+</blockquote>
+<h3 id="litellm-row-retention">LiteLLM row retention</h3>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/my-values/infra/litellm-config.yaml#L1-L14">checked-in gateway YAML selects no row-retention policy</a>.
+Both selected LiteLLM revisions can schedule deletion of old request-cost
+records (spend logs), request-routing sessions (autorouter sessions), and
+health-check records when their effective retention settings enable cleanup.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L9588-L9629">Direct scheduling</a>
+and <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L10008-L10049">GitOps scheduling</a>
+are conditional. Database-stored settings can change and reschedule this job;
+see <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L6805-L6825">direct setting application</a>
+and <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L7162-L7182">GitOps setting application</a>.
+The cleanup implementation <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L308-L336">deletes aged rows in bounded batches</a>
+from <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L456-L505">these record tables</a>.</p>
+<p>Before assuming indefinite retention, identify the mounted configuration and
+database-stored values of <code>maximum_spend_logs_retention_period</code>,
+<code>maximum_autorouter_session_retention_period</code>, and
+<code>maximum_health_check_retention_period</code>. Cleanup can remove aged diagnostic or
+accounting rows before a later backup. A retained earlier dump can still contain
+those rows. Preserve the dumps and determine the effective policy before treating
+this difference as corruption. These settings do not define a common expiry for
+models, keys, or budgets, and do not delete retained backup groups.</p>
+<h4 id="read-retention-inputs-without-changing-the-service">Read retention inputs without changing the service</h4>
+<p>This procedure applies to the two <a href="#selected-litellm-source-and-image-boundary">selected LiteLLM revisions</a>.
+Run it from the bound independent administration machine. It reads one running
+LiteLLM Pod and its database; it does not change retention or start cleanup.
+Use <code>kubectl</code>, Python 3 with PyYAML in the selected container, and <code>psql</code> on the
+administration machine. Do not install tools into the running container.</p>
+<p>Before starting, the LiteLLM and database owners must identify the deployed
+profile, immutable image, upstream revision, database service and database
+name, applied schema-change history, and the exact Pod/container. They must
+supply an authorized read-only database connection profile privately. It must
+select that instance and a role with only the necessary read access. Use a
+libpq service file and password file through their private paths; never put a
+credential URL or password in a command, record, or shell trace. Cluster access
+must permit reading the selected Pod and executing this file-read command.
+The owners must confirm that the deployed <code>LiteLLM_Config</code> table is in <code>public</code>,
+with <code>param_name</code> as its unique text key and <code>param_value</code> as JSON or JSONB.
+The <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L618-L623">direct schema</a>
+and <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma#L621-L626">GitOps schema</a>
+describe the selected schema, but do not prove that live migrations completed.
+Stop if this instance, schema, read-only access, or tool selection is unverified.</p>
+<ol>
+<li>Bind the cluster as specified in <a href="../use/install.html#bind-cluster-authority">Bind Cluster Authority</a>.
+Set <code>LITELLM_POD</code> to the owner's exact running Pod name and
+<code>LITELLM_POD_UID</code> to its recorded UID. Keep its non-secret owner/image/mount
+record with the observation time. Both repository profiles mount
+<code>/app/config.yaml</code>; confirm that this is the selected container's actual
+configuration file. The <a href="https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/my-values/infra/litellm-deployment.yaml#L60-L74">direct mount</a>
+and <a href="https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/gitops/platform/litellm/resources.yaml#L40-L50">GitOps mount</a>
+use <code>subPath</code>. A ConfigMap alone is insufficient: the <code>subPath</code> mount
+can keep older bytes after a ConfigMap change.</li>
+</ol>
+<pre><code class="language-bash">assert_cluster_binding || exit 126
+set -euo pipefail
+umask 077
+test &quot;$(kubectl --context &quot;$EXPECTED_CONTEXT&quot; -n &quot;$NAMESPACE&quot; get pod \
+  &quot;$LITELLM_POD&quot; -o jsonpath='{.metadata.uid}')&quot; = &quot;$LITELLM_POD_UID&quot;
+kubectl --context &quot;$EXPECTED_CONTEXT&quot; -n &quot;$NAMESPACE&quot; exec -i \
+  &quot;$LITELLM_POD&quot; -c litellm -- python - &lt;&lt;'PY'
+try:
+    import hashlib, json, re, yaml
+    raw = open('/app/config.yaml', 'rb').read()
+    config = yaml.safe_load(raw)
+    if not isinstance(config, dict):
+        raise ValueError()
+    g = config.get('general_settings', {})
+    if not isinstance(g, dict):
+        raise ValueError()
+    keys = ('maximum_spend_logs_retention_period',
+            'maximum_autorouter_session_retention_period',
+            'maximum_health_check_retention_period')
+    def safe(v):
+        if v is None or type(v) is int:
+            return v
+        if type(v) is str and re.fullmatch(r'[0-9]+(s|m|h|d|w|mo)', v):
+            return v
+        return {'uninterpreted_type': type(v).__name__, 'value_withheld': True}
+    print(json.dumps({'mounted_file_sha256': hashlib.sha256(raw).hexdigest(),
+        'settings': {k: {'present': k in g, 'value': safe(g.get(k))} for k in keys}}))
+except Exception:
+    raise SystemExit('LITELLM_RETENTION_CONFIG_READ_FAILED') from None
+PY
+</code></pre>
+<p>Expected result: one mounted-file digest and exactly three setting records.
+<code>present: false</code> differs from an explicit YAML null. The output withholds
+unexpected values instead of exposing arbitrary configuration strings.
+A missing Pod, changed UID, file-read failure, unavailable Python/PyYAML, or
+unexpected value stops this identification. File-read, import, parse, and
+mapping-shape failures return nonzero with only
+<code>LITELLM_RETENTION_CONFIG_READ_FAILED</code>; raw YAML, exception text and tracebacks
+are withheld. An empty/null document or a nonmapping <code>general_settings</code> is
+rejected. Keep this constant failure record and ask the owner to diagnose the
+configuration privately. Obtain a versioned owner procedure
+that exports only these fields and the exact mounted-file identity if this
+read command is unavailable. Do not dump the configuration or environment.</p>
+<ol start="2">
+<li>
+<p>In a dedicated query shell, set <code>PGSERVICE</code>, <code>PGSERVICEFILE</code>, and
+<code>PGPASSFILE</code> to the owner's read-only service name and absolute private
+service-file and password-file paths. Ordinary shell assignments are not
+inherited by <code>psql</code>; the command block below explicitly exports them.
+The owner must confirm that this service name exists in that exact file,
+selects the verified source host/address, port, database and read-only user,
+and contains the approved transport and authentication settings. The files
+must be privately owned and readable; the password file must deny group and
+other access. The service section must contain neither a <code>password</code> nor a
+<code>passfile</code> setting for this password-file procedure. Do not print file
+contents or selector values.</p>
+<p>A <a href="https://www.postgresql.org/docs/18/libpq-pgservice.html">service-file field</a>
+overrides its corresponding environment value. A field omitted from the
+service can still use an inherited variable or a built-in default. A direct
+connection argument overrides the service. Therefore the block rejects
+every other <code>PG*</code> shell input and supplies no host, user, database, password
+or connection-string argument. In particular, inherited <code>PGPASSWORD</code> can
+supply a password before the <a href="https://www.postgresql.org/docs/18/libpq-pgpass.html">password file</a>
+is considered. Reject it instead of silently using it. The selected service
+must define all target identity and required security fields; owners must
+approve any deliberately omitted default. Selector export and a clean
+environment do not by themselves prove which server accepted a connection.</p>
+<p>If the guard rejects an inherited input, stop and ask the owner for a clean
+query shell with the same approved files. Do not dump the environment,
+inspect secrets, or remove an input to guess a connection. Run this exact
+projection only after the live schema and instance checks above:</p>
+</li>
+</ol>
+<pre><code class="language-bash">set -euo pipefail
+umask 077
+for pg_input in ${!PG@}; do
+  case &quot;$pg_input&quot; in
+    PGSERVICE|PGSERVICEFILE|PGPASSFILE) ;;
+    *) printf '%s\n' 'LITELLM_RETENTION_PROFILE_INPUT_REJECTED' &gt;&amp;2; exit 126 ;;
+  esac
+done
+if test -z &quot;${PGSERVICE-}&quot; || test -z &quot;${PGSERVICEFILE-}&quot; || test -z &quot;${PGPASSFILE-}&quot;; then
+  printf '%s\n' 'LITELLM_RETENTION_PROFILE_INPUT_MISSING' &gt;&amp;2
+  exit 126
+fi
+for profile_path in &quot;$PGSERVICEFILE&quot; &quot;$PGPASSFILE&quot;; do
+  case &quot;$profile_path&quot; in
+    /*) ;;
+    *) printf '%s\n' 'LITELLM_RETENTION_PROFILE_PATH_INVALID' &gt;&amp;2; exit 126 ;;
+  esac
+  if ! test -f &quot;$profile_path&quot; || ! test -r &quot;$profile_path&quot;; then
+    printf '%s\n' 'LITELLM_RETENTION_PROFILE_FILE_UNAVAILABLE' &gt;&amp;2
+    exit 126
+  fi
+done
+export PGSERVICE PGSERVICEFILE PGPASSFILE
+psql --no-psqlrc --set=ON_ERROR_STOP=1 &lt;&lt;'SQL'
+BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY;
+SET LOCAL statement_timeout = '5s';
+SHOW transaction_read_only;
+WITH keys(key) AS (VALUES
+ ('maximum_spend_logs_retention_period'),
+ ('maximum_autorouter_session_retention_period'),
+ ('maximum_health_check_retention_period')),
+settings AS (
+ SELECT param_value::jsonb AS value FROM public.&quot;LiteLLM_Config&quot;
+ WHERE param_name = 'general_settings'
+)
+SELECT keys.key, settings.value IS NOT NULL AS record_has_value,
+       jsonb_typeof(settings.value) AS record_type,
+       COALESCE(settings.value ? keys.key, false) AS key_present,
+       jsonb_typeof(settings.value -&gt; keys.key) AS value_type,
+       CASE
+         WHEN jsonb_typeof(settings.value -&gt; keys.key) = 'null' THEN 'null'
+         WHEN jsonb_typeof(settings.value -&gt; keys.key) = 'number'
+           AND (settings.value -&gt;&gt; keys.key) ~ '^-?[0-9]+$'
+           THEN settings.value -&gt;&gt; keys.key
+         WHEN jsonb_typeof(settings.value -&gt; keys.key) = 'string'
+           AND (settings.value -&gt;&gt; keys.key) ~ '^[0-9]+(s|m|h|d|w|mo)$'
+           THEN settings.value -&gt;&gt; keys.key
+         ELSE '[absent or withheld]'
+       END AS retention_value
+FROM keys LEFT JOIN settings ON true ORDER BY keys.key;
+ROLLBACK;
+SQL
+</code></pre>
+<p>Expected result: <code>transaction_read_only</code> is <code>on</code>, three rows and <code>ROLLBACK</code>.
+<code>record_type</code> must be <code>object</code> or null; stop for any other record shape.
+The query reads only the three retention fields from the <code>general_settings</code>
+record. A missing record, SQL null record, absent key and JSON null key are
+not an enabled policy. An unexpected type or withheld value needs owner
+interpretation against the selected parser. Do not broaden the query to whole
+records, Secrets, provider credentials, or key tables. On connection, schema,
+permission, timeout, or shape failure, stop; preserve the safe error and obtain
+the database owner's corrected read-only procedure. Do not try a write-capable
+profile or run a migration.</p>
+<ol start="3">
+<li>Compare the mounted and stored observations with these rules.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Input or observation</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Key absent from initial mounted settings and not applied from the database</td>
+<td>No retention period for that record type; deletion is disabled. There is no built-in number of retention days for these three keys.</td>
+</tr>
+<tr>
+<td>Database key present and applied by the selected process</td>
+<td>It overwrites the loaded value even when YAML also supplied that key. A changed value, including null, reschedules cleanup.</td>
+</tr>
+<tr>
+<td>Database key absent</td>
+<td>The setter does not assign that key. It does not prove that the process has forgotten an earlier stored value or now equals the mounted file.</td>
+</tr>
+<tr>
+<td>Applied null, or a string that raises <code>ValueError</code> in the retention parser</td>
+<td>The corresponding deletion path is disabled. Other unexpected types can fail parsing; do not call them a safe disabled policy without owner investigation.</td>
+</tr>
+<tr>
+<td>Integer</td>
+<td>The retention parser treats it as days. Use an explicit string such as <code>7d</code> when the owner later changes policy.</td>
+</tr>
+<tr>
+<td>Explicit duration string</td>
+<td><code>s</code>, <code>m</code>, <code>h</code>, <code>d</code>, <code>w</code>, and <code>mo</code> mean seconds, minutes, hours, days, weeks, and calendar months. Zero can parse; do not assume zero disables deletion. Calendar-month seconds depend on parsing time.</td>
+</tr>
+</tbody>
+</table>
+<p>Spend retention applies to <code>LiteLLM_SpendLogs.startTime</code> and its derived
+<code>LiteLLM_SpendLogToolIndex.start_time</code> rows. Autorouter retention applies to
+<code>LiteLLM_AutoRouterSession.last_turn_at</code>; health retention applies to
+<code>LiteLLM_HealthCheckTable.checked_at</code>. Each uses its own cutoff. These are
+current-database deletions, not changes to previously published backup groups.</p>
+<p>The authenticated admin-view <code>GET /config/field/info?field_name=&lt;key&gt;</code> reads
+stored settings and can fail for an absent field. It is not a loaded-value
+read. <code>GET /config/list?config_type=general_settings</code> reports loaded settings
+but falls back to the database when the loaded value is <code>None</code>.
+Its <code>stored_in_db</code> flag describes presence, not proof of successful application.
+Use the owner's private authenticated administration surface for these GETs;
+retain only these three fields, not the full response. Neither endpoint is an
+unconditional observation of the cleanup task in every running worker.</p>
+<p><strong>Effective runtime policy can remain unknown.</strong> The mounted-file and SQL
+results prove inputs at their recorded times. They do not prove that each worker
+loaded the same inputs, that a database change was applied, that a scheduler
+ran, or that deletion succeeded. To claim an effective policy, the LiteLLM owner
+must supply a versioned read-only observation procedure bound to each relevant
+Pod/process and observation time. It must identify the loaded values, their
+parsed seconds or disabled/error result, the scheduled cleanup state, and any
+change between the input reads. Stop at this boundary if that observation is
+unavailable or conflicts with the inputs. Keep both dumps and mark the effective
+policy <code>unknown</code>; do not restart, change retention, or delete rows to make the
+observations agree.</p>
+<blockquote>
+<p><strong>Source evidence — retention identification and its limit</strong></p>
+<p>Claim: database application overwrites present retention keys; the parser and
+table-specific deletion paths determine cleanup, while administration reads
+have the limits stated above.</p>
+<p>Implementation: <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L6805-L6825">direct setter</a>,
+<a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L7162-L7182">GitOps setter</a>,
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L176-L207">parser</a>,
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L456-L505">table cutoffs</a>,
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/litellm_core_utils/duration_parser.py#L23-L98">duration units</a>,
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L16810-L16879">direct field-info read</a>,
+<a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L17342-L17411">GitOps field-info read</a>,
+<a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L17540-L17682">GitOps config-list fallback</a>,
+and <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L17004-L17140">direct config-list fallback</a>.</p>
+<p>Contract or setting: only the three named retention settings are projected.
+Test evidence: local output-filter and query-shape checks; no deployed
+input retrieval or cleanup execution has been demonstrated by this page.
+Revision: the two selected upstream revisions above; KubeClaw <code>ebcc040</code>.
+Limit: input evidence and source rules do not establish an observed live policy.</p>
+</blockquote>
+<h3 id="selected-litellm-source-and-image-boundary">Selected LiteLLM source and image boundary</h3>
+<p>An image digest selects an OCI index: a list of images for different processor
+architectures. Both checked-in LiteLLM indexes contain Linux <code>amd64</code> and
+<code>arm64</code> images. Their registry configuration and attached BuildKit provenance
+identify different upstream source revisions.</p>
+<table>
+<thead>
+<tr>
+<th>Deployment profile</th>
+<th>Selected OCI index digest</th>
+<th>Upstream revision reported by both architectures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct infrastructure</td>
+<td><code>sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580</code></td>
+<td><code>7d5b6456baaf8be6ac1a60db2b710566b5344adf</code></td>
+</tr>
+<tr>
+<td>GitOps platform</td>
+<td><code>sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2</code></td>
+<td><code>16f6d924530c1cf2dc94b3e83c86a4632aefb7c0</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/litellm-deployment.yaml#L25-L33">direct manifest selects the first index</a>.
+The <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/litellm/resources.yaml#L22-L30">GitOps manifest selects the second index</a>;
+its <code>main-latest</code> tag does not replace the digest authority.
+<a href="https://ghcr.io/v2/berriai/litellm/manifests/sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580">The direct registry index</a>
+and <a href="https://ghcr.io/v2/berriai/litellm/manifests/sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2">the GitOps registry index</a>
+bind their platform manifests, configuration, provenance, and filesystem layers
+by digest. Registry API access can require a pull token.</p>
+<p>The revision labels are in the
+<a href="https://ghcr.io/v2/berriai/litellm/blobs/sha256:1c188fb990fad2d2cc6d7555910ab4d455b69e9750ecdd4d8557957035019053">direct amd64 configuration</a>,
+<a href="https://ghcr.io/v2/berriai/litellm/blobs/sha256:fdd19ec7b3b133895f6f09116cc27979d32bcd6bb3344a2e3ed59bb86c942585">direct arm64 configuration</a>,
+<a href="https://ghcr.io/v2/berriai/litellm/blobs/sha256:c175e926e4b0e8328885696165f40e28bb763c7384e4c9c55235e3cdfb78a0c7">GitOps amd64 configuration</a>,
+and <a href="https://ghcr.io/v2/berriai/litellm/blobs/sha256:27852540a0b41e0150d72f51bfbad3be449fb26e8067456c5e6bc3c74b004356">GitOps arm64 configuration</a>.</p>
+<p>Selected schema, migration, startup, model-storage, and encryption files from
+those layers matched the official Git source at the reported revisions for
+both architectures. This establishes the inspected file bytes. It does not
+establish a verified publisher signature, complete runtime equivalence, or a
+successful database restore. The two profiles have different schema and
+migration files; do not treat them as interchangeable application versions.</p>
+<h3 id="rows-and-encryption-inputs">Rows and encryption inputs</h3>
+<p>The direct revision's <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L12-L61">Prisma schema defines budgets, named credentials, and
+stored models</a>,
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L417-L466">virtual-key permissions and limits</a>,
+and <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L618-L654">configuration and request accounting</a>.
+The <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma#L38-L61">GitOps schema defines the corresponding model and credential records</a>.
+A dump must preserve the whole database and its record of applied database
+schema changes, not only the current embedding model row.</p>
+<p>On a stored-model write, LiteLLM passes each model parameter through the
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/management_endpoints/model_management_endpoints.py#L1054-L1081">encryption helper before inserting the model</a>.
+The helper encrypts strings; it leaves non-string values unchanged. It selects
+<code>LITELLM_SALT_KEY</code> when present and otherwise uses the loaded master key.
+Without an effective <code>general_settings.encryption_algorithm</code> override, new
+strings use XSalsa20-Poly1305, a SHA-256-derived key, and URL-safe Base64 storage.
+An <code>aes-256-gcm</code> override selects versioned <code>v2:gcm:</code> values. Reads detect the
+format, so one database can contain both formats.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/common_utils/encrypt_decrypt_utils.py#L23-L116">Direct key and algorithm selection</a>
+and <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/common_utils/encrypt_decrypt_utils.py#L26-L119">GitOps key and algorithm selection</a>
+use this rule. The checked-in gateway configuration does not select an
+algorithm override; stored settings and externally supplied Secrets still need
+to be checked for the deployed instance.</p>
+<p>A failed decryption can return <code>None</code> or the original stored value, depending
+on the caller. It does not always stop the process.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/common_utils/encrypt_decrypt_utils.py#L119-L160">The direct read helper handles these failures</a>.
+Keep the encryption input that wrote the retained rows. If no salt key was used,
+changing the master key also changes that input. Do not replace ciphertext with
+new values to hide a failed restore. Before cutover, prove that the restored
+application can use retained encrypted configuration, as well as complete one
+real authenticated embedding. A route backed only by mounted credentials does
+not prove that database ciphertext can be read.</p>
+<p>The checked-in configuration supplies no pool override. The CLI's default
+connection limit is 10 and its pool-wait timeout is 60 seconds. These control
+one client's pool; they are not a service-wide concurrency limit or an operation
+deadline. The CLI writes the selected pool parameters into <code>DATABASE_URL</code>,
+over existing query values. <code>database_extra_connection_params</code> can override
+those selected parameters. Do not print the credential-bearing URL during
+diagnosis. Check the effective settings and PostgreSQL connection capacity
+before increasing a limit.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py#L56-L92">Default pool values and parameter construction</a>,
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py#L162-L176">URL parameter precedence</a>,
+and <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_cli.py#L63-L66">GitOps pool defaults</a>
+support these bounds.</p>
+<h3 id="startup-can-change-a-restored-schema">Startup can change a restored schema</h3>
+<p>The image entrypoint starts the <code>litellm</code> CLI. With <code>DATABASE_URL</code> present and
+schema updates enabled, the CLI applies migrations before starting HTTP.
+The checked-in arguments do not select <code>--use_prisma_db_push</code> or the v2 migration
+resolver, so the default path uses <code>prisma migrate deploy</code> with the v1 resolver.
+Schema updates can be disabled by <code>general_settings.disable_prisma_schema_update</code>
+or, when that setting is absent, <code>DISABLE_SCHEMA_UPDATE</code>.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py#L1309-L1360">The CLI selects the migration path</a>
+and <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/prisma_client.py#L968-L992">the database manager selects the update setting</a>.</p>
+<p>The v1 resolver makes up to four migration attempts per setup call. After applying pending
+migrations, it can generate and execute a schema difference; a nonempty database
+without a record of applied schema changes can enter its baseline-and-resolution path. These
+are writes, not read-only compatibility checks.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L1018-L1137">Migration attempts and baseline recovery</a>
+and <a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L416-L552">schema-difference execution</a>
+explain why the restored database must remain isolated from production writers.</p>
+<p>The CLI can continue startup when migration setup returns <code>False</code> unless
+<code>ENFORCE_PRISMA_MIGRATION_CHECK</code> or its CLI flag enables enforcement. An
+unrecoverable <code>RuntimeError</code> instead exits with status 2.
+<a href="https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_cli.py#L1333-L1360">Direct startup failure handling</a>
+and <a href="https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_cli.py#L1351-L1378">GitOps startup failure handling</a>
+show this distinction. Neither checked-in Deployment sets enforcement directly;
+<code>envFrom</code> can supply it through the external Secret. A running process therefore
+does not prove that migrations succeeded.</p>
+<p>Fence writers and retain an untouched verified dump before starting an image
+against a restored database. Keep the recorded application digest, key inputs,
+and record of applied database schema changes together. Stop cutover on a
+migration failure, unexplained schema change, or unreadable retained ciphertext. Do not downgrade an image
+against a database that a newer image has changed; restore an isolated,
+compatible recovery group first.</p>
+<blockquote>
+<p><strong>Source evidence — selected LiteLLM implementation</strong></p>
+<p><strong>Claim:</strong> The selected files implement the schema, encryption selection, and
+startup migration behavior described above.
+<strong>Implementation:</strong> The commit-pinned upstream functions and schema linked
+beside each mechanism; their selected OCI-layer bytes matched both architectures.
+<strong>Contract or setting:</strong> The two deployment image digests, external <code>litellm-secrets</code>,
+gateway configuration, and startup arguments determine the selected profile.
+<strong>Test evidence:</strong> Registry and file-digest comparisons completed; no upstream
+test, image execution, encryption round trip, or application restore was run.
+<strong>Revision:</strong> Direct <code>7d5b6456baaf8be6ac1a60db2b710566b5344adf</code>;
+GitOps <code>16f6d924530c1cf2dc94b3e83c86a4632aefb7c0</code>.
+<strong>Limit:</strong> The linked implementation does not establish a verified publisher signature,
+deployed Secret values, effective stored settings, or live recovery.</p>
+</blockquote>
+<h3 id="deployment-profiles-are-not-the-same-capacity-contract">Deployment profiles are not the same capacity contract</h3>
+<p>The repository contains two PostgreSQL value profiles. The direct production
+profile at <code>my-values/infra/postgresql-values.yaml</code> requests 20 GiB. The Argo CD
+platform profile at <code>gitops/platform/values/postgresql.yaml</code> requests 1 GiB and
+smaller resource limits. Both select the <code>litellm</code> database and an external
+Secret. An operator must record which profile owns the deployed release. Do not
+use the larger value when you calculate free space for the smaller profile.</p>
+<p>The same distinction exists for Redis. The direct production profile requests a
+20 GiB PVC and contains the strict AOF and no-eviction policy described below.
+The Argo CD platform profile requests 2 GiB and does not repeat that
+<code>commonConfiguration</code> block. Chart defaults therefore become part of the GitOps
+profile's effective durability contract. Render and inspect them before you
+claim the same durability as the direct profile.</p>
+<blockquote>
+<p><strong>Source evidence — profile differences</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/postgresql.yaml#L1-L23">The Argo CD PostgreSQL values request 1 GiB</a>, while <a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/postgresql-values.yaml#L1-L19">the direct production values request 20 GiB</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/gitops/platform/values/redis.yaml#L1-L19">The Argo CD Redis values request 2 GiB and omit an explicit persistence-policy block</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/redis-values.yaml#L1-L27">The direct profile declares strict AOF, no eviction, and 20 GiB</a>.</p>
+</blockquote>
+<h2 id="redis-durable-delivery-not-product-authority">Redis: Durable Delivery, Not Product Authority</h2>
+<p>The direct production Redis profile persists stream and dedup state with AOF. It
+uses <code>appendfsync always</code>, rejects a truncated AOF, disables RDB snapshots, and
+uses <code>noeviction</code>. When memory is full, new writes fail. Redis does not evict a
+dedup key and then accept a duplicate publication.</p>
+<p>The adapter uses one Lua operation:</p>
+<ol>
+<li>Read the dedup key.</li>
+<li>Return its original stream ID when it exists.</li>
+<li>Otherwise append the payload with approximate <code>MAXLEN</code>.</li>
+<li>Store the returned stream ID under the dedup TTL.</li>
+</ol>
+<p>This is atomic inside Redis. It does not provide indefinite deduplication. When
+the dedup key expires, a very late replay can append again. Consumers must use
+the stable envelope identity when their own correctness needs a longer window.</p>
+<p>The configured 1 GiB Redis memory limit is not a capacity proof for every
+stream. <code>MAXLEN</code> is per stream, payloads can be up to 1 MiB, and dedup keys also
+consume memory. Monitor measured stream and key growth.</p>
+<blockquote>
+<p><strong>Source evidence — Redis data behavior</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L28-L87">The adapter validates endpoints and bounds, limits payloads to 1 MiB, and performs stream append plus deduplication in Lua</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/my-values/infra/redis-values.yaml#L1-L27">The selected production values enable strict AOF, disable eviction, set 1 GiB Redis memory, and request a 20 GiB PVC</a>.</p>
+</blockquote>
+<h2 id="artifact-lifecycle">Artifact Lifecycle</h2>
+<p>An artifact needs five identities:</p>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Namespace</td>
+<td>Prevent one plugin or domain from writing into another owner's space.</td>
+</tr>
+<tr>
+<td>Artifact ID</td>
+<td>Stable reference used in a contract.</td>
+</tr>
+<tr>
+<td>Content digest</td>
+<td>Prove the exact bytes.</td>
+</tr>
+<tr>
+<td>Media type and encoding</td>
+<td>Tell a reader how to interpret the bytes.</td>
+</tr>
+<tr>
+<td>Producer identity</td>
+<td>Bind the object to run, stage, attempt, and registration authority.</td>
+</tr>
+</tbody>
+</table>
+<p>Publication is complete only after the bytes are durable and the authoritative
+record contains their verified reference. A temporary file is not an artifact.
+A digest-named file without the matching journal or database reference is an
+unreferenced object, not proof that an operation completed.</p>
+<p>Current stores do not share one garbage collector. The owning domain must prove
+that no journal, result, baseline, report, backup, or active recovery process
+still refers to an object before deletion. Absence from the latest UI is not
+such proof.</p>
+<h2 id="backup-groups">Backup Groups</h2>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Include</th>
+<th>Writer fence</th>
+<th>Restore order</th>
+<th>Current automation boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova run</td>
+<td>Complete run root, large effect results, and any separately stored artifact bytes referenced by events</td>
+<td>Stop mutation for the selected run and stop administrative reopen</td>
+<td>Restore files privately; verify snapshot and hash chains; verify referenced artifacts; then start recovery</td>
+<td>No repository-wide scheduler, off-node copy, RPO, or RTO</td>
+</tr>
+<tr>
+<td>Worker host</td>
+<td>Ownership store, attempt metadata, input/result blobs, and output spools</td>
+<td>Stop admission and hold the trusted supervisor boundary</td>
+<td>Restore only to the proved host identity; validate ownership; replay attempts; reopen admission last</td>
+<td>No automatic retirement or cross-host restore workflow</td>
+</tr>
+<tr>
+<td>Buster runtime</td>
+<td>Complete <code>stateRoot</code> plus <code>runtimeRoot</code>: remote jobs, statuses, source archives or verified retained Git source, attempts, results, receipts, evidence, and reports</td>
+<td>Stop remote admission, execution, and compaction</td>
+<td>Restore the state store, result blobs, and job directories together; verify identities and digests; reconcile incomplete attempts; expose status last</td>
+<td>Quiesced storage backup is operator work; file stores are not replicated</td>
+</tr>
+<tr>
+<td>Prism</td>
+<td>One PostgreSQL dump plus the complete immutable artifact superset and group metadata</td>
+<td>Stop migrations and administrative artifact deletion; normal immutable publication follows the group rule</td>
+<td>Verify group; restore database and artifacts into isolated targets; start Prism readers; verify application references; cut over last</td>
+<td>Scheduled local backup, verification, and SQL smoke proof exist; no automatic expiry or off-host copy</td>
+</tr>
+<tr>
+<td>LiteLLM</td>
+<td>Full logical database dump, roles/ACL evidence, metadata, checksums, and independently retained master/salt and database credentials</td>
+<td>Fence LiteLLM writes</td>
+<td>Restore roles and empty database; restore dump; supply exact keys; validate LiteLLM API and encrypted values; cut over last</td>
+<td>Scheduled local recovery job exists; no automatic backup-group deletion or off-node copy</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>AOF-aware snapshot or fenced RDB plus stream, consumer, pending, and expiry evidence and external password authority</td>
+<td>Pause writes and stop all publishers before source shutdown</td>
+<td>Prepare a fresh compatible AOF data set; start isolated target; validate streams, pending entries, exact dedup expiry, lost-ACK replay, and restart; switch clients last</td>
+<td>Migration tooling and native tests exist; cluster/CSI and power-loss acceptance remain environment work</td>
+</tr>
+<tr>
+<td>Telemetry projections</td>
+<td>Sink store only when diagnostic retention requires it</td>
+<td>Stop the sink writer or use its owned consistent snapshot</td>
+<td>Restore after canonical Nova journals; replay only events beyond verified checkpoints</td>
+<td>Projection recovery must never block restoration of lifecycle authority</td>
+</tr>
+<tr>
+<td>OpenClaw agent</td>
+<td>One config PVC and one workspace PVC for the same agent; independent Secrets and committed Git remote remain outside the group</td>
+<td>Scale that agent to zero; ensure startup doctor and Git init are not running</td>
+<td>Restore config and workspace to private claims; restore Secrets from their own authority; run the pinned startup doctor; verify gateway and exact repository state</td>
+<td>No automated backup, checksum manifest, restore test, RPO, or RTO</td>
+</tr>
+<tr>
+<td>Registry</td>
+<td>Registry filesystem plus an inventory of retained manifests/digests and the independent client configuration</td>
+<td>Stop pushes, garbage collection, and registry writer</td>
+<td>Restore to an empty compatible registry; verify manifest and layer digests; perform a real pull; switch clients last</td>
+<td>No repository backup/restore; Argo-adopted local registry has no persistent data to restore</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Prometheus TSDB, Loki store, Grafana state, and optional Alloy positions are separate groups; do not combine inconsistent live copies</td>
+<td>Use each product's snapshot boundary or stop its writer</td>
+<td>Restore Loki and Prometheus, then Grafana; restore positions only when their source CRI files and cutover point are known</td>
+<td>No repository backup/restore test; metric/log loss must not block product recovery</td>
+</tr>
+<tr>
+<td>Ops</td>
+<td>Home and workspace claims; optional Tailscale state is a separate sensitive group</td>
+<td>Scale the StatefulSet to zero and revoke external sessions if compromise is suspected</td>
+<td>Restore home/workspace privately; prefer new Tailscale authentication after loss; verify that bearer, GitHub, Kubernetes, and tailnet credentials come from current external authorities</td>
+<td>No automated backup or restore test; never clone one Tailscale device state to concurrent writers</td>
+</tr>
+</tbody>
+</table>
+<h2 id="restore-decision-rules">Restore Decision Rules</h2>
+<p>Use this order during an incident:</p>
+<ol>
+<li>Identify the failed owner and stop its writers.</li>
+<li>Preserve the failed media. Do not clean, compact, or migrate it.</li>
+<li>Select one checksum-valid and version-compatible backup group.</li>
+<li>Restore into an isolated destination.</li>
+<li>Validate native format, schema, hashes, and references.</li>
+<li>Start the owning application reader and verify real records.</li>
+<li>Rebuild projections only after authority is healthy.</li>
+<li>Cut over clients through a separate, reversible operation.</li>
+<li>Retain the old source until the acceptance and rollback window ends.</li>
+</ol>
+<p>Do not combine members from different backup groups. Do not treat a PVC as a
+backup. Do not rotate an encryption key to make old encrypted data readable.</p>
+<h2 id="deletion-and-retention-rules">Deletion and Retention Rules</h2>
+<p>The platform has no single global retention timer. This is intentional: Nova,
+Buster, Worker Core, Prism, LiteLLM, Redis, and telemetry have different proof
+obligations. The cost is that operators must assign retention explicitly.</p>
+<p>Before deletion, record:</p>
+<ul>
+<li>the domain owner;</li>
+<li>the exact selected identities and digests;</li>
+<li>the terminal or superseded state that permits deletion;</li>
+<li>all reference checks;</li>
+<li>backup and legal retention requirements;</li>
+<li>the writer fence;</li>
+<li>the deletion receipt or tombstone;</li>
+<li>the rollback boundary.</li>
+</ul>
+<p>Never delete unresolved effects, active Worker ownership, a Buster job with an
+unimported result, an artifact referenced by a retained record, the last verified
+backup, or Redis data while a publisher can still rely on its dedup window.</p>
+<h2 id="failure-and-recovery-matrix">Failure and Recovery Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Meaning</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova journal has an incomplete final line</td>
+<td>Last append did not commit</td>
+<td>Preserve a copy. Let the journal truncate only the uncommitted tail, then verify the full chain.</td>
+</tr>
+<tr>
+<td>Nova journal hash or committed prefix differs</td>
+<td>Authoritative history is corrupt or replaced</td>
+<td>Stop mutation. Restore the complete run group from a trusted copy.</td>
+</tr>
+<tr>
+<td>Effect request is accepted but has no receipt</td>
+<td>External outcome is uncertain</td>
+<td>Reconcile through the effect owner. Do not blind-retry.</td>
+</tr>
+<tr>
+<td>A resume signal exists but no matching <code>wait.resolved</code> event exists</td>
+<td>Resume was not committed, or stopped before its lifecycle commit</td>
+<td>Validate the signal, wait identity, issuer, expiry, snapshot, and event head. Resume only through Nova's owned entry point; do not append the event manually.</td>
+</tr>
+<tr>
+<td>Administrative decision conflicts with a recorded decision ID or idempotency key</td>
+<td>The supplied decision differs from the retained decision</td>
+<td>Stop. Preserve both inputs and the complete run journals. Recover the intended run group and reconcile the original decision through the authorized entry point; do not edit the recorded decision or bypass its identity checks.</td>
+</tr>
+<tr>
+<td>Remote import remains <code>pending_evidence</code></td>
+<td>Nova reserved the result but did not finish verified evidence storage</td>
+<td>Re-fetch by the same job and digests within the original deadline policy. Never mark the record complete or compact dispatch by hand.</td>
+</tr>
+<tr>
+<td>Reconciliation quarantine is non-empty</td>
+<td>Raw observation was invalid or could not be attributed</td>
+<td>Preserve the entry and overflow metadata. Correct the producer or mapping; an observability-required gate remains incomplete.</td>
+</tr>
+<tr>
+<td>Operator delivery says <code>outcome: possible</code> and has no receiver receipt</td>
+<td>The external service can have accepted a lost acknowledgement</td>
+<td>Stop automatic retry. Query the receiver when supported, or require an operator decision that records the uncertainty.</td>
+</tr>
+<tr>
+<td>Worker ownership refers to another host</td>
+<td>Kernel ownership cannot be proved</td>
+<td>Keep admission closed. Recover on the original proved host or perform an explicit abandonment procedure.</td>
+</tr>
+<tr>
+<td>Worker or Buster store is full</td>
+<td>The system cannot retain the promised result</td>
+<td>Reject new work. Add capacity or retire only records whose owner proves safe deletion.</td>
+</tr>
+<tr>
+<td>Prism database exists but an artifact is missing</td>
+<td>Backup group is incomplete or storage is corrupt</td>
+<td>Keep Prism isolated. Restore a matched database-and-artifact group.</td>
+</tr>
+<tr>
+<td>LiteLLM data decrypts with neither retained key</td>
+<td>Credential authority is incomplete</td>
+<td>Do not overwrite encrypted fields. Recover the original master/salt keys or select an older compatible group.</td>
+</tr>
+<tr>
+<td>Redis is empty after restore</td>
+<td>Transport and dedup history is absent</td>
+<td>Restore Redis if that history is required, then replay from canonical journals within policy. Do not infer that Nova events were lost.</td>
+</tr>
+<tr>
+<td>Telemetry sink is missing records</td>
+<td>Diagnostic projection is incomplete</td>
+<td>Inspect observer checkpoints and canonical events; replay through the owned observer path.</td>
+</tr>
+<tr>
+<td>Prism quarantine object is absent</td>
+<td>The temporary Pod store restarted, expired, or was cleaned</td>
+<td>Reacquire the source. Do not create a database or artifact reference for missing bytes.</td>
+</tr>
+<tr>
+<td>Registry manifest exists but a layer is missing</td>
+<td>Registry storage is incomplete or corrupt</td>
+<td>Stop release use of that digest. Restore the registry group or rebuild from the exact retained source and build contract, then publish a new verified result.</td>
+</tr>
+<tr>
+<td>Alloy positions are lost</td>
+<td>Collection can reread retained CRI bytes or skip bytes that kubelet already rotated</td>
+<td>Keep one collector. Compare source files and Loki time range, then accept documented duplication/gap or restore a known position; do not infer completeness from readiness.</td>
+</tr>
+<tr>
+<td>OpenClaw SQLite or configuration is corrupt</td>
+<td>Gateway-owned host state cannot be trusted</td>
+<td>Stop the gateway, preserve the volume, restore the matched group, and run the pinned startup doctor. Do not edit SQLite rows to make health pass.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verification-map-and-evidence-limits">Verification Map and Evidence Limits</h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Repository check</th>
+<th>What it does not prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova journal, effects, snapshots, and recovery</td>
+<td>Nova Core state, effect, recovery, and audit tests</td>
+<td>Filesystem or volume survival during real node loss</td>
+</tr>
+<tr>
+<td>Worker store durability and limits</td>
+<td>Worker local-runtime, native journal, ownership, spool, and recovery tests</td>
+<td>Correct cgroup and disk behavior on every target host</td>
+</tr>
+<tr>
+<td>Buster admission, evidence, and compaction</td>
+<td>Buster runner, storage, remote dispatch, compaction, and evidence tests</td>
+<td>Replication or off-node recovery of a deployed runtime root</td>
+</tr>
+<tr>
+<td>Prism SQL, artifacts, and backup grouping</td>
+<td>Prism storage tests, native PostgreSQL tests, artifact durability tests, and deployment backup test</td>
+<td>Complete live service restore in an independent cluster</td>
+</tr>
+<tr>
+<td>LiteLLM database recovery</td>
+<td>PostgreSQL recovery renderer and native two-server test</td>
+<td>Real LiteLLM image, Kubernetes Secret, CSI, and network-policy recovery</td>
+</tr>
+<tr>
+<td>Redis durability and migration</td>
+<td>Redis durability and version-migration tests with real Redis binaries</td>
+<td>Storage-hardware power-loss behavior and live Kubernetes cutover</td>
+</tr>
+<tr>
+<td>Nova dispatch, import, wait, operator delivery, and reconciliation</td>
+<td>Store-boundary, remote-fault, import, operator-delivery, wait, and observability recovery tests</td>
+<td>A coordinated off-node restore of every configured root</td>
+</tr>
+<tr>
+<td>Prism quarantine</td>
+<td>Ingestion service and rendered resource tests verify TTL clamping, deletion, and 4 GiB <code>emptyDir</code></td>
+<td>Survival across Pod loss; survival is intentionally not provided</td>
+</tr>
+<tr>
+<td>Registry, OpenClaw, monitoring, and Ops PVCs</td>
+<td>Source manifests and chart-render checks establish mounts, sizes, retention settings, and one-writer shapes</td>
+<td>Consistent backup, restore, media integrity, live capacity, or accepted RPO/RTO</td>
+</tr>
+</tbody>
+</table>
+<p>No environment-wide RPO or RTO is proven. Prism has scheduled local backup
+resources, and LiteLLM has a rendered PostgreSQL recovery job. These do not
+prove off-site disaster recovery. The operator must retain credentials, copy
+verified groups to an independent failure domain, and execute an application
+restore test.</p>
+<h2 id="related-guides">Related Guides</h2>
+<ul>
+<li><a href="nova-core.html">Nova Core</a> explains lifecycle and recovery decisions.</li>
+<li><a href="worker-core.html">Worker Core</a> explains native attempt and ownership state.</li>
+<li><a href="buster.html">Buster architecture</a> explains remote test authority and evidence.</li>
+<li><a href="prism-data.html">Prism data architecture</a> is the detailed Prism schema guide.</li>
+<li><a href="telemetry.html">Telemetry</a> explains active event and observer data paths.</li>
+<li><a href="../use/recovery.html">Back up and recover</a> gives the operator procedure.</li>
+</ul>
+</main></body></html>

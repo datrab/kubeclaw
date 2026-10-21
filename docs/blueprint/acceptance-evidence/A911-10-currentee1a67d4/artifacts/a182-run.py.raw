@@ -1,0 +1,39 @@
+import subprocess,json,hashlib,copy,re
+from pathlib import Path
+from datetime import datetime,timezone
+P=Path(__file__).resolve().parent;R=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo');F=P/'fixture';REV='ee1a67d4aa21a8104625d6e7b2aa4e46c7b70120';S='scripts/generate-buster-provider-reference.mjs';SCHEMA='skills/buster/plugins/api-flow/schemas/config.schema.json';PAGE='docs/site/reference/buster-provider-configuration.md'
+def g(root,*a):return subprocess.check_output(['git',*a],cwd=root,stderr=subprocess.PIPE)
+def sha(b):return hashlib.sha256(b).hexdigest()
+assert R.is_dir() and not F.exists();assert json.loads((P/'review.json').read_text())['findings']==[]
+files=[p for p in g(R,'ls-tree','-r','--name-only',REV,'skills/buster/plugins').decode().splitlines() if p.endswith('.json')]+[S,PAGE];F.mkdir();inputs={}
+for file in files:
+ b=g(R,'show',REV+':'+file);out=F/file;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(b);inputs[file]=sha(b)
+g(F,'init','-q');g(F,'config','user.name','Nova');g(F,'config','user.email','nova@openclaw.local');g(F,'config','core.hooksPath','/dev/null')
+def commit(label):g(F,'add','--','skills',S);g(F,'commit','-qm',label);return g(F,'rev-parse','HEAD').decode().strip()
+base=commit('direct rename original schema baseline');cases=[]
+def run(name,revision,write=False,stale=False):
+ r=subprocess.run(['node',S,'--revision='+revision]+(['--write'] if write else []),cwd=F,capture_output=True,text=True,timeout=60)
+ for suffix,text in [('stdout',r.stdout),('stderr',r.stderr)]:(P/(name+'.'+suffix)).write_text(text)
+ cases.append({'id':name,'exitCode':r.returncode,'expectedStale':stale,'stdoutSHA256':sha(r.stdout.encode()),'stderrSHA256':sha(r.stderr.encode())})
+ if stale:assert r.returncode!=0 and 'generated Buster provider configuration reference is stale' in r.stderr
+ else:assert r.returncode==0,(name,r.stderr[:1000])
+ return (F/PAGE).read_text()
+def section(t):return t.split('## `kubeclaw.api-flow@1`',1)[1].split('\n## ',1)[0]
+baseline=run('direct-baseline-write',base,True);run('direct-baseline-check',base)
+assert '| `maximumSteps` |' in section(baseline) and '| `maximumStepsAfterRename` |' not in section(baseline)
+sourceBefore=json.loads(g(F,'show',base+':'+SCHEMA));assert 'maximumSteps' in sourceBefore['properties'] and 'maximumStepsAfterRename' not in sourceBefore['properties']
+changed=copy.deepcopy(sourceBefore);changed['properties']['maximumStepsAfterRename']=changed['properties'].pop('maximumSteps');(F/SCHEMA).write_text(json.dumps(changed,indent=2)+'\n');renamed=commit('direct rename maximumSteps to maximumStepsAfterRename');parent=g(F,'rev-parse',renamed+'^').decode().strip();assert parent==base
+assert 'maximumSteps' not in json.loads(g(F,'show',renamed+':'+SCHEMA))['properties']
+# Deliberately refresh every revision token while leaving obsolete field row intact:
+# stale rejection must therefore come from row/reference mismatch, not revision-only drift.
+repinnedStale=baseline.replace(base,renamed);assert base not in repinnedStale and renamed in repinnedStale
+assert '| `maximumSteps` |' in section(repinnedStale) and '| `maximumStepsAfterRename` |' not in section(repinnedStale)
+(F/PAGE).write_text(repinnedStale);(P/'stale-old-row-with-correct-new-pin.md').write_text(repinnedStale)
+run('direct-rename-stale-row-correct-pin-rejected',renamed,stale=True)
+final=run('direct-rename-write',renamed,True);run('direct-rename-check',renamed)
+assert '| `maximumSteps` |' not in section(final) and '| `maximumStepsAfterRename` |' in section(final)
+assert f'Evidence revision: `{renamed}`' in final and f'blob/{renamed}/{SCHEMA}' in final
+assert re.search(r'^Owner: (.+)$',baseline,re.M).group(1)==re.search(r'^Owner: (.+)$',final,re.M).group(1)=='buster'
+(P/'baseline-output.md').write_text(baseline);(P/'renamed-output.md').write_text(final);(P/'source-before.json').write_text(json.dumps(sourceBefore,indent=2)+'\n');(P/'source-after.json').write_text(json.dumps(changed,indent=2)+'\n')
+result={'utc':datetime.now(timezone.utc).isoformat(),'acceptanceId':'A911-10','state':'DIRECT_BASELINE_TO_RENAME_ACTUAL_PASS_NOT_ADDITION','reviewedPublishedSource':REV,'generatorSHA256':inputs[S],'source':SCHEMA,'baselineCommit':base,'renamedCommit':renamed,'renamedParent':parent,'directParentIsBaseline':True,'oldFieldPresentBefore':True,'oldFieldAbsentAfter':True,'successorPresentAfter':True,'metadataOnlyStaleConfoundExcluded':'All revision tokens already switched to renamedcommit while oldrow retained; exact original guard still rejects.','ownerPreserved':'buster','routeChanged':False,'cases':cases,'inputs':inputs,'canonicalWrites':False,'formalAcceptance':False}
+(P/'actual-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'state':result['state'],'cases':len(cases),'baseline':base,'renamed':renamed,'directParent':parent},indent=2))

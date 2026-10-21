@@ -1,0 +1,51 @@
+"""Exact original generator on copied JSON only; never import provider/runtime code."""
+import subprocess,json,hashlib,copy,re
+from pathlib import Path
+from datetime import datetime,timezone
+P=Path(__file__).resolve().parent;R=Path('/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/ci-green/repo');F=P/'provider-transition-fixture';REV='b1b2fe3d9f8d57e1cd2d3803824311fbd796aad9'
+SCRIPT='scripts/generate-buster-provider-reference.mjs';SCHEMA='skills/buster/plugins/api-flow/schemas/config.schema.json';PAGE='docs/site/reference/buster-provider-configuration.md'
+def git(*a):return subprocess.check_output(['git',*a],cwd=R)
+def sha(b):return hashlib.sha256(b).hexdigest()
+assert R.is_dir(),'explicit source checkout absent'
+assert not F.exists(),'one-shot fixture already exists'
+assert (P/'provider-controller-review.json').exists(),'independent exact controller/effect review missing'
+review=json.loads((P/'provider-controller-review.json').read_text());assert review['findings']==[],'controller has unresolved findings'
+inputs={}
+files=git('ls-tree','-r','--name-only',REV,'skills/buster/plugins').decode().splitlines()
+files=[p for p in files if p.endswith('.json')]+[SCRIPT,PAGE]
+F.mkdir()
+for p in files:
+ b=git('show',REV+':'+p);out=F/p;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(b);inputs[p]=sha(b)
+(P/'provider-input-bindings.json').write_text(json.dumps({'revision':REV,'files':inputs,'effectReviewSHA256':sha((P/'provider-controller-review.json').read_bytes())},indent=2)+'\n')
+cases=[]
+def run(name,write=False,expected=0):
+ args=['node',SCRIPT]+(['--write'] if write else [])
+ result=subprocess.run(args,cwd=F,text=True,capture_output=True,timeout=60)
+ for suffix,text in [('stdout',result.stdout),('stderr',result.stderr)]: (P/(name+'.'+suffix)).write_text(text)
+ cases.append({'name':name,'exitCode':result.returncode,'expected':expected,'stdoutSHA256':sha(result.stdout.encode()),'stderrSHA256':sha(result.stderr.encode())})
+ assert (result.returncode==0)==(expected==0),(name,result.stderr[:2000])
+ if expected:assert 'generated Buster provider configuration reference is stale' in result.stderr
+ return (F/PAGE).read_text()
+original=json.loads((F/SCHEMA).read_text());field='maximumSteps';assert field in original['properties'] and field not in original.get('required',[])
+# Separate provider section assertions, avoiding same-named fields of unrelated providers.
+def section(text):return text.split('## `kubeclaw.api-flow@1`',1)[1].split('\n## ',1)[0]
+def set_schema(d):(F/SCHEMA).write_text(json.dumps(d,indent=2)+'\n')
+base=run('provider-baseline');assert '| `maximumSteps` |' in section(base)
+removed=copy.deepcopy(original);del removed['properties'][field];set_schema(removed)
+run('provider-removal-stale-rejected',expected=1)
+removed_output=run('provider-removal-write',write=True);assert '| `maximumSteps` |' not in section(removed_output)
+run('provider-removal-current-check')
+# Restore baseline bytes before the independently named rename transition.
+set_schema(original);(F/PAGE).write_text(base)
+renamed=copy.deepcopy(original);renamed['properties']['maximumStepsAfterRename']=renamed['properties'].pop(field);set_schema(renamed)
+run('provider-rename-stale-rejected',expected=1)
+renamed_output=run('provider-rename-write',write=True);s=section(renamed_output)
+assert '| `maximumSteps` |' not in s and '| `maximumStepsAfterRename` |' in s
+run('provider-rename-current-check')
+# The source/page path and Owner do not change: no route redirect is applicable.
+owner=lambda t:re.search(r'^Owner: (.+)$',t,re.M).group(1)
+assert owner(base)==owner(removed_output)==owner(renamed_output)=='buster'
+# Retain exact output bytes for semantic/historical review; do not call historical-source links current.
+for n,t in [('baseline',base),('removed',removed_output),('renamed',renamed_output)]: (P/('provider-'+n+'-output.md')).write_text(t)
+result={'utc':datetime.now(timezone.utc).isoformat(),'acceptanceId':'A911-10','state':'BOUNDED_PROVIDER_FIELD_REMOVE_RENAME_STRUCTURAL_PASS_HISTORICAL_ATTRIBUTION_OPEN','revision':REV,'cases':cases,'source':SCHEMA,'field':'maximumSteps','renamedField':'maximumStepsAfterRename','output':PAGE,'owner':'buster','routeChanged':False,'redirectApplicability':'No route, page, source path or owner changes; field identifiers only. This is not the separately proved page-route redirect scenario.','actualProof':'Original generator rejects stale output, removes obsolete field and migrates renamed field; unchanged owner. Fixed historical revision in original generator output is retained, NOT claimed to substantiate mutated synthetic field semantics.','historicalAttributionFinding':'Generator revision constant cannot attribute hypothetical changed schema to its new source. No generated synthetic output is published or claimed as valid current-source evidence. Qualify or fix source-revision binding before formal gate PASS.','formalAcceptance':False,'canonicalWrites':False,'runtimeCodeImported':False,'targetExecutions':7,'inputBindingsSHA256':sha((P/'provider-input-bindings.json').read_bytes())}
+(P/'provider-transition-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

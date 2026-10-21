@@ -175,7 +175,7 @@ Audit: `docs/architecture/pipeline-test-gate-phase-5-audit.md`.
 ### Phase 5.5: Extract the Neutral Worker Core
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-audit.md](pipeline-worker-core-phase-5-5-audit.md).
+[pipeline-worker-core-phase-5-5-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md).
 
 #### Goal
 
@@ -329,7 +329,7 @@ Audit: `docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md`.
 #### Step 5.5-C: Adapt the Local Buster Runner
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-c-audit.md](pipeline-worker-core-phase-5-5-c-audit.md).
+[pipeline-worker-core-phase-5-5-c-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-c-audit.md).
 
 Keep the current local scheduling behavior.
 
@@ -349,7 +349,7 @@ No provider or suite contract changes in this step.
 #### Step 5.5-D: Add the Local Worker Lifecycle
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-d-audit.md](pipeline-worker-core-phase-5-5-d-audit.md).
+[pipeline-worker-core-phase-5-5-d-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-d-audit.md).
 
 Implement the local states:
 
@@ -377,7 +377,7 @@ and performs cleanup.
 #### Step 5.5-E: Prove No Behavior Change
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-audit.md](pipeline-worker-core-phase-5-5-audit.md).
+[pipeline-worker-core-phase-5-5-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md).
 
 Run:
 

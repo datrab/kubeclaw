@@ -1,0 +1,786 @@
+{
+  "utc": "2026-10-17T10:03:45.733193+00:00",
+  "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+  "command": [
+    "/usr/local/bin/node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/sdk-provenance-v3/root",
+  "exitCode": 0,
+  "cleanBeforeAndAfter": true,
+  "stdoutSha256": "3b1fd83095ad99a19cfd488f104c4f21d680e322236f451b33f85bd0b58b7256",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "formalAcceptance": false,
+  "actualOutputRoot": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-09-decision-v1/sdk-provenance-v3/root/.tmp/docs-publication",
+  "outputFiles": [
+    {
+      "path": "README.md",
+      "sha256": "450c37600e509157ce29d857c8cf2fa354709de3c1d728eec4167e9b1873a80a"
+    },
+    {
+      "path": "build-report.json",
+      "sha256": "9a5e67c2193bbcfb239e6bd71c1d69e8bd9366d3141618c54059d1b54caeb66b"
+    },
+    {
+      "path": "decisions/README.md",
+      "sha256": "1ad0c0fde42be68ccb2af0ef01ec1892c2769aa386d5dfb0a12a85470f57704b"
+    },
+    {
+      "path": "decisions/acceptance.md",
+      "sha256": "c6106b2daea635c06f9e912d4e47a3ca52df97f54eb31b69a9f960f080fbdb26"
+    },
+    {
+      "path": "decisions/core-and-plugins.md",
+      "sha256": "63d22e2f61d5c87b4b8dd4b4564662806f49066a6e01463abfd7feb17886e447"
+    },
+    {
+      "path": "decisions/echo.md",
+      "sha256": "0e60670b8a9ffe8646c522f37645978fabf155a644eeb2d482e47dee9ab9634c"
+    },
+    {
+      "path": "decisions/implementation.md",
+      "sha256": "e3d3ee5f7ae33e10bbba75f5cec8f62464a67a0d155ce3b244332f5122661ef4"
+    },
+    {
+      "path": "decisions/prism.md",
+      "sha256": "a5aeab53743bb8e6eb6942391ff2b8ea5a7d651b10e66fbfa5a85620a34c7dc5"
+    },
+    {
+      "path": "decisions/runtime-and-operations.md",
+      "sha256": "b3ae2f84c42823b223e4cec988699e136a9fc3d2f6d0274163cb433552bed9d3"
+    },
+    {
+      "path": "decisions/test-gate.md",
+      "sha256": "2effac78e8b04b033f1337c4cb33effaf4d9392d53f3a5c04fc6d25c5d6f6f5c"
+    },
+    {
+      "path": "extend/README.md",
+      "sha256": "32c1e3c137d5d03e7561b09d57764c06ff9d5fe068f2d544886af1e98ca04a14"
+    },
+    {
+      "path": "extend/buster.md",
+      "sha256": "f9346213987b8e004f2e9cde14bd1c0db766d3a3e02539db8078c47ef10718db"
+    },
+    {
+      "path": "extend/contracts.md",
+      "sha256": "b12b87e0cf8b72cb90f8a578a950ef10f8bce98fcd65be03db1a0c5ccb022eef"
+    },
+    {
+      "path": "extend/developer-handbook.md",
+      "sha256": "97c693c151da26a6d972c56f8e1f62d966585408677c566df3ed6268da1f83d4"
+    },
+    {
+      "path": "extend/documentation-maintenance.md",
+      "sha256": "d7e3de7a2f3c1f669f9855ad6d93ff49e783c093767db4e639873d4001bd78fa"
+    },
+    {
+      "path": "extend/effectful-plugin.md",
+      "sha256": "1d421e99972d1406ed555a176a87c4d3c8f2afef5096380ca1ba56414e4f6fc4"
+    },
+    {
+      "path": "extend/examples/minimal-stage/package.json",
+      "sha256": "858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39"
+    },
+    {
+      "path": "extend/examples/minimal-stage/plugin.json",
+      "sha256": "ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73"
+    },
+    {
+      "path": "extend/examples/minimal-stage/schemas/config.schema.json",
+      "sha256": "ecb4659a0d13372817eb167c4af7a0eaba08e1b8f3ccf496dbb6fa287cc992ad"
+    },
+    {
+      "path": "extend/examples/minimal-stage/schemas/input.schema.json",
+      "sha256": "39dcacb7784aaf29e76304fb161c03c4d050a4abff4f080b4bd39f604ee486c4"
+    },
+    {
+      "path": "extend/examples/minimal-stage/schemas/result.schema.json",
+      "sha256": "1b312c6f2a9601239a47a3ad6ebc7d3ff67c5e377b1b2a905e743298e9d35859"
+    },
+    {
+      "path": "extend/examples/minimal-stage/src/stage.js",
+      "sha256": "58f99854a1ab3c1afcd9e08721c4a05afa8fda06c4030e34de0f54b8498ebf08"
+    },
+    {
+      "path": "extend/examples/minimal-stage/tests/stage.test.mjs",
+      "sha256": "5eb15bb9853c4f8a7bb341b92fd4732b3415ec98e2f3b62c10b2f8838c764c0a"
+    },
+    {
+      "path": "extend/examples/platform-change-nova-lifecycle.json",
+      "sha256": "2a1d752198305331536e73a771fb0e2096eb501266f43612f6286ca786e406fc"
+    },
+    {
+      "path": "extend/first-plugin.md",
+      "sha256": "b38b7c3f03d8607d340c198c9589331559f4fc5b866e30179911d58d562ecb89"
+    },
+    {
+      "path": "extend/host-and-engine.md",
+      "sha256": "6bed5b5aa5e95f46ee3817d784521d3708439aa40a5b0e3d1f675efc973e1651"
+    },
+    {
+      "path": "extend/lint.md",
+      "sha256": "67e149dd2d10bc8b961cf911d0fc353fef948946dd16ce88b31289f8bd4de119"
+    },
+    {
+      "path": "extend/nova.md",
+      "sha256": "84446574b45588f7ae47199ea3cd74269d11add90889043754547b5f2133e449"
+    },
+    {
+      "path": "extend/platform/README.md",
+      "sha256": "20b8f1dbf9cf36e3da6e58a81d73b3b3026b554bf828cc8b373ed25bff5917f8"
+    },
+    {
+      "path": "extend/platform/buster.md",
+      "sha256": "5f21aac68ffd40f4317892cb57a6a39a8afe73c3112c086ac596dc12b4907b1e"
+    },
+    {
+      "path": "extend/platform/prism.md",
+      "sha256": "527479258d880efb9efbd406065093a71adf181cb442488155b11de0e784b9c2"
+    },
+    {
+      "path": "extend/plugin-catalogue/README.md",
+      "sha256": "25ca5f2c5e97602ceb81c64ef46b7c72038a2db944d79920238b7d4194fbacdf"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "sha256": "ea3da6f6a837b0492f7eddc44143d0af0baca96ba807377fa1e0a24cf0f65cce"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-ops.md",
+      "sha256": "f7b74fd8523d03a41571347b826c37324388e06b87c349c2ce5e36541568ef0c"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw-prism.md",
+      "sha256": "d3278277bbfae03b36da70ce665b3679976952242a65c5abf770295ca0a14e67"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "sha256": "bc826025f1e560e3e46e100a9ebdf818166d7f0b7b6b614792817ac055ab1c8e"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "sha256": "290d778c1382817c4dbc60b17bffef3a86e68effc3e0c793d11eaeff2bc1c2f6"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "sha256": "8f7fda3fed3f8d19d3d0715dceebd95d0b2b499349efeb814e06de7a66d11dc7"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "sha256": "26760980e0a6e3957e2de90d810813cc8c863de3c707267452d17b6d89b978d4"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.axe.md",
+      "sha256": "faa7b8d0d7fab9963d1622875df3be1aa303b978fd385836cf8144a469bee43a"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "sha256": "c2ea099a9050c1db435b8e3f234686f184b676445ca071461d8edd2aecca5d3e"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "sha256": "64d53ffb2b7b40825ed6b8cad4dd7e1179e4c58293883e644878f4cb9bc62683"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.case-study.md",
+      "sha256": "eab72b687cb2a59376b9eb62e6840891462688dec042c078aaad6f224bcda3af"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "sha256": "dd7338cd793492ecd28a939bcb8b89dda1ec63d7a4eb90529773a6008fa90abc"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.container-build.md",
+      "sha256": "cbedb81fec45b8744378d074921c0095854c179b009062080e8928fbd4f7bc48"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "sha256": "a63da7efc52838fc6da460c8ada412077c4350616d6c07adfd4a75a0fe8c46f7"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "sha256": "2e8e0c53926952688c2f632515edcc92741b2d572068b8d4cac6ea997534d04f"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "sha256": "5ee0b8e1a1419fc91ef6a6f43d64b237ad581b056a1307bb128231202af97022"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "sha256": "a9b56794255ff9d0bee7fa25d757c0f4236352471ab05aa6cc329a429f19b655"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "sha256": "8431bbbc8f7dcd47dcd73cbc333bbb2c7737f275efaa1b518514f8769859e8b1"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "sha256": "55a4a82e0a9938fc8c0da55f88428f6f46391d0bb436d9f8b6143f80717ceda8"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.http.md",
+      "sha256": "dbc2887776a527adf1e2f1ed179e64219a09a3a6621523ba7f809897ab8d7684"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "sha256": "d37a3bfefb87eec3acdc3fec6344e2d24b54576f7bbe85fed1e46b82f42d5691"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "sha256": "bf9fcef66c89b26586d2d18333b286c2f90421bf01b50347930158ca61dc4071"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "sha256": "c626eaaede8d0d9757f3ca9f58d7d843c3ad1b069188bc016addd46d10082a95"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "sha256": "c5a5cc4ff7cd3698fe94af4fbf833b56c227c1f9ca632aa8c071bbfd0654f2b3"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "sha256": "5ab037afcac0d52da635a7b59fe7a621e6b1c6d667e13f8a6905e85d59f21e4f"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.lint.md",
+      "sha256": "38994625b94fb7f2e6f3fac989b48b6598a155b95ba6ce5b8512b3f23bb3dee0"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.network-http.md",
+      "sha256": "11c542c80c8153608e641b6ea8ddbdc9aa0915398e13f9d4f9b772090b45a18b"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "sha256": "559ade37c19e21a7c73124b2f75b9865ae17cf754498c8c2384dba944b29dc5b"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.openapi.md",
+      "sha256": "35a38d22bf9994e9f0e4aedec8102fedb62522ca30b3715ee5a8b7bbb3b10a50"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "sha256": "040dfe3f4e176a39312a73f1ca505d6dcb592c57d03e169fb7fe59508589b0c4"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "sha256": "076d042ea3b8655e71a74aeb7e5498bf19088b87fd53a07dc3810dc1e81a995e"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "sha256": "3954eace23c4845fd20e7b8d9b4b43e87c5bcb0afcbb0b6324565d8901baa7d3"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.playwright.md",
+      "sha256": "571ed4bffd7f0b1e3216cf0f8993eec604d41e3b835a9a1027d188239f1d1859"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "sha256": "f921290c19e5440d46de9042b32b54cf9d889db1f14258b81555ca26ba90dfda"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "sha256": "3e8c0d4e456ed213f1fb9afcde4f755107a2ba3f0975d9439128c63c5fa2d19c"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "sha256": "22071bee0a54c7fb6d602685a63e960d79beed840fc6e3e96b08e34a4b795c7d"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "sha256": "b3234358c3af0af3f816e870433c8fd7b09d912425e02313e6599ce9e6f29301"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "sha256": "bd535ba344e4047a2f144e2b8b31f68870ac50323a5cbc3b76d3dc1dc65873e1"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "sha256": "62796c77209246ded1a8b3acc119ad0a3ee45677eace09e0f66975d28fc75489"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.review.md",
+      "sha256": "ea18eee3176860e8944e90e3f9bd72117140d2d476c3885c507d6d7200d82139"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "sha256": "b34181d2968d54d4ab81c1f1b2dbcd0b46f456f2070588c2829abb0586283638"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "sha256": "65bb467d12b9a17ddf9f9f23c2d5d016a2917425b02070da2642b81835f4b3b9"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "sha256": "a75c1c947a9f1649e0e20b644497f7d99cae27d9534f2618b976a51ee4e89e10"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "sha256": "130287c09596c890c3fac09b2a81c13d40784ece2adc24912e5438047f209329"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.state-store.md",
+      "sha256": "5a233488b32252f4f3ce66a195cfba437efff96ce59cd0e05558c2ab41b99913"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "sha256": "6d5014a59ac98e30c627534e7520c5a05679c8d8d076d9bd2c4f7d4bc525ac1a"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "sha256": "a0f8782546e0d36797a0180554045e7dbf4d545b46c388565e458ad62a6b554a"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "sha256": "074bfe0bc9669eb625c5395f7fa18e64ae220e2d69f41950a9d6b5670a57cc98"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "sha256": "08aa3df2179d927a02e635a5fa7a4e65698b249164895f8bb46ed2a70bb482e6"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.visual.md",
+      "sha256": "e117ff189f8966fff4d125e7d2051d419009e1fb7349309e3b5638cd49246bbe"
+    },
+    {
+      "path": "extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "sha256": "fc78c5a1d8235446356091225c84645d904ffa73aa9dd30cff6db59134141ef2"
+    },
+    {
+      "path": "extend/testing.md",
+      "sha256": "0d78932fccf9c0a6db1c405bc6f688e3c2c01c8f342e717ec196b5e28e26db84"
+    },
+    {
+      "path": "product-surfaces.md",
+      "sha256": "47ebbfb9183a04e992926202017c08d343549d1b07655b3dc81ec40fa7d96f6d"
+    },
+    {
+      "path": "reference/README.md",
+      "sha256": "3ec71a28fb866bd79d6bc774c720a56515b43b2970dc51acd3b036c5bbc421e4"
+    },
+    {
+      "path": "reference/api-object-updates.md",
+      "sha256": "5b9efac5934075c28d05d0b8680ae2a80d3c123311327ce341d346841175a733"
+    },
+    {
+      "path": "reference/buster-error-codes.md",
+      "sha256": "3fd56bbe89cde2cfaa4ab98fdda940091b7bee68b83fc1bc6ac4d68eaeced52c"
+    },
+    {
+      "path": "reference/buster-provider-configuration.md",
+      "sha256": "ec195dddad852b38061d5b267225a15253ad6c3ad18d2aa646cc6a2bfcf47515"
+    },
+    {
+      "path": "reference/buster-runtime-configuration.md",
+      "sha256": "9ee43c2a00ba4404fc7c073bf7150a52f8b652e4f36ce084bfec699422d38b9e"
+    },
+    {
+      "path": "reference/buster-suites.md",
+      "sha256": "3832f80b3dd58c73bf60c7b300dbd576b33f749141411b346d4aeafbc40331b3"
+    },
+    {
+      "path": "reference/capabilities.md",
+      "sha256": "628672e7d6d904d3cb826abfd70b9729ee2516807da64bc49df6cfeedd22dd92"
+    },
+    {
+      "path": "reference/cli.md",
+      "sha256": "2658db5c922ae0a51538937640afcf60d4bc88b0fe00272f1d635b5db82a8166"
+    },
+    {
+      "path": "reference/configuration-change-impact.md",
+      "sha256": "1fb8ca18c880a93d94cf5dbc074f889fb7254d4afc6850984bd1490107836def"
+    },
+    {
+      "path": "reference/configuration-compatibility.md",
+      "sha256": "c1d6b3c00af38203d6bd666fb33ab61807ea9fdda8968b9d21c0543dabde8043"
+    },
+    {
+      "path": "reference/configuration-errors.md",
+      "sha256": "6609bd27fd1e60c17d46c2762eaf3c768963a53be63748e53a5db204b3dd68e5"
+    },
+    {
+      "path": "reference/configuration-precedence.md",
+      "sha256": "2c76c33a645847556e3cbdb5d2aab734b2e22ffb14d75e40a0954a447a805702"
+    },
+    {
+      "path": "reference/configuration.md",
+      "sha256": "be4d962242681e6a090db1624b04bbdc7354d97cbbb34498335d2db7fba9729f"
+    },
+    {
+      "path": "reference/contracts.md",
+      "sha256": "831d4fbdbff8ff290287e426ed5ae5eb1d8267d98002556c7a222e36ef95b297"
+    },
+    {
+      "path": "reference/documentation-governance.md",
+      "sha256": "757a431db4c08f407076bf94506aabc1662d0f2c5967bb06f5f8a3036b04c2e5"
+    },
+    {
+      "path": "reference/documentation-route-registry.json",
+      "sha256": "bdbc4d339768c152951ac09c0093068beec69d5dcbcac2db7b640fbe82364382"
+    },
+    {
+      "path": "reference/documentation-site.md",
+      "sha256": "fb0cae14489f31f1665f81c30ad2e065e19f4dda7645a9444e189d3b93c7b8f9"
+    },
+    {
+      "path": "reference/endpoints.md",
+      "sha256": "517dc649c2741cd693981614185477ee04f80fc940c3a1af91d7cbacd232d19c"
+    },
+    {
+      "path": "reference/environment-variables.md",
+      "sha256": "ed48989a77a32c0460c15926b13c5b677657dfbf550ef018b3a55f2c374c93ab"
+    },
+    {
+      "path": "reference/errors.md",
+      "sha256": "074d7edb54dcc0321345bfeb1cdf2c9be7cacde430324762f08d415f55ed9414"
+    },
+    {
+      "path": "reference/events.md",
+      "sha256": "bbed0c11ca1bc5c68a897aaeacbe16b00e1165e3b926967213a434e017da29dd"
+    },
+    {
+      "path": "reference/generated-documentation-map.json",
+      "sha256": "b1cb93f01751080c9f34672a20117698b974f3430a24e41b6102f47fd18377ac"
+    },
+    {
+      "path": "reference/glossary.md",
+      "sha256": "f4a88586a401e59dbb59bb714b77c16b277f22cfed51071d2b358158ad75a3d3"
+    },
+    {
+      "path": "reference/helm-values.md",
+      "sha256": "f194bfc869d3e96dde10ed3dc37c4513c6e891a223ac478c232c0c2ec9bed3f2"
+    },
+    {
+      "path": "reference/host-and-prism-configuration.md",
+      "sha256": "5e564a82c90540ab03e7326fa9869c0beb30fd74756235f24ba0397e2a753790"
+    },
+    {
+      "path": "reference/images-and-digests.md",
+      "sha256": "c1ade6654b324903f3385ac1c49f6a7c604eaacac61ab886534ff7763a4d36ca"
+    },
+    {
+      "path": "reference/lint-policy-generated.md",
+      "sha256": "43365a8696b66d1b4110d08e118ae5e47e4e509a339b2b55ebfe4d166e5d98e5"
+    },
+    {
+      "path": "reference/lint-policy.md",
+      "sha256": "a44f1fa866575d77b61b774539ad33a737e6a317a0eff87f220893c73b0176fc"
+    },
+    {
+      "path": "reference/lint-rules.md",
+      "sha256": "f44ee4b4d55f8be240dd2beccd2448e01ac1b3d0012f491d093e454a5b0eefcb"
+    },
+    {
+      "path": "reference/nova-project.md",
+      "sha256": "06afc02132313d44bd95d3f6409b74bcee5f0e17e617de2f063b7a438f0b83ce"
+    },
+    {
+      "path": "reference/pipeline-definition.md",
+      "sha256": "8422c24693d773439db312c0e8b5ba1d45273ef6b5194fde25bd830adc5cc95b"
+    },
+    {
+      "path": "reference/pipeline-json.md",
+      "sha256": "fdf5a859794cfb14a9cc60dde3263696c3551ddae849a36696452de46ee28cc2"
+    },
+    {
+      "path": "reference/pipeline-platform.md",
+      "sha256": "ff5f6994d06c7143fb72de795fb3c3907cd14bf9392c6f1d73e8a7eb436e9d1b"
+    },
+    {
+      "path": "reference/platform-surfaces-generated.md",
+      "sha256": "ad4fcc7b4adb94357829183729abfb3b3252f19abe5e220d0da65904af5ad6f3"
+    },
+    {
+      "path": "reference/plugin-configuration.md",
+      "sha256": "10de0e872f133898b54d9a58e7858e4527c13bb4c9962a18f3302043239656a4"
+    },
+    {
+      "path": "reference/project-pipeline-publication.md",
+      "sha256": "d12f95abd1b2d0f780dec2787b18cd9330304850f1e34f39082d94a532cc0259"
+    },
+    {
+      "path": "reference/roles-and-package-ownership.md",
+      "sha256": "1ddf3808d81b998f7368bbbbdd368a2c3ba94e24bc37f402c51fc2f234c64f87"
+    },
+    {
+      "path": "reference/schemas.md",
+      "sha256": "d9dee74725d27826e14e7a58d926c69ca320138b49430e039239f265c5ec6721"
+    },
+    {
+      "path": "reference/sdk-exports.md",
+      "sha256": "98dad486a6183b5a408bbab67cca92fb816b40bcb53f2a6cbca62d93905f54f1"
+    },
+    {
+      "path": "reference/sdk.md",
+      "sha256": "85f860f4287d61a8919a754fa93b3a7852341cba0fe0399fbf47c0d717ba3bfe"
+    },
+    {
+      "path": "reference/secrets.md",
+      "sha256": "c94a8d9e3dda40d02ff5253da7cfe8f7fc76728d52fc1d7dc1d4c2084ae34ebb"
+    },
+    {
+      "path": "reference/service-routing.md",
+      "sha256": "cb0d38bb0b0f475464c7e9f484b2765c0ca6d8747179cb006717cc6e2d74a81b"
+    },
+    {
+      "path": "reference/stores-and-retention.md",
+      "sha256": "779e898918403ceaf7f720c8144cabddda221bbf0acfdec66f76cdee2a1642f4"
+    },
+    {
+      "path": "reference/verification-commands.md",
+      "sha256": "24e1125232b0589ce4fb9d43408c6605012b5340d2ca978816f76f92ba736b75"
+    },
+    {
+      "path": "reference/worker-profiles-and-roles.md",
+      "sha256": "48a9cd1944e5e23f40d3128367ffdffe522c46637444f9789ec81bfe541a24af"
+    },
+    {
+      "path": "reference/workflows.md",
+      "sha256": "3eec2339b64df2306613c4275eff6933c9f37e23191fbceea0abe506e6e53a8b"
+    },
+    {
+      "path": "status/acceptance.md",
+      "sha256": "c72bb5c14c1f157377dc35bb29e162774e525c9baa1553378cfb7ee4ff44452d"
+    },
+    {
+      "path": "status/current.md",
+      "sha256": "07033686cb02e46f003a6a52f3b86583d23811663beade50152e0cc18dd6014f"
+    },
+    {
+      "path": "status/open-issues.md",
+      "sha256": "2e617a38b2915470a5d9b0de7bc96b7406c83def19b39e1cec6f6f122edcddf0"
+    },
+    {
+      "path": "status/roadmap.md",
+      "sha256": "8ff7cf2f70c33b0d3c7844a46e7bd5570cc98acc34502694d87e227602066a67"
+    },
+    {
+      "path": "understand/README.md",
+      "sha256": "52ffc4de1f473b6121f45aeecac2e6806c924990504b0b0fd031b778e96327a8"
+    },
+    {
+      "path": "understand/archviewer.md",
+      "sha256": "88ff3f9324791952de52be7d41539baafcd8e32e91452c6a5a136424d34d1f7a"
+    },
+    {
+      "path": "understand/buster-namespace-controller.md",
+      "sha256": "b7b9167eb639fbd3c37ac8da29963bca12186d86d192e484a7d039936cec47a5"
+    },
+    {
+      "path": "understand/buster.md",
+      "sha256": "931743a9420b4da8a5ce9503e05ed627aaec7e96cd78e099b339da4017ae6599"
+    },
+    {
+      "path": "understand/codex-integration.md",
+      "sha256": "335081f8158261ce56ddd19ef23f6e2c57475be4421024f0feb1f7d072f777fc"
+    },
+    {
+      "path": "understand/communication.md",
+      "sha256": "993f75c9977a6030e52f90bb135ca5cc4286145db3c4ce6271067fbc456b2f4a"
+    },
+    {
+      "path": "understand/components-and-authority.md",
+      "sha256": "3c8740a1e58f1f1187853595555df93922ba801b7c6e53045d9e464b86d4a409"
+    },
+    {
+      "path": "understand/data-and-state.md",
+      "sha256": "34cc97bfc51c2305762aafc76e0afc4ce0d7066239d9727c7b22b8eb6db75066"
+    },
+    {
+      "path": "understand/deployment-and-trust.md",
+      "sha256": "f7954a8d888ca4ff7a866454477f769512a1ffba11039992857458dca58bf11e"
+    },
+    {
+      "path": "understand/echo.md",
+      "sha256": "438f4faa344a0fe33e4ec5b5205a2689d8c4cee334e7eeabac13f12d10cf4937"
+    },
+    {
+      "path": "understand/forge.md",
+      "sha256": "8064b8d5aafafe14d348e6f92f6999a913c62183dc7c6cc943401893d82f4307"
+    },
+    {
+      "path": "understand/nova-core.md",
+      "sha256": "1c76e10298c392f4834d8598a6d487a5c88840eee642e100e9790c9e64383717"
+    },
+    {
+      "path": "understand/openclaw.md",
+      "sha256": "e30e118e3afe689d2eb01b223ea28bfab57961cac4027d03c86df5c52de56574"
+    },
+    {
+      "path": "understand/ops-mcp.md",
+      "sha256": "efa1d5995d0e515a2446d83a9b2c8cbb879ff0134270281dfdc917ef03520c36"
+    },
+    {
+      "path": "understand/pipeline-dependencies.md",
+      "sha256": "8c3993f1e3bb27d4ce2bf89ed7a5d5774f9740d278dee5eb276146c32aa6fd1f"
+    },
+    {
+      "path": "understand/platform-and-operations.md",
+      "sha256": "615c7f6c6e30d32091739e5a1ce9b0aece22088605486f46fdccb1a047723797"
+    },
+    {
+      "path": "understand/plugin-runtime.md",
+      "sha256": "da3f12d89604fdd0ffceb048906d1e7ff1aea01751c38453f7513c094c7ae9c1"
+    },
+    {
+      "path": "understand/prism-data.md",
+      "sha256": "91f8588789b51b68fa36149f91aa6dec0316156a9628584a2609ebfbe507ba30"
+    },
+    {
+      "path": "understand/prism-runtime.md",
+      "sha256": "58eea7e3821630e9689ef3b2b4ebb32349a723410616a10d12e59c6313540512"
+    },
+    {
+      "path": "understand/prism.md",
+      "sha256": "87520eafbab71b08dd4a1cdc5803f767b1e0a7122bb8d7f607f779f11833d2bb"
+    },
+    {
+      "path": "understand/request-state-recovery.md",
+      "sha256": "11c8fb5d95e417ae2694aa9a347e36e5bae9bfa49a3f8844b61053e3b1698ba4"
+    },
+    {
+      "path": "understand/request-to-result.md",
+      "sha256": "25717403b4831f95afb823088c995fe9ecf33ca0cb3cac44a48d84d1eebd66aa"
+    },
+    {
+      "path": "understand/security-and-trust.md",
+      "sha256": "c20ca666c25eb781a9922e95d6e72f292a84596690ff7b273c5309b5f201c5fd"
+    },
+    {
+      "path": "understand/telemetry.md",
+      "sha256": "5479891ed19d552ddd7befd089f482d92506f703aac4a6d5a478fabb7552e43d"
+    },
+    {
+      "path": "understand/worker-core.md",
+      "sha256": "7fcff1bdf9ced60f39535ad08fbb9a3f3b2292d5d7ba2fac7fa21410e0da9496"
+    },
+    {
+      "path": "understand/worker-trust.md",
+      "sha256": "213663f89c24b1e1aaa4eaf988ed3894aba3170b04fbafb9d9f0e05d8bfde53c"
+    },
+    {
+      "path": "use/README.md",
+      "sha256": "19f87707627f2e9c49fd17c6b4623e8eb2f045d19334de5e23cab4a7be71942d"
+    },
+    {
+      "path": "use/capacity.md",
+      "sha256": "0659504cf19865541d76a3499191677d7dc66b13be631e4901da3e5292337e5b"
+    },
+    {
+      "path": "use/demo-delivery.md",
+      "sha256": "89984d6fda6fb0a15a92b6cd9b5af8973b3e3780f1961de716fe82ca18c1985b"
+    },
+    {
+      "path": "use/diagnose.md",
+      "sha256": "e69101f6225ffceb5c5bb4507834e5e514c08b357e0be169a0a789e44f2ea9f0"
+    },
+    {
+      "path": "use/install.md",
+      "sha256": "9c6eda0af9bf266c21a5a505e43063e0b6d38be2fb101668b7135ff3da7709ae"
+    },
+    {
+      "path": "use/maintenance.md",
+      "sha256": "612be8ffbfe4f76f1439f66f3808f069ff076c4dd131a32bced8212e02a6e38e"
+    },
+    {
+      "path": "use/operate.md",
+      "sha256": "3caedff05fb2135dc25b071fb8290ebe0628c776d820196056a20eec5fcf5152"
+    },
+    {
+      "path": "use/plugins.md",
+      "sha256": "667fda85615b72331b94387a80cdcc46125ed74137f78ae931a0c8b3ad7fd0d7"
+    },
+    {
+      "path": "use/prism-studio.md",
+      "sha256": "043b732204046cf66e7001c161bee017109a23051bfd80c39799edf3b44ae416"
+    },
+    {
+      "path": "use/quickstart.md",
+      "sha256": "7d23fbcf3d52936cc73d1ace52dfa610a0b60a53dbafb461193c7670709a4d77"
+    },
+    {
+      "path": "use/recovery.md",
+      "sha256": "ecb3122c3138795305fa3984a4ca9a86a57360edc97d2068f14f2285893faf0a"
+    },
+    {
+      "path": "use/worker-trust.md",
+      "sha256": "23ab842eef5dae361b4d5b9496fff247a4d51fa21b2a6bb84d7c167308d8e9bf"
+    },
+    {
+      "path": "use/workflows/README.md",
+      "sha256": "93208d9db45f7001c88a5f669b415564b59bafbb227c0b5e6bb064c1e1199814"
+    },
+    {
+      "path": "use/workflows/buster-suite.md",
+      "sha256": "84419c80140291efcccfee3137ec4e670f34a530aaca575029feb49b83f2aef1"
+    },
+    {
+      "path": "use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
+    },
+    {
+      "path": "use/workflows/examples/request-trace-redis-unavailable.json",
+      "sha256": "a7e50d68b2a4c0ed85ec1ce1d7b7c25e441c1c378df666d908d1ce0221b2c3b4"
+    },
+    {
+      "path": "use/workflows/examples/request-trace-success.json",
+      "sha256": "ad5e77b0b88753809f6117ea0d55c92147f814d0bfafd0b117b652b69e560eb7"
+    },
+    {
+      "path": "use/workflows/kubernetes-fixture.md",
+      "sha256": "cb95139780117384df58d599604f839e3d4efce0bf7b0df07aa5718094315750"
+    },
+    {
+      "path": "use/workflows/wait-resume/approval.pipeline.json",
+      "sha256": "e28df575a6b6b90c8d4f0f8c94ed1eb0ba1f6760d41a9e03398b9941fb1405d9"
+    },
+    {
+      "path": "use/workflows/wait-resume/platform.template.json",
+      "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+    },
+    {
+      "path": "use/workflows/wait-resume/signal.template.json",
+      "sha256": "5ca867de4e70a28a24f3cf7f6e74499ce6b9af5a98c45b7358e6b226dfee0ffd"
+    },
+    {
+      "path": "use/workflows/wait-resume.md",
+      "sha256": "df4c4cf40f439aa544541c5c66ee27ce8ba9ab60bc13d019f3bf22817ded944c"
+    }
+  ],
+  "buildReport": {
+    "schemaVersion": "kubeclaw-docs-publication.v1",
+    "revision": "c559e97960a89a0f80487483addb91d2e6e4527d",
+    "sourceManifestSha256": "d6d7501265067a9ba6acee4992bced4f715453d19398ed182a060a3bf4ccd5d2",
+    "pageCount": 166,
+    "assetPaths": [
+      "extend/examples/minimal-stage/package.json",
+      "extend/examples/minimal-stage/plugin.json",
+      "extend/examples/minimal-stage/schemas/config.schema.json",
+      "extend/examples/minimal-stage/schemas/input.schema.json",
+      "extend/examples/minimal-stage/schemas/result.schema.json",
+      "extend/examples/minimal-stage/src/stage.js",
+      "extend/examples/minimal-stage/tests/stage.test.mjs",
+      "extend/examples/platform-change-nova-lifecycle.json",
+      "reference/documentation-route-registry.json",
+      "reference/generated-documentation-map.json",
+      "use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "use/workflows/examples/request-trace-redis-unavailable.json",
+      "use/workflows/examples/request-trace-success.json",
+      "use/workflows/wait-resume/approval.pipeline.json",
+      "use/workflows/wait-resume/platform.template.json",
+      "use/workflows/wait-resume/signal.template.json"
+    ],
+    "pluginCount": 51,
+    "pageDigest": "311cd03a95a4a7ca48437c85a3b68d3a753fa6d649beafb5f6ccf60ec765e199",
+    "checks": [
+      "metadata",
+      "controlled-language",
+      "links",
+      "reader-journeys",
+      "plugin-coverage",
+      "release-pinned-evidence",
+      "documentation-ownership-map",
+      "route-registry"
+    ]
+  }
+}

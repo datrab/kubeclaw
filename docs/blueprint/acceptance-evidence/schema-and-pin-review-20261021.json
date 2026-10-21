@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Whole selected Source/native consumer: PASS for both generators. Complete sources transform fixed JSON Schema inputs into fixed V2/V3 schema files; --check compares bytes. These are schema transforms, not API resource emissions. Both refreshed digests match current native AST facts, including schema dependencies, and selected sinks classify as non-api. Unknown-input guards and positively identified API precedence remain intact. No runtime effects or selected-input byte success inferred.\n\nREADME.md: sourceAccuracy PASS; readerUsability PASS; quality impact PASS. extend/contracts.md: sourceAccuracy PASS; readerUsability PASS; quality impact PASS. Actual git show byte comparisons confirm all four replaced citation sources are entirely identical between their previous revisions and bcf032f241b432bf920baa9ee5f727947921447d. Prose, ranges and previously accepted content scopes are unchanged.\n\nGenerated documentation map impact: PASS. Only communication lastVerified metadata changes; every other byte matches HEAD, preserving existing semantic content and accepted requirements/gates. Unrelated communication/Python work excluded. No global generation or gates PASS asserted.",
+  "overall_confidence": 0.98
+}

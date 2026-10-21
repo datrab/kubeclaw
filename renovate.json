@@ -696,7 +696,7 @@
           "ops/pod/package-lock.json",
           "tools/ops-mcp/Dockerfile",
           "charts/**",
-          "docs/ops/ops-pod.md",
+          "docs/generated/inventory/ops-tool-versions.json",
           "skills/common/plugins/openclaw-agent-observer/package.json",
           "scripts/scan-runtime-images.sh",
           ".github/workflows/*.yaml",

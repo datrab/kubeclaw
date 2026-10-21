@@ -1,0 +1,51 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Complete the effect journal and compatibility change procedure",
+      "body": "CDV-003 remains incomplete: this paragraph names encoding, corruption and compatibility concerns without explaining the persisted formats or how to change them safely. `skills/nova/core/effects/journal.ts` defines requested/accepted/completed/completed-reference records and moves results above 64 KiB into digest-verified sidecars. `skills/common/plugin-runtime/foundation/observability/hash-journal.ts:10-29` defines the actual newline-delimited hash-chain encoding, while `skills/nova/core/effects/identity.ts:23-43` explicitly distinguishes portable identities from the historical producer algorithm. Neither this section nor its linked lifecycle procedure connects these contracts into an effect-format change workflow. Document the owning sources, supported historical reader behavior, sidecar compatibility/corruption cases, and required reliability checks before changing those formats. The existing receipt-recovery and preservation warnings should remain.",
+      "priority": "P2",
+      "confidence": 0.95,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 149
+      }
+    },
+    {
+      "title": "[P2] Supply the capability and event introduction workflow",
+      "body": "CDV-007 explicitly requires the complete introduction task, but this passage expressly leaves registration, consumers and roles to an unspecified future procedure. The missing steps have concrete source authorities: `capability-vocabulary.ts` defines operations/resources/constraints; `foundation/registry/capabilities.ts` validates registration requirements, explicit provider selection and grants; `contracts/telemetry/v1/catalog.json` lists event types and ordering; `scripts/generate-telemetry-contracts.mjs` reads each catalogued payload schema and generates wire representations and the manifest. Add an ordered workflow connecting those edits to resource-match enforcement, security review, payload/redaction rules, role packaging, documentation generation and a producer-to-consumer verification case. An honest deferral protects activation but does not satisfy this catalogue obligation.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 269
+      }
+    },
+    {
+      "title": "[P2] Add concrete Forge and Echo integration change paths",
+      "body": "CDV-010 is still deferred here. The generic runtime-dispatch discussion does not identify how a developer changes the actual Forge/Echo input/result, host/model, policy and version contracts or selects their harness and deployment path. For example, `skills/nova/plugins/implementation-agent/src/stage.ts` builds the dispatch request, parses completion, binds workspace identity and retains uncertain work; its `protocol.ts` owns that input/result interpretation. Echo has distinct policy, verification and report contracts under `skills/nova/plugins/review/src`. Add separate source-backed routes through those callers and their actual receiving hosts, with exact verification/deployment references and explicit unsupported or unknown steps. Preserve the existing warning that the shared dispatch adapter has no receipt method; do not replace that limitation with invented recovery behavior.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 302
+      }
+    },
+    {
+      "title": "[P2] Connect chart changes to generated GitOps ownership",
+      "body": "CDV-012 requires a developer workflow for the generated GitOps tree and ownership, but this section and its linked handbook procedure describe fixture effects and checks without identifying the production generation authorities or ownership transition. `scripts/gitops-bundle.mjs:104-120` exports immutable role resources and a bundle receipt and rejects an existing output directory; `scripts/gitops-continuous.mjs` generates `gitops/production` application/bootstrap/selection files; `scripts/gitops-owner.mjs` rejects direct deployment into namespaces still owned by Argo, including retained tracked workloads. Document which inputs developers edit, which trees they regenerate, how receipts/selections stay consistent, and how security/upgrade review and ownership checks precede rollout. Link the supported operational procedure for concrete commands while retaining the stated live-check and data-rollback limits.",
+      "priority": "P2",
+      "confidence": 0.95,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/extend/platform/README.md",
+        "line": 347
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Scoped whole-content acceptance verdicts:\nCDV-003: sourceAccuracy NOT_READY; readerUsability NOT_READY; quality NOT_READY. Receipt recovery and journal mutation warnings are accurate, but the required effect-format, historical identity and sidecar compatibility workflow is incomplete.\nCDV-007: sourceAccuracy PASS for the documented contracts and explicit limits; readerUsability NOT_READY; quality NOT_READY. The complete vocabulary/catalog-to-provider/consumer/grant verification workflow is expressly deferred.\nCDV-010: sourceAccuracy PASS for the documented dispatch boundary and missing receipt support; readerUsability NOT_READY; quality NOT_READY. Concrete Forge/Echo host/model, policy, version, harness and deployment procedures remain absent.\nCDV-012: sourceAccuracy PASS for the described rendering, fixture and rollback limits; readerUsability NOT_READY; quality NOT_READY. Generated-tree ownership and security/upgrade review are not connected into the developer procedure.\nDEC-002: sourceAccuracy PASS; readerUsability PASS; quality PASS within this decision-record obligation. The index defines rationale, alternatives, consequences and supersession; linked records provide structured group accountability, distinguish implementation from approval, and explicitly retain unknown approval information. Decision pages have Evidence metadata, and inspected pinned repository evidence paths resolve. This does not establish a passing aggregate publication gate.\nImpact verdict: the supplied commit does not modify either audited page; no regression to previously accepted scopes on those pages is attributed to it. Findings concern remaining omissions exposed by the explicitly requested whole-content audit, rather than defects in the unrelated private-route/Prism diff. Existing safe-boundary explanations should be preserved. Read-only source inspection only; no tests, product commands, delegation or edits. No global, unrelated-content, deployment or live acceptance is granted.",
+  "overall_confidence": 0.9
+}

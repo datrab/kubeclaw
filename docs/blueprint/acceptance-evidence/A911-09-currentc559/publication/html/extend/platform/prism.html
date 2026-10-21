@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/platform/prism.html"></head><body><main>
+<h1 id="extend-prism-safely">Extend Prism Safely</h1>
+<p>Status: implemented extension guidance with stated runtime limits
+Audience: Prism maintainer, service developer, contract author, Studio developer
+Owner: Prism maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism">skills/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/prism/v1">contracts/prism/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/tests/verification/contracts">tests/verification/contracts</a>
+Evidence revision: <code>4e52c72788ac002788bc036a497d76c13e6a35fd</code>
+Applies to: current Prism source, contracts, services, and deployment integration
+Last verified: source and test inspection on 2026-09-19</p>
+<h2 id="purpose">Purpose</h2>
+<p>Use this page when you change Prism itself.
+It explains where a change belongs, which boundary it can cross, and which
+checks must prove the change.</p>
+<p>Read <a href="../../understand/prism-runtime.html">Prism runtime architecture</a> before you
+change a service boundary. Read <a href="../../understand/prism-data.html">Prism data architecture</a>
+before you change a durable record. Use the <a href="../../use/prism-studio.html">Prism operator journey</a>
+to verify that a new feature remains operable.</p>
+<h2 id="start-with-the-smallest-owner">Start With the Smallest Owner</h2>
+<p>Do not add a feature to Control only because callers can reach Control directly.
+Select the component that owns the meaning.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Primary owner</th>
+<th>Other boundaries that can change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A field, identity, or wire shape</td>
+<td><code>contracts/prism/v1</code></td>
+<td>Domain, Engine, Control, Studio, migrations, and consumers</td>
+</tr>
+<tr>
+<td>A typed document edit</td>
+<td><code>skills/prism/domain</code></td>
+<td>Contract operation schema, Studio adapter, tests</td>
+</tr>
+<tr>
+<td>A design operation</td>
+<td><code>skills/prism/engine</code></td>
+<td>Worker binding and engine request/result schemas</td>
+</tr>
+<tr>
+<td>A provider call</td>
+<td>Engine provider implementation</td>
+<td>Cancellation, limits, secrets, evidence, and cache identity</td>
+</tr>
+<tr>
+<td>A public HTTP operation</td>
+<td>Prism Control</td>
+<td>Session, CSRF, internal identity, database transaction, client</td>
+</tr>
+<tr>
+<td>Attempt execution</td>
+<td>Prism Worker and neutral Worker Core</td>
+<td>Profile, envelope, artifact hydration, result binding</td>
+</tr>
+<tr>
+<td>Source acquisition</td>
+<td>Prism Ingestion</td>
+<td>Rights, quarantine, digest, retention, Control handoff</td>
+</tr>
+<tr>
+<td>Retrieval or ranking</td>
+<td>Corpus module and PostgreSQL</td>
+<td>Eligibility policy, query evidence, benchmark</td>
+</tr>
+<tr>
+<td>A visual editor action</td>
+<td>Prism Studio</td>
+<td>Typed domain operation and stale-revision handling</td>
+</tr>
+<tr>
+<td>HTML rendering</td>
+<td>Renderer</td>
+<td>Contract node catalogue, output limits, preview isolation</td>
+</tr>
+<tr>
+<td>A durable field or invariant</td>
+<td>Prism storage migration and repository</td>
+<td>Backup, rollback, reader compatibility, operator procedure</td>
+</tr>
+<tr>
+<td>Nova or Buster handoff</td>
+<td>Prism pipeline adapter or Nova stage plugin</td>
+<td>Approved digest, immutable artifacts, downstream contract</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision:</strong> Keep product meaning in Prism and generic attempt mechanics in
+Worker Core.</p>
+<p><strong>Reason:</strong> Buster and future engines need the same admission, deadline,
+cancellation, resource, journal, and result rules without importing design
+policy.</p>
+<p><strong>Rejected alternative:</strong> Add Prism request types or renderer policy to Worker
+Core.</p>
+<p><strong>Cost:</strong> A change can require coordinated updates to a Prism contract and its
+Worker binding.</p>
+<blockquote>
+<p><strong>Source evidence — ownership boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/runtime.ts#L1-L3">The public Prism runtime exports Engine, Worker binding, and Domain without changing Worker Core</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/worker-binding.ts#L1-L49">The Worker binding admits only the five Prism operations and validates exact request and result schema identities</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/packaging/runtime/roles/prism.json#L1-L28">The Prism role declares neutral Worker Core as a separate package dependency</a>.</p>
+</blockquote>
+<h2 id="prepare-a-development-checkout">Prepare a Development Checkout</h2>
+<ol>
+<li>Use Node.js 24 and install the repository lockfile without changing it.</li>
+<li>Run <code>npm run typecheck --prefix skills/prism</code>.</li>
+<li>Run <code>npm test --prefix contracts/prism/v1</code>.</li>
+<li>Run the smallest Prism test command for the component that you will change.</li>
+<li>Record whether PostgreSQL, a browser, cgroup v2, or root launcher authority
+is available. Do not report a source-only check as live proof.</li>
+</ol>
+<p>The Prism package separates component checks from environment checks.
+The normal test suite uses local and in-memory substitutes where the test name
+does not state a native dependency. Native PostgreSQL, browser, worker, backup,
+and deployment checks require their named environment.</p>
+<blockquote>
+<p><strong>Source evidence — maintained commands</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/package.json#L1-L48">The Prism package defines focused Domain, Renderer, Storage, Engine, Corpus, Quality, Pipeline, Studio, and native-worker commands</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/package.json">The contract package keeps schema generation, contract tests, and type checking together</a>.</p>
+</blockquote>
+<h2 id="change-a-public-contract">Change a Public Contract</h2>
+<p>Prism contracts are versioned machine boundaries.
+The JSON schemas and generated standalone validators are the wire authority.
+TypeScript types make the same shapes usable by services and browsers.</p>
+<p>Use this sequence:</p>
+<ol>
+<li>Identify every producer, consumer, durable record, and artifact that uses
+the shape.</li>
+<li>Decide whether the change is compatible. Use a new schema or contract major
+for an incompatible change.</li>
+<li>Change the source schema.</li>
+<li>Update semantic checks when JSON structure alone cannot protect the rule.</li>
+<li>Regenerate validators. Do not edit generated validators by hand.</li>
+<li>Update the Engine request/result digest mapping when the operation wire
+shape changes.</li>
+<li>Add positive, unknown-field, size, depth, reference, and old-version tests.</li>
+<li>Update Studio and service consumers before publication.</li>
+<li>Define recovery for durable old values before deployment.</li>
+</ol>
+<p>The public admission limit is 32 MiB encoded JSON, depth 256, and 1,000,000
+visited values or properties. A service can set a smaller transport limit.
+Increasing a transport limit does not increase the contract limit.</p>
+<blockquote>
+<p><strong>Source evidence — contract change path</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/index.ts">The contract entry exports generated validation plus semantic checks for public Prism values</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/complexity.ts">Complexity admission defines the depth, visit, and encoded-byte ceilings</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/scripts/generate-validators.mjs">The generator creates browser-compatible standalone validators from the maintained schemas</a>.</p>
+</blockquote>
+<h2 id="add-or-change-a-document-operation">Add or Change a Document Operation</h2>
+<p>The canonical Studio editor input is a typed operation, not a replacement
+document. Each operation carries <code>baseRevision</code>. Control applies it only to
+that revision and creates a new immutable revision.</p>
+<p>There is one separate whole-document boundary. A fenced Agent job can submit a
+complete next <code>PrismDocument</code>. Control validates its job, project, round,
+preference generation, source revision, exact revision increment, and complete
+document before the repository replaces the current pointer. Do not reuse this
+privileged Agent boundary as a browser update shortcut.</p>
+<p>The current operation owners are:</p>
+<ul>
+<li><code>node.insert</code> adds one declared subtree;</li>
+<li><code>node.remove</code> removes a non-root node;</li>
+<li><code>node.duplicate</code> copies a subtree with new stable IDs;</li>
+<li><code>node.move</code> changes one parent and index without creating a cycle;</li>
+<li><code>node.props.set</code> changes canonical properties;</li>
+<li><code>responsive.props.set</code> changes one viewport patch; and</li>
+<li><code>operation.batch</code> applies operations with one common base revision.</li>
+</ul>
+<p>To add an operation:</p>
+<ol>
+<li>Add its closed schema and TypeScript union member.</li>
+<li>Define its revision rule, target identity, allowed fields, and invalid state.</li>
+<li>Apply it to a structured clone. Do not mutate the accepted prior revision.</li>
+<li>Validate the complete resulting Design Document.</li>
+<li>Add the Studio conversion only after the domain operation exists.</li>
+<li>Test stale revision, duplicate IDs, missing targets, root protection,
+cycles, invalid indexes, responsive patches, and batches.</li>
+</ol>
+<p>Do not accept a complete browser document as an update shortcut.
+That shortcut hides who changed which invariant and makes concurrent edits
+unsafe.</p>
+<blockquote>
+<p><strong>Source evidence — operation authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L5-L113">The Domain union checks the supplied base revision and enforces structural rules, cloning, and full result validation</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/puck-adapter.ts#L204-L263">The Puck adapter converts supported editor changes into typed Prism operations</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L265-L277">The fenced Agent revision route validates a complete next document before repository replacement</a>.</p>
+</blockquote>
+<h2 id="add-a-node-type-or-renderer-feature">Add a Node Type or Renderer Feature</h2>
+<p>A node type crosses four boundaries: contract, semantics, renderer, and Studio.
+Treat these changes as one unit.</p>
+<ol>
+<li>Add the node name and closed property rules to the contract catalogue.</li>
+<li>Define which properties accept tokens, data bindings, actions, children,
+variants, state patches, and responsive patches.</li>
+<li>Add semantic rules for references and forbidden type changes.</li>
+<li>Render escaped text and allowlisted attributes only.</li>
+<li>Add the Studio component and property controls.</li>
+<li>Add evaluation rules when accessibility or flow behavior changes.</li>
+<li>Test canonical rendering, each viewport, each state, malformed properties,
+missing assets, unsafe text, and CSP-compatible preview use.</li>
+</ol>
+<p>Do not let a document supply arbitrary HTML, JavaScript, CSS declarations,
+browser flags, or network locations. These values would turn design data into
+execution authority.</p>
+<blockquote>
+<p><strong>Source evidence — rendering boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/renderer/index.ts#L1-L225">The renderer checks the contract node catalogue, resolves bounded tokens and data, escapes output, and selects explicit render branches</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/document-semantics.ts">Document semantics prevent component-type replacement through state and responsive patches</a>.</p>
+</blockquote>
+<h2 id="change-a-design-provider">Change a Design Provider</h2>
+<p>A <code>DesignProvider</code> has two bounded operations: propose typed document operations
+and create an embedding with model identity.
+The Engine, not the provider, applies operations and validates the final
+document.</p>
+<p>For a provider change:</p>
+<ol>
+<li>Keep credentials outside request values and durable documents.</li>
+<li>Forward <code>AbortSignal</code> to every network call and stop parsing after abort.</li>
+<li>Bound response bytes and reject non-JSON or incomplete structured output.</li>
+<li>Return typed operations. Do not return a trusted complete document.</li>
+<li>Record model and model-version identity with every embedding.</li>
+<li>Include every behavior-changing input in cache or idempotency identity.</li>
+<li>Test abort before dispatch, abort in flight, timeout, malformed output,
+duplicate delivery, and changed input under one idempotency key.</li>
+</ol>
+<p>The Engine supports only <code>generate</code>, <code>render</code>, <code>evaluate</code>, <code>ingest</code>, and
+<code>publish</code> in contract major 1. Adding an operation is a contract change, not a
+provider-only change.</p>
+<blockquote>
+<p><strong>Source evidence — provider containment</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L12-L34">The provider interface returns typed operations and model-bound embeddings</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L69-L176">The Engine fingerprints operation and input, owns idempotent execution, validates documents, and applies provider operations itself</a>.</p>
+</blockquote>
+<h2 id="change-retrieval-or-ingestion">Change Retrieval or Ingestion</h2>
+<p>Ingestion and retrieval share data, but they have different authority.
+Ingestion decides whether source material can enter quarantine and durable
+corpus storage. Retrieval can select only already eligible records.</p>
+<p>For an ingestion change:</p>
+<ol>
+<li>Define the source class, locator policy, rights input, redirect policy,
+byte limit, and quarantine lifetime.</li>
+<li>Acquire bytes in the isolated service.</li>
+<li>Verify TLS, pinned address behavior, redirects, media type, and digest.</li>
+<li>Normalize only allowed facts.</li>
+<li>Create embedding evidence with model identity.</li>
+<li>Commit rights, revision, current pointer, and embedding in one database
+transaction.</li>
+<li>Remove or retain quarantine data according to the recorded outcome.</li>
+</ol>
+<p>For a retrieval change:</p>
+<ol>
+<li>Apply status, rights, validity, model, required, and avoid filters before
+ranking.</li>
+<li>Keep text and vector candidate identity visible.</li>
+<li>Use stable tie breaking.</li>
+<li>Apply preferred traits and source-family diversity after eligibility.</li>
+<li>Record the ranking profile and inputs needed to reproduce the result.</li>
+<li>Change weights only with a representative benchmark.</li>
+</ol>
+<p>Do not make an external provider response eligible before rights and digest
+admission.</p>
+<blockquote>
+<p><strong>Source evidence — corpus safety</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L30-L148">Corpus ingestion validates source and rights data, serializes duplicate inputs, and commits the rights, revision, current pointer, and embedding together</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/corpus/index.ts#L150-L238">Search filters current usable records and combines text and vector candidates with deterministic ranking and source-family limits</a>.</p>
+</blockquote>
+<h2 id="change-evaluation-or-preferences">Change Evaluation or Preferences</h2>
+<p>Evaluation reports findings. It does not approve a design.
+A human approval remains bound to one exact revision and digest.</p>
+<p>When you add an evaluation rule:</p>
+<ol>
+<li>Select <code>blocking</code>, <code>review</code>, or <code>information</code>.</li>
+<li>Select an existing gate or version the finding contract.</li>
+<li>Produce a stable finding ID from stable content.</li>
+<li>Name a view, node, flow, or other exact target when possible.</li>
+<li>Add a valid example and a failing example.</li>
+<li>Keep the rule deterministic. Put model critique in a separate evidence path.</li>
+</ol>
+<p>Preference events are append-only evidence.
+A projection can decay scores or group evidence, but it must retain origins and
+respect retractions.
+Do not replace source events with one mutable preference score.</p>
+<blockquote>
+<p><strong>Source evidence — evaluation and preference boundaries</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L4-L180">The evaluator emits stable findings but does not emit its reserved visual-quality gate</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L1-L89">Preference projection validates events, deduplicates identity, applies retractions, retains origins, and calculates time-dependent effective scores</a>.</p>
+</blockquote>
+<h2 id="change-control-or-an-http-route">Change Control or an HTTP Route</h2>
+<p>Control is the public product authority, not a generic router.
+Every write route must identify its caller, validate bounded input, bind an
+idempotency or revision identity, perform one explicit durable transition, and
+return a stable failure.</p>
+<p>Use this sequence:</p>
+<ol>
+<li>Decide whether the route is public, Studio-only, agent-only, worker-only,
+ingestion-only, or internal artifact traffic.</li>
+<li>Select session, CSRF, ingress secret, bearer secret, or SPIFFE identity as
+required by that trust boundary.</li>
+<li>Define authorization separately from authentication: identify which role or
+project membership can read or change each resource.</li>
+<li>Set the request byte and body-time limit before JSON parsing.</li>
+<li>Validate the contract and relationship rules.</li>
+<li>Put related database changes in one transaction.</li>
+<li>Use compare-and-swap for a mutable current pointer.</li>
+<li>Commit durable intent before remote dispatch.</li>
+<li>Reconcile an uncertain remote response by stable identity.</li>
+<li>Add client handling and an operator diagnosis path.</li>
+<li>Test wrong method, wrong identity, unauthorized resource, stale revision, duplicate request,
+conflicting duplicate, cancellation, restart, and storage failure.</li>
+</ol>
+<p>The current shared browser-session helper authenticates a Prism audience and
+checks CSRF. It does not enforce stored roles or project membership on the
+general Studio routes. The current JSON body helper also enforces a byte limit,
+but no body-read deadline. New work must close these gaps explicitly; using the
+existing helpers does not satisfy the authorization or body-time requirements.
+Most current Control failures become <code>422</code>, including several authentication
+and storage failures, so a stable failure does not yet imply a precise HTTP
+status class.</p>
+<p>Do not infer an operator identity from a normal browser header.
+Do not expose internal artifact upload or worker dispatch through the public
+Studio proxy.</p>
+<blockquote>
+<p><strong>Source evidence — Control boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L142-L940">The Control server separates health, session, dispatch, agent, project, document, revision, approval, baseline, artifact, corpus, and preference routes</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/session.ts#L3-L20">Session exchange signs a bounded Prism audience and derives identity from the trusted ingress boundary</a>.</p>
+</blockquote>
+<h2 id="change-worker-execution">Change Worker Execution</h2>
+<p>The worker HTTP service accepts a neutral Worker envelope.
+The Prism binding validates the specialist contract and result.
+Native execution adds a root-owned launcher, cgroup scope, durable attempt and
+ownership records, artifact hydration, and a bounded result body.</p>
+<p>Before you change this path:</p>
+<ol>
+<li>Decide whether the rule is generic Worker Core behavior or Prism meaning.</li>
+<li>Keep claim, profile, engine digest, schema digest, package, capability,
+deadline, and cancellation binding intact.</li>
+<li>Preserve admission before launch.</li>
+<li>Preserve one owner for engine execution and idempotency cache entries.</li>
+<li>Keep artifact digests and media types authoritative after hydration.</li>
+<li>Forward cancellation through HTTP, Worker Core, Engine, provider, browser,
+and cleanup.</li>
+<li>Seal a result only after cleanup and final resource observation.</li>
+<li>Stop admission when ownership, process termination, or journal state is
+uncertain.</li>
+</ol>
+<p>Do not add a direct fallback that runs specialist code outside the admitted
+native boundary in production.</p>
+<blockquote>
+<p><strong>Source evidence — worker integration</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/worker-service.ts#L1-L107">The worker service limits probes and attempts and routes accepted work through the configured attempt executor</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/native-worker-execution.ts#L1-L38">Native execution binds the fixed host entry, environment, browser path, Control URL, and runtime policy</a>.</p>
+</blockquote>
+<h2 id="change-studio">Change Studio</h2>
+<p>Studio is a client of Control.
+It does not own database state, approval authority, or publication authority.</p>
+<p>For a Studio change:</p>
+<ol>
+<li>Start from a supported Control read or write contract.</li>
+<li>Keep the project, round, design-set, document, revision, and approval
+identities visible in client state.</li>
+<li>Convert editor changes to typed operations.</li>
+<li>Send the exact base revision.</li>
+<li>On conflict, preserve local intent, load the current revision, and ask the
+user to reconcile. Do not silently overwrite.</li>
+<li>Keep preview messages origin-bound and map actions only to declared flows.</li>
+<li>Keep Control proxy paths on the allowlist.</li>
+<li>Test desktop and compact layouts, keyboard use, focus, failure messages,
+stale revisions, disconnected requests, and reload.</li>
+</ol>
+<blockquote>
+<p><strong>Source evidence — Studio boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/flows.ts#L1-L47">Studio derives flow transitions only from declared Design Document actions</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/studio-request.ts#L1-L139">The Studio server separates health, approved proxy routes, and static-file containment</a>.</p>
+</blockquote>
+<h2 id="change-storage-or-add-a-migration">Change Storage or Add a Migration</h2>
+<p>Never change an existing applied migration.
+Add the next ordered migration and keep older readers in mind.</p>
+<ol>
+<li>Name the durable invariant and the owner of every new column or table.</li>
+<li>Define whether existing rows remain valid.</li>
+<li>Write an additive migration when possible.</li>
+<li>Separate schema change from credential-role transition.</li>
+<li>Use the migrator role for DDL and the runtime role for application access.</li>
+<li>Add repository methods with explicit transactions and compare-and-swap.</li>
+<li>Test from a new database and from the oldest supported schema state.</li>
+<li>Test rollback of application code while the new schema remains.</li>
+<li>Update backup grouping and restore order when the new data depends on an
+artifact or another store.</li>
+<li>Run native PostgreSQL checks before cluster acceptance.</li>
+</ol>
+<p>Do not put large binary content in PostgreSQL.
+Upload immutable content-addressed bytes first, verify their digest, and then
+commit the database reference.</p>
+<blockquote>
+<p><strong>Source evidence — storage change path</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L11-L75">The migration runner serializes migration application and records each migration filename and application time; it does not store a content digest</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L330">The revision repository creates immutable revisions and advances the current pointer with a compare-and-swap update</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67">The content-addressed artifact store verifies bytes and uses no-replace publication</a>.</p>
+</blockquote>
+<h2 id="change-publication-or-pipeline-handoff">Change Publication or Pipeline Handoff</h2>
+<p>Publication spends human approval authority.
+Bind approval to the exact design revision, document digest, warnings,
+architecture input, previews, specification, and bundle content.</p>
+<p>The handoff to Forge is read-only and module-scoped.
+The handoff to Buster names fixed visual targets and the approved baseline
+digest.</p>
+<p>For a handoff change:</p>
+<ol>
+<li>Start with an approved immutable baseline.</li>
+<li>Preserve its digest in every downstream assignment or test declaration.</li>
+<li>Reject an unknown target.</li>
+<li>Keep Forge access read-only.</li>
+<li>Keep Git visual baselines under a separate reviewed change workflow.</li>
+<li>Do not let a render, test, or notification path create approval.</li>
+</ol>
+<blockquote>
+<p><strong>Source evidence — downstream binding</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/pipeline-adapter/index.ts#L1-L57">The pipeline adapter rejects a missing digest or target and creates fixed Buster targets and read-only Forge assignments</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/nova/plugins/prism-design/src/stage.ts">The Nova Prism stage verifies architecture and approval identity before it returns a baseline</a>.</p>
+</blockquote>
+<h2 id="verification-matrix">Verification Matrix</h2>
+<p>Run the smallest row that covers the change, then run the complete Prism suite.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Required local proof</th>
+<th>Additional environment proof</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contract or semantics</td>
+<td>Prism contract tests, validator generation check, typecheck</td>
+<td>Browser consumer build when browser contracts change</td>
+</tr>
+<tr>
+<td>Domain operation</td>
+<td>Domain and domain-storage tests</td>
+<td>PostgreSQL test for durable application</td>
+</tr>
+<tr>
+<td>Engine or provider</td>
+<td>Engine, provider-cancellation, worker-binding tests</td>
+<td>Real provider only when release policy permits it</td>
+</tr>
+<tr>
+<td>Renderer or evaluation</td>
+<td>Renderer, remediation, quality tests</td>
+<td>Playwright capture for browser behavior</td>
+</tr>
+<tr>
+<td>Corpus or retrieval</td>
+<td>Corpus tests</td>
+<td>Native PostgreSQL with pgvector and representative benchmark</td>
+</tr>
+<tr>
+<td>Preference projection</td>
+<td>Preference and preference-generation tests</td>
+<td>Native database transition when stored wire identity changes</td>
+</tr>
+<tr>
+<td>Control route</td>
+<td>Control, internal-auth, and focused route tests</td>
+<td>Native PostgreSQL and deployed ingress identity</td>
+</tr>
+<tr>
+<td>Worker path</td>
+<td>Worker service, cancellation, readiness, and binding tests</td>
+<td>Native worker, cgroup v2, launcher, browser, and PostgreSQL</td>
+</tr>
+<tr>
+<td>Studio</td>
+<td>Studio adapter, roundtrip, preview-asset, typecheck, and build</td>
+<td>Playwright desktop and compact flows</td>
+</tr>
+<tr>
+<td>Migration</td>
+<td>Storage and domain-storage tests, plus an explicit review that applied filenames match the intended SQL</td>
+<td>New database, upgrade database, backup, and restore; add a digest guard before claiming SQL-content drift detection</td>
+</tr>
+<tr>
+<td>Pipeline handoff</td>
+<td>Pipeline-adapter and Nova-stage contract tests</td>
+<td>Complete Nova-to-Prism environment acceptance</td>
+</tr>
+</tbody>
+</table>
+<p>Relevant environment tests can be unavailable on a development machine.
+Record this as unavailable proof. Do not convert it to a pass.</p>
+<h2 id="review-checklist">Review Checklist</h2>
+<p>Before merge, answer each question:</p>
+<ol>
+<li>Which component owns the new meaning?</li>
+<li>Did a wire or durable contract change?</li>
+<li>Which old version remains readable?</li>
+<li>Which exact identity makes a retry safe?</li>
+<li>What happens after cancellation or process loss?</li>
+<li>Can a stale browser or worker overwrite newer state?</li>
+<li>Can untrusted content become code, HTML, CSS, a URL, or a database query?</li>
+<li>Which secret and peer identity protect each new call?</li>
+<li>Which artifact and database records must enter one backup group?</li>
+<li>Which focused, native, browser, and live checks prove the claim?</li>
+</ol>
+<p>If an answer is unknown, stop the change at that boundary.</p>
+<h2 id="related-reading">Related Reading</h2>
+<ul>
+<li><a href="../../understand/prism.html">Prism architecture</a> gives the complete reader route.</li>
+<li><a href="../../understand/prism-runtime.html">Prism runtime architecture</a> explains service
+ownership and communication.</li>
+<li><a href="../../understand/prism-data.html">Prism data architecture</a> explains durable state,
+retrieval, rendering, approval, and publication.</li>
+<li><a href="../../use/prism-studio.html">Operate Prism</a> gives the user and operator journey.</li>
+<li><a href="../../understand/worker-core.html">Worker Core</a> explains the neutral attempt layer.</li>
+<li><a href="../../decisions/prism.html">Prism decisions</a> preserves accepted alternatives and
+their costs.</li>
+</ul>
+</main></body></html>

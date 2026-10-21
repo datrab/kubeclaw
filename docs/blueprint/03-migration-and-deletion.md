@@ -1,72 +1,66 @@
-# 3. Old-document migration and deletion ledger
+# 3. Document decisions and migration
 
-## Exhaustive ledger
+Status: AP02 policy; individual content review starts in AP03.
 
-The row-level ledger is generated at [generated/migration-ledger.csv](generated/migration-ledger.csv). Its summary is [generated/migration-ledger-summary.md](generated/migration-ledger-summary.md).
+## One source inventory, one human review ledger
 
-Every file currently under `docs/`, excluding this blueprint, receives exactly one disposition and replacement destination. The generator fails if a file is left with the generic `review` disposition.
+Reuse the [AP01 inventory](ap01-baseline/file-inventory.tsv) as the baseline path set. Refresh it against the current commit and include root/component docs, site sources and blueprint/work records themselves. Keep excluded licenses and fixtures visible with a reason. Do not use the earlier generated ledger's limited scope as the denominator.
 
-## Allowed dispositions
+At the start of AP03, create one human-owned review ledger beside this blueprint. Use the existing tabular approach; no new database or application is required. The old generated migration CSV supplies suggestions only. No generator may overwrite human decisions. AP03 must establish this separation before recording the first reviewed document; AP09 integrates the final mechanical checks.
 
-| Disposition | Meaning |
+On refresh, compare by path and blob identity. Preserve reviewed entries unchanged when content is unchanged; mark changed content for recheck; retain removed paths until their deletion outcome is recorded; add new files as unreviewed. A rename preserves the record's old/new path mapping. A generator must never replace reviewed proof with a default pending string.
+
+## Four decisions, separate review states
+
+| Decision | Meaning and required record |
 | --- | --- |
-| `rewrite-and-keep` | The subject remains public, but the page is replaced with a source-backed page in the new structure. |
-| `merge-into-operator-track` | Deployment material becomes task-oriented operator documentation. |
-| `replace-with-generated-reference` | Mechanical facts are generated from code; authored text only explains use and boundaries. |
-| `split-rewrite-then-delete` | Mixed architecture/design material is split into current documentation, decisions, and clearly labeled proposals; the old mixed page is then removed. |
-| `extract-then-delete` | Current facts and durable reasoning are extracted; phase/audit/plan bookkeeping is deleted. |
-| `extract-decisions-then-delete` | Durable decisions are promoted to concise decision records; the old ledger is removed from product docs. |
-| `replace-then-delete` | SVG content is replaced by accessible responsive HTML before the source vector is removed. |
-| `internal-only` | Tooling or contributor workflow remains in the repository but is excluded from publication. |
-| `regenerate-internal` | Raw generated inventory remains build input/output, not a navigable public page. |
-| `move-out-of-product-docs` | Planning or project governance is retained outside current product documentation. |
-| `keep-and-verify` | A useful example remains only after schema, compilation, or execution verification. |
+| Keep | Useful and current; give canonical location and source verification; record any move |
+| Remove | No remaining useful content or required dependency; explain why no replacement is needed |
+| Extract information | Identify exact facts, decisions, examples or open work to transfer and their destination sections; then remove the replaced source |
+| Expand | Retain the topic but specify corrections and missing content; name the target and task acceptance |
 
-## Extraction procedure
+These are the user's four decisions: behalten, entfernen, Informationen extrahieren, erweitern. Combination is allowed through the detailed actions, with one primary decision. A filename-based recommendation is not a completed decision.
 
-For each old page:
+States are: captured, content-reviewed, migrating, verified-complete, blocked. A reviewed source can still require substantial migration. Completion must be measured separately from documents read.
 
-1. Split statements into current fact, durable decision, proposal, historical result, procedure, or obsolete claim.
-2. Verify current facts against the evidence hierarchy in artifact 1.
-3. Place each fact in its canonical track or generated reference owner.
-4. Convert durable reasoning into a decision record from artifact 5.
-5. Put proposals in an explicitly designed/not-implemented location or project planning outside product docs.
-6. Rewrite procedures as verified operator or developer tasks.
-7. Migrate incoming links.
-8. Update the ledger’s completion proof with destination URLs, source/test evidence, and verification command.
-9. Delete the old page only when the deletion gate passes.
+Each row records path, reviewed blob/commit, topic/audience, state, primary decision, concrete rationale, sections to preserve/correct, target chapter and section, source/test evidence, incoming dependencies, linked issues/decisions, verification result and next action/blocker. Removal without replacement explicitly says so rather than inventing a target URL.
+
+## Work one coherent batch at a time
+
+1. Select approximately 10–20 related documents, fewer for long designs; record the exact source state.
+2. Read each whole document. Separate current facts, accepted intent, examples, procedures, proposals, historical results and obsolete material.
+3. Compare important claims with actual source, contracts and appropriate evidence. Record disagreements rather than silently selecting whichever text seems newest.
+4. Record a specific disposition per file. AP04 extracts durable decisions and open work; AP05 identifies missing topics independently of the old files.
+5. In AP06–AP08 write complete replacement content, using the accepted chapter purpose and task criteria.
+6. Verify examples/procedures to their declared scope and update source links, navigation, search inputs and all consumers.
+7. Remove replaced documents and obsolete generated outputs in the same completed topic migration.
+8. Check the resulting references and affected tests, save the change and update the ledger and next action.
+
+Do not postpone every deletion until the end and create a second permanent documentation set. AP10 occurs per completed topic; AP11 performs a global check.
+
+## Reviews, findings and executable evidence
+
+The desired final repository has no collection of old review reports. Before deleting one, preserve only the useful current explanation, durable reasoning, remaining issue context and still-needed test assets.
+
+AP04 establishes one canonical open-issue register using stable historical finding IDs. Each issue needs problem/impact, current partial implementation, affected code, reproduction or evidence, remaining work, completion criterion and relevant decisions. The 13 incomplete baseline findings are not the entire universe of work: also reconcile additional GitHub issues, including #7. Do not change their status merely because documentation improved.
+
+Separate live acceptance from implementation findings. The 141 local closures remain local closures under D12. Extract relevant live tasks from their reports, deduplicate shared checks, and record prerequisites, procedure, expected result and responsible party. The evidence index is a discovery source, not 141 automatically open live issues. Replace old register consumers before retiring the historical full register.
+
+AP01 found tests that execute scripts under `docs/review/evidence/`, and tests that write evidence there. Move required executable reproductions to appropriate test locations and update their imports/invocations. Preserve functional checks; do not remove tests to make deletion pass. Review JSON, parity ledgers, schemas and manifests under `docs/architecture/` can also be executable inputs.
 
 ## Deletion gate
 
-Deletion requires all of these conditions:
+A source may be removed when all applicable conditions are true:
 
-- The ledger row names a final destination.
-- Every current claim has implementation or contract evidence.
-- Every durable decision has a decision-record disposition.
-- Every useful example is retained and verified.
-- Every incoming link has a valid replacement.
-- No published navigation points to the old page.
-- Search has indexed the replacement.
-- The documentation coverage check passes after deletion.
-- The change is reviewed as a documentation migration, not a bulk cleanup.
+- Its individual review is recorded against the actual source revision.
+- Each useful fact, example, decision and open item has a concrete destination, or a documented reason for removal.
+- The replacement fulfills its reader task and has the required source/verification evidence.
+- Incoming prose links, tests, scripts, configuration references and generator inputs are migrated or explicitly retired.
+- Build navigation and search inputs use the replacement; public historical routes redirect where useful. An unpublished internal report need not acquire a public redirect.
+- Affected checks pass, or a pre-existing unrelated failure is explicitly separated with evidence. A broken affected dependency blocks that topic's deletion.
 
-“Archived just in case” is not the default. Git retains history. A separate archive is justified only for legally, operationally, or historically necessary material and must remain outside published navigation.
+A live public deployment is not needed to delete repository sources after locally checking replacement navigation. No new archive is created “just in case”. Git history preserves obsolete content. Any unavoidable retained historical asset needs a concrete continuing purpose; it must not masquerade as current product guidance.
 
-## Content specifically removed from the public site
+## Completion and handoff
 
-- Phase-by-phase audits and closeouts.
-- Implementation plans and completion checklists.
-- Temporary baselines and migration roadmaps.
-- Internal topic maps, generator notes, and author templates.
-- Raw generated JSON inventories.
-- Superseded SVG diagrams.
-- Duplicate pages whose canonical content has moved.
-- Stale claims that cannot be proved from current code.
-
-## Decision preservation
-
-Deletion never erases useful reasoning. The decision catalogue identifies which mixed documents contain durable choices, the target record, current status, and code/test evidence. Historical sequence, task lists, temporary phase names, and “next step” text are not copied into decision records unless they explain a lasting constraint.
-
-## Completion proof
-
-The generated completeness report must show that every existing documentation file is classified. Actual deletion is a later migration phase; the blueprint deliberately performs no deletion while unrelated work and merge conflicts exist.
+Report captured, content-reviewed, migrated and blocked counts separately. Do not use a single percent as a substitute for quality. Preserve the baseline and next action in the same documentation PR. AP03 is complete when every source is read and decided, even if writing remains in later packages. AP11 is complete only after new/changed files are reconciled and all documentation tasks and deletion dependencies are resolved or explicitly bounded by actual product limitations.

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false, "required": ["flowFile"],
+  "properties": {
+    "flowFile": { "type": "string", "minLength": 1, "maxLength": 1024, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$" },
+    "url": { "type": "string", "minLength": 1, "maxLength": 2048 },
+    "endpointName": { "type": "string", "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$" },
+    "requestTimeoutMs": { "type": "integer", "minimum": 1, "maximum": 300000, "default": 10000 },
+    "maximumResponseBytes": { "type": "integer", "minimum": 1, "maximum": 16777216, "default": 1048576 },
+    "maximumSteps": { "type": "integer", "minimum": 1, "maximum": 256, "default": 64 }
+  }
+}

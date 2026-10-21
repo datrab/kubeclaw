@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/buster.html"></head><body><main>
+<h1 id="extend-buster-tests-fixtures-suites-and-reports">Extend Buster Tests, Fixtures, Suites, And Reports</h1>
+<p>Status: implemented with stated execution limits
+Audience: test provider author, suite maintainer, report adapter author
+Owner: buster
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json">skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-test-gate/v1/suites">contracts/pipeline-test-gate/v1/suites</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/resolver.ts">skills/nova/core/test-gates/resolver.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/provider-loader.ts">skills/buster/engine/test-gates/provider-loader.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/runner.ts">skills/buster/engine/test-gates/runner.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates/report-adapter-runtime.ts">skills/buster/engine/test-gates/report-adapter-runtime.ts</a>
+Evidence revision: <code>bcf032f241b432bf920baa9ee5f727947921447d</code>
+Applies to: Buster test providers, fixtures, suite templates, and report adapters
+Last verified: 2026-09-19; focused local checks passed within the stated scope</p>
+<h2 id="objective">Objective</h2>
+<p>Extend Buster without bypassing its plan, isolation, evidence, and decision rules.
+This page explains four different extension tasks:</p>
+<ol>
+<li>select or configure an installed test provider;</li>
+<li>compose installed providers in a suite template;</li>
+<li>implement a new test or fixture provider;</li>
+<li>implement a report adapter for an existing report format.</li>
+</ol>
+<p>Do not start by copying a provider. First decide whether an installed contract and a
+new suite declaration can meet the need. A suite adds composition. It does not add
+executable authority.</p>
+<h2 id="buster-data-path">Buster Data Path</h2>
+<p>The extension path has separate compilation and execution phases:</p>
+<ol>
+<li>Foundation discovers provider and report registrations.</li>
+<li>Nova reads the selected test scope from <code>.swarm/pipeline.json</code>.</li>
+<li>Nova combines direct declarations and suite templates.</li>
+<li>The resolver validates configs and ports, expands matrices, freezes provider
+package identity, and creates a deterministic plan.</li>
+<li>Buster imports the plan and snapshots each provider package.</li>
+<li>A sandboxed provider executes with a bounded workspace and capabilities.</li>
+<li>Buster validates counts, evidence, reports, outputs, and cleanup.</li>
+<li>Report adapters normalize selected report artifacts.</li>
+<li>Buster stores attempts and produces a gate decision from actual node results.</li>
+</ol>
+<p>The extension contract guide explains the supported contracts in that path. It does not teach the complete
+project-file syntax or claim a deployed end-to-end pipeline run.</p>
+<blockquote>
+<p><strong>Source evidence — extension input becomes a fixed plan</strong></p>
+<p><strong>Claim:</strong> Nova reads only the declared test-gate scope and resolves it to a
+plan that binds node and registry identity before Buster execution.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/test-gates/pipeline.ts#L12-L53">scope loader, <code>testScopeFromPipeline</code></a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/test-gates/resolver.ts#L720-L754">resolver finalization</a></p>
+<p><strong>Contract or setting:</strong> <a href="../decisions/core-and-plugins.html#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core">ADR-003</a> ·
+<a href="../decisions/test-gate.html#d-001-base-system-structure">D-001</a></p>
+<p><strong>Test evidence:</strong> <code>npm run verify:test-gate:suite-resolver</code> passed on
+2026-09-19. It covered node expansion, links, and stable plan identity.</p>
+<p><strong>Revision:</strong> <code>bcf032f241b432bf920baa9ee5f727947921447d</code></p>
+<p><strong>Limit:</strong> The resolver check uses controlled packages. It does not prove an
+external provider or a deployed Buster service.</p>
+</blockquote>
+<h2 id="why-buster-separates-plans-providers-and-reports">Why Buster Separates Plans, Providers, And Reports</h2>
+<p>A single test script could execute work, parse output, and announce a verdict. That
+design would hide which code ran and which evidence supported the verdict.</p>
+<p>Buster uses three boundaries instead:</p>
+<ul>
+<li>the plan freezes selection, configuration, dependencies, limits, and identity;</li>
+<li>the provider executes one test or fixture and declares raw evidence;</li>
+<li>the report adapter converts one known report format to bounded common data.</li>
+</ul>
+<p><strong>Benefit:</strong> A reviewer can trace the decision from the plan to exact package bytes
+and then to preserved evidence.</p>
+<p><strong>Cost:</strong> Authors must keep provider results, evidence declarations, ports, and
+report formats consistent.</p>
+<p><strong>Rejected alternative:</strong> Buster does not accept an arbitrary command result as a
+complete test decision. Process exit, structured report, and policy remain separate.</p>
+<p><strong>Reconsider when:</strong> A new evidence type has stable semantics that no current
+provider result or report contract can express.</p>
+<h2 id="choose-the-smallest-buster-change">Choose The Smallest Buster Change</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Correct change</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change command, URL, threshold, browser, or policy within an installed contract</td>
+<td>Provider configuration</td>
+<td>Executable meaning already exists</td>
+</tr>
+<tr>
+<td>Reuse several installed checks with common overrides and dependencies</td>
+<td>Suite template</td>
+<td>Composition needs a stable reusable name</td>
+</tr>
+<tr>
+<td>Execute a new kind of test or fixture</td>
+<td>Test provider</td>
+<td>Buster needs new executable meaning</td>
+</tr>
+<tr>
+<td>Parse a new report format</td>
+<td>Report adapter</td>
+<td>Execution already exists; normalization is missing</td>
+</tr>
+<tr>
+<td>Add network, process, cluster, build, browser, or scan authority</td>
+<td>Provider plus existing capability selection</td>
+<td>Provider code must not access the host directly</td>
+</tr>
+<tr>
+<td>Add a new capability name</td>
+<td>Core, policy, runtime, and adapter change</td>
+<td>Package-only work cannot expand authority vocabulary</td>
+</tr>
+</tbody>
+</table>
+<h2 id="current-provider-surface">Current Provider Surface</h2>
+<p>The current Buster packages register 19 provider contracts: 17 tests and two
+fixtures. <code>retrySafe</code> is a contract claim, not a request from the project.</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Contract IDs</th>
+<th>Retry behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Command and coverage</td>
+<td><code>kubeclaw.direct-command@1</code>, <code>kubeclaw.coverage-budget@1</code></td>
+<td>Retry-safe</td>
+</tr>
+<tr>
+<td>HTTP and API</td>
+<td><code>kubeclaw.http@1</code>, <code>kubeclaw.security-headers@1</code></td>
+<td>Retry-safe</td>
+</tr>
+<tr>
+<td>Stateful API flows</td>
+<td><code>kubeclaw.api-flow@1</code>, <code>kubeclaw.openapi@1</code>, <code>kubeclaw.demo-auth-smoke@1</code></td>
+<td>Not retry-safe</td>
+</tr>
+<tr>
+<td>Browser</td>
+<td><code>kubeclaw.axe@1</code>, <code>kubeclaw.lighthouse@1</code>, <code>kubeclaw.visual@1</code></td>
+<td>Retry-safe</td>
+</tr>
+<tr>
+<td>Browser E2E</td>
+<td><code>kubeclaw.playwright@1</code></td>
+<td>Not retry-safe</td>
+</tr>
+<tr>
+<td>Build and size</td>
+<td><code>kubeclaw.container-build@1</code>, <code>kubeclaw.size-budget@1</code></td>
+<td>Retry-safe</td>
+</tr>
+<tr>
+<td>Security scanning</td>
+<td>dependency, image, Kubernetes policy, and Kubernetes runtime contracts</td>
+<td>Retry-safe</td>
+</tr>
+<tr>
+<td>Deployment fixture</td>
+<td><code>kubeclaw.kubernetes-fixture@1</code></td>
+<td>Not retry-safe fixture</td>
+</tr>
+<tr>
+<td>Exposure fixture</td>
+<td><code>kubeclaw.tailscale-exposure@1</code></td>
+<td>Not retry-safe fixture</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="plugin-catalogue/README.html">package catalogue</a> supplies per-package guidance.
+This page explains the shared host and contracts.</p>
+<h2 id="suite-templates">Suite Templates</h2>
+<p>A suite template is immutable composition data. It has a versioned contract ID and
+can contain fixtures, tests, dependencies, input links, conditions, matrices,
+concurrency groups, and evidence defaults. A project can select the suite, exclude
+named nodes, override allowed fields, and add local nodes.</p>
+<p>The resolver rejects hidden authority changes. Every node still resolves through an
+installed provider contract and its schema. A suite cannot provide an executable,
+grant a capability, increase policy maxima, or make a non-retry-safe provider safe.</p>
+<p>The repository currently supplies 12 templates:</p>
+<ul>
+<li>accessibility, API, container build, browser E2E, HTTP, Kubernetes fixture;</li>
+<li>Lighthouse performance, security, size budget, Tailscale exposure, unit, visual.</li>
+</ul>
+<p>Some templates intentionally contain no concrete test node. They supply a stable
+contract and defaults for project-added configuration. An empty template is not proof
+that a test ran.</p>
+<h3 id="suite-resolution-rules">Suite resolution rules</h3>
+<ul>
+<li>Suite contract IDs must be unique in the selected catalogue.</li>
+<li>Exclusion removes declared nodes before coverage evaluation.</li>
+<li>Overrides can narrow or configure an existing node; they do not replace its
+provider contract silently.</li>
+<li>Matrices expand only fields declared by the provider and remain within policy size.</li>
+<li>A project concurrency value can lower a suite value but cannot exceed policy.</li>
+<li>Conditions create explicit skipped nodes or omit excluded nodes as defined by the
+resolver; absence is not a passed result.</li>
+<li>Plan identity binds suite template digest, provider package digest, configuration,
+links, and policy-relevant expansion.</li>
+</ul>
+<blockquote>
+<p><strong>Template validation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/test-gates/resolver.ts#L279-L329">The resolver validates template identity and builds a unique suite catalogue</a>.</p>
+<p><strong>Executable resolver proof:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-pipeline-test-suite-resolver.mts#L102-L206">The suite test covers exclusions, overrides, matrices, port links, retry safety, stable identity, and deterministic digest</a>.</p>
+</blockquote>
+<h3 id="change-a-suite-safely">Change a suite safely</h3>
+<ol>
+<li>Confirm that every required provider contract already exists.</li>
+<li>Create a new versioned suite ID when consumer meaning changes.</li>
+<li>Give each node a stable local name and exact provider contract.</li>
+<li>Add dependencies and port links explicitly.</li>
+<li>Keep retry counts within provider and policy limits.</li>
+<li>Give expensive or exclusive work a bounded concurrency group.</li>
+<li>Run the suite resolver test and compare the plan digest twice.</li>
+<li>Test exclusions, allowed overrides, skipped conditions, and invalid links.</li>
+</ol>
+<h3 id="check-a-new-suite-from-creation-to-removal">Check a new suite from creation to removal</h3>
+<p>Create <code>contracts/pipeline-test-gate/v1/suites/&lt;suite-name&gt;.v1.json</code>. Use the
+<a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-test-gate/v1/suites/a11y.v1.json#L1-L19">accessibility suite</a>
+as the minimal shape. Add a focused test that reads the new file and passes it in
+<code>suiteTemplates</code> to <code>resolveTestPlan</code>. The test must select the suite by its exact
+<code>contractId</code> and assert the resolved nodes, provider contracts, configuration,
+dependencies, ports, retries, concurrency groups, and plan digest.</p>
+<p>Run:</p>
+<pre><code class="language-bash">npm run verify:test-gate:suite-resolver
+node tests/verification/integration/pipeline-gate-coverage.test.mts
+</code></pre>
+<p>The first check proves the shared resolver rules. The second reads every shipped
+suite file and proves that the full catalogue can be selected and excluded. These
+checks do not prove the new suite's intended semantics unless its focused test also
+runs; add that test to the applicable <code>verify:test-gate:*implementation</code> command.</p>
+<p>For a practical suite, execute one resolved success and one representative failed
+or skipped dependency through the runner. Cancel a run while its fixture is ready.
+Verify that dependent tests stop and fixture cleanup remains visible in the result.
+If the suite uses a non-retry-safe provider, assert that an override cannot add a
+retry.</p>
+<p>To update compatible defaults, edit the current version and accept that new plans
+receive a new template digest. To change consumer meaning, add a new <code>@2</code> contract
+and keep <code>@1</code> while retained projects use it. To disable the suite, remove project
+selection before catalogue removal. To remove it, delete the template only after
+no maintained project or recovery fixture selects it. Suite removal does not remove
+provider packages, stored plans, results, evidence, or external fixture state.</p>
+<p>The accessibility suite is a small reference. It selects one exact provider,
+defines two profiles, and limits its browser concurrency. It adds no executable code.</p>
+<blockquote>
+<p><strong>Suite reference:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-test-gate/v1/suites/a11y.v1.json#L1-L19">The accessibility template binds one provider and its bounded configuration to one concurrency group</a>.</p>
+</blockquote>
+<h2 id="implement-a-test-provider">Implement A Test Provider</h2>
+<p>Create a package with <code>testProviders</code> in <code>plugin.json</code>. One package can register
+multiple independent contracts. Each registration needs:</p>
+<ul>
+<li>unique local <code>id</code> and versioned global <code>contractId</code>;</li>
+<li><code>kind</code> set to <code>test</code> or <code>fixture</code>;</li>
+<li>module and factory export;</li>
+<li>strict configuration schema;</li>
+<li>typed input and output ports;</li>
+<li>required capabilities;</li>
+<li>truthful <code>retrySafe</code> value;</li>
+<li>allowed matrix fields and report formats;</li>
+<li>allowed evidence types and outcome-specific defaults.</li>
+</ul>
+<p>The factory receives the immutable invocation and returns an instance. The instance
+implements <code>execute</code> and can implement <code>cleanup</code>. Execution receives a bounded
+workspace, abort signal, log method, and capability invocation method.</p>
+<p>Do not import host process, network, Kubernetes, BuildKit, browser, or scanner access
+as an authority shortcut. Use the capability that Buster supplies. The production
+runtime maps only operator-enabled capabilities to implementations and validates the
+associated configuration.</p>
+<h3 id="provider-package-identity">Provider package identity</h3>
+<p>Before Buster imports code, it recalculates the package digest and copies the exact
+package to an attempt-owned snapshot. The sandbox imports the snapshot, not mutable
+source bytes. A digest mismatch stops execution.</p>
+<p>The package must include all runtime dependencies that its bundle needs. A test that
+passes only because the repository root supplies an undeclared dependency is not a
+valid provider test.</p>
+<blockquote>
+<p><strong>Source evidence — provider contract and package identity</strong></p>
+<p><strong>Claim:</strong> A provider receives the bounded SDK context, and Buster imports the
+package only after it verifies and snapshots the selected bytes.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/sdk/src/runtime.ts#L92-L125">provider SDK contracts</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/provider-loader.ts#L37-L86">provider snapshot loader</a></p>
+<p><strong>Contract or setting:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L338-L384">plugin-system v2 provider registration</a></p>
+<p><strong>Test evidence:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-pipeline-test-provider-registry.mts#L90-L157">The registry test checks ownership, package identity,
+schema validation, and conflicts</a>.
+<code>npm run verify:test-gate:provider-registry</code> passed on 2026-09-19.</p>
+<p><strong>Revision:</strong> <code>bcf032f241b432bf920baa9ee5f727947921447d</code></p>
+<p><strong>Limit:</strong> Registry proof does not execute provider code or prove an external
+capability. The runner and live dependency need separate checks.</p>
+</blockquote>
+<h2 id="build-a-test-provider-end-to-end">Build A Test Provider End To End</h2>
+<p>Use <code>kubeclaw.direct-command</code> as the structural reference. Do not copy its broad
+output list when your provider has a narrower contract.</p>
+<h3 id="two-checked-examples">Two checked examples</h3>
+<p>Use <code>coverage-budget</code> as the minimal provider example. It reads bounded LCOV
+artifacts, calculates line coverage, and returns a fact without requesting a host
+capability:</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/package.json">package and test command</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/plugin.json#L1-L23">manifest, input ports, and retry claim</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/schemas/config.schema.json#L1-L8">strict configuration schema</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/src/provider.js#L49-L98">provider implementation</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/coverage-budget/tests/live-function.test.ts#L9-L36">pass, fail, duplicate-input, combine, and malformed-input test</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/buster.json#L23-L46">Buster role selection</a>.</li>
+</ul>
+<p>Coverage budget is not selected by a shipped suite template. A project declaration
+must add the provider node and link its <code>coverage-*</code> input ports to LCOV outputs.
+The resolver validates those links and requires a minimum for a blocking budget.
+This explicit project connection is not a missing suite. Run:</p>
+<pre><code class="language-bash">npm test --prefix skills/buster/plugins/coverage-budget
+</code></pre>
+<p>On 2026-09-19 this command passed and printed
+<code>{&quot;ok&quot;:true,&quot;provider&quot;:&quot;coverage-budget&quot;,&quot;format&quot;:&quot;lcov&quot;}</code>. The check creates
+real temporary LCOV files. It proves package behavior without a network or cluster.</p>
+<p>Use <code>http</code> as the practical external-effect example. It performs an actual request
+through the <code>network.http</code> capability while policy controls the origin, port,
+method, headers, response size, and timeout:</p>
+<ul>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/http/package.json">package and connected test command</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/http/plugin.json#L1-L43">manifest, input ports, capability, matrix field, and retry claim</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/http/schemas/config.schema.json#L1-L23">strict configuration schema</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/http/src/provider.js#L157-L175">provider capability invocation and result conversion</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/integration/http-provider-live.test.ts#L8-L126">real local HTTP server, resolver, capability policy, failure, and cancellation test</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-test-gate/v1/suites/api.v1.json#L1-L19">API suite connection</a>;</li>
+<li><a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/buster.json#L23-L46">Buster role selects both the HTTP provider and its capability adapter</a>.</li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash">npm test --prefix skills/buster/plugins/http
+</code></pre>
+<p>On 2026-09-19 this command passed and printed
+<code>{&quot;ok&quot;:true,&quot;provider&quot;:&quot;http&quot;,&quot;boundary&quot;:&quot;real-local-http-server&quot;,&quot;mocks&quot;:0,&quot;wrappers&quot;:0}</code>.
+The test observes real loopback requests, status and content assertions, a linked
+fixture endpoint, timeout, cancellation, denied origin, denied header, redirect,
+and response-size behavior. It does not prove access to a deployed application or
+an operator's production allowlist.</p>
+<h3 id="start-from-a-clean-checkout">Start from a clean checkout</h3>
+<p>Use Node.js 24, which is the version used by the repository workflows. First
+complete the canonical
+<a href="../use/quickstart.html#locked-dependency-installation">Locked Dependency Installation</a>
+in a disposable checkout and retain its sanitized evidence. Then run the
+following commands at the repository root:</p>
+<pre><code class="language-bash">npm run verify:runtime-packaging:roles
+npm run verify:test-gate:provider-registry
+</code></pre>
+<p>The first command installs the locked dependencies. The other commands establish
+that current role closure and the provider registry were valid before the change.
+Stop if one of these checks fails. A pre-existing failure would make a later result
+ambiguous.</p>
+<p>The repository does not provide a Buster-provider scaffolder. Create and review the
+files manually. A provider directory uses this layout:</p>
+<pre><code class="language-text">skills/buster/plugins/&lt;package-directory&gt;/
+├── package.json
+├── plugin.json
+├── schemas/config.schema.json
+├── src/&lt;provider-module&gt;.js
+├── tests/&lt;provider-test&gt;.test.ts
+└── tsconfig.json
+</code></pre>
+<p><code>&lt;package-directory&gt;</code> is the new directory name. <code>&lt;provider-module&gt;</code> is the module
+named by the manifest. <code>&lt;provider-test&gt;</code> is the package test. These names are
+placeholders; they are not literal contract values.</p>
+<p>The maintained <a href="https://github.com/datrab/kubeclaw/tree/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/direct-command">direct-command package</a>
+is a complete structural reference for a provider that creates reports and several
+artifact types. Use <code>coverage-budget</code> for the minimal shape. The provider SDK, not
+direct-command's large output list, is the authority for the interface.</p>
+<h3 id="author-and-register-the-package">Author and register the package</h3>
+<ol>
+<li>Create a directory under <code>skills/buster/plugins</code>.</li>
+<li>Add the six files shown above. Use a package-local <code>test</code> script so the check
+does not depend on an unpublished global command.</li>
+<li>Give the provider a new versioned <code>contractId</code>. Keep an old contract ID when
+behavior remains compatible; create <code>@2</code> when the same accepted configuration
+can acquire a different meaning.</li>
+<li>Make the configuration schema strict. Define required fields, limits, defaults,
+and <code>additionalProperties</code> behavior. The schema is the accepted input boundary.</li>
+<li>Declare exact value and artifact ports before implementation. A port makes
+identity, media type, and dependency checks possible.</li>
+<li>Declare only the capabilities, report formats, matrix fields, and evidence types
+that execution uses. A capability is permission, not descriptive metadata.</li>
+<li>Set <code>retrySafe</code> from external effects. Use <code>false</code> when another attempt can
+duplicate a mutation or cannot reconcile earlier state.</li>
+<li>Implement the exported factory and <code>execute</code> through the public provider
+context. Pass the abort signal to each capability call.</li>
+<li>Implement <code>cleanup</code> when the provider owns temporary state. Make cleanup safe
+after partial setup and safe to call more than once.</li>
+<li>Test success, declared failure, invalid configuration, duplicate input where
+applicable, cancellation, retry behavior, and cleanup after partial work.</li>
+<li>Add the manifest <code>id</code> to <code>packaging/runtime/roles/buster.json</code>. This activates
+package selection in new Buster role bundles; it does not change a running pod.</li>
+</ol>
+<p>Before step 11, simulate role inclusion without editing the role. Replace
+<code>&lt;plugin-id&gt;</code> with the <code>id</code> from the new <code>plugin.json</code>:</p>
+<pre><code class="language-bash">node scripts/check-runtime-role-manifests.mjs \
+  --role-addition buster=&lt;plugin-id&gt;
+</code></pre>
+<p>The command succeeds only when the new package is discoverable and its declared
+capability closure is valid. After step 11, use the normal checks:</p>
+<pre><code class="language-bash">npm test --prefix skills/buster/plugins/&lt;package-directory&gt;
+npm run verify:runtime-packaging:roles
+npm run verify:test-gate:provider-registry
+npm run verify:test-gate:suite-resolver
+</code></pre>
+<p>Expected observation: each command exits with status 0. The package test must show
+the provider-specific assertions. The role check proves package selection, not a
+live dependency. The registry check proves shared registry behavior; add the new
+contract to a package or connected resolver test so the change itself has a
+positive and negative execution vector.</p>
+<p>Run <code>npm run verify:plugin-packages</code> as the complete package sweep when the host
+has every provider dependency. On 2026-09-19 that sweep stopped at the Axe package
+because the Playwright Chromium executable was not installed. The preceding
+API-flow package checks passed. This environment result does not invalidate a
+focused new-package check, and it must not be reported as a complete package pass.</p>
+<h3 id="prove-activation-and-runtime-behavior">Prove activation and runtime behavior</h3>
+<p>Add a resolver vector that selects the new <code>contractId</code> and rejects invalid
+configuration. Add a runner vector that uses a controlled capability implementation.
+The vector must observe the result, declared outputs, evidence, and cleanup facts.
+Run these connected checks:</p>
+<pre><code class="language-bash">npm run verify:test-gate:suite-resolver
+npm run verify:test-gate:plan-runner
+</code></pre>
+<p>The plan-runner command builds the sandbox first. On this repository's current
+minimal host it can stop because the host has no C compiler or GNU <code>flock</code>. Record
+that result as unavailable. Do not report the provider as runtime-verified from
+package and registry checks alone.</p>
+<p>For a provider with an external effect, the practical example must use a disposable
+dependency. Observe both the dependency and Buster evidence. A successful return
+without the expected external state is a failed exercise. Cancel the attempt once
+during the effect, verify that descendants stop, and run cleanup twice. The second
+cleanup must not delete unrelated or replacement state.</p>
+<p>The direct-command reference shows the complete connection. Its manifest declares
+the contract and authority. Its provider validates configuration, invokes
+<code>command.execute</code>, copies bounded evidence, and returns one normalized result. Its
+test supplies a controlled capability and verifies both success and rejected input.</p>
+<blockquote>
+<p><strong>Reference manifest:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/direct-command/plugin.json#L1-L47">The direct-command registration declares its contract, ports, capability, retry claim, reports, and evidence</a>.</p>
+<p><strong>Reference execution:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/direct-command/src/provider.js#L132-L205">The provider invokes bounded command authority and converts its result to evidence and outputs</a>.</p>
+<p><strong>Reference test:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/direct-command/tests/live-function.test.ts#L7-L40">The package test checks capability use, reports, artifacts, limits, and protected environment fields</a>.</p>
+<p><strong>Role inclusion:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/roles/buster.json#L1-L60">The Buster role lists the exact providers, adapters, packages, and external capability sources</a>.</p>
+</blockquote>
+<p>Package tests prove provider logic. Registry tests prove discovery and identity.
+Role checks prove bundle selection. A runner test proves plan execution. Keep these
+claims separate because one green test cannot replace the other three.</p>
+<h3 id="update-disable-remove-and-preserve-data">Update, disable, remove, and preserve data</h3>
+<ul>
+<li><strong>Compatible update:</strong> Increase <code>packageVersion</code>, keep the <code>contractId</code>, and run
+the complete package, registry, role, resolver, and runner checks. Resolve a new
+plan so its package digest selects the new bytes.</li>
+<li><strong>Incompatible update:</strong> Add a new contract version. Keep the old package or
+provider available while a nonterminal or recoverable plan still identifies it.</li>
+<li><strong>Disable new use:</strong> Remove the provider from suite and project selection first.
+Do not edit a frozen plan. New resolution must fail or omit the old contract as
+intended.</li>
+<li><strong>Remove executable selection:</strong> Remove the plugin ID from the Buster role only
+after no retained nonterminal plan needs its package digest. Run the role and
+registry checks after removal.</li>
+<li><strong>Remove source:</strong> Delete the package only after recovery and retention policy no
+longer require its exact bytes. Provider evidence, result records, and external
+resources are separate data. Package removal does not delete them.</li>
+<li><strong>Rollback:</strong> Restore the exact earlier package bytes and role selection only for
+a plan that already identifies that digest. Do not place old bytes behind a new
+digest or reuse a contract ID for incompatible behavior.</li>
+</ul>
+<p>There is no generic command that proves every external provider on every host. The
+package author must add the connected vector and name the disposable live environment
+for the authority that the provider uses.</p>
+<h2 id="define-ports-and-dependencies">Define Ports And Dependencies</h2>
+<p>A value port names a schema ID. An artifact port names one or more media types and can
+also name a schema ID. The resolver connects an input to a specific upstream output.
+It rejects missing ports, kind mismatch, schema mismatch, media-type mismatch, cycles,
+and dependencies that cannot satisfy their accepted outcomes.</p>
+<p>Use a fixture for a resource lifecycle that other tests consume. A fixture result
+does not make a blocking or advisory quality decision. Its readiness and output feed
+dependent nodes. Cleanup must run when the plan finishes, fails, or is cancelled to
+the limits supported by the runner.</p>
+<p>Do not pass an untracked filesystem path between providers. Declare a value or
+artifact output so Buster can preserve identity, size, digest, ownership, and input
+compatibility.</p>
+<h2 id="evidence-is-a-contract">Evidence Is A Contract</h2>
+<p>A provider result contains counts, findings, metrics, evidence files, report
+references, produced outputs, process exit information, and provider-specific detail.
+Buster validates the result before it becomes gate evidence.</p>
+<p>Important rules include:</p>
+<ul>
+<li>total count equals passed plus failed plus skipped;</li>
+<li>a passed provider cannot report failed cases;</li>
+<li>evidence IDs and physical paths are unique;</li>
+<li><code>runner-log</code> is reserved by Buster;</li>
+<li>every evidence type must be declared by the provider;</li>
+<li>every report must reference a declared <code>test-report</code> evidence file;</li>
+<li>every report format must be declared by the provider;</li>
+<li>output ports must match the registration;</li>
+<li>selected evidence depends on pass, fail, or error policy.</li>
+</ul>
+<p>A provider must not return <code>passed</code> merely because its process exited zero if the
+contract requires structured evidence that shows a failure.</p>
+<blockquote>
+<p><strong>Result checks:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/runner.ts#L322-L383">The runner validates counts, evidence uniqueness, evidence types, and report references before finalization</a>.</p>
+</blockquote>
+<h2 id="retry-cancellation-and-cleanup">Retry, Cancellation, And Cleanup</h2>
+<p>The resolver assigns a retry only when the provider declares <code>retrySafe</code> and policy
+permits a retry. The runner records each attempt. A later pass after an earlier failed
+or incomplete attempt is unstable, not indistinguishable from a first-attempt pass.</p>
+<p>Provider cancellation uses the execution context signal. The sandbox must terminate
+the provider process and descendants within its limits. The provider must pass the
+signal to capability calls and stop creating new work after abort.</p>
+<p>Cleanup runs for provider-owned temporary state. Fixture cleanup is especially
+important because dependent tests can finish while the fixture remains active. A
+cleanup failure is evidence; do not convert it to a successful test result.</p>
+<p>Set <code>retrySafe: false</code> when a new attempt can duplicate an external mutation or when
+the provider cannot reconcile prior work. A suite or project cannot override this
+decision to <code>true</code>.</p>
+<h2 id="implement-a-report-adapter">Implement A Report Adapter</h2>
+<p>Use a report adapter when a provider can produce a stable report artifact but Buster
+does not understand its format. The registration names the format, contract version,
+accepted media types, module, and export.</p>
+<p>The adapter receives bytes and explicit limits. It returns normalized counts, cases,
+findings, duration, and truncation facts. It receives no capability context and must
+not execute the test, read arbitrary files, contact a service, or decide provider
+authority.</p>
+<p>Current production support includes one JUnit adapter. It accepts JUnit XML media
+types and normalizes them under contract version 1. The registry permits more than
+one installed adapter for a format. Plan resolution must select the exact package and
+adapter identity so execution does not depend on discovery order.</p>
+<blockquote>
+<p><strong>Bounded adapter API:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/sdk/src/runtime.ts#L127-L158">The SDK accepts only report bytes and limits and returns normalized evidence fields</a>.</p>
+<p><strong>Artifact admission:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/test-gates/report-adapter-runtime.ts#L118-L153">The report runtime checks artifact type, media type, size, cancellation, and runtime-root integrity</a>.</p>
+</blockquote>
+<p>Use this authoring sequence:</p>
+<ol>
+<li>Choose one stable format name and contract version.</li>
+<li>List only media types that the parser actually accepts.</li>
+<li>Parse from supplied bytes. Do not open paths from report content.</li>
+<li>Bound nesting, text, cases, findings, duration, and captured output.</li>
+<li>Return explicit truncation data when a limit removes information.</li>
+<li>Test valid dialects, malformed input, unsafe paths, entity handling, and every limit.</li>
+<li>Add the package to the Buster role and bind its exact identity during resolution.</li>
+</ol>
+<h3 id="check-a-report-adapter-from-creation-to-removal">Check a report adapter from creation to removal</h3>
+<p>Create the same package-level files as a provider, except that a report adapter
+does not need a configuration schema. Register <code>reportAdapters</code> in <code>plugin.json</code>
+and keep <code>testProviders</code> empty or omit it. Use the
+<a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/plugin.json#L1-L23">JUnit manifest</a>
+and <a href="https://github.com/datrab/kubeclaw/tree/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/tests">adapter tests</a>
+as the maintained shape and test boundary.</p>
+<p>Add the adapter package ID to the Buster role. Before that edit, use the same
+<code>--role-addition buster=&lt;plugin-id&gt;</code> simulation shown for a provider. Then run:</p>
+<pre><code class="language-bash">npm test --prefix skills/buster/plugins/&lt;package-directory&gt;
+npm run verify:runtime-packaging:roles
+npm run verify:test-gate:report-adapter-registry
+npm run verify:test-gate:report-adapter-runtime
+</code></pre>
+<p>The package test must cover a valid document, malformed bytes, each accepted media
+type, depth and size limits, unsafe embedded paths or entities where applicable,
+truncation, and cancellation before and during parsing. The registry check proves
+discovery and stable identity. The runtime check proves bounded artifact admission
+and invocation, but it needs the sandbox build tools.</p>
+<p>Activation is complete only after a provider declares the format, the resolved
+plan selects the exact adapter package and registration, and a runner test observes
+normalized output plus the original report evidence. A parser unit test alone does
+not prove this connection.</p>
+<p>For a compatible parser update, increase <code>packageVersion</code> and resolve a new plan
+with the new package digest. For incompatible normalized meaning, add a contract
+version rather than changing version 1 silently. Disable new use by removing format
+selection from providers and resolver policy first. Remove the role entry and source
+only when no recoverable plan identifies the adapter bytes. Existing raw reports,
+normalized facts, results, and evidence remain stored according to their own
+retention rules.</p>
+<p>The JUnit adapter is the maintained example. Its manifest has no capability request.
+Its parser treats report text as untrusted input and creates stable finding IDs.</p>
+<blockquote>
+<p><strong>JUnit registration:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/plugin.json#L1-L23">The manifest binds one format and version to three accepted XML media types</a>.</p>
+<p><strong>Bounded parser:</strong> <a href="https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/src/adapter.js#L3-L143">The adapter bounds XML depth, tag bytes, captured text, duration, file paths, and finding identity</a>.</p>
+</blockquote>
+<h2 id="common-failures">Common Failures</h2>
+<table>
+<thead>
+<tr>
+<th>Error or symptom</th>
+<th>Meaning</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REGISTRY_TEST_PROVIDER_CONTRACT_CONFLICT</code></td>
+<td>Two providers own one contract ID</td>
+<td>Rename or remove one contract; do not depend on order</td>
+</tr>
+<tr>
+<td><code>TEST_PROVIDER_MISSING</code></td>
+<td>The resolved plan names an unavailable contract</td>
+<td>Install the locked package or resolve a new plan</td>
+</tr>
+<tr>
+<td><code>TEST_PROVIDER_PACKAGE_DIGEST_MISMATCH</code></td>
+<td>Package bytes changed after resolution</td>
+<td>Restore exact bytes; create a new plan for new bytes</td>
+</tr>
+<tr>
+<td><code>TEST_PLAN_*_INVALID</code></td>
+<td>Suite, node, matrix, port, limit, or graph violates resolver policy</td>
+<td>Fix the named declaration; do not bypass resolution</td>
+</tr>
+<tr>
+<td><code>TEST_PROVIDER_COUNTS_INVALID</code></td>
+<td>Result counts do not reconcile</td>
+<td>Correct provider normalization</td>
+</tr>
+<tr>
+<td><code>TEST_PROVIDER_EVIDENCE_TYPE_INVALID</code></td>
+<td>Provider returned undeclared evidence</td>
+<td>Add a truthful manifest declaration and review policy</td>
+</tr>
+<tr>
+<td><code>TEST_REPORT_ADAPTER_MISSING</code></td>
+<td>No locked adapter matches report reference</td>
+<td>Install and select the exact adapter identity</td>
+</tr>
+<tr>
+<td><code>TEST_REPORT_ZERO_CASES</code></td>
+<td>Required report contained no case</td>
+<td>Correct report production or requirement</td>
+</tr>
+<tr>
+<td><code>TEST_REPORT_NO_EXECUTED_CASES</code></td>
+<td>All cases were skipped where execution was required</td>
+<td>Fix prerequisites; do not manufacture a passed case</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verification">Verification</h2>
+<p>Use the smallest applicable commands:</p>
+<pre><code class="language-bash">node tests/verification/contracts/check-pipeline-test-provider-registry.mts
+node tests/verification/contracts/check-pipeline-test-suite-resolver.mts
+npm run plugin-system:sandbox:build
+node tests/verification/contracts/check-pipeline-test-plan-runner.mts
+node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
+node tests/verification/contracts/check-pipeline-report-adapter-runtime.mts
+npm test --prefix skills/buster/plugins/junit-report-adapter
+</code></pre>
+<p>Provider-specific packages can require browsers, BuildKit, Kubernetes, scanners,
+network targets, or delegated cgroups. A skipped prerequisite is not a passed live
+test. Each catalogue page records the exact command and known environment limit.</p>
+<p>Current local results keep successful checks separate from unavailable ones:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Result on 2026-09-16</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provider registry</td>
+<td>Passed</td>
+<td>Provider identity, schemas, and conflicts agree</td>
+</tr>
+<tr>
+<td>Suite resolver</td>
+<td>Passed</td>
+<td>Composition, ports, retries, matrices, and plan identity agree</td>
+</tr>
+<tr>
+<td>Report-adapter registry</td>
+<td>Passed</td>
+<td>Format ownership and exact adapter selection agree</td>
+</tr>
+<tr>
+<td>JUnit package test</td>
+<td>Passed</td>
+<td>JUnit and Pytest dialects, input bounds, and unsafe XML checks agree</td>
+</tr>
+<tr>
+<td>Sandbox build</td>
+<td>Unavailable</td>
+<td>This host has no <code>cc</code> executable</td>
+</tr>
+<tr>
+<td>Test-plan runner</td>
+<td>Unavailable</td>
+<td>BusyBox <code>flock</code> prevents the persistent attempt store</td>
+</tr>
+<tr>
+<td>Report-adapter runtime</td>
+<td>Unavailable</td>
+<td>The missing sandbox launcher stops execution first</td>
+</tr>
+</tbody>
+</table>
+<p>Do not replace an unavailable result with a pass from a smaller check. Run the
+sandbox-dependent checks again on a host with a C compiler and GNU <code>flock</code>.</p>
+<h2 id="author-review">Author Review</h2>
+<p>Before accepting a Buster extension, verify:</p>
+<ul>
+<li>the provider contract is new and cannot be expressed by configuration or a suite;</li>
+<li>every capability and constraint is explicit;</li>
+<li>input and output ports make all dependencies visible;</li>
+<li>retry safety is true only when a new attempt is safe;</li>
+<li>cancellation reaches all owned work;</li>
+<li>fixtures clean up on success, failure, and cancellation;</li>
+<li>evidence names, types, reports, counts, and limits agree;</li>
+<li>package digest and exact adapter identity survive plan transport;</li>
+<li>no test result is inferred from absence, process exit alone, or report count alone.</li>
+</ul>
+</main></body></html>

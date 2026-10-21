@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/extend/platform/buster.html"></head><body><main>
+<h1 id="develop-buster-core">Develop Buster Core</h1>
+<p>Status: implemented with environment-dependent integration checks
+Audience: Buster engine, Nova adapter, and namespace-controller developer
+Owner: buster
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/pipeline-test-gate/v1">contracts/pipeline-test-gate/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/nova/core/test-gates/resolver.ts">skills/nova/core/test-gates/resolver.ts</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/buster/engine/test-gates">skills/buster/engine/test-gates</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/cmd/buster-namespace-controller">cmd/buster-namespace-controller</a>
+Evidence revision: <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code>
+Applies to: changes below the public provider and suite extension contracts
+Last verified: source and contract inspection on 2026-09-19</p>
+<h2 id="use-this-guide-for-core-changes">Use This Guide For Core Changes</h2>
+<p>Use the general <a href="../buster.html">Buster extension guide</a> when an installed
+provider, report adapter, or suite template is sufficient. Use this page when a
+change alters plan meaning, remote wire data, admission, durable state,
+execution authority, evidence rules, result authority, or namespace lifecycle.</p>
+<h3 id="decision-record-keep-test-semantics-outside-the-engine">Decision record: keep test semantics outside the engine</h3>
+<ul>
+<li><strong>Problem and constraints:</strong> New tests need executable meaning, but a change to
+Buster Core changes the authority and recovery surface shared by all suites.</li>
+<li><strong>Decision:</strong> Put test meaning in versioned providers,
+report parsing in adapters, and composition in suites. Change the engine only
+when a public extension contract cannot express the required behavior.</li>
+<li><strong>Rejected alternative:</strong> Add common test behavior directly to the engine.
+<a href="../../decisions/core-and-plugins.html#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core">ADR-003</a>
+is the canonical decision record.</li>
+<li><strong>Reason:</strong> A package can change and be reviewed without silently changing the
+authority shared by every suite.</li>
+<li><strong>Cost:</strong> Core stays neutral, but authors must understand package
+contracts and can need coordinated registry and role changes.</li>
+<li><strong>Reconsider when:</strong> Reconsider the extension boundary when behavior cannot be
+represented without changing plan meaning, capability vocabulary, scheduling,
+durable state, or result authority. Such a case is a core change, not an
+exception that a provider can hide.</li>
+<li><strong>Decision status:</strong> Accepted in ADR-003.</li>
+<li><strong>Implementation status:</strong> Implemented for the inspected provider, adapter,
+registry, role, Worker Core, and Buster boundaries. Individual live providers
+have separate environment acceptance.</li>
+<li><strong>Supersession:</strong> No identified successor.</li>
+</ul>
+<blockquote>
+<p><strong>Source evidence — core and extension boundary</strong></p>
+<p><strong>Claim:</strong> Providers and report adapters use public SDK contracts, while the
+Buster role selects the exact deployable packages.</p>
+<p><strong>Implementation:</strong> <a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/common/plugin-runtime/sdk/src/runtime.ts#L92-L158">provider and adapter SDK types</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/packaging/runtime/roles/buster.json#L1-L60">Buster role package set</a></p>
+<p><strong>Contract or setting:</strong> <a href="../../decisions/core-and-plugins.html#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core">ADR-003</a></p>
+<p><strong>Test evidence:</strong> <code>npm run verify:test-gate:provider-registry</code> and
+<code>npm run verify:runtime-packaging:roles</code> passed on 2026-09-19. A live provider
+check is separate.</p>
+<p><strong>Revision:</strong> <code>3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f</code></p>
+<p><strong>Limit:</strong> Registry and role checks prove selection and closure. They do not
+prove a browser, cluster, scanner, registry, or network dependency.</p>
+</blockquote>
+<h2 id="component-map">Component Map</h2>
+<table>
+<thead>
+<tr>
+<th>Change area</th>
+<th>Primary owner</th>
+<th>Other boundaries that must agree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Suite and project resolution</td>
+<td><code>skills/nova/core/test-gates/resolver.ts</code></td>
+<td>Shared plan schema, registry snapshot, Buster runner</td>
+</tr>
+<tr>
+<td>Source snapshot and signing</td>
+<td>Nova source-snapshot and shared remote contract</td>
+<td>Buster admission authorities and archive limits</td>
+</tr>
+<tr>
+<td>Remote request or status</td>
+<td>Shared remote contracts and both HTTP sides</td>
+<td>Durable record migration, client retry behavior</td>
+</tr>
+<tr>
+<td>Admission and job lifecycle</td>
+<td>Buster remote-plan service/runtime</td>
+<td>Store capacity, recovery, cancellation, readiness</td>
+</tr>
+<tr>
+<td>Provider invocation</td>
+<td>Buster runner, loader, Worker Core</td>
+<td>SDK, sandbox, registry, role packages</td>
+</tr>
+<tr>
+<td>Evidence or report</td>
+<td>Runner and report-adapter runtime</td>
+<td>Result schema, remote limits, Nova importer</td>
+</tr>
+<tr>
+<td>Result authority</td>
+<td>Shared remote contract and Buster service</td>
+<td>Nova result-authority verification</td>
+</tr>
+<tr>
+<td>Namespace lease</td>
+<td>CRD and Go controller</td>
+<td>Helm values, RBAC, admission fence, fixture capability</td>
+</tr>
+<tr>
+<td>New host capability</td>
+<td>Common contract and Buster production runtime</td>
+<td>Operator policy, adapter, worker grants, role closure</td>
+</tr>
+</tbody>
+</table>
+<p>The table is a change-impact map, not a list of interchangeable files. A wire
+field added on one side only is a compatibility defect. A new capability name
+in a provider manifest without runtime policy and an implementation is not a
+working extension.</p>
+<h2 id="change-a-plan-field">Change A Plan Field</h2>
+<ol>
+<li>State which decision the field changes and why configuration in an existing
+provider cannot express it.</li>
+<li>Change the strict contract schema and TypeScript type together.</li>
+<li>Define required/optional behavior, default, range, canonical form, and
+unknown-field behavior.</li>
+<li>Add the value to canonical identity and digest calculation when it changes
+execution or evidence meaning.</li>
+<li>Update Nova resolution and every validation that assumes a closed node.</li>
+<li>Update Buster runner admission. Never accept a value Buster silently ignores.</li>
+<li>Add positive, boundary, unknown-field, and digest-change vectors.</li>
+<li>Update the suite reference and compatibility statement.</li>
+</ol>
+<p><strong>Compatibility rule:</strong> If an old executor would accept the plan but execute a
+different meaning, introduce a new schema or contract version. Do not rely on a
+new optional field that an old side ignores.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L624-L754">The resolver produces the canonical plan and digest</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts#L234-L265">The runner revalidates the plan against its installed snapshot</a>.</p>
+</blockquote>
+<h2 id="change-the-remote-protocol">Change The Remote Protocol</h2>
+<p>The job request binds job ID, idempotency key, plan, source snapshot, archive,
+grants, limits, stage, and request digest. Status, result, and evidence are
+separate resources. Preserve these properties:</p>
+<ul>
+<li>the same idempotency key and same content returns the same job;</li>
+<li>the same key with different content fails;</li>
+<li>admission verifies all identities before storing <code>accepted</code>;</li>
+<li>status never substitutes for result bytes;</li>
+<li>result and evidence are fetched by digest;</li>
+<li>cancellation cannot overwrite a terminal record; and</li>
+<li>recovery completes before readiness opens.</li>
+</ul>
+<p>For a new wire version, add producer and consumer vectors first. Define how a
+mixed deployment fails. Update request-size, response-size, archive, result,
+evidence, and durable-store limits independently. One large <code>bodyLimit</code> is not
+a safe replacement because each resource creates a different liability.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/remote.ts">Remote request validation and receipt contracts</a> ·
+<a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-service.ts">Buster admission and guarded transition</a></p>
+</blockquote>
+<h2 id="change-execution-or-result-rules">Change Execution or Result Rules</h2>
+<p>The runner is the authority between an immutable plan and a remote result. A
+change must preserve dependency order, fixture lifetime, group and global
+concurrency, attempt identity, package snapshot, grant limits, deadline,
+cancellation, cleanup, result counts, ports, evidence, and report admission.</p>
+<p>When adding a result field, decide all of these questions:</p>
+<ol>
+<li>Which component creates it?</li>
+<li>Is it an observed fact, an assertion, or a policy decision?</li>
+<li>Is it included in attempt, node, result, and receipt digests?</li>
+<li>Can it be absent for old jobs or recovered records?</li>
+<li>What size and count limit applies?</li>
+<li>Can a provider supply it, or must the runner calculate it?</li>
+<li>How does Nova reject a contradictory or missing value?</li>
+<li>What evidence lets an operator diagnose it?</li>
+</ol>
+<p>Do not let a provider report pipeline success. Providers report one attempt.
+The runner normalizes node results; Nova owns the final gate policy after it
+verifies the remote result.</p>
+<h2 id="add-a-new-suite-end-to-end">Add A New Suite End To End</h2>
+<p>A suite needs no engine change when existing provider contracts can express it.
+Use this sequence:</p>
+<ol>
+<li>Add a versioned JSON file under <code>contracts/pipeline-test-gate/v1/suites</code>.</li>
+<li>Use a globally unique <code>contractId</code> and the current template schema version.</li>
+<li>Give every fixture and test a stable local name.</li>
+<li>Select exact provider contract IDs. Do not name packages or source paths.</li>
+<li>Set mode, retries, dependencies, port links, conditions, matrices, evidence
+choices, and concurrency groups explicitly where needed.</li>
+<li>Keep project-specific commands, origins, image names, and credentials out of
+a shared template unless they are a deliberate product default.</li>
+<li>Add the suite to the catalogue input used by Nova and test duplicate IDs.</li>
+<li>Add resolver vectors for selection, exclusion, permitted override, matrix,
+link compatibility, retry safety, deterministic order, and stable digest.</li>
+<li>Add a remote runner vector for success and one representative failure.</li>
+<li>Document purpose, boundary, all fields and defaults, prerequisites,
+evidence, pass/fail/skip, diagnosis, customization, and verification.</li>
+</ol>
+<p>Create a new version when changing existing consumer meaning. Editing the bytes
+of <code>@1</code> changes the template digest and therefore new plan identities, but it
+does not communicate semantic compatibility to a human or an older binary.</p>
+<h2 id="add-a-new-provider-or-report-adapter">Add A New Provider or Report Adapter</h2>
+<p>The <a href="../buster.html#implement-a-test-provider">public extension guide</a> gives the
+complete package sequence. A core developer must additionally verify:</p>
+<ul>
+<li>registry conflicts and immutable package digest;</li>
+<li>Buster role closure and production bundle presence;</li>
+<li>Worker profile and capability-grant compatibility;</li>
+<li>sandbox import from the attempt snapshot, not repository source;</li>
+<li>result, evidence, output, and cleanup validation in the runner;</li>
+<li>Nova resolver support for ports and matrix fields; and</li>
+<li>compatible remote execution with the production capability adapter.</li>
+</ul>
+<p>A report adapter gets bytes and limits but no host authority. A new report
+format needs exact adapter selection in the resolved plan. Discovery order must
+not decide which parser handles evidence.</p>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/common/plugin-runtime/sdk/src/runtime.ts#L92-L158">The public SDK separates provider execution and report parsing contracts</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/packaging/runtime/roles/buster.json#L1-L60">The Buster role fixes the packages and external authority families in the deployable bundle</a>.</p>
+</blockquote>
+<h2 id="add-a-new-capability">Add A New Capability</h2>
+<p>A capability expands authority and is therefore the most expensive extension.
+Complete all layers:</p>
+<ol>
+<li>define the name, request, response, limits, errors, and cancellation contract;</li>
+<li>add it to the permitted capability namespace and plugin schema;</li>
+<li>implement an operator-configured production adapter;</li>
+<li>add policy that decides which provider can receive which request;</li>
+<li>bind it through the Worker grant and invocation context;</li>
+<li>remove credentials and host handles from provider-visible data;</li>
+<li>add timeout, cancellation, size, origin/path, and malformed-response tests;</li>
+<li>include the implementation and its dependencies in the Buster role;</li>
+<li>document configuration, secret source, readiness, audit, failure, and recovery;</li>
+<li>run the live dependency check in a disposable environment.</li>
+</ol>
+<p>Do not add direct filesystem, process, socket, Kubernetes, registry, or browser
+access to a provider as a shortcut. That bypasses the single audited boundary.</p>
+<h2 id="change-namespace-lifecycle">Change Namespace Lifecycle</h2>
+<p>Treat CRD schema, controller validation, reconciliation, RBAC, and admission
+fence as one feature. When adding a spec field, decide immutability and include
+it in the stored specification digest. When adding a resource, label it with
+lease identity, verify ownership before update or delete, and add it to cleanup.</p>
+<p>Status writes must compare lease UID, resource version, generation, deletion
+state, and any operation-specific claim. Reconciliation must be idempotent. A
+restart can repeat an observation, so creation and cleanup cannot depend on an
+in-memory step counter.</p>
+<p>Never weaken the namespace admission fence to make a test pass. If a new
+controller action is required, narrow its identity, prefix, label, verb, and
+resource form, then add a denial test for the worker identity.</p>
+<h2 id="error-design">Error Design</h2>
+<p>Use a stable error code for a distinct operator action. Include the failing
+identity and bounded context, but never tokens, credential values, full response
+bodies, or arbitrary provider data. Preserve the causal boundary:</p>
+<ul>
+<li>declaration and graph errors belong to resolution;</li>
+<li>authentication, digest, request, and capacity errors belong to admission;</li>
+<li>package, grant, capability, timeout, and cleanup errors belong to attempts;</li>
+<li>count, evidence, report, output, and receipt errors belong to result validation;</li>
+<li>missing blobs and digest mismatches belong to import;</li>
+<li>ownership and stale-writer errors belong to namespace reconciliation.</li>
+</ul>
+<p>Retry only when the operation is contractually safe. A generic transient label
+cannot turn a stateful provider into a retry-safe provider.</p>
+<h2 id="required-checks">Required Checks</h2>
+<p>Run the smallest affected set first, then the connected boundary checks:</p>
+<pre><code class="language-text">npm run verify:test-gate:provider-registry
+npm run verify:test-gate:suite-resolver
+npm run verify:test-gate:plan-runner
+npm run verify:test-gate:remote-plan
+npm run verify:test-gate:junit-report-adapter
+go test ./cmd/buster-namespace-controller/...
+</code></pre>
+<p>Run the provider-specific <code>verify:test-gate:*implementation</code> command for each
+changed provider. Run TypeScript checks for Nova, Buster, common plugin runtime,
+and the shared contract when their boundary changes. Render Helm with both
+broker-disabled and broker-enabled values.</p>
+<p>These local checks do not prove BuildKit, OCI registry, Kubernetes admission,
+Tailscale, browser binaries, Trivy databases, SPIFFE proxying, cgroups, or
+cross-pod restart behavior. Record those as separate live acceptance evidence.</p>
+<h2 id="review-checklist">Review Checklist</h2>
+<ul>
+<li>The change has one owner and a clear reason.</li>
+<li>Old and new version behavior is explicit.</li>
+<li>Every execution-changing field participates in identity.</li>
+<li>Admission fails before the runtime grants persistent authority.</li>
+<li>Durable intent precedes external effects.</li>
+<li>Cancellation reaches owned child work.</li>
+<li>Recovery is safe after every durable transition.</li>
+<li>Cleanup proves ownership before deletion.</li>
+<li>Evidence and reports remain bounded and immutable.</li>
+<li>Operator secrets never enter provider configuration or evidence.</li>
+<li>Negative and stale-writer tests accompany success tests.</li>
+<li>Canonical documentation and its drift check change with the code.</li>
+</ul>
+</main></body></html>

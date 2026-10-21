@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable regression found in the supplied relocation bundle. The new baseline content matches the deleted content, and the reader uses the new path with the existing SHA-256 pin unchanged. Read-only shell inspection failed because of an environment restriction, so repository-wide references and on-disk byte hashes could not be independently verified. No code or tests were executed; this conclusion covers only the relocation.",
+  "overall_confidence": 0.87
+}

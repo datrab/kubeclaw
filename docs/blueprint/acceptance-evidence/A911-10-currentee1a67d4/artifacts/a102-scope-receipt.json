@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-17T12:26:26.088929+00:00",
+  "sourceUTC": "2026-10-17T12:26:26.088929+00:00",
+  "package": "AP09.11",
+  "phase": "Abnahme",
+  "currentGateIds": [
+    "A911-10"
+  ],
+  "task": "A911-10 – Abnahme: historischen Source-Pin nach Remove/Rename korrigiert und als ee1a67d4 auf beiden Refs verifiziert; vollständige unabhängige Source-Gate-Entscheidung am stabilen Dossier wird ausgewertet. AP09.11 bleibt1/12.",
+  "basis": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/continuation-result.json",
+    "sha256": "454106c267578b146f2131800b1d4774c9afc16df5626302ee6a4bc9cc125023"
+  },
+  "dossier": {
+    "path": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/efficiency-20261015/finish-20261017/acceptance-first/A911-10-source-transition-v1/gate-decision-v1/dossier.json",
+    "sha256": "3f476819462280d7ef2a5fb57b3f4fce34d7c640302700701fda82c1ebd129b5"
+  },
+  "formalAcceptance": false
+}

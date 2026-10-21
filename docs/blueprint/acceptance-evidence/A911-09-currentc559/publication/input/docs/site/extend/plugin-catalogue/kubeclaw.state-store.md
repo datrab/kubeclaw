@@ -1,0 +1,131 @@
+# kubeclaw.state-store
+
+Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: [skills/common/plugins/state-store/plugin.json](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/state-store/plugin.json); [skills/common/plugins/state-store/README.md](https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/common/plugins/state-store/README.md)
+Applies to: pipeline-plugin-v2; package 1.0.0
+Last verified: source facts revision 586f1f558a673c4df51c0afb9ea535c814b933b1; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+
+## Purpose
+
+Provide controlled reads and writes for extension-owned state.
+
+## When To Use It
+
+Use it when a pipeline extension needs durable bounded state.
+
+## When Not To Use It
+
+Do not use it to replace Core's canonical journal.
+
+## Most Important Limit
+
+State operations read or append namespaced records. The adapter has no update, delete, or retention operation.
+
+The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.
+
+- [Package guide](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/README.md)
+- [Shared extension contracts](../contracts.md)
+- [Proof and failure exercises](../testing.md#use-a-proof-ladder)
+- [Install and activate](../testing.md#install-and-activate-by-surface)
+- [Update or replace](../testing.md#update-or-replace)
+- [Disable safely](../testing.md#disable-safely)
+- [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
+- [Host and engine boundaries](../host-and-engine.md)
+
+## Package Reference
+
+- Host: `pipeline-runtime`.
+- Package identity: `kubeclaw.state-store@1.0.0`.
+- Runtime-role manifest inclusion: `nova`
+- Manifest: [skills/common/plugins/state-store/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/plugin.json)
+
+## Boundaries
+
+- The manifest declares extension identity and requested authority.
+- Nova and Buster apply the selection rules for each declared surface.
+- Platform grants or resolved plans supply authority separately from package code.
+- Pipeline Core keeps canonical lifecycle authority.
+- The package cannot use undeclared capabilities.
+
+## Registration Summary
+
+| Kind | ID | Public contract or type | Module | Export |
+| --- | --- | --- | --- | --- |
+| capability adapter | `state` | `state` | `src/adapter.ts` | `activate` |
+
+## capability adapter: state
+
+Public identifier: `state`.
+Global registration ID: `kubeclaw.state-store:state`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+
+Required capabilities: None.
+
+Provided capabilities: `state.read`, `state.append`
+
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/schemas/config.schema.json)
+
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+
+- `root` (string; required; minLength `1`)
+- `maxEntryBytes` (integer; optional; default `1048576`; minimum `1`)
+- `maximumRecords` (integer; optional; default `100000`; minimum `1`)
+- `maximumStoreBytes` (integer; optional; default `268435456`; minimum `1`)
+
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
+
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
+
+Declared manifest facts:
+
+| Field | Exact declared value |
+| --- | --- |
+| `id` | `state` |
+| `module` | `src/adapter.ts` |
+| `export` | `activate` |
+| `providesCapabilities` | `["state.read","state.append"]` |
+| `requiredCapabilities` | Empty list. |
+| `configSchema` | `schemas/config.schema.json` |
+
+## Failure Behavior
+
+Read returns namespaced records; append uses an idempotency key. Reusing that key with different content fails with STATE_IDEMPOTENCY_CONFLICT. No operation updates or deletes an existing record.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+
+## Package Checks
+
+Recorded local command result on 2026-09-16: `unavailable`.
+
+The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+Run the package command:
+
+```bash
+npm test --prefix skills/common/plugins/state-store
+```
+
+Package test files found: 2. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+```
+
+Local package checks do not prove live host or cluster readiness.
+The result above states the exact local limit. Run the package command in the target environment before activation.
+
+## Source Evidence
+
+- Manifest: [skills/common/plugins/state-store/plugin.json](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/plugin.json)
+- Package implementation guide: [skills/common/plugins/state-store/README.md](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/README.md)
+- Module for `state`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/src/adapter.ts)
+- Test: [skills/common/plugins/state-store/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/tests/live-function.test.ts)
+- Test: [skills/common/plugins/state-store/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/586f1f558a673c4df51c0afb9ea535c814b933b1/skills/common/plugins/state-store/tests/package-boundary.test.mjs)

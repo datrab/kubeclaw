@@ -1,0 +1,1443 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="canonical" href="/understand/prism-runtime.html"></head><body><main>
+<h1 id="prism-runtime-from-design-request-to-approved-baseline">Prism Runtime: From Design Request to Approved Baseline</h1>
+<p>Status: implemented with stated deployment and recovery limits
+Audience: architecture reader, Prism developer, operator, incident responder
+Owner: Prism maintainers
+Evidence: <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/skills/prism">skills/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/contracts/prism/v1">contracts/prism/v1</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/charts/prism">charts/prism</a>; <a href="https://github.com/datrab/kubeclaw/blob/c559e97960a89a0f80487483addb91d2e6e4527d/my-values/prism-agent-values.yaml">my-values/prism-agent-values.yaml</a>
+Evidence revision: <code>b2b85d4c8d3174aa41507cde77637227bb709e1e</code>
+Applies to: the current Prism Control, Studio, native Worker, Ingestion service, Agent Bridge, and pipeline adapter
+Last verified: source, deployment, and test inspection on 2026-09-19; Prism Agent values changes reconciled on 2026-10-17 (source inspection, not a live readiness test)</p>
+<h2 id="purpose">Purpose</h2>
+<p>Prism turns an approved product boundary into design evidence that an implementation pipeline can use.
+It stores design revisions, asks one managed design agent for proposals, renders previews, evaluates quality, records human decisions, and publishes one content-addressed baseline.</p>
+<p>Prism is not a second pipeline orchestrator.
+Nova owns pipeline order and final pipeline state.
+Prism owns design state and design publication.
+Worker Core owns the safety rules for each bounded Prism engine attempt.
+The OpenClaw gateway owns model access.</p>
+<p>This separation is important because design work has two different kinds of execution:</p>
+<ul>
+<li>Deterministic work, such as render, evaluate, and embedding, runs in the native Prism Worker.</li>
+<li>Model-driven design generation runs through the Prism Agent and its OpenClaw gateway.</li>
+</ul>
+<p>The split has a cost.
+Prism needs two execution paths and more identities to reconcile.
+The benefit is that a model response cannot silently become a durable design revision, and a rendering process cannot acquire pipeline authority.</p>
+<blockquote>
+<p><strong>Source evidence — product boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/engine/index.ts#L12-L33">The engine contract defines generate, render, evaluate, ingest, and publish as the Prism operation names</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-operation.ts#L58-L76">The native operation rejects generation because generation must use the OpenClaw agent path</a>.</p>
+</blockquote>
+<h2 id="runtime-map">Runtime Map</h2>
+<pre><code class="language-mermaid">flowchart LR
+    Nova[Nova pipeline] --&gt;|design request or approved-baseline request| Control[Prism Control]
+    User[Tailscale user] --&gt; Studio[Prism Studio]
+    Studio --&gt;|session and user API| Control
+    Control --&gt; DB[(PostgreSQL)]
+    Control --&gt; Files[(Artifact volume)]
+    Control --&gt;|durable agent job| Agent[Prism Agent Bridge]
+    Agent --&gt; Gateway[OpenClaw gateway]
+    Gateway --&gt; Model[Managed model route]
+    Agent --&gt;|fenced design result| Control
+    Control --&gt;|bound attempt| Worker[Native Prism Worker]
+    Worker --&gt;|isolated host| Engine[Prism engine]
+    Engine --&gt;|artifact read and write| Control
+    Control --&gt;|acquire and quarantine| Ingestion[Ingestion service]
+    Adapter[Pipeline adapter library] --&gt; Buster[Buster visual plan]
+    Adapter --&gt; Forge[Forge assignments]
+    Control --&gt;|approved baseline| Nova
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nova pipeline</td>
+<td>Directed connection — design request or approved-baseline request</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Tailscale user</td>
+<td>Directed connection</td>
+<td>Prism Studio</td>
+</tr>
+<tr>
+<td>Prism Studio</td>
+<td>Directed connection — session and user API</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection</td>
+<td>Artifact volume</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — durable agent job</td>
+<td>Prism Agent Bridge</td>
+</tr>
+<tr>
+<td>Prism Agent Bridge</td>
+<td>Directed connection</td>
+<td>OpenClaw gateway</td>
+</tr>
+<tr>
+<td>OpenClaw gateway</td>
+<td>Directed connection</td>
+<td>Managed model route</td>
+</tr>
+<tr>
+<td>Prism Agent Bridge</td>
+<td>Directed connection — fenced design result</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — bound attempt</td>
+<td>Native Prism Worker</td>
+</tr>
+<tr>
+<td>Native Prism Worker</td>
+<td>Directed connection — isolated host</td>
+<td>Prism engine</td>
+</tr>
+<tr>
+<td>Prism engine</td>
+<td>Directed connection — artifact read and write</td>
+<td>Prism Control</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — acquire and quarantine</td>
+<td>Ingestion service</td>
+</tr>
+<tr>
+<td>Pipeline adapter library</td>
+<td>Directed connection</td>
+<td>Buster visual plan</td>
+</tr>
+<tr>
+<td>Pipeline adapter library</td>
+<td>Directed connection</td>
+<td>Forge assignments</td>
+</tr>
+<tr>
+<td>Prism Control</td>
+<td>Directed connection — approved baseline</td>
+<td>Nova pipeline</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: Nova sends a design request to Control. A user reaches Studio through the Tailscale ingress. Studio proxies the user API to Control. Control owns PostgreSQL records and the artifact volume. Model-driven jobs go through the Agent Bridge and OpenClaw. Deterministic operations go to the native Worker. The Worker reads and writes artifacts through Control. The optional Ingestion service acquires untrusted corpus content. The pipeline adapter converts a published baseline handoff into Buster and Forge inputs.</p>
+<h3 id="components-and-authority">Components and authority</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Owns</th>
+<th>Does not own</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>API admission, durable design state, revisions, preferences, approvals, baseline publication, durable agent jobs, native-operation replay</td>
+<td>Pipeline scheduling, model execution, browser process isolation</td>
+</tr>
+<tr>
+<td>Studio</td>
+<td>Static web client and same-origin proxy</td>
+<td>Durable state, user identity, authorization decisions</td>
+</tr>
+<tr>
+<td>Agent Bridge</td>
+<td>Polling and execution of already admitted agent jobs</td>
+<td>Job admission, final design state, automatic replay after an uncertain external action</td>
+</tr>
+<tr>
+<td>OpenClaw Prism Agent</td>
+<td>Exactly three initial proposals and explicit design revisions</td>
+<td>Direct database changes, baseline approval, pipeline lifecycle</td>
+</tr>
+<tr>
+<td>Native Worker</td>
+<td>One bounded engine attempt, process-tree control, resource evidence, durable native-attempt recovery</td>
+<td>Model generation, design approval, pipeline scheduling</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>Acquisition, media checks, short-lived quarantine, and cleanup</td>
+<td>Corpus activation, search policy, design state</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>Transactional design and operation records</td>
+<td>Binary artifact bytes</td>
+</tr>
+<tr>
+<td>Artifact store</td>
+<td>Content-addressed input, evidence, preview, and baseline bytes</td>
+<td>Business state or access policy by itself</td>
+</tr>
+<tr>
+<td>Pipeline adapter</td>
+<td>Pure conversion of a baseline handoff into Buster targets and Forge assignments</td>
+<td>Network I/O, persistence, execution, or approval</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — packaged role</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/packaging/runtime/roles/prism.json#L1-L28">The Prism runtime role declares its packages, platform plugins, observer extension, and read-only project snapshot capability</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L1-L23">The Helm chart deploys separate Control, Studio, and Worker workloads and requires exactly one native Worker</a>.</p>
+</blockquote>
+<h2 id="1-control-the-durable-authority">1. Control: The Durable Authority</h2>
+<p>Control is the only Prism service that combines the database, the artifact store, user sessions, agent admission, and Worker dispatch.
+Its production entry point creates a PostgreSQL pool and composes the HTTP server.
+It listens on all interfaces and closes the pool after the server closes on <code>SIGTERM</code>.</p>
+<p>Control loads its service configuration once.
+It also loads the optional product-decision authority before it accepts requests.
+This startup snapshot prevents later environment changes from changing a running process.</p>
+<h3 id="required-and-default-configuration">Required and default configuration</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Rule or default</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATABASE_URL</code></td>
+<td>Passed to the PostgreSQL pool. The listener does not provide an embedded mode.</td>
+<td>Production state must use the durable database.</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td><code>8080</code></td>
+<td>Standard in-cluster service port.</td>
+</tr>
+<tr>
+<td><code>PRISM_SESSION_SECRET</code></td>
+<td>Required</td>
+<td>Signs the 15-minute user session.</td>
+</tr>
+<tr>
+<td><code>PRISM_INGRESS_SECRET</code></td>
+<td>Required</td>
+<td>Trusts only the Studio ingress when it exchanges Tailscale identity.</td>
+</tr>
+<tr>
+<td><code>PRISM_INGESTION_SECRET</code></td>
+<td>Required, even when the optional Ingestion workload is disabled</td>
+<td>The observed startup contract always requires this secret. Corpus acquisition will not work without the service.</td>
+</tr>
+<tr>
+<td><code>ARTIFACT_ROOT</code></td>
+<td><code>/var/lib/prism/artifacts</code></td>
+<td>Gives Control one local content-addressed artifact root.</td>
+</tr>
+<tr>
+<td><code>PRISM_WORKER_URL</code></td>
+<td><code>http://prism-worker:8080</code></td>
+<td>Selects the deterministic execution service.</td>
+</tr>
+<tr>
+<td><code>PRISM_INGESTION_URL</code></td>
+<td><code>http://prism-ingestion:8080</code></td>
+<td>Selects the optional acquisition service.</td>
+</tr>
+<tr>
+<td><code>PRISM_CONTROL_INTERNAL_URL</code></td>
+<td><code>http://prism-control:8080</code></td>
+<td>Gives workers a canonical artifact origin.</td>
+</tr>
+<tr>
+<td><code>PRISM_STUDIO_PUBLIC_URL</code></td>
+<td><code>https://prism-studio</code></td>
+<td>Builds links in agent design-set responses.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_MAXIMUM_RESULT_BYTES</code></td>
+<td>64 MiB</td>
+<td>Bounds the Worker HTTP response.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_DISPATCH_TIMEOUT_MS</code></td>
+<td>900,000 ms</td>
+<td>Bounds the complete Control-to-Worker request.</td>
+</tr>
+<tr>
+<td><code>PRISM_PIPELINE_PREFERENCE_SUBJECT</code></td>
+<td>No default subject</td>
+<td>Pipeline learning is disabled unless an existing subject is explicit.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source evidence — composition and defaults</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-config.ts#L16-L72">Control validates secrets, trust identities, URLs, storage, result size, and dispatch time during composition</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control.ts#L1-L9">The production listener uses a PostgreSQL pool and has no embedded-runtime switch</a>.</p>
+</blockquote>
+<h3 id="public-health-and-readiness">Public health and readiness</h3>
+<ul>
+<li><code>GET /health</code> proves only that the Control HTTP handler is alive.</li>
+<li><code>GET /ready</code> runs <code>SELECT 1</code>. It proves that Control can reach PostgreSQL at that moment.</li>
+<li>Readiness does not probe the Worker, Agent, Ingestion service, artifact volume, or optional product controller.</li>
+</ul>
+<p>This narrow probe keeps the services from becoming one readiness dependency chain.
+That benefit is an architecture inference from the implemented boundary, not a motive recorded in the source.
+An operator must not read the probe as complete Prism readiness.</p>
+<h3 id="user-session-and-authorization">User session and authorization</h3>
+<p>The Studio sends the Tailscale identity headers to <code>POST /v1/session</code>.
+It also adds <code>x-prism-ingress-secret</code>.
+Control rejects the exchange if that secret is wrong or <code>tailscale-user-login</code> is absent.
+It then returns two Secure, SameSite=Strict cookies:</p>
+<ul>
+<li><code>prism_session</code> is HTTP-only and contains a signed user, audience, roles, and 15-minute expiry.</li>
+<li><code>prism_csrf</code> is readable by the client and must match <code>x-prism-csrf</code> on non-GET and non-HEAD user requests.</li>
+</ul>
+<p>Control stores roles in the session, but the general design routes do not currently apply role-specific permissions.
+Possession of a valid session gives access to those routes.
+The optional product-decision routes add a separate operator allowlist.</p>
+<blockquote>
+<p><strong>Source evidence — session boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/session.ts#L3-L19">Session signing, expiry, audience validation, and Tailscale identity exchange are explicit</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L108-L123">Control sets both 15-minute cookies and requires the CSRF value on mutating user requests</a>.</p>
+</blockquote>
+<h3 id="internal-trust-modes">Internal trust modes</h3>
+<p>Prism supports two internal trust modes.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Control-to-Worker and internal artifact trust</th>
+<th>Dispatch trust</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPIFFE enabled</td>
+<td>Envoy terminates mutual TLS and adds verified peer identity headers. Application code permits only configured SPIFFE IDs and loopback proxy traffic.</td>
+<td>Nova, Prism Agent, and the test runner must match the configured identities.</td>
+</tr>
+<tr>
+<td>SPIFFE disabled</td>
+<td>Control signs Worker requests with HMAC, timestamp, and nonce. Internal artifact calls use a bearer secret.</td>
+<td>Nova dispatch uses an HMAC over <code>idempotency-key + &quot;.&quot; + raw body</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>SPIFFE mode requires the complete Nova, Worker, Control, and Prism Agent identity set.
+HMAC mode requires both dispatch and Worker secrets.
+Worker HMAC requests have a five-minute timestamp window and a PostgreSQL nonce record, so a valid request cannot be replayed.</p>
+<blockquote>
+<p><strong>Source evidence — internal authentication</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-config.ts#L22-L37">Control fails startup when the selected trust policy is incomplete</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-auth.ts#L3-L14">Worker HMAC binds timestamp, nonce, body digest, signature, audience, and one-time nonce consumption</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/internal-auth.ts#L52-L86">Verification enforces the five-minute window and rejects a consumed nonce</a>.</p>
+</blockquote>
+<h2 id="2-api-surface-and-request-flows">2. API Surface and Request Flows</h2>
+<p>Control has four API classes.
+They have different trust rules and must not be treated as one public API.</p>
+<h3 id="service-and-pipeline-routes">Service and pipeline routes</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Caller</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code></td>
+<td>Probe</td>
+<td>Process liveness only.</td>
+</tr>
+<tr>
+<td><code>GET /ready</code></td>
+<td>Probe</td>
+<td>Database connectivity.</td>
+</tr>
+<tr>
+<td><code>POST /v1/session</code></td>
+<td>Studio proxy</td>
+<td>Signed user session and CSRF value.</td>
+</tr>
+<tr>
+<td><code>POST /v1/dispatch</code></td>
+<td>Nova, Prism Agent, or test runner</td>
+<td><code>202 waiting</code> with a durable agent job, or <code>200</code> with an approved baseline archive.</td>
+</tr>
+<tr>
+<td><code>GET/POST /v1/internal/artifacts/:digest</code></td>
+<td>Worker, Control, or Prism Agent</td>
+<td>Digest-bound binary read or write.</td>
+</tr>
+</tbody>
+</table>
+<p>The dispatch request must have JSON content, an idempotency key, valid transport identity, and a valid <code>prism.design-request.v1</code> body.
+Control stores the project and active architecture revision before it starts design work.
+A newer architecture supersedes older active requests.
+An incompatible architecture transition is rejected.</p>
+<p>Without <code>approvalId</code>, dispatch starts or reuses a design round and admits one durable Agent job.
+With <code>approvalId</code>, dispatch returns only a baseline that is already bound to that approved round.
+It does not publish a new baseline on the pipeline request path.</p>
+<blockquote>
+<p><strong>Source evidence — pipeline dispatch</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L174-L213">Dispatch checks transport identity, a 2 MB body limit, idempotency, and the design-request contract</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L214-L240">Control records the architecture transition before it either admits design work or returns the approved archive</a>.</p>
+</blockquote>
+<h3 id="agent-routes">Agent routes</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /v1/agent/jobs/claim</code></td>
+<td>Claim the oldest safe job for one bridge runner.</td>
+</tr>
+<tr>
+<td><code>GET /v1/agent/jobs/:id</code></td>
+<td>Read the internal durable job.</td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/jobs/:id/finish</code></td>
+<td>Record the bound Worker Core outcome.</td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/design-sets</code></td>
+<td>Commit exactly three distinct designs under a live job fence.</td>
+</tr>
+<tr>
+<td><code>POST /v1/agent/revisions</code></td>
+<td>Commit exactly one next revision under a live job fence.</td>
+</tr>
+</tbody>
+</table>
+<p>All these routes require SPIFFE mode and the configured Prism Agent identity.
+The design-set route requires exactly three unique direction keys and materially different documents.
+The revision route verifies project ownership, the preference generation, the expected source revision, and an exact increment of one.</p>
+<p>The result commit and its agent job receipt share a database transaction.
+This prevents a process failure from leaving a design change without its durable external-action record.</p>
+<blockquote>
+<p><strong>Source evidence — fenced agent writes</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-job-routes.ts#L6-L26">Agent job routes require the trusted Prism Agent peer and expose claim, read, and finish operations</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L243-L277">Design sets and revisions validate job identity and commit through the revision repository</a>.</p>
+</blockquote>
+<h3 id="session-routes">Session routes</h3>
+<p>After the internal routes, Control requires a valid user session.</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /v1/agent-jobs/:id</code></td>
+<td>Read the public receipt for an asynchronous design job.</td>
+</tr>
+<tr>
+<td><code>GET /v1/projects</code></td>
+<td>List projects and the active direction summary.</td>
+</tr>
+<tr>
+<td><code>POST /v1/projects</code></td>
+<td>Create a standalone Studio project and its first synthetic design request.</td>
+</tr>
+<tr>
+<td><code>GET /v1/projects/:id/brief</code></td>
+<td>Read the active architecture request for one project.</td>
+</tr>
+<tr>
+<td><code>GET /v1/projects/:id/directions</code></td>
+<td>Read directions from the current active round.</td>
+</tr>
+<tr>
+<td><code>POST /v1/projects/:id/directions</code></td>
+<td>Start or reuse a new design round for an exact document revision.</td>
+</tr>
+<tr>
+<td><code>POST /v1/documents</code></td>
+<td>Create a validated document under the active design request.</td>
+</tr>
+<tr>
+<td><code>GET /v1/documents/:id</code></td>
+<td>Read the current immutable revision target.</td>
+</tr>
+<tr>
+<td><code>GET /v1/documents/:id/revisions</code></td>
+<td>Read revision history.</td>
+</tr>
+<tr>
+<td><code>POST /v1/documents/:id/revisions/:revisionId/restore</code></td>
+<td>Create a new revision from an older revision.</td>
+</tr>
+<tr>
+<td><code>POST /v1/documents/:id/operations</code></td>
+<td>Apply one typed design operation with optimistic revision control.</td>
+</tr>
+<tr>
+<td><code>POST /v1/documents/:id/engine</code></td>
+<td>Start agent generation or run native render, evaluate, or publish engine work.</td>
+</tr>
+<tr>
+<td><code>POST /v1/directions/:id/feedback</code></td>
+<td>Record rejected, liked, disliked, or preserved feedback.</td>
+</tr>
+<tr>
+<td><code>POST /v1/directions/:id/select</code></td>
+<td>Select one direction and document.</td>
+</tr>
+<tr>
+<td><code>POST /v1/approvals</code></td>
+<td>Approve the exact current design and explicit warning set.</td>
+</tr>
+<tr>
+<td><code>POST /v1/baselines</code></td>
+<td>Build or reuse the approved baseline archive.</td>
+</tr>
+<tr>
+<td><code>POST /v1/artifacts</code></td>
+<td>Store one strict base64 artifact of at most 6 MB.</td>
+</tr>
+<tr>
+<td><code>GET /v1/artifacts/:digest</code></td>
+<td>Read one content-addressed artifact.</td>
+</tr>
+<tr>
+<td><code>POST /v1/corpus</code></td>
+<td>Acquire, embed, store, clean, and activate one corpus revision.</td>
+</tr>
+<tr>
+<td><code>GET /v1/corpus/search</code></td>
+<td>Embed a query and search the active governed corpus.</td>
+</tr>
+<tr>
+<td><code>PUT /v1/preferences/policy</code></td>
+<td>Enable or disable personal preferences for one project.</td>
+</tr>
+<tr>
+<td><code>POST /v1/preferences</code></td>
+<td>Record one validated preference event for the session user.</td>
+</tr>
+<tr>
+<td><code>GET /v1/preferences</code></td>
+<td>Read preference events and their learned projection.</td>
+</tr>
+</tbody>
+</table>
+<p>Most request or domain errors return <code>422</code>; JSON parse errors return <code>400</code>.
+This is the current implementation.
+It does not yet give each error a stable machine-readable code or a precise HTTP class.</p>
+<h3 id="product-decision-routes">Product-decision routes</h3>
+<p>Product decisions are optional and disabled by default.
+When enabled, Control adds an operator page and routes to list subjects, list decisions, submit a decision, and recover an uncertain decision.</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /v1/product-decisions/operator</code></td>
+<td>Serve the static operator page without granting authority.</td>
+</tr>
+<tr>
+<td><code>GET /v1/product-decisions/subjects</code></td>
+<td>Read eligible subjects from the product controller.</td>
+</tr>
+<tr>
+<td><code>GET /v1/product-decisions</code></td>
+<td>List at most 100 decisions owned by the authenticated operator.</td>
+</tr>
+<tr>
+<td><code>POST /v1/product-decisions</code></td>
+<td>Validate, sign, store, and submit one accept or extend decision.</td>
+</tr>
+<tr>
+<td><code>POST /v1/product-decisions/:id/recover</code></td>
+<td>Reconcile one uncertain decision that the same operator owns.</td>
+</tr>
+</tbody>
+</table>
+<p>Control calls three controller routes over pinned HTTPS.
+It uses <code>POST /v1/demo-product/subjects</code>, <code>POST /v1/demo-product/decisions</code>,
+and <code>POST /v1/demo-product/status</code>.</p>
+<p>The path uses a dedicated operator allowlist plus exact Origin and CSRF checks.
+It also uses an Ed25519 key, HTTPS-only origins, a service-account token, and a controller CA.</p>
+<p>Control stores the signed intent before it calls the external controller.
+If the result is uncertain, it returns <code>202 pending</code> and requires recovery of the same decision ID.
+It does not create a replacement decision.</p>
+<blockquote>
+<p><strong>Source evidence — optional authority</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/product-decisions.ts#L20-L35">Product authority is disabled unless all explicit HTTPS, operator, key, controller, CA, and token settings validate</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/product-controller.ts#L12-L28">The controller transport uses a 15-second timeout, a 1 MB response limit, a pinned CA, and its service-account token</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/product-decisions.ts#L26-L40">An uncertain outcome retries the same status or decision envelope and never issues a replacement</a>.</p>
+</blockquote>
+<h2 id="3-the-main-design-journey">3. The Main Design Journey</h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant N as Nova
+    participant C as Control
+    participant A as Agent Bridge
+    participant O as OpenClaw Agent
+    participant S as Studio user
+    participant W as Native Worker
+    N-&gt;&gt;C: Dispatch architecture and idempotency key
+    C-&gt;&gt;C: Record active design request and round
+    C--&gt;&gt;N: Waiting plus durable job identity
+    A-&gt;&gt;C: Claim job with runner identity
+    C--&gt;&gt;A: Fenced attempt and session key
+    A-&gt;&gt;O: Run one named OpenClaw session
+    O-&gt;&gt;C: Commit exactly three designs
+    A-&gt;&gt;C: Finish bound attempt receipt
+    S-&gt;&gt;C: Select, revise, render, and evaluate
+    S-&gt;&gt;C: Approve exact design digest and warnings
+    S-&gt;&gt;C: Publish baseline
+    C-&gt;&gt;W: Render every view, state, and viewport
+    W--&gt;&gt;C: Bound result and evidence
+    C-&gt;&gt;C: Store immutable baseline archive
+    N-&gt;&gt;C: Dispatch same architecture with approval ID
+    C--&gt;&gt;N: Approved archive and digest
+</code></pre>
+<p><strong>Text alternative to the diagram</strong></p>
+<p>Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.</p>
+<p>Participants: Nova, Control, Agent Bridge, OpenClaw Agent, Studio user, Native Worker.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>From</th>
+<th>Relationship</th>
+<th>To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Nova</td>
+<td>Message — Dispatch architecture and idempotency key</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Control</td>
+<td>Self-action — Record active design request and round</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Control</td>
+<td>Dashed reply — Waiting plus durable job identity</td>
+<td>Nova</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Agent Bridge</td>
+<td>Message — Claim job with runner identity</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Control</td>
+<td>Dashed reply — Fenced attempt and session key</td>
+<td>Agent Bridge</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Agent Bridge</td>
+<td>Message — Run one named OpenClaw session</td>
+<td>OpenClaw Agent</td>
+</tr>
+<tr>
+<td>7</td>
+<td>OpenClaw Agent</td>
+<td>Message — Commit exactly three designs</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Agent Bridge</td>
+<td>Message — Finish bound attempt receipt</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Studio user</td>
+<td>Message — Select, revise, render, and evaluate</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Studio user</td>
+<td>Message — Approve exact design digest and warnings</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Studio user</td>
+<td>Message — Publish baseline</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Control</td>
+<td>Message — Render every view, state, and viewport</td>
+<td>Native Worker</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Native Worker</td>
+<td>Dashed reply — Bound result and evidence</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Control</td>
+<td>Self-action — Store immutable baseline archive</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Nova</td>
+<td>Message — Dispatch same architecture with approval ID</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Control</td>
+<td>Dashed reply — Approved archive and digest</td>
+<td>Nova</td>
+</tr>
+</tbody>
+</table>
+<p>Text version: Nova records one architecture and starts a durable design round. The bridge claims its job and uses one stable OpenClaw session. The Agent commits exactly three designs. A user selects and revises a direction, reviews quality findings, and approves an exact revision. Publication renders all declared states at three viewport classes and stores one immutable archive. Nova then requests that already approved archive.</p>
+<h3 id="why-the-agent-job-is-durable">Why the Agent job is durable</h3>
+<p>Model execution is an external action.
+After a bridge claims a job, Control cannot prove that a lost bridge did or did not reach the model or submit a result.
+Automatic replay could create a second, conflicting action in the same agent session.</p>
+<p>For this reason, a claim has a random fence and a 16-minute expiry.
+Only <code>accepted</code> work can be claimed.
+Once work is <code>running</code>, expiry changes it to <code>needs_nova</code>.
+It is never returned to the automatic queue.
+The same session blocks later accepted jobs.
+The current API has no supported transition that resolves a <code>needs_nova</code> job.
+An operator can inspect the durable state, but must not mutate the database or
+submit replacement work as an improvised recovery procedure. Restoring service
+requires a future supported reconciliation path or a code change with its own
+migration and acceptance evidence.</p>
+<p>The bridge polls once per second and runs only one active job.
+It validates the envelope identity and local profile before launch.
+It starts <code>openclaw agent</code> with the stored session key and a 900-second gateway timeout.
+On shutdown, it aborts the active Worker Core executor.
+The local process termination path sends <code>SIGTERM</code> to the process group and sends <code>SIGKILL</code> after one second if required.</p>
+<blockquote>
+<p><strong>Source evidence — no blind replay</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/agent-jobs.ts#L38-L53">Claim serializes admission, expires old running work to <code>needs_nova</code>, supersedes stale accepted work, and issues a 16-minute fenced attempt</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-job-runner.mjs#L16-L46">The runner validates the durable identity, uses the stable session key, and records any launch uncertainty as an errored outcome</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-process.ts#L14-L38">The launcher uses a detached process group and escalates from <code>SIGTERM</code> to <code>SIGKILL</code> after one second</a>.</p>
+</blockquote>
+<h3 id="agent-bridge-admission-and-probes">Agent Bridge admission and probes</h3>
+<p>The Agent Bridge is a loopback HTTP helper in the OpenClaw Prism Agent pod.
+It listens on <code>127.0.0.1</code> and defaults to port 18080.
+Its default Control address is the local trust-proxy port <code>http://127.0.0.1:28080</code>.
+The deployed Envoy listener provides the SPIFFE transport boundary around it.</p>
+<p>The bridge accepts bodies of at most 2 MB and accepts only <code>POST</code> for work routes.
+Its routes have narrow meanings:</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code></td>
+<td>Returns ready without checking Control, OpenClaw, or the active runner.</td>
+</tr>
+<tr>
+<td><code>GET /ready</code></td>
+<td>Returns the same local-process result as health.</td>
+</tr>
+<tr>
+<td><code>POST /v1/dispatch</code></td>
+<td>Forwards a design dispatch to Control with a 30-second deadline and the original idempotency key.</td>
+</tr>
+<tr>
+<td><code>POST /v1/design-set</code></td>
+<td>Requires an existing durable <code>jobId</code> and reads its Control status. It does not admit new work.</td>
+</tr>
+<tr>
+<td><code>POST /v1/revise</code></td>
+<td>Requires an existing durable <code>jobId</code> and reads its Control status. It does not admit new work.</td>
+</tr>
+</tbody>
+</table>
+<p>The deployed bridge probes run Node inside the container and fetch these
+loopback routes on port 18080. Each fetch has an 800 ms abort timeout; a
+non-success HTTP response or fetch error exits unsuccessfully. Readiness has
+a three-second initial delay and liveness a ten-second initial delay. These
+checks reach the private listener without exposing it on the pod address;
+they do not broaden the route meanings above or prove the full Prism journey.</p>
+<p>The bridge polls Control once per second for admitted work.
+The OpenClaw plugin gives the model only two Prism mutation tools:
+<code>prism_create_design_set</code> and <code>prism_apply_revision</code>.
+Both tools send their complete payload to the SPIFFE-protected Control agent routes.
+Control, not the plugin schema, performs the final document, generation, fence, and revision checks.</p>
+<p>The Agent Worker Core envelope uses a 900-second execution limit and a 10-second cleanup limit.
+It allows 1 MiB each for logs and results. Two evidence files can use at most 2 MiB.
+CPU, memory, and complete child-process counts are explicitly unrequested because this deployment cannot measure the remote gateway and model as one local process tree.</p>
+<blockquote>
+<p><strong>Source evidence — bridge and tool surface</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-bridge.mjs#L1-L37">The bridge defines its loopback listener, routes, body limit, deadlines, poll interval, and shutdown request</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/openclaw-plugin/index.mjs#L22-L80">The OpenClaw extension exposes only the design-set and revision tools</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/agent-attempt.ts#L5-L28">The launcher envelope declares its unavailable measurements and exact execution, cleanup, log, result, and evidence limits</a>.</p>
+</blockquote>
+<h3 id="approval-is-not-publication">Approval is not publication</h3>
+<p>Approval records the exact current design revision, the supplied design digest, the user, the active architecture digest, and the exact set of accepted review warnings.
+Approval fails if the quality gate is blocked or the accepted warning list differs from the current findings.</p>
+<p>Publication checks those bindings again.
+It also requires one selected direction from the active round.
+It builds:</p>
+<ul>
+<li>the canonical Design Document;</li>
+<li>a readable design specification;</li>
+<li>generated acceptance criteria;</li>
+<li>a quality report with accepted warnings;</li>
+<li>declared binary assets;</li>
+<li>one screenshot and one accessibility snapshot for every view, state, and compact, regular, and wide viewport;</li>
+<li>a preview index, checksums, and a baseline manifest.</li>
+</ul>
+<p>The archive is content-addressed and the baseline row binds its digest, artifact, revision, approval, specification, criteria, and preview index.
+A repeated publication request for the same approval, project, and document returns the existing archive.</p>
+<p>This costs time because publication can require many render attempts.
+It prevents a lightweight approval from being mistaken for complete implementation evidence.</p>
+<blockquote>
+<p><strong>Source evidence — approval and publication</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L521-L565">Approval binds the current revision, architecture, quality status, and exact warning acceptance</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L693-L752">Publication renders each view, state, and viewport and rejects missing or failing accessibility evidence</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L753-L797">The assembled archive and its exact component digests are committed to the baseline record</a>.</p>
+</blockquote>
+<h2 id="4-native-worker-and-engine-execution">4. Native Worker and Engine Execution</h2>
+<p>The Prism Worker is a privileged supervisor, not the design engine itself.
+It verifies host policy, owns a fixed native pool, recovers its journal, and only then opens HTTP admission.
+Each attempt starts a separate unprivileged Node process inside a governed cgroup scope.</p>
+<h3 id="startup-order">Startup order</h3>
+<ol>
+<li>Capture and validate Worker configuration.</li>
+<li>Read the root-managed pool policy, node identity, and runtime identity.</li>
+<li>Verify supervisor authority and the fixed launcher.</li>
+<li>Open the bounded ownership store.</li>
+<li>Reconcile existing ownership and native attempt journals.</li>
+<li>Build the native execution adapter.</li>
+<li>Select SPIFFE or HMAC admission.</li>
+<li>Start the HTTP server.</li>
+</ol>
+<p>The sequence chooses safety over fast startup.
+The Worker does not report initialized readiness while ownership reconciliation is incomplete.</p>
+<h3 id="worker-endpoints">Worker endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code></td>
+<td>HTTP process is alive. It can still be unreconciled or unsafe for new work.</td>
+</tr>
+<tr>
+<td><code>GET /bootstrap</code></td>
+<td>Native ownership is reconciled. This is the Kubernetes startup readiness route.</td>
+</tr>
+<tr>
+<td><code>GET /ready</code></td>
+<td>Native ownership is ready and, in HMAC mode, the nonce database is reachable.</td>
+</tr>
+<tr>
+<td><code>POST /v1/attempts</code></td>
+<td>Authenticate, validate, and execute one Worker Core v3 envelope.</td>
+</tr>
+</tbody>
+</table>
+<p>The Helm workload intentionally probes <code>/bootstrap</code>, not <code>/ready</code>.
+On a first install, the migration hook can create the nonce table only after the Worker pod becomes ready.
+Thus Kubernetes readiness proves native initialization but does not prove HMAC nonce-table readiness.
+Call <code>/ready</code> when end-to-end Worker admission must be checked.</p>
+<blockquote>
+<p><strong>Source evidence — readiness meaning</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-service.ts#L28-L107">The Worker distinguishes liveness, bootstrap reconciliation, dependency readiness, and attempt admission</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L157-L162">The deployment uses <code>/bootstrap</code> to break the first-install migration dependency</a>.</p>
+</blockquote>
+<h3 id="admission-limits-and-defaults">Admission limits and defaults</h3>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th style="text-align:right">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active non-probe HTTP requests</td>
+<td style="text-align:right">16</td>
+</tr>
+<tr>
+<td>Extra probe requests</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td>TCP connections</td>
+<td style="text-align:right">128</td>
+</tr>
+<tr>
+<td>Attempt request body</td>
+<td style="text-align:right">16 MiB</td>
+</tr>
+<tr>
+<td>Request body timeout</td>
+<td style="text-align:right">120 seconds</td>
+</tr>
+<tr>
+<td>Graceful Worker shutdown</td>
+<td style="text-align:right">120 seconds</td>
+</tr>
+<tr>
+<td>Native engine operation timeout</td>
+<td style="text-align:right">300 seconds</td>
+</tr>
+<tr>
+<td>Engine cleanup timeout</td>
+<td style="text-align:right">10 seconds</td>
+</tr>
+<tr>
+<td>Attempt logs</td>
+<td style="text-align:right">1 MiB</td>
+</tr>
+<tr>
+<td>Specialist result</td>
+<td style="text-align:right">16 MiB</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td style="text-align:right">128 MiB in at most 64 files</td>
+</tr>
+<tr>
+<td>Native CPU time</td>
+<td style="text-align:right">60,000 ms</td>
+</tr>
+<tr>
+<td>Native memory</td>
+<td style="text-align:right">8 GiB</td>
+</tr>
+<tr>
+<td>Native Linux tasks</td>
+<td style="text-align:right">2,048</td>
+</tr>
+<tr>
+<td>Native output</td>
+<td style="text-align:right">32 MiB</td>
+</tr>
+<tr>
+<td>Native result HTTP body</td>
+<td style="text-align:right">64 MiB</td>
+</tr>
+<tr>
+<td>Native ownership records</td>
+<td style="text-align:right">65,536 records and 64 MiB</td>
+</tr>
+<tr>
+<td>Native journal</td>
+<td style="text-align:right">64 GiB</td>
+</tr>
+<tr>
+<td>Native poll interval</td>
+<td style="text-align:right">20 ms</td>
+</tr>
+<tr>
+<td>Native close timeout</td>
+<td style="text-align:right">105 seconds</td>
+</tr>
+</tbody>
+</table>
+<p>The listed limit and deadline settings must be positive safe integers.
+Most timer and HTTP limits cannot exceed 2,147,483,647.
+Other numeric settings have their own validators; for example, the Worker
+converts <code>PORT</code> without applying this shared limit rule.
+The Helm chart also requires Worker shutdown to exceed native close plus drain time and requires the pod termination grace to exceed Worker shutdown.</p>
+<blockquote>
+<p><strong>Source evidence — limits</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-config.ts#L17-L38">Ingress defaults and validation are centralized in Worker configuration</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/config/native-worker.ts#L25-L83">Native policy, store, journal, launcher, identity, and timing defaults are explicit</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/engine/worker-envelope.ts#L33-L52">The produced attempt fixes execution, cleanup, log, result, and evidence budgets</a>.</p>
+</blockquote>
+<h3 id="attempt-and-evidence-flow">Attempt and evidence flow</h3>
+<p>Control first stores the complete engine input as an artifact.
+It then creates and durably reserves one Worker Core v3 envelope under the operation idempotency key.
+The envelope binds the engine content digest, profile digest, input digest, capability set, limits, resource budgets, claim, execution, and attempt identities.</p>
+<p>The Worker accepts only its installed profile and configured resource maxima.
+The child host reads one bounded envelope from standard input, validates it, creates an artifact client, and runs Worker Core.
+Render evidence is uploaded back to Control.
+Control verifies result binding before it reads evidence.
+It permits only:</p>
+<ul>
+<li><code>prism-full-log</code> as <code>text/plain</code>;</li>
+<li><code>render-screenshot</code> as <code>image/png</code> for render;</li>
+<li><code>render-aria</code> as <code>text/plain</code> for render.</li>
+</ul>
+<p>It checks evidence count, total bytes, duplicate IDs, media type, canonical artifact URL, size, and digest.</p>
+<blockquote>
+<p><strong>Source evidence — attempt binding</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation.ts#L12-L29">Control stores the input, reserves the attempt, records the terminal result before hydration, and completes only after hydration</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/native-worker-execution.ts#L28-L47">The Worker accepts only the installed profile and resource budgets within host policy</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/worker-evidence.ts#L5-L37">Control validates bound results and all evidence limits before import</a>.</p>
+</blockquote>
+<h3 id="cancellation-and-shutdown">Cancellation and shutdown</h3>
+<p>A client disconnect aborts the request signal.
+The native operation combines that signal with its own termination signal.
+Worker Core bounds execution, termination, cleanup, evidence, and finalization.</p>
+<p>On <code>SIGTERM</code> or <code>SIGINT</code>, the Worker:</p>
+<ol>
+<li>fences native admission;</li>
+<li>rejects new HTTP work;</li>
+<li>closes idle connections;</li>
+<li>aborts all active request controllers;</li>
+<li>waits for active work and dependencies;</li>
+<li>closes all connections if the shutdown deadline expires;</li>
+<li>asks native ownership to reconcile before the process exits.</li>
+</ol>
+<p>If a result reports failed cleanup or unresolved termination, the HTTP lifecycle marks itself unsafe and stops accepting work.
+Closing connections at the deadline is not a claim that the child process tree stopped.
+The native ownership layer must provide that proof.</p>
+<blockquote>
+<p><strong>Source evidence — cancellation and shutdown</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-lifecycle.ts#L24-L64">The lifecycle has separate stopping and unsafe states and aborts active requests during bounded shutdown</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/worker-lifecycle.ts#L66-L103">Shutdown drains requests and dependencies and reports unresolved work or a deadline instead of claiming success</a>.</p>
+</blockquote>
+<h2 id="5-durable-restart-and-recovery">5. Durable Restart and Recovery</h2>
+<p>Prism has different recovery contracts for different work.</p>
+<table>
+<thead>
+<tr>
+<th>Work</th>
+<th>Durable record</th>
+<th>Restart behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Design documents and directions</td>
+<td>PostgreSQL revisions, rounds, and direction rows</td>
+<td>Read the current pointer and immutable history. Conflicting revision writes fail.</td>
+</tr>
+<tr>
+<td>Native engine operation</td>
+<td>PostgreSQL envelope and bound result plus native attempt journal</td>
+<td>Reuse the original envelope. Replay the same result when complete. Do not create a new attempt for uncertain work.</td>
+</tr>
+<tr>
+<td>Native process ownership</td>
+<td>Host ownership store and attempt journal</td>
+<td>Reconcile scopes and journal before readiness.</td>
+</tr>
+<tr>
+<td>Agent job before claim</td>
+<td>PostgreSQL <code>accepted</code> job</td>
+<td>A bridge can claim it once.</td>
+</tr>
+<tr>
+<td>Agent job after claim</td>
+<td>Fence, runner, expiry, attempt envelope, result, and outcome</td>
+<td>Expiry becomes <code>needs_nova</code>. No automatic replay exists, and the current API has no supported resolution transition.</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>PostgreSQL binding plus content-addressed archive</td>
+<td>Return the existing archive for the same approval.</td>
+</tr>
+<tr>
+<td>Ingestion quarantine</td>
+<td>Ephemeral file named by digest</td>
+<td>Startup and periodic reaper delete expired files. Control activates corpus only after Worker processing and cleanup.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="native-operation-replay">Native operation replay</h3>
+<p>Control reserves the proposed envelope before dispatch.
+A repeated idempotency key must have the same request digest.
+If the row has an original envelope, Control reuses it.
+If it also has a bound terminal result, Control validates and hydrates that result without dispatch.</p>
+<p>Control records the Worker result before it reads evidence.
+This order is important.
+If evidence hydration fails after the Worker completed, a retry must not run the engine again.
+It must reconcile the stored result and evidence.</p>
+<p>Older pending rows without a stored envelope stop with <code>PRISM_NATIVE_LEGACY_PENDING_RECONCILIATION_REQUIRED</code>.
+An old cached result without its accepted attempt stops with <code>PRISM_WORKER_CACHE_UNBOUND</code>.
+Prism does not invent missing authority for legacy data.</p>
+<blockquote>
+<p><strong>Source evidence — durable replay</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L25-L44">Reservation locks the idempotency key, checks request identity, and preserves the original accepted envelope</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/control/native-operation-store.ts#L47-L67">Result recording rejects changed attempts and conflicting terminal results</a>.</p>
+</blockquote>
+<h3 id="restart-limits">Restart limits</h3>
+<p>Control has durable operation records, but its HTTP shutdown is basic.
+It closes the server and then the pool on <code>SIGTERM</code>.
+It has no explicit drain deadline or request-wide cancellation controller.</p>
+<p>Studio and Ingestion have no explicit signal handler in their entry points.
+The Agent Bridge closes its loopback server and requests cancellation of its active job, but its signal handler does not await that work before returning.
+Only the native Worker has the complete bounded shutdown sequence described above.</p>
+<p>These facts do not make stored data unsafe.
+They do mean that deployment shutdown proof is strongest for Worker and weaker for the other stateless or Control processes.</p>
+<h2 id="6-studio-user-entry-and-same-origin-proxy">6. Studio: User Entry and Same-Origin Proxy</h2>
+<p>Studio serves the built React application and proxies every <code>/v1/</code> request to Control.
+It does not contain database access or session-signing authority.</p>
+<p>The proxy copies only a small header allowlist: Origin, content type, cookies, CSRF, idempotency key, and the three Tailscale identity headers.
+It always adds the ingress secret.
+It limits a request body to 2 MB and uses a 30-second Control timeout by default.
+It aborts the Studio-to-Control HTTP request after client disconnect. Control
+can still continue a durable or native operation because it does not convert
+that disconnect into a request-wide operation signal. The proxy blocks
+redirects and streams the response with backpressure.</p>
+<p>Static-file resolution decodes the path and proves that it remains under <code>STUDIO_ROOT</code>.
+Unknown client routes fall back to <code>index.html</code>.
+The response adds a content security policy.</p>
+<p><code>GET /health</code> and <code>GET /ready</code> both return ready without checking the static root or Control.
+They prove Studio process liveness only.</p>
+<p>Stable Studio errors include:</p>
+<ul>
+<li><code>PRISM_STUDIO_REQUEST_TOO_LARGE</code>;</li>
+<li><code>PRISM_STUDIO_PROXY_NOT_CONFIGURED</code>;</li>
+<li><code>PRISM_STUDIO_CONTROL_TIMEOUT</code>;</li>
+<li><code>PRISM_STUDIO_UPSTREAM_FAILED</code>;</li>
+<li><code>PRISM_STUDIO_PATH_ENCODING_INVALID</code>;</li>
+<li><code>PRISM_STUDIO_PATH_OUTSIDE_ROOT</code>;</li>
+<li><code>PRISM_STUDIO_STATIC_NOT_FOUND</code>;</li>
+<li><code>PRISM_STUDIO_URL_INVALID</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Source evidence — Studio boundary</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/studio-config.ts#L4-L17">Studio validates its port and timeout and defaults to the built static root and in-cluster Control</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/studio-request.ts#L44-L103">The proxy header allowlist, body limit, disconnect cancellation, timeout, and streaming behavior are explicit</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/studio-request.ts#L106-L138">Static serving prevents path escape and adds the browser content policy</a>.</p>
+</blockquote>
+<h2 id="7-ingestion-untrusted-content-boundary">7. Ingestion: Untrusted Content Boundary</h2>
+<p>The Ingestion service is optional and disabled by default in the Helm chart.
+When enabled, it requires explicit CPU and memory sizing and uses a 4 GiB ephemeral quarantine volume.</p>
+<p>Its complete HTTP surface is:</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code></td>
+<td>Process liveness only.</td>
+</tr>
+<tr>
+<td><code>GET /ready</code></td>
+<td>Process readiness only; it does not test quarantine writes or external access.</td>
+</tr>
+<tr>
+<td><code>POST /v1/acquisitions</code></td>
+<td>Acquire and quarantine one bounded source with the bearer secret.</td>
+</tr>
+<tr>
+<td><code>DELETE /v1/acquisitions/:digest</code></td>
+<td>Delete one quarantined object with the bearer secret. Control uses this for cleanup.</td>
+</tr>
+<tr>
+<td>It can process uploaded base64 content, metadata-only content, or an HTTPS public source.</td>
+<td></td>
+</tr>
+<tr>
+<td>For public sources it:</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>permits HTTPS only;</li>
+<li>resolves DNS before connection;</li>
+<li>rejects private, loopback, link-local, multicast, and other blocked IPv4 and IPv6 ranges;</li>
+<li>pins the selected address while retaining the original TLS server name and Host header;</li>
+<li>follows at most three redirects and checks every new target;</li>
+<li>uses a 15-second request timeout;</li>
+<li>accepts at most 6 MB.</li>
+</ul>
+<p>It allows JSON, HTML, plain text, PNG, JPEG, WebP, SVG, and WOFF2.
+It rejects basic active SVG forms.
+It stores the bytes under their SHA-256 digest with mode <code>0600</code> and returns both the normalized metadata and bytes to Control.</p>
+<p>Control verifies the digest and asks the Worker to create the embedding.
+It stores the corpus revision as inactive and deletes quarantine content. It then activates that exact revision.
+If publication and cleanup both fail, Control reports both failures.</p>
+<p>Current boundary: Control explicitly rejects <code>sourceKind: public-web</code> until a source policy is approved.
+Thus the acquisition implementation exists, but it is not admitted through the user-facing Control route.</p>
+<p>The quarantine time-to-live defaults to one hour and is clamped to between one minute and one day.
+The service reaps expired entries on startup and at least once per minute.
+Its <code>/health</code> and <code>/ready</code> routes do not test quarantine writes or external DNS and HTTPS access.</p>
+<blockquote>
+<p><strong>Source evidence — acquisition controls</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/ingestion.ts#L10-L35">Ingestion validates its secret, quarantine root, bounded TTL, and address deny rules at startup</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/ingestion.ts#L36-L80">HTTPS acquisition pins DNS, limits redirects, enforces size, filters media, and quarantines by digest</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/server/control-server.ts#L810-L842">Control currently blocks public-web input and activates a corpus revision only after embedding and quarantine cleanup</a>.</p>
+</blockquote>
+<h2 id="8-pipeline-adapter">8. Pipeline Adapter</h2>
+<p>The pipeline adapter is a pure TypeScript conversion library.
+It is not an HTTP service and it does not read the baseline archive.
+Its caller must provide a <code>BaselineHandoff</code> with a SHA-256 baseline digest, project ID, and fidelity targets.</p>
+<p><code>toBusterPlan</code> converts targets into the visual plugin configuration and explicit viewport sizes:</p>
+<ul>
+<li>compact: 390 by 844;</li>
+<li>regular: 768 by 1024;</li>
+<li>wide: 1440 by 1000.</li>
+</ul>
+<p>It fixes the visual plugin to <code>kubeclaw.visual@1</code>, the strict comparison profile, and the two <code>.swarm</code> manifest paths.</p>
+<p><code>toForgeAssignments</code> gives each module a read-only baseline assignment and rejects an unknown target ID.
+Both helpers validate the digest. <code>toBusterPlan</code> also requires a nonempty
+target set. <code>toForgeAssignments</code> permits empty inputs and validates each
+referenced target ID when assignments are present.
+Its caller must validate project IDs, path safety, duplicate identities, and archive content.
+Those checks remain the caller's responsibility.</p>
+<blockquote>
+<p><strong>Source evidence — adapter scope</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/skills/prism/pipeline-adapter/index.ts#L1-L56">The complete adapter is a pair of pure conversion functions with fixed viewport and visual-plan mappings</a>.</p>
+</blockquote>
+<h2 id="9-deployment-topology">9. Deployment Topology</h2>
+<p>The default chart has one Control, one Studio, one native Worker, one PostgreSQL instance, and an optional Ingestion service.
+Control and Worker use <code>Recreate</code> deployment strategy.
+Control must stay at one replica while the artifact claim is ReadWriteOnce.
+Worker must stay at one replica because it is bound to one prepared host node and native pool.</p>
+<p>The Worker pod runs as root only for native supervision.
+Its container has a read-only root filesystem, drops all capabilities, and adds only <code>SETUID</code>, <code>SETGID</code>, and <code>KILL</code>.
+The per-attempt host drops to the configured UID and GID.
+Control, Studio, and Ingestion run as UID and GID 1000 with no added capability.</p>
+<p>The chart starts with default-deny network policies.
+It opens only named paths between the declared Prism, Nova, database, Agent, and test-runner components.
+When SPIFFE is enabled, Envoy sidecars expose mutual-TLS internal services while application processes use loopback proxy ports.</p>
+<p>Tailscale ingress exposes only Studio.
+Studio then performs the controlled identity exchange with Control.
+Direct Control access does not create a trusted human identity.</p>
+<p>The Prism Agent is a separate OpenClaw workload.
+Its bridge sidecar listens on loopback port 18080.
+An Envoy listener exposes the trusted dispatch port and forwards authenticated calls to the bridge.
+The deployed Prism Agent values enable SPIFFE and disable Redis and registry probes for that role.</p>
+<p>Those values also enable the startup doctor before gateway startup, with
+<code>--max-old-space-size=3072</code>. Its resource requests are 100m CPU and 256Mi
+memory; limits are two CPUs and 4Gi memory. The heap setting is not the
+container memory limit. These settings configure migration headroom, not proof
+that a particular persistent state will migrate successfully or fit in memory.</p>
+<blockquote>
+<p><strong>Source evidence — deployment constraints</strong></p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L45-L65">The workload binds the Worker to one node, mounts the native cgroup and identity files, and gives only Control the artifact volume</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/charts/prism/templates/workloads.yaml#L71-L188">Application and trust-sidecar environment, probes, mounts, and credentials are separate</a>.</p>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/my-values/prism-agent-values.yaml#L66-L107">The Prism Agent values colocate the loopback bridge with OpenClaw and configure SPIFFE trust</a>.</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/datrab/kubeclaw/blob/b2b85d4c8d3174aa41507cde77637227bb709e1e/my-values/prism-agent-values.yaml#L5-L13">Startup-doctor enablement, heap setting, resource requests, and limits are explicit role values</a>.</p>
+</blockquote>
+<h2 id="10-implemented-boundaries-and-open-limits">10. Implemented Boundaries and Open Limits</h2>
+<p>The following table separates present behavior from a future or external responsibility.</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Implemented now</th>
+<th>Limit or external responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline integration</td>
+<td>Durable design dispatch and approved archive return</td>
+<td>The adapter does not itself wire a complete Nova pipeline.</td>
+</tr>
+<tr>
+<td>Design generation</td>
+<td>Durable, fenced OpenClaw Agent jobs</td>
+<td>An uncertain claimed action enters <code>needs_nova</code>; the current API has no supported resolution transition.</td>
+</tr>
+<tr>
+<td>Deterministic engine work</td>
+<td>Native Worker with bounded process-tree execution</td>
+<td><code>generate</code> is intentionally unavailable in the native engine path.</td>
+</tr>
+<tr>
+<td>User entry</td>
+<td>Tailscale identity through Studio and signed sessions</td>
+<td>General design routes do not use the stored session roles for finer authorization.</td>
+</tr>
+<tr>
+<td>Product decisions</td>
+<td>Optional signed operator authority and recovery</td>
+<td>Disabled by default and dependent on an external controller.</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>Hardened acquisition implementation and quarantine</td>
+<td>User-facing public-web admission is disabled until policy approval.</td>
+</tr>
+<tr>
+<td>Artifacts</td>
+<td>Content-addressed local filesystem with digest checks</td>
+<td>One ReadWriteOnce volume limits Control to one replica; off-host durability is an operator duty.</td>
+</tr>
+<tr>
+<td>Native recovery</td>
+<td>Durable operation row, native ownership, and attempt journal</td>
+<td>Legacy pending rows without an envelope require manual reconciliation.</td>
+</tr>
+<tr>
+<td>Shutdown</td>
+<td>Complete bounded Worker shutdown</td>
+<td>Control, Studio, Ingestion, and bridge shutdown have weaker drain guarantees.</td>
+</tr>
+<tr>
+<td>Readiness</td>
+<td>Component-specific probe endpoints</td>
+<td>No single endpoint proves that the complete Prism journey is ready.</td>
+</tr>
+<tr>
+<td>API errors</td>
+<td>Stable codes for many Worker and Studio boundaries</td>
+<td>Most Control domain failures are free-text <code>422</code> responses.</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Structured failure output in selected services and Worker receipts</td>
+<td>There is no complete Prism-wide metrics and trace contract on these entry points.</td>
+</tr>
+</tbody>
+</table>
+<p>These are not reasons to hide the architecture.
+They are part of the architecture.
+A reader can only operate and extend Prism safely when the proof boundary and the missing proof are both clear.</p>
+<h2 id="11-failure-codes-that-matter-during-recovery">11. Failure Codes That Matter During Recovery</h2>
+<table>
+<thead>
+<tr>
+<th>Code or state</th>
+<th>Meaning</th>
+<th>Required response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>needs_nova</code></td>
+<td>A claimed external Agent action has an uncertain outcome, and that session cannot admit later work.</td>
+<td>Do not replay, replace, or edit database state. The current API has no supported resolution transition; escalate this implementation gap.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_RECONCILIATION_REQUIRED</code></td>
+<td>Native ownership recovery is incomplete.</td>
+<td>Keep Worker admission closed and inspect the host journal and scope state.</td>
+</tr>
+<tr>
+<td><code>PRISM_NONCE_DATABASE_UNAVAILABLE</code></td>
+<td>HMAC admission cannot check its nonce table.</td>
+<td>Restore PostgreSQL access or the migration. Do not bypass replay protection.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_PROFILE_NOT_ACCEPTED</code></td>
+<td>A new attempt does not match the installed engine profile.</td>
+<td>Align producer and Worker image identity.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_BUDGET_NOT_ACCEPTED:&lt;metric&gt;</code></td>
+<td>A new request exceeds host policy or lacks a requested budget.</td>
+<td>Correct the producer policy. Do not widen it inside the Worker.</td>
+</tr>
+<tr>
+<td><code>PRISM_OPERATION_IDEMPOTENCY_CONFLICT</code></td>
+<td>One key names different engine input.</td>
+<td>Use the original request or a new deliberate key.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_LEGACY_PENDING_RECONCILIATION_REQUIRED</code></td>
+<td>Old durable state lacks the original envelope.</td>
+<td>Reconcile manually. Automatic rerun is forbidden.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_OPERATION_BINDING_INVALID</code></td>
+<td>Stored attempt, operation, or result identities disagree.</td>
+<td>Stop and investigate durable state integrity.</td>
+</tr>
+<tr>
+<td><code>PRISM_NATIVE_OPERATION_RESULT_CONFLICT</code></td>
+<td>A second terminal result differs from the stored result.</td>
+<td>Preserve both facts for investigation. Do not select one silently.</td>
+</tr>
+<tr>
+<td><code>PRISM_WORKER_RESULT_BINDING_INVALID</code></td>
+<td>The Worker result does not bind to the accepted attempt.</td>
+<td>Reject it before evidence import.</td>
+</tr>
+<tr>
+<td><code>PRISM_WORKER_SHUTDOWN_UNRESOLVED</code></td>
+<td>Active work reported unresolved cleanup or termination.</td>
+<td>Keep the instance unavailable and inspect native ownership.</td>
+</tr>
+<tr>
+<td><code>PRISM_WORKER_SHUTDOWN_DEADLINE</code></td>
+<td>The HTTP shutdown deadline expired.</td>
+<td>Treat connection closure as incomplete process proof.</td>
+</tr>
+<tr>
+<td><code>PRISM_STUDIO_CONTROL_TIMEOUT</code></td>
+<td>Studio did not receive a Control response within its configured deadline.</td>
+<td>Check Control and dependencies before repeating a mutating request.</td>
+</tr>
+<tr>
+<td><code>PRISM_INGESTION_IO_FAILED</code></td>
+<td>An unhandled acquisition I/O failure occurred.</td>
+<td>Inspect the structured server record and quarantine state.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-extension-rules">12. Extension Rules</h2>
+<p>Use these rules when a new Prism feature crosses a runtime boundary.</p>
+<ol>
+<li>Put durable design authority in Control, not Studio, Agent, or Worker.</li>
+<li>Add a closed contract before a new operation crosses a service boundary.</li>
+<li>Bind every external action to stable request, attempt, and result identities.</li>
+<li>Store the admitted request before execution.</li>
+<li>Store a terminal receipt before optional hydration or projection.</li>
+<li>Do not automatically replay work after an external side effect can have occurred.</li>
+<li>Add the new evidence type to the Control evidence policy before the Worker can emit it.</li>
+<li>Give each probe a narrow stated meaning. Do not call liveness complete readiness.</li>
+<li>Add explicit input size, output size, time, concurrency, and cleanup bounds.</li>
+<li>State whether cancellation proves that a process stopped or only that a connection closed.</li>
+<li>Keep model calls behind OpenClaw and deterministic engine work behind Worker Core.</li>
+<li>Update deployment identity, network policy, migrations, backup, and recovery evidence with the code change.</li>
+</ol>
+<p>These rules keep one central promise. A client can request work.
+Only the durable authority records accepted work and commits a result to Prism state.</p>
+</main></body></html>

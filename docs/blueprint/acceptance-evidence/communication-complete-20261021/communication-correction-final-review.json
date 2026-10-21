@@ -1,0 +1,51 @@
+{
+  "findings": [
+    {
+      "title": "Document Worker-side restart branches alongside Control reservation states",
+      "body": "COM-003 remains incomplete: a reserved Control envelope without a result does not determine whether Worker executes, replays, or rejects it. At HEAD, native-attempt-executor.ts:24\u201335 reads cached receipts and invokes recovery before launch; native-attempt-recovery.ts:25\u201343 reconstructs archived results or seals interrupted attempts without relaunching. native-attempt-journal.ts:161\u2013170 bypasses new-admission validation for historical records, whereas native-attempt-executor.ts:75\u201377 rejects expired claims for new admission. Document these distinctions and their stop conditions beside this row. Otherwise an operator reconciling an old reservation cannot distinguish historical replay from expired, never-admitted work. The source-only test worker-native-journal.test.mts:20\u201335 explicitly distinguishes new-admission rejection from historical replay.",
+      "priority": "P2",
+      "confidence": 0.97,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 375
+      }
+    },
+    {
+      "title": "Include spawn queue pressure and its separate timing boundary",
+      "body": "The Forge/Echo timing description covers polling but omits the producer queue that precedes it. openclaw.ts:187\u2013207 serializes spawns by endpoint/controller session and waits spawnIntervalMs after each operation; openclaw-config.ts:65 defaults that interval to 1,500 ms. This promise chain has no queue-length ceiling. The session timeout begins inside pollSession (openclaw-session.ts:223\u2013230), after spawning, so it does not bound queue residence or spawn time. Document queue ordering, the absence of a queue ceiling, and the caller/declaration deadline that can stop queued work. These are substantive missing COM-004/COM-012 pressure and timeout rules, rather than provider behavior that must remain unknown.",
+      "priority": "P2",
+      "confidence": 0.98,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 312
+      }
+    },
+    {
+      "title": "Specify the independent cleanup budget and signal rules",
+      "body": "Calling this merely a bounded cleanup scope leaves the Core deadline/abort model incomplete for COM-005 and COM-012. adapter-startup.ts:106\u2013114 constructs the scope using platform shutdownTimeoutMs; adapter-invocation-phase.ts:32\u201358 permits it once and combines its own timeout with adapter lifecycle cancellation, rather than the already-aborted invocation signal. adapter-startup.ts:127\u2013140 preserves the original invocation authority while substituting that cleanup signal. State the configuration source, single-use rule, lifecycle abort, timeout/error outcomes, and separation from the normal attempt deadline. This distinction explains how cancellation can still reach Gateway and when termination proof becomes unresolved. adapter-cleanup-scope.test.mts:39\u201384 contains the corresponding timeout, lifecycle, authorization, and reuse cases.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "maintainability",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 337
+      }
+    },
+    {
+      "title": "Describe stage-result fields using the validating schema branches",
+      "body": "The new summary presents reason as an optional common field, but the actual passed branch prohibits it: plugin-system-v2.schema.json:609\u2013624 sets additionalProperties=false and permits only schemaVersion, outcome, artifacts, and facts. A plugin following the summary and returning passed with reason fails validation and becomes core.plugin_runtime_failed/retry (stage-executor.ts:43\u201347,132\u2013140). Clarify that passed forbids reason, while every other branch requires it, and cite the validating union at schema lines 609\u2013675. The linked generated ResultBase at contracts.ts:509\u2013525 is broader than the accepted result union and cannot establish those constraints.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/understand/communication.md",
+        "line": 412
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Whole-obligation decisions: COM-003 NOT_READY: Control restart coverage omits the distinct Worker replay/recovery/new-admission branches (native-attempt-executor.ts:24\u201335,75\u201377; native-attempt-recovery.ts:25\u201343). COM-004 NOT_READY: protocol variants and result-import selection are substantially covered, but spawn queue ordering/pressure and pre-poll timing remain absent (openclaw.ts:187\u2013207; openclaw-session.ts:223\u2013230). COM-005 NOT_READY: the stage-result summary contradicts the validating passed branch, and the independent cleanup abort/budget contract is missing (plugin-system-v2.schema.json:609\u2013675; adapter-invocation-phase.ts:32\u201358). COM-012 NOT_READY: the central model still omits those implemented queue and cleanup rules.\n\nsourceAccuracy: NOT_READY because the new result-field summary admits a schema-invalid passed result. readerUsability: NOT_READY because restart and cancellation decisions still require reconstructing omitted source branches. quality: NOT_READY for the incomplete whole obligations above; the additions otherwise substantially improve protocol, isolation, and observer coverage.\n\nPrior accepted scopes: COM-002 impact PASS; COM-006 impact PASS; COM-007 impact PASS. The additions and verification metadata do not contradict or weaken those accepted facets. COM-001/008/009/010/011 remain explicitly open; this review accepts no additional obligations. Native runtime/effect behavior and unknown external identities remain unproven. Inspection was source-only; no product, render, cluster, native, or test execution was performed.",
+  "overall_confidence": 0.94
+}
