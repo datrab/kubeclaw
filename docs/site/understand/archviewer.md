@@ -93,7 +93,7 @@ dedicated private publication route or auth volume.
 > [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/archviewer.nginx.conf#L1-L19).
 >
 > [The current chart validates the provider and renders the private Service, Ingress, and selected policy](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L5-L65).
-
+>
 > [The current chart validates the provider and renders the private Service, Ingress, and selected policy (continued 2)](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L66-L80).
 >
 > [The current values default to Cilium](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/values.yaml#L529-L539).

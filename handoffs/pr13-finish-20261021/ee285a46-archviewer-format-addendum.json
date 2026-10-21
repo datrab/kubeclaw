@@ -1,0 +1,934 @@
+{
+  "baselineRevision": "ee285a46c73a678461a3fde8d93146ce44e169cd",
+  "file": "docs/site/understand/archviewer.md",
+  "beforeSha256": "0b872d1322a3ce7e70e60fe2833af632693ba9d7013bd862aad73768b5b2ded5",
+  "afterSha256": "0989df382292736a2a91cab2894334ff5c055549fea636f5fbe2f2ea6cd3c22a",
+  "exactDelta": "line96 empty string becomes >; all other bytes identical",
+  "orderedUrlsUnchanged": true,
+  "allSixEvidenceFieldsSingleContiguousQuotedBlock": true,
+  "verdict": "BOUNDED_SOURCE_SEMANTIC_READER_QUALITY_FORMAT_PRESERVATION_PASS_AFTER_EXACT_REPAIR",
+  "intersectionCount": 3,
+  "records": [
+    {
+      "id": "AP09-closeout-runtime-20261020",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/archviewer.md"
+        ],
+        "sources": []
+      },
+      "basis": "Static consumer/publisher absence, Basic auth versus health, named Secret and selected network-policy scope remain word-for-word. Joining their evidence box changes presentation ownership, not deployment enforcement or native evidence claims.",
+      "originalVerdict": "PASS",
+      "originalRecordPreserved": {
+        "id": "AP09-closeout-runtime-20261020",
+        "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+        "author": "Documentation authors and correction coordinator",
+        "reviewer": "/root/close_runtime_docs",
+        "gateIds": [],
+        "requirementIds": [
+          "ARC-003",
+          "SPC-010",
+          "DAT-008",
+          "WKC-002",
+          "WKC-011",
+          "WKC-014"
+        ],
+        "pages": [
+          "docs/site/understand/components-and-authority.md",
+          "docs/site/understand/archviewer.md",
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/worker-core.md"
+        ],
+        "sources": [
+          "charts/kubeclaw/templates/archviewer.yaml",
+          "charts/kubeclaw/templates/configmap-gateway.yaml",
+          "charts/kubeclaw/templates/deployment.yaml",
+          "charts/kubeclaw/values.yaml",
+          "contracts/agent-observability/v1/src/constants.ts",
+          "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+          "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+          "contracts/pipeline-worker-core/v1/src/types.ts",
+          "contracts/pipeline-worker-core/v1/src/validation.ts",
+          "docker/Dockerfile.archviewer",
+          "docker/Dockerfile.nova",
+          "docker/archviewer.nginx.conf",
+          "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+          "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "my-values/nova-values.yaml",
+          "packaging/runtime/roles/buster.json",
+          "packaging/runtime/roles/nova.json",
+          "packaging/runtime/roles/prism.json",
+          "scripts/docs-platform-surface-inventory.mjs",
+          "scripts/lib/docs-markdown-anchors.mjs",
+          "scripts/tests/buster-lease-receiver.test.mjs",
+          "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+          "skills/common/plugin-runtime/sdk/src/values.ts",
+          "skills/common/plugins/agent-observability/src/observers.ts",
+          "skills/common/plugins/artifact-store/src/adapter.ts",
+          "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "skills/nova/core/execution/artifact-checkpoints.ts",
+          "skills/nova/core/execution/engine-admin.ts",
+          "skills/nova/core/execution/engine-run.ts",
+          "skills/nova/core/execution/engine-runtime.ts",
+          "skills/nova/core/execution/pipeline-loop.ts",
+          "skills/nova/core/execution/run-decisions.ts",
+          "skills/nova/core/execution/stage-executor.ts",
+          "skills/worker/core/worker/native-attempt-recovery.ts",
+          "skills/worker/core/worker/native-result.ts",
+          "skills/worker/core/worker/native-worker-ownership.ts",
+          "tests/verification/deployment/archviewer-policy-provider.test.mjs",
+          "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs"
+        ],
+        "checks": [
+          {
+            "command": "node --test tests/verification/deployment/archviewer-policy-provider.test.mjs tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+            "exitCode": 0,
+            "observation": "6/6 passed:actual policy variants and codec/checkpoint refusal semantics."
+          },
+          {
+            "command": "NODE_ENV=test node --test tests/verification/reliability/worker-native-contract.test.mts tests/verification/reliability/worker-native-journal.test.mts",
+            "exitCode": 0,
+            "observation": "9/9 passed:versioned native contracts and original durable recovery;no live root/cgroup claim."
+          },
+          {
+            "command": "Independent runtime source/reader and impact review",
+            "exitCode": 0,
+            "observation": "6 complete requirement PASSs;97 local links checked;old accepted scopes preserved separately."
+          },
+          {
+            "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+            "exitCode": 0,
+            "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+          },
+          {
+            "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+            "exitCode": 0,
+            "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams\u00d73widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
+          },
+          {
+            "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
+            "exitCode": 0,
+            "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+          }
+        ],
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS"
+        },
+        "summary": "Independent sourceAccuracy/readerUsability/quality PASS for ARC-003, SPC-010, DAT-008, WKC-002, WKC-011, WKC-014. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+        "limits": [
+          "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+          "No new whole-gate acceptance;all inherited scoped limits retained.",
+          "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+        ],
+        "openIssues": [],
+        "verdict": "PASS",
+        "impactReviews": [
+          {
+            "reviewer": "/root/close_runtime_docs",
+            "verdict": "PASS",
+            "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+            "revision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+            "changedDependencies": [
+              "docs/site/understand/components-and-authority.md"
+            ],
+            "summary": "Independent ARC006 impact review explicitly preserves all original registered scopes;only separatehostobservercrossingadded,no pipeline/registry/Worker authority change."
+          },
+          {
+            "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+            "previousReviewedRevision": "c46b8268efe8642deb608b8067c2c7f4c7fb8ae9",
+            "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+            "changedDependencies": [
+              "docs/site/understand/worker-core.md"
+            ],
+            "verdict": "PASS",
+            "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+          },
+          {
+            "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+            "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+            "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+            "changedDependencies": [
+              "docs/site/understand/worker-core.md"
+            ],
+            "verdict": "PASS",
+            "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+            "evidence": [
+              "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+              "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+            ]
+          },
+          {
+            "reviewer": "Independent Codex autoreview 2026-10-21 whole-state correction/final, platform correction and publication scoped impact",
+            "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+            "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+            "changedDependencies": [
+              "docs/site/understand/data-and-state.md"
+            ],
+            "verdict": "PASS",
+            "summary": "State final audit preserves DAT002/003/007/008 and OPR007 after path/encryption/offline Redis corrections. Platform correction review preserves already accepted router topics. Publication scoped review preserves accepted COM002/003/004/005/006/007/009/012 and OPL topics after language-only and generator-owned Secret-copy correction. All other bound dependencies unchanged. No global generator/publication/runtime acceptance.",
+            "evidence": [
+              "docs/blueprint/acceptance-evidence/ready-topics-20261021/publication-scope-review.json",
+              "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
+              "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
+            ]
+          },
+          {
+            "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+            "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+            "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+            "changedDependencies": [
+              "docs/site/understand/data-and-state.md"
+            ],
+            "verdict": "PASS",
+            "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+            "evidence": [
+              "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+              "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+              "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+              "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+            ]
+          },
+          {
+            "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+            "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+            "changedDependencies": [
+              "docs/site/understand/archviewer.md",
+              "docs/site/understand/data-and-state.md",
+              "docs/site/understand/worker-core.md"
+            ],
+            "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
+            "verdict": "PASS",
+            "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+          }
+        ],
+        "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+        "revisionHistory": [
+          {
+            "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+            "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+            "changedFiles": [
+              "docs/site/understand/worker-core.md"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+          },
+          {
+            "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+            "changedFiles": [
+              "docs/site/understand/components-and-authority.md"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+            "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+          }
+        ]
+      }
+    },
+    {
+      "id": "AP09-specialists-whole-gate-20261021",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/archviewer.md"
+        ],
+        "sources": []
+      },
+      "basis": "Only Archviewer evidence-box continuation changes; complete specialist request/configuration/recovery/extension explanations, existing source links and no-live limits retained.",
+      "originalVerdict": "PASS",
+      "originalRecordPreserved": {
+        "id": "AP09-specialists-whole-gate-20261021",
+        "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+        "author": "Nova /root authored content and correction coordinator",
+        "reviewer": "Independent Codex autoreview 2026-10-21 specialists-whole-gate-review",
+        "gateIds": [
+          "A97-09"
+        ],
+        "requirementIds": [],
+        "pages": [
+          "docs/site/understand/forge.md",
+          "docs/site/understand/echo.md",
+          "docs/site/understand/openclaw.md",
+          "docs/site/understand/codex-integration.md",
+          "docs/site/understand/ops-mcp.md",
+          "docs/site/understand/archviewer.md"
+        ],
+        "sources": [
+          ".agents/plugins/marketplace.json",
+          "charts/kubeclaw/templates/archviewer.yaml",
+          "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+          "charts/kubeclaw/templates/deployment.yaml",
+          "charts/kubeclaw/values.yaml",
+          "charts/ops-pod/templates/network.yaml",
+          "charts/ops-pod/templates/rbac.yaml",
+          "charts/ops-pod/templates/workload.yaml",
+          "charts/ops-pod/values.yaml",
+          "docker/Dockerfile.archviewer",
+          "docker/archviewer.nginx.conf",
+          "my-values/infra/cilium-cluster-policies.yaml",
+          "my-values/nova-values.yaml",
+          "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+          "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+          "scripts/deploy-ops-pod.sh",
+          "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+          "skills/common/plugins/openclaw-agent-observer/package.json",
+          "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+          "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+          "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+          "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+          "skills/nova/plugins/implementation-agent/plugin.json",
+          "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+          "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+          "skills/nova/plugins/implementation-agent/src/protocol.ts",
+          "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+          "skills/nova/plugins/implementation-agent/src/stage.ts",
+          "skills/nova/plugins/implementation-agent/src/workspace.ts",
+          "skills/nova/plugins/review/plugin.json",
+          "skills/nova/plugins/review/schemas/input.schema.json",
+          "skills/nova/plugins/review/src/echo-review-contract.ts",
+          "skills/nova/plugins/review/src/repository-audit-stage.ts",
+          "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+          "skills/nova/plugins/review/src/repository-review-profile.ts",
+          "skills/nova/plugins/review/src/review-policy-resolver.ts",
+          "skills/nova/plugins/review/src/review-report-contract.ts",
+          "skills/nova/plugins/review/src/stage.ts",
+          "skills/prism/control/agent-jobs.ts",
+          "skills/prism/openclaw-plugin/index.mjs",
+          "skills/prism/openclaw-plugin/openclaw.plugin.json",
+          "skills/prism/server/agent-bridge.mjs",
+          "skills/prism/server/agent-job-runner.mjs",
+          "skills/prism/server/control-server.ts",
+          "tests/verification/reliability/archviewer-native.test.mjs",
+          "tests/verification/reliability/forge-lock-wait.test.mts",
+          "tests/verification/reliability/forge-workspace.test.mts",
+          "tools/ops-mcp/src/authentication.mjs",
+          "tools/ops-mcp/src/config.mjs",
+          "tools/ops-mcp/src/hubble.mjs",
+          "tools/ops-mcp/src/kubernetes.mjs",
+          "tools/ops-mcp/src/server.mjs",
+          "tools/ops-mcp/test/local.test.mjs"
+        ],
+        "checks": [
+          {
+            "command": "node scripts/docs-check.mjs",
+            "exitCode": 0,
+            "observation": "167 active pages; diagram and code evidence checks PASS."
+          },
+          {
+            "command": "node scripts/docs-publication.mjs check",
+            "exitCode": 0,
+            "observation": "167 canonical pages and51 installed plugins PASS; no rendered HTML or live publication claim."
+          },
+          {
+            "command": "node scripts/docs-check-refs.mjs",
+            "exitCode": 0,
+            "observation": "Current local references, anchors, repository paths and pinned Source ranges PASS; exact counts retained in check-results.json."
+          },
+          {
+            "command": "Independent whole A97-09 source/reader/quality review",
+            "exitCode": 0,
+            "observation": "Complete six-component documentation contract PASS, not inferred from narrower SPC acceptances."
+          },
+          {
+            "command": "npm test --prefix tools/ops-mcp",
+            "exitCode": 0,
+            "observation": "15 tests PASS, zero failed/skipped; includes HTTP/MCP contract behavior. No cluster deployment."
+          },
+          {
+            "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
+            "exitCode": 0,
+            "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+          }
+        ],
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS"
+        },
+        "summary": "WHOLE A97-09: each named specialist/host/tool/UI has connected request/data/error route, configuration, operation, recovery, extension and reasoned system role.",
+        "limits": [
+          "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+        ],
+        "openIssues": [],
+        "verdict": "PASS",
+        "evidence": [
+          "docs/blueprint/acceptance-evidence/ready-topics-20261021/specialists-whole-gate-review.json",
+          "docs/blueprint/acceptance-evidence/ready-topics-20261021/scope.json"
+        ],
+        "impactReviews": [
+          {
+            "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+            "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+            "changedDependencies": [
+              "docs/site/understand/archviewer.md",
+              "docs/site/understand/echo.md",
+              "docs/site/understand/forge.md",
+              "docs/site/understand/openclaw.md"
+            ],
+            "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
+            "verdict": "PASS",
+            "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+          }
+        ]
+      }
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "intersection": {
+        "pages": [
+          "docs/site/understand/archviewer.md"
+        ],
+        "sources": []
+      },
+      "basis": "Canonical page headings, content words and ordered URLs unchanged; one quote marker keeps all six evidence fields within their Source-labelled block. Search/allowlists/renderer code unchanged; rebuilt artifact/preview/search/browser observations remain parent-owned.",
+      "originalVerdict": "PASS",
+      "originalRecordPreserved": {
+        "id": "AP09-complete-static-reader-search-20261021",
+        "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+        "author": "Nova /root documentation author and implementation coordinator",
+        "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
+        "verdict": "PASS",
+        "gateIds": [],
+        "requirementIds": [
+          "PUB-002"
+        ],
+        "pages": [
+          "docs/site/README.md",
+          "docs/site/decisions/README.md",
+          "docs/site/decisions/acceptance.md",
+          "docs/site/decisions/core-and-plugins.md",
+          "docs/site/decisions/echo.md",
+          "docs/site/decisions/implementation.md",
+          "docs/site/decisions/prism.md",
+          "docs/site/decisions/runtime-and-operations.md",
+          "docs/site/decisions/test-gate.md",
+          "docs/site/extend/README.md",
+          "docs/site/extend/buster.md",
+          "docs/site/extend/contracts.md",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/documentation-maintenance.md",
+          "docs/site/extend/effectful-plugin.md",
+          "docs/site/extend/first-plugin.md",
+          "docs/site/extend/host-and-engine.md",
+          "docs/site/extend/lint.md",
+          "docs/site/extend/nova.md",
+          "docs/site/extend/platform/README.md",
+          "docs/site/extend/platform/buster.md",
+          "docs/site/extend/platform/prism.md",
+          "docs/site/extend/plugin-catalogue/README.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+          "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+          "docs/site/extend/testing.md",
+          "docs/site/product-surfaces.md",
+          "docs/site/reference/README.md",
+          "docs/site/reference/api-object-updates.md",
+          "docs/site/reference/buster-error-codes.md",
+          "docs/site/reference/buster-namespace-lease.md",
+          "docs/site/reference/buster-provider-configuration.md",
+          "docs/site/reference/buster-runtime-configuration.md",
+          "docs/site/reference/buster-suites.md",
+          "docs/site/reference/capabilities.md",
+          "docs/site/reference/cli.md",
+          "docs/site/reference/configuration-change-impact.md",
+          "docs/site/reference/configuration-compatibility.md",
+          "docs/site/reference/configuration-errors.md",
+          "docs/site/reference/configuration-precedence.md",
+          "docs/site/reference/configuration.md",
+          "docs/site/reference/contracts.md",
+          "docs/site/reference/documentation-governance.md",
+          "docs/site/reference/documentation-site.md",
+          "docs/site/reference/endpoints.md",
+          "docs/site/reference/environment-variables.md",
+          "docs/site/reference/errors.md",
+          "docs/site/reference/events.md",
+          "docs/site/reference/glossary.md",
+          "docs/site/reference/helm-values.md",
+          "docs/site/reference/host-and-prism-configuration.md",
+          "docs/site/reference/images-and-digests.md",
+          "docs/site/reference/lint-policy-generated.md",
+          "docs/site/reference/lint-policy.md",
+          "docs/site/reference/lint-rules.md",
+          "docs/site/reference/nova-project.md",
+          "docs/site/reference/pipeline-definition.md",
+          "docs/site/reference/pipeline-json.md",
+          "docs/site/reference/pipeline-platform.md",
+          "docs/site/reference/platform-surfaces-generated.md",
+          "docs/site/reference/plugin-configuration.md",
+          "docs/site/reference/project-pipeline-publication.md",
+          "docs/site/reference/roles-and-package-ownership.md",
+          "docs/site/reference/schemas.md",
+          "docs/site/reference/sdk-exports.md",
+          "docs/site/reference/sdk.md",
+          "docs/site/reference/secrets.md",
+          "docs/site/reference/service-routing.md",
+          "docs/site/reference/stores-and-retention.md",
+          "docs/site/reference/verification-commands.md",
+          "docs/site/reference/worker-profiles-and-roles.md",
+          "docs/site/reference/workflows.md",
+          "docs/site/status/acceptance.md",
+          "docs/site/status/current.md",
+          "docs/site/status/open-issues.md",
+          "docs/site/status/roadmap.md",
+          "docs/site/understand/README.md",
+          "docs/site/understand/archviewer.md",
+          "docs/site/understand/buster-namespace-controller.md",
+          "docs/site/understand/buster.md",
+          "docs/site/understand/codex-integration.md",
+          "docs/site/understand/communication.md",
+          "docs/site/understand/components-and-authority.md",
+          "docs/site/understand/data-and-state.md",
+          "docs/site/understand/deployment-and-trust.md",
+          "docs/site/understand/echo.md",
+          "docs/site/understand/forge.md",
+          "docs/site/understand/nova-core.md",
+          "docs/site/understand/openclaw.md",
+          "docs/site/understand/ops-mcp.md",
+          "docs/site/understand/pipeline-dependencies.md",
+          "docs/site/understand/platform-and-operations.md",
+          "docs/site/understand/plugin-runtime.md",
+          "docs/site/understand/prism-data.md",
+          "docs/site/understand/prism-runtime.md",
+          "docs/site/understand/prism.md",
+          "docs/site/understand/request-state-recovery.md",
+          "docs/site/understand/request-to-result.md",
+          "docs/site/understand/security-and-trust.md",
+          "docs/site/understand/telemetry.md",
+          "docs/site/understand/worker-core.md",
+          "docs/site/understand/worker-trust.md",
+          "docs/site/use/README.md",
+          "docs/site/use/capacity.md",
+          "docs/site/use/demo-delivery.md",
+          "docs/site/use/diagnose.md",
+          "docs/site/use/install.md",
+          "docs/site/use/maintenance.md",
+          "docs/site/use/operate.md",
+          "docs/site/use/plugins.md",
+          "docs/site/use/prism-studio.md",
+          "docs/site/use/quickstart.md",
+          "docs/site/use/recovery.md",
+          "docs/site/use/worker-trust.md",
+          "docs/site/use/workflows/README.md",
+          "docs/site/use/workflows/buster-suite.md",
+          "docs/site/use/workflows/kubernetes-fixture.md",
+          "docs/site/use/workflows/wait-resume.md"
+        ],
+        "sources": [
+          "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/checked-observations.json",
+          "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
+          "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+          "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+          "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
+          "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+          "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json",
+          "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
+          "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+          "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "docs/config/documentation-publication-manifest.json",
+          "docs/config/documentation-tree-classification.json",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-publication.mjs",
+          "scripts/docs-reader/check-artifact.mjs",
+          "scripts/docs-reader/check-search.mjs",
+          "scripts/docs-reader/check-source-links.mjs",
+          "scripts/docs-reader/check-source-previews.mjs",
+          "scripts/docs-reader/metadata.mjs",
+          "scripts/docs-reader/package-lock.json",
+          "scripts/docs-reader/package.json",
+          "scripts/docs-reader/renderer.mjs",
+          "scripts/docs-reader/search-questions.json",
+          "scripts/docs-reader/source-links.mjs",
+          "scripts/docs-reader/source-previews.mjs",
+          "scripts/lib/docs-markdown-anchors.mjs",
+          "scripts/lib/docs-publication-assets.mjs",
+          "scripts/lib/docs-publication-links.mjs",
+          "scripts/tests/docs-publication-assets.test.mjs",
+          "scripts/tests/docs-publication-links.test.mjs",
+          "scripts/tests/docs-reader-source-links.test.mjs",
+          "scripts/tests/docs-reader-source-previews.test.mjs",
+          "scripts/tests/docs-reader.test.mjs"
+        ],
+        "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        "checks": [
+          {
+            "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs",
+            "exitCode": 0,
+            "observation": "76/76 PASS, including positive parser/render/build and changed-output/missing-fragment negative artifact checks."
+          },
+          {
+            "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+            "exitCode": 0,
+            "observation": "Original committed build167 reader pages,176HTML incl. generated file indexes/search/homefallback;179exact output hashes and36523local links/anchors verified."
+          },
+          {
+            "command": "Actual retained reader-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
+            "exitCode": 0,
+            "observation": "Four routes at320/768/1440:HTTP200,loadedCSS,nooverflow,zero Axe violations;minimumLinePercent search and no-results behavior;mobile no-JS skip/keyboard navigation PASS. Not all-page accessibility/screenreader validation."
+          },
+          {
+            "command": "node scripts/docs-check-refs.mjs",
+            "exitCode": 0,
+            "observation": "6032 local links,3284local anchors,8328repository paths,31893pinned source links PASS."
+          },
+          {
+            "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+            "exitCode": 0,
+            "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+          },
+          {
+            "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+            "exitCode": 0,
+            "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+          },
+          {
+            "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+            "exitCode": 0,
+            "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+          },
+          {
+            "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+            "exitCode": 0,
+            "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+          },
+          {
+            "command": "Independent narrow three-record namespace source/search/layout preservation and current actual reader checkers",
+            "exitCode": 0,
+            "observation": "209output hashes;27freshSVGhashes;1667exactSourceexcerpts;three namespace widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json"
+          },
+          {
+            "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+            "exitCode": 0,
+            "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
+          },
+          {
+            "command": "Independent narrow five-record changed-custody and static-loader preservation and current actual reader checkers",
+            "exitCode": 0,
+            "observation": "93tests/64roles PASS;27freshSVGhashes identical to existingartifact;9exactrenewals55same;noMD/search/render/CSS contentchanges. docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json"
+          },
+          {
+            "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+            "exitCode": 0,
+            "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+          },
+          {
+            "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+            "exitCode": 0,
+            "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams\u00d73widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
+          },
+          {
+            "command": "Independent bounded release-content preservation plus current d303 reader build, artifact/search, Source links/previews, deterministic diagrams and changed-page browser checks",
+            "exitCode": 0,
+            "observation": "Seven affected records narrowly reviewed; 38 reader/bundle tests PASS; current counts and limits recorded in revisionHistory. Historical global layout/accessibility/live evidence not rerun. Three pre-existing generated Helm reader-boundary failures remain separate."
+          },
+          {
+            "command": "Independent bounded metadata or Prism/diagram preservation plus current310b reader output checks",
+            "exitCode": 0,
+            "observation": "Exact affected scope independently reviewed;177HTML/209hashes/36958localtargets,14473SourceLinks/3744objects,1696excerpts/889objects,27freshSVGs,12searchquestions,18changed-page/diagram width observations and38reader/bundle tests PASS. Unchanged original acceptance scopes and limits preserved."
+          },
+          {
+            "command": "Independent finite tree/test custody correction review and node --test scripts/tests/api-output-node-entry-custody.test.mjs",
+            "exitCode": 0,
+            "observation": "7/7PASS;only finite recipe metadata plus2guard negatives changed. No product/API writer exemption or generic interpreter. Existing scoped accepted facts preserved."
+          },
+          {
+            "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
+            "exitCode": 0,
+            "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+          },
+          {
+            "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
+            "exitCode": 0,
+            "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+          },
+          {
+            "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+            "exitCode": 0,
+            "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+          }
+        ],
+        "limits": [
+          "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+          "No other publication gate or whole documentation package acceptance.",
+          "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+          "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+        ],
+        "openIssues": [],
+        "revisionHistory": [
+          {
+            "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+            "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+            "changedFiles": [
+              "docs/site/reference/documentation-site.md",
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/docs-reader/renderer.mjs",
+              "scripts/tests/docs-reader.test.mjs"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+          },
+          {
+            "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+            "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+            "changedFiles": [
+              "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+              "docs/site/product-surfaces.md",
+              "docs/site/reference/documentation-site.md",
+              "docs/site/use/diagnose.md",
+              "docs/site/use/install.md",
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/docs-publication.mjs",
+              "scripts/docs-reader/check-artifact.mjs",
+              "scripts/tests/docs-reader.test.mjs"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+          },
+          {
+            "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+            "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+            "changedFiles": [
+              "docs/site/reference/documentation-site.md",
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/docs-publication.mjs",
+              "scripts/docs-reader/renderer.mjs",
+              "scripts/docs-reader/source-links.mjs"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+          },
+          {
+            "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+            "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+            "changedFiles": [
+              "docs/site/reference/documentation-site.md",
+              "docs/site/understand/prism-runtime.md",
+              "docs/site/understand/worker-core.md",
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/docs-publication.mjs",
+              "scripts/docs-reader/package-lock.json",
+              "scripts/docs-reader/package.json",
+              "scripts/docs-reader/renderer.mjs",
+              "scripts/tests/docs-reader.test.mjs"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+          },
+          {
+            "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+            "changedFiles": [
+              "docs/site/understand/buster-namespace-controller.md"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
+            "reason": "Narrow independent preservation only: same pinned namespace implementation, corrected initial credential/exposure ordering and distinct expiry/deletion finalizer paths; current actual artifact/search/Source/preview/fresh-render and three-width namespace browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+          },
+          {
+            "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+            "changedFiles": [
+              "docs/site/understand/platform-and-operations.md",
+              "docs/site/understand/prism-data.md"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+            "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+          },
+          {
+            "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+            "changedFiles": [
+              "scripts/docs-api-documentation-role-custody.mjs"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
+            "reason": "Narrow independent preservation only: exact private-writer all-caller projection, separately bound three-role facade constructor, static fixed-layout diagram loader and9precise native receipt renewals/55unchanged; current27fresh SVG hashes identical. ExistingHTML/search/Source/preview/browser evidence remainsboundedbaseline, not a fresh rebuild. Existing accepted facts and limits retained; no broad historical reapproval."
+          },
+          {
+            "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+            "changedFiles": [
+              "docs/config/documentation-tree-classification.json",
+              "scripts/docs-api-documentation-role-custody.mjs"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+            "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+          },
+          {
+            "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+            "changedFiles": [
+              "docs/config/documentation-tree-classification.json",
+              "docs/site/understand/components-and-authority.md",
+              "docs/site/understand/deployment-and-trust.md",
+              "docs/site/understand/pipeline-dependencies.md",
+              "docs/site/understand/security-and-trust.md"
+            ],
+            "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+            "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+          },
+          {
+            "revision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+            "changedFiles": [
+              "docs/site/use/install.md",
+              "docs/site/use/maintenance.md",
+              "docs/site/reference/images-and-digests.md",
+              "docs/config/documentation-diagrams.json"
+            ],
+            "review": "handoffs/pr13-reset-20261021/release-review.md",
+            "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
+          },
+          {
+            "revision": "d303e57edad20b27f2332c6d037c8daeadb8e1ba",
+            "changedFiles": [
+              "docs/site/understand/prism.md",
+              "docs/config/documentation-diagrams.json"
+            ],
+            "review": "handoffs/pr13-reset-20261021/prism-diagram-review.md",
+            "reason": "Independent narrow preservation after explicit public-web rejection boundary: all other Prism handoffs and original accepted limits unchanged. Current310b actual artifact/search/Source/previews/27freshSVGs and18changed-page/diagram offline/noJS width observations PASS; historical whole layout/human/live evidence not reapproved."
+          },
+          {
+            "revision": "310b8dca1377e0ef3b5c307fc1f917af8a3c89de",
+            "changedFiles": [
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/tests/api-output-node-entry-custody.test.mjs"
+            ],
+            "review": "handoffs/pr13-finish-20261021/custody-review.md",
+            "reason": "Independent bounded preservation: exact test fixture55declarations and tree closure44units/7ranges/16initializers renewed after source/caller/consumer review. Same selectors/callers/guard logic; tree native operation digest unchanged;7custody tests including2newwarm-cache source-revocation negatives PASS. Existing renderer/search/Source/preview/layout facts and limits retained;no fresh whole-reader or live reapproval."
+          }
+        ],
+        "impactReviews": [
+          {
+            "previousReviewedRevision": "7e006461f46614e1f334b7c8a63d9db4815cf8db",
+            "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+            "changedDependencies": [
+              "docs/config/documentation-publication-manifest.json",
+              "docs/config/documentation-tree-classification.json",
+              "docs/site/extend/README.md",
+              "docs/site/extend/buster.md",
+              "docs/site/extend/documentation-maintenance.md",
+              "docs/site/extend/lint.md",
+              "docs/site/product-surfaces.md",
+              "docs/site/reference/lint-policy.md",
+              "docs/site/reference/nova-project.md",
+              "docs/site/reference/pipeline-json.md",
+              "docs/site/understand/archviewer.md",
+              "docs/site/understand/buster-namespace-controller.md",
+              "docs/site/understand/communication.md",
+              "docs/site/understand/data-and-state.md",
+              "docs/site/understand/echo.md",
+              "docs/site/understand/forge.md",
+              "docs/site/understand/openclaw.md",
+              "docs/site/understand/platform-and-operations.md",
+              "docs/site/understand/security-and-trust.md",
+              "docs/site/understand/telemetry.md",
+              "docs/site/understand/worker-core.md",
+              "docs/site/use/workflows/README.md",
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/lib/docs-publication-assets.mjs"
+            ],
+            "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
+            "verdict": "PASS",
+            "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+          },
+          {
+            "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+            "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+            "changedDependencies": [
+              "docs/site/reference/contracts.md",
+              "docs/site/understand/telemetry.md",
+              "docs/site/use/workflows/README.md",
+              "docs/site/use/workflows/buster-suite.md",
+              "scripts/docs-api-documentation-role-custody.mjs"
+            ],
+            "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+            "verdict": "PASS",
+            "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+          },
+          {
+            "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+            "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+            "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+            "changedDependencies": [
+              "docs/site/decisions/runtime-and-operations.md",
+              "docs/site/reference/errors.md",
+              "docs/site/use/workflows/README.md",
+              "docs/config/documentation-publication-manifest.json",
+              "docs/config/documentation-tree-classification.json",
+              "scripts/lib/docs-publication-assets.mjs"
+            ],
+            "verdict": "PASS",
+            "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+          },
+          {
+            "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+            "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+            "changedDependencies": [
+              "docs/site/reference/documentation-site.md",
+              "docs/site/reference/errors.md",
+              "scripts/docs-api-documentation-role-custody.mjs",
+              "scripts/docs-publication.mjs",
+              "scripts/docs-reader/renderer.mjs"
+            ],
+            "reviewer": "/root/workflow_acceptance",
+            "verdict": "PASS",
+            "summary": "Search index/text/ranking production functions unchanged. Error-page original chapter preserved with two bounded independently root-reviewed appendices; actual177-page search equality/12 questions pass. New snippets remain excluded from indexing by unchanged preview staging.",
+            "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
+            "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+          }
+        ]
+      }
+    }
+  ],
+  "initialFailure": "Parent actual browser-recovery-ee285a46.json reports same split-box finding at320/768/1440; retained NOTPASS at old bytes. Earlier semantic preservation is not built-format validation.",
+  "limits": [
+    "No current rendering success claimed; actual fresh Reader/browser belongs to parent.",
+    "Only3direct pages/sources intersections, not4; no synthetic transitive intersection.",
+    "No main/register edits, record-state changes, new acceptance count or global PASS.",
+    "Previous broad exact16semantic preservation remains bounded; this addendum explicitly accounts for actual old-byte format defect and reviewed repair."
+  ]
+}

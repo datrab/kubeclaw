@@ -1,0 +1,7 @@
+# Actual first built Reader finding and bounded correction
+
+Reader Sourceee285a46 built177canonical pages. Artifact/search/source-preview checks passed; actual local preview served240manifest outputs with exact bytes and19copiedassets. Fresh27diagram renders matched after supplying the existing browser library/font environment; initial omitted-environment launch failed missing libglib and is retained separately. Current source-links check result remains pending when this entry was written.
+
+Actual offline/noJS browser observed9changedpages at320/768/1440plus offline search:28page/search observations,81changed-source-box observations,0externalrequests. It FAILED three observations of the same second Archviewer box (once at each width): inherited unquoted empty line split its implementation and four remaining fields into separate blockquotes. The source/semantic-content review was not fresh rendered validation. First failed logs/JSON remain task scratch browser-callouts-ee285a46.txt and browser-recovery-ee285a46.json.
+
+Repair: only the intervening empty Markdown line becomes a quoted empty line. All words, links and ordering remain identical. Independently checked Source/semanticReader/Quality format preservation and actual3record intersections are in the companion addendum. This does not change177canonical selection or acceptance counts. A successor Reader must be built and checked before delivery; ee285a46 is NOT represented as the newly delivered complete checkpoint Reader.
