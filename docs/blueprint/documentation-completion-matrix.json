@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -52,6 +52,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -99,12 +104,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -176,6 +189,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -335,6 +353,15 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -1258,7 +1285,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1342,6 +1369,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -1508,12 +1540,20 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -1617,6 +1657,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -1696,6 +1741,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/use/install.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -1801,7 +1855,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1947,6 +2001,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -2085,12 +2144,21 @@
             ".github/workflows/docs-checks.yaml"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2156,6 +2224,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -2226,12 +2299,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -2314,6 +2395,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -2395,12 +2481,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2457,6 +2551,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -2570,12 +2669,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2625,6 +2732,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -2766,6 +2878,16 @@
             "docs/site/reference/documentation-site.md"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/product-surfaces.md",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -2929,7 +3051,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -3004,6 +3126,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -3072,12 +3199,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -3160,6 +3295,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -3295,6 +3435,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -3636,7 +3784,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -3685,6 +3833,11 @@
           "command": "node docs/site/use/workflows/examples/first-project.mjs /tmp/pr13-first-project-20261021; node --test /tmp/pr13-first-project-20261021/repository/app/greeting.test.mjs",
           "exitCode": 0,
           "observation": "Real maintained materializer and compiler produce8stages;executionfalse andplatformAdmissionfalse. One greeting unit test passes; no provider/run success inferred."
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -3741,7 +3894,18 @@
           ]
         }
       ],
-      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213"
+      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "revisionHistory": [
+        {
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/use/diagnose.md",
+            "docs/site/use/install.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
@@ -4053,7 +4217,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -4109,6 +4273,11 @@
           "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "167pages/51plugins pass; build produces Markdown publication and declaredassets, not rendered HTML or deployed/browsable site."
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -4123,7 +4292,17 @@
         "Historical composite findings retain other-page scopes. Only the accepted canonical-page namespace/status/decision-reason facets are closed."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "revisionHistory": [
+        {
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/use/install.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        }
+      ]
     },
     {
       "id": "AP09-ops-mcp-complete-contract-20261021",
@@ -4759,7 +4938,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -4818,6 +4997,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -4843,12 +5027,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -4913,10 +5105,13 @@
         "scripts/docs-publication.mjs",
         "scripts/docs-reader/check-artifact.mjs",
         "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/metadata.mjs",
         "scripts/docs-reader/package-lock.json",
         "scripts/docs-reader/package.json",
         "scripts/docs-reader/renderer.mjs",
         "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/source-links.mjs",
         "scripts/docs-status.mjs",
         "scripts/docs-tree-boundary.mjs",
         "scripts/external-helm-archives.json",
@@ -4936,6 +5131,7 @@
         "scripts/scan-runtime-images.sh",
         "scripts/tests/argocd-checked-artifacts.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
         "scripts/tests/docs-reader.test.mjs",
         "scripts/tests/docs-source-freshness.test.mjs",
         "scripts/tests/vendor-external-helm-authorities.test.mjs",
@@ -5026,6 +5222,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -5135,6 +5336,18 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/check-artifact.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -5256,7 +5469,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -5419,6 +5632,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -5489,6 +5707,15 @@
             ".github/workflows/docs-checks.yaml"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -5811,7 +6038,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -6358,6 +6585,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -6407,6 +6639,15 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
@@ -6550,7 +6791,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6668,6 +6909,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -6708,12 +6954,22 @@
             "docs/site/reference/documentation-site.md"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6942,6 +7198,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "review": {
@@ -6980,12 +7241,21 @@
             ".github/workflows/docs-checks.yaml"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -7171,15 +7441,19 @@
         "scripts/docs-publication.mjs",
         "scripts/docs-reader/check-artifact.mjs",
         "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/metadata.mjs",
         "scripts/docs-reader/package-lock.json",
         "scripts/docs-reader/package.json",
         "scripts/docs-reader/renderer.mjs",
         "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/source-links.mjs",
         "scripts/lib/docs-markdown-anchors.mjs",
         "scripts/lib/docs-publication-assets.mjs",
         "scripts/lib/docs-publication-links.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
         "scripts/tests/docs-publication-links.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
         "scripts/tests/docs-reader.test.mjs"
       ],
       "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
@@ -7214,6 +7488,11 @@
           "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "limits": [
@@ -7234,12 +7513,28 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+            "docs/site/product-surfaces.md",
+            "docs/site/reference/documentation-site.md",
+            "docs/site/use/diagnose.md",
+            "docs/site/use/install.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-publication.mjs",
+            "scripts/docs-reader/check-artifact.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -7291,12 +7586,108 @@
           "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
           "exitCode": 0,
           "observation": "Committed167readerpages/176HTML/179outputhashes/36523localtargets andfragments verified."
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
         }
       ],
       "limits": [
         "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
         "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
         "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+      ],
+      "openIssues": [],
+      "revisionHistory": [
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        }
+      ]
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+      "author": "Nova /root documentation author and implementation coordinator",
+      "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
+      "verdict": "PASS",
+      "gateIds": [
+        "A912-09"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/documentation-site.md",
+        "docs/site/use/install.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md"
+      ],
+      "sources": [
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        ".github/workflows/docs-checks.yaml",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/committed-output-observation.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/primary-source-observation.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/metadata-native-propagation.json",
+        "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-link-native-propagation.json"
+      ],
+      "summary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+      },
+      "checks": [
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6032local links,3284local anchors,8334repository paths,31892pinned Source links checked in repository."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed candidateef68977e:167pages,176HTML,179byte hashes,36698local link/anchor/asset/script targets;12reader queries/167canonical index PASS."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "All176actual digest-verified HTML files;14401unique Source links,3723objects. Local Git actual full commits/types/regular modes/blobbytes or tree objects;118upstream primary files fetched directly over fixed HTTPS full-commit routes across11repos. All requested line/Markdown-anchor bounds valid;0stderr."
+        },
+        {
+          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs",
+          "exitCode": 0,
+          "observation": "84/84PASS including actual missing/symlink/type/range/revision/origin negative controls, primary-byte fragment caching, digest-consistent broken rendered fragment/script, and all167real metadata headers."
+        }
+      ],
+      "limits": [
+        "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+        "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+        "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+        "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+        "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
       ],
       "openIssues": []
     }
@@ -27915,7 +28306,7 @@
       "id": "A912-09",
       "passCondition": "Alle lokalen Links, Anchors, Assets, Routen, Source-Revisions- und Zeilenbereiche werden im Repositorybuild und im gebauten Output geprüft.",
       "automaticFailure": "Nur Markdown-Links werden geprüft; gebaute Routen, Assets, Anchors oder Sourcebereiche bleiben ungeprüft.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -27930,11 +28321,20 @@
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "Scanner semantics passed;all rendered routes/assets/ranges not verified.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+        "reason": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+        "completionRecord": "AP09-rendered-source-bounds-gate-20261021"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "Scanner semantics passed;all rendered routes/assets/ranges not verified.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "AP09-rendered-source-bounds-gate-20261021"
     },
     {
       "id": "A912-10",
@@ -39400,46 +39800,45 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "securedSourceRevision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
       "acceptedRequirements": 201,
-      "acceptedGates": 14,
+      "acceptedGates": 15,
       "newRequirementsThisCampaign": 42,
-      "newGatesThisCampaign": 3,
-      "nextWork": "Continue exact API copier/input-caller closure at build-runtime-role-bundle.mjs:74. Refresh stale Helm language through its owning generator once global input coverage permits. Remaining60contents/75gates unwaived.",
-      "codeCandidate": "bfa5ddcd: weighted shared search function/finite reader synonyms, exact canonical index and12readerquestions;77/77tests PASS.2native receipts renewed/54unchanged/newtypedchecker qualified.",
+      "newGatesThisCampaign": 4,
+      "nextWork": "Review existing actual no-JS/static/offline reader fallback against whole PUB-006 before new feature work; then remaining publication preview/diagram/accessibility boundaries and global build-runtime-role-bundle.mjs:74. Refresh stale Helm language through its owner once global input coverage permits.60contents/74gates remain unwaived.",
+      "codeCandidate": "ef68977e; typedSource locators/full commits, metadata-header owner fix withall167headers, complete actual primary-source/built-HTML check.84/84tests PASS.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
-      "publication": "WholePUB002 andA91204 accepted.167canonical pages exactlyindexed;12actualreaderquestions x3widths hit upper3.176HTML/179digests/36523local links verified. No all-page/accessibility/livehosting claim.",
-      "scope": "201/261contents,14/89gates. Preserve negative/historical evidence and separate Source projection from product effects.",
+      "publication": "Whole PUB002/A91204/A91209 accepted:167canonical pages;12reader questions×3widths top3;176HTML/179hashes/36698localtargets;14401Source locators/3723objects including118upstream files/11repos. No all-semantic/human-screenreader/hosting claim.",
+      "scope": "201/261contents,15/89gates. Negative/historical evidence preserved; Source projection separate from product effects.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json",
-        "impactReport": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json",
-        "result": "No actionable findings for wholeA91204 boundedcode/evidence and narrowSource/Reader/Quality impact.",
-        "limit": "Originalapproval facts preserved only for unchangedscope; no broaderhistorical/globalAPI/hosting approval."
+        "report": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
+        "result": "Clean whole A91209 Source/Reader/Quality verdict and narrow 21-record changed-Source impact verdict.",
+        "limit": "Earlier facts/limits preserved for changed boundaries only, not broader historical/runtime/hosting approval."
       },
       "checks": [
         {
-          "command": "node scripts/docs-reader/check-search.mjs",
+          "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
-          "observation": "Exact canonical manifest/index route-set equality167/167, no internal/auxiliary/duplicate pages; all12defined questions in upper3; absentquery returnsnoresults."
+          "observation": "6032local links,3284local anchors,8334repository paths,31892pinned Source links checked in repository."
         },
         {
-          "command": "Actual retained search-rank-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs",
           "exitCode": 0,
-          "observation": "All12queries x3widths yield expected upper3 targets; fourroutes x3widths HTTP200/CSS/nooverflow/zeroAxe; noresult and no-JSkeyboardreading routePASS.52observations,0findings."
+          "observation": "Actual committed candidateef68977e:167pages,176HTML,179byte hashes,36698local link/anchor/asset/script targets;12reader queries/167canonical index PASS."
         },
         {
-          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs",
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
           "exitCode": 0,
-          "observation": "77/77 PASS; same actual search function used by browser and tests; synonymranking,heading/technicalID,unknown/empty/missingroute controls."
+          "observation": "All176actual digest-verified HTML files;14401unique Source links,3723objects. Local Git actual full commits/types/regular modes/blobbytes or tree objects;118upstream primary files fetched directly over fixed HTTPS full-commit routes across11repos. All requested line/Markdown-anchor bounds valid;0stderr."
         },
         {
-          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-source-links.test.mjs",
           "exitCode": 0,
-          "observation": "Committed167readerpages/176HTML/179outputhashes/36523localtargets andfragments verified."
+          "observation": "84/84PASS including actual missing/symlink/type/range/revision/origin negative controls, primary-byte fragment caching, digest-consistent broken rendered fragment/script, and all167real metadata headers."
         }
       ]
     }
