@@ -5,6 +5,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
+import { validatePipelineV10PluginRelations } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-plugin-relations.ts';
+import { preflightPipelineV10Infrastructure } from '../../../skills/common/plugin-runtime/foundation/config/pipeline-v10-infra.ts';
 import { readSwarmBundle } from '../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts';
 
 const repository = fileURLToPath(new URL('../../../', import.meta.url));
@@ -23,6 +25,37 @@ for (const operation of contract.rootPatch) {
 function fixture(t: test.TestContext) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-v10-plugins-'));
   t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  // The direct loader now retains the complete declared source generation.
+  // Seed all original members before applying the existing plugin mutations;
+  // partial fixtures must not bypass the real source-intake boundary.
+  const inputContract = read(path.join(repository, 'skills/common/plugin-runtime/foundation/config/pipeline-v10-input-contract.json'));
+  const writeMember = (relative: string, bytes: Buffer) => {
+    const destination = path.join(directory, relative);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, bytes);
+  };
+  for (const member of inputContract.base.members) {
+    const bytes = fs.readFileSync(path.join(base, 'same-entry-agent-role-binding-01', member.relativePath.startsWith('schemas/') ? '' : 'stand', member.relativePath));
+    assert.equal(bytes.length, member.byteLength, `original input size: ${member.relativePath}`);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), member.sha256, `original input identity: ${member.relativePath}`);
+    writeMember(member.relativePath, bytes);
+  }
+  for (const member of [...inputContract.additions, ...inputContract.packageSources]) {
+    const retained = path.join(repository, 'tests/verification/reliability/fixtures/pipeline-v10-retained', member.sha256 + '.fixture');
+    const bytes = fs.readFileSync(fs.existsSync(retained) ? retained : path.join(repository, member.sourcePath));
+    assert.equal(bytes.length, member.byteLength, `original source size: ${member.sourcePath}`);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), member.sha256, `original source identity: ${member.sourcePath}`);
+    writeMember(member.relativePath, bytes);
+  }
+  const schema = read(path.join(repository, contract.baseRootSchema.path));
+  for (const operation of contract.rootSchemaPatch) {
+    const parts = operation.path.split('/').slice(1), key = parts.at(-1)!;
+    const target = parts.slice(0, -1).reduce((value: any, key: string) => value[key], schema);
+    if (operation.op === 'test') assert.deepEqual(target[key], operation.value);
+    else if (Array.isArray(target)) { assert.equal(key, '-'); target.push(structuredClone(operation.value)); }
+    else target[key] = structuredClone(operation.value);
+  }
+  writeMember('schemas/pipeline-entry.schema.json', Buffer.from(JSON.stringify(schema)));
   const config = path.join(directory, 'config');
   fs.mkdirSync(path.join(config, 'components'), { recursive: true });
   const root = structuredClone(original), file = path.join(config, 'pipeline.config.json');
@@ -65,6 +98,17 @@ function fixture(t: test.TestContext) {
   const selection = { role: 'buster' as const, callerId: 'buster-preparation' as const, serviceInstanceId: binding.instanceId,
     bindings: [{ owner: 'buster-engine' as const, instanceId: binding.instanceId, profileId: binding.profileId }] };
   return { directory, config, root, writeRoot, load: () => readSwarmBundle(file, selection) };
+}
+
+// Supported policy domains and exact historical source identity are distinct:
+// valid changed policies pass the real semantic validators, but are not the
+// declared original generation and must still fail physical source intake.
+function supportedPolicyMutation(f: ReturnType<typeof fixture>) {
+  const components = Object.fromEntries(Object.keys(f.root.components).map(name => [name, read(path.join(f.config, 'components', name + '.config.json'))]));
+  const owners = new Map(Object.entries(sources.packages).map(([id, source]: [string, any]) => [id, read(path.join(f.config, source.ownerPath))]));
+  assert.doesNotThrow(() => validatePipelineV10PluginRelations(f.root, components, owners, sources.packages));
+  assert.doesNotThrow(() => preflightPipelineV10Infrastructure(f.root, components, relative => fs.readFileSync(path.join(f.directory, relative))));
+  assert.throws(f.load, /PIPELINE_INPUT_SIZE_MISMATCH|PIPELINE_INPUT_DIGEST_MISMATCH/);
 }
 
 test('18 whole schemas and actual manifests preserve exact source provenance and 15-provider/8-Nova families', () => {
@@ -187,11 +231,12 @@ test('Nova current target membership and token-sum constraints reject without eq
     // tunable token profile. They must reject BEFORE the relation guard.
     target.maxInputTokens = target.maxContextTokens;
   }, /PLUGIN_OWNER_INVALID:kubeclaw.runtime-dispatch:.*maxInputTokens/);
-  const file = path.join(f.config, 'plugins/kubeclaw.architecture-validator.config.json'), value = read(file);
+  const file = path.join(f.config, 'plugins/kubeclaw.architecture-validator.config.json'), original = fs.readFileSync(file), value = read(file);
   value.profiles.A.processing['kubeclaw.architecture-validator:architecture'].agentRole = 'independent diagnostic, not installed role';
   fs.writeFileSync(file, JSON.stringify(value));
-  assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  supportedPolicyMutation(f);
   assert.equal(read(file).profiles.A.processing['kubeclaw.architecture-validator:architecture'].agentRole, 'independent diagnostic, not installed role');
+  fs.writeFileSync(file, original); assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
 });
 
 test('resolved Security add/replace rules obey the real native header domain', t => {
@@ -218,7 +263,7 @@ test('Playwright raw worker/timeout domain preserves native clamping rather than
   fs.writeFileSync(file, JSON.stringify(value));
   // The actual native invoker bounds both against original source options;
   // this preflight MUST NOT silently narrow the supported raw policy domain.
-  assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  supportedPolicyMutation(f);
   fs.writeFileSync(file, before);
   assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
 });
@@ -384,7 +429,7 @@ test('ALL Gateway profile TTLs use original pure native duration parser, not sil
   }, /PIPELINE_V10_GATEWAY_DURATION_INVALID/);
   const file = path.join(f.directory, 'charts/kubeclaw/values.yaml'), original = fs.readFileSync(file), value = read(file);
   value.profiles['nova-modelcontrast'].settings.gatewayOpenClaw.agents.defaults.contextPruning.ttl = '1h30m';
-  fs.writeFileSync(file, JSON.stringify(value)); assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  fs.writeFileSync(file, JSON.stringify(value)); supportedPolicyMutation(f);
   fs.writeFileSync(file, original); assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
 });
 
@@ -398,7 +443,7 @@ test('unselected Lighthouse fractional throughput admitted by schema must still 
   const file = path.join(f.config, 'plugins/kubeclaw.lighthouse.config.json'), original = fs.readFileSync(file), value = read(file);
   const unselected = Object.keys(value.profiles).find(name => name !== 'A')!;
   value.profiles[unselected].processing.settings.profiles.desktop.throttling.throughputKbps = 1;
-  fs.writeFileSync(file, JSON.stringify(value)); assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
+  fs.writeFileSync(file, JSON.stringify(value)); supportedPolicyMutation(f);
   fs.writeFileSync(file, original); assert.throws(f.load, /PIPELINE_V10_SOURCE_RECEIVING_REQUIRED/);
 });
 
