@@ -452,13 +452,14 @@
       "status": "implemented",
       "audience": "lint rule author, policy maintainer, Nova maintainer",
       "owner": "lint",
-      "appliesTo": "`kubeclaw.lint` and the shipped lint policy",
-      "lastVerified": "source and focused package checks on 2026-09-20",
+      "appliesTo": "`kubeclaw.lint` and the shipped lint policy; separate `kubeclaw.lint.delivery` package section",
+      "lastVerified": "source and focused package checks on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "skills/nova/plugins/lint/plugin.json",
         "skills/nova/plugins/lint/src",
         "skills/nova/plugins/lint/tests",
-        "charts/kubeclaw/files/config"
+        "charts/kubeclaw/files/config",
+        "skills/nova/plugins/delivery-lint"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2323,14 +2324,16 @@
       "status": "current configuration reference",
       "audience": "project operator, pipeline author",
       "owner": "Nova project compiler",
-      "appliesTo": "`nova-project.v2`",
-      "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`",
+      "appliesTo": "`nova-project.v2`; package sections for `kubeclaw.validate.preflight-contract`, `kubeclaw.validate.source-preflight`, and `kubeclaw.report.project-summary`",
+      "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "skills/nova/project/compiler.ts",
         "skills/nova/project/source.ts",
         "skills/nova/project/coverage.ts",
         "skills/nova/project/demo.ts",
-        "skills/nova/project/cli.ts"
+        "skills/nova/project/cli.ts",
+        "skills/nova/plugins/preflight-contract",
+        "skills/nova/plugins/project-summary"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
@@ -3107,12 +3110,13 @@
       "status": "implemented with explicit model and repository evidence limits",
       "audience": "pipeline operator, Echo maintainer, policy author, security reviewer",
       "owner": "Echo maintainers",
-      "appliesTo": "review, repository-audit, and repository-revalidation stages",
-      "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20",
+      "appliesTo": "review, repository-audit, and repository-revalidation stages; separate `kubeclaw.validate.architecture` package section",
+      "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "skills/nova/plugins/review/src",
         "skills/nova/plugins/review/schemas",
-        "skills/nova/plugins/review/tests"
+        "skills/nova/plugins/review/tests",
+        "skills/nova/plugins/architecture-validator"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -3127,14 +3131,15 @@
       "status": "implemented for the Nova implementation stage",
       "audience": "pipeline operator, Forge maintainer, plugin author, security reviewer",
       "owner": "Forge maintainers",
-      "appliesTo": "`kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path",
-      "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20",
+      "appliesTo": "`kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path; separate `kubeclaw.generate.blueprint-sync` package section",
+      "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "skills/nova/plugins/implementation-agent",
         "skills/common/plugins/runtime-dispatch",
         "skills/common/plugins/git-workspace",
         "tests/verification/reliability/forge-workspace.test.mts",
-        "tests/verification/reliability/forge-lock-wait.test.mts"
+        "tests/verification/reliability/forge-lock-wait.test.mts",
+        "skills/nova/plugins/blueprint-sync"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -3430,14 +3435,15 @@
       "status": "implemented with stated native-host limits",
       "audience": "Worker Core developer, specialist-engine developer, operator, security reviewer",
       "owner": "Worker Core maintainers",
-      "appliesTo": "Worker protocol v1, attempt envelopes v1-v3, generic execution, and Linux native execution",
-      "lastVerified": "source, contract, and focused test inspection on 2026-09-19",
+      "appliesTo": "Worker protocol v1, attempt envelopes v1-v3, generic execution, and Linux native execution; separate `kubeclaw.command-runner:command` adapter section",
+      "lastVerified": "source, contract, and focused test inspection on 2026-09-19; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim",
       "sourceDependencies": [
         "contracts/pipeline-worker-core/v1",
         "skills/worker/core",
         "skills/prism/server/native-worker-execution.ts",
         "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
-        "tests/verification/reliability"
+        "tests/verification/reliability",
+        "skills/common/plugins/command-runner"
       ],
       "checks": [
         "npm run docs:governance:check",

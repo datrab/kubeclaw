@@ -3,9 +3,9 @@
 Status: current configuration reference
 Audience: project operator, pipeline author
 Owner: Nova project compiler
-Evidence: skills/nova/project/compiler.ts; skills/nova/project/source.ts; skills/nova/project/coverage.ts; skills/nova/project/demo.ts; skills/nova/project/cli.ts
-Applies to: `nova-project.v2`
-Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
+Evidence: skills/nova/project/compiler.ts; skills/nova/project/source.ts; skills/nova/project/coverage.ts; skills/nova/project/demo.ts; skills/nova/project/cli.ts; skills/nova/plugins/preflight-contract; skills/nova/plugins/project-summary
+Applies to: `nova-project.v2`; package sections for `kubeclaw.validate.preflight-contract`, `kubeclaw.validate.source-preflight`, and `kubeclaw.report.project-summary`
+Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Purpose and compiler boundary
 

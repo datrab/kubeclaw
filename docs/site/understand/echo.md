@@ -3,10 +3,10 @@
 Status: implemented with explicit model and repository evidence limits
 Audience: pipeline operator, Echo maintainer, policy author, security reviewer
 Owner: Echo maintainers
-Evidence: skills/nova/plugins/review/src; skills/nova/plugins/review/schemas; skills/nova/plugins/review/tests
+Evidence: skills/nova/plugins/review/src; skills/nova/plugins/review/schemas; skills/nova/plugins/review/tests; skills/nova/plugins/architecture-validator
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Applies to: review, repository-audit, and repository-revalidation stages
-Last verified: source, schema, manifest, and focused test inspection on 2026-09-20
+Applies to: review, repository-audit, and repository-revalidation stages; separate `kubeclaw.validate.architecture` package section
+Last verified: source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Purpose And Decision Boundary
 

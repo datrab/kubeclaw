@@ -3,10 +3,10 @@
 Status: implemented with stated native-host limits
 Audience: Worker Core developer, specialist-engine developer, operator, security reviewer
 Owner: Worker Core maintainers
-Evidence: contracts/pipeline-worker-core/v1; skills/worker/core; skills/prism/server/native-worker-execution.ts; tests/verification/contracts/check-pipeline-worker-attempt-executor.mts; tests/verification/reliability
+Evidence: contracts/pipeline-worker-core/v1; skills/worker/core; skills/prism/server/native-worker-execution.ts; tests/verification/contracts/check-pipeline-worker-attempt-executor.mts; tests/verification/reliability; skills/common/plugins/command-runner
 Evidence revision: `ce7740252864a9b547bee8a35260d6ab10c9f05e`
-Applies to: Worker protocol v1, attempt envelopes v1-v3, generic execution, and Linux native execution
-Last verified: source, contract, and focused test inspection on 2026-09-19
+Applies to: Worker protocol v1, attempt envelopes v1-v3, generic execution, and Linux native execution; separate `kubeclaw.command-runner:command` adapter section
+Last verified: source, contract, and focused test inspection on 2026-09-19; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Purpose
 

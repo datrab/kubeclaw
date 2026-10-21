@@ -3,10 +3,10 @@
 Status: implemented
 Audience: lint rule author, policy maintainer, Nova maintainer
 Owner: lint
-Evidence: skills/nova/plugins/lint/plugin.json; skills/nova/plugins/lint/src; skills/nova/plugins/lint/tests; charts/kubeclaw/files/config
+Evidence: skills/nova/plugins/lint/plugin.json; skills/nova/plugins/lint/src; skills/nova/plugins/lint/tests; charts/kubeclaw/files/config; skills/nova/plugins/delivery-lint
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Applies to: `kubeclaw.lint` and the shipped lint policy
-Last verified: source and focused package checks on 2026-09-20
+Applies to: `kubeclaw.lint` and the shipped lint policy; separate `kubeclaw.lint.delivery` package section
+Last verified: source and focused package checks on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Objective
 

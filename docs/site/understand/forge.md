@@ -3,10 +3,10 @@
 Status: implemented for the Nova implementation stage
 Audience: pipeline operator, Forge maintainer, plugin author, security reviewer
 Owner: Forge maintainers
-Evidence: skills/nova/plugins/implementation-agent; skills/common/plugins/runtime-dispatch; skills/common/plugins/git-workspace; tests/verification/reliability/forge-workspace.test.mts; tests/verification/reliability/forge-lock-wait.test.mts
+Evidence: skills/nova/plugins/implementation-agent; skills/common/plugins/runtime-dispatch; skills/common/plugins/git-workspace; tests/verification/reliability/forge-workspace.test.mts; tests/verification/reliability/forge-lock-wait.test.mts; skills/nova/plugins/blueprint-sync
 Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
-Applies to: `kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path
-Last verified: source, schema, manifest, and focused test inspection on 2026-09-20
+Applies to: `kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path; separate `kubeclaw.generate.blueprint-sync` package section
+Last verified: source, schema, manifest, and focused test inspection on 2026-09-20; added package sections source/test checked 2026-10-21 only; original other-scope verification date unchanged; no new live dependency claim
 
 ## Purpose And Authority
 
