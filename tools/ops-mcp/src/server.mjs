@@ -193,6 +193,8 @@ function buildServer() {
       version: '0.2.0',
     },
     {
+      // Fixed security ceilings, not operator-tunable capacity defaults.
+      maxToolInputElements: 1024,
       instructions:
         'Read-only operations interface for the kubeclaw Kubernetes cluster. ' +
         'Correlate Argo CD, Kubernetes workload state, events, bounded pod logs and bounded Hubble network flows. ' +
@@ -491,7 +493,7 @@ function buildServer() {
   return server;
 }
 
-const mcpHandler = createMcpHandler(buildServer, { responseMode: 'json' });
+const mcpHandler = createMcpHandler(buildServer, { responseMode: 'json', maxRequestBodySize: 64 * 1024 });
 const nodeMcpHandler = toNodeHandler(mcpHandler);
 
 function requestAuthorized(req) {
