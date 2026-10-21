@@ -104,7 +104,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -171,6 +171,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -322,6 +327,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
@@ -1245,7 +1258,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1324,6 +1337,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -1482,6 +1500,14 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
@@ -1775,7 +1801,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -1916,6 +1942,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -2046,6 +2077,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
@@ -2536,7 +2575,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2581,6 +2620,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -2714,6 +2758,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
@@ -4796,7 +4848,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -4860,9 +4912,11 @@
         "scripts/docs-platform-surface-inventory.mjs",
         "scripts/docs-publication.mjs",
         "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
         "scripts/docs-reader/package-lock.json",
         "scripts/docs-reader/package.json",
         "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/search-questions.json",
         "scripts/docs-status.mjs",
         "scripts/docs-tree-boundary.mjs",
         "scripts/external-helm-archives.json",
@@ -4967,6 +5021,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -5065,6 +5124,17 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
@@ -5186,7 +5256,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -5344,6 +5414,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -5406,6 +5481,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
@@ -6467,7 +6550,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6580,6 +6663,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -6611,12 +6699,21 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml",
+            "docs/site/reference/documentation-site.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -6840,6 +6937,11 @@
           "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
           "exitCode": 0,
           "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "review": {
@@ -6870,12 +6972,20 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            ".github/workflows/docs-checks.yaml"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -7053,22 +7163,24 @@
         "docs/site/use/workflows/wait-resume.md"
       ],
       "sources": [
+        "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json",
+        "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
         "scripts/docs-publication.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/lib/docs-markdown-anchors.mjs",
         "scripts/lib/docs-publication-assets.mjs",
         "scripts/lib/docs-publication-links.mjs",
-        "scripts/lib/docs-markdown-anchors.mjs",
-        "scripts/docs-reader/renderer.mjs",
-        "scripts/docs-reader/check-artifact.mjs",
-        "scripts/docs-reader/package.json",
-        "scripts/docs-reader/package-lock.json",
-        "scripts/tests/docs-reader.test.mjs",
         "scripts/tests/docs-publication-assets.test.mjs",
         "scripts/tests/docs-publication-links.test.mjs",
-        "scripts/docs-api-documentation-role-custody.mjs",
-        "docs/config/documentation-tree-classification.json",
-        "docs/config/documentation-publication-manifest.json",
-        "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
-        "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json"
+        "scripts/tests/docs-reader.test.mjs"
       ],
       "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
       "review": {
@@ -7097,6 +7209,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "6032 local links,3284local anchors,8328repository paths,31893pinned source links PASS."
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
         }
       ],
       "limits": [
@@ -7104,6 +7221,82 @@
         "No other publication gate or whole documentation package acceptance.",
         "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
         "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "openIssues": [],
+      "revisionHistory": [
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-reader/renderer.mjs",
+            "scripts/tests/docs-reader.test.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        }
+      ]
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+      "author": "Nova /root documentation author and implementation coordinator",
+      "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
+      "verdict": "PASS",
+      "gateIds": [
+        "A912-04"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/reference/documentation-site.md"
+      ],
+      "sources": [
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json",
+        "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json",
+        "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/committed-search-observation.json"
+      ],
+      "summary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS",
+        "report": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json"
+      },
+      "checks": [
+        {
+          "command": "node scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Exact canonical manifest/index route-set equality167/167, no internal/auxiliary/duplicate pages; all12defined questions in upper3; absentquery returnsnoresults."
+        },
+        {
+          "command": "Actual retained search-rank-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
+          "exitCode": 0,
+          "observation": "All12queries x3widths yield expected upper3 targets; fourroutes x3widths HTTP200/CSS/nooverflow/zeroAxe; noresult and no-JSkeyboardreading routePASS.52observations,0findings."
+        },
+        {
+          "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs",
+          "exitCode": 0,
+          "observation": "77/77 PASS; same actual search function used by browser and tests; synonymranking,heading/technicalID,unknown/empty/missingroute controls."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Committed167readerpages/176HTML/179outputhashes/36523localtargets andfragments verified."
+        }
+      ],
+      "limits": [
+        "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+        "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+        "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
       ],
       "openIssues": []
     }
@@ -27646,11 +27839,18 @@
       "id": "A912-04",
       "passCondition": "Suche indexiert alle kanonischen Seiten, Überschriften, technische IDs und Synonyme, schließt interne Artefakte aus und liefert für festgelegte Readerfragen das richtige Ziel in den oberen Ergebnissen.",
       "automaticFailure": "Nur Indexgröße oder Suchfeldexistenz wird geprüft.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "AP09-search-reader-gate-20261021",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+        "reason": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+        "completionRecord": "AP09-search-reader-gate-20261021"
+      }
     },
     {
       "id": "A912-05",
@@ -39200,45 +39400,46 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "744b9a15e06d202eed24884ac2248c36074354f1",
+      "securedSourceRevision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
       "acceptedRequirements": 201,
-      "acceptedGates": 13,
+      "acceptedGates": 14,
       "newRequirementsThisCampaign": 42,
-      "newGatesThisCampaign": 2,
-      "nextWork": "Continue API copier/input-caller closure at scripts/build-runtime-role-bundle.mjs:74; repair three existing generated Helm boundary phrases at owning source. Whole configuration and remaining60contents/76gates remain unwaived.",
-      "codeCandidate": "Static-reader9baf5583 independently reviewed;76/76custody/publication/Argo/reader tests PASS. One exact publisher native receipt plus2newdocumentation-only roles;53existingroles unchanged.",
+      "newGatesThisCampaign": 3,
+      "nextWork": "Continue exact API copier/input-caller closure at build-runtime-role-bundle.mjs:74. Refresh stale Helm language through its owning generator once global input coverage permits. Remaining60contents/75gates unwaived.",
+      "codeCandidate": "bfa5ddcd: weighted shared search function/finite reader synonyms, exact canonical index and12readerquestions;77/77tests PASS.2native receipts renewed/54unchanged/newtypedchecker qualified.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
-      "publication": "Actual167page HTML reader with local full-text search,176HTML routes incl auxiliary indexes,179verifiedgeneratedhashes,36523local links. Four routes x3widths and no-JS keyboard route observed; no all-page/human-screenreader/hosting acceptance.",
-      "scope": "201/261contents and13/89gates accepted. Preserve all negative/historical evidence; no completeness claim.",
+      "publication": "WholePUB002 andA91204 accepted.167canonical pages exactlyindexed;12actualreaderquestions x3widths hit upper3.176HTML/179digests/36523local links verified. No all-page/accessibility/livehosting claim.",
+      "scope": "201/261contents,14/89gates. Preserve negative/historical evidence and separate Source projection from product effects.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
-        "result": "No accepted/actionable findings; whole PUB002 and impacted existing acceptance boundaries supported.",
-        "limit": "No wholepublication/globalAPI/allaccessibility/externalhosting acceptance."
+        "report": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json",
+        "impactReport": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json",
+        "result": "No actionable findings for wholeA91204 boundedcode/evidence and narrowSource/Reader/Quality impact.",
+        "limit": "Originalapproval facts preserved only for unchangedscope; no broaderhistorical/globalAPI/hosting approval."
       },
       "checks": [
         {
+          "command": "node scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Exact canonical manifest/index route-set equality167/167, no internal/auxiliary/duplicate pages; all12defined questions in upper3; absentquery returnsnoresults."
+        },
+        {
+          "command": "Actual retained search-rank-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
+          "exitCode": 0,
+          "observation": "All12queries x3widths yield expected upper3 targets; fourroutes x3widths HTTP200/CSS/nooverflow/zeroAxe; noresult and no-JSkeyboardreading routePASS.52observations,0findings."
+        },
+        {
           "command": "node --test scripts/tests/api-output-custody.test.mjs scripts/tests/api-output-publication.test.mjs scripts/tests/argocd-checked-artifacts.test.mjs scripts/tests/docs-reader.test.mjs",
           "exitCode": 0,
-          "observation": "76/76 PASS, including positive parser/render/build and changed-output/missing-fragment negative artifact checks."
+          "observation": "77/77 PASS; same actual search function used by browser and tests; synonymranking,heading/technicalID,unknown/empty/missingroute controls."
         },
         {
           "command": "node scripts/docs-publication.mjs build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
           "exitCode": 0,
-          "observation": "Original committed build167 reader pages,176HTML incl. generated file indexes/search/homefallback;179exact output hashes and36523local links/anchors verified."
-        },
-        {
-          "command": "Actual retained reader-browser-qa source with Chromium151/Playwright1.62.1 and local fonts/libraries",
-          "exitCode": 0,
-          "observation": "Four routes at320/768/1440:HTTP200,loadedCSS,nooverflow,zero Axe violations;minimumLinePercent search and no-results behavior;mobile no-JS skip/keyboard navigation PASS. Not all-page accessibility/screenreader validation."
-        },
-        {
-          "command": "node scripts/docs-check-refs.mjs",
-          "exitCode": 0,
-          "observation": "6032 local links,3284local anchors,8328repository paths,31893pinned source links PASS."
+          "observation": "Committed167readerpages/176HTML/179outputhashes/36523localtargets andfragments verified."
         }
       ]
     }
