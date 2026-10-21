@@ -652,7 +652,7 @@
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_a91103 (01a157bb-c870-79c0-917a-0e2191dd73cc)",
       "gateIds": [],
@@ -667,41 +667,43 @@
         "docs/site/extend/platform/prism.md"
       ],
       "sources": [
-        "skills/prism/runtime.ts",
+        "charts/prism/files/prism-backup.sh",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.yaml",
+        "contracts/pipeline-test-gate/v1/src/remote.ts",
+        "contracts/prism/v1/src/baseline-archive.ts",
+        "contracts/prism/v1/src/complexity.ts",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+        "packaging/runtime/roles/prism.json",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/prism/config/database-bootstrap.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/design-generations.ts",
+        "skills/prism/control/native-operation-store.ts",
+        "skills/prism/control/pipeline-preference-subject.ts",
+        "skills/prism/control/preference-snapshot.ts",
+        "skills/prism/control/session.ts",
+        "skills/prism/corpus/index.ts",
+        "skills/prism/directions/index.ts",
         "skills/prism/domain/index.ts",
         "skills/prism/engine/index.ts",
         "skills/prism/engine/worker-binding.ts",
         "skills/prism/engine/worker-envelope.ts",
         "skills/prism/pipeline-adapter/index.ts",
         "skills/prism/preferences/index.ts",
-        "skills/prism/corpus/index.ts",
-        "skills/prism/storage/index.ts",
-        "skills/prism/storage/artifacts.ts",
-        "skills/prism/control/design-generations.ts",
-        "skills/prism/control/preference-snapshot.ts",
-        "skills/prism/control/pipeline-preference-subject.ts",
-        "skills/prism/control/native-operation-store.ts",
-        "skills/prism/control/agent-jobs.ts",
-        "skills/prism/control/session.ts",
-        "skills/prism/directions/index.ts",
+        "skills/prism/runtime.ts",
         "skills/prism/server/control-server.ts",
-        "skills/prism/server/worker-service.ts",
-        "skills/prism/server/worker-operation.ts",
+        "skills/prism/server/database-roles.ts",
+        "skills/prism/server/ingestion.ts",
         "skills/prism/server/native-worker-execution.ts",
         "skills/prism/server/native-worker-host.ts",
         "skills/prism/server/studio-request.ts",
-        "skills/prism/server/ingestion.ts",
-        "skills/prism/server/database-roles.ts",
-        "skills/prism/config/database-bootstrap.ts",
-        "contracts/prism/v1/src/complexity.ts",
-        "contracts/prism/v1/src/baseline-archive.ts",
-        "packaging/runtime/roles/prism.json",
-        "charts/prism/templates/workloads.yaml",
-        "charts/prism/values.yaml",
-        "charts/prism/files/prism-backup.sh",
-        "skills/nova/plugins/prism-design/src/stage.ts",
-        "contracts/pipeline-test-gate/v1/src/remote.ts",
-        "skills/common/plugin-runtime/sdk/src/runtime.ts"
+        "skills/prism/server/worker-operation.ts",
+        "skills/prism/server/worker-service.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/storage/index.ts"
       ],
       "checks": [
         {
@@ -718,6 +720,11 @@
           "command": "Independent Prism source/reader topic review",
           "exitCode": 0,
           "observation": "Overview,data and extension guide PASS; relevant source pins and reader links checked."
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "review": {
@@ -732,7 +739,17 @@
         "Whole-file package.json guide pin check failed; unchanged inspected Prism source claims independently verified, no aggregate guide PASS."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "revisionHistory": [
+        {
+          "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+          "changedFiles": [
+            "docs/site/understand/prism-data.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
+      ]
     },
     {
       "id": "AP09.5-ready-buster-core-change-20261020",
@@ -948,7 +965,7 @@
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -988,71 +1005,73 @@
         "docs/site/understand/security-and-trust.md"
       ],
       "sources": [
-        "skills/nova/plugins/implementation-agent/src/stage.ts",
-        "skills/nova/plugins/implementation-agent/src/protocol.ts",
-        "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
-        "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
-        "skills/nova/plugins/implementation-agent/plugin.json",
+        ".agents/plugins/marketplace.json",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/ops-pod/templates/rbac.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml",
+        "charts/prism/templates/networkpolicy.yaml",
+        "docker/Dockerfile.archviewer",
+        "docker/Dockerfile.nova",
+        "docker/archviewer.nginx.conf",
+        "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/loki.yaml",
+        "gitops/platform/values/postgresql.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "gitops/platform/values/redis.yaml",
+        "gitops/platform/values/tailscale-operator.yaml",
+        "my-values/infra/registry-local.yaml",
+        "my-values/infra/registry-mirror.yaml",
+        "my-values/infra/spire-values.yaml",
+        "my-values/nova-values.yaml",
+        "my-values/prism-agent-values.yaml",
+        "my-values/setup-secrets.sh",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "scripts/argocd-self-management.mjs",
+        "scripts/check-cni-portability.mjs",
+        "scripts/check-platform-specialist-guides.mjs",
+        "scripts/deploy.sh",
+        "scripts/platform-services.mjs",
+        "scripts/registry-client-config.mjs",
+        "skills/common/plugins/openclaw-agent-observer/package.json",
+        "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
         "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
         "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
-        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
-        "skills/nova/plugins/review/src/stage.ts",
+        "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/test-gates/source-snapshot.ts",
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+        "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/review/plugin.json",
+        "skills/nova/plugins/review/schemas/input.schema.json",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
         "skills/nova/plugins/review/src/review-policy-resolver.ts",
         "skills/nova/plugins/review/src/review-reducer.ts",
         "skills/nova/plugins/review/src/review-report-contract.ts",
-        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
-        "skills/nova/plugins/review/plugin.json",
-        "skills/nova/plugins/review/schemas/input.schema.json",
-        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/nova/plugins/review/src/stage.ts",
         "skills/prism/control/agent-jobs.ts",
-        "skills/prism/server/agent-job-runner.mjs",
-        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
-        "skills/common/plugins/openclaw-agent-observer/src/config.ts",
-        "skills/common/plugins/openclaw-agent-observer/package.json",
-        "my-values/nova-values.yaml",
-        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
-        ".agents/plugins/marketplace.json",
-        "charts/ops-pod/templates/workload.yaml",
-        "charts/ops-pod/templates/rbac.yaml",
-        "charts/ops-pod/values.yaml",
-        "tools/ops-mcp/src/server.mjs",
-        "tools/ops-mcp/src/config.mjs",
-        "tools/ops-mcp/src/authentication.mjs",
-        "tools/ops-mcp/src/kubernetes.mjs",
-        "tools/ops-mcp/src/hubble.mjs",
-        "tools/ops-mcp/package.json",
-        "charts/kubeclaw/templates/archviewer.yaml",
-        "charts/kubeclaw/templates/deployment.yaml",
-        "docker/archviewer.nginx.conf",
-        "docker/Dockerfile.archviewer",
-        "scripts/deploy.sh",
-        "scripts/platform-services.mjs",
-        "scripts/argocd-self-management.mjs",
-        "scripts/check-cni-portability.mjs",
-        "charts/kubeclaw/values.yaml",
-        "charts/prism/templates/networkpolicy.yaml",
-        "my-values/infra/registry-local.yaml",
-        "docker/buster-runtime-entrypoint.sh",
-        "scripts/registry-client-config.mjs",
-        "my-values/infra/registry-mirror.yaml",
-        "gitops/platform/values/redis.yaml",
-        "gitops/platform/values/postgresql.yaml",
-        "gitops/platform/values/tailscale-operator.yaml",
-        "gitops/platform/values/prometheus.yaml",
-        "gitops/platform/values/loki.yaml",
-        "gitops/platform/values/alloy.yaml",
-        "docker/Dockerfile.nova",
-        "charts/kubeclaw/templates/configmap-gateway.yaml",
-        "my-values/prism-agent-values.yaml",
-        "skills/worker/core/worker/trust.ts",
-        "skills/nova/core/execution/authorization.ts",
-        "skills/nova/core/test-gates/source-snapshot.ts",
         "skills/prism/control/session.ts",
-        "skills/common/plugins/secret-resolver/src/adapter.ts",
-        "my-values/setup-secrets.sh",
-        "my-values/infra/spire-values.yaml",
-        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
-        "scripts/check-platform-specialist-guides.mjs"
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/server/agent-job-runner.mjs",
+        "skills/worker/core/worker/trust.ts",
+        "tools/ops-mcp/package.json",
+        "tools/ops-mcp/src/authentication.mjs",
+        "tools/ops-mcp/src/config.mjs",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/kubernetes.mjs",
+        "tools/ops-mcp/src/server.mjs"
       ],
       "checks": [
         {
@@ -1084,6 +1103,11 @@
           "command": "Independent specialist/dependency/security source and reader review",
           "exitCode": 0,
           "observation": "22 named requirements and whole A97-02/A97-04 source/reader/quality PASS; exact owners,contracts,failures and recovery reviewed."
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "review": {
@@ -1145,7 +1169,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revisionHistory": [
+        {
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedFiles": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
+      ]
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
@@ -4367,7 +4401,7 @@
     },
     {
       "id": "AP09-selected-model-gateway-20261021",
-      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -4381,13 +4415,15 @@
         "docs/site/understand/pipeline-dependencies.md"
       ],
       "sources": [
-        "versions.json",
-        "docker/Dockerfile.nova",
         "charts/kubeclaw/templates/configmap-gateway.yaml",
         "charts/kubeclaw/values.yaml",
+        "docker/Dockerfile.nova",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "my-values/infra/litellm-config.yaml",
         "my-values/infra/litellm-deployment.yaml",
-        "scripts/render-litellm-deployment.mjs"
+        "scripts/render-litellm-deployment.mjs",
+        "versions.json"
       ],
       "checks": [
         {
@@ -4399,6 +4435,11 @@
           "command": "node scripts/docs-platform-surface-inventory.mjs --check",
           "exitCode": 0,
           "observation": "498 dependency signals,171 resources,42 secret refs,72 endpoints,65 outbound records,75 stores,56 events,8 Ops tools current."
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "review": {
@@ -4441,7 +4482,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce"
+      "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revisionHistory": [
+        {
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedFiles": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
+      ]
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
@@ -5096,7 +5147,7 @@
     },
     {
       "id": "AP09-complete-state-content-20261021",
-      "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 state-final-review",
       "gateIds": [],
@@ -5129,6 +5180,8 @@
         "contracts/prism/v1/src/node-catalog.ts",
         "docker/Dockerfile.buster-runtime",
         "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "docs/status/open-issues.json",
         "gitops/platform/litellm/resources.yaml",
         "gitops/platform/registry-local/resources.yaml",
@@ -5237,6 +5290,11 @@
           "command": "Independent whole state content review, correction audit and final offline-limit follow-up",
           "exitCode": 0,
           "observation": "DAT001/004/005/009 sourceAccuracy/readerUsability/quality PASS; intermediate NOT_READY retained."
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "review": {
@@ -5273,7 +5331,17 @@
           ]
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedFiles": [
+            "docs/site/understand/prism-data.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
+      ]
     },
     {
       "id": "AP09-decision-record-content-20261021",
@@ -6153,7 +6221,7 @@
     },
     {
       "id": "AP09-registry-data-path-20261021",
-      "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Nova /root authored guide and selected registry profile correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
       "gateIds": [],
@@ -6187,6 +6255,8 @@
         "docker/Dockerfile.buster-runtime",
         "docker/archviewer.nginx.conf",
         "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "gitops/platform/bootstrap/registry-local.yaml",
         "gitops/platform/litellm/resources.yaml",
         "gitops/platform/registry-local/resources.yaml",
@@ -6309,6 +6379,11 @@
           "command": "Independent whole COM010 and OPR010 source/reader/quality review, corrected profile follow-ups",
           "exitCode": 0,
           "observation": "Both whole obligations PASS; intermediate NOT_READY preserved and all affected prior scopes explicitly retained."
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "review": {
@@ -6327,6 +6402,16 @@
         "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-final-review.json",
         "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/remaining-surfaces-review.json",
         "docs/blueprint/acceptance-evidence/registry-studio-complete-20261021/registry-profiles-correction-review.json"
+      ],
+      "revisionHistory": [
+        {
+          "revision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
+          "changedFiles": [
+            "docs/site/understand/platform-and-operations.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        }
       ]
     },
     {
@@ -7771,7 +7856,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -7949,6 +8034,8 @@
         "docs/site/use/workflows/wait-resume.md"
       ],
       "sources": [
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-final-output-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json",
@@ -8029,6 +8116,11 @@
           "command": "Independent narrow three-record namespace source/search/layout preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "209output hashes;27freshSVGhashes;1667exactSourceexcerpts;three namespace widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json"
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -8101,6 +8193,15 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
           "reason": "Narrow independent preservation only: same pinned namespace implementation, corrected initial credential/exposure ordering and distinct expiry/deletion finalizer paths; current actual artifact/search/Source/preview/fresh-render and three-width namespace browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+          "changedFiles": [
+            "docs/site/understand/platform-and-operations.md",
+            "docs/site/understand/prism-data.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
         }
       ]
     },
@@ -8537,7 +8638,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+      "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -8552,6 +8653,8 @@
       ],
       "sources": [
         ".github/workflows/docs-checks.yaml",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-final-output-observations.json",
+        "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-axe-observations.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-harness-provenance.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corrected-browser-observations.json",
@@ -8649,6 +8752,11 @@
           "command": "Independent narrow three-record namespace source/search/layout preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "209output hashes;27freshSVGhashes;1667exactSourceexcerpts;three namespace widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json"
+        },
+        {
+          "command": "Independent narrow seven-record corpus/platform source/search/layout preservation and current actual reader checkers",
+          "exitCode": 0,
+          "observation": "209output hashes;27freshSVGhashes;1678exactSourceexcerpts;six changed diagram widths/nativekeyboard/noJS/offline without findings. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json"
         }
       ],
       "limits": [
@@ -8666,6 +8774,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
           "reason": "Narrow independent preservation only: same pinned namespace implementation, corrected initial credential/exposure ordering and distinct expiry/deletion finalizer paths; current actual artifact/search/Source/preview/fresh-render and three-width namespace browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "2febcd995924bfd05961b1c41142c401205bf39e",
+          "changedFiles": [
+            "docs/config/documentation-diagrams.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+          "reason": "Narrow independent preservation only: same pinned corpus/platform implementation, corrected unsupported corpus-generation/CAS arrows and separate readiness/client-cache/externalCSI ownership; current actual artifact/search/Source/preview/fresh-render and two-diagram six-width native browser proof. Existing accepted facts and limits retained; no broad historical reapproval."
         }
       ]
     }
@@ -40811,7 +40927,7 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "2febcd995924bfd05961b1c41142c401205bf39e",
+      "securedSourceRevision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
       "acceptedRequirements": 203,
       "acceptedGates": 17,
       "newRequirementsThisCampaign": 44,
@@ -40826,8 +40942,8 @@
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
-        "result": "PASS narrow three-record changed-boundary preservation; prior complete A91207 retained.",
+        "report": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/corpus-platform-prior-impact-review.json",
+        "result": "PASS narrow seven-record changed-boundary preservation; prior complete A91207 retained.",
         "limit": "No new whole diagram/humanAT/globalAPI/live approval."
       },
       "checks": [
@@ -40847,7 +40963,7 @@
           "observation": "91/91+7/7PASS;2precise native receipt renewals/60unchanged/2newDocroles;isolated lock source-input separately accounted. Root package/lock unchanged. Scoped semantic corrections independently clean."
         }
       ],
-      "diagramSourceProgress": "17/27 individual diagrams supported in documented pinned-source scope. Six system and four service edge proofs remain incomplete; wholePUB005/A91206 NOT_READY. Namespace initial provisioning vs Ready and TTL vs explicit deletion finalizer paths independently corrected; broad capacity failures retained."
+      "diagramSourceProgress": "19/27 individual diagrams supported in documented pinned-source scope. Six system and two service edge proofs remain incomplete; wholePUB005/A91206 NOT_READY. Corpus generation and CAS links corrected; mirror readiness/client routing and external CSI boundaries corrected; broad capacity failures and authority-map Prism activation NOT_READY retained. Buster16edges supported by separate unchanged-source review."
     }
   },
   "productBoundaries": [
