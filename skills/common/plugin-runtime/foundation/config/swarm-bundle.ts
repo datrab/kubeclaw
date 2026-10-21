@@ -71,6 +71,17 @@ export function preflightPipelineV10Owners(document: unknown, supplied: unknown)
     if (owner === 'worker-core' && !validateWorkerCoreV3Author(authors[owner])) {
       throw new Error('PIPELINE_V10_OWNER_INVALID:worker-core:NATIVE_POLICY');
     }
+    // The v10 owner has a distinct original render wire. Preserve the real
+    // engine's relational invariant for EVERY profile before source I/O;
+    // schema-valid dimensions alone are insufficient. Never send this wire
+    // through the legacy enginePolicy/render codec or grant activation.
+    if (owner === 'prism-execution') {
+      for (const profile of Object.values(authors[owner].profiles)) {
+        const render = (profile.settings.engine as { render: Record<string, number> }).render;
+        if (!(render['WIDTH-COMPACT']! < render['WIDTH-REGULAR']!
+          && render['WIDTH-REGULAR']! < render['WIDTH-WIDE']!)) throw new Error('PRISM_RENDER_WIDTH_ORDER_INVALID');
+      }
+    }
     counts[owner] = Object.keys(authors[owner].profiles).length;
     if (owner === 'buster-engine') {
       for (const profile of Object.values(authors[owner].profiles)) {

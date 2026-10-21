@@ -127,3 +127,43 @@ test('existing physical loader checks v10 root and every owner, but never emits 
   assert.throws(() => readSwarmBundle(path.join(directory, 'pipeline.config.json'), selection), /V10_ROOT_INVALID/,
     'bad root denied before component I/O, no legacy/default fallback');
 });
+
+test('v10 selected and unselected render widths retain original strict ordering before physical source I/O', t => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-v10-render-'));
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  fs.mkdirSync(path.join(directory, 'components'));
+  fs.writeFileSync(path.join(directory, 'pipeline.config.json'), JSON.stringify(root));
+  const candidate = clone();
+  const execution = candidate.owners['prism-execution'];
+  const selected = candidate.root.bindings.find((b: any) => b.owner === 'prism-execution').profileId;
+  const unselected = 'unselected-render';
+  execution.profiles[unselected] = structuredClone(execution.profiles[selected]);
+  assert.ok(!candidate.root.bindings.some((b: any) => b.owner === 'prism-execution' && b.profileId === unselected));
+  const binding = candidate.root.bindings.find((b: any) => b.owner === 'buster-engine');
+  const selection = { role: 'buster' as const, callerId: 'buster-preparation' as const, serviceInstanceId: binding.instanceId,
+    bindings: [{ owner: 'buster-engine' as const, instanceId: binding.instanceId, profileId: binding.profileId }] };
+  const entry = path.join(directory, 'pipeline.config.json');
+  const write = () => {
+    for (const [name, owner] of Object.entries(candidate.owners)) {
+      fs.writeFileSync(path.join(directory, 'components', name+'.config.json'), JSON.stringify(owner));
+    }
+  };
+  const original = structuredClone(execution.profiles[selected].settings.engine.render);
+  for (const profileId of [selected, unselected]) {
+    for (const [left, right] of [['WIDTH-COMPACT', 'WIDTH-REGULAR'], ['WIDTH-REGULAR', 'WIDTH-WIDE']]) {
+      for (const inverted of [false, true]) {
+        const render = execution.profiles[profileId].settings.engine.render;
+        render[right!] = render[left!] - Number(inverted);
+        assert.throws(() => preflightPipelineV10Owners(candidate.root, candidate.owners), /PRISM_RENDER_WIDTH_ORDER_INVALID/);
+        write();
+        assert.throws(() => readSwarmBundle(entry, selection), /PRISM_RENDER_WIDTH_ORDER_INVALID/,
+          'all original owners are validated before plugin/source I/O, even for a Buster caller');
+        execution.profiles[profileId].settings.engine.render = structuredClone(original);
+        assert.equal(preflightPipelineV10Owners(candidate.root, candidate.owners).activationAllowed, false);
+        write();
+        assert.throws(() => readSwarmBundle(entry, selection), /V10_SOURCE_LAYOUT_REQUIRED/,
+          'restoring the original reaches the source gate, never legacy capture or activation');
+      }
+    }
+  }
+});
