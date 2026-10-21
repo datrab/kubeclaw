@@ -149,7 +149,7 @@ use the individual extension guides below for activation and safe removal.
 | `reportAdapters` | `ReadonlyMap<string,ReportAdapterRegistryEntry>` |
 | `reportAdapterFormats` | `ReadonlyMap<string,readonlyReportAdapterRegistryEntry[]>` |
 
-Source: [Registry snapshot and registration entry contracts](https://github.com/datrab/kubeclaw/blob/c46de6bab8835d6146e90ff0adbede08f5bacb85/skills/common/plugin-runtime/foundation/registry/types.ts#L20-L64).
+Source: [Registry snapshot and registration entry contracts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/foundation/registry/types.ts#L20-L64).
 
 ## Choose Configuration First
 

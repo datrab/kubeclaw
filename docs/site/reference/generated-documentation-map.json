@@ -2931,7 +2931,7 @@
       "audience": "platform operator, runtime maintainer, integration developer, security reviewer",
       "owner": "runtime and platform maintainers",
       "appliesTo": "current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths",
-      "lastVerified": "code, schema, chart, manifest, and focused test inspection on 2026-09-21",
+      "lastVerified": "original path inspection on 2026-09-21; native restart, Core isolation and observer delivery source details extended on 2026-10-21; no live or native exercise asserted",
       "sourceDependencies": [
         "contracts/pipeline-test-gate/v1",
         "contracts/pipeline-worker-core/v1",

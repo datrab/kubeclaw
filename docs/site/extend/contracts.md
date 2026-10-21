@@ -189,8 +189,8 @@ Top-level calls select this path for confidential capabilities such as
 `secrets.read`. An adapter can also explicitly call a declared, granted dependency
 through `invokeConfidential`, even when that capability is not classified as
 confidential. This changes recording, not the provider, grant or resource checks.
-[The dependency dispatcher selects either confidential condition](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapter-startup.ts#L75-L95);
-[the coordinator redacts the audit and returns the result without a durable receipt](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/effects/coordinator.ts#L39-L70).
+[The dependency dispatcher selects either confidential condition](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/adapter-startup.ts#L75-L95);
+[the coordinator redacts the audit and returns the result without a durable receipt](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/effects/coordinator.ts#L39-L70).
 
 The effect coordinator records request, acceptance, and receipt around ordinary
 mutations. A durable receipt prevents the same effect key from invoking the adapter
@@ -216,9 +216,9 @@ Explicit shutdown aborts active lifecycle signals and waits up to
 `shutdownTimeoutMs`. A timeout clears the runtime's instance maps; it does not
 prove external operations stopped or resources disappeared. Preserve their
 identities and reconcile with the owning provider before a retry.
-[Startup sequence](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapter-startup.ts#L23-L62)
-, [rollback teardown](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapter-startup.ts#L160-L166)
-and [bounded explicit shutdown](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/core/execution/adapters.ts#L69-L88)
+[Startup sequence](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/adapter-startup.ts#L23-L62)
+, [rollback teardown](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/adapter-startup.ts#L160-L166)
+and [bounded explicit shutdown](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/adapters.ts#L69-L88)
 define these limits. See [the runtime lifecycle](../understand/plugin-runtime.md)
 for activation, readiness and partial-failure diagnosis.
 

@@ -6,7 +6,7 @@ Owner: runtime and platform maintainers
 Evidence: contracts/pipeline-test-gate/v1; contracts/pipeline-worker-core/v1; skills/nova/core; skills/worker/core; skills/common/plugins/redis-transport; charts/kubeclaw; charts/prism; tests/verification/reliability
 Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths
-Last verified: code, schema, chart, manifest, and focused test inspection on 2026-09-21
+Last verified: original path inspection on 2026-09-21; native restart, Core isolation and observer delivery source details extended on 2026-10-21; no live or native exercise asserted
 
 ## How To Read This Page
 
@@ -102,6 +102,12 @@ it is not the authority for Control state.
 
 The [embedding client limits and failure rules](platform-and-operations.md#embedding-client-limits-and-failure-rules) give the pinned source, attempt budgets, cancellation limits, and source-versus-live boundary for the LiteLLM row below.
 
+Use the [inbound route and outbound connection reference](../reference/endpoints.md)
+for the discovered method/path inventory, including probe routes, forwarding
+prefixes, static fallbacks and their exclusions. The rows below group connections
+by their owner and failure contract; a grouped row is not a replacement for the
+individual route's schema or admission rules.
+
 | Sender → receiver | Purpose and schema | Transport / endpoint | Authentication and authorization | Timeout and ordering | Retry, persistence, and deduplication | Backpressure | Failure effect and recovery |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Nova → Buster | Submit `buster-plan-job.v1`; read status, `buster-plan-result.v1`, and digest-bound evidence. | HTTP(S): `POST /v1/plan-jobs`; `GET` or `DELETE /v1/plan-jobs/:jobId`; `GET .../results/:digest` and `.../evidence/:digest`. | Bearer token of at least 32 characters, or loopback HTTP behind a SPIFFE proxy; capability and fixed plan/source grants are in the job. | One gate deadline; polling is at least 10 ms; cleanup defaults to 10 s. Submit precedes status and import. | Nova stores intent first. Job ID derives from idempotency key. Buster locks and stores one job. Retry uses the same ID. Import records pending before blobs and completes once. | Configured response/result ceilings, plan limits, Buster concurrency, and evidence byte limits. | Retry only classified transport/server failures within the deadline. Lost response causes status reconciliation, never a new job. Digest or identity mismatch blocks import. |
@@ -114,12 +120,12 @@ The [embedding client limits and failure rules](platform-and-operations.md#embed
 | Nova, Buster, or Prism OpenClaw → LiteLLM → Vertex | Create remote memory-search embeddings. Agent reasoning uses the separately configured managed OpenAI model route. | OpenAI-compatible `http://litellm.kubeclaw.svc.cluster.local:4000/v1`; model `gemini-embedding-001`; LiteLLM routes to Vertex AI. | OpenClaw receives `LITELLM_API_KEY`; LiteLLM reads its master key and mounted Google service-account credential. | Pinned source: 60 s per query attempt; 10 min per inline index request; query cancellation propagates. The role probe calls only `/health`. | Memory manager allows at most three query attempts; index requests allow three transient or five rate-limit attempts, with recursive splitting for selected failures. These are attempt counts, not a whole-run ceiling. LiteLLM PostgreSQL and OpenClaw memory state have separate owners. | Index input estimate: 8,000 UTF-8 bytes per group; success response: 16 MiB and 30 s body-idle limit. No adapter request-body cap. Provider quota and gateway capacity remain external. | Keep the owning operation incomplete on timeout, auth, quota, provider, or vector error. Diagnose and prove one real embedding; health success is not route proof. |
 | Discord service and allowed user ↔ Nova or Buster OpenClaw | Carry the two enabled bot channels, allowed commands, threaded sessions, replies, and Buster execution approvals. | External Discord bot gateway and HTTPS APIs as implemented by the pinned OpenClaw Discord plugin. The repository fixes channel IDs but not Discord service endpoints. | Distinct `DISCORD_TOKEN` Secret keys authenticate each bot. Channel, allowed-user, owner, mention, and Buster approver lists authorize application handling. | Guild messages require a mention. The configured inbound worker limit is 12 hours; thread idle is 999 hours. External request timeout, reconnect, and rate-limit retry are not defined here. | OpenClaw retains role session state. Discord retains external message identity. No Discord message can replace a Nova journal, Buster receipt, or Prism row, and no repository contract proves end-to-end message deduplication. | Discord limits, one gateway's session controls, and external rate controls. | Keep domain state unchanged on disconnect, denial, or uncertain reply. Restore the same bot and channel, then prove an allowed user and a denied user without replaying an uncertain command. |
 | Prism Control / Worker → Prism PostgreSQL | Transact projects, revisions, operations, agent jobs, approvals, preferences, corpus, and worker nonces. | PostgreSQL to `prism-postgresql:5432`; separate runtime, migration, backup, and test URLs. | Credentials come from `prism-postgresql-auth`; NetworkPolicy restricts named Prism clients. | Pool, statement, lock, and transaction limits are owner-specific. Worker dependency checks default to 750 ms. | PostgreSQL is authoritative. Row locks, unique keys, advisory locks, revision CAS, and job fences serialize conflicts. | Database pool and retained PVC. | Stop Prism mutation when unavailable. Restore the matched database-and-artifact group and reconcile operations before new admission. |
-| Nova stage → Forge or Echo via runtime adapter | `kubeclaw.implementation.v2` or the Echo review request; strict typed completion. | In-process capability call, then OpenClaw Gateway HTTP/MCP/ACP for the selected allowlisted target. | Core capability grant, target ID allowlist, named secret; optional verified workspace owner. OpenClaw controls model/tool access. | Target polling defaults 1–15 s and session deadline 30 minutes. One session identity orders all polls and result collection. | Core effect identity and runtime idempotency key; session identity is reconciled after lost response. Final artifact is stored by the stage. | Fixed prompt/context/output budgets; target response sizes; bounded session polls. | Parser rejection blocks the stage. Abort sends cancel/stop and must prove terminal state. Unresolved cleanup blocks retry to prevent duplicate agents. |
+| Nova stage → Forge or Echo via runtime adapter | `kubeclaw.implementation.v2` or the Echo review request; strict typed completion. | In-process capability call, then bearer-authenticated HTTP POST JSON to the configured OpenClaw Gateway endpoint for the selected allowlisted target; ACP/subagent selects the runtime, not a second wire transport. | Core capability grant, target ID allowlist, named secret; optional verified workspace owner. OpenClaw controls model/tool access. | Target polling defaults 1–15 s and session deadline 30 minutes. One session identity orders all polls and result collection. | Core effect identity and runtime idempotency key; session identity is reconciled after lost response. Final artifact is stored by the stage. | Fixed prompt/context/output budgets; target response sizes; bounded session polls. | Parser rejection blocks the stage. Abort sends cancel/stop and must prove terminal state. Unresolved cleanup blocks retry to prevent duplicate agents. |
 | Nova Core → stage | Invoke stage with `StageInvocationContract`; receive `stage-result.v2`, wait, effects, facts, and artifacts. | In-process module call for direct activation; isolated stage IPC when that activation is selected. | Registry snapshot, package digest, registration ID, role selection, stage capability grant, attempt lease and fence. | Attempt lease and abort signal propagate. Scheduler orders graph dependencies; stages do not select successors. | Run journal and attempt records are authoritative. Attempt number and effect idempotency keys prevent reuse. | Declared input/artifact limits, scheduler concurrency, effect limits, and isolation channel limits. | Invalid result or expired fence cannot change lifecycle. Core records failure and applies declared retry/repair policy. |
 | Stage → adapter | Request one effect such as Git, artifact, secret, dispatch, Redis, or Buster transport. | In-process capability router; adapter can then use local or network transport. | Exact capability grant, operation, resource type and canonical ID; confidential calls hide secret results from ordinary stage data. | Caller abort and effect deadline propagate. Core journals intent before uncertain external work. | Effect ID and idempotency key bind retries. Adapter-specific reconciliation decides whether an unknown result can repeat. | Adapter request/response limits and bounded cleanup scope. | Unknown external outcome becomes reconciliation-required. Do not translate it into an ordinary stage retry. |
 | Buster provider → configured HTTP(S) target | Execute a Buster `network.http` request whose method and complete URL are supplied by the admitted provider request; inventory identity is `DYNAMIC {configuredUrl}`. | Fetch with manual redirects; HTTP or HTTPS only. WebSocket is a separately gated operation and is not this HTTP family. | The capability request must name `network.http`, `network.url`, and an allowed operation. Runtime policy checks exact origin or suffix, port, exact-origin authority, method, request headers, and optional registry-health credentials; URL credentials and fragments are denied. | The request timeout is the smaller configured request value or runtime maximum and is combined with caller cancellation. There is no automatic redirect or request retry. | The invoker stores no response or deduplication state. The owning Buster job/attempt and its evidence remain authoritative, so an uncertain non-idempotent target outcome needs target-specific reconciliation. | Configured request and response byte ceilings; request header entries and requested response-header names are each limited to 32; WebSocket message count/bytes are separately bounded. | Denied policy, cancellation, timeout, redirect, response overflow, or transport error fails the provider request. Do not replay a mutating configured method unless the owning effect and remote target make that replay safe. |
 | Granted stage/plugin → common `network.http` adapter → configured HTTP(S) target | Execute the common adapter's runtime-configured method and URL; inventory identity is `DYNAMIC {configuredUrl}`. | Fetch to the request canonical URL with manual redirects and connection close. | Core must grant `network.http`/`request`; the adapter requires an exact configured origin and allowed method/header set, rejects URL credentials, and checks the current fence for non-confidential calls. Any application credential is an explicitly allowed request header, not implicit adapter identity. | Caller cancellation propagates; adapter timeout defaults to 30 s. It performs one request and never follows or retries a redirect. | The adapter is stateless. Core's effect journal, effect ID, and idempotency key own retry/reconciliation; the remote service owns any accepted mutation. | Request and decompressed response each default to 1 MiB and are configurable; response collection stops at the ceiling. | Origin, method, header, fence, timeout, redirect, size, HTTP, decode, or transport failure rejects the effect. Preserve an unknown remote outcome for reconciliation rather than turning it into a fresh stage retry. |
-| Core → observer | Deliver lifecycle and telemetry events after authoritative state changes. | In-process observer callback; an observer may emit to Redis or another sink through a granted adapter. | Observer registration and narrow telemetry capabilities. Observer has no lifecycle-write grant. | Delivery follows committed lifecycle order; observer deadline applies. | Canonical journal is the source of truth. Sink delivery can deduplicate by event/idempotency identity. | Observer queue and sink bounds. | Observer failure can degrade visibility but cannot reverse or invent pipeline state. Replay from authority where supported. |
+| Core → observer | Deliver lifecycle and telemetry events after authoritative state changes. | In-process observer callback; an observer may emit to Redis or another sink through a granted adapter. | Observer registration and narrow telemetry capabilities. Observer has no lifecycle-write grant. | Delivery follows committed lifecycle order; observer deadline applies. | Canonical journal is the source of truth. Sink delivery can deduplicate by event/idempotency identity. | Journal-backed drain with no bounded delivery-queue ceiling; sink-specific bounds. | Observer failure can degrade visibility but cannot reverse or invent pipeline state. Replay from authority where supported. |
 | Native supervisor ↔ unprivileged worker host | Carry role-defined control messages; process input/result use the Worker envelope/result contracts. | One duplex native control stream with 4-byte big-endian length framing; process stdin/stdout is separate. | Local process ownership, fixed executable, dropped privilege, attempt identity, cgroup, and journal. No network credential. | Single reader; writes serialize in call order. Attempt, close, poll, and cleanup timeouts come from native policy. | Native journal records accepted input, process result, spooled output, and sealed result. The framing layer has no message deduplication. | Per-message and total-session byte ceilings; stdout/stderr spool and result limits. Stream write backpressure is awaited. | Truncated, oversized, closed, or ambiguous channel fails the attempt. Supervisor terminates and drains the owned process tree before recovery. |
 | Plugin → Redis | Publish transport payload or telemetry JSON. | RESP over `redis://` or TLS over `rediss://`; `AUTH`, then one Lua `EVAL`. Stream is `<prefix>:v2:<kind>:<encoded target>`. | Password is resolved through `secrets.read`; URL cannot contain credentials. TLS validates the server hostname in `rediss` mode. Capability must match publisher or telemetry adapter. | Configured timeout, maximum 300 s. Redis stream IDs order accepted entries per stream. | Lua checks a digest-derived dedup key, then `XADD MAXLEN ~`, then stores entry ID with configured TTL. Redis is transport, not run authority. | Payload ≤1 MiB; response ≤about 1 MiB; `maxLen` ≤1,000,000; socket pressure and timeout stop the call. | Connection, auth, protocol, timeout, or response failure rejects the effect. Reconcile by the same idempotency key; lifecycle recovers from Nova's journal. |
 | OpenClaw observer → Redis | Write agent-observability v1 control or payload events and failed-control dead letters. | `XADD MAXLEN ~` to fixed `pipeline:agent-observability:{control,payload,deadletter}:v1` streams. | Observer Redis credentials and optional TLS; host policy controls which OpenClaw hooks enter the writer. | One queue drains control before payload. Each command has a configured timeout. Control retries use bounded exponential delay; payload writes try once. | Redis retains entries to approximate configured length. Runtime sequence/content suppression reduces duplicate observations, but there is no atomic Redis dedup key and no consumer acknowledgement here. | Separate bounded control and payload queues. A full queue drops the new event for that same queue. Control drain priority does not evict a payload event. | Failed control writes go to the dead-letter stream after bounded retry. If that write also fails, counters and warnings are the only evidence. Telemetry loss never changes lifecycle authority. |
@@ -213,7 +219,7 @@ PostgreSQL or the artifact store.
 | Prism Agent Bridge | `/health`, `/ready`, `/v1/dispatch`, `/v1/design-set`, `/v1/revise` on loopback | Same-pod OpenClaw/Envoy path and durable job ID | 2 MB body; 30 s dispatch; 10 s job read. |
 | Buster `network.http` provider | `DYNAMIC {configuredUrl}` with a configured HTTP method | Admitted Buster capability request plus origin/suffix, port, method, and header policy | Runtime execution/request/response ceilings; redirects and implicit retry are denied. |
 | Common `network.http` adapter | `DYNAMIC {configuredUrl}` with a configured HTTP method | Core capability grant and adapter exact-origin/method/header policy; fence for non-confidential calls | 30 s, 1 MiB request, and 1 MiB response defaults; redirects and adapter retry are denied. |
-| Ops MCP | `/healthz`, `/mcp` on loopback 8080; outbound `GET {kubernetesApiPath}` over configured API HTTPS origin | Shared MCP bearer and optional Origin allowlist; projected Kubernetes bearer, CA, and RBAC | Logs 64 KiB; Kubernetes 8 MiB/10 s; Hubble 2 MiB raw/192 KiB output/12 s. |
+| Ops MCP | `/healthz`, `/mcp` on loopback 8080; outbound `GET {kubernetesApiPath}` over configured API HTTPS origin | Shared MCP bearer and optional Origin allowlist; projected Kubernetes bearer, CA, and RBAC | Logs 64 KiB; Kubernetes 8 MiB/10 s; Hubble 2 MiB raw/12 s and 192 KiB compact flows array; metadata and the encoded MCP response are additional. See [the complete Ops MCP contract](ops-mcp.md). |
 | Archviewer | `/healthz`, static document paths on 3456 | Tailnet route plus Basic auth for documents | No directory listing; 401/403/404 fail closed. |
 | OCI registry | `/v2/` and OCI blob/manifest routes | Anonymous HTTP in the current lab service | Not suitable as the final production registry security posture. |
 | Local registry | `registry-local:5001` Service to container port 5000, `/v2/` health and OCI routes | Anonymous in the current lab | ReadWriteOncePod storage and one Recreate writer; no TLS or registry authentication. |
@@ -270,6 +276,87 @@ before import.
 >
 > [It checks result and evidence digests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L135-L194).
 
+### Forge and Echo: Gateway envelope and result import
+
+The physical adapter transport is an authenticated HTTP POST to the configured
+target's OpenClaw Gateway URL. Its JSON body contains `tool`, `args`, optional
+controller `sessionKey`, and optional `idempotencyKey`; the same key is encoded
+in the capability resource URL fragment for effect identity. `runtime=acp` or
+`runtime=subagent` selects Gateway execution behavior, not a second MCP or ACP
+wire transport implemented by this adapter. Core grants `runtime.dispatch`, the
+target allowlist and its secret reference authorize the request; OpenClaw owns
+agent/model/tool execution after admission.
+
+| Request protocol | Bound input and expected result |
+| --- | --- |
+| `kubeclaw.implementation.v2` | Forge receives the selected task, source/attempt identity and agent-owned output contract. Its output must not copy controller-owned request fields. The implementation plugin validates completion before accepting artifacts or source changes. |
+| `kubeclaw.echo-review.v1` | Echo receives immutable review bundle, bundle digest, resolved policy profile/digest, task and `outputContract`. Output is `echo-review-output.v1` with observations/proposed findings, not PASS/FAIL or lifecycle authority. |
+| `kubeclaw.echo-review-verification.v1` | Verification binds bundle, policy and proposal-set identities. Result is `echo-review-verification.v1`, with `confirmed`, `rejected`, or `insufficient_evidence` decisions for the specified proposals. |
+| `kubeclaw.echo-review-scale.v1` | One deterministic review job and its digest; the response uses the strict Echo review output schema. Context expansion stays bound to available complete sources, not an arbitrary file request. |
+| `kubeclaw.echo-review-scale-verification.v1` | Verification bundle/policy/proposal-set digests, one named proposal and supplied sources; output uses the verification schema. |
+| `kubeclaw.repository-finding-revalidation.v1` | Baseline/target heads, finding fingerprint and cluster, current path states/source and relationship candidates; result uses the repository revalidation contract. Absence proves path absence, not that behavior was not moved elsewhere. |
+
+Protocol builders and strict result definitions are the field authority:
+[implementation input/completion](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/implementation-agent/src/protocol.ts#L1-L59),
+[Echo request](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/protocol.ts#L62-L75),
+[Echo output](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/echo-review-contract.ts#L64-L137),
+[verification contract](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/echo-review-verification-contract.ts#L5-L35),
+[scaled review](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/scalable-review-jobs.ts#L157-L165),
+[scaled verification](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/scalable-review-verification.ts#L292-L305),
+and [repository revalidation](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/plugins/review/src/repository-revalidation-stage.ts#L174-L182).
+
+The adapter recovers a registered subagent using its stable label and expected
+model, then requires a complete, unambiguous run/session identity. Conflicting
+aliases or multiple candidates fail reattachment. Polling defaults to 1,000 ms,
+backs off up to 15,000 ms, and is bounded by 1,800 polls and a 1,800,000 ms
+session timeout. The owning invocation's abort/deadline further narrows this
+budget. Prompt bytes, tokenizer, reserved input, output and context token budgets
+are validated before dispatch; they are not provider-side streaming guarantees.
+Before polling, spawns are serialized within each adapter activation by Gateway
+endpoint and controller session key. The promise chain has no queue-length
+ceiling. After each spawn operation it waits `spawnIntervalMs` (default 1,500 ms),
+even when the operation fails. The session timeout starts inside `pollSession`,
+after spawning: it does not bound queue residence or spawn time. The caller's
+invocation signal and declared attempt deadline remain the outer cancellation
+boundary; queued work checks that signal before spawning.
+
+Source: [spawn serialization and spacing](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L187-L207),
+[configured default](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L59-L69),
+and [post-spawn polling deadline](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw-session.ts#L223-L240).
+
+This adapter polls bounded HTTP tool responses and imports one terminal result;
+it does not specify a model-token streaming protocol. Progress or a partial
+assistant message is not a completed stage result.
+
+Result selection has distinct paths:
+
+1. With both result endpoint and token secret, GET the result file's basename
+   from that endpoint using the separate bearer. Require status 200 and a record
+   containing non-empty text content.
+2. Otherwise, for an admitted workspace reference, read the workspace result,
+   validate JSON and persist its repository result record before Git cleanup.
+3. Read the repository result path through `git.repository.read`. Only an
+   explicit file-not-found result permits fallback; other read failures stop.
+4. Prefer a collector's structured result, then its non-empty result text;
+   validate and persist that value. Only when neither structured output nor non-empty result text is available does the collector schema/error state fail this selection. A selected structured value still requires the owning plugin’s validation.
+5. Otherwise read session history and require exactly one assistant message
+   marked `__openclaw.runTerminal=true`, containing exactly one text item.
+   Validate and persist it before parsing the stage result. Multiple or absent
+   terminal values fail; the adapter does not guess the last useful message.
+
+A lost spawn response is not permission to spawn again. Cleanup first resolves
+the original identity, requests subagent cancellation or sends the ACP stop
+message, then observes exact terminal state in Core's bounded cleanup scope.
+Neither a collector acknowledgement nor the stop message proves termination.
+Unknown identity or unproved termination leaves reconciliation unresolved and
+blocks ordinary replacement/retry. A valid terminal JSON result still passes
+the owning plugin's strict result contract before lifecycle or artifacts change.
+
+Source: [Gateway envelope](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw-session.ts#L167-L177),
+[target polling defaults](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L74),
+[terminal result selection](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw-result.ts#L48-L101),
+and [unknown-outcome cleanup](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L29-L65).
+
 ### Core, Plugins, And Worker Control
 
 Core communication is an authority boundary even when it is an in-process
@@ -286,6 +373,254 @@ state machine.
 > **Source evidence — bounded framing**
 >
 > [The channel validates limits and serializes framed writes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-control-channel.ts#L1-L45), then [rejects a second reader and truncated or oversized input](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-control-channel.ts#L46-L74).
+
+### Prism hop identities and native pressure
+
+The checked-in profiles enable SPIFFE with trust domain `kubeclaw.internal`.
+Let `N` be the Prism Helm release namespace and `K` the role-workload
+KubeClaw Helm release namespace. These are independently derived values, not
+an assumed shared namespace.
+The chart defaults Nova namespace/ServiceAccount to `kubeclaw`/`agent-nova`
+and the Prism Agent to `kubeclaw`/`agent-prism`; the selected Prism profile
+explicitly repeats the Agent pair. The resulting exact URI SANs are:
+
+| Authenticated hop | Client identity | Expected server identity |
+| --- | --- | --- |
+| Nova → Prism Agent (production dispatch) | `spiffe://kubeclaw.internal/ns/K/sa/agent-nova` | `spiffe://kubeclaw.internal/ns/K/sa/agent-prism` |
+| Control → Worker | `spiffe://kubeclaw.internal/ns/N/sa/prism-control` | `spiffe://kubeclaw.internal/ns/N/sa/prism-worker` |
+| Worker → Control | `spiffe://kubeclaw.internal/ns/N/sa/prism-worker` | `spiffe://kubeclaw.internal/ns/N/sa/prism-control` |
+| Control → Prism Agent | `spiffe://kubeclaw.internal/ns/N/sa/prism-control` | `spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-prism` |
+| Agent → Control | `spiffe://kubeclaw.internal/ns/K/sa/agent-prism` | `spiffe://kubeclaw.internal/ns/K/sa/prism-control` |
+
+The role chart derives both the Agent ingress allowlist and its Control
+upstream SAN from `K`; Prism's `novaNamespace`/`agentNamespace` do not rewrite
+those checks. Agent ingress accepts Nova, Control and the Prism test runner
+in `K`. Consequently Control → Agent and Agent → Control require `N = K`
+with the current templates, matching trust domains, and matching Agent
+namespace/account settings in the Prism chart. With the selected profile's
+Agent namespace `kubeclaw`, that also requires `K = kubeclaw`. Different
+namespaces need an explicit supported template/configuration change; changing
+only Prism's peer settings cannot make the role chart accept a different SAN.
+The charts do not establish an arbitrary cross-namespace deployment contract.
+
+Control also allowlists Nova directly at the configured Nova namespace/account;
+that permission is not the production Nova → Agent dispatch hop.
+
+Control's ingress allowlist additionally includes
+`spiffe://kubeclaw.internal/ns/N/sa/prism-test-runner` and Control itself.
+These are exact URI matches, not a trust-domain-wide grant. The template uses
+`workerTrust.spiffe.trustDomain`, `novaNamespace`, `novaServiceAccount`,
+`agentNamespace` and `agentServiceAccount`; changing these changes the expected
+identity. Studio's user-facing browser route has its own authentication boundary
+and is not an additional workload SPIFFE identity. A wrong SAN/namespace/account
+fails transport admission before operation/result binding; the matrix does not
+prove that SPIRE issued these identities or that a deployed proxy enforced them.
+
+Source: [selected Prism profile](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/my-values/prism-values.yaml#L35-L40),
+[selected Nova profile](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/my-values/nova-values.yaml#L118-L121),
+[identity defaults](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/values.yaml#L75-L84),
+[Control identity and accepted clients](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/templates/configmap-worker-trust.yaml#L9-L38),
+[Worker, Control and Agent upstream SANs](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/templates/configmap-worker-trust.yaml#L80-L130),
+[role-chart Agent ingress](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L104),
+[Nova upstream SAN](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/kubeclaw/templates/configmap-worker-trust.yaml#L129-L160),
+[Agent Control SAN](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/kubeclaw/templates/configmap-worker-trust.yaml#L175-L198),
+and [Worker's Control allowlist](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/charts/prism/templates/configmap-worker-trust.yaml#L139-L160).
+
+Native process stdout and stderr share one aggregate output budget, distinct
+from result-artifact and evidence-import limits. Configuration comes from the
+Worker's `PRISM_NATIVE_*` environment, not the Control HTTP response ceiling:
+
+| Environment suffix after `PRISM_NATIVE_` | Fallback | Pressure boundary |
+| --- | --- | --- |
+| `MAXIMUM_OWNERSHIP_RECORDS` / `MAXIMUM_OWNERSHIP_BYTES` | 65,536 / 64 MiB | Bounds durable ownership accounting; capacity is not permission to discard ownership evidence. |
+| `MAXIMUM_INPUT_BYTES` | 16 MiB | Bounds admitted input, separate from the aggregate journal reservation. |
+| `MAXIMUM_OUTPUT_BYTES` | 32 MiB | Aggregate stdout plus stderr overflow stops the producer with `WORKER_NATIVE_OUTPUT_LIMIT`. Persistence failure stops it with `WORKER_NATIVE_OUTPUT_PERSISTENCE_FAILED`. |
+| `MAXIMUM_RESULT_BYTES` | 67,108,864 bytes | Bounds native result storage/transport; separate from the 16 MiB result artifact. |
+| `MAXIMUM_JOURNAL_BYTES` | 64 GiB | New admission reserves input plus maximum output/result bytes, 65,536 bytes overhead and state space. Over-capacity rejects with `WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED` before retaining a new accepted identity. |
+| `POLL_INTERVAL_MS` / `DRAIN_TIMEOUT_MS` / `CLOSE_TIMEOUT_MS` | 20 / 10,000 / 105,000 ms | Bounds supervision polling and cleanup phases; failed cleanup or uncertain ownership fences further admission. |
+
+Actual environment values override these fallbacks and must satisfy the config
+validator. Spooling pauses the corresponding host pipe until durable append
+completes, propagating pressure to the process. Historical receipts remain
+replayable; do not delete journals/ownership records to free capacity or retry
+an uncertain process under a new identity. Diagnose capacity versus output
+termination versus fenced cleanup before resuming the same admitted work.
+
+Source: [native configuration and fallbacks](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/config/native-worker.ts#L4-L14),
+[Worker storage and cleanup limits](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/config/native-worker.ts#L56-L82),
+[journal reservation before new admission](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/worker/core/worker/native-attempt-journal.ts#L157-L179),
+and [aggregate output and durable-pipe pressure](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/worker/core/worker/native-process-output.ts#L5-L26).
+
+### Native Prism restart decisions
+
+Keep the original Control idempotency key and request content when a dispatch
+response is lost. A new key is new work, not reconciliation. Control first stores
+the input artifact, derives its content-bound request identity, and reserves the
+original `worker-attempt-envelope.v3` in `prism.engine_operation` under an advisory
+transaction lock. These are separate boundaries: an input artifact can exist
+without a reserved operation, and a reserved operation can exist without a response.
+
+| Durable state for the same key | Implemented continuation | Stop condition |
+| --- | --- | --- |
+| No operation row | Reserve the proposed envelope, then submit that reserved attempt. | Input artifact or request validation fails. Do not bypass validation by constructing another envelope. |
+| Row with the same request digest and a valid stored envelope, no result | Use the stored original envelope, including its execution ID, for the Worker request. | Changed request digest produces `PRISM_OPERATION_IDEMPOTENCY_CONFLICT`; inconsistent envelope, operation or execution binding produces `PRISM_NATIVE_OPERATION_BINDING_INVALID`. |
+| Bound successful (`completed`) terminal result already stored | Hydrate that stored result and evidence; do not dispatch another Worker execution. Mark completion for the same execution only after hydration. | A different result cannot replace the receipt; `PRISM_NATIVE_OPERATION_RESULT_CONFLICT` stops it. Failed hydration leaves the receipt available for another hydration attempt. |
+| Bound failed terminal receipt already stored | Preserve the receipt; cached-result acceptance throws the Worker error before evidence hydration. Do not dispatch again. | A non-`completed` state is not a hydratable successful result; reservation/acceptance fails rather than marking completion. |
+| Legacy row with no stored envelope but a cached result | Validate the cached result against the request digest and original attempt ID, then hydrate it. | An incompatible cached result is not permission to execute again. |
+| Legacy pending row without an envelope or result | Stop with `PRISM_NATIVE_LEGACY_PENDING_RECONCILIATION_REQUIRED`. | No automatic replay exists for this state. Preserve the row, Worker journal, source identity and original request for the platform maintainer; do not delete it or invent a replacement attempt. |
+
+The transport posts the reserved envelope to `/v1/attempts`. Non-success HTTP
+status cancels the body and fails the request; a successful response still needs
+bounded UTF-8/JSON decoding and result binding. Control's transport defaults are
+900,000 ms and 67,108,864 response bytes, configurable through
+`PRISM_NATIVE_DISPATCH_TIMEOUT_MS` and `PRISM_NATIVE_MAXIMUM_RESULT_BYTES`.
+They are distinct from the envelope's 300-second execution, 10-second cleanup,
+16 MiB result-artifact and 128 MiB evidence limits. A transport timeout does not
+establish whether execution finished. The operation receipt is committed before
+evidence hydration, so a failed download must not cause a second execution.
+Completion is accepted only for the stored execution whose Worker state is
+`completed`; an incompatible completion raises
+`PRISM_NATIVE_OPERATION_COMPLETION_CONFLICT`.
+
+Source: [reservation, legacy-state and result binding](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/control/native-operation-store.ts#L25-L68),
+[dispatch versus cached hydration](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/control/native-operation.ts#L12-L31),
+[bounded Worker response](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/control/worker-operation-transport.ts#L8-L35),
+and [transport defaults](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/prism/config/native-worker.ts#L4-L14).
+These are implemented recovery branches, not a record of a native restart exercise.
+
+On the Worker side, reconciliation precedes launch. A sealed cached receipt is
+returned without another process. An archived process result is reconstructed
+only if its ownership record is `disposed`, has a final observation, and that
+observation exactly matches the archived resources; otherwise recovery stops
+with `WORKER_NATIVE_JOURNAL_OWNERSHIP_UNPROVEN`. Without an archived result,
+non-quiescent ownership stops with `WORKER_NATIVE_RECOVERY_NOT_QUIESCENT`;
+a historical admitted attempt is sealed as interrupted, not relaunched.
+Only a newly accepted attempt with no ownership record can reach fresh launch.
+New admission validates active claim and queue deadline; replay of an existing
+journal admission does not reapply that new-admission test. Expiry between
+admission and launch seals a never-launched failure. Failed cleanup fences
+further admission; persistence/ownership uncertainty also fences it.
+
+Source: [replay, recovery and launch](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/worker/core/worker/native-attempt-executor.ts#L22-L62),
+[claim admission](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/worker/core/worker/native-attempt-executor.ts#L70-L79),
+[archived and interrupted recovery](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/worker/core/worker/native-attempt-recovery.ts#L24-L41),
+and [historical admission selection](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/worker/core/worker/native-attempt-journal.ts#L157-L172).
+
+### Core invocation and isolation contracts
+
+The complete typed field authority is the [SDK runtime interface](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/runtime.ts#L21-L111)
+and its [generated contract definitions](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L110-L163).
+They distinguish the following messages rather than treating every call as an
+untyped request:
+
+| Boundary | Request and response |
+| --- | --- |
+| Core → stage context | `plugin-context.v2`: lease, config, input and artifacts; optional runtime-dispatch/review-cache profiles, guidance and stage-lifecycle budgets. The lease carries registration provenance, attempt identity, grants, limits, expiry and status. |
+| Stage → Core result | `stage-result.v2` contains `schemaVersion`, `outcome` and `artifacts`, with branch-specific fields. `passed` can add `facts` but forbids `reason` and other extra fields; every other outcome requires `reason`; `retry`, `request_fix`, `blocked`, `failed`, `timed_out` and `cancelled` require a reason; `wait`/`orchestrator_required` also require `wait`; `rate_limited` requires reason and `retryAt`. The declared contract supplies no independent attempt-identity authority: Core binds it to the invoking context, validates and reduces it. A returned extra field cannot commit lifecycle. |
+| Plugin → capability router | `CapabilityInvocation`: operation, resource `{type, canonicalId}`, payload and optional runtime-dispatch profile. Core creates `effect-request.v2` with `effectId`, `idempotencyKey`, `attempt`, `capability`, `operation`, `resource`, `payload`, `requestedAt` and optional `deliveryId`/`runtimeDispatchProfile`. |
+| Core → adapter | A fenced `AdapterInvocation` includes request, `AbortSignal`, lock and `assertCurrent()` fence. A confidential invocation instead has `confidential=true` and no lock/fence fields. These are different authority shapes, not interchangeable JSON messages. Adapter returns a record; durable `effect-receipt.v2` contains `effectId`, `idempotencyKey`, `adapter`, `status`, `recordedAt` and optional `result`/`error`. Status is `accepted`, `completed` or `failed`. |
+| Core → observer | `observer-delivery.v2`: delivery ID, observer provenance, delivery attempt number, canonical event and delivery time. The event is lifecycle or plugin-domain data, not a lifecycle command. Completion is an acknowledgement, not a stage result. |
+
+An attempt identity contains `runId`, `stageId`, `attemptId` and `attemptNumber`.
+An `invocation-lease.v2` adds `leaseId`, registration, `active`/`revoked` status,
+grants, wall-time/memory/CPU limits, `issuedAt`, `expiresAt` and optional
+`revokedAt`/`revocationReason`. A reason contains a namespaced `code` and optional
+message/details. A `wait-request.v2` contains `waitId`, `signal`/`orchestrator`
+kind, `signalType`, authorized issuer type/ID, nullable `expiresAt` and optional
+request data; it is not an instruction for the plugin to admit its own resume.
+For field constraints and compatibility use the [contract reference](../reference/contracts.md)
+and [schema authorities](../reference/schemas.md), with the exact
+[result/reason/wait definitions](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L509-L552).
+
+Direct activation uses JavaScript calls. Isolated stage/observer activation uses
+newline-delimited JSON over the owned child's pipes; this is not the native
+binary Worker Control Channel. The first message is `kind=invoke` with surface,
+canonical module path, export name, argument and context. Child requests are
+`capability` with RPC ID/capability/request, or `event` with ID/type/identity/payload.
+Parent replies `response` with the same ID, Boolean `ok` and value or error.
+Terminal child messages are `result` with value, or `error`/`fatal` with an error.
+The parent accepts a result only after pending RPCs drain. The child redirects
+console methods to stderr so they do not corrupt protocol stdout.
+
+| Isolation pressure or failure | Enforced boundary |
+| --- | --- |
+| Input, response or result serialization | At most 1 MiB for each encoded value; invalid or undefined JSON serialization fails. Pending stdin bytes plus the next value are also bounded to 1 MiB. |
+| Incoming protocol | At most 256 KiB per line and 1 MiB pending buffer; strict UTF-8, JSON object messages and complete newline framing. Invalid UTF-8/JSON, arrays, unknown message kinds and trailing partial bytes fail. |
+| Capability/event RPCs | At most 64 pending; capability name at most 128 characters, event type at most 256. Each request still passes Core capability/event authorization. |
+| Diagnostics | Child stderr is bounded to 64 KiB. It is not a second result channel. |
+| Abort, deadline or invalid result | Parent finishes the session, destroys stdin and sends SIGTERM. After one second it invokes the host process-tree boundary and SIGKILL; after another second unclosed cleanup becomes `ISOLATION_PROCESS_CLEANUP_TIMEOUT`. This does not establish rollback of an external effect. |
+
+Source: [initial invocation and process ownership](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/foundation/isolation/runner.ts#L25-L51),
+[session input and diagnostics](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/foundation/isolation/session.ts#L6-L60), [RPC and result handling](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/foundation/isolation/session.ts#L61-L120), [termination and cleanup](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/foundation/isolation/session.ts#L121-L168),
+[byte framing](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/foundation/isolation/protocol.ts#L1-L37),
+and [child dispatch](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/foundation/isolation/child.mjs#L51-L98).
+
+Core maps unresolved/recovery effect errors to `blocked` with
+`core.effect_reconciliation_required`. Caller cancellation maps to `cancelled`
+with `core.attempt_cancelled`; the exact `PLUGIN_ATTEMPT_TIMEOUT` error maps to
+`timed_out` with `core.attempt_timed_out`. Other exceptions, including result-schema
+validation and isolation errors, map to `retry` with `core.plugin_runtime_failed`.
+An isolation timeout therefore does not automatically become a timed-out stage
+result. These are invocation results; the stage transition policy decides the
+subsequent lifecycle action.
+
+Source: [invocation and validation](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/execution/stage-executor.ts#L35-L51),
+[deadline and failure mapping](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/execution/stage-executor.ts#L123-L143).
+
+Adapter cleanup has a separate, single-use budget from platform runtime
+`shutdownTimeoutMs`. It combines its own timeout with adapter lifecycle
+cancellation, not the already-aborted invocation signal, so cleanup can still
+send Gateway cancellation. The cleanup context preserves the original adapter,
+attempt, request, execution-key and confidential authority while substituting
+that cleanup signal; it does not grant new capabilities. A second cleanup call
+fails with `ADAPTER_CLEANUP_ALREADY_STARTED`; closed invocation or revoked
+lifecycle fails with `ADAPTER_INVOCATION_CLOSED` or `ADAPTER_CONTEXT_REVOKED`.
+Expiry rejects with `ADAPTER_CLEANUP_TIMEOUT`; the signal is closed on completion.
+A cleanup acknowledgement without terminal proof leaves dispatch unresolved.
+
+Source: [cleanup budget and invocation ownership](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/execution/adapter-startup.ts#L106-L140),
+[single-use timeout and lifecycle rules](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/execution/adapter-invocation-phase.ts#L25-L60),
+and [validating result branches](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L609-L675).
+
+### Observer ordering, retries and restart
+
+An observer's failure is not always degraded visibility. For each granted
+observer, Core filters subscribed canonical events, retains per-run sequence
+order, and does not deliver events already covered by its checkpoint. Observer
+effect events are excluded from input to avoid a delivery feedback loop.
+Before each delivery it records `started`; completion or failure appends the
+matching delivery record. The stable identity is observer ID plus event ID,
+not a fresh delivery identity for every retry.
+
+Retries are owned by `ObserverRuntime`: attempts continue only up to the
+registration's `failurePolicy.maxAttempts`, with `backoffMs` between failures.
+The attempt count survives restart. `timeoutMs` bounds one delivery, aborts its
+signal on expiry, and its invocation lease is revoked when delivery finishes.
+That prevents continued Core-authorized use of an expired delivery context; it
+does not prove that an external request was rolled back.
+
+The checked-in telemetry observer and both notification observer registrations
+use `best_effort`, five attempts, 1,000 ms backoff and a 10,000 ms delivery timeout.
+Required-observer handling is supported by Core but is not the selected policy
+for these registrations. `drain()` refreshes and materializes the whole canonical
+journal; it does not impose a bounded delivery-queue ceiling or journal-size
+backpressure. A failed delivery blocks later events for that run in this drain.
+
+Source: [telemetry policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/telemetry-observer/plugin.json#L39-L47),
+[notification policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/notification-observer/plugin.json#L26-L34),
+[preview delivery policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/common/plugins/notification-observer/plugin.json#L47-L55).
+
+| Outcome | Effect on later delivery and recovery |
+| --- | --- |
+| Delivered | Record completion, then commit a monotonic checkpoint bound to event/run/provenance. |
+| Required observer exhausts attempts or fails | Throw `REQUIRED_OBSERVER_DELIVERY_FAILED`; callers cannot treat the drain as successful or merely optional visibility loss. Diagnose the delivery and its effects before continuing. |
+| Best-effort observer fails | Return the failure and block later events for that run in this drain. Other runs can continue; advancing past the failed event would break ordering. |
+| Restart after completion but before checkpoint | Recover the completed delivery and commit the checkpoint without executing the observer again. |
+| Restart after started/failed delivery | Recover the highest attempted number; remaining retries use the same logical delivery. An exhausted budget remains exhausted. Invalid event order, provenance, checkpoint or delivery transitions stop recovery rather than silently reset history. |
+
+Source: [delivery record, ordering and failure policy](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observers.ts#L41-L108),
+[deadline, abort and lease](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observer-delivery.ts#L8-L44),
+and [restart validation](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/nova/core/telemetry/observer-recovery.ts#L13-L83).
 
 ### Redis
 
@@ -348,6 +683,20 @@ directly; the repository does not provide a supported Git-mirror service. An
 OCI manifest digest binds image content.
 A Tailscale lease binds a temporary private endpoint. Nova and Buster import
 these identities into their own durable records before they use the result.
+
+Buster's `build_push_verify` uses one wall-clock deadline shared by BuildKit
+execution and subsequent registry-manifest verification. The effective time and
+log budgets are the lesser of request limits and configured invoker maxima;
+there is no fresh full timeout for verification. The manifest has its own
+configured byte ceiling, checked against both declared length and streamed
+bytes, and its SHA-256 must match the requested digest and any digest header.
+Caller abort cancels both phases. A normally exited unsuccessful BuildKit
+command yields a failed build result; launch, cancellation, output-limit and
+verification failures remain execution errors. A timed-out push may already
+have published content: inspect the immutable digest before any retry.
+
+Source: [manifest byte/digest verification](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/buster/engine/test-gates/container-build-runtime.ts#L112-L160),
+[shared execution deadline and failure mapping](https://github.com/datrab/kubeclaw/blob/a721a6e69aef5900002cef1dca3d1272f7903009/skills/buster/engine/test-gates/container-build-runtime.ts#L220-L280).
 
 The local registry and Docker Hub mirror have different jobs. The local
 registry stores KubeClaw build output on Service port 5001. The mirror caches
