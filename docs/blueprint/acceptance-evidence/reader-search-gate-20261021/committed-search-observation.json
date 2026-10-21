@@ -1,0 +1,1523 @@
+{
+  "codeRevision": "bfa5ddcd0be7846ed747549b5149f9a7f36abdc1",
+  "buildReport": {
+    "schemaVersion": "kubeclaw-docs-publication.v1",
+    "revision": "bfa5ddcd0be7846ed747549b5149f9a7f36abdc1",
+    "sourceManifestSha256": "af172dd3d424323555924b3b5f3d74b1d123500853b4b923f35fd6aa78093f25",
+    "pageCount": 167,
+    "readerManifest": "reader-manifest.json",
+    "renderedPageCount": 167,
+    "assetPaths": [
+      "extend/examples/minimal-stage/package.json",
+      "extend/examples/minimal-stage/plugin.json",
+      "extend/examples/minimal-stage/schemas/config.schema.json",
+      "extend/examples/minimal-stage/schemas/input.schema.json",
+      "extend/examples/minimal-stage/schemas/result.schema.json",
+      "extend/examples/minimal-stage/src/stage.js",
+      "extend/examples/minimal-stage/tests/stage.test.mjs",
+      "extend/examples/platform-change-nova-lifecycle.json",
+      "reference/documentation-route-registry.json",
+      "reference/generated-documentation-map.json",
+      "use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "use/workflows/examples/first-project.mjs",
+      "use/workflows/examples/request-trace-redis-unavailable.json",
+      "use/workflows/examples/request-trace-success.json",
+      "use/workflows/wait-resume/approval.pipeline.json",
+      "use/workflows/wait-resume/platform.template.json",
+      "use/workflows/wait-resume/signal.template.json"
+    ],
+    "pluginCount": 51,
+    "pageDigest": "4aa943ca34971298d9cf55295ca926177352fd49482a4d977a9b5874a3e7616d",
+    "checks": [
+      "metadata",
+      "controlled-language",
+      "links",
+      "reader-journeys",
+      "plugin-coverage",
+      "release-pinned-evidence",
+      "documentation-ownership-map",
+      "route-registry"
+    ]
+  },
+  "readerManifest": {
+    "schemaVersion": "kubeclaw-reader-artifact.v1",
+    "revision": "bfa5ddcd0be7846ed747549b5149f9a7f36abdc1",
+    "pageCount": 167,
+    "outputs": [
+      {
+        "path": "decisions/acceptance.html",
+        "sha256": "5448370a898cf7d1eae5cfaf13c516ff5499b8c2a62430bb2d5d7131c36f1073",
+        "bytes": 20634
+      },
+      {
+        "path": "decisions/core-and-plugins.html",
+        "sha256": "d9bcdaee3e028e36fe48320970b2f1c72a44d47dcbc00cfe991e3c049dda58bf",
+        "bytes": 67955
+      },
+      {
+        "path": "decisions/echo.html",
+        "sha256": "c59dac6d4348f4040894c5fc536cdf92cafe488714523ad43836131ba4f7e347",
+        "bytes": 48157
+      },
+      {
+        "path": "decisions/implementation.html",
+        "sha256": "4466360acaff6edec024ed9da7e264374b75840761b447cefc991c01e4f5f7ff",
+        "bytes": 31050
+      },
+      {
+        "path": "decisions/prism.html",
+        "sha256": "db96113ac94a687e3289869be45c0b7ff8ba8c34ba8c1ac38d22432ee5205c54",
+        "bytes": 31061
+      },
+      {
+        "path": "decisions/README.html",
+        "sha256": "50be12224b6ce0b765570c3896d87505287019009f79b2f6ee8284ba64b777ca",
+        "bytes": 20584
+      },
+      {
+        "path": "decisions/runtime-and-operations.html",
+        "sha256": "46a6a70bcb4fc718d1e83c182dfcfc4f6f35c2075510bfcc3a91b65c63257b72",
+        "bytes": 56134
+      },
+      {
+        "path": "decisions/test-gate.html",
+        "sha256": "76f32b9773dbef75180dc80c4bbbe473d19f4f7dfa4d6229722fb64a2fdc2487",
+        "bytes": 103774
+      },
+      {
+        "path": "extend/buster.html",
+        "sha256": "28959e993624c59fa1b5f7c8556d136f88152db9a7e02cf9009237133fb2f293",
+        "bytes": 63222
+      },
+      {
+        "path": "extend/contracts.html",
+        "sha256": "81150f04b52b5c442b806045177d7ae503b00281ae77bc5489dc1518d5fdf0d5",
+        "bytes": 45221
+      },
+      {
+        "path": "extend/developer-handbook.html",
+        "sha256": "19f594f2f49e2dbacfc8402362108572bb1a519ae5861e11563143a8fa5c6187",
+        "bytes": 224744
+      },
+      {
+        "path": "extend/documentation-maintenance.html",
+        "sha256": "28d35dd9f565226968f475659e3f16ddfa3dcd3b487d0dda3e61f218c3f6f809",
+        "bytes": 67471
+      },
+      {
+        "path": "extend/effectful-plugin.html",
+        "sha256": "633197f2da78c0ab10c77969f18524fdba608741dc68f78da1b26f5ee8793f91",
+        "bytes": 39020
+      },
+      {
+        "path": "extend/examples/index.html",
+        "sha256": "79c6d2f70ffa940b3586bc64f60f30e2ca6cd73ccaa5fbbbb74981e6769ff16e",
+        "bytes": 17519
+      },
+      {
+        "path": "extend/examples/minimal-stage/index.html",
+        "sha256": "8f02a62743e1025d47a2ab8d8e2655c3724904022768f369c96330827a8827d1",
+        "bytes": 17773
+      },
+      {
+        "path": "extend/examples/minimal-stage/schemas/index.html",
+        "sha256": "9e09657b8130d0b556f231b70bdfcea5a9981e205434012bba8831c293f2f584",
+        "bytes": 18051
+      },
+      {
+        "path": "extend/examples/minimal-stage/src/index.html",
+        "sha256": "7b4cbf0dd3821ccf09bf5b55efccb4581e51bfe5ccbe09243ae8f5b33cd241c6",
+        "bytes": 17905
+      },
+      {
+        "path": "extend/examples/minimal-stage/tests/index.html",
+        "sha256": "d72ebe06e915ca67285810e7d126267b5fde11fd0a102bb7c8fe1b1607c4a9bb",
+        "bytes": 17921
+      },
+      {
+        "path": "extend/first-plugin.html",
+        "sha256": "48ca5becb045875e70bb6a1bd1d54231116835c7eead4de313542392204e76a6",
+        "bytes": 40347
+      },
+      {
+        "path": "extend/host-and-engine.html",
+        "sha256": "b61822bfd5bb546643c9f02bc32d3ecea58e8df1350ce30f9f8287f2a6f4fae6",
+        "bytes": 50549
+      },
+      {
+        "path": "extend/lint.html",
+        "sha256": "6c248a99c00bf04342a2dc8fa259b46a259ead9cb04922722834666f8730397f",
+        "bytes": 99186
+      },
+      {
+        "path": "extend/nova.html",
+        "sha256": "a14a62d474fdbfaee0173e1ccd931cb22b03a604b2240f3cecf9f25f5d2e0ec4",
+        "bytes": 47646
+      },
+      {
+        "path": "extend/platform/buster.html",
+        "sha256": "5a1661c593e5a5b2e26c8b68a4a6703f25bdb2ffa2c6a6ea6bd77b0573550e4c",
+        "bytes": 35585
+      },
+      {
+        "path": "extend/platform/prism.html",
+        "sha256": "856da90a65408e5783699510846ffac8bf5fa3124501ad05508e5acf9b3469d0",
+        "bytes": 49190
+      },
+      {
+        "path": "extend/platform/README.html",
+        "sha256": "a05fd30645d2e4aadc4f674efef2050ae496b00f291cc11b4694670d95456168",
+        "bytes": 106688
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw-agent-observer.html",
+        "sha256": "171766206e471745f69163633b0ae36a0dc0f1336ab187e1b1d20995b6d23115",
+        "bytes": 26749
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw-ops.html",
+        "sha256": "47b4411d5b73d00f4afe27bc317674df7adb61391537e28adde8a654fc46ddb5",
+        "bytes": 23553
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw-prism.html",
+        "sha256": "b51738c0cf4e06caed57a14f401e9b447d200d288c593492e00f63360d672e78",
+        "bytes": 24181
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.agent-observability.html",
+        "sha256": "800a097b1c56e923f1791e08973977b18f5868a76e62f75884092b0f90f598b6",
+        "bytes": 30718
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.api-flow.html",
+        "sha256": "bc4d1375af918dc57e484098877b0e5f6c950ac5c2fe83a23d4c8bec9d2402e5",
+        "bytes": 27044
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+        "sha256": "b810e9967635c7bf634b7483903a88c564405c2804210e83987724be87520704",
+        "bytes": 26671
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.artifact-store.html",
+        "sha256": "6cdf604f4f6f6424a38c825b5839b135fcc25d7bbd1422a497456d949c49df50",
+        "bytes": 26176
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.axe.html",
+        "sha256": "3da3d1c5edd2852577edf88309cb729d242274764b49b29d05ec7d1ad0e80c7e",
+        "bytes": 27068
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+        "sha256": "f9da31dcaca955d2c542fa2c5d468474954495866e47e1c57772bb9f18471705",
+        "bytes": 26075
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+        "sha256": "d103c013cbdb4c48a79433fcbaa5976191c0c44c27b1ac85f02cd7e9589098c1",
+        "bytes": 26869
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.case-study.html",
+        "sha256": "bf8ab6a7e1e40b60576295865dd1f07349b29255f40346c39cbb8022212e37d0",
+        "bytes": 26122
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.command-runner.html",
+        "sha256": "65548941c37dbd322d39540f3266de1b7600cf2495d0c1b6429fdb425ad7f31f",
+        "bytes": 26603
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.container-build.html",
+        "sha256": "0ca908d8c048e998c4989526503fd57382a5855b5df88a85bf91294b62068915",
+        "bytes": 26700
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+        "sha256": "3063d38127f1b877e12fd184b3e603c82dbe95617ad5c12af187836bb3d22bd8",
+        "bytes": 27037
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+        "sha256": "d3785df9685a80cfe7abc4260fffdd3f99c2849010a23115e508b50c38de207e",
+        "bytes": 26079
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+        "sha256": "4a4d986b44622049323d45558c4e7c5ac158cd32700bb2e66ebf6a75bc2e9dd2",
+        "bytes": 27162
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+        "sha256": "8caddd42fbd7492773a5fb7f52102fb95353b4ed62870238772c4923e1bd25b3",
+        "bytes": 34621
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.direct-command.html",
+        "sha256": "a7f803d8fd8ceb0a68cdd0b16f276c77bc6422b250094f32c6bd1612e6bc8856",
+        "bytes": 30675
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.git-workspace.html",
+        "sha256": "4ac6b10cc3cee6c74debb50ea6d99543675d5a881e59f335205b219ba1f43a66",
+        "bytes": 26913
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.http.html",
+        "sha256": "d393fc1fb9bff112e865b294edfb042b2e2d961d3bd5f6061b1d2927fd4fa554",
+        "bytes": 26994
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.human-approval.html",
+        "sha256": "1208132aa96d9a2298de741f424d79fd9d9686a073b7f29b6cd67f0da4d5e5af",
+        "bytes": 30105
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+        "sha256": "45ab2d570f43395ff6faa455eff529aa90c838b75df70b85aac9b91b429b15d1",
+        "bytes": 26741
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.junit-report.html",
+        "sha256": "f6a4a568b6eddd1fbc3fbfedd7018401f3ac645908a1ad39ef7ea1512a878c6c",
+        "bytes": 25287
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+        "sha256": "ef1ad17232dca87a072eeafdf51a1302bcff72eaedd4425fcdacc074c4e8de67",
+        "bytes": 27931
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.lighthouse.html",
+        "sha256": "eea98f6e3aed4e1405c1e6497722d52d1c4c6cafdaf1101e7e35c6a148a90350",
+        "bytes": 27486
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.lint.html",
+        "sha256": "f93e30593bfe2b47767e32be530d21835ebadf36eb86ac2285ee133b6028f044",
+        "bytes": 32919
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.network-http.html",
+        "sha256": "be64b6036dd1c59b8ac3d0f4c55ae024130f10b9c3d1f0251158c19c0df38f32",
+        "bytes": 26387
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.notification-observer.html",
+        "sha256": "4405dc2262daaf07c7aa06e3446a9b89f00f6ae8a010182ab415142c89eb9b41",
+        "bytes": 31159
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.openapi.html",
+        "sha256": "35e208b0f6a9393e5c9a71e3fb821b3e132c8418c55a85ecf30dae4f9955fbf1",
+        "bytes": 27154
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+        "sha256": "87ba847ed214063d66958b4c184fd7f863d4db665c076170c06fdf81567576b7",
+        "bytes": 26314
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+        "sha256": "9e0c6ecd005941e38fe626d9fcd349c44e63f61b6bcacd7f3b5f05be3cf19db9",
+        "bytes": 26200
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+        "sha256": "71a266c70165d7fb70aac2e275968a6978c7d73960951612db3c876c20e44514",
+        "bytes": 29144
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.playwright.html",
+        "sha256": "3cce994481009fbb5456b6887251351c906484cd11e9196d3852adca1ce41183",
+        "bytes": 27518
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+        "sha256": "39a842fd71dd9be6cd6445945c485cd5d434870b7e364680be975f7c1eed01dc",
+        "bytes": 28982
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.prism-design.html",
+        "sha256": "18fffd60aaa44850207e0fd29769af59a98c3148b773f410c6da44e910a07228",
+        "bytes": 26099
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.project-summary.html",
+        "sha256": "4891e5a1b07d1e93ffd851985cdb67500784ba554adcb8526f60968f15146e23",
+        "bytes": 26293
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.redis-transport.html",
+        "sha256": "819cd60e4a90efb8f3013ae9991e2b0689fbccf58d3f0b0ac816d442d8d1165b",
+        "bytes": 29276
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+        "sha256": "3a6627a24a8672db7fd26bb50794c9e612f9443a06ada3b7990ed3809dfbaafa",
+        "bytes": 28783
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+        "sha256": "2747a567c14d163950506bae8d3cdf13be6399d0a451c6bcbffe0e67f9207012",
+        "bytes": 26245
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.review.html",
+        "sha256": "33abe540f9022bcf81765331745a929e001e0885025f65b3b330f850ecad2d2c",
+        "bytes": 49944
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+        "sha256": "e5f89b34ca7150b4547ef224b2e9512dd740d1f9778f9969d49c6206998c89bc",
+        "bytes": 28391
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+        "sha256": "6330e62f166273d9067e76c474fad1a3b69040d7fc5cdfd4bbf04aa01cfdaccc",
+        "bytes": 25651
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.security-providers.html",
+        "sha256": "30fbbe5a902919946aa228499f64f5624b6a7bba1a7f86d0a86cc47a0e349013",
+        "bytes": 40312
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.size-budget.html",
+        "sha256": "b41f18e195a3d83af19bec188ec35996f27c3b3f45724643a778d08f2c80d393",
+        "bytes": 27253
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.state-store.html",
+        "sha256": "8c0dbb7cee02fec70d9d3967b8aa79a98b68c8442be5bad7e34a0a815d79e249",
+        "bytes": 25950
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+        "sha256": "039421f7950af7ecc3ebe8ee065f287afef89a32526b97fe01ab8b390b3ad7e0",
+        "bytes": 26851
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+        "sha256": "54f4e560c80ece964a68d6fd64525202ec87ced0faec2d25dec4157076e51b66",
+        "bytes": 26953
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+        "sha256": "1566dc366462156bae74de004de03191e4d40f339b9207260c4e81141c6db16e",
+        "bytes": 26190
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+        "sha256": "148b7bf4e38019bde2bf5ab5e5ba32faebddf712245b65b2ee46a930fed9a094",
+        "bytes": 26596
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.visual.html",
+        "sha256": "198c556938c14072c338dbebb1cce8ae85694ee22f019509a627f8ca32328b5c",
+        "bytes": 27532
+      },
+      {
+        "path": "extend/plugin-catalogue/kubeclaw.wait-store.html",
+        "sha256": "82372d484079be274838148577bb977b152df46b38b2c2b523e9eb0260fccec2",
+        "bytes": 25928
+      },
+      {
+        "path": "extend/plugin-catalogue/README.html",
+        "sha256": "cd1cb86e3def637e8142a9a2e30f91148da7f9245933d8627e3a9680627860e0",
+        "bytes": 23311
+      },
+      {
+        "path": "extend/README.html",
+        "sha256": "fee76958e5950e68c22efb98061fc1342cf68e8c60fda8f073ab745bb2bf8c52",
+        "bytes": 61337
+      },
+      {
+        "path": "extend/testing.html",
+        "sha256": "1b7b529d37a1f828ec6de6d02da4f962dc4095b44ec98635ebde5a9ab278c6b3",
+        "bytes": 59054
+      },
+      {
+        "path": "index.html",
+        "sha256": "3df49f04ba93c8496ba4b54a0f9cb81dc7a07dfca3e3ac4bf1a91961587443c8",
+        "bytes": 299
+      },
+      {
+        "path": "product-surfaces.html",
+        "sha256": "05a2d550e67f84fb1730da70a7ce60fbf66e25995ff4bf0e2048d2b98bfba604",
+        "bytes": 51712
+      },
+      {
+        "path": "reader.css",
+        "sha256": "255968dcc0b465e1192492ac199698c173713c6b9987be14cd6200930bf713f0",
+        "bytes": 4424
+      },
+      {
+        "path": "reader.js",
+        "sha256": "a7ff5a0437d008d8f05d71d6a9e37541dbe96f4a4edc824b740449c51f50ae4d",
+        "bytes": 3952
+      },
+      {
+        "path": "README.html",
+        "sha256": "d970ea1a06c61019088b0010aab1f8138cb7e0ca6d37999643d43f28e7eef73b",
+        "bytes": 22266
+      },
+      {
+        "path": "reference/api-object-updates.html",
+        "sha256": "3028a09927a80f35bcc76ca43e9d0d65eba4568d6ccb02abf6ad6dada3fb1186",
+        "bytes": 42778
+      },
+      {
+        "path": "reference/buster-error-codes.html",
+        "sha256": "9fa3f1ede5fd0a0cef16a6369cd18c6fb9328fcd381f43d7f02388f0ef8992f5",
+        "bytes": 726287
+      },
+      {
+        "path": "reference/buster-namespace-lease.html",
+        "sha256": "3e115ffc544793924be206ae01999f2ba259353cbb297a5e891aba930aadee4b",
+        "bytes": 71722
+      },
+      {
+        "path": "reference/buster-provider-configuration.html",
+        "sha256": "ba932adad8d0c11c534a4a377cac2dc8561763ac74a4e37f24be94f75e9427b1",
+        "bytes": 81779
+      },
+      {
+        "path": "reference/buster-runtime-configuration.html",
+        "sha256": "c690052825d73fcdb12366315119582bc8788d417d57dacf57170a855524de26",
+        "bytes": 61159
+      },
+      {
+        "path": "reference/buster-suites.html",
+        "sha256": "32f1a67a78ed011511ca62822fc1cce69b8ae37e03d3e2dd491be5487c844f97",
+        "bytes": 97908
+      },
+      {
+        "path": "reference/capabilities.html",
+        "sha256": "901601890411c1657ddf714ee75d2df61551e2303d35b16760e6febff3f2d470",
+        "bytes": 87978
+      },
+      {
+        "path": "reference/cli.html",
+        "sha256": "8db911d52970ee59828dd58f77eee31e165f3f10013ca3cc3f44a15f85d9223b",
+        "bytes": 166039
+      },
+      {
+        "path": "reference/configuration-change-impact.html",
+        "sha256": "796105a9c32f345b506ed89e16426f7653b5699c46a08228f8dfd87fa01b5740",
+        "bytes": 101866
+      },
+      {
+        "path": "reference/configuration-compatibility.html",
+        "sha256": "ca9e370a32525a77ee0f9d83bedd3025aa9e8cb38053226a5b71a8d605fd891a",
+        "bytes": 28730
+      },
+      {
+        "path": "reference/configuration-errors.html",
+        "sha256": "4a329df786f74f565094f600751a0c1f3505cd91adc0efd1cf7fcd83ce64849b",
+        "bytes": 34257
+      },
+      {
+        "path": "reference/configuration-precedence.html",
+        "sha256": "adf2da2c977b8c1bb4da5e5a0927ad619cfcbfc80daf926e564ae6fda7541c65",
+        "bytes": 63424
+      },
+      {
+        "path": "reference/configuration.html",
+        "sha256": "31484a1352f1ad7faa7c55383255965bac528d522bcf227d6dac5ce35f1d7509",
+        "bytes": 38541
+      },
+      {
+        "path": "reference/contracts.html",
+        "sha256": "d4039b3f3e54d777735e0a4356ddd101e9fb5311c25b6413e052a00bc7158718",
+        "bytes": 45900
+      },
+      {
+        "path": "reference/documentation-governance.html",
+        "sha256": "94e04918f2456699baed1824927fea9de2daebe0200a636dbd5aba8c09245fd6",
+        "bytes": 29528
+      },
+      {
+        "path": "reference/documentation-site.html",
+        "sha256": "c54b0821ff1cef073c8fe6d3220b16074a608b0ef9a2c9d71b8b185c5c280d2f",
+        "bytes": 37215
+      },
+      {
+        "path": "reference/endpoints.html",
+        "sha256": "e93d9bead7b4546e0e2fbfae93759df50df47652cf1a092c0603cd717fcc5fe0",
+        "bytes": 95654
+      },
+      {
+        "path": "reference/environment-variables.html",
+        "sha256": "70be68323a40061b98ba544e4b85d6b3f3ef23704174b3e4addd2f1508ab5d9c",
+        "bytes": 1718016
+      },
+      {
+        "path": "reference/errors.html",
+        "sha256": "3e207582ff539f672baaa0cd8d4bc5bc09450c51fa44ac4577ccf6872624b02a",
+        "bytes": 43900
+      },
+      {
+        "path": "reference/events.html",
+        "sha256": "932e56b325963bdc5ec29a5e4da0627105f03c225feb4cdde18b623d96af04cf",
+        "bytes": 49592
+      },
+      {
+        "path": "reference/glossary.html",
+        "sha256": "d8fac004b0b51a1c46bc83508d87be14dff4b0d52912af70872588918cc61f5d",
+        "bytes": 44944
+      },
+      {
+        "path": "reference/helm-values.html",
+        "sha256": "4719611cedccf9365a3bec27110ed426f327d58c70561c0ebea87e99cd66cf0f",
+        "bytes": 17659978
+      },
+      {
+        "path": "reference/host-and-prism-configuration.html",
+        "sha256": "8c05c17d80326ce5b83f97bc498493b46afddfb8c13511d4c2fd4904b4b9f626",
+        "bytes": 35844
+      },
+      {
+        "path": "reference/images-and-digests.html",
+        "sha256": "6a58055b61bd1fc358297bdceb6ac8a9f421b7bfab9d94da95c559141130794b",
+        "bytes": 62259
+      },
+      {
+        "path": "reference/lint-policy-generated.html",
+        "sha256": "363d0ef85fc64e05ab8e2fe964900448d1f4ebcc4ebec12ba7866622ca670d45",
+        "bytes": 74151
+      },
+      {
+        "path": "reference/lint-policy.html",
+        "sha256": "e86e4ae2d21e625869f6fbf78d419d7e1db749382e5277fb92dc2f37e37a1136",
+        "bytes": 91775
+      },
+      {
+        "path": "reference/lint-rules.html",
+        "sha256": "d51413119ceb35144567f8cf0d1286fcd2c711c420640dbefc697bb1b3cca49f",
+        "bytes": 71280
+      },
+      {
+        "path": "reference/nova-project.html",
+        "sha256": "3f98e0442d173ba7e04a5f2cfbb4491ba4bb4641e0b09f30f16800aea29dac98",
+        "bytes": 45857
+      },
+      {
+        "path": "reference/pipeline-definition.html",
+        "sha256": "8d7e373c720ec0804a89e7de7396be2bbd9c935fc8ee1ed1ae69ea606728e651",
+        "bytes": 33894
+      },
+      {
+        "path": "reference/pipeline-json.html",
+        "sha256": "55c7ae372cbaa2f821b4c778343f47ceeefc5fe1a1e78a56035820bcccff29cc",
+        "bytes": 38701
+      },
+      {
+        "path": "reference/pipeline-platform.html",
+        "sha256": "e65f9cb77470a356a104ff1002b17eb3b28e2b3e51f68afaa0abbe14f44bd222",
+        "bytes": 58119
+      },
+      {
+        "path": "reference/platform-surfaces-generated.html",
+        "sha256": "cef5b3992de658fef4ed0367a38ab919ddd55838b96cf13079336a5ce6de52c9",
+        "bytes": 552950
+      },
+      {
+        "path": "reference/plugin-configuration.html",
+        "sha256": "fd461d217cce295d1c0585980bb8a3cbcef4ea260b06fdfbcc962a74a69a5414",
+        "bytes": 1818325
+      },
+      {
+        "path": "reference/project-pipeline-publication.html",
+        "sha256": "e004e7b33ca6fb24fb6574b8160d0fbd9fc5c30ee0527fadf2d1d5d6c9b8905a",
+        "bytes": 67048
+      },
+      {
+        "path": "reference/README.html",
+        "sha256": "f86d1f19b792768b0537bd24440e0109203db66181fed7c55d87c9c6c104dd99",
+        "bytes": 25751
+      },
+      {
+        "path": "reference/roles-and-package-ownership.html",
+        "sha256": "e47d1757e50b9f78dc8ce6275c336298c836c2fc9e26a2d7e5c3fe8272467539",
+        "bytes": 87176
+      },
+      {
+        "path": "reference/schemas.html",
+        "sha256": "be4eb08b100280ed8f27f589aab4d6b472f1c64337fc3361b99c46347a003c48",
+        "bytes": 80322
+      },
+      {
+        "path": "reference/sdk-exports.html",
+        "sha256": "feff75ec0134e7737e3d89346c83dc5afb78c31c671b090b90e2da5cfe6c20e0",
+        "bytes": 1011010
+      },
+      {
+        "path": "reference/sdk.html",
+        "sha256": "f365ed4891cdb402e2a8f5cd9dce2c62b07d3e088534063897727cf0b5432bba",
+        "bytes": 80600
+      },
+      {
+        "path": "reference/secrets.html",
+        "sha256": "7d5993be20d37ad62eddae02469d7255acd185f5665ef8cb31fb0707f39e2e4d",
+        "bytes": 410510
+      },
+      {
+        "path": "reference/service-routing.html",
+        "sha256": "5bbaddaa3bd6735789d6c1722c1ad5b6f442693562821aeb65c92e6bf09e3929",
+        "bytes": 40025
+      },
+      {
+        "path": "reference/stores-and-retention.html",
+        "sha256": "bde77d11033a418125c41989e5ac4182aef0857176def64659b9de10066c0467",
+        "bytes": 52722
+      },
+      {
+        "path": "reference/verification-commands.html",
+        "sha256": "da8d3c288b0c25ff0f1085b4baa90a989e290289715ed9d5fc6f859d8814f08d",
+        "bytes": 23375
+      },
+      {
+        "path": "reference/worker-profiles-and-roles.html",
+        "sha256": "0dc789fa28767922c0066063434d8c101d92e14e672c29abaa40e9e373779c2c",
+        "bytes": 36657
+      },
+      {
+        "path": "reference/workflows.html",
+        "sha256": "bc40134e0e48bb092c456131b3f0ea8babbda143c455d9ab5f6a87ed5fa46798",
+        "bytes": 138317
+      },
+      {
+        "path": "search-index.js",
+        "sha256": "ec4431c6aa2cebf3ddd3ec76f51703756654729e8ff01002b6e7076430118dbf",
+        "bytes": 21649006
+      },
+      {
+        "path": "search.html",
+        "sha256": "1166e1fd32c617916fd23b5c036a1b44fe69a89f855234ccc8751e1d21cf9cdf",
+        "bytes": 16251
+      },
+      {
+        "path": "status/acceptance.html",
+        "sha256": "c123a0898e9715f29cbabe048677df2bf86f83ff48cd9becc4370deafbc078b3",
+        "bytes": 56679
+      },
+      {
+        "path": "status/current.html",
+        "sha256": "f181701c691683118b7db2d4c9614e2c868116b50bed61367f318e54795324ff",
+        "bytes": 20742
+      },
+      {
+        "path": "status/open-issues.html",
+        "sha256": "52018b35c799a3ebbb154e1f2201a14922c3d108cad3bc3c3f0be8a3339f2023",
+        "bytes": 133868
+      },
+      {
+        "path": "status/roadmap.html",
+        "sha256": "f2c771fcc90fc72e14119dc6de1ee7ae90e157fe2d64503bb2cd2f44a92d3a5e",
+        "bytes": 32386
+      },
+      {
+        "path": "understand/archviewer.html",
+        "sha256": "598e9cf93da83c8b9c1c0f7e61e7d42b625d0c072271bbe200b7bf47f07873a7",
+        "bytes": 29753
+      },
+      {
+        "path": "understand/buster-namespace-controller.html",
+        "sha256": "7898bf93d35aa54165e148a535edc0945d79d2daa342fa8070b61a87d2181f4c",
+        "bytes": 58195
+      },
+      {
+        "path": "understand/buster.html",
+        "sha256": "48276d809dc59bdf03805d5011a5205141bf4e741ab424a17a7bbf528f60cb34",
+        "bytes": 45719
+      },
+      {
+        "path": "understand/codex-integration.html",
+        "sha256": "4800febc4526f5a85982d68c6e3076d4335598e16eea9635009262c7966602f9",
+        "bytes": 32465
+      },
+      {
+        "path": "understand/communication.html",
+        "sha256": "7a0dfca2fddd07f9b8902938550851fb486b142f140f200b48cf32862c5c5550",
+        "bytes": 167071
+      },
+      {
+        "path": "understand/components-and-authority.html",
+        "sha256": "850a11b6cf1f4fc1e61d923ac388c9f4a29187ea94ec52ccb99be29f6d2a463f",
+        "bytes": 65780
+      },
+      {
+        "path": "understand/data-and-state.html",
+        "sha256": "e8c34c28f55be4f343ddbf31aa03a93e355334ae29fbccdebc526b4bb752c2fa",
+        "bytes": 177085
+      },
+      {
+        "path": "understand/deployment-and-trust.html",
+        "sha256": "cd20c8f3dbcfffd44c11c1dd9905c548b8b9073541366c3e588dcf44d092392e",
+        "bytes": 55204
+      },
+      {
+        "path": "understand/echo.html",
+        "sha256": "6e522cbae00b7248a744e40b53b749261ef2d2058fe1348b1ab95a3e84ed5b2f",
+        "bytes": 34791
+      },
+      {
+        "path": "understand/forge.html",
+        "sha256": "c166200bf549b84ace5488e3a787e7faee5ceacd7d819b51ad2cfba73bb2d4b5",
+        "bytes": 33260
+      },
+      {
+        "path": "understand/nova-core.html",
+        "sha256": "2737cef205ae2a72a1387f061f646086bd8471f8338d4c8a21d7bba8d4d3fd12",
+        "bytes": 134657
+      },
+      {
+        "path": "understand/openclaw.html",
+        "sha256": "f2d8efe1e812e0de78e25acb57a64c0e11c175e74b0e66b2d0f79cd448ce524f",
+        "bytes": 37151
+      },
+      {
+        "path": "understand/ops-mcp.html",
+        "sha256": "899298afcecc65c0c9bd72a2bc5cd887221beb3034ccd9faf53ee2a9edee219f",
+        "bytes": 52663
+      },
+      {
+        "path": "understand/pipeline-dependencies.html",
+        "sha256": "698b0f7661c1ff068c1f5b8e2c01c5c152fc21177fb64d86db08ebcf2c64bff2",
+        "bytes": 43771
+      },
+      {
+        "path": "understand/platform-and-operations.html",
+        "sha256": "6ea30c4380876906df166b03f0a76f4c76641b75a7f4849eb7daaea205544833",
+        "bytes": 108538
+      },
+      {
+        "path": "understand/plugin-runtime.html",
+        "sha256": "9de39c33f11831dc6498236f9d872444008ae7cbd1561db4420cb4ea14d00a34",
+        "bytes": 91804
+      },
+      {
+        "path": "understand/prism-data.html",
+        "sha256": "9dbf680f6dca1343601342731e9a48f6bb2f807f9a4fc86751e3009f835112fa",
+        "bytes": 101761
+      },
+      {
+        "path": "understand/prism-runtime.html",
+        "sha256": "a93d5db60b311e94b53bb61d41778b262de868fc7037c3e9511c6d9a95f66df4",
+        "bytes": 85615
+      },
+      {
+        "path": "understand/prism.html",
+        "sha256": "240318d56525f440e5dc506fd5f435350bf8857a5a7b727851676b9d90647fb2",
+        "bytes": 38097
+      },
+      {
+        "path": "understand/README.html",
+        "sha256": "0007c7bc63a4f3bf5a12a6b29c1eae8d0476be0211a80d7e0d2eb6ddd90c5fef",
+        "bytes": 34778
+      },
+      {
+        "path": "understand/request-state-recovery.html",
+        "sha256": "6cf86b02b8c983c14c3555b917b2d49737330b44ec547b47a9e9307baadaba39",
+        "bytes": 44818
+      },
+      {
+        "path": "understand/request-to-result.html",
+        "sha256": "78150aac9b0e2be5267825d6a62498821f66ba5a29b49f2febb86e735a90eccf",
+        "bytes": 17461
+      },
+      {
+        "path": "understand/security-and-trust.html",
+        "sha256": "884994ebf1d0c0d6e88c04e42a02e3f940f8a9b829c53dd430bc1d21a255fc74",
+        "bytes": 85240
+      },
+      {
+        "path": "understand/telemetry.html",
+        "sha256": "75dc389a0b5e1419f4e579f29024ba25532c9da27d3a0e8c7bd22be0a9b62463",
+        "bytes": 146423
+      },
+      {
+        "path": "understand/worker-core.html",
+        "sha256": "47fd38e407331d754773ce9e566f3842480805518f1455985734734ecee89bab",
+        "bytes": 102291
+      },
+      {
+        "path": "understand/worker-trust.html",
+        "sha256": "30cca4f1c44a3e0b30ac7794b48d6b9ad91d9457cc17dea94036c15bc0733342",
+        "bytes": 31770
+      },
+      {
+        "path": "use/capacity.html",
+        "sha256": "c61dc532f46089642b2866916c5cc66cb47cb3a94b1c7465d417234befa2ff03",
+        "bytes": 77236
+      },
+      {
+        "path": "use/demo-delivery.html",
+        "sha256": "f82e1bab3ef2fa86ba2257fa79341629f9befed7fc5920dd541d8cdb00c4ce4d",
+        "bytes": 33087
+      },
+      {
+        "path": "use/diagnose.html",
+        "sha256": "f3d0e6ce8424b8ab9bdf8a4866031873964450fd2f8cc44e02c1e106d7f8fc15",
+        "bytes": 198791
+      },
+      {
+        "path": "use/install.html",
+        "sha256": "dd32e43c9995433a6fff6379afa8831b2bc88362df5f7d9b1128c0909a6784ca",
+        "bytes": 116482
+      },
+      {
+        "path": "use/maintenance.html",
+        "sha256": "32fd20e054417eb18721929b8cfdeb5a846b64a54bfed2e17faeff9495fd89aa",
+        "bytes": 113392
+      },
+      {
+        "path": "use/operate.html",
+        "sha256": "3828c1631b13e3b8b00e33cead88c7101236e31922e8a670c851be9cd1b35e10",
+        "bytes": 74077
+      },
+      {
+        "path": "use/plugins.html",
+        "sha256": "e48ea93325dbb1d47309abf016630d522da66e05c1e77a23607e06c850123811",
+        "bytes": 693775
+      },
+      {
+        "path": "use/prism-studio.html",
+        "sha256": "5e59e1ab4fdaa2eec05f42c25bdd2b6203e91f6ac3ba4055167e1bc7db569b43",
+        "bytes": 282648
+      },
+      {
+        "path": "use/quickstart.html",
+        "sha256": "c5329147d5d4344d2653b3732354d955bad922192b6e0eafe0243d0da826050d",
+        "bytes": 26589
+      },
+      {
+        "path": "use/README.html",
+        "sha256": "9d7f99fb1a732c968c5d0644a6635177b806d9c2024ed51bf0a685307b163d71",
+        "bytes": 30766
+      },
+      {
+        "path": "use/recovery.html",
+        "sha256": "177f5ef335493b90a7f173608dfa2ef344e183b5957c80a6d7bac35d585de552",
+        "bytes": 90115
+      },
+      {
+        "path": "use/worker-trust.html",
+        "sha256": "56a57d14f0a15685fba6a58c9095379bebf274a75a3f4d2d9fdc1fd6b09e0455",
+        "bytes": 53384
+      },
+      {
+        "path": "use/workflows/buster-suite.html",
+        "sha256": "f67a117226301cd5a8fec5a7bccaeec86860ae9bc8c0f88d97ab3adc3403b66e",
+        "bytes": 62552
+      },
+      {
+        "path": "use/workflows/examples/index.html",
+        "sha256": "56fa216fe08f4740201454cf5566323737270e5dbaa418e322060a791a23c82e",
+        "bytes": 17665
+      },
+      {
+        "path": "use/workflows/kubernetes-fixture.html",
+        "sha256": "a9c394a82846a033bb898234ab400503cdb21f14473ea8d91ff69009b3c25f2a",
+        "bytes": 27312
+      },
+      {
+        "path": "use/workflows/README.html",
+        "sha256": "3b48b6f006fbc6958f1035d02b0e653c08d253f035b8e290729946f4b5d6c70a",
+        "bytes": 30722
+      },
+      {
+        "path": "use/workflows/wait-resume.html",
+        "sha256": "317bfc4942ef059aca94f56f47cf2c0dff5ed2ae921f8be3d34bf08c2a879428",
+        "bytes": 67806
+      },
+      {
+        "path": "use/workflows/wait-resume/index.html",
+        "sha256": "5b16a82e8219123ed3a94c256e2167e3564a11c4daf4d835533030afdd8572fc",
+        "bytes": 17533
+      }
+    ]
+  },
+  "artifactCheck": {
+    "selectedPages": 167,
+    "htmlPages": 176,
+    "localLinks": 36523,
+    "verifiedOutputDigests": 179
+  },
+  "searchCheck": {
+    "indexedCanonicalPages": 167,
+    "internalArtifacts": 0,
+    "readerQuestionsPassed": 12,
+    "observed": [
+      {
+        "query": "disaster recovery",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "status/open-issues.html"
+        ]
+      },
+      {
+        "query": "backup restore",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "understand/prism-data.html"
+        ]
+      },
+      {
+        "query": "install platform",
+        "expectedRoute": "use/install.html",
+        "observedTopThree": [
+          "use/install.html",
+          "status/roadmap.html",
+          "reference/pipeline-platform.html"
+        ]
+      },
+      {
+        "query": "troubleshoot incident",
+        "expectedRoute": "use/diagnose.html",
+        "observedTopThree": [
+          "use/diagnose.html"
+        ]
+      },
+      {
+        "query": "create first plugin",
+        "expectedRoute": "extend/first-plugin.html",
+        "observedTopThree": [
+          "extend/first-plugin.html",
+          "use/plugins.html",
+          "reference/plugin-configuration.html"
+        ]
+      },
+      {
+        "query": "change core",
+        "expectedRoute": "extend/developer-handbook.html",
+        "observedTopThree": [
+          "extend/developer-handbook.html",
+          "understand/nova-core.html",
+          "extend/platform/buster.html"
+        ]
+      },
+      {
+        "query": "settings overrides",
+        "expectedRoute": "reference/configuration-precedence.html",
+        "observedTopThree": [
+          "reference/configuration-precedence.html",
+          "decisions/test-gate.html",
+          "reference/helm-values.html"
+        ]
+      },
+      {
+        "query": "package ownership",
+        "expectedRoute": "reference/roles-and-package-ownership.html",
+        "observedTopThree": [
+          "reference/roles-and-package-ownership.html",
+          "understand/plugin-runtime.html",
+          "extend/developer-handbook.html"
+        ]
+      },
+      {
+        "query": "first pipeline compile",
+        "expectedRoute": "use/workflows/README.html",
+        "observedTopThree": [
+          "use/workflows/README.html",
+          "extend/first-plugin.html",
+          "reference/pipeline-json.html"
+        ]
+      },
+      {
+        "query": "remove plugins",
+        "expectedRoute": "use/plugins.html",
+        "observedTopThree": [
+          "use/plugins.html",
+          "understand/openclaw.html",
+          "extend/lint.html"
+        ]
+      },
+      {
+        "query": "prism studio",
+        "expectedRoute": "use/prism-studio.html",
+        "observedTopThree": [
+          "use/prism-studio.html",
+          "extend/platform/prism.html",
+          "understand/prism-runtime.html"
+        ]
+      },
+      {
+        "query": "minimumLinePercent",
+        "expectedRoute": "reference/plugin-configuration.html",
+        "observedTopThree": [
+          "reference/plugin-configuration.html",
+          "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+          "reference/buster-provider-configuration.html"
+        ]
+      }
+    ]
+  },
+  "browserObservations": {
+    "observations": [
+      {
+        "width": 1440,
+        "route": "/README.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "route": "/use/quickstart.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "route": "/extend/first-plugin.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "route": "/search.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 1440,
+        "search": "4 pages found. Showing up to 50."
+      },
+      {
+        "width": 1440,
+        "query": "disaster recovery",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "status/open-issues.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "backup restore",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "understand/prism-data.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "install platform",
+        "expectedRoute": "use/install.html",
+        "observedTopThree": [
+          "use/install.html",
+          "status/roadmap.html",
+          "reference/pipeline-platform.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "troubleshoot incident",
+        "expectedRoute": "use/diagnose.html",
+        "observedTopThree": [
+          "use/diagnose.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "create first plugin",
+        "expectedRoute": "extend/first-plugin.html",
+        "observedTopThree": [
+          "extend/first-plugin.html",
+          "use/plugins.html",
+          "reference/plugin-configuration.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "change core",
+        "expectedRoute": "extend/developer-handbook.html",
+        "observedTopThree": [
+          "extend/developer-handbook.html",
+          "understand/nova-core.html",
+          "extend/platform/buster.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "settings overrides",
+        "expectedRoute": "reference/configuration-precedence.html",
+        "observedTopThree": [
+          "reference/configuration-precedence.html",
+          "decisions/test-gate.html",
+          "reference/helm-values.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "package ownership",
+        "expectedRoute": "reference/roles-and-package-ownership.html",
+        "observedTopThree": [
+          "reference/roles-and-package-ownership.html",
+          "understand/plugin-runtime.html",
+          "extend/developer-handbook.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "first pipeline compile",
+        "expectedRoute": "use/workflows/README.html",
+        "observedTopThree": [
+          "use/workflows/README.html",
+          "extend/first-plugin.html",
+          "reference/pipeline-json.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "remove plugins",
+        "expectedRoute": "use/plugins.html",
+        "observedTopThree": [
+          "use/plugins.html",
+          "understand/openclaw.html",
+          "extend/lint.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "prism studio",
+        "expectedRoute": "use/prism-studio.html",
+        "observedTopThree": [
+          "use/prism-studio.html",
+          "extend/platform/prism.html",
+          "understand/prism-runtime.html"
+        ]
+      },
+      {
+        "width": 1440,
+        "query": "minimumLinePercent",
+        "expectedRoute": "reference/plugin-configuration.html",
+        "observedTopThree": [
+          "reference/plugin-configuration.html",
+          "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+          "reference/buster-provider-configuration.html"
+        ]
+      },
+      {
+        "width": 768,
+        "route": "/README.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "route": "/use/quickstart.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "route": "/extend/first-plugin.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "route": "/search.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 768,
+        "search": "4 pages found. Showing up to 50."
+      },
+      {
+        "width": 768,
+        "query": "disaster recovery",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "status/open-issues.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "backup restore",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "understand/prism-data.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "install platform",
+        "expectedRoute": "use/install.html",
+        "observedTopThree": [
+          "use/install.html",
+          "status/roadmap.html",
+          "reference/pipeline-platform.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "troubleshoot incident",
+        "expectedRoute": "use/diagnose.html",
+        "observedTopThree": [
+          "use/diagnose.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "create first plugin",
+        "expectedRoute": "extend/first-plugin.html",
+        "observedTopThree": [
+          "extend/first-plugin.html",
+          "use/plugins.html",
+          "reference/plugin-configuration.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "change core",
+        "expectedRoute": "extend/developer-handbook.html",
+        "observedTopThree": [
+          "extend/developer-handbook.html",
+          "understand/nova-core.html",
+          "extend/platform/buster.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "settings overrides",
+        "expectedRoute": "reference/configuration-precedence.html",
+        "observedTopThree": [
+          "reference/configuration-precedence.html",
+          "decisions/test-gate.html",
+          "reference/helm-values.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "package ownership",
+        "expectedRoute": "reference/roles-and-package-ownership.html",
+        "observedTopThree": [
+          "reference/roles-and-package-ownership.html",
+          "understand/plugin-runtime.html",
+          "extend/developer-handbook.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "first pipeline compile",
+        "expectedRoute": "use/workflows/README.html",
+        "observedTopThree": [
+          "use/workflows/README.html",
+          "extend/first-plugin.html",
+          "reference/pipeline-json.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "remove plugins",
+        "expectedRoute": "use/plugins.html",
+        "observedTopThree": [
+          "use/plugins.html",
+          "understand/openclaw.html",
+          "extend/lint.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "prism studio",
+        "expectedRoute": "use/prism-studio.html",
+        "observedTopThree": [
+          "use/prism-studio.html",
+          "extend/platform/prism.html",
+          "understand/prism-runtime.html"
+        ]
+      },
+      {
+        "width": 768,
+        "query": "minimumLinePercent",
+        "expectedRoute": "reference/plugin-configuration.html",
+        "observedTopThree": [
+          "reference/plugin-configuration.html",
+          "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+          "reference/buster-provider-configuration.html"
+        ]
+      },
+      {
+        "width": 320,
+        "route": "/README.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "route": "/use/quickstart.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "route": "/extend/first-plugin.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "route": "/search.html",
+        "status": 200,
+        "overflow": false,
+        "axeViolations": 0
+      },
+      {
+        "width": 320,
+        "search": "4 pages found. Showing up to 50."
+      },
+      {
+        "width": 320,
+        "query": "disaster recovery",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "status/open-issues.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "backup restore",
+        "expectedRoute": "use/recovery.html",
+        "observedTopThree": [
+          "use/recovery.html",
+          "understand/data-and-state.html",
+          "understand/prism-data.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "install platform",
+        "expectedRoute": "use/install.html",
+        "observedTopThree": [
+          "use/install.html",
+          "status/roadmap.html",
+          "reference/pipeline-platform.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "troubleshoot incident",
+        "expectedRoute": "use/diagnose.html",
+        "observedTopThree": [
+          "use/diagnose.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "create first plugin",
+        "expectedRoute": "extend/first-plugin.html",
+        "observedTopThree": [
+          "extend/first-plugin.html",
+          "use/plugins.html",
+          "reference/plugin-configuration.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "change core",
+        "expectedRoute": "extend/developer-handbook.html",
+        "observedTopThree": [
+          "extend/developer-handbook.html",
+          "understand/nova-core.html",
+          "extend/platform/buster.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "settings overrides",
+        "expectedRoute": "reference/configuration-precedence.html",
+        "observedTopThree": [
+          "reference/configuration-precedence.html",
+          "decisions/test-gate.html",
+          "reference/helm-values.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "package ownership",
+        "expectedRoute": "reference/roles-and-package-ownership.html",
+        "observedTopThree": [
+          "reference/roles-and-package-ownership.html",
+          "understand/plugin-runtime.html",
+          "extend/developer-handbook.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "first pipeline compile",
+        "expectedRoute": "use/workflows/README.html",
+        "observedTopThree": [
+          "use/workflows/README.html",
+          "extend/first-plugin.html",
+          "reference/pipeline-json.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "remove plugins",
+        "expectedRoute": "use/plugins.html",
+        "observedTopThree": [
+          "use/plugins.html",
+          "understand/openclaw.html",
+          "extend/lint.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "prism studio",
+        "expectedRoute": "use/prism-studio.html",
+        "observedTopThree": [
+          "use/prism-studio.html",
+          "extend/platform/prism.html",
+          "understand/prism-runtime.html"
+        ]
+      },
+      {
+        "width": 320,
+        "query": "minimumLinePercent",
+        "expectedRoute": "reference/plugin-configuration.html",
+        "observedTopThree": [
+          "reference/plugin-configuration.html",
+          "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+          "reference/buster-provider-configuration.html"
+        ]
+      },
+      {
+        "noJavaScriptNavigation": "PASS",
+        "skipKeyboard": "PASS"
+      }
+    ],
+    "findings": []
+  },
+  "scope": "Whole A912-04 only; actual committed UI queries and canonical index coverage. No other publication/accessibility/livehosting/runtimeAPI approval."
+}
