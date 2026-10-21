@@ -41,6 +41,7 @@ node_modules/
 !/skills/common/plugins/openclaw-agent-observer/package-lock.json
 !/spikes/prism/*/package-lock.json
 !/tools/ops-mcp/package-lock.json
+!/scripts/docs-reader/package-lock.json
 **/dist/
 **/dist-studio/
 **/test-results/

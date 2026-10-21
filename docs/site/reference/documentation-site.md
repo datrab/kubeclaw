@@ -1,11 +1,11 @@
 # Documentation site and publication
 
-Status: source-described publication workflow; rendered-site behavior requires separate verification
+Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
-Applies to: repository reader pages under docs/site and the Markdown publication staging command
-Last verified: implementation behavior checked on 2026-10-15; no build, browser, search, or accessibility execution asserted
+Evidence: scripts/docs-publication.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Applies to: positively selected repository reader pages and the local HTML publication artifact
+Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
 
 ## Find the explanation before the source
 
@@ -25,11 +25,17 @@ then [Roles and package ownership](roles-and-package-ownership.md). That page
 separates bundle selection, caller grants, Buster configuration, and Prism host
 policy. Do not infer a grant from a package name.
 
-Use section indexes and your Markdown viewer's find function for an exact ID.
-The publication command does not create a full-text search index or search UI.
-A viewer's text search is not a ranked search over all canonical pages. If a
-name is not found, follow the component's reference or implementation evidence;
-absence from search results does not prove absence from the product.
+Use **Search documentation** in the built reader for an exact identifier or words
+from any published page. Search matches all entered words, without case, against
+page titles and full page text, including code examples. It lists at most 50
+matching pages. Open a result and use your browser's Find command for its section.
+
+The search index loads on the first query and stays local to the artifact.
+Large reference pages make that index substantial; the reader reports loading,
+no results, and a load failure. A failure is not evidence that a product name is
+absent. Use section navigation or the owning reference while search is unavailable.
+Search requires JavaScript. Reading, navigation, source links, and native section
+links do not. No search query is sent to an external service.
 
 ## Read source evidence with its limits
 
@@ -44,7 +50,7 @@ an assertion that every procedure or deployment passed.
 | Test or command result | The named cases ran under the recorded conditions | Coverage of your route, version, and failure conditions |
 | Live observation | The recorded environment behaved that way at that time | Compatibility with your environment and durable recovery rules |
 
-A source link must remain useful without JavaScript. The current staging build
+A source link must remain useful without JavaScript. The local build
 turns plain Evidence paths into GitHub links at the checkout's HEAD. Existing
 explicit links in prose retain their written revisions. The plugin catalogue
 also checks selected source snippets against the separate documentation source
@@ -55,8 +61,8 @@ do not repair a mismatch by weakening its source guard.
 
 > **Source — evidence revisions**
 >
-> Claim: selected catalogue evidence uses the documentation source revision; plain Evidence links in staged pages use HEAD.
-> Implementation: [sourceEvidenceLink](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L148-L166); Evidence conversion in [build](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L1060-L1096).
+> Claim: selected catalogue evidence uses the documentation source revision; plain Evidence links in published pages use HEAD.
+> Implementation: [sourceEvidenceLink](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L148-L166); current Evidence conversion belongs to `build` in `scripts/docs-publication.mjs`.
 > Contract: the catalogue checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.
 > Validation: no build or test execution for this statement.
 > Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.
@@ -92,11 +98,16 @@ than editing the generated map by hand.
 
 ## Routes, links, and static use
 
-The ownership map represents the root README as `/`, a section README as its
-section route, and another Markdown page as a trailing-slash route. For example,
-this page maps to `/reference/documentation-site/`. The staging build preserves
-Markdown relative paths; it does not implement those routes in an HTTP server.
-A renderer or hosting system must supply and test the actual routes.
+The publication manifest owns actual HTML paths: the home page is
+`/README.html`, a section index is such as `/use/README.html`, and this page is
+`/reference/documentation-site.html`. The artifact's `index.html` supplies a
+static home redirect and a visible fallback link. Parsed reader links target
+those HTML files; code examples keep their original text. Approved example
+folders have generated file indexes, without admitting extra repository files.
+
+These artifact paths are distinct from the ownership map's logical trailing-slash
+identities. A hosting system must explicitly map any additional public routes;
+this local builder does not claim that an external host serves them.
 
 The [route registry](documentation-route-registry.json) records redirect intent.
 The governance checker rejects duplicate redirect origins, an origin that is
@@ -110,18 +121,27 @@ the successor according to [governance](documentation-governance.md). Test the
 old route and its anchors in the actual output before retiring it. Do not
 invent historical redirects for paths that were never public.
 
-The staging artifact is Markdown plus approved assets. Read it in a Markdown
-viewer using relative page links. Tables and written procedures remain the
-primary explanation. A Mermaid diagram needs an adjacent text explanation for
-a viewer that cannot render it. This publisher does not provide an interactive
-architecture viewer or an automatic static export of one. Any future optional
-interaction must preserve its essential explanation without scripts, hover,
-color, or a network fetch. External source links require network access; the
-local explanation must still state the safe action when those links are offline.
+The artifact includes HTML, original Markdown, approved example files, navigation,
+styles, and a local search index. Open `index.html` locally, or serve the directory
+with a static server. Relative HTML links also work when the artifact is mounted
+under a URL prefix. Tables and code blocks scroll within their content region.
+The mobile navigation uses a native disclosure; keyboard users have a visible
+skip link and focus indicators. The reader uses system fonts and no remote assets.
+
+Mermaid source blocks remain code in this renderer; their adjacent written
+explanations are the static alternative. This is not a rendered-diagram or
+interactive-architecture acceptance. External source links still require network
+access. Local reading does not execute the published runnable examples.
 
 ## Check and stage a local copy
 
 Use the repository root with Node.js 24 and its locked root dependencies.
+Install the isolated, locked reader dependencies before checking or building:
+
+```sh
+npm ci --prefix scripts/docs-reader --ignore-scripts
+node --test scripts/tests/docs-reader.test.mjs
+```
 Prepare the selected route's additional tools and source revision through the
 [handbook prerequisites](../extend/developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route).
 The publisher reads plugin manifests, dependency contracts, catalogue guidance,
@@ -143,6 +163,7 @@ npm run docs:check:refs
 npm run docs:site-boundary:check
 npm run docs:publication:check
 npm run docs:publication:build
+node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs
 ```
 
 These are instructions, not a record of successful execution for this page.
@@ -154,26 +175,23 @@ unprepared or restricted environment.
 | --- | --- | --- |
 | `docs:publication:generate` | Builds plugin catalogue/capability content and the operator plugin matrix from their inputs | Writes those owned pages/sections sequentially. A failure can leave earlier writes; inspect the diff and first error. It is not the prose-page generator. |
 | `docs:publication:check` | Runs the two publication helper test files, then compares generated content and checks selected pages, assets, metadata, language, links, and bounded examples | Does not invoke publication `generate` or `build`. A nonzero helper or publisher result stops the chain. It does not render a website. |
-| `docs:publication:build` | Runs publication input checks, then stages Markdown and assets with a report | After successful input checks, removes and recreates `.tmp/docs-publication`. A later copy/write failure can leave partial output. Exit zero and the fresh report are required. |
-| `docs:publish-check` | Runs the broader `docs:check` chain, then the staging build | Includes mutation tests and the staging replacement. It is not a lightweight link check or a hosting deployment. |
+| `docs:publication:build` | Runs publication input checks, then renders HTML, navigation, local search, Markdown and approved assets with reports | After successful input checks, removes and recreates `.tmp/docs-publication`. A later copy/write failure can leave partial output. Exit zero and the fresh report are required. |
+| `docs:publish-check` | Runs the broader `docs:check` chain, then the HTML build | Includes mutation tests and the staging replacement. It is not a lightweight link check or a hosting deployment. |
 
-> **Source — publication modes and owned output**
->
-> Claim: generation writes its owned pages/section; checking compares inputs; staging removes its output only after input checks and then writes sequentially.
-> Implementation: [generate](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L780-L788); [compareGenerated](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L790-L802); input selection in [checkSite](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L898-L1058); staging and report in [build](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L1060-L1096).
-> Contract: `package.json` selects the explicit generate/check/build modes. The report lists declared checks and input identity, not browser results.
-> Validation: no mode or helper test execution for this statement.
-> Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.
-> Limit: initialization, source/Git prerequisites and selected helper effects still apply. The staging directory is not an atomic publication transaction or rendered site.
+The mode entrypoints belong to `scripts/docs-publication.mjs`. HTML parsing,
+link conversion, sanitization, navigation, and search belong to
+`scripts/docs-reader/renderer.mjs`. Their original parser/build regressions run
+with `node --test scripts/tests/docs-reader.test.mjs`. These tests do not replace
+browser, hosting, or assistive-technology reader checks.
 
-Inspect `.tmp/docs-publication/build-report.json` and its sibling pages/assets.
-The report contains the Git revision, page count, asset paths, plugin count,
-a digest of concatenated input page contents, and declared check labels.
-Those labels are not browser observations or individual coverage results.
-The report is not a complete per-route canonical URL, redirect, source, and
-rendered-content digest manifest. Reproducing the same output requires the same
-inputs, source revisions, dependencies, and tools; two clean builds must still
-be compared before claiming reproducibility.
+Inspect `.tmp/docs-publication/build-report.json` and `reader-manifest.json`.
+The build report retains its input digest, selected page and asset counts, and
+checkout revision. The reader manifest additionally lists each generated HTML,
+CSS, JavaScript and index output with its exact byte count and SHA-256. It does
+not include its own recursive digest. Neither report labels a declared check as
+a browser observation. A failed build must not be published merely because an
+older report exists. Reproducibility requires the same selected input bytes,
+source revisions, dependencies, and tools.
 
 If input checks fail before output replacement, an old staging directory may
 remain. Its existence does not mean the new build passed. If staging fails
@@ -181,10 +199,12 @@ after replacement, preserve the diagnostic and partial output for diagnosis;
 remove only the owned `.tmp/docs-publication` tree when no inspection uses it.
 Never reset unrelated generated files or another author's changes.
 
-## What CI does, and what still needs a renderer
+## CI and the remaining acceptance boundary
 
 The documentation workflow validates pull requests and applicable manual runs.
-It installs the declared Node, Go, and Helm tools and locked dependencies,
+It installs the declared Node, Go, and Helm tools and locked root and reader dependencies,
+checks publication and parser/build regressions, builds the local HTML artifact,
+and checks blueprint and suite documentation contracts. It also
 regenerates selected inventories/reference output, and rejects resulting drift.
 Its `docs:check:generated` chain also includes multiple inventory and parity
 checks. The workflow's validation job does not
@@ -194,19 +214,18 @@ and push them. This is a write workflow, not evidence of external hosting.
 Consult [Workflow inventory](workflows.md) and the workflow source before
 changing triggers, permissions, or owned outputs.
 
-> **Source — CI drift and update boundaries**
->
-> Claim: validation can regenerate transient files before rejecting drift; the main update job can commit and push allowed generated paths, without deploying a rendered site.
-> Implementation: `.github/workflows/docs-checks.yaml`, `jobs.validate` drift/check steps, lines 39–71; `jobs.update` commit/push and event condition, lines 140–166.
-> Contract: pull-request or non-main manual validation has read contents permission; the main update route has write contents permission and checks its allowed outputs.
-> Validation: no workflow execution for this statement.
-> Checkout identity: workflow SHA-256 `5349499f1936d361a0d269bc45664550580fb8b1af5773391fbdd30dd08a35d7`; no committed revision asserted for these file bytes.
-> Limit: a workflow declaration is not evidence of a successful job, external hosting, redirects, search, or browser behavior.
+The implementation belongs to `.github/workflows/docs-checks.yaml`. Validation
+can regenerate transient files before rejecting drift. The main update job can
+commit and push only its declared generated paths; reader output is not one of
+those source paths. Neither route deploys external hosting. The declaration of
+these checks is not evidence that a CI run or the complete generated-source
+chain passed. Record the actual first failure when a broader check is blocked.
 
 A complete reader release also needs checks of the actual renderer: local and
 built links, anchors, assets, routes and redirects; defined search questions;
 narrow and wide screens; keyboard focus and screen-reader reading; diagrams'
 text alternatives; and no-script/offline critical instructions. Capture failures
-and their affected pages. Markdown lint, a route JSON file, or a staging report
-cannot substitute for those observations. This page describes the source
-workflow; it does not assert that those rendered-reader checks have passed.
+and their affected pages. Markdown lint, a route JSON file, or an artifact report
+cannot substitute for those observations. Only the explicitly retained local observations establish their tested scope.
+They do not establish external hosting, all-page visual acceptance, a human
+screen-reader trial, or whole publication acceptance.

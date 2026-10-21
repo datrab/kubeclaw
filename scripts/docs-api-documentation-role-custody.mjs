@@ -4122,6 +4122,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "bee5355a5433f9e5c725b65906bf37615f4b205d7e842347e2e6f1da207a3102"
       },
       {
+        "expressionSha256": "7682cc93857cfe42187c32a27789ca231dbaf2b2dd82438310d526b6e4b8af62"
+      },
+      {
         "expressionSha256": "3ee8d2a86bce7e184b5af248ec43d200a4568fffed75f64bcaa16b36a9d516a7"
       },
       {
@@ -4162,6 +4165,9 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+      },
+      {
+        "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
       },
       {
         "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
@@ -4212,7 +4218,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "eafaf07975c2c1e7d6781026ebc77fd9f3006cf14b4d9854583117ea7471f27d",
+    "factsDigest": "9e840166a5efeb8f2958adee30fc5aad7b684a8fc1437edb431950e903e2bafd",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5365,6 +5371,86 @@ export const documentationExecutableRoleRecipes = {
       }
     ],
     "factsDigest": "5985f6dfcc71350c9200fdfcf273906977e1f848c6ae0c48e5bb541276561b50",
+    "authorityInputs": []
+  }
+,
+  "scripts/docs-reader/renderer.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Positively selected local documentation HTML, navigation, full-text search and exact rendered artifact manifests; source/example text is inert reader data, never API submission or product execution.",
+    "selectors": [
+      {
+        "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
+      },
+      {
+        "expressionSha256": "e9a94d1c97b66c8fdde65062729add4a7598cf0f88e46449ccbd63b3f76b3281"
+      },
+      {
+        "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
+      },
+      {
+        "expressionSha256": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0"
+      },
+      {
+        "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
+      },
+      {
+        "expressionSha256": "490f49f3f4a26c8d9b1ff787519d3f83f71e42b2f6ab5119a80dba54ce7c23d9"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "a8f4a33a10aae288aa40261ebcb69edbb3fe6b6c39d95db46299784eaedda1e2"
+      },
+      {
+        "expressionSha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
+      }
+    ],
+    "factsDigest": "63a59beafb92a32011ba8ded6c04aecb0f3af195cbff4dd348dc349912359757",
+    "authorityInputs": []
+  },
+  "scripts/docs-reader/check-artifact.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Read-only verification of selected generated documentation HTML bytes, local reader links/fragments and exact artifact hashes; emits only documentation check counts, never product API bodies.",
+    "selectors": [
+      {
+        "expressionSha256": "39b41069a19f6818c703ae0ce9a83c2efaf0c6f23d9cbe82afe85b402b2bc77e"
+      },
+      {
+        "expressionSha256": "24502c0329d10c2649694b1de8333b3ad3289865e91745237cee6d0605e4620c"
+      },
+      {
+        "expressionSha256": "0f9fa9269fe79888749d1cc7c0014fbcde848aaf9dd9154279e87752ce4083db"
+      },
+      {
+        "expressionSha256": "fbf5146d7c75e878a077a6442a6ed03b25678c0a08e20273e15e2b0a364aef0c"
+      },
+      {
+        "expressionSha256": "28756ea8dc7d55cf1a7110a2619111cccc27f2569289201c44875f86528953f8"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "f5ae85f5a46d92c524f5644181b77d8d84ce6b420d5c48738420decbec8dd743"
+      }
+    ],
+    "factsDigest": "72b7b3111976d58e532e8806b0b1a807d8ef8e5b91cbf82966649b3149dda8b3",
     "authorityInputs": []
   }
 };

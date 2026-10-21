@@ -14,6 +14,7 @@ import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.m
 import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 import { publicationAssets, copyPublicationAssets, publicationPages, publicationManifest } from './lib/docs-publication-assets.mjs';
 import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
+import { buildReader } from './docs-reader/renderer.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -1066,6 +1067,7 @@ function build() {
   const base = `${remoteBase()}/blob/${revision}`;
   const outputRoot = path.join(root, '.tmp', 'docs-publication');
   fs.rmSync(outputRoot, { recursive: true, force: true });
+  const readerPages = [];
   for (const file of pages) {
     const relative = path.relative(siteRoot, file);
     const target = path.join(outputRoot, relative);
@@ -1080,14 +1082,24 @@ function build() {
     text = text.replace(/^Last verified: generated during publication$/mu, `Last verified: ${revision}`);
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, text);
+    readerPages.push({ relative: relative.split(path.sep).join('/'), text });
   }
   const assets = publicationAssets(siteRoot);
   copyPublicationAssets(siteRoot, outputRoot, assets);
+  const reader = buildReader({ outputRoot, pages: readerPages, assets, revision, sourceLink: target => {
+    const relative = path.posix.normalize(`docs/site/${target}`);
+    if (relative.startsWith('../') || path.posix.isAbsolute(relative)) throw new Error(`Reader source escapes repository: ${target}`);
+    const pinned = execFileSync('git', ['-C', root, 'show', `${revision}:${relative}`], { maxBuffer: 32 * 1024 * 1024 });
+    if (!pinned.equals(fs.readFileSync(path.join(root, relative)))) throw new Error(`Reader source differs from publication revision: ${relative}`);
+    return `${base}/${relative}`;
+  } });
   const report = {
     schemaVersion: 'kubeclaw-docs-publication.v1',
     revision,
     sourceManifestSha256: crypto.createHash('sha256').update(fs.readFileSync(publicationManifestPath)).digest('hex'),
     pageCount: pages.length,
+    readerManifest: 'reader-manifest.json',
+    renderedPageCount: reader.pageCount,
     assetPaths: assets,
     pluginCount: plugins.length,
     pageDigest: crypto.createHash('sha256').update(pages.map((file) => fs.readFileSync(file)).join('')).digest('hex'),

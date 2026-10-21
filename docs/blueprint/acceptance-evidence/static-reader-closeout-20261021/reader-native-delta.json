@@ -1,0 +1,1570 @@
+{
+  "oldFacts": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "busterDependencyRoutes",
+      "sha256": "38d839e4e4350cb7ff8f175a095b4a88f06d9dcc4c5399d372dd690eb75d5e99"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "catalogueRoot",
+      "sha256": "4c401736e91356bc235f6d04aaec1b6ee37274953ea535dea4c5970cf10b584f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "command",
+      "sha256": "1439df95bfd279b553e68cda96b2f0f3e6fd48ff253b7a2945d70633ea16d142"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "configurationSemantics",
+      "sha256": "a10fafc6b1aae9cdb6564399f5169576c3bab3c8eca4872169a6bf361278d255"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "configurationSemanticsPath",
+      "sha256": "b3f13f822ed3e4fe328a79aabada2721f53c2d631c293a31974ef9e48521010e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "dependencyAnalysisCache",
+      "sha256": "524396cd17f95f20d9c21b60ef362112098059b9dd3488feffe71abe6e750f1c"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "errors",
+      "sha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "extensionKeys",
+      "sha256": "afef89a7ca50922788a2625004535ceb01eb4aa099cc9bd93764cb56bf1d022d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "extensionKinds",
+      "sha256": "29a277a6ca44ba8917565b2a18ffccefa565653a382b2056c73d8730298a1f7b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "generated",
+      "sha256": "73a583bd05f074d0725e631821a211d44d3ff2255fd4accf78b57da70b9bf188"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "guidance",
+      "sha256": "2879af4ce29b778f261475f20843b2fe57a0ec673463ee572672805e19c03e01"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "guidanceById",
+      "sha256": "32e403e1fe7d43af7cd546b5d982640fde707eda7c5ef31029379edfa3591b3d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "inventory",
+      "sha256": "6cd98675ddd5d2eaf1b5cb2abed246bf402b6b10291a616e4a9665327fa9da1d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "inventoryById",
+      "sha256": "f5c12dd05b5ee82564e403a2662caf9e557c3447dda6684bdaa32f876121daad"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "legacyTerms",
+      "sha256": "4afd90b984d35cfcc8127683f878e59bb744fbfef3f2830f5fde4e29543173b8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "localVerification",
+      "sha256": "de475d585e40e9cce00f87f303edb45d5bb6260b485e7680558ecdbd94154eba"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "localVerificationById",
+      "sha256": "fe9b52422c2acf4294a0ad423368724e045c3f82f22b53be14c919d8e95a25f8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "messagingSchema",
+      "sha256": "457aa8e22764993193e28833ef69061c106ef2176d35124e2b853a27da432f21"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "messagingTargetPattern",
+      "sha256": "3a48a55fa8ce313885b2cf93d156e80b7a7292e68a754fe1547504bf0673e6fd"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "metadataFields",
+      "sha256": "8b2ebfdf312cdd91f9584c561ba560e5115bc5980c77795f064cebdfc1177f41"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "operatorMatrixEnd",
+      "sha256": "06c6d70a5966370fb1e5823ce4d6194b2b683b9fc29c0ee4ea4f76f03366aa91"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "operatorMatrixStart",
+      "sha256": "766a6f6c52ee03a0a35cfd06de931fd38f394c77663676584d95bb93fe29e8a2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "operatorPluginPage",
+      "sha256": "7727905e5655c38051b165354cb0773d1135d7d378ddf3c7fdc7244ef8031f0f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "passive",
+      "sha256": "b6a8622e74c2610a5195930cc6af42de075c791f88dcc8b1aa7ac949744cdd08"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "pinnedSources",
+      "sha256": "18dd080e5ca3dc97c7cc34a08480ec92807728bcd4a4a413197e1c6723c371f8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "pluginFiles",
+      "sha256": "3258e51021544d46c7436e7cac61acf44e5695e54694d58b744aa92c79b4b484"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "plugins",
+      "sha256": "59dbfa54f2a8aee6a826e6e431bee5d6ec0986a62fd37cab3ba3cbab1c8ad1d1"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "publicationManifestPath",
+      "sha256": "ed1c953f43348b9ac2bedb6e12dc9b47ed5729dba04d1c59d97b8c8d76ab194f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "root",
+      "sha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "schemaRenderingExample",
+      "sha256": "2cc237e79b176ef3e45268a1e685621dda3d387d8852c78d7ef8db0e802f1adf"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "siteRoot",
+      "sha256": "0245e3522916bd6aa6488abde7cc4d10b044497dbe8b655fd053d70df026128a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "sourceBase",
+      "sha256": "b1201d0384f56eb54b60eaefcf7e531a1caab5a7688ddbd91bbbafe3e626a5f9"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "sourceRevision",
+      "sha256": "9034dabf131ba2786030247ce38eafd5f3f773975603172440677045ea5002d2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "vague",
+      "sha256": "f5d3b041599d18ea9696d2311559f6ee4db53a9bca4d8878dd211a8e1a7536ff"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "build",
+      "sha256": "89f41825b45dd9558754ded231af4b12e1bb632a45d799fb8e15f3db3024f911"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "capabilityPage",
+      "sha256": "6be20d130b21601cfd49cb863656c15ad88ed49aff0f8ba467141feb083e7726"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "catalogueIndex",
+      "sha256": "95ff791723295ea2a818fdf1243e9b21fbd402fb2365b4e47b7cd9128d1dd991"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "checkDecisionContracts",
+      "sha256": "c896ae488b1848aa6f319e6222151d644babdfedf322105eefe37a76e0b168b4"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "checkLanguage",
+      "sha256": "9b239c7008dd43a0ac0ee82ba2792c9c69c5abd62fc2124ec902061bc38c30f2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "checkSite",
+      "sha256": "bfb554fedd4cf3742f124aae3699c4bfded1c47d3dc58289a1930151884f94b8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "compareGenerated",
+      "sha256": "30b01a3ff72c34a32b68f79a41add13ce105987c18002d4f727ea30ef0f82fc0"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "generate",
+      "sha256": "994dc0adcafb066e441d562bd8a76df07e9181feebbbde5b31f0cd795d16d817"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "git",
+      "sha256": "e2dcfe86e56d5280efe7fd5d62c72d23b7c0cd80153f32b5cc6086450724a95c"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "list",
+      "sha256": "7502e36a1d9fc00ecba69fe3dee0da806a3710f934f2fba0c4ad4aaaa86fc4d7"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "manifestValue",
+      "sha256": "a657390e65880ea6fe8347f9144207a8dbbe11ccd068599f0bee7ef68f6a5f67"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownCell",
+      "sha256": "e096763deea969cfc23761931bfbfc7bdb6237d15b389958054a07149b303734"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownInlineCode",
+      "sha256": "61764f7d70e0c4efa1c482ca27f563e008784dc11e9612b4934aab49d14efb0a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownLinkTargets",
+      "sha256": "a6194f10a0db2665cc0e95dfd9b5ed310c9eee90d114feaa5d7e8bf360ed06b0"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "numberedIds",
+      "sha256": "2aa51328bbfa2744f6a09081d3b3b2e506a609fdc57b6ca06cd52a8c689ccdc6"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "operatorPluginMatrix",
+      "sha256": "09635f51a1d576bb3fcde5c5ce993edf4082bf3776b4a443ce64236299eaf445"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginPage",
+      "sha256": "adaac3b607913663efdaa2699f2f949882d56f59179b35f6797ed140f5ebdab4"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "readJson",
+      "sha256": "f5aeb27539b7328c54e39a87f335d211a6c283c2965f1efdb651358b50211c36"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "registrationDependencyFacts",
+      "sha256": "f47f2e112d10f4d67817d0d829c328d8fe7feadba28365e44a0b00859564d4cd"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "registrationName",
+      "sha256": "3c6f0c97673b1564d383d6c0e2d16be0555212a92c5224288a9b6d672306b08b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "registrationSchemaFacts",
+      "sha256": "1bd6865216d3abd70dcc77bb75c42b2def1fb99525d7d846c10407a4db2dd085"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "rel",
+      "sha256": "71e95a19a52a887cf135764d2626bf4595168a921400b4dced1a217327d270f2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "remoteBase",
+      "sha256": "e351042d406d09117021f51e5e38e6f5c3367feafa830ea2614317ce480188f8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "replaceOperatorMatrix",
+      "sha256": "2417ae2b611254fdc7c62fc231a7ed9e56286fb8196d9b2f08138f77a04de428"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaConditions",
+      "sha256": "2040cb5693cb73ca3a9225d2dd40fd4634465499ddef23e9fe39e14e5afe91b7"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaConstraint",
+      "sha256": "5c0bc2460ff44d2d8deb9a040921ad02dea06ae8ac2770edc0a4019c522a32a8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaFacts",
+      "sha256": "ca88b21e6cd5ebe64b3a89aa9feb535a8e3e987948b4791cf87030423659cf0f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaSemanticText",
+      "sha256": "0ef30c03585cedc1defafb5e3cd03c5d0bf68d82fbd7ec7e13a5b0eb1791288f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "sourceEvidenceLink",
+      "sha256": "b2fd5227416c69c25cfbb1d7bd45cda6bde86f6e4a05e94950d19fa04f1737d6"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "sourceLink",
+      "sha256": "48e6a2687da24d170dacc3f989b045311b53910c2c013f22328daec1b555aa49"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripMarkdown",
+      "sha256": "dc5e930ea9d0094b8af758506f973ca242008f2e31f0fa1c0a4a990a07953d09"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "walk",
+      "sha256": "b2be3aea2f7e804939911c8cd6e7e42131f89fe6363443f6d00f805f2e9a4a34"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "208376b621ac2c847e0cd8c29f2ec56d9306f00570d5abe874380bc374759646"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "2d5a15faa2b756b7e1557b08eec4e14ec6e570f34cc0d86496f6938ee3d1e93b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "3250e73ba5238c9117c1302fd9725376d44158e111e20503002017a780f36977"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "3e36f3a35840f4b312de9ee185b4a07d4d3d9d25a9d570d8fe23d278165cfd08"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "53d07930fcd4f066f48349bdd0ed164b79ffdd46454898a4b579190df5d8601b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "6564afe52f7d82f74c160d37579649072c5f70845780b547f98614b0bdd673b2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "7dca2b72477678feaec7f2177fb4a05b0d014518ebd37bedc5820af5aaed661b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "blank",
+      "sha256": "28fedb51d8b6c273d59f06373660c624ff703afbea55c9bbf4717a0725eba4be"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "closingBracket",
+      "sha256": "f2bd0692aa103bb9f8cee9e662f43587a5351a95a028b91cf10596a52c0f5243"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "containerDetails",
+      "sha256": "7ec62045e55ffc46cc82db990a3b6ba4fbc86e6783b4ce1b4d5e227688f79455"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "containerPrefixLength",
+      "sha256": "d0fbcbc907c738a909bd3a043da8a14bcd15834baaa22c8ab296c1bb9e2b30fe"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "continuationPrefixLength",
+      "sha256": "67e883e4bb6ca1e501f3e23917c660a9dde6fdc4f2bc43a0e3ea96ba48bc7a03"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownInlineLinks",
+      "sha256": "56a29c2b92b227ef834c53787b916dad54258a3e499692390219f144e21b0e05"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripBlockCodeAndComments",
+      "sha256": "fdcb73a5bcd8824be1e8eb3ac438cadaef2695d92e20b503c9f311e05fe54620"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripContainerIndentedCode",
+      "sha256": "8574e4d25f19530a03ec0f8db6699afa81adc69c4708732587d9ccd66e4bac93"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripContainerPrefixes",
+      "sha256": "f773387788ce13b5660b32e321ea626045c0efeec698bc500169c2799157251b"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripInlineCode",
+      "sha256": "9a5d81bb70aee7e5a025bc9edddcf1c68d475595b990811f53091436d8d07194"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripInlineHtmlTags",
+      "sha256": "99e3ceb9ac1ec74985ffdfca33e8951d4802d1e04ac976d452873c6c765249ad"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripMarkdownCodeAndRawHtml",
+      "sha256": "261b6bcd14a1d3d3f160d2c22c6928e58281cd0c3f33e2330771bf3574234da3"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripRawHtmlBlocksForHeadings",
+      "sha256": "d0639dd7d50ff54e1b75c8617505757a058bf808fe26b51b12cd3dbe556d1a60"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FirstStatement",
+      "symbol": "files",
+      "sha256": "cf37f4a1a9693848faba6ae68c65508caccdba4baacef6139142a60f5c5aa532"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "copyPublicationAssets",
+      "sha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "publicationAssets",
+      "sha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "publicationManifest",
+      "sha256": "c81eccebd5e373abb67d8e6a14803492196c3bee99202e3f90771cdc7a0118b5"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "publicationPages",
+      "sha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
+    },
+    {
+      "source": "scripts/lib/docs-publication-links.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "rebaseMarkdownLinks",
+      "sha256": "d4870f9c5c20e57862f6275b2a02fa133282ac89ff546184336b0def0bc17c00"
+    },
+    {
+      "source": "scripts/lib/docs-publication-links.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "5131b780753211e444df21c92ccfdc19b1344a9e2a5406a9f5e8048317fa64a0"
+    },
+    {
+      "source": "scripts/plugin-dependency-boundaries.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "invocationDependencyBoundaries",
+      "sha256": "8ce454e4726ea22fedbb8b51902aa51f4eb003dfaccfa3cb23d1e9d8e1fece19"
+    },
+    {
+      "source": "scripts/plugin-schema-dependencies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "dependencySchemaFacts",
+      "sha256": "457c0a61d48ca8a9f7d01a315a033ec8f3539aec46756c3009238f858fa1e281"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FirstStatement",
+      "symbol": "builtins",
+      "sha256": "76520d450387284dc1a438c98dc1942026d25aa272ed84b8171a916e4b6dea8b"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FirstStatement",
+      "symbol": "cache",
+      "sha256": "560a7a8f3867dce9dfd5347f8206ff1672044eb7e0a1732eec18bd4377715fe5"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginCapabilityRoutes",
+      "sha256": "92945684b36d74f6427d173f7671b1278fc4f6cd0d4160c839a7aa78cea537c2"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginInvocationFacts",
+      "sha256": "1ba5458cd896fd52e09f194e48061af25074ca988fc8d602304a92b174d71d0a"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginSourceClosure",
+      "sha256": "c1d632ffcee4ccbae4ea4e577310f413521e35abf1221fe7204f3b50974879f3"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "workspacePackages",
+      "sha256": "d2585314cbcbb6098c558a256ea437cdad854700df15f32ad591c6327962b7f2"
+    }
+  ],
+  "newFacts": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "2b90f1892075e476edac54e49eb6a4617ea822dde137421d30f4b16fe5b1f7d5"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "busterDependencyRoutes",
+      "sha256": "38d839e4e4350cb7ff8f175a095b4a88f06d9dcc4c5399d372dd690eb75d5e99"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "catalogueRoot",
+      "sha256": "4c401736e91356bc235f6d04aaec1b6ee37274953ea535dea4c5970cf10b584f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "command",
+      "sha256": "1439df95bfd279b553e68cda96b2f0f3e6fd48ff253b7a2945d70633ea16d142"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "configurationSemantics",
+      "sha256": "a10fafc6b1aae9cdb6564399f5169576c3bab3c8eca4872169a6bf361278d255"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "configurationSemanticsPath",
+      "sha256": "b3f13f822ed3e4fe328a79aabada2721f53c2d631c293a31974ef9e48521010e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "dependencyAnalysisCache",
+      "sha256": "524396cd17f95f20d9c21b60ef362112098059b9dd3488feffe71abe6e750f1c"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "errors",
+      "sha256": "f53a56ba0c26895836a10e6c4319d5a54505f49cd2a87c5b5719f041265f38fb"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "extensionKeys",
+      "sha256": "afef89a7ca50922788a2625004535ceb01eb4aa099cc9bd93764cb56bf1d022d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "extensionKinds",
+      "sha256": "29a277a6ca44ba8917565b2a18ffccefa565653a382b2056c73d8730298a1f7b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "generated",
+      "sha256": "73a583bd05f074d0725e631821a211d44d3ff2255fd4accf78b57da70b9bf188"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "guidance",
+      "sha256": "2879af4ce29b778f261475f20843b2fe57a0ec673463ee572672805e19c03e01"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "guidanceById",
+      "sha256": "32e403e1fe7d43af7cd546b5d982640fde707eda7c5ef31029379edfa3591b3d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "inventory",
+      "sha256": "6cd98675ddd5d2eaf1b5cb2abed246bf402b6b10291a616e4a9665327fa9da1d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "inventoryById",
+      "sha256": "f5c12dd05b5ee82564e403a2662caf9e557c3447dda6684bdaa32f876121daad"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "legacyTerms",
+      "sha256": "4afd90b984d35cfcc8127683f878e59bb744fbfef3f2830f5fde4e29543173b8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "localVerification",
+      "sha256": "de475d585e40e9cce00f87f303edb45d5bb6260b485e7680558ecdbd94154eba"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "localVerificationById",
+      "sha256": "fe9b52422c2acf4294a0ad423368724e045c3f82f22b53be14c919d8e95a25f8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "messagingSchema",
+      "sha256": "457aa8e22764993193e28833ef69061c106ef2176d35124e2b853a27da432f21"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "messagingTargetPattern",
+      "sha256": "3a48a55fa8ce313885b2cf93d156e80b7a7292e68a754fe1547504bf0673e6fd"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "metadataFields",
+      "sha256": "8b2ebfdf312cdd91f9584c561ba560e5115bc5980c77795f064cebdfc1177f41"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "operatorMatrixEnd",
+      "sha256": "06c6d70a5966370fb1e5823ce4d6194b2b683b9fc29c0ee4ea4f76f03366aa91"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "operatorMatrixStart",
+      "sha256": "766a6f6c52ee03a0a35cfd06de931fd38f394c77663676584d95bb93fe29e8a2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "operatorPluginPage",
+      "sha256": "7727905e5655c38051b165354cb0773d1135d7d378ddf3c7fdc7244ef8031f0f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "passive",
+      "sha256": "b6a8622e74c2610a5195930cc6af42de075c791f88dcc8b1aa7ac949744cdd08"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "pinnedSources",
+      "sha256": "18dd080e5ca3dc97c7cc34a08480ec92807728bcd4a4a413197e1c6723c371f8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "pluginFiles",
+      "sha256": "3258e51021544d46c7436e7cac61acf44e5695e54694d58b744aa92c79b4b484"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "plugins",
+      "sha256": "59dbfa54f2a8aee6a826e6e431bee5d6ec0986a62fd37cab3ba3cbab1c8ad1d1"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "publicationManifestPath",
+      "sha256": "ed1c953f43348b9ac2bedb6e12dc9b47ed5729dba04d1c59d97b8c8d76ab194f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "root",
+      "sha256": "f6055bf37a2744ecd109a220117928b82359853c93ea2274e97993770e5ac65a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "schemaRenderingExample",
+      "sha256": "2cc237e79b176ef3e45268a1e685621dda3d387d8852c78d7ef8db0e802f1adf"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "siteRoot",
+      "sha256": "0245e3522916bd6aa6488abde7cc4d10b044497dbe8b655fd053d70df026128a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "sourceBase",
+      "sha256": "b1201d0384f56eb54b60eaefcf7e531a1caab5a7688ddbd91bbbafe3e626a5f9"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "sourceRevision",
+      "sha256": "9034dabf131ba2786030247ce38eafd5f3f773975603172440677045ea5002d2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FirstStatement",
+      "symbol": "vague",
+      "sha256": "f5d3b041599d18ea9696d2311559f6ee4db53a9bca4d8878dd211a8e1a7536ff"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "build",
+      "sha256": "fe124ec019cae7fe00cdf056a0a8be0546344e43b08fd617185ef2060d661a2e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "capabilityPage",
+      "sha256": "6be20d130b21601cfd49cb863656c15ad88ed49aff0f8ba467141feb083e7726"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "catalogueIndex",
+      "sha256": "95ff791723295ea2a818fdf1243e9b21fbd402fb2365b4e47b7cd9128d1dd991"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "checkDecisionContracts",
+      "sha256": "c896ae488b1848aa6f319e6222151d644babdfedf322105eefe37a76e0b168b4"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "checkLanguage",
+      "sha256": "9b239c7008dd43a0ac0ee82ba2792c9c69c5abd62fc2124ec902061bc38c30f2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "checkSite",
+      "sha256": "bfb554fedd4cf3742f124aae3699c4bfded1c47d3dc58289a1930151884f94b8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "compareGenerated",
+      "sha256": "30b01a3ff72c34a32b68f79a41add13ce105987c18002d4f727ea30ef0f82fc0"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "generate",
+      "sha256": "994dc0adcafb066e441d562bd8a76df07e9181feebbbde5b31f0cd795d16d817"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "git",
+      "sha256": "e2dcfe86e56d5280efe7fd5d62c72d23b7c0cd80153f32b5cc6086450724a95c"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "list",
+      "sha256": "7502e36a1d9fc00ecba69fe3dee0da806a3710f934f2fba0c4ad4aaaa86fc4d7"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "manifestValue",
+      "sha256": "a657390e65880ea6fe8347f9144207a8dbbe11ccd068599f0bee7ef68f6a5f67"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownCell",
+      "sha256": "e096763deea969cfc23761931bfbfc7bdb6237d15b389958054a07149b303734"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownInlineCode",
+      "sha256": "61764f7d70e0c4efa1c482ca27f563e008784dc11e9612b4934aab49d14efb0a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownLinkTargets",
+      "sha256": "a6194f10a0db2665cc0e95dfd9b5ed310c9eee90d114feaa5d7e8bf360ed06b0"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "numberedIds",
+      "sha256": "2aa51328bbfa2744f6a09081d3b3b2e506a609fdc57b6ca06cd52a8c689ccdc6"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "operatorPluginMatrix",
+      "sha256": "09635f51a1d576bb3fcde5c5ce993edf4082bf3776b4a443ce64236299eaf445"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginPage",
+      "sha256": "adaac3b607913663efdaa2699f2f949882d56f59179b35f6797ed140f5ebdab4"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "readJson",
+      "sha256": "f5aeb27539b7328c54e39a87f335d211a6c283c2965f1efdb651358b50211c36"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "registrationDependencyFacts",
+      "sha256": "f47f2e112d10f4d67817d0d829c328d8fe7feadba28365e44a0b00859564d4cd"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "registrationName",
+      "sha256": "3c6f0c97673b1564d383d6c0e2d16be0555212a92c5224288a9b6d672306b08b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "registrationSchemaFacts",
+      "sha256": "1bd6865216d3abd70dcc77bb75c42b2def1fb99525d7d846c10407a4db2dd085"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "rel",
+      "sha256": "71e95a19a52a887cf135764d2626bf4595168a921400b4dced1a217327d270f2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "remoteBase",
+      "sha256": "e351042d406d09117021f51e5e38e6f5c3367feafa830ea2614317ce480188f8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "replaceOperatorMatrix",
+      "sha256": "2417ae2b611254fdc7c62fc231a7ed9e56286fb8196d9b2f08138f77a04de428"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaConditions",
+      "sha256": "2040cb5693cb73ca3a9225d2dd40fd4634465499ddef23e9fe39e14e5afe91b7"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaConstraint",
+      "sha256": "5c0bc2460ff44d2d8deb9a040921ad02dea06ae8ac2770edc0a4019c522a32a8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaFacts",
+      "sha256": "ca88b21e6cd5ebe64b3a89aa9feb535a8e3e987948b4791cf87030423659cf0f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "schemaSemanticText",
+      "sha256": "0ef30c03585cedc1defafb5e3cd03c5d0bf68d82fbd7ec7e13a5b0eb1791288f"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "sourceEvidenceLink",
+      "sha256": "b2fd5227416c69c25cfbb1d7bd45cda6bde86f6e4a05e94950d19fa04f1737d6"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "sourceLink",
+      "sha256": "48e6a2687da24d170dacc3f989b045311b53910c2c013f22328daec1b555aa49"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripMarkdown",
+      "sha256": "dc5e930ea9d0094b8af758506f973ca242008f2e31f0fa1c0a4a990a07953d09"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "walk",
+      "sha256": "b2be3aea2f7e804939911c8cd6e7e42131f89fe6363443f6d00f805f2e9a4a34"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "208376b621ac2c847e0cd8c29f2ec56d9306f00570d5abe874380bc374759646"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "2d5a15faa2b756b7e1557b08eec4e14ec6e570f34cc0d86496f6938ee3d1e93b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "3250e73ba5238c9117c1302fd9725376d44158e111e20503002017a780f36977"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "3e36f3a35840f4b312de9ee185b4a07d4d3d9d25a9d570d8fe23d278165cfd08"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "53d07930fcd4f066f48349bdd0ed164b79ffdd46454898a4b579190df5d8601b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "6564afe52f7d82f74c160d37579649072c5f70845780b547f98614b0bdd673b2"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "IfStatement",
+      "symbol": "<operation>",
+      "sha256": "7dca2b72477678feaec7f2177fb4a05b0d014518ebd37bedc5820af5aaed661b"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "0ccd0687f00733cd9d7ba2de8dcfa5b48aa208d2a91d4fc128ff0194839819b7"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "1a1bbd89063e3aaf2c874583e7d500d8b0865f5c9d8fd8a905ec131bacf83782"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "456fa2069bd36b9358e3edad3b86a51c35db37694c545b071547f9aa81b0b735"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "5a987c5d013be6b33356f9597163728d4fcc58a64acf58358047d5de6e4e3b72"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "escape",
+      "sha256": "a37507e8f7f59ffc9d922dfcfc18b502f063b6e5d66029d94dbe937ca8e3ee64"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "groups",
+      "sha256": "3514a969a263ef2946a4cb47bd63b7b084e9c8b9304acb2cd4ab16d7a4ec3b34"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "hash",
+      "sha256": "b0eaa75bb6c21da082a7355668a37371bde470750b3377fc7544d332b96c5caa"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerCss",
+      "sha256": "074ea6ba3f3ef9944a164b0bbe2ea4c1292e46358a118a1cd1b1efd889a8b1c8"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerScript",
+      "sha256": "efa48c8d025dc953b9b4c4248ea6ea1dcb348952ed33dda6ed4a43ed1c609e2e"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "buildReader",
+      "sha256": "e9a94d1c97b66c8fdde65062729add4a7598cf0f88e46449ccbd63b3f76b3281"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "readerHref",
+      "sha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "renderReaderMarkdown",
+      "sha256": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "shell",
+      "sha256": "5f63871c5a289dc6500c0b44b8121c1325750721fc8636134b90446ad5deed18"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "blank",
+      "sha256": "28fedb51d8b6c273d59f06373660c624ff703afbea55c9bbf4717a0725eba4be"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "closingBracket",
+      "sha256": "f2bd0692aa103bb9f8cee9e662f43587a5351a95a028b91cf10596a52c0f5243"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "containerDetails",
+      "sha256": "7ec62045e55ffc46cc82db990a3b6ba4fbc86e6783b4ce1b4d5e227688f79455"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "containerPrefixLength",
+      "sha256": "d0fbcbc907c738a909bd3a043da8a14bcd15834baaa22c8ab296c1bb9e2b30fe"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "continuationPrefixLength",
+      "sha256": "67e883e4bb6ca1e501f3e23917c660a9dde6fdc4f2bc43a0e3ea96ba48bc7a03"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "githubHeadingText",
+      "sha256": "51cc25f4de9028b0f594b354f351d380767c4ff34ff99dbe5d8dff059915d977"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "githubSlug",
+      "sha256": "82834532e66d417b76ff562f025b6c98f19c28511db51560963703cb0856b93e"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "markdownInlineLinks",
+      "sha256": "56a29c2b92b227ef834c53787b916dad54258a3e499692390219f144e21b0e05"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripBlockCodeAndComments",
+      "sha256": "fdcb73a5bcd8824be1e8eb3ac438cadaef2695d92e20b503c9f311e05fe54620"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripContainerIndentedCode",
+      "sha256": "8574e4d25f19530a03ec0f8db6699afa81adc69c4708732587d9ccd66e4bac93"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripContainerPrefixes",
+      "sha256": "f773387788ce13b5660b32e321ea626045c0efeec698bc500169c2799157251b"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripInlineCode",
+      "sha256": "9a5d81bb70aee7e5a025bc9edddcf1c68d475595b990811f53091436d8d07194"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripInlineHtmlTags",
+      "sha256": "99e3ceb9ac1ec74985ffdfca33e8951d4802d1e04ac976d452873c6c765249ad"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripMarkdownCodeAndRawHtml",
+      "sha256": "261b6bcd14a1d3d3f160d2c22c6928e58281cd0c3f33e2330771bf3574234da3"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "stripRawHtmlBlocksForHeadings",
+      "sha256": "d0639dd7d50ff54e1b75c8617505757a058bf808fe26b51b12cd3dbe556d1a60"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FirstStatement",
+      "symbol": "files",
+      "sha256": "cf37f4a1a9693848faba6ae68c65508caccdba4baacef6139142a60f5c5aa532"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "copyPublicationAssets",
+      "sha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "publicationAssets",
+      "sha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "publicationManifest",
+      "sha256": "c81eccebd5e373abb67d8e6a14803492196c3bee99202e3f90771cdc7a0118b5"
+    },
+    {
+      "source": "scripts/lib/docs-publication-assets.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "publicationPages",
+      "sha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
+    },
+    {
+      "source": "scripts/lib/docs-publication-links.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "rebaseMarkdownLinks",
+      "sha256": "d4870f9c5c20e57862f6275b2a02fa133282ac89ff546184336b0def0bc17c00"
+    },
+    {
+      "source": "scripts/lib/docs-publication-links.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "5131b780753211e444df21c92ccfdc19b1344a9e2a5406a9f5e8048317fa64a0"
+    },
+    {
+      "source": "scripts/plugin-dependency-boundaries.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "invocationDependencyBoundaries",
+      "sha256": "8ce454e4726ea22fedbb8b51902aa51f4eb003dfaccfa3cb23d1e9d8e1fece19"
+    },
+    {
+      "source": "scripts/plugin-schema-dependencies.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "dependencySchemaFacts",
+      "sha256": "457c0a61d48ca8a9f7d01a315a033ec8f3539aec46756c3009238f858fa1e281"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FirstStatement",
+      "symbol": "builtins",
+      "sha256": "76520d450387284dc1a438c98dc1942026d25aa272ed84b8171a916e4b6dea8b"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FirstStatement",
+      "symbol": "cache",
+      "sha256": "560a7a8f3867dce9dfd5347f8206ff1672044eb7e0a1732eec18bd4377715fe5"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginCapabilityRoutes",
+      "sha256": "92945684b36d74f6427d173f7671b1278fc4f6cd0d4160c839a7aa78cea537c2"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginInvocationFacts",
+      "sha256": "1ba5458cd896fd52e09f194e48061af25074ca988fc8d602304a92b174d71d0a"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "pluginSourceClosure",
+      "sha256": "c1d632ffcee4ccbae4ea4e577310f413521e35abf1221fe7204f3b50974879f3"
+    },
+    {
+      "source": "scripts/plugin-source-closure.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "workspacePackages",
+      "sha256": "d2585314cbcbb6098c558a256ea437cdad854700df15f32ad591c6327962b7f2"
+    }
+  ],
+  "removed": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "build",
+      "sha256": "89f41825b45dd9558754ded231af4b12e1bb632a45d799fb8e15f3db3024f911"
+    }
+  ],
+  "added": [
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "build",
+      "sha256": "fe124ec019cae7fe00cdf056a0a8be0546344e43b08fd617185ef2060d661a2e"
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "escape",
+      "sha256": "a37507e8f7f59ffc9d922dfcfc18b502f063b6e5d66029d94dbe937ca8e3ee64"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "groups",
+      "sha256": "3514a969a263ef2946a4cb47bd63b7b084e9c8b9304acb2cd4ab16d7a4ec3b34"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "hash",
+      "sha256": "b0eaa75bb6c21da082a7355668a37371bde470750b3377fc7544d332b96c5caa"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerCss",
+      "sha256": "074ea6ba3f3ef9944a164b0bbe2ea4c1292e46358a118a1cd1b1efd889a8b1c8"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FirstStatement",
+      "symbol": "readerScript",
+      "sha256": "efa48c8d025dc953b9b4c4248ea6ea1dcb348952ed33dda6ed4a43ed1c609e2e"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "buildReader",
+      "sha256": "e9a94d1c97b66c8fdde65062729add4a7598cf0f88e46449ccbd63b3f76b3281"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "readerHref",
+      "sha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "renderReaderMarkdown",
+      "sha256": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "shell",
+      "sha256": "5f63871c5a289dc6500c0b44b8121c1325750721fc8636134b90446ad5deed18"
+    },
+    {
+      "source": "scripts/docs-reader/renderer.mjs",
+      "kind": "ImportDeclaration",
+      "symbol": "<operation>",
+      "sha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "githubHeadingText",
+      "sha256": "51cc25f4de9028b0f594b354f351d380767c4ff34ff99dbe5d8dff059915d977"
+    },
+    {
+      "source": "scripts/lib/docs-markdown-anchors.mjs",
+      "kind": "FunctionDeclaration",
+      "symbol": "githubSlug",
+      "sha256": "82834532e66d417b76ff562f025b6c98f19c28511db51560963703cb0856b93e"
+    }
+  ]
+}
