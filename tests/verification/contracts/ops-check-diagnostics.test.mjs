@@ -45,3 +45,66 @@ test('successful original commands emit no error annotation', () => {
   assert.deepEqual(result.calls, ['ci --ignore-scripts', 'test']);
   assert.doesNotMatch(result.stdout, /::error/u);
 });
+
+
+const scanScript = workflow.jobs.validate.steps.find(step => step.name === 'Scan the built candidate before accepting the build').run;
+function exerciseScan(setupStatus, scanStatus, report = null) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ops-scan-diagnostics-'));
+  try {
+    fs.mkdirSync(path.join(dir, 'scripts'));
+    fs.writeFileSync(path.join(dir, 'scripts/scan-runtime-images.sh'), `#!/bin/bash
+if [ "$SCAN_SETUP_STATUS" != 0 ]; then printf 'scanner setup %% failed\\r\\n' >&2; exit "$SCAN_SETUP_STATUS"; fi
+printf '%s\\n' "$SCAN_EXECUTABLE"
+`);
+    const executable = path.join(dir, 'scanner');
+    fs.writeFileSync(executable, `#!/bin/bash
+printf '%s\\n' "$@" > "$SCAN_CALLS"
+printf 'original scanner output %% marker\\r\\n' >&2
+if [ -n "$SCAN_REPORT" ]; then printf '%s' "$SCAN_REPORT" > dist/trivy/test.json; fi
+exit "$SCAN_STATUS"
+`, { mode: 0o755 });
+    const result = spawnSync('bash', ['-e', '-o', 'pipefail', '-c', scanScript], {
+      cwd: dir, encoding: 'utf8', env: { ...process.env, IMAGE_NAME: 'test', TEST_IMAGE: 'candidate:exact',
+        SCAN_EXECUTABLE: executable, SCAN_CALLS: path.join(dir, 'calls'),
+        SCAN_SETUP_STATUS: String(setupStatus), SCAN_STATUS: String(scanStatus),
+        SCAN_REPORT: report === null ? '' : report },
+    });
+    assert.equal(result.error, undefined);
+    return { ...result, calls: fs.existsSync(path.join(dir, 'calls')) ? fs.readFileSync(path.join(dir, 'calls'), 'utf8').trim().split('\n') : [],
+      report: fs.existsSync(path.join(dir, 'dist/trivy/test.json')) ? fs.readFileSync(path.join(dir, 'dist/trivy/test.json'), 'utf8') : null,
+      log: fs.readFileSync(path.join(dir, 'dist/trivy/test.log'), 'utf8') };
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+}
+test('scanner setup failure preserves its exit, escapes diagnostics and never scans', () => {
+  const result = exerciseScan(17, 0);
+  assert.equal(result.status, 17);
+  assert.deepEqual(result.calls, []);
+  assert.match(result.stdout, /::error title=Candidate vulnerability scan failed \(exit 17\)::scanner setup %25 failed/u);
+});
+test('failed candidate scan exposes bounded findings without changing the original gate or report', () => {
+  const report = JSON.stringify({ Results: [{ Vulnerabilities: Array.from({ length: 30 }, (_, i) => ({
+    VulnerabilityID: `CVE-test-${i}`, Severity: 'HIGH', PkgName: 'example', InstalledVersion: '1', FixedVersion: '2',
+  })) }] });
+  const result = exerciseScan(0, 1, report);
+  assert.equal(result.status, 1);
+  assert.equal(result.report, report);
+  assert.deepEqual(result.calls, ['image', '--scanners', 'vuln', '--severity', 'HIGH,CRITICAL', '--exit-code', '1', '--format', 'json', '--output', 'dist/trivy/test.json', 'candidate:exact']);
+  const annotation = result.stdout.split('\n').find(line => line.startsWith('::error'));
+  assert.ok(Buffer.byteLength(annotation) < 4096);
+  assert.match(annotation, /HIGH\/CRITICAL findings: 30/u);
+  assert.match(annotation, /CVE-test-0/u);
+  assert.doesNotMatch(annotation, /CVE-test-10/u);
+  assert.match(result.log, /original scanner output % marker/u);
+});
+test('malformed scan JSON cannot mask the original failing exit', () => {
+  const result = exerciseScan(0, 23, '{invalid');
+  assert.equal(result.status, 23);
+  assert.match(result.stdout, /Candidate vulnerability scan failed \(exit 23\)/u);
+  assert.equal(result.report, '{invalid');
+});
+test('successful candidate scan retains output and emits no failure annotation', () => {
+  const result = exerciseScan(0, 0, '{"Results":[]}');
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /original scanner output % marker/u);
+  assert.doesNotMatch(result.stdout, /::error/u);
+});

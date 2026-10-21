@@ -153,9 +153,40 @@ jobs:
           TEST_IMAGE: ${{ steps.candidate.outputs.image }}
         run: |
           mkdir -p dist/trivy
+          log="dist/trivy/$IMAGE_NAME.log"
+          # Separate bash preserves errexit for scanner setup inside the conditional.
+          if bash -e -o pipefail >"$log" 2>&1 <<'SCAN'
           trivy="$(bash scripts/scan-runtime-images.sh --executable)"
           "$trivy" image --scanners vuln --severity HIGH,CRITICAL --exit-code 1 \
             --format json --output "dist/trivy/$IMAGE_NAME.json" "$TEST_IMAGE"
+          SCAN
+          then
+            cat "$log"
+          else
+            status=$?
+            cat "$log"
+            # Full JSON/log remain artifacts; expose only bounded diagnostic data.
+            node --input-type=module >>"$log" <<'SUMMARY' || true
+          import fs from 'node:fs';
+          const file = `dist/trivy/${process.env.IMAGE_NAME}.json`;
+          if (fs.existsSync(file)) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const findings = (report.Results ?? []).flatMap(result => result.Vulnerabilities ?? [])
+              .filter(item => ['HIGH', 'CRITICAL'].includes(item.Severity));
+            console.log(`HIGH/CRITICAL findings: ${findings.length}`);
+            for (const item of findings.slice(0, 10)) {
+              console.log(JSON.stringify({ id: item.VulnerabilityID, severity: item.Severity,
+                package: item.PkgName, installed: item.InstalledVersion, fixed: item.FixedVersion }));
+            }
+          }
+          SUMMARY
+            message="$(tail -c 3000 "$log")"
+            message="${message//'%'/'%25'}"
+            message="${message//$'\r'/'%0D'}"
+            message="${message//$'\n'/'%0A'}"
+            printf '::error title=Candidate vulnerability scan failed (exit %s)::%s\n' "$status" "$message"
+            exit "$status"
+          fi
       - name: Upload candidate vulnerability report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
