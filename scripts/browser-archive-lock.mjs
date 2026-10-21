@@ -38,8 +38,27 @@ export function browserLock(manifest, packageLock) {
 }
 
 export async function downloadArchive(url, target) {
-  const response = await fetch(url, { signal: AbortSignal.timeout(600_000), redirect: 'follow' });
-  if (!response.ok || !response.url.startsWith('https://')) throw new Error(`Browser download failed: ${response.status}`);
+  // Playwright's dbazure route redirects to a host that can be unavailable.
+  // Its registry also supplies this exact CDN mirror for the same revision.
+  // Never resolve a version or relax the caller's pinned size/SHA256 identity.
+  const urls = [url];
+  if (/^https:\/\/cdn\.playwright\.dev\/dbazure\/download\/playwright\/builds\/[A-Za-z0-9._/-]+\.zip$/.test(url)) {
+    urls.push(url.replace('/dbazure/download/playwright/', '/'));
+  }
+  const signal = AbortSignal.timeout(600_000); // One budget across both routes.
+  let response;
+  for (let index = 0; index < urls.length; index++) {
+    try {
+      response = await fetch(urls[index], { signal, redirect: 'follow' });
+      if (!response.ok || !response.url.startsWith('https://')) {
+        await response.body?.cancel();
+        throw new Error(`Browser download failed: ${response.status}`);
+      }
+      break;
+    } catch (error) {
+      if (index === urls.length - 1 || signal.aborted) throw error;
+    }
+  }
   let size = 0;
   const limit = new Transform({ transform(chunk, encoding, callback) { size += chunk.length; callback(size > maximumArchiveBytes ? new Error('Browser archive exceeds limit') : null, chunk); } });
   await pipeline(Readable.fromWeb(response.body), limit, fs.createWriteStream(target, { flags: 'wx' }));
