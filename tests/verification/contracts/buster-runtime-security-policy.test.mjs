@@ -277,3 +277,23 @@ test('reloaded file changes real PATH and diagnostic consumers; old captured con
   assert.deepEqual(f.observations().map(item => item.path),
     [f.authoredPath.join(path.delimiter), '/absent-reloaded-helper-directory', f.authoredPath.join(path.delimiter)]);
 });
+
+const originalExecutableSearchPath = defaults().executableSearchPath;
+for (const [index, member] of originalExecutableSearchPath.entries()) {
+  test(`authored RuntimeSecurity PATH member ${index} ${member} reaches child across reload`, { timeout: 15000 }, async t => {
+    const f = fixture(t, 'process.stdout.write(JSON.stringify(lease));', {});
+    assert.deepEqual(f.authoredPath, originalExecutableSearchPath, 'no substitution of original authored members');
+    assert.equal((await f.invoke()).namespace, 'test-one');
+    const changedPath = [...originalExecutableSearchPath];
+    changedPath[index] = path.join(f.root, `replacement-path-${index}`);
+    const changed = f.reload({ executableSearchPath: changedPath });
+    // Mutating the original caller after construction cannot change its captured PATH.
+    f.options.kubernetesRuntimeSecurity.executableSearchPath[index] = '/caller-mutated-path';
+    assert.equal((await changed()).namespace, 'test-one');
+    assert.equal((await f.invoke()).namespace, 'test-one');
+    await f.confirmClosed();
+    assert.equal(f.children.length, 3);
+    assert.deepEqual(f.observations().map(item => item.path.split(path.delimiter)),
+      [originalExecutableSearchPath, changedPath, originalExecutableSearchPath]);
+  });
+}
