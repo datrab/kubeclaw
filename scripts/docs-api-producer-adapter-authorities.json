@@ -14351,11 +14351,11 @@
               "expression": "`${args.tool}: added ${additions.length} approved fingerprints\\n`"
             }
           ],
-          "factsDigest": "183d19fe4012d3f32bd4cf94467923bdf384fd771aa3e7085d4f4e3d8452a2a9"
+          "factsDigest": "5f6a6d856254c47ec6b874c05ed9927f1a9298a5d214afbf2a08c4f6d2b4c375"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/lint-baseline-update.mjs",
         "sink": "process.stdout.write",
         "expression": "`${args.tool}: added ${additions.length} approved fingerprints\\n`",
@@ -14415,7 +14415,7 @@
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "source": "scripts/prepare-native-worker-pools.mjs",
         "sink": "fs.writeFileSync",
         "expression": "`${machineId}\\n`",
@@ -14471,11 +14471,11 @@
               "expression": "`${receipt.code?.commit ?? receipt.commit}\\n`"
             }
           ],
-          "factsDigest": "e0672f8e8d5d93ea571490284a742c5bb44ddabda184207c344478463e87fcc8"
+          "factsDigest": "3bbce5c5e5f44655a7a042ff517db753b34eff228d3077d72bda8331cc27fcac"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/updates/deployment-release.mjs",
         "sink": "process.stdout.write",
         "expression": "`${receipt.code?.commit ?? receipt.commit}\\n`",
@@ -14486,7 +14486,9 @@
             "expression": "`${receipt.code?.commit ?? receipt.commit}\\n`"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api",
+      "role": "unknown"
     },
     {
       "source": "scripts/updates/verify-release-source.mjs",
@@ -14501,11 +14503,11 @@
               "expression": "`${family}: selected digests match successful source run ${selected.sourceRunId}/${selected.sourceRunAttempt}`"
             }
           ],
-          "factsDigest": "b7569b488c7a75d71ca459e083fe7d2f23e035d8c167a0bc9aa7d9cefdddc9a3"
+          "factsDigest": "c0c2161ca7acc3da738e45823cbd0f7fdefb92b4c275f16adffe54de52248fac"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/updates/verify-release-source.mjs",
         "sink": "console.log",
         "expression": "`${family}: selected digests match successful source run ${selected.sourceRunId}/${selected.sourceRunAttempt}`",
@@ -14621,11 +14623,11 @@
               "expression": "canonicalJson(value)"
             }
           ],
-          "factsDigest": "8b810400187ffaa30c88aac6cf7daa2bd75f7024e9fbf022f5d008ce288fc334"
+          "factsDigest": "48bb826aa2388f5f147a1b2246e6b56ec78a2fdd26384bbad7c6ffb7d177adaa"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
         "sink": "fs.writeFileSync",
         "expression": "canonicalJson(value)",
@@ -14651,11 +14653,11 @@
               "expression": "`${canonicalJson(definition)}\\n`"
             }
           ],
-          "factsDigest": "e368713c27910835be85ee8b19ca3414be5c53dfa116f83f554188f9dbd0ca5d"
+          "factsDigest": "a4584a52b25edfbece26d0e73f28bb0f2392e58d9d6932cb06ab2d8c14080960"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "skills/nova/project/cli.ts",
         "sink": "fs.writeFileSync",
         "expression": "`${canonicalJson(definition)}\\n`",
@@ -14681,11 +14683,11 @@
               "expression": "`${canonicalJson(imported.project)}\\n`"
             }
           ],
-          "factsDigest": "8c3f71dfbb3dc3062f888f3827ef9489a6a356704042e65c3c4dce6d2a82e367"
+          "factsDigest": "e321002a68898d70407e3e121d21c67fc256fea73bf75f1699d2b8b07e5e72fd"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "skills/nova/project/legacy-import-cli.ts",
         "sink": "fs.writeFileSync",
         "expression": "`${canonicalJson(imported.project)}\\n`",
@@ -14742,11 +14744,11 @@
               "expression": "content"
             }
           ],
-          "factsDigest": "9db6472391b0e500e1cbf622ba5c03b727ed29808179a0d1b6dfa5552197799d"
+          "factsDigest": "10829790920ac294fb62ecd490235a6d1136e17fa79eeb64ba11659ae3632c90"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/ap08-extension-inventory.mjs",
         "sink": "fs.writeFileSync",
         "expression": "content",
@@ -14773,11 +14775,11 @@
               "expression": "`AP08 repeat-review scope is current (${reviewPaths.length} review paths, ${scope.evidenceObjects.length} evidence objects)`"
             }
           ],
-          "factsDigest": "fba58c27c6741bb2b446a2ae1f17b7da0f96a1a3fc1ea538e6d0d6803fc45e72"
+          "factsDigest": "0e4271f3aa5db858368909c3464a0c589ba7ec51b0ce31bbea31a133f9e5bbb0"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/ap08-review-scope.mjs",
         "sink": "console.log",
         "expression": "`AP08 repeat-review scope is current (${reviewPaths.length} review paths, ${scope.evidenceObjects.length} evidence objects)`",
@@ -14804,11 +14806,11 @@
               "expression": "`wrote ${outputPath} (${reviewPaths.length} review paths, ${scope.evidenceObjects.length} evidence objects)`"
             }
           ],
-          "factsDigest": "fba58c27c6741bb2b446a2ae1f17b7da0f96a1a3fc1ea538e6d0d6803fc45e72"
+          "factsDigest": "0e4271f3aa5db858368909c3464a0c589ba7ec51b0ce31bbea31a133f9e5bbb0"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/ap08-review-scope.mjs",
         "sink": "console.log",
         "expression": "`wrote ${outputPath} (${reviewPaths.length} review paths, ${scope.evidenceObjects.length} evidence objects)`",
@@ -14825,7 +14827,7 @@
       "source": "scripts/build-runtime-role-bundle.mjs",
       "sink": "fs.writeFileSync",
       "expression": "content",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-source-bound-native-config-code-or-reader-artifact",
       "operations": [
         {
@@ -14835,11 +14837,11 @@
               "expression": "content"
             }
           ],
-          "factsDigest": "6106a1bc00df2266ae5c414c9de50e7a1758dd1beec186c4a7761c3581ff70b4"
+          "factsDigest": "3110fea61278ce55e2901979222e267a03dd50221ba0f525451fa9e797635410"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/build-runtime-role-bundle.mjs",
         "sink": "fs.writeFileSync",
         "expression": "content",
@@ -14850,7 +14852,8 @@
             "expression": "content"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-buster-guides.mjs",
@@ -14897,11 +14900,11 @@
               "expression": "check.stdout"
             }
           ],
-          "factsDigest": "6d35f408afd01d69e49a9a471f4decf6b3fa702bab31a669789eb86209cfa5ba"
+          "factsDigest": "677562ac8d9f69e7d005e6b2c107c821d8847f1cd6b39a4d5bc5ef9046caca8a"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "source": "scripts/check-configuration-cli-drift.mjs",
         "sink": "process.stdout.write",
         "expression": "check.stdout",
@@ -14928,11 +14931,11 @@
               "expression": "original"
             }
           ],
-          "factsDigest": "1f464501484f3da437bcbdab1779b3b4ade6c19aec4aa0063572773f83dd7fe5"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "original",
@@ -14959,11 +14962,11 @@
               "expression": "original.replace(before, after)"
             }
           ],
-          "factsDigest": "316bf6e29277f36893430a43a49465ad057a757ff599a0810e95de0153df321f"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "original.replace(before, after)",
@@ -14990,11 +14993,11 @@
               "expression": "lines.join('\\n')"
             }
           ],
-          "factsDigest": "9cbcdc284e986e0cf914ef55613d284fcef4607b0650cfe11df7877843c5ea92"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "lines.join('\\n')",
@@ -15021,11 +15024,11 @@
               "expression": "changed"
             }
           ],
-          "factsDigest": "6d17454c14e04d0eb512de248c9f0287616aa7c35aa2536299899e6122d7da64"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "changed",
@@ -15052,11 +15055,11 @@
               "expression": "`PASS ${name}: public CLI option rejected until authored documentation exists`"
             }
           ],
-          "factsDigest": "958b71e47e10dc1e3bdbef70f712f90317cc43407fdd26ebb25263a5c1601c62"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "`PASS ${name}: public CLI option rejected until authored documentation exists`",
@@ -15083,11 +15086,11 @@
               "expression": "`PASS ${name}: public option rejected until qualified semantic authority exists`"
             }
           ],
-          "factsDigest": "958b71e47e10dc1e3bdbef70f712f90317cc43407fdd26ebb25263a5c1601c62"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "`PASS ${name}: public option rejected until qualified semantic authority exists`",
@@ -15114,11 +15117,11 @@
               "expression": "`PASS ${name}: source -> inventory -> published semantics`"
             }
           ],
-          "factsDigest": "958b71e47e10dc1e3bdbef70f712f90317cc43407fdd26ebb25263a5c1601c62"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "`PASS ${name}: source -> inventory -> published semantics`",
@@ -15145,11 +15148,11 @@
               "expression": "`PASS ${name}`"
             }
           ],
-          "factsDigest": "025868b8f81cffafb86ba86e1993c38adf5802dac83b7e3bf8423a3c9429b185"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "`PASS ${name}`",
@@ -15176,11 +15179,11 @@
               "expression": "runtimeSemantics.stdout.trim()"
             }
           ],
-          "factsDigest": "3edc5cca867cae76c6912e8ce120a74c8781b20d6de7c916dbd837d835a2964d"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "runtimeSemantics.stdout.trim()",
@@ -15207,11 +15210,11 @@
               "expression": "baseline.stdout.trim()"
             }
           ],
-          "factsDigest": "3edc5cca867cae76c6912e8ce120a74c8781b20d6de7c916dbd837d835a2964d"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "baseline.stdout.trim()",
@@ -15238,11 +15241,11 @@
               "expression": "semanticCheck.stdout.trim()"
             }
           ],
-          "factsDigest": "3edc5cca867cae76c6912e8ce120a74c8781b20d6de7c916dbd837d835a2964d"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "semanticCheck.stdout.trim()",
@@ -15269,11 +15272,11 @@
               "expression": "`PASS focused mutation prefix ${casePrefix} and baseline recovery`"
             }
           ],
-          "factsDigest": "3edc5cca867cae76c6912e8ce120a74c8781b20d6de7c916dbd837d835a2964d"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "`PASS focused mutation prefix ${casePrefix} and baseline recovery`",
@@ -15300,11 +15303,11 @@
               "expression": "casePrefix\n  ? `Selected configuration documentation drift mutations passed (${casePrefix}).`\n  : 'All configuration documentation drift mutations passed.'"
             }
           ],
-          "factsDigest": "3b443860ebb51b0d4193b791644962200ceea3276b39b48742b5db0faf6c3f2f"
+          "factsDigest": "981eb1fb01cb83c3486472100dfd05d9232ea353ab9b941875f2dce36a2c2c57"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/check-configuration-drift-mutations.mjs",
         "sink": "console.log",
         "expression": "casePrefix\n  ? `Selected configuration documentation drift mutations passed (${casePrefix}).`\n  : 'All configuration documentation drift mutations passed.'",
@@ -15331,11 +15334,11 @@
               "expression": "`Typecheck ${sourceConfigs.indexOf(config) + 1}/${sourceConfigs.length}: ${config}`"
             }
           ],
-          "factsDigest": "b1d7110e656753d404dd707b6bdd49514f26b0eeae0c0362b64e176f2224f37a"
+          "factsDigest": "4847d0fa4214b53f759026e7f628377448c8123a381759970e513fae656a43b2"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-erasable-typescript.mjs",
         "sink": "console.log",
         "expression": "`Typecheck ${sourceConfigs.indexOf(config) + 1}/${sourceConfigs.length}: ${config}`",
@@ -15362,11 +15365,11 @@
               "expression": "alloyConfig"
             }
           ],
-          "factsDigest": "3b7b14f694e9d50571e3515d7cb6d1c84dcaf96cf9c44127b0555d0e90075a99"
+          "factsDigest": "275a4f47546989d4bab798c5d65a682a659b9358c03619c41a5527caeaffe3be"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "source": "scripts/check-monitoring.mjs",
         "sink": "fs.writeFileSync",
         "expression": "alloyConfig",
@@ -15424,11 +15427,11 @@
               "expression": "`Operator task registry is valid (${registry.tasks.length} unique tasks; ${REQUIRED_LIFECYCLE_COVERAGE.size} required lifecycle capabilities).`"
             }
           ],
-          "factsDigest": "215e800480869df983cc3d5beb8e1020adb2df59163afb846ecdff9a02238be6"
+          "factsDigest": "c4444f7016d1aaf366989affc905cc0ef411672831657780e445eb98971bbe66"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "source": "scripts/check-operator-task-registry.mjs",
         "sink": "console.log",
         "expression": "`Operator task registry is valid (${registry.tasks.length} unique tasks; ${REQUIRED_LIFECYCLE_COVERAGE.size} required lifecycle capabilities).`",
@@ -15455,11 +15458,11 @@
               "expression": "`PASS: ${objects.size} platform resources, separate ownership, manual sync, storage and external credentials preserved.`"
             }
           ],
-          "factsDigest": "2cd23fb60350b2e88373ce557d1290384aebe2e9309e78f82e398689794deec3"
+          "factsDigest": "71a4450abd788e777d54aac69d7917610771e8d2438d681e1a5445d16a8b9168"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/check-platform-services.mjs",
         "sink": "console.log",
         "expression": "`PASS: ${objects.size} platform resources, separate ownership, manual sync, storage and external credentials preserved.`",
@@ -15486,11 +15489,11 @@
               "expression": "`AP09.6/9.7 guides passed (${specifications.length} pages, ${sourceLinkCount} pinned source links, ${checkedSources.size} source files, ${opsTools.length} Ops tools)\\n`"
             }
           ],
-          "factsDigest": "555ba933011d940858164256e521205818b5a9dacad3bcf2a6ab9f073635262c"
+          "factsDigest": "37d10092797b25b4cfc0376fa6effd50c44bec8d2fc6cfaf51669308288a51d0"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/check-platform-specialist-guides.mjs",
         "sink": "process.stdout.write",
         "expression": "`AP09.6/9.7 guides passed (${specifications.length} pages, ${sourceLinkCount} pinned source links, ${checkedSources.size} source files, ${opsTools.length} Ops tools)\\n`",
@@ -15507,7 +15510,7 @@
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "ingressFixture",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15517,11 +15520,11 @@
               "expression": "ingressFixture"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "ingressFixture",
@@ -15532,13 +15535,14 @@
             "expression": "ingressFixture"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "ingressFixtureBefore",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15548,11 +15552,11 @@
               "expression": "ingressFixtureBefore"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "ingressFixtureBefore",
@@ -15563,13 +15567,14 @@
             "expression": "ingressFixtureBefore"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "after",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15579,11 +15584,11 @@
               "expression": "after"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "after",
@@ -15594,13 +15599,14 @@
             "expression": "after"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "before",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15610,11 +15616,11 @@
               "expression": "before"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "before",
@@ -15625,13 +15631,14 @@
             "expression": "before"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "dependencyMutation.apply('add', dependencyBefore)",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15641,11 +15648,11 @@
               "expression": "dependencyMutation.apply('add', dependencyBefore)"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "dependencyMutation.apply('add', dependencyBefore)",
@@ -15656,13 +15663,14 @@
             "expression": "dependencyMutation.apply('add', dependencyBefore)"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "dependencyBefore",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15672,11 +15680,11 @@
               "expression": "dependencyBefore"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "dependencyBefore",
@@ -15687,13 +15695,14 @@
             "expression": "dependencyBefore"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-platform-surface-drift-mutations.mjs",
       "sink": "fs.writeFileSync",
       "expression": "mappingBefore",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-isolated-source-copy-mutation-and-restoration",
       "operations": [
         {
@@ -15703,11 +15712,11 @@
               "expression": "mappingBefore"
             }
           ],
-          "factsDigest": "eda3e93e1db64d57e693a77b635f6dbec69cf7cac6a56f5546ff9fc22e4bf811"
+          "factsDigest": "5162bfb668989b4d77608e5c91fe93abaae4e119052dbc4baf076bd511c143a4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-platform-surface-drift-mutations.mjs",
         "sink": "fs.writeFileSync",
         "expression": "mappingBefore",
@@ -15718,7 +15727,8 @@
             "expression": "mappingBefore"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/check-prism-guides.mjs",
@@ -15734,11 +15744,11 @@
               "expression": "`Prism guides verified: ${specifications.length} pages, ${sourceLinks} pinned links, ${checkedSources.size} source files, ${settings.length} runtime settings, ${helmFields.length} shipped Helm fields, ${deploySettings.length} deploy identifiers, ${migrations.length} migrations, ${Object.keys(requirementMarkers).length} requirements.`"
             }
           ],
-          "factsDigest": "233678c2a18cb67d9ed49b1b7b95da290bb8300fe9f434784a46cd2e174d0188"
+          "factsDigest": "c6ed9f995b09a52c386cbb6020056ecb5917fae5d5201374116b3b59f5a58b6d"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-prism-guides.mjs",
         "sink": "console.log",
         "expression": "`Prism guides verified: ${specifications.length} pages, ${sourceLinks} pinned links, ${checkedSources.size} source files, ${settings.length} runtime settings, ${helmFields.length} shipped Helm fields, ${deploySettings.length} deploy identifiers, ${migrations.length} migrations, ${Object.keys(requirementMarkers).length} requirements.`",
@@ -15765,11 +15775,11 @@
               "expression": "`suite migration ${mode} check passed`"
             }
           ],
-          "factsDigest": "a0a7a8cf2803afd6319389d7b6341864fade4d4fe8e8b13ce5c8934c8d2f3d57"
+          "factsDigest": "a60a50d7acb78632a530aaa6abab7d3dfd0bd3b4f557456bcbd77f8f8541dcd1"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/check-suite-migration-workflow.mjs",
         "sink": "console.log",
         "expression": "`suite migration ${mode} check passed`",
@@ -15796,11 +15806,11 @@
               "expression": "`wrote ${path.relative(root, target)} (${locations.size} stable codes from ${productionFiles.length} production files)`"
             }
           ],
-          "factsDigest": "f81f01c0d7c3b73d0c9836f0d3cb6ccc0a1442a1ce22d0b33cd9608edc58ed4e"
+          "factsDigest": "f514f4e47286e0d0708f87303555cc99cfed5568635af3e6984633df6208c88d"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/generate-buster-error-reference.mjs",
         "sink": "console.log",
         "expression": "`wrote ${path.relative(root, target)} (${locations.size} stable codes from ${productionFiles.length} production files)`",
@@ -15827,11 +15837,11 @@
               "expression": "`Buster error reference verified: ${grouped.size} groups, ${locations.size} stable codes, ${productionFiles.length} production files`"
             }
           ],
-          "factsDigest": "f81f01c0d7c3b73d0c9836f0d3cb6ccc0a1442a1ce22d0b33cd9608edc58ed4e"
+          "factsDigest": "f514f4e47286e0d0708f87303555cc99cfed5568635af3e6984633df6208c88d"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/generate-buster-error-reference.mjs",
         "sink": "console.log",
         "expression": "`Buster error reference verified: ${grouped.size} groups, ${locations.size} stable codes, ${productionFiles.length} production files`",
@@ -15858,11 +15868,11 @@
               "expression": "`wrote ${path.relative(root, target)}`"
             }
           ],
-          "factsDigest": "7b0e7c528c9fc69d65529ad01dc619a58be53f89327478fb05d831242fdc9fcc"
+          "factsDigest": "a5c46ef1134c4bac772926ad34813d1f33d8654a31c1484b1f030d97054a65d4"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "source": "scripts/generate-buster-provider-reference.mjs",
         "sink": "console.log",
         "expression": "`wrote ${path.relative(root, target)}`",
@@ -15889,11 +15899,11 @@
               "expression": "`Operator task registry generation is current (${source.tasks.length} tasks).`"
             }
           ],
-          "factsDigest": "455f847b22b719abdf19d39b4d29ca016a21b028b0b5243bcfadf681ce67f282"
+          "factsDigest": "56ecbbf27d318187fbf066a63866bdb0b1afcdac245c18bf9ffca5988fa3df44"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/generate-operator-task-registry.mjs",
         "sink": "console.log",
         "expression": "`Operator task registry generation is current (${source.tasks.length} tasks).`",
@@ -15920,11 +15930,11 @@
               "expression": "`Generated ${path.relative(root, outputPath)} from ${path.relative(root, sourcePath)}.`"
             }
           ],
-          "factsDigest": "455f847b22b719abdf19d39b4d29ca016a21b028b0b5243bcfadf681ce67f282"
+          "factsDigest": "56ecbbf27d318187fbf066a63866bdb0b1afcdac245c18bf9ffca5988fa3df44"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/generate-operator-task-registry.mjs",
         "sink": "console.log",
         "expression": "`Generated ${path.relative(root, outputPath)} from ${path.relative(root, sourcePath)}.`",
@@ -15951,11 +15961,11 @@
               "expression": "`${JSON.stringify({schemaVersion:'kubeclaw.visual-baselines.v2',baselineBundleDigest:`sha256:${crypto.createHash('sha256').update(digest).digest('hex')}`,entries:[{id:'home-desktop',route:'/',profile:'chromium-desktop',baselineFile:'.swarm/visual/home-desktop.png',sha256:digest,browser:'chromium',browserVersion:browser.version(),viewport:{width:1280,height:720},pageConditions:{colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false,fullPage:true}}]},null,2)}\\n`"
             }
           ],
-          "factsDigest": "84989edf50554f22f9b1b30a8aa8556b41d80c2c0cedf98c94421c51a14bc3d2"
+          "factsDigest": "c154743f5f4055fed68f443721dc66251f9d00338787a68568ebff8bb43f85e5"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/generate-real-e2e-visual-baseline.mjs",
         "sink": "fs.writeFileSync",
         "expression": "`${JSON.stringify({schemaVersion:'kubeclaw.visual-baselines.v2',baselineBundleDigest:`sha256:${crypto.createHash('sha256').update(digest).digest('hex')}`,entries:[{id:'home-desktop',route:'/',profile:'chromium-desktop',baselineFile:'.swarm/visual/home-desktop.png',sha256:digest,browser:'chromium',browserVersion:browser.version(),viewport:{width:1280,height:720},pageConditions:{colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false,fullPage:true}}]},null,2)}\\n`",
@@ -16075,11 +16085,11 @@
               "expression": "content"
             }
           ],
-          "factsDigest": "2a90dfa789d33ea25a5824d4d08ca35ad08636a97af3058d50347231e39e569d"
+          "factsDigest": "4631c48c2c48de9a1c9026249dce19a202a9b262d4456563e15889057950539e"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/generate-telemetry-contracts.mjs",
         "sink": "fs.writeFileSync",
         "expression": "content",
@@ -16127,7 +16137,7 @@
       "source": "scripts/gitops-continuous.mjs",
       "sink": "fs.writeFileSync",
       "expression": "bytes",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16137,11 +16147,11 @@
               "expression": "bytes"
             }
           ],
-          "factsDigest": "243e652ccad801eceaefa54736ffc851356dfaabf817d58f2688af22963c5cf5"
+          "factsDigest": "649fde8972bd5a09032d50ef1eec4579c2550736cd3bedb3e72e7a98979b0777"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/gitops-continuous.mjs",
         "sink": "fs.writeFileSync",
         "expression": "bytes",
@@ -16152,13 +16162,14 @@
             "expression": "bytes"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/gitops-rollback.mjs",
       "sink": "fs.writeFileSync",
       "expression": "bytes",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16168,11 +16179,11 @@
               "expression": "bytes"
             }
           ],
-          "factsDigest": "40af111158e97d360164ab03623f86a8ee25bc78f30499ac2861e964b2b2f506"
+          "factsDigest": "18528ea4cefba2f061cabad6859dea07a03faac54b45671175236757a70231cc"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "source": "scripts/gitops-rollback.mjs",
         "sink": "fs.writeFileSync",
         "expression": "bytes",
@@ -16183,13 +16194,14 @@
             "expression": "bytes"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/gitops.mjs",
       "sink": "process.stdout.write",
       "expression": "result.documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\\n')",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16199,11 +16211,11 @@
               "expression": "result.documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\\n')"
             }
           ],
-          "factsDigest": "6b764e52da16a2e207e09296a702aef86881105fd2d91e16c19fc9cf8f8f424b"
+          "factsDigest": "aceed1c9247c2933a1125a5519449e8e430c5f29b136208e7630a14223c8cb84"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/gitops.mjs",
         "sink": "process.stdout.write",
         "expression": "result.documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\\n')",
@@ -16214,13 +16226,14 @@
             "expression": "result.documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\\n')"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/gitops.mjs",
       "sink": "process.stdout.write",
       "expression": "`Exported ${result.groups.length} groups. Review and commit the release bundle before bootstrap.\\n`",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16230,11 +16243,11 @@
               "expression": "`Exported ${result.groups.length} groups. Review and commit the release bundle before bootstrap.\\n`"
             }
           ],
-          "factsDigest": "f4f17fe53d4c91436904431445f81045b63a629995b4cdebe6fa948c4b1c6adb"
+          "factsDigest": "aceed1c9247c2933a1125a5519449e8e430c5f29b136208e7630a14223c8cb84"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/gitops.mjs",
         "sink": "process.stdout.write",
         "expression": "`Exported ${result.groups.length} groups. Review and commit the release bundle before bootstrap.\\n`",
@@ -16245,7 +16258,8 @@
             "expression": "`Exported ${result.groups.length} groups. Review and commit the release bundle before bootstrap.\\n`"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/infrastructure-image-renderer.mjs",
@@ -16292,11 +16306,11 @@
               "expression": "`pruned ${removed} stale lint baseline fingerprint(s)\\n`"
             }
           ],
-          "factsDigest": "852a92759bd980c6a896b0179620ec7c97ea2e2eca6870d7b8d9ce85e90513a2"
+          "factsDigest": "18cbe1c8579597dcbf23566a290679230f5ec1f34dd74f70d44d2ead9dd08303"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/lint-baseline-prune.mjs",
         "sink": "process.stdout.write",
         "expression": "`pruned ${removed} stale lint baseline fingerprint(s)\\n`",
@@ -16416,11 +16430,11 @@
               "expression": "expected"
             }
           ],
-          "factsDigest": "c71aa53dec3bab9e7a95430def4b9152d225b3aef139e13ee4c6da4e862570c0"
+          "factsDigest": "f919099c382dc77e65ab030a09b6424609889e9a0905546fb8a1d8a6000f84e9"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/plugin-system-inventory.mjs",
         "sink": "fs.writeFileSync",
         "expression": "expected",
@@ -16447,11 +16461,11 @@
               "expression": "required.map(controller => `+${controller}`).join(' ')"
             }
           ],
-          "factsDigest": "b812a78067b06127ac441d81b3fa5a916efedcf03fcf7316f26816439035f60f"
+          "factsDigest": "366989342a36196e9218e9c5d0a416690402b07bde8ce5653afdfb5bd86bc153"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "source": "scripts/prepare-native-worker-pools.mjs",
         "sink": "fs.writeFileSync",
         "expression": "required.map(controller => `+${controller}`).join(' ')",
@@ -16478,11 +16492,11 @@
               "expression": "value"
             }
           ],
-          "factsDigest": "b812a78067b06127ac441d81b3fa5a916efedcf03fcf7316f26816439035f60f"
+          "factsDigest": "366989342a36196e9218e9c5d0a416690402b07bde8ce5653afdfb5bd86bc153"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "source": "scripts/prepare-native-worker-pools.mjs",
         "sink": "fs.writeFileSync",
         "expression": "value",
@@ -16530,7 +16544,7 @@
       "source": "scripts/render-kubernetes-api-probe.mjs",
       "sink": "process.stdout.write",
       "expression": "[config, job].map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16540,11 +16554,11 @@
               "expression": "[config, job].map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')"
             }
           ],
-          "factsDigest": "28714e45e183d899d464b98f99e1f946d337ae789dd9acdfd006472678939943"
+          "factsDigest": "b93e36905a0aeeedf090bc4ba4c3f0e03bc1e92b866ed8220f920214629ecdf8"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/render-kubernetes-api-probe.mjs",
         "sink": "process.stdout.write",
         "expression": "[config, job].map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
@@ -16555,7 +16569,8 @@
             "expression": "[config, job].map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/render-litellm-deployment.mjs",
@@ -16571,11 +16586,11 @@
               "expression": "[configMap, ...documents].map(value => dump(value, { lineWidth: -1, noRefs: true })).join('---\\n')"
             }
           ],
-          "factsDigest": "ecb75be2d969a73d956cb316fabfd7cbffe84f901ab033183014938846e87576"
+          "factsDigest": "2f8ed31ee9758af1283c72269e14df034d31223b6f10dd1ea50a5cf0cc29b47b"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/render-litellm-deployment.mjs",
         "sink": "process.stdout.write",
         "expression": "[configMap, ...documents].map(value => dump(value, { lineWidth: -1, noRefs: true })).join('---\\n')",
@@ -16633,11 +16648,11 @@
               "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')"
             }
           ],
-          "factsDigest": "a1b02b7f6195b47464b09c538f37bf869d7c4aa939e1b007740469fdbbb894e1"
+          "factsDigest": "9d7a0a7f9ba9a4fa03b364e36bd9895e8fe6f5c90073773c6151ce823dee2d63"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/render-postgresql-recovery.mjs",
         "sink": "process.stdout.write",
         "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
@@ -16685,7 +16700,7 @@
       "source": "scripts/render-stateful-network-policies.mjs",
       "sink": "process.stdout.write",
       "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16695,11 +16710,11 @@
               "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')"
             }
           ],
-          "factsDigest": "2fe6807c60bbbb18cfad9d68d5578d50069f2275057ef70ea1a4e4b4076f8987"
+          "factsDigest": "50e4130e13cc3583d228b7a1c8a54e71009980a9ec35aea3d7d5ef18245547bc"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/render-stateful-network-policies.mjs",
         "sink": "process.stdout.write",
         "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')",
@@ -16710,7 +16725,8 @@
             "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/runtime-tool-locks.mjs",
@@ -16726,11 +16742,11 @@
               "expression": "fs.readFileSync(path.join(directory, output), 'utf8')\n      .replace(/^(\\S+?)\\[[^\\]]+\\](==)/gmu, '$1$2')"
             }
           ],
-          "factsDigest": "3a34b2d5dca4cecb8e2041f253eaab54abc700bcd49bd2c0e2ea6900c63bb4fe"
+          "factsDigest": "2578d4d8470a6d6390965248537669f09f0d3ebf8418eec0fc2b2a5e567a0581"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/runtime-tool-locks.mjs",
         "sink": "fs.writeFileSync",
         "expression": "fs.readFileSync(path.join(directory, output), 'utf8')\n      .replace(/^(\\S+?)\\[[^\\]]+\\](==)/gmu, '$1$2')",
@@ -16757,11 +16773,11 @@
               "expression": "statefulDatabaseService(...process.argv.slice(2)).name"
             }
           ],
-          "factsDigest": "f456d1f289d4a28da8ff164fca8367ed9d387581118335a8ef24844124655c99"
+          "factsDigest": "82975eb20112cc49680bd154cdbc5bab8c72e66e27c1721da93ab0927969e44c"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "source": "scripts/stateful-database-service.mjs",
         "sink": "console.log",
         "expression": "statefulDatabaseService(...process.argv.slice(2)).name",
@@ -16871,7 +16887,7 @@
       "source": "scripts/updates/deployment-release.mjs",
       "sink": "process.stdout.write",
       "expression": "rendered",
-      "role": "api-adapted",
+      "role": "unknown",
       "basis": "original-manifest-stream-covered-by-qualified-offline-adapter",
       "operations": [
         {
@@ -16881,11 +16897,11 @@
               "expression": "rendered"
             }
           ],
-          "factsDigest": "e0672f8e8d5d93ea571490284a742c5bb44ddabda184207c344478463e87fcc8"
+          "factsDigest": "3bbce5c5e5f44655a7a042ff517db753b34eff228d3077d72bda8331cc27fcac"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "scripts/updates/deployment-release.mjs",
         "sink": "process.stdout.write",
         "expression": "rendered",
@@ -16896,13 +16912,14 @@
             "expression": "rendered"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "api-adapted"
     },
     {
       "source": "scripts/updates/refresh-versions.mjs",
       "sink": "console.log",
       "expression": "`Verifying upstream ${tool} ${version} linux/${arch}`",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-source-bound-diagnostic-text",
       "operations": [
         {
@@ -16912,11 +16929,11 @@
               "expression": "`Verifying upstream ${tool} ${version} linux/${arch}`"
             }
           ],
-          "factsDigest": "69185ce70ffaf5b5d814e52c33ae8ee17b4622c5081f80b2a81f60d251d5baf3"
+          "factsDigest": "bedb924393048478e25012d0111ae636ba346f131f806d9a3a65fe8f6fd763ec"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/updates/refresh-versions.mjs",
         "sink": "console.log",
         "expression": "`Verifying upstream ${tool} ${version} linux/${arch}`",
@@ -16927,13 +16944,14 @@
             "expression": "`Verifying upstream ${tool} ${version} linux/${arch}`"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/updates/refresh-versions.mjs",
       "sink": "fs.writeFileSync",
       "expression": "original",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-source-bound-native-config-code-or-reader-artifact",
       "operations": [
         {
@@ -16943,11 +16961,11 @@
               "expression": "original"
             }
           ],
-          "factsDigest": "4b97a9aa10f3076c64a822a3025a932f360a195cd7899c2d38f2ec28569ab89e"
+          "factsDigest": "bedb924393048478e25012d0111ae636ba346f131f806d9a3a65fe8f6fd763ec"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/updates/refresh-versions.mjs",
         "sink": "fs.writeFileSync",
         "expression": "original",
@@ -16958,7 +16976,8 @@
             "expression": "original"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "scripts/updates/verify-release-source.mjs",
@@ -16974,11 +16993,11 @@
               "expression": "`runtime code: verified source ${selected.sourceRunId}/${selected.sourceRunAttempt}`"
             }
           ],
-          "factsDigest": "beb7265cc33da1dda5eadc38ca88958c8bc2e558e23e7bdfcd3426b02c0e7281"
+          "factsDigest": "c0c2161ca7acc3da738e45823cbd0f7fdefb92b4c275f16adffe54de52248fac"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "scripts/updates/verify-release-source.mjs",
         "sink": "console.log",
         "expression": "`runtime code: verified source ${selected.sourceRunId}/${selected.sourceRunAttempt}`",
@@ -17005,11 +17024,11 @@
               "expression": "`external Helm authority snapshots are current (${inventoryFields.length} exact fields across ${Object.keys(lock.charts).length} charts)`"
             }
           ],
-          "factsDigest": "0c2acb805ae4d7f95f3e23b00311e96cf50ddbdf689d031abb3a3bbf577a059b"
+          "factsDigest": "71f666318ec45c857151eae71c8997a38038f22adb4dfe00cbd355eb094fb66c"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "source": "scripts/vendor-external-helm-authorities.mjs",
         "sink": "console.log",
         "expression": "`external Helm authority snapshots are current (${inventoryFields.length} exact fields across ${Object.keys(lock.charts).length} charts)`",
@@ -17026,7 +17045,7 @@
       "source": "scripts/versions.mjs",
       "sink": "fs.writeFileSync",
       "expression": "content",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-source-bound-native-config-code-or-reader-artifact",
       "operations": [
         {
@@ -17036,11 +17055,11 @@
               "expression": "content"
             }
           ],
-          "factsDigest": "883962c5fe90b4a190c319727dbac329ce98d88450a0a1ed9c2127b1926c8223"
+          "factsDigest": "fcfe6fdf2a00a5926cdd8918a0dc674fbee3b554e1fb7d7a49bef9ee57ae6bff"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "source": "scripts/versions.mjs",
         "sink": "fs.writeFileSync",
         "expression": "content",
@@ -17051,7 +17070,8 @@
             "expression": "content"
           }
         ]
-      }
+      },
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "skills/buster/plugins/container-build/src/provider.js",
@@ -17160,11 +17180,11 @@
               "expression": "`REGISTRY_IMPORT_AUDIT_OK:${exportName}\\n`"
             }
           ],
-          "factsDigest": "b8d1919b3a9f85cfe458ae3224e814dc22fd5a1e696e3c81527cf7d3182bec6a"
+          "factsDigest": "b956e81f2aa3fcc533e9b3f1da558631b82259842cc972819c71e3b81a939db8"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
         "sink": "process.stdout.write",
         "expression": "`REGISTRY_IMPORT_AUDIT_OK:${exportName}\\n`",
@@ -17253,11 +17273,11 @@
               "expression": "`- [${item.kind}] ${item.field}: ${item.message}`"
             }
           ],
-          "factsDigest": "4eefeaaca16cb370acc13690426e028bf03fbfdcd70071a8a7dc43666d01b31d"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.log",
         "expression": "`- [${item.kind}] ${item.field}: ${item.message}`",
@@ -17284,11 +17304,11 @@
               "expression": "diffSummary(readJsonIfExists(context.progressFile), progress)"
             }
           ],
-          "factsDigest": "dc548e57f8dd8ff6aa1700224f7da2aca116dfde810e9951f5870471fed23cfd"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.log",
         "expression": "diffSummary(readJsonIfExists(context.progressFile), progress)",
@@ -17315,11 +17335,11 @@
               "expression": "`wrote ${relFromRepo(context.repoRoot, context.progressFile)}`"
             }
           ],
-          "factsDigest": "dc548e57f8dd8ff6aa1700224f7da2aca116dfde810e9951f5870471fed23cfd"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.log",
         "expression": "`wrote ${relFromRepo(context.repoRoot, context.progressFile)}`",
@@ -17346,11 +17366,11 @@
               "expression": "`wrote ${relFromRepo(context.repoRoot, context.pipelineFile)}`"
             }
           ],
-          "factsDigest": "dc548e57f8dd8ff6aa1700224f7da2aca116dfde810e9951f5870471fed23cfd"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.log",
         "expression": "`wrote ${relFromRepo(context.repoRoot, context.pipelineFile)}`",
@@ -17377,11 +17397,11 @@
               "expression": "`wrote ${relFromRepo(context.repoRoot, context.scaffoldFile)}`"
             }
           ],
-          "factsDigest": "7fa719823f567cfece1c1b788ee92c0799c083b25943841b40ba802074eedfda"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.log",
         "expression": "`wrote ${relFromRepo(context.repoRoot, context.scaffoldFile)}`",
@@ -17408,11 +17428,11 @@
               "expression": "`// Generated by scripts/generate-validators.mjs. Do not edit.\\n${generated}`"
             }
           ],
-          "factsDigest": "91f1ff6a60bdad6f21631e361d028d37d7e4ff811bf44c7953aeab88961f0585"
+          "factsDigest": "a60231335f49e609584dd18dbac8187ef4540453b270015fc18e83a4097a2bed"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "source": "contracts/prism/v1/scripts/generate-validators.mjs",
         "sink": "fs.writeFileSync",
         "expression": "`// Generated by scripts/generate-validators.mjs. Do not edit.\\n${generated}`",
@@ -17438,11 +17458,11 @@
               "expression": "bytes"
             }
           ],
-          "factsDigest": "84989edf50554f22f9b1b30a8aa8556b41d80c2c0cedf98c94421c51a14bc3d2"
+          "factsDigest": "c154743f5f4055fed68f443721dc66251f9d00338787a68568ebff8bb43f85e5"
         }
       ],
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "source": "scripts/generate-real-e2e-visual-baseline.mjs",
         "sink": "fs.writeFileSync",
         "expression": "bytes",
@@ -17501,12 +17521,12 @@
               "expression": "JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes))"
             }
           ],
-          "factsDigest": "1fe3d4fa95afdb208c01e40fdd15ef8642585c58170b942182d64ebd9ca1907d"
+          "factsDigest": "16de54fbbd985fb6e0d93854862e8ab27ee3053b18afbe73c37d16049a9f4839"
         }
       ],
       "publicationCondition": "Callers must independently qualify the actual returned root before a stdout, file or serialized public output.",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "source": "skills/buster/engine/test-gates/native-fixture-journal.ts",
         "sink": "return",
         "expression": "JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes))",
@@ -17590,7 +17610,7 @@
       "role": "non-api",
       "basis": "original-framed-provider-log-evidence",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-1.json",
         "consumer": "captureLog prefixes [stream], bounds total bytes and writes provider.log; returns evidenceId runner-log, type log and text/plain.",
         "operation": "fs.writeFileSync(path.join(directory, \"provider.log\"), chunks.join(\"\"))",
         "source": "skills/buster/engine/test-gates/runner.ts",
@@ -17611,7 +17631,7 @@
               "expression": "chunks.join(\"\")"
             }
           ],
-          "factsDigest": "23c4af5cda48ed8ab58f7e8725ae1087cfad212df65dfa57274da53627d74d82"
+          "factsDigest": "b610049eb6d67efcfc63d1236439b75e521c4fedd22ecec19cfc1959d547c75f"
         }
       ]
     },
@@ -17622,7 +17642,7 @@
       "role": "api-capable-utility",
       "basis": "original-immutable-native-json-pair-file-capability",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "publishJsonPair validates two distinct .json names; digest manifest published-json-pair.v1 and atomic current.json select immutable bytes. Actual progress/pipeline caller is separately operation-qualified.",
         "operation": "handle.writeFile(bytes)",
         "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
@@ -17643,7 +17663,7 @@
               "expression": "bytes"
             }
           ],
-          "factsDigest": "8e3ce91599fc5982cc9210fcea8054c6c1001db0933336c8587dab3d2ddc81be"
+          "factsDigest": "aafe625f25173d759e39c861560a51ffa5e590967d6935054f6f22a1e24f3371"
         }
       ]
     },
@@ -17654,7 +17674,7 @@
       "role": "non-api",
       "basis": "original-content-addressed-attempt-evidence-blob",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "durableBlob writes root/blobs prefix with supplied verified digest; recordEvidence validates observability evidence and returns WorkerEvidenceRefV1. Metadata/readback verify digest and size.",
         "operation": "handle.writeFile(bytes)",
         "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
@@ -17675,7 +17695,7 @@
               "expression": "bytes"
             }
           ],
-          "factsDigest": "2580f11300c63109af5eb0e523dc74508ecfe67a7aaa2dde19a7bc6a9b23e7cb"
+          "factsDigest": "a01892ad71e9b6f1266ed569996fe63839e1eb0d0d5507b63262a6c969df9e5e"
         }
       ]
     },
@@ -17683,10 +17703,10 @@
       "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
       "sink": "file-stream.write",
       "expression": "canonicalJson(value)",
-      "role": "api-capable-utility",
+      "role": "unknown",
       "basis": "original-durable-canonical-native-state-file-capability",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "consumer": "writeDurableState is a generic canonical writer with temporary fsync+rename; actual callers and their native state contracts are separately operation-qualified, never waived by this utility role.",
         "operation": "handle.writeFile(canonicalJson(value))",
         "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
@@ -17707,18 +17727,19 @@
               "expression": "canonicalJson(value)"
             }
           ],
-          "factsDigest": "f78ce820b537dda43854625bbbcbfe58cc37a3902e9239802129835be4989d88"
+          "factsDigest": "ca518623ce225e0f018986370ea997052c939d62eb4bf3441146e6d4ecfef244"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "api-capable-utility"
     },
     {
       "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
       "sink": "file-stream.write",
       "expression": "bytes",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-content-addressed-durable-blob-storage",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "consumer": "FileDurableBlobStore takes owned bytes, hashes them, uses root/blobs/sha256, bounds per-object/total size, returns digest/size and get verifies bytes.",
         "operation": "handle.writeFile(bytes)",
         "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
@@ -17739,9 +17760,10 @@
               "expression": "bytes"
             }
           ],
-          "factsDigest": "cdce3159a3447c35bb366bada374ce3b1e882364dc3867e25d11aa23821630c9"
+          "factsDigest": "d71608c46c3adffc82f3dfda11850717268f6745e777e7c648f7c0504a396dd3"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "skills/nova/core/execution/engine-snapshots.ts",
@@ -17750,7 +17772,7 @@
       "role": "non-api",
       "basis": "original-validated-native-run-snapshot-publication",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "consumer": "writeRunSnapshots builds run-snapshot.v4, graph+registry and dispatch/review profiles, assertRunSnapshot validates native contracts, then publishes run-snapshot.json. readRunSnapshot validates before recovery.",
         "operation": "fs.writeFileSync(descriptor, JSON.stringify(snapshot))",
         "source": "skills/nova/core/execution/engine-snapshots.ts",
@@ -17771,7 +17793,7 @@
               "expression": "JSON.stringify(snapshot)"
             }
           ],
-          "factsDigest": "0ee62eb9285f7ccebc7faad522b9db32a55783e122b2007e026731de4ccf0f8e"
+          "factsDigest": "b264f1d83b0ec399548f3fa4046f925b06a6f8a0247d99fc8e4515361928fe2f"
         }
       ]
     },
@@ -17811,10 +17833,10 @@
       "source": "skills/prism/server/ingestion.ts",
       "sink": "fs.writeFileSync",
       "expression": "acquired.bytes",
-      "role": "non-api",
+      "role": "unknown",
       "basis": "original-digest-addressed-prism-quarantine",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "consumer": "acquire validates source inputs and media types; writes acquired bytes under quarantine SHA256 basename; /v1/acquisitions response exposes quarantineDigest/contentBase64/normalized. Reaper and DELETE use digest names.",
         "operation": "writeFile(join(root,digest),acquired.bytes,{flag:\"wx\",mode:0o600})",
         "source": "skills/prism/server/ingestion.ts",
@@ -17835,9 +17857,10 @@
               "expression": "acquired.bytes"
             }
           ],
-          "factsDigest": "5f84be8aa5456eff5b65011b8413c7869dbd83c78b84ff3157e78d151668c691"
+          "factsDigest": "0f5aa264819a8fcafa54c95e4c05c3149588312626d1f5c73470f9f5c1c08a28"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api"
     },
     {
       "source": "skills/prism/storage/artifacts.ts",
@@ -17942,7 +17965,7 @@
       "role": "non-api",
       "basis": "original-closed-registry-native-client-configuration",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "consumer": "writeRegistryClients restricts output kind to buildkit/runtime/node; original constructors produce BuildKit TOML, runtime origin projection, and containerd mirrors/configs. Consumers are the original worker activation and registry contract tests.",
         "operation": "fs.writeFileSync(file,kind==='buildkit'?config.buildkit:JSON.stringify(config[kind],null,2)+'\\n',{mode:0o600,flag:'wx'})",
         "source": "scripts/registry-client-config.mjs",
@@ -17963,7 +17986,7 @@
               "expression": "kind==='buildkit'?config.buildkit:JSON.stringify(config[kind],null,2)+'\\n'"
             }
           ],
-          "factsDigest": "db3e51df443f697458f105703922263113185333ee4f075c8883d582e3cea59b"
+          "factsDigest": "77a6381c72e71c2182168ca7ce6d5f2ebd6e8ecc032c684410145ca95c9d6242"
         }
       ]
     },
@@ -18038,7 +18061,7 @@
       "role": "non-api",
       "basis": "original-github-action-runtime-selection-output-frame",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "consumer": "appendFileSync targets GITHUB_OUTPUT with fixed selected=true and releases/gitops/runtime numeric-run directory after source receipt validation; consumed by auto-promote workflow.",
         "operation": "fs.appendFileSync(process.env.GITHUB_OUTPUT, `selected=true\\ndirectory=releases/gitops/runtime-${id}-${attempt}\\n`)",
         "source": "scripts/updates/select-runtime-deployment.mjs",
@@ -18059,7 +18082,7 @@
               "expression": "`selected=true\\ndirectory=releases/gitops/runtime-${id}-${attempt}\\n`"
             }
           ],
-          "factsDigest": "3a7dcca28c5bd66df220fd14e6d8bae8ffc7ba52d726f47ad267c7e1e7ec50d3"
+          "factsDigest": "02d6aaa5f0dd9d8490da67b4c1f82e3ddd90817f99faef197af9aae1868c88f8"
         }
       ]
     },
@@ -18161,7 +18184,7 @@
       "expression": "`${JSON.stringify({operationId:input.intent.operationId,...result,releasedResults:result.newlyRetired?1:0})}\\n`",
       "basis": "original-native-terminal-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Local operator stdout retirement result from retained-run-authorized FileDurableAttemptStore.retireImportedResult, fixed operationId/newlyRetired/releasedResults metadata.",
         "source": "scripts/retire-attempt-result.mjs",
         "sink": "process.stdout.write",
@@ -18181,7 +18204,7 @@
               "expression": "`${JSON.stringify({operationId:input.intent.operationId,...result,releasedResults:result.newlyRetired?1:0})}\\n`"
             }
           ],
-          "factsDigest": "0fd8f95e39639ad4e9747cbb176d420c88eb583085cf082258791bd62a74e370"
+          "factsDigest": "5d105aaf504f0ff50653b7ebaf9629aa161d66b9149d517e7a8ff0378da44df8"
         }
       ]
     },
@@ -18191,7 +18214,7 @@
       "expression": "`${JSON.stringify(await retireNovaDispatch(scope))}\\n`",
       "basis": "original-native-terminal-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-2.json",
         "consumer": "Local operator stdout native dispatch compaction receipt returned by FileNovaRemotePlanStore.compactImportedArchive under retained import authority.",
         "source": "scripts/retire-nova-dispatch.mjs",
         "sink": "process.stdout.write",
@@ -18211,7 +18234,7 @@
               "expression": "`${JSON.stringify(await retireNovaDispatch(scope))}\\n`"
             }
           ],
-          "factsDigest": "e770fbebc302d2dd319310c67b2fb9db0b5fadc7b06861798d9e5f8fb08357d8"
+          "factsDigest": "0b7c9cd838672baab5400b03f0576b3e4995ee4ac4e2cb21628b4ef58c562c1c"
         }
       ]
     },
@@ -18221,7 +18244,7 @@
       "expression": "JSON.stringify(await retireOperatorRequest(inventory.json(file)))",
       "basis": "original-native-terminal-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "consumer": "Local operator stdout projectDeliveryRequest returns fixed newlyProjected/releasedBytes object after validated native notification retention authority.",
         "source": "scripts/retire-operator-request.mjs",
         "sink": "console.log",
@@ -18241,7 +18264,7 @@
               "expression": "JSON.stringify(await retireOperatorRequest(inventory.json(file)))"
             }
           ],
-          "factsDigest": "3fb5a6c10634d2d38bface99165c0179d21a62fe2169d18cc6c0988fc3cb021a"
+          "factsDigest": "78cff0cbe7148f42cfd6bab0695a66f68743e3af77606ee243f2cd93fc707e9d"
         }
       ]
     },
@@ -18251,7 +18274,7 @@
       "expression": "repositoryArchiveBytes(job.repositoryArchive)",
       "basis": "original-native-terminal-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "consumer": "The fixed repository.tar.gz sink stores bytes from repositoryArchiveBytes; bounded base64 archive digest validation precedes safeExtract and archive deletion. It is an archive artifact, never a serialized API resource.",
         "source": "skills/buster/engine/test-gates/remote-plan-service.ts",
         "sink": "fs.writeFileSync",
@@ -18271,7 +18294,7 @@
               "expression": "repositoryArchiveBytes(job.repositoryArchive)"
             }
           ],
-          "factsDigest": "9a39e31fb155d95ed58cf27712af469e9b0464795d47ad87230331af823ed821"
+          "factsDigest": "83cf077c3770c999d0b0844bc2e985119ff891ffafd8cc6cc9bd69ab963170e7"
         }
       ]
     },
@@ -18371,7 +18394,7 @@
       "expression": "`progress scaffold diagnostics (${diagnostics.length}):`",
       "basis": "original-native-terminal-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "consumer": "printDiagnostics writes fixed progress scaffold diagnostics prefix and computed array length to console, followed by human-readable diagnostics.",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.log",
@@ -18391,7 +18414,7 @@
               "expression": "`progress scaffold diagnostics (${diagnostics.length}):`"
             }
           ],
-          "factsDigest": "4eefeaaca16cb370acc13690426e028bf03fbfdcd70071a8a7dc43666d01b31d"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ]
     },
@@ -18401,7 +18424,7 @@
       "expression": "JSON.stringify(result)",
       "basis": "original-native-terminal-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Original bounded validated workerAttemptEnvelopeV3 input is executed by WorkerAttemptExecutor; stdout emits native worker result for supervisor tree draining/resealing, not Kubernetes submission.",
         "source": "skills/prism/server/native-worker-host.ts",
         "sink": "process.stdout.write",
@@ -18421,7 +18444,7 @@
               "expression": "JSON.stringify(result)"
             }
           ],
-          "factsDigest": "30e32daa861d0d83933b1d5a08ffc225ea9e975478427b5b71d2a951ab6cc88c"
+          "factsDigest": "c82f4ca925081b2cb9932bac70a647e97e04e34313d874d16f6e6437063a22b8"
         }
       ]
     },
@@ -18432,7 +18455,7 @@
       "expression": "error instanceof Error ? error.message : String(error)",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "consumer": "Original write/check failure catch renders Error.message or String(error), sets nonzero exitCode; operator diagnostic, not inventory/resource emission.",
         "source": "scripts/ap08-extension-inventory.mjs",
         "sink": "console.error",
@@ -18453,7 +18476,7 @@
               "line": 305
             }
           ],
-          "factsDigest": "90dfd6c5a6aebbf7e642d34d88dee43dd901384555247def69559e23e591101b"
+          "factsDigest": "10829790920ac294fb62ecd490235a6d1136e17fa79eeb64ba11659ae3632c90"
         }
       ]
     },
@@ -18464,7 +18487,7 @@
       "expression": "`- ${error}`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "consumer": "Original source-link/scenario checks collect textual violations; stderr list follows fixed failed-check header and exits 1.",
         "source": "scripts/check-ap08-choice-guide.mjs",
         "sink": "console.error",
@@ -18485,7 +18508,7 @@
               "line": 141
             }
           ],
-          "factsDigest": "22df375c75991d090f56b14d513ad43b1020d7b2cf6523249a3576ce74663616"
+          "factsDigest": "0898bea24c521044a1841e791e2df98099a937dd67cf7e78c507840e5ab440c5"
         }
       ]
     },
@@ -18496,7 +18519,7 @@
       "expression": "check.stderr",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Only failing original docs-configuration-inventory --check subprocess stderr is relayed before identical failing exit status.",
         "source": "scripts/check-configuration-cli-drift.mjs",
         "sink": "process.stderr.write",
@@ -18517,7 +18540,7 @@
               "line": 15
             }
           ],
-          "factsDigest": "6d35f408afd01d69e49a9a471f4decf6b3fa702bab31a669789eb86209cfa5ba"
+          "factsDigest": "677562ac8d9f69e7d005e6b2c107c821d8847f1cd6b39a4d5bc5ef9046caca8a"
         }
       ]
     },
@@ -18560,7 +18583,7 @@
       "expression": "`suite migration ${mode} check failed:`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "consumer": "Original named migration check actions collect textual errors; mode header and violation list terminate with exit 1.",
         "source": "scripts/check-suite-migration-workflow.mjs",
         "sink": "console.error",
@@ -18581,7 +18604,7 @@
               "line": 459
             }
           ],
-          "factsDigest": "dfeae6e80f339bebf75f89cdcc2e54ac29a3b95165e9596cd5c3aa73b8081b58"
+          "factsDigest": "a60a50d7acb78632a530aaa6abab7d3dfd0bd3b4f557456bcbd77f8f8541dcd1"
         }
       ]
     },
@@ -18592,7 +18615,7 @@
       "expression": "`- ${error}`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-8.json",
         "consumer": "Original named migration check actions collect textual errors; mode header and violation list terminate with exit 1.",
         "source": "scripts/check-suite-migration-workflow.mjs",
         "sink": "console.error",
@@ -18613,7 +18636,7 @@
               "line": 460
             }
           ],
-          "factsDigest": "dfeae6e80f339bebf75f89cdcc2e54ac29a3b95165e9596cd5c3aa73b8081b58"
+          "factsDigest": "a60a50d7acb78632a530aaa6abab7d3dfd0bd3b4f557456bcbd77f8f8541dcd1"
         }
       ]
     },
@@ -18656,7 +18679,7 @@
       "expression": "`${error.message}\\n`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "consumer": "Original CLI command catch emits exception.message then exitCode 1; resource serialization is separately handled original dump/apply branch.",
         "source": "scripts/gitops-continuous.mjs",
         "sink": "process.stderr.write",
@@ -18679,7 +18702,9 @@
           ],
           "factsDigest": "243e652ccad801eceaefa54736ffc851356dfaabf817d58f2688af22963c5cf5"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api",
+      "role": "unknown"
     },
     {
       "source": "scripts/gitops-owner.mjs",
@@ -18688,7 +18713,7 @@
       "expression": "`${error.message}\\n`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "consumer": "Original direct CLI assertNoGitOpsOwner catch emits exception.message and exitCode 1, separate from authenticated read-only kubectl response.",
         "source": "scripts/gitops-owner.mjs",
         "sink": "process.stderr.write",
@@ -18709,7 +18734,7 @@
               "line": 31
             }
           ],
-          "factsDigest": "390d5852d0bb8b4aae419e8b2c5d19c32d6c1b909efe0431d010664d3b57956b"
+          "factsDigest": "02ff4d8a6022cb885de1de62fc7aa6fd6dde02820373000dbeedeaaf2403f3ee"
         }
       ]
     },
@@ -18720,7 +18745,7 @@
       "expression": "`${error.message}\\n`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-5.json",
         "consumer": "Original rollback CLI catch emits exception.message with exitCode 1; successful bundle file generation remains separately qualified.",
         "source": "scripts/gitops-rollback.mjs",
         "sink": "process.stderr.write",
@@ -18741,9 +18766,11 @@
               "line": 66
             }
           ],
-          "factsDigest": "40af111158e97d360164ab03623f86a8ee25bc78f30499ac2861e964b2b2f506"
+          "factsDigest": "18528ea4cefba2f061cabad6859dea07a03faac54b45671175236757a70231cc"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api",
+      "role": "unknown"
     },
     {
       "source": "scripts/gitops.mjs",
@@ -18752,7 +18779,7 @@
       "expression": "`${error.message}\\n`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "consumer": "Original export/bootstrap CLI exception diagnostic then exitCode 1; original resource generators and apply inputs remain separately qualified.",
         "source": "scripts/gitops.mjs",
         "sink": "process.stderr.write",
@@ -18775,7 +18802,9 @@
           ],
           "factsDigest": "f4f17fe53d4c91436904431445f81045b63a629995b4cdebe6fa948c4b1c6adb"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api",
+      "role": "unknown"
     },
     {
       "source": "scripts/plugin-system-inventory.mjs",
@@ -18784,7 +18813,7 @@
       "expression": "error instanceof Error ? error.message : String(error)",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "consumer": "Original inventory write/check failure catch renders exception diagnostic and exitCode 1; separate native inventory artifacts.",
         "source": "scripts/plugin-system-inventory.mjs",
         "sink": "console.error",
@@ -18880,7 +18909,7 @@
       "expression": "`Refreshing runtime tool locks: ${error.message}`",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-3.json",
         "consumer": "Original ENOENT/RUNTIME_ exception branch announces lock refresh; other errors rethrow, actual lock resolution follows separately.",
         "source": "scripts/runtime-tool-locks.mjs",
         "sink": "console.error",
@@ -18901,7 +18930,7 @@
               "line": 76
             }
           ],
-          "factsDigest": "c8da57c02186992100b949df17da9fd2e9a8380475806f8e8a20a4b04b67a3fc"
+          "factsDigest": "ffd6b15dbbb52061d1ea9e5c133ede67335cdc34bcfd96a15de069dd323d26ab"
         }
       ]
     },
@@ -19040,7 +19069,7 @@
       "expression": "errorMessage(error)",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "consumer": "Original direct CLI run catch emits normalized errorMessage and optional diagnostic list, exitCode 1; publishJsonPair artifacts remain separately qualified.",
         "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
         "sink": "console.error",
@@ -19061,7 +19090,7 @@
               "line": 171
             }
           ],
-          "factsDigest": "4818060e22a373b4b593edf221cb19782adf8174a72d3465415cc8e01c286561"
+          "factsDigest": "6964cd3341bbf3c3cb604059c0f0f205cd696ccb609ae4008d7ed6f66685c184"
         }
       ]
     },
@@ -19072,7 +19101,7 @@
       "expression": "'Prism durable agent runner:'",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Original runner.tick and runner.stop rejected promise handlers emit fixed Prism durable runner/shutdown labels and exception argument; original HTTP response path separate.",
         "source": "skills/prism/server/agent-bridge.mjs",
         "sink": "console.error",
@@ -19093,7 +19122,7 @@
               "line": 32
             }
           ],
-          "factsDigest": "d15a8faaee6443de1dd184adcd5d4bf5f3cc93a3f4140f4891af28ad5df87f2c"
+          "factsDigest": "c4e6b29de4603f07f9e65423ddace4e8633ddd1714cb8f4dc387793fa6bde92a"
         }
       ]
     },
@@ -19104,7 +19133,7 @@
       "expression": "error",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Original runner.tick and runner.stop rejected promise handlers emit fixed Prism durable runner/shutdown labels and exception argument; original HTTP response path separate.",
         "source": "skills/prism/server/agent-bridge.mjs",
         "sink": "console.error",
@@ -19125,7 +19154,7 @@
               "line": 32
             }
           ],
-          "factsDigest": "d15a8faaee6443de1dd184adcd5d4bf5f3cc93a3f4140f4891af28ad5df87f2c"
+          "factsDigest": "c4e6b29de4603f07f9e65423ddace4e8633ddd1714cb8f4dc387793fa6bde92a"
         }
       ]
     },
@@ -19136,7 +19165,7 @@
       "expression": "'Prism agent shutdown:'",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Original runner.tick and runner.stop rejected promise handlers emit fixed Prism durable runner/shutdown labels and exception argument; original HTTP response path separate.",
         "source": "skills/prism/server/agent-bridge.mjs",
         "sink": "console.error",
@@ -19157,7 +19186,7 @@
               "line": 36
             }
           ],
-          "factsDigest": "68686a0074133bfe7eada46f5b43e96aef4753bb42c21b3149638fe542712d8a"
+          "factsDigest": "c4e6b29de4603f07f9e65423ddace4e8633ddd1714cb8f4dc387793fa6bde92a"
         }
       ]
     },
@@ -19168,7 +19197,7 @@
       "expression": "error",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-7.json",
         "consumer": "Original runner.tick and runner.stop rejected promise handlers emit fixed Prism durable runner/shutdown labels and exception argument; original HTTP response path separate.",
         "source": "skills/prism/server/agent-bridge.mjs",
         "sink": "console.error",
@@ -19189,7 +19218,7 @@
               "line": 36
             }
           ],
-          "factsDigest": "68686a0074133bfe7eada46f5b43e96aef4753bb42c21b3149638fe542712d8a"
+          "factsDigest": "c4e6b29de4603f07f9e65423ddace4e8633ddd1714cb8f4dc387793fa6bde92a"
         }
       ]
     },
@@ -19200,7 +19229,7 @@
       "expression": "\"[prism-control] request failed\"",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "consumer": "Original HTTP request catch emits fixed prism-control request failed label and newly constructed method/path/error-message diagnostic object before error response.",
         "source": "skills/prism/server/control-server.ts",
         "sink": "console.error",
@@ -19221,7 +19250,7 @@
               "line": 924
             }
           ],
-          "factsDigest": "22583ea73addc4e5866dfd06d86719d33691b1c0385687f5914dd9c2104b9380"
+          "factsDigest": "da4a00732e7806defa748550f965c196edd49998a3e380e0c155176fbbd84f65"
         }
       ]
     },
@@ -19232,7 +19261,7 @@
       "expression": "{\n      method: request.method,\n      path: request.url,\n      error: error instanceof Error ? error.message : \"request failed\",\n    }",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "PASS independent complete selected Source/native consumer purpose; no runtime input/bytes/effects qualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-4.json",
         "consumer": "Original HTTP request catch emits fixed prism-control request failed label and newly constructed method/path/error-message diagnostic object before error response.",
         "source": "skills/prism/server/control-server.ts",
         "sink": "console.error",
@@ -19253,7 +19282,7 @@
               "line": 924
             }
           ],
-          "factsDigest": "22583ea73addc4e5866dfd06d86719d33691b1c0385687f5914dd9c2104b9380"
+          "factsDigest": "da4a00732e7806defa748550f965c196edd49998a3e380e0c155176fbbd84f65"
         }
       ]
     },
@@ -19264,7 +19293,7 @@
       "expression": "\"Prism quarantine cleanup failed\"",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "consumer": "Original periodic quarantine cleanup rejected promise handler emits fixed cleanup failure label and exception; content ingestion outputs separate.",
         "source": "skills/prism/server/ingestion.ts",
         "sink": "console.error",
@@ -19285,9 +19314,11 @@
               "line": 20
             }
           ],
-          "factsDigest": "3c53a0e6d121aa29d1016292331dcca23e9f617bc78334e90b6b5bb7dd290212"
+          "factsDigest": "210ae0fa5f559bca09f54a52f41a406990a24579f6f22bf5cf13a99848e8f42f"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api",
+      "role": "unknown"
     },
     {
       "source": "skills/prism/server/ingestion.ts",
@@ -19296,7 +19327,7 @@
       "expression": "error",
       "basis": "original-native-diagnostic-consumer-role",
       "roleConsumerEvidence": {
-        "review": "AUTHOR selected producer operation and terminal consumer; independent acceptance pending",
+        "review": "NOT_READY independent complete Source/native consumer review; actual API/input/caller closure remains unqualified; docs/blueprint/acceptance-evidence/native-contract-reconciliation-20261021/partition-6.json",
         "consumer": "Original periodic quarantine cleanup rejected promise handler emits fixed cleanup failure label and exception; content ingestion outputs separate.",
         "source": "skills/prism/server/ingestion.ts",
         "sink": "console.error",
@@ -19317,9 +19348,11 @@
               "line": 20
             }
           ],
-          "factsDigest": "3c53a0e6d121aa29d1016292331dcca23e9f617bc78334e90b6b5bb7dd290212"
+          "factsDigest": "210ae0fa5f559bca09f54a52f41a406990a24579f6f22bf5cf13a99848e8f42f"
         }
-      ]
+      ],
+      "previouslyDeclaredRole": "non-api",
+      "role": "unknown"
     },
     {
       "source": "skills/prism/server/worker-readiness.ts",

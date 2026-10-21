@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Qualify the actual Kubernetes probe manifest stream before renewing its receipt",
+      "body": "Source `scripts/render-kubernetes-api-probe.mjs` is NOT_READY. Its stdout contains Kubernetes ConfigMap and Job API roots built from external Pod/origin files, versions.json, and embedded probe source. The renewed contract claims coverage by a qualified offline renderer adapter, but `discoverTransformedApiOutputs()` has no recipe for this Source. Generic constructor discovery identifies API objects but does not establish the actual serialized stream with those acquired inputs, including forwarded Pod labels and metadata. Add a source-bound output adapter and input/publication closure, or retain this Source as NOT_READY rather than renewing the coverage assertion.",
+      "priority": "P2",
+      "confidence": 0.88,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/docs-api-producer-adapter-authorities.json",
+        "line": 16540
+      }
+    },
+    {
+      "title": "[P2] Cover runtime release rendering before renewing the shared render receipt",
+      "body": "Source `scripts/updates/deployment-release.mjs` is NOT_READY for its `rendered` publication. The selected-release adapter in `shellReleaseFileProof()` invokes only the ops family/chart. The original Source also renders runtime roles nova, buster, prism-agent, and prism through `deploy.sh`, using selected release files, chart inputs, overlays, and optional bundle controls. Those paths share the renewed stdout contract but lack corresponding actual-output adapter closure; independent chart discovery does not prove the original release-selection and overlay transformation. Add runtime caller/output coverage or narrow the contract and preserve NOT_READY for the uncovered branches.",
+      "priority": "P2",
+      "confidence": 0.87,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/docs-api-producer-adapter-authorities.json",
+        "line": 16881
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Source/native consumer decisions: scripts/generate-buster-error-reference.mjs PASS: complete generator produces Markdown reference content and bounded count/path diagnostics; mutable production inventory, target reference and revision argument remain inputs. scripts/updates/deployment-release.mjs NOT_READY: verify emits a validated commit consumed by deployment checks, but actual runtime-role manifest adapter closure is unproven; ops coverage alone is insufficient. skills/buster/engine/test-gates/native-fixture-journal.ts PASS: private JSON decoder feeds admission/readiness/result validation, identity comparisons and journal snapshots; it is reader/protocol state, not blanket diagnostic authority. scripts/check-ap08-choice-guide.mjs PASS: page/inventory/Git evidence checks construct failure diagnostics and terminate unsuccessfully. scripts/runtime-tool-locks.mjs PASS: generated requirements become temporary uv constraints; errors become refresh diagnostics. Resolution depends on external tools/package indexes and can modify locks before failure; classification does not certify those effects or resolved bytes. scripts/check-platform-services.mjs PASS: local or externally rendered manifests are checked, while the selected publication is a constructed count diagnostic; render fixtures, Helm executable and upstream charts remain mutable inputs. scripts/render-kubernetes-api-probe.mjs NOT_READY: known ConfigMap/Job API roots remain API, but an actual stream adapter covering external Pod/origin inputs is unproven. scripts/gitops-owner.mjs PASS: Kubernetes reads feed ownership checks; failure messages reach stderr and a failing exit consumed by deployment/teardown callers. Scope: only partition 3 listed receipt refreshes and selected native closure; no execution, tests, cluster access, global acceptance, communication review or host-lifecycle checker review.",
+  "overall_confidence": 0.86
+}
