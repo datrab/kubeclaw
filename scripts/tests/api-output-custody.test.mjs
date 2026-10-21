@@ -25,6 +25,60 @@ test('sink location discovery conservatively retains classified writers without 
  write(source,'process.stdout.write(process.env.PAYLOAD);');assert.equal(classifySerializedOutputRoles(root,source)[0].role,'unknown');
 }));
 
+test('closed bundle writer retains its API capability and projects every payload caller',()=>fixture(({root,write})=>{
+ const source='scripts/build-runtime-role-bundle.mjs';
+ write(source,fs.readFileSync(new URL('../build-runtime-role-bundle.mjs',import.meta.url),'utf8'));
+ const roles=classifySerializedOutputRoles(root,source),utility=roles.find(role=>role.role==='api-capable-utility');
+ assert(utility,'private declaration must not be labelled non-API');
+ assert.equal(utility.closedWriterDeclaration.projectedCallers.length,3);
+ const calls=roles.filter(role=>role.sink==='native-file-writer-call');
+ assert.equal(calls.length,3);
+ assert(calls.some(role=>role.role==='unknown'&&role.expression==='fs.readFileSync(source)'), 'opaque copied bytes must remain unknown');
+ assert(calls.some(role=>role.role==='unknown'&&role.line===246&&role.expression==='facade'), 'missing facade input bindings must remain unknown');
+ assert.equal(calls.find(role=>role.line===267).role,'non-api','fixed manifest constructor has no API root identity');
+ const sites=serializedOutputSinkSites(root,source);
+ for(const role of roles)assert(sites.some(site=>site.line===role.line&&site.sink===role.sink));
+}));
+
+test('changed or escaping bundle writers cannot refresh a private projection into authority',()=>fixture(({root,write})=>{
+ const source='scripts/build-runtime-role-bundle.mjs',original=fs.readFileSync(new URL('../build-runtime-role-bundle.mjs',import.meta.url),'utf8');
+ for(const changed of [original.replace('function writeFile(', 'export function writeFile('),original+'\nconst escapedWriter=writeFile;\n',original+"\nwriteFile('extra.json',JSON.stringify({apiVersion:'v1',kind:'Secret'}));\n",original.replace('fs.writeFileSync(target, content, { mode });',"fs.writeFileSync(target,JSON.stringify({apiVersion:'v1',kind:'Secret'}),{mode});")]){
+  write(source,changed);
+  const roles=classifySerializedOutputRoles(root,source);
+  assert(!roles.some(role=>role.role==='api-capable-utility'),'changed source retained a reviewed private projection');
+  assert(roles.some(role=>role.role==='unknown'||role.role==='api'),'API-bearing or unresolved writer disappeared');
+ }
+}));
+
+test('an operation receipt cannot forge a projected API-capable utility',()=>fixture(({root,write})=>{
+ const source='tools/projection.mjs',expression="'complete'";
+ write(source,"console.log('complete');\n");
+ const selectors=[{expression}],facts=deriveNativeOperationFacts(root,source,selectors);
+ assert(facts);
+ write('scripts/docs-api-producer-adapter-authorities.json',JSON.stringify({nonApiOutputContracts:[{source,sink:'console.log',expression,role:'api-capable-utility',basis:'forged-private-projection',operations:[{source,selectors,factsDigest:nativeOperationFactDigest(facts)}]}]}));
+ assert.throws(()=>classifySerializedOutputRoles(root,source),/OUTPUT_ROLE_CLOSED_WRITER_PROJECTION_UNQUALIFIED/);
+}));
+
+test('bundle facade construction binds all three role values without qualifying source copies or imports',()=>fixture(({root,write})=>{
+ const source='scripts/build-runtime-role-bundle.mjs';
+ write(source,fs.readFileSync(new URL('../build-runtime-role-bundle.mjs',import.meta.url),'utf8'));
+ for(const role of ['nova','buster','prism'])write(`packaging/runtime/roles/${role}.json`,fs.readFileSync(new URL(`../../packaging/runtime/roles/${role}.json`,import.meta.url),'utf8'));
+ const classify=()=>classifySerializedOutputRoles(root,source),facade=classify().find(role=>role.constructor==='facadeLines');
+ assert(facade);assert.equal(facade.role,'non-api');assert.equal(facade.inputs.length,3);
+ assert.equal(facade.runtimeImportsAuthorized,false);assert.equal(facade.runtimeExecutionAuthorized,false);
+ assert(classify().some(role=>role.role==='unknown'&&role.expression==='fs.readFileSync(source)'));
+ const file='packaging/runtime/roles/nova.json',original=JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
+ for(const value of ['@unreviewed/runtime',"x\n---\napiVersion: v1\nkind: Secret"]){
+  write(file,JSON.stringify({...original,entrypoint:{...original.entrypoint,import:value}}));
+  const roles=classify();
+  assert(!roles.some(role=>role.constructor==='facadeLines'),'changed entrypoint retained facade construction authority');
+  assert(roles.some(role=>role.role==='unknown'&&role.line===246&&role.expression==='facade'));
+ }
+ const selectors=[{expression:'facade'}],facts=deriveNativeOperationFacts(root,source,selectors);assert(facts);
+ write('scripts/docs-api-producer-adapter-authorities.json',JSON.stringify({nonApiOutputContracts:[{source,sink:'native-file-writer-call',expression:'facade',role:'non-api',basis:'refreshed-but-unreviewed-role-input',operations:[{source,selectors,factsDigest:nativeOperationFactDigest(facts)}]}]}));
+ assert(classify().some(role=>role.role==='unknown'&&role.line===246&&role.expression==='facade'),'refreshed operation metadata laundered changed role values');
+}));
+
 test('Ops Helm source checksum stays a hash-check input, not a generic Docker writer exemption',()=>fixture(({write,discover})=>{
  const checksum='RUN printf \'%s  source.tar.gz\\n\' "$OPS_HELM_SOURCE_SHA256" | sha256sum -c -\n';
  write('ops/pod/Dockerfile',checksum);assert.deepEqual(discover(),[]);

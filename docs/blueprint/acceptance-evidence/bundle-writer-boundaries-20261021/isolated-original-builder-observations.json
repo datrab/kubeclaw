@@ -1,0 +1,104 @@
+{
+  "sourceCommit": "c103bfadadaa50129b83f029071a27485051f9a2",
+  "scope": "Unmodified builder executed only in an isolated hard-linked input snapshot with minimal environment; no product modules imported or runtime effects qualified.",
+  "sourceSnapshot": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-Rm2sa9/source",
+  "inputPaths": 19837,
+  "environmentKeys": [
+    "PATH",
+    "HOME",
+    "LANG",
+    "LC_ALL"
+  ],
+  "nodeVersion": "v24.21.0",
+  "runtimeExecutionAuthorized": false,
+  "apiRoleQualified": false,
+  "roles": [
+    {
+      "role": "nova",
+      "stdout": "{\"ok\":true,\"phase\":\"5.6-C\",\"roles\":3,\"plugins\":48}\n{\"ok\":true,\"phase\":\"5.6-D\",\"role\":\"nova\",\"files\":1746,\"packages\":12,\"plugins\":32}\n",
+      "output": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-Rm2sa9/nova",
+      "copiedFilesMatched": 1704,
+      "constructedOutputs": [
+        {
+          "path": "skills/pipeline.ts",
+          "sha256": "bb6c4823bbeecbb199c2cb070ccf5d92d15867966e55a794f44bcb70f8cf50e0",
+          "bytes": 273,
+          "mode": 493
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "0fb83ceb11b663873447a005cbbf0e26a9954745fa2cd8507e2513b034758974",
+          "bytes": 14917,
+          "mode": 420
+        }
+      ],
+      "moduleLinksMatched": 40,
+      "directoryModesMatched": 249,
+      "constructorManifestSha256": "0fb83ceb11b663873447a005cbbf0e26a9954745fa2cd8507e2513b034758974"
+    },
+    {
+      "role": "buster",
+      "stdout": "{\"ok\":true,\"phase\":\"5.6-C\",\"roles\":3,\"plugins\":48}\n{\"ok\":true,\"phase\":\"5.6-D\",\"role\":\"buster\",\"files\":13732,\"packages\":11,\"plugins\":24}\n",
+      "output": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-Rm2sa9/buster",
+      "copiedFilesMatched": 13699,
+      "constructedOutputs": [
+        {
+          "path": "skills/runtime.ts",
+          "sha256": "2512c4f28fcc8e0dd5b31c85639374ff7a57b5a957e18a4c76cf663793088bbc",
+          "bytes": 113,
+          "mode": 420
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "16d5ebce000f71fc6a61579d569b34d782ab0baa4e790c0c65b8efd879904e8a",
+          "bytes": 36348,
+          "mode": 420
+        }
+      ],
+      "moduleLinksMatched": 31,
+      "directoryModesMatched": 1380,
+      "constructorManifestSha256": "16d5ebce000f71fc6a61579d569b34d782ab0baa4e790c0c65b8efd879904e8a"
+    },
+    {
+      "role": "prism",
+      "stdout": "{\"ok\":true,\"phase\":\"5.6-C\",\"roles\":3,\"plugins\":48}\n{\"ok\":true,\"phase\":\"5.6-D\",\"role\":\"prism\",\"files\":6556,\"packages\":11,\"plugins\":7}\n",
+      "output": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-Rm2sa9/prism",
+      "copiedFilesMatched": 6539,
+      "constructedOutputs": [
+        {
+          "path": "skills/runtime.ts",
+          "sha256": "33515e7b4c280317193fdbf4fb8932a26f0e8eb804ca07027ddf1c901e7a869d",
+          "bytes": 105,
+          "mode": 420
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "ab308f6d09973373d3c1734f88e5a047c16237869b8eb43a41339512f208ecb0",
+          "bytes": 37247,
+          "mode": 420
+        }
+      ],
+      "moduleLinksMatched": 15,
+      "directoryModesMatched": 1063,
+      "constructorManifestSha256": "ab308f6d09973373d3c1734f88e5a047c16237869b8eb43a41339512f208ecb0"
+    }
+  ],
+  "findings": [],
+  "nativePredecessor": {
+    "source": "scripts/build-plugin-sandbox.mjs",
+    "sha256": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec",
+    "bytes": 730,
+    "mode": 420,
+    "cSource": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+    "compilerVersion": "cc (Debian 12.2.0-14+deb12u1) 12.2.0",
+    "output": "skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
+    "outputFact": {
+      "sha256": "715c31703ea5704f1a600e9bb46254defd43034270941ea165128cc2a3cff08f",
+      "bytes": 21872,
+      "mode": 493
+    },
+    "binaryExecuted": false,
+    "limit": "Build observed only in isolated snapshot; compiler attestation, arbitrary native input, canonical checkout binary and runtime execution not qualified."
+  },
+  "originalInputsUnchanged": true
+}

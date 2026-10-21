@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects found. The projection requires the exact reviewed source hash and closed caller coverage, retains the raw sink, and classifies all three caller payloads separately. Opaque copy and facade payloads remain unknown; refreshed operation metadata cannot forge the utility marker. The recorded test log reports 29/29 passing. This review grants no broader API inventory or runtime qualification.",
+  "overall_confidence": 0.94
+}

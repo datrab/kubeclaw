@@ -5,6 +5,23 @@ import ts from 'typescript';
 import { createHash } from 'node:crypto';
 import YAML from 'yaml';
 
+// Project this reviewed private utility to every direct caller. This is not a
+// payload role: source copies stay unknown, and constructors are checked at the
+// call site. Neither an operation-receipt refresh nor another same-named writer
+// can authorize this projection.
+const reviewedClosedLocalWriters = [{
+ source: 'scripts/build-runtime-role-bundle.mjs',
+ sourceSha256: '0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9',
+ name: 'writeFile', inputParameter: 'content', callerCount: 3,
+}];
+// These are inert JSON values consumed by the exact reviewed facadeLines
+// constructor, not permission to import an arbitrary role or supplied bundle.
+const reviewedBundleFacadeInputs = [
+ {role:'nova',source:'packaging/runtime/roles/nova.json',sha256:'1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23',entrypoint:{package:'nova-runtime',path:'pipeline.ts',output:'pipeline.ts',import:'@kubeclaw/nova-core',execute:'@kubeclaw/nova-project/cli'}},
+ {role:'buster',source:'packaging/runtime/roles/buster.json',sha256:'a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc',entrypoint:{package:'buster-runtime',path:'runtime.ts',output:'runtime.ts',import:'@kubeclaw/buster-engine'}},
+ {role:'prism',source:'packaging/runtime/roles/prism.json',sha256:'8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe',entrypoint:{package:'prism-runtime',path:'runtime.ts',output:'runtime.ts',import:'@kubeclaw/prism'}},
+];
+
 const canonicalOperationRecipes=[
   {
     "source": "scripts/production-receipt-attestation.mjs",
@@ -259,6 +276,24 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   capabilityUses(tree);
   for(const call of state.allCalls){const value=indirectWriter(call.expression);if(value?.indirect)state.sinks.push({expression:{getText:()=> 'unknown-output-function'},arguments:[call],getStart:()=>call.getStart(tree)});}
   for(const call of state.allCalls){const resolved=ts.isIdentifier(call.expression)?symbol(state,call.expression.text):ts.isPropertyAccessExpression(call.expression)?klassOf(call.expression.expression,state):null;if(!resolved)continue;const capability=(roleRegistry.nativeFileWriterCapabilities??[]).find(c=>c.source===resolved.state.file&&(c.export&&c.export===resolved.node.name?.text||c.class&&c.class===resolved.node.name?.text&&c.method===call.expression.name?.text));if(capability){const fn=capability.class?resolved.node.members.find(member=>ts.isMethodDeclaration(member)&&member.name.getText(resolved.state.tree)===capability.method):resolved.node;const index=fn.parameters?.findIndex(parameter=>parameter.name.getText(resolved.state.tree)===capability.inputParameter)??-1;state.sinks.push({expression:{getText:()=> 'native-file-writer-call'},arguments:[index>=0&&!call.arguments.some(ts.isSpreadElement)?call.arguments[index]??call:call],getStart:()=>call.getStart(tree),originalCall:call,capability});}}
+  const writerProfile=reviewedClosedLocalWriters.find(profile=>profile.source===file&&createHash('sha256').update(bytes).digest('hex')===profile.sourceSha256);
+  if(writerProfile){
+   const fn=state.functions.get(writerProfile.name),references=[];
+   function collectWriterReferences(node){if(ts.isIdentifier(node)&&node.text===writerProfile.name)references.push(node);ts.forEachChild(node,collectWriterReferences);}
+   collectWriterReferences(tree);
+   const callerReferences=references.filter(node=>ts.isCallExpression(node.parent)&&node.parent.expression===node);
+   const index=fn?.parameters?.findIndex(parameter=>ts.isIdentifier(parameter.name)&&parameter.name.text===writerProfile.inputParameter)??-1;
+   const closed=fn&&ts.isFunctionDeclaration(fn)&&!publicFunction(fn)&&index>=0&&references.length===writerProfile.callerCount+1&&callerReferences.length===writerProfile.callerCount&&references.includes(fn.name)&&callerReferences.every(node=>!node.parent.arguments.some(ts.isSpreadElement)&&node.parent.arguments[index]);
+   if(closed){
+    const rawCalls=state.allCalls.filter(call=>{let owner=call.parent;while(owner&&!ts.isFunctionLike(owner))owner=owner.parent;return owner===fn&&state.outputName(call.expression)==='fs.writeFileSync';});
+    const raw=rawCalls.length===1&&state.sinks.find(sink=>sink.expression.getText(tree)==='fs.writeFileSync'&&sink.getStart()===rawCalls[0].getStart(tree));
+    if(raw&&ts.isIdentifier(raw.arguments[1])&&raw.arguments[1].text===writerProfile.inputParameter){
+     const projectedCallers=callerReferences.map(node=>({line:tree.getLineAndCharacterOfPosition(node.parent.getStart(tree)).line+1,sink:'native-file-writer-call',expressionSha256:createHash('sha256').update(node.parent.arguments[index].getText(tree)).digest('hex')}));
+     raw.closedWriterDeclaration={source:file,sourceSha256:writerProfile.sourceSha256,projectedCallers};
+     for(const node of callerReferences){const call=node.parent;state.sinks.push({expression:{getText:()=> 'native-file-writer-call'},arguments:[call.arguments[index]],getStart:()=>call.getStart(tree),originalCall:call,closedLocalWriterCall:true});}
+    }
+   }
+  }
   return state;
  }
  function declarationFor(node,state){const choices=state.declarations.get(node.text)??[];for(let scope=node.parent;scope;scope=scope.parent){const matches=choices.filter(choice=>choice.scope===scope);if(matches.length)return (matches.filter(choice=>(choice.value.end??choice.value.bindingExpression?.end??0)<=node.pos).at(-1)??matches[0]).value;}return null;}
@@ -588,6 +623,18 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
  }
  function qualifiedFileRole(sink,argument,state) {
   const text=state.tree.getText();const compact=value=>value.replace(/\s+/gu,'');const expression=compact(argument.getText(state.tree));const destination=sink.arguments[0]?.getText(state.tree)??'';const compactDestination=compact(destination);
+  if(sink.closedWriterDeclaration)return {role:'api-capable-utility',basis:'reviewed-private-writer-with-all-direct-callers-projected',expression:argument.getText(state.tree),closedWriterDeclaration:sink.closedWriterDeclaration};
+  if(sink.closedLocalWriterCall&&state.file==='scripts/build-runtime-role-bundle.mjs'&&ts.isIdentifier(argument)&&argument.text==='facade'){
+   const inputs=[];
+   for(const binding of reviewedBundleFacadeInputs){
+    let bytes,value;
+    try{bytes=fs.readFileSync(path.join(root,binding.source));value=JSON.parse(bytes);}catch{return unknown(argument,state);}
+    dependencies.add(binding.source);
+    if(createHash('sha256').update(bytes).digest('hex')!==binding.sha256||value.schemaVersion!=='pipeline-runtime-role.v1'||value.role!==binding.role||Object.keys(binding.entrypoint).some(key=>value.entrypoint?.[key]!==binding.entrypoint[key])||value.entrypoint?.execute!==binding.entrypoint.execute)return unknown(argument,state);
+    inputs.push({source:binding.source,sha256:binding.sha256,role:binding.role,entrypoint:binding.entrypoint});
+   }
+   return {role:'non-api',basis:'reviewed-three-role-javascript-entry-facade',constructor:'facadeLines',inputs,runtimeImportsAuthorized:false,runtimeExecutionAuthorized:false};
+  }
   if(sink.expression.getText(state.tree)==='process.stdout.write'&&ts.isCallExpression(argument)&&argument.expression.getText(state.tree)==='execFileSync'&&argument.arguments[0]?.getText(state.tree)==="'kubectl'"&&argument.arguments[1]?.getText(state.tree).replace(/\s+/gu,'')==="['apply','-f','-']")return {role:'non-api',basis:'kubectl-apply-cli-text-response',sinkContract:{destination:'stdout',expression}};
   function authority(file,requirements){if(!fs.existsSync(path.join(root,file)))return false;const bytes=fs.readFileSync(path.join(root,file),'utf8');if(!requirements.every(requirement=>requirement.test(bytes)))return false;dependencies.add(file);return true;}
   const role=basis=>({role:'non-api',basis,sinkContract:{destination,expression}});
@@ -602,7 +649,7 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   // returns before consulting a native receipt. A refreshed dependency digest
   // records syntax; it cannot relabel an actual API root as a diagnostic.
   if(!adaptedIdentity){const actualRoot=shape(argument,state);if(actualRoot.role==='api')return actualRoot;if(importedConstructorGap(argument,state))return {...unknown(argument,state),basis:'unsupported-runtime-imported-constructor'};}
-  if(sink.expression.getText(state.tree)==='native-file-writer-call'){const call=sink.originalCall.getText(state.tree);const contract=(roleRegistry.nativeFileWriterCallContracts??[]).find(c=>c.source===state.file&&c.call===call&&(c.line===undefined||c.line===state.tree.getLineAndCharacterOfPosition(sink.originalCall.getStart(state.tree)).line+1)&&c.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:contract.basis,operationSources:contract.operations.map(o=>o.source)};}if(!sink.capability.operations.every(operationMatches))return unknown(argument,state);return shape(argument,state);}
+  if(sink.expression.getText(state.tree)==='native-file-writer-call'){if(sink.closedLocalWriterCall)return shape(argument,state);const call=sink.originalCall.getText(state.tree);const contract=(roleRegistry.nativeFileWriterCallContracts??[]).find(c=>c.source===state.file&&c.call===call&&(c.line===undefined||c.line===state.tree.getLineAndCharacterOfPosition(sink.originalCall.getStart(state.tree)).line+1)&&c.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:contract.basis,operationSources:contract.operations.map(o=>o.source)};}if(!sink.capability.operations.every(operationMatches))return unknown(argument,state);return shape(argument,state);}
   if(sink.expression.getText(state.tree)==='kubernetes-http-request')return unknown(argument,state);
   if(sink.expression.getText(state.tree)==='kubectl-request'){if(ts.isArrayLiteralExpression(sink.originalCall?.arguments[1])&&readOnlyCommand(sink.originalCall,state))return {role:'non-api',basis:'actual-call-read-only-kubernetes-argv'};const readContract=(roleRegistry.kubernetesCommandContracts??[]).find(contract=>contract.source===state.file&&selectedCommand(contract,sink,state)&&contract.operations.every(operationMatches));if(readContract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:readContract.basis,operationSources:readContract.operations.map(operation=>operation.source)};}const contract=nativeRoleContracts.find(contract=>contract.source===state.file&&contract.role==='api-adapted'&&contract.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'api-adapted',basis:'actual-adapted-kubectl-submission',operationSources:contract.operations.map(operation=>operation.source)};}return unknown(argument,state);}
   {for(const contract of nativeRoleContracts)if(contract.source===state.file&&contract.sink===sink.expression.getText(state.tree)&&contract.expression===argument.getText(state.tree)&&(contract.line===undefined||contract.line===state.tree.getLineAndCharacterOfPosition(sink.getStart(state.tree)).line+1)&&contract.operations.every(operationMatches)){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {...role(contract.basis),role:contract.role??'non-api',operationSources:contract.operations.map(operation=>operation.source)};}}
@@ -642,7 +689,12 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    const destination=(name==='fs.writeFileSync'||name==='writeFileSync')?sourcePath(sink.arguments[0],state):null;const classified=qualifiedFileRole(sink,argument,state)??(rawPublication(argument,state)&&unknownRawText(argument,state)?unknown(argument,state):shape(argument,state));const {properties,returns,choices,elements,...role}=classified;results.push({line:state.tree.getLineAndCharacterOfPosition(sink.getStart(state.tree)).line+1,sink:name,...role,dependencies:[...dependencies].sort()});
   }
  }
- return results;
+  for(const role of results.filter(value=>value.role==='api-capable-utility')){
+   const projection=role.closedWriterDeclaration;
+   const covered=projection?.source===source&&projection.projectedCallers?.length>0&&projection.projectedCallers.every(caller=>state.sinks.some(sink=>sink.closedLocalWriterCall&&state.tree.getLineAndCharacterOfPosition(sink.getStart()).line+1===caller.line&&createHash('sha256').update(sink.arguments[0].getText(state.tree)).digest('hex')===caller.expressionSha256&&results.some(result=>result.line===caller.line&&result.sink===caller.sink)));
+   if(!covered)throw new Error(`OUTPUT_ROLE_CLOSED_WRITER_PROJECTION_UNQUALIFIED: ${source}`);
+  }
+  return results;
  };
  classify.sinkSites=source=>{
   refreshObserverState();const state=module(source);

@@ -1,0 +1,56 @@
+{
+  "scope": "Shape-only triage of selected JSON/YAML bytes. No API consumer or code-output purpose qualified; code/native/other bytes outside this parse are not exempted.",
+  "selectedSourcePaths": 19826,
+  "parsedJsonYamlFiles": 1030,
+  "parseGaps": [
+    {
+      "source": "node_modules/lighthouse/flow-report/tsconfig.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 67 (line 4 column 5)"
+    },
+    {
+      "source": "node_modules/lighthouse/report/generator/tsconfig.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 70 (line 4 column 5)"
+    },
+    {
+      "source": "node_modules/lighthouse/report/tsconfig.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 67 (line 4 column 5)"
+    },
+    {
+      "source": "node_modules/lighthouse/shared/tsconfig.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 67 (line 4 column 5)"
+    },
+    {
+      "source": "node_modules/lighthouse/tsconfig-all.json",
+      "message": "SyntaxError: Unexpected token '/', \"// Compila\"... is not valid JSON"
+    },
+    {
+      "source": "node_modules/lighthouse/tsconfig-base.json",
+      "message": "SyntaxError: Unexpected token '/', \"// Base co\"... is not valid JSON"
+    },
+    {
+      "source": "node_modules/lighthouse/tsconfig.json",
+      "message": "SyntaxError: Expected double-quoted property name in JSON at position 95 (line 5 column 3)"
+    },
+    {
+      "source": "node_modules/lighthouse/types/lhr/tsconfig.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 70 (line 4 column 5)"
+    },
+    {
+      "source": "node_modules/chrome-launcher/tsconfig.json",
+      "message": "SyntaxError: Expected double-quoted property name in JSON at position 457 (line 16 column 5)"
+    },
+    {
+      "source": "node_modules/@paulirish/trace_engine/tsconfig.json",
+      "message": "SyntaxError: Expected double-quoted property name in JSON at position 369 (line 19 column 5)"
+    },
+    {
+      "source": "node_modules/deep-diff/.vscode/launch.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 4 (line 2 column 3)"
+    },
+    {
+      "source": "node_modules/deep-diff/.vscode/tasks.json",
+      "message": "SyntaxError: Expected property name or '}' in JSON at position 4 (line 2 column 3)"
+    }
+  ],
+  "resourceLikeValues": []
+}

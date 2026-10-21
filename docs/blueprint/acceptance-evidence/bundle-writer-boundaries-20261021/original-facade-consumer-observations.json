@@ -1,0 +1,15 @@
+{
+  "source": "tests/verification/contracts/check-runtime-bundle-builder.mjs",
+  "sha256": "30500c5d47fadf0e04b88c21a78276c5cf4fba9f4257ca2b42f5b43bbea59282",
+  "snapshot": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-Rm2sa9/source",
+  "scope": "Run original builder/export consumer test in isolated source snapshot with minimal environment. Imports role facades only for export presence; no worker/pipeline execution, cluster or API purpose approval.",
+  "exitCode": 0,
+  "stdout": "{\"ok\":true,\"phase\":\"5.6-D\",\"roles\":3}\n",
+  "stderr": "",
+  "envKeys": [
+    "PATH",
+    "HOME",
+    "LANG",
+    "LC_ALL"
+  ]
+}

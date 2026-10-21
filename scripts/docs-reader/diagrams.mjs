@@ -4,11 +4,11 @@ import path from 'node:path';
 import http from 'node:http';
 import crypto from 'node:crypto';
 import { once } from 'node:events';
-import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
 import MarkdownIt from 'markdown-it';
 import { parse, parseFragment } from 'parse5';
 
-const require = createRequire(import.meta.url);
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 const escape = value => String(value).replace(/[&<>"']/gu, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const svgTags = new Set('svg style g defs marker path rect polygon polyline line circle ellipse text tspan title desc filter fedropshadow fegaussianblur feoffset femerge femergenode clippath lineargradient stop pattern symbol use'.split(' '));
@@ -77,7 +77,11 @@ export function collectDocumentationDiagrams(pages, registry) {
 // The browser receives only the pinned local Mermaid distribution and positively
 // selected diagram descriptions. No external page or network resource is used.
 export async function renderDocumentationDiagrams(definitions) {
-  const { chromium } = require('playwright'), dist = path.dirname(require.resolve('mermaid')), servedModules = new Map();
+  // The isolated reader install owns this fixed distribution directory. Do not
+  // select an ambient package or acquire executable modules through require.
+  const dist = fileURLToPath(new URL('./node_modules/mermaid/dist', import.meta.url)), servedModules = new Map();
+  assert(fs.existsSync(dist) && fs.realpathSync(dist) === dist && fs.statSync(dist).isDirectory(), 'Install the isolated reader Mermaid distribution before rendering');
+  assert(fs.existsSync(path.join(dist, 'mermaid.esm.min.mjs')), 'The reader Mermaid browser entry is missing');
   const server = http.createServer((request, response) => {
     try {
       if (request.url === '/') { response.setHeader('Content-Type', 'text/html'); response.end('<!doctype html><html><head><meta charset="utf-8"></head><body><script type="module">import mermaid from "/mermaid.esm.min.mjs";window.mermaid=mermaid;</script></body></html>'); return; }

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+    "changedFiles": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "summary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+    "limits": [
+      "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+      "No other publication gate or whole documentation package acceptance.",
+      "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+      "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+    ]
+  },
+  {
+    "id": "AP09-search-reader-gate-20261021",
+    "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+    "changedFiles": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "summary": "Whole A912-04: canonical search index includes all167pages, headings and technical IDs, finite reader synonyms and weighted upper results. Twelve defined reader questions find expected route among top3 in actual browser at320/768/1440; exact positive-manifest equality excludes internal artifacts.",
+    "limits": [
+      "Whole A912-04 only; finite declared reader synonyms, not universal semantic or natural-language search.",
+      "No other publication gate, all-page/human-screenreader, rendered-Mermaid/source-preview/externalhosting acceptance.",
+      "Global API bundle input/caller closure and three unchanged generated Helm-language diagnostics remain open."
+    ]
+  },
+  {
+    "id": "AP09-rendered-source-bounds-gate-20261021",
+    "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+    "changedFiles": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "summary": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+    "limits": [
+      "Exact source location/object/type/byte/range checks, not semantic correctness of every claim, signatures, live runtime or hosting.",
+      "Local Source objects were observed in actual Git; GitHub reachability follows pushed ancestors, not a substituted upstream HTTP proof.",
+      "Native documentation purposes preserve source/caller identity and do not waive the global API bundle-copier boundary.",
+      "Whole A912-09 only; remaining publication/accessibility/diagram/preview/full-workflow gates not automatically accepted.",
+      "Three unchanged stale generated Helm phrases and global API bundle input/caller gap remain open."
+    ]
+  },
+  {
+    "id": "AP09-complete-same-source-code-preview-20261021",
+    "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+    "changedFiles": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "summary": "Whole PUB004: general same-source component automatically pairs immutable source links with exact same-revision inert code inside original evidence boxes.1660excerpts/390boxes/874objects across53pages;fresh-source and actualbrowser/text/native-disclosure proof.",
+    "limits": [
+      "WholePUB004 only; A91205 all-six-field canonical format not established for every older evidence box and remains unaccepted.",
+      "Preserves originalclaims/contracts/tests/limits; missing author evidence not fabricated and source snippets do not prove live or semantic correctness.",
+      "ThreeSource boxes containingonlydirectory/named-anchor references remain ordinarylinks, not fake code previews.",
+      "No diagram/layoutgate, humanScreenReader, freshuser, hosting, globalAPI or productruntime approval.",
+      "GlobalAPIbundlecopier74 andthreeunchangedstaleHelmphrases stayopen."
+    ]
+  },
+  {
+    "id": "AP09-complete-responsive-reader-layout-20261021",
+    "revision": "bbee1c8d7493c50fdce8b726c5a1c10b667d8a89",
+    "changedFiles": [
+      "scripts/docs-api-documentation-role-custody.mjs",
+      "scripts/docs-reader/diagrams.mjs"
+    ],
+    "summary": "Whole A91207 responsive reader layout at320/768/1440: navigation,tables,code,27 registered static diagrams,callouts,search remain available without page overflow; focusable internally scrolling regions preserve full content and textual alternatives.",
+    "limits": [
+      "Whole responsive-layout gate only; PUB005/A91206 semantic diagram completeness NOT_READY:16/27 scoped supported,6system and5service proofs incomplete;capacity failures preserved.",
+      "Human screenreader/fresh-role user/hosting/live workflows/global API not accepted by automated browser or byte checks.",
+      "Native table/code/diagram internal horizontal scroll is intentional and focus/keyboard tested; no horizontal PAGE navigation.",
+      "Global bundle-copier and three stale generated Helm phrases remain open."
+    ]
+  }
+]

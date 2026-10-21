@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "c103bfadadaa50129b83f029071a27485051f9a2",
+  "scope": "Unmodified builder executed only in an isolated hard-linked input snapshot with minimal environment; no product modules imported or runtime effects qualified.",
+  "sourceSnapshot": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/source",
+  "inputPaths": 19837,
+  "environmentKeys": [
+    "PATH",
+    "HOME",
+    "LANG",
+    "LC_ALL"
+  ],
+  "nodeVersion": "v24.21.0",
+  "runtimeExecutionAuthorized": false,
+  "apiRoleQualified": false,
+  "roles": [],
+  "findings": [
+    {
+      "message": "Error: Command failed: /usr/local/bin/node /home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/source/scripts/build-runtime-role-bundle.mjs nova /home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/nova c103bfadadaa50129b83f029071a27485051f9a2 v2 2000-01-01T00:00:00Z\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: plugin isolation launcher is not built\n    at file:///home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/source/scripts/build-runtime-role-bundle.mjs:22:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n",
+      "stack": "Error: Command failed: /usr/local/bin/node /home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/source/scripts/build-runtime-role-bundle.mjs nova /home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/nova c103bfadadaa50129b83f029071a27485051f9a2 v2 2000-01-01T00:00:00Z\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: plugin isolation launcher is not built\n    at file:///home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/source/scripts/build-runtime-role-bundle.mjs:22:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at file:///home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-capture.mjs:39:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: plugin isolation launcher is not built\n    at file:///home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-fKCAXH/source/scripts/build-runtime-role-bundle.mjs:22:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n"
+    }
+  ]
+}

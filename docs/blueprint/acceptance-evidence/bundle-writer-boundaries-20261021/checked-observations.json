@@ -1,0 +1,108 @@
+{
+  "tests": {
+    "custody": {
+      "finished": 30,
+      "passed": 30
+    },
+    "nodeEntryPublicationReaderDiagram": {
+      "finished": 63,
+      "passed": 63
+    }
+  },
+  "documentationRoles": {
+    "passed": 64,
+    "sources": [
+      "scripts/docs-ap09-catalogue.mjs",
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/docs-api-output-role-classification.mjs",
+      "scripts/docs-api-product-scope.mjs",
+      "scripts/docs-api-receiver-coverage.mjs",
+      "scripts/docs-api-reference.mjs",
+      "scripts/docs-api-schema-authorities.mjs",
+      "scripts/docs-argo-receiver-contracts.mjs",
+      "scripts/docs-blueprint-generate.mjs",
+      "scripts/docs-buster-authored-unknown-field-contracts.mjs",
+      "scripts/docs-buster-lease-receiver-contracts.mjs",
+      "scripts/docs-check-coverage.mjs",
+      "scripts/docs-check-refs.mjs",
+      "scripts/docs-check.mjs",
+      "scripts/docs-cilium-receiver-contracts.mjs",
+      "scripts/docs-clusterspiffeid-selected-receiver-contracts.mjs",
+      "scripts/docs-configuration-inventory.mjs",
+      "scripts/docs-generate-core.mjs",
+      "scripts/docs-generate.mjs",
+      "scripts/docs-governance.mjs",
+      "scripts/docs-inventory.mjs",
+      "scripts/docs-kubernetes-admission-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-admission-status-contracts.mjs",
+      "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-auth-delete-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-cluster-configuration-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-identity-secret-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-network-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
+      "scripts/docs-lint-policy-reference.mjs",
+      "scripts/docs-local-helm-authorities.mjs",
+      "scripts/docs-parity-batches.mjs",
+      "scripts/docs-parity-check.mjs",
+      "scripts/docs-parity-extract.mjs",
+      "scripts/docs-parity-review-assignments.mjs",
+      "scripts/docs-parity-status.mjs",
+      "scripts/docs-parity-transition.mjs",
+      "scripts/docs-platform-surface-inventory.mjs",
+      "scripts/docs-prometheus-selected-receiver-contracts.mjs",
+      "scripts/docs-publication.mjs",
+      "scripts/docs-runtime-consumer-contracts.mjs",
+      "scripts/docs-secret-inventory.mjs",
+      "scripts/docs-status.mjs",
+      "scripts/docs-tree-boundary.mjs",
+      "scripts/docs-yaml-field-authorities.mjs",
+      "scripts/docs-yaml-inventory.mjs",
+      "scripts/docs-sdk-reference.mjs",
+      "scripts/docs-reader/renderer.mjs",
+      "scripts/docs-reader/check-artifact.mjs",
+      "scripts/docs-reader/check-search.mjs",
+      "scripts/docs-reader/source-links.mjs",
+      "scripts/docs-reader/check-source-links.mjs",
+      "scripts/docs-reader/metadata.mjs",
+      "scripts/docs-reader/source-previews.mjs",
+      "scripts/docs-reader/check-source-previews.mjs",
+      "scripts/docs-reader/diagrams.mjs",
+      "scripts/docs-reader/check-diagrams.mjs"
+    ]
+  },
+  "freshDiagrams": {
+    "pages": 167,
+    "diagrams": 27,
+    "freshRenderHashesMatched": 27,
+    "localOnly": true,
+    "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+  },
+  "nativePropagation": {
+    "renewals": 9,
+    "unchanged": 55,
+    "proof": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/writer-static-native-propagation.json"
+  },
+  "projectionReview": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "No actionable defects found. The projection requires the exact reviewed source hash and closed caller coverage, retains the raw sink, and classifies all three caller payloads separately. Opaque copy and facade payloads remain unknown; refreshed operation metadata cannot forge the utility marker. The recorded test log reports 29/29 passing. This review grants no broader API inventory or runtime qualification.",
+    "overall_confidence": 0.94
+  },
+  "currentGlobalBlocker": "AssertionError [ERR_ASSERTION]: API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:91: fs.readFileSync(source)\n    at discoverScriptApiOutputs (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-discovery.mjs:1503:35)\n    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/[eval1]:1:96\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n",
+  "nativeCopies": {
+    "roles": 3,
+    "filesMatched": 21942,
+    "moduleLinks": 86,
+    "proof": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-native-capture.json",
+    "facadeConsumer": "/home/node/.openclaw/workspace/tmp/pr13-graph-closeout-20261021/runtime-bundle-facade-consumer-check.json"
+  },
+  "scope": "Source-only constructor/loader/native renewal; NOwholebundle/API/runtime/gate acceptance."
+}
