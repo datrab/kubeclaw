@@ -143,7 +143,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -168,27 +168,29 @@
         "docs/site/status/current.md"
       ],
       "sources": [
-        "docs/site/README.md",
-        "docs/site/reference/documentation-governance.md",
         "docs/README.md",
+        "docs/blueprint/05-decision-record-catalogue.md",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "docs/site/README.md",
+        "docs/site/decisions/README.md",
+        "docs/site/reference/documentation-governance.md",
         "docs/site/reference/generated-documentation-map.json",
+        "docs/site/status/current.md",
+        "docs/site/understand/README.md",
+        "docs/status/finding-identities.json",
+        "docs/status/open-issues.json",
+        "packaging/runtime/package-ownership.json",
         "scripts/docs-governance.mjs",
         "scripts/docs-publication.mjs",
         "scripts/docs-status.mjs",
-        "packaging/runtime/package-ownership.json",
-        "docs/site/understand/README.md",
-        "skills/nova/project/compiler.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
         "skills/nova/core/execution/engine-run.ts",
         "skills/nova/core/execution/pipeline-loop.ts",
         "skills/nova/core/lifecycle/reducer.ts",
-        "skills/nova/core/effects/durable-invocation.ts",
-        "skills/prism/server/native-worker-host.ts",
+        "skills/nova/project/compiler.ts",
         "skills/prism/server/native-worker-execution.ts",
-        "docs/site/decisions/README.md",
-        "docs/blueprint/05-decision-record-catalogue.md",
-        "docs/site/status/current.md",
-        "docs/status/open-issues.json",
-        "docs/status/finding-identities.json"
+        "skills/prism/server/native-worker-host.ts"
       ],
       "checks": [
         {
@@ -230,6 +232,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -416,6 +423,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
@@ -1388,7 +1403,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1413,24 +1428,26 @@
         "docs/site/reference/capabilities.md"
       ],
       "sources": [
-        "skills/nova/core/test-gates/resolver.ts",
-        "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+        "charts/kubeclaw/files/config/knip.json",
+        "docker/nova-tools/package-lock.json",
+        "docker/nova-tools/package.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/check-core-architecture-guides.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-lint-policy-reference.mjs",
+        "scripts/docs-published-route-baseline.json",
+        "scripts/docs-status.mjs",
+        "scripts/lib/docs-route-continuity.mjs",
         "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
         "skills/common/plugin-runtime/foundation/registry/errors.ts",
         "skills/nova/core/execution/context.ts",
-        "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        "skills/nova/core/test-gates/resolver.ts",
+        "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
         "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
-        "scripts/docs-lint-policy-reference.mjs",
-        "charts/kubeclaw/files/config/knip.json",
-        "versions.json",
-        "docker/nova-tools/package.json",
-        "docker/nova-tools/package-lock.json",
-        "scripts/docs-governance.mjs",
-        "scripts/lib/docs-route-continuity.mjs",
-        "scripts/docs-published-route-baseline.json",
-        "scripts/check-core-architecture-guides.mjs",
-        "scripts/docs-status.mjs",
-        "docs/site/reference/generated-documentation-map.json"
+        "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        "versions.json"
       ],
       "checks": [
         {
@@ -1487,6 +1504,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -1677,6 +1699,14 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
@@ -2943,7 +2973,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -2966,11 +2996,13 @@
         "docs/site/product-surfaces.md"
       ],
       "sources": [
-        "scripts/lib/docs-publication-assets.mjs",
-        "scripts/lib/docs-markdown-anchors.mjs",
-        "docs/config/documentation-tree-classification.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
         "scripts/docs-publication.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
         "scripts/lib/docs-publication-links.mjs"
       ],
       "checks": [
@@ -3008,6 +3040,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -3177,6 +3214,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
@@ -3854,7 +3899,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -3866,22 +3911,24 @@
         "docs/site/use/workflows/README.md"
       ],
       "sources": [
+        "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/src/index.ts",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/nova/core/src/index.ts",
+        "skills/nova/core/test-gates/resolver.ts",
         "skills/nova/pipeline.ts",
         "skills/nova/project/cli.ts",
         "skills/nova/project/compiler.ts",
-        "skills/nova/project/source.ts",
         "skills/nova/project/coverage.ts",
-        "skills/nova/project/review-semantics.ts",
         "skills/nova/project/delivery-manifest.ts",
-        "skills/nova/core/test-gates/resolver.ts",
-        "skills/nova/core/src/index.ts",
-        "skills/common/plugin-runtime/sdk/src/index.ts",
-        "skills/common/plugin-runtime/foundation/registry/schema.ts",
-        "contracts/pipeline-test-gate/v1/src/index.ts",
-        "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
-        "docs/site/use/workflows/examples/first-project.mjs",
-        "scripts/lib/docs-publication-assets.mjs",
-        "docs/config/documentation-tree-classification.json"
+        "skills/nova/project/review-semantics.ts",
+        "skills/nova/project/source.ts"
       ],
       "checks": [
         {
@@ -3908,6 +3955,11 @@
           "command": "Independent first-project source/reader/quality review and boundedpublicationreview",
           "exitCode": 0,
           "observation": "BothwholeFLW003/005all3aspectsPASS;15locallinksresolve,exact.mjsassetclassification/allowanceconfirmed."
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -3946,7 +3998,17 @@
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
         }
       ],
-      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
+      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "revisionHistory": [
+        {
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        }
+      ]
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
@@ -5473,7 +5535,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -5505,6 +5567,8 @@
         "contracts/prism/v1/package.json",
         "contracts/telemetry/v1/tests/contracts.test.mjs",
         "docker/archviewer.nginx.conf",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-tree-baseline.json",
         "docs/config/documentation-tree-classification.json",
         "docs/site/reference/documentation-route-registry.json",
@@ -5673,6 +5737,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -5820,6 +5889,15 @@
             "scripts/tests/docs-reader.test.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/docs-tree-boundary.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
@@ -7334,7 +7412,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -7352,6 +7430,8 @@
         ".github/workflows/docs-checks.yaml",
         ".github/workflows/pipeline-reliability.yaml",
         "contracts/telemetry/v1/catalog.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-tree-classification.json",
         "docs/site/extend/developer-handbook.md",
         "docs/site/extend/platform/prism.md",
@@ -7467,6 +7547,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "review": {
@@ -7537,6 +7622,14 @@
             "scripts/docs-publication.mjs"
           ],
           "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
@@ -7856,7 +7949,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -8042,6 +8135,8 @@
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/namespace-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/committed-reader-observation.json",
         "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-publication-manifest.json",
         "docs/config/documentation-tree-classification.json",
         "scripts/docs-api-documentation-role-custody.mjs",
@@ -8128,6 +8223,11 @@
           "command": "Independent narrow five-record changed-custody and static-loader preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "93tests/64roles PASS;27freshSVGhashes identical to existingartifact;9exactrenewals55same;noMD/search/render/CSS contentchanges. docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8217,12 +8317,21 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
           "reason": "Narrow independent preservation only: exact private-writer all-caller projection, separately bound three-role facade constructor, static fixed-layout diagram loader and9precise native receipt renewals/55unchanged; current27fresh SVG hashes identical. ExistingHTML/search/Source/preview/browser evidence remainsboundedbaseline, not a fresh rebuild. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -8240,6 +8349,8 @@
         "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/committed-search-observation.json",
         "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json",
         "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-rank-review.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-publication-manifest.json",
         "docs/config/documentation-tree-classification.json",
         "scripts/docs-api-documentation-role-custody.mjs",
@@ -8296,6 +8407,11 @@
           "command": "Independent narrow five-record changed-custody and static-loader preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "93tests/64roles PASS;27freshSVGhashes identical to existingartifact;9exactrenewals55same;noMD/search/render/CSS contentchanges. docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8346,12 +8462,21 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
           "reason": "Narrow independent preservation only: exact private-writer all-caller projection, separately bound three-role facade constructor, static fixed-layout diagram loader and9precise native receipt renewals/55unchanged; current27fresh SVG hashes identical. ExistingHTML/search/Source/preview/browser evidence remainsboundedbaseline, not a fresh rebuild. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -8376,6 +8501,8 @@
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-output-manifest.json",
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json",
         "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/source-link-native-propagation.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-publication-manifest.json",
         "scripts/docs-api-documentation-role-custody.mjs",
         "scripts/docs-check-refs.mjs",
@@ -8436,6 +8563,11 @@
           "command": "Independent narrow five-record changed-custody and static-loader preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "93tests/64roles PASS;27freshSVGhashes identical to existingartifact;9exactrenewals55same;noMD/search/render/CSS contentchanges. docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8480,6 +8612,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
           "reason": "Narrow independent preservation only: exact private-writer all-caller projection, separately bound three-role facade constructor, static fixed-layout diagram loader and9precise native receipt renewals/55unchanged; current27fresh SVG hashes identical. ExistingHTML/search/Source/preview/browser evidence remainsboundedbaseline, not a fresh rebuild. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+          "changedFiles": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
@@ -8585,7 +8725,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -8609,6 +8749,8 @@
         "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json",
         "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-reader-offline-observations.json",
         "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/widget-browser-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-publication-manifest.json",
         "scripts/docs-api-documentation-role-custody.mjs",
         "scripts/docs-publication.mjs",
@@ -8663,6 +8805,11 @@
           "command": "Independent narrow five-record changed-custody and static-loader preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "93tests/64roles PASS;27freshSVGhashes identical to existingartifact;9exactrenewals55same;noMD/search/render/CSS contentchanges. docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8693,12 +8840,20 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
           "reason": "Narrow independent preservation only: exact private-writer all-caller projection, separately bound three-role facade constructor, static fixed-layout diagram loader and9precise native receipt renewals/55unchanged; current27fresh SVG hashes identical. ExistingHTML/search/Source/preview/browser evidence remainsboundedbaseline, not a fresh rebuild. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+          "changedFiles": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+      "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -8774,6 +8929,8 @@
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/semantic-review-capacity-failures.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/system-and-confirmed-corrections-review.json",
         "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
         "docs/config/documentation-diagrams.json",
         "scripts/docs-api-documentation-role-custody.mjs",
         "scripts/docs-publication.mjs",
@@ -8824,6 +8981,11 @@
           "command": "Independent narrow five-record changed-custody and static-loader preservation and current actual reader checkers",
           "exitCode": 0,
           "observation": "93tests/64roles PASS;27freshSVGhashes identical to existingartifact;9exactrenewals55same;noMD/search/render/CSS contentchanges. docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
         }
       ],
       "limits": [
@@ -8858,6 +9020,14 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
           "reason": "Narrow independent preservation only: exact private-writer all-caller projection, separately bound three-role facade constructor, static fixed-layout diagram loader and9precise native receipt renewals/55unchanged; current27fresh SVG hashes identical. ExistingHTML/search/Source/preview/browser evidence remainsboundedbaseline, not a fresh rebuild. Existing accepted facts and limits retained; no broad historical reapproval."
+        },
+        {
+          "revision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+          "changedFiles": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
         }
       ]
     }
@@ -41003,24 +41173,24 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "7cf0dbd743a81545c2674a11dfa1fc6f450a110a",
+      "securedSourceRevision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
       "acceptedRequirements": 203,
       "acceptedGates": 17,
       "newRequirementsThisCampaign": 44,
       "newGatesThisCampaign": 6,
-      "nextWork": "Qualify actual four copySelection input domains with explicit originalAPIproducer provenance; do notmasktheAPI frontier or handeditgeneratedHelm. Eightdiagram Source proofs/humanAT/freshreader/workflow limits retained.58contents/72gates open.",
-      "codeCandidate": "7c88925d: API-capable privatewriter notnonAPI; all3callerpayloads explicit; finite3role facade ctor values bounded; staticPlaywright/fixedMermaid distribution.93tests/64roles/27freshSVGmatches PASS.",
+      "nextWork": "Continue API copier original-producer custody at build-runtime-role-bundle.mjs:91; eight incomplete diagram Source proofs, humanAT/fresh-reader/workflow and three generated Helm prose limits remain.58contents/72gates open.",
+      "codeCandidate": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6: source-bound10standaloneDocvalidators retain read edges, exact internal classification954additions/2965oldunchanged, oneASTreceipt renewal63same;54tree+30custody tests/64roles PASS. Tree3926files clean. Three stale governance metadata fields and two installer links repaired.",
       "currentGlobalBlocker": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/build-runtime-role-bundle.mjs:74; copied opaque package/dependency payloads and caller-context coverage.",
       "publication": "Registered static SVG diagrams with explicit reader questions,owner,hashes,visible text alternatives;27fresh render matches and 209output hashes.501page+81diagram+27fallback+9axe checks. No whole semantic, humanAT or runtime approval.",
-      "scope": "203/261contents,17/89gates; no new count from scoped diagram correction.",
+      "scope": "203/261contents,17/89gates; no new count from tree/metadata correction.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
       "workingTree": "Expected clean after checkpoint; verify before continuation. Never use obsolete dirty kubeclaw-documentation-cloud checkout as the current PR13 source.",
       "checkout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
       "remoteBranch": "refs/heads/docs/documentation-overhaul",
       "review": {
-        "report": "docs/blueprint/acceptance-evidence/bundle-writer-boundaries-20261021/five-record-preservation-review.json",
-        "result": "PASS narrow five-record changed-boundary preservation; prior complete A91207 retained.",
-        "limit": "No new whole diagram/humanAT/globalAPI/live approval."
+        "report": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "result": "PASS narrow eleven-record tree/metadata/receipt preservation.",
+        "limit": "Historical HTML/search/browser c958eb59 evidence retained; no fresh browser, whole diagram/API, humanAT, hosting or live-runtime acceptance."
       },
       "checks": [
         {

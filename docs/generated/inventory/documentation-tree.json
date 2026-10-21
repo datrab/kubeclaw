@@ -52359,6 +52359,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
           "inputUse": false
@@ -52491,6 +52496,11 @@
       "introducedAfterBaseline": true,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
@@ -53021,7 +53031,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "e7971e3835bf126b51538d1ab01a169960c04d2cdf92d49d1dc941bd492f8b92"
+      "sha256": "0c60bf4b697e8d0ce087a6d71b838f01293c99d6a19d8d8437c9e87dc44f2649"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
