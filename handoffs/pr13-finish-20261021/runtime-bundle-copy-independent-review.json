@@ -1,0 +1,43 @@
+{
+  "reviewer": "/root/operator_acceptance",
+  "author": "/root/custody_review",
+  "scope": "Finite inert runtime bundle-copy helper, tests and exact output-slot integration; narrow MNT017 preservation only",
+  "files": {
+    "scripts/docs-runtime-bundle-copy-custody.mjs": "7d448705c6c03c33179016efeb1fd8facd7491599cfd62eae484a3e46ffb488d",
+    "scripts/tests/runtime-bundle-copy-custody.test.mjs": "5c2ea6914681d011332cd9bd7b7da12be6832f9f8813f2634203278bccc940b6",
+    "scripts/docs-api-output-discovery.mjs": "82e1610949e003e8d51ec4bc74ef591aa8ee93189e06db1c48104fdd933cb7f2"
+  },
+  "verdict": "PASS",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "openIssues": [],
+  "checks": [
+    {
+      "command": "node --test scripts/tests/runtime-bundle-copy-custody.test.mjs",
+      "exitCode": 0,
+      "observation": "7/7passed; inert actual roster, exact slot/nonforgeable custody, changed/add/remove member digests, recursive optional/required dependencies, resources, alias/authority/JSONC negatives."
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/independent-bundle-text-negative.mjs",
+      "exitCode": 0,
+      "observation": "Independent kind-first, comment-first, root YAMLsequence, scalar-first multidoc and map-first multidoc resource probes all STOP at original source->target diagnostic."
+    }
+  ],
+  "summary": "Read full pinned builder, sync child, helper and integration. Four copied domains and recursive installed dependencies are reacquired inertly before cache lookup; inputDigest covers bytes/modes/directory membership/optional absence/targets. Only exact source-hash and line91/sink/expression unknown slot gets non-api via private acquisition WeakSet. Runtime/module/API/assembly authority stays false. Builder caller/selector hashes are independently fixed; changes remain unknown or STOP. First identified unknowntext kind/comment, YAMLsequence and scalar-first multidoc falsegreens were corrected and independently retested. No remaining material issue in bounded helper/integration.",
+  "preservation": {
+    "recordId": "AP09-documentation-agent-maintenance-20261021",
+    "requirementIds": [
+      "MNT-017"
+    ],
+    "verdict": "PASS-original-scope-and-limits-preserved",
+    "reason": "Canonical documentation-maintenance workflow is unchanged. The correction follows actual original entry/caller/consumer, finite source acquisition and failure retention; does not bypass expected authority or grant generic role. Existing Argo checked-artifact flow, page ownership/generation, reader probe and retirement routes are unchanged. No newly claimed global discovery/runtime execution or generator success."
+  },
+  "limits": [
+    "No full current config/local-Helm discovery success or native warm full-pipeline cache execution is claimed. Cache wiring reviewed statically and helper input invalidation tested; actual pipeline check remains parent integration obligation.",
+    "No copied module, builder, package lifecycle or runtime artifact is executed by the helper; assemblyPrerequisitesAuthorized=false intentionally does not prove compiled launcher or actual bundle assembly.",
+    "Binary copied files remain inert byte inputs; no data inside an executable is interpreted as a nested API emission. Source/Markdown examples do not grant or invent apply authority."
+  ]
+}

@@ -1,3 +1,4 @@
+import {runtimeBundleCopyCustody, runtimeBundleCopyRole} from './docs-runtime-bundle-copy-custody.mjs';
 import {deploymentNodeOutputOccurrences} from './docs-api-deployment-node-occurrences.mjs';
 import {observerMaterializedSourceState, canonicalObserverDocumentationSource, resolveObserverDocumentationImport} from './docs-api-observer-materialized-source.mjs';
 import assert from 'node:assert/strict';
@@ -1430,9 +1431,14 @@ export function discoverScriptApiOutputs(root) {
     ?checkedArgocdArtifactOutputs(root,reviewedArgocdArtifactProfile.source,
       fs.readFileSync(path.join(root,reviewedArgocdArtifactProfile.source),'utf8')):null;
   if(checkedArtifact)assertCheckedArtifactEntryContext(documentationGraphCache.get(root),reviewedArgocdArtifactProfile.source);
+  // Acquire the complete finite copied-byte roster before cache reuse: newly
+  // installed optional dependencies and new directory members are inputs too.
+  const bundleSource='scripts/build-runtime-role-bundle.mjs';
+  const bundleCopy=executableSourceSet.has(bundleSource)
+    ?runtimeBundleCopyCustody(root,bundleSource,fs.readFileSync(path.join(root,bundleSource))):null;
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,bundleCopy?.inputDigest??null,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
   const classifiedDependencies=new Set();
@@ -1498,7 +1504,7 @@ export function discoverScriptApiOutputs(root) {
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
-    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness));
+    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     if(witness){result.push(...witness.outputs);continue;}
@@ -1805,7 +1811,8 @@ export function discoverScriptOutputRoleClassifications(root) {
   return sources.flatMap(source=>{
     const witness=checkedArgocdArtifactOutputs(root,source,fs.readFileSync(path.join(root,source),'utf8'));
     if(witness)assertCheckedArtifactEntryContext(documentationGraphCache.get(root),source);
-    return classify(source).map(role=>checkedArtifactRole(role,witness)).flatMap(role=>{
+    const bundleCopy=runtimeBundleCopyCustody(root,source,fs.readFileSync(path.join(root,source)));
+    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).flatMap(role=>{
     // Deployment observations alone remain annotations, never role grants.
     // The separate Source-owned checked-artifact profile above binds one exact
     // descriptor and API output set; all other unknown outputs stay unknown.
