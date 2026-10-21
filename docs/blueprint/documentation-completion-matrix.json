@@ -89,7 +89,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "488deafa90a629d936d078827715c85e2c705895",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -205,6 +205,16 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 local closeout",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "488deafa90a629d936d078827715c85e2c705895",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Reviewed map change only updates Ops MCP verification metadata and adds its current Cilium policy dependency. Exact structural comparison confirms all other page, route, ownership and dependency records unchanged; original acceptance scopes and limitations preserved."
         }
       ]
     },
@@ -995,7 +1005,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+      "revision": "488deafa90a629d936d078827715c85e2c705895",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -1116,6 +1126,16 @@
           ],
           "verdict": "PASS",
           "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 local closeout",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "488deafa90a629d936d078827715c85e2c705895",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Reviewed map change only updates Ops MCP verification metadata and adds its current Cilium policy dependency. Exact structural comparison confirms all other page, route, ownership and dependency records unchanged; original acceptance scopes and limitations preserved."
         }
       ],
       "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c"
@@ -2957,6 +2977,78 @@
         "Documentation/source and bounded local compiler evidence only; no live install/readiness, upgrade/rollback, restore, provider/pipeline execution, clean dependency installation or native isolation certified.",
         "No A98-03/A98-08/A98-09 or global generator/publication/UI gates accepted by these four requirements.",
         "Historical composite findings retain other-page scopes. Only the accepted canonical-page namespace/status/decision-reason facets are closed."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AP09-ops-mcp-complete-contract-20261021",
+      "revision": "488deafa90a629d936d078827715c85e2c705895",
+      "author": "Nova /root documentation correction coordinator",
+      "reviewer": "Independent Codex autoreview 2026-10-21 (whole-topic audit and corrected local closeout)",
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-009"
+      ],
+      "pages": [
+        "docs/site/understand/ops-mcp.md"
+      ],
+      "sources": [
+        "tools/ops-mcp/package.json",
+        "tools/ops-mcp/package-lock.json",
+        "tools/ops-mcp/src/authentication.mjs",
+        "tools/ops-mcp/src/config.mjs",
+        "tools/ops-mcp/src/diagnostics.mjs",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/kubernetes.mjs",
+        "tools/ops-mcp/src/server.mjs",
+        "tools/ops-mcp/test/authentication.test.mjs",
+        "tools/ops-mcp/test/bootstrap.test.mjs",
+        "tools/ops-mcp/test/diagnostics.test.mjs",
+        "tools/ops-mcp/test/http.test.mjs",
+        "tools/ops-mcp/test/hubble.test.mjs",
+        "tools/ops-mcp/test/kubernetes.test.mjs",
+        "tools/ops-mcp/test/local.test.mjs",
+        "charts/ops-pod/templates/kubeconfig.yaml",
+        "charts/ops-pod/templates/network.yaml",
+        "charts/ops-pod/templates/rbac.yaml",
+        "charts/ops-pod/templates/tailscale-storage.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml",
+        "scripts/deploy-ops-pod.sh",
+        "my-values/infra/cilium-cluster-policies.yaml"
+      ],
+      "checks": [
+        {
+          "command": "npm test --prefix tools/ops-mcp",
+          "exitCode": 0,
+          "observation": "15/15 local service tests pass with zero failures/skips; actual HTTP authentication/rotation/namespace, bounded logs/Hubble, HTTPS CA/hostname and failed MCP read envelope cases."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "167 pages mapped; updated Ops MCP metadata and exact map-only comparison pass."
+        },
+        {
+          "command": "Independent complete SPC-009 content audit and corrected local autoreview",
+          "exitCode": 0,
+          "observation": "Whole requirement sourceAccuracy/readerUsability/quality PASS. Four initial concrete gaps fixed: full argument contracts, compact flows-only byte bound, default chart/Relay policy mismatch and HTTP/MCP/partial-result envelopes. Source citations inspected; follow-up range correction narrows local test citation to actual lines32-51."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "6084local links,3287anchors,8302repository paths,31679pinned source links pass after correcting the local MCP test citation to actual lines32-51."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Central current Ops MCP tool/argument/default/limit/authentication/namespace/transport/dependency/error and safe-recovery contract independently accepted.",
+      "limits": [
+        "Documentation and local service evidence only; no deployed cluster, live RBAC/Relay connectivity or production retained-history claim.",
+        "No whole A97 or global generation/publication/browser gate accepted; historical/runtime input metadata does not qualify effects."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -6285,7 +6377,7 @@
         "charts/ops-pod",
         "scripts/deploy-ops-pod.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-topic-review-PASS",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6317,12 +6409,9 @@
       ],
       "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
-        "source",
-        "reader",
-        "quality",
-        "astra-final"
+        "independent-topic-review"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
@@ -6343,12 +6432,7 @@
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
       "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md",
-      "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
-        "reason": "Scoped independent review did not establish full requirement coverage; see concrete topic decision.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "completionRecord": "AP09-ops-mcp-complete-contract-20261021"
     },
     {
       "id": "SPC-010",
@@ -35014,14 +35098,14 @@
       "scope": "Author32Bash53Node20CJS24syntheticchecks only, noformal6scenario/live/ReaderQualityapproval."
     },
     "currentCloseout20261021": {
-      "securedSourceRevision": "62c0c8a47515046caa4c3151a8d055a92b19477c",
-      "acceptedRequirements": 174,
+      "securedSourceRevision": "488deafa90a629d936d078827715c85e2c705895",
+      "acceptedRequirements": 175,
       "acceptedGates": 12,
       "newRequirementsThisCampaign": 16,
       "newGatesThisCampaign": 2,
-      "nextWork": "Classify actual module.builtinModules namespace reads in tests/verification/lib/module-graph.mjs without allowing createRequire/unknown namespace member custody or suppressing dynamic imports; rerun generator, then remaining content/reference/workflow/publication gaps.",
-      "codeCandidate": "Six additional native replay input recipes independently clean; 21 exact dynamic import expressions bound to source/overlay/archive/caller inputs. Total this continuation: 12 recipes,29 imports. Runtime archive/environment/temporary-copy identity and all native effects remain unqualified; current selected sources still executable/API discovery. 25 focused tests pass.",
-      "currentGlobalBlocker": "tests/verification/lib/module-graph.mjs: unsupported node-module custody: module. Actual default node:module import only reads module.builtinModules twice into builtin-name Set; current capability scanner admits named builtinModules but rejects namespace property projection.",
+      "nextWork": "Requalify current docs-check executable consumer after reviewed Markdown parser/main-guard change; continue global inventory generation and remaining topic/gate closures.",
+      "codeCandidate": "builtinModules literal projections reviewed and26tests pass; graph77 dynamic input operations reconciled under unchanged Source-anchored recipes; schemas regenerated,8focused dependency tests and original schema semantics pass; Ops MCP whole SPC-009 independently PASS with15local tests. Broader publication regression44/45: one expected diagnostic differs while unsafe createRequire remains rejected. No global generator PASS.",
+      "currentGlobalBlocker": "DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-check.mjs; current Markdown stripping/export/main guard differs from Source-owned executable role receipt.",
       "publication": "167pages51plugins pass publicationcheck and Markdownbuild; no rendered HTML/browser/search proof.",
       "scope": "No promise of unattended running work and no completeness claim. MNT/OPL NOT_READY remains explicit.",
       "owner": "Nova, continuing the authorized PR13 request from Raven on2026-10-21",
