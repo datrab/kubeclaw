@@ -532,7 +532,12 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
           // alias, bound argument, or computed URL and resolve its loads here.
           const forwarding=propertyOf(node.expression);
           const base=forwarding==='call'?node.arguments[1]:forwarding==='apply'&&node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]:node.arguments[0];
-          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)))return source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs'?reviewedImporterResolutionOperation(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency)):reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
+          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))) {
+            if(source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs')return reviewedImporterResolutionOperation(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
+            if(source==='scripts/docs-sdk-reference.mjs')return reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
+            // Unknown owners retain the ordinary factory-base rejection below;
+            // they cannot enter another source's specialized provenance recipe.
+          }
           assert(forwarding!=='bind'&&capability!=='create-require-forwarder'&&base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)&&base.expression.keywordToken===ts.SyntaxKind.ImportKeyword&&base.expression.name.text==='meta',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported createRequire factory base: ${node.getText(tree)}; expected exact import.meta.url`);
           return 'require';
         }

@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import ts from 'typescript';
-import {reviewedImporterResolutionOperation} from '../docs-api-documentation-role-custody.mjs';
+import {reviewedImporterResolutionOperation,assertDocumentationExecutableRole} from '../docs-api-documentation-role-custody.mjs';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
@@ -25,6 +25,26 @@ test('node module builtin-name projections preserve API discovery and reject loa
    assert.throws(discover,/DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED/);
   }
  }
+}));
+
+test('current documentation checker role binds exported link parser, helper and guarded invocation',()=>fixture(({root,write})=>{
+ const source='scripts/docs-check.mjs',helper='scripts/lib/docs-markdown-anchors.mjs';
+ const original=fs.readFileSync(new URL('../docs-check.mjs',import.meta.url),'utf8');
+ const helperBytes=fs.readFileSync(new URL('../lib/docs-markdown-anchors.mjs',import.meta.url),'utf8');
+ write(source,original);write(helper,helperBytes);
+ assert.doesNotThrow(()=>assertDocumentationExecutableRole(root,source));
+ for(const [before,after]of [
+  ["stripFencedCodeAndComments(text)","text"],
+  ["path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)","true"],
+  ["console.log(`docs check passed (${files.length} active markdown files)`)","console.log(JSON.stringify({apiVersion:'v1',kind:'Secret'}))"],
+ ]){
+  assert(original.includes(before),before);write(source,original.replace(before,after));
+  assert.throws(()=>assertDocumentationExecutableRole(root,source),/DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED/);
+  write(source,original);assertDocumentationExecutableRole(root,source);
+ }
+ write(helper,helperBytes.replace('return stripBlockCodeAndComments(value);',"return process.env.UNREVIEWED_TEXT;"));
+ assert.notEqual(fs.readFileSync(path.join(root,helper),'utf8'),helperBytes);
+ assert.throws(()=>assertDocumentationExecutableRole(root,source),/DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED/);
 }));
 
 test('native ESM keeps actual .js authority, explicit .ts neighbors, creation and removal custody',()=>fixture(({root,write,discover})=>{

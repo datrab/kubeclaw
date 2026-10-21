@@ -1285,6 +1285,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "ed6e1b362f4961b4fcda91d928d853b67ae8583d22384755ec133c516700034a"
       },
       {
+        "expressionSha256": "86c57555e18d652e8d9a2e9bd138e747b1721348fa46a6a1ea8a04d738b895fc"
+      },
+      {
         "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
       },
       {
@@ -1297,10 +1300,10 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "c911664f1383262f472f293bf37442ecc966e75f7783f63641e87892a5d649c8"
       },
       {
-        "expressionSha256": "496849c3a4c5e9500881d56f1ef3f5f3bf4cd1bd7e56f5099a5c1f777d237476"
+        "expressionSha256": "21db498a2b5ab57d6b737222565ba53c1e2354c92deadd0b0e53e78f2e94ae16"
       }
     ],
-    "factsDigest": "c242be73ec39ce431f799dcaf91fe19ec57742b6fae38f5cdca49781c5879347",
+    "factsDigest": "9b69d5ff4929d923a78978e692f92563855f1ec86b0956166165402846eb439b",
     "authorityInputs": []
   },
   "scripts/docs-cilium-receiver-contracts.mjs": {
