@@ -770,6 +770,66 @@ export function assertNativeProductResponseSchemaAuthority(root) {
    assert(fs.existsSync(file)&&hash(fs.readFileSync(file))==='5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8',`API_PRODUCT_GO_HTTP_RESPONSE_SCHEMA_AUTHORITY_UNQUALIFIED: ${source}: $.status.demoProduct.decisions.items`);
 
 }
+// Complete Source-owned preflight body and exact sink grammar, not an approval
+// of live bytes or effects. Its only JSON projection has four fixed non-resource
+// keys; other selected outputs are labelled human diagnostics or the unchanged
+// kubectl server-dry-run summary. Registry refresh cannot admit another producer.
+const reviewedRuntimeAdoptionDiagnostics = {
+  "source": "scripts/check-runtime-adoption-live.py",
+  "sha256": "8dea018e325c287f30446c6926858b75db82a728e06a41b0a5fa07542c848741",
+  "outputs": [
+    {
+      "function": "<module>",
+      "expressionSha256": "ebf1f970ae48d4605199237752595cce5f036ae7d7904f8048eaec84fcc62020",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "95b99fe720a83d70995bb7e1d955b1be344f5f1b8c9645cbf33e1b88c7c011d3",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "dry_run_diagnostics",
+      "expressionSha256": "30278aa5d7b0ab31c901046d309bb92b86d54c82011be174f02e7b0deb760c41",
+      "operationSha256": "022ed2d2ab3cd81c50336e88778053609b9bc37902c5892babc4329482ab34ab"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "4e321d19443bff11015322f0af5aa01812310c73958be3c88a077aae14d5573c",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "0a1660f82e45986bb591af0264c5f9e2024e16b2bbf34a232ddc524e3e1c17ab",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "21281cefec7b9e607ab9c685d37e62ac13f2c4eabe770a966e3325b3dc22af83",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "aeaf5658c01e2d5dbff8e8b4788296ba0d0229465d8a8632b958063fd11c73a4",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "ddb7e34918009f6fe1a75d084d1dc19c7e3a1c4e596b8e2700ae15e0be21286e",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "8734405e6aee00ccaaf6a79aaba04431b5c88fdc68053e3dc085fd61409ce56d",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    },
+    {
+      "function": "<module>",
+      "expressionSha256": "a9cb9f2eee05848aa19471ad15ed6cf46cef43411a18d45004259369479d4cd7",
+      "operationSha256": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5"
+    }
+  ]
+};
 export function nativeOutputConsumerMatches(output,contracts,root) {
  // Digests only invalidate reviewed facts. A role also requires the actual
  // operation to satisfy its consumer grammar; a generic diagnostic label does
@@ -827,6 +887,13 @@ export function nativeOutputConsumerMatches(output,contracts,root) {
   const external=/\b(?:os\.Args|os\.Getenv|os\.Stdin|sys\.argv|input\(|eval\(|exec\()/u.test(expression);
   if(external)return false;
   switch(consumer.kind){
+   case 'python-runtime-adoption-diagnostic':{
+    const recipe=reviewedRuntimeAdoptionDiagnostics,file=path.join(root,recipe.source);
+    return output.role==='unknown'&&consumer.source===recipe.source&&fs.existsSync(file)
+      &&fs.realpathSync(file)===path.resolve(file)&&hash(fs.readFileSync(file))===recipe.sha256
+      &&recipe.outputs.some(selected=>selected.function===output.function
+        &&selected.expressionSha256===hash(output.expression)&&selected.operationSha256===hash(operation));
+   }
    case 'go-error-stderr':return output.diagnosticQualified===true&&output.authorityQualified===true&&/^fmt\.Fprintln\(os\.Stderr, err(?:\.Error\(\))?\)$/u.test(expression)&&/if (?:[^\n]+;\s*)?err != nil\s*\{/u.test(operation)&&consumer.errorOrigins?.some(origin=>operation.includes(origin))&&/os\.Exit\(1\)/u.test(operation);
    case 'go-digest':return /^json\.Marshal\(/u.test(expression)&&/sha256\.Sum256\(/u.test(operation)&&resultName&&new RegExp(`(?:Sum256|Transform)\\(${resultName}\\)`, 'u').test(operation);
    case 'go-equality':return /^json\.Marshal\(/u.test(expression)&&resultName&&(new RegExp(`bytes\\.Equal\\([^)]*\\b${resultName}\\b`, 'u').test(operation)||new RegExp(`string\\(${resultName}\\)\\s*(?:==|!=)|(?:==|!=)\\s*string\\(${resultName}\\)`, 'u').test(operation));

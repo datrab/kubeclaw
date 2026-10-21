@@ -30601,6 +30601,168 @@
           "dependencyFactsDigest": "00f5cc0f8edccd90034d7aad730c448587ae19f5019f5298054f21dd7a7f0330"
         }
       ]
+    },
+    {
+      "source": "scripts/check-runtime-adoption-live.py",
+      "language": "Python",
+      "basis": "source-bound-native-cli-diagnostic-consumer",
+      "roleConsumerEvidence": {
+        "review": "Independent Codex autoreview native-diagnostic-review 2026-10-21: complete Source/consumer PASS; no live bytes, executable identity, effects or runtime success qualified",
+        "consumer": "Human runtime adoption prerequisites/server-dry-run diagnostics only; no live observed bytes/executable identity/cluster effect qualification",
+        "sinkLines": [
+          17,
+          28,
+          35,
+          41,
+          44,
+          52,
+          57,
+          58,
+          62
+        ]
+      },
+      "outputs": [
+        {
+          "expression": "print(f\"=== {group['role']} ===\", flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(result.stdout, end='', flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(line[:2000] + (' [truncated]' if len(line) > 2000 else ''), flush=True)",
+          "function": "dry_run_diagnostics",
+          "operationDigest": "022ed2d2ab3cd81c50336e88778053609b9bc37902c5892babc4329482ab34ab",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(f\"ERROR reading Secret {secret['name']}\", flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(f\"MISSING Secret {secret['name']}: \" + (', '.join(missing) or 'object'), flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(f\"OK Secret {secret['name']} (contents not printed)\", flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(f\"ERROR reading StatefulSet {resource['name']}\", flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(f\"LIVE immutable fields: StatefulSet/{resource['name']}\", flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "print(json.dumps({key: spec.get(key) for key in fields}, indent=2), flush=True)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        },
+        {
+          "expression": "json.dumps({key: spec.get(key) for key in fields}, indent=2)",
+          "function": "<module>",
+          "operationDigest": "0624f05bd46b7df122396734b267fa8460750f6b81bcc092703ee7918a3ac4d5",
+          "consumer": {
+            "source": "scripts/check-runtime-adoption-live.py",
+            "purpose": "Exact labelled preflight status, fixed four-field StatefulSet projection, or unchanged kubectl server-dry-run human summary; external live observations and effects remain unqualified",
+            "evidence": [
+              "Name(id='print'",
+              "Constant(value=2000)"
+            ],
+            "kind": "python-runtime-adoption-diagnostic"
+          }
+        }
+      ]
     }
   ],
   "nativeRoleDependencyBoundary": "Operation facts are derived from selected actual sink/caller/consumer expressions and their lexical source dependencies. Registry digests detect changes; they do not authorize an unknown output or replace semantic review. Complete module syntax is not duplicated.",

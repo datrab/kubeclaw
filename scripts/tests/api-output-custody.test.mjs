@@ -7,7 +7,7 @@ import ts from 'typescript';
 import {reviewedImporterResolutionOperation,assertDocumentationExecutableRole} from '../docs-api-documentation-role-custody.mjs';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
+import {nativeOutputConsumerMatches,documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
 import {classifySerializedOutputRoles,serializedOutputSinkSites,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';
 import {shellHeredocCustody,shellCommandAcquisitions} from '../docs-shell-source-custody.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
@@ -29,6 +29,22 @@ test('Ops Helm source checksum stays a hash-check input, not a generic Docker wr
  const checksum='RUN printf \'%s  source.tar.gz\\n\' "$OPS_HELM_SOURCE_SHA256" | sha256sum -c -\n';
  write('ops/pod/Dockerfile',checksum);assert.deepEqual(discover(),[]);
  for(const changed of [checksum.replace('OPS_HELM_SOURCE_SHA256','UNREVIEWED'),checksum.replace('sha256sum -c -','kubectl apply -f -'),checksum+"RUN echo '{\"apiVersion\":\"v1\",\"kind\":\"Secret\"}'\n"]){write('ops/pod/Dockerfile',changed);assert.throws(discover,/API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED.*ops\/pod\/Dockerfile/);}
+}));
+
+test('live-check diagnostic roles bind complete readonly source and cannot be refreshed into API output',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname),source='scripts/check-runtime-adoption-live.py';
+ const bytes=fs.readFileSync(path.join(repository,source),'utf8');write(source,bytes);
+ const parse=()=>{const r=spawnSync('python3',[path.join(repository,'scripts/docs-api-python-output-adapter.py'),path.join(root,source),'--classify'],{encoding:'utf8',maxBuffer:1024*1024});assert.equal(r.status,0,r.stderr);return JSON.parse(r.stdout);};
+ const outputs=parse(),contracts=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json'))).nativeLanguageSerializationContracts.find(r=>r.source===source).outputs;
+ assert.equal(outputs.filter(x=>x.role==='unknown').length,10);
+ for(const output of outputs.filter(x=>x.role==='unknown'))assert(nativeOutputConsumerMatches(output,contracts,root));
+ assert(!nativeOutputConsumerMatches({...outputs.find(x=>x.role==='unknown'),role:'api'},contracts,root));
+ for(const changed of [bytes.replace("'--dry-run=server', ",''),bytes.replace("'volumeClaimTemplates'","'apiVersion', 'kind'"),bytes+"\nprint(json.dumps({'apiVersion':'v1','kind':'Secret'}))\n"]){
+  assert.notEqual(changed,bytes);write(source,changed);const actual=parse();
+  const refreshed=actual.map(output=>({expression:output.expression,function:output.function,operationDigest:sha(output.operation),consumer:contracts[0].consumer}));
+  assert(actual.some(output=>output.role==='unknown'&&!nativeOutputConsumerMatches(output,refreshed,root)));
+  for(const output of actual.filter(x=>x.role==='api'))assert(!nativeOutputConsumerMatches(output,refreshed,root));
+ }
 }));
 
 test('node module builtin-name projections preserve API discovery and reject loader escapes',()=>fixture(({write,discover})=>{
