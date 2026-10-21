@@ -157,7 +157,7 @@ separately authenticated endpoint.
 
 > **Source evidence — provisioning and cleanup boundaries**
 >
-> **Claim:** Initial credential/exposure calls precede `Ready`; expiry cleanup does not clear the lease finalizer, whereas explicit lease deletion may clear it after successful owned cleanup or an ownership mismatch that preserves the other namespace.
+> **Claim:** Initial credential/exposure calls precede `Ready`. Expiry cleanup retains the lease finalizer. Explicit deletion clears it after successful owned cleanup. Ownership mismatch instead preserves the other namespace and permits finalizer removal.
 >
 > **Implementation:** [Initial provisioning](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L594-L672), [later reconciliation](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L337-L383), [expiry](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L319-L335), and [explicit deletion](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L704-L718).
 >
