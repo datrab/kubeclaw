@@ -1668,6 +1668,31 @@ test(`installed v10 full source ${installedRole} uses real staged v2 output and 
   };
   positive();
   if (installedRole === 'buster') {
+  const parentExpected = path.join(stage, 'expected/buster-preparation/expected-delivery.json');
+  const receivePreparation = (composition = services, expected = parentExpected) =>
+    installed.capturePipelineV10BusterPreparationSource(expected, system, code, receipt.runtimeSurface, composition);
+  const parent = await receivePreparation();
+  try {
+    parent.assertCurrent();
+    const selected = services.find((value: any) => value.callerId === 'buster-preparation')!;
+    const expected = inspectPipelineV10BusterServiceSelection({ role: selected.role,
+      callerId: selected.callerId, serviceInstanceId: selected.serviceInstanceId }, original.capture);
+    assert.deepEqual(parent.ownerSource, expected);
+    assert.equal(parent.ownerSource.callerId, 'buster-preparation');
+    assert.equal(parent.ownerSource.clusterInvokers, null);
+    assert.deepEqual(parent.ownerSource.providerPolicies, {});
+    assert.equal(parent.ownerSource.activationAllowed, false);
+    assert.equal(parent.activationAllowed, false);
+    assert.throws(() => installed.assertPipelineBootCapture(parent, 'buster-preparation'), /VERIFIED_CAPTURE_REQUIRED/);
+  } finally { parent.close(); }
+  assert.throws(parent.assertCurrent, /BOOT_SOURCE_CLOSED/);
+  await assert.rejects(() => receivePreparation(services, expectedFile), /MISMATCH/);
+  const movingPreparationServices = structuredClone(services);
+  const preparationPromise = receivePreparation(movingPreparationServices);
+  movingPreparationServices.find((value: any) => value.callerId === 'buster-preparation')!.serviceInstanceId = 'foreign-after-import';
+  const stableParent = await preparationPromise;
+  try { assert.deepEqual(stableParent.ownerSource, parent.ownerSource); stableParent.assertCurrent(); }
+  finally { stableParent.close(); }
   const runtime = runtimeFor(services[1]);
   const runtimeStage = fs.mkdtempSync(path.join(root, 'runtime-stage-'));
   const movingRuntime = Buffer.from(runtime);
@@ -1767,6 +1792,22 @@ test(`installed v10 full source ${installedRole} uses real staged v2 output and 
     assert.notEqual(runtimeCapturedB.runtimeSource.profileId, inspectPipelineV10BusterServiceSelection({ role: 'buster',
       callerId: 'buster-runtime', serviceInstanceId }, original.capture).profileId);
   } finally { runtimeCapturedB.close(); }
+  // Preparation must retain B's actual complete input generation and owner,
+  // while A remains the original captured selection (no latest-value refill).
+  const preparationB = await installed.capturePipelineV10BusterPreparationSource(
+    path.join(runtimeStageB, 'expected/buster-preparation/expected-delivery.json'), path.join(runtimeStageB, 'system'),
+    code, receipt.runtimeSurface, runtimeServicesB);
+  const preparationA = await receivePreparation();
+  try {
+    preparationA.assertCurrent(); preparationB.assertCurrent();
+    assert.equal(preparationB.inputGenerationSha256, originalB.capture.inputGenerationSha256);
+    assert.equal(preparationA.inputGenerationSha256, original.capture.inputGenerationSha256);
+    assert.notEqual(preparationB.inputGenerationSha256, preparationA.inputGenerationSha256);
+    assert.notEqual(preparationB.ownerSource.profileId, preparationA.ownerSource.profileId);
+    assert.equal(preparationB.ownerSource.activationAllowed, false);
+    assert.throws(() => installed.assertPipelineBootCapture(preparationB, 'buster-preparation'), /VERIFIED_CAPTURE_REQUIRED/);
+  } finally { preparationA.close(); preparationB.close(); }
+  await assert.rejects(() => receivePreparation(runtimeServicesB), /MISMATCH/);
   rewriteRuntime(runtimeB); await assert.rejects(receiveRuntime, /SELECTED_SERVICE_POLICY_MISMATCH/);
   rewriteRuntime(runtime); await runtimePositive();
   assert.throws(() => installed.capturePipelineV10BootSource(expectedB, system, 'buster-runtime', code,

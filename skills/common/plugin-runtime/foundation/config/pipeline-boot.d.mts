@@ -81,3 +81,10 @@ export function capturePipelineV10BusterRuntimeSource(expectedFile: string, syst
   Promise<ReturnType<typeof capturePipelineV10BootSource> & Readonly<{
     runtimeSource: ReturnType<typeof import('./pipeline-v10-receiver.ts').inspectPipelineV10BusterRuntimeSourceIdentity>;
   }>>;
+
+/** Physical preparation source receiving, not a verified parent startup capture. */
+export function capturePipelineV10BusterPreparationSource(expectedFile: string, systemRoot: string,
+  packageRoot: string, runtimeSurface: string, services: readonly SwarmSelection[]):
+  Promise<ReturnType<typeof capturePipelineV10BootSource> & Readonly<{
+    ownerSource: ReturnType<typeof import('./pipeline-v10-receiver.ts').inspectPipelineV10BusterServiceSelection>;
+  }>>;

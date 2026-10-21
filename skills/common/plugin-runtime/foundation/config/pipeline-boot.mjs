@@ -498,7 +498,18 @@ export async function capturePipelineV10BusterRuntimeSource(expectedFile, system
     runtimeFile, inspectPipelineV10BusterRuntimeSourceIdentity);
 }
 
-function captureV10Source(expectedFile, systemRoot, callerId, packageRoot, runtimeSurface, services, runtimeFile, inspectRuntime) {
+/** Retain the installed preparation caller's original v10 owner and Worker
+ * policies. This is source receiving only, never a parent startup/boot grant.
+ * Snapshot composition before the versioned import, just as runtime does.
+ */
+export async function capturePipelineV10BusterPreparationSource(expectedFile, systemRoot, packageRoot, runtimeSurface, services) {
+  services = structuredClone(services);
+  const receiver = await import('./pipeline-v10-receiver.ts');
+  return captureV10Source(expectedFile, systemRoot, 'buster-preparation', packageRoot, runtimeSurface, services,
+    undefined, undefined, receiver.inspectPipelineV10BusterServiceSelection);
+}
+
+function captureV10Source(expectedFile, systemRoot, callerId, packageRoot, runtimeSurface, services, runtimeFile, inspectRuntime, inspectOwner) {
   services = structuredClone(services);
   for (const directory of [systemRoot, packageRoot]) {
     if (typeof directory !== 'string' || !path.isAbsolute(directory) || path.resolve(directory) !== directory
@@ -559,6 +570,7 @@ function captureV10Source(expectedFile, systemRoot, callerId, packageRoot, runti
     const owner = service.role === 'buster'
       ? JSON.parse(read(path.join(systemRoot, 'selections', `${callerId}.buster.json`))) : null;
     const received = receivePipelineV10BootSource({ expected, image, selection, owner }, inputs, services, callerId, packageDigest);
+    const ownerSource = inspectOwner?.({ role: service.role, callerId, serviceInstanceId: service.serviceInstanceId }, inputs);
     let runtimeSource;
     if (runtimeFile !== undefined) {
       // The receiver fixes the runtime locator inside the same system tree.
@@ -589,6 +601,7 @@ function captureV10Source(expectedFile, systemRoot, callerId, packageRoot, runti
     assertCurrent();
     return Object.freeze({ ...received, inputGenerationSha256: inputs.inputGenerationSha256,
       sourceMemberCount: inputs.members.length, installedPackageRoot: packageRoot,
-      ...(runtimeSource === undefined ? {} : { runtimeSource }), assertCurrent, close });
+      ...(runtimeSource === undefined ? {} : { runtimeSource }),
+      ...(ownerSource === undefined ? {} : { ownerSource }), assertCurrent, close });
   } catch (error) { close(); throw error; }
 }

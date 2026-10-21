@@ -167,14 +167,16 @@ export async function materializePipelineGeneration({ authorRoot, packageRoot, o
       // Exercise the real installed reader on the distinct physical v2 layout,
       // not only an in-memory wire. No v1 output/verified Swarm capture or
       // publication is authorized by this staged source observation.
-      const { capturePipelineV10BootSource, capturePipelineV10BusterRuntimeSource } = await import(pathToFileURL(path.join(directory, 'pipeline-boot.mjs')).href);
+      const { capturePipelineV10BootSource, capturePipelineV10BusterRuntimeSource, capturePipelineV10BusterPreparationSource } = await import(pathToFileURL(path.join(directory, 'pipeline-boot.mjs')).href);
       const parent = path.dirname(output);
       if (fs.realpathSync(parent) !== parent || !fs.lstatSync(parent).isDirectory()) throw new Error('PIPELINE_GENERATION_PARENT_INVALID');
       stage = fs.mkdtempSync(path.join(parent, '.pipeline-stage-'));
       await stagePipelineV10BootSource(stage, inputCapture, services, packageBytes, directory, busterRuntimeSource);
       for (const service of services) {
         const expectedFile = path.join(stage, 'expected', service.callerId, 'expected-delivery.json');
-        const captured = service.callerId === 'buster-runtime' && busterRuntimeSource !== undefined
+        const captured = service.callerId === 'buster-preparation'
+          ? await capturePipelineV10BusterPreparationSource(expectedFile, path.join(stage, 'system'), packageRoot, receipt.runtimeSurface, services)
+          : service.callerId === 'buster-runtime' && busterRuntimeSource !== undefined
           ? await capturePipelineV10BusterRuntimeSource(expectedFile, path.join(stage, 'system'), packageRoot, receipt.runtimeSurface, services)
           : capturePipelineV10BootSource(expectedFile, path.join(stage, 'system'), service.callerId, packageRoot, receipt.runtimeSurface, services);
         try { captured.assertCurrent(); inputCapture.assertCurrent(); }

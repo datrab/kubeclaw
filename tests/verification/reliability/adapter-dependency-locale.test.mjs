@@ -5,6 +5,33 @@ import path from 'node:path';
 import {createHarness} from './adapter-dependency-locale-fixture.mjs';
 import {materializeLegacyDependencyCore} from './adapter-dependency-historical.mjs';
 
+test('current and historical dependency workers use the declared platform lease for both real effect locks', async () => {
+  const harness = createHarness();
+  try {
+    const origin = await harness.listen();
+    const historical = materializeLegacyDependencyCore(path.join(harness.root, 'historical'));
+    for (const runtime of [undefined, historical]) {
+      for (const ttl of [300_000, 450_000]) {
+        const directory = harness.fixture(`lease-${runtime ? 'historical' : 'current'}-${ttl}`, origin);
+        const file = path.join(directory, 'fixture.json'), fixture = JSON.parse(fs.readFileSync(file, 'utf8'));
+        fixture.platform.effectLockTtlMs = ttl;
+        fs.writeFileSync(file, JSON.stringify(fixture));
+        const produced = await harness.subprocess(directory, 'en_US.UTF-8', runtime);
+        assert.equal(produced.signal, 'SIGKILL', produced.err);
+        const rows = fs.readFileSync(path.join(directory, 'locks/locks.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);
+        const first = new Map();
+        for (const row of rows) if (!first.has(row.lockId)) first.set(row.lockId, row);
+        assert.deepEqual([...first.values()].map(row => row.resource.type).sort(), ['network.url', 'runtime.invocation']);
+        for (const lock of first.values()) {
+          assert.equal(Date.parse(lock.expiresAt) - Date.parse(lock.acquiredAt), ttl,
+            `${runtime ? 'historical' : 'current'} ${lock.resource.type}: original selected lease must reach the actual lock journal`);
+        }
+      }
+    }
+    assert.equal(harness.received.length, 4, 'each real producer performed exactly one child POST before its SIGKILL');
+  } finally { await harness.close(); }
+});
+
 for (const mode of ['current', 'legacy-resume', 'historical-countercheck']) test(`original SIGKILL dependency identity ${mode} across native locales`, async () => {
   const harness = createHarness();
   try {
