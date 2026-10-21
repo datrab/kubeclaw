@@ -68,7 +68,7 @@ test('published ingestion A/B/A selects real TLS request timeout and redirect bu
     const server = await selection.startIngestionServer(selection.config);
     try {
       const address = server.address(); assert(address && typeof address !== 'string');
-      const post = (path: string) => fetch(`http://127.0.0.1:${address.port}/v1/acquisitions`, {
+      const post = (path: string): Promise<Response> => fetch(`http://127.0.0.1:${address.port}/v1/acquisitions`, {
         method: 'POST', headers: { authorization: 'Bearer tls-selected' }, body: JSON.stringify({
           sourceKind: 'public-web', rights: 'full', title: 'TLS fixture', summary: 'selected transport', tags: [],
           locator: `https://source.fixture.test:${sourceAddress.port}${path}`,
