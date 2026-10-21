@@ -1,0 +1,17 @@
+{
+  "scope": "Defined reader questions for upper search results; expected route must appear among the first three. Search never authorizes a product action.",
+  "questions": [
+    { "query": "disaster recovery", "route": "use/recovery.html" },
+    { "query": "backup restore", "route": "use/recovery.html" },
+    { "query": "install platform", "route": "use/install.html" },
+    { "query": "troubleshoot incident", "route": "use/diagnose.html" },
+    { "query": "create first plugin", "route": "extend/first-plugin.html" },
+    { "query": "change core", "route": "extend/developer-handbook.html" },
+    { "query": "settings overrides", "route": "reference/configuration-precedence.html" },
+    { "query": "package ownership", "route": "reference/roles-and-package-ownership.html" },
+    { "query": "first pipeline compile", "route": "use/workflows/README.html" },
+    { "query": "remove plugins", "route": "use/plugins.html" },
+    { "query": "prism studio", "route": "use/prism-studio.html" },
+    { "query": "minimumLinePercent", "route": "reference/plugin-configuration.html" }
+  ]
+}

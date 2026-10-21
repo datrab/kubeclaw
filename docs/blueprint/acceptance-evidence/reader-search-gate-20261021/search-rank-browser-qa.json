@@ -1,0 +1,459 @@
+{
+  "observations": [
+    {
+      "width": 1440,
+      "route": "/README.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 1440,
+      "route": "/use/quickstart.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 1440,
+      "route": "/extend/first-plugin.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 1440,
+      "route": "/search.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 1440,
+      "search": "4 pages found. Showing up to 50."
+    },
+    {
+      "width": 1440,
+      "query": "disaster recovery",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "status/open-issues.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "backup restore",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "understand/prism-data.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "install platform",
+      "expectedRoute": "use/install.html",
+      "observedTopThree": [
+        "use/install.html",
+        "status/roadmap.html",
+        "reference/pipeline-platform.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "troubleshoot incident",
+      "expectedRoute": "use/diagnose.html",
+      "observedTopThree": [
+        "use/diagnose.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "create first plugin",
+      "expectedRoute": "extend/first-plugin.html",
+      "observedTopThree": [
+        "extend/first-plugin.html",
+        "use/plugins.html",
+        "reference/plugin-configuration.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "change core",
+      "expectedRoute": "extend/developer-handbook.html",
+      "observedTopThree": [
+        "extend/developer-handbook.html",
+        "understand/nova-core.html",
+        "extend/platform/buster.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "settings overrides",
+      "expectedRoute": "reference/configuration-precedence.html",
+      "observedTopThree": [
+        "reference/configuration-precedence.html",
+        "decisions/test-gate.html",
+        "reference/helm-values.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "package ownership",
+      "expectedRoute": "reference/roles-and-package-ownership.html",
+      "observedTopThree": [
+        "reference/roles-and-package-ownership.html",
+        "understand/plugin-runtime.html",
+        "extend/developer-handbook.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "first pipeline compile",
+      "expectedRoute": "use/workflows/README.html",
+      "observedTopThree": [
+        "use/workflows/README.html",
+        "extend/first-plugin.html",
+        "reference/pipeline-json.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "remove plugins",
+      "expectedRoute": "use/plugins.html",
+      "observedTopThree": [
+        "use/plugins.html",
+        "understand/openclaw.html",
+        "extend/lint.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "prism studio",
+      "expectedRoute": "use/prism-studio.html",
+      "observedTopThree": [
+        "use/prism-studio.html",
+        "extend/platform/prism.html",
+        "understand/prism-runtime.html"
+      ]
+    },
+    {
+      "width": 1440,
+      "query": "minimumLinePercent",
+      "expectedRoute": "reference/plugin-configuration.html",
+      "observedTopThree": [
+        "reference/plugin-configuration.html",
+        "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+        "reference/buster-provider-configuration.html"
+      ]
+    },
+    {
+      "width": 768,
+      "route": "/README.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 768,
+      "route": "/use/quickstart.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 768,
+      "route": "/extend/first-plugin.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 768,
+      "route": "/search.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 768,
+      "search": "4 pages found. Showing up to 50."
+    },
+    {
+      "width": 768,
+      "query": "disaster recovery",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "status/open-issues.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "backup restore",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "understand/prism-data.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "install platform",
+      "expectedRoute": "use/install.html",
+      "observedTopThree": [
+        "use/install.html",
+        "status/roadmap.html",
+        "reference/pipeline-platform.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "troubleshoot incident",
+      "expectedRoute": "use/diagnose.html",
+      "observedTopThree": [
+        "use/diagnose.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "create first plugin",
+      "expectedRoute": "extend/first-plugin.html",
+      "observedTopThree": [
+        "extend/first-plugin.html",
+        "use/plugins.html",
+        "reference/plugin-configuration.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "change core",
+      "expectedRoute": "extend/developer-handbook.html",
+      "observedTopThree": [
+        "extend/developer-handbook.html",
+        "understand/nova-core.html",
+        "extend/platform/buster.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "settings overrides",
+      "expectedRoute": "reference/configuration-precedence.html",
+      "observedTopThree": [
+        "reference/configuration-precedence.html",
+        "decisions/test-gate.html",
+        "reference/helm-values.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "package ownership",
+      "expectedRoute": "reference/roles-and-package-ownership.html",
+      "observedTopThree": [
+        "reference/roles-and-package-ownership.html",
+        "understand/plugin-runtime.html",
+        "extend/developer-handbook.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "first pipeline compile",
+      "expectedRoute": "use/workflows/README.html",
+      "observedTopThree": [
+        "use/workflows/README.html",
+        "extend/first-plugin.html",
+        "reference/pipeline-json.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "remove plugins",
+      "expectedRoute": "use/plugins.html",
+      "observedTopThree": [
+        "use/plugins.html",
+        "understand/openclaw.html",
+        "extend/lint.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "prism studio",
+      "expectedRoute": "use/prism-studio.html",
+      "observedTopThree": [
+        "use/prism-studio.html",
+        "extend/platform/prism.html",
+        "understand/prism-runtime.html"
+      ]
+    },
+    {
+      "width": 768,
+      "query": "minimumLinePercent",
+      "expectedRoute": "reference/plugin-configuration.html",
+      "observedTopThree": [
+        "reference/plugin-configuration.html",
+        "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+        "reference/buster-provider-configuration.html"
+      ]
+    },
+    {
+      "width": 320,
+      "route": "/README.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 320,
+      "route": "/use/quickstart.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 320,
+      "route": "/extend/first-plugin.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 320,
+      "route": "/search.html",
+      "status": 200,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 320,
+      "search": "4 pages found. Showing up to 50."
+    },
+    {
+      "width": 320,
+      "query": "disaster recovery",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "status/open-issues.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "backup restore",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "understand/prism-data.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "install platform",
+      "expectedRoute": "use/install.html",
+      "observedTopThree": [
+        "use/install.html",
+        "status/roadmap.html",
+        "reference/pipeline-platform.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "troubleshoot incident",
+      "expectedRoute": "use/diagnose.html",
+      "observedTopThree": [
+        "use/diagnose.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "create first plugin",
+      "expectedRoute": "extend/first-plugin.html",
+      "observedTopThree": [
+        "extend/first-plugin.html",
+        "use/plugins.html",
+        "reference/plugin-configuration.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "change core",
+      "expectedRoute": "extend/developer-handbook.html",
+      "observedTopThree": [
+        "extend/developer-handbook.html",
+        "understand/nova-core.html",
+        "extend/platform/buster.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "settings overrides",
+      "expectedRoute": "reference/configuration-precedence.html",
+      "observedTopThree": [
+        "reference/configuration-precedence.html",
+        "decisions/test-gate.html",
+        "reference/helm-values.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "package ownership",
+      "expectedRoute": "reference/roles-and-package-ownership.html",
+      "observedTopThree": [
+        "reference/roles-and-package-ownership.html",
+        "understand/plugin-runtime.html",
+        "extend/developer-handbook.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "first pipeline compile",
+      "expectedRoute": "use/workflows/README.html",
+      "observedTopThree": [
+        "use/workflows/README.html",
+        "extend/first-plugin.html",
+        "reference/pipeline-json.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "remove plugins",
+      "expectedRoute": "use/plugins.html",
+      "observedTopThree": [
+        "use/plugins.html",
+        "understand/openclaw.html",
+        "extend/lint.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "prism studio",
+      "expectedRoute": "use/prism-studio.html",
+      "observedTopThree": [
+        "use/prism-studio.html",
+        "extend/platform/prism.html",
+        "understand/prism-runtime.html"
+      ]
+    },
+    {
+      "width": 320,
+      "query": "minimumLinePercent",
+      "expectedRoute": "reference/plugin-configuration.html",
+      "observedTopThree": [
+        "reference/plugin-configuration.html",
+        "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+        "reference/buster-provider-configuration.html"
+      ]
+    },
+    {
+      "noJavaScriptNavigation": "PASS",
+      "skipKeyboard": "PASS"
+    }
+  ],
+  "findings": []
+}

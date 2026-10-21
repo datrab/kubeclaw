@@ -1951,6 +1951,8 @@
         "scripts/docs-reader/package-lock.json",
         "scripts/tests/docs-reader.test.mjs",
         "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
         "scripts/docs-governance.mjs",
         "scripts/docs-check-refs.mjs",
         "scripts/check-site-reader-boundary.mjs",

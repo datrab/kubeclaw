@@ -3,7 +3,7 @@
 Status: implemented local static reader; external hosting and broader live acceptance remain separate
 Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
-Evidence: scripts/docs-publication.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
+Evidence: scripts/docs-publication.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml
 Applies to: positively selected repository reader pages and the local HTML publication artifact
 Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope
 
@@ -27,7 +27,10 @@ policy. Do not infer a grant from a package name.
 
 Use **Search documentation** in the built reader for an exact identifier or words
 from any published page. Search matches all entered words, without case, against
-page titles and full page text, including code examples. It lists at most 50
+page titles, headings and full text, including code examples. Defined reader
+synonyms such as disaster recovery, backup/restore, settings/overrides and
+first plugin also find their owning guides. Title, heading and reader-intent
+matches receive more weight than incidental body mentions. It lists at most 50
 matching pages. Open a result and use your browser's Find command for its section.
 
 The search index loads on the first query and stays local to the artifact.
@@ -164,6 +167,7 @@ npm run docs:site-boundary:check
 npm run docs:publication:check
 npm run docs:publication:build
 node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs
+node scripts/docs-reader/check-search.mjs
 ```
 
 These are instructions, not a record of successful execution for this page.

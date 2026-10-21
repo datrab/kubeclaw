@@ -7,7 +7,20 @@ import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'parse5';
-import { buildReader, renderReaderMarkdown } from '../docs-reader/renderer.mjs';
+import { buildReader, renderReaderMarkdown, searchReaderPages } from '../docs-reader/renderer.mjs';
+
+test('search ranks declared reader synonyms, headings and technical IDs without admitting missing or internal pages', () => {
+  const index = [
+    { route: 'reference/other.html', title: 'Other', headings: [], text: 'backup restore disaster recovery '.repeat(100) },
+    { route: 'use/recovery.html', title: 'Recover durable state', headings: ['Back up'], text: 'Durable snapshots.' },
+    { route: 'reference/configuration.html', title: 'Configuration', headings: ['minimumLinePercent'], text: 'minimumLinePercent' },
+  ];
+  assert.equal(searchReaderPages(index, 'DISASTER recovery')[0].route, 'use/recovery.html');
+  assert.equal(searchReaderPages(index, 'minimumLinePercent')[0].route, 'reference/configuration.html');
+  assert.deepEqual(searchReaderPages(index, 'missing technical identifier'), []);
+  assert.deepEqual(searchReaderPages(index, 'create first plugin'), []);
+  assert.deepEqual(searchReaderPages(index, ' !!! '), []);
+});
 
 function elements(html) {
   const result = [];

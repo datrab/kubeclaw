@@ -4218,7 +4218,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "9e840166a5efeb8f2958adee30fc5aad7b684a8fc1437edb431950e903e2bafd",
+    "factsDigest": "ccbfe712f68d1f30c0678776c4ef7697ef64b07fc3d6cfe9b8f198128ffa8009",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -5382,13 +5382,16 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "f05d29332cd38f9e82b894523362ba3ed37cb2df35c3ec89540a4eea4cb7fa5a"
       },
       {
-        "expressionSha256": "e9a94d1c97b66c8fdde65062729add4a7598cf0f88e46449ccbd63b3f76b3281"
+        "expressionSha256": "39671655a966ebffbb9914b1fe7efabd0e669da1ed35b3ebbccc447dcaf9d0a4"
       },
       {
         "expressionSha256": "451127a16af5d7ebcdbfa0db3e5689b3d718475c40249b981f294b10563cc27e"
       },
       {
         "expressionSha256": "0a99af47ae0607c1b4b3ffab4b46a549a92a30de0d907b197975ee3faa2132a0"
+      },
+      {
+        "expressionSha256": "e4211203018f0f300d9a24ac9ba61658dcf61ff3837b71b04b2a9c3168886caa"
       },
       {
         "expressionSha256": "fb393494b41f58200dd072fe5f475b739c33f02322e177f7be0c4c0c0abcb414"
@@ -5412,7 +5415,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "a603125c590536011643fa933d79921834f3425c4dad8458fc2bece3ab881f25"
       }
     ],
-    "factsDigest": "63a59beafb92a32011ba8ded6c04aecb0f3af195cbff4dd348dc349912359757",
+    "factsDigest": "d8ea9bfd7f1b26d7f8698d5177be6df2aa4ecf2f1096cb8d0400df4434c63f27",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-artifact.mjs": {
@@ -5451,6 +5454,51 @@ export const documentationExecutableRoleRecipes = {
       }
     ],
     "factsDigest": "72b7b3111976d58e532e8806b0b1a807d8ef8e5b91cbf82966649b3149dda8b3",
+    "authorityInputs": []
+  }
+,
+  "scripts/docs-reader/check-search.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Read-only documentation search index/positive manifest equality and reader-question checks. Emits only page counts, query strings and declared route strings, never arbitrary copied question objects or product API payloads.",
+    "selectors": [
+      {
+        "expressionSha256": "2b991e9cb058f4ac69533002acdbaf85fe2ddff1b8b97377a72e1f122715c14a"
+      },
+      {
+        "expressionSha256": "7f791876cd8ce81285f7fcb98037e020bc80b28ffb2eed4fc7c6218f9fc7ea8c"
+      },
+      {
+        "expressionSha256": "d7ca508eb2440dffaceec64c1a6d1fb7a643ce49166df0a0217076ba40c25dac"
+      },
+      {
+        "expressionSha256": "c3e6fab89be622d6153823a93f101e5a48e233b1e83a8a163e454b3c13c17f91"
+      },
+      {
+        "expressionSha256": "2d2675d5ee55b92755efd5bac20cdf36d077ae4be4f3d3ef357262b10239ec20"
+      },
+      {
+        "expressionSha256": "64edb9e253aa1653bf18be3b62d2e1a8671ed83fd85662d8446de9268cf1d278"
+      },
+      {
+        "expressionSha256": "be8eb43040120d8b8c98b2cf968444e83c79c0e624d3276fb0760ceda558e4e8"
+      },
+      {
+        "expressionSha256": "3ad3903dfb71d6439ac108f7b6435c456cd9cd260ffcbbc55e5a252731d66498"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "1ea5210bdaa920308f9adbc4d7ecde05126ab8ff5675c163bfc6a2764754412c"
+      }
+    ],
+    "factsDigest": "8ab0979f81fb2e1fc6abc99072ba8f4271276aca78c5f21d124038791a8c36b2",
     "authorityInputs": []
   }
 };
