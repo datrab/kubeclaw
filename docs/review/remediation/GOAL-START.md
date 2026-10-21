@@ -38,6 +38,11 @@ Dateien lesen, nicht diese datierte Momentaufnahme als aktuellen Beweis verwende
 
 ## Nächste Arbeit, nicht nur weitere Belegpflege
 
+Seit Nutzerbestätigung vom 2026-10-14 gilt die Arbeitssteuerung im
+[Hauptauftrag](OPENCLAW-CONFIG-GOAL.md#arbeitssteuerung--vom-nutzer-bestätigt-am-2026-10-14).
+Aktuelle Aufgaben ausschließlich über die [zentrale Restliste](config-c0-closeout.md)
+steuern; die folgenden Schritte erklären das Verfahren, nicht eine weitere Queue.
+
 1. [Inventar](config-semantic-inventory.json), [Matrix](config-acceptance-matrix.json)
    und [Definition](config-definition-current.md) zusammen mit den Originalquellen
    lesen. `gaps`, offene Zeilen, Kandidaten-/Quellendispositionen und fehlende

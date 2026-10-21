@@ -47,6 +47,35 @@ Do not enable AGENTS loading or require a second instruction entry to run this g
 
 ## Goal and current authorization
 
+### Arbeitssteuerung — vom Nutzer bestätigt am 2026-10-14
+
+Diese Ergänzung strafft das Vorgehen, nicht Umfang, Beweislast oder Freigaben.
+Die [zentrale C0-Restliste](config-c0-closeout.md) ist der einzige aktuelle
+Arbeitsindex. Inventar, Matrix, Originalanforderungen und unabhängige Berichte
+bleiben fachliche Autoritäten; historische Statuslisten sind keine zweite Queue.
+
+- Vor jeder neuen Arbeit vorhandene Korrekturen und Reviews lesen. Nur eine
+  konkret benannte verbleibende Anforderung rechtfertigt ein neues Artefakt.
+  Bestehende Belege referenzieren, nicht erneut kopieren oder sammeln.
+- Zusammenhängende Consumer-/Autoritäts-/Bindinglücken als integrierten Schnitt
+  abschließen. Keine neue generische Prüf-, Archiv- oder Receipt-Infrastruktur,
+  sofern nicht eine konkrete unerfüllte Pflicht deren Notwendigkeit belegt.
+- Nach Konsolidierung eine frische unabhängige Gesamtprüfung C0-A–E. Erforderliche
+  materielle Korrekturen dürfen gemeinsam geprüft werden. Danach gezielte
+  Nachprüfung betroffener Semantik und Abhängigkeiten; eine breite Wiederholung
+  braucht einen konkreten Änderungs-, Fehler- oder Abhängigkeitsgrund.
+  Unveränderte Hashes, Navigation und Statusprosa allein lösen kein Review aus.
+- C0 spezifiziert vollständige spätere Consumer-/Negativ-/Mutanten-/Recoveryfälle;
+  es führt nicht vorzeitig C1–C6 aus. Fehlende echte Aktivierungsinputs separat
+  ausweisen, lokale Definitionslücken weiter selbständig schließen.
+- Fortschritt bedeutet geschlossene Anforderungen mit Beleg und Reviewstatus,
+  nicht zusätzliche Dateien, Paketnummern oder Prüfzähler. Keine laufende Arbeit
+  behaupten, sofern keine aktuelle Ausführung belegt ist.
+- Abschlussprodukt ist ein kohärentes, unabhängig geprüftes Umsetzungspaket mit
+  exakten Feld-/Fall-/Datei-/Consumer-Zuordnungen und C1–C6-Abhängigkeiten.
+  Alle bisherigen Kriterien, historischen Fehler und die ausdrückliche
+  Paketfreigabe vor C1–C6 bleiben unverändert.
+
 Complete **C0**, the code-based semantic inventory and concrete CONFIG definition,
 have it checked by a **fresh independent subagent**, correct legitimate findings,
 and present a bounded implementation package with its exact acceptance cases to

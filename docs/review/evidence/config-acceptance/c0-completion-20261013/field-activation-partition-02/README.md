@@ -198,3 +198,42 @@ frozen inputs. Whole C0 remains unaccepted; implementationAuthorization is null.
 ### Final read stability
 
 All71 snapshots roundtrip; original row/current-source/history/case conservation and3,516 exact case-reference occurrences have zero byte/pointer errors. This is identity evidence, not semantic PASS. One input changed concurrently: Provider02 `source-processing-adjudication.json` from `65d35cf9079bcbd4b4b9dc408e2fc57ab1f7cc912c90c995451feec34b16e25a` to `6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727`. All eight processing members changed. The exact affected new processing coordinates and original context IDs are in `dependent-material-reference-work.json`. This02 retains the captured former version; later Provider02 refinement is an explicit affected-scope rejoin/review task, never silently merged or accepted. All other70 captured inputs were stable at final observation.
+# Additive roster navigation — 2026-10-14
+
+`deadline-policy-binding-joins.json` supplies the three previously omitted
+maximumRequestTimeoutMs policy identities, exact whole profiles/schema/task/cases
+and original binding applicability. It is pending independent material review,
+not a new canonical alias or runtime result. Existing four-U local-definition
+tasks are superseded ONLY for those four by the reviewed
+`../four-source-boundary-contracts-01/` contracts; old remaining-work JSON is
+history there, not a reason to restart accepted corrections. Other actual
+standalone/observer/binding recipes remain open until explicitly reconciled.
+
+## Additive 2026-10-14 residual binding witnesses — author work, not acceptance
+
+[RESIDUAL-BINDING-RECIPES.md](RESIDUAL-BINDING-RECIPES.md),
+[32 original wrapper joins](residual-binding-case-joins.json) and
+[five concrete anchors](residual-anchor-joins.json) supersede ONLY the generic
+profile/task/receiver applicability text for the same original wrappers/anchors.
+They preserve every original body/case/result and all run-stable classes. They
+reuse reviewed launcher/service/provider/four-source contracts, expressly retain
+unsupported one-operation Prism cache EFFECT contrast and exported-only dormant
+producer limits, and specify original-A recovery/fixed Eval at actual boundaries.
+The prospective sole Core author is config/nova/core.config.json selected through
+novaCoreSelection on the SAME system entry; no seventh Swarm component/current
+root adoption is claimed. The [composed schema](nova-core-owner.schema.json)
+references existing full platform/compiler schemas; complete local Core fixtures
+and task are inputs to future real Core/observer/telemetry effect cases, not native
+role/grant proof. Physical Worker profiles reuse batch17/batch15 unchanged.
+Original source omission of retained Core TTL and volatile Worker replay history
+remain explicit implementation migration obligations; no current persistence
+success is claimed. See residual-definition-observations.json and
+residual-input-identities.json for source/ref checks and exact identities.
+Fresh OTHER reviewer required; no self/whole-C0/implementation acceptance.
+# Current material correction precedence
+
+`RESIDUAL-CORRECTIONS.md`, `residual-applicability-corrections.json`, complete
+`residual-core-owner-fixtures.corrected.json` and `next-module-review-profiles.json`
+correct only RBR-01–03 after the original residual recipe files. Original32
+wrapper bodies and fixtures remain preserved. No self-acceptance; targeted
+independent review is required before definition closure.
