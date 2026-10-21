@@ -14140,6 +14140,7 @@
       "invocations": [],
       "operationRecipe": {
         "language": "Python",
+        "protocol": "docs-python-ast-v1",
         "ast": "Module(body=[Expr(value=Constant(value='Compare source policy specs with live specs; fail on drift (including extra keys).\\nRun with trusted platform credentials. Dry-run admission does not persist resources.\\n')), Import(names=[alias(name='json')]), Import(names=[alias(name='subprocess')]), Import(names=[alias(name='sys')]), Import(names=[alias(name='yaml')]), FunctionDef(name='run', args=arguments(vararg=arg(arg='args')), body=[Return(value=Call(func=Attribute(value=Name(id='subprocess', ctx=Load()), attr='check_output', ctx=Load()), args=[Name(id='args', ctx=Load())], keywords=[keyword(arg='text', value=Constant(value=True))]))]), FunctionDef(name='documents', args=arguments(args=[arg(arg='text')]), body=[Assign(targets=[Name(id='decoder', ctx=Store())], value=Call(func=Attribute(value=Name(id='json', ctx=Load()), attr='JSONDecoder', ctx=Load()))), While(test=Call(func=Attribute(value=Name(id='text', ctx=Load()), attr='strip', ctx=Load())), body=[Assign(targets=[Tuple(elts=[Name(id='value', ctx=Store()), Name(id='end', ctx=Store())], ctx=Store())], value=Call(func=Attribute(value=Name(id='decoder', ctx=Load()), attr='raw_decode', ctx=Load()), args=[Call(func=Attribute(value=Name(id='text', ctx=Load()), attr='lstrip', ctx=Load()))])), Assign(targets=[Name(id='text', ctx=Store())], value=Subscript(value=Call(func=Attribute(value=Name(id='text', ctx=Load()), attr='lstrip', ctx=Load())), slice=Slice(lower=Name(id='end', ctx=Load())), ctx=Load())), Expr(value=YieldFrom(value=IfExp(test=Compare(left=Call(func=Attribute(value=Name(id='value', ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='kind')]), ops=[Eq()], comparators=[Constant(value='List')]), body=Subscript(value=Name(id='value', ctx=Load()), slice=Constant(value='items'), ctx=Load()), orelse=List(elts=[Name(id='value', ctx=Load())], ctx=Load()))))])]), FunctionDef(name='verify', args=arguments(args=[arg(arg='namespace'), arg(arg='paths')]), body=[For(target=Name(id='path', ctx=Store()), iter=Name(id='paths', ctx=Load()), body=[Assign(targets=[Name(id='scope', ctx=Store())], value=IfExp(test=Call(func=Attribute(value=Name(id='path', ctx=Load()), attr='endswith', ctx=Load()), args=[Tuple(elts=[Constant(value='cilium-cluster-policies.yaml'), Constant(value='spire-network-policies.yaml')], ctx=Load())]), body=List(ctx=Load()), orelse=List(elts=[Constant(value='-n'), Name(id='namespace', ctx=Load())], ctx=Load()))), Assign(targets=[Name(id='desired', ctx=Store())], value=Call(func=Name(id='run', ctx=Load()), args=[Constant(value='kubectl'), Constant(value='apply'), Constant(value='--dry-run=server'), Starred(value=Name(id='scope', ctx=Load()), ctx=Load()), Constant(value='-f'), Name(id='path', ctx=Load()), Constant(value='-o'), Constant(value='json')])), For(target=Name(id='obj', ctx=Store()), iter=Call(func=Attribute(value=Name(id='yaml', ctx=Load()), attr='safe_load_all', ctx=Load()), args=[Call(func=Name(id='open', ctx=Load()), args=[Name(id='path', ctx=Load())], keywords=[keyword(arg='encoding', value=Constant(value='utf-8'))])]), body=[If(test=Compare(left=Name(id='obj', ctx=Load()), ops=[Is()], comparators=[Constant(value=None)]), body=[Continue()]), If(test=Compare(left=Subscript(value=Name(id='obj', ctx=Load()), slice=Constant(value='kind'), ctx=Load()), ops=[NotIn()], comparators=[Tuple(elts=[Constant(value='NetworkPolicy'), Constant(value='CiliumNetworkPolicy'), Constant(value='CiliumClusterwideNetworkPolicy')], ctx=Load())]), body=[Raise(exc=Call(func=Name(id='RuntimeError', ctx=Load()), args=[Constant(value='Only policy resources are accepted')]))]), Assign(targets=[Name(id='meta', ctx=Store())], value=Subscript(value=Name(id='obj', ctx=Load()), slice=Constant(value='metadata'), ctx=Load())), Assign(targets=[Name(id='args', ctx=Store())], value=List(elts=[Constant(value='kubectl'), Constant(value='get'), Subscript(value=Name(id='obj', ctx=Load()), slice=Constant(value='kind'), ctx=Load()), Subscript(value=Name(id='meta', ctx=Load()), slice=Constant(value='name'), ctx=Load()), Constant(value='-o'), Constant(value='json')], ctx=Load())), If(test=Compare(left=Subscript(value=Name(id='obj', ctx=Load()), slice=Constant(value='kind'), ctx=Load()), ops=[NotEq()], comparators=[Constant(value='CiliumClusterwideNetworkPolicy')]), body=[AugAssign(target=Name(id='args', ctx=Store()), op=Add(), value=List(elts=[Constant(value='-n'), Call(func=Attribute(value=Name(id='meta', ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='namespace'), Name(id='namespace', ctx=Load())])], ctx=Load()))]), Assign(targets=[Name(id='live', ctx=Store())], value=Call(func=Attribute(value=Name(id='json', ctx=Load()), attr='loads', ctx=Load()), args=[Call(func=Name(id='run', ctx=Load()), args=[Starred(value=Name(id='args', ctx=Load()), ctx=Load())])])), For(target=Name(id='field', ctx=Store()), iter=Tuple(elts=[Constant(value='spec'), Constant(value='specs')], ctx=Load()), body=[If(test=Compare(left=Call(func=Attribute(value=Name(id='live', ctx=Load()), attr='get', ctx=Load()), args=[Name(id='field', ctx=Load())]), ops=[NotEq()], comparators=[Call(func=Attribute(value=Name(id='obj', ctx=Load()), attr='get', ctx=Load()), args=[Name(id='field', ctx=Load())])]), body=[Raise(exc=Call(func=Name(id='RuntimeError', ctx=Load()), args=[JoinedStr(values=[Constant(value='Policy drift: '), FormattedValue(value=Subscript(value=Name(id='obj', ctx=Load()), slice=Constant(value='kind'), ctx=Load()), conversion=-1), Constant(value='/'), FormattedValue(value=Subscript(value=Name(id='meta', ctx=Load()), slice=Constant(value='name'), ctx=Load()), conversion=-1), Constant(value=' '), FormattedValue(value=Name(id='field', ctx=Load()), conversion=-1)])]))])])])]), Assign(targets=[Name(id='agents', ctx=Store())], value=Subscript(value=Call(func=Attribute(value=Name(id='json', ctx=Load()), attr='loads', ctx=Load()), args=[Call(func=Name(id='run', ctx=Load()), args=[Constant(value='kubectl'), Constant(value='-n'), Constant(value='cilium'), Constant(value='get'), Constant(value='pods'), Constant(value='-l'), Constant(value='k8s-app=cilium'), Constant(value='-o'), Constant(value='json')])]), slice=Constant(value='items'), ctx=Load())), If(test=UnaryOp(op=Not(), operand=Name(id='agents', ctx=Load())), body=[Raise(exc=Call(func=Name(id='RuntimeError', ctx=Load()), args=[Constant(value='No Cilium agents found')]))]), For(target=Name(id='agent', ctx=Store()), iter=Name(id='agents', ctx=Load()), body=[Assign(targets=[Name(id='endpoints', ctx=Store())], value=Call(func=Attribute(value=Name(id='json', ctx=Load()), attr='loads', ctx=Load()), args=[Call(func=Name(id='run', ctx=Load()), args=[Constant(value='kubectl'), Constant(value='-n'), Constant(value='cilium'), Constant(value='exec'), Subscript(value=Subscript(value=Name(id='agent', ctx=Load()), slice=Constant(value='metadata'), ctx=Load()), slice=Constant(value='name'), ctx=Load()), Constant(value='-c'), Constant(value='cilium-agent'), Constant(value='--'), Constant(value='cilium-dbg'), Constant(value='endpoint'), Constant(value='list'), Constant(value='-o'), Constant(value='json')])])), For(target=Name(id='ep', ctx=Store()), iter=Name(id='endpoints', ctx=Load()), body=[Assign(targets=[Name(id='status', ctx=Store())], value=Call(func=Attribute(value=Name(id='ep', ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='status'), Dict()])), Assign(targets=[Name(id='policy', ctx=Store())], value=Call(func=Attribute(value=Name(id='status', ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='policy'), Dict()])), Assign(targets=[Name(id='desired', ctx=Store())], value=IfExp(test=Compare(left=Constant(value='spec'), ops=[In()], comparators=[Name(id='policy', ctx=Load())]), body=Call(func=Attribute(value=Subscript(value=Name(id='policy', ctx=Load()), slice=Constant(value='spec'), ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='policy-revision'), Constant(value=0)]), orelse=Constant(value=None))), Assign(targets=[Name(id='realized', ctx=Store())], value=IfExp(test=Compare(left=Constant(value='realized'), ops=[In()], comparators=[Name(id='policy', ctx=Load())]), body=Call(func=Attribute(value=Subscript(value=Name(id='policy', ctx=Load()), slice=Constant(value='realized'), ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='policy-revision'), Constant(value=0)]), orelse=Constant(value=None))), If(test=BoolOp(op=Or(), values=[Compare(left=Call(func=Attribute(value=Name(id='status', ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='state')]), ops=[NotEq()], comparators=[Constant(value='ready')]), Compare(left=Name(id='desired', ctx=Load()), ops=[Is()], comparators=[Constant(value=None)]), Compare(left=Name(id='realized', ctx=Load()), ops=[NotEq()], comparators=[Name(id='desired', ctx=Load())])]), body=[Raise(exc=Call(func=Name(id='RuntimeError', ctx=Load()), args=[JoinedStr(values=[Constant(value='Endpoint not ready/realized on '), FormattedValue(value=Subscript(value=Subscript(value=Name(id='agent', ctx=Load()), slice=Constant(value='metadata'), ctx=Load()), slice=Constant(value='name'), ctx=Load()), conversion=-1), Constant(value=': '), FormattedValue(value=Call(func=Attribute(value=Name(id='ep', ctx=Load()), attr='get', ctx=Load()), args=[Constant(value='id')]), conversion=-1)])]))])])]), Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Constant(value='Desired policy specs match and current agent endpoints are ready at their desired revisions.')])), Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Constant(value='This does not replace unmanaged-pod checks, negative probes or the pipeline test.')]))]), If(test=Compare(left=Name(id='__name__', ctx=Load()), ops=[Eq()], comparators=[Constant(value='__main__')]), body=[Expr(value=Call(func=Name(id='verify', ctx=Load()), args=[Subscript(value=Attribute(value=Name(id='sys', ctx=Load()), attr='argv', ctx=Load()), slice=Constant(value=1), ctx=Load()), Subscript(value=Attribute(value=Name(id='sys', ctx=Load()), attr='argv', ctx=Load()), slice=Slice(lower=Constant(value=2)), ctx=Load())]))])])"
       }
     },
@@ -19469,7 +19470,25 @@
       "source": "ops/pod/verify.py",
       "language": "Python",
       "basis": "original-ops-pod-native-state-and-jsonrpc-protocol",
-      "outputs": []
+      "outputs": [
+        {
+          "expression": "json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': params})",
+          "function": "call",
+          "operationDigest": "64e486f993d95b4770a01421c17bdbcd07156f0deacf0e5fb02b68fdb2e5bf66",
+          "consumer": {
+            "source": "ops/pod/verify.py",
+            "purpose": "loopback-mcp-jsonrpc-envelope; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='call', args=arguments("
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        }
+      ],
+      "roleConsumerEvidence": {
+        "review": "PASS independent complete Source/native consumer review; docs/blueprint/acceptance-evidence/python-consumer-boundaries-20261021.json; no runtime input, dependencies, effects or live success qualified",
+        "consumer": "loopback-mcp-jsonrpc-envelope; runtime input identity, external dependencies and effects remain unqualified"
+      }
     },
     {
       "source": "cmd/buster-namespace-controller/demo-credentials.go",
@@ -30762,7 +30781,180 @@
             "kind": "python-runtime-adoption-diagnostic"
           }
         }
-      ]
+      ],
+      "inputBoundary": {
+        "role": "external-exported-manifest-server-dry-run-consumer",
+        "receiptSelector": "root / sys.argv[1] / bundle.receipt; absolute/traversal/symlink inputs not confined",
+        "manifestSelector": "root / group['path'] / resources.yaml; bytes and namespace come from external selected receipt",
+        "runtimeExecutionAuthorized": false,
+        "runtimeInputBytesQualified": false,
+        "selectedManifestIsRepositorySource": false
+      }
+    },
+    {
+      "source": "scripts/docs-api-python-ast-v1.py",
+      "language": "Python",
+      "basis": "source-owned-auxiliary-protocol",
+      "outputs": [
+        {
+          "expression": "print(json.dumps(documentation_custody(tree, source) if custody else serialize(tree, source)))",
+          "function": "<module>",
+          "operationDigest": "c9ddac17d51805f05d996fb786518c1ae434a3f774b6a420881d7b29f238fdbc",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "Module(body=[Expr(value=Constant(value='"
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "json.dumps(documentation_custody(tree, source) if custody else serialize(tree, source))",
+          "function": "<module>",
+          "operationDigest": "c9ddac17d51805f05d996fb786518c1ae434a3f774b6a420881d7b29f238fdbc",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "Module(body=[Expr(value=Constant(value='"
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "import ast",
+          "function": "<module>",
+          "operationDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              ""
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "type(statement).__name__",
+          "function": "documentation_custody",
+          "operationDigest": "2920a84132b5d1ff4f96f847c3d36ee94150dc7c250c18cd68d5b09e9b92f090",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='documentation_custody'"
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "type(value).__name__",
+          "function": "emit",
+          "operationDigest": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='emit', args=arguments("
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "getattr(value, field)",
+          "function": "emit",
+          "operationDigest": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='emit', args=arguments("
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "type(value).__name__",
+          "function": "emit",
+          "operationDigest": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='emit', args=arguments("
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "vars(value)",
+          "function": "emit",
+          "operationDigest": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0",
+          "consumer": {
+            "source": "scripts/docs-api-python-ast-v1.py",
+            "purpose": "finite-source-ast-receipt-protocol; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='emit', args=arguments("
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        }
+      ],
+      "roleConsumerEvidence": {
+        "review": "PASS independent complete Source/native consumer review; docs/blueprint/acceptance-evidence/python-consumer-boundaries-20261021.json; no runtime input, dependencies, effects or live success qualified",
+        "consumer": "finite-source-ast-receipt-protocol; runtime input identity, external dependencies and effects remain unqualified"
+      }
+    },
+    {
+      "source": "scripts/verify-cilium-policies.py",
+      "language": "Python",
+      "basis": "source-owned-auxiliary-protocol",
+      "outputs": [
+        {
+          "expression": "print('Desired policy specs match and current agent endpoints are ready at their desired revisions.')",
+          "function": "verify",
+          "operationDigest": "d636ae331dc576d96e6b2f2691b6191da14460458acbbfde42c3cde6c3c607bb",
+          "consumer": {
+            "source": "scripts/verify-cilium-policies.py",
+            "purpose": "existing-source-bound-policy-probe-diagnostics; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='verify', args=argument"
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "print('This does not replace unmanaged-pod checks, negative probes or the pipeline test.')",
+          "function": "verify",
+          "operationDigest": "d636ae331dc576d96e6b2f2691b6191da14460458acbbfde42c3cde6c3c607bb",
+          "consumer": {
+            "source": "scripts/verify-cilium-policies.py",
+            "purpose": "existing-source-bound-policy-probe-diagnostics; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              "FunctionDef(name='verify', args=argument"
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        },
+        {
+          "expression": "import yaml",
+          "function": "<module>",
+          "operationDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "consumer": {
+            "source": "scripts/verify-cilium-policies.py",
+            "purpose": "existing-source-bound-policy-probe-diagnostics; metadata/probe/RPC only, not resource-body publication or execution approval",
+            "evidence": [
+              ""
+            ],
+            "kind": "python-source-owned-auxiliary-protocol"
+          }
+        }
+      ],
+      "roleConsumerEvidence": {
+        "review": "PASS independent complete Source/native consumer review; docs/blueprint/acceptance-evidence/python-consumer-boundaries-20261021.json; no runtime input, dependencies, effects or live success qualified",
+        "consumer": "existing-source-bound-policy-probe-diagnostics; runtime input identity, external dependencies and effects remain unqualified"
+      }
     }
   ],
   "nativeRoleDependencyBoundary": "Operation facts are derived from selected actual sink/caller/consumer expressions and their lexical source dependencies. Registry digests detect changes; they do not authorize an unknown output or replace semantic review. Complete module syntax is not duplicated.",

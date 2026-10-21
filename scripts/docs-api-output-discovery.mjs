@@ -830,6 +830,107 @@ const reviewedRuntimeAdoptionDiagnostics = {
     }
   ]
 };
+// Source AST receipts, fixed probe diagnostics and JSON-RPC transport are
+// distinct from resource-object construction. Exact complete source plus each
+// selected operation remains bound; external runtime effects are not approved.
+const reviewedAuxiliaryPythonConsumers = {
+  "scripts/docs-api-python-ast-v1.py": {
+    "source": "scripts/docs-api-python-ast-v1.py",
+    "inputClass": "finite-source-ast-receipt-protocol",
+    "sha256": "8ad32b060c582612b70824705a8199d8c57a0305dc45692068da307aa55e4c53",
+    "outputs": [
+      {
+        "function": "<module>",
+        "expressionSha256": "1f8873ef2fb305c140185941734989e5a3eebc7931f75774bcd5b2bfab1265f0",
+        "operationSha256": "c9ddac17d51805f05d996fb786518c1ae434a3f774b6a420881d7b29f238fdbc"
+      },
+      {
+        "function": "<module>",
+        "expressionSha256": "5d85f92d48bf31908af966b99f2bfddc80c49fa6949eb540a05f2deab5c7ef7c",
+        "operationSha256": "c9ddac17d51805f05d996fb786518c1ae434a3f774b6a420881d7b29f238fdbc"
+      },
+      {
+        "function": "<module>",
+        "expressionSha256": "7e2b36d7ff4507ef86d0c699f545ffe596952685e8abbad9cb744f1f2d669372",
+        "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "function": "documentation_custody",
+        "expressionSha256": "4e5a0ffecb92abe78d13d782248912e51eb5f4b3023f0cfe6e9edbaf7b979b3c",
+        "operationSha256": "2920a84132b5d1ff4f96f847c3d36ee94150dc7c250c18cd68d5b09e9b92f090"
+      },
+      {
+        "function": "emit",
+        "expressionSha256": "f0d6dc549d5beadbcfa81551a553b9209a3780827339e06ddfc632c902057c17",
+        "operationSha256": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0"
+      },
+      {
+        "function": "emit",
+        "expressionSha256": "9d0ccc67e84d7ab645f03cb5f6427cce53cc77511b5ff2bf9a042128f0ccfc3a",
+        "operationSha256": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0"
+      },
+      {
+        "function": "emit",
+        "expressionSha256": "f0d6dc549d5beadbcfa81551a553b9209a3780827339e06ddfc632c902057c17",
+        "operationSha256": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0"
+      },
+      {
+        "function": "emit",
+        "expressionSha256": "8038d5ee324845049e26ed58609a16ecdd34ce380abf586cc799ac3147d85e03",
+        "operationSha256": "687afaa6831c5a134d23182941e24ebaf833ece5d7fd29a389e253fbb7877bc0"
+      }
+    ]
+  },
+  "scripts/verify-cilium-policies.py": {
+    "source": "scripts/verify-cilium-policies.py",
+    "inputClass": "existing-source-bound-policy-probe-diagnostics",
+    "sha256": "7ea64cab58c312f8de2bcca8c804641f7e6ae117779ae6ca8ae1e30b0be67b22",
+    "outputs": [
+      {
+        "function": "verify",
+        "expressionSha256": "1293efbeff774fa9268538162b9443046da6af213f15140eb68a39abc4e89840",
+        "operationSha256": "d636ae331dc576d96e6b2f2691b6191da14460458acbbfde42c3cde6c3c607bb"
+      },
+      {
+        "function": "verify",
+        "expressionSha256": "4f8d7616ffa320fd0353155c607a7e6ac494aac801bae476d5e6c11eebaceef6",
+        "operationSha256": "d636ae331dc576d96e6b2f2691b6191da14460458acbbfde42c3cde6c3c607bb"
+      },
+      {
+        "function": "<module>",
+        "expressionSha256": "1ba25a0ad00c4511b591046805e6342b82d740583998a6e7a79a83be33fa67bf",
+        "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "ops/pod/verify.py": {
+    "source": "ops/pod/verify.py",
+    "inputClass": "loopback-mcp-jsonrpc-envelope",
+    "sha256": "8ab65fbcaf4fa7c381a3811eb594e7092d1a7d652934aa2e52205921910d2d71",
+    "outputs": [
+      {
+        "function": "call",
+        "expressionSha256": "95de4f5f4403075e67200656351228ffec8511b0ba57d16736cea660c6aff103",
+        "operationSha256": "64e486f993d95b4770a01421c17bdbcd07156f0deacf0e5fb02b68fdb2e5bf66"
+      }
+    ]
+  }
+};
+export function runtimeAdoptionManifestInputAuthority(root,source,bytes) {
+ const recipe=reviewedRuntimeAdoptionDiagnostics,file=path.join(root,source);
+ if(source!==recipe.source||hash(bytes)!==recipe.sha256||!fs.existsSync(file)
+   ||fs.realpathSync(file)!==path.resolve(file)||hash(fs.readFileSync(file))!==recipe.sha256)return null;
+ // This program consumes a caller-selected exported manifest; it never
+ // constructs that manifest. Do not invent current repository API objects
+ // from externally selected receipt/resource bytes or execute this live check.
+ return Object.freeze({source,inputClass:'external-exported-manifest-server-dry-run-consumer',
+  receiptSelector:'Path(__file__).resolve().parent.parent / sys.argv[1] / bundle.receipt',
+  manifestSelector:"root / group['path'] / resources.yaml; groups come from the selected receipt",
+  request:'kubectl [--context KUBE_CONTEXT] apply --dry-run=server -f selectedManifest',
+  limits:'Absolute paths, traversal, symlinks and mutable receipt/manifest bytes are not confined or attested by this script; server dry-run does not certify absence of external admission effects.',
+  metadataOnly:true,runtimeExecutionAuthorized:false,runtimeInputBytesQualified:false,
+  selectedManifestIsRepositorySource:false});
+}
 export function nativeOutputConsumerMatches(output,contracts,root) {
  // Digests only invalidate reviewed facts. A role also requires the actual
  // operation to satisfy its consumer grammar; a generic diagnostic label does
@@ -887,6 +988,14 @@ export function nativeOutputConsumerMatches(output,contracts,root) {
   const external=/\b(?:os\.Args|os\.Getenv|os\.Stdin|sys\.argv|input\(|eval\(|exec\()/u.test(expression);
   if(external)return false;
   switch(consumer.kind){
+   case 'python-source-owned-auxiliary-protocol':{
+    const recipe=reviewedAuxiliaryPythonConsumers[consumer.source];if(!recipe)return false;
+    const file=path.join(root,recipe.source);
+    return output.role==='unknown'&&fs.existsSync(file)&&fs.realpathSync(file)===path.resolve(file)
+      &&hash(fs.readFileSync(file))===recipe.sha256
+      &&recipe.outputs.some(selected=>selected.function===output.function
+        &&selected.expressionSha256===hash(output.expression)&&selected.operationSha256===hash(operation));
+   }
    case 'python-runtime-adoption-diagnostic':{
     const recipe=reviewedRuntimeAdoptionDiagnostics,file=path.join(root,recipe.source);
     return output.role==='unknown'&&consumer.source===recipe.source&&fs.existsSync(file)
@@ -1296,6 +1405,7 @@ export function discoverScriptApiOutputs(root) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     const roles=assertNativeSerializationRoles(root,source,bytes,'Python');
     const patchRoles=roles.filter(role=>role.role==='api-patch');
+    if(!patchRoles.length&&runtimeAdoptionManifestInputAuthority(root,source,bytes))continue;
     if(!patchRoles.length&&source!=='ops/pod/bootstrap.py'&&!/kubectl[^\n]*(?:apply|create|patch)|(?:apply|create)_secret/u.test(bytes))continue;
     if(source==='scripts/verify-cilium-policies.py'){assertProducerAdapterAuthority(root,[source]);continue;}
     assert(source==='ops/pod/bootstrap.py'||patchRoles.length,`API_PRODUCT_PYTHON_PRODUCER_UNQUALIFIED: ${source}`);

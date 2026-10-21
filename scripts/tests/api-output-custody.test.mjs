@@ -7,7 +7,7 @@ import ts from 'typescript';
 import {reviewedImporterResolutionOperation,assertDocumentationExecutableRole} from '../docs-api-documentation-role-custody.mjs';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {nativeOutputConsumerMatches,documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
+import {runtimeAdoptionManifestInputAuthority,nativeOutputConsumerMatches,documentationModuleInputAuthority,discoverScriptApiOutputs,discoverScriptOutputRoleClassifications,discoverTransformedApiOutputs,discoverShellApiOutputs,producerAdapterOperationRecipe,shellRawOutputSinks,shellRawOutputOperationRecipe} from '../docs-api-output-discovery.mjs';
 import {classifySerializedOutputRoles,serializedOutputSinkSites,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';
 import {shellHeredocCustody,shellCommandAcquisitions} from '../docs-shell-source-custody.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
@@ -37,13 +37,36 @@ test('live-check diagnostic roles bind complete readonly source and cannot be re
  const parse=()=>{const r=spawnSync('python3',[path.join(repository,'scripts/docs-api-python-output-adapter.py'),path.join(root,source),'--classify'],{encoding:'utf8',maxBuffer:1024*1024});assert.equal(r.status,0,r.stderr);return JSON.parse(r.stdout);};
  const outputs=parse(),contracts=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json'))).nativeLanguageSerializationContracts.find(r=>r.source===source).outputs;
  assert.equal(outputs.filter(x=>x.role==='unknown').length,10);
+ const metadata=runtimeAdoptionManifestInputAuthority(root,source,bytes);
+ assert.equal(metadata.metadataOnly,true);assert.equal(metadata.runtimeExecutionAuthorized,false);assert.equal(metadata.runtimeInputBytesQualified,false);assert.equal(metadata.selectedManifestIsRepositorySource,false);assert(Object.isFrozen(metadata));
  for(const output of outputs.filter(x=>x.role==='unknown'))assert(nativeOutputConsumerMatches(output,contracts,root));
  assert(!nativeOutputConsumerMatches({...outputs.find(x=>x.role==='unknown'),role:'api'},contracts,root));
  for(const changed of [bytes.replace("'--dry-run=server', ",''),bytes.replace("'volumeClaimTemplates'","'apiVersion', 'kind'"),bytes+"\nprint(json.dumps({'apiVersion':'v1','kind':'Secret'}))\n"]){
   assert.notEqual(changed,bytes);write(source,changed);const actual=parse();
+  assert.equal(runtimeAdoptionManifestInputAuthority(root,source,changed),null);
   const refreshed=actual.map(output=>({expression:output.expression,function:output.function,operationDigest:sha(output.operation),consumer:contracts[0].consumer}));
   assert(actual.some(output=>output.role==='unknown'&&!nativeOutputConsumerMatches(output,refreshed,root)));
   for(const output of actual.filter(x=>x.role==='api'))assert(!nativeOutputConsumerMatches(output,refreshed,root));
+ }
+ write(source,bytes);
+ write('scripts/docs-api-producer-adapter-authorities.json',JSON.stringify({nativeLanguageSerializationContracts:[{source,language:'Python',outputs:contracts}]}));
+ assert.deepEqual(discoverScriptApiOutputs(root),[],'consumer metadata must not execute the live helper or invent exported-manifest resource bytes');
+ write('tools/unreviewed.py',"import json\nprint(json.dumps({'apiVersion':'v1','kind':'Secret'}))\n");
+ assert.throws(()=>discoverScriptApiOutputs(root),/PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED.*tools\/unreviewed.py/);
+}));
+
+test('auxiliary Python receipts distinguish AST, policy-probe and JSON-RPC metadata from API writers',()=>fixture(({root,write})=>{
+ const repository=path.resolve(new URL('../..',import.meta.url).pathname);
+ const registry=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json')));
+ for(const source of ['scripts/docs-api-python-ast-v1.py','scripts/verify-cilium-policies.py','ops/pod/verify.py']){
+  const bytes=fs.readFileSync(path.join(repository,source),'utf8');write(source,bytes);
+  const parsed=spawnSync('python3',[path.join(repository,'scripts/docs-api-python-output-adapter.py'),path.join(root,source),'--classify'],{encoding:'utf8',maxBuffer:4*1024*1024});assert.equal(parsed.status,0,parsed.stderr);
+  const outputs=JSON.parse(parsed.stdout).filter(x=>x.role==='unknown'),contracts=registry.nativeLanguageSerializationContracts.find(r=>r.source===source).outputs;
+  assert(outputs.length>0);for(const output of outputs){assert(nativeOutputConsumerMatches(output,contracts,root));assert(!nativeOutputConsumerMatches({...output,role:'api'},contracts,root));}
+  write(source,bytes+"\nprint(json.dumps({'apiVersion':'v1','kind':'Secret'}))\n");
+  for(const output of outputs)assert(!nativeOutputConsumerMatches(output,contracts,root),'complete source changed without Source approval');
+  write(source,bytes);const arbitrary={...outputs[0],expression:"print(json.dumps({'apiVersion':'v1','kind':'Secret'}))"};
+  const refreshed=[{...contracts[0],expression:arbitrary.expression,operationDigest:sha(arbitrary.operation)}];assert(!nativeOutputConsumerMatches(arbitrary,refreshed,root));
  }
 }));
 
