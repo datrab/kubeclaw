@@ -1041,11 +1041,26 @@ test('Buster runtime v2 derives its service policy from original complete input 
   const chart = JSON.parse(retained.capture.read('charts/kubeclaw/values.yaml').toString());
   const deployment = root.deploymentSelections.find((d: any) => d.consumer === 'namespace-controller' && d.busterComponentInstanceId === binding.instanceId);
   const namespace = chart.profiles[deployment.profileId].readonlyBindings.releaseNamespace;
-  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2', ...structuredClone(policy), ...sources,
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2',
+    platformConfig: '/original/platform.json', sourceAttestationPublicKeyEnvironmentVariable: 'ORIGINAL_SOURCE_KEY',
+    trustedSourceAuthority: 'original:source', stateRoot: '/original/state', runtimeRoot: '/original/runs',
+    tarExecutable: '/usr/bin/tar', ...structuredClone(policy), ...sources,
     clusterBindings: { controllerNamespace: namespace } };
   const output = Buffer.from(JSON.stringify(runtime));
   const run = (value = output) => inspectPipelineV10BusterRuntimeSourceIdentity(selection, value, retained.capture);
   const result = run();
+  // A policy-equal v2 output must also satisfy the REAL production source
+  // envelope. Shape validation does not install locators or authenticate issuer.
+  for (const [field, invalid, diagnostic] of [
+    ['tarExecutable', '/bin/tar', /BUSTER_NATIVE_TAR_LOCATOR_INVALID/],
+    ...['platformConfig', 'sourceAttestationPublicKeyEnvironmentVariable', 'trustedSourceAuthority',
+      'stateRoot', 'runtimeRoot'].map(field => [field, '', new RegExp('BUSTER_REMOTE_CONFIG_INVALID:' + field)]),
+  ] as const) {
+    assert.throws(() => run(Buffer.from(JSON.stringify({ ...runtime, [field as string]: invalid }))), diagnostic as RegExp);
+    const missing = { ...runtime } as Record<string, unknown>; delete missing[field as string];
+    assert.throws(() => run(Buffer.from(JSON.stringify(missing))), diagnostic as RegExp);
+    assert.deepEqual(run(), result, 'restored original complete runtime source');
+  }
   // One captured caller tuple must own BOTH policy and deployment source joins.
   // Reading the captured generation may invoke an upstream reader; subsequent
   // mutation of the supplied tuple must not retarget the namespace selection.
@@ -1294,7 +1309,10 @@ test('Buster runtime v2 original network-only policy rejects inactive source bra
   const selection = { role: 'buster', callerId: 'buster-runtime', serviceInstanceId: binding.instanceId };
   const owner = JSON.parse(retained.capture.read('config/components/buster-engine.config.json').toString());
   const settings = owner.profiles['network-only'].settings;
-  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2', ...structuredClone(settings.remotePlanService),
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v2',
+    platformConfig: '/original/platform.json', sourceAttestationPublicKeyEnvironmentVariable: 'ORIGINAL_SOURCE_KEY',
+    trustedSourceAuthority: 'original:source', stateRoot: '/original/state', runtimeRoot: '/original/runs',
+    tarExecutable: '/usr/bin/tar', ...structuredClone(settings.remotePlanService),
     networkHttp: structuredClone(settings.execution.capabilityProviders.networkHttp) };
   const run = (value: any) => inspectPipelineV10BusterRuntimeSourceIdentity(selection, Buffer.from(JSON.stringify(value)), retained.capture);
   const original = run(runtime);

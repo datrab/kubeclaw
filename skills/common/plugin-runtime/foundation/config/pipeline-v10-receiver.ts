@@ -11,7 +11,7 @@ import { preflightPipelineV10Owners } from './swarm-bundle.ts';
 import { captureWorkerCorePolicy } from './worker-core-policy.ts';
 import { captureBusterPreparationV10 } from './buster-preparation-v10.ts';
 import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings } from './swarm.ts';
-import { readBusterRemotePlanServicePolicy, receiveBusterRuntimeV2ServicePolicy } from './buster-service-policy.ts';
+import { readBusterRemotePlanServicePolicy, receiveBusterRuntimeV2ServicePolicy, validateBusterRuntimeSourceMetadata } from './buster-service-policy.ts';
 import { preflightPipelineV10Infrastructure } from './pipeline-v10-infra.ts';
 import type { capturePipelineInputSet } from './pipeline-input-set.ts';
 import { composePipelineV10InputSet } from './pipeline-v10-input-set.ts';
@@ -694,6 +694,7 @@ export function inspectPipelineV10BusterRuntimeSourceIdentity(selection: unknown
   const raw = Buffer.from(output), original = inspectPipelineV10BusterServiceSelection(selection, inputs);
   const runtime = parse(raw);
   const policy = receiveBusterRuntimeV2ServicePolicy(runtime, original.policy);
+  validateBusterRuntimeSourceMetadata(runtime, 'buster-remote-plan-runtime.v2');
   // Compare every selected public leaf before treating output as coherent.
   // Extra source fields may carry separately admitted native/registry locators;
   // their presence is NOT verified or authorized by this local equality check.

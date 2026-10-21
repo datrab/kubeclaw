@@ -102,3 +102,27 @@ export function receiveBusterRuntimeV2ServicePolicy(
   if (!isDeepStrictEqual(received, selected)) throw new Error('BUSTER_SELECTED_SERVICE_POLICY_MISMATCH');
   return selected;
 }
+
+
+/** Shared effect-free source envelope of the actual production reader.
+ * The version is selected by the receiving path, never by the received value.
+ * Public locator/issuer shape is not installed native or credential authority.
+ */
+export function validateBusterRuntimeSourceMetadata(value: Readonly<Record<string, unknown>>,
+  version: 'buster-remote-plan-runtime.v1' | 'buster-remote-plan-runtime.v2'): void {
+  if (value.schemaVersion !== version) throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
+  if (value.tarExecutable !== '/usr/bin/tar') throw new Error('BUSTER_NATIVE_TAR_LOCATOR_INVALID');
+  rejectRetiredBusterRuntimeAuthors(value);
+  for (const name of [
+    'platformConfig',
+    'host',
+    'sourceAttestationPublicKeyEnvironmentVariable',
+    'trustedSourceAuthority',
+    'stateRoot',
+    'runtimeRoot',
+    'tarExecutable',
+  ]) {
+    if (typeof value[name] !== 'string' || value[name].length === 0)
+      throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${name}`);
+  }
+}

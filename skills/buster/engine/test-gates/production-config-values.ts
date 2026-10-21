@@ -1,4 +1,4 @@
-import { rejectRetiredBusterRuntimeAuthors } from '@kubeclaw/plugin-foundation/config/buster-service-policy';
+import { validateBusterRuntimeSourceMetadata } from '@kubeclaw/plugin-foundation/config/buster-service-policy';
 import type { captureRegistryPeer } from './production-registry-peer.ts';
 import { createPublicKey } from 'node:crypto';
 import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
@@ -171,21 +171,7 @@ export function scannerRegistry(source: Record<string, unknown>, capturedRegistr
 }
 
 export function validateRuntimeRoot(value: Record<string, unknown>): void {
-  if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
-  if (value.tarExecutable !== '/usr/bin/tar') throw new Error('BUSTER_NATIVE_TAR_LOCATOR_INVALID');
-  rejectRetiredBusterRuntimeAuthors(value);
-  for (const name of [
-    'platformConfig',
-    'host',
-    'sourceAttestationPublicKeyEnvironmentVariable',
-    'trustedSourceAuthority',
-    'stateRoot',
-    'runtimeRoot',
-    'tarExecutable',
-  ]) {
-    if (typeof value[name] !== 'string' || value[name].length === 0)
-      throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${name}`);
-  }
+  validateBusterRuntimeSourceMetadata(value, 'buster-remote-plan-runtime.v1');
 }
 
 export function runtimeAuthority(value: Record<string, unknown>, environment: NodeJS.ProcessEnv) {
